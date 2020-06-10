@@ -151,7 +151,7 @@
 
 /datum/chemical_reaction/granibitaluri
 	results = list(/datum/reagent/medicine/granibitaluri = 3)
-	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/phenol = 1, /datum/reagent/nitrogen = 1)
+	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/carbon = 1, /datum/reagent/toxin/acid = 1)
 	required_catalysts = list(/datum/reagent/iron = 5)
 
 /datum/chemical_reaction/medsuture
@@ -169,3 +169,4 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/mesh/advanced(location)
+

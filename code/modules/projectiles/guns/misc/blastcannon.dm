@@ -3,7 +3,7 @@
 	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole."
 	icon_state = "empty_blastcannon"
 	var/icon_state_loaded = "loaded_blastcannon"
-	item_state = "blastcannon_empty"
+	inhand_icon_state = "blastcannon_empty"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
@@ -150,7 +150,13 @@
 				if(prob(wallbreak_chance))
 					W.dismantle_wall(TRUE, TRUE)
 		else
-			loc.ex_act(amount_destruction)
+			switch(amount_destruction)
+				if(EXPLODE_DEVASTATE)
+					SSexplosions.highturf += loc
+				if(EXPLODE_HEAVY)
+					SSexplosions.medturf += loc
+				if(EXPLODE_LIGHT)
+					SSexplosions.lowturf += loc
 	else
 		qdel(src)
 

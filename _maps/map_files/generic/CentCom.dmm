@@ -4090,7 +4090,7 @@
 	dwidth = 25;
 	height = 50;
 	id = "emergency_syndicate";
-	name = "Syndicate Auxillary Shuttle Dock";
+	name = "Syndicate Auxiliary Shuttle Dock";
 	width = 50
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -4882,7 +4882,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/supply)
 "mc" = (
-/obj/machinery/computer/auxillary_base{
+/obj/machinery/computer/auxiliary_base{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
@@ -6894,7 +6894,7 @@
 /area/centcom/supplypod/loading/ert)
 "pF" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Auxillary Dock";
+	name = "Auxiliary Dock";
 	req_access_txt = ""
 	},
 /turf/open/floor/plating,
@@ -7248,7 +7248,7 @@
 /area/centcom/ferry)
 "ql" = (
 /obj/structure/dresser,
-/obj/structure/sign/plaques/golden/captain{
+/obj/structure/plaque/static_plaque/golden/captain{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -7679,7 +7679,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "rl" = (
-/obj/machinery/computer/auxillary_base{
+/obj/machinery/computer/auxiliary_base{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
@@ -14518,7 +14518,7 @@
 /area/tdome/tdomeobserve)
 "GL" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/lawyers_badge{
@@ -14542,7 +14542,7 @@
 /area/tdome/tdomeobserve)
 "GO" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/medal/silver{
@@ -14817,7 +14817,7 @@
 /area/tdome/tdomeobserve)
 "Hr" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/thunderdome{
+/obj/structure/plaque/static_plaque/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal/gold{
@@ -14843,7 +14843,7 @@
 /area/tdome/tdomeobserve)
 "Ht" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/thunderdome{
+/obj/structure/plaque/static_plaque/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal{

@@ -12,15 +12,16 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4, /obj/item/clothing/head/goatpelt = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	faction = list("goat")
+	faction = list("neutral")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	attack_same = 1
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -184,24 +185,27 @@
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
 		Paralyze(60, ignore_canstun = TRUE)
 		icon_state = icon_dead
-		spawn(rand(20,50))
-			if(!stat && M)
-				icon_state = icon_living
-				var/external
-				var/internal
-				switch(pick(1,2,3,4))
-					if(1,2,3)
-						var/text = pick("imploringly.", "pleadingly.",
-							"with a resigned expression.")
-						external = "[src] looks at [M] [text]"
-						internal = "You look at [M] [text]"
-					if(4)
-						external = "[src] seems resigned to its fate."
-						internal = "You resign yourself to your fate."
-				visible_message("<span class='notice'>[external]</span>",
-					"<span class='revennotice'>[internal]</span>")
+		addtimer(CALLBACK(src, .proc/cow_tipped, M), rand(20,50))
+
 	else
 		..()
+
+/mob/living/simple_animal/cow/proc/cow_tipped(mob/living/carbon/M)
+	if(QDELETED(M) || stat)
+		return
+	icon_state = icon_living
+	var/external
+	var/internal
+	if(prob(75))
+		var/text = pick("imploringly.", "pleadingly.",
+			"with a resigned expression.")
+		external = "[src] looks at [M] [text]"
+		internal = "You look at [M] [text]"
+	else
+		external = "[src] seems resigned to its fate."
+		internal = "You resign yourself to your fate."
+	visible_message("<span class='notice'>[external]</span>",
+		"<span class='revennotice'>[internal]</span>")
 
 ///Wisdom cow, gives XP to a random skill and speaks wisdoms
 /mob/living/simple_animal/cow/wisdom
@@ -220,7 +224,7 @@
 /mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == INTENT_HELP)
 		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
-		M.mind?.adjust_experience(pick(subtypesof(/datum/skill)), 500)
+		M.mind?.adjust_experience(pick(GLOB.skill_types), 500)
 		do_smoke(1, get_turf(src))
 		qdel(src)
 		return

@@ -132,7 +132,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 		for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			S.update_starlight()
-	SSdemo.mark_turf(W)
 
 	return W
 
@@ -164,7 +163,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		while(ispath(turf_type, /turf/baseturf_skipover))
 			amount++
 			if(amount > new_baseturfs.len)
-				CRASH("The bottomost baseturf of a turf is a skipover [src]([type])")
+				CRASH("The bottommost baseturf of a turf is a skipover [src]([type])")
 			turf_type = new_baseturfs[max(1, new_baseturfs.len - amount + 1)]
 		new_baseturfs.len -= min(amount, new_baseturfs.len - 1) // No removing the very bottom
 		if(new_baseturfs.len == 1)

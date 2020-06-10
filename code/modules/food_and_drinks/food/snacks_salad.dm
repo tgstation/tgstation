@@ -21,6 +21,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/medicine/omnizine = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1)
 	foodtype = VEGETABLES | FRUIT
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/salad/herbsalad
 	name = "herb salad"
@@ -30,6 +31,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1, "apple" = 1)
 	foodtype = VEGETABLES | FRUIT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/salad/validsalad
 	name = "valid salad"
@@ -39,6 +41,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
 	foodtype = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/salad/oatmeal
 	name = "oatmeal"
@@ -48,6 +51,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("oats" = 1, "milk" = 1)
 	foodtype = DAIRY | GRAIN | BREAKFAST
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/salad/fruit
 	name = "fruit salad"
@@ -56,6 +60,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("fruit" = 1)
 	foodtype = FRUIT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/salad/jungle
 	name = "jungle salad"
@@ -65,6 +70,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("fruit" = 1, "the jungle" = 1)
 	foodtype = FRUIT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/salad/citrusdelight
 	name = "citrus delight"
@@ -74,6 +80,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("sourness" = 1, "leaves" = 1)
 	foodtype = FRUIT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/salad/ricebowl
 	name = "ricebowl"
@@ -83,6 +90,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("rice" = 1)
 	foodtype = GRAIN | RAW
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/salad/boiledrice
 	name = "boiled rice"
@@ -92,6 +100,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("rice" = 1)
 	foodtype = GRAIN
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/salad/ricepudding
 	name = "rice pudding"
@@ -100,6 +109,8 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rice" = 1, "sweetness" = 1)
 	foodtype = GRAIN | DAIRY
+	value = FOOD_FAST
+
 
 /obj/item/reagent_containers/food/snacks/salad/ricepork
 	name = "rice and pork"
@@ -108,6 +119,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/salad/eggbowl
 	name = "egg bowl"
@@ -116,3 +128,4 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtype = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+	value = FOOD_RARE		//No that's wrong ninja what the hell ~ArcaneMusic 2k20

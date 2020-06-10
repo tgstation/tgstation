@@ -348,9 +348,8 @@
 				hacking = TRUE
 				screen = MSG_MON_SCREEN_HACKED
 				//Time it takes to bruteforce is dependant on the password length.
-				spawn(100*length(linkedServer.decryptkey))
-					if(src && linkedServer && usr)
-						BruteForce(usr)
+				addtimer(CALLBACK(src, .proc/finish_bruteforce, usr), 100*length(linkedServer.decryptkey))
+
 		//Delete the log.
 		if (href_list["delete_logs"])
 			//Are they on the view logs screen?
@@ -443,6 +442,13 @@
 			screen = MSG_MON_SCREEN_MAIN
 
 	return attack_hand(usr)
+
+/obj/machinery/computer/message_monitor/proc/finish_bruteforce(mob/user)
+	if(!QDELETED(user))
+		BruteForce(user)
+		return
+	hacking = FALSE
+	screen = MSG_MON_SCREEN_MAIN
 
 #undef MSG_MON_SCREEN_MAIN
 #undef MSG_MON_SCREEN_LOGS

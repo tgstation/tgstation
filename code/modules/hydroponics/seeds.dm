@@ -49,14 +49,14 @@
 	var/list/reagents_add
 	// Format: "reagent_id" = potency multiplier
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
-	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
+	// Total amount of any reagent in plant is calculated by formula: max(round(potency * multiplier), 1)
 	///If the chance below passes, then this many weeds sprout during growth
 	var/weed_rate = 1
 	///Percentage chance per tray update to grow weeds
 	var/weed_chance = 5
 	///Determines if the plant has had a graft removed or not.
 	var/grafted = FALSE
-	///Trait to be applied when grafting a plant.
+	///Type-path of trait to be applied when grafting a plant.
 	var/graft_gene
 
 /obj/item/seeds/Initialize(mapload, nogenes = 0)
@@ -432,9 +432,7 @@
 			continue
 		all_traits += " [traits.get_name()]"
 	text += "- Plant Traits:[all_traits]\n"
-
 	text += "*---------*"
-
 	return text
 
 /obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)  //in case seeds have some special interaction with special chems
@@ -445,11 +443,11 @@
 		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
 		var/text
 		var/obj/item/plant_analyzer/P_analyzer = O
-		if(P_analyzer.scan_mode == 0)
+		if(P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
 			text = get_analyzer_text()
 			if(text)
 				to_chat(user, "<span class='notice'>[text]</span>")
-		if(reagents_add && P_analyzer.scan_mode == 1)
+		if(reagents_add && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
 			to_chat(user, "<span class='notice'>- Plant Reagents -</span>")
 			to_chat(user, "<span class='notice'>*---------*</span>")
 			for(var/datum/plant_gene/reagent/G in genes)
@@ -553,3 +551,53 @@
 	for(var/i in 1 to amount_random_reagents)
 		var/datum/reagent/chemical = pick(reagents_add)
 		qdel(chemical)
+
+/**
+  * Creates a graft from this plant.
+  *
+  * Creates a new graft from this plant.
+  * Sets the grafts trait to this plants graftable trait.
+  * Gives the graft a reference to this plant.
+  * Copies all the relevant stats from this plant to the graft.
+  * Returns the created graft.
+  */
+/obj/item/seeds/proc/create_graft()
+	var/obj/item/graft/snip = new(loc, graft_gene)
+	snip.parent_seed = src
+	snip.parent_name = plantname
+	snip.name += "([plantname])"
+
+	// Copy over stats so the graft can outlive its parent.
+	snip.lifespan = lifespan
+	snip.endurance = endurance
+	snip.production = production
+	snip.weed_rate = weed_rate
+	snip.weed_chance = weed_chance
+	snip.yield = yield
+
+	return snip
+
+/**
+  * Applies a graft to this plant.
+  *
+  * Adds the graft trait to this plant if possible.
+  * Increases plant stats by 2/3 of the grafts stats to a maximum of 100 (10 for yield).
+  * Returns [TRUE]
+  *
+  * Arguments:
+  * - [snip][/obj/item/graft]: The graft being used applied to this plant.
+  */
+/obj/item/seeds/proc/apply_graft(obj/item/graft/snip)
+	var/datum/plant_gene/trait/new_trait = snip.stored_trait
+	if(new_trait?.can_add(src))
+		genes += new_trait.Copy()
+
+	// Adjust stats based on graft stats.
+	src.lifespan	= round(clamp(max(src.lifespan,		(src.lifespan	+(2/3)*(snip.lifespan	-src.lifespan)		)),0,100))
+	src.endurance	= round(clamp(max(src.endurance,	(src.endurance	+(2/3)*(snip.endurance	-src.endurance)		)),0,100))
+	src.production	= round(clamp(max(src.production,	(src.production	+(2/3)*(snip.production	-src.production)	)),0,100))
+	src.weed_rate	= round(clamp(max(src.weed_rate,	(src.weed_rate	+(2/3)*(snip.weed_rate	-src.weed_rate)		)),0,100))
+	src.weed_chance	= round(clamp(max(src.weed_chance,	(src.weed_chance+(2/3)*(snip.weed_chance-src.weed_chance)	)),0,100))
+	src.yield		= round(clamp(max(src.yield,		(src.yield		+(2/3)*(snip.yield		-src.yield)			)),0,10	))
+
+	return TRUE

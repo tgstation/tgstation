@@ -18,7 +18,7 @@
 
 /turf/open/CanAtmosPass(turf/T, vertical = FALSE)
 	var/dir = vertical? get_dir_multiz(src, T) : get_dir(src, T)
-	var/opp = dir_inverse_multiz(dir)
+	var/opp = REVERSE_DIR(dir)
 	var/R = FALSE
 	if(vertical && !(zAirOut(dir, T) && T.zAirIn(dir, src)))
 		R = TRUE
@@ -44,7 +44,7 @@
 	return FALSE
 
 /turf/proc/ImmediateCalculateAdjacentTurfs()
-	var/canpass = CANATMOSPASS(src, src) 
+	var/canpass = CANATMOSPASS(src, src)
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)

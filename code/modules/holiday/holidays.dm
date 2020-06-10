@@ -475,10 +475,10 @@
 	begin_day = 1
 	end_day = 3
 
-/datum/holiday/ramadan/getStationPrefix()
-	return pick("Haram","Halaal","Jihad","Muslim")
+/datum/holiday/islamic/ramadan/getStationPrefix()
+	return pick("Haram","Halaal","Jihad","Muslim", "Al", "Mohammad", "Rashidun", "Umayyad", "Abbasid", "Abdul", "Fatimid", "Ayyubid", "Almohad", "Abu")
 
-/datum/holiday/ramadan/end
+/datum/holiday/islamic/ramadan/end
 	name = "End of Ramadan"
 	end_month = 10
 	begin_day = 28

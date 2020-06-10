@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Wearing a gun on your armor / belt will no longer result in your waist turning purple and black."

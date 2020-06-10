@@ -42,8 +42,6 @@
 	var/list/atom_colours
 
 
-	///overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
-	var/list/priority_overlays
 	/// a very temporary list of overlays to remove
 	var/list/remove_overlays
 	/// a very temporary list of overlays to add
@@ -79,6 +77,7 @@
 	var/rad_insulation = RAD_NO_INSULATION
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
 	var/list/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
@@ -94,6 +93,13 @@
 
 	/// Last appearance of the atom for demo saving purposes
 	var/image/demo_last_appearance
+
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmessage overlays
+	var/chat_color
+	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
+	var/chat_color_darkened
 
 /**
   * Called when an atom is created in byond (built in engine proc)
@@ -119,7 +125,6 @@
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
-	SSdemo.mark_new(src)
 
 /**
   * The primary method that objects are setup in SS13 with
@@ -156,7 +161,7 @@
   * * [/turf/open/space/Initialize]
   */
 /atom/proc/Initialize(mapload, ...)
-	SHOULD_NOT_SLEEP(TRUE)
+	//SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -179,12 +184,8 @@
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	var/temp_list = list()
-	for(var/i in custom_materials)
-		temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
-
-	custom_materials = null //Null the list to prepare for applying the materials properly
-	set_custom_materials(temp_list)
+	// apply materials properly from the default custom_materials value
+	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 
@@ -230,7 +231,6 @@
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(priority_overlays)
 
 	for(var/i in targeted_by)
 		var/mob/M = i
@@ -270,7 +270,7 @@
 /// Returns true or false to allow the mover to move through src
 /atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
 	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_BE_PURE(TRUE)
+	//SHOULD_BE_PURE(TRUE)
 	return !density
 
 /**
@@ -560,7 +560,6 @@
 			add_overlay(new_overlays)
 		. = TRUE
 
-	SSdemo.mark_dirty(src)
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, signalOut, .)
 
 /// Updates the icon state of the atom
@@ -717,8 +716,8 @@
   *
   * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
   */
-/atom/proc/emag_act(mob/user)
-	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user)
+/atom/proc/emag_act(mob/user, obj/item/card/emag/E)
+	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, E)
 
 /**
   * Respond to a radioactive wave hitting this atom
@@ -752,7 +751,7 @@
 	return FALSE
 
 /**
-  * Respond to a electric bolt action on our item
+  * Respond to an electric bolt action on our item
   *
   * Default behaviour is to return, we define here to allow for cleaner code later on
   */
@@ -845,7 +844,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
-	SSdemo.mark_dirty(src)
 
 ///Handle melee attack by a mech
 /atom/proc/mech_melee_attack(obj/mecha/M)
@@ -1268,26 +1266,21 @@
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
-
-	if(!materials)
-		materials = custom_materials
-
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
 	if(!length(materials))
+		custom_materials = null
 		return
 
-	custom_materials = list() //Reset the list
+	if(!(material_flags & MATERIAL_NO_EFFECTS))
+		for(var/x in materials)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
+			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
-	for(var/x in materials)
-		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
-
-		if(!(material_flags & MATERIAL_NO_EFFECTS))
-			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
-		custom_materials[custom_material] += materials[x] * multiplier
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
 /**
   * Returns true if this atom has gravity for the passed in turf
@@ -1322,7 +1315,7 @@
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return FALSE
-	if(istype(T, /turf/open/openspace)) //openspace in a space area doesn't get gravity
+	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
 			return FALSE
 

@@ -837,7 +837,7 @@
 /obj/item/stack/cable_coil{
 	amount = 2;
 	icon_state = "coil_red2";
-	item_state = "coil_red"
+	inhand_icon_state = "coil_red"
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";

@@ -49,7 +49,7 @@
 	name = "\improper Magus helm"
 	desc = "A mysterious helmet that hums with an unearthly power."
 	icon_state = "magus"
-	item_state = "magus"
+	inhand_icon_state = "magus"
 	dog_fashion = null
 
 /obj/item/clothing/head/wizard/santa
@@ -63,7 +63,7 @@
 	name = "wizard robe"
 	desc = "A magnificent, gem-lined robe that seems to radiate power."
 	icon_state = "wizard"
-	item_state = "wizrobe"
+	inhand_icon_state = "wizrobe"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
@@ -78,50 +78,50 @@
 	name = "red wizard robe"
 	desc = "A magnificent red gem-lined robe that seems to radiate power."
 	icon_state = "redwizard"
-	item_state = "redwizrobe"
+	inhand_icon_state = "redwizrobe"
 
 /obj/item/clothing/suit/wizrobe/yellow
 	name = "yellow wizard robe"
 	desc = "A magnificent yellow gem-lined robe that seems to radiate power."
 	icon_state = "yellowwizard"
-	item_state = "yellowwizrobe"
+	inhand_icon_state = "yellowwizrobe"
 
 /obj/item/clothing/suit/wizrobe/black
 	name = "black wizard robe"
 	desc = "An unnerving black gem-lined robe that reeks of death and decay."
 	icon_state = "blackwizard"
-	item_state = "blackwizrobe"
+	inhand_icon_state = "blackwizrobe"
 
 /obj/item/clothing/suit/wizrobe/marisa
 	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
-	item_state = "marisarobe"
+	inhand_icon_state = "marisarobe"
 
 /obj/item/clothing/suit/wizrobe/magusblue
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
-	item_state = "magusblue"
+	inhand_icon_state = "magusblue"
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
-	item_state = "magusred"
+	inhand_icon_state = "magusred"
 
 
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"
 	desc = "Festive!"
 	icon_state = "santa"
-	item_state = "santa"
+	inhand_icon_state = "santa"
 
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"
 	desc = "A rather dull blue robe meant to mimic real wizard robes."
 	icon_state = "wizard-fake"
-	item_state = "wizrobe"
+	inhand_icon_state = "wizrobe"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
@@ -140,7 +140,7 @@
 	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
-	item_state = "marisarobe"
+	inhand_icon_state = "marisarobe"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
@@ -150,11 +150,10 @@
 	name = "papier-mache robe" // no non-latin characters!
 	desc = "A robe held together by various bits of clear-tape and paste."
 	icon_state = "wizard-paper"
-	item_state = "wizard-paper"
+	inhand_icon_state = "wizard-paper"
 	var/timer = 0 //when we'll next be able to use the summon stickman ability
 	var/angry_sticks = TRUE // have you set the robe to make stickmen who WON'T have the neutral faction? note that this WON'T affect stickmen that (whom?) you've already made
 	actions_types = list(/datum/action/item_action/stickmen, /datum/action/item_action/evilstick)
-
 
 /obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/evilstick)) //choose whether or not you want your stickmen to attack neutral mobs, such as other players (but not you, of course!)
@@ -162,7 +161,6 @@
 		to_chat(user, "<span class='warning'>The stickmen you summon will now be more [angry_sticks ? "passive":"aggressive"].</span>")
 		return
 	stickmen() //if you didn't choose the evilstick action, you must have chosen item_action/stickmen; let's try to summon a stickman, then
-
 
 /obj/item/clothing/suit/wizrobe/paper/verb/stickmen()
 	set category = "Object"
@@ -192,7 +190,7 @@
 	name = "battlemage armour"
 	desc = "Not all wizards are afraid of getting up close and personal."
 	icon_state = "battlemage"
-	item_state = "battlemage"
+	inhand_icon_state = "battlemage"
 	recharge_rate = 0
 	current_charges = 15
 	recharge_cooldown = INFINITY
@@ -209,7 +207,7 @@
 	name = "battlemage helmet"
 	desc = "A suitably impressive helmet."
 	icon_state = "battlemage"
-	item_state = "battlemage"
+	inhand_icon_state = "battlemage"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)

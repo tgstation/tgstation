@@ -76,6 +76,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
+#define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
@@ -223,6 +224,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SNOB				"snob"
 #define TRAIT_BALD				"bald"
 
+//Medical Categories for quirks
+#define CAT_QUIRK_ALL 0
+#define CAT_QUIRK_NOTES 1
+#define CAT_QUIRK_MINOR_DISABILITY 2
+#define CAT_QUIRK_MAJOR_DISABILITY 3
+
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define GENERIC_ITEM_TRAIT "generic_item"
@@ -251,6 +258,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
+#define CRIT_HEALTH_TRAIT "crit_health"
+#define OXYLOSS_TRAIT "oxyloss"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"

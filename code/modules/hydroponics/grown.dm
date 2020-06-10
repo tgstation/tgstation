@@ -68,10 +68,10 @@
 	if (istype(O, /obj/item/plant_analyzer))
 		var/obj/item/plant_analyzer/P_analyzer = O
 		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
-		if(seed && P_analyzer.scan_mode == 0)
+		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
 			msg += seed.get_analyzer_text()
 		var/reag_txt = ""
-		if(seed && P_analyzer.scan_mode == 1)
+		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
 			msg += "<br><span class='info'>*Plant Reagents:*</span>"
 			for(var/reagent_id in seed.reagents_add)
 				var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]

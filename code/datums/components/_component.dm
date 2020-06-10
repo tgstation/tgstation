@@ -163,7 +163,7 @@
   * Register to listen for a signal from the passed in target
   *
   * This sets up a listening relationship such that when the target object emits a signal
-  * the source datum this proc is called upon, will recieve a callback to the given proctype
+  * the source datum this proc is called upon, will receive a callback to the given proctype
   * Return values from procs registered must be a bitfield
   *
   * Arguments:
@@ -388,7 +388,7 @@
   *
   * Returns the component that was created. Or the old component in a dupe situation where [COMPONENT_DUPE_UNIQUE] was set
   *
-  * If this tries to add an component to an incompatible type, the component will be deleted and the result will be `null`. This is very unperformant, try not to do it
+  * If this tries to add a component to an incompatible type, the component will be deleted and the result will be `null`. This is very unperformant, try not to do it
   *
   * Properly handles duplicate situations based on the `dupe_mode` var
   */

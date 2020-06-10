@@ -128,10 +128,22 @@
 	severity++
 	for(var/X in equipment)
 		var/obj/item/mecha_parts/mecha_equipment/ME = X
-		ME.ex_act(severity,target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += ME
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += ME
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += ME
 	for(var/Y in trackers)
 		var/obj/item/mecha_parts/mecha_tracking/MT = Y
-		MT.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += MT
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += MT
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += MT
 	if(occupant)
 		occupant.ex_act(severity,target)
 
@@ -201,7 +213,7 @@
 				to_chat(user, "<span class='notice'>You install the power cell.</span>")
 				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 				cell = C
-				log_message("Powercell installed", LOG_MECHA)
+				log_message("Power cell installed", LOG_MECHA)
 			else
 				to_chat(user, "<span class='warning'>There's already a power cell installed!</span>")
 		return
