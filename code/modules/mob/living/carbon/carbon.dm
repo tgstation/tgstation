@@ -179,7 +179,7 @@
 
 	dat += "<BR><B>Back:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_BACK]'>[back ? back : "Nothing"]</A>"
 
-	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank))
+	if(can_use_internals() && istype(back, /obj/item/tank))
 		dat += "<BR><A href='?src=[REF(src)];internal=[ITEM_SLOT_BACK]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
 	if(handcuffed)
@@ -200,7 +200,7 @@
 	if(href_list["internal"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		var/slot = text2num(href_list["internal"])
 		var/obj/item/ITEM = get_item_by_slot(slot)
-		if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & MASKINTERNALS))
+		if(ITEM && istype(ITEM, /obj/item/tank) && can_use_internals())
 			visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
 							"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on your [ITEM.name].</span>", null, null, usr)
 			to_chat(usr, "<span class='notice'>You try to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name]...</span>")
@@ -209,7 +209,7 @@
 					internal = null
 					update_internals_hud_icon(0)
 				else if(ITEM && istype(ITEM, /obj/item/tank))
-					if((wear_mask && (wear_mask.clothing_flags & MASKINTERNALS)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+					if(can_use_internals())
 						internal = ITEM
 						update_internals_hud_icon(1)
 
@@ -1109,3 +1109,22 @@
 
 	if(shoes && !(HIDESHOES in obscured) && shoes.washed(washer))
 		update_inv_shoes()
+
+/**
+  * Checks if the mob is wearing a suitable mask/etc to have internals on
+  */
+/mob/living/carbon/proc/can_use_internals()
+	if(getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		return TRUE
+
+	var/is_clothing = isclothing(head)
+	if(is_clothing && (head.clothing_flags & STOPSPRESSUREDAMAGE))
+		return TRUE
+	
+	is_clothing = isclothing(wear_mask)
+	if(is_clothing && wear_mask.mask_adjusted)
+		wear_mask.adjustmask(src)
+	if(is_clothing && (wear_mask.clothing_flags & MASKINTERNALS))
+		return TRUE
+
+	return FALSE

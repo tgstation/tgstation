@@ -32,16 +32,9 @@
 		H.internal = null
 		H.update_internals_hud_icon(0)
 	else
-		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			if(!H.wear_mask)
-				to_chat(H, "<span class='warning'>You need a mask!</span>")
-				return
-			var/is_clothing = isclothing(H.wear_mask)
-			if(is_clothing && H.wear_mask.mask_adjusted)
-				H.wear_mask.adjustmask(H)
-			if(!is_clothing || !(H.wear_mask.clothing_flags & MASKINTERNALS))
-				to_chat(H, "<span class='warning'>[H.wear_mask] can't use [src]!</span>")
-				return
+		if(!H.can_use_internals())
+			to_chat(H, "<span class='warning'>You need a suitable mask or a helmet!</span>")
+			return
 
 		if(H.internal)
 			to_chat(H, "<span class='notice'>You switch your internals to [src].</span>")
