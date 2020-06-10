@@ -34,7 +34,7 @@
 	var/hackedcheck[1]
 	var/devillawcheck[5]
 
-	var/sensors_on = 1 //are our HUDs on?
+	var/sensors_on = TRUE //are our HUDs on?
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
