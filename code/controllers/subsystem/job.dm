@@ -135,7 +135,8 @@ SUBSYSTEM_DEF(job)
 
 		if(job.title in GLOB.command_positions) //If you want a command position, select it!
 			continue
-
+		if(job.title == "Security Officer")
+			continue
 		if(is_banned_from(player.ckey, job.title) || QDELETED(player))
 			if(QDELETED(player))
 				JobDebug("GRJ isbanned failed, Player deleted")

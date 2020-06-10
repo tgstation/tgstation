@@ -71,3 +71,31 @@
 		uses--
 	else
 		to_chat(user, "The spell matrix was disrupted by something near the destination.")
+
+/obj/item/teleportation_scroll/no_smoke
+
+/obj/item/teleportation_scroll/no_smoke/teleportscroll(mob/user)
+
+	var/A
+	
+	A = input(user, "Area to jump to", "*citrus laugh*", A) as null|anything in GLOB.teleportlocs
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
+		return
+	var/area/thearea = GLOB.teleportlocs[A]
+	if(istype(thearea, /area/security/) || istype(thearea, /area/prophunt))
+		to_chat(user, "You can't go there! Cmom man.")
+		return
+
+	var/list/L = list()
+	for(var/turf/T in get_area_turfs(thearea.type))
+		if(!is_blocked_turf(T))
+			L += T
+
+	if(!L.len)
+		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
+		return
+
+	if(do_teleport(user, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+		uses--
+	else
+		to_chat(user, "The spell matrix was disrupted by something near the destination.")
