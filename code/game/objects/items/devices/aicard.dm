@@ -3,7 +3,7 @@
 	desc = "A storage device for AIs. Patent pending."
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -58,7 +58,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "intellicard", name, 500, 500, master_ui, state)
+		ui = new(user, src, ui_key, "Intellicard", name, 500, 500, master_ui, state)
 		ui.open()
 
 /obj/item/aicard/ui_data()

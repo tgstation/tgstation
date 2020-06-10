@@ -95,7 +95,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_heater", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "ChemHeater", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/chem_heater/ui_data()
@@ -124,14 +124,7 @@
 			. = TRUE
 		if("temperature")
 			var/target = params["target"]
-			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New target temperature:", name, target_temperature) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(adjust)
-				target = target_temperature + adjust
-			else if(text2num(target) != null)
+			if(text2num(target) != null)
 				target = text2num(target)
 				. = TRUE
 			if(.)

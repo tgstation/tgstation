@@ -7,6 +7,12 @@
 #define PLAYER_READY_TO_PLAY 1
 #define PLAYER_READY_TO_OBSERVE 2
 
+//Game mode list indexes
+#define CURRENT_LIVING_PLAYERS	"living_players_list"
+#define CURRENT_LIVING_ANTAGS	"living_antags_list"
+#define CURRENT_DEAD_PLAYERS	"dead_players_list"
+#define CURRENT_OBSERVERS		"current_observers_list"
+
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
@@ -35,20 +41,20 @@
 #define VENTCRAWLER_ALWAYS 2
 
 //Bloodcrawling defines
-#define BLOODCRAWL 1
-#define BLOODCRAWL_EAT 2
+#define BLOODCRAWL 1 /// bloodcrawling, see: [/mob/living/var/bloodcrawl]
+#define BLOODCRAWL_EAT 2 /// crawling+mob devour
 
 //Mob bio-types flags
-#define MOB_ORGANIC 	1 << 0
-#define MOB_MINERAL		1 << 1
-#define MOB_ROBOTIC 	1 << 2
-#define MOB_UNDEAD		1 << 3
-#define MOB_HUMANOID 	1 << 4
-#define MOB_BUG 		1 << 5
-#define MOB_BEAST		1 << 6
-#define MOB_EPIC		1 << 7 //megafauna
-#define MOB_REPTILE		1 << 8
-#define MOB_SPIRIT		1 << 9
+#define MOB_ORGANIC 	(1 << 0)
+#define MOB_MINERAL		(1 << 1)
+#define MOB_ROBOTIC 	(1 << 2)
+#define MOB_UNDEAD		(1 << 3)
+#define MOB_HUMANOID 	(1 << 4)
+#define MOB_BUG 		(1 << 5)
+#define MOB_BEAST		(1 << 6)
+#define MOB_EPIC		(1 << 7) //megafauna
+#define MOB_REPTILE		(1 << 8)
+#define MOB_SPIRIT		(1 << 9)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -123,6 +129,7 @@
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
 #define BIOWARE_LIGAMENTS "ligaments"
+#define BIOWARE_CORTEX "cortex"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -242,9 +249,9 @@
 ///The shock doesn't stun.
 #define SHOCK_NOSTUN (1 << 3)
 
-#define INCORPOREAL_MOVE_BASIC 1
-#define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
-#define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
+#define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
+#define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
+#define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
 
 //Secbot and ED209 judgement criteria bitflag values
 #define JUDGE_EMAGGED		(1<<0)
@@ -278,14 +285,16 @@
 //MINOR TWEAKS/MISC
 #define AGE_MIN				17	//youngest a character can be
 #define AGE_MAX				85	//oldest a character can be
+#define AGE_MINOR			20  //legal age of space drinking and smoking
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
 #define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
+#define SHOES_SPEED_SLIGHT  SHOES_SLOWDOWN - 1 // slightest speed boost to movement
 #define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
-#define	ETHEREAL_CHARGE_FACTOR	0.12 //factor at which ethereal's charge decreases
+#define	ETHEREAL_CHARGE_FACTOR	0.08 //factor at which ethereal's charge decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
@@ -334,4 +343,20 @@
 //Wabbacjack staff projectiles
 #define WABBAJACK     (1<<6)
 
+// Reasons a defibrilation might fail
+#define DEFIB_POSSIBLE (1<<0)
+#define DEFIB_FAIL_SUICIDE (1<<1)
+#define DEFIB_FAIL_HELLBOUND (1<<2)
+#define DEFIB_FAIL_HUSK (1<<3)
+#define DEFIB_FAIL_TISSUE_DAMAGE (1<<4)
+#define DEFIB_FAIL_FAILING_HEART (1<<5)
+#define DEFIB_FAIL_NO_HEART (1<<6)
+#define DEFIB_FAIL_FAILING_BRAIN (1<<7)
+#define DEFIB_FAIL_NO_BRAIN (1<<8)
+#define DEFIB_FAIL_NO_INTELLIGENCE (1<<9)
+
+// Bit mask of possible return values by can_defib that would result in a revivable patient
+#define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_POSSIBLE)
+
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
+#define INTERACTING_WITH(X, Y) (Y in X.do_afters)

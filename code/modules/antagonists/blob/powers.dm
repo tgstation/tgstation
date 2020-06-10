@@ -28,6 +28,10 @@
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
 			return 0
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || A && !A.blob_allowed)
+			to_chat(src, "<span class='warning'>You cannot place your core here!</span>")
+			return 0
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))
@@ -318,7 +322,7 @@
 	if(!surrounding_turfs.len)
 		return
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
-		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
+		if(isturf(BS.loc) && get_dist(BS, T) <= 35 && !BS.key)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 

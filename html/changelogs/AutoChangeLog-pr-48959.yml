@@ -1,7 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - tweak: "Embeddables have been reworked and given new functionality."
-  - rscadd: "Adds toy shurikens for pranks and shock shurikens for less lethal takedowns."
-  - rscadd: "Adds sticky tape that lets you stick random junk to people! How will anyone believe the Captain's cries that he's not actually a boomer when there's a can of Monkey Energy stuck to his head?"
-  - refactor: "Embedding functionality has been made an element, with new support for dealing a mix of brute and stamina damage, and a separate pain check for on-move."

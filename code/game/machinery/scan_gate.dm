@@ -51,7 +51,10 @@
 		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
 /obj/machinery/scanner_gate/Crossed(atom/movable/AM)
-	..()
+	. = ..()
+	auto_scan(AM)
+
+/obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
 	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM))
 		perform_scan(AM)
 
@@ -181,7 +184,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "scanner_gate", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "ScannerGate", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/scanner_gate/ui_data()

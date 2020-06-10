@@ -32,8 +32,12 @@
 	response_harm_simple = "kick"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
+	///Limits how often cats can spam chasing mice.
+	var/emote_cooldown = 0
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
+	can_be_held = TRUE
+	held_state = "cat2"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
@@ -61,6 +65,7 @@
 	unsuitable_atmos_damage = 0
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
+	held_state = "spacecat"
 
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
@@ -71,6 +76,7 @@
 	icon_dead = "original_dead"
 	collar_type = null
 	unique_pet = TRUE
+	held_state = "original"
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
@@ -97,6 +103,7 @@
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
 	var/memory_saved = FALSE
+	held_state = "cat"
 
 /mob/living/simple_animal/pet/cat/Runtime/Initialize()
 	if(prob(5))
@@ -193,6 +200,12 @@
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
+				if(istype(M, /mob/living/simple_animal/mouse/brown/Tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
+					if (emote_cooldown < (world.time - 600))
+						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
+						step(M, pick(GLOB.cardinals))
+						emote_cooldown = world.time
+					break
 				if(!M.stat && Adjacent(M))
 					emote("me", 1, "splats \the [M]!")
 					M.splat()
@@ -265,6 +278,7 @@
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
 	deathsound = "bodyfall"
+	held_state = "cak"
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
 	..()

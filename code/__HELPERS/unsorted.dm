@@ -232,60 +232,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 /proc/ionnum()
 	return "[pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
-//Returns a list of unslaved cyborgs
-/proc/active_free_borgs()
-	. = list()
-	for(var/mob/living/silicon/robot/R in GLOB.alive_mob_list)
-		if(R.connected_ai || R.shell)
-			continue
-		if(R.stat == DEAD)
-			continue
-		if(R.emagged || R.scrambledcodes)
-			continue
-		. += R
-
-//Returns a list of AI's
-/proc/active_ais(check_mind=0)
-	. = list()
-	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
-		if(A.stat == DEAD)
-			continue
-		if(A.control_disabled)
-			continue
-		if(check_mind)
-			if(!A.mind)
-				continue
-		. += A
-	return .
-
-//Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
-/proc/select_active_ai_with_fewest_borgs()
-	var/mob/living/silicon/ai/selected
-	var/list/active = active_ais()
-	for(var/mob/living/silicon/ai/A in active)
-		if(!selected || (selected.connected_robots.len > A.connected_robots.len))
-			selected = A
-
-	return selected
-
-/proc/select_active_free_borg(mob/user)
-	var/list/borgs = active_free_borgs()
-	if(borgs.len)
-		if(user)
-			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sortList(borgs)
-		else
-			. = pick(borgs)
-	return .
-
-/proc/select_active_ai(mob/user)
-	var/list/ais = active_ais()
-	if(ais.len)
-		if(user)
-			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sortList(ais)
-		else
-			. = pick(ais)
-	return .
-
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0)
 	var/list/mobs = sortmobs()
@@ -437,6 +383,30 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return locate(x,y,A.z)
 
+/**
+  * Get ranged target turf, but with direct targets as opposed to directions
+  *
+  * Starts at atom A and gets the exact angle between A and target
+  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+  * Arguments:
+  * * A - Initial Firer / Position
+  * * target - Target to aim towards
+  * * range - Distance of returned target turf from A
+  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+  */
+/proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
+	var/angle = ATAN2(target.x - A.x, target.y - A.y)
+	if(offset)
+		angle += offset
+	var/turf/T = get_turf(A)
+	for(var/i in 1 to range)
+		var/turf/check = locate(A.x + cos(angle) * i, A.y + sin(angle) * i, A.z)
+		if(!check)
+			break
+		T = check
+
+	return T
+
 
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
@@ -449,7 +419,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	Gets all contents of contents and returns them all in a list.
 */
 
-/atom/proc/GetAllContents(var/T)
+/atom/proc/GetAllContents(var/T, ignore_flag_1)
 	var/list/processing_list = list(src)
 	if(T)
 		. = list()
@@ -458,14 +428,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 			var/atom/A = processing_list[++i]
 			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 			//This is also why we don't need to check against assembled as we go along
-			processing_list += A.contents
-			if(istype(A,T))
-				. += A
+			if (!(A.flags_1 & ignore_flag_1))
+				processing_list += A.contents
+				if(istype(A,T))
+					. += A
 	else
 		var/i = 0
 		while(i < length(processing_list))
 			var/atom/A = processing_list[++i]
-			processing_list += A.contents
+			if (!(A.flags_1 & ignore_flag_1))
+				processing_list += A.contents
 		return processing_list
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
@@ -727,22 +699,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 			return loc
 		loc = loc.loc
 	return null
-
-
-//For objects that should embed, but make no sense being is_sharp or is_pointed()
-//e.g: rods
-GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
-	/obj/item/stack/rods,
-	/obj/item/pipe)))
-
-/proc/can_embed(obj/item/W)
-	if(W.get_sharpness())
-		return 1
-	if(is_pointed(W))
-		return 1
-
-	if(is_type_in_typecache(W, GLOB.can_embed_types))
-		return 1
 
 
 /*
@@ -1144,6 +1100,12 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		if (isnull(value))
 			return
 	value = trim(value)
+
+	var/random = FALSE
+	if(findtext(value, "?"))
+		value = replacetext(value, "?", "")
+		random = TRUE
+
 	if(!isnull(value) && value != "")
 		matches = filter_fancy_list(matches, value)
 
@@ -1153,10 +1115,12 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	var/chosen
 	if(matches.len==1)
 		chosen = matches[1]
+	else if(random)
+		chosen = pick(matches) || null
 	else
 		chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in sortList(matches)
-		if(!chosen)
-			return
+	if(!chosen)
+		return
 	chosen = matches[chosen]
 	return chosen
 
@@ -1274,6 +1238,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/ready_to_die = FALSE
 
 /mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
+	SHOULD_CALL_PARENT(FALSE)
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dview/Destroy(force = FALSE)
@@ -1309,6 +1274,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		if(istype(O, /obj/structure/window))
 			var/obj/structure/window/W = O
 			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+				return FALSE
+		if(istype(O, /obj/structure/railing))
+			var/obj/structure/railing/rail = O
+			if(rail.ini_dir == dir_to_check || rail.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
 				return FALSE
 	return TRUE
 
@@ -1557,28 +1526,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		for(var/i in 1 to items_list[each_item])
 			new each_item(where_to)
 
-//sends a message to chat
-//config_setting should be one of the following
-//null - noop
-//empty string - use TgsTargetBroadcast with admin_only = FALSE
-//other string - use TgsChatBroadcast with the tag that matches config_setting, only works with TGS4, if using TGS3 the above method is used
-/proc/send2chat(message, config_setting)
-	if(config_setting == null || !world.TgsAvailable())
-		return
-
-	var/datum/tgs_version/version = world.TgsVersion()
-	if(config_setting == "" || version.suite == 3)
-		world.TgsTargetedChatBroadcast(message, FALSE)
-		return
-
-	var/list/channels_to_use = list()
-	for(var/I in world.TgsChatChannelInfo())
-		var/datum/tgs_chat_channel/channel = I
-		if(channel.tag == config_setting)
-			channels_to_use += channel
-
-	if(channels_to_use.len)
-		world.TgsChatBroadcast()
 
 /proc/num2sign(numeric)
 	if(numeric > 0)

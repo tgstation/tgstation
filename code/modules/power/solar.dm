@@ -201,7 +201,7 @@
 	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker."
 	icon = 'goon/icons/obj/power.dmi'
 	icon_state = "sp_base"
-	item_state = "electropack"
+	inhand_icon_state = "electropack"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY // Pretty big!
@@ -352,7 +352,7 @@
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "solar_control", name, 380, 230, master_ui, state)
+		ui = new(user, src, ui_key, "SolarControl", name, 380, 230, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/solar_control/ui_data()

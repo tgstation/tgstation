@@ -72,6 +72,8 @@
 
 /obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
 	. = new_overlays
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
 	if(!opened)
 		if(icon_door)
 			. += "[icon_door]_door"
@@ -80,6 +82,9 @@
 		if(welded)
 			. += icon_welded
 		if(secure && !broken)
+			//Overlay is similar enough for both that we can use the same mask for both
+			luminosity = 1
+			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 			if(locked)
 				. += "locked"
 			else
@@ -235,7 +240,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
@@ -486,8 +491,13 @@
 
 /obj/structure/closet/contents_explosion(severity, target)
 	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += A
 
 /obj/structure/closet/singularity_act()
 	dump_contents()

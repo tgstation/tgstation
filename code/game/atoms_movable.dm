@@ -43,6 +43,40 @@
 
 	var/zfalling = FALSE
 
+	///Last location of the atom for demo recording purposes
+	var/atom/demo_last_loc
+
+	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
+	var/blocks_emissive = FALSE
+	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
+	var/atom/movable/emissive_blocker/em_block
+
+
+/atom/movable/Initialize(mapload)
+	. = ..()
+	switch(blocks_emissive)
+		if(EMISSIVE_BLOCK_GENERIC)
+			update_emissive_block()
+		if(EMISSIVE_BLOCK_UNIQUE)
+			render_target = ref(src)
+			em_block = new(src, render_target)
+			vis_contents += em_block
+
+/atom/movable/Destroy()
+	QDEL_NULL(em_block)
+	return ..()
+
+/atom/movable/proc/update_emissive_block()
+	if(blocks_emissive != EMISSIVE_BLOCK_GENERIC)
+		return
+	if(length(managed_vis_overlays))
+		for(var/a in managed_vis_overlays)
+			var/obj/effect/overlay/vis/vs
+			if(vs.plane == EMISSIVE_BLOCKER_PLANE)
+				SSvis_overlays.remove_vis_overlay(src, list(vs))
+				break
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE, dir)
+
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
 	if(!direction)
 		direction = DOWN
@@ -353,6 +387,7 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
@@ -395,6 +430,8 @@
 
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/AM, oldloc)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
 /atom/movable/Uncross(atom/movable/AM, atom/newloc)
@@ -532,8 +569,13 @@
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = 0
-	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-	return hit_atom.hitby(src, throwingdatum=throwingdatum)
+	var/hitpush = TRUE
+	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
+		hitpush = FALSE // hacky, tie this to something else or a proper workaround later
+
+	if(impact_signal & ~COMPONENT_MOVABLE_IMPACT_NEVERMIND) // in case a signal interceptor broke or deleted the thing before we could process our hit
+		return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
@@ -546,7 +588,7 @@
 	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle)
 
 ///If this returns FALSE then callback will not be called.
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE, quickstart = TRUE)
 	. = FALSE
 	if (!target || speed <= 0)
 		return
@@ -631,7 +673,8 @@
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
-	TT.tick()
+	if (quickstart)
+		TT.tick()
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
@@ -668,6 +711,7 @@
 /// Returns true or false to allow src to move through the blocker, mover has final say
 /atom/movable/proc/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
 	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_BE_PURE(TRUE)
 	return blocker_opinion
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
@@ -723,7 +767,7 @@
 		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(src, pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I

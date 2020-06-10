@@ -42,7 +42,9 @@
 		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.</span>"
 
 /obj/machinery/smartfridge/update_icon_state()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!machine_stat)
+		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 		if (visible_contents)
 			switch(contents.len)
 				if(0)
@@ -91,7 +93,7 @@
 
 		if(accept_check(O))
 			load(O)
-			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", "<span class='notice'>You add \the [O] to \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] adds \the [O] to \the [src].</span>", "<span class='notice'>You add \the [O] to \the [src].</span>")
 			updateUsrDialog()
 			if (visible_contents)
 				update_icon()
@@ -134,7 +136,7 @@
 
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/) || istype(O, /obj/item/seeds/) || istype(O, /obj/item/grown/))
+	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/) || istype(O, /obj/item/seeds/) || istype(O, /obj/item/grown/) || istype(O, /obj/item/graft/))
 		return TRUE
 	return FALSE
 
@@ -163,7 +165,7 @@
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "smartvend", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "SmartVend", name, ui_x, ui_y, master_ui, state)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
@@ -235,7 +237,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
-	desc = "A wooden contraption, used to dry plant products, food and leather."
+	desc = "A wooden contraption, used to dry plant products, food and hide."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
 	use_power = IDLE_POWER_USE
@@ -313,7 +315,7 @@
 		var/obj/item/reagent_containers/food/snacks/S = O
 		if(S.dried_type)
 			return TRUE
-	if(istype(O, /obj/item/stack/sheet/wetleather/))
+	if(istype(O, /obj/item/stack/sheet/wethide))
 		return TRUE
 	return FALSE
 
@@ -337,7 +339,7 @@
 			new dried(drop_location())
 			qdel(S)
 		return TRUE
-	for(var/obj/item/stack/sheet/wetleather/WL in src)
+	for(var/obj/item/stack/sheet/wethide/WL in src)
 		new /obj/item/stack/sheet/leather(drop_location(), WL.amount)
 		qdel(WL)
 		return TRUE

@@ -50,8 +50,9 @@
 	parent = raw_args[1]
 	var/list/arguments = raw_args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
+		stack_trace("Incompatible [type] assigned to a [parent.type]! args: [json_encode(arguments)]")
 		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [parent.type]! args: [json_encode(arguments)]")
+		return
 
 	_JoinParent(parent)
 
@@ -387,7 +388,7 @@
   *
   * Returns the component that was created. Or the old component in a dupe situation where [COMPONENT_DUPE_UNIQUE] was set
   *
-  * If this tries to add an component to an incompatible type, the component will be deleted and the result will be `null`. This is very unperformant, try not to do it
+  * If this tries to add a component to an incompatible type, the component will be deleted and the result will be `null`. This is very unperformant, try not to do it
   *
   * Properly handles duplicate situations based on the `dupe_mode` var
   */

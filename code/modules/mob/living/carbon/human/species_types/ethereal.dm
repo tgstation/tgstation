@@ -12,9 +12,10 @@
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
+	payday_modifier = 0.75
 	attack_type = BURN //burn bish
 	damage_overlay_type = "" //We are too cool for regular damage overlays
-	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR)
+	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR, HAIR)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/ethereal
 	inherent_traits = list(TRAIT_NOHUNGER)
@@ -25,6 +26,8 @@
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // about 150C
 	// Cold temperatures hurt faster as it is harder to move with out the heat energy
 	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
+	hair_color = "fixedmutcolor"
+	hair_alpha = 140
 	var/current_color
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
@@ -35,15 +38,16 @@
 	var/static/g2 = 164
 	var/static/b2 = 149
 	//this is shit but how do i fix it? no clue.
+	var/drain_time = 0 //used to keep ethereals from spam draining power sources
 
 /datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	.=..()
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		default_color = "#" + H.dna.features["ethcolor"]
-		r1 = GetRedPart(default_color)
-		g1 = GetGreenPart(default_color)
-		b1 = GetBluePart(default_color)
+		r1 = GETREDPART(default_color)
+		g1 = GETGREENPART(default_color)
+		b1 = GETBLUEPART(default_color)
 		spec_updatehealth(H)
 		RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, .proc/on_emag_act)
 		RegisterSignal(C, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)

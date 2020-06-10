@@ -2,7 +2,7 @@
 	name = "remote signaling device"
 	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another."
 	icon_state = "signaller"
-	item_state = "signaler"
+	inhand_icon_state = "signaler"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
@@ -70,10 +70,10 @@
 	return UI_CLOSE
 
 /obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "signaler", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Signaler", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/item/assembly/signaler/ui_data(mob/user)
@@ -183,7 +183,7 @@
 	name = "anomaly core"
 	desc = "The neutralized core of an anomaly. It'd probably be valuable for research."
 	icon_state = "anomaly core"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	resistance_flags = FIRE_PROOF

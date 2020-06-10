@@ -16,15 +16,27 @@
 /obj/machinery/nanite_programmer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
-		if(disk)
-			eject(user)
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			if(disk)
+				eject(user)
 			disk = N
 			program = N.program
 	else
 		..()
+
+/obj/machinery/nanite_programmer/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_screwdriver(user, "nanite_programmer_t", "nanite_programmer", I)
+
+/obj/machinery/nanite_programmer/crowbar_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_crowbar(I)
 
 /obj/machinery/nanite_programmer/proc/eject(mob/living/user)
 	if(!disk)
@@ -34,10 +46,16 @@
 	disk = null
 	program = null
 
+/obj/machinery/nanite_programmer/AltClick(mob/user)
+	if(disk && user.canUseTopic(src, !issilicon(user)))
+		to_chat(user, "<span class='notice'>You take out [disk] from [src].</span>")
+		eject(user)
+	return
+
 /obj/machinery/nanite_programmer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_programmer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "NaniteProgrammer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/nanite_programmer/ui_data()

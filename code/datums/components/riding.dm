@@ -153,7 +153,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
+			buckled_mob.client.view_size.resetToDefault()
 
 //MOVEMENT
 /datum/component/riding/proc/turf_check(turf/next, turf/current)
@@ -223,14 +223,15 @@
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
-	H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
+	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	. = ..()
 
 /datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	. = ..()
 	var/mob/living/carbon/human/H = parent
-	H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN)
+	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
 	var/mob/living/carbon/human/H = parent
@@ -328,6 +329,9 @@
 		else
 			inhand.rider = riding_target_override
 		inhand.parent = AM
+		for(var/obj/item/I in user.held_items) // yes i know this sucks but these are ABSTRACT++ dumbness and i'm not adding a whole new flag for these two meme items
+			if((I.obj_flags & HAND_ITEM))
+				qdel(I)
 		if(user.put_in_hands(inhand, TRUE))
 			amount_equipped++
 		else
@@ -377,3 +381,11 @@
 			AM.unbuckle_mob(rider)
 	. = ..()
 
+/obj/item/riding_offhand/on_thrown(mob/living/carbon/user, atom/target)
+	if(rider == user)
+		return //Piggyback user.
+	user.unbuckle_mob(rider)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='notice'>You gently let go of [rider].</span>")
+		return
+	return rider

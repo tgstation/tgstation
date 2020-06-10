@@ -2,7 +2,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	name = "tank transfer valve"
 	icon_state = "valve_1"
-	item_state = "ttv"
+	inhand_icon_state = "ttv"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	desc = "Regulates the transfer of air between two tanks."
@@ -194,10 +194,10 @@
 	return
 
 /obj/item/transfer_valve/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "transfer_valve", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "TransferValve", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/item/transfer_valve/ui_data(mob/user)

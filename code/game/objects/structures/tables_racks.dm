@@ -138,8 +138,8 @@
 
 /obj/structure/table/proc/tableheadsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
-	pushed_mob.apply_damage(40, BRUTE, BODY_ZONE_HEAD)
-	pushed_mob.apply_damage(60, STAMINA)
+	pushed_mob.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	pushed_mob.apply_damage(40, STAMINA)
 	take_damage(50)
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
@@ -174,6 +174,34 @@
 			user.visible_message("<span class='notice'>[user] empties [I] on [src].</span>")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
+
+	if(istype(I, /obj/item/riding_offhand))
+		var/obj/item/riding_offhand/riding_item = I
+		var/mob/living/carried_mob = riding_item.rider
+		if(carried_mob == user) //Piggyback user.
+			return
+		switch(user.a_intent)
+			if(INTENT_HARM)
+				user.unbuckle_mob(carried_mob)
+				tableheadsmash(user, carried_mob)
+			if(INTENT_HELP)
+				var/tableplace_delay = 3.5 SECONDS
+				var/skills_space = ""
+				if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
+					tableplace_delay = 2 SECONDS
+					skills_space = " expertly"
+				else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
+					tableplace_delay = 2.75 SECONDS
+					skills_space = " quickly"
+				carried_mob.visible_message("<span class='notice'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>",
+					"<span class='userdanger'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>")
+				if(do_after(user, tableplace_delay, target = carried_mob))
+					user.unbuckle_mob(carried_mob)
+					tableplace(user, carried_mob)
+			else
+				user.unbuckle_mob(carried_mob)
+				tablepush(user, carried_mob)
+		return TRUE
 
 	if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
@@ -217,7 +245,7 @@
 ///Table on wheels
 /obj/structure/table/rolling
 	name = "Rolling table"
-	desc = "A NT brand \"Rolly poly\" rolling table. It can and will move."
+	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
 	smooth = SMOOTH_FALSE
 	canSmoothWith = list()
@@ -237,13 +265,13 @@
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
 /obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
+	. = ..()
 	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
 		M.forceMove(loc)
 	for(var/x in attached_items)
 		var/atom/movable/AM = x
 		if(!AM.Move(loc))
 			RemoveItemFromTable(AM, AM.loc)
-	return TRUE
 
 /*
  * Glass tables
@@ -498,8 +526,8 @@
 
 /obj/structure/table/optable/Initialize()
 	. = ..()
-	for(var/direction in GLOB.cardinals)
-		computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
+	for(var/direction in GLOB.alldirs)
+		computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)
 		if(computer)
 			computer.table = src
 			break
@@ -512,18 +540,24 @@
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
-	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
-	check_patient()
+	visible_message("<span class='notice'>[user] lays [pushed_mob] on [src].</span>")
+	get_patient()
 
-/obj/structure/table/optable/proc/check_patient()
-	var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, loc)
+/obj/structure/table/optable/proc/get_patient()
+	var/mob/living/carbon/M = locate(/mob/living/carbon) in loc
 	if(M)
 		if(M.resting)
 			patient = M
-			return TRUE
 	else
 		patient = null
+
+/obj/structure/table/optable/proc/check_eligible_patient()
+	get_patient()
+	if(!patient)
 		return FALSE
+	if(ishuman(patient) ||  ismonkey(patient))
+		return TRUE
+	return FALSE
 
 /*
  * Racks

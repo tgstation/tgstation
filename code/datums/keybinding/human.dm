@@ -37,3 +37,14 @@
 	var/mob/living/carbon/human/H = user.mob
 	H.smart_equipbag()
 	return TRUE
+
+/datum/keybinding/human/equipment_swap
+	hotkey_keys = list("V")
+	name = "equipment_swap"
+	full_name = "Equipment Swap"
+	description = "Equip the currently held item by swapping it out with the already equipped item after a small delay"
+
+/datum/keybinding/human/equipment_swap/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	H.equipment_swap()
+	return TRUE

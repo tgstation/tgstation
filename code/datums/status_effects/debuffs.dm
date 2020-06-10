@@ -1,3 +1,5 @@
+#define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
+
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
@@ -20,10 +22,21 @@
 	owner.update_mobility()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
+	return ..()
 
 //STUN
 /datum/status_effect/incapacitating/stun
 	id = "stun"
+
+/datum/status_effect/incapacitating/stun/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/stun/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	return ..()
 
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
@@ -36,10 +49,30 @@
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
 
+/datum/status_effect/incapacitating/paralyzed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/paralyzed/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
 	needs_update_stat = TRUE
+
+/datum/status_effect/incapacitating/unconscious/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/unconscious/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	return ..()
 
 /datum/status_effect/incapacitating/unconscious/tick()
 	if(owner.getStaminaLoss())
@@ -64,6 +97,16 @@
 /datum/status_effect/incapacitating/sleeping/Destroy()
 	carbon_owner = null
 	human_owner = null
+	return ..()
+
+/datum/status_effect/incapacitating/sleeping/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/sleeping/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
@@ -168,19 +211,6 @@
 			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
-
-/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
-/datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
-	return ..()
-
-/datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
-
 //OTHER DEBUFFS
 /datum/status_effect/pacify
 	id = "pacify"
@@ -240,9 +270,9 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/twohanded/kinetic_crusher/hammer_synced
+	var/obj/item/kinetic_crusher/hammer_synced
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced
@@ -288,7 +318,13 @@
 	new /obj/effect/temp_visual/bleed/explode(T)
 	for(var/d in GLOB.alldirs)
 		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
-	playsound(T, "desceration", 100, TRUE, -1)
+	playsound(T, "desecration", 100, TRUE, -1)
+
+/datum/status_effect/stacking/saw_bleed/bloodletting
+	id = "bloodletting"
+	stack_threshold = 7
+	max_stacks = 7
+	bleed_damage = 20
 
 /datum/status_effect/neck_slice
 	id = "neck_slice"

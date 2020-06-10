@@ -2,7 +2,7 @@
 	name = "C-4 charge"
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
 	icon_state = "plastic-explosive0"
-	item_state = "plastic-explosive"
+	inhand_icon_state = "plastic-explosive"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -20,7 +20,7 @@
 
 /obj/item/grenade/c4/Initialize()
 	. = ..()
-	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
+	plastic_overlay = mutable_appearance(icon, "[inhand_icon_state]2", HIGH_OBJ_LAYER)
 	wires = new /datum/wires/explosive/c4(src)
 
 /obj/item/grenade/c4/ComponentInitialize()
@@ -41,9 +41,11 @@
 	else
 		return ..()
 
-/obj/item/grenade/c4/prime()
+/obj/item/grenade/c4/prime(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
+
+	. = ..()
 	var/turf/location
 	if(target)
 		if(!QDELETED(target))
@@ -102,7 +104,7 @@
 			I.throw_range = max(1, (I.throw_range - 3))
 			if(I.embedding)
 				I.embedding["embed_chance"] = 0
-				I.AddElement(/datum/element/embed, I.embedding)
+				I.updateEmbedding()
 		else if(istype(AM, /mob/living))
 			plastic_overlay.layer = FLOAT_LAYER
 
@@ -157,6 +159,6 @@
 	name = "X-4 charge"
 	desc = "A shaped high-explosive breaching charge. Designed to ensure user safety and wall nonsafety."
 	icon_state = "plasticx40"
-	item_state = "plasticx4"
+	inhand_icon_state = "plasticx4"
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)

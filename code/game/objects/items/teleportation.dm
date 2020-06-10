@@ -19,7 +19,7 @@
 	var/temp = null
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
@@ -119,7 +119,7 @@
 	desc = "A portable item using blue-space technology."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hand_tele"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throwforce = 0
@@ -203,7 +203,7 @@
 		return
 	RegisterSignal(created[1], COMSIG_PARENT_QDELETING, .proc/on_portal_destroy) //Gosh darn it kevinz.
 	RegisterSignal(created[2], COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
-	try_move_adjacent(created[1])
+	try_move_adjacent(created[1], user.dir)
 	active_portal_pairs[created[1]] = created[2]
 	var/obj/effect/portal/c1 = created[1]
 	var/obj/effect/portal/c2 = created[2]

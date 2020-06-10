@@ -44,7 +44,7 @@
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/clf3 = 10, /datum/reagent/water/hollowwater = 10, /datum/reagent/medicine/omnizine/protozine = 6, /datum/reagent/wittel = 1)
+	var/list/options = list(/datum/reagent/clf3 = 10, /datum/reagent/water/hollowwater = 10,/datum/reagent/plasma_oxide = 8, /datum/reagent/medicine/omnizine/protozine = 6, /datum/reagent/wittel = 1)
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
@@ -64,6 +64,16 @@
 /obj/item/plunger/attack_obj(obj/O, mob/living/user)
 	if(!O.plunger_act(src, user, reinforced))
 		return ..()
+
+/obj/item/plunger/throw_impact(atom/hit_atom, datum/thrownthing/tt)
+	. = ..()
+	if(tt.target_zone != BODY_ZONE_HEAD)
+		return
+	if(iscarbon(hit_atom))
+		var/mob/living/carbon/H = hit_atom
+		if(!H.wear_mask)
+			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
+			H.visible_message("<span class='warning'>The plunger slams into [H]'s face!</span>", "<span class='warning'>The plunger suctions to your face!</span>")
 
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"

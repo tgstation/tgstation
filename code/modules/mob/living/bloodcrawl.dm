@@ -60,7 +60,7 @@
 	forceMove(holder)
 
 	// if we're not pulling anyone, or we can't eat anyone
-	if(!pullee || bloodcrawl != BLOODCRAWL_EAT)
+	if(!pullee || !HAS_TRAIT(src, TRAIT_BLOODCRAWL_EAT))
 		notransform = FALSE
 		return
 

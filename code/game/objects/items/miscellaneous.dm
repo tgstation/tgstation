@@ -17,7 +17,7 @@
 	desc = "Hey, why are you viewing this?!! Please let CentCom know about this odd occurrence."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
-	item_state = "radio"
+	inhand_icon_state = "radio"
 	var/uses = 1
 
 /obj/item/choice_beacon/attack_self(mob/user)
@@ -80,6 +80,7 @@
 
 /obj/item/storage/box/hero
 	name = "Courageous Tomb Raider - 1940's."
+	desc = "This legendary figure of still dubious historical accuracy is thought to have been a world-famous archeologist who embarked on countless adventures in far away lands, along with his trademark whip and fedora hat."
 
 /obj/item/storage/box/hero/PopulateContents()
 	new /obj/item/clothing/head/fedora/curator(src)
@@ -90,6 +91,7 @@
 
 /obj/item/storage/box/hero/astronaut
 	name = "First Man on the Moon - 1960's."
+	desc = "One small step for a man, one giant leap for mankind. Relive the beginnings of space exploration with this fully functional set of vintage EVA equipment."
 
 /obj/item/storage/box/hero/astronaut/PopulateContents()
 	new /obj/item/clothing/suit/space/nasavoid(src)
@@ -99,12 +101,23 @@
 
 /obj/item/storage/box/hero/scottish
 	name = "Braveheart, the Scottish rebel - 1300's."
+	desc = "Seemingly a legendary figure in the battle for Scottish independence, this historical figure is closely associated with blue facepaint, big swords, strange man skirts, and his ever enduring catchphrase: 'FREEDOM!!'"
 
 /obj/item/storage/box/hero/scottish/PopulateContents()
 	new /obj/item/clothing/under/costume/kilt(src)
 	new /obj/item/claymore/weak/ceremonial(src)
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/storage/box/hero/carphunter
+	name = "Carp Hunter, Wildlife Expert - 2506."
+	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate environmentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
+
+/obj/item/storage/box/hero/carphunter/PopulateContents()
+	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)
+	new /obj/item/clothing/mask/gas/carp(src)
+	new /obj/item/kitchen/knife/hunting(src)
+	new /obj/item/storage/box/papersack/meat(src)
 
 /obj/item/choice_beacon/augments
 	name = "augment beacon"

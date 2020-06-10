@@ -20,7 +20,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas
 	head = /obj/item/clothing/head/helmet/swat
@@ -39,7 +39,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen
@@ -59,7 +59,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen/harness
@@ -130,7 +130,7 @@
 	uniform = /obj/item/clothing/under/syndicate/camo
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/helmet/alt
 	mask = /obj/item/clothing/mask/balaclava
@@ -175,6 +175,26 @@
 /datum/outfit/nanotrasensoldiercorpse2
 	name = "NT Private Security Officer Corpse"
 	uniform = /obj/item/clothing/under/rank/security/officer
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
+	ears = /obj/item/radio/headset
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+	back = /obj/item/storage/backpack/security
+	id = /obj/item/card/id
+
+/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier
+	name = "Nanotrasen Private Security Officer"
+	id_job = "Nanotrasen Assault Force"
+	id_access = "Security Officer"
+	outfit = /datum/outfit/nanotrasenassaultsoldiercorpse
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
+
+/datum/outfit/nanotrasenassaultsoldiercorpse
+	name = "NT Assault Officer Corpse"
+	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat

@@ -37,7 +37,10 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
-
+	///These are armor values that protect the wearer, taken from the clothing's armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
+	var/list/armor_list = list()
+	///These are armor values that protect the clothing, taken from its armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
+	var/list/durability_list = list()
 
 /obj/item/clothing/Initialize()
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
@@ -140,6 +143,87 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
+	if(LAZYLEN(armor_list))
+		armor_list.Cut()
+	if(armor.bio)
+		armor_list += list("TOXIN" = armor.bio)
+	if(armor.bomb)
+		armor_list += list("EXPLOSIVE" = armor.bomb)
+	if(armor.bullet)
+		armor_list += list("BULLET" = armor.bullet)
+	if(armor.energy)
+		armor_list += list("ENERGY" = armor.energy)
+	if(armor.laser)
+		armor_list += list("LASER" = armor.laser)
+	if(armor.magic)
+		armor_list += list("MAGIC" = armor.magic)
+	if(armor.melee)
+		armor_list += list("MELEE" = armor.melee)
+	if(armor.rad)
+		armor_list += list("RADIATION" = armor.rad)
+
+	if(LAZYLEN(durability_list))
+		durability_list.Cut()
+	if(armor.fire)
+		durability_list += list("FIRE" = armor.fire)
+	if(armor.acid)
+		durability_list += list("ACID" = armor.acid)
+
+	if(LAZYLEN(armor_list) || LAZYLEN(durability_list))
+		. += "<span class='notice'>It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.</span>"
+
+/obj/item/clothing/Topic(href, href_list)
+	. = ..()
+
+	if(href_list["list_armor"])
+		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES (I-X)</u></b>")
+		if(LAZYLEN(armor_list))
+			readout += "\n<b>ARMOR</b>"
+			for(var/dam_type in armor_list)
+				var/armor_amount = armor_list[dam_type]
+				readout += "\n[dam_type] [armor_to_protection_class(armor_amount)]" //e.g. BOMB IV
+		if(LAZYLEN(durability_list))
+			readout += "\n<b>DURABILITY</b>"
+			for(var/dam_type in durability_list)
+				var/durability_amount = durability_list[dam_type]
+				readout += "\n[dam_type] [armor_to_protection_class(durability_amount)]" //e.g. FIRE II
+		readout += "</span>"
+
+		to_chat(usr, "[readout.Join()]")
+
+/**
+  * Rounds armor_value to nearest 10, divides it by 10 and then expresses it in roman numerals up to 10
+  *
+  * Rounds armor_value to nearest 10, divides it by 10
+  * and then expresses it in roman numerals up to 10
+  * Arguments:
+  * * armor_value - Number we're converting
+  */
+/obj/item/clothing/proc/armor_to_protection_class(armor_value)
+	armor_value = round(armor_value,10) / 10
+	switch (armor_value)
+		if (1)
+			. = "I"
+		if (2)
+			. = "II"
+		if (3)
+			. = "III"
+		if (4)
+			. = "IV"
+		if (5)
+			. = "V"
+		if (6)
+			. = "VI"
+		if (7)
+			. = "VII"
+		if (8)
+			. = "VIII"
+		if (9)
+			. = "IX"
+		if (10 to INFINITY)
+			. = "X"
+	return .
+
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
 		update_clothes_damaged_state(TRUE)
@@ -147,11 +231,18 @@
 		var/mob/M = loc
 		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
 
+//This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
-	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
-	var/static/list/damaged_clothes_icons = list()
 	if(damaging)
 		damaged_clothes = 1
+	else
+		damaged_clothes = 0
+
+/obj/item/clothing/update_overlays()
+	. = ..()
+	if(damaged_clothes)
+		var/index = "[REF(initial(icon))]-[initial(icon_state)]"
+		var/static/list/damaged_clothes_icons = list()
 		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
 		if(!damaged_clothes_icon)
 			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply damaged effect to the initial icon_state for each object
@@ -159,11 +250,7 @@
 			damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
 			damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
 			damaged_clothes_icons[index] = damaged_clothes_icon
-		add_overlay(damaged_clothes_icon, 1)
-	else
-		damaged_clothes = 0
-		cut_overlay(damaged_clothes_icons[index], TRUE)
-
+		. += damaged_clothes_icon
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -207,7 +294,7 @@ BLIND     // can't see anything
 		to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
-
+	set_sensor_glob()
 	if (src.loc == usr)
 		switch(sensor_mode)
 			if(0)
@@ -324,3 +411,14 @@ BLIND     // can't see anything
 		deconstruct(FALSE)
 	else
 		..()
+/obj/item/clothing/proc/set_sensor_glob()
+	var/mob/living/carbon/human/H = src.loc
+
+	if (istype(H) && istype(H.w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/U = H.w_uniform
+		if (U.has_sensor && U.sensor_mode && U.has_sensor != BROKEN_SENSORS)
+			GLOB.suit_sensors_list |= H
+		else
+			GLOB.suit_sensors_list -= H
+	else
+		GLOB.suit_sensors_list -= H

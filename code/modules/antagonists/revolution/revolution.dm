@@ -115,7 +115,7 @@
 
 /datum/antagonist/rev/head/proc/admin_take_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/handheld/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Deleting flash failed!</span>")
 		return
@@ -136,7 +136,7 @@
 
 /datum/antagonist/rev/head/proc/admin_repair_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/handheld/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Repairing flash failed!</span>")
 	else
@@ -240,7 +240,7 @@
 		return
 
 	if(give_flash)
-		var/obj/item/assembly/flash/T = new(C)
+		var/obj/item/assembly/flash/handheld/T = new(C)
 		var/list/slots = list (
 			"backpack" = ITEM_SLOT_BACKPACK,
 			"left pocket" = ITEM_SLOT_LPOCKET,

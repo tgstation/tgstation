@@ -14,8 +14,8 @@
 	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	welded = FALSE
-	level = 1
 	layer = GAS_SCRUBBER_LAYER
+	hide = TRUE
 
 	var/id_tag = null
 	var/pump_direction = RELEASING
@@ -295,7 +295,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
-	power_channel = EQUIP
+	power_channel = AREA_USAGE_EQUIP
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()

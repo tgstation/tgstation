@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { createLogger, directLog } from 'common/logging.js';
 import http from 'http';
 import { inspect } from 'util';
@@ -29,14 +35,24 @@ export const broadcastMessage = (link, msg) => {
   }
 };
 
-const deserializeObject = obj => {
-  return JSON.parse(obj, (key, value) => {
+const deserializeObject = str => {
+  return JSON.parse(str, (key, value) => {
     if (typeof value === 'object' && value !== null) {
       if (value.__error__) {
+        if (!value.stack) {
+          return value.string;
+        }
         return retrace(value.stack);
       }
       if (value.__number__) {
         return parseFloat(value.__number__);
+      }
+      if (value.__undefined__) {
+        // NOTE: You should not rely on deserialized object's undefined,
+        // this is purely for inspection purposes.
+        return {
+          [inspect.custom]: () => undefined,
+        };
       }
       return value;
     }
@@ -102,7 +118,7 @@ const setupHttpLink = () => {
         body += chunk.toString();
       });
       req.on('end', () => {
-        const msg = JSON.parse(body);
+        const msg = deserializeObject(body);
         handleLinkMessage(msg);
         res.end();
       });

@@ -40,7 +40,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "tachyon_array", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "TachyonArray", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/doppler_array/ui_data(mob/user)
@@ -107,7 +107,7 @@
 	<li>Outer Radius: [record.factual_radius["outer_radius"]]</li>
 	<li>Shockwave Radius: [record.factual_radius["shockwave_radius"]]</li></ul>"}
 
-	if(record.theory_radius.len)
+	if(length(record.theory_radius))
 		info += {"</br><li>Theoretical Epicenter Radius: [record.theory_radius["epicenter_radius"]]</li>
 		<li>Theoretical Outer Radius: [record.theory_radius["outer_radius"]]</li>
 		<li>Theoretical Shockwave Radius: [record.theory_radius["shockwave_radius"]]</li>"}

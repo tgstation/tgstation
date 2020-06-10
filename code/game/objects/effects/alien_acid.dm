@@ -53,6 +53,7 @@
 		return 0
 
 /obj/effect/acid/Crossed(AM as mob|obj)
+	. = ..()
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.movement_type & FLYING)

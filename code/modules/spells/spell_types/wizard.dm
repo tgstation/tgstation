@@ -194,23 +194,19 @@
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
 	cast_sound = 'sound/magic/summon_karp.ogg'
 
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
 	desc = "This spell conjures a construct which may be controlled by Shades."
-
 	school = "conjuration"
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-
 	summon_type = list(/obj/structure/constructshell)
-
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "artificer"
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
-
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
@@ -227,40 +223,11 @@
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
 
-/obj/effect/proc_holder/spell/targeted/trigger/blind
-	name = "Blind"
-	desc = "This spell temporarily blinds a single target."
-
-	school = "transmutation"
-	charge_max = 300
-	clothes_req = FALSE
-	invocation = "STI KALY"
-	invocation_type = "whisper"
-	message = "<span class='notice'>Your eyes cry out in pain!</span>"
-	cooldown_min = 50 //12 deciseconds reduction per rank
-
-	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
-
-	action_icon_state = "blind"
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
 	name = "Summon Creatures (DANGEROUS)"
 	clothes_req = TRUE
 	charge_max = 5000
 	summon_amt = 2
-
-
-
-/obj/effect/proc_holder/spell/targeted/inflict_handler/blind
-	amt_eye_blind = 10
-	amt_eye_blurry = 20
-	sound = 'sound/magic/blind.ogg'
-
-/obj/effect/proc_holder/spell/targeted/genetic/blind
-	mutations = list(BLINDMUT)
-	duration = 300
-	charge_max = 400 // needs to be higher than the duration or it'll be permanent
-	sound = 'sound/magic/blind.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
@@ -390,7 +357,7 @@
 				M.electrocute_act(80, src, flags = SHOCK_ILLUSION)
 		qdel(src)
 
-/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY)
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY, quickstart = TRUE)
 	. = ..()
 	if(ishuman(thrower))
 		var/mob/living/carbon/human/H = thrower

@@ -65,7 +65,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "flare"
+	inhand_icon_state = "flare"
 	throw_speed = 3
 	throw_range = 7
 	det_time = 30
@@ -108,7 +108,8 @@ obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volum
 	icon_state = initial(icon_state) + "_active"
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/firecracker/prime()
+/obj/item/grenade/firecracker/prime(mob/living/lanced_by)
+	. = ..()
 	update_mob()
 	var/explosion_loc = get_turf(src)
 	qdel(src)

@@ -1,9 +1,20 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section, NoticeBox, Input, Table } from '../components';
+import { Window } from '../layouts';
 
-export const NaniteRemote = props => {
-  const { act, data } = useBackend(props);
+export const NaniteRemote = (props, context) => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <NaniteRemoteContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const NaniteRemoteContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     code,
     locked,
@@ -109,16 +120,16 @@ export const NaniteRemote = props => {
           <Table>
             <Table.Row header>
               <Table.Cell width="35%">
-              Name
+                Name
               </Table.Cell>
               <Table.Cell width="20%">
-              Mode
+                Mode
               </Table.Cell>
               <Table.Cell collapsing>
-              Code
+                Code
               </Table.Cell>
               <Table.Cell collapsing>
-              Relay
+                Relay
               </Table.Cell>
             </Table.Row>
             {saved_settings.map(setting => (
@@ -156,7 +167,7 @@ export const NaniteRemote = props => {
           </Table>
         ) : (
           <NoticeBox>
-          No settings currently saved
+            No settings currently saved
           </NoticeBox>
         )}
       </Section>

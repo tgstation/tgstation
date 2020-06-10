@@ -54,11 +54,6 @@
 	..()
 	nukes_left--
 
-/datum/game_mode/nuclear/check_win()
-	if (nukes_left == 0)
-		return TRUE
-	return ..()
-
 /datum/game_mode/nuclear/check_finished()
 	//Keep the round going if ops are dead but bomb is ticking.
 	if(nuke_team.operatives_dead())
@@ -115,7 +110,7 @@
 
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves =  /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack/fireproof
 	ears = /obj/item/radio/headset/syndicate/alt
 	l_pocket = /obj/item/pinpointer/nuke/syndicate

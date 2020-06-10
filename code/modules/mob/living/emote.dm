@@ -402,6 +402,12 @@
 	message = "yawns."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/gurgle
+	key = "gurgle"
+	key_third_person = "gurgles"
+	message = "makes an uncomfortable gurgle."
+	emote_type = EMOTE_AUDIBLE
+
 /datum/emote/living/custom
 	key = "me"
 	key_third_person = "custom"
@@ -488,35 +494,6 @@
 	sound = 'sound/machines/twobeep.ogg'
 	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
 
-/datum/emote/living/circle
-	key = "circle"
-	key_third_person = "circles"
-	restraint_check = TRUE
-
-/datum/emote/living/circle/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	var/obj/item/circlegame/N = new(user)
-	if(user.put_in_hands(N))
-		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
-	else
-		qdel(N)
-		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
-
-/datum/emote/living/slap
-	key = "slap"
-	key_third_person = "slaps"
-	restraint_check = TRUE
-
-/datum/emote/living/slap/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/slapper/N = new(user)
-	if(user.put_in_hands(N))
-		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
-	else
-		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
-
 /datum/emote/inhale
 	key = "inhale"
 	key_third_person = "inhales"
@@ -526,3 +503,111 @@
 	key = "exhale"
 	key_third_person = "exhales"
 	message = "breathes out."
+
+/datum/emote/living/bababooey
+	key = "bababooey"
+	key_third_person = "bababooeys"
+	message = "spews bababooey."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
+
+/datum/emote/living/bababooey/get_sound(mob/living/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			else
+				return pick('sound/voice/human/bababooey.ogg', 'sound/voice/human/bababooey2.ogg')
+
+/datum/emote/living/babafooey
+	key = "babafooey"
+	key_third_person = "babafooeys"
+	message = "spews babafooey."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
+
+/datum/emote/living/babafooey/get_sound(mob/living/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			else
+				return 'sound/voice/human/babafooey.ogg'
+
+/datum/emote/living/fafafooey
+	key = "fafafooey"
+	key_third_person = "fafafooeys"
+	message = "spews fafafooey."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
+
+/datum/emote/living/fafafooey/get_sound(mob/living/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			if(prob(10))
+				return 'sound/voice/human/fafafohowa.ogg'
+			else
+				return pick('sound/voice/human/fafafooey.ogg', 'sound/voice/human/fafafooey2.ogg', 'sound/voice/human/fafafooey3.ogg')
+
+/datum/emote/living/fafafoggy
+	key = "fafafoggy"
+	key_third_person = "fafafoggys"
+	message = "spews fafafoggy."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
+
+/datum/emote/living/fafafoggy/get_sound(mob/living/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			if(prob(10))
+				return 'sound/voice/human/fafafohowa.ogg'
+			else
+				return pick('sound/voice/human/fafafoggy.ogg', 'sound/voice/human/fafafoggy2.ogg')
+
+/datum/emote/living/hohohoy
+	key = "hohohoy"
+	key_third_person = "hohohoys"
+	message = "spews hohohoy."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
+
+/datum/emote/living/hohohoy/get_sound(mob/living/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			else
+				return 'sound/voice/human/hohohoy.ogg'
+
+/datum/emote/living/ffff
+	key = "ffff"
+	key_third_person = "ffffs"
+	message = "spews something softly."
+	emote_type = EMOTE_AUDIBLE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
+
+/datum/emote/living/ffff/get_sound(mob/living/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
+			return 'sound/voice/human/ffff.ogg'

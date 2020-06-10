@@ -2,7 +2,7 @@
 	name = "Prison Escapee"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
-	r_pocket = /obj/item/kitchen/knife/carrotshiv
+	r_pocket = /obj/item/kitchen/knife/shiv
 
 /datum/outfit/prisoner/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -67,7 +67,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
 	head = /obj/item/clothing/head/helmet/police
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -97,7 +97,7 @@
 	uniform = /obj/item/clothing/under/rank/prisoner
 	head = /obj/item/clothing/head/hunter
 	suit = /obj/item/clothing/suit/space/hunter
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
 	glasses = /obj/item/clothing/glasses/sunglasses/garb

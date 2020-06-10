@@ -2,7 +2,7 @@
 	name = "syringe"
 	desc = "A syringe that can hold up to 15 units."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "syringe_0"
+	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "0"
@@ -158,7 +158,7 @@
 /obj/item/reagent_containers/syringe/update_icon_state()
 	var/rounded_vol = get_rounded_vol()
 	icon_state = "[rounded_vol]"
-	item_state = "syringe_[rounded_vol]"
+	inhand_icon_state = "syringe_[rounded_vol]"
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
@@ -250,12 +250,6 @@
 	amount_per_transfer_from_this = 20
 	volume = 60
 
-/obj/item/reagent_containers/syringe/noreact
-	name = "cryo syringe"
-	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
-	volume = 20
-	reagent_flags = TRANSPARENT | NO_REACT
-
 /obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
@@ -286,3 +280,28 @@
 	name = "syringe (syriniver)"
 	desc = "Contains syriniver, used to treat toxins and purge chemicals.The tag on the syringe states 'Inject one time per minute'"
 	list_reagents = list(/datum/reagent/medicine/C2/syriniver = 15)
+
+/obj/item/reagent_containers/syringe/contraband
+	name = "unlabeled syringe"
+	desc = "A syringe containing some sort of unknown chemical cocktail."
+
+/obj/item/reagent_containers/syringe/contraband/space_drugs
+	list_reagents = list(/datum/reagent/drug/space_drugs = 15)
+
+/obj/item/reagent_containers/syringe/contraband/krokodil
+	list_reagents = list(/datum/reagent/drug/krokodil = 15)
+
+/obj/item/reagent_containers/syringe/contraband/crank
+	list_reagents = list(/datum/reagent/drug/crank = 15)
+
+/obj/item/reagent_containers/syringe/contraband/methamphetamine
+	list_reagents = list(/datum/reagent/drug/methamphetamine = 15)
+
+/obj/item/reagent_containers/syringe/contraband/bath_salts
+	list_reagents = list(/datum/reagent/drug/bath_salts = 15)
+
+/obj/item/reagent_containers/syringe/contraband/fentanyl
+	list_reagents = list(/datum/reagent/toxin/fentanyl = 15)
+
+/obj/item/reagent_containers/syringe/contraband/morphine
+	list_reagents = list(/datum/reagent/medicine/morphine = 15)

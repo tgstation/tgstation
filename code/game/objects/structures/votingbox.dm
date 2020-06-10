@@ -3,7 +3,7 @@
 
 /obj/structure/votebox
 	name = "voting box"
-	desc = "A automatic voting box."
+	desc = "An automatic voting box."
 
 	icon = 'icons/obj/votebox.dmi'
 	icon_state = "votebox_maint"
@@ -114,7 +114,7 @@
 		to_chat(user,"<span class='notice'>You cast your vote.</span>")
 
 /obj/structure/votebox/proc/valid_vote(obj/item/paper/I)
-	if(length_char(text) > VOTE_TEXT_LIMIT || findtext(text,"<h1>Voting Results:</h1><hr><ol>"))
+	if(length_char(I.info) > VOTE_TEXT_LIMIT || findtext(I.info,"<h1>Voting Results:</h1><hr><ol>"))
 		return FALSE
 	return TRUE
 

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
 	icon_state = "meterX"
 	layer = GAS_PUMP_LAYER
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
@@ -44,8 +44,6 @@
 	for(var/obj/machinery/atmospherics/pipe/pipe in loc)
 		if(pipe.piping_layer == target_layer)
 			candidate = pipe
-			if(pipe.level == 2)
-				break
 	if(candidate)
 		target = candidate
 		setAttachLayer(candidate.piping_layer)

@@ -34,7 +34,7 @@
 /obj/machinery/door/keycard
 	name = "locked door"
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructable."
-	icon = 'icons/obj/doors/doorpuzzle.dmi'
+	icon = 'icons/obj/doors/puzzledoor/default.dmi'
 	icon_state = "door_closed"
 	explosion_block = 3
 	heat_proof = TRUE
@@ -42,7 +42,10 @@
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	damage_deflection = 70
-	var/puzzle_id = null	//Make sure that the key has the same puzzle_id as the keycard door!
+	/// Make sure that the key has the same puzzle_id as the keycard door!
+	var/puzzle_id = null
+	/// Message that occurs when the door is opened
+	var/open_message = "The door beeps, and slides opens."
 
 //Standard Expressions to make keycard doors basically un-cheeseable
 /obj/machinery/door/keycard/Bumped(atom/movable/AM)
@@ -64,7 +67,8 @@
 	if(istype(I,/obj/item/keycard))
 		var/obj/item/keycard/key = I
 		if((!puzzle_id || puzzle_id == key.puzzle_id)  && density)
-			to_chat(user, "<span class='notice'>The door beeps, and slides opens.</span>")
+			if(open_message)
+				to_chat(user, "<span class='notice'>[open_message]</span>")
 			open()
 			return
 		else if(puzzle_id != key.puzzle_id)
@@ -116,20 +120,28 @@
 	var/reward = /obj/item/reagent_containers/food/snacks/cookie
 	var/claimed = FALSE
 
+/obj/item/pressure_plate/hologrid/Initialize()
+	. = ..()
+
+	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
+
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()
 	if(claimed)
 		. += "<span class='notice'>This one appears to be spent already.</span>"
 
 /obj/item/pressure_plate/hologrid/trigger()
-	reward = new reward(loc)
+	if(!claimed)
+		new reward(loc)
 	flick("lasergrid_a",src)
 	icon_state = "lasergrid_full"
+	claimed = TRUE
 
 /obj/item/pressure_plate/hologrid/Crossed(atom/movable/AM)
 	. = ..()
 	if(trigger_item && istype(AM, specific_item) && !claimed)
-		claimed = TRUE
+		AM.anchored = TRUE
 		flick("laserbox_burn", AM)
+		trigger()
 		sleep(15)
 		qdel(AM)

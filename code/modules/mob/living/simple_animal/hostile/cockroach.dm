@@ -62,6 +62,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/cockroach/Crossed(var/atom/movable/AM)
+	. = ..()
 	if(ismob(AM))
 		if(isliving(AM))
 			var/mob/living/A = AM
@@ -77,7 +78,7 @@
 	else
 		if(isstructure(AM))
 			if(prob(squish_chance))
-				AM.visible_message("<span class='notice'>[src] was crushed under [AM].</span>")
+				AM.visible_message("<span class='notice'>[src] is crushed under [AM].</span>")
 				adjustBruteLoss(1)
 			else
 				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")

@@ -37,7 +37,7 @@
 			return
 
 	if(heal(M, user))
-		user?.mind.adjust_experience(/datum/skill/medical, experience_given)
+		user?.mind.adjust_experience(/datum/skill/healing, experience_given)
 		log_combat(user, M, "healed", src.name)
 		use(1)
 		if(repeating && amount > 0)
@@ -58,7 +58,7 @@
 		user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
 		var/brute2heal = brute
 		var/burn2heal = burn
-		var/skill_mod = user?.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
+		var/skill_mod = user?.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER)
 		if(skill_mod)
 			brute2heal *= (2-skill_mod)
 			burn2heal *= (2-skill_mod)
@@ -241,7 +241,6 @@
 		is_open = FALSE
 		update_icon()
 
-
 /obj/item/stack/medical/mesh/update_icon_state()
 	if(!is_open)
 		icon_state = "regen_mesh_closed"
@@ -271,7 +270,7 @@
 	. = ..()
 
 /obj/item/stack/medical/mesh/attack_hand(mob/user)
-	if(!is_open & user.get_inactive_held_item() == src)
+	if(!is_open && user.get_inactive_held_item() == src)
 		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
 		return
 	. = ..()
@@ -284,6 +283,57 @@
 		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
 		return
 	. = ..()
+
+/obj/item/stack/medical/mesh/advanced
+	name = "advanced regenerative mesh"
+	desc = "An advanced mesh made with aloe extracts and sterilizing chemicals, used to treat burns."
+
+	gender = PLURAL
+	singular_name = "advanced regenerative mesh"
+	icon_state = "aloe_mesh"
+	heal_burn = 15
+	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
+
+/obj/item/stack/medical/mesh/advanced/update_icon_state()
+	if(!is_open)
+		icon_state = "aloe_mesh_closed"
+	else
+		return ..()
+
+/obj/item/stack/medical/aloe
+	name = "aloe cream"
+	desc = "A healing paste you can apply on wounds."
+
+	icon_state = "aloe_paste"
+	self_delay = 20
+	other_delay = 10
+	novariants = TRUE
+	amount = 20
+	max_amount = 20
+	var/heal = 3
+	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
+
+/obj/item/stack/medical/aloe/heal(mob/living/M, mob/user)
+	. = ..()
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return FALSE
+	if(iscarbon(M))
+		return heal_carbon(M, user, heal, heal)
+	if(isanimal(M))
+		var/mob/living/simple_animal/critter = M
+		if (!(critter.healable))
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
+			return FALSE
+		else if (critter.health == critter.maxHealth)
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
+			return FALSE
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		M.heal_bodypart_damage(heal, heal)
+		return TRUE
+
+	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+
 
 	/*
 	The idea is for these medical devices to work like a hybrid of the old brute packs and tend wounds,

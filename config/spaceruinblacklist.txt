@@ -47,4 +47,5 @@
 #_maps/RandomRuins/SpaceRuins/way_home.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipdock.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
+#_maps/RandomRuins/SpaceRuins/forgottenship.dmm
 

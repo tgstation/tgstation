@@ -7,11 +7,12 @@
 	density = TRUE
 	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	max_integrity = 350
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
+	ricochet_chance_mod = 0.8
 	damage_deflection = 10
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
@@ -145,6 +146,9 @@
 
 /obj/machinery/door/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
+	if(.)
+		return
+
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 
@@ -207,7 +211,7 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/twohanded/fireaxe)))
+	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
 		if(istype(I, /obj/item/crowbar))
 			var/obj/item/crowbar/C = I
@@ -412,3 +416,8 @@
 
 /obj/machinery/door/GetExplosionBlock()
 	return density ? real_explosion_block : 0
+
+/obj/machinery/door/power_change()
+	. = ..()
+	if(. && !(machine_stat & NOPOWER))
+		autoclose_in(rand(0.5 SECONDS, 3 SECONDS))

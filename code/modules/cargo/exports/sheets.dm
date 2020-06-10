@@ -53,6 +53,12 @@
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
 
+/datum/export/stack/licenseplate
+	cost = 25
+	unit_name = "license plate"
+	export_types = list(/obj/item/stack/license_plates/filled)
+
+
 // Common materials.
 // For base materials, see materials.dm
 
@@ -92,6 +98,11 @@
 	cost = 0.2
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
+
+/datum/export/stack/ammonia_crystals
+	cost = 25
+	unit_name = "of ammonia crystal"
+	export_types = list(/obj/item/stack/ammonia_crystals)
 
 // Weird Stuff
 

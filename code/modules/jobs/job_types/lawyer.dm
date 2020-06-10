@@ -7,7 +7,7 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the head of personnel"
-	selection_color = "#dddddd"
+	selection_color = "#bbe291"
 	var/lawyers = 0 //Counts lawyer amount
 
 	outfit = /datum/outfit/job/lawyer
@@ -15,7 +15,7 @@
 	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_CIV
+	paycheck_department = ACCOUNT_SRV
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_LAWYER

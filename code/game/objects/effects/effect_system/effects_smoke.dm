@@ -178,7 +178,7 @@
 				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 					U.welded = TRUE
 					U.update_icon()
-					U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
+					U.visible_message("<span class='danger'>[U] is frozen shut!</span>")
 		for(var/mob/living/L in T)
 			L.ExtinguishMob()
 		for(var/obj/item/Item in T)
@@ -231,8 +231,6 @@
 		var/fraction = 1/initial(lifetime)
 		for(var/atom/movable/AM in T)
 			if(AM.type == src.type)
-				continue
-			if(T.intact && AM.level == 1) //hidden under the floor
 				continue
 			reagents.reaction(AM, TOUCH, fraction)
 

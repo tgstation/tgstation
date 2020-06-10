@@ -105,7 +105,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 100)
 	build_path = /obj/item/reagent_containers/glass/maunamug
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/rolling_table
 	name = "Rolly poly"
@@ -115,7 +115,7 @@
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/structure/table/rolling
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
@@ -135,7 +135,7 @@
 	materials = list(/datum/material/iron = 4000, /datum/material/bananium = 1000)
 	build_path = /obj/item/bikehorn/airhorn
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL			//HONK!
+
 
 /datum/design/mesons
 	name = "Optical Meson Scanners"
@@ -216,16 +216,6 @@
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/diskplantgene
-	name = "Plant Data Disk"
-	desc = "A disk for storing plant genetic data."
-	id = "diskplantgene"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
-	build_path = /obj/item/disk/plantgene
-	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/roastingstick
 	name = "Advanced Roasting Stick"
@@ -333,7 +323,7 @@
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/bikehorn/rubberducky/plasticducky
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
@@ -567,15 +557,6 @@
 /////////////////Tape////////////////////
 /////////////////////////////////////////
 
-/datum/design/sticky_tape
-	name = "Sticky Tape"
-	id = "sticky_tape"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/plastic = 500)
-	build_path = /obj/item/stack/sticky_tape
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 /datum/design/super_sticky_tape
 	name = "Super Sticky Tape"
 	id = "super_sticky_tape"
@@ -593,3 +574,27 @@
 	build_path = /obj/item/stack/sticky_tape/pointy
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+
+
+/////////////////////////////////////////
+////////////Tackle Gloves////////////////
+/////////////////////////////////////////
+
+/datum/design/tackle_dolphin
+	name = "Dolphin Gloves"
+	id = "tackle_dolphin"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 2500)
+	build_path = /obj/item/clothing/gloves/tackler/dolphin
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/tackle_rocket
+	name = "Rocket Gloves"
+	id = "tackle_rocket"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plasma = 1000, /datum/material/plastic = 2000)
+	build_path = /obj/item/clothing/gloves/tackler/rocket
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

@@ -171,6 +171,34 @@ SUBSYSTEM_DEF(shuttle)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
+/datum/controller/subsystem/shuttle/proc/canEvac(mob/user)
+	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
+	if(world.time - SSticker.round_start_time < srd)
+		to_chat(user, "<span class='alert'>The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.</span>")
+		return FALSE
+
+	switch(emergency.mode)
+		if(SHUTTLE_RECALL)
+			to_chat(user, "<span class='alert'>The emergency shuttle may not be called while returning to CentCom.</span>")
+			return FALSE
+		if(SHUTTLE_CALL)
+			to_chat(user, "<span class='alert'>The emergency shuttle is already on its way.</span>")
+			return FALSE
+		if(SHUTTLE_DOCKED)
+			to_chat(user, "<span class='alert'>The emergency shuttle is already here.</span>")
+			return FALSE
+		if(SHUTTLE_IGNITING)
+			to_chat(user, "<span class='alert'>The emergency shuttle is firing its engines to leave.</span>")
+			return FALSE
+		if(SHUTTLE_ESCAPE)
+			to_chat(user, "<span class='alert'>The emergency shuttle is moving away to a safe distance.</span>")
+			return FALSE
+		if(SHUTTLE_STRANDED)
+			to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
+			return FALSE
+
+	return TRUE
+
 /datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \
@@ -184,30 +212,9 @@ SUBSYSTEM_DEF(shuttle)
 			manually, and then calling register() on the mobile docking port. \
 			Good luck.")
 		emergency = backup_shuttle
-	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
-	if(world.time - SSticker.round_start_time < srd)
-		to_chat(user, "<span class='alert'>The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.</span>")
-		return
 
-	switch(emergency.mode)
-		if(SHUTTLE_RECALL)
-			to_chat(user, "<span class='alert'>The emergency shuttle may not be called while returning to CentCom.</span>")
-			return
-		if(SHUTTLE_CALL)
-			to_chat(user, "<span class='alert'>The emergency shuttle is already on its way.</span>")
-			return
-		if(SHUTTLE_DOCKED)
-			to_chat(user, "<span class='alert'>The emergency shuttle is already here.</span>")
-			return
-		if(SHUTTLE_IGNITING)
-			to_chat(user, "<span class='alert'>The emergency shuttle is firing its engines to leave.</span>")
-			return
-		if(SHUTTLE_ESCAPE)
-			to_chat(user, "<span class='alert'>The emergency shuttle is moving away to a safe distance.</span>")
-			return
-		if(SHUTTLE_STRANDED)
-			to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
-			return
+	if(!canEvac(user))
+		return
 
 	call_reason = trim(html_encode(call_reason))
 
@@ -749,7 +756,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "shuttle_manipulator", name, 800, 600, master_ui, state)
+		ui = new(user, src, ui_key, "ShuttleManipulator", name, 800, 600, master_ui, state)
 		ui.open()
 
 

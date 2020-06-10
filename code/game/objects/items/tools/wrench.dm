@@ -79,7 +79,7 @@
 	name = "combat wrench"
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
 	icon_state = "wrench_combat"
-	item_state = "wrench_combat"
+	inhand_icon_state = "wrench_combat"
 	attack_verb = list("devastated", "brutalized", "committed a war crime against", "obliterated", "humiliated")
 	tool_behaviour = null
 	toolspeed = null
@@ -113,7 +113,7 @@
 /obj/item/wrench/combat/update_icon_state()
 	if(on)
 		icon_state = "[initial(icon_state)]_on"
-		item_state = "[initial(item_state)]1"
+		inhand_icon_state = "[initial(inhand_icon_state)]1"
 	else
 		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
+		inhand_icon_state = "[initial(inhand_icon_state)]"

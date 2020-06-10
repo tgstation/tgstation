@@ -48,6 +48,11 @@
 	var/brute_heal = 1
 	var/burn_heal = 0
 
+/datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.2))
+
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
 		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
@@ -163,6 +168,13 @@
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
 
+// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
+/datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWeeds(rand(1,2))
+		mytray.adjustPests(rand(1,2))
+
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
 	M.AdjustSleeping(600, FALSE)
@@ -179,6 +191,12 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
+
+	// Compost for EVERYTHING
+/datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 0.5))
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -293,8 +311,8 @@
 			victim.blind_eyes(3) // 6 seconds
 			victim.confused = max(M.confused, 5) // 10 seconds
 			victim.Knockdown(3 SECONDS)
-			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
-			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
+			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
 		victim.update_damage_hud()
 	if(method == INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
@@ -450,8 +468,15 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
 
+/datum/reagent/consumable/nutraslop
+	name = "Nutraslop"
+	description = "Mixture of leftover prison foods served on previous days."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#3E4A00" // rgb: 62, 74, 0
+	taste_description = "your imprisonment"
+
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -539,6 +564,16 @@
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 
+	// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
+/datum/reagent/consumable/honey/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		if(myseed && prob(20))
+			mytray.pollinate(1)
+		else
+			mytray.adjustWeeds(rand(1,2))
+			mytray.adjustPests(rand(1,2))
+
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
 	M.reagents.add_reagent(/datum/reagent/consumable/sugar,3)
 	if(prob(55))
@@ -558,9 +593,15 @@
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
-	description = "An white and oily mixture of mixed egg yolks."
+	description = "A white and oily mixture of mixed egg yolks."
 	color = "#DFDFDF"
 	taste_description = "mayonnaise"
+
+/datum/reagent/consumable/mold // yeah, ok, togopal, I guess you could call that a condiment
+	name = "Mold"
+	description = "This condiment will make any food break the mold. Or your stomach."
+	color ="#708a88"
+	taste_description = "rancid fungus"
 
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"

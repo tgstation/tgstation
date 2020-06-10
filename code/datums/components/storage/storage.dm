@@ -217,7 +217,7 @@
 	var/list/rejections = list()
 	while(do_after(M, 10, TRUE, parent, FALSE, CALLBACK(src, .proc/handle_mass_pickup, things, I.loc, rejections, progress)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 	to_chat(M, "<span class='notice'>You put everything you could [insert_preposition] [parent].</span>")
 
 /datum/component/storage/proc/handle_mass_item_insertion(list/things, datum/component/storage/src_object, mob/user, datum/progressbar/progress)
@@ -275,7 +275,7 @@
 	var/datum/progressbar/progress = new(M, length(things), T)
 	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 
 /datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
 	var/atom/real_location = real_location()

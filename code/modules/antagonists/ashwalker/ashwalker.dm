@@ -1,6 +1,7 @@
 /datum/team/ashwalkers
 	name = "Ashwalkers"
 	show_roundend_report = FALSE
+	var/list/players_spawned = new
 
 /datum/antagonist/ashwalker
 	name = "Ash Walker"
@@ -21,13 +22,16 @@
 	return ashie_team
 
 /datum/antagonist/ashwalker/on_body_transfer(mob/living/old_body, mob/living/new_body)
+	. = ..()
 	UnregisterSignal(old_body, COMSIG_MOB_EXAMINATE)
 	RegisterSignal(new_body, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
 
 /datum/antagonist/ashwalker/on_gain()
+	. = ..()
 	RegisterSignal(owner.current, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
 
 /datum/antagonist/ashwalker/on_removal()
+	. = ..()
 	UnregisterSignal(owner.current, COMSIG_MOB_EXAMINATE)
 
 /datum/antagonist/ashwalker/proc/on_examinate(datum/source, atom/A)

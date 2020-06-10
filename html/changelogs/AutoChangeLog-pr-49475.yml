@@ -1,5 +1,0 @@
-author: "Yenwodyah"
-delete-after: True
-changes: 
-  - bugfix: "Removed geneticists from the medbay radio channel"
-  - bugfix: "Geneticists are on the science payroll now"

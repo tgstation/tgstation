@@ -11,12 +11,12 @@
 	throw_speed = 3
 	throw_range = 6
 	grind_results = list()
-	var/Uses = 1 // uses before it goes inert
-	var/qdel_timer = null // deletion timer, for delayed reactions
-	var/effectmod
-	var/list/activate_reagents = list() //Reagents required for activation
+	var/Uses = 1 ///uses before it goes inert
+	var/qdel_timer = null ///deletion timer, for delayed reactions
+	var/effectmod ///Which type of crossbred
+	var/list/activate_reagents = list() ///Reagents required for activation
 	var/recurring = FALSE
-	var/research //Research point value
+	var/research ///Research point value for slime cores. These are defines stored in [/__DEFINES/research] - the actual values are updated there.
 
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()
@@ -45,12 +45,24 @@
 	if(Uses)
 		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
-//Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
+/**
+* Effect when activated by a Luminescent.
+*
+* This proc is called whenever a Luminescent consumes a slime extract. Each one is separated into major and minor effects depending on the extract. Cooldown is measured in deciseconds.
+*
+* * arg1 - The mob absorbing the slime extract.
+* * arg2 - The valid species for the absorbtion. Should always be a Luminescent unless something very major has changed.
+* * arg3 - Whether or not the activation is major or minor. Major activations have large, complex effects, minor are simple.
+*/
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	to_chat(user, "<span class='warning'>Nothing happened... This slime extract cannot be activated this way.</span>")
 	return 0
 
-//Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
+/**
+* Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
+*
+* By using a valid core on a living adult slime, then feeding it nine more of the same type, you can mutate it into more useful items. Not every slime type has an implemented core cross.
+*/
 /obj/item/slime_extract/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
 		return ..()
@@ -142,7 +154,8 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			var/food_type = get_random_food()
-			var/obj/O = new food_type
+			var/obj/item/reagent_containers/food/snacks/O = new food_type
+			O.silver_spawned = TRUE
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -628,6 +641,16 @@
 
 ////Slime-derived potions///
 
+/**
+* #Slime potions
+*
+* Feed slimes potions either by hand or using the slime console.
+*
+* Slime potions either augment the slime's behavior, its extract output, or its intelligence. These all come either from extract effects or cross cores.
+* A few of the more powerful ones can modify someone's equipment or gender.
+* New ones should probably be accessible only through cross cores as all the normal core types already have uses. Rule of thumb is 'stronger effects go in cross cores'.
+*/
+
 /obj/item/slimepotion
 	name = "slime potion"
 	desc = "A hard yet gelatinous capsule excreted by a slime, containing mysterious substances."
@@ -910,7 +933,7 @@
 		return
 	if(C.max_heat_protection_temperature >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 		to_chat(user, "<span class='warning'>The [C] is already fireproof!</span>")
-		return ..()
+		return
 	to_chat(user, "<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>")
 	C.name = "fireproofed [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -1001,12 +1024,14 @@
 	imp.implant(M, user)
 	qdel(src)
 
+///Definitions for slime products that don't have anywhere else to go (Floor tiles, blueprints).
+
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	icon_state = "tile-bluespace"
-	item_state = "tile-bluespace"
+	inhand_icon_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
 	custom_materials = list(/datum/material/iron=500)
@@ -1023,7 +1048,7 @@
 	singular_name = "floor tile"
 	desc = "Time seems to flow very slowly around these tiles."
 	icon_state = "tile-sepia"
-	item_state = "tile-sepia"
+	inhand_icon_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
 	custom_materials = list(/datum/material/iron=500)

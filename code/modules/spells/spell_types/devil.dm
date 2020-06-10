@@ -5,7 +5,7 @@
 	include_user = TRUE
 	range = -1
 	clothes_req = FALSE
-	item_type = /obj/item/twohanded/pitchfork/demonic
+	item_type = /obj/item/pitchfork/demonic
 
 	school = "conjuration"
 	charge_max = 150
@@ -15,16 +15,16 @@
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater
-	item_type = /obj/item/twohanded/pitchfork/demonic/greater
+	item_type = /obj/item/pitchfork/demonic/greater
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended
-	item_type = /obj/item/twohanded/pitchfork/demonic/ascended
+	item_type = /obj/item/pitchfork/demonic/ascended
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
 	item_type = /obj/item/instrument/violin/golden
 	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
 	invocation_type = "whisper"
-	invocation = "I aint have this much fun since Georgia."
+	invocation = "I ain't had this much fun since Georgia."
 	action_icon_state = "golden_violin"
 	name = "Summon golden violin"
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'

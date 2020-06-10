@@ -88,6 +88,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 
+
+	// Beer is a chemical composition of alcohol and various other things. It's a garbage nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
+/datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.05))
+		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 0.7))
+
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety has reduced calorie and alcohol content."
@@ -210,7 +218,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(0,M.drowsyness-7)
 	M.AdjustSleeping(-40)
-	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
 	return ..()
@@ -646,7 +654,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "toxinsspecialglass"
 
 /datum/reagent/consumable/ethanol/toxins_special/on_mob_life(var/mob/living/M)
-	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL + 20) //310.15 is the normal bodytemp.
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash
@@ -717,7 +725,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_metabolize(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna.check_mutation(DWARFISM) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE))
+		if(HAS_TRAIT(H, TRAIT_DWARF) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE))
 			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
 			boozepwr = 5 //We've had worse in the mines
 			dorf_mode = TRUE
@@ -850,7 +858,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The ultimate refreshment."
 
 /datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL + 20) //310.15 is the normal bodytemp.
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/barefoot
@@ -975,7 +983,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "sweet and salty alcohol"
 	glass_icon_state = "red_meadglass"
 	glass_name = "Red Mead"
-	glass_desc = "A true Viking's beverage, though its color is strange."
+	glass_desc = "A true Viking's beverage, made with the blood of their enemies."
 
 /datum/reagent/consumable/ethanol/mead
 	name = "Mead"
@@ -987,7 +995,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "sweet, sweet alcohol"
 	glass_icon_state = "meadglass"
 	glass_name = "Mead"
-	glass_desc = "A Viking's beverage, though a cheap one."
+	glass_desc = "A drink from Valhalla."
 
 /datum/reagent/consumable/ethanol/iced_beer
 	name = "Iced Beer"
@@ -1090,11 +1098,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/irishcarbomb
 	name = "Irish Car Bomb"
-	description = "Mmm, tastes like chocolate cake..."
+	description = "Mmm, tastes like the free Irish state."
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 25
 	quality = DRINK_GOOD
-	taste_description = "delicious anger"
+	taste_description = "the spirit of Ireland"
 	glass_icon_state = "irishcarbomb"
 	glass_name = "Irish Car Bomb"
 	glass_desc = "An Irish car bomb."
@@ -1493,7 +1501,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quadruple_sec
 	name = "Quadruple Sec"
-	description = "Kicks just as hard as licking the powercell on a baton, but tastier."
+	description = "Kicks just as hard as licking the power cell on a baton, but tastier."
 	color = "#cc0000"
 	boozepwr = 35
 	quality = DRINK_GOOD
@@ -1673,7 +1681,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/peppermint_patty/on_mob_life(mob/living/carbon/M)
 	M.apply_status_effect(/datum/status_effect/throat_soothed)
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/ethanol/alexander
@@ -2137,7 +2145,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "boozy Catholicism in a glass."
 
 /datum/reagent/consumable/ethanol/trappist/on_mob_life(mob/living/carbon/M)
-	if(M.mind.isholy)
+	if(M.mind.holy_role)
 		M.adjustFireLoss(-2.5, 0)
 		M.jitteriness = max(0, M.jitteriness-1)
 		M.stuttering = max(0, M.stuttering-1)
@@ -2216,3 +2224,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "pina_colada"
 	glass_name = "Pina Colada"
 	glass_desc = "If you like pina coladas, and getting caught in the rain... well, you'll like this drink."
+
+
+/datum/reagent/consumable/ethanol/pruno // pruno mix is in drink_reagents
+	name = "pruno"
+	color = "#E78108"
+	description = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
+	boozepwr = 85
+	taste_description = "your tastebuds being individually shanked"
+	glass_icon_state = "glass_orange"
+	glass_name = "glass of pruno"
+	glass_desc = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
+
+/datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/M)
+	M.adjust_disgust(5)
+	..()

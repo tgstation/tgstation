@@ -5,13 +5,13 @@
 	extended_desc = "This program is capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = FALSE
-	usage_flags = PROGRAM_CONSOLE
+	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	transfer_access = ACCESS_HEADS
 	available_on_ntnet = TRUE
-	tgui_id = "ntos_ai_restorer"
+	tgui_id = "NtosAiRestorer"
 	ui_x = 370
 	ui_y = 400
-
+	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
 /datum/computer_file/program/aidiag/proc/get_ai(cardcheck)
@@ -95,8 +95,10 @@
 
 	var/obj/item/aicard/aicard = get_ai(2)
 
+	data["ejectable"] = TRUE
+	data["AI_present"] = FALSE
+	data["error"] = null
 	if(!aicard)
-		data["nocard"] = TRUE
 		data["error"] = "Please insert an intelliCard."
 	else
 		if(!AI)
@@ -106,12 +108,12 @@
 			if(cardhold.flush)
 				data["error"] = "Flush in progress"
 			else
+				data["AI_present"] = TRUE
 				data["name"] = AI.name
 				data["restoring"] = restoring
-				data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
 				data["health"] = (AI.health + 100) / 2
 				data["isDead"] = AI.stat == DEAD
-				data["ai_laws"] = AI.laws.get_law_list(include_zeroth = 1)
+				data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
 
 	return data
 

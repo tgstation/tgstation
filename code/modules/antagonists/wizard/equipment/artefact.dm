@@ -8,7 +8,7 @@
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	item_state = "knife"
+	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 15
@@ -66,7 +66,7 @@
 	else
 		return ..()
 
-/obj/effect/rend/singularity_pull()
+/obj/effect/rend/singularity_act()
 	return
 
 /obj/effect/rend/singularity_pull()
@@ -197,7 +197,7 @@
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -268,7 +268,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), ITEM_SLOT_FEET)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), ITEM_SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/spear(H), ITEM_SLOT_BACK)
 
 
 /obj/item/voodoo
@@ -276,7 +276,7 @@
 	desc = "Something creepy about it."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "voodoo"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
@@ -340,9 +340,7 @@
 			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)
 				user.reset_perspective(target)
-				spawn(100)
-					user.reset_perspective(null)
-					user.unset_machine()
+				addtimer(CALLBACK(src, .proc/reset, user), 10 SECONDS)
 			if(BODY_ZONE_R_LEG,BODY_ZONE_L_LEG)
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
 				var/turf/T = get_step(target,pick(GLOB.cardinals))
@@ -356,6 +354,12 @@
 				to_chat(target, "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>")
 				GiveHint(target,user)
 		cooldown = world.time + cooldown_time
+
+/obj/item/voodoo/proc/reset(mob/user)
+	if(QDELETED(user))
+		return
+	user.reset_perspective(null)
+	user.unset_machine()
 
 /obj/item/voodoo/proc/update_targets()
 	possible = list()

@@ -103,10 +103,10 @@
 	name = "Carbon Dioxide Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/carbon_tank
 
-/obj/item/circuitboard/computer/auxillary_base
-	name = "Auxillary Base Management Console (Computer Board)"
+/obj/item/circuitboard/computer/auxiliary_base
+	name = "Auxiliary Base Management Console (Computer Board)"
 	icon_state = "engineering"
-	build_path = /obj/machinery/computer/auxillary_base
+	build_path = /obj/machinery/computer/auxiliary_base
 
 /obj/item/circuitboard/computer/base_construction
 	name = "circuit board (Aux Mining Base Construction Console)"
@@ -197,13 +197,13 @@
 
 /obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
+		if(build_path == /obj/machinery/computer/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole
 			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
 		else
 			name = "Book Inventory Management Console (Computer Board)"
-			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+			build_path = /obj/machinery/computer/bookmanagement
 			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
 	else
 		return ..()
@@ -333,20 +333,6 @@
 /obj/item/circuitboard/computer/rdconsole/production
 	name = "R&D Console Production Only (Computer Board)"
 	build_path = /obj/machinery/computer/rdconsole/production
-
-
-/obj/item/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/rdconsole/core)
-			name = "R&D Console - Robotics (Computer Board)"
-			build_path = /obj/machinery/computer/rdconsole/robotics
-			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
-		else
-			name = "R&D Console (Computer Board)"
-			build_path = /obj/machinery/computer/rdconsole/core
-			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
-	else
-		return ..()
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control (Computer Board)"

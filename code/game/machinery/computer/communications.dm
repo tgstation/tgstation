@@ -183,7 +183,7 @@
 
 		if("callshuttle")
 			state = STATE_DEFAULT
-			if(authenticated)
+			if(authenticated && SSshuttle.canEvac(usr))
 				state = STATE_CALLSHUTTLE
 		if("callshuttle2")
 			if(authenticated)
@@ -321,13 +321,13 @@
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					return
-				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
+				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self-Destruct Code Request.","")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				Nuke_request(input, usr)
 				to_chat(usr, "<span class='notice'>Request sent.</span>")
 				usr.log_message("has requested the nuclear codes from CentCom with reason \"[input]\"", LOG_SAY)
-				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/ai/commandreport.ogg')
+				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested",'sound/ai/commandreport.ogg')
 				CM.lastTimeUsed = world.time
 
 
@@ -336,7 +336,9 @@
 			aicurrmsg = null
 			aistate = STATE_DEFAULT
 		if("ai-callshuttle")
-			aistate = STATE_CALLSHUTTLE
+			aistate = STATE_DEFAULT
+			if(SSshuttle.canEvac(usr))
+				aistate = STATE_CALLSHUTTLE
 		if("ai-callshuttle2")
 			SSshuttle.requestEvac(usr, href_list["call"])
 			aistate = STATE_DEFAULT

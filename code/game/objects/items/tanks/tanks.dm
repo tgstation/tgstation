@@ -145,7 +145,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "tanks", name, 400, 120, master_ui, state)
+		ui = new(user, src, ui_key, "Tank", name, 400, 120, master_ui, state)
 		ui.open()
 
 /obj/item/tank/ui_data(mob/user)
@@ -182,10 +182,6 @@
 			else if(pressure == "max")
 				pressure = TANK_MAX_RELEASE_PRESSURE
 				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New release pressure ([TANK_MIN_RELEASE_PRESSURE]-[TANK_MAX_RELEASE_PRESSURE] kPa):", name, distribute_pressure) as num|null
-				if(!isnull(pressure) && !..())
-					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE

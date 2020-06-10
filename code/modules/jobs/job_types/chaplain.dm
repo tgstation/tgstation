@@ -7,36 +7,40 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
-	selection_color = "#dddddd"
+	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/chaplain
 
 	access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_CIV
+	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	. = ..()
-	if(H.mind)
-		H.mind.isholy = TRUE
 
 	var/obj/item/storage/book/bible/booze/B = new
 
 	if(GLOB.religion)
+		if(H.mind)
+			H.mind.holy_role = HOLY_ROLE_PRIEST
 		B.deity_name = GLOB.deity
 		B.name = GLOB.bible_name
 		B.icon_state = GLOB.bible_icon_state
-		B.item_state = GLOB.bible_item_state
+		B.inhand_icon_state = GLOB.bible_inhand_icon_state
 		to_chat(H, "<span class='boldnotice'>There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain.</span>")
 		H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
 		H.put_in_hands(N)
+		if(GLOB.religious_sect)
+			GLOB.religious_sect.on_conversion(H)
 		return
+	if(H.mind)
+		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
 	var/new_religion = DEFAULT_RELIGION
 	if(M.client && M.client.prefs.custom_names["religion"])
@@ -47,7 +51,6 @@
 		new_deity = M.client.prefs.custom_names["deity"]
 
 	B.deity_name = new_deity
-
 
 	switch(lowertext(new_religion))
 		if("christianity") // DEFAULT_RELIGION
@@ -74,7 +77,7 @@
 			B.name = "Fluorescent Incandescence"
 		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
 			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition","F.A.T.A.L. Rulebook")
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // starts off retarded as fuck
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
 		if("monkeyism","apism","gorillism","primatism")
 			B.name = pick("Going Bananas", "Bananas Out For Harambe")
 		if("mormonism")
@@ -85,6 +88,8 @@
 			B.name = "The Holy Piby"
 		if("satanism")
 			B.name = "The Unholy Bible"
+		if("sikhism")
+			B.name = "Guru Granth Sahib"
 		if("science")
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		if("scientology")
@@ -118,6 +123,12 @@
 	belt = /obj/item/pda/chaplain
 	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
-	backpack_contents = list(/obj/item/camera/spooky = 1)
+	backpack_contents = list(
+		/obj/item/stamp/chap = 1,
+		/obj/item/camera/spooky = 1
+		)
+
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack
+
+	chameleon_extras = /obj/item/stamp/chap

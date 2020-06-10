@@ -1,9 +1,9 @@
 /obj/item/gun/ballistic/automatic/pistol
-	name = "stechkin pistol"
-	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
+	name = "makarov pistol"
+	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
-	mag_type = /obj/item/ammo_box/magazine/m10mm
+	mag_type = /obj/item/ammo_box/magazine/m9mm
 	can_suppress = TRUE
 	burst_size = 1
 	fire_delay = 0
@@ -42,7 +42,7 @@
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
-	
+
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE
 
@@ -58,26 +58,27 @@
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
-	
+
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
-	item_state = "deagleg"
+	inhand_icon_state = "deagleg"
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/camo
 	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
-	item_state = "deagleg"
+	inhand_icon_state = "deagleg"
 
-/obj/item/gun/ballistic/automatic/pistol/APS
-	name = "stechkin APS pistol"
-	desc = "The original Russian version of a widely used Syndicate sidearm. Uses 9mm ammo."
+/obj/item/gun/ballistic/automatic/pistol/aps
+	name = "stechkin APS machine pistol"
+	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."
 	icon_state = "aps"
-	w_class = WEIGHT_CLASS_SMALL
-	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
-	can_suppress = FALSE
+	w_class = WEIGHT_CLASS_NORMAL
+	mag_type = /obj/item/ammo_box/magazine/m9mm_aps
+	can_suppress = TRUE
 	burst_size = 3
-	fire_delay = 2
+	fire_delay = 1
+	spread = 10
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 
 /obj/item/gun/ballistic/automatic/pistol/stickman

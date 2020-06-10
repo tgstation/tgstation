@@ -3,9 +3,11 @@
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
 /obj/effect/mob_spawn
-	name = "Unknown"
+	name = "Mob Spawner"
 	density = TRUE
 	anchored = TRUE
+	icon = 'icons/effects/mapping_helpers.dmi' // These aren't *really* mapping helpers but it fits the most with it's common usage (to help place corpses in maps)
+	icon_state = "mobspawner" // So it shows up in the map editor
 	var/mob_type = null
 	var/mob_name = ""
 	var/mob_gender = null
@@ -41,9 +43,12 @@
 	if(is_banned_from(user.key, banType))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
+	if(!allow_spawn(user))
+		return
 	if(QDELETED(src) || QDELETED(user))
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be revived!)",,"Yes","No")
+
 	if(ghost_role == "No" || !loc)
 		return
 	log_game("[key_name(user)] became [mob_name]")
@@ -64,6 +69,9 @@
 	if(!LAZYLEN(spawners))
 		GLOB.mob_spawners -= name
 	return ..()
+
+/obj/effect/mob_spawn/proc/allow_spawn(mob/user) //Override this to add spawn limits to a ghost role
+	return TRUE
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return
@@ -215,6 +223,8 @@
 
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
+		if(H.age)
+			W.registered_age = H.age
 		if(id_access)
 			for(var/jobtype in typesof(/datum/job))
 				var/datum/job/J = new jobtype
@@ -232,6 +242,7 @@
 
 //Instant version - use when spawning corpses during runtime
 /obj/effect/mob_spawn/human/corpse
+	icon_state = "corpsehuman"
 	roundstart = FALSE
 	instant = TRUE
 
@@ -247,6 +258,7 @@
 /obj/effect/mob_spawn/human/corpse/delayed
 	ghost_usable = FALSE //These are just not-yet-set corpses.
 	instant = FALSE
+	invisibility = 101 // a fix for the icon not wanting to cooperate
 
 //Non-human spawners
 
@@ -300,6 +312,7 @@
 /obj/effect/mob_spawn/human/corpse/assistant
 	name = "Assistant"
 	outfit = /datum/outfit/job/assistant
+	icon_state = "corpsegreytider"
 
 /obj/effect/mob_spawn/human/corpse/assistant/beesease_infection
 	disease = /datum/disease/beesease
@@ -313,15 +326,18 @@
 /obj/effect/mob_spawn/human/corpse/cargo_tech
 	name = "Cargo Tech"
 	outfit = /datum/outfit/job/cargo_tech
+	icon_state = "corpsecargotech"
 
 /obj/effect/mob_spawn/human/cook
 	name = "Cook"
 	outfit = /datum/outfit/job/cook
+	icon_state = "corpsecook"
 
 
 /obj/effect/mob_spawn/human/doctor
 	name = "Doctor"
 	outfit = /datum/outfit/job/doctor
+	icon_state = "corpsedoctor"
 
 
 /obj/effect/mob_spawn/human/doctor/alive
@@ -345,6 +361,7 @@
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
 	outfit = /datum/outfit/job/engineer/gloved
+	icon_state = "corpseengineer"
 
 /obj/effect/mob_spawn/human/engineer/rig
 	outfit = /datum/outfit/job/engineer/gloved/rig
@@ -352,14 +369,17 @@
 /obj/effect/mob_spawn/human/clown
 	name = "Clown"
 	outfit = /datum/outfit/job/clown
+	icon_state = "corpseclown"
 
 /obj/effect/mob_spawn/human/scientist
 	name = "Scientist"
 	outfit = /datum/outfit/job/scientist
+	icon_state = "corpsescientist"
 
 /obj/effect/mob_spawn/human/miner
 	name = "Shaft Miner"
 	outfit = /datum/outfit/job/miner
+	icon_state = "corpseminer"
 
 /obj/effect/mob_spawn/human/miner/rig
 	outfit = /datum/outfit/job/miner/equipped/hardsuit
@@ -399,6 +419,14 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	id = /obj/item/card/id
+
+/datum/outfit/spacebartender/post_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+
+	var/obj/item/card/id/W = H.wear_id
+	if(H.age < AGE_MINOR)
+		W.registered_age = AGE_MINOR
+		to_chat(H, "<span class='notice'>You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!</span>")
 
 /obj/effect/mob_spawn/human/beach
 	outfit = /datum/outfit/beachbum
@@ -469,7 +497,7 @@
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
 	id = /obj/item/card/id
@@ -486,7 +514,7 @@
 	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security

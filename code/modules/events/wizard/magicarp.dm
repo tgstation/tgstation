@@ -38,6 +38,9 @@
 	health = 50
 	gold_core_spawnable = NO_SPAWN
 	random_color = FALSE
+	food_type = list()
+	tame_chance = 0
+	bonus_tame_chance = 0
 	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
 	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball,
 	/obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage)

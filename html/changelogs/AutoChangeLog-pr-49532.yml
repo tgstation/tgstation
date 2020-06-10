@@ -1,4 +1,0 @@
-author: "Arkatos and actioninja"
-delete-after: True
-changes: 
-  - rscadd: "Malfunction Modules Picker now uses tgui."

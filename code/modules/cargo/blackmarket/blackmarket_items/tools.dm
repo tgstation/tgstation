@@ -44,7 +44,7 @@
 /datum/blackmarket_item/tool/binoculars
 	name = "Binoculars"
 	desc = "Increase your sight by 150% with this handy Tool!"
-	item = /obj/item/twohanded/binoculars
+	item = /obj/item/binoculars
 	stock = 1
 
 	price_min = 400

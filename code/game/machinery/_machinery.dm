@@ -21,9 +21,9 @@ Class Variables:
    power_channel (num)
       What channel to draw from when drawing power for power mode
       Possible Values:
-         EQUIP:0 -- Equipment Channel
-         LIGHT:2 -- Lighting Channel
-         ENVIRON:3 -- Environment Channel
+         AREA_USAGE_EQUIP:0 -- Equipment Channel
+         AREA_USAGE_LIGHT:2 -- Lighting Channel
+         AREA_USAGE_ENVIRON:3 -- Environment Channel
 
    component_parts (list)
       A list of component parts of machine used by frame based machines.
@@ -53,11 +53,11 @@ Class Procs:
       Default definition uses 'use_power', 'power_channel', 'active_power_usage',
       'idle_power_usage', 'powered()', and 'use_power()' implement behavior.
 
-   powered(chan = EQUIP)         'modules/power/power.dm'
+   powered(chan = -1)         'modules/power/power.dm'
       Checks to see if area that contains the object has power available for power
-      channel given in 'chan'.
+      channel given in 'chan'. -1 defaults to power_channel
 
-   use_power(amount, chan=EQUIP)   'modules/power/power.dm'
+   use_power(amount, chan=-1)   'modules/power/power.dm'
       Deducts 'amount' from the power channel 'chan' of the area that contains the object.
 
    power_change()               'modules/power/power.dm'
@@ -92,6 +92,8 @@ Class Procs:
 	pressure_resistance = 15
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
+	flags_ricochet = RICOCHET_HARD
+	ricochet_chance_mod = 0.3
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -103,8 +105,8 @@ Class Procs:
 		//2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
-	var/power_channel = EQUIP
-		//EQUIP,ENVIRON or LIGHT
+	var/power_channel = AREA_USAGE_EQUIP
+		//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	var/wire_compatible = FALSE
 
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
@@ -113,7 +115,10 @@ Class Procs:
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
-	var/speed_process = FALSE // Process as fast as possible?
+	/// Viable flags to go here are START_PROCESSING_ON_INIT, or START_PROCESSING_MANUALLY. See code\__DEFINES\machines.dm for more information on these flags.
+	var/processing_flags = START_PROCESSING_ON_INIT
+	/// What subsystem this machine will use, which is generally SSmachines or SSfastprocess. By default all machinery use SSmachines. This fires a machine's process() roughly every 2 seconds.
+	var/subsystem_type = /datum/controller/subsystem/machines
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
@@ -137,15 +142,23 @@ Class Procs:
 		circuit = new circuit
 		circuit.apply_default_parts(src)
 
-	if(!speed_process)
-		START_PROCESSING(SSmachines, src)
-	else
-		START_PROCESSING(SSfastprocess, src)
+	if(processing_flags & START_PROCESSING_ON_INIT)
+		begin_processing()
 
-	if (occupant_typecache)
+	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
 	return INITIALIZE_HINT_LATELOAD
+
+/// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
+/obj/machinery/proc/begin_processing()
+	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
+	START_PROCESSING(subsystem, src)
+
+/// Helper proc for telling a machine to stop processing with the subsystem type that is located in its `subsystem_type` var.
+/obj/machinery/proc/end_processing()
+	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
+	STOP_PROCESSING(subsystem, src)
 
 /obj/machinery/LateInitialize()
 	. = ..()
@@ -154,10 +167,7 @@ Class Procs:
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
-	if(!speed_process)
-		STOP_PROCESSING(SSmachines, src)
-	else
-		STOP_PROCESSING(SSfastprocess, src)
+	end_processing()
 	dropContents()
 	if(length(component_parts))
 		for(var/atom/A in component_parts)
@@ -238,24 +248,36 @@ Class Procs:
 	return !(machine_stat & (NOPOWER|BROKEN|MAINT))
 
 /obj/machinery/can_interact(mob/user)
-	var/silicon = issiliconoradminghost(user)
-	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE))
+	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
-	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
+
+	var/silicon = issilicon(user)
+	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN)) // Check if we can interact with an open panel machine, if the panel is open
 		if(!silicon || !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
 
-	if(silicon)
+	if(silicon || IsAdminGhost(user)) // If we are an AI or adminghsot, make sure the machine allows silicons to interact
 		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 			return FALSE
-	else
-		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON)
+
+	else if(isliving(user)) // If we are a living human
+		var/mob/living/L = user
+
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) // First make sure the machine doesn't require silicon interaction
 			return FALSE
-		if(!Adjacent(user))
-			var/mob/living/carbon/H = user
+
+		if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
+			var/mob/living/carbon/H = L
 			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
 				return FALSE
-	return TRUE
+
+		if(L.incapacitated()) // Finally make sure we aren't incapacitated
+			return FALSE
+
+	else // If we aren't a silicon, living, or admin ghost, bad!
+		return FALSE
+
+	return TRUE // If we pass all these checks, woohoo! We can interact
 
 /obj/machinery/proc/check_nap_violations()
 	if(!SSeconomy.full_ancap)
@@ -322,6 +344,14 @@ Class Procs:
 /obj/machinery/attack_robot(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !IsAdminGhost(user))
 		return FALSE
+	if(Adjacent(user) && can_buckle && has_buckled_mobs()) //so that borgs (but not AIs, sadly (perhaps in a future PR?)) can unbuckle people from machines
+		if(buckled_mobs.len > 1)
+			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
+			if(user_unbuckle_mob(unbuckled,user))
+				return TRUE
+		else
+			if(user_unbuckle_mob(buckled_mobs[1],user))
+				return TRUE
 	return _try_interact(user)
 
 /obj/machinery/attack_ai(mob/user)
@@ -395,6 +425,12 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+
+/obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+
+	if(mover.pass_flags & PASSMACHINE)
+		return TRUE
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)

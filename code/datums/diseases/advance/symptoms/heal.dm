@@ -259,26 +259,27 @@
 /datum/symptom/heal/coma/End(datum/disease/advance/A)
 	if(!..())
 		return
+	if(active_coma)
+		uncoma()
 	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
 	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
-	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
+	if(M.IsSleeping())
+		return power * 0.25 //Voluntary unconsciousness yields lower healing.
+	if(M.stat == UNCONSCIOUS)
 		return power * 0.9
-	else if(M.stat == SOFT_CRIT)
+	if(M.stat == SOFT_CRIT)
 		return power * 0.5
-	else if(M.IsSleeping())
-		return power * 0.25
-	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
+	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
 		active_coma = TRUE
 		addtimer(CALLBACK(src, .proc/coma, M), 60)
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	M.fakedeath("regenerative_coma", !deathgasp)
-	M.update_stat()
 	M.update_mobility()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
@@ -287,7 +288,6 @@
 		return
 	active_coma = FALSE
 	M.cure_fakedeath("regenerative_coma")
-	M.update_stat()
 	M.update_mobility()
 
 /datum/symptom/heal/coma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
@@ -415,12 +415,12 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you...</span>")
 
-	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,BODYTEMP_NORMAL)
+	if(M.bodytemperature > M.get_body_temp_normal())
+		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel less hot.</span>")
-	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
-		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,0,BODYTEMP_NORMAL)
+	else if(M.bodytemperature < (M.get_body_temp_normal() + 1))
+		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,0, M.get_body_temp_normal())
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 

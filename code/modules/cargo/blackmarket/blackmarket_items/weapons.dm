@@ -27,7 +27,7 @@
 /datum/blackmarket_item/weapon/bone_spear
 	name = "Bone Spear"
 	desc = "Authentic tribal spear, made from real bones! A steal at any price, especially if you're a caveman."
-	item = /obj/item/twohanded/spear/bonespear
+	item = /obj/item/spear/bonespear
 
 	price_min = 200
 	price_max = 300

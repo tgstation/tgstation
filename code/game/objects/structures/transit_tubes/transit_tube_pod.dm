@@ -59,7 +59,13 @@
 
 /obj/structure/transit_tube_pod/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
-		AM.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += AM
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += AM
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += AM
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
 	..()
@@ -151,7 +157,14 @@
 		outside_tube()
 
 /obj/structure/transit_tube_pod/proc/outside_tube()
+	var/list/savedcontents = contents.Copy()
+	var/saveddir = dir
+	var/turf/destination = get_edge_target_turf(src,saveddir)
+	visible_message("<span class='warning'>[src] ejects its insides out!</span>")
 	deconstruct(FALSE)//we automatically deconstruct the pod
+	for(var/i in savedcontents)
+		var/atom/movable/AM = i
+		AM.throw_at(destination,rand(1,3),5)
 
 /obj/structure/transit_tube_pod/return_air()
 	return air_contents

@@ -79,6 +79,7 @@
 #define ACCESS_NETWORK 67
 /// Pharmacy access (Chemistry room in Medbay)
 #define ACCESS_PHARMACY 69 ///Nice.
+#define ACCESS_PSYCHOLOGY 70
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.

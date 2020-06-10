@@ -26,7 +26,8 @@ GENE SCANNER
 	var/on = FALSE
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=150)
@@ -65,8 +66,6 @@ GENE SCANNER
 		return
 	var/list/t_ray_images = list()
 	for(var/obj/O in orange(distance, viewer) )
-		if(O.level != 1)
-			continue
 
 		if(O.invisibility == INVISIBILITY_MAXIMUM || HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
@@ -82,7 +81,8 @@ GENE SCANNER
 	name = "health analyzer"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "health"
-	item_state = "healthanalyzer"
+	inhand_icon_state = "healthanalyzer"
+	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner capable of distinguishing vital signs of the subject."
@@ -193,7 +193,9 @@ GENE SCANNER
 				trauma_text += trauma_desc
 			render_list += "<span class='alert ml-1'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>\n"
 		if(C.roundstart_quirks.len)
-			render_list += "<span class='info ml-1'>Subject has the following physiological traits: [C.get_trait_string()].</span>\n"
+			render_list += "<span class='info ml-1'>Subject Major Disabilities: [C.get_trait_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY)].</span>\n"
+			if(advanced)
+				render_list += "<span class='info ml-1'>Subject Minor Disabilities: [C.get_trait_string(FALSE, CAT_QUIRK_MINOR_DISABILITY)].</span>\n"
 	if(advanced)
 		render_list += "<span class='info ml-1'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
 
@@ -302,15 +304,15 @@ GENE SCANNER
 		var/datum/species/S = H.dna.species
 		var/mutant = H.dna.check_mutation(HULK) \
 			|| S.mutantlungs != initial(S.mutantlungs) \
-			|| S.mutant_brain != initial(S.mutant_brain) \
-			|| S.mutant_heart != initial(S.mutant_heart) \
+			|| S.mutantbrain != initial(S.mutantbrain) \
+			|| S.mutantheart != initial(S.mutantheart) \
 			|| S.mutanteyes != initial(S.mutanteyes) \
 			|| S.mutantears != initial(S.mutantears) \
 			|| S.mutanthands != initial(S.mutanthands) \
 			|| S.mutanttongue != initial(S.mutanttongue) \
-			|| S.mutanttail != initial(S.mutanttail) \
 			|| S.mutantliver != initial(S.mutantliver) \
 			|| S.mutantstomach != initial(S.mutantstomach) \
+			|| S.mutantappendix != initial(S.mutantappendix) \
 			|| S.flying_species != initial(S.flying_species)
 
 		render_list += "<span class='info ml-1'>Species: [S.name][mutant ? "-derived mutant" : ""]</span>\n"
@@ -401,7 +403,7 @@ GENE SCANNER
 	custom_price = 100
 	icon = 'icons/obj/device.dmi'
 	icon_state = "analyzer"
-	item_state = "analyzer"
+	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -503,7 +505,7 @@ GENE SCANNER
 				to_chat(user, "<span class='warning'>[src]'s barometer function says that the next storm will breeze on by.</span>")
 		else
 			var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
-			var/fixed = next_hit ? next_hit - world.time : -1
+			var/fixed = next_hit ? timeleft(next_hit) : -1
 			if(fixed < 0)
 				to_chat(user, "<span class='warning'>[src]'s barometer function was unable to trace any weather patterns.</span>")
 			else
@@ -537,7 +539,7 @@ GENE SCANNER
 	var/icon = target
 	var/render_list = list()
 	if(!silent && isliving(user))
-		user.visible_message("<span class='notice'>[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].</span>", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+		user.visible_message("<span class='notice'>[user] uses the analyzer on [icon2html(icon, viewers(user))] [target].</span>", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	render_list += "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>"
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
@@ -579,7 +581,7 @@ GENE SCANNER
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "adv_spectrometer"
-	item_state = "analyzer"
+	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -634,7 +636,7 @@ GENE SCANNER
 	name = "nanite scanner"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_scanner"
-	item_state = "nanite_remote"
+	inhand_icon_state = "nanite_remote"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to detect nanites and their programming."
@@ -661,7 +663,7 @@ GENE SCANNER
 	name = "genetic sequence scanner"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gene"
-	item_state = "healthanalyzer"
+	inhand_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Hold near a DNA console to update the internal database."
@@ -686,7 +688,7 @@ GENE SCANNER
 		gene_scan(M, user)
 
 	else
-		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
+		user.visible_message("<span class='notice'>[user] fails to analyze [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
 
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)
@@ -762,10 +764,10 @@ GENE SCANNER
 	name = "kiosk scanner wand"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner_wand"
-	item_state = "healthanalyzer"
+	inhand_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	desc = "An wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
+	desc = "A wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY

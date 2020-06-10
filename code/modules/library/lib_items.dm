@@ -23,6 +23,12 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
+	/// When enabled, books_to_load number of random books will be generated for this bookcase when first interacted with.
+	var/load_random_books = FALSE
+	/// The category of books to pick from when populating random books.
+	var/random_category = null
+	/// How many random books to generate.
+	var/books_to_load = 0
 
 /obj/structure/bookcase/examine(mob/user)
 	. = ..()
@@ -119,6 +125,9 @@
 		return
 	if(!istype(user))
 		return
+	if(load_random_books)
+		create_random_books(books_to_load, src, FALSE, random_category)
+		load_random_books = FALSE
 	if(contents.len)
 		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sortNames(contents.Copy())
 		if(choice)
@@ -140,10 +149,10 @@
 
 
 /obj/structure/bookcase/update_icon_state()
-	if(contents.len < 5)
-		icon_state = "book-[contents.len]"
-	else
-		icon_state = "book-5"
+	var/amount = contents.len
+	if(load_random_books)
+		amount += books_to_load
+	icon_state = "book-[amount < 5 ? amount : 5]"
 
 
 /obj/structure/bookcase/manuals/engineering
@@ -315,7 +324,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
+	var/obj/machinery/computer/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
 	var/obj/item/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 

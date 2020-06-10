@@ -228,6 +228,12 @@
 			if(prob(20))
 				emote(pick("giggle","laugh"))
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+		if(SA_partialpressure > safe_tox_max*3)
+			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_tox_max)
+			adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+			throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+		else
+			clear_alert("too_much_tox")
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
@@ -248,6 +254,11 @@
 	if(breath_gases[/datum/gas/nitryl])
 		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
+
+	//FREON
+	if(breath_gases[/datum/gas/freon])
+		var/freon_partialpressure = (breath_gases[/datum/gas/freon][MOLES]/breath.total_moles())*breath_pressure
+		adjustFireLoss(freon_partialpressure * 0.25)
 
 	//MIASMA
 	if(breath_gases[/datum/gas/miasma])
@@ -572,7 +583,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
  */
 /mob/living/carbon/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment)
 	var/areatemp = get_temperature(environment)
-	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
+	var/body_temperature_difference = get_body_temp_normal() - bodytemperature
 	var/natural_change = 0
 
 	// We are very cold, increate body temperature
@@ -581,12 +592,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			BODYTEMP_AUTORECOVERY_MINIMUM)
 
 	// we are cold, reduce the minimum increment and do not jump over the difference
-	else if(bodytemperature > BODYTEMP_COLD_DAMAGE_LIMIT && bodytemperature < BODYTEMP_NORMAL)
+	else if(bodytemperature > BODYTEMP_COLD_DAMAGE_LIMIT && bodytemperature < get_body_temp_normal())
 		natural_change = max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
 			min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM / 4))
 
 	// We are hot, reduce the minimum increment and do not jump below the difference
-	else if(bodytemperature > BODYTEMP_NORMAL && bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
+	else if(bodytemperature > get_body_temp_normal() && bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
 		natural_change = min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
 			max(body_temperature_difference, -(BODYTEMP_AUTORECOVERY_MINIMUM / 4)))
 
@@ -596,7 +607,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	var/thermal_protection = 1 - get_insulation_protection(areatemp) // invert the protection
 	if(areatemp > bodytemperature) // It is hot here
-		if(bodytemperature < BODYTEMP_NORMAL)
+		if(bodytemperature < get_body_temp_normal())
 			// Our bodytemp is below normal we are cold, insulation helps us retain body heat
 			// and will reduce the heat we lose to the environment
 			natural_change = (thermal_protection + 1) * natural_change
@@ -606,7 +617,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			natural_change = (1 / (thermal_protection + 1)) * natural_change
 	else // It is cold here
 		if(!on_fire) // If on fire ignore ignore local temperature in cold areas
-			if(bodytemperature < BODYTEMP_NORMAL)
+			if(bodytemperature < get_body_temp_normal())
 				// Our bodytemp is below normal, insulation helps us retain body heat
 				// and will reduce the heat we lose to the environment
 				natural_change = (thermal_protection + 1) * natural_change
@@ -649,12 +660,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/proc/share_bodytemperature(mob/living/carbon/M)
 	var/temp_diff = bodytemperature - M.bodytemperature
 	if(temp_diff > 0) // you are warm share the heat of life
-		M.adjust_bodytemperature(temp_diff, use_insulation=TRUE, use_steps=TRUE) // warm up the giver
-		adjust_bodytemperature((temp_diff * -1), use_insulation=TRUE, use_steps=TRUE) // cool down the reciver
+		M.adjust_bodytemperature((temp_diff * 0.5), use_insulation=TRUE, use_steps=TRUE) // warm up the giver
+		adjust_bodytemperature((temp_diff * -0.5), use_insulation=TRUE, use_steps=TRUE) // cool down the reciver
 
 	else // they are warmer leech from them
-		adjust_bodytemperature(temp_diff, use_insulation=TRUE, use_steps=TRUE) // warm up the reciver
-		M.adjust_bodytemperature((temp_diff * -1), use_insulation=TRUE, use_steps=TRUE) // cool down the giver
+		adjust_bodytemperature((temp_diff * -0.5) , use_insulation=TRUE, use_steps=TRUE) // warm up the reciver
+		M.adjust_bodytemperature((temp_diff * 0.5), use_insulation=TRUE, use_steps=TRUE) // cool down the giver
 
 /**
  * Adjust the body temperature of a mob

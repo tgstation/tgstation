@@ -92,7 +92,6 @@
 
 
 /obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
-	. = ..()
 	if (message_mode == MODE_INTERCOM)
 		return  // Avoid hearing the same thing twice
 	if(!anyai && !(speaker in ai))
@@ -107,7 +106,7 @@
 		if(!A || emped)
 			on = FALSE
 		else
-			on = A.powered(EQUIP) // set "on" to the power status
+			on = A.powered(AREA_USAGE_EQUIP) // set "on" to the power status
 
 		if(!on)
 			icon_state = "intercom-p"

@@ -3,7 +3,7 @@
 	desc = "Exosuit"
 	icon = 'icons/mecha/mecha.dmi'
 	density = TRUE //Dense. To raise the heat.
-	opacity = 1 ///opaque. Menacing.
+	opacity = TRUE //opaque. Menacing.
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -25,9 +25,12 @@
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
 	var/equipment_disabled = 0 //disabled due to EMP
-	var/obj/item/stock_parts/cell/cell ///Keeps track of the mech's cell
-	var/obj/item/stock_parts/scanning_module/scanmod ///Keeps track of the mech's scanning module
-	var/obj/item/stock_parts/capacitor/capacitor ///Keeps track of the mech's capacitor
+	/// Keeps track of the mech's cell
+	var/obj/item/stock_parts/cell/cell
+	/// Keeps track of the mech's scanning module
+	var/obj/item/stock_parts/scanning_module/scanmod
+	/// Keeps track of the mech's capacitor
+	var/obj/item/stock_parts/capacitor/capacitor
 	var/construction_state = MECHA_LOCKED
 	var/last_message = 0
 	var/add_req_access = 1
@@ -108,6 +111,8 @@
 	var/phasing_energy_drain = 200
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
+	var/canstrafe = TRUE //if we can turn on strafing
+	var/haslights = TRUE //if we can turn on lights
 
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds
@@ -706,7 +711,7 @@
 			if(MECHA_INT_TEMP_CONTROL)
 				occupant_message("<span class='boldnotice'>Life support system reactivated.</span>")
 			if(MECHA_INT_FIRE)
-				occupant_message("<span class='boldnotice'>Internal fire extinquished.</span>")
+				occupant_message("<span class='boldnotice'>Internal fire extinguished.</span>")
 			if(MECHA_INT_TANK_BREACH)
 				occupant_message("<span class='boldnotice'>Damaged internal tank has been sealed.</span>")
 	internal_damage &= ~int_dam_flag
@@ -877,6 +882,9 @@
 	if((user != M) || user.incapacitated() || !Adjacent(user))
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.
+		return
+	if(HAS_TRAIT(user, TRAIT_PRIMITIVE)) //no lavalizards either.
+		to_chat(user, "<span class='warning'>The knowledge to use this device eludes you!</span>")
 		return
 	log_message("[user] tries to move in.", LOG_MECHA)
 	if (occupant)
@@ -1072,7 +1080,7 @@
 
 	if(L && L.client)
 		L.update_mouse_pointer()
-		L.client.change_view(CONFIG_GET(string/default_view))
+		L.client.view_size.resetToDefault() 
 		zoom_mode = 0
 
 /////////////////////////

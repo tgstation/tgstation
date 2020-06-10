@@ -20,9 +20,12 @@
   * * grant any actions the mob has to the client
   * * calls [auto_deadmin_on_login](mob.html#proc/auto_deadmin_on_login)
   * * send signal COMSIG_MOB_CLIENT_LOGIN
+  * client can be deleted mid-execution of this proc, chiefly on parent calls, with lag
   */
 /mob/Login()
-	GLOB.player_list |= src
+	if(!client)
+		return FALSE
+	add_to_player_list()
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
 	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
@@ -39,7 +42,13 @@
 	next_move = 1
 
 	..()
-	if (client && key != client.key)
+
+	if(!client)
+		return FALSE
+
+	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+
+	if (key != client.key)
 		key = client.key
 	reset_perspective(loc)
 
@@ -65,7 +74,7 @@
 	update_client_colour()
 	update_mouse_pointer()
 	if(client)
-		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
+		client.change_view(getScreenSize(client.prefs.widescreenpref)) // Resets the client.view in case it was changed.
 
 		if(client.player_details.player_actions.len)
 			for(var/datum/action/A in client.player_details.player_actions)
@@ -79,6 +88,9 @@
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
+
+	return TRUE
+
 
 /**
   * Checks if the attached client is an admin and may deadmin them

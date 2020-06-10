@@ -104,7 +104,7 @@
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_icon()
 		else
-			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [I.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
+			user.visible_message("<span class='danger'>[user] catastrophically fails at refilling [user.p_their()] [I.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			log_bomber(user, "detonated a", src, "via welding tool")
 			boom()
 		return
@@ -182,6 +182,14 @@
 	icon_state = "vat"
 	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/cooking_oil
+
+/obj/structure/reagent_dispensers/servingdish
+	name = "serving dish"
+	desc = "A dish full of food slop for your bowl."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "serving"
+	anchored = TRUE
+	reagent_id = /datum/reagent/consumable/nutraslop
 
 /obj/structure/reagent_dispensers/plumbed
 	name = "stationairy water tank"

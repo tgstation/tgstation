@@ -48,12 +48,11 @@
 		"<span class='notice'>[user] attempts to patch some of [target]'s [woundtype].</span>")
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
-	if(..())
-		experience_given = min(experience_given+1,PER_ITERATION_XP_CAP)
-		while((brutehealing && target.getBruteLoss()) || (burnhealing && target.getFireLoss()))
-			if(!..())
-				break
-			experience_given = min(experience_given+1,PER_ITERATION_XP_CAP)
+	if(!..())
+		return
+	while((brutehealing && target.getBruteLoss()) || (burnhealing && target.getFireLoss()))
+		if(!..())
+			break
 
 /datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/umsg = "You succeed in fixing some of [target]'s wounds" //no period, add initial space to "addons"
@@ -72,7 +71,7 @@
 		urhealedamt_burn *= 0.55
 		umsg += " as best as you can while they have clothing on"
 		tmsg += " as best as they can while [target] has clothing on"
-	target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)
+	experience_given = CEILING((target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)/5),1)
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",
 		"[tmsg].")

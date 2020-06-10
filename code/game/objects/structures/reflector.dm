@@ -55,9 +55,6 @@
 /obj/structure/reflector/setDir(new_dir)
 	return ..(NORTH)
 
-/obj/structure/reflector/proc/dir_map_to_angle(dir)
-	return 0
-
 /obj/structure/reflector/bullet_act(obj/projectile/P)
 	var/pdir = P.dir
 	var/pangle = P.Angle
@@ -105,7 +102,7 @@
 								"<span class='hear'>You hear welding.</span>")
 			if(W.use_tool(src, user, 40, volume=40))
 				obj_integrity = max_integrity
-				user.visible_message("<span class='notice'>[user] has repaired [src].</span>", \
+				user.visible_message("<span class='notice'>[user] repairs [src].</span>", \
 									"<span class='notice'>You finish repairing [src].</span>")
 
 		else if(!anchored)
@@ -252,9 +249,6 @@
 		return
 	else
 		return ..()
-
-/obj/structure/reflector/dir_map_to_angle(dir)
-	return dir2angle(dir)
 
 /obj/structure/reflector/singularity_act()
 	if(admin)

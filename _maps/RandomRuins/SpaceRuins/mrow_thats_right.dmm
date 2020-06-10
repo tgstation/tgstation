@@ -185,7 +185,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aF" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -294,7 +294,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -551,7 +551,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8

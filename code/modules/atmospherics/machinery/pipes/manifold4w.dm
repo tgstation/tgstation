@@ -37,4 +37,3 @@
 			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
 
 	update_layer()
-	update_alpha()

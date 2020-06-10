@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	item_state = "sheet-glass"
+	inhand_icon_state = "sheet-glass"
 	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
 	resistance_flags = ACID_PROOF
@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	desc = "A glass sheet made out of a plasma-silicate alloy. It looks extremely tough and heavily fire resistant."
 	singular_name = "plasma glass sheet"
 	icon_state = "sheet-pglass"
-	item_state = "sheet-pglass"
+	inhand_icon_state = "sheet-pglass"
 	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 100)
 	resistance_flags = ACID_PROOF
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-	item_state = "sheet-rglass"
+	inhand_icon_state = "sheet-rglass"
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
 	resistance_flags = ACID_PROOF
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	desc = "A glass sheet made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough and nearly fire-proof!"
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-prglass"
-	item_state = "sheet-prglass"
+	inhand_icon_state = "sheet-prglass"
 	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT, /datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.5)
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	desc = "A glass sheet made out of a titanium-silicate alloy."
 	singular_name = "titanium glass sheet"
 	icon_state = "sheet-titaniumglass"
-	item_state = "sheet-titaniumglass"
+	inhand_icon_state = "sheet-titaniumglass"
 	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
@@ -222,7 +222,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	desc = "A glass sheet made out of a plasma-titanium-silicate alloy."
 	singular_name = "plastitanium glass sheet"
 	icon_state = "sheet-plastitaniumglass"
-	item_state = "sheet-plastitaniumglass"
+	inhand_icon_state = "sheet-plastitaniumglass"
 	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	material_flags = MATERIAL_NO_EFFECTS
@@ -241,7 +241,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	w_class = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 10
-	item_state = "shard-glass"
+	inhand_icon_state = "shard-glass"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
@@ -310,10 +310,21 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 			M.apply_damage(force*0.5, BRUTE, hit_hand)
 
-
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/lightreplacer))
-		I.attackby(src, user)
+		var/obj/item/lightreplacer/L = I
+		L.attackby(src, user)
+	else if(istype(I, /obj/item/stack/sheet/cloth))
+		var/obj/item/stack/sheet/cloth/C = I
+		to_chat(user, "<span class='notice'>You begin to wrap the [C] around the [src]...</span>")
+		if(do_after(user, 35, target = src))
+			var/obj/item/kitchen/knife/shiv/S = new /obj/item/kitchen/knife/shiv
+			C.use(1)
+			to_chat(user, "<span class='notice'>You wrap the [C] around the [src] forming a makeshift weapon.</span>")
+			remove_item_from_storage(src)
+			qdel(src)
+			user.put_in_hands(S)
+
 	else
 		return ..()
 

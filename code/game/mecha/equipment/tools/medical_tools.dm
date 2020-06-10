@@ -323,7 +323,7 @@
 				if(length(mobs))
 					var/mob/living/carbon/M = pick(mobs)
 					var/R
-					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
+					mechsyringe.visible_message("<span class=\"attack\"> [M] is hit by the syringe!</span>")
 					if(M.can_inject(null, 1))
 						if(mechsyringe.reagents)
 							for(var/datum/reagent/A in mechsyringe.reagents.reagent_list)
@@ -478,7 +478,7 @@
 		if(R.can_synth && add_known_reagent(R.type,R.name))
 			occupant_message("<span class='notice'>Reagent analyzed, identified as [R.name] and added to database.</span>")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
-	occupant_message("<span class='notice'>Analyzis complete.</span>")
+	occupant_message("<span class='notice'>Analysis complete.</span>")
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/add_known_reagent(r_id,r_name)

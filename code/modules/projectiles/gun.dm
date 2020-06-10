@@ -7,7 +7,7 @@
 	desc = "It's a gun. It's pretty terrible, though."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "detective"
-	item_state = "gun"
+	inhand_icon_state = "gun"
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=2000)
@@ -50,13 +50,11 @@
 
 	var/can_flashlight = FALSE //if a flashlight can be added or removed if it already has one.
 	var/obj/item/flashlight/seclite/gun_light
-	var/mutable_appearance/flashlight_overlay
 	var/datum/action/item_action/toggle_gunlight/alight
 	var/gunlight_state = "flight"
 
 	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
 	var/obj/item/kitchen/knife/bayonet
-	var/mutable_appearance/knife_overlay
 	var/knife_x_offset = 0
 	var/knife_y_offset = 0
 
@@ -133,7 +131,7 @@
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
 	if(zoomed && user.get_active_held_item() != src)
-		zoom(user, FALSE) //we can only stay zoomed in if it's in our hands	//yeah and we only unzoom if we're actually zoomed using the gun!!
+		zoom(user, user.dir, FALSE) //we can only stay zoomed in if it's in our hands	//yeah and we only unzoom if we're actually zoomed using the gun!!
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber()
@@ -396,14 +394,8 @@
 			return
 		to_chat(user, "<span class='notice'>You attach [K] to [src]'s bayonet lug.</span>")
 		bayonet = K
-		var/state = "bayonet"							//Generic state.
-		if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
-			state = bayonet.icon_state
-		var/icon/bayonet_icons = 'icons/obj/guns/bayonets.dmi'
-		knife_overlay = mutable_appearance(bayonet_icons, state)
-		knife_overlay.pixel_x = knife_x_offset
-		knife_overlay.pixel_y = knife_y_offset
-		add_overlay(knife_overlay, TRUE)
+		update_icon()
+
 	else
 		return ..()
 
@@ -432,8 +424,8 @@
 		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
 			if(!pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
 				return
-			user.visible_message("<span class='notice'>[pin] was pried out of [src] by [user], destroying the pin in the process.</span>",
-								"<span class='warning'>You pried [pin] out with [I], destroying the pin in the process.</span>", null, 3)
+			user.visible_message("<span class='notice'>[pin] is pried out of [src] by [user], destroying the pin in the process.</span>",
+								"<span class='warning'>You pry [pin] out with [I], destroying the pin in the process.</span>", null, 3)
 			QDEL_NULL(pin)
 			return TRUE
 
@@ -450,8 +442,8 @@
 		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, 5, volume = 50))
 			if(!pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
 				return
-			user.visible_message("<span class='notice'>[pin] was spliced out of [src] by [user], melting part of the pin in the process.</span>",
-								"<span class='warning'>You spliced [pin] out of [src] with [I], melting part of the pin in the process.</span>", null, 3)
+			user.visible_message("<span class='notice'>[pin] is spliced out of [src] by [user], melting part of the pin in the process.</span>",
+								"<span class='warning'>You splice [pin] out of [src] with [I], melting part of the pin in the process.</span>", null, 3)
 			QDEL_NULL(pin)
 			return TRUE
 
@@ -467,8 +459,8 @@
 		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
 			if(!pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
 				return
-			user.visible_message("<span class='notice'>[pin] was ripped out of [src] by [user], mangling the pin in the process.</span>",
-								"<span class='warning'>You ripped [pin] out of [src] with [I], mangling the pin in the process.</span>", null, 3)
+			user.visible_message("<span class='notice'>[pin] is ripped out of [src] by [user], mangling the pin in the process.</span>",
+								"<span class='warning'>You rip [pin] out of [src] with [I], mangling the pin in the process.</span>", null, 3)
 			QDEL_NULL(pin)
 			return TRUE
 
@@ -490,9 +482,7 @@
 	if(!bayonet)
 		return
 	bayonet = null
-	if(knife_overlay)
-		cut_overlay(knife_overlay, TRUE)
-		knife_overlay = null
+	update_icon()
 	return TRUE
 
 /obj/item/gun/proc/clear_gunlight()
@@ -528,20 +518,9 @@
 			set_light(gun_light.brightness_on)
 		else
 			set_light(0)
-		cut_overlays(flashlight_overlay, TRUE)
-		var/state = "[gunlight_state][gun_light.on? "_on":""]"	//Generic state.
-		if(gun_light.icon_state in icon_states('icons/obj/guns/flashlights.dmi'))	//Snowflake state?
-			state = gun_light.icon_state
-		flashlight_overlay = mutable_appearance('icons/obj/guns/flashlights.dmi', state)
-		flashlight_overlay.pixel_x = flight_x_offset
-		flashlight_overlay.pixel_y = flight_y_offset
-		add_overlay(flashlight_overlay, TRUE)
-		add_overlay(knife_overlay, TRUE)
 	else
 		set_light(0)
-		cut_overlays(flashlight_overlay, TRUE)
-		flashlight_overlay = null
-	update_icon(TRUE)
+	update_icon()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -556,7 +535,30 @@
 	if(azoom)
 		azoom.Remove(user)
 	if(zoomed)
-		zoom(user,FALSE)
+		zoom(user, user.dir)
+
+/obj/item/gun/update_overlays()
+	. = ..()
+	if(gun_light)
+		var/mutable_appearance/flashlight_overlay
+		var/state = "[gunlight_state][gun_light.on? "_on":""]"	//Generic state.
+		if(gun_light.icon_state in icon_states('icons/obj/guns/flashlights.dmi'))	//Snowflake state?
+			state = gun_light.icon_state
+		flashlight_overlay = mutable_appearance('icons/obj/guns/flashlights.dmi', state)
+		flashlight_overlay.pixel_x = flight_x_offset
+		flashlight_overlay.pixel_y = flight_y_offset
+		. += flashlight_overlay
+
+	if(bayonet)
+		var/mutable_appearance/knife_overlay
+		var/state = "bayonet"							//Generic state.
+		if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
+			state = bayonet.icon_state
+		var/icon/bayonet_icons = 'icons/obj/guns/bayonets.dmi'
+		knife_overlay = mutable_appearance(bayonet_icons, state)
+		knife_overlay.pixel_x = knife_x_offset
+		knife_overlay.pixel_y = knife_y_offset
+		. += knife_overlay
 
 /obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))
@@ -613,19 +615,23 @@
 	var/obj/item/gun/gun = null
 
 /datum/action/toggle_scope_zoom/Trigger()
-	gun.zoom(owner)
+	gun.zoom(owner, owner.dir)
 
 /datum/action/toggle_scope_zoom/IsAvailable()
 	. = ..()
 	if(!. && gun)
-		gun.zoom(owner, FALSE)
+		gun.zoom(owner, owner.dir, FALSE)
 
 /datum/action/toggle_scope_zoom/Remove(mob/living/L)
-	gun.zoom(L, FALSE)
+	gun.zoom(L, L.dir, FALSE)
 	..()
 
+/obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)
+	if(ismob(thing))
+		var/mob/lad = thing
+		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)
 
-/obj/item/gun/proc/zoom(mob/living/user, forced_zoom)
+/obj/item/gun/proc/zoom(mob/living/user, direc, forced_zoom)
 	if(!user || !user.client)
 		return
 
@@ -635,25 +641,11 @@
 		zoomed = forced_zoom
 
 	if(zoomed)
-		var/_x = 0
-		var/_y = 0
-		switch(user.dir)
-			if(NORTH)
-				_y = zoom_amt
-			if(EAST)
-				_x = zoom_amt
-			if(SOUTH)
-				_y = -zoom_amt
-			if(WEST)
-				_x = -zoom_amt
-
-		user.client.change_view(zoom_out_amt)
-		user.client.pixel_x = world.icon_size*_x
-		user.client.pixel_y = world.icon_size*_y
+		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
+		user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, direc)
 	else
-		user.client.change_view(CONFIG_GET(string/default_view))
-		user.client.pixel_x = 0
-		user.client.pixel_y = 0
+		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
+		user.client.view_size.zoomIn()
 	return zoomed
 
 //Proc, so that gun accessories/scopes/etc. can easily add zooming.

@@ -11,7 +11,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Charge modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...</span>"
-	hive_fluff_string = "<span class='holoparasite'>The mass seems to have primal senses, rapidly assaulting its' enemies.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Titanium, a lightweight, agile fighter.</span>"
 	var/charging = 0
 	var/obj/screen/alert/chargealert
 

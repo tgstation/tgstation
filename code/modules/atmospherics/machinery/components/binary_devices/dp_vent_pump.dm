@@ -14,7 +14,8 @@
 	name = "dual-port air vent"
 	desc = "Has a valve and pump attached to it. There are two ports."
 
-	level = 1
+	hide = TRUE
+
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection

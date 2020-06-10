@@ -31,6 +31,8 @@
 			return							//gravity checking only our parent would prevent us from triggering they're using magboots / other gravity assisting items that would cause them to still touch us.
 		if(H.buckled) //if they're buckled to something, that something should be checked instead.
 			return
+		if(!(H.mobility_flags & MOBILITY_STAND)) //if were not standing we cant step on the caltrop
+			return
 
 		var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
@@ -47,7 +49,6 @@
 		var/damage = rand(min_damage, max_damage)
 		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
 			damage *= 0.75
-		H.apply_damage(damage, BRUTE, picked_def_zone)
 
 		if(cooldown < world.time - 10) //cooldown to avoid message spam.
 			var/atom/A = parent
@@ -59,4 +60,5 @@
 						"<span class='userdanger'>You slide on [A]!</span>")
 
 			cooldown = world.time
+		H.apply_damage(damage, BRUTE, picked_def_zone)
 		H.Paralyze(60)

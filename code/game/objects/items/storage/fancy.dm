@@ -82,7 +82,7 @@
 
 /obj/item/storage/fancy/egg_box
 	icon = 'icons/obj/food/containers.dmi'
-	item_state = "eggbox"
+	inhand_icon_state = "eggbox"
 	icon_state = "eggbox"
 	icon_type = "egg"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -107,7 +107,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candlebox5"
 	icon_type = "candle"
-	item_state = "candlebox5"
+	inhand_icon_state = "candlebox5"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
@@ -129,7 +129,7 @@
 	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
-	item_state = "cigpacket"
+	inhand_icon_state = "cigpacket"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
@@ -137,6 +137,23 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 	var/candy = FALSE //for cigarette overlay
 	custom_price = 75
+	age_restricted = TRUE
+	var/spawn_coupon = TRUE
+
+/obj/item/storage/fancy/cigarettes/attack_self(mob/user)
+	if(contents.len == 0 && spawn_coupon)
+		to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
+		var/obj/item/coupon/attached_coupon = new
+		user.put_in_hands(attached_coupon)
+		attached_coupon.generate()
+		attached_coupon = null
+		spawn_coupon = FALSE
+		name = "discarded cigarette packet"
+		desc = "An old cigarette packet with the back torn off, worth less than nothing now."
+		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+		STR.max_items = 0
+		return
+	return ..()
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
@@ -146,7 +163,10 @@
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
+
 	. += "<span class='notice'>Alt-click to extract contents.</span>"
+	if(spawn_coupon)
+		. += "<span class='notice'>There's a coupon on the back of the pack! You can tear it off once it's empty.</span>"
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -253,6 +273,7 @@
 	icon_type = "candy cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/candy
 	candy = TRUE
+	age_restricted = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize()
 	. = ..()
@@ -289,6 +310,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"
+	///The value in here has NOTHING to do with icons. It needs to be this for the proper examine.
 	icon_type = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
 	custom_price = 25
@@ -298,6 +320,10 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.set_holdable(list(/obj/item/rollingpaper))
+
+///Overrides to do nothing because fancy boxes are fucking insane.
+/obj/item/storage/fancy/rollingpapers/update_icon_state()
+	return
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -316,6 +342,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_type = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_coupon = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
@@ -358,7 +385,7 @@
 	name = "heart-shaped box"
 	desc = "A heart-shaped box for holding tiny chocolates."
 	icon = 'icons/obj/food/containers.dmi'
-	item_state = "chocolatebox"
+	inhand_icon_state = "chocolatebox"
 	icon_state = "chocolatebox"
 	icon_type = "chocolate"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'

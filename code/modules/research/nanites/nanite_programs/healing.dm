@@ -36,15 +36,15 @@
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/temperature/check_conditions()
-	if(host_mob.bodytemperature > (BODYTEMP_NORMAL - 30) && host_mob.bodytemperature < (BODYTEMP_NORMAL + 30))
+	if(host_mob.bodytemperature > (host_mob.get_body_temp_normal(apply_change=FALSE) - 30) && host_mob.bodytemperature < (host_mob.get_body_temp_normal(apply_change=FALSE) + 30))
 		return FALSE
 	return ..()
 
 /datum/nanite_program/temperature/active_effect()
-	if(host_mob.bodytemperature > BODYTEMP_NORMAL)
-		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	else if(host_mob.bodytemperature < (BODYTEMP_NORMAL + 1))
-		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(host_mob.bodytemperature > host_mob.get_body_temp_normal(apply_change=FALSE))
+		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, host_mob.get_body_temp_normal(apply_change=FALSE))
+	else if(host_mob.bodytemperature < (host_mob.get_body_temp_normal(apply_change=FALSE) + 1))
+		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, host_mob.get_body_temp_normal(apply_change=FALSE))
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
@@ -225,7 +225,7 @@
 	var/mob/living/carbon/C = host_mob
 	if(C.get_ghost())
 		return FALSE
-	return C.can_defib()
+	return C.can_defib() == DEFIB_POSSIBLE
 
 /datum/nanite_program/defib/proc/zap()
 	var/mob/living/carbon/C = host_mob

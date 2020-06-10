@@ -166,6 +166,7 @@
 //Do not override this proc, instead use the appropiate procs.
 //This proc will handle the calls to the appropiate procs.
 /datum/round_event/process()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!processing)
 		return
 

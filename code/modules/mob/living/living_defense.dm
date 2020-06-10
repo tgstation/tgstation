@@ -1,9 +1,14 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armour_penetration, penetrated_text)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE)
 	var/armor = getarmor(def_zone, attack_flag)
 
+	if(armor <= 0)
+		return armor
+	if(silent)
+		return max(0, armor - armour_penetration)
+
 	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armor > 0 && armour_penetration)
+	if(armour_penetration)
 		armor = max(0, armor - armour_penetration)
 		if(penetrated_text)
 			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
@@ -14,13 +19,12 @@
 			to_chat(src, "<span class='notice'>[absorb_text]</span>")
 		else
 			to_chat(src, "<span class='notice'>Your armor absorbs the blow!</span>")
-	else if(armor > 0)
+	else
 		if(soften_text)
 			to_chat(src, "<span class='warning'>[soften_text]</span>")
 		else
 			to_chat(src, "<span class='warning'>Your armor softens the blow!</span>")
 	return armor
-
 
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
@@ -78,6 +82,8 @@
 		if(!blocked)
 			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
 							"<span class='userdanger'>You're hit by [I]!</span>")
+			if(!I.throwforce)
+				return
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
@@ -184,7 +190,7 @@
 					visible_message("<span class='danger'>[user] grabs [src] aggressively!</span>", \
 									"<span class='userdanger'>[user] grabs you aggressively!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 					to_chat(user, "<span class='danger'>You grab [src] aggressively!</span>")
-					drop_all_held_items()
+				drop_all_held_items()
 				stop_pulling()
 				log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 			if(GRAB_NECK)
@@ -391,13 +397,15 @@
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
 	else
-		switch(rand(1, 6))
+		switch(rand(1, 4))
 			if(1)
-				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
+				new /mob/living/simple_animal/hostile/construct/juggernaut/hostile(get_turf(src))
 			if(2)
 				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
-			if(3 to 6)
-				new /mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(src))
+			if(3)
+				new /mob/living/simple_animal/hostile/construct/artificer/hostile(get_turf(src))
+			if(4)
+				new /mob/living/simple_animal/hostile/construct/proteon/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return TRUE

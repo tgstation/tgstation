@@ -25,7 +25,7 @@ effective or pretty fucking useless.
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
@@ -88,20 +88,19 @@ effective or pretty fucking useless.
 		var/cooldown = get_cooldown()
 		used = TRUE
 		icon_state = "health1"
-		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
+		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
+		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
-		spawn((wavelength+(intensity*4))*5)
-			if(M)
-				if(intensity >= 5)
-					M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
-				M.rad_act(intensity*10)
+		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M), (wavelength+(intensity*4))*5)
 	else
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
 
-/obj/item/healthanalyzer/rad_laser/proc/handle_cooldown(cooldown)
-	spawn(cooldown)
-		used = FALSE
-		icon_state = "health"
+/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M)
+	if(QDELETED(M))
+		return
+	if(intensity >= 5)
+		M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
+	M.rad_act(intensity*10)
 
 /obj/item/healthanalyzer/rad_laser/proc/get_cooldown()
 	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
@@ -113,10 +112,10 @@ effective or pretty fucking useless.
 	ui_interact(user)
 
 /obj/item/healthanalyzer/rad_laser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "radioactive_microlaser", "Radioactive Microlaser", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "RadioactiveMicrolaser", "Radioactive Microlaser", ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/item/healthanalyzer/rad_laser/ui_data(mob/user)
@@ -147,11 +146,7 @@ effective or pretty fucking useless.
 		if("radintensity")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New output target (1-20):", name, intensity) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 1
 				. = TRUE
 			else if(target == "max")
@@ -169,11 +164,7 @@ effective or pretty fucking useless.
 		if("radwavelength")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New output target (0-120):", name, wavelength) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 0
 				. = TRUE
 			else if(target == "max")
@@ -194,7 +185,7 @@ effective or pretty fucking useless.
 	desc = "Makes you invisible for short periods of time. Recharges in darkness."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
-	item_state = "utility"
+	inhand_icon_state = "utility"
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 

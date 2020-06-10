@@ -6,7 +6,7 @@
 	icon_state = "close"
 	use_power = ACTIVE_POWER_USE
 	active_power_usage = 60
-	power_channel = EQUIP
+	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
 	max_integrity = 250
 	ui_x = 400
@@ -95,7 +95,7 @@
 
 /obj/machinery/suit_storage_unit/cmo
 	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
-	mask_type = /obj/item/clothing/mask/breath
+	mask_type = /obj/item/clothing/mask/breath/medical
 	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/rd
@@ -438,7 +438,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "suit_storage_unit", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "SuitStorageUnit", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/suit_storage_unit/ui_data()

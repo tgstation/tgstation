@@ -4,6 +4,8 @@
 	max_integrity = 300
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	layer = BELOW_OBJ_LAYER
+	flags_ricochet = RICOCHET_HARD
+	ricochet_chance_mod = 0.5
 
 	var/climb_time = 20
 	var/climb_stun = 20
@@ -36,7 +38,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		structureclimber.Paralyze(40)
-		structureclimber.visible_message("<span class='warning'>[structureclimber] has been knocked off [src].", "You're knocked off [src]!", "You see [structureclimber] get knocked off [src].</span>")
+		structureclimber.visible_message("<span class='warning'>[structureclimber] is knocked off [src].</span>", "<span class='warning'>You're knocked off [src]!</span>", "<span class='warning'>You see [structureclimber] get knocked off [src].</span>")
 
 /obj/structure/ui_act(action, params)
 	. = ..()
@@ -66,6 +68,11 @@
 
 /obj/structure/proc/do_climb(atom/movable/A)
 	if(climbable)
+		if(A.loc == src.loc)
+			var/where_to_climb = get_step(A,dir)
+			if(!(is_blocked_turf(where_to_climb)))
+				A.forceMove(where_to_climb)
+				return TRUE
 		density = FALSE
 		. = step(A,get_dir(A,src.loc))
 		density = TRUE
@@ -105,6 +112,12 @@
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
+
+/obj/structure/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	
+	if(mover.pass_flags & PASSSTRUCTURE)
+		return TRUE
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	var/healthpercent = (obj_integrity/max_integrity) * 100

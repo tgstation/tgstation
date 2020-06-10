@@ -5,7 +5,7 @@
 	icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "clamps"
+	inhand_icon_state = "clamps"
 	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -25,7 +25,7 @@
 	icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "clamps"
+	inhand_icon_state = "clamps"
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -46,7 +46,7 @@
 	icon_state = "cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "cautery"
+	inhand_icon_state = "cautery"
 	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -70,7 +70,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	flags_1 = CONDUCT_1
-	item_flags = SURGICAL_TOOL
+	item_flags = SURGICAL_TOOL | EYE_STAB
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("drilled")
@@ -99,9 +99,9 @@
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "scalpel"
+	inhand_icon_state = "scalpel"
 	flags_1 = CONDUCT_1
-	item_flags = SURGICAL_TOOL
+	item_flags = SURGICAL_TOOL | EYE_STAB
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -167,7 +167,7 @@
 	icon_state = "surgical_drapes"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "drapes"
+	inhand_icon_state = "drapes"
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("slapped")
 

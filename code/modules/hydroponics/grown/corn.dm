@@ -8,6 +8,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/corn
 	maturation = 8
 	potency = 20
+	instability = 50 //Corn used to be wheatgrass, before being cultivated for generations.
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
@@ -33,7 +34,7 @@
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
 	icon_state = "corncob"
-	item_state = "corncob"
+	inhand_icon_state = "corncob"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
@@ -64,7 +65,7 @@
 	name = "snap corn"
 	desc = "A cob with snap pops."
 	icon_state = "snapcorn"
-	item_state = "corncob"
+	inhand_icon_state = "corncob"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3

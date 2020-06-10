@@ -15,7 +15,7 @@
 	circuit = /obj/item/circuitboard/machine/space_heater
 	ui_x = 400
 	ui_y = 305
-
+	use_power = NO_POWER_USE		/// We don't use area power, we always use the cell
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
@@ -174,7 +174,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "space_heater", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "SpaceHeater", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/space_heater/ui_data()
@@ -221,16 +221,7 @@
 			if(!panel_open)
 				return
 			var/target = params["target"]
-			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New target temperature:", name, round(targetTemperature - T0C, 1)) as num|null
-				if(!isnull(target) && !..())
-					target += T0C
-					. = TRUE
-			else if(adjust)
-				target = targetTemperature + adjust
-				. = TRUE
-			else if(text2num(target) != null)
+			if(text2num(target) != null)
 				target= text2num(target) + T0C
 				. = TRUE
 			if(.)

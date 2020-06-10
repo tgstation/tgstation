@@ -7,6 +7,7 @@
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	speedmod = 2
+	payday_modifier = 0.75
 	armor = 55
 	siemens_coeff = 0
 	punchdamagelow = 5
@@ -589,10 +590,9 @@
 	special_names = null
 	inherent_factions = list("cult")
 	species_language_holder = /datum/language_holder/golem/runic
-
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
-	var/obj/effect/proc_holder/spell/targeted/abyssal_gaze/abyssal_gaze
-	var/obj/effect/proc_holder/spell/targeted/dominate/dominate
+	var/obj/effect/proc_holder/spell/pointed/abyssal_gaze/abyssal_gaze
+	var/obj/effect/proc_holder/spell/pointed/dominate/dominate
 
 /datum/species/golem/runic/random_name(gender,unique,lastname)
 	var/edgy_first_name = pick("Razor","Blood","Dark","Evil","Cold","Pale","Black","Silent","Chaos","Deadly","Coldsteel")
@@ -960,7 +960,7 @@
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bp)
-					playsound(H, get_sfx("desceration"), 50, TRUE, -1) //You just want to socialize
+					playsound(H, get_sfx("desecration"), 50, TRUE, -1) //You just want to socialize
 					H.visible_message("<span class='warning'>[H] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
 					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
 					bp.receive_damage(200, 0, 0) //But I don't think we should
@@ -1143,3 +1143,20 @@
 /datum/species/golem/soviet/proc/handle_speech(datum/source, list/speech_args)
 	playsound(source, 'sound/misc/Cyka Blyat.ogg', 25, FALSE)
 	speech_args[SPEECH_MESSAGE] = "Cyka Blyat"
+
+/datum/species/golem/mhydrogen
+	name = "Metallic Hydrogen Golem"
+	id = "Metallic Hydrogen golem"
+	fixed_mut_color = "ddd"
+	info_text = "As a <span class='danger'>Metallic Hydrogen Golem</span>, you were forged in the highest pressures and the highest heats. Your unique mineral makeup makes you immune to most types of damages."
+	prefix = "Metallic Hydrogen"
+	special_names = null
+	inherent_traits = list(TRAIT_NOFLASH, TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_NODISMEMBER,TRAIT_CHUNKYFINGERS)
+
+/datum/species/golem/mhydrogen/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	ADD_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+
+/datum/species/golem/mhydrogen/on_species_loss(mob/living/carbon/C)
+	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	return ..()

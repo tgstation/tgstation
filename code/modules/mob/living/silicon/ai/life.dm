@@ -40,8 +40,8 @@
 
 		if(!lacks_power())
 			var/area/home = get_area(src)
-			if(home.powered(EQUIP))
-				home.use_power(1000, EQUIP)
+			if(home.powered(AREA_USAGE_EQUIP))
+				home.use_power(1000, AREA_USAGE_EQUIP)
 
 			if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 				ai_restore_power()
@@ -62,7 +62,7 @@
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss()
+	set_health(maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss())
 	update_stat()
 	diag_hud_set_health()
 	disconnect_shell()

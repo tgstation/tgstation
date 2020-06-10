@@ -3,7 +3,7 @@
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paint sprayer"
-	item_state = "paint sprayer"
+	inhand_icon_state = "paint sprayer"
 
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -15,6 +15,24 @@
 	usesound = 'sound/effects/spray2.ogg'
 
 	var/obj/item/toner/ink = null
+	/// Associate list of all paint jobs the airlock painter can apply. The key is the name of the airlock the user will see. The value is the type path of the airlock
+	var/list/available_paint_jobs = list(
+		"Public" = /obj/machinery/door/airlock/public,
+		"Engineering" = /obj/machinery/door/airlock/engineering,
+		"Atmospherics" = /obj/machinery/door/airlock/atmos,
+		"Security" = /obj/machinery/door/airlock/security,
+		"Command" = /obj/machinery/door/airlock/command,
+		"Medical" = /obj/machinery/door/airlock/medical,
+		"Research" = /obj/machinery/door/airlock/research,
+		"Freezer" = /obj/machinery/door/airlock/freezer,
+		"Science" = /obj/machinery/door/airlock/science,
+		"Mining" = /obj/machinery/door/airlock/mining,
+		"Maintenance" = /obj/machinery/door/airlock/maintenance,
+		"External" = /obj/machinery/door/airlock/external,
+		"External Maintenance"= /obj/machinery/door/airlock/maintenance/external,
+		"Virology" = /obj/machinery/door/airlock/virology,
+		"Standard" = /obj/machinery/door/airlock
+	)
 
 /obj/item/airlock_painter/Initialize()
 	. = ..()
@@ -131,7 +149,7 @@
 	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed. Alt-Click to change design."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
-	item_state = "decalsprayer"
+	inhand_icon_state = "decalsprayer"
 	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=500)
 	var/stored_dir = 2
 	var/stored_color = ""
@@ -182,7 +200,7 @@
 /obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "decal_painter", name, 500, 400, master_ui, state)
+		ui = new(user, src, ui_key, "DecalPainter", name, 500, 400, master_ui, state)
 		ui.open()
 
 /obj/item/airlock_painter/decal/ui_data(mob/user)

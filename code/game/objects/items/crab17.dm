@@ -20,6 +20,12 @@
 		var/turf/targetturf = get_safe_random_station_turf()
 		if (!targetturf)
 			return FALSE
+		var/list/accounts_to_rob = SSeconomy.bank_accounts.Copy()
+		var/mob/living/carbon/human/H = user
+		accounts_to_rob -= H.get_bank_account()
+		for(var/i in accounts_to_rob)
+			var/datum/bank_account/B = i
+			B.being_dumped = TRUE
 		new /obj/effect/dumpeetTarget(targetturf, user)
 		dumped = TRUE
 
@@ -65,7 +71,6 @@
 				return
 			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>") // This is a reference and not a typo
 			card.registered_account.being_dumped = FALSE
-			card.registered_account.withdrawDelay = 0
 			if(check_if_finished())
 				qdel(src)
 				return
@@ -79,7 +84,7 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(src, 8 MINUTES) //Self destruct after 8 min
+	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
@@ -188,7 +193,7 @@
 	icon = 'icons/obj/money_machine_64.dmi'
 	pixel_z = 300
 	desc = "Get out of the way!"
-	layer = FLY_LAYER//that wasnt flying, that was falling with style!
+	layer = FLY_LAYER//that wasn't flying, that was falling with style!
 	icon_state = "missile_blur"
 
 /obj/effect/dumpeetTarget

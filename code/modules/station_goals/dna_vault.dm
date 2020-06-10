@@ -63,7 +63,7 @@
 	name = "DNA Sampler"
 	desc = "Can be used to take chemical and genetic samples of pretty much anything."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "hypo"
+	inhand_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
@@ -181,7 +181,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		roll_powers(user)
-		ui = new(user, src, ui_key, "dna_vault", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "DnaVault", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 
@@ -248,8 +248,6 @@
 	else
 		return ..()
 
-
-
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H,upgrade_type)
 	if(!(upgrade_type in power_lottery[H]))
 		return
@@ -279,7 +277,7 @@
 			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, "dna_vault")
 		if(VAULT_SPEED)
 			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")
-			H.add_movespeed_modifier(MOVESPEED_ID_DNA_VAULT, update=TRUE, priority=100, multiplicative_slowdown=-0.4, blacklisted_movetypes=(FLYING|FLOATING))
+			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
 			H.next_move_modifier = 0.5

@@ -127,6 +127,7 @@
 	var/triggered = 0
 
 /obj/effect/meatgrinder/Crossed(atom/movable/AM)
+	. = ..()
 	Bumped(AM)
 
 /obj/effect/meatgrinder/Bumped(atom/movable/AM)

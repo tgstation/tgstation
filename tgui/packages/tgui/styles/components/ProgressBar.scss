@@ -1,9 +1,15 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
 
 $color-default: colors.bg(colors.$primary) !default;
 $color-background: rgba(0, 0, 0, 0) !default;
-$border-radius: 0 !default;
+$border-radius: base.$border-radius !default;
 $bg-map: colors.$bg-map !default;
 
 .ProgressBar {
@@ -21,6 +27,9 @@ $bg-map: colors.$bg-map !default;
   top: 0;
   left: 0;
   bottom: 0;
+}
+
+.ProgressBar__fill--animated {
   transition: background-color 500ms, width 500ms;
 }
 

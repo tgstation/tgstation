@@ -88,7 +88,7 @@
 /obj/item/clothing/head/bunnyhead
 	name = "Easter Bunny Head"
 	icon_state = "bunnyhead"
-	item_state = "bunnyhead"
+	inhand_icon_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'."
 	slowdown = -1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -97,7 +97,7 @@
 	name = "Easter Bunny Suit"
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
-	item_state = "bunnysuit"
+	inhand_icon_state = "bunnysuit"
 	slowdown = -1
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -107,7 +107,7 @@
 	name = "Easter Bunny Satchel"
 	desc = "Good for your eyes."
 	icon_state = "satchel_carrot"
-	item_state = "satchel_carrot"
+	inhand_icon_state = "satchel_carrot"
 
 //Egg prizes and egg spawns!
 /obj/item/reagent_containers/food/snacks/egg
@@ -148,6 +148,7 @@
 	/obj/item/toy/prize/phazon,
 	/obj/item/toy/prize/reticence,
 	/obj/item/toy/prize/honk,
+	/obj/item/toy/prize/clarke,
 	/obj/item/toy/plush/carpplushie,
 	/obj/item/toy/redbutton,
 	/obj/item/toy/windupToolbox,
@@ -218,7 +219,7 @@
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1
+		/obj/item/reagent_containers/food/snacks/meatball = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/scotchegg
 	subcategory = CAT_MISCFOOD

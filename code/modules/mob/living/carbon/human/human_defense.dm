@@ -86,15 +86,18 @@
 			return BULLET_ACT_HIT
 
 	return ..(P, def_zone)
-
-/mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+///Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+/mob/living/carbon/human/proc/check_reflect(def_zone)
 	if(wear_suit)
-		if(wear_suit.IsReflect(def_zone) == 1)
-			return 1
+		if(wear_suit.IsReflect(def_zone))
+			return TRUE
+	if(head)
+		if(head.IsReflect(def_zone))
+			return TRUE
 	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone) == 1)
-			return 1
-	return 0
+		if(I.IsReflect(def_zone))
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	var/block_chance_modifier = round(damage / -3)
@@ -176,7 +179,6 @@
 	var/hulk_verb = pick("smash","pummel")
 	if(check_shields(user, 15, "the [hulk_verb]ing"))
 		return
-	..()
 	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
 	visible_message("<span class='danger'>[user] [hulk_verb]ed [src]!</span>", \
 					"<span class='userdanger'>[user] [hulk_verb]ed [src]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
@@ -201,7 +203,7 @@
 
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
-		if(I && dropItemToGround(I))
+		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 							"<span class='userdanger'>[M] disarmed you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, M)
@@ -392,7 +394,13 @@
 				for(var/I in contents)
 					var/atom/A = I
 					if(!QDELETED(A))
-						A.ex_act(severity)
+						switch(severity)
+							if(EXPLODE_DEVASTATE)
+								SSexplosions.highobj += A
+							if(EXPLODE_HEAVY)
+								SSexplosions.medobj += A
+							if(EXPLODE_LIGHT)
+								SSexplosions.lowobj += A
 				gib()
 				return
 			else
@@ -667,7 +675,7 @@
 
 		..()
 
-/mob/living/carbon/human/proc/check_self_for_injuries()
+/mob/living/carbon/human/check_self_for_injuries()
 	if(stat == DEAD || stat == UNCONSCIOUS)
 		return
 
@@ -731,7 +739,7 @@
 		to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name][isdisabled][self_aware ? " has " : " is "][status].</span>")
 
 		for(var/obj/item/I in LB.embedded_objects)
-			if(I.is_embed_harmless())
+			if(I.isEmbedHarmless())
 				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
 			else
 				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
@@ -821,7 +829,7 @@
 		to_chat(src, "<span class='info'>Your [damaged_message] [damaged_plural ? "are" : "is"] hurt.</span>")
 
 	if(roundstart_quirks.len)
-		to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
+		to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string(FALSE, CAT_QUIRK_ALL)].</span>")
 
 /mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)

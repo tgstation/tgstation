@@ -5,7 +5,7 @@
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder)		//This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
-		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>")
+		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>", confidential = TRUE)
 		return
 
 	if(!D)
@@ -94,16 +94,7 @@
 	<head>
 		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 		<title>[title]</title>
-		<style>
-			body {
-				font-family: Verdana, sans-serif;
-				font-size: 9pt;
-			}
-			.value {
-				font-family: "Courier New", monospace;
-				font-size: 8pt;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="view_variables.css">
 	</head>
 	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
 		<script type="text/javascript">

@@ -12,7 +12,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	req_access = list(ACCESS_KEYCARD_AUTH)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	ui_x = 375
@@ -37,7 +37,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 					datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "keycard_auth", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "KeycardAuth", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/keycard_auth/ui_data()

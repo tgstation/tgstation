@@ -75,37 +75,55 @@
 					D.adjust_money(amount)
 					return
 
-/datum/datacore/proc/addMinorCrime(id = "", datum/data/crime/crime)
+/**
+  * Adds crime to security record.
+  *
+  * Is used to add single crime to someone's security record.
+  * Arguments:
+  * * id - record id.
+  * * datum/data/crime/crime - premade array containing every variable, usually created by createCrimeEntry.
+  */
+/datum/datacore/proc/addCrime(id = "", datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
-			var/list/crimes = R.fields["mi_crim"]
+			var/list/crimes = R.fields["crim"]
 			crimes |= crime
 			return
 
-/datum/datacore/proc/removeMinorCrime(id, cDataId)
+/**
+  * Deletes crime from security record.
+  *
+  * Is used to delete single crime to someone's security record.
+  * Arguments:
+  * * id - record id.
+  * * cDataId - id of already existing crime.
+  */
+/datum/datacore/proc/removeCrime(id, cDataId)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
-			var/list/crimes = R.fields["mi_crim"]
+			var/list/crimes = R.fields["crim"]
 			for(var/datum/data/crime/crime in crimes)
 				if(crime.dataId == text2num(cDataId))
 					crimes -= crime
 					return
 
-/datum/datacore/proc/removeMajorCrime(id, cDataId)
+/**
+  * Adds details to a crime.
+  *
+  * Is used to add or replace details to already existing crime.
+  * Arguments:
+  * * id - record id.
+  * * cDataId - id of already existing crime.
+  * * details - data you want to add.
+  */
+/datum/datacore/proc/addCrimeDetails(id, cDataId, details)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
-			var/list/crimes = R.fields["ma_crim"]
+			var/list/crimes = R.fields["crim"]
 			for(var/datum/data/crime/crime in crimes)
 				if(crime.dataId == text2num(cDataId))
-					crimes -= crime
+					crime.crimeDetails = details
 					return
-
-/datum/datacore/proc/addMajorCrime(id = "", datum/data/crime/crime)
-	for(var/datum/data/record/R in security)
-		if(R.fields["id"] == id)
-			var/list/crimes = R.fields["ma_crim"]
-			crimes |= crime
-			return
 
 /datum/datacore/proc/manifest()
 	for(var/i in GLOB.new_player_list)
@@ -130,7 +148,7 @@
 		"Medical" = GLOB.medical_positions,
 		"Science" = GLOB.science_positions,
 		"Supply" = GLOB.supply_positions,
-		"Civilian" = GLOB.civilian_positions,
+		"Service" = GLOB.service_positions,
 		"Silicon" = GLOB.nonhuman_positions
 	)
 	for(var/datum/data/record/t in GLOB.data_core.general)
@@ -242,15 +260,14 @@
 		M.fields["name"]		= H.real_name
 		M.fields["blood_type"]	= H.dna.blood_type
 		M.fields["b_dna"]		= H.dna.unique_enzymes
-		M.fields["mi_dis"]		= "None"
-		M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
-		M.fields["ma_dis"]		= "None"
-		M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
-		M.fields["alg"]			= "None"
-		M.fields["alg_d"]		= "No allergies have been detected in this patient."
+		M.fields["mi_dis"]		= H.get_trait_string(!medical, CAT_QUIRK_MINOR_DISABILITY)
+		M.fields["mi_dis_d"]	= H.get_trait_string(medical, CAT_QUIRK_MINOR_DISABILITY)
+		M.fields["ma_dis"]		= H.get_trait_string(!medical, CAT_QUIRK_MAJOR_DISABILITY)
+		M.fields["ma_dis_d"]	= H.get_trait_string(medical, CAT_QUIRK_MAJOR_DISABILITY)
 		M.fields["cdi"]			= "None"
 		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-		M.fields["notes"]		= H.get_trait_string(medical)
+		M.fields["notes"]		= H.get_trait_string(!medical, CAT_QUIRK_NOTES)
+		M.fields["notes_d"]		= H.get_trait_string(medical, CAT_QUIRK_NOTES)
 		medical += M
 
 		//Security Record
@@ -259,8 +276,7 @@
 		S.fields["name"]		= H.real_name
 		S.fields["criminal"]	= "None"
 		S.fields["citation"]	= list()
-		S.fields["mi_crim"]		= list()
-		S.fields["ma_crim"]		= list()
+		S.fields["crim"]		= list()
 		S.fields["notes"]		= "No notes."
 		security += S
 

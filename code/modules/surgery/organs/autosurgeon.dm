@@ -5,7 +5,7 @@
 	desc = "A device that automatically inserts an implant or organ into the user without the hassle of extensive surgery. It has a slot to insert implants/organs and a screwdriver slot for removing accidentally added items."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "autoimplanter"
-	item_state = "nothing"
+	inhand_icon_state = "nothing"
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/item/organ/storedorgan
 	var/organ_type = /obj/item/organ

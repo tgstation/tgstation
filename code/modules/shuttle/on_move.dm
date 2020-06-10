@@ -71,6 +71,8 @@ All ShuttleMove procs go here
 /turf/proc/afterShuttleMove(turf/oldT, rotation)
 	//Dealing with the turf we left behind
 	oldT.TransferComponents(src)
+
+	SSexplosions.wipe_turf(src)
 	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
 	if(shuttle_boundary)
 		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
@@ -104,6 +106,7 @@ All ShuttleMove procs go here
 		return
 
 	loc = newT
+
 
 	return TRUE
 
@@ -211,7 +214,7 @@ All ShuttleMove procs go here
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
 
-/obj/machinery/computer/auxillary_base/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/computer/auxiliary_base/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
@@ -251,15 +254,10 @@ All ShuttleMove procs go here
 			A.atmosinit()
 			if(A.returnPipenet())
 				A.addMember(src)
-		build_network()
+		SSair.add_to_rebuild_queue(src)
 	else
 		// atmosinit() calls update_icon(), so we don't need to call it
 		update_icon()
-
-/obj/machinery/atmospherics/pipe/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	var/turf/T = loc
-	hide(T.intact)
 
 /obj/machinery/navbeacon/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
@@ -268,8 +266,7 @@ All ShuttleMove procs go here
 
 /obj/machinery/navbeacon/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	var/turf/T = loc
-	hide(T.intact)
+
 	if(codes["patrol"])
 		if(!GLOB.navbeacons["[z]"])
 			GLOB.navbeacons["[z]"] = list()
@@ -277,12 +274,6 @@ All ShuttleMove procs go here
 	if(codes["delivery"])
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
-
-/obj/machinery/power/terminal/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	var/turf/T = src.loc
-	if(level==1)
-		hide(T.intact)
 
 /************************************Item move procs************************************/
 
@@ -338,21 +329,14 @@ All ShuttleMove procs go here
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
 
-/obj/structure/disposalpipe/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	update()
-
 /obj/structure/cable/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	cut_cable_from_powernet(FALSE)
 
 /obj/structure/cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	var/turf/T = loc
-	if(level==1)
-		hide(T.intact)
-	connect_wire(TRUE)
-	propogate_if_no_network()
+	Connect_cable(TRUE)
+	propagate_if_no_network()
 
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()

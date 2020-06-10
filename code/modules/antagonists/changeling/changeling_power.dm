@@ -20,7 +20,7 @@
 /*
 changeling code now relies on on_purchase to grant powers.
 if you override it, MAKE SURE you call parent or it will not be usable
-the same goes for Remove(). if you override Remove(), call parent or else your power wont be removed on respec
+the same goes for Remove(). if you override Remove(), call parent or else your power won't be removed on respec
 */
 
 /datum/action/changeling/proc/on_purchase(mob/user, is_respec)

@@ -143,17 +143,19 @@
 	var/spammer = 0
 
 /datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
-		M.adjustFireLoss(-3 * REM)
-		M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
-		..()
-		return TRUE
-/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
-	M.add_movespeed_modifier(MOVESPEED_ID_LENTURI, update=TRUE, priority=100, multiplicative_slowdown=1.50, blacklisted_movetypes=(FLYING|FLOATING))
-	. = ..()
-/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
-	M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
+	M.adjustFireLoss(-3 * REM)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
+	..()
+	return TRUE
 
-	. = ..()
+/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
+	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
+/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
@@ -305,20 +307,23 @@
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
-	M.adjustToxLoss(-0.2 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 1.5/medibonus : 1)
+	M.adjustToxLoss(-0.5 * min(medibonus, 3)) //not great at healing but if you have nothing else it will work
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5) //kills at 40u
 	for(var/r2 in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
-		var/amount2purge = 0.1
-		if(istype(the_reagent2,/datum/reagent/toxin) || istype(the_reagent2,/datum/reagent/consumable/ethanol/))
-			amount2purge *= (5*medibonus) //very good antitox and antidrink (well just removing them) for roundstart availability
-		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
+		var/amount2purge = 3
+		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) will make it not purge medicines
 			continue
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
 	..()
 	return TRUE
+
+// Antitoxin binds plants pretty well. So the tox goes significantly down
+/datum/reagent/medicine/C2/multiver/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 2))
 
 #define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/C2/syriniver) || istype(A,/datum/reagent/medicine/C2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 
@@ -403,48 +408,96 @@
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/C2/instabitaluri
 	name = "Synthflesh (Instabitaluri)"
-	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
+	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
 /datum/reagent/medicine/C2/instabitaluri/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
-		var/mob/living/carbon/Carbies = M
-		if (Carbies.stat == DEAD)
+		var/mob/living/carbon/carbies = M
+		if (carbies.stat == DEAD)
 			show_message = 0
-		if(method in list(PATCH, TOUCH))
-			var/harmies = min(Carbies.getBruteLoss(),Carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
-			var/burnies = min(Carbies.getFireLoss(),Carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
-			Carbies.adjustToxLoss((harmies+burnies)*0.66)
+		if(method in list(PATCH, TOUCH, VAPOR))
+			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
+			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
+			carbies.adjustToxLoss((harmies+burnies)*0.66)
 			if(show_message)
-				to_chat(Carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
-			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-			//Has to be at less than TRESHOLD_UNHUSK burn damage and have 100 isntabitaluri before unhusking. Corpses dont metabolize.
-			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && Carbies.getFireLoss() < TRESHOLD_UNHUSK && Carbies.reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, 100))
-				Carbies.cure_husk("burn")
-				Carbies.visible_message("<span class='nicegreen'>With most of the burnt off flesh replaced, [Carbies] looks a lot healthier.</span>")
+				to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
+			SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/C2/instabitaluri) + reac_volume >= 100))
+				carbies.cure_husk("burn")
+				carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 	..()
 	return TRUE
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
+/*
+*How this medicine works:
+*Penthrite if you are not in crit only stabilizes your heart.
+*As soon as you pass crit threshold it's special effects kick in. Penthrite forces your heart to beat preventing you from entering
+*soft and hard crit, but there is a catch. During this you will be healed and you will sustain
+*heart damage that will not imapct you as long as penthrite is in your system.
+*If you reach the threshold of -60 HP penthrite stops working and you get a heart attack, penthrite is flushed from your system in that very moment,
+*causing you to loose your soft crit, hard crit and heart stabilization effects.
+*Overdosing on penthrite also causes a heart failure.
+*/
 /datum/reagent/medicine/C2/penthrite
 	name = "Penthrite"
-	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
+	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. It reacts violently with other emergency medication."
 	color = "#F5F5F5"
-	self_consuming = TRUE
+	overdose_threshold = 50
 
 /datum/reagent/medicine/C2/penthrite/on_mob_add(mob/living/M)
 	. = ..()
+	to_chat(M,"<span class='notice'>Your heart begins to beat with great force!")
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(M, TRAIT_NOHARDCRIT,type)
+	ADD_TRAIT(M, TRAIT_NOSOFTCRIT,type)
+	M.crit_threshold = M.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
 
-/datum/reagent/medicine/C2/penthrite/on_mob_metabolize(mob/living/M)
+
+/datum/reagent/medicine/C2/penthrite/on_mob_life(mob/living/carbon/human/H)
+	H.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
+	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > H.crit_threshold) //we cannot save someone above our raised crit threshold.
+
+		H.adjustToxLoss(-2 * REM, 0)
+		H.adjustBruteLoss(-2 * REM, 0)
+		H.adjustFireLoss(-2 * REM, 0)
+		H.adjustOxyLoss(-6 * REM, 0)
+
+		H.losebreath = 0
+
+		H.adjustOrganLoss(ORGAN_SLOT_HEART,max(1,volume/10)) // your heart is barely keeping up!
+
+		H.Jitter(rand(0,2))
+		H.Dizzy(rand(0,2))
+
+
+		if(prob(33))
+			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!</span>")
+
+	if(H.health <= H.crit_threshold) //certain death above this threshold
+		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart before we give him heart attack
+		to_chat(H,"<span class='danger'>You feel something rupturing inside your chest!</span>")
+		H.emote("scream")
+		H.set_heartattack(TRUE)
+		volume = 0
 	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.5 * REM)
 
 /datum/reagent/medicine/C2/penthrite/on_mob_end_metabolize(mob/living/M)
+	M.crit_threshold = M.crit_threshold - HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT,type)
+	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT,type)
 	. = ..()
+
+/datum/reagent/medicine/C2/penthrite/overdose_process(mob/living/carbon/human/H)
+	REMOVE_TRAIT(H, TRAIT_STABLEHEART, type)
+	H.adjustStaminaLoss(10)
+	H.adjustOrganLoss(ORGAN_SLOT_HEART,10)
+	H.set_heartattack(TRUE)
+
 
 /******NICHE******/
 //todo

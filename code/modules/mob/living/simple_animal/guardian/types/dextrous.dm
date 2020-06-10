@@ -7,7 +7,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Drone, a dextrous master of construction and repair.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Dextrous combat modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! It can hold stuff in its fins, sort of.</span>"
-	hive_fluff_string = "<span class='holoparasite'>The mass seems to be able to... hold stuff?</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Gold, a malleable constructor.</span>"
 	dextrous = TRUE
 	held_items = list(null, null)
 	var/obj/item/internal_storage //what we're storing within ourself

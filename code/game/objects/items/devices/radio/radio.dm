@@ -2,7 +2,7 @@
 	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
 	icon_state = "walkietalkie"
-	item_state = "walkietalkie"
+	inhand_icon_state = "walkietalkie"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
 
@@ -51,10 +51,7 @@
 	frequency = add_radio(src, new_frequency)
 
 /obj/item/radio/proc/recalculateChannels()
-	channels = list()
-	translate_binary = FALSE
-	syndie = FALSE
-	independent = FALSE
+	resetChannels()
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
@@ -70,6 +67,13 @@
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+
+// Used for cyborg override
+/obj/item/radio/proc/resetChannels()
+	channels = list()
+	translate_binary = FALSE
+	syndie = FALSE
+	independent = FALSE
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
@@ -118,7 +122,7 @@
 				ui_height += 6 + channels.len * 21
 			else
 				ui_height += 24
-		ui = new(user, src, ui_key, "radio", name, ui_width, ui_height, master_ui, state)
+		ui = new(user, src, ui_key, "Radio", name, ui_width, ui_height, master_ui, state)
 		ui.open()
 
 /obj/item/radio/ui_data(mob/user)
@@ -150,16 +154,7 @@
 				return
 			var/tune = params["tune"]
 			var/adjust = text2num(params["adjust"])
-			if(tune == "input")
-				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
-				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
-				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
-				if(!isnull(tune) && !..())
-					if (tune < MIN_FREE_FREQ && tune <= MAX_FREE_FREQ / 10)
-						// allow typing 144.7 to get 1447
-						tune *= 10
-					. = TRUE
-			else if(adjust)
+			if(adjust)
 				tune = frequency + adjust * 10
 				. = TRUE
 			else if(text2num(tune) != null)
@@ -373,11 +368,17 @@
 
 /obj/item/radio/borg
 	name = "cyborg radio"
+	subspace_transmission = TRUE
 	subspace_switchable = TRUE
 	dog_fashion = null
 
-/obj/item/radio/borg/Initialize(mapload)
+/obj/item/radio/borg/resetChannels()
 	. = ..()
+	
+	var/mob/living/silicon/robot/R = loc
+	if(istype(R))
+		for(var/ch_name in R.module.radio_channels)
+			channels[ch_name] = 1
 
 /obj/item/radio/borg/syndicate
 	syndie = 1

@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "radio headset"
 	desc = "An updated, modular intercom that fits over the head. Takes encryption keys."
 	icon_state = "headset"
-	item_state = "headset"
+	inhand_icon_state = "headset"
 	custom_materials = list(/datum/material/iron=75)
 	subspace_transmission = TRUE
 	canhear_range = 0 // can't hear headsets from very far away
@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "syndicate headset"
 	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs."
 	icon_state = "syndie_headset"
-	item_state = "syndie_headset"
+	inhand_icon_state = "syndie_headset"
 
 /obj/item/radio/headset/syndicate/alt/ComponentInitialize()
 	. = ..()
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "security bowman headset"
 	desc = "This is used by your elite security force. Protects ears from flashbangs."
 	icon_state = "sec_headset_alt"
-	item_state = "sec_headset_alt"
+	inhand_icon_state = "sec_headset_alt"
 
 /obj/item/radio/headset/headset_sec/alt/ComponentInitialize()
 	. = ..()
@@ -157,6 +157,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "srvsec_headset"
 	keyslot = new /obj/item/encryptionkey/headset_srvsec
 
+/obj/item/radio/headset/headset_srvmed
+	name = "psychology headset"
+	desc = "A headset allowing the wearer to communicate with medbay and service."
+	icon_state = "med_headset"
+	keyslot = new /obj/item/encryptionkey/headset_srvmed
+
 /obj/item/radio/headset/headset_com
 	name = "command radio headset"
 	desc = "A headset with a commanding channel."
@@ -176,7 +182,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "\proper the captain's bowman headset"
 	desc = "The headset of the boss. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
-	item_state = "com_headset_alt"
+	inhand_icon_state = "com_headset_alt"
 
 /obj/item/radio/headset/heads/captain/alt/ComponentInitialize()
 	. = ..()
@@ -198,7 +204,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "\proper the head of security's bowman headset"
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
-	item_state = "com_headset_alt"
+	inhand_icon_state = "com_headset_alt"
 
 /obj/item/radio/headset/heads/hos/ComponentInitialize()
 	. = ..()
@@ -258,7 +264,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "\improper CentCom bowman headset"
 	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs."
 	icon_state = "cent_headset_alt"
-	item_state = "cent_headset_alt"
+	inhand_icon_state = "cent_headset_alt"
 	keyslot = null
 
 /obj/item/radio/headset/headset_cent/alt/ComponentInitialize()

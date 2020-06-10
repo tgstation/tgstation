@@ -86,6 +86,18 @@
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
 #define PLASMA_UPPER_TEMPERATURE			(1370+T0C)
 #define PLASMA_OXYGEN_FULLBURN				10
+#define HYDROGEN_MINIMUM_BURN_TEMPERATURE	(100+T0C)
+#define HYDROGEN_UPPER_TEMPERATURE			(1370+T0C)
+#define HYDROGEN_OXYGEN_FULLBURN			10
+
+//COLD FIRE (this is used only for the freon-o2 reaction, there is no fire still)
+#define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_SPREAD	263 //fire will spread if the temperature is -10 °C
+#define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST	273 //fire will start if the temperature is 0 °C
+#define COLD_FIRE_SPREAD_RADIOSITY_SCALE		0.95
+#define COLD_FIRE_GROWTH_RATE					40000
+#define FREON_MAXIMUM_BURN_TEMPERATURE			293
+#define FREON_LOWER_TEMPERATURE					60 //minimum temperature allowed for the burn to go, we would have negative pressure otherwise
+#define FREON_OXYGEN_FULLBURN					10
 
 //GASES
 #define MIN_TOXIC_GAS_DAMAGE				1
@@ -124,7 +136,7 @@
 /// Minimum amount of kelvin moved toward 310K per tick. So long as abs(310.15 - bodytemp) is more than 50.
 #define BODYTEMP_AUTORECOVERY_MINIMUM		12
 ///Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
-#define BODYTEMP_COLD_DIVISOR				6
+#define BODYTEMP_COLD_DIVISOR				15
 /// Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
 #define BODYTEMP_HEAT_DIVISOR				15
 /// The maximum number of degrees that your body can cool in 1 tick, due to the environment, when in a cold area.
@@ -258,6 +270,7 @@
 
 //ATMOS MIX IDS
 #define LAVALAND_DEFAULT_ATMOS		"LAVALAND_ATMOS"
+#define ICEMOON_DEFAULT_ATMOS		"ICEMOON_ATMOS"
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"

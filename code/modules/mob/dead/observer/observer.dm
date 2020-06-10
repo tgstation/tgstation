@@ -32,6 +32,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/health_scan = FALSE //Are health scans currently enabled?
+	var/chem_scan = FALSE //Are chem scans currently enabled?
 	var/gas_scan = FALSE //Are gas scans currently enabled?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
@@ -128,7 +129,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 
-	GLOB.dead_mob_list += src
+	add_to_dead_mob_list()
 
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
@@ -340,7 +341,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && mind.current.key[1] != "@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
-	client.change_view(CONFIG_GET(string/default_view))
+	client.view_size.setDefault(getScreenSize(client.prefs.widescreenpref))//Let's reset so people can't become allseeing gods
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	return TRUE
@@ -497,22 +498,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Change your view range."
 
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
-	if(client.view == CONFIG_GET(string/default_view))
+	if(client.view_size.getView() == client.view_size.default)
 		var/list/views = list()
 		for(var/i in 7 to max_view)
 			views |= i
-		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
+		var/new_view = input("Choose your new view", "Modify view range", 0) as null|anything in views
 		if(new_view)
-			client.change_view(clamp(new_view, 7, max_view))
+			client.view_size.setTo(clamp(new_view, 7, max_view) - 7)
 	else
-		client.change_view(CONFIG_GET(string/default_view))
+		client.view_size.resetToDefault()
 
 /mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
 	set hidden = TRUE
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(input)
-		client.rescale_view(input, 15, (max_view*2)+1)
+		client.rescale_view(input, 0, ((max_view*2)+1) - 15)
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
@@ -723,6 +724,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Health scan enabled.</span>")
 		health_scan = TRUE
 
+/mob/dead/observer/verb/toggle_chem_scan()
+	set name = "Toggle Chem Scan"
+	set desc = "Toggles whether you scan living beings for chemicals and addictions on click"
+	set category = "Ghost"
+
+	if(chem_scan) //remove old huds
+		to_chat(src, "<span class='notice'>Chem scan disabled.</span>")
+		chem_scan = FALSE
+	else
+		to_chat(src, "<span class='notice'>Chem scan enabled.</span>")
+		chem_scan = TRUE
+
 /mob/dead/observer/verb/toggle_gas_scan()
 	set name = "Toggle Gas Scan"
 	set desc = "Toggles whether you analyze gas contents on click"
@@ -893,8 +906,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/t_ray_images = list()
 	var/static/list/stored_t_ray_images = list()
 	for(var/obj/O in orange(client.view, src) )
-		if(O.level != 1)
-			continue
 
 		if(O.invisibility == INVISIBILITY_MAXIMUM)
 			var/image/I = new(loc = get_turf(O))

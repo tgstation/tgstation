@@ -236,6 +236,8 @@ GLOBAL_LIST_INIT(phonetic_alphabet, world.file2list("strings/phonetic_alphabet.t
 
 GLOBAL_LIST_INIT(numbers_as_words, world.file2list("strings/numbers_as_words.txt"))
 
+GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
+
 /proc/generate_number_strings()
 	var/list/L[198]
 	for(var/i in 1 to 99)
