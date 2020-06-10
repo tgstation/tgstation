@@ -76,11 +76,6 @@ GLOBAL_LIST_EMPTY(request_list)
 	else
 		return ..()
 
-/obj/machinery/bounty_board/proc/localAlert()
-	say("New bounty has been added!")
-	playsound(src, 'sound/effects/cashregister.ogg', 30, TRUE)
-	return
-
 /obj/machinery/bounty_board/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

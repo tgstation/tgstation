@@ -1,6 +1,6 @@
 /datum/computer_file/program/bounty_board
 	filename = "bountyboard"
-	filedesc = "Nanotrasen Bounty Request Network"
+	filedesc = "Bounty Board Request Network"
 	program_icon_state = "bountyboard"
 	extended_desc = "A multi-platform network for placing requests across the station, with payment across the network being possible.."
 	requires_ntnet = TRUE
@@ -15,11 +15,6 @@
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
-
-/datum/computer_file/program/bounty_board/proc/localAlert()
-	computer.say("New bounty has been added!")
-	playsound(computer, 'sound/effects/cashregister.ogg', 30, TRUE)
-	return
 
 /datum/computer_file/program/bounty_board/ui_data(mob/user)
 	var/list/data = get_header_data()
