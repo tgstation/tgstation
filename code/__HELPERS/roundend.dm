@@ -246,8 +246,8 @@
 
 	CHECK_TICK
 
-	//check config blah blah
 	handle_hearts()
+	set_observer_default_invisibility(0)
 
 	CHECK_TICK
 
