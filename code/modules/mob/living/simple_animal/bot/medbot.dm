@@ -67,8 +67,8 @@
 	var/tipped_status = MEDBOT_PANIC_NONE
 ///The name we got when we were tipped
 	var/tipper_name
-///The last time we were tipped, to avoid spam
-	var/last_tipping_voice = 0
+///The last time we were tipped/righted and said a voice line, to avoid spam
+	var/last_tipping_action_voice = 0
 
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -271,8 +271,8 @@
 		messagevoice = list("Fuck you." = 'sound/voice/medbot/fuck_you.ogg', "Your behavior has been reported, have a nice day." = 'sound/voice/medbot/reported.ogg')
 
 	tipper_name = null
-	if(world.time > last_tipping_voice + 15 SECONDS)
-		last_tipping_voice = world.time
+	if(world.time > last_tipping_action_voice + 15 SECONDS)
+		last_tipping_action_voice = world.time
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], 70)
@@ -351,7 +351,7 @@
 	if(QDELETED(patient))
 		if(!shut_up && prob(1))
 			if(emagged && prob(30))
-				var/list/i_need_scissors = list('sound/voice/medbot/fuck_you.ogg', 'sound/voice/medbot/turn_off.ogg', 'sound/voice/medbot/im_different.ogg', 'sound/voice/medbot/close.ogg')
+				var/list/i_need_scissors = list('sound/voice/medbot/fuck_you.ogg', 'sound/voice/medbot/turn_off.ogg', 'sound/voice/medbot/im_different.ogg', 'sound/voice/medbot/close.ogg', 'sound/voice/medbot/shindemashou.ogg')
 				playsound(src, pick(i_need_scissors), 70)
 			else
 				var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg', "Why are we still here? Just to suffer?" = 'sound/voice/medbot/why.ogg')
@@ -464,8 +464,8 @@
 	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
 		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
 
-		if(world.time > last_tipping_voice + 15 SECONDS)
-			last_tipping_voice = world.time // message for tipping happens when we start interacting, message for righting comes after finishing
+		if(world.time > last_tipping_action_voice + 15 SECONDS)
+			last_tipping_action_voice = world.time // message for tipping happens when we start interacting, message for righting comes after finishing
 			var/list/messagevoice = list("Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',"Please don't..." = 'sound/voice/medbot/please_dont.ogg',"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg', "Nooo..." = 'sound/voice/medbot/nooo.ogg', "Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
