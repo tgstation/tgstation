@@ -4,7 +4,7 @@
 /obj/screen/swarmer/FabricateTrap
 	icon_state = "ui_trap"
 	name = "Create trap (Costs 4 Resources)"
-	desc = "Creates a trap that will nonlethally shock any non-swarmer that attempts to cross it. (Costs 5 resources)"
+	desc = "Creates a trap that will nonlethally shock any non-swarmer that attempts to cross it. (Costs 4 resources)"
 
 /obj/screen/swarmer/FabricateTrap/Click()
 	if(isswarmer(usr))
@@ -14,7 +14,7 @@
 /obj/screen/swarmer/Barricade
 	icon_state = "ui_barricade"
 	name = "Create barricade (Costs 4 Resources)"
-	desc = "Creates a destructible barricade that will stop any non swarmer from passing it. Also allows disabler beams to pass through. (Costs 5 resources)"
+	desc = "Creates a destructible barricade that will stop any non swarmer from passing it. Also allows disabler beams to pass through. (Costs 4 resources)"
 
 /obj/screen/swarmer/Barricade/Click()
 	if(isswarmer(usr))
