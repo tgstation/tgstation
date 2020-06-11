@@ -281,6 +281,16 @@
 	build_path = /obj/item/reagent_containers/blood
 	category = list("Medical Designs")
 
+/datum/design/portablechemdispenser
+	name = "Portable Chemical Dispenser"
+	desc = "A portable chemical dispenser that is attached to a belt."
+	id = "portablechemdispenser"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/plastic = 500, /datum/material/bluespace = 100)
+	build_path = /obj/item/portable_chem_dispenser
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
