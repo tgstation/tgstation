@@ -517,6 +517,8 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		if(rand(0,1) == 1)
+			to_chat(user, "<span class='danger'>You feel your braincells dying</span>")
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -536,6 +538,8 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		if(rand(0,1) == 1)
+			to_chat(user, "<span class='danger'>You feel your braincells dying</span>")
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -555,6 +559,8 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		if(rand(0,1) == 1)
+			to_chat(user, "<span class='danger'>You feel your braincells dying</span>")
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -576,6 +582,8 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		if(rand(0,1) == 1)
+			to_chat(user, "<span class='danger'>You feel your braincells dying</span>")
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -597,6 +605,8 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		if(rand(0,1) == 1)
+			to_chat(user, "<span class='danger'>You feel your braincells dying</span>")
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -615,5 +625,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		if(rand(0,1) == 1)
+			to_chat(user, "<span class='danger'>You feel your braincells dying</span>")
 		if(!L.mind || !L.mind.miming)
 			return 'sound/voice/human/ffff.ogg'
