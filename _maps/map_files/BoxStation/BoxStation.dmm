@@ -42756,6 +42756,7 @@
 	name = "Medbay";
 	req_access_txt = "5"
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel,
 /area/medical/medbay/lobby)
 "dlg" = (
@@ -43622,6 +43623,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel,
 /area/medical/medbay/lobby)
 "ewz" = (
