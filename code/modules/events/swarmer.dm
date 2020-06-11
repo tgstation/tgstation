@@ -16,7 +16,9 @@
 	var/list/spawn_locs = list()
 	for(var/X in GLOB.xeno_spawn)
 		var/turf/T = X
-		spawn_locs += T
+		var/light_amount = T.get_lumcount()
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+			spawn_locs += T
 	if(!spawn_locs.len)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
