@@ -516,6 +516,7 @@
 /datum/emote/living/bababooey/get_sound(mob/living/user)
 	if(isliving(user))
 		var/mob/living/L = user
+		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -534,6 +535,7 @@
 /datum/emote/living/babafooey/get_sound(mob/living/user)
 	if(isliving(user))
 		var/mob/living/L = user
+		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -552,6 +554,7 @@
 /datum/emote/living/fafafooey/get_sound(mob/living/user)
 	if(isliving(user))
 		var/mob/living/L = user
+		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -572,6 +575,7 @@
 /datum/emote/living/fafafoggy/get_sound(mob/living/user)
 	if(isliving(user))
 		var/mob/living/L = user
+		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -592,6 +596,7 @@
 /datum/emote/living/hohohoy/get_sound(mob/living/user)
 	if(isliving(user))
 		var/mob/living/L = user
+		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
@@ -609,5 +614,6 @@
 /datum/emote/living/ffff/get_sound(mob/living/user)
 	if(isliving(user))
 		var/mob/living/L = user
+		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 		if(!L.mind || !L.mind.miming)
 			return 'sound/voice/human/ffff.ogg'
