@@ -10,7 +10,7 @@
 	ui_y = 350
 	///Account used for creating barcodes.
 	var/datum/bank_account/payments_acc
-	///The amount which the tagger will recieve for the sale.
+	///The amount which the tagger will receive for the sale.
 	var/percent_cut = 20
 
 /datum/computer_file/program/shipping/ui_data(mob/user)

@@ -286,7 +286,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			configuration = json_decode(file2text(json_file))
 			if(configuration["Dynamic"])
 				for(var/variable in configuration["Dynamic"])
-					if(!vars[variable])
+					if(!(variable in vars))
 						stack_trace("Invalid dynamic configuration variable [variable] in game mode variable changes.")
 						continue
 					vars[variable] = configuration["dynamic"][variable]
@@ -304,14 +304,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if ("Midround")
 				if (ruleset.weight)
 					midround_rules += ruleset
-		if(configuration)
-			if(!configuration[ruleset.ruletype])
-				continue
-			if(!configuration[ruleset.ruletype][ruleset.name])
-				continue
+		// Wouldn't it be funny if you wanted to make a multiline if to make it more readable you needed to escape the newlines?
+		if( configuration \
+		 && configuration[ruleset.ruletype] \
+		 && configuration[ruleset.ruletype][ruleset.name])
 			var/rule_conf = configuration[ruleset.ruletype][ruleset.name]
 			for(var/variable in rule_conf)
-				if(isnull(ruleset.vars[variable]))
+				if(!(variable in ruleset.vars))
 					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
 					continue
 				ruleset.vars[variable] = rule_conf[variable]
