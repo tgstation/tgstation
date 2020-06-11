@@ -1,9 +1,13 @@
-import { Button, Section } from '../components';
+import { Button, Input, Section } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 
 const PATTERN_DESCRIPTOR = / \[(?:ghost|dead)\]$/;
 const PATTERN_NUMBER = / \(([0-9]+)\)$/;
+
+const searchFor = bySearch => thing => {
+  return thing.name.toLowerCase().startsWith(bySearch.toLowerCase());
+};
 
 const sortByName = (a, b) => {
   const [aName, bName] = [a.name, b.name];
@@ -31,11 +35,11 @@ const sortByName = (a, b) => {
 };
 
 const BasicSection = props => {
-  const { source, orbit, title } = props;
+  const { orbit, search, source, title } = props;
 
   return source.length > 0 && (
     <Section title={title}>
-      { source.sort(sortByName).map(thing => (<Button
+      { source.filter(searchFor(search)).sort(sortByName).map(thing => (<Button
         key={thing.name}
         content={thing.name.replace(PATTERN_DESCRIPTOR, "")}
         onClick={() => orbit(thing.name)}
@@ -84,6 +88,8 @@ export const Orbit = (props, context) => {
     npcs,
   } = data;
 
+  const [search, setSearch] = useLocalState(context, "search", "");
+
   const collatedAntagonists = {};
   for (const antagonist of antagonists) {
     if (collatedAntagonists[antagonist.antag] === undefined) {
@@ -98,6 +104,14 @@ export const Orbit = (props, context) => {
   return (
     <Window>
       <Window.Content>
+        <Section title={
+          <Input
+            fluid
+            value={search}
+            onInput={(_, value) => setSearch(value)}
+          />
+        } />
+
         { antagonists.length > 0 && (
           <Section title="Antagonists">
             { Object.entries(collatedAntagonists).sort((a, b) => {
@@ -105,14 +119,19 @@ export const Orbit = (props, context) => {
             }).map(([name, antags]) => {
               return (
                 <Section key={name} title={name} level={2}>
-                  { antags.sort(sortByName).map(antag => (
-                    <OrbitedButton
-                      key={antag.name}
-                      color="bad"
-                      thing={antag}
-                      orbit={orbit}
-                    />
-                  )) }
+                  {
+                    antags
+                      .filter(searchFor(search))
+                      .sort(sortByName)
+                      .map(antag => (
+                        <OrbitedButton
+                          key={antag.name}
+                          color="bad"
+                          thing={antag}
+                          orbit={orbit}
+                        />
+                      ))
+                  }
                 </Section>
               );
             }) }
@@ -120,7 +139,7 @@ export const Orbit = (props, context) => {
         ) }
 
         <Section title="Alive">
-          { alive.sort(sortByName).map(thing => (
+          { alive.filter(searchFor(search)).sort(sortByName).map(thing => (
             <OrbitedButton
               key={thing.name}
               color="good"
@@ -129,10 +148,33 @@ export const Orbit = (props, context) => {
             />)) }
         </Section>
 
-        <BasicSection title="Dead" source={dead} orbit={orbit} />
-        <BasicSection title="NPCs" source={npcs} orbit={orbit} />
-        <BasicSection title="Misc" source={misc} orbit={orbit} />
-        <BasicSection title="Ghosts" source={ghosts} orbit={orbit} />
+        <BasicSection
+          title="Dead"
+          source={dead}
+          orbit={orbit}
+          search={search}
+        />
+
+        <BasicSection
+          title="NPCs"
+          source={npcs}
+          orbit={orbit}
+          search={search}
+        />
+
+        <BasicSection
+          title="Misc"
+          source={misc}
+          orbit={orbit}
+          search={search}
+        />
+
+        <BasicSection
+          title="Ghosts"
+          source={ghosts}
+          orbit={orbit}
+          search={search}
+        />
       </Window.Content>
     </Window>
   );
