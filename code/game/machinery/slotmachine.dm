@@ -342,6 +342,7 @@
 				C.throw_at(target, 3, 10)
 			else
 				random_step(C, 2, 40)
+			CHECK_TICK
 
 	return amount
 
