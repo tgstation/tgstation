@@ -4,6 +4,7 @@
 
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
+	worn_icon_state = "baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 

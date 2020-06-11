@@ -133,8 +133,11 @@
 	if(!assembly.proxy_module)
 		assembly.proxy_module = new(assembly)
 	upgrades |= CAMERA_UPGRADE_MOTION
+	create_prox_monitor()
 
 /obj/machinery/camera/proc/removeMotion()
 	if(name == "motion-sensitive security camera")
 		name = "security camera"
 	upgrades &= ~CAMERA_UPGRADE_MOTION
+	if(!area_motion)
+		QDEL_NULL(proximity_monitor)

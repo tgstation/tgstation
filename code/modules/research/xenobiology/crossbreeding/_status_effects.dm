@@ -60,6 +60,7 @@
 /datum/status_effect/slimerecall
 	id = "slime_recall"
 	duration = -1 //Will be removed by the extract.
+	tick_interval = -1
 	alert_type = null
 	var/interrupted = FALSE
 	var/mob/target
