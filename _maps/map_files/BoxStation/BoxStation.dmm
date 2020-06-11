@@ -20184,7 +20184,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/security/checkpoint/medical";
-	dir = 8;
+	dir = 1;
 	name = "Medbay Security APC";
 	pixel_y = 23
 	},
@@ -22711,7 +22711,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/security/checkpoint/medical)
+/area/medical/medbay)
 "bom" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	icon_state = "trimline_fill";
@@ -24458,6 +24458,9 @@
 	},
 /obj/machinery/stasis,
 /obj/structure/cable,
+/obj/machinery/defibrillator_mount{
+	pixel_y = 28
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "btZ" = (
@@ -26841,6 +26844,9 @@
 	dir = 6
 	},
 /obj/machinery/iv_drip,
+/obj/machinery/newscaster{
+	pixel_y = -28
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bAw" = (
@@ -28119,6 +28125,10 @@
 	},
 /obj/machinery/shower{
 	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
@@ -29570,14 +29580,14 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
@@ -30716,7 +30726,7 @@
 "bMc" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall,
-/area/medical/medbay/central)
+/area/medical/virology)
 "bMg" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/xenobiology";
@@ -42648,6 +42658,9 @@
 /obj/machinery/keycard_auth{
 	pixel_x = 24
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "diu" = (
@@ -44276,10 +44289,6 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/item/storage/box/syringes,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
@@ -44730,7 +44739,7 @@
 	dir = 1
 	},
 /obj/structure/bed/pod,
-/obj/machinery/newscaster{
+/obj/machinery/defibrillator_mount{
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel,
@@ -45391,7 +45400,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/aft)
 "gTN" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -46207,6 +46216,9 @@
 	dir = 1
 	},
 /obj/machinery/stasis,
+/obj/machinery/defibrillator_mount{
+	pixel_y = 28
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "iiu" = (
@@ -46334,7 +46346,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/security/checkpoint/medical)
+/area/medical/medbay)
 "isi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	icon_state = "trimline_fill";
@@ -48262,7 +48274,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/security/checkpoint/medical)
+/area/medical/medbay)
 "lDM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
@@ -52114,7 +52126,7 @@
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/aft)
 "rYD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -52492,7 +52504,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/medbay/aft)
 "sIY" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -52757,13 +52769,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"tgE" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/security/checkpoint/medical)
 "thX" = (
 /obj/structure/cable,
 /obj/machinery/camera{
@@ -52884,7 +52889,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/area/medical/virology)
 "toT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light,
@@ -92385,7 +92390,7 @@ lSr
 boh
 imb
 mtt
-bfG
+bof
 btX
 isi
 bwG
@@ -93410,7 +93415,7 @@ bix
 bjX
 blp
 bmO
-tgE
+boh
 imb
 bwz
 bqY
@@ -93924,10 +93929,10 @@ biy
 bjY
 bjN
 bmO
-tgE
+boh
 imb
 mtt
-bfG
+bof
 iis
 qAF
 myf
@@ -95484,7 +95489,7 @@ btR
 bFM
 bCV
 gRX
-bof
+bRN
 bIf
 bIL
 bOq
