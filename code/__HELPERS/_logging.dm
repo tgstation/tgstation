@@ -177,6 +177,10 @@
 	if (CONFIG_GET(flag/log_job_debug))
 		WRITE_LOG(GLOB.world_job_debug_log, "JOB: [text]")
 
+/proc/log_crew_monitor_debug(text)
+	if (CONFIG_GET(flag/log_crew_monitor_debug))
+		WRITE_LOG(GLOB.world_crew_monitor_debug_log, "CMC: [text]")
+
 /* Log to both DD and the logfile. */
 /proc/log_world(text)
 #ifdef USE_CUSTOM_ERROR_HANDLER

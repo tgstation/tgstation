@@ -97,12 +97,15 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		var/turf/T = get_turf(user)
 		z = T.z
 	var/list/zdata = update_data(z)
+	if(zdata == null)
+		log_crew_monitor_debug("update_data([z]) returned null! Crew monitors have broken!")
 	. = list()
 	.["sensors"] = zdata
 	.["link_allowed"] = isAI(user)
 
 /datum/crewmonitor/proc/update_data(z)
 	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)
+		log_crew_monitor_debug("Retrieving cached result for [z]: [data_by_z["[z]"]]")
 		return data_by_z["[z]"]
 
 	var/list/results = list()
@@ -121,6 +124,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	var/pos_y
 	var/life_status
 
+	log_crew_monitor_debug("Creating new list of results. [GLOB.nanite_sensors_list?.len] nanite sensors, [GLOB.suit_sensors_list?.len] suit sensors")
+
 	for(var/i in GLOB.nanite_sensors_list)
 		var/mob/living/carbon/human/H = i
 		var/nanite_sensors = FALSE
@@ -129,14 +134,16 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		// Check if their z-level is correct and if they are wearing a uniform.
 		// Accept H.z==0 as well in case the mob is inside an object.
 		if(((H.z == 0 || H.z == z) && (nanite_sensors)))
-
+			log_crew_monitor_debug("Checking nanite sensors for [H] on z-level [H.z]")
 			pos = H.z == 0 || (nanite_sensors) ? get_turf(H) : null
 
 			// Special case: If the mob is inside an object confirm the z-level on turf level.
 			if (H.z == 0 && (!pos || pos.z != z))
+				log_crew_monitor_debug("Mob was on z-level 0, but pos was on z-level [pos.z]")
 				continue
 
 			I = H.wear_id ? H.wear_id.GetID() : null
+			log_crew_monitor_debug("ID: [I]")
 
 			if (I)
 				name = I.registered_name
@@ -161,23 +168,30 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			pos_y = pos.y
 
 			results[++results.len] = list("name" = name, "assignment" = assignment, "ijob" = ijob, "life_status" = life_status, "oxydam" = oxydam, "toxdam" = toxdam, "burndam" = burndam, "brutedam" = brutedam, "area" = area, "pos_x" = pos_x, "pos_y" = pos_y, "can_track" = H.can_track(null))
+			log_crew_monitor_debug("Result: [json_encode(results[results.len])]")
+
+	log_crew_monitor_debug("Finished checking nanites, checking suit sensors")
 
 	for(var/i in GLOB.suit_sensors_list)
 		var/mob/living/carbon/human/H = i
 		// Check if their z-level is correct and if they are wearing a uniform.
 		// Accept H.z==0 as well in case the mob is inside an object. Nanite sensors come before normal sensors.
+		log_crew_monitor_debug("Checking suit sensors for [H]: Z: [H.z], U: [H.w_uniform], N: [!(H in GLOB.nanite_sensors_list)]")
 		if((H.z == 0 || H.z == z) && (istype(H.w_uniform, /obj/item/clothing/under)) && !(H in GLOB.nanite_sensors_list))
 			U = H.w_uniform
 
 			// Are the suit sensors on?
+			log_crew_monitor_debug("Checking suit sensors, U.has_sensor == [U.has_sensor], U.sensor_mode == [U.sensor_mode]")
 			if (((U.has_sensor > 0) && U.sensor_mode))
 				pos = H.z == 0 || (U.sensor_mode == SENSOR_COORDS) ? get_turf(H) : null
 
 				// Special case: If the mob is inside an object confirm the z-level on turf level.
 				if (H.z == 0 && (!pos || pos.z != z))
+					log_crew_monitor_debug("Mob was on z-level 0, but pos was on z-level [pos.z]")
 					continue
 
 				I = H.wear_id ? H.wear_id.GetID() : null
+				log_crew_monitor_debug("ID: [I]")
 
 				if (I)
 					name = I.registered_name
@@ -216,9 +230,12 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 					pos_y = null
 
 				results[++results.len] = list("name" = name, "assignment" = assignment, "ijob" = ijob, "life_status" = life_status, "oxydam" = oxydam, "toxdam" = toxdam, "burndam" = burndam, "brutedam" = brutedam, "area" = area, "pos_x" = pos_x, "pos_y" = pos_y, "can_track" = H.can_track(null))
+				log_crew_monitor_debug("Result: [json_encode(results[results.len])]")
 
 	data_by_z["[z]"] = sortTim(results,/proc/sensor_compare)
 	last_update["[z]"] = world.time
+
+	log_crew_monitor_debug("Final results: [results]")
 
 	return results
 

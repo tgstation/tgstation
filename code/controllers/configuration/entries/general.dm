@@ -96,6 +96,8 @@
 
 /datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 
+/datum/config_entry/flag/log_crew_monitor_debug // log crew monitor traces
+
 /// Whether demos are written, if not set demo SS never initializes
 /datum/config_entry/flag/demos_enabled
 
