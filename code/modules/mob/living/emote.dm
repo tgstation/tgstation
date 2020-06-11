@@ -511,6 +511,7 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	vary = TRUE
+	cooldown = (60 SECONDS)
 	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/bababooey/get_sound(mob/living/user)
@@ -529,6 +530,7 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	vary = TRUE
+	cooldown = (60 SECONDS)
 	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/babafooey/get_sound(mob/living/user)
@@ -547,6 +549,7 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	vary = TRUE
+	cooldown = (60 SECONDS)
 	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/fafafooey/get_sound(mob/living/user)
@@ -567,6 +570,7 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	vary = TRUE
+	cooldown = (60 SECONDS)
 	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/fafafoggy/get_sound(mob/living/user)
@@ -587,6 +591,7 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	vary = TRUE
+	cooldown = (60 SECONDS)
 	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/hohohoy/get_sound(mob/living/user)
@@ -604,6 +609,7 @@
 	message = "spews something softly."
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
+	cooldown = (60 SECONDS)
 	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/ffff/get_sound(mob/living/user)
