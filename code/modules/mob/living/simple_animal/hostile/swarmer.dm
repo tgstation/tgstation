@@ -114,8 +114,8 @@
 	if(!isliving(target))
 		return target.swarmer_act(src)
 	else if(iscyborg(target))
-		var/mob/living/borg = target
-		borg.adjustHealth(melee_damage_lower)
+		var/mob/living/silicon/borg = target
+		borg.adjustBruteLoss(melee_damage_lower)
 		return ..()
 	else
 		return ..()
