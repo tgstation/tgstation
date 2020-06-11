@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(discord)
 	//We cast the discord ID to varchar to prevent BYOND mangling
 	//it into it's scientific notation
 	var/datum/DBQuery/query_get_discord_id = SSdbcore.NewQuery(
-		"SELECT CAST(discord_id AS VARCHAR(25)) FROM [format_table_name("player")] WHERE ckey = :ckey",
+		"SELECT CAST(discord_id AS CHAR(25)) FROM [format_table_name("player")] WHERE ckey = :ckey",
 		list("ckey" = lookup_ckey)
 	)
 	if(!query_get_discord_id.Execute())
