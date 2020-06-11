@@ -129,7 +129,6 @@
 	var/turf/here = get_turf(computer)
 	var/turf/there = get_turf(signal)
 	if(!here || !there)
-		to_chat(world, "DEBUG -- somehow a [here] or [there] is null.")
 		return FALSE //I was still getting a runtime even after the above check while scanning, so fuck it
 	return (there.z == here.z) || (is_station_level(here.z) && is_station_level(there.z))
 
@@ -156,8 +155,8 @@
   *something like "mob_209". In order to find the actual atom, we need
   *to search the appropriate list for the REF string. This is dependant
   *on the program (Lifeline uses GLOB.human_list, while Fission360 uses
-  *GLOB.poi_list), but the result will be the same; input string and
-  *output atom reference.
+  *GLOB.poi_list), but the result will be the same; evaluate the string and
+  *return an atom reference.
 */
 /datum/computer_file/program/radar/proc/find_atom()
 	return

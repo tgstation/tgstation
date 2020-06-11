@@ -22,7 +22,6 @@
 	var/obj/item/modular_computer/my_computer = null
 	var/list/main_repo
 	var/list/antag_repo
-	var/theme = "ntos"
 
 /datum/computer_file/program/ntnetdownload/run_program()
 	. = ..()
@@ -123,7 +122,6 @@
 
 	var/list/data = get_header_data()
 
-	data["theme"] = theme
 	data["downloading"] = !!downloaded_file
 	data["error"] = downloaderror || FALSE
 
@@ -196,7 +194,6 @@
 	requires_ntnet = 0
 	ui_header = "downloader_finished.gif"
 	tgui_id = "NtosNetDownloader"
-	theme = "syndicate"
 
 /datum/computer_file/program/ntnetdownload/syndicate/run_program()
 	. = ..()
