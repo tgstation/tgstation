@@ -40,7 +40,7 @@
 
 /obj/item/ammo_casing/c38/match/bouncy
 	name = ".38 Rubber bullet casing"
-	desc = "A .38 rubber bullet casing, manufactured to exceedingly high standards."
+	desc = "A .38 rubber bullet casing, manufactured to exceedingly bouncy standards."
 	projectile_type = /obj/projectile/bullet/c38/match/bouncy
 
 /obj/item/ammo_casing/c38/dumdum

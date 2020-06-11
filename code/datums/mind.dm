@@ -67,7 +67,7 @@
 
 	var/list/learned_recipes //List of learned recipe TYPES.
 
-	///List of skills the user has recieved a reward for. Should not be used to keep track of currently known skills. Lazy list because it shouldnt be filled often
+	///List of skills the user has received a reward for. Should not be used to keep track of currently known skills. Lazy list because it shouldnt be filled often
 	var/list/skills_rewarded
 	///Assoc list of skills. Use SKILL_LVL to access level, and SKILL_EXP to access skill's exp.
 	var/list/known_skills = list()

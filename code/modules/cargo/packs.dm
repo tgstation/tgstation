@@ -15,7 +15,7 @@
 	var/special_enabled = FALSE
 	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE
-	var/small_item = FALSE //Small items can be grouped into a single crate.
+	var/goody = FALSE //Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the 700 min doesn't apply
 
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
@@ -290,16 +290,6 @@
 					/obj/item/gun/energy/disabler)
 	crate_name = "disabler crate"
 
-/datum/supply_pack/security/dumdum
-	name = ".38 DumDum Speedloader"
-	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets. Requires Security or Forensics access to open."
-	cost = 1200
-	access = FALSE
-	small_item = TRUE
-	access_any = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
-	contains = list(/obj/item/ammo_box/c38/dumdum)
-	crate_name = ".38 DumDum crate"
-
 /datum/supply_pack/security/forensics
 	name = "Forensics Crate"
 	desc = "Stay hot on the criminal's heels with Nanotrasen's Detective Essentials(tm). Contains a forensics scanner, six evidence bags, camera, tape recorder, white crayon, and of course, a fedora. Requires Security access to open."
@@ -330,15 +320,7 @@
 					/obj/item/gun/energy/laser)
 	crate_name = "laser crate"
 
-/datum/supply_pack/security/match
-	name = ".38 Match Grade Speedloader"
-	desc = "Contains one speedloader of match grade .38 ammunition, perfect for showing off trickshots. Requires Security or Forensics access to open."
-	cost = 1200
-	access = FALSE
-	small_item = TRUE
-	access_any = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
-	contains = list(/obj/item/ammo_box/c38/match)
-	crate_name = ".38 match crate"
+
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
@@ -374,13 +356,6 @@
 	cost = 2500
 	contains = list(/obj/item/storage/box/stingbangs)
 	crate_name = "stingbang grenade pack crate"
-
-/datum/supply_pack/security/stingpack/single
-	name = "Stingbang Single-Pack"
-	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks. Requires Security access to open."
-	cost = 1400
-	small_item = TRUE
-	contains = list(/obj/item/grenade/stingbang)
 
 /datum/supply_pack/security/supplies
 	name = "Security Supplies Crate"
@@ -488,13 +463,6 @@
 	contains = list(/obj/item/storage/box/chemimp)
 	crate_name = "chemical implant crate"
 
-/datum/supply_pack/security/armory/combatknives_single
-	name = "Combat Knife Single-Pack"
-	desc = "Contains one sharpened combat knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
-	cost = 1200
-	small_item = TRUE
-	contains = list(/obj/item/kitchen/knife/combat)
-
 /datum/supply_pack/security/armory/combatknives
 	name = "Combat Knives Crate"
 	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
@@ -503,14 +471,6 @@
 					/obj/item/kitchen/knife/combat,
 					/obj/item/kitchen/knife/combat)
 	crate_name = "combat knife crate"
-
-/datum/supply_pack/security/armory/ballistic_single
-	name = "Combat Shotgun Single-Pack"
-	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier. Requires Armory access to open."
-	cost = 3200
-	small_item = TRUE
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat,
-					/obj/item/storage/belt/bandolier)
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
@@ -532,13 +492,6 @@
 					/obj/item/gun/energy/e_gun/dragnet,
 					/obj/item/gun/energy/e_gun/dragnet)
 	crate_name = "\improper DRAGnet crate"
-
-/datum/supply_pack/security/armory/energy_single
-	name = "Energy Guns Single-Pack"
-	desc = "Contains one Energy Gun, capable of firing both nonlethal and lethal blasts of light. Requires Armory access to open."
-	cost = 1500
-	small_item = TRUE
-	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
@@ -667,13 +620,6 @@
 					/obj/item/clothing/gloves/tackler/combat)
 	crate_name = "swat crate"
 
-/datum/supply_pack/security/armory/wt550_single
-	name = "WT-550 Auto Rifle Single-Pack"
-	desc = "Contains one high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
-	cost = 2000
-	contains = list(/obj/item/gun/ballistic/automatic/wt550)
-	small_item = TRUE
-
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Auto Rifle Crate"
 	desc = "Contains two high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
@@ -691,12 +637,6 @@
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9)
 
-/datum/supply_pack/security/armory/wt550ammo_single
-	name = "WT-550 Auto Rifle Ammo Single-Pack"
-	desc = "Contains a 20-round magazine for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
-	cost = 750 //one of the few single-pack items that who's price per unit is the exact same as the bulk
-	contains = list(/obj/item/ammo_box/magazine/wt550m9)
-	small_item = TRUE
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
@@ -760,13 +700,6 @@
 					/obj/item/clothing/glasses/meson/engine,
 					/obj/item/clothing/glasses/meson/engine)
 	crate_name = "engineering gear crate"
-
-/datum/supply_pack/engineering/sologamermitts
-	name = "Insulated Gloves Single-Pack"
-	desc = "The backbone of modern society. Barely ever ordered for actual engineering. Single Order."
-	cost = 800
-	small_item = TRUE
-	contains = list(/obj/item/clothing/gloves/color/yellow)
 
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
@@ -1227,20 +1160,6 @@
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
-/datum/supply_pack/medical/firstaidbruises_single
-	name = "Bruise Treatment Kit Single-Pack"
-	desc = "Contains one first aid kit focused on healing bruises and broken bones."
-	cost = 330
-	small_item = TRUE
-	contains = list(/obj/item/storage/firstaid/brute)
-
-/datum/supply_pack/medical/firstaidburns_single
-	name = "Burn Treatment Kit Single-Pack"
-	desc = "Contains one first aid kit focused on healing severe burns."
-	cost = 330
-	small_item = TRUE
-	contains = list(/obj/item/storage/firstaid/fire)
-
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
 	desc = "Contains thirteen different chemicals, for all the fun experiments you can make."
@@ -1270,14 +1189,6 @@
 	contains = list(/obj/item/defibrillator/loaded,
 					/obj/item/defibrillator/loaded)
 	crate_name = "defibrillator crate"
-
-
-/datum/supply_pack/medical/firstaid_single
-	name = "First Aid Kit Single-Pack"
-	desc = "Contains one first aid kit for healing most types of wounds."
-	cost = 250
-	small_item = TRUE
-	contains = list(/obj/item/storage/firstaid/regular)
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
@@ -1318,13 +1229,6 @@
 		var/item = pick(contains)
 		new item(C)
 
-/datum/supply_pack/medical/firstaidoxygen_single
-	name = "Oxygen Deprivation Kit Single-Pack"
-	desc = "Contains three first aid kits focused on helping oxygen deprivation victims."
-	cost = 330
-	small_item = TRUE
-	contains = list(/obj/item/storage/firstaid/o2)
-
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"
 	desc = "Do you want to perform surgery, but don't have one of those fancy shmancy degrees? Just get started with this crate containing a medical duffelbag, Sterilizine spray and collapsible roller bed."
@@ -1333,13 +1237,6 @@
 					/obj/item/reagent_containers/medigel/sterilizine,
 					/obj/item/roller)
 	crate_name = "surgical supplies crate"
-
-/datum/supply_pack/medical/firstaidtoxins_single
-	name = "Toxin Treatment Kit Single-Pack"
-	desc = "Contains one first aid kit focused on healing damage dealt by heavy toxins."
-	cost = 330
-	small_item = TRUE
-	contains = list(/obj/item/storage/firstaid/toxin)
 
 /datum/supply_pack/medical/salglucanister
 	name = "Heavy-Duty Saline Canister"
@@ -1886,7 +1783,7 @@
 					/obj/item/kirbyplants/random,
 					/obj/item/kirbyplants/random)
 	crate_name = "potted plants crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
@@ -2322,7 +2219,7 @@
 		if(prob(50))
 			the_toy = pickweight(GLOB.arcade_prize_pool)
 		else
-			the_toy = pick(subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/kinggoat))
+			the_toy = pick(subtypesof(/obj/item/toy/plush))
 		new the_toy(.)
 
 /datum/supply_pack/costumes_toys/wizard
@@ -2424,6 +2321,20 @@
 	if(prob(10)) //A little extra sugar every now and then to shake things up.
 		new	/obj/item/switchblade(C)
 
+/datum/supply_pack/costumes_toys/randomised/tcg
+	name = "Big-Ass Booster Pack Pack"
+	desc = "A bumper load of NT TCG Booster Packs of varying series. Collect them all!"
+	cost = 1000
+	contains = list()
+	crate_name = "booster pack pack"
+
+/datum/supply_pack/costumes_toys/randomised/tcg/generate()
+	. = ..()
+	var/cardpacktype
+	for(var/i in 1 to 10)
+		cardpacktype = pick(subtypesof(/obj/item/cardpack))
+		new cardpacktype(.)
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2472,13 +2383,15 @@
 
 /datum/supply_pack/misc/book_crate
 	name = "Book Crate"
-	desc = "Surplus from the Nanotrasen Archives, these five books are sure to be good reads."
+	desc = "Surplus from the Nanotrasen Archives, these seven books are sure to be good reads."
 	cost = 1500
 	contains = list(/obj/item/book/codex_gigas,
 					/obj/item/book/manual/random/,
 					/obj/item/book/manual/random/,
 					/obj/item/book/manual/random/,
-					/obj/item/book/random/triple)
+					/obj/item/book/random,
+					/obj/item/book/random,
+					/obj/item/book/random)
 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/misc/paper

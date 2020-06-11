@@ -236,6 +236,7 @@
 	icon_state = "radfirstaid"
 	inhand_icon_state = "firstaid-rad"
 	custom_premium_price = 1100
+	damagetype_healed = "all"
 
 /obj/item/storage/firstaid/advanced/PopulateContents()
 	if(empty)
@@ -251,6 +252,7 @@
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "bezerk"
+	damagetype_healed = "all"
 
 /obj/item/storage/firstaid/tactical/ComponentInitialize()
 	. = ..()

@@ -356,7 +356,10 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
-	var/datum/DBQuery/query_delete_poll = SSdbcore.NewQuery("CALL set_poll_deleted('[sanitizeSQL(poll_id)]')")
+	var/datum/DBQuery/query_delete_poll = SSdbcore.NewQuery(
+		"CALL set_poll_deleted(:poll_id)",
+		list("poll_id" = poll_id)
+	)
 	if(!query_delete_poll.warn_execute())
 		qdel(query_delete_poll)
 		return
@@ -382,51 +385,46 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
-	var/poll_id_sql = "[sanitizeSQL(poll_id)]"
-	var/new_poll = FALSE
-	if(!poll_id_sql)
-		poll_id_sql = "NULL"
-		new_poll = TRUE
-	var/poll_type_sql = sanitizeSQL(poll_type)
-	var/question_sql = sanitizeSQL(question)
-	var/subtitle_sql = sanitizeSQL(subtitle)
-	var/admin_only_sql = sanitizeSQL(admin_only)
-	var/options_allowed_sql = "[sanitizeSQL(options_allowed)]"
+	var/new_poll = !poll_id
 	if(poll_type != POLLTYPE_MULTI)
-		options_allowed_sql = "NULL"
-	var/dont_show_sql = sanitizeSQL(dont_show)
-	var/allow_revoting_sql = sanitizeSQL(allow_revoting)
-	var/admin_ckey = sanitizeSQL(created_by)
-	var/admin_ip = sanitizeSQL(usr.client.address)
+		options_allowed = null
+	var/admin_ckey = created_by
+	var/admin_ip = usr.client.address
+
 	var/end_datetime_sql
-	if(interval)
-		end_datetime_sql = "NOW() + INTERVAL [sanitizeSQL(duration)] [sanitizeSQL(interval)]"
+	if (interval in list("SECOND", "MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"))
+		end_datetime_sql = "NOW() + INTERVAL :duration [interval]"
 	else
-		end_datetime_sql = "'[sanitizeSQL(duration)]'"
-	var/start_datetime_sql
-	if(!start_datetime)
-		start_datetime_sql = "NOW()"
-	else
-		start_datetime_sql = "'[sanitizeSQL(start_datetime)]'"
+		end_datetime_sql = ":duration"
+
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/datum/DBQuery/query_save_poll = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_question")] (id, polltype, created_datetime, starttime, endtime, question, subtitle, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow, allow_revoting) VALUES ([poll_id_sql], '[poll_type_sql]', NOW(), [start_datetime_sql], [end_datetime_sql], '[question_sql]', '[subtitle_sql]', '[admin_only_sql]', [options_allowed_sql], '[admin_ckey]', INET_ATON('[admin_ip]'), '[dont_show_sql]', '[allow_revoting_sql]') ON DUPLICATE KEY UPDATE starttime = [start_datetime_sql], endtime = [end_datetime_sql], question = '[question_sql]', subtitle = '[subtitle_sql]', adminonly = '[admin_only_sql]', multiplechoiceoptions = [options_allowed_sql], dontshow = '[dont_show_sql]', allow_revoting = '[allow_revoting_sql]'")
+	var/datum/DBQuery/query_save_poll = SSdbcore.NewQuery({"
+		INSERT INTO [format_table_name("poll_question")] (id, polltype, created_datetime, starttime, endtime, question, subtitle, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow, allow_revoting)
+		VALUES (:poll_id, :poll_type, NOW(), COALESCE(:start_datetime, NOW()), [end_datetime_sql], :question, :subtitle, :admin_only, :options_allowed, :admin_ckey, INET_ATON(:admin_ip), :dont_show, :allow_revoting)
+		ON DUPLICATE KEY UPDATE starttime = :start_datetime, endtime = [end_datetime_sql], question = :question, subtitle = :subtitle, adminonly = :admin_only, multiplechoiceoptions = :options_allowed, dontshow = :dont_show, allow_revoting = :allow_revoting
+	"}, list(
+		"poll_id" = poll_id, "poll_type" = poll_type, "start_datetime" = start_datetime, "duration" = duration,
+		"question" = question, "subtitle" = subtitle, "admin_only" = admin_only, "options_allowed" = options_allowed,
+		"admin_ckey" = admin_ckey, "admin_ip" = admin_ip, "dont_show" = dont_show, "allow_revoting" = allow_revoting
+	))
 	if(!query_save_poll.warn_execute())
 		qdel(query_save_poll)
 		return
+	if (!poll_id)
+		poll_id = query_save_poll.last_insert_id
 	qdel(query_save_poll)
-	if(poll_id_sql == "NULL")
-		poll_id_sql = "LAST_INSERT_ID()"
-	var/datum/DBQuery/query_get_poll_id_start_endtime = SSdbcore.NewQuery("SELECT LAST_INSERT_ID(), starttime, endtime, IF(starttime > NOW(), 1, 0) FROM [format_table_name("poll_question")] WHERE id = [poll_id_sql]")
+	var/datum/DBQuery/query_get_poll_id_start_endtime = SSdbcore.NewQuery(
+		"SELECT starttime, endtime, IF(starttime > NOW(), 1, 0) FROM [format_table_name("poll_question")] WHERE id = :poll_id",
+		list("poll_id" = poll_id)
+	)
 	if(!query_get_poll_id_start_endtime.warn_execute())
 		qdel(query_get_poll_id_start_endtime)
 		return
 	if(query_get_poll_id_start_endtime.NextRow())
-		if(!poll_id)
-			poll_id = text2num(query_get_poll_id_start_endtime.item[1])
-		start_datetime = query_get_poll_id_start_endtime.item[2]
-		end_datetime = query_get_poll_id_start_endtime.item[3]
-		future_poll = text2num(query_get_poll_id_start_endtime.item[4])
+		start_datetime = query_get_poll_id_start_endtime.item[1]
+		end_datetime = query_get_poll_id_start_endtime.item[2]
+		future_poll = text2num(query_get_poll_id_start_endtime.item[3])
 	qdel(query_get_poll_id_start_endtime)
 	if(clear_votes)
 		clear_poll_votes()
@@ -453,13 +451,6 @@
 	for(var/o in options)
 		var/datum/poll_option/option = o
 		option.save_option()
-		var/datum/DBQuery/query_get_option_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-		if(!query_get_option_id.warn_execute())
-			qdel(query_get_option_id)
-			return
-		if(query_get_option_id.NextRow())
-			option.option_id = text2num(query_get_option_id.item[1])
-		qdel(query_get_option_id)
 
 /**
   * Deletes all votes or text replies for this poll, depending on its type.
@@ -474,7 +465,10 @@
 	var/table = "poll_vote"
 	if(poll_type == POLLTYPE_TEXT)
 		table = "poll_textreply"
-	var/datum/DBQuery/query_clear_poll_votes = SSdbcore.NewQuery("UPDATE [format_table_name("[table]")] SET deleted = 1 WHERE pollid = [sanitizeSQL(poll_id)]")
+	var/datum/DBQuery/query_clear_poll_votes = SSdbcore.NewQuery(
+		"UPDATE [format_table_name(table)] SET deleted = 1 WHERE pollid = :poll_id",
+		list("poll_id" = poll_id)
+	)
 	if(!query_clear_poll_votes.warn_execute())
 		qdel(query_clear_poll_votes)
 		return
@@ -649,38 +643,28 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
-	var/list/columns = list("text", "default_percentage_calc", "pollid", "id")
-	var/list/values = list("'[sanitizeSQL(text)]'", "[sanitizeSQL(default_percentage_calc)]", "[sanitizeSQL(parent_poll.poll_id)]")
-	if(option_id)
-		values += "[sanitizeSQL(option_id)]"
-	else
-		values += "NULL"
+
+	var/list/values = list("text" = text, "default_percentage_calc" = default_percentage_calc, "pollid" = parent_poll.poll_id, "id" = option_id)
 	if(parent_poll.poll_type == POLLTYPE_RATING)
-		columns.Add("minval", "maxval", "descmin", "descmid", "descmax")
-		values.Add("[sanitizeSQL(min_val)]", "[sanitizeSQL(max_val)]")
-		if(desc_min)
-			values += "'[sanitizeSQL(desc_min)]'"
-		else
-			values += "NULL"
-		if(desc_mid)
-			values += "'[sanitizeSQL(desc_mid)]'"
-		else
-			values += "NULL"
-		if(desc_max)
-			values += "'[sanitizeSQL(desc_max)]'"
-		else
-			values += "NULL"
-	var/list/update_data = list()
-	var/count = 0
-	for(var/i in columns)
-		count++
-		if(i == "pollid" || i == "id") //we don't want to update the pollid or option id so skip including those
-			continue
-		update_data += "[i] = [values[count]]"
-	var/datum/DBQuery/query_update_poll_option = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_option")] ([jointext(columns, ",")]) VALUES ([jointext(values, ",")]) ON DUPLICATE KEY UPDATE [jointext(update_data, ", ")]")
+		values["minval"] = min_val
+		values["maxval"] = max_val
+		values["descmin"] = desc_min
+		values["descmid"] = desc_mid
+		values["descmax"] = desc_max
+
+	var/update_data = list()
+	for (var/k in values)
+		update_data += "[k] = VALUES([k])"
+
+	var/datum/DBQuery/query_update_poll_option = SSdbcore.NewQuery(
+		"INSERT INTO [format_table_name("poll_option")] ([jointext(values, ",")]) VALUES (:[jointext(values, ",:")]) ON DUPLICATE KEY UPDATE [jointext(update_data, ", ")]",
+		values
+	)
 	if(!query_update_poll_option.warn_execute())
 		qdel(query_update_poll_option)
 		return
+	if (!option_id)
+		option_id = query_update_poll_option.last_insert_id
 	qdel(query_update_poll_option)
 
 /**
@@ -695,7 +679,10 @@
 		if(!SSdbcore.Connect())
 			to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 			return
-		var/datum/DBQuery/query_delete_poll_option = SSdbcore.NewQuery("UPDATE [format_table_name("poll_option")] AS o INNER JOIN [format_table_name("poll_vote")] AS v ON o.id = v.optionid SET o.deleted = 1, v.deleted = 1 WHERE o.id = [sanitizeSQL(option_id)]")
+		var/datum/DBQuery/query_delete_poll_option = SSdbcore.NewQuery(
+			"UPDATE [format_table_name("poll_option")] AS o INNER JOIN [format_table_name("poll_vote")] AS v ON o.id = v.optionid SET o.deleted = 1, v.deleted = 1 WHERE o.id = :option_id",
+			list("option_id" = option_id)
+		)
 		if(!query_delete_poll_option.warn_execute())
 			qdel(query_delete_poll_option)
 			return
