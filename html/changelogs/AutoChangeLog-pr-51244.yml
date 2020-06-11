@@ -1,0 +1,5 @@
+author: "tmtmtl30"
+delete-after: True
+changes: 
+  - bugfix: "The Families gamemode and antagonist have been refactored and should perform more sanely in some cases."
+  - rscadd: "Families can now appear in dynamic rounds."
