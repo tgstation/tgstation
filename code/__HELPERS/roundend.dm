@@ -247,7 +247,7 @@
 	CHECK_TICK
 
 	handle_hearts()
-	set_observer_default_invisibility(0)
+	set_observer_default_invisibility(0, "<span class='warning'>The round is over! You are now visible to the living.</span>")
 
 	CHECK_TICK
 
