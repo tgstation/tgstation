@@ -322,39 +322,6 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/clothing/under/adv_chameleon
-//starts off as black
-	name = "grey jumpsuit"
-	icon = 'icons/obj/clothing/under/color.dmi'
-	icon_state = "grey"
-	inhand_icon_state = "gy_suit"
-	worn_icon = 'icons/mob/clothing/under/color.dmi'
-	desc = "A tasteful grey jumpsuit that reminds you of the good old days. It has a small dial on the wrist."
-	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
-	random_sensor = FALSE
-	resistance_flags = NONE
-	can_adjust = FALSE
-	armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 50, "acid" = 50)
-	var/datum/action/item_action/chameleon/change/chameleon_action
-
-/obj/item/clothing/under/adv_chameleon/Initialize()
-	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/under
-	chameleon_action.chameleon_name = "Jumpsuit"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/under, /obj/item/clothing/under/color, /obj/item/clothing/under/rank, /obj/item/clothing/under/changeling), only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-
-/obj/item/clothing/under/adv_chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-/obj/item/clothing/under/adv_chameleon/broken/Initialize()
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
-
 /obj/item/clothing/suit/chameleon
 	name = "armor"
 	desc = "A slim armored vest that protects against most types of damage."
@@ -384,7 +351,7 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/clothing/glasses/adv_chameleon
+/obj/item/clothing/glasses/chameleon
 	name = "sunglasses"
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks flashes."
 	icon_state = "sun"
@@ -395,34 +362,6 @@
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	resistance_flags = NONE
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	var/datum/action/item_action/chameleon/change/chameleon_action
-
-/obj/item/clothing/glasses/adv_chameleon/Initialize()
-	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/glasses
-	chameleon_action.chameleon_name = "Glasses"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-
-/obj/item/clothing/glasses/adv_chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-/obj/item/clothing/glasses/adv_chameleon/broken/Initialize()
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
-
-/obj/item/clothing/glasses/chameleon
-	name = "Optical Meson Scanner"
-	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
-	icon_state = "meson"
-	inhand_icon_state = "meson"
-	resistance_flags = NONE
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/clothing/glasses/chameleon/Initialize()
@@ -443,8 +382,7 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-
-/obj/item/clothing/gloves/adv_chameleon
+/obj/item/clothing/gloves/chameleon
 	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
@@ -452,35 +390,6 @@
 	siemens_coefficient = 0 // insulated
 	resistance_flags = NONE
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	var/datum/action/item_action/chameleon/change/chameleon_action
-
-/obj/item/clothing/gloves/adv_chameleon/Initialize()
-	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/gloves
-	chameleon_action.chameleon_name = "Gloves"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/gloves, /obj/item/clothing/gloves/color, /obj/item/clothing/gloves/changeling), only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-
-/obj/item/clothing/gloves/adv_chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-/obj/item/clothing/gloves/adv_chameleon/broken/Initialize()
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
-
-/obj/item/clothing/gloves/chameleon
-	desc = "These gloves provide protection against electric shock."
-	name = "insulated gloves"
-	icon_state = "yellow"
-	inhand_icon_state = "ygloves"
-
-	resistance_flags = NONE
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/clothing/gloves/chameleon/Initialize()
@@ -498,32 +407,6 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/gloves/chameleon/broken/Initialize()
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
-
-/obj/item/clothing/head/adv_chameleon
-	name = "grey cap"
-	desc = "It's a baseball hat in a tasteful grey colour."
-	icon_state = "greysoft"
-	resistance_flags = NONE
-	armor = list("melee" = 35, "bullet" = 30, "laser" = 30,"energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	var/datum/action/item_action/chameleon/change/chameleon_action
-
-/obj/item/clothing/head/adv_chameleon/Initialize()
-	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/head
-	chameleon_action.chameleon_name = "Hat"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/head/changeling, only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-
-/obj/item/clothing/head/adv_chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-/obj/item/clothing/head/adv_chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
