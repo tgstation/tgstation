@@ -96,7 +96,7 @@
 
 /datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)
 	var/list/current_teams = list()
-	for(var/datum/team/abductor_team/T in get_all_teams(/datum/team/abductor_team))
+	for(var/datum/team/abductor_team/T in GLOB.antagonist_teams)
 		current_teams[T.name] = T
 	var/choice = input(admin,"Add to which team ?") as null|anything in (current_teams + "new team")
 	if (choice == "new team")

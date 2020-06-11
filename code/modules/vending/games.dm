@@ -13,7 +13,8 @@
 					/obj/item/instrument/piano_synth/headphones = 4,
 					/obj/item/camera = 3,
 					/obj/item/cardpack/series_one = 10,
-					/obj/item/cardpack/resin = 10)
+					/obj/item/cardpack/resin = 10,
+					/obj/item/storage/card_binder = 10)
 	contraband = list(/obj/item/dice/fudge = 9)
 	premium = list(/obj/item/melee/skateboard/pro = 3,
 					/obj/item/melee/skateboard/hoverboard = 1)

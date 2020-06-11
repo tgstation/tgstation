@@ -593,8 +593,8 @@
 		"}, list(
 			"player_key" = ckey(player_key),
 			"admin_key" = ckey(admin_key),
-			"player_ip" = player_ip,
-			"player_cid" = player_cid,
+			"player_ip" = player_ip || null,
+			"player_cid" = player_cid || null,
 		))
 		if(!query_unban_count_bans.warn_execute())
 			qdel(query_unban_count_bans)
@@ -653,8 +653,8 @@
 		"}, list(
 			"player_key" = ckey(player_key),
 			"admin_key" = ckey(admin_key),
-			"player_ip" = player_ip,
-			"player_cid" = player_cid,
+			"player_ip" = player_ip || null,
+			"player_cid" = player_cid || null,
 			"skip" = bansperpage * page,
 			"take" = bansperpage,
 		))
