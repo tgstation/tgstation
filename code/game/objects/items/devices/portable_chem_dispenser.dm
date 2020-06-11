@@ -11,13 +11,13 @@
 	var/machine_stat = 0
 	var/ui_x = 565
 	var/ui_y = 620
+	
 
 
 	var/obj/item/stock_parts/cell/cell
 	var/obj/item/reagent_containers/beaker = null
 	var/powerefficiency = 0.1
 	var/amount = 30
-	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
 	var/list/dispensable_reagents = list(
@@ -160,9 +160,10 @@
 					ui_interact(user)
 				else
 					to_chat(user, "<span class='warning'>It has no power cell installed!</span>")
+				return
 			else
 				to_chat(user, "<span class='warning'>You must strap the portable chemical dispenser's belt on to handle it properly!</span>")
-		return
+			return
 	return ..()
 
 
