@@ -150,21 +150,6 @@
 //	Accessing the Dispenser and moving it back to the hand
 //----------------------------------------------------------------------------------------------------------
 
-
-// /obj/item/portable_chem_dispenser/attack_hand(mob/user)
-// 	if(loc == user)
-// 		if(slot_flags == ITEM_SLOT_BELT)
-// 			if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-// 				if(cell)
-// 					ui_interact(user)
-// 				else
-// 					to_chat(user, "<span class='warning'>It has no power cell installed!</span>")
-// 				return
-// 			else
-// 				to_chat(user, "<span class='warning'>You must strap the portable chemical dispenser's belt on to handle it properly!</span>")
-// 			return
-// 	return ..()
-
 /obj/item/portable_chem_dispenser/attack_hand(mob/user)
 	if(loc != user)
 		return ..()
