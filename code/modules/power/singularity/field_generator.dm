@@ -3,8 +3,8 @@
 
 /*
 field_generator power level display
-   The icon used for the field_generator need to have 'NUM_POWER_LEVELS' number of icon states
-   named 'Field_Gen +p[num]' where 'num' ranges from 1 to 'NUM_POWER_LEVELS'
+   The icon used for the field_generator need to have 6 icon states
+   named 'Field_Gen +p[num]' where 'num' ranges from 1 to 6
 
    The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
    The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
@@ -22,9 +22,6 @@ field_generator power level display
 #define FG_UNSECURED 0
 #define FG_SECURED 1
 #define FG_WELDED 2
-
-/// Total number of power level icon has
-#define NUM_POWER_LEVELS 6
 
 /obj/machinery/field/generator
 	name = "field generator"
@@ -173,9 +170,14 @@ field_generator power level display
 	cleanup()
 	return ..()
 
+/*
+   The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
+   The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
+   no power level overlay is currently in the overlays list.
+   */
 
 /obj/machinery/field/generator/proc/check_power_level()
-	var/new_level = round(NUM_POWER_LEVELS * power / field_generator_max_power)
+	var/new_level = round(6 * power / field_generator_max_power)
 	if(new_level != power_level)
 		power_level = new_level
 		update_icon()
@@ -205,7 +207,7 @@ field_generator power level display
 	warming_up++
 	update_icon()
 	if(warming_up >= 3)
-		start_fields()		
+		start_fields()
 	else
 		addtimer(CALLBACK(src, .proc/warm_up), 50)
 
@@ -266,7 +268,7 @@ field_generator power level display
 	addtimer(CALLBACK(src, .proc/setup_field, 2), 2)
 	addtimer(CALLBACK(src, .proc/setup_field, 4), 3)
 	addtimer(CALLBACK(src, .proc/setup_field, 8), 4)
-	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)	
+	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
 	var/turf/T = loc
@@ -347,13 +349,13 @@ field_generator power level display
 	if(connected_gens.len < 2)
 		return
 	var/CGcounter
-	for(CGcounter = 1; CGcounter < connected_gens.len, CGcounter++)		
-		 
+	for(CGcounter = 1; CGcounter < connected_gens.len, CGcounter++)
+
 		var/list/CGList = ((connected_gens[CGcounter].connected_gens & connected_gens[CGcounter+1].connected_gens)^src)
 		if(!CGList.len)
 			return
 		var/obj/machinery/field/generator/CG = CGList[1]
-		
+
 		var/x_step
 		var/y_step
 		if(CG.x > x && CG.y > y)
@@ -372,14 +374,14 @@ field_generator power level display
 			for(x_step=x; x_step >= CG.x; x_step--)
 				for(y_step=y; y_step >= CG.y; y_step--)
 					place_floor(locate(x_step,y_step,z),create)
-					
+
 
 /obj/machinery/field/generator/proc/place_floor(Location,create)
 	if(create && !locate(/obj/effect/shield) in Location)
 		new/obj/effect/shield(Location)
-	else if(!create)		
+	else if(!create)
 		var/obj/effect/shield/S=locate(/obj/effect/shield) in Location
-		if(S)			
+		if(S)
 			qdel(S)
 
 /obj/machinery/field/generator/proc/notify_admins()

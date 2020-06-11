@@ -765,3 +765,15 @@
 		content = new_content
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
+
+#undef STATE_DEFAULT
+#undef STATE_CALLSHUTTLE
+#undef STATE_CANCELSHUTTLE
+#undef STATE_MESSAGELIST
+#undef STATE_VIEWMESSAGE
+#undef STATE_DELMESSAGE
+#undef STATE_STATUSDISPLAY
+#undef STATE_ALERT_LEVEL
+#undef STATE_CONFIRM_LEVEL
+#undef STATE_TOGGLE_EMERGENCY
+#undef STATE_PURCHASE

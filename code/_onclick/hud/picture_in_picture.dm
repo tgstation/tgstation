@@ -1,5 +1,3 @@
-#define MAX_DIMENSIONS 10
-
 /obj/screen/movable/pic_in_pic
 	name = "Picture-in-picture"
 	screen_loc = "CENTER"
@@ -102,9 +100,11 @@
 		standard_background.transform = M
 		add_overlay(standard_background)
 
+// maximum number of dimensions is 10
+
 /obj/screen/movable/pic_in_pic/proc/set_view_size(width, height, do_refresh = TRUE)
-	width = clamp(width, 0, MAX_DIMENSIONS)
-	height = clamp(height, 0, MAX_DIMENSIONS)
+	width = clamp(width, 0, 10)
+	height = clamp(height, 0, 10)
 	src.width = width
 	src.height = height
 

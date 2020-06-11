@@ -294,3 +294,6 @@
 /obj/structure/transit_tube/station/dispenser/reverse/flipped/init_tube_dirs()
 	..()
 	boarding_dir = dir
+
+#undef OPEN_DURATION
+#undef CLOSE_DURATION

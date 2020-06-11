@@ -4,9 +4,6 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
-///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
-#define BOTTLE_KNOCKDOWN_DURATION 13
-
 /obj/item/reagent_containers/food/drinks/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
@@ -23,6 +20,8 @@
 	isGlass = TRUE
 	foodtype = ALCOHOL
 	age_restricted = TRUE // wrryy can't set an init value to see if foodtype contains ALCOHOL so here we go
+	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
+	var/bottle_knockdown_duration = 1.3 SECONDS
 
 /obj/item/reagent_containers/food/drinks/bottle/update_overlays()
 	. = ..()
@@ -95,13 +94,13 @@
 			headarmor = 0
 
 		//Calculate the knockdown duration for the target.
-		armor_duration = (BOTTLE_KNOCKDOWN_DURATION - headarmor) + force
+		armor_duration = (bottle_knockdown_duration - headarmor) + force
 
 	else
 		//Only humans can have armor, right?
 		armor_block = target.run_armor_check(affecting, "melee")
 		if(affecting == BODY_ZONE_HEAD)
-			armor_duration = BOTTLE_KNOCKDOWN_DURATION + force
+			armor_duration = bottle_knockdown_duration + force
 
 	//Apply the damage!
 	armor_block = min(90,armor_block)

@@ -158,3 +158,7 @@
 		STOP_PROCESSING(SSobj, src)
 		explosion(src.loc, 4,8,16,32)
 		qdel(src)
+
+#undef DISCONNECTED
+#undef CLAMPED_OFF
+#undef OPERATING
