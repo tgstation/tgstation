@@ -115,7 +115,7 @@
 		return target.swarmer_act(src)
 	else if(iscyborg(target))
 		var/mob/living/borg = target
-		borg.Paralyze(60)
+		borg.adjustHealth(melee_damage_lower)
 		return ..()
 	else
 		return ..()
@@ -282,7 +282,7 @@
 	return FALSE
 
 /obj/structure/reagent_dispensers/fueltank/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Destroying this object would cause a chain reaction. Aborting.</span>")
+	to_chat(S, "<span class='warning'>Destroying this object could cause a chain reaction. Aborting.</span>")
 	return FALSE
 
 /obj/structure/cable/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
@@ -403,6 +403,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/Fabricate(atom/fabrication_object,fabrication_cost = 0)
 	if(!isturf(loc))
 		to_chat(src, "<span class='warning'>This is not a suitable location for fabrication. We need more space.</span>")
+		return
 	if(resources >= fabrication_cost)
 		resources -= fabrication_cost
 	else
@@ -425,7 +426,7 @@
 	if(resource_gain)
 		resources += resource_gain
 		do_attack_animation(target)
-		changeNext_move(CLICK_CD_MELEE)
+		changeNext_move(CLICK_CD_RAPID)
 		var/obj/effect/temp_visual/swarmer/integrate/I = new /obj/effect/temp_visual/swarmer/integrate(get_turf(target))
 		I.pixel_x = target.pixel_x
 		I.pixel_y = target.pixel_y
@@ -776,6 +777,7 @@
 	light_range = 10
 	anchored = TRUE
 	density = FALSE
+	///Whether or not a swarmer is currently being created by this beacon
 	var/processing_swarmer = FALSE
 
 /obj/structure/swarmer_beacon/attack_ghost(mob/user)
