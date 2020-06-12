@@ -18,7 +18,7 @@
 
 /obj/item/forbidden_book/examine(mob/user)
 	. = ..()
-	if(!IS_HERETIC(user)))
+	if(!IS_HERETIC(user))
 		return
 	. += "The Tome holds [charge] charges."
 	. += "Use it on the floor to create a transmutation rune, used to perform rituals."
@@ -76,11 +76,10 @@
 
 /obj/item/forbidden_book/ui_data(mob/user)
 	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	var/list/to_know_alpha = list()
+	var/list/to_know = list()
 	for(var/Y in cultie.get_researchable_knowledge())
-		to_know_alpha += new Y
-	var/list/to_know = get_custom_sorted_list(user,to_know_alpha)
-	var/list/known = get_custom_sorted_list(user,cultie.get_all_knowledge())
+		to_know += new Y
+	var/list/known = cultie.get_all_knowledge()
 	var/list/data = list()
 	var/list/lore = list()
 
@@ -114,24 +113,7 @@
 	if(!length(data["to_know"]))
 		data["to_know"] = null
 
-	sortList(data)
-
 	return data
-
-/obj/item/forbidden_book/proc/get_custom_sorted_list(mob/user,list/lst)
-	var/list/lore = list()
-
-	for(var/X in lst)
-		var/datum/eldritch_knowledge/EK = X
-		if(EK.route != "Side")
-			lore += EK
-
-	for(var/X in lst)
-		var/datum/eldritch_knowledge/EK = X
-		if(EK.route == "Side")
-			lore += EK
-
-	return lore
 
 /obj/item/forbidden_book/ui_act(action, params)
 	. = ..()

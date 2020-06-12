@@ -1,4 +1,6 @@
 import { useBackend } from '../backend';
+import { flow } from 'common/fp';
+import { sortBy } from 'common/collections';
 import { map } from 'common/collections';
 import { Button, Section, Box, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -10,13 +12,18 @@ export const ForbiddenLore = (props, context) => {
     charges,
     to_know = {},
   } = data;
+  const SortByPath = flow([
+    sortBy(to_know => to_know.state !== "Research",
+      to_know => to_know.path === "Side"),
+  ])(data.to_know || []);
+
   return (
     <Window resizable>
       <Window.Content scrollable>
         <Section title="Research Eldritch Knowledge">
           Charges left : {charges}
-          {to_know !== null ? (
-            to_know.map(knowledge => (
+          {SortByPath!== null ? (
+            SortByPath.map(knowledge => (
               <Section
                 key={knowledge.name}
                 title={knowledge.name}
