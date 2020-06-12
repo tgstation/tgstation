@@ -1118,13 +1118,13 @@
 		return TRUE
 
 	var/is_clothing = isclothing(head)
-	if(is_clothing && (head.clothing_flags & STOPSPRESSUREDAMAGE))
+	if(is_clothing && (head.clothing_flags & INTERNALS))
 		return TRUE
-	
+
 	is_clothing = isclothing(wear_mask)
 	if(is_clothing && wear_mask.mask_adjusted)
 		wear_mask.adjustmask(src)
-	if(is_clothing && (wear_mask.clothing_flags & MASKINTERNALS))
+	if(is_clothing && (wear_mask.clothing_flags & INTERNALS))
 		return TRUE
 
 	return FALSE

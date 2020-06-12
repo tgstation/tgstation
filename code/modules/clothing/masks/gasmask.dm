@@ -2,7 +2,7 @@
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | INTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "gas_alt"
@@ -74,7 +74,7 @@
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = INTERNALS
 	icon_state = "clown"
 	inhand_icon_state = "clown_hat"
 	dye_color = "clown"
@@ -122,7 +122,7 @@
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = INTERNALS
 	icon_state = "sexyclown"
 	inhand_icon_state = "sexyclown"
 	flags_cover = MASKCOVERSEYES
@@ -131,7 +131,7 @@
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = INTERNALS
 	icon_state = "mime"
 	inhand_icon_state = "mime"
 	w_class = WEIGHT_CLASS_SMALL
@@ -175,7 +175,7 @@
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = INTERNALS
 	icon_state = "monkeymask"
 	inhand_icon_state = "monkeymask"
 	flags_cover = MASKCOVERSEYES
@@ -184,7 +184,7 @@
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = INTERNALS
 	icon_state = "sexymime"
 	inhand_icon_state = "sexymime"
 	flags_cover = MASKCOVERSEYES
@@ -200,7 +200,7 @@
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
-	clothing_flags = MASKINTERNALS
+	clothing_flags = INTERNALS
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 

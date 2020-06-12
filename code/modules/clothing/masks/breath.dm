@@ -4,8 +4,8 @@
 	icon_state = "breath"
 	inhand_icon_state = "m_mask"
 	body_parts_covered = 0
-	clothing_flags = MASKINTERNALS
-	visor_flags = MASKINTERNALS
+	clothing_flags = INTERNALS
+	visor_flags = INTERNALS
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.1
 	permeability_coefficient = 0.5

@@ -16,7 +16,7 @@
 	desc = "It makes you feel safe in your anonymity, but for a stealth outfit you sure do look obvious that you're up to no good. It seems to have a built in heads-up display."
 	icon_state = "syndicate_balaclava"
 	inhand_icon_state = "syndicate_balaclava"
-	clothing_flags = MASKINTERNALS
+	clothing_flags = INTERNALS
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
