@@ -20,13 +20,11 @@ export const ForbiddenLore = (props, context) => {
               <Section
                 key={knowledge.name}
                 title={knowledge.name}
-
                 level={2}>
-                <Box bold>
+                <Box bold mb={1} mt={1}>
                   {knowledge.path} path
                 </Box>
-                <br />
-                <Box>
+                <Box mb={1} mt={1}>
                   <Button
                     content={knowledge.state}
                     disabled={knowledge.disabled}
@@ -36,19 +34,17 @@ export const ForbiddenLore = (props, context) => {
                     })} />
                   {' '}
                   Cost : {knowledge.cost}
-                </Box>
-                <br />
-                <Box italic>
+                </Box >
+                <Box italic mb={1} mt={1}>
                   {knowledge.flavour}
                 </Box>
-                <br />
-                <Box>
+                <Box mb={1} mt={1}>
                   {knowledge.desc}
                 </Box>
               </Section>
             ))
           ) : (
-            <Box>
+            <Box >
               No more knowledge can be found
             </Box>
           )}
