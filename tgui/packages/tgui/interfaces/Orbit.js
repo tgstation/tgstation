@@ -149,6 +149,13 @@ export const Orbit = (props, context) => {
         </Section>
 
         <BasicSection
+          title="Ghosts"
+          source={ghosts}
+          orbit={orbit}
+          search={search}
+        />
+
+        <BasicSection
           title="Dead"
           source={dead}
           orbit={orbit}
@@ -165,13 +172,6 @@ export const Orbit = (props, context) => {
         <BasicSection
           title="Misc"
           source={misc}
-          orbit={orbit}
-          search={search}
-        />
-
-        <BasicSection
-          title="Ghosts"
-          source={ghosts}
           orbit={orbit}
           search={search}
         />
