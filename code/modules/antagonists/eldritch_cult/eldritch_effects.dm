@@ -98,10 +98,8 @@
 /datum/reality_smash_tracker/Destroy(force, ...)
 	if(GLOB.reality_smash_track == src)
 		stack_trace("/datum/reality_smash_tracker was deleted. Heretics may no longer access any influences. Fix it or call coder support")
-	for(var/X in smashes)
-		qdel(X)
-	for(var/Y in targets)
-		targets -= Y
+	QDEL_LIST(smashes)
+	targets.Cut()
 	return ..()
 
 /**

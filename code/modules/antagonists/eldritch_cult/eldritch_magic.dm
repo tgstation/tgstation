@@ -323,7 +323,7 @@
 
 		for(var/mob/living/L in T.contents)
 			if(L.anti_magic_check())
-				L.visible_message("<span class='danger'>Spell bounces off of [L.real_name]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+				L.visible_message("<span class='danger'>Spell bounces off of [L]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 				continue
 			if(L in hit_list || L == source)
 				continue
