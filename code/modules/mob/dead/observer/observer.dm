@@ -275,6 +275,8 @@ Works together with spawning an observer, noted above.
 			ghost.key = key
 			if(!can_reenter_corpse)	// Disassociates observer mind from the body mind
 				ghost.mind = null
+			else
+				ghost.mind.current?.med_hud_set_status()
 			return ghost
 
 /*
