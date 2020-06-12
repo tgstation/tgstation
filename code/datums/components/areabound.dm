@@ -1,3 +1,4 @@
+/// Movables with this component will automatically return to their original turf if moved outside their initial area
 /datum/component/areabound
 	var/area/bound_area
 	var/turf/reset_turf
