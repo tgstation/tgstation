@@ -170,11 +170,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	///weapon wielded by the enemy, the shotgun doesn't count.
 	var/chosen_weapon
 
-	///Player health/attack points
+	///Player health
 	var/player_hp = 85
+	///player magic points
 	var/player_mp = 20
 	///used to remember the last three move of the player before this turn.
 	var/list/last_three_move
+	///if the enemy or player died. basically restart the game when TRUE
 	var/gameover = FALSE
 	///the player cannot make any move while this is set to TRUE. is basically only TRUE during enemy turns.
 	var/blocked = FALSE
@@ -207,6 +209,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if("chonker" in current_enemy_passive)
 		enemy_hp += 20
+
+	if("shotgun" in current_enemy_passive)
+		chosen_weapon = "shotgun"
+	else
+		chosen_weapon = pick(weapons)
 
 	if(player_skill)
 		player_hp += player_skill * 2
@@ -241,7 +248,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	enemy_name = ("The " + name_part1 + " " + name_part2)
 	name = (name_action + " " + enemy_name)
-	chosen_weapon = pick(weapons)
 
 	enemy_setup(0) //in the case it's reset we assume the player skill is 0 because the VOID isn't a gamer
 
@@ -393,19 +399,20 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			player_hp -= attack_amount * 1000 //hey it's a maxcap we might as well go all in
 		bomb_cooldown--
 
-//heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
-	if("chonker" in current_enemy_passive)
-		if(weakpoint_check("chonker","power_attack","power_attack","power_attack"))
-			temp += "<br><center><h3>After a lot of power attacks you manage to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
-			enemy_hp -= 30
-
 //yeah I used the shotgun as a passive, you know why? because the shotgun gives +5 attack which is pretty good
 	if("shotgun" in current_enemy_passive)
 		if(weakpoint_check("shotgun","defend","defend","power_attack"))
 			temp += "<br><center><h3>You manage to disarm [enemy_name] with a surprise power attack and shoot him with his shotgun until it runs out of ammo! <center><h3> "
 			enemy_hp -= 10
+			chosen_weapon = "empty shotgun"
 		else
 			attack_amount += 5
+
+//heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
+	if("chonker" in current_enemy_passive)
+		if(weakpoint_check("chonker","power_attack","power_attack","power_attack"))
+			temp += "<br><center><h3>After a lot of power attacks you manage to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
+			enemy_hp -= 30
 
 //smart passive trait, mainly works in tandem with other traits, makes the enemy unable to be counter_attacked
 	if("smart" in current_enemy_passive)
@@ -522,7 +529,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	screen_setup(user)
 	timer_id = null
 	blocked = FALSE
-
 
 
 /obj/machinery/computer/arcade/battle/proc/gameover_check(mob/user)
