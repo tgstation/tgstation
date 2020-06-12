@@ -400,19 +400,19 @@
 	if(is_ghost || !(user.mind in SSticker.mode.wizards))
 		..()
 
-/obj/structure/ladder/unbreakable/rope
+/obj/structure/ladder/unbreakable/rope // i regret to inform you but fikou is, in fact, cringe
 	name = "\improper Rope"
 	desc = "You don't want to fall in the acid, pal."
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "hangknot"
 
-/obj/structure/ladder/unbreakable/rune/ComponentInitialize()
+/obj/structure/ladder/unbreakable/rope/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
+/obj/structure/ladder/unbreakable/rope/show_fluff_message(up,mob/user)
 	user.visible_message("<span class='notice'>[user] climbs \the [src].</span>", "<span class='notice'>You climb \the [src].</span>")
 
-/obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
+/obj/structure/ladder/unbreakable/rope/use(mob/user, is_ghost=FALSE)
 	if(is_ghost || !(user.mind in SSticker.mode.wizards))
 		..()

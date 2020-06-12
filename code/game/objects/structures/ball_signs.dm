@@ -6,9 +6,21 @@
 	max_integrity = 99999999
 	buildable_sign = FALSE
 
-/obj/structure/sign/ball/large
-    icon = 'icons/obj/ball-sign-large.dmi'
-    icon_state = "Cat"
+/obj/structure/sign/ball/large // PRIVATE PYLE, YOU HAVE SIXTY SECONDS TO EXPLAIN WHY THIS WAS THE ONLY SIGN YOU CODED
+	icon = 'icons/obj/ball-sign-large.dmi'
+	icon_state = "Cat"
+
+/obj/structure/sign/ball/large/cards // PRIVATE PYLE, YOU HAVE SIXTY SECONDS TO EXPLAIN WHY YOU DIDN'T USE TAB
+	icon = 'icons/obj/ball-sign-large.dmi'
+	icon_state = "Card"
+
+/obj/structure/sign/ball/large/normalgirl
+	icon = 'icons/obj/ball-sign-large.dmi'
+	icon_state = "Girl"
+
+/obj/structure/sign/ball/large/drinks // C'mon dream c'mon!
+	icon = 'icons/obj/ball-sign-large.dmi'
+	icon_state = "Drink"
 
 /obj/structure/fluff/blackjack
 	name = "Blackjack Table"
