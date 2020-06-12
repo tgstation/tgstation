@@ -128,7 +128,7 @@
 	desc = "Can hold various medical equipment."
 	icon_state = "medical"
 	inhand_icon_state = "medical"
-	worn_icon = "medical"
+	worn_icon_state = "medical"
 
 /obj/item/storage/belt/medical/ComponentInitialize()
 	. = ..()
