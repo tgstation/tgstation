@@ -22,8 +22,8 @@ export const ForbiddenLore = (props, context) => {
                 title={knowledge.name}
 
                 level={2}>
-                <Box>
-                  <b> {knowledge.path} path</b>
+                <Box bold>
+                  {knowledge.path} path
                 </Box>
                 <br />
                 <Box>
@@ -38,8 +38,8 @@ export const ForbiddenLore = (props, context) => {
                   Cost : {knowledge.cost}
                 </Box>
                 <br />
-                <Box>
-                  <i> {knowledge.flavour} </i>
+                <Box italic>
+                  {knowledge.flavour}
                 </Box>
                 <br />
                 <Box>
