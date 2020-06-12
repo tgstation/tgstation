@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - tweak: "Borgs and AIs now start with their borgHUDs/siliconHUDs on by default."
