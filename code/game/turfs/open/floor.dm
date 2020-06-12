@@ -24,6 +24,9 @@
 
 	tiled_dirt = TRUE
 
+	/// Blocks prying and replacing the tile
+	var/no_replacement = FALSE
+
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
 		broken_states = typelist("broken_states", list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
@@ -166,12 +169,12 @@
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/stack/tile))
+	if(intact && !no_replacement && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
 	return 0
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
-	if(intact && pry_tile(I, user))
+	if(intact && !no_replacement && pry_tile(I, user))
 		return TRUE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
