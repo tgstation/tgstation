@@ -3,19 +3,19 @@
 	damage = 60
 
 /obj/projectile/bullet/shotgun_slug/executioner
-	name = "executioner slug"
+	name = "executioner slug" // admin only, can dismember limbs
 	sharpness = TRUE
 	wound_bonus = 0
 
 /obj/projectile/bullet/shotgun_slug/pulverizer
-	name = "pulverizer slug"
+	name = "pulverizer slug" // admin only, can crush bones
 	sharpness = FALSE
 	wound_bonus = 0
 
 /obj/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
 	damage = 10
-	stamina = 45
+	stamina = 55
 	wound_bonus = 20
 	sharpness = FALSE
 

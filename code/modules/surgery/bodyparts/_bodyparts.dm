@@ -316,20 +316,17 @@
 			armor_ablation += C.armor.getRating("wound")
 			if(wounding_type == WOUND_SHARP)
 				C.take_damage_zone(body_zone, damage, BRUTE, armour_penetration)
-			else if(wounding_type == WOUND_BURN)
+			else if(wounding_type == WOUND_BURN && damage >= 10) // lazy way to block freezing from shredding clothes without adding another var onto apply_damage()
 				C.take_damage_zone(body_zone, damage, BURN, armour_penetration)
 
 		if(!armor_ablation)
 			injury_mod += bare_wound_bonus
-			//bwb = bare_wound_bonus
 
 	injury_mod -= armor_ablation
 	injury_mod += wound_bonus
 
-	//var/tp = 0
 	for(var/thing in wounds)
 		var/datum/wound/W = thing
-		//tp += W.threshold_penalty
 		injury_mod += W.threshold_penalty
 
 	var/part_mod = -wound_resistance
@@ -337,7 +334,6 @@
 		part_mod += disabled_wound_penalty
 
 	injury_mod += part_mod
-	//testing("Mods| TOTAL: [injury_mod] | Armor: -[armor_ablation] | Wound Bonus: [wound_bonus] | BWB: [bwb] | Existing wounds: [tp] | Limb: [part_mod]")
 
 	return injury_mod
 
