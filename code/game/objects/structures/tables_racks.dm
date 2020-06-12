@@ -315,7 +315,7 @@
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
 	#ifdef EVENTMODE
-		return
+	return
 	#endif
 	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & FLYING))
 		table_shatter(M)
