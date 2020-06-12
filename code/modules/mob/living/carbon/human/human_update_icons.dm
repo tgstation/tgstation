@@ -500,9 +500,6 @@ generate/load female uniform sprites matching all previously decided variables
 				t_state = inhand_icon_state
 		else if(worn_icon_state)
 			t_state = worn_icon_state
-	var/t_icon = worn_icon
-	if(!t_icon)
-		t_icon = default_icon_file
 
 	//Find a valid icon file from variables+arguments
 	var/file2use
