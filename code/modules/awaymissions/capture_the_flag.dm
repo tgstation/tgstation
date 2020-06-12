@@ -592,7 +592,7 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table, /obj/structure/table/reinforced/ctf)
+	flags_1 = NODECONSTRUCT_1
 
 /obj/effect/ctf
 	density = FALSE
