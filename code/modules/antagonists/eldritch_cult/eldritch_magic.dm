@@ -165,36 +165,12 @@
 	var/list/turflist = list()
 	var/turf/T1
 	turflist += get_turf(src)
-	switch(Dir)
-		if(NORTH)
-			T1 = get_step(src,WEST)
-			turflist += T1
-			turflist += get_step(T1,WEST)
-			T1 = get_step(src,EAST)
-			turflist += T1
-			turflist += get_step(T1,EAST)
-		if(SOUTH)
-			T1 = get_step(src,WEST)
-			turflist += T1
-			turflist += get_step(T1,WEST)
-			T1 = get_step(src,EAST)
-			turflist += T1
-			turflist += get_step(T1,EAST)
-		if(WEST)
-			T1 = get_step(src,NORTH)
-			turflist += T1
-			turflist += get_step(T1,NORTH)
-			T1 = get_step(src,SOUTH)
-			turflist += T1
-			turflist += get_step(T1,SOUTH)
-		if(EAST)
-			T1 = get_step(src,NORTH)
-			turflist += T1
-			turflist += get_step(T1,NORTH)
-			T1 = get_step(src,SOUTH)
-			turflist += T1
-			turflist += get_step(T1,SOUTH)
-
+	T1 = get_step(src,turn(dir,90))
+	turflist += T1
+	turflist += get_step(T1,turn(dir,90))
+	T1 = get_step(src,turn(dir,-90))
+	turflist += T1
+	turflist += get_step(T1,turn(dir,-90))
 	for(var/X in turflist)
 		if(prob(25))
 			continue
