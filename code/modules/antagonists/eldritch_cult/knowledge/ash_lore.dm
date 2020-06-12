@@ -199,8 +199,7 @@
 		return
 	var/turf/L = get_turf(user)
 	var/datum/gas_mixture/env = L.return_air()
-	env.temperature += 50
-	for(var/turf/T in range(1,user)-range(0,user))
+	for(var/turf/T in range(1,user))
 		env = T.return_air()
 		env.temperature += 25
 		T.air_update_turf()
