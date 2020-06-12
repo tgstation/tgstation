@@ -125,7 +125,8 @@
 
 		var/turf/chosen_location = get_safe_random_station_turf()
 		var/obj/effect/reality_smash/what_if_i_have_one = locate() in chosen_location
-		if(!isnull(what_if_i_have_one)) //we dont want to spawn overlapping influences okay?
+		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in chosen_location
+		if(!isnull(what_if_i_have_one) || !isnull(what_if_i_had_one_but_got_used)) //we dont want to spawn overlapping influences okay?
 			number++
 			continue
 		var/obj/effect/reality_smash/RS = new(chosen_location.drop_location())
