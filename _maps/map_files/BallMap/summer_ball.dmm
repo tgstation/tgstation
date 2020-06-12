@@ -2620,6 +2620,16 @@
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"hs" = (
+/obj/structure/closet/secure_closet/security,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "hw" = (
 /obj/structure/bed,
 /obj/item/bedsheet/captain{
@@ -3716,6 +3726,14 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"ph" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "pk" = (
 /turf/open/floor/wood/boardwalk{
 	icon_state = "woodhort"
@@ -3869,6 +3887,13 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"qs" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/machinery/suit_storage_unit/security,
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "qt" = (
 /obj/structure/railing{
 	dir = 4
@@ -3942,6 +3967,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"qL" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/floor/plasteel,
+/area/security/brig/upper)
 "qN" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet/royalblue,
@@ -3985,22 +4016,15 @@
 "qZ" = (
 /turf/open/transparent/openspace,
 /area/awaymission/beach)
-"ra" = (
-/obj/machinery/door/poddoor,
-/turf/closed/wall/r_wall,
-/area/security/brig/upper)
 "rb" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 9
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/dark,
+/turf/open/transparent/openspace,
 /area/security/brig/upper)
 "rc" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/recharger,
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "rd" = (
@@ -4015,6 +4039,9 @@
 	dir = 5
 	},
 /obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/snacks/donut/jelly/choco{
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "rf" = (
@@ -4029,22 +4056,11 @@
 /area/security/brig/upper)
 "rh" = (
 /obj/effect/turf_decal/bot_red,
+/obj/structure/rack,
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "ri" = (
 /obj/structure/chair/office,
-/turf/open/floor/plasteel/dark,
-/area/security/brig/upper)
-"rj" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/personal,
-/turf/open/floor/plasteel/dark,
-/area/security/brig/upper)
-"rk" = (
-/obj/effect/turf_decal/bot_red,
-/obj/structure/closet/crate/secure/weapon,
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "rl" = (
@@ -4075,6 +4091,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/machinery/recharger,
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "rp" = (
@@ -4120,6 +4137,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/snacks/donut/jelly/choco{
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "ru" = (
@@ -4147,6 +4167,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "rx" = (
@@ -4164,6 +4185,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/item/clothing/mask/gas/sechailer/swat,
+/obj/item/clothing/mask/gas/sechailer/swat,
+/obj/item/clothing/mask/gas/sechailer/swat,
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "rz" = (
@@ -4172,6 +4196,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/item/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
@@ -4184,13 +4210,16 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "rB" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/security,
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "rC" = (
@@ -4198,11 +4227,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/security_officer,
-/turf/open/floor/plasteel/dark,
-/area/security/brig/upper)
-"rD" = (
-/obj/effect/turf_decal/bot_red,
-/obj/structure/closet/crate/medical,
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "rE" = (
@@ -8426,6 +8450,11 @@
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"DB" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "DJ" = (
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 6
@@ -9189,6 +9218,8 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "GS" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
@@ -9937,6 +9968,17 @@
 /obj/structure/stone_tile,
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/ash_walkers)
+"Kn" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/item/clothing/mask/gas/sechailer/swat/spacepol,
+/obj/item/clothing/mask/gas/sechailer/swat/spacepol,
+/obj/item/clothing/mask/gas/sechailer/swat/spacepol,
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "Ko" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -10547,6 +10589,21 @@
 "MT" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/structure/rack,
+/obj/item/clothing/neck/cloak/hos{
+	name = "security cloak"
+	},
+/obj/item/clothing/neck/cloak/hos{
+	name = "security cloak"
+	},
+/obj/item/clothing/neck/cloak/hos{
+	name = "security cloak"
+	},
+/obj/item/clothing/neck/cloak/hos{
+	name = "security cloak"
+	},
+/obj/item/clothing/neck/cloak/hos{
+	name = "security cloak"
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
 "MU" = (
@@ -10998,6 +11055,13 @@
 	},
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/ash_walkers)
+"OH" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/machinery/vending/wardrobe/sec_wardrobe,
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "OI" = (
 /obj/structure/sign/departments/restroom{
 	max_integrity = 9999;
@@ -11433,6 +11497,15 @@
 "Qy" = (
 /turf/open/transparent/glass,
 /area/awaymission/beach)
+"QA" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "QC" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile{
@@ -11724,6 +11797,11 @@
 	},
 /turf/open/water,
 /area/awaymission/beach)
+"Sd" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/chair,
+/turf/open/floor/plasteel,
+/area/security/brig/upper)
 "Se" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -12946,6 +13024,13 @@
 	},
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/ash_walkers)
+"WJ" = (
+/obj/structure/railing/corner{
+	icon_state = "railing_corner";
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "WK" = (
 /obj/structure/chair/sofa/left{
 	dir = 4
@@ -13311,6 +13396,15 @@
 	},
 /turf/open/floor/carpet/green,
 /area/crew_quarters/abandoned_gambling_den)
+"XX" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "XY" = (
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
@@ -13472,6 +13566,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"YE" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/machinery/vending/wardrobe/sec_wardrobe,
+/turf/open/floor/plasteel/dark,
+/area/security/brig/upper)
 "YG" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
@@ -81653,16 +81754,16 @@ qZ
 qZ
 qZ
 qZ
-ra
+Sv
 VA
-rf
-rk
-rf
-rk
 rf
 rh
 rf
-rD
+rh
+rf
+rh
+rf
+rh
 rf
 rh
 rf
@@ -81910,7 +82011,7 @@ qZ
 qZ
 qZ
 qZ
-ra
+Sv
 VA
 rg
 rl
@@ -82167,12 +82268,10 @@ qZ
 qZ
 qZ
 qZ
-ra
+Sv
 VA
 rh
 rm
-rk
-rm
 rh
 rm
 rh
@@ -82181,7 +82280,9 @@ rh
 rm
 rh
 rm
-rk
+rh
+rm
+rh
 rm
 rh
 rm
@@ -82432,7 +82533,7 @@ BK
 BK
 Va
 rB
-rB
+sI
 rB
 VM
 BK
@@ -82442,7 +82543,7 @@ sI
 sI
 sI
 sI
-sD
+DB
 Sv
 qZ
 qZ
@@ -82940,8 +83041,8 @@ qZ
 qZ
 Sv
 rb
-Xv
-ZJ
+rb
+rb
 BK
 BK
 JC
@@ -83196,9 +83297,9 @@ qZ
 qZ
 qZ
 Sv
-rc
-BK
-BK
+rb
+rb
+rb
 BK
 BK
 BK
@@ -83453,10 +83554,10 @@ qZ
 qZ
 qZ
 Sv
-rd
-BK
-BK
-BK
+hs
+XX
+QA
+WJ
 rs
 rs
 BK
@@ -83984,7 +84085,7 @@ QG
 sx
 sx
 sx
-rR
+qL
 rJ
 rU
 qZ
@@ -84241,7 +84342,7 @@ Sv
 Ki
 sx
 sx
-rR
+Sd
 rJ
 rU
 qZ
@@ -84481,7 +84582,7 @@ qZ
 qZ
 qZ
 Ko
-VA
+rd
 ri
 ro
 BK
@@ -84738,7 +84839,7 @@ qZ
 qZ
 qZ
 Ko
-VA
+rd
 BK
 rp
 BK
@@ -84747,10 +84848,10 @@ rz
 BK
 Lh
 Sv
-Ec
-rB
-rB
-sD
+OH
+qs
+qs
+YE
 Sv
 rO
 sx
@@ -85000,7 +85101,7 @@ BK
 Xj
 BK
 BK
-ry
+Kn
 rC
 Lh
 Sv
@@ -85257,7 +85358,7 @@ BK
 rq
 BK
 BK
-ry
+rx
 rC
 Lh
 Sv
@@ -86281,12 +86382,12 @@ qZ
 qZ
 Sv
 re
-rj
-rj
 sI
 sI
-rj
-rj
+ph
+ph
+sI
+sI
 sD
 Sv
 rI
@@ -146675,26 +146776,26 @@ qZ
 qZ
 qZ
 qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
 qZ
 qZ
 qZ
@@ -146932,7 +147033,6 @@ qZ
 qZ
 qZ
 qZ
-qZ
 oP
 oP
 oP
@@ -146951,7 +147051,8 @@ oP
 oP
 oP
 oP
-qZ
+oP
+oP
 qZ
 qZ
 qZ
@@ -147208,7 +147309,7 @@ oP
 oP
 oP
 oP
-qZ
+oP
 qZ
 qZ
 qZ
@@ -147465,7 +147566,7 @@ oP
 oP
 oP
 oP
-qZ
+oP
 qZ
 qZ
 qZ
@@ -147722,7 +147823,7 @@ oP
 oP
 oP
 oP
-qZ
+oP
 qZ
 qZ
 qZ
@@ -147960,7 +148061,6 @@ qZ
 qZ
 qZ
 qZ
-qZ
 oP
 oP
 oP
@@ -147979,7 +148079,8 @@ oP
 oP
 oP
 oP
-qZ
+oP
+oP
 qZ
 qZ
 qZ
@@ -148217,26 +148318,26 @@ qZ
 qZ
 qZ
 qZ
-qZ
-qZ
-qZ
-qZ
 oP
 oP
-qZ
-qZ
-qZ
-qZ
-qZ
 oP
 oP
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
 qZ
 qZ
 qZ
@@ -148474,7 +148575,6 @@ qZ
 qZ
 qZ
 qZ
-qZ
 oP
 oP
 oP
@@ -148483,12 +148583,13 @@ oP
 oP
 oP
 oP
-qZ
 oP
 oP
 oP
 oP
-qZ
+oP
+oP
+oP
 qZ
 qZ
 qZ
@@ -148731,7 +148832,6 @@ qZ
 qZ
 qZ
 qZ
-qZ
 oP
 oP
 oP
@@ -148745,7 +148845,8 @@ oP
 oP
 oP
 oP
-qZ
+oP
+oP
 qZ
 qZ
 qZ
@@ -148988,7 +149089,6 @@ qZ
 qZ
 qZ
 qZ
-qZ
 oP
 oP
 oP
@@ -148997,12 +149097,13 @@ oP
 oP
 oP
 oP
-qZ
 oP
 oP
 oP
 oP
-qZ
+oP
+oP
+oP
 qZ
 qZ
 qZ
@@ -149259,7 +149360,7 @@ oP
 oP
 oP
 oP
-qZ
+oP
 qZ
 qZ
 qZ
@@ -149516,7 +149617,7 @@ oP
 oP
 oP
 oP
-qZ
+oP
 qZ
 qZ
 qZ
@@ -149768,12 +149869,12 @@ oP
 oP
 oP
 oP
-qZ
 oP
 oP
 oP
 oP
-qZ
+oP
+oP
 qZ
 qZ
 qZ
@@ -150030,7 +150131,7 @@ oP
 oP
 oP
 oP
-qZ
+oP
 qZ
 qZ
 qZ
@@ -150282,12 +150383,12 @@ oP
 oP
 oP
 oP
-qZ
 oP
 oP
 oP
 oP
-qZ
+oP
+oP
 qZ
 qZ
 qZ
@@ -150539,12 +150640,12 @@ oP
 oP
 oP
 oP
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
+oP
+oP
+oP
+oP
+oP
+oP
 qZ
 qZ
 qZ
@@ -150796,7 +150897,7 @@ oP
 oP
 oP
 oP
-qZ
+oP
 qZ
 qZ
 qZ
@@ -151053,7 +151154,7 @@ oP
 oP
 oP
 oP
-qZ
+oP
 qZ
 qZ
 qZ
@@ -151301,7 +151402,6 @@ qZ
 qZ
 qZ
 qZ
-qZ
 oP
 oP
 oP
@@ -151310,7 +151410,8 @@ oP
 oP
 oP
 oP
-qZ
+oP
+oP
 qZ
 qZ
 qZ
@@ -151558,7 +151659,6 @@ qZ
 qZ
 qZ
 qZ
-qZ
 oP
 oP
 oP
@@ -151567,7 +151667,8 @@ oP
 oP
 oP
 oP
-qZ
+oP
+oP
 qZ
 qZ
 qZ
@@ -151815,7 +151916,6 @@ qZ
 qZ
 qZ
 qZ
-qZ
 oP
 oP
 oP
@@ -151824,7 +151924,8 @@ oP
 oP
 oP
 oP
-qZ
+oP
+oP
 qZ
 qZ
 qZ
@@ -152072,16 +152173,16 @@ qZ
 qZ
 qZ
 qZ
-qZ
-qZ
-qZ
-qZ
 oP
 oP
-qZ
-qZ
-qZ
-qZ
+oP
+oP
+oP
+oP
+oP
+oP
+oP
+oP
 qZ
 qZ
 qZ
