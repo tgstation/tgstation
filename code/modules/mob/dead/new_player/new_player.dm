@@ -435,12 +435,25 @@
 		is_antag = TRUE
 
 	client.prefs.copy_to(H, antagonist = is_antag, is_latejoiner = transfer_after)
+	var/cur_scar_index = client.prefs.scars_index
+	if(client.prefs.persistent_scars && client.prefs.scars_list["[cur_scar_index]"])
+		var/scar_string = client.prefs.scars_list["[cur_scar_index]"]
+		var/valid_scars = ""
+		for(var/scar_line in splittext(scar_string, ";"))
+			if(H.load_scar(scar_line))
+				valid_scars += "[scar_line];"
+
+		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
+		client.prefs.save_character()
+
+	client.prefs.copy_to(H, antagonist = is_antag)
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
 			mind.late_joiner = TRUE
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
+		mind.original_character = H
 
 	H.name = real_name
 

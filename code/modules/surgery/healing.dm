@@ -90,7 +90,7 @@
 		urdamageamt_brute += round((target.getBruteLoss()/ (missinghpbonus*2)),0.1)
 		urdamageamt_burn += round((target.getFireLoss()/ (missinghpbonus*2)),0.1)
 
-	target.take_bodypart_damage(urdamageamt_brute, urdamageamt_burn)
+	target.take_bodypart_damage(urdamageamt_brute, urdamageamt_burn, wound_bonus=CANT_WOUND)
 	return FALSE
 
 /***************************BRUTE***************************/
