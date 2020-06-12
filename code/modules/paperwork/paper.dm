@@ -11,6 +11,10 @@
  **/
 /obj/item/paper
 	var/const/MAX_PAPER_LENGTH = 1000
+	var/const/MODE_READING = 0
+	var/const/MODE_WRITING = 1
+	var/const/MODE_STAMPING = 2
+
 	name = "paper"
 	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -49,12 +53,17 @@
 	var/ui_y = 800
 	/// When the sheet can be "filled out"
 	var/form_sheet = FALSE
-	/// We MAY be edited, mabye we are just looking at it or something.
-	var/readonly = FALSE
-	/// Color of the pin that last wrote
+	/// What edit mode we are in and who is
+	/// writing on it right now
+	var/edit_mode = MODE_READING
+	var/mob/living/edit_usr = null
+	/// Setup for writing to a sheet
 	var/pen_color = "black"
 	var/pen_font = ""
 	var/is_crayon = FALSE
+	/// Setup for stamping a sheet
+	var/obj/item/stamp/current_stamp = null
+	var/stamp_class = null
 
 /**
  ** This proc copies this sheet of paper to a new
@@ -77,7 +86,6 @@
  ** be.
  **/
 /obj/item/paper/proc/setText(text, read_only = TRUE)
-	readonly = read_only
 	info = text
 	update_icon_state()
 
@@ -143,7 +151,11 @@
 	spam_flag = FALSE
 
 /obj/item/paper/attack_self(mob/user)
-	readonly = TRUE		/// Assume we are just reading it
+	if(edit_mode != MODE_READING)
+		log_paper("<span class='warning'>Not sure why, but there is an open ui and its in his hand?</span>")
+		edit_mode = MODE_READING
+		edit_usr = null
+		return
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		if(!spam_flag)
 			spam_flag = TRUE
@@ -171,12 +183,16 @@
 
 
 /obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
-	readonly = TRUE		/// Assume we are just reading it
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(!form_sheet && length(info) >= 1000) // Sheet must have less than 1000 charaters
 			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
-		readonly = FALSE	// we are read only becausse the sheet is full
+		if(edit_mode != MODE_READING)
+			to_chat(user, "<span class='warning'>[edit_usr.real_name] is already working on this sheet!</span>")
+			return
+				/// Assume we are just reading it)
+		edit_mode = MODE_WRITING	// we are read only becausse the sheet is full
+		edit_usr = user
 		/// should a crayon be in the same subtype as a pen?  How about a brush or charcoal?
 		is_crayon = istype(P, /obj/item/toy/crayon);
 		if(is_crayon)
@@ -192,24 +208,40 @@
 		return
 	else if(istype(P, /obj/item/stamp))
 
-		if(!in_range(src, user))
+		if(edit_mode != MODE_READING)
+			to_chat(user, "<span class='warning'>[edit_usr.real_name] is already working on this sheet!</span>")
 			return
 
+				/// Assume we are just reading it)
+		edit_mode = MODE_STAMPING	// we are read only becausse the sheet is full
+		edit_usr = user
+		current_stamp = P
+
+		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+		stamp_class = sheet.icon_class_name(P.icon_state)
+
+		to_chat(user, "<span class='notice'>You ready your stamp over the paper! </span>")
+#if 0
+		/// This is the tgui interface stuff
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 		if (isnull(stamps))
-			stamps = sheet.css_tag()
-		stamps += sheet.icon_tag(P.icon_state)
+			stamps = new/list()
+		/// We just want a rough position of where the stamp will be
+		/// so go with a % then? class, x, y
+		stamps += list(sheet.icon_class_name)
+
+		/// This does the overlay stuff
 		var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[P.icon_state]")
 		stampoverlay.pixel_x = rand(-2, 2)
 		stampoverlay.pixel_y = rand(-3, 2)
-
-		LAZYADD(stamped, P.icon_state)
 		add_overlay(stampoverlay)
+		LAZYADD(stamped, P.icon_state)
 
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
-
+#endif
+		ui_interact(user)
 		return /// Normaly you just stamp, you don't need to read the thing
-	if(P.get_temperature())
+	else if(P.get_temperature())
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
@@ -221,9 +253,16 @@
 		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
 			return
 
+
 		user.dropItemToGround(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
+	else
+		if(edit_mode != MODE_READING)
+			to_chat(user, "You look at the sheet while [edit_usr.real_name] edits it")
+		else
+			edit_mode = MODE_READING
+		ui_interact(user)	/// The other ui will be created with just read mode outside of this
 
 	. = ..()
 
@@ -249,54 +288,75 @@
 		ui.open()
 
 /obj/item/paper/ui_close(mob/user)
-	var/datum/tgui/ui = SStgui.try_update_ui(user, src, "main");
-	if(ui)
-		ui.close()
+	/// close the editing window and change the mode
+	if(edit_usr != null && user == edit_usr)
+		edit_mode = MODE_READING
+		edit_usr = null
+		current_stamp = null
+		stamp_class = null
+
+	. = ..()
+
+	// var/datum/tgui/ui = SStgui.try_update_ui(user, src, "main");
+	// if(ui)
+	// 	ui.close()
 
 /obj/item/paper/proc/ui_update()
 	var/datum/tgui/ui = SStgui.try_update_ui(usr, src, "main");
 	if(ui)
 		ui.update()
 
+
+
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
+	// Should all this go in static data and just do a forced update?
 	data["text"] = info
 	data["max_length"] = MAX_PAPER_LENGTH
-	data["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling
-	data["pen_color"] = pen_color
+	data["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling?
 	data["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
-	data["edit_sheet"] = readonly ? FALSE : TRUE
-	/// data["stamps_info"] = list(stamp_info)
 	data["stamps"] = stamps
+
+	if(edit_usr != null && user != edit_usr)
+		data["edit_mode"] = MODE_READING		/// Eveyone else is just an observer
+	else
+		data["edit_mode"] = edit_mode
+
+	// pen info for editing
 	data["is_crayon"] = is_crayon
 	data["pen_font"] = pen_font
+	data["pen_color"] = pen_color
+
+	// stamping info for..stamping
+	data["stamp_class"] = stamp_class
+
 	return data
-
-/obj/item/paper/proc/parsepencode(t, obj/item/pen/P, mob/user, iscrayon = 0)
-	if(length(t) < 1)		//No input means nothing needs to be parsed
-		return
-
-	t = parsemarkdown(t, user, iscrayon)
-
-
-
-	// Count the fields
-	//var/laststart = 1
-	//while(fields < 15)
-	//	var/i = findtext(t, "<span class=\"paper_field\">", laststart)
-	//	if(i == 0)
-	//		break
-	//	laststart = i+1
-	//	fields++
-	// in_paper = replacetext(in_paper, regex("%s(?:ign)?(?=\\s|$)", "igm"), user ? "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>" : "<span class=\"paper_field\"></span>")
-	// in_paper = replacetext(in_paper, regex("%f(?:ield)?(?=\\s|$)", "igm"), "<span class=\"paper_field\"></span>")
-
-	return t
 
 /obj/item/paper/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
+		if("stamp")
+			var/stamp_x = text2num(params["x"])
+			var/stamp_y = text2num(params["y"])
+			var/stamp_r = text2num(params["r"])	// rotation in degrees
+
+			/// We just want a rough position of where the stamp will be
+			/// so go with a % then? class, x, y, rotation
+			if (isnull(stamps))
+				stamps = new/list()
+			stamps += list(stamp_class, stamp_x, stamp_y, stamp_r)
+			edit_usr.visible_message("<span class='notice'>[edit_usr] stamps [src] with [current_stamp]!</span>", "<span class='notice'>You stamp [src] with [current_stamp]!</span>")
+			/// This does the overlay stuff
+			var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[current_stamp.icon_state]")
+			stampoverlay.pixel_x = rand(-2, 2)
+			stampoverlay.pixel_y = rand(-3, 2)
+			add_overlay(stampoverlay)
+			LAZYADD(stamped, current_stamp.icon_state)
+
+			ui_update()
+			. = TRUE
+
 		if("save")
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper) + length(info)
@@ -315,10 +375,10 @@
 				else
 					info += "<font face=\"[pen_font]\" color=[pen_color]>[in_paper]</font>"
 				info = regex("%s(?:ign)?(?=\\s|$)", "igm").Replace(info, "<font face=\"[SIGNFONT]\"><i>[usr.real_name]</i></font>")
-
+ 				info = regex("%f(?:ield)?(?=\\s|$)", "igm").Replace(info, "<span class=\"paper_field\"></span>")
 				log_paper("[key_name(usr)] writing to paper [name]")
 				to_chat(usr, "You have added to your paper masterpiece!");
-				readonly=TRUE	// Force an update to show it as normal paper
+
 				ui_update()
 				update_icon()
 			. = TRUE

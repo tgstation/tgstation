@@ -18,10 +18,12 @@
   $color-bg-grad-spread: 0%,
   $border-radius: 0px,
 );
-
+$font-size: 24px;
 // A fat warning to anyone who wants to use this: this only half works.
 // It was made almost purely for the nuke ui, and requires a good amount of manual hacks to get it working as intended.
 .theme-paper {
+  $color-fg:  rgb(0,0,0);
+  $color-bg:  rgb(255, 255, 255);
   // Atomic classes
   @include meta.load-css('../atomic/color.scss');
 
@@ -42,7 +44,7 @@
   @include meta.load-css('../layouts/Window.scss');
 
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-background': #ffffff,
+    'color-background':$color-bg,
   ));
 
 
@@ -51,6 +53,8 @@
   }
   .Window {
     background-image: none;
+    color: $color-fg;
+    $font-size: $font-size;
   }
 
 }
