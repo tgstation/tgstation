@@ -517,7 +517,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!L.mind || !Lg.mind.miming)
-                        L.losebreath += 5
+          L.losebreath += 5
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			else
@@ -536,7 +536,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!L.mind || !L.mind.miming)
-                        L.losebreath += 5
+          L.losebreath += 5
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			else
@@ -555,7 +555,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!L.mind || !L.mind.miming)
-                        L.losebreath += 5 
+          L.losebreath += 5 
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			if(prob(10))
@@ -576,7 +576,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!L.mind || !L.mind.miming)
-                        L.losebreath += 5
+          L.losebreath += 5
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			if(prob(10))
@@ -597,7 +597,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!L.mind || !L.mind.miming)
-                        L.losebreath += 5
+          L.losebreath += 5
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			else
@@ -615,5 +615,5 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!L.mind || !L.mind.miming)
-                        L.losebreath += 5
+          L.losebreath += 5
 			return 'sound/voice/human/ffff.ogg'
