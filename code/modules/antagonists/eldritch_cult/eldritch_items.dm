@@ -50,7 +50,7 @@
 	if(!IS_HERETIC(user))
 		to_chat(user,"<span class='danger'>Echoes of the breat beyond break your mind!</span>")
 		var/mob/living/carbon/human/human_user = user
-		human_user.AdjustStun(5 SECONDS)
+		human_user.AdjustParalyzed(5 SECONDS)
 		return FALSE
 	return ..()
 
