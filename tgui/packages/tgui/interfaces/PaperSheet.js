@@ -432,7 +432,7 @@ export const PaperSheet = (props, context) => {
   return (
     <Window resizable theme="paper" style={background_style}>
       <Window.Content min-height="100vh" min-width="100vw">
-        <Box ml={0 + 'px'} mt={0 + 'px'} min-height="100vh" min-width="100vw">
+        <Box min-height="100vh" min-width="100vw">
           {decide_mode(edit_mode)}
         </Box>
       </Window.Content>
