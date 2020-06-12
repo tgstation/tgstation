@@ -44,7 +44,7 @@
 	var/list/data = list()
 	var/list/bountyinfo = list()
 	for(var/datum/bounty/B in GLOB.bounties_list)
-		bountyinfo += list(list("name" = B.name, "description" = B.description, "reward_string" = B.reward_string(), "completion_string" = B.completion_string() , "claimed" = B.claimed, "priority" = B.high_priority, "bounty_ref" = REF(B)))
+		bountyinfo += list(list("name" = B.name, "description" = B.description, "reward_string" = B.reward_string(), "completion_string" = B.completion_string() , "claimed" = B.claimed, "can_claim" = B.can_claim(), "priority" = B.high_priority, "bounty_ref" = REF(B)))
 	data["stored_cash"] = cargocash.account_balance
 	data["bountydata"] = bountyinfo
 	return data
