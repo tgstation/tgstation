@@ -13,6 +13,8 @@
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/clumsy_check = TRUE
+	wound_bonus = -30
+	bare_wound_bonus = 40
 
 /obj/item/melee/transforming/Initialize()
 	. = ..()

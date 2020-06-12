@@ -34,4 +34,4 @@
 	if(prob(reac_volume*2))
 		M.emp_act(EMP_LIGHT)
 	if(M)
-		M.apply_damage(reac_volume, BURN)
+		M.apply_damage(reac_volume, BURN, wound_bonus=CANT_WOUND)

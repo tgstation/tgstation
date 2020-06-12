@@ -337,7 +337,7 @@ Versioning
 		"y_coord" = L.y,
 		"z_coord" = L.z,
 		"last_words" = L.last_words,
-		"sucide" = L.suiciding,
+		"suicide" = L.suiciding,
 		"map" = SSmapping.config.map_name,
 		"internet_address" = world.internet_address || "0",
 		"port" = "[world.port]",
