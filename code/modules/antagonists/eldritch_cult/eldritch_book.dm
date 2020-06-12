@@ -18,7 +18,7 @@
 
 /obj/item/forbidden_book/examine(mob/user)
 	. = ..()
-	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
+	if(!IS_HERETIC(user)))
 		return
 	. += "The Tome holds [charge] charges."
 	. += "Use it on the floor to create a transmutation rune, used to perform rituals."
@@ -27,7 +27,7 @@
 
 /obj/item/forbidden_book/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!proximity_flag)
+	if(!proximity_flag || !IS_HERETIC(user))
 		return
 	if(istype(target,/obj/effect/eldritch))
 		remove_rune(target,user)
@@ -47,8 +47,6 @@
 ///Draws a rune on a selected turf
 /obj/item/forbidden_book/proc/draw_rune(atom/target,mob/user)
 
-	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
-		return
 	for(var/turf/T in range(1,target))
 		if(is_type_in_typecache(T, blacklisted_turfs))
 			to_chat(target, "<span class='warning'>The terrain doesn't support runes!</span>")
@@ -63,8 +61,6 @@
 ///Removes runes from the selected turf
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
 
-	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
-		return
 	to_chat(target, "<span class='warning'>You start removing a rune...</span>")
 	if(do_after(user,2 SECONDS,user))
 		qdel(target)
