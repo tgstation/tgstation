@@ -387,11 +387,11 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	///The account which is recieving the split profits.
+	///The account which is receiving the split profits.
 	var/datum/bank_account/payments_acc = null
 	var/paper_count = 10
 	var/max_paper_count = 20
-	///Details the percentage the scanned account recieves off the final sale.
+	///Details the percentage the scanned account receives off the final sale.
 	var/percent_cut = 20
 
 /obj/item/sales_tagger/examine(mob/user)
@@ -455,7 +455,7 @@
 	if(!potential_cut)
 		percent_cut = 50
 	percent_cut = clamp(round(potential_cut, 1), 1, 50)
-	to_chat(user, "<span class='notice'>[percent_cut]% profit will be recieved if a package with a barcode is sold.</span>")
+	to_chat(user, "<span class='notice'>[percent_cut]% profit will be received if a package with a barcode is sold.</span>")
 
 /obj/item/barcode
 	name = "Barcode tag"
