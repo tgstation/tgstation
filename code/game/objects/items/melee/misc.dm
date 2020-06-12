@@ -20,6 +20,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 10
 	throwforce = 7
+	wound_bonus = 15
+	bare_wound_bonus = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
@@ -193,6 +195,8 @@
 	var/force_off // Damage when off - not stunning
 	var/weight_class_on // What is the new size class when turned on
 
+	wound_bonus = 15
+
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
@@ -340,6 +344,7 @@
 	force_on = 10
 	force_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
+	bare_wound_bonus = 5
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user

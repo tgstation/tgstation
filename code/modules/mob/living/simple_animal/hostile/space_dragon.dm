@@ -18,7 +18,7 @@
   */
 /mob/living/simple_animal/hostile/space_dragon
 	name = "Space Dragon"
-	desc = "A vile leviathan-esque creature that flies in the most unnatural way.  Slightly looks similar to a space carp."
+	desc = "A vile, leviathan-esque creature that flies in the most unnatural way.  Looks slightly similar to a space carp."
 	maxHealth = 400
 	health = 400
 	a_intent = INTENT_HARM
@@ -44,7 +44,7 @@
 	ranged = TRUE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
-	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, life estinguished."
+	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, its life extinguished."
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
@@ -350,7 +350,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 			main_objective.completed = TRUE
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds.  Evacuation of the remamining crew will begin immediately.", "Central Command Spatial Corps")
+	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. Evacuation of the remaining crew will begin immediately.", "Central Command Spatial Corps")
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.carp_stored = 999999
 	sleep(50)

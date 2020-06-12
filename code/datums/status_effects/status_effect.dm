@@ -73,6 +73,10 @@
 		return
 	duration = world.time + original_duration
 
+//do_after modifier!
+/datum/status_effect/proc/interact_speed_modifier()
+	return 1
+
 //clickdelay/nextmove modifiers!
 /datum/status_effect/proc/nextmove_modifier()
 	return 1

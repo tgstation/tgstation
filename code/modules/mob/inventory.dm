@@ -37,7 +37,6 @@
 		return "r"
 	return "l"
 
-
 //Check we have an organ for this hand slot (Dismemberment), Only relevant for humans
 /mob/proc/has_hand_for_held_index(i)
 	return TRUE

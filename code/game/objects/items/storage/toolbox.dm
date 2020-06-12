@@ -19,6 +19,7 @@
 	material_flags = MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
+	wound_bonus = 5
 
 /obj/item/storage/toolbox/Initialize()
 	. = ..()
