@@ -173,5 +173,5 @@
 	var/last_asset_job = 0
 	var/last_completed_asset_job = 0
 
-	//rate limiting for the crew manifest
+	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
