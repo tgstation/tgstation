@@ -135,6 +135,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "beesword"
 	inhand_icon_state = "stinger"
+	worn_icon_state = "stinger"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
