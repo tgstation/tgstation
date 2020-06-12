@@ -192,6 +192,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		if(!all)
 			qdel(src)
 			return
+	if(all)
+		qdel(src)
 
 /obj/effect/mapping_helpers/component_injector/proc/build_args()
 	return list(component_type)
