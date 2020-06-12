@@ -1,6 +1,6 @@
-//The necropolis gate is used to call forth Legion from the Necropolis.
+//The necropolis gate is used to piss me off.
 /obj/structure/necropolis_gate
-	name = "necropolis gate"
+	name = "temple gate"
 	desc = "A massive stone gateway."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
@@ -203,7 +203,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	duration = 38
 
 /obj/structure/necropolis_arch
-	name = "necropolis arch"
+	name = "temple arch"
 	desc = "A massive arch over the necropolis gate, set into a massive tower of stone."
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "arch_full"
