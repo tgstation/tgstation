@@ -353,7 +353,7 @@
 				/// Side note, the only way we should get here is if
 				/// the javascript was modified, somehow, outside of
 				/// byond.
-				log_paper("[key_name(usr)] writing to paper [name], and overwrote it by [MAX_PAPER_LENGTH-paper_len], aborting")
+				log_paper("[key_name(edit_usr)] writing to paper [name], and overwrote it by [MAX_PAPER_LENGTH-paper_len], aborting")
 				ui_force_close()
 			else if(paper_len == 0)
 				to_chat(usr, pick("Writing block strikes again!", "You forgot to write anthing!"))
@@ -365,17 +365,19 @@
 				else
 					info += "<font face=\"[pen_font]\" color=[pen_color]>[in_paper]</font>"
 				/// Next find the sign marker and replace it with somones sig
-				info = regex("%s(?:ign)?(?=\\s|$)", "igm").Replace(info, "<font face=\"[SIGNFONT]\"><i>[usr.real_name]</i></font>")
+				info = regex("%s(?:ign)?(?=\\s|$)", "igm").Replace(info, "<font face=\"[SIGNFONT]\"><i>[edit_usr.real_name]</i></font>")
 				/// Do the same with form fields
  				info = regex("%f(?:ield)?(?=\\s|$)", "igm").Replace(info, "<span class=\"paper_field\"></span>")
-				log_paper("[key_name(usr)] writing to paper [name]")
+				log_paper("[key_name(edit_usr)] writing to paper [name]")
 				to_chat(usr, "You have added to your paper masterpiece!");
 				/// Switch ui to reading mode
-				edit_mode = MODE_READING
-				edit_usr = null
+
 
 				ui_update()
 				update_icon()
+			edit_mode = MODE_READING
+			edit_usr = null
+			
 			. = TRUE
 
 
