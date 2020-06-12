@@ -2,8 +2,10 @@
 	name = "Heretic"
 	roundend_category = "Heretics"
 	antagpanel_category = "Heretic"
-	antag_moodlet = /datum/mood_event/e_cult
+	antag_moodlet = /datum/mood_event/heretics
 	job_rank = ROLE_HERETIC
+	antag_hud_type = ANTAG_HUD_HERETIC
+	antag_hud_name = "heretic"
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
@@ -123,7 +125,7 @@
 	if(mob_override)
 		current = mob_override
 	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to use complex items effectively.")
-	current.faction |= "e_cult"
+	current.faction |= "heretics"
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -131,7 +133,7 @@
 	if(mob_override)
 		current = mob_override
 	handle_clown_mutation(current, removing = FALSE)
-	current.faction -= "e_cult"
+	current.faction -= "heretics"
 
 /datum/antagonist/heretic/get_admin_commands()
 	. = ..()

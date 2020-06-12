@@ -148,7 +148,7 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/e_cult
+/datum/dynamic_ruleset/roundstart/heretics
 	name = "Heretics"
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/heretic
@@ -162,7 +162,7 @@
 	antag_cap = list(1,1,1,2,2,2,2,3,3,3)
 
 
-/datum/dynamic_ruleset/roundstart/e_cult/pre_execute()
+/datum/dynamic_ruleset/roundstart/heretics/pre_execute()
 	. = ..()
 	var/num_ecult = antag_cap[indice_pop] * (scaled_times + 1)
 
@@ -177,7 +177,7 @@
 		GLOB.pre_setup_antags += picked_candidate.mind
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/e_cult/execute()
+/datum/dynamic_ruleset/roundstart/heretics/execute()
 
 	for(var/c in assigned)
 		var/datum/mind/cultie = c

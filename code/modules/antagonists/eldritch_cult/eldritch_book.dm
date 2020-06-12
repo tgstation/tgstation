@@ -151,6 +151,7 @@
 					continue
 				if(cultie.gain_knowledge(EK))
 					charge -= text2num(params["cost"])
+					return TRUE
 
 	update_icon() // Not applicable to all objects.
 

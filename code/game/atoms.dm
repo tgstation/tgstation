@@ -1376,7 +1376,7 @@
 	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
 
 /**
-  * Causes effects when the atom gets hit by a rust effect from e_cult
+  * Causes effects when the atom gets hit by a rust effect from heretics
   *
   * Override this if you want custom behaviour in whatever gets hit by the rust
   */

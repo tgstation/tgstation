@@ -46,7 +46,7 @@
 	humie.setMaxHealth(50)
 	humie.health = 50 // Voiceless dead are much tougher than ghouls
 	humie.become_husk()
-	humie.faction |= "e_cult"
+	humie.faction |= "heretics"
 	humie.fully_replace_character_name(humie.real_name,"Voiceless [humie.real_name]")
 	to_chat(humie, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(humie, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
@@ -114,7 +114,7 @@
 	human_target.setMaxHealth(25)
 	human_target.health = 25
 	human_target.become_husk()
-	human_target.faction |= "e_cult"
+	human_target.faction |= "heretics"
 	human_target.fully_replace_character_name(human_target.real_name,"Ghouled [human_target.real_name]")
 	to_chat(human_target, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(human_target, "<span class='big bold'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
