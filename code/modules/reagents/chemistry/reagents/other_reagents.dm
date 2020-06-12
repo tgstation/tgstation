@@ -2293,11 +2293,6 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM // 5u (WOUND_DETERMINATION_CRITICAL) will last for ~17 ticks
 	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
 	var/significant = FALSE
-/datum/reagent/eldritch
-	name = "Eldritch Essence"
-	description = "Strange liquid that defies the laws of physics"
-	taste_description = "Ag'hsj'saje'sh"
-	color = "#1f8016"
 
 /datum/reagent/determination/on_mob_end_metabolize(mob/living/carbon/M)
 	if(significant)
@@ -2323,6 +2318,12 @@
 			wounded_part.heal_damage(0.25, 0.25)
 		M.adjustStaminaLoss(-0.25*REM) // the more wounds, the more stamina regen
 	..()
+
+/datum/reagent/eldritch
+	name = "Eldritch Essence"
+	description = "Strange liquid that defies the laws of physics"
+	taste_description = "Ag'hsj'saje'sh"
+	color = "#1f8016"
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/M)
 	if(IS_HERETIC(M))

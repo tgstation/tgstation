@@ -68,7 +68,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/flesh_mark)
 	route = "Rust"
 
-/datum/eldritch_knowledge/rust_mark/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/rust_mark/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living_target = target
@@ -83,11 +83,11 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
 	route = "Rust"
 
-/datum/eldritch_knowledge/rust_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/rust_blade_upgrade/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 5)
+		carbon_target.reagents.add_reagent(/datum/reagent/eldritch, 5)
 
 /datum/eldritch_knowledge/spell/rust_wave
 	name = "Wave of Rust"

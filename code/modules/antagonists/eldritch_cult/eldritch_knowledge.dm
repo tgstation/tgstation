@@ -105,7 +105,7 @@
   *
   * Gives addtional effects to sickly blade weapon
   */
-/datum/eldritch_knowledge/proc/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/proc/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	return
 
 //////////////

@@ -349,8 +349,9 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.bleed_rate += 5
-		H.blood_volume -= 50
+		var/obj/item/bodypart/bodypart = pick(H.bodyparts)
+		var/datum/wound/brute/cut/severe/crit_wound = new
+		crit_wound.apply_wound(bodypart)
 	return ..()
 
 /datum/status_effect/eldritch/ash

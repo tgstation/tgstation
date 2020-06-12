@@ -63,11 +63,11 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/flesh_mark)
 	route = "Ash"
 
-/datum/eldritch_knowledge/ash_mark/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/ash_mark/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
-	if(istype(target,/mob/living))
-		var/mob/living/L = target
-		L.apply_status_effect(/datum/status_effect/eldritch/ash,5)
+	if(isliving(target))
+		var/mob/living/living_target = target
+		living_target.apply_status_effect(/datum/status_effect/eldritch/ash,5)
 
 /datum/eldritch_knowledge/curse/blindness
 	name = "Curse of blindness"
@@ -105,7 +105,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
 	route = "Ash"
 
-/datum/eldritch_knowledge/ash_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/ash_blade_upgrade/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target

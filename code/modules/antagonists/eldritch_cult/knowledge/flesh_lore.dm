@@ -85,7 +85,11 @@
 	var/datum/status_effect/eldritch/eldritch_effect = human_target.has_status_effect(/datum/status_effect/eldritch/rust) || human_target.has_status_effect(/datum/status_effect/eldritch/ash) || human_target.has_status_effect(/datum/status_effect/eldritch/flesh)
 	if(eldritch_effect)
 		eldritch_effect.on_effect()
-		human_target.bleed_rate += 5
+		if(iscarbon(target))
+			var/mob/living/carbon/carbon_target = target
+			var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
+			var/datum/wound/brute/cut/severe/crit_wound = new
+			crit_wound.apply_wound(bodypart)
 
 	human_target.grab_ghost()
 
@@ -141,7 +145,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/ash_mark)
 	route = "Flesh"
 
-/datum/eldritch_knowledge/flesh_mark/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/flesh_mark/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living_target = target
@@ -156,12 +160,13 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/rust_blade_upgrade)
 	route = "Flesh"
 
-/datum/eldritch_knowledge/flesh_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/flesh_blade_upgrade/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/carbon_target = target
-		carbon_target.bleed_rate += 3
-		carbon_target.blood_volume -= 10
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
+		var/datum/wound/brute/cut/severe/crit_wound = new
+		crit_wound.apply_wound(bodypart)
 
 /datum/eldritch_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
