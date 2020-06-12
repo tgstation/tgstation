@@ -1,0 +1,12 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Introduces medical wounds, new injuries that can happen to fleshy carbons when they sustain lots of damage on a bodypart. There's quite a lot of change here, but you can read the guide at: https://tgstation13.org/wiki/Guide_to_wounds and an extended changelog is available here: https://hackmd.io/l_FI9b3tSqa_woDadewJXA"
+  - rscadd: "Introduces scars and temporal scarring! Healing a wound leaves a scar behind that can be seen by examining someone twice rapidly, and if Temporal Scarring is enabled in character prefs, surviving a round with scars will save them to be granted at roundstart another round! Let your body tell stories!"
+  - tweak: "Bleeding is now fully bodypart-focused, and 95% of bleeding comes from cut wounds from sharp weapons. Gauze is applied on a limb-by-limb basis, and helps staunch bloodflow rather than totally stop it. Notably, you no longer bleed just from having 40+ brute damage on a limb."
+  - rscdel: "Organic bodyparts are no longer disabled at maximum damage, but are easier to cause wounds to"
+  - rscadd: "O2 medkits in emergency lockers have been replaced with new emergency medkits with basic tools for diagnosing and treating wounds and basic damage"
+  - tweak: "Herapin now rapidly increases bleeding on all open cuts, rather than causing bleeding by itself. The more cuts on the target, the more it will affect them."
+  - tweak: "Neckgrab table slams now hit the targeted limb rather than just the head, with a large chance to dislocate or break a bone"
+  - tweak: "Sharp weapons and burning weapons can now shred zones on jumpsuits, disabling protection on that limb. Damaged clothes can be repaired with cloth."
+  - tweak: "Slaughter demons now deal less raw damage, but gain the ability to cause cut wounds, which becomes more powerful with each attack on a humanoid but resets when bloodcrawling."

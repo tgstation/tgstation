@@ -8,6 +8,7 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "detective"
 	inhand_icon_state = "gun"
+	worn_icon_state = "gun"
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=2000)
@@ -195,6 +196,11 @@
 				return
 			user.AddComponent(/datum/component/gunpoint, target, src)
 			return
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			for(var/datum/wound/W in C.all_wounds)
+				if(W.try_treating(src, user))
+					return // another coward cured!
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
