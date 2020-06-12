@@ -123,8 +123,12 @@
 
 	for(var/i in 0 to number)
 
-		var/obj/effect/landmark/L = pick(GLOB.generic_event_spawns + GLOB.landmarks_list)
-		var/obj/effect/reality_smash/RS = new(L.drop_location())
+		var/turf/chosen_location = get_safe_random_station_turf()
+		var/obj/effect/reality_smash/what_if_i_have_one = locate() in chosen_location
+		if(!isnull(what_if_i_have_one)) //we dont want to spawn overlapping influences okay?
+			number++
+			continue
+		var/obj/effect/reality_smash/RS = new(chosen_location.drop_location())
 		smashes += RS
 
 	ReworkNetwork()
