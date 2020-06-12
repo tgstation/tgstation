@@ -2571,6 +2571,19 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"gH" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "gJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	alpha = 255
@@ -2740,6 +2753,12 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"ip" = (
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "iv" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-18";
@@ -2764,10 +2783,17 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"iy" = (
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 9
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "iz" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
+/obj/effect/turf_decal/trimline/blue/filled/warning,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "iC" = (
@@ -2832,6 +2858,12 @@
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"iW" = (
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 5
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "iY" = (
 /obj/structure/railing{
 	dir = 8
@@ -2914,6 +2946,12 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"jx" = (
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "jz" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	alpha = 255;
@@ -2973,6 +3011,15 @@
 /obj/machinery/vending/cola/space_up,
 /turf/open/floor/wood,
 /area/crew_quarters/fitness/recreation)
+"jK" = (
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 6
+	},
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "jL" = (
 /obj/machinery/door/airlock/grunge{
 	id_tag = "phentrance";
@@ -3115,6 +3162,13 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"kY" = (
+/obj/machinery/stasis,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "kZ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -3144,6 +3198,9 @@
 	})
 "ld" = (
 /obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -3176,12 +3233,25 @@
 	dir = 1
 	},
 /area/security/brig)
+"ln" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "lq" = (
 /obj/machinery/computer/secure_data{
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
 /area/crew_quarters/abandoned_gambling_den)
+"ls" = (
+/obj/structure/filingcabinet/medical{
+	pixel_x = -10
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "lz" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
@@ -3197,6 +3267,20 @@
 	icon_state = "wood-broken"
 	},
 /area/awaymission/beach)
+"lD" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/regular{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 5
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "lG" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
@@ -3277,6 +3361,18 @@
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"mh" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"ml" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "mp" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3309,6 +3405,12 @@
 	icon_state = "anglewood-ne"
 	},
 /area/awaymission/beach)
+"mt" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "mv" = (
 /turf/open/floor/plasteel,
 /area/science{
@@ -3455,6 +3557,12 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"ny" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "nA" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	alpha = 255;
@@ -3522,6 +3630,10 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"nP" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "nZ" = (
 /turf/open/floor/plasteel/stairs/medium{
 	dir = 8
@@ -3564,11 +3676,30 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"on" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "oo" = (
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"oq" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/table/glass,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 5
+	},
+/obj/item/toy/figure/md{
+	toysay = "Keep the floors clean!";
+	pixel_x = -4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "os" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -3835,6 +3966,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
+"pZ" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/stasis,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "qb" = (
 /obj/machinery/door/airlock/titanium/glass{
 	name = "Accommodation"
@@ -3861,6 +3999,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
+"qj" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "ql" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -3943,6 +4088,15 @@
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"qF" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "qG" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -7550,6 +7704,9 @@
 /area/awaymission/beach)
 "zL" = (
 /obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "zM" = (
@@ -7689,6 +7846,10 @@
 /area/medical/morgue)
 "Ai" = (
 /obj/structure/table/reinforced,
+/obj/item/toy/braintoy,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 5
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "Aj" = (
@@ -7900,6 +8061,12 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"AZ" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue"
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "Bb" = (
 /turf/open/floor/wood,
 /area/crew_quarters/fitness/recreation)
@@ -7991,6 +8158,10 @@
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"BA" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "BD" = (
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/theatre)
@@ -8053,12 +8224,29 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"BS" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/toxin,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "BT" = (
 /obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"BU" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "BW" = (
 /obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/carpet/red,
@@ -8147,6 +8335,14 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"Cm" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/structure/bed,
+/obj/item/bedsheet/medical,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Cn" = (
 /obj/structure/curtain/cloth,
 /obj/machinery/shower{
@@ -8243,6 +8439,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"CG" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "CH" = (
 /obj/structure/stairs/north,
 /turf/open/floor/wood,
@@ -8869,6 +9071,20 @@
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"Fe" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/brute{
+	pixel_y = 5;
+	pixel_x = -3
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = 5
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Ff" = (
 /obj/structure/chair/sofa/right{
 	dir = 1
@@ -9075,6 +9291,20 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
 /area/crew_quarters/fitness/recreation)
+"Gb" = (
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/brute{
+	pixel_y = 5;
+	pixel_x = -3
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = 5
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Gd" = (
 /obj/structure/shuttle/engine/huge{
 	dir = 4
@@ -9341,6 +9571,12 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
+"Hl" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Hm" = (
 /obj/structure/holobox/statue/ranger,
 /turf/open/floor/plasteel/cult,
@@ -9406,6 +9642,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"HB" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/machinery/vending/wallmed{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "HD" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/structure/stone_tile/block{
@@ -9483,6 +9728,12 @@
 	},
 /turf/open/floor/carpet/green,
 /area/crew_quarters/abandoned_gambling_den)
+"HU" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "HV" = (
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/dark,
@@ -9529,6 +9780,17 @@
 	name = "acid"
 	},
 /area/ruin/unpowered/ash_walkers)
+"Ii" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/medical3,
+/obj/item/gun/magic/staff/healing,
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Ij" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
@@ -9584,6 +9846,15 @@
 	},
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/ash_walkers)
+"Iw" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/closet/secure_closet/medical3,
+/obj/item/gun/magic/staff/healing,
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Iy" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/food/drinks/colocup,
@@ -9699,6 +9970,12 @@
 /obj/machinery/computer/arcade/battle,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"Jd" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/bed,
+/obj/item/bedsheet/blue,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Je" = (
 /obj/structure/chair/stool/bar{
 	pixel_y = 10
@@ -9847,6 +10124,13 @@
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"JN" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/structure/closet/crate/freezer/blood,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "JO" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -10194,6 +10478,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
+/obj/effect/turf_decal/trimline/blue/filled/warning,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "Ls" = (
@@ -10340,6 +10625,9 @@
 	})
 "LS" = (
 /obj/machinery/stasis,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "LT" = (
@@ -10753,6 +11041,13 @@
 	icon_state = "oldsmoothdirt"
 	},
 /area/awaymission/beach)
+"NC" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/machinery/vending/wardrobe/medi_wardrobe,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "ND" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Port Cabin 5"
@@ -10929,6 +11224,10 @@
 "Ol" = (
 /turf/open/water,
 /area/ruin/unpowered/ash_walkers)
+"Om" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "On" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/sosjerky{
@@ -11039,6 +11338,14 @@
 /area/shuttle/abandoned/crew{
 	name = "NTSS Spirit of Freedom Lower Deck"
 	})
+"OC" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/item/reagent_containers/food/drinks/britcup,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "OE" = (
 /obj/structure/stone_tile/surrounding,
 /obj/structure/stone_tile/center,
@@ -11135,6 +11442,12 @@
 /obj/structure/chair/stool/bar,
 /turf/open/floor/carpet/green,
 /area/crew_quarters/abandoned_gambling_den)
+"OW" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "OX" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -11143,6 +11456,12 @@
 	icon_state = "oldsmoothdirt"
 	},
 /area/awaymission/beach)
+"OZ" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Pa" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall,
@@ -11292,6 +11611,13 @@
 	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
+"PG" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/warning,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "PH" = (
 /obj/structure/chair/sofa/right{
 	dir = 4
@@ -11308,6 +11634,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"PI" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "PL" = (
 /obj/structure/chair/comfy/black,
 /turf/open/transparent/glass,
@@ -11321,6 +11654,15 @@
 /area/science{
 	name = "WIP Theatre"
 	})
+"PN" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "PO" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
@@ -11695,6 +12037,11 @@
 	},
 /turf/open/water,
 /area/awaymission/beach)
+"Rt" = (
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "Rv" = (
 /obj/structure/stone_tile/block/cracked,
 /turf/open/water,
@@ -11809,6 +12156,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"Sh" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Sj" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Starboard Cabin 2"
@@ -11899,6 +12255,19 @@
 	icon_state = "anglewood-se"
 	},
 /area/awaymission/beach)
+"Sz" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "SA" = (
 /obj/machinery/vending/wardrobe/civil_wardrobe,
 /turf/open/floor/carpet/red,
@@ -11909,7 +12278,15 @@
 /area/awaymission/beach)
 "SC" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/effect/turf_decal/trimline/blue/filled/warning,
 /turf/open/floor/plasteel/dark,
+/area/medical/medbay/central)
+"SD" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "SE" = (
 /obj/item/toy/seashell,
@@ -12007,6 +12384,13 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"SW" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/vending/wallmed{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "SX" = (
 /turf/open/floor/plasteel/stairs{
 	icon_state = "stairs";
@@ -12085,6 +12469,13 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"Tk" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "To" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
@@ -12242,6 +12633,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"TN" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/warning,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "TP" = (
 /turf/open/floor/wood/boardwalk{
 	icon_state = "anglewood-se"
@@ -12291,6 +12692,17 @@
 	},
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/ash_walkers)
+"Ua" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/o2{
+	pixel_y = 5;
+	pixel_x = -3
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Uc" = (
 /obj/structure/bed,
 /obj/item/bedsheet/rd{
@@ -12639,6 +13051,16 @@
 /obj/structure/stone_tile/surrounding_tile,
 /turf/open/water,
 /area/ruin/unpowered/ash_walkers)
+"Vo" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner{
+	icon_state = "railing_corner";
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Vp" = (
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "cabin7";
@@ -12755,6 +13177,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "VM" = (
@@ -12858,6 +13281,15 @@
 	},
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/ash_walkers)
+"Wc" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/machinery/vending/wallmed{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "Wd" = (
 /turf/closed/indestructible/oldshuttle{
 	desc = "Woah, a movie? Niiiice!";
@@ -13197,6 +13629,10 @@
 /area/ruin/unpowered/ash_walkers)
 "Xp" = (
 /obj/structure/table/glass,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/item/storage/firstaid,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "Xq" = (
@@ -13318,6 +13754,12 @@
 /obj/item/cardpack/resin,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
+"XG" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "XH" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Port Cabin 6"
@@ -13629,6 +14071,12 @@
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
+"YV" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "YW" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/plasteel/dark,
@@ -13762,6 +14210,12 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/abandoned_gambling_den)
+"Zw" = (
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 10
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "Zy" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/red/line{
@@ -112173,12 +112627,12 @@ MK
 jM
 mP
 iz
-Sw
-Sw
-Sw
-Sw
-Sw
-Sw
+Tk
+Ii
+Ii
+Ii
+Fe
+lD
 jM
 jM
 jM
@@ -112430,14 +112884,14 @@ Ls
 jM
 EH
 SC
+mt
 Sw
 Sw
 Sw
 Sw
-Sw
-Sw
-Sw
-Sw
+OZ
+HB
+Wc
 jM
 jM
 rW
@@ -112687,15 +113141,15 @@ zV
 jM
 mP
 SC
+mt
 Sw
-Sw
-Sw
-Sw
+BA
+ml
 ld
 ld
-Sw
-Sw
-Sw
+XG
+OZ
+NC
 jM
 rW
 rW
@@ -112944,15 +113398,15 @@ fv
 jM
 Ow
 SC
-Sw
-Sw
-Sw
+mt
+nP
+Om
 jM
 zZ
 Aa
+HU
 Sw
-Sw
-Sw
+SW
 jM
 jM
 rW
@@ -113203,14 +113657,14 @@ Ow
 Lr
 LS
 Xp
-LS
+kY
 jM
 zZ
 Aa
+XG
 Sw
-Sw
-Sw
-Sw
+OZ
+mh
 jM
 rW
 rW
@@ -113464,10 +113918,10 @@ jM
 jM
 jM
 jM
-Sw
-Sw
-Sw
-Sw
+YV
+ml
+ml
+Hl
 jM
 rW
 rW
@@ -113982,7 +114436,7 @@ gX
 gX
 zL
 gX
-gX
+ls
 GI
 rW
 rW
@@ -114494,9 +114948,9 @@ zV
 Ak
 gX
 gX
-zL
-zL
-zL
+OC
+on
+on
 GI
 rW
 rW
@@ -178481,9 +178935,9 @@ yD
 yD
 yD
 jM
-Sw
-Sw
-kM
+PI
+ny
+mh
 kM
 kM
 jM
@@ -178738,9 +179192,9 @@ yD
 yD
 yD
 jM
+qj
 Sw
-Sw
-kM
+Om
 kM
 kM
 jM
@@ -178995,11 +179449,11 @@ yD
 yD
 yD
 jM
+mt
 Sw
-Sw
-Sw
-Sw
-Sw
+Vo
+Sh
+qF
 jM
 yD
 yD
@@ -179252,11 +179706,11 @@ yD
 yD
 yD
 jM
+SD
 Sw
 Sw
 Sw
-Sw
-Sw
+Jd
 jM
 yD
 yD
@@ -179509,11 +179963,11 @@ yD
 yD
 yD
 jM
+SD
 Sw
 Sw
 Sw
-Sw
-Sw
+oq
 jM
 yD
 yD
@@ -179766,11 +180220,11 @@ yD
 yD
 yD
 jM
-Sw
-Sw
-Sw
-Sw
-Sw
+Ua
+PN
+XG
+BA
+Cm
 jM
 yD
 yD
@@ -180025,8 +180479,8 @@ FO
 jM
 jM
 jM
-Sw
-Sw
+mt
+Om
 jM
 jM
 jM
@@ -180281,13 +180735,13 @@ zV
 zV
 zV
 jM
-Sw
-Sw
-Sw
-Sw
-Sw
-Sw
-Sw
+OW
+HU
+OZ
+ny
+ny
+ny
+BS
 jM
 yD
 yD
@@ -180538,13 +180992,13 @@ zV
 zV
 zV
 jM
+pZ
 Sw
 Sw
 Sw
 Sw
 Sw
-Sw
-Sw
+Iw
 jM
 yD
 yD
@@ -180795,13 +181249,13 @@ zV
 zV
 zV
 jM
+Gb
 Sw
 Sw
 Sw
 Sw
 Sw
-Sw
-Sw
+Iw
 jM
 yD
 yD
@@ -181052,13 +181506,13 @@ zV
 zV
 zV
 jM
+pZ
 Sw
-Sw
-Sw
-Sw
-Sw
-Sw
-Sw
+BA
+ml
+ml
+ml
+JN
 jM
 yD
 yD
@@ -181309,12 +181763,12 @@ zV
 zV
 zV
 jM
-Sw
-Sw
-Sw
+YV
+ml
+Hl
 MJ
 MJ
-MO
+AZ
 MJ
 MJ
 yD
@@ -182337,9 +182791,9 @@ zV
 zV
 zV
 Pa
-gX
-gX
-gX
+iy
+jx
+Zw
 MJ
 MO
 MO
@@ -182594,9 +183048,9 @@ FE
 FE
 FE
 Al
-gX
-gX
-gX
+ln
+Sz
+PG
 MJ
 Af
 MO
@@ -182851,9 +183305,9 @@ FE
 FE
 FE
 gX
-gX
-gX
-gX
+BU
+gH
+TN
 MJ
 Ah
 MO
@@ -183108,9 +183562,9 @@ zV
 zV
 zV
 Pa
-gX
-gX
-gX
+iW
+ip
+jK
 MJ
 MO
 MO
@@ -183365,9 +183819,9 @@ zV
 zV
 zV
 En
-gX
-gX
-gX
+CG
+CG
+Rt
 MJ
 Ai
 MO
