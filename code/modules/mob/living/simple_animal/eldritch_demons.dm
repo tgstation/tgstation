@@ -240,15 +240,27 @@
 	name = "Rust Walker"
 	real_name = "Rusty"
 	desc = "Incomprehensible abomination actively seeping life out of it's surrounding."
-	icon_state = "rust_walker"
+	icon_state = "rust_walker_s"
 	status_flags = CANPUSH
-	icon_living = "rust_walker"
+	icon_living = "rust_walker_s"
 	maxHealth = 75
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
 	spells_to_add = list(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small,/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
+
+/mob/living/simple_animal/hostile/eldritch/rust_spirit/setDir(newdir)
+    . = ..()
+    if(newdir == NORTH)
+        icon_state = "rust_walker_n"
+    else if(newdir == SOUTH)
+        icon_state = "rust_walker_s"
+    update_icon()
+
+/mob/living/simple_animal/hostile/eldritch/rust_spirit/Moved()
+	. = ..()
+	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
 	. = ..()
