@@ -39,32 +39,12 @@
 	top_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_top")
 	top_overlay.layer = EDGED_TURF_LAYER
 	add_overlay(top_overlay)
-	door_overlay = mutable_appearance('icons/effects/96x96.dmi', "door")
-	door_overlay.layer = EDGED_TURF_LAYER
-	add_overlay(door_overlay)
 	dais_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_dais")
 	dais_overlay.layer = CLOSED_TURF_LAYER
 	add_overlay(dais_overlay)
 
-/obj/structure/necropolis_gate/Destroy(force)
-	if(force)
-		qdel(sight_blocker, TRUE)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
-
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
-
-/obj/structure/necropolis_gate/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-	if(!(get_dir(loc, target) == dir))
-		return TRUE
-
-/obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
-	if(get_dir(O.loc, target) == dir)
-		return !density
-	return 1
 
 /obj/structure/opacity_blocker
 	icon = 'icons/effects/96x96.dmi'
