@@ -5,7 +5,7 @@
 	antag_flag = ROLE_CULTIST // TEMPORARY SOLUTION, CHANGE TO ROLE_HERETIC UPON MERGING
 	false_report_weight = 5
 	protected_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_jobs = list("AI", "Cyborg","Chaplain")
+	restricted_jobs = list("AI", "Cyborg")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -56,7 +56,6 @@
 		return TRUE
 
 /datum/game_mode/heretics/post_setup()
-	GLOB.reality_smash_track.Generate(num_ecult)
 	for(var/c in culties)
 		var/datum/mind/cultie = c
 		log_game("[key_name(cultie)] has been selected as an heretic!")

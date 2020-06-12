@@ -184,3 +184,21 @@
 	else if(finished == STATION_VICTORY)
 		SSticker.mode_result = "loss - rev heads killed"
 		SSticker.news_report = REVS_LOSE
+
+//////////////////////////////////////////////
+//                                          //
+//           SYNDICATE TRAITORS             //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/heretic_smuggler
+	name = "Heretic Smuggler"
+	antag_datum = /datum/antagonist/heretic
+	antag_flag = ROLE_CULTIST //TEMPORARY SOLUTION FIX BEFORE MERGING
+	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain")
+	restricted_roles = list("AI","Cyborg")
+	required_candidates = 1
+	weight = 5
+	cost = 5
+	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	repeatable = TRUE

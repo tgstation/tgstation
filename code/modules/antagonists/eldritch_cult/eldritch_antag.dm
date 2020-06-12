@@ -12,11 +12,9 @@
 
 /datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
-	GLOB.reality_smash_track.Generate(1)
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has heresized [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
-
 
 /datum/antagonist/heretic/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
@@ -35,6 +33,7 @@
 		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
 		gain_knowledge(/datum/eldritch_knowledge/living_heart)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
+	GLOB.reality_smash_track.Generate(1)
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing,src)
 	if(give_equipment)
