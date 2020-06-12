@@ -117,11 +117,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		var/datum/bank_account/D
 		if(SO.paying_account) //Someone paid out of pocket
 			D = SO.paying_account
+			var/list/current_buyer_orders = goodies_by_buyer[SO.paying_account] // so we can access the length a few lines down
 			if(!SO.pack.goody)
 				price *= 1.1 //TODO make this customizable by the quartermaster
 
 			// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
-			else if(goodies_by_buyer[SO.paying_account].len == GOODY_FREE_SHIPPING_MAX)
+			else if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
 				price += CRATE_TAX
 				D.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
 		else
