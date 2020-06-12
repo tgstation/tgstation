@@ -113,7 +113,7 @@ export const Orbit = (props, context) => {
         } />
 
         { antagonists.length > 0 && (
-          <Section title="Antagonists">
+          <Section title="Ghost-Visible Antagonists">
             { Object.entries(collatedAntagonists).sort((a, b) => {
               return a.localeCompare(b);
             }).map(([name, antags]) => {
