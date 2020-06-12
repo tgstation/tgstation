@@ -294,7 +294,7 @@
 	name = "Breath Mask"
 	id = "breathmask"
 	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(/datum/material/glass = 1000)
+	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/clothing/mask/breath
 	category = list("initial","Misc","Equipment")
 
