@@ -11,6 +11,8 @@
  **/
 /obj/item/paper
 	var/const/MAX_PAPER_LENGTH = 1000
+	var/const/MAX_PAPER_STAMPS = 30		// Too low?
+	var/const/MAX_PAPER_STAMPS_OVERLAYS = 4
 	var/const/MODE_READING = 0
 	var/const/MODE_WRITING = 1
 	var/const/MODE_STAMPING = 2
@@ -38,7 +40,7 @@
 	var/info = ""
 
 	/// The (text for the) stamps on the paper.
-	var/stamps
+	var/list/stamps
 	var/list/stamped
 
 	/// This REALLY should be a componenet.  Basicly used during, april fools
@@ -85,7 +87,7 @@
  ** icons.  You can modify the pen_color after if need
  ** be.
  **/
-/obj/item/paper/proc/setText(text, read_only = TRUE)
+/obj/item/paper/proc/setText(text)
 	info = text
 	update_icon_state()
 
@@ -190,10 +192,11 @@
 		if(edit_mode != MODE_READING)
 			to_chat(user, "<span class='warning'>[edit_usr.real_name] is already working on this sheet!</span>")
 			return
-				/// Assume we are just reading it)
-		edit_mode = MODE_WRITING	// we are read only becausse the sheet is full
+
+		edit_mode = MODE_WRITING
 		edit_usr = user
 		/// should a crayon be in the same subtype as a pen?  How about a brush or charcoal?
+		/// TODO:  Convert all writing stuff to one type, /obj/item/art_tool maybe?
 		is_crayon = istype(P, /obj/item/toy/crayon);
 		if(is_crayon)
 			var/obj/item/toy/crayon/PEN = P
@@ -221,24 +224,7 @@
 		stamp_class = sheet.icon_class_name(P.icon_state)
 
 		to_chat(user, "<span class='notice'>You ready your stamp over the paper! </span>")
-#if 0
-		/// This is the tgui interface stuff
-		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-		if (isnull(stamps))
-			stamps = new/list()
-		/// We just want a rough position of where the stamp will be
-		/// so go with a % then? class, x, y
-		stamps += list(sheet.icon_class_name)
 
-		/// This does the overlay stuff
-		var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[P.icon_state]")
-		stampoverlay.pixel_x = rand(-2, 2)
-		stampoverlay.pixel_y = rand(-3, 2)
-		add_overlay(stampoverlay)
-		LAZYADD(stamped, P.icon_state)
-
-		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
-#endif
 		ui_interact(user)
 		return /// Normaly you just stamp, you don't need to read the thing
 	else if(P.get_temperature())
@@ -249,10 +235,6 @@
 			user.adjust_fire_stacks(1)
 			user.IgniteMob()
 			return
-
-		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
-			return
-
 
 		user.dropItemToGround(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
@@ -283,7 +265,7 @@
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 		assets.send(user)
 		/// The x size is because we double the width for the editor
-		ui = new(user, src, ui_key, "PaperSheet", name, 400, 600, master_ui, state)
+		ui = new(user, src, ui_key, "PaperSheet", name, ui_x, ui_y, master_ui, state)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
@@ -297,16 +279,15 @@
 
 	. = ..()
 
-	// var/datum/tgui/ui = SStgui.try_update_ui(user, src, "main");
-	// if(ui)
-	// 	ui.close()
+/obj/item/paper/proc/ui_force_close()
+	var/datum/tgui/ui = SStgui.try_update_ui(usr, src, "main");
+	if(ui)
+		ui.close()
 
 /obj/item/paper/proc/ui_update()
 	var/datum/tgui/ui = SStgui.try_update_ui(usr, src, "main");
 	if(ui)
 		ui.update()
-
-
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
@@ -341,18 +322,25 @@
 			var/stamp_y = text2num(params["y"])
 			var/stamp_r = text2num(params["r"])	// rotation in degrees
 
-			/// We just want a rough position of where the stamp will be
-			/// so go with a % then? class, x, y, rotation
 			if (isnull(stamps))
 				stamps = new/list()
-			stamps += list(stamp_class, stamp_x, stamp_y, stamp_r)
-			edit_usr.visible_message("<span class='notice'>[edit_usr] stamps [src] with [current_stamp]!</span>", "<span class='notice'>You stamp [src] with [current_stamp]!</span>")
-			/// This does the overlay stuff
-			var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[current_stamp.icon_state]")
-			stampoverlay.pixel_x = rand(-2, 2)
-			stampoverlay.pixel_y = rand(-3, 2)
-			add_overlay(stampoverlay)
-			LAZYADD(stamped, current_stamp.icon_state)
+			if(stamps.len < MAX_PAPER_STAMPS)
+				/// I hate byond when dealing with freaking lists
+				stamps += list(list(stamp_class, stamp_x,  stamp_y,stamp_r))	/// WHHHHY
+
+				/// This does the overlay stuff
+				if (isnull(stamped))
+					stamped = new/list()
+				if(stamped.len < MAX_PAPER_STAMPS_OVERLAYS)
+					var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[current_stamp.icon_state]")
+					stampoverlay.pixel_x = rand(-2, 2)
+					stampoverlay.pixel_y = rand(-3, 2)
+					add_overlay(stampoverlay)
+					LAZYADD(stamped, current_stamp.icon_state)
+
+				edit_usr.visible_message("<span class='notice'>[edit_usr] stamps [src] with [current_stamp]!</span>", "<span class='notice'>You stamp [src] with [current_stamp]!</span>")
+			else
+				to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
 
 			ui_update()
 			. = TRUE
@@ -360,24 +348,31 @@
 		if("save")
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper) + length(info)
-			// side note, this is also checked inside of tgui
-			// but we get here, kill the changes as we
-			// shouldn't get here leagly
+
 			if(paper_len > MAX_PAPER_LENGTH)
+				/// Side note, the only way we should get here is if
+				/// the javascript was modified, somehow, outside of
+				/// byond.
 				log_paper("[key_name(usr)] writing to paper [name], and overwrote it by [MAX_PAPER_LENGTH-paper_len], aborting")
-				ui_close(usr)
+				ui_force_close()
 			else if(paper_len == 0)
 				to_chat(usr, pick("Writing block strikes again!", "You forgot to write anthing!"))
-				ui_close(usr)
+				ui_force_close()
 			else
+				/// First, fix the fonts depending on the pen used
 				if(is_crayon)
 					info += "<font face=\"[pen_font]\" color=[pen_color]><b>[in_paper]</b></font>"
 				else
 					info += "<font face=\"[pen_font]\" color=[pen_color]>[in_paper]</font>"
+				/// Next find the sign marker and replace it with somones sig
 				info = regex("%s(?:ign)?(?=\\s|$)", "igm").Replace(info, "<font face=\"[SIGNFONT]\"><i>[usr.real_name]</i></font>")
+				/// Do the same with form fields
  				info = regex("%f(?:ield)?(?=\\s|$)", "igm").Replace(info, "<span class=\"paper_field\"></span>")
 				log_paper("[key_name(usr)] writing to paper [name]")
 				to_chat(usr, "You have added to your paper masterpiece!");
+				/// Switch ui to reading mode
+				edit_mode = MODE_READING
+				edit_usr = null
 
 				ui_update()
 				update_icon()

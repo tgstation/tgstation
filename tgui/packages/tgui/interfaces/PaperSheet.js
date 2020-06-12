@@ -40,12 +40,13 @@ const sanatize_text = value => {
   // though dangerouslySetInnerHTML and even though
   // the default DOMPurify kills javascript, it dosn't
   // kill href links or such
-  return DOMPurify.sanitize(value,
-    { ALLOWED_TAGS:
-        ['br', 'code', 'li', 'p', 'pre',
-          'span', 'table', 'td', 'tr',
-          'th', 'ul', 'ol', 'menu', 'font', 'b', 'center'] }
-  );
+  return DOMPurify.sanitize(value, {
+    ALLOWED_TAGS: [
+      'br', 'code', 'li', 'p', 'pre',
+      'span', 'table', 'td', 'tr',
+      'th', 'ul', 'ol', 'menu', 'font', 'b', 'center',
+    ],
+  });
 };
 
 const run_marked_default = value => {
@@ -61,86 +62,11 @@ const run_marked_default = value => {
 };
 
 const pauseEvent = e => {
-  if (e.stopPropagation) e.stopPropagation();
-  if (e.preventDefault) e.preventDefault();
+  if (e.stopPropagation) { e.stopPropagation(); }
+  if (e.preventDefault) { e.preventDefault(); }
   e.cancelBubble=true;
   e.returnValue=false;
   return false;
-};
-const copyPositioning = (target, event) => {
-  target.pageX = event.pageX;
-  target.pageY = event.pageY;
-  target.clientX = event.clientX;
-  target.clientY = event.clientY;
-};
-
-const mapPointerEvent = event => {
-  const result = {};
-  result.isTouchEvent = !!event.touches;
-  if (result.isTouchEvent) {
-    copyPositioning(result, event.touches[0]);
-  } else {
-    copyPositioning(result, event);
-  }
-  result.target = event.target;
-  result.original = event;
-  return result;
-};
-
-export const dragHelper = (options, event) => {
-  const onStart = typeof options.onStart === 'function' && options.onStart;
-  const onMove = typeof options.onMove === 'function' && options.onMove;
-  const onEnd = typeof options.onEnd === 'function' && options.onEnd;
-
-  const onDragStart = event => {
-    if (event.currentTarget !== event.target) return;
-    if (event.button !== 0) return;
-
-    event.preventDefault();
-
-    const mappedEvent = mapPointerEvent(event);
-    const init = onStart && onStart(mappedEvent);
-    const eventNames = mappedEvent.isTouchEvent
-      ? ['touchmove', 'touchend']
-      : ['mousemove', 'mouseup'];
-
-    if (!mappedEvent.isTouchEvent) event.preventDefault();
-
-    if (options.moveOnStart) {
-      onDragMove(event);
-    }
-
-    const onDragMove = event => {
-      event.preventDefault();
-
-      if (onMove) {
-        const mappedEvent = mapPointerEvent(event);
-        onMove(init, mappedEvent);
-      }
-    };
-
-    const onDragEnd = event => {
-      if (onEnd) {
-        onEnd(event);
-      }
-
-      document.removeEventListener(eventNames[0], onDragMove, {
-        capture: true,
-        passive: false,
-      });
-      document.removeEventListener(eventNames[1], onDragEnd);
-    };
-
-    document.addEventListener(eventNames[0], onDragMove, {
-      capture: true,
-      passive: false,
-    });
-    document.addEventListener(eventNames[1], onDragEnd);
-  };
-
-  return event
-    ? onDragStart(event)
-    : onDragStart;
 };
 
 const Stamp = (props, context) => {
@@ -150,7 +76,8 @@ const Stamp = (props, context) => {
     ...rest
   } = props;
 
-  const matrix_trasform = 'rotate(' + image.rotate + 'deg) translate(' + image.x + 'px,' + image.y + 'px)';
+  const matrix_trasform = 'rotate(' + image.rotate
+    + 'deg) translate(' + image.x + 'px,' + image.y + 'px)';
   const stamp_trasform = {
     'transform': matrix_trasform,
     '-ms-transform': matrix_trasform,
@@ -159,14 +86,13 @@ const Stamp = (props, context) => {
     'position': 'absolute',
   };
   return (
-      <div
-        className={classes([
-          'paper121x54',
-          image.sprite,
-        ])}
-        style={stamp_trasform}
-
-      />
+    <div
+      className={classes([
+        'paper121x54',
+        image.sprite,
+      ])}
+      style={stamp_trasform}
+    />
   );
 };
 
@@ -177,43 +103,50 @@ class PaperSheetView extends Component {
     super(props, context);
     const {
       value = '',
+      stamps,
     } = props;
     this.state = {
       marked: { __html: run_marked_default(value) },
       raw_text: value,
+      stamps: stamps || [],
     };
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.value !== this.props.value
-        && nextProps.value !== this.state.raw_text) {
+    if (nextState.raw_text !== this.state.raw_text
+      || nextState.stamps.length !== this.state.stamps.length) {
+      // ok, we are at the queued state change, lets do an update
+      // or do one if the stamps get updated
+      return false;
+    }
+    if (nextProps.stamps
+        && nextProps.stamps.length !== this.state.stamps.length) {
+      this.setState({ stamps: nextProps.stamps });
+    }
+    if ((nextProps.value !== this.props.value
+        && nextProps.value !== this.state.raw_text)) {
       // first check if the parrent updated us
       // if so queue a state change, then
       // skip to the state change
-      const new_text = nextProps.value;
-      this.setState({ marked: { __html: run_marked_default(new_text) },
-        raw_text: new_text });
-    } else if (nextState.raw_text !== this.state.raw_text) {
-      // ok, we are at the queued state change, lets do an update
-      return false;
+      this.setState({ marked: { __html: run_marked_default(nextProps.value) },
+        raw_text: nextProps.value });
     }
-    return true; // only update on state changes
+    return true;
   }
-
   render() {
     const {
       value,
       stamps,
       ...rest
     } = this.props;
-    const stamp_list = stamps || [];
+    const stamp_list = this.state.stamps;
     return (
       <Box position="relative" {...rest} >
         <Box position="absoulte" {...rest} top={0} left={0}
           dangerouslySetInnerHTML={this.state.marked} />
-                  {stamp_list.map(o => (
-            <Stamp image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3]}} />
+        {stamp_list.map((o, i) => (
+          <Stamp key={o[0] + i}
+            image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3] }} />
         ))}
-        <Stamp image={{ sprite: "stamp-clown", rotate: 45, x: 40, y: 30 }} />
       </Box>
     );
   }
@@ -223,37 +156,10 @@ class PaperSheetStamper extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      dragging: false,
       x: 0,
       y: 0,
       rotate: 0,
-      stamp_class: props.stamp_class,
-      stamps: [],
     };
-
-    this.startNodeMove = dragHelper({
-      onStart: event => {
-        pauseEvent(event);
-        logger.log("pos: (" + event.pageX + ", " + event.pageY + ")");
-        return {
-          p: vecCreate(this.state.x, this.state.y),
-          prev: vecCreate(event.pageX, event.pageY),
-        };
-      },
-      onMove: (start, event) => {
-        pauseEvent(event);
-        const dpos = vecCreate(
-          event.clientX - start.prev[0],
-          event.clientY - start.prev[1]);
-        // choice here, update before or after set state, lets try before
-        const new_pos = vecAdd(start.p, dpos);
-        logger.log("pos: (" + new_pos[0] + ", " + new_pos[1] + ")");
-        this.setState({ x: new_pos[0], y: new_pos[1], dragging:true });
-      },
-      onEnd: event => {
-
-      },
-    });
   }
   findStampPosition(e) {
     const position = {
@@ -286,16 +192,14 @@ class PaperSheetStamper extends Component {
     const pos = this.findStampPosition(e);
     // center offset of stamp
     pauseEvent(e);
-    this.setState({ x: pos[0] , y: pos[1] , dragging:false });
+    this.setState({ x: pos[0], y: pos[1] });
   }
 
   handleMouseClick(e) {
-    const position = this.findStampPosition(e);
-    let sstamps = this.state.stamps || [];
-    sstamps.push([this.props.stamp_class, position[0], position[1], this.state.rotate]);
-    const new_stamps = { stamps: sstamps };
-    logger.log("Length :" + new_stamps.stamps.length);
-    this.setState(() => new_stamps);
+    const pos = this.findStampPosition(e);
+    const { act, data } = useBackend(this.context);
+    act("stamp", { x: pos[0], y: pos[1], r: this.state.rotate });
+    this.setState({ x: pos[0], y: pos[1] });
 
   }
   handleWheel(e) {
@@ -309,22 +213,7 @@ class PaperSheetStamper extends Component {
       this.setState(() => rotate);
     }
     pauseEvent(e);
-    logger.log("while pos: (" + e.deltaY +  ", " + rotate_amount+ ")");
-  }
-  componentDidMount() {
-    logger.log("mounted");
-    document.addEventListener('wheel', this.handleWheel.bind(this));
-   // window.addEventListener('onmousedown', this.startNodeMove.bind(this) );
-   // window.addEventListener('onclick', this.handleMouseClick.bind(this) );
-
-   // window.addEventListener('onwheel', this.handleWheel.bind(this) );
-   // window.addEventListener('mousewheel', this.handleWheel.bind(this) );
-
-// onClick={this.handleMouseClick.bind(this)}
-
-  }
-  componentWillUnmount() {
-
+    logger.log("while pos: (" + e.deltaY + ", " + rotate_amount+ ")");
   }
 
   render() {
@@ -334,26 +223,27 @@ class PaperSheetStamper extends Component {
       stamps,
       ...rest
     } = this.props;
-    const stamp_list = this.state.stamps;
+    const stamp_list = stamps || [];
+    const current_pos = {
+      sprite: stamp_class,
+      x: this.state.x,
+      y: this.state.y,
+      rotate: this.state.rotate,
+    };
     return (
-      <Box position="absoulte" onClick={this.handleMouseClick.bind(this)} onMouseMove={this.handleMouseMove.bind(this)}  onWheel={this.handleWheel.bind(this)} {...rest}>
-        {this.state.stamps.map(o => (
-          <Stamp image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3]}} />
-        ))}
-        <PaperSheetView fillPositionedParent={1} value={value} stamps={stamps} />
-
-        {<Stamp
-          opacity={0.5}
-          image={{ sprite: stamp_class, x: this.state.x, y: this.state.y, rotate: this.state.rotate }}
-          style={{ 'z-order': 100 }}
-          onMouseDown={this.startNodeMove.bind(this)}
-          />}
+      <Box position="absoulte" onClick={this.handleMouseClick.bind(this)}
+        onMouseMove={this.handleMouseMove.bind(this)} {...rest}>
+        <PaperSheetView fillPositionedParent={1}
+          value={value} stamps={stamp_list} />
+        <Stamp
+          opacity={0.5} image={current_pos} />
       </Box>
     );
   }
+}
 
-};
-// ugh.  So have to turn this into a full component too if I want to keep updates
+// ugh.  So have to turn this into a full
+// component too if I want to keep updates
 // low and keep the wierd flashing down
 class PaperSheetEdit extends Component {
   constructor(props, context) {
@@ -421,18 +311,20 @@ class PaperSheetEdit extends Component {
       backgroundColor,
       textColor,
       textFont,
-      stamps = "",
+      stamps,
       ...rest
     } = this.props;
 
     return (
-      <Flex direction="column" >
+      <Flex direction="column" fillPositionedParent={1}>
         <Flex.Item>
           <Tabs>
             <Tabs.Tab
               key="marked_edit"
               textColor={'black'}
-              backgroundColor={this.state.previewSelected === "Edit" ? "grey" : "white"}
+              backgroundColor={this.state.previewSelected === "Edit"
+                ? "grey"
+                : "white"}
               selected={this.state.previewSelected === "Edit"}
               onClick={() => this.setState({ previewSelected: "Edit" })}>
               Edit
@@ -440,7 +332,9 @@ class PaperSheetEdit extends Component {
             <Tabs.Tab
               key="marked_preview"
               textColor={'black'}
-              backgroundColor={this.state.previewSelected === "Preview" ? "grey" : "white"}
+              backgroundColor={this.state.previewSelected === "Preview"
+                ? "grey"
+                : "white"}
               selected={this.state.previewSelected === "Preview"}
               onClick={() => this.setState({ previewSelected: "Preview" })}>
               Preview
@@ -457,7 +351,8 @@ class PaperSheetEdit extends Component {
                 || this.state.previewSelected === "save"}
               onClick={() => {
                 if (this.state.previewSelected === "confirm") {
-                  act('save', { text: this.finalUpdate(this.state.textarea_text) });
+                  act('save',
+                    { text: this.finalUpdate(this.state.textarea_text) });
                 } else {
                   this.setState({ previewSelected: "confirm" });
                 }
@@ -477,10 +372,11 @@ class PaperSheetEdit extends Component {
               textColor="#000000"
               textFont={textFont}
               height={(window.innerHeight - 80) + "px"}
-              onInput={this.onInputHandler.bind(this)} {...rest} />
+              onInput={this.onInputHandler.bind(this)} />
           ) || (
             <PaperSheetView
-              value={this.state.combined_text+stamps}
+              value={this.state.combined_text}
+              stamps={stamps}
               backgroundColor={backgroundColor}
               textColor={textColor} />
           )}
@@ -504,27 +400,29 @@ export const PaperSheet = (props, context) => {
     stamped,
   } = data;
   const background_style = {
-    'background-color': paper_color && paper_color !== "white" ? paper_color : "#FFFFFF",
+    'background-color': paper_color && paper_color !== "white"
+      ? paper_color
+      : "#FFFFFF",
   };
-  const stamp_list = !stamps || stamps === null? [] : stamps;
+  const stamp_list = !stamps || stamps === null
+    ? []
+    : stamps;
 
-  //        <img src="paper_121x54.png" alt="Girl in a jacket" width="500" height="600" />
-  // {stamped.length >0 && <link rel="stylesheet" href="spritesheet_paper.css" />}
-  // {stamped.map((x, i) => <Stamp key={i} stamp_class={x} stamp_index={i} />)}
   const decide_mode = mode => {
     switch (mode) {
       case 0:
         return (<PaperSheetView fillPositionedParent={1}
-          value={text} stamps={stamps} />);
+          value={text} stamps={stamp_list} />);
       case 1:
         return (<PaperSheetEdit value={text}
           backgroundColor={paper_color}
           textColor={pen_color}
           textFont={pen_font}
-          fillPositionedParent={1} />);
+          stamps={stamp_list}
+        />);
       case 2:
         return (<PaperSheetStamper value={text}
-          stamps={stamps} stamp_class={stamp_class}
+          stamps={stamp_list} stamp_class={stamp_class}
           fillPositionedParent={1} />);
       default:
         return "ERROR ERROR WE CANNOT BE HERE!!";
