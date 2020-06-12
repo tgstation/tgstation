@@ -13,7 +13,7 @@
 	enemy_minimum_age = 0
 
 	announce_span = "danger"
-	announce_text = "An heretics has been spotted on the station!\n\
+	announce_text = "Heretics have been spotted on the station!\n\
 	<span class='danger'>Heretics</span>: Accomplish your objectives.\n\
 	<span class='notice'>Crew</span>: Do not let the madman succeed!"
 
