@@ -477,10 +477,7 @@
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
-		/datum/reagent/consumable/ethanol/thirteenloko,
 		/datum/reagent/consumable/ethanol/whiskey_cola,
-		/datum/reagent/toxin/mindbreaker,
-		/datum/reagent/toxin/staminatoxin
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -530,11 +527,7 @@
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
-		/datum/reagent/consumable/ethanol,
 		/datum/reagent/iron,
-		/datum/reagent/toxin/minttoxin,
-		/datum/reagent/consumable/ethanol/atomicbomb,
-		/datum/reagent/consumable/ethanol/fernet
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
@@ -560,7 +553,7 @@
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list(/datum/reagent/toxin/mutagen)
 	upgrade_reagents = null
-	emagged_reagents = list(/datum/reagent/toxin/plasma)
+	emagged_reagents = null
 
 
 /obj/machinery/chem_dispenser/mutagensaltpeter

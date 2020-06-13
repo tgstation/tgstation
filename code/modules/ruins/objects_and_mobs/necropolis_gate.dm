@@ -39,9 +39,6 @@
 	top_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_top")
 	top_overlay.layer = EDGED_TURF_LAYER
 	add_overlay(top_overlay)
-	door_overlay = mutable_appearance('icons/effects/96x96.dmi', "door")
-	door_overlay.layer = EDGED_TURF_LAYER
-	add_overlay(door_overlay)
 	dais_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_dais")
 	dais_overlay.layer = CLOSED_TURF_LAYER
 	add_overlay(dais_overlay)
