@@ -150,14 +150,14 @@
 
 	if(compiled_list.len == 0)
 		to_chat(user, "<span class='warning'>The items don't posses required fingerprints.</span>")
-		return
+		return FALSE
 
 	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)
 	if(!chosen_mob)
-		return ..()
+		return FALSE
 	curse(compiled_list[chosen_mob])
 	addtimer(CALLBACK(src, .proc/uncurse, compiled_list[chosen_mob]),timer)
-	return ..()
+	return TRUE
 
 /datum/eldritch_knowledge/curse/proc/curse(mob/living/chosen_mob)
 	return
@@ -173,10 +173,9 @@
 /datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user,list/atoms,loc)
 	message_admins("[initial(mob_to_summon.name)] is being summoned by [user.real_name] in [loc]")
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [initial(mob_to_summon.real_name)]", ROLE_HERETIC, null, ROLE_HERETIC, 50,initial(mob_to_summon))
-	if(!LAZYLEN(candidates))
+	if(LAZYLEN(candidates) == 0)
 		to_chat(user,"<span class='warning'>No ghost could be found...</span>")
-		atoms = list()
-		return
+		return FALSE
 	var/mob/living/summoned = new mob_to_summon(loc)
 	var/mob/dead/observer/C = pick(candidates)
 	log_game("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]), their master is [user.real_name]")
@@ -184,6 +183,31 @@
 	summoned.key = C.key
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user)
+	return TRUE
+
+//Ascension knowledge
+/datum/eldritch_knowledge/final
+	var/finished = FALSE
+
+/datum/eldritch_knowledge/final/recipe_snowflake_check(list/atoms, loc,selected_atoms)
+	if(finished)
+		return FALSE
+	var/counter = 0
+	for(var/mob/living/carbon/human/H in atoms)
+		selected_atoms |= H
+		counter++
+		if(counter == 3)
+			return TRUE
+	return FALSE
+
+/datum/eldritch_knowledge/final/on_finished_recipe(mob/living/user, list/atoms, loc)
+	finished = TRUE
+	return TRUE
+
+/datum/eldritch_knowledge/final/cleanup_atoms(list/atoms)
+	. = ..()
+	for(var/mob/living/carbon/human/H in atoms)
+		H.gib()
 
 
 ///////////////
@@ -210,6 +234,7 @@
 	return FALSE
 
 /datum/eldritch_knowledge/spell/basic/on_finished_recipe(mob/living/user, list/atoms, loc)
+	. = TRUE
 	var/mob/living/carbon/carbon_user = user
 	for(var/obj/item/living_heart/LH in atoms)
 
@@ -236,6 +261,7 @@
 			qdel(A)
 			if(LH.target)
 				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [LH.target.real_name]!</span>")
+
 			else
 				to_chat(user,"<span class='warning'>target could not be found for living heart.</span>")
 

@@ -2,7 +2,7 @@
 	name = "Blacksmith's Tale"
 	desc = "Opens up the path of rust to you. Allows you to transmute a knife with any trash item into a Rusty Blade."
 	gain_text = "Let me tell you a story, blacksmith said as he glazed into his rusty blade."
-	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/ash_final,/datum/eldritch_knowledge/flesh_final)
+	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/flesh_final)
 	next_knowledge = list(/datum/eldritch_knowledge/rust_fist)
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/trash)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
@@ -95,7 +95,7 @@
 	gain_text = "Messenger's of hope fear the rustbringer!"
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
-	next_knowledge = list(/datum/eldritch_knowledge/rust_final,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/rusty)
+	next_knowledge = list(/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/rusty)
 	route = "Rust"
 
 /datum/eldritch_knowledge/armor
@@ -116,39 +116,24 @@
 	required_atoms = list(/obj/structure/reagent_dispensers/watertank)
 	result_atoms = list(/obj/item/reagent_containers/glass/beaker/eldritch)
 
-/datum/eldritch_knowledge/rust_final
+/datum/eldritch_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
 	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resillient overall."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
 	route = "Rust"
-	var/finished = FALSE
 
-
-/datum/eldritch_knowledge/rust_final/recipe_snowflake_check(list/atoms, loc,list/selected_atoms)
-	if(finished)
-		return FALSE
-	var/counter = 0
-	for(var/mob/living/carbon/human/H in atoms)
-		selected_atoms |= H
-		counter++
-		if(counter == 3)
-			return TRUE
-	return FALSE
-
-/datum/eldritch_knowledge/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
+/datum/eldritch_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
-	finished = TRUE
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the decay, for Rustbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 	new /datum/rust_spread(loc)
-
 	return ..()
 
 
-/datum/eldritch_knowledge/rust_final/on_life(mob/user)
+/datum/eldritch_knowledge/final/rust_final/on_life(mob/user)
 	. = ..()
 	if(!finished)
 		return

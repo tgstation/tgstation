@@ -2,7 +2,7 @@
 	name = "Nightwatcher's secret"
 	desc = "Opens up the path of ash to you. Allows you to transmute a match with a kitchen knife or it's derivatives into an ashen blade."
 	gain_text = "City guard knows their watch. If you ask them at night they may tell you about the ashy lantern."
-	banned_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/rust_final,/datum/eldritch_knowledge/flesh_final)
+	banned_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/final/flesh_final)
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/match)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
@@ -93,7 +93,7 @@
 	desc = "Short range spell that allows you to curse someone with massive sanity loss."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/touch/mad_touch
-	next_knowledge = list(/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/ash_final)
+	next_knowledge = list(/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/final/ash_final)
 	route = "Ash"
 
 /datum/eldritch_knowledge/ash_blade_upgrade
@@ -158,30 +158,16 @@
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/ash_cleave
 	next_knowledge = list(/datum/eldritch_knowledge/summon/raw_prophet,/datum/eldritch_knowledge/spell/area_conversion)
 
-/datum/eldritch_knowledge/ash_final
+/datum/eldritch_knowledge/final/ash_final
 	name = "Ashlord's rite"
 	gain_text = "The forgotten lords have spoken! The lord of ash have come! Fear the fire!"
 	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire ,space ,cold and other enviromental hazards and become overall sturdier to all other damages. You will gain a spell that passively creates ring of fire around you as well ,as you will gain a powerful abiltiy that let's you create a wave of flames all around you."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
 	route = "Ash"
-	var/finished = FALSE
 	var/list/trait_list = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_BOMBIMMUNE)
 
-/datum/eldritch_knowledge/ash_final/recipe_snowflake_check(list/atoms, loc,list/selected_atoms)
-	if(finished)
-		return FALSE
-	var/counter = 0
-	for(var/mob/living/carbon/human/H in atoms)
-		selected_atoms |= H
-		counter++
-		if(counter == 3)
-			return TRUE
-	return FALSE
-
-/datum/eldritch_knowledge/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	if(finished)
-		return
+/datum/eldritch_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for Ashbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/fire_sworn)
@@ -190,10 +176,9 @@
 	H.physiology.burn_mod *= 0.5
 	for(var/X in trait_list)
 		ADD_TRAIT(user,X,MAGIC_TRAIT)
-	finished = TRUE
-	. = ..()
+	return ..()
 
-/datum/eldritch_knowledge/ash_final/on_life(mob/user)
+/datum/eldritch_knowledge/final/ash_final/on_life(mob/user)
 	. = ..()
 	if(!finished)
 		return

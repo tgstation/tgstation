@@ -2,7 +2,7 @@
 	name = "Principle of Hunger"
 	desc = "Opens up the path of flesh to you. Allows you to transmute a pool of blood with a kitchen knife into a Flesh Blade"
 	gain_text = "Hundred's of us starved, but I.. I found the strength in my greed."
-	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/ash_final,/datum/eldritch_knowledge/rust_final)
+	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/rust_final)
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_grasp)
 	required_atoms = list(/obj/item/kitchen/knife,/obj/effect/decal/cleanable/blood)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
@@ -186,7 +186,7 @@
 	cost = 1
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/reagent_containers/food/snacks/grown/poppy,/obj/item/pen,/obj/item/paper)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker
-	next_knowledge = list(/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/summon/rusty,/datum/eldritch_knowledge/flesh_final)
+	next_knowledge = list(/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/summon/rusty,/datum/eldritch_knowledge/final/flesh_final)
 	route = "Flesh"
 
 /datum/eldritch_knowledge/summon/ashy
@@ -215,28 +215,15 @@
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/ash_leech
 	next_knowledge = list(/datum/eldritch_knowledge/spell/rust_wave,/datum/eldritch_knowledge/spell/mad_touch)
 
-/datum/eldritch_knowledge/flesh_final
+/datum/eldritch_knowledge/final/flesh_final
 	name = "Priest's Final Hymn"
 	gain_text = "Man of this world. Hear me! For the time of the lord of arms has come!"
 	desc = "Bring 3 bodies onto a transmutation rune to either ascend as a terror of the night prime or you can summon a regular terror of the night."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
 	route = "Flesh"
-	var/is_summoned = FALSE
 
-/datum/eldritch_knowledge/flesh_final/recipe_snowflake_check(list/atoms, loc,list/selected_atoms)
-	if(is_summoned)
-		return FALSE
-	var/counter = 0
-	for(var/mob/living/carbon/human/H in atoms)
-		selected_atoms |= H
-		counter++
-		if(counter == 3)
-			return TRUE
-	return FALSE
-
-/datum/eldritch_knowledge/flesh_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	is_summoned = TRUE // you got one chance
+/datum/eldritch_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/alert_ = alert(user,"Do you want to ascend as the lord of the night or just summon a terror of the night?","...","Yes","No")
 	user.SetImmobilized(10 HOURS) // no way someone will stand 10 hours in a spot, just so he can move while the alert is still showing.
 	switch(alert_)
@@ -245,8 +232,8 @@
 			message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
 			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [summoned.real_name]", ROLE_HERETIC, null, ROLE_HERETIC, 50,summoned)
 			user.SetImmobilized(0)
-			if(!LAZYLEN(candidates))
-				return
+			if(LAZYLEN(candidates) == 0)
+				return FALSE
 			var/mob/dead/observer/ghost_candidate = pick(candidates)
 			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for vassal of arms has ascended! Terror of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 			log_game("[key_name_admin(ghost_candidate)] has taken control of ([key_name_admin(summoned)]).")

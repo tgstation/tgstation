@@ -70,8 +70,8 @@
 
 		flick("[icon_state]_active",src)
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
-		current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc)
-		current_eldritch_knowledge.cleanup_atoms(selected_atoms)
+		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
+			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
 		return
 	to_chat(user,"<span class='warning'>Your ritual failed! You used either wrong components or are missing something important!</span>")
 

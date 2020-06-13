@@ -196,6 +196,8 @@
 		qdel(target)
 		heal()
 		return
+	if(target == back || target == front)
+		return
 	if(back)
 		back.target = target
 		back.AttackingTarget()
