@@ -168,6 +168,12 @@
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "fokof"
 
+/obj/structure/fluff/fugoff_sign
+	name = "death warning"
+	desc = "A crudely-made sign, indicating that the caves up ahead are deadly. DO NOT GO IN UNPREPARED!"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "fugof"
+
 /obj/structure/fluff/big_chain
 	name = "giant chain"
 	desc = "A towering link of chains leading up to the ceiling."
