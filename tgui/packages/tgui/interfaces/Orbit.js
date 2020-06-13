@@ -8,6 +8,8 @@ const PATTERN_NUMBER = / \(([0-9]+)\)$/;
 
 const searchFor = searchText => createSearch(searchText, thing => thing.name);
 
+const compareString = (a, b) => a < b ? -1 : a > b;
+
 const compareNumberedText = (a, b) => {
   const aName = a.name;
   const bName = b.name;
@@ -27,7 +29,7 @@ const compareNumberedText = (a, b) => {
     return aNumber - bNumber;
   }
 
-  return aName.localeCompare(bName);
+  return compareString(aName, bName);
 };
 
 const BasicSection = (props, context) => {
@@ -97,7 +99,7 @@ export const Orbit = (props, context) => {
 
   const sortedAntagonists = Object.entries(collatedAntagonists);
   sortedAntagonists.sort((a, b) => {
-    return a[0].localeCompare(b[0]);
+    return compareString(a[0], b[0]);
   });
 
   return (
