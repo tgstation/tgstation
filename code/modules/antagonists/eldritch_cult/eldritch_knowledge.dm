@@ -182,8 +182,10 @@
 	log_game("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]), their master is [user.real_name]")
 	summoned.ghostize(FALSE)
 	summoned.key = C.key
+	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
+	heretic_monster.set_owner(user)
 
-	to_chat(summoned,"<span class='warning'>You are bound to [user.real_name]'s' will! Don't let your master die, protect them at all cost!</span>")
+
 ///////////////
 ///Base lore///
 ///////////////

@@ -36,6 +36,8 @@
 /mob/living/simple_animal/hostile/eldritch/Initialize()
 	. = ..()
 	add_spells()
+	//by default
+	mind.add_antag_datum(/datum/antagonist/heretic_monster)
 
 /**
   * Add_spells
@@ -188,8 +190,6 @@
 
 	adjustBruteLoss(-maxHealth * 0.5, FALSE)
 	adjustFireLoss(-maxHealth * 0.5 ,FALSE)
-	adjustToxLoss(-maxHealth * 0.5, FALSE)
-	adjustOxyLoss(-maxHealth * 0.5)
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
 	if(istype(target,/obj/item/bodypart/r_arm) || istype(target,/obj/item/bodypart/l_arm))
@@ -231,7 +231,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 
-/mob/living/simple_animal/hostile/eldritch/armsy/prime/New(spawn_more, len)
+/mob/living/simple_animal/hostile/eldritch/armsy/prime/Initialize(mapload,spawn_more = TRUE,len = 9)
 	. = ..()
 	var/matrix/matrix_transformation = matrix()
 	matrix_transformation.Scale(1.4,1.4)

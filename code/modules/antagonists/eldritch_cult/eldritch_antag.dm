@@ -115,6 +115,7 @@
 				objectives += P
 
 	var/datum/objective/sacrifice_ecult/SE = new
+	SE.owner = owner
 	SE.update_explanation_text()
 	objectives += SE
 

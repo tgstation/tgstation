@@ -172,9 +172,7 @@
 	turflist += T1
 	turflist += get_step(T1,turn(dir,-90))
 	for(var/X in turflist)
-		if(!X)
-			continue
-		if(prob(25))
+		if(!X || prob(25))
 			continue
 		var/turf/T = X
 		T.rust_heretic_act()

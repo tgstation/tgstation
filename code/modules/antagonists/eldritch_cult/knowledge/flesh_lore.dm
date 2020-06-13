@@ -48,8 +48,9 @@
 	humie.become_husk()
 	humie.faction |= "heretics"
 	humie.fully_replace_character_name(humie.real_name,"Voiceless [humie.real_name]")
-	to_chat(humie, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(humie, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
+
+	var/datum/antagonist/heretic_monster/heretic_monster = humie.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+	heretic_monster.set_owner(user)
 	atoms -= humie
 	ghouls += humie
 
@@ -59,7 +60,7 @@
 
 	for(var/mob/living/carbon/human/ghoul in ghouls)
 		if(ghoul.stat == DEAD)
-			to_chat(ghoul, "<span class='big bold'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
+			ghoul?.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 			ghouls -= ghoul
 			current_amt--
 
@@ -116,8 +117,8 @@
 	human_target.become_husk()
 	human_target.faction |= "heretics"
 	human_target.fully_replace_character_name(human_target.real_name,"Ghouled [human_target.real_name]")
-	to_chat(human_target, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(human_target, "<span class='big bold'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
+	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+	heretic_monster.set_owner(user)
 	return
 
 /datum/eldritch_knowledge/flesh_grasp/proc/check_ghouls(mob/user)
@@ -130,7 +131,7 @@
 			continue
 		var/mob/living/carbon/human/ghoul = spook
 		if(ghoul.stat == DEAD)
-			to_chat(ghoul, "<span class='big bold'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
+			ghoul?.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 			LAZYREMOVE(spooky_scaries, spook)
 			continue
 
