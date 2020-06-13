@@ -129,7 +129,7 @@
 		if(!isnull(what_if_i_have_one) || !isnull(what_if_i_had_one_but_got_used)) //we dont want to spawn overlapping influences okay?
 			number++
 			continue
-		var/obj/effect/reality_smash/RS = new(chosen_location.drop_location())
+		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location.loc)
 		smashes += RS
 
 	ReworkNetwork()
