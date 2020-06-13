@@ -559,6 +559,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/list/base_bindings = sanitize_islist(value,list())
 	for(var/key in base_bindings)
 		base_bindings[key] = base_bindings[key] & GLOB.keybindings_by_name
+	return base_bindings
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
