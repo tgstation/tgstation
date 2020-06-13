@@ -332,7 +332,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			. = TRUE
 
 		////////////////////////////ADMIN SOUNDS//////////////////
-		if("fallingSound") //Admin sound from a local file that plays when the pod lands
+		if("fallSound") //Admin sound from a local file that plays when the pod lands
 			if ((temp_pod.fallingSound) != initial(temp_pod.fallingSound))
 				temp_pod.fallingSound = initial(temp_pod.fallingSound)
 				temp_pod.fallingSoundLength = initial(temp_pod.fallingSoundLength)

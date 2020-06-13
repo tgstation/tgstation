@@ -22,15 +22,16 @@
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
-	desc = "It's a jumpsuit worn by atmospheric technicians."
+	desc = "It's a jumpsuit worn by atmospheric technicians. It has minor protection from fire."
 	name = "atmospheric technician's jumpsuit"
 	icon_state = "atmos"
 	inhand_icon_state = "atmos_suit"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 60, "acid" = 20)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt
 	name = "atmospheric technician's jumpskirt"
-	desc = "It's a jumpskirt worn by atmospheric technicians."
+	desc = "It's a jumpskirt worn by atmospheric technicians. It has minor protection from fire."
 	icon_state = "atmos_skirt"
 	inhand_icon_state = "atmos_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -54,7 +55,7 @@
 
 /obj/item/clothing/under/rank/engineering/engineer/skirt
 	name = "engineer's jumpskirt"
-	desc = "It's an orange high visibility jumpskirt worn by engineers."
+	desc = "It's an orange high visibility jumpskirt worn by engineers. It has minor radiation shielding."
 	icon_state = "engine_skirt"
 	inhand_icon_state = "engi_suit"
 	body_parts_covered = CHEST|GROIN|ARMS

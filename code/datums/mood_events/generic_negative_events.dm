@@ -96,13 +96,17 @@
 		var/mob/living/carbon/human/H = owner
 		H.dna.species.start_wagging_tail(H)
 		addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 30)
-		description =  "<span class='nicegreen'>They want to play on the table!</span>\n"
+		description = "<span class='nicegreen'>They want to play on the table!</span>\n"
 		mood_change = 2
 
-/datum/mood_event/table_headsmash
-	description = "<span class='warning'>My fucking head, that hurts...</span>"
+/datum/mood_event/table_limbsmash
+	description = "<span class='warning'>That fucking table, man that hurts...</span>\n"
 	mood_change = -3
 	timeout = 3 MINUTES
+
+/datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
+	if(banged_limb)
+		description = "<span class='warning'>My fucking [banged_limb.name], man that hurts...</span>\n"
 
 /datum/mood_event/brain_damage
   mood_change = -3

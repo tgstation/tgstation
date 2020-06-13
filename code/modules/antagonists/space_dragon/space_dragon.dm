@@ -8,9 +8,9 @@
 	var/list/datum/mind/carp = list()
 
 /datum/antagonist/space_dragon/greet()
-	to_chat(owner, "<b>Endless time and space we have moved through.  We do not remember from where we came, we do not know where we will go.  All space belongs to us.\n\
-					Space is an empty void, of which our kind is the apex predator, and there was little to rival our claim to this title.\n\
-					But now, we find intruders spread out amongst our claim, willing to fight our teeth with magics unimaginable, their dens like lights flicking in the depths of space.\n\
+	to_chat(owner, "<b>Through endless time and space we have moved. We do not remember from where we came, we do not know where we will go.  All of space belongs to us.\n\
+					It is an empty void, of which our kind was the apex predator, and there was little to rival our claim to this title.\n\
+					But now, we find intruders spread out amongst our claim, willing to fight our teeth with magics unimaginable, their dens like lights flickering in the depths of space.\n\
 					Today, we will snuff out one of those lights.</b>")
 	to_chat(owner, "<span class='boldwarning'>You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came.</span>")
 	owner.announce_objectives()
@@ -33,7 +33,7 @@
 	var/list/parts = list()
 	var/datum/objective/summon_carp/S = locate() in objectives
 	if(S.check_completion())
-		parts += "<span class='redtext big'>The [name] has succeeded!  Station space has been reclaimed by the space carp!</span>"
+		parts += "<span class='redtext big'>The [name] has succeeded! Station space has been reclaimed by the space carp!</span>"
 	parts += printplayer(owner)
 	var/objectives_complete = TRUE
 	if(objectives.len)

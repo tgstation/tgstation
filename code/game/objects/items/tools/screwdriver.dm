@@ -4,6 +4,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "screwdriver_map"
 	inhand_icon_state = "screwdriver"
+	worn_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -91,6 +92,7 @@
 	desc = "A simple powered hand drill."
 	icon_state = "drill_screw"
 	inhand_icon_state = "drill"
+	worn_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25) //done for balance reasons, making them high value for research, but harder to get
