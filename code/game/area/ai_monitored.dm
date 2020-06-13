@@ -9,7 +9,7 @@
 		for (var/obj/machinery/camera/M in src)
 			if(M.isMotion())
 				motioncameras.Add(M)
-				M.area_motion = src
+				M.set_area_motion(src)
 
 //Only need to use one camera
 

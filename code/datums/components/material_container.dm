@@ -1,5 +1,6 @@
 /*!
 	This datum should be used for handling mineral contents of machines and whatever else is supposed to hold minerals and make use of them.
+
 	Variables:
 		amount - raw amount of the mineral this container is holding, calculated by the defined value MINERAL_MATERIAL_AMOUNT=2000.
 		max_amount - max raw amount of mineral this container can hold.
@@ -72,7 +73,7 @@
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [parent].</span>")
 		return
-	if((!istype(I, /obj/item/stack) && !has_space(material_amount)) || (!has_space(MINERAL_MATERIAL_AMOUNT)))
+	if(!has_space(material_amount))
 		to_chat(user, "<span class='warning'>[parent] is full. Please remove materials from [parent] in order to insert more.</span>")
 		return
 	user_insert(I, user)
@@ -82,62 +83,46 @@
 	set waitfor = FALSE
 	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
-	if(istype(I, /obj/item/stack))
-		if(precise_insertion)
-			var/atom/current_parent = parent
-			var/obj/item/stack/S = I
-			requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
-			if(isnull(requested_amount) || (requested_amount <= 0))
-				return
-			if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
-				return
-		else
-			if((total_amount + get_item_material_amount(I)) <= max_amount)
-				requested_amount = get_item_material_amount(I)
-			else
-				requested_amount = (max_amount-total_amount)
+	if(istype(I, /obj/item/stack) && precise_insertion)
+		var/atom/current_parent = parent
+		var/obj/item/stack/S = I
+		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
+		if(isnull(requested_amount) || (requested_amount <= 0))
+			return
+		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
+			return
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return
-	var/inserted = insert_item(I, amt = requested_amount)
+	var/inserted = insert_item(I, stack_amt = requested_amount)
 	if(inserted)
 		to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
-		if(get_item_material_amount(I) - inserted)
-			user.put_in_active_hand(I)
-		if(istype(I, /obj/item/stack))
-			var/obj/item/stack/S = I
-			S.use(inserted / MINERAL_MATERIAL_AMOUNT)
-			I = S
-		else
-			qdel(I)
+		qdel(I)
 		if(after_insert)
 			after_insert.Invoke(I, last_inserted_id, inserted)
 	else if(I == active_held)
 		user.put_in_active_hand(I)
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/component/material_container/proc/insert_item(obj/item/I, amt=1, multiplier = 1)
+/datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1, stack_amt)
 	if(!I)
 		return FALSE
 
 	multiplier = CEILING(multiplier, 0.01)
 
-	if(!amt)
+	var/material_amount = get_item_material_amount(I)
+	if(!material_amount || !has_space(material_amount))
 		return FALSE
-	if(!istype(I, /obj/item/stack) && !has_space(amt))
-		return FALSE
-	if(istype(I, /obj/item/stack))
-		amt = amount2sheet(amt) * MINERAL_MATERIAL_AMOUNT
 
 	last_inserted_id = insert_item_materials(I, multiplier)
-	return amt
+	return material_amount
 
 /datum/component/material_container/proc/insert_item_materials(obj/item/I, multiplier = 1)
 	var/primary_mat
 	var/max_mat_value = 0
 	for(var/MAT in materials)
-		materials[MAT] += can_insert_amount_mat(I.custom_materials[MAT] * multiplier, MAT)
-		total_amount += can_insert_amount_mat(I.custom_materials[MAT] * multiplier, MAT)
+		materials[MAT] += I.custom_materials[MAT] * multiplier
+		total_amount += I.custom_materials[MAT] * multiplier
 		if(I.custom_materials[MAT] > max_mat_value)
 			primary_mat = MAT
 	return primary_mat

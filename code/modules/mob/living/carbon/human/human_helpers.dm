@@ -175,3 +175,22 @@
 		return TRUE
 	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
 		return TRUE
+
+/// For use formatting all of the scars this human has for saving for persistent scarring
+/mob/living/carbon/human/proc/format_scars()
+	if(!all_scars)
+		return
+	var/scars = ""
+	for(var/i in all_scars)
+		var/datum/scar/S = i
+		scars += "[S.format()];"
+	return scars
+
+/// Takes a single scar from the persistent scar loader and recreates it from the saved data
+/mob/living/carbon/human/proc/load_scar(scar_line)
+	var/list/scar_data = splittext(scar_line, "|")
+	if(LAZYLEN(scar_data) != 4)
+		return // invalid, should delete
+	var/obj/item/bodypart/BP = get_bodypart("[scar_data[SCAR_SAVE_ZONE]]")
+	var/datum/scar/S = new
+	return S.load(BP, scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]))
