@@ -118,8 +118,10 @@
   *
   * Automatically creates more reality smashes
   */
-/datum/reality_smash_tracker/proc/Generate(var/n)
-	var/number = round(max(n * 6,10),1)
+/datum/reality_smash_tracker/proc/_Generate()
+	var/targ_len = length(targets)
+	var/smash_len = length(smashes)
+	var/number = targ_len * 6 - smash_len
 
 	for(var/i in 0 to number)
 
@@ -143,9 +145,11 @@
 /datum/reality_smash_tracker/proc/AddMind(var/datum/mind/M)
 	RegisterSignal(M.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
 	targets |= M
+	_Generate()
 	for(var/X in smashes)
 		var/obj/effect/reality_smash/reality_smash = X
 		reality_smash.AddMind(M)
+
 
 /**
   * Removes a mind from the list of people that can see the reality smashes

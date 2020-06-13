@@ -33,7 +33,6 @@
 		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
 		gain_knowledge(/datum/eldritch_knowledge/living_heart)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
-	GLOB.reality_smash_track.Generate(1)
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing,src)
 	if(give_equipment)
@@ -124,6 +123,7 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
+	add_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "heretics"
 
@@ -132,6 +132,7 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
+	remove_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "heretics"
 

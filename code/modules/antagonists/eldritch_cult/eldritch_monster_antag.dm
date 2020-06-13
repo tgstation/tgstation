@@ -6,7 +6,7 @@
 	antag_moodlet = /datum/mood_event/heretics
 	job_rank = ROLE_HERETIC
 	antag_hud_type = ANTAG_HUD_HERETIC
-	antag_hud_name = "heretic"
+	antag_hud_name = "heretic_beast"
 	var/mob/living/master
 
 /datum/antagonist/heretic_monster/admin_add(datum/mind/new_owner,mob/admin)
@@ -33,3 +33,11 @@
 	owner.announce_objectives()
 	to_chat(owner, "<span class='boldannounce'>Your master is [master.real_name]</span>")
 	return
+
+/datum/antagonist/heretic_monster/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
+
+/datum/antagonist/heretic_monster/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	remove_antag_hud(antag_hud_type, antag_hud_name, owner.current)
