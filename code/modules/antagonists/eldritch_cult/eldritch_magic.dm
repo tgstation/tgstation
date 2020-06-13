@@ -97,7 +97,7 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/ash_leech
 	name = "Blood Siphon"
-	desc = "Touch spell that heals you while damaging the enemy."
+	desc = "Touch spell that heals you while damaging the enemy, has a chance to transfer wounds between you and your enemy."
 	hand_path = /obj/item/melee/touch_attack/ash_leech
 	school = "evocation"
 	charge_max = 150
@@ -130,6 +130,16 @@
 		C2.adjustBruteLoss(-20)
 	if(iscarbon(target))
 		var/mob/living/carbon/C1 = target
+		for(var/obj/item/bodypart/bodypart in C2.bodyparts)
+			for(var/datum/wound/wound in bodypart.wounds)
+				if(prob(50))
+					continue
+				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in C1.bodyparts
+				if(!target_bodypart)
+					continue
+				wound.remove_wound()
+				wound.apply_wound(target_bodypart)
+
 		C1.blood_volume -= 20
 		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
 			C2.blood_volume += 20

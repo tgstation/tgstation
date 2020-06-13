@@ -24,7 +24,7 @@
 	///What do we get out of this
 	var/list/result_atoms = list()
 	///What path is this on defaults to "Side"
-	var/route = "Side"
+	var/route = PATH_SIDE
 
 /datum/eldritch_knowledge/New()
 	. = ..()
@@ -171,12 +171,14 @@
 
 
 /datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user,list/atoms,loc)
-	message_admins("[initial(mob_to_summon.name)] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [initial(mob_to_summon.real_name)]", ROLE_HERETIC, null, ROLE_HERETIC, 50,initial(mob_to_summon))
-	if(LAZYLEN(candidates) == 0)
-		to_chat(user,"<span class='warning'>No ghost could be found...</span>")
-		return FALSE
+	//we need to spawn the mob first so that we can use it in pollCandidatesForMob, we will move it from nullspace down the code
 	var/mob/living/summoned = new mob_to_summon(loc)
+	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [summoned.name]", ROLE_HERETIC, null, FALSE, 100, summoned)
+	if(!LAZYLEN(candidates))
+		to_chat(user,"<span class='warning'>No ghost could be found...</span>")
+		qdel(summoned)
+		return FALSE
 	var/mob/dead/observer/C = pick(candidates)
 	log_game("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]), their master is [user.real_name]")
 	summoned.ghostize(FALSE)

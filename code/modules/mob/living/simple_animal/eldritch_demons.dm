@@ -266,15 +266,13 @@
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
-	. = ..()
 	if(stat == DEAD)
-		return
+		return ..()
 	var/turf/T = get_turf(src)
 	if(istype(T,/turf/open/floor/plating/rust))
 		adjustBruteLoss(-3, FALSE)
 		adjustFireLoss(-3, FALSE)
-		adjustToxLoss(-3, FALSE)
-		adjustOxyLoss(-1)
+	return ..()
 
 /mob/living/simple_animal/hostile/eldritch/ash_spirit
 	name = "Ash Man"

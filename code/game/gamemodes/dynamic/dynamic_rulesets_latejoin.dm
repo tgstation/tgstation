@@ -187,18 +187,18 @@
 
 //////////////////////////////////////////////
 //                                          //
-//           SYNDICATE TRAITORS             //
+//           HERETIC SMUGGLER          		//
 //                                          //
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler
 	name = "Heretic Smuggler"
 	antag_datum = /datum/antagonist/heretic
-	antag_flag = ROLE_CULTIST //TEMPORARY SOLUTION FIX BEFORE MERGING
-	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain")
+	antag_flag = ROLE_HERETIC
+	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain","Prisoner")
 	restricted_roles = list("AI","Cyborg")
 	required_candidates = 1
-	weight = 5
-	cost = 5
+	weight = 4
+	cost = 10
 	requirements = list(40,30,20,10,10,10,10,10,10,10)
 	repeatable = TRUE

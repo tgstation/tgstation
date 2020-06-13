@@ -150,16 +150,16 @@
 
 /datum/dynamic_ruleset/roundstart/heretics
 	name = "Heretics"
-	antag_flag = ROLE_CULTIST
+	antag_flag = ROLE_HERETIC
 	antag_datum = /datum/antagonist/heretic
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 3
-	cost = 15
-	scaling_cost = 10
-	requirements = list(50,45,45,40,35,20,20,10,10,5)
-	antag_cap = list(1,1,1,2,2,2,2,3,3,3)
+	cost = 20
+	scaling_cost = 15
+	requirements = list(50,45,45,40,35,20,20,15,10,10)
+	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
 
 
 /datum/dynamic_ruleset/roundstart/heretics/pre_execute()

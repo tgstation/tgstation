@@ -7,7 +7,7 @@
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/match)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	cost = 1
-	route = "Ash"
+	route = PATH_ASH
 
 /datum/eldritch_knowledge/spell/ashen_shift
 	name = "Ashen Shift"
@@ -16,7 +16,7 @@
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	next_knowledge = list(/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/essence,/datum/eldritch_knowledge/ashen_eyes)
-	route = "Ash"
+	route = PATH_ASH
 
 /datum/eldritch_knowledge/ashen_grasp
 	name = "Grasp of Ash"
@@ -24,7 +24,7 @@
 	desc = "Empowers your mansus grasp to throw away enemies."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/spell/ashen_shift)
-	route = "Ash"
+	route = PATH_ASH
 
 /datum/eldritch_knowledge/ashen_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -61,7 +61,7 @@
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness)
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/flesh_mark)
-	route = "Ash"
+	route = PATH_ASH
 
 /datum/eldritch_knowledge/ash_mark/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
@@ -77,7 +77,7 @@
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/screwdriver,/obj/effect/decal/cleanable/blood)
 	next_knowledge = list(/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/curse/paralysis)
 	timer = 2 MINUTES
-	route = "Ash"
+	route = PATH_ASH
 
 /datum/eldritch_knowledge/curse/blindness/curse(mob/living/chosen_mob)
 	. = ..()
@@ -94,7 +94,7 @@
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/touch/mad_touch
 	next_knowledge = list(/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/final/ash_final)
-	route = "Ash"
+	route = PATH_ASH
 
 /datum/eldritch_knowledge/ash_blade_upgrade
 	name = "Fiery blade"
@@ -103,7 +103,7 @@
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/mad_touch)
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
-	route = "Ash"
+	route = PATH_ASH
 
 /datum/eldritch_knowledge/ash_blade_upgrade/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
@@ -164,7 +164,7 @@
 	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire ,space ,cold and other enviromental hazards and become overall sturdier to all other damages. You will gain a spell that passively creates ring of fire around you as well ,as you will gain a powerful abiltiy that let's you create a wave of flames all around you."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
-	route = "Ash"
+	route = PATH_ASH
 	var/list/trait_list = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_BOMBIMMUNE)
 
 /datum/eldritch_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)

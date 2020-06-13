@@ -7,7 +7,7 @@
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/trash)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
 	cost = 1
-	route = "Rust"
+	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_fist
 	name = "Grasp of rust"
@@ -17,7 +17,7 @@
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen)
 	var/rust_force = 500
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
-	route = "Rust"
+	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -37,7 +37,7 @@
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	next_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/spell/cleave)
-	route = "Rust"
+	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_regen
 	name = "Leeching Walk"
@@ -45,7 +45,7 @@
 	gain_text = "The strength was unparallel, it was unnatural. Blacksmith was smiling."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/armor,/datum/eldritch_knowledge/essence)
-	route = "Rust"
+	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_regen/on_life(mob/user)
 	. = ..()
@@ -66,7 +66,7 @@
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/area_conversion)
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/flesh_mark)
-	route = "Rust"
+	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_mark/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
@@ -81,7 +81,7 @@
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/rust_wave)
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
-	route = "Rust"
+	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_blade_upgrade/on_eldritch_blade(target,user,proximity_flag,click_parameters)
 	. = ..()
@@ -96,7 +96,7 @@
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
 	next_knowledge = list(/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/rusty)
-	route = "Rust"
+	route = PATH_RUST
 
 /datum/eldritch_knowledge/armor
 	name = "Armorer's ritual"
@@ -122,7 +122,7 @@
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
-	route = "Rust"
+	route = PATH_RUST
 
 /datum/eldritch_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
