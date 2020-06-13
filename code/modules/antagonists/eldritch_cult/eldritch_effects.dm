@@ -108,6 +108,8 @@
   * Fixes any bugs that are caused by late Generate() or exchanging clients
   */
 /datum/reality_smash_tracker/proc/ReworkNetwork()
+	listclearnulls(mind)
+	listclearnulls(smashes)
 	for(var/mind in targets)
 		for(var/X in smashes)
 			var/obj/effect/reality_smash/reality_smash = X

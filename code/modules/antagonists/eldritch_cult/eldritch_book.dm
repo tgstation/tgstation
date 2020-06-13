@@ -66,7 +66,7 @@
 		qdel(target)
 
 /obj/item/forbidden_book/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
-	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
+	if(!IS_HERETIC(user))
 		return FALSE
 	last_user = user
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
