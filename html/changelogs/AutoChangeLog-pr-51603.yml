@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Unrestricted directional access settings will now show correct directions in the related UIs."
+  - bugfix: "Theoretical radiuses will now show properly in the Tachyon-Doppler Array UI."

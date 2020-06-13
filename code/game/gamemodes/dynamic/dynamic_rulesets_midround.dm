@@ -244,9 +244,10 @@
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/families/acceptable(population = 0, threat_level = 0)
+	. = ..()
 	if(GLOB.deaths_during_shift > round(mode.roundstart_pop_ready / 2))
 		return FALSE
-	return ..()
+
 
 /datum/dynamic_ruleset/midround/families/ready(forced = FALSE)
 	if (required_candidates > living_players.len)
