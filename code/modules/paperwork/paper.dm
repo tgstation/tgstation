@@ -4,18 +4,18 @@
  *
  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
  */
+#define MAX_PAPER_LENGTH 5000
+#define MAX_PAPER_STAMPS 30		// Too low?
+#define MAX_PAPER_STAMPS_OVERLAYS 4
+#define MODE_READING 0
+#define MODE_WRITING 1
+#define MODE_STAMPING 2
 /**
  ** Paper is now using markdown (like in github pull notes) for ALL rendering
  ** so we do loose a bit of functionality but we gain in easy of use of
  ** paper and getting rid of that crashing bug
  **/
 /obj/item/paper
-	var/const/MAX_PAPER_LENGTH = 5000
-	var/const/MAX_PAPER_STAMPS = 30		// Too low?
-	var/const/MAX_PAPER_STAMPS_OVERLAYS = 4
-	var/const/MODE_READING = 0
-	var/const/MODE_WRITING = 1
-	var/const/MODE_STAMPING = 2
 	var/static/regex/sign_regex = regex("%s(?:ign)?(?=\\s|$)", "igm")
 	name = "paper"
 	gender = NEUTER
@@ -151,10 +151,11 @@
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
 
-/// ONLY USED FOR APRIL FOOLS
 
+/// ONLY USED FOR APRIL FOOLS
 /obj/item/paper/proc/reset_spamflag()
 	spam_flag = FALSE
+
 
 /obj/item/paper/attack_self(mob/user)
 	if(edit_mode != MODE_READING)
@@ -194,7 +195,7 @@
 			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
 		if(edit_mode != MODE_READING)
-			to_chat(user, "<span class='warning'>[edit_usr.real_name] is already working on this sheet!</span>")
+			to_chat(user, "<span class='warning'>[edit_usr] is already working on this sheet!</span>")
 			return
 
 		edit_mode = MODE_WRITING
@@ -216,10 +217,9 @@
 	else if(istype(P, /obj/item/stamp))
 
 		if(edit_mode != MODE_READING)
-			to_chat(user, "<span class='warning'>[edit_usr.real_name] is already working on this sheet!</span>")
+			to_chat(user, "<span class='warning'>[edit_usr] is already working on this sheet!</span>")
 			return
 
-				/// Assume we are just reading it)
 		edit_mode = MODE_STAMPING	// we are read only becausse the sheet is full
 		edit_usr = user
 		current_stamp = P
@@ -245,12 +245,13 @@
 		fire_act()
 	else
 		if(edit_mode != MODE_READING)
-			to_chat(user, "You look at the sheet while [edit_usr.real_name] edits it")
+			to_chat(user, "You look at the sheet while [edit_usr] edits it")
 		else
 			edit_mode = MODE_READING
 		ui_interact(user)	/// The other ui will be created with just read mode outside of this
 
 	. = ..()
+
 
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
 	..()
@@ -273,6 +274,7 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
+
 /obj/item/paper/ui_close(mob/user)
 	/// close the editing window and change the mode
 	if(edit_usr != null && user == edit_usr)
@@ -283,15 +285,18 @@
 
 	. = ..()
 
+
 /obj/item/paper/proc/ui_force_close()
 	var/datum/tgui/ui = SStgui.try_update_ui(usr, src, "main");
 	if(ui)
 		ui.close()
 
+
 /obj/item/paper/proc/ui_update()
 	var/datum/tgui/ui = SStgui.try_update_ui(usr, src, "main");
 	if(ui)
 		ui.update()
+
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
@@ -315,9 +320,9 @@
 	// stamping info for..stamping
 	data["stamp_class"] = stamp_class
 	data["field_counter"] = field_counter
-	// form fields, they are filled out
 
 	return data
+
 
 /obj/item/paper/ui_act(action, params)
 	if(..())
@@ -369,7 +374,7 @@
 			else
 				/// Next find the sign marker and replace it with somones sig
 				/// All other processing should of been done in the js module
-				in_paper = sign_regex.Replace(in_paper, "<font face=\"[SIGNFONT]\"><i>[edit_usr.real_name]</i></font>")
+				in_paper = sign_regex.Replace(in_paper, "<font face=\"[SIGNFONT]\"><i>[edit_usr]</i></font>")
 				/// Do the same with form fields
 				log_paper("[key_name(edit_usr)] writing to paper [name]")
 				if(info != in_paper) // this a good idea?
@@ -378,7 +383,7 @@
 					/// Switch ui to reading mode
 				if(fields && fields.len > 0)
 					for(var/key in fields)	/// In case somone %sign in a field
-						form_fields[key] = sign_regex.Replace(fields[key], "<font face=\"[SIGNFONT]\"><i>[edit_usr.real_name]</i></font>")
+						form_fields[key] = sign_regex.Replace(fields[key], "<font face=\"[SIGNFONT]\"><i>[edit_usr]</i></font>")
 
 			edit_mode = MODE_READING
 			edit_usr = null
@@ -386,7 +391,6 @@
 			update_icon()
 
 			. = TRUE
-
 
 
 /*
@@ -420,3 +424,10 @@
 
 /obj/item/paper/crumpled/muddy
 	icon_state = "scrap_mud"
+
+#undef MAX_PAPER_LENGTH
+#undef MAX_PAPER_STAMPS
+#undef MAX_PAPER_STAMPS_OVERLAYS
+#undef MODE_READING
+#undef MODE_WRITING
+#undef MODE_STAMPING
