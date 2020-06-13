@@ -130,7 +130,6 @@
 		var/obj/effect/reality_smash/what_if_i_have_one = locate() in range(1, chosen_location)
 		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
-			number++
 			continue
 		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location.loc)
 		smashes += RS
