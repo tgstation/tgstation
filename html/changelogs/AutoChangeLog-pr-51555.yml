@@ -1,6 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Medbot interaction menus are fixed"
-  - bugfix: "You can no longer queue multiple medbot flips at once"
-  - soundadd: "Medbots now have lots more to say, especially if you knock them over!"
