@@ -14,7 +14,7 @@ export const NtosNetDownloader = (props, context) => {
     hackedavailable,
   } = data;
   return (
-    <NtosWindow resizable PC_device_theme={PC_device_theme}>
+    <NtosWindow resizable theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         {!!error && (
           <NoticeBox>

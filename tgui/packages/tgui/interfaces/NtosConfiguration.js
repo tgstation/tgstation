@@ -7,7 +7,7 @@ export const NtosConfiguration = (props, context) => {
   const { act, data } = useBackend(context);
 
   const {
-    device_theme,
+    PC_device_theme,
     power_usage,
     battery_exists,
     battery = {},
@@ -17,7 +17,7 @@ export const NtosConfiguration = (props, context) => {
   } = data;
 
   return (
-    <NtosWindow resizable theme={device_theme}>
+    <NtosWindow resizable theme={PC_device_theme}>
       <NtosWindow.Content scrollable>
         <Section
           title="Power Supply"
