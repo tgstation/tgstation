@@ -5,7 +5,6 @@ SUBSYSTEM_DEF(air)
 	wait = 5
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	can_fire = FALSE
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
