@@ -6,4 +6,5 @@
 	nodamage = FALSE
 	flag = "bullet"
 	hitsound_wall = "ricochet"
+	sharpness = TRUE
 	impact_effect_type = /obj/effect/temp_visual/impact_effect

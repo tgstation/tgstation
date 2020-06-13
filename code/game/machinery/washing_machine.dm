@@ -219,6 +219,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			righthand_file = initial(target_type.righthand_file)
 			inhand_icon_state = initial(target_type.inhand_icon_state)
 			worn_icon = initial(target_type.worn_icon)
+			worn_icon_state = initial(target_type.worn_icon_state)
 			inhand_x_dimension = initial(target_type.inhand_x_dimension)
 			inhand_y_dimension = initial(target_type.inhand_y_dimension)
 			name = initial(target_type.name)

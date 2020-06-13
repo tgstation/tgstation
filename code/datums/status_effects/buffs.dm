@@ -252,6 +252,10 @@
 	owner.adjustBruteLoss(-10, FALSE)
 	owner.adjustFireLoss(-5, FALSE)
 	owner.adjustOxyLoss(-10)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	QDEL_LIST(C.all_scars)
 
 /obj/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"

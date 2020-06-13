@@ -38,6 +38,8 @@
 	var/escape_in_progress = FALSE
 	var/message_cooldown
 	var/breakout_time = 300
+	///Cryo will continue to treat people with 0 damage but existing wounds, but will sound off when damage healing is done in case doctors want to directly treat the wounds instead
+	var/treating_wounds = FALSE
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 
@@ -204,15 +206,27 @@
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
 	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
-		on = FALSE
-		update_icon()
-		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-		var/msg = "Patient fully restored."
-		if(autoeject) // Eject if configured.
-			msg += " Auto ejecting patient now."
-			open_machine()
-		radio.talk_into(src, msg, radio_channel)
-		return
+		if(iscarbon(mob_occupant))
+			var/mob/living/carbon/C = mob_occupant
+			if(C.all_wounds)
+				if(!treating_wounds) // if we have wounds and haven't already alerted the doctors we're only dealing with the wounds, let them know
+					treating_wounds = TRUE
+					playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+					var/msg = "Patient vitals fully recovered, continuing automated wound treatment."
+					radio.talk_into(src, msg, radio_channel)
+			else // otherwise if we were only treating wounds and now we don't have any, turn off treating_wounds so we can boot 'em out
+				treating_wounds = FALSE
+
+		if(!treating_wounds)
+			on = FALSE
+			update_icon()
+			playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+			var/msg = "Patient fully restored."
+			if(autoeject) // Eject if configured.
+				msg += " Auto ejecting patient now."
+				open_machine()
+			radio.talk_into(src, msg, radio_channel)
+			return
 
 	var/datum/gas_mixture/air1 = airs[1]
 
@@ -285,6 +299,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
+	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
 		..(user)
