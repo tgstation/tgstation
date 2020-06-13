@@ -335,6 +335,70 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	strip_delay = 80
 
+//monkey sentience caps
+
+/obj/item/clothing/head/helmet/monkey_sentience
+	name = "monkey mind magnification helmet"
+	desc = "An expensive tool to boost the intelligence on monkeys to sentient levels. You see several warning labels..."
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_cover = HEADCOVERSEYES
+	armor = list("melee" = 35, "bullet" = 25, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	icon_state = "skull"
+	inhand_icon_state = "skull"
+	strip_delay = 100
+	var/magnification = FALSE ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please))
+
+/obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
+	. = ..()
+	. += "<span class='boldwarning'>---WARNING: REMOVAL OF HELMET ON SUBJECT MAY LEAD TO:---</span>"
+	. += "<span class='warning'>BLOOD RAGE</span>"
+	. += "<span class='warning'>BRAIN DEATH</span>"
+	. += "<span class='warning'>PRIMAL GENE ACTIVATION</span>"
+	. += "<span class='warning'>GENETIC MAKEUP MASS SUSCEPTIBILITY</span>"
+	. += "<span class='boldnotice'>Ask your CMO if mind magnification is right for you.</span>"
+
+/obj/item/clothing/head/helmet/monkey_sentience/equipped(mob/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_HEAD)
+		return
+	if(!ismonkey(user))
+		var/mob/living/something = user
+		to_chat(something, "<span class='boldnotice'>You feel a stabbing pain in the back of your head for a moment.</span>")
+		something.apply_damage(5,BRUTE,BODY_ZONE_HEAD,FALSE,FALSE,FALSE) //notably: no damage resist (it's in your helmet), no damage spread (it's in your helmet)
+		return
+	magnification = TRUE //this polls ghosts
+	var/removed_candidate = user.ckey //don't poll the guy you just ghosted
+	if(user.ckey)
+		to_chat(user, "<span class='userdanger'>You feel a stabbing pain in the back of your head for a moment, and a new entity overwrites your existence in this body.</span>")
+		user.ghostize(FALSE)
+
+	var/mob/living/carbon/monkey/monkey = user
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, monkey, POLL_IGNORE_SENTIENCE_POTION) - removed_candidate
+	if(!candidates.len)
+
+	monkey.key = pick(candidates)
+
+/obj/item/clothing/head/helmet/monkey_sentience/dropped(mob/user)
+	. = ..()
+	if(!magnification)
+		return
+	var/mob/living/carbon/monkey/monkey = user
+	if(monkey.ckey)
+		to_chat(monkey, "<span class='userdanger'>You feel your flicker of sentience ripped away from you, as everything becomes dim...</span>")
+		monkey.ghostize(FALSE)
+	if(prob(10))
+		switch(rand(1,4))
+			if(1) //blood rage
+				monkey.aggressive = TRUE
+			if(2) //brain death (death)
+				monkey.death()
+			if(3) //primal gene (gorilla)
+				monkey.gorillize()
+			if(4) //genetic mass susceptibility (gib)
+				monkey.gib()
+	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
+	new /obj/effect/decal/cleanable/ash/crematorium(src.loc) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
+	qdel(src)
 
 //LightToggle
 
