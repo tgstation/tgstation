@@ -58,7 +58,8 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
-	add_sensors()
+	if(!ispAI(src)) //pAIs need to purchase their HUDs
+		add_sensors()
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
