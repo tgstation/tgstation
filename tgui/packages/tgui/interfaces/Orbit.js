@@ -102,6 +102,21 @@ export const Orbit = (props, context) => {
     return compareString(a[0], b[0]);
   });
 
+  const orbitMostRelevant = searchText => {
+    for (const source of [
+      sortedAntagonists.map(([_, antags]) => antags),
+      alive, ghosts, dead, npcs, misc,
+    ]) {
+      const member = source
+        .filter(searchFor(searchText))
+        .sort(compareNumberedText)[0];
+      if (member !== undefined) {
+        act("orbit", { name: member.name });
+        break;
+      }
+    }
+  };
+
   return (
     <Window>
       <Window.Content>
@@ -109,7 +124,8 @@ export const Orbit = (props, context) => {
           <Input
             fluid
             value={searchText}
-            onInput={(_, value) => setSearchText(value)} />
+            onInput={(_, value) => setSearchText(value)}
+            onEnter={(_, value) => orbitMostRelevant(value)} />
         </Section>
 
         {antagonists.length > 0 && (
