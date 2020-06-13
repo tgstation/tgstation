@@ -123,7 +123,7 @@
 		if (QDELETED(head))
 			return
 
-		playsound(src, 'sound/weapons/bladeslice.ogg', 100, TRUE)
+		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
 			log_combat(user, H, "beheaded", src)

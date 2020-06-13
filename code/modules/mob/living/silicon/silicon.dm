@@ -33,8 +33,9 @@
 	var/ioncheck[1]
 	var/hackedcheck[1]
 	var/devillawcheck[5]
-
-	var/sensors_on = 0
+	
+	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
+	var/sensors_on = TRUE
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
@@ -57,6 +58,7 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
+	add_sensors()
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -333,6 +335,12 @@
 	usr << browse(list, "window=laws")
 
 /mob/living/silicon/proc/ai_roster()
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
+
 	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 387, 420)
 	popup.set_content(GLOB.data_core.get_manifest_html())
 	popup.open()

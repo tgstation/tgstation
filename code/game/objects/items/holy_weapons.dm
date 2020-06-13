@@ -201,6 +201,7 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
+	wound_bonus = -10
 	var/reskinned = FALSE
 	var/chaplain_spawnable = TRUE
 
@@ -359,6 +360,7 @@
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	inhand_icon_state = "katana"
+	worn_icon_state = "katana"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 
 /obj/item/nullrod/claymore/multiverse
@@ -602,6 +604,8 @@
 	item_flags = ABSTRACT
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
+	wound_bonus = -20
+	bare_wound_bonus = 25
 
 /obj/item/nullrod/armblade/Initialize()
 	. = ..()

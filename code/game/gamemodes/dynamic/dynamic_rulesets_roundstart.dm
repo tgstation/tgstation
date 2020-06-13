@@ -450,6 +450,48 @@
 		SSticker.mode_result = "loss - rev heads killed"
 		SSticker.news_report = REVS_LOSE
 
+//////////////////////////////////////////////
+//                                          //
+//                 FAMILIES                 //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/families
+	name = "Families"
+	persistent = TRUE
+	antag_flag = ROLE_FAMILIES
+	protected_roles = list("Prisoner", "Head of Personnel")
+	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	required_candidates = 6 // gotta have 'em ALL
+	weight = 2
+	cost = 30
+	requirements = list(101,101,101,101,101,70,40,10,10,10)
+	flags = HIGHLANDER_RULESET
+	minimum_players = 36
+	antag_cap = list(6,6,6,6,6,6,6,6,6,6)
+	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
+	var/datum/gang_handler/handler
+
+/datum/dynamic_ruleset/roundstart/families/pre_execute()
+	..()
+	handler = new /datum/gang_handler(candidates,restricted_roles)
+	handler.gangs_to_generate = (antag_cap[indice_pop] / 2)
+	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
+	return handler.pre_setup_analogue()
+
+/datum/dynamic_ruleset/roundstart/families/execute()
+	return handler.post_setup_analogue(TRUE)
+
+/datum/dynamic_ruleset/roundstart/families/clean_up()
+	QDEL_NULL(handler)
+	..()
+
+/datum/dynamic_ruleset/roundstart/families/rule_process()
+	return handler.process_analogue()
+
+/datum/dynamic_ruleset/roundstart/families/round_result()
+	return handler.set_round_result_analogue()
+
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
 
 //////////////////////////////////////////////

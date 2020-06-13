@@ -4,6 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "firing_pin"
 	inhand_icon_state = "pen"
+	worn_icon_state = "pen"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("poked")
