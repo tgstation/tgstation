@@ -483,6 +483,7 @@
 	ears = /obj/item/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
+	toggle_helmet = FALSE // see the whites of their eyes
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/card/id/away
