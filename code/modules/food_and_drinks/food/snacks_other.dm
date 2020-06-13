@@ -462,6 +462,7 @@
 	throwforce = 15
 	block_chance = 55
 	armour_penetration = 80
+	wound_bonus = -70
 	attack_verb = list("slapped", "slathered")
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
@@ -478,7 +479,7 @@
 	///Stores the time set for the next handle_reagents
 	var/next_succ = 0
 
-	//makes snacks actually wearable as masks and still edible the old fashioned way.
+	//makes snacks actually wearable as masks and still edible the old-fashioned way.
 /obj/item/reagent_containers/food/snacks/chewable/proc/handle_reagents()
 	if(reagents.total_volume)
 		if(iscarbon(loc))
@@ -517,7 +518,7 @@
 	desc = "A delicious lollipop. Makes for a great Valentine's present."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "lollipop_stick"
-	item_state = "lollipop_stick"
+	inhand_icon_state = "lollipop_stick"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
 	var/mutable_appearance/head
 	var/headcolor = rgb(0, 0, 0)
@@ -559,7 +560,7 @@
 	name = "bubblegum"
 	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."
 	icon_state = "bubblegum"
-	item_state = "bubblegum"
+	inhand_icon_state = "bubblegum"
 	color = "#E48AB5" // craftable custom gums someday?
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
@@ -792,7 +793,7 @@
 
 /obj/item/reagent_containers/food/snacks/crab_rangoon
 	name = "Crab Rangoon"
-	desc = "Has many names, like crab puffs, cheese wontons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
+	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
 	icon_state = "crabrangoon"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	filling_color = "#f2efdc"

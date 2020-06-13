@@ -166,6 +166,11 @@
 	toxpwr = 2
 	taste_description = "fish"
 
+/datum/reagent/toxin/carpotoxin/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	for(var/i in M.all_scars)
+		qdel(i)
+
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
@@ -280,7 +285,8 @@
 
 	//Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!mytray)
+		return
 	if(chems.has_reagent(type, 1))
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 0.5))
 		mytray.adjustWeeds(-rand(1,2))
@@ -293,9 +299,10 @@
 
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
+	if(!mytray)
+		return
 	if(chems.has_reagent(type, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 0.5))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 1))
 		mytray.adjustPests(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -303,6 +310,20 @@
 	if(M.mob_biotypes & MOB_BUG)
 		var/damage = min(round(0.4*reac_volume, 0.1),10)
 		M.adjustToxLoss(damage)
+
+/datum/reagent/toxin/pestkiller/organic
+	name = "Natural Pest Killer"
+	description = "An organic mixture used to kill pests, with less of the side effects. Do not ingest!"
+	color = "#4b2400" // rgb: 75, 0, 75
+	toxpwr = 1
+
+//Pest Spray
+/datum/reagent/toxin/pestkiller/organic/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	if(!mytray)
+		return
+	if(chems.has_reagent(type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 0.1))
+		mytray.adjustPests(-rand(1,2))
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -733,21 +754,12 @@
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
 	name = "Heparin"
-	description = "A powerful anticoagulant. Victims will bleed uncontrollably and suffer scaling bruising."
+	description = "A powerful anticoagulant. All open cut wounds on the victim will open up and bleed much faster"
 	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#C8C8C8" //RGB: 200, 200, 200
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
-
-/datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.bleed_rate = min(H.bleed_rate + 2, 8)
-		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
-		. = 1
-	return ..() || .
-
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"
@@ -930,7 +942,7 @@
 		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
 		if(bp)
-			playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+			playsound(M, get_sfx("desecration"), 50, TRUE, -1)
 			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
 			M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
 			bp.receive_damage(0, 0, 200)

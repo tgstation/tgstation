@@ -37,10 +37,27 @@
 		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/firstaid/emergency
+	icon_state = "medbriefcase"
+	name = "emergency first-aid kit"
+	desc = "A very simple first aid kit meant to secure and stabilize serious wounds for later treatment."
+
+/obj/item/storage/firstaid/emergency/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/healthanalyzer/wound = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/suture/emergency = 1,
+		/obj/item/stack/medical/ointment = 1,
+		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
+		/obj/item/storage/pill_bottle/iron = 1)
+	generate_items_inside(items_inside,src)
+
 /obj/item/storage/firstaid/medical
 	name = "medical aid kit"
 	icon_state = "firstaid_surgery"
-	item_state = "firstaid"
+	inhand_icon_state = "firstaid"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
 
 /obj/item/storage/firstaid/medical/ComponentInitialize()
@@ -76,6 +93,7 @@
 		/obj/item/surgical_drapes, //for true paramedics
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
+		/obj/item/bonesetter,
 		/obj/item/surgicaldrill,
 		/obj/item/retractor,
 		/obj/item/cautery,
@@ -102,10 +120,10 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
-		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/reagent_containers/hypospray/medipen/ekit = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
@@ -134,7 +152,7 @@
 	name = "burn treatment kit"
 	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
 	icon_state = "ointment"
-	item_state = "firstaid-ointment"
+	inhand_icon_state = "firstaid-ointment"
 	damagetype_healed = BURN
 
 /obj/item/storage/firstaid/fire/suicide_act(mob/living/carbon/user)
@@ -159,7 +177,7 @@
 	name = "toxin treatment kit"
 	desc = "Used to treat toxic blood content and radiation poisoning."
 	icon_state = "antitoxin"
-	item_state = "firstaid-toxin"
+	inhand_icon_state = "firstaid-toxin"
 	damagetype_healed = TOX
 
 /obj/item/storage/firstaid/toxin/suicide_act(mob/living/carbon/user)
@@ -184,7 +202,7 @@
 	name = "oxygen deprivation treatment kit"
 	desc = "A box full of oxygen goodies."
 	icon_state = "o2"
-	item_state = "firstaid-o2"
+	inhand_icon_state = "firstaid-o2"
 	damagetype_healed = OXY
 
 /obj/item/storage/firstaid/o2/suicide_act(mob/living/carbon/user)
@@ -209,7 +227,7 @@
 	name = "brute trauma treatment kit"
 	desc = "A first aid kit for when you get toolboxed."
 	icon_state = "brute"
-	item_state = "firstaid-brute"
+	inhand_icon_state = "firstaid-brute"
 	damagetype_healed = BRUTE
 
 /obj/item/storage/firstaid/brute/suicide_act(mob/living/carbon/user)
@@ -234,8 +252,9 @@
 	name = "advanced first aid kit"
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "radfirstaid"
-	item_state = "firstaid-rad"
+	inhand_icon_state = "firstaid-rad"
 	custom_premium_price = 1100
+	damagetype_healed = "all"
 
 /obj/item/storage/firstaid/advanced/PopulateContents()
 	if(empty)
@@ -251,6 +270,7 @@
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "bezerk"
+	damagetype_healed = "all"
 
 /obj/item/storage/firstaid/tactical/ComponentInitialize()
 	. = ..()
@@ -304,7 +324,7 @@
 	desc = "It's an airtight container for storing medication."
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
-	item_state = "contsolid"
+	inhand_icon_state = "contsolid"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL

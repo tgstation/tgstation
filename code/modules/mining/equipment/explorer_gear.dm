@@ -3,7 +3,7 @@
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
 	icon_state = "explorer"
-	item_state = "explorer"
+	inhand_icon_state = "explorer"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
@@ -22,7 +22,7 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50, "wound" = 10)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/hooded/explorer/Initialize()
@@ -41,7 +41,7 @@
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 20, "acid" = 40)
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 20, "acid" = 40, "wound" = 5)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
@@ -59,7 +59,7 @@
 	name = "H.E.C.K. suit"
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
-	item_state = "hostile_env"
+	inhand_icon_state = "hostile_env"
 	clothing_flags = THICKMATERIAL //not spaceproof
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
@@ -85,7 +85,7 @@
 	name = "H.E.C.K. helmet"
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
-	item_state = "hostile_env"
+	inhand_icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL // no space protection

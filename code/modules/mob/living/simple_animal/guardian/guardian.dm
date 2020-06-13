@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			attack_verb_simple = "bite"
 			attack_sound = 'sound/weapons/bite.ogg'
 			recolorentiresprite = TRUE
-	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isnt gone for some reason
+	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isn't gone for some reason
 		cooloverlay = mutable_appearance(icon, theme)
 		add_overlay(cooloverlay)
 
@@ -499,10 +499,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 ////////Creation
 
 /obj/item/guardiancreator
-	name = "deck of tarot cards"
+	name = "enchanted deck of tarot cards"
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "deck_syndicate_full"
+	icon_state = "deck_tarot_full"
 	var/used = FALSE
 	var/theme = "magic"
 	var/mob_name = "Guardian Spirit"

@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "Cryotubes can no longer reach fusion level heat"
-  - rscadd: "Cryotubes breakdown if the heat inside is higher than 2000 K"
-  - rscadd: "Cryotubes extinguish the mob if on fire"

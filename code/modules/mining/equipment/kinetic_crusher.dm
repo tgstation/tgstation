@@ -2,7 +2,7 @@
 /obj/item/kinetic_crusher
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
-	item_state = "crusher0"
+	inhand_icon_state = "crusher0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "proto-kinetic crusher"
@@ -81,6 +81,8 @@
 		user.drop_all_held_items()
 		return
 	var/datum/status_effect/crusher_damage/C = target.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+	if(!C)
+		C = target.apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	var/target_health = target.health
 	..()
 	for(var/t in trophies)
@@ -117,6 +119,8 @@
 		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
 			return
 		var/datum/status_effect/crusher_damage/C = L.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+		if(!C)
+			C = L.apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 		var/target_health = L.health
 		for(var/t in trophies)
 			var/obj/item/crusher_trophy/T = t
@@ -156,7 +160,7 @@
 		set_light(0)
 
 /obj/item/kinetic_crusher/update_icon_state()
-	item_state = "crusher[wielded]" // this is not icon_state and not supported by 2hcomponent
+	inhand_icon_state = "crusher[wielded]" // this is not icon_state and not supported by 2hcomponent
 
 /obj/item/kinetic_crusher/update_overlays()
 	. = ..()
@@ -436,11 +440,6 @@
 	return "mark detonation to create a barrier you can pass"
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
-	var/turf/current_location = get_turf(user)
-	var/area/current_area = current_location.loc
-	if(current_area.noteleport)
-		to_chat(user, "[src] fizzles uselessly.")
-		return
 	var/turf/T = get_turf(user)
 	new /obj/effect/temp_visual/hierophant/wall/crusher(T, user) //a wall only you can pass!
 	var/turf/otherT = get_step(T, turn(user.dir, 90))
@@ -452,27 +451,3 @@
 
 /obj/effect/temp_visual/hierophant/wall/crusher
 	duration = 75
-
-/obj/item/crusher_trophy/king_goat
-	name = "king goat hoof"
-	desc = "A hoof from the king of all goats, it still glows with a fraction of its original power... Suitable as a trophy for a kinetic crusher."
-	icon_state = "goat_hoof" //needs a better sprite but I cant sprite .
-	denied_type = /obj/item/crusher_trophy/king_goat
-
-/obj/item/crusher_trophy/king_goat/effect_desc()
-	return "you also passively recharge markers 5x as fast while this is equipped and do a decent amount of damage at the cost of dulling the blade"
-
-/obj/item/crusher_trophy/king_goat/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
-	marker.damage = 10 //in my testing only does damage to simple mobs so should be fine to have it high
-
-/obj/item/crusher_trophy/king_goat/add_to(obj/item/kinetic_crusher/H, mob/living/user)
-	. = ..()
-	if(.)
-		H.charge_time = 3
-		H.AddComponent(/datum/component/two_handed, force_wielded=5)
-
-/obj/item/crusher_trophy/king_goat/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
-	. = ..()
-	if(.)
-		H.charge_time = 15
-		H.AddComponent(/datum/component/two_handed, force_wielded=20)

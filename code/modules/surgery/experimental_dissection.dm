@@ -1,11 +1,7 @@
-#define BASE_HUMAN_REWARD 500
-#define EXPDIS_FAIL_MSG "<span class='notice'>You dissect [target], but do not find anything particularly interesting.</span>"
-#define PUBLIC_TECHWEB_GAIN 0.6 //how many research points go directly into the main pool
-#define PRIVATE_TECHWEB_GAIN (1 - PUBLIC_TECHWEB_GAIN) //how many research points go directly into the main pool
 
 /datum/surgery/advanced/experimental_dissection
 	name = "Dissection"
-	desc = "A surgical procedure which analyzes the biology of a corpse, and automatically adds new findings to the research database."
+	desc = "A surgical procedure which analyzes the biology of a corpse, and greatly increases one's medical knowledge."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,
@@ -31,33 +27,33 @@
 	time = 125
 	silicons_obey_prob = TRUE
 	repeatable = TRUE
-	experience_given = 0 //experience recieved scales with what's being dissected + which step you're doing.
+	experience_given = 0 //experience received scales with what's being dissected + which step you're doing.
 
 /datum/surgery_step/dissection/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] starts dissecting [target].</span>", "<span class='notice'>You start dissecting [target].</span>")
 
 /datum/surgery_step/dissection/proc/check_value(mob/living/target, datum/surgery/advanced/experimental_dissection/ED)
-	var/cost = BASE_HUMAN_REWARD
+	var/cost = MEDICAL_SKILL_DISSECT
 	var/multi_surgery_adjust = 0
 
 	//determine bonus applied
 	if(isalienroyal(target))
-		cost = (BASE_HUMAN_REWARD*10)
+		cost = (MEDICAL_SKILL_DISSECT*5)
 	else if(isalienadult(target))
-		cost = (BASE_HUMAN_REWARD*5)
+		cost = (MEDICAL_SKILL_DISSECT*3)
 	else if(ismonkey(target))
-		cost = (BASE_HUMAN_REWARD*0.5)
+		cost = (MEDICAL_SKILL_DISSECT*0.5)
 	else if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(H?.dna?.species)
 			if(isabductor(H))
-				cost = (BASE_HUMAN_REWARD*4)
+				cost = (MEDICAL_SKILL_DISSECT*3)
 			else if(isgolem(H) || iszombie(H))
-				cost = (BASE_HUMAN_REWARD*3)
+				cost = (MEDICAL_SKILL_DISSECT*2.5)
 			else if(isjellyperson(H) || ispodperson(H))
-				cost = (BASE_HUMAN_REWARD*2)
+				cost = (MEDICAL_SKILL_DISSECT*1.5)
 	else
-		cost = (BASE_HUMAN_REWARD * 0.6)
+		cost = (MEDICAL_SKILL_DISSECT * 0.6)
 
 
 
@@ -74,56 +70,34 @@
 	return (cost-multi_surgery_adjust)
 
 /datum/surgery_step/dissection/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/points_earned = check_value(target, surgery)
-	user.visible_message("<span class='notice'>[user] dissects [target], discovering [points_earned] point\s of data!</span>", "<span class='notice'>You dissect [target], finding [points_earned] point\s worth of discoveries, you also write a few notes.</span>")
-
-	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points_earned*PUBLIC_TECHWEB_GAIN))
-	var/obj/item/research_notes/the_dossier =new /obj/item/research_notes(user.loc, points_earned*PRIVATE_TECHWEB_GAIN, "biology")
-	if(!user.put_in_hands(the_dossier) && istype(user.get_inactive_held_item(), /obj/item/research_notes))
-		var/obj/item/research_notes/hand_dossier = user.get_inactive_held_item()
-		hand_dossier.merge(the_dossier)
-
+	user.visible_message("<span class='notice'>[user] dissects [target], enhancing their medical knowledge!", "<span class='notice'>You dissect [target] and receive some healing experience!</span>")
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
+	target.apply_damage(80, BRUTE, L, wound_bonus=CANT_WOUND)
 	ADD_TRAIT(target, TRAIT_DISSECTED, "[surgery.name]")
 	repeatable = FALSE
-	experience_given = max(points_earned/(BASE_HUMAN_REWARD/MEDICAL_SKILL_MEDIUM),1)
+	experience_given = check_value(target, surgery)
 	return ..()
 
 /datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/points_earned = round(check_value(target, surgery) * 0.01)
-	user.visible_message("<span class='notice'>[user] dissects [target]!</span>", EXPDIS_FAIL_MSG)
-
-	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points_earned*PUBLIC_TECHWEB_GAIN))
-	var/obj/item/research_notes/the_dossier =new /obj/item/research_notes(user.loc, points_earned*PRIVATE_TECHWEB_GAIN, "biology")
-	if(!user.put_in_hands(the_dossier) && istype(user.get_inactive_held_item(), /obj/item/research_notes))
-		var/obj/item/research_notes/hand_dossier = user.get_inactive_held_item()
-		hand_dossier.merge(the_dossier)
-
+	user.visible_message("<span class='notice'>[user] dissects [target]!</span>", "<span class='notice'>You attempt to dissect [target], but do not find anything particularly interesting.</span>")
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
+	target.apply_damage(80, BRUTE, L, wound_bonus=CANT_WOUND)
 	return TRUE
 
 /datum/surgery/advanced/experimental_dissection/adv
 	name = "Thorough Dissection"
-	value_multiplier = 2
+	value_multiplier = 1.5
 	replaced_by = /datum/surgery/advanced/experimental_dissection/exp
 	requires_tech = TRUE
 
 /datum/surgery/advanced/experimental_dissection/exp
 	name = "Experimental Dissection"
-	value_multiplier = 5
+	value_multiplier = 2
 	replaced_by = /datum/surgery/advanced/experimental_dissection/alien
 	requires_tech = TRUE
 
 /datum/surgery/advanced/experimental_dissection/alien
 	name = "Extraterrestrial Dissection"
-	value_multiplier = 10
+	value_multiplier = 5
 	requires_tech = TRUE
 	replaced_by = null
-
-
-#undef BASE_HUMAN_REWARD
-#undef EXPDIS_FAIL_MSG
-#undef PUBLIC_TECHWEB_GAIN
-#undef PRIVATE_TECHWEB_GAIN

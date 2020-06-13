@@ -74,7 +74,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_markings" = "None")
 	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
-	var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
 	var/phobia = "spiders"
 
 	var/list/custom_names = list()
@@ -102,10 +101,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/ambientocclusion = TRUE
+	///Should we automatically fit the viewport?
 	var/auto_fit_viewport = FALSE
+	///Should we be in the widescreen mode set by the config?
 	var/widescreenpref = TRUE
-
+	///What size should pixels be displayed as? 0 is strech to fit
+	var/pixel_size = 0
+	///What scaling method should we use? Distort means nearest neighbor
+	var/scaling_method = SCALING_METHOD_DISTORT
 	var/uplink_spawn_loc = UPLINK_PDA
+	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 5K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
+	var/playtime_reward_cloak = FALSE
 
 	var/list/exp = list()
 	var/list/menuoptions
@@ -114,6 +120,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	///This var stores the amount of points the owner will get for making it out alive.
 	var/hardcore_survival_score = 0
+
+	///Someone thought we were nice! We get a little heart in OOC until we join the server past the below time (we can keep it until the end of the round otherwise)
+	var/hearted
+	///If we have a hearted commendations, we honor it every time the player loads preferences until this time has been passed
+	var/hearted_until
+	/// Agendered spessmen can choose whether to have a male or female bodytype
+	var/body_type
+
+	/// If we have persistent scars enabled
+	var/persistent_scars = TRUE
+	/// We have 5 slots for persistent scars, if enabled we pick a random one to load (empty by default) and scars at the end of the shift if we survived as our original person
+	var/list/scars_list = list("1" = "", "2" = "", "3" = "", "4" = "", "5" = "")
+	/// Which of the 5 persistent scar slots we randomly roll to load for this round, if enabled. Actually rolled in [/datum/preferences/proc/load_character(slot)]
+	var/scars_index = 1
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -214,6 +234,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dispGender = "Other"
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a>"
+				if(gender == PLURAL || gender == NEUTER)
+					dat += "<BR><b>Body Type:</b> <a href='?_src_=prefs;preference=body_type'>[body_type == MALE ? "Male" : "Female"]</a>"
+
 				if(randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG]) //doesn't work unless random body
 					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Gender: [(randomise[RANDOM_GENDER]) ? "Yes" : "No"]</A>"
 					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER_ANTAG]'>When Antagonist: [(randomise[RANDOM_GENDER_ANTAG]) ? "Yes" : "No"]</A>"
@@ -273,9 +296,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br><b>Jumpsuit Style:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a>"
 			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_JUMPSUIT_STYLE]'>[(randomise[RANDOM_JUMPSUIT_STYLE]) ? "Lock" : "Unlock"]</A>"
 
+			dat += "<br><b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backpack]</a>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BACKPACK]'>[(randomise[RANDOM_BACKPACK]) ? "Lock" : "Unlock"]</A>"
+
+			if(CAN_SCAR in pref_species.species_traits)
+				dat += "<BR><b>Temporal Scarring:</b><BR><a href='?_src_=prefs;preference=persistent_scars'>[(persistent_scars) ? "Enabled" : "Disabled"]</A>"
+				dat += "<a href='?_src_=prefs;preference=clear_scars'>Clear scar slots</A>"
 
 			dat += "<br><b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
-
+			if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
+				dat += "<br><b>Don The Ultimate Gamer Cloak?:</b><BR><a href ='?_src_=prefs;preference=playtime_reward_cloak'>[(playtime_reward_cloak) ? "Enabled" : "Disabled"]</a><BR></td>"
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones)
 
@@ -591,6 +621,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (CONFIG_GET(string/default_view) != CONFIG_GET(string/default_view_square))
 				dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled ([CONFIG_GET(string/default_view_square)])"]</a><br>"
 
+			button_name = pixel_size
+			dat += "<b>Pixel Scaling:</b> <a href='?_src_=prefs;preference=pixel_size'>[(button_name) ? "Pixel Perfect [button_name]x" : "Stretch to fit"]</a><br>"
+
+			switch(scaling_method)
+				if(SCALING_METHOD_DISTORT)
+					button_name = "Nearest Neighbor"
+				if(SCALING_METHOD_NORMAL)
+					button_name = "Point Sampling"
+				if(SCALING_METHOD_BLUR)
+					button_name = "Bilinear"
+			dat += "<b>Scaling Method:</b> <a href='?_src_=prefs;preference=scaling_method'>[button_name]</a><br>"
+
 			if (CONFIG_GET(flag/maprotation))
 				var/p_map = preferred_map
 				if (!p_map)
@@ -653,6 +695,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC Color:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+				if(hearted_until)
+					dat += "<a href='?_src_=prefs;preference=clear_heart'>Clear OOC Commend Heart</a><br>"
 
 			dat += "</td>"
 
@@ -1457,6 +1501,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_loc)
 						uplink_spawn_loc = new_loc
 
+				if("playtime_reward_cloak")
+					if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
+						playtime_reward_cloak = !playtime_reward_cloak
+
 				if("ai_core_icon")
 					var/ai_core_icon = input(user, "Choose your preferred AI core display screen:", "AI Core Display Screen Selection") as null|anything in GLOB.ai_core_display_screens
 					if(ai_core_icon)
@@ -1521,6 +1569,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
+					var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
 					var/pickedGender = input(user, "Choose your gender.", "Character Preference", gender) as null|anything in friendlyGenders
 					if(pickedGender && friendlyGenders[pickedGender] != gender)
 						gender = friendlyGenders[pickedGender]
@@ -1529,7 +1578,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						socks = random_socks()
 						facial_hairstyle = random_facial_hairstyle(gender)
 						hairstyle = random_hairstyle(gender)
-
+				if("body_type")
+					if(body_type == MALE)
+						body_type = FEMALE
+					else
+						body_type = MALE
 				if("hotkeys")
 					hotkeys = !hotkeys
 					if(hotkeys)
@@ -1659,6 +1712,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						randomise[random_type] = TRUE
 
+				if("persistent_scars")
+					persistent_scars = !persistent_scars
+
+				if("clear_scars")
+					to_chat(user, "<span class='notice'>All scar slots cleared. Please save character to confirm.</span>")
+					scars_list["1"] = ""
+					scars_list["2"] = ""
+					scars_list["3"] = ""
+					scars_list["4"] = ""
+					scars_list["5"] = ""
+
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
 
@@ -1722,7 +1786,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("widescreenpref")
 					widescreenpref = !widescreenpref
-					user.client.change_view(CONFIG_GET(string/default_view))
+					user.client.view_size.setDefault(getScreenSize(widescreenpref))
+
+				if("pixel_size")
+					switch(pixel_size)
+						if(PIXEL_SCALING_AUTO)
+							pixel_size = PIXEL_SCALING_1X
+						if(PIXEL_SCALING_1X)
+							pixel_size = PIXEL_SCALING_1_2X
+						if(PIXEL_SCALING_1_2X)
+							pixel_size = PIXEL_SCALING_2X
+						if(PIXEL_SCALING_2X)
+							pixel_size = PIXEL_SCALING_3X
+						if(PIXEL_SCALING_3X)
+							pixel_size = PIXEL_SCALING_AUTO
+					user.client.view_size.apply() //Let's winset() it so it actually works
+
+				if("scaling_method")
+					switch(scaling_method)
+						if(SCALING_METHOD_NORMAL)
+							scaling_method = SCALING_METHOD_DISTORT
+						if(SCALING_METHOD_DISTORT)
+							scaling_method = SCALING_METHOD_BLUR
+						if(SCALING_METHOD_BLUR)
+							scaling_method = SCALING_METHOD_NORMAL
+					user.client.view_size.setZoomMode()
 
 				if("save")
 					save_preferences()
@@ -1742,10 +1830,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (href_list["tab"])
 						current_tab = text2num(href_list["tab"])
 
+				if("clear_heart")
+					hearted = FALSE
+					hearted_until = null
+					to_chat(user, "<span class='notice'>OOC Commendation Heart disabled</span>")
+					save_preferences()
+
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
 
 	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
 
@@ -1763,7 +1857,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(randomise[RANDOM_HARDCORE] && parent.mob.mind && !character_setup)
 		if(can_be_random_hardcore())
-			hardcore_random_setup(character, antagonist)
+			hardcore_random_setup(character, antagonist, is_latejoiner)
 
 	if(roundstart_checks)
 		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
@@ -1779,6 +1873,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.gender = gender
 	character.age = age
+	if(gender == MALE || gender == FEMALE)
+		character.body_type = gender
+	else
+		character.body_type = body_type
 
 	character.eye_color = eye_color
 	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)

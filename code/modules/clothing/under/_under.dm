@@ -1,14 +1,15 @@
 /obj/item/clothing/under
 	name = "under"
 	icon = 'icons/obj/clothing/under/default.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/under/default.dmi'
+	worn_icon = 'icons/mob/clothing/under/default.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
 	slot_flags = ITEM_SLOT_ICLOTHING
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
+	limb_integrity = 30
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = TRUE
@@ -41,7 +42,7 @@
 	if(!attach_accessory(I, user))
 		return ..()
 
-/obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
+/obj/item/clothing/under/update_clothes_damaged_state()
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -87,6 +88,7 @@
 		H.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
 			H.update_inv_wear_suit()
+	set_sensor_glob()	
 
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)
@@ -96,7 +98,7 @@
 			H.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
 				H.update_inv_wear_suit()
-
+	set_sensor_glob()	
 	..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)

@@ -120,7 +120,7 @@
 		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	if(overlay)
 		var/atom/A = parent
-		A.cut_overlay(overlay, TRUE)
+		UnregisterSignal(A,COMSIG_ATOM_UPDATE_OVERLAYS)
 		qdel(overlay)
 
 	return ..()
@@ -147,7 +147,7 @@
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		var/damage = weapon.w_class * impact_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus=-30, sharpness = TRUE)
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 	else
 		victim.visible_message("<span class='danger'>[weapon] sticks itself to [victim]'s [limb.name]!</span>",ignored_mobs=victim)
@@ -163,7 +163,7 @@
 
 	if(harmful && prob(chance))
 		var/damage = weapon.w_class * jostle_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] jostles and stings!</span>")
 
 
@@ -173,7 +173,7 @@
 
 	if(harmful)
 		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 		victim.visible_message("<span class='danger'>[weapon] falls out of [victim.name]'s [limb.name]!</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[weapon] falls out of your [limb.name]!</span>")
 	else
@@ -199,7 +199,7 @@
 
 		if(harmful)
 			var/damage = weapon.w_class * remove_pain_mult
-			limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage) //It hurts to rip it out, get surgery you dingus.
+			limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=TRUE) //It hurts to rip it out, get surgery you dingus.
 			victim.emote("scream")
 			victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] out of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
 		else
@@ -276,7 +276,7 @@
 		damage *= 0.7
 
 	if(harmful && prob(chance))
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] hurts!</span>")
 
 	if(prob(fall_chance))
@@ -312,14 +312,15 @@
 			pixelX -= 2
 
 	if(throwingdatum.init_dir in list(NORTH,  WEST, NORTHWEST, SOUTHWEST))
-		overlay = mutable_appearance(icon=weapon.righthand_file,icon_state=weapon.item_state)
+		overlay = mutable_appearance(icon=weapon.righthand_file,icon_state=weapon.inhand_icon_state)
 	else
-		overlay = mutable_appearance(icon=weapon.lefthand_file,icon_state=weapon.item_state)
+		overlay = mutable_appearance(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state)
 
 	var/matrix/M = matrix()
 	M.Translate(pixelX, pixelY)
 	overlay.transform = M
-	hit.add_overlay(overlay, TRUE)
+	RegisterSignal(hit,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay)
+	hit.update_icon()
 
 	if(harmful)
 		hit.visible_message("<span class='danger'>[weapon] embeds itself in [hit]!</span>")
@@ -332,6 +333,8 @@
 	else
 		hit.visible_message("<span class='danger'>[weapon] sticks itself to [hit]!</span>")
 
+/datum/component/embedded/proc/apply_overlay(atom/source, list/overlay_list)
+	overlay_list += overlay
 
 /datum/component/embedded/proc/examineTurf(datum/source, mob/user, list/examine_list)
 	if(harmful)

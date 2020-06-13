@@ -2,7 +2,7 @@
 	name = "butchering gloves"
 	desc = "These gloves allow the user to rip apart bodies with precision and ease."
 	icon_state = "black"
-	item_state = "blackgloves"
+	inhand_icon_state = "blackgloves"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS

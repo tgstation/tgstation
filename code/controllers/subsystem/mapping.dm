@@ -151,7 +151,7 @@ SUBSYSTEM_DEF(mapping)
 		qdel(T, TRUE)
 
 /* Nuke threats, for making the blue tiles on the station go RED
-   Used by the AI doomsday and the self destruct nuke.
+   Used by the AI doomsday and the self-destruct nuke.
 */
 
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
@@ -253,7 +253,9 @@ SUBSYSTEM_DEF(mapping)
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
 
 	if(SSdbcore.Connect())
-		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
+		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery({"
+			UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id
+		"}, list("map_name" = config.map_name, "round_id" = GLOB.round_id))
 		query_round_map_name.Execute()
 		qdel(query_round_map_name)
 
@@ -541,7 +543,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			qdel(TR, TRUE)
 	UNSETEMPTY(turf_reservations)
 	var/list/clearing = list()
-	for(var/l in unused_turfs)			//unused_turfs is a assoc list by z = list(turfs)
+	for(var/l in unused_turfs)			//unused_turfs is an assoc list by z = list(turfs)
 		if(islist(unused_turfs[l]))
 			clearing |= unused_turfs[l]
 	clearing |= used_turfs		//used turfs is an associative list, BUT, reserve_turfs() can still handle it. If the code above works properly, this won't even be needed as the turfs would be freed already.

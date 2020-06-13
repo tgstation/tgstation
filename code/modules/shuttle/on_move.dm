@@ -71,6 +71,8 @@ All ShuttleMove procs go here
 /turf/proc/afterShuttleMove(turf/oldT, rotation)
 	//Dealing with the turf we left behind
 	oldT.TransferComponents(src)
+
+	SSexplosions.wipe_turf(src)
 	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
 	if(shuttle_boundary)
 		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
@@ -119,6 +121,8 @@ All ShuttleMove procs go here
 		update_light()
 	if(rotation)
 		shuttleRotate(rotation)
+	if(proximity_monitor)
+		proximity_monitor.HandleMove()
 
 	update_parallax_contents()
 
@@ -212,7 +216,7 @@ All ShuttleMove procs go here
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
 
-/obj/machinery/computer/auxillary_base/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/computer/auxiliary_base/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))

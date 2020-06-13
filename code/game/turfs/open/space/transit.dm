@@ -36,7 +36,7 @@
 	if(!AM || istype(AM, /obj/docking_port))
 		return
 	if(AM.loc != src) 	// Multi-tile objects are "in" multiple locs but its loc is it's true placement.
-		return			// Don't move multi tile objects if their origin isnt in transit
+		return			// Don't move multi tile objects if their origin isn't in transit
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
@@ -45,6 +45,10 @@
 		var/datum/space_level/D = A
 		if (D.linkage == CROSSLINKED)
 			possible_transtitons += D.z_value
+	if(!length(possible_transtitons)) //No space to throw them to - try throwing them onto mining
+		possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_MINING)
+		if(!length(possible_transtitons)) //Just throw them back on station, if not just runtime.
+			possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_STATION)
 	var/_z = pick(possible_transtitons)
 
 	//now select coordinates for a border turf

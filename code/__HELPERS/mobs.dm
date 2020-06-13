@@ -195,6 +195,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/datum/progressbar/progbar
 	if (progress)
 		progbar = new(user, time, target)
+	if(target.pixel_x != 0) //shifts the progress bar if target has an offset sprite
+		progbar.bar.pixel_x -= target.pixel_x
 
 	var/endtime = world.time+time
 	var/starttime = world.time
@@ -457,6 +459,8 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(M.client.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE) && message_type == DEADCHAT_REGULAR)
+			override = TRUE
+		if(SSticker.current_state == GAME_STATE_FINISHED)
 			override = TRUE
 		if(isnewplayer(M) && !override)
 			continue

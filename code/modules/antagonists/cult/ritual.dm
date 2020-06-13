@@ -115,18 +115,18 @@ This file contains the cult dagger and rune list code
 			return
 		priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/ai/spanomalies.ogg')
 		for(var/B in spiral_range_turfs(1, user, 1))
-			var/obj/structure/emergency_shield/sanguine/N = new(B)
+			var/obj/structure/emergency_shield/cult/narsie/N = new(B)
 			shields += N
 	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open [user.p_their()] arm and begins writing in [user.p_their()] own blood":"begins sketching out a strange design"]!</span>", \
 						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
 	if(user.blood_volume)
-		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), wound_bonus = CANT_WOUND) // *cuts arm* *bone explodes* ever have one of those days?
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
 	if(istype(get_turf(user), /turf/open/floor/engine/cult) && !(ispath(rune_to_scribe, /obj/effect/rune/narsie)))
 		scribe_mod *= 0.5
 	if(!do_after(user, scribe_mod, target = get_turf(user)))
 		for(var/V in shields)
-			var/obj/structure/emergency_shield/sanguine/S = V
+			var/obj/structure/emergency_shield/cult/narsie/S = V
 			if(S && !QDELETED(S))
 				qdel(S)
 		return

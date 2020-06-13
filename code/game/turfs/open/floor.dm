@@ -141,7 +141,7 @@
 		icon_state = pick(broken_states)
 	burnt = 1
 
-/turf/open/floor/proc/make_plating()
+/turf/open/floor/proc/make_plating(force = FALSE)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 ///For when the floor is placed under heavy load. Calls break_tile(), but exists to be overridden by floor types that should resist crushing force.
@@ -211,17 +211,17 @@
 		if(prob(30))
 			if(floor_tile)
 				new floor_tile(src)
-				make_plating()
+				make_plating(TRUE)
 	else if(current_size == STAGE_FOUR)
 		if(prob(50))
 			if(floor_tile)
 				new floor_tile(src)
-				make_plating()
+				make_plating(TRUE)
 	else if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(70))
 				new floor_tile(src)
-				make_plating()
+				make_plating(TRUE)
 		else if(prob(50))
 			ReplaceWithLattice()
 

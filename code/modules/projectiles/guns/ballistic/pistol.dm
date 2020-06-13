@@ -62,12 +62,12 @@
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
-	item_state = "deagleg"
+	inhand_icon_state = "deagleg"
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/camo
 	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
-	item_state = "deagleg"
+	inhand_icon_state = "deagleg"
 
 /obj/item/gun/ballistic/automatic/pistol/aps
 	name = "stechkin APS machine pistol"
