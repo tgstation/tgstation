@@ -10,13 +10,13 @@
  ** paper and getting rid of that crashing bug
  **/
 /obj/item/paper
-	var/const/MAX_PAPER_LENGTH = 1000
+	var/const/MAX_PAPER_LENGTH = 5000
 	var/const/MAX_PAPER_STAMPS = 30		// Too low?
 	var/const/MAX_PAPER_STAMPS_OVERLAYS = 4
 	var/const/MODE_READING = 0
 	var/const/MODE_WRITING = 1
 	var/const/MODE_STAMPING = 2
-
+	var/static/regex/sign_regex = regex("%s(?:ign)?(?=\\s|$)", "igm")
 	name = "paper"
 	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -54,7 +54,9 @@
 	var/ui_x = 600
 	var/ui_y = 800
 	/// When the sheet can be "filled out"
-	var/form_sheet = FALSE
+	/// This is an associated list
+	var/list/form_fields
+	var/field_counter = 1
 	/// What edit mode we are in and who is
 	/// writing on it right now
 	var/edit_mode = MODE_READING
@@ -79,6 +81,8 @@
 	N.update_icon_state()
 	N.stamps = stamps
 	N.stamped = stamped.Copy()
+	N.form_fields = form_fields.Copy()
+	N.field_counter = field_counter
 	copy_overlays(N, TRUE)
 	return N
 
@@ -186,7 +190,7 @@
 
 /obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
-		if(!form_sheet && length(info) >= 1000) // Sheet must have less than 1000 charaters
+		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
 			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
 		if(edit_mode != MODE_READING)
@@ -310,6 +314,8 @@
 
 	// stamping info for..stamping
 	data["stamp_class"] = stamp_class
+	data["field_counter"] = field_counter
+	// form fields, they are filled out
 
 	return data
 
@@ -347,37 +353,38 @@
 
 		if("save")
 			var/in_paper = params["text"]
-			var/paper_len = length(in_paper) + length(info)
+			var/paper_len = length(in_paper)
+			var/list/fields = params["form_fields"]
+			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
 
 			if(paper_len > MAX_PAPER_LENGTH)
 				/// Side note, the only way we should get here is if
 				/// the javascript was modified, somehow, outside of
 				/// byond.
-				log_paper("[key_name(edit_usr)] writing to paper [name], and overwrote it by [MAX_PAPER_LENGTH-paper_len], aborting")
+				log_paper("[key_name(edit_usr)] writing to paper [name], and overwrote it by [paper_len-MAX_PAPER_LENGTH], aborting")
 				ui_force_close()
 			else if(paper_len == 0)
 				to_chat(usr, pick("Writing block strikes again!", "You forgot to write anthing!"))
 				ui_force_close()
 			else
-				/// First, fix the fonts depending on the pen used
-				if(is_crayon)
-					info += "<font face=\"[pen_font]\" color=[pen_color]><b>[in_paper]</b></font>"
-				else
-					info += "<font face=\"[pen_font]\" color=[pen_color]>[in_paper]</font>"
 				/// Next find the sign marker and replace it with somones sig
-				info = regex("%s(?:ign)?(?=\\s|$)", "igm").Replace(info, "<font face=\"[SIGNFONT]\"><i>[edit_usr.real_name]</i></font>")
+				/// All other processing should of been done in the js module
+				in_paper = sign_regex.Replace(in_paper, "<font face=\"[SIGNFONT]\"><i>[edit_usr.real_name]</i></font>")
 				/// Do the same with form fields
- 				info = regex("%f(?:ield)?(?=\\s|$)", "igm").Replace(info, "<span class=\"paper_field\"></span>")
 				log_paper("[key_name(edit_usr)] writing to paper [name]")
-				to_chat(usr, "You have added to your paper masterpiece!");
-				/// Switch ui to reading mode
+				if(info != in_paper) // this a good idea?
+					to_chat(usr, "You have added to your paper masterpiece!");
+					info = in_paper
+					/// Switch ui to reading mode
+				if(fields && fields.len > 0)
+					for(var/key in fields)	/// In case somone %sign in a field
+						form_fields[key] = sign_regex.Replace(fields[key], "<font face=\"[SIGNFONT]\"><i>[edit_usr.real_name]</i></font>")
 
-
-				ui_update()
-				update_icon()
 			edit_mode = MODE_READING
 			edit_usr = null
-			
+			ui_update()
+			update_icon()
+
 			. = TRUE
 
 
