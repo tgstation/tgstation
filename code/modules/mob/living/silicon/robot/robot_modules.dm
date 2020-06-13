@@ -274,11 +274,8 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
-<<<<<<< HEAD
-=======
 		/obj/item/bonesetter,
 		/obj/item/extinguisher/mini,
->>>>>>> origin/master
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
