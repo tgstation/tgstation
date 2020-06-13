@@ -30,3 +30,12 @@
 	mouse_opacity = 0
 	anchored = TRUE
 	deconstructible = FALSE
+
+/obj/structure/fluff/fancyblackjack
+	name = "Fancy Blackjack Table"
+	desc = "The house can't always win, right?"
+	icon = 'icons/obj/blackjack.dmi'
+	icon_state = "blackjacktableblue"
+	mouse_opacity = 0
+	anchored = TRUE
+	deconstructible = FALSE

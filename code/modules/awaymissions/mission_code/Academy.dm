@@ -416,3 +416,20 @@
 /obj/structure/ladder/unbreakable/rope/use(mob/user, is_ghost=FALSE)
 	if(is_ghost || !(user.mind in SSticker.mode.wizards))
 		..()
+
+/obj/structure/ladder/unbreakable/hole // jerry, why didn't you use a real chasm? pussy.
+	name = "\improper Hole"
+	desc = "It's kinda dark in there."
+	icon = 'icons/mob/nest.dmi'
+	icon_state = "hole"
+
+/obj/structure/ladder/unbreakable/hole/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
+
+/obj/structure/ladder/unbreakable/hole/show_fluff_message(up,mob/user)
+	user.visible_message("<span class='notice'>[user] climbs through \the [src].</span>", "<span class='notice'>You climb through \the [src].</span>")
+
+/obj/structure/ladder/unbreakable/hole/use(mob/user, is_ghost=FALSE)
+	if(is_ghost || !(user.mind in SSticker.mode.wizards))
+		..()
