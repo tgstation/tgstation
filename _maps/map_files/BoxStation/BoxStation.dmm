@@ -13820,11 +13820,11 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aNK" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
+	},
+/mob/living/simple_animal/hostile/retaliate/goat{
+	name = "Pete"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
@@ -20271,7 +20271,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/southright{
 	name = "Research and Development Desk";
-	req_one_access_txt = "7;29"
+	req_one_access_txt = "7"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rnd";
@@ -23615,7 +23615,7 @@
 "bry" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Genetics Lab Maintenance";
-	req_access_txt = "47, 9"
+	req_access_txt = "9"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -24603,20 +24603,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "buH" = (
-/obj/machinery/door/airlock/research{
-	name = "Research Access";
-	req_access_txt = "47"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "buI" = (
@@ -26374,10 +26361,17 @@
 "bzO" = (
 /obj/structure/table/glass,
 /obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 5
+	pixel_x = -5;
+	pixel_y = 3
 	},
-/obj/item/pen,
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 9;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "bzP" = (
@@ -26831,7 +26825,10 @@
 /area/storage/tech)
 "bAR" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/rxglasses,
+/obj/item/storage/box/bodybags{
+	pixel_x = -1;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "bAS" = (
@@ -28074,7 +28071,7 @@
 "bEg" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Storage";
-	req_access_txt = "8"
+	req_access_txt = "71"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -28812,7 +28809,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room Access";
-	req_access_txt = "7"
+	req_access_txt = "8"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -29075,7 +29072,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Lab";
-	req_access_txt = "7"
+	req_access_txt = "8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
@@ -29681,7 +29678,7 @@
 "bIS" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room";
-	req_access_txt = "7"
+	req_access_txt = "8"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -30058,7 +30055,7 @@
 "bKf" = (
 /obj/machinery/door/window/southleft{
 	name = "Mass Driver Door";
-	req_access_txt = "7"
+	req_access_txt = "8"
 	},
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
@@ -32007,8 +32004,10 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/obj/item/clothing/suit/hooded/wintercoat/science,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPJ" = (
@@ -40275,12 +40274,12 @@
 /area/maintenance/port/aft)
 "cAL" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /mob/living/simple_animal/hostile/lizard{
 	name = "Wags-His-Tail";
 	real_name = "Wags-His-Tail"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/janitor)
 "cAN" = (
@@ -43321,10 +43320,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "eob" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 6
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "eon" = (
@@ -43473,8 +43472,8 @@
 "eFD" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/disks{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 5;
+	pixel_y = 7
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
@@ -46710,12 +46709,18 @@
 /area/medical/pharmacy)
 "kGS" = (
 /obj/structure/table/glass,
-/obj/item/storage/pill_bottle/mannitol,
-/obj/item/storage/pill_bottle/mutadone,
 /obj/item/radio/headset/headset_sci{
-	pixel_x = -3
+	pixel_x = -6;
+	pixel_y = 6
 	},
-/obj/item/folder/white,
+/obj/item/folder/white{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_x = 9;
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "kHM" = (
@@ -50776,8 +50781,14 @@
 /area/vacant_room/commissary)
 "taM" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/monkeycubes,
-/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -6;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "tbd" = (
@@ -51002,7 +51013,7 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "trt" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "trR" = (
@@ -53363,6 +53374,10 @@
 /area/crew_quarters/dorms)
 "xXe" = (
 /obj/structure/closet/radiation,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "xXI" = (
@@ -96615,7 +96630,7 @@ bsQ
 bsR
 box
 bWr
-hDD
+buH
 byf
 bzw
 bAB

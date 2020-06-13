@@ -1,0 +1,6 @@
+author: "Shadark"
+delete-after: True
+changes: 
+  - rscdel: "Detective gets roundstart normal sunglasses instead of SecHUDs at PubbyStation."
+  - balance: "Balanced access to arrest option through SecHUDs, now requiring Security access instead of Brig access."
+  - balance: "Balanced access to portable turrets, now requiring Security access instead of Brig access."
