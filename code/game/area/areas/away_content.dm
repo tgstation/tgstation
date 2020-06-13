@@ -16,7 +16,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg','sound/ambience/ambiodd.ogg','sound/ambience/ambinice.ogg')
+	ambientsounds = list('sound/ambience/sea_shanty2.ogg')
 
 /area/awaymission/errorroom
 	name = "Super Secret Room"
