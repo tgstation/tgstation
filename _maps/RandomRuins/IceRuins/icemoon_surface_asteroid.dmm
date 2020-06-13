@@ -61,11 +61,6 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/icemoon/surface)
-"H" = (
-/obj/machinery/door/airlock/bronze/seethru,
-/obj/structure/fans/tiny,
-/turf/open/floor/bronze,
-/area/icemoon/surface)
 "P" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
 /turf/open/floor/bronze,
@@ -88,8 +83,9 @@
 	},
 /area/icemoon/surface)
 "U" = (
-/obj/machinery/door/airlock/bronze,
-/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/bronze{
+	use_power = 0
+	},
 /turf/open/floor/bronze,
 /area/icemoon/surface)
 "V" = (
@@ -285,8 +281,8 @@ a
 c
 c
 c
-H
-H
+U
+U
 c
 c
 c
@@ -900,7 +896,7 @@ b
 U
 k
 n
-H
+U
 a
 a
 a
@@ -931,7 +927,7 @@ a
 a
 a
 a
-H
+U
 n
 i
 U
@@ -942,7 +938,7 @@ b
 U
 i
 P
-H
+U
 a
 a
 a
@@ -973,7 +969,7 @@ a
 a
 a
 a
-H
+U
 v
 d
 U
@@ -1587,8 +1583,8 @@ a
 c
 c
 c
-H
-H
+U
+U
 c
 c
 c

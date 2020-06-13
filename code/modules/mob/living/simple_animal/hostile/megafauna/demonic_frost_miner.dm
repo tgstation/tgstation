@@ -27,6 +27,7 @@ Difficulty: Extremely Hard
 	rapid_melee = 4
 	speed = 20
 	move_to_delay = 20
+	gps_name = "Bloodchilling Signal"
 	ranged = TRUE
 	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/ice_block_talisman)
 	loot = list(/obj/effect/decal/remains/plasma)
@@ -366,10 +367,15 @@ Difficulty: Extremely Hard
 /datum/status_effect/ice_block_talisman
 	id = "ice_block_talisman"
 	duration = 40
-	status_type = STATUS_EFFECT_REFRESH
+	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /obj/screen/alert/status_effect/ice_block_talisman
 	/// Stored icon overlay for the hit mob, removed when effect is removed
 	var/icon/cube
+
+/datum/status_effect/ice_block_talisman/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
 
 /obj/screen/alert/status_effect/ice_block_talisman
 	name = "Frozen Solid"

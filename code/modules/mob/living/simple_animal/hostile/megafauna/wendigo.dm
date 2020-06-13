@@ -29,10 +29,11 @@ Difficulty: Hard
 	melee_queue_distance = 20 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
 	pixel_x = -16
+	gps_name = "Berserk Signal"
 	loot = list()
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1)
-	crusher_loot = list(/obj/item/crusher_trophy/demon_claws)
+	crusher_loot = list(/obj/item/book/granter/martial/carp)
 	wander = FALSE
 	del_on_death = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL

@@ -36,8 +36,9 @@
 	},
 /area/icemoon/underground)
 "H" = (
-/obj/machinery/door/airlock/cult/friendly,
-/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/cult/friendly{
+	use_power = 0
+	},
 /turf/open/floor/plasteel/cult,
 /area/icemoon/underground)
 "J" = (

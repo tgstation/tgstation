@@ -135,16 +135,21 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	baseturfs = /turf/open/transparent/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	var/replacement_turf = /turf/open/floor/plating/asteroid/snow/icemoon
+	var/protect_ruin = TRUE
+	var/drill_below = TRUE
 
 /turf/open/transparent/openspace/icemoon/Initialize()
 	. = ..()
 	var/turf/T = below()
-	if(T.flags_1 & NO_RUINS_1)
+	if(T.flags_1 & NO_RUINS_1 && protect_ruin)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 		return
-	if(!ismineralturf(T))
+	if(!ismineralturf(T) || !drill_below)
 		return
 	var/turf/closed/mineral/M = T
 	M.mineralAmt = 0
 	M.gets_drilled()
 
+/turf/open/transparent/openspace/icemoon/ruins
+	protect_ruin = FALSE
+	drill_below = FALSE
