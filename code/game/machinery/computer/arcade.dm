@@ -202,10 +202,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	current_enemy_passive = null
 
 	var/list/passive_available = enemy_passive_list.Copy()
-	while(LAZYLEN(current_enemy_passive) < max_passive)
-		var/picked_passive = pick(passive_available)
+	for(var/i in 1 to max_passive)
+		var/picked_passive = pick_n_take(passive_available)
 		LAZYADD(current_enemy_passive, picked_passive)
-		passive_available -= picked_passive
 
 	if("chonker" in current_enemy_passive)
 		enemy_hp += 20
@@ -274,7 +273,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		dat += "<center><b><a href='byond://?src=[REF(src)];power_attack=1'>Power attack</a>"
 
 	dat += "</b></center>"
-	if(user.mind?.key) //mainly here to avoid a runtime when the player gets gibbed when losing the emag mode.
+	if(user.client) //mainly here to avoid a runtime when the player gets gibbed when losing the emag mode.
 		var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
@@ -350,6 +349,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return
 
 
+///happens after a player action and before the enemy turn. the enemy turn will be cancelled if there's a gameover.
 /obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user,player_stance,attackamt)
 	screen_setup(user)
 	blocked = TRUE
@@ -374,7 +374,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		LAZYREMOVE(last_three_move, last_three_move[1])
 		LAZYADD(last_three_move, player_stance)
 
-	else if(length(last_three_move) > 3)
+	else if(LAZYLEN(last_three_move) > 3)
 		last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
 
 	var/enemy_stance
@@ -383,7 +383,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(player_stance == "defend")
 		attack_amount -= 5
 
-///if emagged, cuban pete will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
+	//if emagged, cuban pete will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
 	if(obj_flags & EMAGGED)
 		if(bomb_cooldown == 18)
 			temp += "<br><center><h3>[enemy_name] takes two valve tank and links them together, what's he planning?<center><h3>"
@@ -394,12 +394,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(bomb_cooldown == 6)
 			temp += "<br><center><h3>[enemy_name]'s hand brushes the remote linked to the bomb, your heart skipped a beat. <center><h3>"
 		if(bomb_cooldown == 2)
-			temp += "<br><center><h3>[enemy_name] is going to press the button! it's now or never! <center><h3>"
+			temp += "<br><center><h3>[enemy_name] is going to press the button! It's now or never! <center><h3>"
 		if(bomb_cooldown == 0)
 			player_hp -= attack_amount * 1000 //hey it's a maxcap we might as well go all in
 		bomb_cooldown--
 
-//yeah I used the shotgun as a passive, you know why? because the shotgun gives +5 attack which is pretty good
+	//yeah I used the shotgun as a passive, you know why? because the shotgun gives +5 attack which is pretty good
 	if("shotgun" in current_enemy_passive)
 		if(weakpoint_check("shotgun","defend","defend","power_attack"))
 			temp += "<br><center><h3>You manage to disarm [enemy_name] with a surprise power attack and shoot him with his shotgun until it runs out of ammo! <center><h3> "
@@ -408,13 +408,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else
 			attack_amount += 5
 
-//heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
+	//heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
 	if("chonker" in current_enemy_passive)
 		if(weakpoint_check("chonker","power_attack","power_attack","power_attack"))
 			temp += "<br><center><h3>After a lot of power attacks you manage to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
 			enemy_hp -= 30
 
-//smart passive trait, mainly works in tandem with other traits, makes the enemy unable to be counter_attacked
+	//smart passive trait, mainly works in tandem with other traits, makes the enemy unable to be counter_attacked
 	if("smart" in current_enemy_passive)
 		if(weakpoint_check("smart","defend","defend","attack"))
 			temp += "<br><center><h3>[enemy_name] is confused by your illogical strategy!<center><h3> "
@@ -433,7 +433,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				enemy_mp -= 5
 			enemy_stance = "defensive"
 
-//short temper passive trait, gets easily baited into being counter attacked but will bypass your counter when low on HP
+	//short temper passive trait, gets easily baited into being counter attacked but will bypass your counter when low on HP
 	if("short temper" in current_enemy_passive)
 		if(weakpoint_check("short temper","counter_attack","counter_attack","counter_attack"))
 			temp += "<br><center><h3>[enemy_name] is getting frustrated at all your counter attacks and throws a tantrum!<center><h3>"
@@ -452,20 +452,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		else if(!enemy_stance)
 			var/added_temp
-			var success = pick(TRUE,FALSE)
 
-			if(success)
+			if(rand())
 				added_temp = "you for [attack_amount + 5] damage!"
 				player_hp -= attack_amount + 5
 				enemy_stance = "attack"
-			if(!success)
+			else
 				added_temp = "the wall, breaking their skull in the process!" //[enemy_name] you have a literal dent in your skull
 				enemy_hp -= attack_amount
 				enemy_stance = "attack"
 
 			temp += "<br><center><h3>[enemy_name] grits their teeth and charge right into [added_temp]<center><h3>"
 
-//in the case none of the previous passive triggered, Mainly here to set an enemy stance for passives that needs it like the magical passive.
+	//in the case none of the previous passive triggered, Mainly here to set an enemy stance for passives that needs it like the magical passive.
 	if(!enemy_stance)
 		enemy_stance = pick("attack","defensive")
 		if(enemy_stance == "attack")
@@ -483,11 +482,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			enemy_mp -= 15
 			enemy_hp += 5
 
-//magical passive trait, recharges MP nearly every turn it's not blasting you with magic.
+	//magical passive trait, recharges MP nearly every turn it's not blasting you with magic.
 	if("magical" in current_enemy_passive)
 		if(player_mp >= 50)
 			temp += "<br><center><h3>the huge amount of magical energy you have acumulated throws [enemy_name] off balance!<center><h3>"
-			enemy_mp -= enemy_mp
+			enemy_mp = 0
 			LAZYREMOVE(current_enemy_passive, "magical")
 			pissed_off++
 
@@ -509,7 +508,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp += "<br><center><h3>[enemy_name]'s magical nature lets them get some mp back!<center><h3>"
 			enemy_mp += attack_amount
 
-//poisonous passive trait, while it's less damage added than the shotgun it acts up even when the enemy doesn't attack at all.
+	//poisonous passive trait, while it's less damage added than the shotgun it acts up even when the enemy doesn't attack at all.
 	if("poisonous" in current_enemy_passive)
 		if(weakpoint_check("poisonous","attack","attack","attack"))
 			temp += "<br><center><h3>your flurry of attack throws back the poisonnous gas at [enemy_name] and makes them choke on it!<center><h3> "
@@ -518,7 +517,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp += "<br><center><h3>the stinky breath of [enemy_name] hurts you for 3 hp!<center><h3> "
 			player_hp -= 3
 
-//if all passive's weakpoint have been triggered, set finishing_move to TRUE
+	//if all passive's weakpoint have been triggered, set finishing_move to TRUE
 	if(pissed_off >= max_passive && !finishing_move)
 		temp += "<br><center><h3>You have weakened [enemy_name] enough for them to show their weak point, you will do 10 times as much damage with your next attack!<center><h3> "
 		finishing_move = TRUE
