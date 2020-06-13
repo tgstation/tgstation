@@ -35,16 +35,16 @@ const BasicSection = (props, context) => {
   const { searchText, source, title } = props;
   const things = source.filter(searchFor(searchText));
   things.sort(compareNumberedText);
-
   return source.length > 0 && (
     <Section title={title}>
-      {
-        things.map(thing => (<Button
+      {things.map(thing => (
+        <Button
           key={thing.name}
           content={thing.name.replace(PATTERN_DESCRIPTOR, "")}
-          onClick={() => act("orbit", { name: thing.name })}
-        />))
-      }
+          onClick={() => act("orbit", {
+            name: thing.name,
+          })} />
+      ))}
     </Section>
   );
 };
@@ -53,28 +53,25 @@ const OrbitedButton = (props, context) => {
   const { act } = useBackend(context);
   const { color, thing } = props;
 
-  return (<Button
-    color={color}
-    content={(
-      <span>
-        {thing.name}
-        {
-          thing.orbiters && (
-            <span>
-              <Box inline mr={1} />
-              ({thing.orbiters}{" "}
-              <Box
-                as="img"
-                src="ghost.png"
-                opacity={0.7}
-              />)
-            </span>
-          )
-        }
-      </span>
-    )}
-    onClick={() => act("orbit", { name: thing.name })}
-  />);
+  return (
+    <Button
+      color={color}
+      onClick={() => act("orbit", {
+        name: thing.name,
+      })}>
+      {thing.name}
+      {thing.orbiters && (
+        <Box inline ml={1}>
+          {"("}{thing.orbiters}{" "}
+          <Box
+            as="img"
+            src="ghost.png"
+            opacity={0.7} />
+          {")"}
+        </Box>
+      )}
+    </Button>
+  );
 };
 
 export const Orbit = (props, context) => {
@@ -95,7 +92,6 @@ export const Orbit = (props, context) => {
     if (collatedAntagonists[antagonist.antag] === undefined) {
       collatedAntagonists[antagonist.antag] = [];
     }
-
     collatedAntagonists[antagonist.antag].push(antagonist);
   }
 
@@ -107,48 +103,42 @@ export const Orbit = (props, context) => {
   return (
     <Window>
       <Window.Content>
-        <Section title={
+        <Section>
           <Input
             fluid
             value={searchText}
-            onInput={(_, value) => setSearchText(value)}
-          />
-        } />
+            onInput={(_, value) => setSearchText(value)} />
+        </Section>
 
-        { antagonists.length > 0 && (
+        {antagonists.length > 0 && (
           <Section title="Ghost-Visible Antagonists">
-            { sortedAntagonists.map(([name, antags]) => {
-              return (
-                <Section key={name} title={name} level={2}>
-                  {
-                    antags
-                      .filter(searchFor(searchText))
-                      .sort(compareNumberedText)
-                      .map(antag => (
-                        <OrbitedButton
-                          key={antag.name}
-                          color="bad"
-                          thing={antag}
-                        />
-                      ))
-                  }
-                </Section>
-              );
-            }) }
+            {sortedAntagonists.map(([name, antags]) => (
+              <Section key={name} title={name} level={2}>
+                {antags
+                  .filter(searchFor(searchText))
+                  .sort(compareNumberedText)
+                  .map(antag => (
+                    <OrbitedButton
+                      key={antag.name}
+                      color="bad"
+                      thing={antag}
+                    />
+                  ))}
+              </Section>
+            ))}
           </Section>
-        ) }
+        )}
 
         <Section title="Alive">
-          { alive
+          {alive
             .filter(searchFor(searchText))
             .sort(compareNumberedText)
             .map(thing => (
               <OrbitedButton
                 key={thing.name}
                 color="good"
-                thing={thing}
-              />)
-            )}
+                thing={thing} />
+            ))}
         </Section>
 
         <BasicSection
