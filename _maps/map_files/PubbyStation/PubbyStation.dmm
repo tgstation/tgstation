@@ -11797,7 +11797,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes,
 /obj/item/lighter,
-/obj/item/clothing/glasses/hud/security/sunglasses,
+/obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "aEp" = (
