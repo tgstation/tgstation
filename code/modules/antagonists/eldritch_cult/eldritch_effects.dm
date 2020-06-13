@@ -124,9 +124,10 @@
 	for(var/i in 0 to number)
 
 		var/turf/chosen_location = get_safe_random_station_turf()
-		var/obj/effect/reality_smash/what_if_i_have_one = locate() in chosen_location.contents
-		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in chosen_location.contents
-		if(!isnull(what_if_i_have_one) || !isnull(what_if_i_had_one_but_got_used)) //we dont want to spawn overlapping influences okay?
+		//we also dont want them close to each other, at least 1 tile of seperation
+		var/obj/effect/reality_smash/what_if_i_have_one = locate() in range(1, chosen_location)
+		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
+		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			number++
 			continue
 		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location.loc)
