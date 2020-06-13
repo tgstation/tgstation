@@ -490,16 +490,12 @@ generate/load female uniform sprites matching all previously decided variables
 */
 /obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null)
 
+	//Find a valid icon_state from variables+arguments
 	var/t_state
 	if(override_state)
 		t_state = override_state
 	else
-		t_state = icon_state
-		if(isinhands)
-			if(inhand_icon_state)
-				t_state = inhand_icon_state
-		else if(worn_icon_state)
-			t_state = worn_icon_state
+		t_state = !isinhands ? (worn_icon_state ? worn_icon_state : icon_state) : (inhand_icon_state ? inhand_icon_state : icon_state)
 
 	//Find a valid icon file from variables+arguments
 	var/file2use = !isinhands ? (worn_icon ? worn_icon : default_icon_file) : default_icon_file
