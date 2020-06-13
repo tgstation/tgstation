@@ -123,6 +123,7 @@
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
+	anchored = 1
 	req_access = list(ACCESS_SECURITY)
 	icon_state = "sec"
 

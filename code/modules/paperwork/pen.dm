@@ -16,6 +16,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	inhand_icon_state = "pen"
+	worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -257,6 +258,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "digging_pen"
 	inhand_icon_state = "pen"
+	worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)

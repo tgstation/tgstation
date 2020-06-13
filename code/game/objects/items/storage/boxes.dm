@@ -120,6 +120,8 @@
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 
 /obj/item/storage/box/survival/PopulateContents()
+	new /obj/item/teleportation_scroll/no_smoke(src)
+
 	new mask_type(src)
 	if(!isnull(medipen_type))
 		new medipen_type(src)

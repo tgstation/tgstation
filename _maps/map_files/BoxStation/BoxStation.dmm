@@ -1881,7 +1881,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "afr" = (
-/obj/structure/cable,
 /obj/machinery/flasher{
 	id = "AI";
 	pixel_x = 32;
@@ -1891,6 +1890,7 @@
 	name = "AI Core Door";
 	req_access_txt = "16"
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "afs" = (
@@ -13820,11 +13820,11 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aNK" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
+	},
+/mob/living/simple_animal/hostile/retaliate/goat{
+	name = "Pete"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
@@ -20271,7 +20271,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/southright{
 	name = "Research and Development Desk";
-	req_one_access_txt = "7;29"
+	req_one_access_txt = "7"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rnd";
@@ -23615,7 +23615,7 @@
 "bry" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Genetics Lab Maintenance";
-	req_access_txt = "47, 9"
+	req_access_txt = "9"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -23787,6 +23787,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bsf" = (
@@ -24602,20 +24603,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "buH" = (
-/obj/machinery/door/airlock/research{
-	name = "Research Access";
-	req_access_txt = "47"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "buI" = (
@@ -26373,10 +26361,17 @@
 "bzO" = (
 /obj/structure/table/glass,
 /obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 5
+	pixel_x = -5;
+	pixel_y = 3
 	},
-/obj/item/pen,
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 9;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "bzP" = (
@@ -26830,7 +26825,10 @@
 /area/storage/tech)
 "bAR" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/rxglasses,
+/obj/item/storage/box/bodybags{
+	pixel_x = -1;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "bAS" = (
@@ -28073,7 +28071,7 @@
 "bEg" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Storage";
-	req_access_txt = "8"
+	req_access_txt = "71"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -28811,7 +28809,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room Access";
-	req_access_txt = "7"
+	req_access_txt = "8"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -29074,7 +29072,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Lab";
-	req_access_txt = "7"
+	req_access_txt = "8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
@@ -29680,7 +29678,7 @@
 "bIS" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Launch Room";
-	req_access_txt = "7"
+	req_access_txt = "8"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -30057,7 +30055,7 @@
 "bKf" = (
 /obj/machinery/door/window/southleft{
 	name = "Mass Driver Door";
-	req_access_txt = "7"
+	req_access_txt = "8"
 	},
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
@@ -32006,8 +32004,10 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/obj/item/clothing/suit/hooded/wintercoat/science,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPJ" = (
@@ -37254,13 +37254,13 @@
 /area/maintenance/starboard/aft)
 "chE" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "chH" = (
@@ -38802,7 +38802,6 @@
 /turf/open/space,
 /area/solar/starboard/aft)
 "cpq" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -38924,7 +38923,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cpX" = (
@@ -39664,7 +39662,6 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -40277,12 +40274,12 @@
 /area/maintenance/port/aft)
 "cAL" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /mob/living/simple_animal/hostile/lizard{
 	name = "Wags-His-Tail";
 	real_name = "Wags-His-Tail"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/janitor)
 "cAN" = (
@@ -40311,6 +40308,7 @@
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cBa" = (
@@ -42635,6 +42633,13 @@
 /obj/machinery/chem_heater,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"dkI" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "dlg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43098,7 +43103,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "dTe" = (
-/obj/structure/cable,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -43110,6 +43114,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "dUO" = (
@@ -43315,10 +43320,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "eob" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 6
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "eon" = (
@@ -43467,8 +43472,8 @@
 "eFD" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/disks{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 5;
+	pixel_y = 7
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
@@ -43500,6 +43505,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "eIE" = (
@@ -43520,7 +43526,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "eJx" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 9
 	},
@@ -45497,7 +45502,6 @@
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -45610,7 +45614,6 @@
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -45866,10 +45869,6 @@
 /area/security/brig)
 "iUz" = (
 /obj/structure/chair/office/light,
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"iXH" = (
-/obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -46203,6 +46202,7 @@
 /obj/structure/table,
 /obj/item/paper/guides/jobs/engi/gravity_gen,
 /obj/item/pen/blue,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "jCq" = (
@@ -46222,18 +46222,21 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/structure/cable,
 /obj/machinery/camera{
 	c_tag = "Gravity Generator Room Main";
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "jDf" = (
-/obj/structure/table,
 /obj/item/radio/intercom{
 	pixel_y = -35
 	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "jEy" = (
@@ -46659,6 +46662,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
+"kzm" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/ai_monitored/turret_protected/ai)
 "kzT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -46702,12 +46709,18 @@
 /area/medical/pharmacy)
 "kGS" = (
 /obj/structure/table/glass,
-/obj/item/storage/pill_bottle/mannitol,
-/obj/item/storage/pill_bottle/mutadone,
 /obj/item/radio/headset/headset_sci{
-	pixel_x = -3
+	pixel_x = -6;
+	pixel_y = 6
 	},
-/obj/item/folder/white,
+/obj/item/folder/white{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_x = 9;
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "kHM" = (
@@ -47287,7 +47300,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "lME" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -48877,7 +48889,6 @@
 /obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -49474,6 +49485,7 @@
 /area/ai_monitored/storage/eva)
 "qbd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "qbW" = (
@@ -50186,7 +50198,6 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "rKL" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -50770,8 +50781,14 @@
 /area/vacant_room/commissary)
 "taM" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/monkeycubes,
-/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -6;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "tbd" = (
@@ -50996,7 +51013,7 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "trt" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "trR" = (
@@ -51317,13 +51334,13 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/safe)
 "uch" = (
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "ucw" = (
@@ -51359,6 +51376,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "uea" = (
@@ -53356,6 +53374,10 @@
 /area/crew_quarters/dorms)
 "xXe" = (
 /obj/structure/closet/radiation,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "xXI" = (
@@ -76093,7 +76115,7 @@ gny
 hcj
 hES
 ijf
-iXH
+jaN
 jCE
 mzQ
 jUd
@@ -78661,7 +78683,7 @@ cfe
 cfD
 iQF
 chE
-iQF
+dkI
 gwO
 cji
 cDZ
@@ -82209,7 +82231,7 @@ bfv
 bii
 bii
 dPQ
-tsX
+kzm
 tsX
 tsX
 afq
@@ -96608,7 +96630,7 @@ bsQ
 bsR
 box
 bWr
-hDD
+buH
 byf
 bzw
 bAB

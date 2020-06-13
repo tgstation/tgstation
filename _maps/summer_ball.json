@@ -2,7 +2,22 @@
     "map_name": "Ball Map",
     "map_path": "map_files/BallMap",
     "map_file": "summer_ball.dmm",
-	"shuttles": {
-	    "cargo": "cargo_delta"
-    }
+    "shuttles": {
+        "cargo": "cargo_delta"
+    },
+    "traits":[
+        {
+           "Up":1,
+           "Gravity":true
+        },
+        {
+           "Down":-1,
+           "Up":1,
+           "Gravity":true
+        },
+        {
+           "Down":-1,
+           "Gravity":true
+        }
+    ]
 }

@@ -1,6 +1,6 @@
 /datum/action/changeling/fleshmend
 	name = "Fleshmend"
-	desc = "Our flesh rapidly regenerates, healing our burns, bruises, and shortness of breath. Costs 20 chemicals."
+	desc = "Our flesh rapidly regenerates, healing our burns, bruises, and shortness of breath, as well as hiding all of our scars. Costs 20 chemicals."
 	helptext = "If we are on fire, the healing effect will not function. Does not regrow limbs or restore lost blood. Functions while unconscious."
 	button_icon_state = "fleshmend"
 	chemical_cost = 20

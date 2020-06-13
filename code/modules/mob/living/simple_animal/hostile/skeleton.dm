@@ -37,19 +37,18 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/skeleton/eskimo
-	name = "undead eskimo"
+	name = "undead traveler"
 	desc = "The reanimated remains of some poor traveler."
 	icon_state = "eskimo"
 	icon_living = "eskimo"
 	icon_dead = "eskimo_dead"
-	maxHealth = 55
-	health = 55
+	maxHealth = 80
+	health = 80
 	weather_immunities = list("snow")
 	melee_damage_lower = 17
 	melee_damage_upper = 20
-	deathmessage = "collapses into a pile of bones, its gear falling to the floor!"
+	deathmessage = "collapses into a pile of bones!"
 	loot = list(/obj/effect/decal/remains/human,
-				/obj/item/spear,
 				/obj/item/clothing/shoes/winterboots,
 				/obj/item/clothing/suit/hooded/wintercoat)
 
@@ -85,6 +84,27 @@
 	weather_immunities = list("snow")
 	color = rgb(114,228,250)
 	loot = list(/obj/effect/decal/remains/human{color = rgb(114,228,250)})
+
+/mob/living/simple_animal/hostile/skeleton/daemon
+	name = "great green devil"
+	desc = "Run."
+	icon = 'icons/mob/32x64.dmi'
+	icon_state = "true_devil"
+	icon_living = "true_devil"
+	icon_dead = "true_devil"
+	maxHealth = 2000
+	health = 2000
+	weather_immunities = list("snow")
+	color = rgb(0,255,0)
+	speed = 2
+	speak_chance = 1
+	speak = list("You’ve left and left and found my tomb, and now your soul will die.")
+	force_threshold = 20 //trying to simulate actually having armor
+	obj_damage = 50
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	deathmessage = "collapses into a pile of bones!"
+	loot = list(/obj/effect/decal/remains/xeno)
 
 /mob/living/simple_animal/hostile/skeleton/plasmaminer
 	name = "shambling miner"

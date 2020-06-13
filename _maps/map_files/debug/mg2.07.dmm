@@ -1,0 +1,87 @@
+"aa" = (/obj/machinery/washing_machine,/obj/machinery/requests_console{department = "Crew Quarters"; pixel_y = 30},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/cafeteria,/area/space)
+"ab" = (/obj/machinery/washing_machine,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/cafeteria,/area/space)
+"ac" = (/turf/open/floor/plating{icon_state = "panelscorched"},/area/space)
+"ad" = (/obj/machinery/computer/arcade,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/cafeteria,/area/space)
+"ae" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/cafeteria,/area/space)
+"af" = (/obj/structure/sign/warning/vacuum/external{pixel_x = 32},/obj/structure/closet/emcloset/anchored,/turf/open/floor/plating,/area/space)
+"ag" = (/obj/structure/bedsheetbin,/obj/machinery/newscaster{pixel_x = 32},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/cafeteria,/area/space)
+"ah" = (/obj/machinery/computer/upload,/obj/structure/sign/warning/pods{pixel_y = 32},/turf/open/floor/plasteel/dark,/area/space)
+"aj" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel,/area/space)
+"ak" = (/obj/machinery/door/airlock/external{name = "Escape Pod"},/obj/machinery/navbeacon/wayfinding/dockescpod,/turf/open/floor/plating,/area/space)
+"al" = (/obj/effect/spawner/structure/window/reinforced,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plating,/area/space)
+"ao" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/plating,/area/space)
+"ap" = (/obj/structure/table,/obj/item/clothing/under/color/grey,/obj/structure/sign/poster/official/random{pixel_x = 32},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/cafeteria,/area/space)
+"aq" = (/obj/machinery/door/airlock{name = "Laundry Room"},/turf/closed/wall,/area/space)
+"ar" = (/obj/structure/table/wood,/obj/item/flashlight/lamp,/obj/machinery/camera{c_tag = "Arrivals - Center"; name = "arrivals camera"},/turf/open/floor/plasteel/grimy,/area/space)
+"as" = (/obj/structure/chair/comfy/brown,/turf/open/floor/plasteel/grimy,/area/space)
+"at" = (/obj/item/kirbyplants/random,/turf/open/floor/plasteel/grimy,/area/space)
+"au" = (/obj/structure/table/wood,/obj/item/storage/fancy/donut_box,/turf/open/floor/plasteel/grimy,/area/space)
+"av" = (/obj/machinery/light,/obj/machinery/newscaster{pixel_y = -32},/obj/item/kirbyplants{icon_state = "plant-21"},/turf/open/floor/plasteel/grimy,/area/space)
+"ax" = (/obj/structure/sign/map{icon_state = "map-pubby"; pixel_y = 32},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/item/trash/semki,/turf/open/floor/plasteel,/area/space)
+"ay" = (/obj/machinery/camera{c_tag = "Dormitories Fore"},/obj/machinery/computer/security/telescreen{desc = "Used for watching the monastery."; name = "Monastery Monitor"; network = list("monastery"); pixel_y = 32},/turf/open/floor/plasteel,/area/space)
+"az" = (/obj/structure/chair/comfy/brown{dir = 8},/turf/open/floor/plasteel/grimy,/area/space)
+"aA" = (/obj/machinery/status_display/ai,/turf/closed/wall,/area/space)
+"aB" = (/obj/machinery/door/airlock{name = "Unisex Restroom"},/turf/open/floor/plasteel,/area/space)
+"aC" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/turf/open/floor/plasteel,/area/space)
+"aD" = (/obj/structure/table/wood,/obj/machinery/power/apc{areastring = "/area/security/detectives_office"; dir = 1; name = "Detective's Office APC"; pixel_y = 23},/obj/item/taperecorder,/obj/item/restraints/handcuffs,/turf/open/floor/carpet,/area/space)
+"aE" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/plasteel/grimy,/area/space)
+"aF" = (/turf/open/floor/plasteel/grimy,/area/space)
+"aG" = (/obj/structure/table/wood,/obj/item/folder,/obj/item/pen,/turf/open/floor/plasteel/grimy,/area/space)
+"aH" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/vending/cigarette,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plating,/area/space)
+"aI" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/tile/neutral,/turf/open/floor/plasteel,/area/space)
+"aJ" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/space)
+"ei" = (/obj/effect/turf_decal/tile/neutral,/turf/open/floor/plasteel,/area/space)
+"eB" = (/obj/structure/chair/comfy/brown{dir = 4},/turf/open/floor/plasteel/grimy,/area/space)
+"fu" = (/obj/machinery/door/airlock{name = "Toilet Unit"},/turf/open/floor/plasteel,/area/space)
+"hM" = (/obj/effect/decal/cleanable/dirt,/obj/structure/toilet{dir = 8},/obj/machinery/newscaster{pixel_y = 32},/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
+"kT" = (/turf/closed/wall,/area/space)
+"lq" = (/obj/item/trash/chips,/turf/open/floor/plasteel,/area/space)
+"mv" = (/obj/structure/table/wood,/obj/item/storage/secure/safe{pixel_x = -23},/obj/machinery/computer/security/wooden_tv,/turf/open/floor/carpet,/area/space)
+"mB" = (/obj/structure/urinal{dir = 4; pixel_x = -32},/obj/effect/turf_decal/bot,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/space)
+"nN" = (/obj/structure/table/wood,/obj/item/flashlight/lamp,/obj/item/reagent_containers/food/drinks/flask/det,/turf/open/floor/carpet,/area/space)
+"ot" = (/obj/machinery/status_display/evac,/turf/closed/wall,/area/space)
+"rx" = (/obj/machinery/computer/med_data{dir = 4},/obj/machinery/requests_console{department = "Detective's Office"; name = "Detective RC"; pixel_x = -30},/turf/open/floor/carpet,/area/space)
+"uG" = (/obj/item/trash/raisins,/turf/open/floor/plasteel,/area/space)
+"uM" = (/obj/item/trash/can/food/beans,/turf/open/floor/carpet,/area/space)
+"vo" = (/obj/structure/closet/crate/trashcart,/turf/open/floor/plating{icon_state = "panelscorched"},/area/space)
+"vE" = (/obj/item/trash/pistachios,/turf/open/floor/plasteel,/area/space)
+"wV" = (/obj/item/trash/cheesie,/turf/open/floor/plasteel,/area/space)
+"yk" = (/turf/open/floor/plasteel,/area/space)
+"yo" = (/obj/structure/mirror{pixel_x = -26},/obj/structure/sink{dir = 4; pixel_x = -12},/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
+"yG" = (/obj/structure/table/wood,/obj/item/book/manual/wiki/security_space_law,/obj/item/camera/detective,/turf/open/floor/carpet,/area/space)
+"yK" = (/turf/open/floor/plating,/area/space)
+"zr" = (/obj/item/trash/can/food/peaches/maint,/turf/open/floor/plasteel,/area/space)
+"AE" = (/obj/item/trash/candy,/turf/open/floor/plasteel,/area/space)
+"Bc" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/open/floor/plasteel,/area/space)
+"Ck" = (/obj/item/trash/sosjerky,/turf/open/floor/plasteel,/area/space)
+"DI" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/vomit/old,/obj/structure/toilet{dir = 8},/obj/machinery/newscaster{pixel_y = 32},/obj/machinery/light/small,/turf/open/floor/plating,/area/space)
+"DY" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/carpet,/area/space)
+"Es" = (/obj/item/trash/waffles,/turf/open/floor/plasteel,/area/space)
+"Fs" = (/obj/item/trash/boritos,/turf/open/floor/carpet,/area/space)
+"GP" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/space)
+"Ik" = (/obj/structure/filingcabinet/security,/turf/open/floor/plasteel/grimy,/area/space)
+"IS" = (/obj/structure/closet/secure_closet/detective,/turf/open/floor/plasteel/grimy,/area/space)
+"Lg" = (/obj/machinery/computer/secure_data{dir = 4},/obj/machinery/status_display/evac{pixel_x = -32},/turf/open/floor/carpet,/area/space)
+"PL" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/snacks/chips,/turf/open/floor/plasteel/grimy,/area/space)
+"QY" = (/obj/machinery/holopad,/turf/open/floor/carpet,/area/space)
+"RQ" = (/obj/effect/decal/cleanable/dirt,/obj/structure/mirror{pixel_x = -26},/obj/structure/sink{dir = 4; pixel_x = -12},/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
+"Vp" = (/turf/open/floor/carpet,/area/space)
+"Vs" = (/obj/structure/chair/comfy/brown{buildstackamount = 0; dir = 1},/turf/open/floor/plasteel/grimy,/area/space)
+"XI" = (/obj/item/trash/can,/turf/open/floor/carpet,/area/space)
+"YB" = (/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/open/floor/plasteel,/area/space)
+
+(1,1,1) = {"
+yKyKyKyKkTaaabadkTkTGPyKaf
+yKyKyKyKkTaeaeagkTahGPakal
+yKacyKyKaoaeaeapkTykykykyk
+aAGPGPGPotaqkTkTkTykykykyk
+arasatasauajaxayykykykykyk
+eBVpVpFsazlqykEsykwVykykyk
+aFXIQYVpaFykykykykykykykyk
+eBVpVpuMazykzrykkTkTkTkTkT
+PLVsavVsaGAEykuGkTmBykfuhM
+otkTkTkTaAykykykaBaCBckTkT
+mvnNyGIkISykCkykkTyoYBfuDI
+LgDYaDaEaFykykykkTRQeikTkT
+rxVpVpaFaFvEykykkTaHaIaJvo
+"}
