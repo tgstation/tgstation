@@ -41722,7 +41722,7 @@
 /obj/item/book{
 	desc = "An undeniably handy book.";
 	icon_state = "bookknock";
-	name = "A Simpleton's Guide to Safe-cracking with Stethoscopes"
+	name = "\improper A Simpleton's Guide to Safe-cracking with Stethoscopes"
 	},
 /obj/item/stack/sheet/mineral/diamond,
 /obj/item/stack/spacecash/c1000,
