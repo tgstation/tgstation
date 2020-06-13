@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 	icon_screen = "invaders"
 	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
