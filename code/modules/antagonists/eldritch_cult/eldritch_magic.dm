@@ -42,7 +42,7 @@
 
 /obj/item/melee/touch_attack/mansus_fist
 	name = "Mansus Grasp"
-	desc = "A sinister looking aura that distorts the flow of reality around it."
+	desc = "A sinister looking aura that distorts the flow of reality around it. Causes knockdown, major stamina damage aswell as some Brute. It gains additional beneficial effects with certain knowledges you can research."
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
 	catchphrase = "R'CH T'H TR'TH"
