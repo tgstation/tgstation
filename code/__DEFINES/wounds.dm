@@ -6,9 +6,10 @@
 #define WOUND_SEVERITY_CRITICAL	3
 #define WOUND_SEVERITY_LOSS		4 // theoretical total limb loss, like dismemberment for cuts
 
-#define WOUND_BRUTE	0
-#define WOUND_SHARP	1
-#define WOUND_BURN	2
+#define WOUND_BLUNT		0
+#define WOUND_SLASH		1
+#define WOUND_PIERCE	2
+#define WOUND_BURN		3
 
 // How much determination reagent to add each time someone gains a new wound in [/datum/wound/proc/second_wind()]
 #define WOUND_DETERMINATION_MODERATE	1

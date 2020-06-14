@@ -126,12 +126,12 @@
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
-	if(!(wounding_type in list(WOUND_SHARP, WOUND_BURN)) || !splinted || wound_bonus == CANT_WOUND)
+	if(!(wounding_type in list(WOUND_SLASH, WOUND_BURN)) || !splinted || wound_bonus == CANT_WOUND)
 		return
 
-	splinted.take_damage(wounding_dmg, damage_type = (wounding_type == WOUND_SHARP ? BRUTE : BURN), sound_effect = FALSE)
+	splinted.take_damage(wounding_dmg, damage_type = (wounding_type == WOUND_SLASH ? BRUTE : BURN), sound_effect = FALSE)
 	if(QDELETED(splinted))
-		var/destroyed_verb = (wounding_type == WOUND_SHARP ? "torn" : "burned")
+		var/destroyed_verb = (wounding_type == WOUND_SLASH ? "torn" : "burned")
 		victim.visible_message("<span class='danger'>The splint securing [victim]'s [limb.name] is [destroyed_verb] away!</span>", "<span class='danger'><b>The splint securing your [limb.name] is [destroyed_verb] away!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
 		splinted = null
 		treat_priority = TRUE

@@ -197,15 +197,15 @@
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
 
-	var/wounding_type = (brute > burn ? WOUND_BRUTE : WOUND_BURN)
+	var/wounding_type = (brute > burn ? WOUND_BLUNT : WOUND_BURN)
 	var/wounding_dmg = max(brute, burn)
-	if(wounding_type == WOUND_BRUTE && sharpness)
-		wounding_type = WOUND_SHARP
+	if(wounding_type == WOUND_BLUNT && sharpness)
+		wounding_type = WOUND_SLASH
 	// i know this is effectively the same check as above but i don't know if those can null the damage by rounding and want to be safe
 	if(owner && wounding_dmg > 4 && wound_bonus != CANT_WOUND)
 		// if you want to make tox wounds or some other type, this will need to be expanded and made more modular
 		// handle all our wounding stuff
-		check_wounding(atk_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+		check_wounding(sharpness, wounding_dmg, wound_bonus, bare_wound_bonus)
 
 	var/can_inflict = max_damage - get_damage()
 	var/total_damage = brute + burn
@@ -221,7 +221,7 @@
 
 	for(var/i in wounds)
 		var/datum/wound/W = i
-		W.receive_damage(atk_type, wounding_dmg, wound_bonus)
+		W.receive_damage(sharpness, wounding_dmg, wound_bonus)
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
@@ -243,26 +243,26 @@
   * We can promote a wound from a lesser to a higher severity this way, but we give up if we have a wound of the given type and fail to roll a higher severity, so no sidegrades/downgrades
   *
   * Arguments:
-  * * woundtype- Either WOUND_SHARP, WOUND_BRUTE, or WOUND_BURN based on the attack type.
+  * * woundtype- Either WOUND_SLASH, WOUND_BLUNT, or WOUND_BURN based on the attack type.
   * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
   * * wound_bonus- The wound_bonus of an attack
   * * bare_wound_bonus- The bare_wound_bonus of an attack
   */
-/obj/item/bodypart/proc/check_wounding(atk_type, damage, wound_bonus, bare_wound_bonus)
+/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
 	// actually roll wounds if applicable
 	if(HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE))
 		damage *= 1.5
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
-	injury_roll += check_woundings_mods(atk_type, damage, wound_bonus, bare_wound_bonus)
+	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/wounds_checking
 
 	switch(woundtype)
-		if(WOUND_SHARP)
-			wounds_checking = WOUND_LIST_CUT
-		if(WOUND_BRUTE)
-			wounds_checking = WOUND_LIST_BONE
+		if(WOUND_SLASH)
+			wounds_checking = WOUND_LIST_SLASH
+		if(WOUND_BLUNT)
+			wounds_checking = WOUND_LIST_BLUNT
 		if(WOUND_BURN)
 			wounds_checking = WOUND_LIST_BURN
 
@@ -301,7 +301,7 @@
 	var/datum/wound/new_wound = new potential_wound
 	new_wound.apply_wound(src, smited = smited)
 
-/obj/item/bodypart/proc/check_woundings_mods(atk_type, damage, wound_bonus, bare_wound_bonus)
+/obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0
 	var/injury_mod = 0
 
@@ -314,7 +314,7 @@
 			var/obj/item/clothing/C = c
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			armor_ablation += C.armor.getRating("wound")
-			if(wounding_type == WOUND_SHARP)
+			if(wounding_type == WOUND_SLASH)
 				C.take_damage_zone(body_zone, damage, BRUTE, armour_penetration)
 			else if(wounding_type == WOUND_BURN && damage >= 10) // lazy way to block freezing from shredding clothes without adding another var onto apply_damage()
 				C.take_damage_zone(body_zone, damage, BURN, armour_penetration)
