@@ -85,7 +85,7 @@
 			if(!I.throwforce)
 				return
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-			apply_damage(I.throwforce, dtype, zone, armor, sharpness=I.sharpness)
+			apply_damage(I.throwforce, dtype, zone, armor, sharpness=I.get_sharpness())
 			if(I.thrownby)
 				log_combat(I.thrownby, src, "threw and hit", I)
 		else

@@ -150,7 +150,7 @@
 	///How much bare wounding power it has
 	var/bare_wound_bonus = 0
 	///If the attacks from this are sharp
-	var/sharpness = FALSE
+	var/sharpness = SHARP_NONE
 	///Generic flags
 	var/simple_mob_flags = NONE
 

@@ -17,7 +17,7 @@
 	damage = 10
 	stamina = 55
 	wound_bonus = 20
-	sharpness = FALSE
+	sharpness = SHARP_NONE
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"

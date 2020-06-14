@@ -13,7 +13,7 @@
 	name = "stingball"
 	embedding = list(embed_chance=90, fall_chance=3, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.7, pain_mult=5, jostle_pain_mult=6, rip_time=15)
 	icon_state = "tiny"
-	sharpness = FALSE
+	sharpness = SHARP_NONE
 
 /obj/item/shrapnel/bullet // bullets
 	name = "bullet"
@@ -72,7 +72,7 @@
 	name = "breakbang pellet"
 	damage = 10
 	wound_bonus = 40
-	sharpness = FALSE
+	sharpness = SHARP_NONE
 
 /obj/projectile/bullet/pellet/stingball/shred
 	name = "shredbang pellet"
