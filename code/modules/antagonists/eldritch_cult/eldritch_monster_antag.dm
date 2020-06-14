@@ -20,18 +20,18 @@
 
 /datum/antagonist/heretic_monster/on_removal()
 	if(owner)
-		to_chat(owner, "<span class='boldannounce'>Your master is no longer [master.real_name]</span>")
+		to_chat(owner, "<span class='boldannounce'>Your master is no longer [master.owner.current.real_name]</span>")
 		owner = null
 	return ..()
 
-/datum/antagonist/heretic_monster/proc/set_owner(datum/antagonist/heretic)
+/datum/antagonist/heretic_monster/proc/set_owner(datum/antagonist/heretic/_master)
 	master = _master
 	var/datum/objective/master_obj = new
 	master_obj.owner = src
 	master_obj.explanation_text = "Assist your master in any way you can!"
 	objectives += master_obj
 	owner.announce_objectives()
-	to_chat(owner, "<span class='boldannounce'>Your master is [master.real_name]</span>")
+	to_chat(owner, "<span class='boldannounce'>Your master is [master.owner.current.real_name]</span>")
 	return
 
 /datum/antagonist/heretic_monster/apply_innate_effects(mob/living/mob_override)
