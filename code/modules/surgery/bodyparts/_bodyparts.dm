@@ -200,12 +200,15 @@
 	var/wounding_type = (brute > burn ? WOUND_BLUNT : WOUND_BURN)
 	var/wounding_dmg = max(brute, burn)
 	if(wounding_type == WOUND_BLUNT && sharpness)
-		wounding_type = WOUND_SLASH
+		if(sharpness == SHARP_EDGED)
+			wounding_type = WOUND_SLASH
+		else
+			wounding_type = WOUND_PIERCE
 	// i know this is effectively the same check as above but i don't know if those can null the damage by rounding and want to be safe
 	if(owner && wounding_dmg > 4 && wound_bonus != CANT_WOUND)
 		// if you want to make tox wounds or some other type, this will need to be expanded and made more modular
 		// handle all our wounding stuff
-		check_wounding(sharpness, wounding_dmg, wound_bonus, bare_wound_bonus)
+		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
 	var/can_inflict = max_damage - get_damage()
 	var/total_damage = brute + burn
@@ -259,10 +262,12 @@
 	var/list/wounds_checking
 
 	switch(woundtype)
-		if(WOUND_SLASH)
-			wounds_checking = WOUND_LIST_SLASH
 		if(WOUND_BLUNT)
 			wounds_checking = WOUND_LIST_BLUNT
+		if(WOUND_SLASH)
+			wounds_checking = WOUND_LIST_SLASH
+		if(WOUND_PIERCE)
+			wounds_checking = WOUND_LIST_PIERCE
 		if(WOUND_BURN)
 			wounds_checking = WOUND_LIST_BURN
 
@@ -624,9 +629,6 @@
 	var/bleed_rate = 0
 	if(generic_bleedstacks > 0)
 		bleed_rate++
-
-	if(brute_dam >= 40)
-		bleed_rate += (brute_dam * 0.008)
 
 	//We want an accurate reading of .len
 	listclearnulls(embedded_objects)

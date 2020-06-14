@@ -133,10 +133,7 @@
 /obj/item/stack/medical/gauze/try_heal(mob/living/M, mob/user, silent)
 	var/obj/item/bodypart/limb = M.get_bodypart(check_zone(user.zone_selected))
 	if(limb)
-		if(limb.brute_dam > 40)
-			to_chat(user, "<span class='warning'>The bleeding on [user==M ? "your" : "[M]'s"] [limb.name] is from bruising, and cannot be treated with [src]!</span>")
-		else
-			to_chat(user, "<span class='warning'>There's no bleeding on [user==M ? "your" : "[M]'s"] [limb.name]</span>")
+		to_chat(user, "<span class='warning'>There's no bleeding on [user==M ? "your" : "[M]'s"] [limb.name]</span>")
 
 /obj/item/stack/medical/gauze/twelve
 	amount = 12

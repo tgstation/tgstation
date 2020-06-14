@@ -20,7 +20,6 @@
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 	wound_bonus = -35
-	sharpness = TRUE
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -51,7 +50,7 @@
 	ricochets_max = 0
 	wound_bonus = 0
 	shrapnel_type = /obj/item/shrapnel/bullet/c38/dumdum
-	sharpness = SHARP_NONE
+	sharpness = SHARP_EDGED
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"

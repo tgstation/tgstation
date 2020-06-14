@@ -239,7 +239,7 @@
 /datum/wound/pierce/moderate
 	name = "Skin Breakage"
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
-	treat_text = "Application of clean bandages or first-aid grade sutures, followed by food and rest."
+	treat_text = "Treat afffected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // lol shove your bruised arm out into space, ss13 logic
 	examine_desc = "has a dark bruise, slowly oozing blood"
 	occur_text = "spurts out a thin stream of blood from the impact"
 	sound_effect = 'sound/effects/blood1.ogg'
@@ -256,7 +256,7 @@
 /datum/wound/pierce/severe
 	name = "Open Puncture"
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and organ damage."
-	treat_text = "Speedy application of first-aid grade sutures and clean bandages, followed by vitals monitoring to ensure recovery."
+	treat_text = "Close sources of internal bleeding, then repair punctures in skin."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
 	occur_text = "looses a violent spray of blood and flesh through both sides of the impact site"
 	sound_effect = 'sound/effects/blood2.ogg'
@@ -274,8 +274,8 @@
 /datum/wound/pierce/critical
 	name = "Ruptured Cavity"
 	desc = "Patient's internal tissue and circulatory system is shredded, causing significant internal bleeding and damage to internal organs."
-	treat_text = "Immediate bandaging and either suturing or cauterization, followed by supervised resanguination."
-	examine_desc = "is ripped clear through, providing a clear view of the inside"
+	treat_text = "Surgical stabilization of damaged innards, followed by patching open holes in skin."
+	examine_desc = "is ripped clear through, showing the other side through shredded innards"
 	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
