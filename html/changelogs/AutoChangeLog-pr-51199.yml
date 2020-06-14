@@ -1,5 +1,0 @@
-author: "a few Sprites from Kryson"
-delete-after: True
-changes: 
-  - rscadd: "Heretics have been spotted near your area, don't let them succed."
-  - code_imp: "Added a sane version of GetAllContents called get_all_gear()."
