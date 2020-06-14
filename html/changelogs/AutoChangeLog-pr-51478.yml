@@ -1,6 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the medical HUD sometimes reporting undefibbable bodies as defibbable and vice versa."
-  - bugfix: "Fixed plasmamen needing hearts in order to be defibbed."
-  - bugfix: "Fixed crew with HARS needing a brain to be defibbed."

@@ -64,6 +64,7 @@
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
 	tackle = TT
+	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)

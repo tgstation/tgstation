@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - admin: "Fixed malformed SQL queries for logging admin permission changes."

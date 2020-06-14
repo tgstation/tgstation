@@ -168,6 +168,25 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	. = ..()
 	transform = matrix(0.4,0,0,0,0.4,0)
 
+/obj/item/storage/card_binder
+	name = "card binder"
+	desc = "The perfect way to keep your collection of cards safe and valuable."
+	icon = 'icons/obj/tcg.dmi'
+	icon_state = "binder"
+	inhand_icon_state = "album"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_SMALL
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+
+/obj/item/storage/card_binder/Initialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/tcgcard))
+	STR.max_combined_w_class = 120
+	STR.max_items = 60
+
 ///Returns a list of cards ids of card_cnt weighted by rarity from the pack's tables that have matching series, with gnt_cnt of the guarenteed table.
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)
 	var/list/toReturn = list()

@@ -129,6 +129,11 @@
 	///If TRUE, hit mobs even if they're on the floor and not our target
 	var/hit_stunned_targets = FALSE
 
+	wound_bonus = CANT_WOUND
+	/// For telling whether we want to roll for bone breaking or lacerations if we're bothering with wounds
+	var/sharpness = FALSE
+
+
 /obj/projectile/Initialize()
 	. = ..()
 	permutated = list()

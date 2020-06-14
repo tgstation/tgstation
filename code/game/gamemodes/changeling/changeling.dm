@@ -132,8 +132,11 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		C.appearance = chosen_prof.appearance_list[slot]
 		C.name = chosen_prof.name_list[slot]
 		C.flags_cover = chosen_prof.flags_cover_list[slot]
+		C.lefthand_file = chosen_prof.lefthand_file_list[slot]
+		C.righthand_file = chosen_prof.righthand_file_list[slot]
 		C.inhand_icon_state = chosen_prof.inhand_icon_state_list[slot]
 		C.worn_icon = chosen_prof.worn_icon_list[slot]
+		C.worn_icon_state = chosen_prof.worn_icon_state_list[slot]
 		if(equip)
 			user.equip_to_slot_or_del(C, GLOB.slot2slot[slot])
 
