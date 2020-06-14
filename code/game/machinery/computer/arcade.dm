@@ -291,20 +291,20 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(finishing_move) //time to bonk that fucker,cuban pete will sometime survive a finishing move.
 			attackamt *= 10
 
-//light attack suck absolute ass but it doesn't cost any MP so it's pretty good to finish an enemy off
+		//light attack suck absolute ass but it doesn't cost any MP so it's pretty good to finish an enemy off
 		if (href_list["attack"])
 			temp = "<br><center><h3>you do quick jab for [attackamt] of damage!</h3></center>"
 			enemy_hp -= attackamt
 			arcade_action(usr,"attack",attackamt)
 
-//defend lets you gain back MP and take less damage from non magical attack.
+		//defend lets you gain back MP and take less damage from non magical attack.
 		else if(href_list["defend"])
 			temp = "<br><center><h3>you take a defensive stance and gain back 10 mp!</h3></center>"
 			player_mp += 10
 			arcade_action(usr,"defend",attackamt)
 			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-//mainly used to counter short temper and their absurd damage, will deal twice the damage the player took of a non magical attack.
+		//mainly used to counter short temper and their absurd damage, will deal twice the damage the player took of a non magical attack.
 		else if(href_list["counter_attack"] && player_mp >= 10)
 			temp = "<br><center><h3>you prepare yourself to counter the next attack!</h3></center>"
 			player_mp -= 10
@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			arcade_action(usr,"defend",attackamt)
 			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-//power attack deals twice the amount of damage but is really expensive MP wise, mainly used with combos to get weakpoints.
+		//power attack deals twice the amount of damage but is really expensive MP wise, mainly used with combos to get weakpoints.
 		else if (href_list["power_attack"] && player_mp >= 20)
 			temp = "<br><center><h3>You attack [enemy_name] with all your might for [attackamt * 2] damage!</h3></center>"
 			enemy_hp -= attackamt * 2
@@ -440,7 +440,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			enemy_hp -= attack_amount
 
 		else if(player_stance == "counter_attack" && enemy_hp > 30 && !("smart" in current_enemy_passive))
-			temp += "<br><center><h3>[enemy_name] took the bait and allowed you to counter attack!<center><h3>"
+			temp += "<br><center><h3>[enemy_name] took the bait and allowed you to counter attack for [attack_amount * 2] damage!<center><h3>"
 			player_hp -= attack_amount
 			enemy_hp -= attack_amount * 2
 			enemy_stance = "attack"
@@ -458,7 +458,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				player_hp -= attack_amount + 5
 				enemy_stance = "attack"
 			else
-				added_temp = "the wall, breaking their skull in the process!" //[enemy_name] you have a literal dent in your skull
+				added_temp = "the wall, breaking their skull in the process and losing [attack_amount] hp!" //[enemy_name] you have a literal dent in your skull
 				enemy_hp -= attack_amount
 				enemy_stance = "attack"
 
