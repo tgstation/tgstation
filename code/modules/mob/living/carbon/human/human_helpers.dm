@@ -178,9 +178,13 @@
 
 /// For use formatting all of the scars this human has for saving for persistent scarring
 /mob/living/carbon/human/proc/format_scars()
-	if(!all_scars)
+	var/list/missing_bodyparts = get_missing_limbs()
+	if(!all_scars && !missing_bodyparts.len)
 		return
 	var/scars = ""
+	for(var/i in missing_bodyparts)
+		var/datum/scar/S = new
+		scars += "[S.format_amputated(i)]"
 	for(var/i in all_scars)
 		var/datum/scar/S = i
 		scars += "[S.format()];"
@@ -189,8 +193,11 @@
 /// Takes a single scar from the persistent scar loader and recreates it from the saved data
 /mob/living/carbon/human/proc/load_scar(scar_line)
 	var/list/scar_data = splittext(scar_line, "|")
-	if(LAZYLEN(scar_data) != 4)
+	if(LAZYLEN(scar_data) != 5)
 		return // invalid, should delete
+	var/version = text2num(scar_data[SCAR_SAVE_VERS])
+	if(!version || version < SCAR_CURRENT_VERSION) // get rid of old scars
+		return
 	var/obj/item/bodypart/BP = get_bodypart("[scar_data[SCAR_SAVE_ZONE]]")
 	var/datum/scar/S = new
-	return S.load(BP, scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]))
+	return S.load(BP, scar_data[SCAR_SAVE_VERS], scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]))

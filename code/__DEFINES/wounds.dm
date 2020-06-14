@@ -38,7 +38,12 @@
 #define WOUND_BONE_HEAD_TIME_VARIANCE 20 // if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)
 
 // The following are for persistent scar save formats
-#define SCAR_SAVE_ZONE				1 // The body_zone we're applying to on granting
-#define SCAR_SAVE_DESC				2 // The description we're loading
-#define SCAR_SAVE_PRECISE_LOCATION	3 // The precise location we're loading
-#define SCAR_SAVE_SEVERITY			4 // The severity the scar had
+#define SCAR_SAVE_VERS				1 // The version number of the scar we're saving
+#define SCAR_SAVE_ZONE				2 // The body_zone we're applying to on granting
+#define SCAR_SAVE_DESC				3 // The description we're loading
+#define SCAR_SAVE_PRECISE_LOCATION	4 // The precise location we're loading
+#define SCAR_SAVE_SEVERITY			5 // The severity the scar had
+
+// increment this number when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)
+// saved scars with a version lower than this will be discarded
+#define SCAR_CURRENT_VERSION				1

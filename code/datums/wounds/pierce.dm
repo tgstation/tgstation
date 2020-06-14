@@ -251,7 +251,7 @@
 	threshold_minimum = 20
 	threshold_penalty = 10
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
-	scarring_descriptions = list("light, faded lines", "minor cut marks", "a small faded slit", "a series of small scars")
+	scarring_descriptions = list("a small, faded bruise", "a small twist of reformed skin", "a thumb-sized puncture scar")
 
 /datum/wound/pierce/severe
 	name = "Open Puncture"
@@ -269,7 +269,7 @@
 	threshold_penalty = 25
 	demotes_to = /datum/wound/pierce/moderate
 	status_effect_type = /datum/status_effect/wound/pierce/severe
-	scarring_descriptions = list("a twisted line of faded gashes", "a gnarled sickle-shaped slice scar", "a long-faded puncture wound")
+	scarring_descriptions = list("an ink-splat shaped pocket of scar tissue", "a long-faded puncture wound", "a tumbling puncture hole with evidence of faded stitching")
 
 /datum/wound/pierce/critical
 	name = "Ruptured Cavity"
@@ -287,4 +287,4 @@
 	threshold_penalty = 40
 	demotes_to = /datum/wound/pierce/severe
 	status_effect_type = /datum/status_effect/wound/pierce/critical
-	scarring_descriptions = list("a winding path of very badly healed scar tissue", "a series of peaks and valleys along a gruesome line of cut scar tissue", "a grotesque snake of indentations and stitching scars")
+	scarring_descriptions = list("a rippling shockwave of scar tissue", "a wide, scattered cloud of shrapnel marks", "a gruesome multi-pronged puncture scar")

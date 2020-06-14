@@ -269,7 +269,7 @@
 	threshold_penalty = 25
 	demotes_to = /datum/wound/slash/moderate
 	status_effect_type = /datum/status_effect/wound/slash/severe
-	scarring_descriptions = list("a twisted line of faded gashes", "a gnarled sickle-shaped slice scar", "a long-faded puncture wound")
+	scarring_descriptions = list("a twisted line of faded gashes", "a gnarled sickle-shaped slice scar", "several parallel slice marks")
 
 /datum/wound/slash/critical
 	name = "Weeping Avulsion"

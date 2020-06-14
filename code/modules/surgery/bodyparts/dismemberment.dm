@@ -414,4 +414,6 @@
 		if(!L.attach_limb(src, 1))
 			qdel(L)
 			return FALSE
+		var/datum/scar/S = new
+		S.generate_amputated(L)
 		return TRUE
