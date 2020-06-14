@@ -339,7 +339,8 @@
 
 /obj/item/clothing/head/helmet/monkey_sentience
 	name = "monkey mind magnification helmet"
-	desc = "A fragile, circuitry embedded helmet to boost the intelligence on monkeys to higher levels. You see several warning labels..."
+	desc = "A fragile, circuitry embedded helmet for boosting the intelligence of a monkey to a higher level. You see several warning labels..."
+
 	icon_state = "monkeymind"
 	inhand_icon_state = "monkeymind"
 	strip_delay = 100
@@ -382,7 +383,8 @@
 	var/mob/picked = pick(candidates)
 	magnification.key = picked.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
-	to_chat(magnification, "<span class='notice'>You're a mind magnified monkey! Protect your helmet with your life, if you lose it your sentience goes with it.</span>")
+	to_chat(magnification, "<span class='notice'>You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!</span>")
+
 	icon_state = "monkeymindup"
 
 /obj/item/clothing/head/helmet/monkey_sentience/Destroy()
