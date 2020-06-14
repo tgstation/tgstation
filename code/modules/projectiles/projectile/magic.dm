@@ -336,6 +336,8 @@
 				return
 		else
 			var/obj/O = src
+			if(!isturf(O.loc))
+				O.forceMove(O.loc.drop_location())
 			if(istype(O, /obj/item/gun))
 				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
