@@ -1863,7 +1863,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/mob/living/simple_animal/mouse/brown/Tom,
+/mob/living/simple_animal/mouse/brown/tom,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "aeq" = (
@@ -27733,7 +27733,7 @@
 "bnQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/Ian{
+/mob/living/simple_animal/pet/dog/corgi/ian{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -33914,7 +33914,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "bCj" = (
-/obj/structure/closet/secure_closet/RD,
+/obj/structure/closet/secure_closet/research_director,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "bCk" = (
@@ -35329,7 +35329,7 @@
 	dir = 8
 	},
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/cmo)
 "bFF" = (
@@ -36568,7 +36568,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bIw" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/chief_medical,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -43081,7 +43081,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/poly,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
 "cbr" = (
@@ -51936,7 +51936,7 @@
 /area/maintenance/port)
 "hec" = (
 /obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/Renault,
+/mob/living/simple_animal/pet/fox/renault,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "hhs" = (

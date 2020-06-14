@@ -10671,7 +10671,7 @@
 	pixel_y = 32
 	},
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/Ian,
+/mob/living/simple_animal/pet/dog/corgi/ian,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aBG" = (
@@ -31087,7 +31087,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "bBi" = (
@@ -31167,7 +31167,7 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hor)
 "bBq" = (
-/obj/structure/closet/secure_closet/RD,
+/obj/structure/closet/secure_closet/research_director,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "RD Office APC";
@@ -32783,7 +32783,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bED" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/chief_medical,
 /obj/item/valentine,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -40320,7 +40320,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/poly,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "bVE" = (

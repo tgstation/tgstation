@@ -1277,7 +1277,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "acU" = (
@@ -24489,7 +24489,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/poly,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
 "bek" = (
@@ -30881,7 +30881,7 @@
 	pixel_y = 32
 	},
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/Ian,
+/mob/living/simple_animal/pet/dog/corgi/ian,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bsQ" = (
@@ -33767,7 +33767,7 @@
 	pixel_y = -29
 	},
 /obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/Renault,
+/mob/living/simple_animal/pet/fox/renault,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bAf" = (
@@ -41180,7 +41180,7 @@
 	pixel_y = 6
 	},
 /obj/structure/table/wood,
-/obj/item/toy/talking/AI{
+/obj/item/toy/talking/ai{
 	name = "\improper Nanotrasen-brand toy AI";
 	pixel_y = 6
 	},
@@ -51010,7 +51010,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "cnG" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/chief_medical,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -54728,7 +54728,7 @@
 	},
 /area/crew_quarters/heads/hor)
 "cwS" = (
-/obj/structure/closet/secure_closet/RD,
+/obj/structure/closet/secure_closet/research_director,
 /obj/machinery/keycard_auth{
 	pixel_y = -24
 	},
@@ -70847,7 +70847,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/mob/living/simple_animal/mouse/brown/Tom,
+/mob/living/simple_animal/mouse/brown/tom,
 /obj/structure/sink{
 	pixel_y = 29;
 	dir = 2;

@@ -1168,7 +1168,7 @@
 	req_one_access_txt = "150";
 	secure = 1
 	},
-/obj/item/clothing/head/HoS/beret/syndicate,
+/obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/under/syndicate,

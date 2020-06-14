@@ -66,12 +66,12 @@
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/clothing/glasses/blindfold(src)
 
-/obj/structure/closet/secure_closet/CMO
+/obj/structure/closet/secure_closet/chief_medical
 	name = "\proper chief medical officer's locker"
 	req_access = list(ACCESS_CMO)
 	icon_state = "cmo"
 
-/obj/structure/closet/secure_closet/CMO/PopulateContents()
+/obj/structure/closet/secure_closet/chief_medical/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/cmo(src)
 	new /obj/item/clothing/suit/bio_suit/cmo(src)

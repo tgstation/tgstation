@@ -6796,7 +6796,7 @@
 /area/maintenance/starboard/fore)
 "ard" = (
 /obj/structure/table/wood,
-/obj/item/toy/talking/AI,
+/obj/item/toy/talking/ai,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "are" = (
@@ -37079,7 +37079,7 @@
 /area/crew_quarters/heads/hos)
 "btC" = (
 /obj/structure/closet/secure_closet/hos,
-/obj/item/clothing/head/HoS/beret,
+/obj/item/clothing/head/hos/beret,
 /obj/item/clothing/suit/armor/hos/trenchcoat,
 /obj/item/clothing/under/rank/security/head_of_security/grey,
 /obj/effect/turf_decal/stripes/line{
@@ -50742,7 +50742,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/pet/fox/Renault,
+/mob/living/simple_animal/pet/fox/renault,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
 "bQQ" = (
@@ -54068,7 +54068,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/poly,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
 "bWg" = (
@@ -62127,7 +62127,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/pet/dog/corgi/Ian,
+/mob/living/simple_animal/pet/dog/corgi/ian,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "cla" = (
@@ -96170,7 +96170,7 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dzA" = (
-/obj/structure/closet/secure_closet/RD,
+/obj/structure/closet/secure_closet/research_director,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
 	},
@@ -96343,7 +96343,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/cmo)
 "dAc" = (
@@ -99391,7 +99391,7 @@
 /turf/open/floor/plasteel,
 /area/medical/morgue)
 "dGw" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/chief_medical,
 /obj/item/clothing/under/rank/medical/doctor,
 /obj/item/clothing/head/nursehat,
 /obj/effect/turf_decal/stripes/line{

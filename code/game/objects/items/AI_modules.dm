@@ -495,14 +495,14 @@ AI MODULES
 
 /******************* Ion Module *******************/
 
-/obj/item/aiModule/toyAI // -- Incoming //No actual reason to inherit from ion boards here, either. *sigh* ~Miauw
+/obj/item/aiModule/toy_ai // -- Incoming //No actual reason to inherit from ion boards here, either. *sigh* ~Miauw
 	name = "toy AI"
 	desc = "A little toy model AI core with real law uploading action!" //Note: subtle tell
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "AI"
 	laws = list("")
 
-/obj/item/aiModule/toyAI/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/aiModule/toy_ai/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	//..()
 	if(law_datum.owner)
 		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
@@ -517,7 +517,7 @@ AI MODULES
 			law_datum.replace_random_law(laws[1],list(LAW_ION,LAW_INHERENT,LAW_SUPPLIED))
 	return laws[1]
 
-/obj/item/aiModule/toyAI/attack_self(mob/user)
+/obj/item/aiModule/toy_ai/attack_self(mob/user)
 	laws[1] = generate_ion_law()
 	to_chat(user, "<span class='notice'>You press the button on [src].</span>")
 	playsound(user, 'sound/machines/click.ogg', 20, TRUE)

@@ -12786,7 +12786,7 @@
 /obj/structure/statue/snow/snowman{
 	name = "Snow-Luc Price"
 	},
-/obj/item/clothing/head/HoS{
+/obj/item/clothing/head/hos{
 	pixel_y = 10
 	},
 /turf/open/floor/plating/asteroid/snow,
