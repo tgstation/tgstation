@@ -26,8 +26,8 @@
 "az" = (/obj/machinery/status_display/supply{dir = 4; layer = 4; pixel_x = -32},/obj/machinery/computer{icon_state = "computer"; dir = 4},/turf/open/floor/plasteel,/area/space)
 "aA" = (/obj/effect/turf_decal/tile/brown{dir = 4},/obj/effect/turf_decal/tile/brown{dir = 1},/turf/open/floor/plasteel,/area/space)
 "aB" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/turf/open/floor/plasteel,/area/space)
-"aC" = (/obj/structure/cable,/obj/machinery/door/airlock/mining/glass{name = "Cargo Office"; req_access_txt = "0"},/turf/open/floor/plasteel,/area/space)
-"aD" = (/obj/machinery/door/airlock/mining/glass{name = "Quartermaster"; req_access_txt = "0"},/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/brown,/obj/effect/turf_decal/tile/brown{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/space)
+"aC" = (/obj/machinery/door/airlock/mining/glass{name = "Cargo Office"; req_access_txt = "0"},/turf/open/floor/plasteel,/area/space)
+"aD" = (/obj/machinery/door/airlock/mining/glass{name = "Quartermaster"; req_access_txt = "0"},/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/brown,/obj/effect/turf_decal/tile/brown{dir = 8},/turf/open/floor/plasteel,/area/space)
 "aE" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plasteel,/area/space)
 "aF" = (/obj/effect/decal/cleanable/dirt,/obj/effect/spawner/lootdrop/maintenance,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
 "aG" = (/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/space)
@@ -36,13 +36,13 @@
 "aJ" = (/obj/machinery/disposal/bin,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown,/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/floor/plasteel,/area/space)
 "aK" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 1},/obj/machinery/computer{icon_state = "computer"; dir = 8},/turf/open/floor/plasteel,/area/space)
 "aL" = (/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plasteel,/area/space)
-"aM" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/space)
+"aM" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/floor/plasteel,/area/space)
 "aN" = (/obj/effect/turf_decal/loading_area{dir = 8},/turf/open/floor/plasteel,/area/space)
 "aO" = (/obj/structure/table,/obj/item/clipboard,/obj/item/folder/yellow,/turf/open/floor/plasteel,/area/space)
 "aP" = (/obj/effect/turf_decal/tile/brown,/obj/effect/turf_decal/tile/brown{dir = 4},/obj/machinery/computer{icon_state = "computer"; dir = 8},/turf/open/floor/plasteel,/area/space)
 "aQ" = (/obj/structure/window/reinforced{dir = 1},/obj/effect/turf_decal/loading_area{dir = 8},/turf/open/floor/plasteel,/area/space)
 "aR" = (/obj/structure/closet/crate/secure/weapon,/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,/obj/item/gun/ballistic/automatic/toy/unrestricted,/turf/open/floor/plasteel,/area/space)
-"aS" = (/obj/structure/cable,/turf/open/floor/plasteel,/area/space)
+"aS" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/delivery,/obj/item/ammo_box/foambox,/turf/open/floor/plasteel,/area/space)
 "aT" = (/obj/item/radio/intercom{pixel_y = -35},/obj/effect/turf_decal/tile/brown,/obj/effect/turf_decal/tile/brown{dir = 4},/obj/effect/turf_decal/tile/brown{dir = 8},/obj/machinery/computer{icon_state = "computer"; dir = 8},/turf/open/floor/plasteel,/area/space)
 "aU" = (/obj/machinery/status_display/supply{dir = 4; layer = 4; pixel_x = -32},/obj/structure/filingcabinet,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 8},/turf/open/floor/plasteel,/area/space)
 "aV" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 5},/turf/open/floor/plasteel,/area/space)
@@ -50,14 +50,14 @@
 "aX" = (/obj/structure/table,/obj/machinery/requests_console{department = "Cargo Bay"; departmentType = 2; pixel_x = -30},/obj/item/pen,/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown,/obj/effect/turf_decal/tile/brown{dir = 8},/obj/item/paper_bin/carbon{layer = 2.9},/turf/open/floor/plasteel,/area/space)
 "aY" = (/obj/structure/table,/obj/item/pen,/obj/item/radio/intercom{pixel_y = -26},/obj/item/paper_bin{layer = 2.9},/obj/structure/extinguisher_cabinet{pixel_x = -26},/turf/open/floor/plasteel,/area/space)
 "aZ" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/loading_area{dir = 8},/turf/open/floor/plasteel,/area/space)
-"bc" = (/obj/effect/spawner/lootdrop/maintenance,/obj/effect/turf_decal/bot,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 10},/turf/open/floor/plasteel,/area/space)
+"bc" = (/obj/effect/spawner/lootdrop/maintenance,/obj/effect/turf_decal/bot,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 10},/obj/item/ammo_box/foambox,/turf/open/floor/plasteel,/area/space)
 "bd" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=4"; dir = 4; freq = 1400; location = "QM #1"},/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/space)
 "be" = (/obj/effect/turf_decal/bot,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 8},/mob/living/simple_animal/bot/mulebot{home_destination = "QM #3"; suffix = "#3"},/turf/open/floor/plasteel,/area/space)
 "bf" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/navbeacon{codes_txt = "delivery;dir=4"; dir = 4; freq = 1400; location = "QM #2"},/obj/effect/turf_decal/delivery,/mob/living/simple_animal/bot/mulebot{home_destination = "QM #3"; suffix = "#3"},/turf/open/floor/plasteel,/area/space)
 "bg" = (/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/clothing/suit/hazardvest{desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks."; name = "emergency lifejacket"},/obj/item/tank/internals/emergency_oxygen{pixel_x = 3},/obj/item/tank/internals/emergency_oxygen{pixel_x = 3},/obj/item/tank/internals/emergency_oxygen{pixel_x = 3},/obj/item/tank/internals/emergency_oxygen{pixel_x = 3},/obj/item/tank/internals/emergency_oxygen{pixel_x = 3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/mask/breath{pixel_x = -3; pixel_y = -3},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/item/clothing/head/hardhat/orange{name = "protective hat"; pixel_y = 9},/obj/structure/closet/crate/internals,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
 "bh" = (/obj/machinery/light{dir = 8},/obj/machinery/navbeacon{codes_txt = "delivery;dir=4"; dir = 4; freq = 1400; location = "QM #3"},/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/space)
 "bj" = (/obj/machinery/camera{c_tag = "Cargo Bay - Port"; dir = 4; name = "cargo camera"},/obj/machinery/navbeacon{codes_txt = "delivery;dir=4"; dir = 4; freq = 1400; location = "QM #4"},/obj/effect/turf_decal/delivery,/mob/living/simple_animal/bot/mulebot{beacon_freq = 1400; home_destination = "QM #1"; suffix = "#1"},/turf/open/floor/plasteel,/area/space)
-"bk" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel,/area/space)
+"bk" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 8},/turf/open/floor/plasteel,/area/space)
 "bl" = (/obj/effect/turf_decal/tile/brown{dir = 8},/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/floor/plasteel,/area/space)
 "bm" = (/obj/effect/decal/cleanable/oil,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel,/area/space)
 "bn" = (/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 9},/turf/open/floor/plasteel,/area/space)
@@ -81,14 +81,14 @@
 blacadaeaAaAaAaAaAaAaAaAaA
 bogAgAgAgAgAabagahahagagab
 bogAgAgAgAgAabanararawaEaa
-afaialamaNgAabazaBaLakgAgA
-aoapaoapgAgAabaYaOaHaSaSaK
+afaialaSaNgAabazaBaLakgAgA
+aoapaoapgAgAabaYaOaHgAgAaK
 aqalasataNgAabababababaCab
 apapapavgAgAgAgAgAgAgAgAgA
 axayaFaGaNaugAbLaugAaLbngA
 aVapapapabagaDagabbQaRaQbd
 bcbebgamabaIaMaJabgAbBaWbf
-apaoaobmabbkaSaPagbTbCaZbh
+apaoaobmabbkgAaPagbTbCaZbh
 bpbrgAgAabaUbqaPagaLgAajbj
 bubvbwbxabaXbyaTaggAbLgAgA
 "}

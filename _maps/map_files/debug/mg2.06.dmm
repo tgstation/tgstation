@@ -1,29 +1,49 @@
 "aB" = (/obj/machinery/computer/security{dir = 4},/turf/open/floor/plasteel/showroomfloor,/area/space)
-"bR" = (/obj/structure/table,/turf/open/floor/plasteel/dark,/area/space)
+"bg" = (/obj/item/documents/photocopy,/turf/open/floor/plasteel,/area/space)
+"br" = (/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/apple{pixel_x = 5; pixel_y = -7},/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/apple,/turf/open/floor/plasteel,/area/space)
+"bR" = (/obj/structure/table,/obj/item/documents/syndicate/red,/turf/open/floor/plasteel/dark,/area/space)
+"bY" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted{pixel_y = -5; pixel_x = 5},/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted,/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted{pixel_x = -5; pixel_y = 5},/turf/open/floor/plasteel/dark,/area/space)
 "cq" = (/turf/open/floor/plasteel,/area/space)
 "cu" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "dz" = (/obj/structure/filingcabinet,/obj/machinery/requests_console{department = "Security"; departmentType = 5; pixel_y = 30},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
 "dB" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/dark,/area/space)
 "ef" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/suit_storage_unit/security,/turf/open/floor/plasteel/dark,/area/space)
+"ev" = (/obj/item/clothing/mask/cigarette/robust{pixel_x = -7; pixel_y = 12},/obj/item/clothing/mask/cigarette/robust{pixel_y = -2; pixel_x = -1},/obj/item/clothing/mask/cigarette/robust{pixel_x = -9; pixel_y = -5},/obj/item/clothing/mask/cigarette/robust,/turf/open/floor/plasteel,/area/space)
+"fl" = (/obj/item/paper/fluff/ruins/listeningstation/reports/october,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "gq" = (/turf/closed/wall/r_wall,/area/space)
 "gE" = (/obj/structure/chair/office{dir = 1},/turf/open/floor/plasteel,/area/space)
+"gL" = (/obj/structure/table,/obj/item/folder/documents,/turf/open/floor/plasteel/dark,/area/space)
 "ix" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
+"jD" = (/obj/item/documents/syndicate,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "kp" = (/obj/structure/punching_bag,/turf/open/floor/plasteel,/area/space)
-"mF" = (/obj/machinery/newscaster{pixel_x = -32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"kG" = (/obj/item/paper/fluff/ruins/oldstation/protoinv,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"md" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/paper/fluff/ruins/listeningstation/reports/august,/turf/open/floor/plasteel/dark,/area/space)
+"mF" = (/obj/machinery/newscaster{pixel_x = -32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/reagent_containers/food/snacks/donut/jelly/berry,/obj/item/reagent_containers/food/snacks/donut/jelly/berry{pixel_x = -6; pixel_y = 6},/obj/item/reagent_containers/food/snacks/donut/jelly/berry{pixel_x = 0; pixel_y = 6},/turf/open/floor/plasteel,/area/space)
 "mG" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/space)
+"mH" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/paper/fluff/stations/lavaland/sloth/note,/turf/open/floor/plasteel,/area/space)
+"mL" = (/obj/structure/rack,/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"},/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"; pixel_y = 5},/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"; pixel_y = 5; pixel_x = 11},/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"; pixel_y = 14},/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"; pixel_y = 14; pixel_x = 15},/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"; pixel_y = 7; pixel_x = 6},/turf/open/floor/plasteel/dark,/area/space)
 "oG" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/delivery,/obj/machinery/door/airlock/security{name = "Equipment Room"; req_access_txt = "1"},/turf/open/floor/plasteel,/area/space)
 "ps" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
-"pV" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
-"pX" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
-"ry" = (/obj/structure/rack,/obj/structure/sign/warning/nosmoking{pixel_x = 32},/turf/open/floor/plasteel/dark,/area/space)
+"pH" = (/obj/item/paper/fluff/ruins/oldstation/protosuit,/turf/open/floor/plasteel/dark,/area/space)
+"pV" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/paper/fluff/ruins/thederelict/syndie_mission,/turf/open/floor/plasteel,/area/space)
+"pX" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/storage/belt/security,/turf/open/floor/plasteel,/area/space)
+"ry" = (/obj/structure/rack,/obj/structure/sign/warning/nosmoking{pixel_x = 32},/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted{pixel_x = 5; pixel_y = -5},/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted{pixel_x = -5; pixel_y = 5},/turf/open/floor/plasteel/dark,/area/space)
 "rL" = (/obj/structure/filingcabinet/chestdrawer,/turf/open/floor/plasteel/showroomfloor,/area/space)
-"sm" = (/obj/structure/table,/obj/item/laser_pointer/red,/obj/item/wrench,/obj/item/crowbar,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"sm" = (/obj/structure/table,/obj/item/laser_pointer/red,/obj/item/wrench,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"sO" = (/obj/item/restraints/handcuffs/cable/zipties/used,/obj/item/restraints/handcuffs/cable/zipties/used{pixel_y = 3; pixel_x = -2},/turf/open/floor/plasteel/dark,/area/space)
 "tc" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"tZ" = (/obj/item/reagent_containers/food/snacks/donut,/obj/item/reagent_containers/food/snacks/donut{pixel_y = 3},/turf/open/floor/plasteel,/area/space)
 "ue" = (/obj/structure/closet/bombcloset/security,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "uu" = (/obj/machinery/computer/secure_data,/turf/open/floor/plasteel,/area/space)
 "vm" = (/obj/structure/reagent_dispensers/peppertank{pixel_x = 32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "vs" = (/obj/structure/closet/secure_closet/security/sec,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"vF" = (/obj/item/paper/fluff/ruins/thederelict/equipment,/obj/item/reagent_containers/food/snacks/donut/berry{pixel_y = -4},/obj/item/reagent_containers/food/snacks/donut/berry{pixel_y = -4; pixel_x = 11},/obj/item/reagent_containers/food/snacks/donut/berry{pixel_y = 6},/turf/open/floor/plasteel,/area/space)
+"vK" = (/obj/item/paper/fluff/ruins/thederelict/vaultraider,/turf/open/floor/plasteel,/area/space)
+"wt" = (/obj/item/paper/fluff/ruins/thederelict/nukie_objectives,/turf/open/floor/plasteel,/area/space)
 "wN" = (/obj/machinery/light_switch{dir = 9; pixel_x = -22},/turf/open/floor/plasteel/showroomfloor,/area/space)
+"wQ" = (/obj/structure/sign/poster/official/foam_force_ad{pixel_y = 32},/obj/item/toy/foamblade,/obj/item/toy/foamblade{pixel_x = 3; pixel_y = -5},/turf/open/floor/plasteel/dark,/area/space)
+"wX" = (/obj/item/reagent_containers/food/snacks/donut{pixel_y = 4},/obj/item/reagent_containers/food/snacks/donut{pixel_y = 4; pixel_x = -5},/turf/open/floor/plasteel,/area/space)
+"xH" = (/obj/item/disk,/turf/open/floor/plasteel,/area/space)
 "xW" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "yM" = (/obj/machinery/photocopier,/obj/machinery/computer/security/telescreen/entertainment{pixel_y = 32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
 "yV" = (/obj/structure/lattice,/obj/machinery/camera/motion{c_tag = "Armory External"; dir = 1},/turf/open/space,/area/space)
@@ -31,39 +51,63 @@
 "zj" = (/obj/machinery/power/apc{dir = 8; name = "Security Office APC"; pixel_x = -25},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "zk" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "zW" = (/obj/structure/table,/obj/structure/plaque/static_plaque/golden{pixel_y = 32},/obj/machinery/light{dir = 1},/obj/item/storage/box/handcuffs{pixel_x = 1; pixel_y = 3},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
-"BT" = (/obj/machinery/camera{c_tag = "Security Office"; dir = 4},/obj/item/radio/intercom{dir = 4; pixel_x = -31},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
-"Ca" = (/obj/structure/rack,/turf/open/floor/plasteel/dark,/area/space)
-"Cp" = (/obj/structure/table,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"AX" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/item/disk,/turf/open/floor/plasteel,/area/space)
+"BI" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/paper/fluff/ruins/oldstation/protosleep,/turf/open/floor/plasteel,/area/space)
+"BN" = (/obj/item/paper/fluff/ruins/listeningstation/reports/april,/turf/open/floor/plasteel/dark,/area/space)
+"BT" = (/obj/machinery/camera{c_tag = "Security Office"; dir = 4},/obj/item/radio/intercom{dir = 4; pixel_x = -31},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/disk/holodisk/donutstation,/turf/open/floor/plasteel,/area/space)
+"Ca" = (/obj/structure/rack,/obj/item/gun/ballistic/shotgun/toy/unrestricted{pixel_x = 5; pixel_y = -5},/obj/item/gun/ballistic/shotgun/toy/unrestricted{pixel_x = -5; pixel_y = 5},/obj/item/gun/ballistic/shotgun/toy/unrestricted,/turf/open/floor/plasteel/dark,/area/space)
+"Cp" = (/obj/structure/table,/obj/item/paper/fluff/ruins/oldstation/protogun,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"CB" = (/obj/structure/rack,/obj/item/toy/windupToolbox,/turf/open/floor/plasteel/dark,/area/space)
+"Dv" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/documents,/turf/open/floor/plasteel,/area/space)
+"ED" = (/obj/item/paper/fluff/ruins/oldstation/protohealth,/turf/open/floor/plasteel/dark,/area/space)
+"EV" = (/obj/item/paper/fluff/ruins/oldstation/survivor_note,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"Fr" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/paper/fluff/ruins/listeningstation/reports/july,/turf/open/floor/plasteel,/area/space)
 "FO" = (/turf/open/floor/plasteel/showroomfloor,/area/space)
-"FR" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"FR" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/structure/sign/poster/contraband/donut_corp{pixel_x = 32},/turf/open/floor/plasteel,/area/space)
+"Gc" = (/obj/item/storage/belt/security,/turf/open/floor/plasteel,/area/space)
+"Gw" = (/obj/structure/table/wood,/obj/item/flashlight/lamp/green{pixel_x = -4; pixel_y = 12},/obj/item/pen,/obj/item/folder/red{layer = 2.9; pixel_x = 8},/obj/item/storage/fancy/cigarettes/cigpack_robust{desc = "Smoked by the robust. Malcolm's prefered brand."; name = "Cowboy Killers"; pixel_x = -7; pixel_y = -5},/turf/open/floor/plasteel,/area/space)
 "GI" = (/turf/open/floor/plasteel/dark,/area/space)
 "Ho" = (/obj/machinery/computer/security,/turf/open/floor/plasteel,/area/space)
 "Il" = (/obj/machinery/vending/coffee,/obj/machinery/status_display/evac{pixel_y = 32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"IH" = (/obj/item/disk,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"JB" = (/obj/structure/table,/obj/item/paper/fluff/ruins/spacehotel/notice,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "La" = (/obj/machinery/holopad/secure,/turf/open/floor/plasteel,/area/space)
 "LD" = (/obj/machinery/computer/secure_data{dir = 4},/turf/open/floor/plasteel/showroomfloor,/area/space)
 "LW" = (/obj/structure/closet/l3closet/security,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"Mn" = (/obj/item/storage/belt/security,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"Mq" = (/obj/item/documents/nanotrasen,/turf/open/floor/plasteel,/area/space)
 "MC" = (/turf/closed/wall,/area/space)
 "MO" = (/obj/structure/table,/obj/item/storage/fancy/donut_box{pixel_y = 2},/obj/structure/noticeboard{pixel_y = 32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"Nd" = (/obj/structure/rack,/obj/item/ammo_box/foambox,/obj/item/ammo_box/foambox,/obj/item/ammo_box/foambox,/turf/open/floor/plasteel/dark,/area/space)
 "Nq" = (/obj/structure/weightmachine/weightlifter,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"Ny" = (/obj/item/paper/fluff/ruins/oldstation/generator_manual,/turf/open/floor/plasteel,/area/space)
+"NA" = (/obj/item/paper/fluff/ruins/listeningstation/reports/november,/turf/open/floor/plasteel,/area/space)
+"Pp" = (/obj/item/paper/fluff/ruins/listeningstation/reports/september,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "Qo" = (/obj/machinery/camera/motion{c_tag = "Armory Motion Sensor"},/obj/structure/closet{name = "Evidence Closet"},/turf/open/floor/plasteel/dark,/area/space)
 "QA" = (/obj/structure/table/wood,/obj/item/flashlight/lamp/green{pixel_x = -4; pixel_y = 12},/obj/item/pen,/obj/item/folder/red{layer = 2.9; pixel_x = 8},/turf/open/floor/plasteel,/area/space)
+"RA" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/toy/unrestricted,/obj/item/gun/ballistic/automatic/toy/unrestricted{pixel_x = 5; pixel_y = -5},/obj/item/gun/ballistic/automatic/toy/unrestricted{pixel_x = -5; pixel_y = 5},/turf/open/floor/plasteel/dark,/area/space)
+"RJ" = (/obj/item/paper/fluff/ruins/oldstation/report,/turf/open/floor/plasteel/dark,/area/space)
 "Sz" = (/obj/machinery/light_switch{dir = 9; pixel_x = -22},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "Tn" = (/obj/machinery/door/airlock/security{name = "Brig Control"; req_access_txt = "3"},/obj/machinery/door/firedoor,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"UW" = (/obj/item/paper/fluff/ruins/oldstation/protosing,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "VZ" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"WX" = (/obj/structure/table/wood,/obj/item/flashlight/lamp/green{pixel_x = -4; pixel_y = 12},/obj/item/pen,/obj/item/folder/red{layer = 2.9; pixel_x = 8},/obj/item/paper/fluff/sop{pixel_x = -9},/turf/open/floor/plasteel,/area/space)
+"Xw" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/blumpkin{pixel_y = -6; pixel_x = 8},/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/blumpkin{pixel_x = -13; pixel_y = -6},/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/blumpkin,/turf/open/floor/plasteel,/area/space)
+"Zt" = (/obj/structure/table,/obj/item/documents/syndicate/blue,/turf/open/floor/plasteel/dark,/area/space)
 "Zx" = (/obj/structure/chair/stool,/turf/open/floor/plasteel,/area/space)
 
 (1,1,1) = {"
-GIdBtcyVtcmGFOFONqFONqFOFO
-GIgqgqgqgqgqFOFOFOFOFOFOFO
-GIGIQoGIbRgqwNLWvsvsvsueFO
-bRGIGIGIbRgqoGMCMCMCMCMCoG
-CaGICaGIrygqzkdzMOzWIlyMvm
-CaGICaGICagqzjcqZxZxcqcqVZ
-CaGICaGICagqmFcqcqcqcqcqFR
-efGIGIGIefgqpsQAuucqQAHoVZ
-mGixmGixmGgqBTcqgELacqgEVZ
-LDFOFOFOxWgqSzQAzfcqQAzfVZ
-aBFOFOFOxWmGpVcqgEcqcqgEpX
-CpFOFOFOFOTnpscqcqcqcqcqVZ
-smCpFOFOrLmGzkcucukpcucuzk
+EDdBtcyVtcmGFOFONqUWNqMnFO
+GIgqgqgqgqgqkGFOMnFOFOEVFO
+GIRJQowQbRgqwNLWvsvsvsueFO
+ZtsOGIGIgLgqoGMCMCMCMCMCoG
+CaGINdBNrygqFrdzMOzWIlyMvm
+bYGINdGIRAgqzjvKZxZxvFNyXw
+mLGINdGICBgqmFMqwXtZcqcqFR
+efGIpHGIefgqpsQAuubgWXHoVZ
+mGixmGmdmGgqBTcqgELabrgEAX
+LDFOjDFOxWgqSzQAzfevGwzfVZ
+aBPpFOFOxWmGpVcqgExHwtgEpX
+CpFOflFOFOTnpsGcNAcqcqcqVZ
+smJBFOIHrLmGzkDvcukpmHcuBI
 "}
