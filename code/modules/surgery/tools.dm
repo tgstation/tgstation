@@ -110,7 +110,7 @@
 	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = SHARP_POINTY
+	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
 	bare_wound_bonus = 20
@@ -259,7 +259,7 @@
 	force = 16
 	toolspeed = 0.7
 	light_color = LIGHT_COLOR_GREEN
-	sharpness = SHARP_POINTY
+	sharpness = SHARP_EDGED
 
 /obj/item/scalpel/advanced/Initialize()
 	. = ..()

@@ -42,6 +42,8 @@
 	var/jostle_pain_mult
 	var/pain_stam_pct
 
+	var/datum/wound/pierce/stuck_wound
+
 	///if both our pain multiplier and jostle pain multiplier are 0, we're harmless and can omit most of the damage related stuff
 	var/harmful
 
