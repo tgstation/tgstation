@@ -169,7 +169,7 @@
 			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
 				new cat_type(loc)
 
-/mob/living/simple_animal/pet/cat/Proc
+/mob/living/simple_animal/pet/cat/_proc
 	name = "Proc"
 	gender = MALE
 	gold_core_spawnable = NO_SPAWN

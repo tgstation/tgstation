@@ -600,7 +600,7 @@
 
 
 //LISA! SQUEEEEEEEEE~
-/mob/living/simple_animal/pet/dog/corgi/Lisa
+/mob/living/simple_animal/pet/dog/corgi/lisa
 	name = "Lisa"
 	real_name = "Lisa"
 	gender = FEMALE
@@ -620,13 +620,13 @@
 	var/puppies = 0
 
 //Lisa already has a cute bow!
-/mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
+/mob/living/simple_animal/pet/dog/corgi/lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
 		to_chat(usr, "<span class='warning'>[src] already has a cute bow!</span>")
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Lisa/Life()
+/mob/living/simple_animal/pet/dog/corgi/lisa/Life()
 	..()
 
 	make_babies()

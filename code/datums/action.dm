@@ -228,7 +228,7 @@
 /datum/action/item_action/toggle_barrier_spread
 	name = "Toggle Barrier Spread"
 
-/datum/action/item_action/equip_unequip_TED_Gun
+/datum/action/item_action/equip_unequip_ted_gun
 	name = "Equip/Unequip TED Gun"
 
 /datum/action/item_action/toggle_paddles
@@ -699,7 +699,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "wheelys"
 
-/datum/action/item_action/kindleKicks
+/datum/action/item_action/kindle_kicks
 	name = "Activate Kindle Kicks"
 	desc = "Kick you feet together, activating the lights in your Kindle Kicks."
 	icon_icon = 'icons/mob/actions/actions_items.dmi'

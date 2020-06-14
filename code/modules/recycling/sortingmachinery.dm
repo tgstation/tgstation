@@ -165,7 +165,7 @@
 	for(var/obj/I in src.GetAllContents())
 		SEND_SIGNAL(I, COMSIG_STRUCTURE_UNWRAPPED)
 
-/obj/item/smallDelivery
+/obj/item/small_delivery
 	name = "parcel"
 	desc = "A brown paper delivery parcel."
 	icon = 'icons/obj/storage.dmi'
@@ -176,7 +176,7 @@
 	var/obj/item/paper/note
 	var/obj/item/barcode/sticker
 
-/obj/item/smallDelivery/contents_explosion(severity, target)
+/obj/item/small_delivery/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
@@ -186,7 +186,7 @@
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowobj += AM
 
-/obj/item/smallDelivery/attack_self(mob/user)
+/obj/item/small_delivery/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
 	if(!do_after(user, 15, target = user))
 		return
@@ -199,7 +199,7 @@
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
 
-/obj/item/smallDelivery/attack_self_tk(mob/user)
+/obj/item/small_delivery/attack_self_tk(mob/user)
 	if(ismob(loc))
 		var/mob/M = loc
 		M.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -215,7 +215,7 @@
 	unwrap_contents()
 	qdel(src)
 
-/obj/item/smallDelivery/examine(mob/user)
+/obj/item/small_delivery/examine(mob/user)
 	. = ..()
 	if(note)
 		if(!in_range(user, src))
@@ -226,7 +226,7 @@
 	if(sticker)
 		. += "There's a barcode attached to the side."
 
-/obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
+/obj/item/small_delivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/O = W
 
@@ -317,7 +317,7 @@
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
 
-/obj/item/smallDelivery/proc/unwrap_contents()
+/obj/item/small_delivery/proc/unwrap_contents()
 	if(!sticker)
 		return
 	for(var/obj/I in src.GetAllContents())

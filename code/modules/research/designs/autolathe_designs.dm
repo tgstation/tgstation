@@ -999,7 +999,7 @@
 	build_path = /obj/item/stock_parts/cell/emergency_light
 	category = list("initial", "Electronics")
 
-/datum/design/packageWrap
+/datum/design/package_wrap
 	name = "Package Wrapping"
 	id = "packagewrap"
 	build_type = AUTOLATHE | PROTOLATHE

@@ -400,7 +400,7 @@
 			if("crab")
 				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
 			if("coffee")
-				M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
+				M.change_mob_type( /mob/living/simple_animal/crab/coffee , null, null, delmob )
 			if("parrot")
 				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
 			if("polyparrot")
@@ -1701,7 +1701,7 @@
 										R.activate_module(I)
 
 		if(pod)
-			new /obj/effect/DPtarget(target, pod)
+			new /obj/effect/dp_target(target, pod)
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

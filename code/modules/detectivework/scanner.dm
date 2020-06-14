@@ -19,12 +19,12 @@
 	var/range = 8
 	var/view_check = TRUE
 	var/forensicPrintCount = 0
-	actions_types = list(/datum/action/item_action/displayDetectiveScanResults)
+	actions_types = list(/datum/action/item_action/display_detective_scan_results)
 
-/datum/action/item_action/displayDetectiveScanResults
+/datum/action/item_action/display_detective_scan_results
 	name = "Display Forensic Scanner Results"
 
-/datum/action/item_action/displayDetectiveScanResults/Trigger()
+/datum/action/item_action/display_detective_scan_results/Trigger()
 	var/obj/item/detective_scanner/scanner = target
 	if(istype(scanner))
 		scanner.displayDetectiveScanResults(usr)

@@ -61,7 +61,7 @@
 /obj/item/storage/box/can_be_package_wrapped()
 	return 1
 
-/obj/item/smallDelivery/can_be_package_wrapped()
+/obj/item/small_delivery/can_be_package_wrapped()
 	return 0
 
 /obj/item/stack/package_wrap/afterattack(obj/target, mob/user, proximity)
@@ -83,7 +83,7 @@
 		else if(!isturf(I.loc))
 			return
 		if(use(1))
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))
+			var/obj/item/small_delivery/P = new /obj/item/small_delivery(get_turf(I.loc))
 			if(user.Adjacent(I))
 				P.add_fingerprint(user)
 				I.add_fingerprint(user)

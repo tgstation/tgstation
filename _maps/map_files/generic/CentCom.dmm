@@ -11155,7 +11155,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "ze" = (
-/obj/structure/closet/secure_closet/ertEngi,
+/obj/structure/closet/secure_closet/ert_engi,
 /obj/structure/sign/directions/engineering{
 	pixel_y = 24
 	},
@@ -11163,7 +11163,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "zf" = (
-/obj/structure/closet/secure_closet/ertEngi,
+/obj/structure/closet/secure_closet/ert_engi,
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
@@ -11212,7 +11212,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "zj" = (
-/obj/structure/closet/secure_closet/ertCom,
+/obj/structure/closet/secure_closet/ert_com,
 /obj/structure/sign/directions/command{
 	pixel_y = 24
 	},
@@ -12611,7 +12611,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "CB" = (
-/obj/structure/closet/secure_closet/ertMed,
+/obj/structure/closet/secure_closet/ert_med,
 /obj/structure/sign/directions/medical{
 	dir = 1;
 	pixel_y = -24
@@ -12622,7 +12622,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "CC" = (
-/obj/structure/closet/secure_closet/ertMed,
+/obj/structure/closet/secure_closet/ert_med,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_y = -32;
@@ -12658,14 +12658,14 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "CF" = (
-/obj/structure/closet/secure_closet/ertSec,
+/obj/structure/closet/secure_closet/ert_sec,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "CG" = (
-/obj/structure/closet/secure_closet/ertSec,
+/obj/structure/closet/secure_closet/ert_sec,
 /obj/structure/sign/directions/security{
 	dir = 1;
 	pixel_y = -24

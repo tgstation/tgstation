@@ -25,7 +25,7 @@
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
 	return TRUE
 
-/datum/crafting_recipe/IED
+/datum/crafting_recipe/improv_explosive
 	name = "IED"
 	result = /obj/item/grenade/iedcasing
 	reqs = list(/datum/reagent/fuel = 50,
@@ -207,7 +207,7 @@
 	time = 40
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/Firebot
+/datum/crafting_recipe/firebot
 	name = "Firebot"
 	result = /mob/living/simple_animal/bot/firebot
 	reqs = list(/obj/item/extinguisher = 1,
@@ -217,7 +217,7 @@
 	time = 40
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/Vibebot
+/datum/crafting_recipe/vibebot
 	name = "Vibebot"
 	result = /mob/living/simple_animal/bot/vibebot
 	reqs = list(/obj/item/light/bulb = 2,

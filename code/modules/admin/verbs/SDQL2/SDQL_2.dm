@@ -309,7 +309,7 @@
 		"<span class='admin'>SDQL combined querys took [DisplayTimeText(end_time_total)] to complete.</span>") + combined_refs
 
 GLOBAL_LIST_INIT(sdql2_queries, GLOB.sdql2_queries || list())
-GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null, "VIEW VARIABLES (all)", null))
+GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null, "VIEW VARIABLES (all)", null))
 
 /datum/sdql2_query
 	var/list/query_tree
@@ -1211,8 +1211,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	var/datum/sdql2_query/Q = target
 	Q.action_click()
 
-/obj/effect/statclick/SDQL2_VV_all
+/obj/effect/statclick/sdql2_vv_all
 	name = "VIEW VARIABLES"
 
-/obj/effect/statclick/SDQL2_VV_all/Click()
+/obj/effect/statclick/sdql2_vv_all/Click()
 	usr.client.debug_variables(GLOB.sdql2_queries)

@@ -277,7 +277,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 
 //Hippocratic Oath: Applied when the Rod of Asclepius is activated.
-/datum/status_effect/hippocraticOath
+/datum/status_effect/hippocratic_oath
 	id = "Hippocratic Oath"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
@@ -287,19 +287,19 @@
 	var/hand
 	var/deathTick = 0
 
-/datum/status_effect/hippocraticOath/on_apply()
+/datum/status_effect/hippocratic_oath/on_apply()
 	//Makes the user passive, it's in their oath not to harm!
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.add_hud_to(owner)
 	return ..()
 
-/datum/status_effect/hippocraticOath/on_remove()
+/datum/status_effect/hippocratic_oath/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)
 
-/datum/status_effect/hippocraticOath/tick()
+/datum/status_effect/hippocratic_oath/tick()
 	if(owner.stat == DEAD)
 		if(deathTick < 4)
 			deathTick += 1
@@ -364,7 +364,7 @@
 				var/mob/living/simple_animal/SM = L
 				SM.adjustHealth(-3.5, forced = TRUE)
 
-/datum/status_effect/hippocraticOath/proc/consume_owner()
+/datum/status_effect/hippocratic_oath/proc/consume_owner()
 	owner.visible_message("<span class='notice'>[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.</span>")
 	var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
 	var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/oxandrolone)

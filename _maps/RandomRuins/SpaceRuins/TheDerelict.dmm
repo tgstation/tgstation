@@ -3911,7 +3911,7 @@
 /turf/template_noop,
 /area/space/nearstation)
 "ZM" = (
-/obj/machinery/droneDispenser/derelict,
+/obj/machinery/drone_dispenser/derelict,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 

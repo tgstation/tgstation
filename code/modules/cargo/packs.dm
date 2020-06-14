@@ -895,7 +895,7 @@
 	crate_name = "grounding rod crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
-/datum/supply_pack/engine/PA
+/datum/supply_pack/engine/particle_accelerator
 	name = "Particle Accelerator Crate"
 	desc = "A supermassive black hole or hyper-powered teslaball are the perfect way to spice up any party! This \"My First Apocalypse\" kit contains everything you need to build your own Particle Accelerator! Ages 10 and up."
 	cost = 3000
@@ -1899,7 +1899,7 @@
 	if(prob(50))
 		var/mob/living/simple_animal/pet/cat/C = locate() in .
 		qdel(C)
-		new /mob/living/simple_animal/pet/cat/Proc(.)
+		new /mob/living/simple_animal/pet/cat/proc(.)
 
 /datum/supply_pack/critter/chick
 	name = "Chicken Crate"
@@ -1922,7 +1922,7 @@
 		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
 		if(D.gender == FEMALE)
 			qdel(D)
-			new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
+			new /mob/living/simple_animal/pet/dog/corgi/lisa(.)
 
 /datum/supply_pack/critter/cow
 	name = "Cow Crate"

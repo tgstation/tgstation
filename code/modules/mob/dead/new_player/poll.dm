@@ -222,7 +222,7 @@
   *
   */
 /mob/dead/new_player/proc/poll_player_irv(datum/poll_question/poll)
-	var/datum/asset/irv_assets = get_asset_datum(/datum/asset/group/IRV)
+	var/datum/asset/irv_assets = get_asset_datum(/datum/asset/group/irv)
 	irv_assets.send(src)
 	var/datum/db_query/query_irv_get_votes = SSdbcore.NewQuery({"
 		SELECT optionid FROM [format_table_name("poll_vote")]
