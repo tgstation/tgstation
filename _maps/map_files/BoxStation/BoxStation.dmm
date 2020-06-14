@@ -60,6 +60,11 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
+"aah" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/bounty_board,
+/turf/closed/wall,
+/area/quartermaster/office)
 "aai" = (
 /turf/closed/wall/r_wall,
 /area/security/prison)
@@ -84,6 +89,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aal" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1;
+	sortType = 2
+	},
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 6
+	},
+/obj/machinery/bounty_board,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "aam" = (
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
@@ -96,6 +119,14 @@
 /obj/item/trash/can,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aao" = (
+/obj/machinery/bounty_board,
+/turf/closed/wall/r_wall,
+/area/engine/atmos)
+"aap" = (
+/obj/machinery/bounty_board,
+/turf/closed/wall/r_wall,
+/area/security/main)
 "aaq" = (
 /turf/closed/wall,
 /area/security/prison/safe)
@@ -106,6 +137,16 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"aas" = (
+/obj/structure/cable,
+/obj/machinery/bounty_board{
+	dir = 4;
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 8
+	},
+/area/science/research)
 "aat" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -115,10 +156,33 @@
 /obj/item/reagent_containers/food/snacks/energybar,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aav" = (
+/obj/machinery/power/apc{
+	areastring = "/area/hallway/secondary/service";
+	dir = 1;
+	name = "Service Hall APC";
+	pixel_y = 23
+	},
+/obj/structure/cable,
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/service)
 "aaw" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space/basic,
 /area/space)
+"aax" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box,
+/obj/machinery/bounty_board{
+	dir = 4;
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "aaz" = (
 /obj/item/radio/intercom{
 	desc = "A station intercom. It looks like it has been modified to not broadcast.";
@@ -15331,11 +15395,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"aSE" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "aSF" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -19820,10 +19879,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"bgv" = (
-/obj/structure/disposalpipe/segment,
-/turf/closed/wall,
-/area/quartermaster/office)
 "bgz" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -20615,23 +20670,6 @@
 	},
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
-"biF" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 2
-	},
-/obj/structure/noticeboard{
-	pixel_y = 32
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "biG" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
@@ -22964,12 +23002,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/white/side{
 	dir = 10
-	},
-/area/science/research)
-"bpq" = (
-/obj/structure/cable,
-/turf/open/floor/plasteel/white/side{
-	dir = 8
 	},
 /area/science/research)
 "bps" = (
@@ -45892,16 +45924,6 @@
 "jaN" = (
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
-"jbf" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/secondary/service";
-	dir = 1;
-	name = "Service Hall APC";
-	pixel_y = 23
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/service)
 "jdH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -75804,8 +75826,8 @@ rPX
 pVb
 bgB
 bhX
-bgv
-biF
+aah
+aal
 bkw
 bnE
 bny
@@ -83546,7 +83568,7 @@ bMK
 bUF
 bVN
 bWN
-bLK
+aao
 bYL
 bRi
 bZy
@@ -83758,7 +83780,7 @@ aJq
 aOE
 aPS
 aRs
-aSE
+aax
 aUc
 cnm
 aWY
@@ -85265,7 +85287,7 @@ agA
 fle
 wOA
 aip
-adR
+aap
 rAt
 ajN
 akx
@@ -93510,7 +93532,7 @@ alP
 anf
 anf
 cVb
-jbf
+aav
 wrp
 fnC
 kPd
@@ -101765,7 +101787,7 @@ bki
 bma
 gNQ
 bnl
-bpq
+aas
 vdl
 kXt
 yiW

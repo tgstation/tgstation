@@ -18820,6 +18820,10 @@
 "aSE" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
+/obj/machinery/bounty_board{
+	dir = 4;
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel,
 /area/bridge)
 "aSF" = (
@@ -25432,19 +25436,18 @@
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
 "biF" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 2
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
 	},
-/obj/structure/noticeboard{
-	pixel_y = 32
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/white,
+/area/science/lab)
 "biG" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
@@ -31918,6 +31921,23 @@
 /obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
+"bxH" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1;
+	sortType = 2
+	},
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/bounty_board{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "bxI" = (
 /obj/machinery/status_display/ai,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -31925,6 +31945,31 @@
 	},
 /turf/closed/wall,
 /area/storage/mining)
+"bxJ" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/machinery/bounty_board{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/dark/corner{
+	dir = 1
+	},
+/area/engine/break_room)
+"bxK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/bounty_board{
+	dir = 1;
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "bxL" = (
 /obj/machinery/camera{
 	c_tag = "Central Hallway South-East";
@@ -33661,6 +33706,20 @@
 	},
 /turf/closed/wall,
 /area/quartermaster/miningdock)
+"bBI" = (
+/obj/machinery/power/apc{
+	areastring = "/area/hallway/secondary/service";
+	dir = 1;
+	name = "Service Hall APC";
+	pixel_y = 23
+	},
+/obj/structure/cable,
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/service)
 "bBJ" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -52221,16 +52280,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"jbf" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/secondary/service";
-	dir = 1;
-	name = "Service Hall APC";
-	pixel_y = 23
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/service)
 "jcM" = (
 /obj/machinery/camera{
 	c_tag = "Public Mining Ladder";
@@ -77953,7 +78002,7 @@ pVb
 bgB
 bhX
 bgv
-biF
+bxH
 bkw
 bnE
 bny
@@ -85617,7 +85666,7 @@ aHp
 aIF
 ajc
 aja
-akp
+bxK
 agj
 alA
 amm
@@ -85695,7 +85744,7 @@ bUF
 bVN
 bWN
 bLK
-bYL
+bxJ
 bRi
 bZy
 cbu
@@ -95658,7 +95707,7 @@ alP
 anf
 anf
 cVb
-jbf
+bBI
 wrp
 fnC
 kPd
@@ -102623,7 +102672,7 @@ aXq
 aYV
 bfX
 bhC
-biU
+biF
 bks
 blI
 bpf
