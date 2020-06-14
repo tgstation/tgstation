@@ -33,4 +33,4 @@
 
 /datum/reagent/blob/shifting_fragments/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.7*reac_volume, BRUTE)
+	M.apply_damage(0.7*reac_volume, BRUTE, wound_bonus=CANT_WOUND)

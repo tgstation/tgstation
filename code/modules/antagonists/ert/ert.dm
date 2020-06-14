@@ -15,6 +15,7 @@
 	var/equip_ert = TRUE
 	var/forge_objectives_for_ert = TRUE
 	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	can_hijack = HIJACK_PREVENT
 
@@ -207,8 +208,11 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
-		H.wanted_lvl = new /obj/screen/wanted
-		H.infodisplay += H.wanted_lvl
+		var/obj/screen/wanted/giving_wanted_lvl = new /obj/screen/wanted()
+		H.wanted_lvl = giving_wanted_lvl
+		giving_wanted_lvl.hud = H
+		H.infodisplay += giving_wanted_lvl
+		H.mymob.client.screen += giving_wanted_lvl
 
 
 /datum/antagonist/ert/families/remove_innate_effects(mob/living/mob_override)
@@ -250,18 +254,19 @@
 	random_names = FALSE
 
 /datum/antagonist/ert/families/undercover_cop/on_gain()
-	for(var/C in free_clothes)
-		var/obj/O = new C(owner.current)
-		var/list/slots = list (
-			"backpack" = ITEM_SLOT_BACKPACK,
-			"left pocket" = ITEM_SLOT_LPOCKET,
-			"right pocket" = ITEM_SLOT_RPOCKET
-		)
-		var/mob/living/carbon/human/H = owner.current
-		var/equipped = H.equip_in_one_of_slots(O, slots)
-		if(!equipped)
-			to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
-			qdel(O)
+	if(istype(owner.current, /mob/living/carbon/human))
+		for(var/C in free_clothes)
+			var/obj/O = new C(owner.current)
+			var/list/slots = list (
+				"backpack" = ITEM_SLOT_BACKPACK,
+				"left pocket" = ITEM_SLOT_LPOCKET,
+				"right pocket" = ITEM_SLOT_RPOCKET
+			)
+			var/mob/living/carbon/human/H = owner.current
+			var/equipped = H.equip_in_one_of_slots(O, slots)
+			if(!equipped)
+				to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
+				qdel(O)
 	. = ..()
 
 

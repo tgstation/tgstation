@@ -759,6 +759,8 @@
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
 /obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
+	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
+		return
 	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
 	if(!B)
 		target.apply_status_effect(STATUS_EFFECT_SAWBLEED,bleed_stacks_per_hit)

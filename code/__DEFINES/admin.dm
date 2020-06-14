@@ -79,6 +79,9 @@
 #define ADMIN_PUNISHMENT_FAT "Fatten up"
 #define ADMIN_PUNISHMENT_FAKEBWOINK "Fake bwoink"
 #define ADMIN_PUNISHMENT_NUGGET "Nugget"
+#define ADMIN_PUNISHMENT_CRACK ":B:oneless"
+#define ADMIN_PUNISHMENT_BLEED ":B:loodless"
+#define ADMIN_PUNISHMENT_SCARIFY "Scarify"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
@@ -114,3 +117,7 @@
 
 //How many things you can spawn at once with spawn verb/create panel
 #define ADMIN_SPAWN_CAP 100
+
+// LOG BROWSE TYPES
+#define BROWSE_ROOT_ALL_LOGS 1
+#define BROWSE_ROOT_CURRENT_LOGS 2
