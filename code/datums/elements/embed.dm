@@ -37,6 +37,7 @@
 	if(isitem(target))
 		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbed)
 		RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
 		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, .proc/tryForceEmbed)
 		RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, .proc/detachFromWeapon)
 		if(!initialized)
