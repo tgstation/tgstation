@@ -1006,7 +1006,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				to_chat(usr, "[spaces][whitespace][query_tree[item]]", confidential = TRUE)
 
 //Staying as a world proc as this is called too often for changes to offset the potential IsAdminAdvancedProcCall checking overhead.
-/world/proc/SDQL_var(object, list/expression, start = 1, source, superuser, datum/SDQL2_query/query)
+/world/proc/SDQL_var(object, list/expression, start = 1, source, superuser, datum/sdql2_query/query)
 	var/v
 	var/static/list/exclude = list("usr", "src", "marked", "global", "MC", "FS", "CFG")
 	var/long = start < expression.len

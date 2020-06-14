@@ -11,7 +11,7 @@
 /datum/module_picker/New()
 	possible_modules = get_malf_modules()
 
-/proc/cmp_malfmodules_priority(datum/AI_Module/A, datum/AI_Module/B)
+/proc/cmp_malfmodules_priority(datum/ai_module/A, datum/ai_module/B)
 	return B.cost - A.cost
 
 /proc/get_malf_modules()
@@ -85,7 +85,7 @@
 			compact_mode = !compact_mode
 			return TRUE
 
-/datum/module_picker/proc/purchase_module(mob/living/silicon/ai/AI, datum/AI_Module/AM)
+/datum/module_picker/proc/purchase_module(mob/living/silicon/ai/AI, datum/ai_module/AM)
 	if(!istype(AM))
 		return
 	if(!AI || AI.stat == DEAD)

@@ -66,11 +66,11 @@ Actual Adjacent procs :
 //////////////////////
 
 //the weighting function, used in the A* algorithm
-/proc/PathWeightCompare(datum/PathNode/a, datum/PathNode/b)
+/proc/PathWeightCompare(datum/pathnode/a, datum/pathnode/b)
 	return a.f - b.f
 
 //reversed so that the Heap is a MinHeap rather than a MaxHeap
-/proc/HeapPathWeightCompare(datum/PathNode/a, datum/PathNode/b)
+/proc/HeapPathWeightCompare(datum/pathnode/a, datum/pathnode/b)
 	return b.f - a.f
 
 //wrapper that returns an empty list if A* failed to find a path
