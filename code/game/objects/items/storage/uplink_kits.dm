@@ -117,7 +117,8 @@
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/grenade/c4 (src) // 1 tc
 			new /obj/item/grenade/c4 (src) // 1 tc
-			new /obj/item/card/emag(src) // 6 tc
+			new /obj/item/card/emag(src) // 4 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
 
 /obj/item/storage/box/syndicate/bundle_B/PopulateContents()
 	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 1, "mr_freeze" = 2)))
@@ -229,7 +230,7 @@
 			<ol>
 				<li>Open the Syndicate Contract Uplink program.</li>
 				<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>
-				<li>The payment number shown in brackets is the bonus you'll receive when bringing your target <b>alive</b>. You receive the
+				<li>The payment number shown in brackets is the bonus you'll recieve when bringing your target <b>alive</b>. You recieve the
 				other number regardless of if they were alive or dead.</li>
 				<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them
 				inside the pod.</li>
