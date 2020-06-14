@@ -76,7 +76,6 @@
 	src.jostle_chance = jostle_chance
 	src.jostle_pain_mult = jostle_pain_mult
 	src.pain_stam_pct = pain_stam_pct
-
 	src.weapon = I
 
 	if(!weapon.isEmbedHarmless())
@@ -89,18 +88,26 @@
 	limb.embedded_objects |= weapon // on the inside... on the inside...
 	weapon.forceMove(victim)
 	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/weaponDeleted)
+	victim.visible_message("<span class='danger'>[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] [victim]'s [limb.name]!</span>", "<span class='userdanger'>[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] your [limb.name]!</span>")
 
 	if(harmful)
-		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [limb.name]!</span>", "<span class='userdanger'>[weapon] embeds itself in your [limb.name]!</span>")
 		victim.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		var/damage = weapon.w_class * impact_pain_mult
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
-	else
-		victim.visible_message("<span class='danger'>[weapon] sticks itself to [victim]'s [limb.name]!</span>", "<span class='userdanger'>[weapon] sticks itself to your [limb.name]!</span>")
 
+/datum/component/embedded/Destroy()
+	var/mob/living/carbon/victim = parent
+	if(victim && !victim.has_embedded_objects())
+		victim.clear_alert("embeddedobject")
+		SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+	if(weapon)
+		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	weapon = null
+	limb = null
+	return ..()
 
 /datum/component/embedded/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
@@ -134,12 +141,6 @@
 	if(prob(fall_chance))
 		fallOut()
 
-/datum/component/embedded/Destroy()
-	if(weapon)
-		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
-
-	return ..()
-
 ////////////////////////////////////////
 ////////////BEHAVIOR PROCS//////////////
 ////////////////////////////////////////
@@ -148,7 +149,6 @@
 /// Called every time a carbon with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the carbon is crawling or walking.
 /datum/component/embedded/proc/jostleCheck()
 	var/mob/living/carbon/victim = parent
-
 	var/chance = jostle_chance
 	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
 		chance *= 0.5
@@ -177,40 +177,35 @@
 
 	var/mob/living/carbon/victim = parent
 	var/time_taken = rip_time * weapon.w_class
-
 	victim.visible_message("<span class='warning'>[victim] attempts to remove [weapon] from [victim.p_their()] [limb.name].</span>","<span class='notice'>You attempt to remove [weapon] from your [limb.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
-	if(do_after(victim, time_taken, target = victim))
-		if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
-			qdel(src)
-			return
 
-		if(harmful)
-			var/damage = weapon.w_class * remove_pain_mult
-			limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=TRUE) //It hurts to rip it out, get surgery you dingus.
-			victim.emote("scream")
+	if(!do_after(victim, time_taken, target = victim))
+		return
+	if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
+		qdel(src)
+		return
 
-		victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
-		safeRemove(TRUE)
+	if(harmful)
+		var/damage = weapon.w_class * remove_pain_mult
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=TRUE) //It hurts to rip it out, get surgery you dingus.
+		victim.emote("scream")
 
+	victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
+	safeRemove(TRUE)
 
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
 /// Pass TRUE for to_hands if we want it to go to the victim's hands when they pull it out
 /datum/component/embedded/proc/safeRemove(to_hands)
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
+	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING)) // have to do it here otherwise we trigger weaponDeleted()
 
-	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING)) // have to unhook these here so they don't also register as having disappeared
-
-	if(!weapon || weapon.unembedded()) // if it deleted itself
-		weapon = null
-	else if(to_hands)
-		victim.put_in_hands(weapon)
-	else
-		weapon.forceMove(get_turf(victim))
-
-	if(!victim.has_embedded_objects())
-		victim.clear_alert("embeddedobject")
-		SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+	if(!weapon.unembedded()) // if it hasn't deleted itself due to drop del
+		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		if(to_hands)
+			victim.put_in_hands(weapon)
+		else
+			weapon.forceMove(get_turf(victim))
 
 	qdel(src)
 
@@ -218,12 +213,8 @@
 /datum/component/embedded/proc/weaponDeleted()
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
-	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 
 	if(victim)
 		to_chat(victim, "<span class='userdanger'>\The [weapon] that was embedded in your [limb.name] disappears!</span>")
-		if(!victim.has_embedded_objects())
-			victim.clear_alert("embeddedobject")
-			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-	weapon = null
+
 	qdel(src)
