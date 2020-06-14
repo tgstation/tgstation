@@ -49,7 +49,7 @@
 		return
 	if(prob(25))
 		category = null
-	var/datum/DBQuery/query_get_random_books = SSdbcore.NewQuery({"
+	var/datum/db_query/query_get_random_books = SSdbcore.NewQuery({"
 		SELECT author, title, content
 		FROM [format_table_name("library")]
 		WHERE isnull(deleted) AND (:category IS NULL OR category = :category)
