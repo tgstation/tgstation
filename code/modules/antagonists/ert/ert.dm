@@ -235,6 +235,7 @@
 	missiondesc += "<BR> <B>3.</B> Uphold the law."
 	missiondesc += "<BR> <B>4.</B> Find the Undercover Cops."
 	missiondesc += "<BR> <B>5.</B> Detain Nanotrasen Security personnel if they harm any citizen."
+	missiondesc += "<BR> You can <B>see gangsters</B> using your <B>special sunglasses</B>."
 	to_chat(owner,missiondesc)
 	var/policy = get_policy(ROLE_FAMILIES)
 	if(policy)
