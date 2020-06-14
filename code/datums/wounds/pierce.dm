@@ -37,6 +37,9 @@
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
+	/// If we're parented to an item stuck inside someone, store it here
+	var/obj/item/parent_item
+
 /datum/wound/pierce/wound_injury(datum/wound/pierce/old_wound = null)
 	blood_flow = initial_flow
 	if(old_wound)
@@ -235,6 +238,8 @@
 	treat_priority = FALSE
 	I.use(1)
 
+
+/datum/wound/pierce/proc/stuck(obj/item/I)
 
 /datum/wound/pierce/moderate
 	name = "Skin Breakage"

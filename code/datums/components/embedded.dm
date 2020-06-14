@@ -148,6 +148,18 @@
 ////////////////////////////////////////
 
 
+/datum/component/embedded/proc/checkAddedWound(mob/living/carbon/victim, datum/wound/pierce/W, obj/item/bodypart/BP)
+	if(BP != limb || !istype(W))
+		return
+	// we'll just assume that if we gained a piercing wound at roughly this point that it's from this
+	stuck_wound = W
+	stuck_wound.stuck(weapon)
+
+/datum/component/embedded/proc/removeWoundSignal()
+	if(parent)
+		UnregisterSignal(parent, COMSIG_CARBON_GAIN_WOUND)
+
+
 /// Called every time a carbon with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the carbon is crawling or walking.
 /datum/component/embedded/proc/jostleCheck()
 	var/mob/living/carbon/victim = parent
