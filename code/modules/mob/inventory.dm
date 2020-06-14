@@ -505,4 +505,3 @@
 			SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, item_stuff)
 			processing_list += item_stuff
 	return processing_list
-
