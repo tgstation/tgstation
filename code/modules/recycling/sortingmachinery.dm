@@ -47,8 +47,8 @@
 		. += "There's a barcode attached to the side."
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/destTagger))
-		var/obj/item/destTagger/O = W
+	if(istype(W, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/O = W
 
 		if(sortTag != O.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
@@ -227,8 +227,8 @@
 		. += "There's a barcode attached to the side."
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/destTagger))
-		var/obj/item/destTagger/O = W
+	if(istype(W, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/O = W
 
 		if(sortTag != O.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
@@ -323,7 +323,7 @@
 	for(var/obj/I in src.GetAllContents())
 		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 
-/obj/item/destTagger
+/obj/item/dest_tagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
 	icon = 'icons/obj/device.dmi'
@@ -337,11 +337,11 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 
-/obj/item/destTagger/borg
+/obj/item/dest_tagger/borg
 	name = "cyborg destination tagger"
 	desc = "Used to fool the disposal mail network into thinking that you're a harmless parcel. Does actually work as a regular destination tagger as well."
 
-/obj/item/destTagger/suicide_act(mob/living/user)
+/obj/item/dest_tagger/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tagging [user.p_their()] final destination! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if (islizard(user))
 		to_chat(user, "<span class='notice'>*HELL*</span>")//lizard nerf
@@ -350,7 +350,7 @@
 	playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 	return BRUTELOSS
 
-/obj/item/destTagger/proc/openwindow(mob/user)
+/obj/item/dest_tagger/proc/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
@@ -365,12 +365,12 @@
 	user << browse(dat, "window=destTagScreen;size=450x350")
 	onclose(user, "destTagScreen")
 
-/obj/item/destTagger/attack_self(mob/user)
+/obj/item/dest_tagger/attack_self(mob/user)
 	if(!locked_destination)
 		openwindow(user)
 		return
 
-/obj/item/destTagger/Topic(href, href_list)
+/obj/item/dest_tagger/Topic(href, href_list)
 	add_fingerprint(usr)
 	if(href_list["nextTag"])
 		var/n = text2num(href_list["nextTag"])

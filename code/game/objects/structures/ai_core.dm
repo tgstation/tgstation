@@ -175,11 +175,11 @@
 						to_chat(user, "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>")
 					return
 
-				if(istype(P, /obj/item/aiModule))
+				if(istype(P, /obj/item/ai_module))
 					if(brain && brain.laws.id != DEFAULT_AI_LAWID)
 						to_chat(user, "<span class='warning'>The installed [brain.name] already has set laws!</span>")
 						return
-					var/obj/item/aiModule/module = P
+					var/obj/item/ai_module/module = P
 					module.install(laws, user)
 					return
 

@@ -72,10 +72,10 @@
 			new /obj/item/implanter/storage(src)
 
 		if("hacker")
-			new /obj/item/aiModule/syndicate(src)
+			new /obj/item/ai_module/syndicate(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/encryptionkey/binary(src)
-			new /obj/item/aiModule/toy_ai(src)
+			new /obj/item/ai_module/toy_ai(src)
 			new /obj/item/multitool/ai_detect(src)
 			new /obj/item/storage/toolbox/syndicate(src)
 			new /obj/item/camera_bug(src)

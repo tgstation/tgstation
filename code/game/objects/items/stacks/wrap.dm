@@ -28,7 +28,7 @@
  * Package Wrap
  */
 
-/obj/item/stack/packageWrap
+/obj/item/stack/package_wrap
 	name = "package wrapper"
 	singular_name = "wrapping sheet"
 	desc = "You can use this to wrap items in."
@@ -40,7 +40,7 @@
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 5)
 
-/obj/item/stack/packageWrap/suicide_act(mob/living/user)
+/obj/item/stack/package_wrap/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(use(3))
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(user.loc))
@@ -64,7 +64,7 @@
 /obj/item/smallDelivery/can_be_package_wrapped()
 	return 0
 
-/obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
+/obj/item/stack/package_wrap/afterattack(obj/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -118,13 +118,13 @@
 	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
 	user.log_message("has used [name] on [key_name(target)]", LOG_ATTACK, color="blue")
 
-/obj/item/stack/packageWrap/use(used, transfer = FALSE)
+/obj/item/stack/package_wrap/use(used, transfer = FALSE)
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(QDELETED(src) && !transfer)
 		new /obj/item/c_tube(T)
 
-/obj/item/stack/packageWrap/small
+/obj/item/stack/package_wrap/small
 	desc = "You can use this to wrap items in. This roll looks a bit skimpy."
 	w_class = WEIGHT_CLASS_SMALL
 	amount = 5
