@@ -28,11 +28,11 @@
 	var/damage_multiplier = 1
 
 /obj/item/organ/ears/on_life()
+	. = ..()
 	// if we have non-damage related deafness like mutations, quirks or clothing (earmuffs), don't bother processing here. Ear healing from earmuffs or chems happen elsewhere
 	if(HAS_TRAIT_NOT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
 		return
 
-	..()
 	if((damage < maxHealth) && (organ_flags & ORGAN_FAILING))	//ear damage can be repaired from the failing condition
 		organ_flags &= ~ORGAN_FAILING
 
