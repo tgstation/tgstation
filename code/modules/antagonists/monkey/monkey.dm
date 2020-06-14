@@ -8,6 +8,7 @@
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
+	show_to_ghosts = TRUE
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
 
