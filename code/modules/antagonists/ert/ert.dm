@@ -15,6 +15,7 @@
 	var/equip_ert = TRUE
 	var/forge_objectives_for_ert = TRUE
 	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	can_hijack = HIJACK_PREVENT
 
