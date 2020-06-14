@@ -100,7 +100,7 @@
 
 	for(var/X in known)
 		lore = list()
-		var/datum/eldritch_knowledge/EK = X
+		var/datum/eldritch_knowledge/EK = known[X]
 		lore["name"] = EK.name
 		lore["cost"] = EK.cost
 		lore["disabled"] = TRUE

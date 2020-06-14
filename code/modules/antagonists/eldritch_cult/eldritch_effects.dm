@@ -41,7 +41,7 @@
 		atoms_in_range += atom_in_range
 
 	for(var/X in knowledge)
-		var/datum/eldritch_knowledge/current_eldritch_knowledge = X
+		var/datum/eldritch_knowledge/current_eldritch_knowledge = knowledge[X]
 
 		//has to be done so that we can freely edit the local_required_atoms without fucking up the eldritch knowledge
 		var/list/local_required_atoms = list()

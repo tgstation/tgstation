@@ -63,9 +63,9 @@
 		C.adjustBruteLoss(10)
 		C.AdjustKnockdown(5 SECONDS)
 		C.adjustStaminaLoss(80)
-
-	for(var/X in cultie.get_all_knowledge())
-		var/datum/eldritch_knowledge/EK = X
+	var/list/knowledge = cultie.get_all_knowledge()
+	for(var/X in knowledge)
+		var/datum/eldritch_knowledge/EK = knowledge[X]
 		EK.on_mansus_grasp(target, user, proximity_flag, click_parameters)
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion

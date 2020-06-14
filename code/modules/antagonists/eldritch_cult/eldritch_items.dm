@@ -59,8 +59,9 @@
 	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	if(!cultie || !proximity_flag)
 		return
-	for(var/X in cultie.get_all_knowledge())
-		var/datum/eldritch_knowledge/eldritch_knowledge_datum = X
+	var/list/knowledge = cultie.get_all_knowledge()
+	for(var/X in knowledge)
+		var/datum/eldritch_knowledge/eldritch_knowledge_datum = knowledge[X]
 		eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
 
 /obj/item/melee/sickly_blade/rust

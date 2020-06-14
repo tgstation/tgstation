@@ -167,8 +167,9 @@
 	parts += "<b>Knowledge Researched:</b> "
 
 	var/list/knowledge_message = list()
-	for(var/X in get_all_knowledge())
-		var/datum/eldritch_knowledge/EK = X
+	var/list/knowledge = get_all_knowledge()
+	for(var/X in knowledge)
+		var/datum/eldritch_knowledge/EK = knowledge[X]
 		knowledge_message += "[EK.name]"
 	parts += knowledge_message.Join(", ")
 
@@ -181,8 +182,7 @@
 	if(has_knowledge(EK))
 		return FALSE
 	var/datum/eldritch_knowledge/initialized_knowledge = new EK
-	researched_knowledge += initialized_knowledge
-	researched_knowledge[initialized_knowledge] = initialized_knowledge.name
+	researched_knowledge[initialized_knowledge.type] = initialized_knowledge
 	initialized_knowledge.on_gain(owner.current)
 	return TRUE
 
@@ -190,7 +190,7 @@
 	var/list/researchable_knowledge = list()
 	var/list/banned_knowledge = list()
 	for(var/X in researched_knowledge)
-		var/datum/eldritch_knowledge/EK = X
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		researchable_knowledge |= EK.next_knowledge
 		banned_knowledge |= EK.banned_knowledge
 		banned_knowledge |= EK.type
@@ -198,12 +198,12 @@
 	return researchable_knowledge
 
 /datum/antagonist/heretic/proc/has_knowledge(datum/eldritch_knowledge/wanted)
-	if(researched_knowledge[initial(wanted.name)])
+	if(researched_knowledge[wanted])
 		return TRUE
 	return FALSE
 
 /datum/antagonist/heretic/proc/get_knowledge(datum/eldritch_knowledge/wanted)
-	return researched_knowledge[initial(wanted.name)] || FALSE
+	return researched_knowledge[wanted] || FALSE
 
 /datum/antagonist/heretic/proc/get_all_knowledge()
 	return researched_knowledge

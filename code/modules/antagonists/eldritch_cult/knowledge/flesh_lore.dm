@@ -47,7 +47,6 @@
 	humie.health = 50 // Voiceless dead are much tougher than ghouls
 	humie.become_husk()
 	humie.faction |= "heretics"
-	humie.fully_replace_character_name(humie.real_name,"Voiceless [humie.real_name]")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = humie.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user)
@@ -116,7 +115,6 @@
 	human_target.health = 25
 	human_target.become_husk()
 	human_target.faction |= "heretics"
-	human_target.fully_replace_character_name(human_target.real_name,"Ghouled [human_target.real_name]")
 	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user)
 	return
