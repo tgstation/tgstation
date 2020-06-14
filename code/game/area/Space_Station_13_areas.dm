@@ -1221,11 +1221,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "AI Satellite Antechamber"
 	icon_state = "ai_interior"
 
-/area/ai_monitored/turret_protected/AIsatextAS
+/area/ai_monitored/turret_protected/ai_sat_ext_as
 	name = "AI Sat Ext"
 	icon_state = "ai_sat_east"
 
-/area/ai_monitored/turret_protected/AIsatextAP
+/area/ai_monitored/turret_protected/ai_sat_ext_ap
 	name = "AI Sat Ext"
 	icon_state = "ai_sat_west"
 

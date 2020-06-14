@@ -48,7 +48,7 @@
 		var/mob/M = H
 		holder = M.client //if its a mob, assign the mob's client to holder
 	bay =  locate(/area/centcom/supplypod/loading/one) in GLOB.sortedAreas //Locate the default bay (one) from the centcom map
-	temp_pod = new(locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas) //Create a new temp_pod in the podStorage area on centcom (so users are free to look at it and change other variables if needed)
+	temp_pod = new(locate(/area/centcom/supplypod/pod_storage) in GLOB.sortedAreas) //Create a new temp_pod in the podStorage area on centcom (so users are free to look at it and change other variables if needed)
 	orderedArea = createOrderedArea(bay) //Order all the turfs in the selected bay (top left to bottom right) to a single list. Used for the "ordered" mode (launchChoice = 1)
 
 /datum/centcom_podlauncher/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, \
@@ -553,7 +553,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = DuplicateObject(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
 	toLaunch.bay = bay //Bay is currently a nonstatic expression, so it cant go into toLaunch using DuplicateObject
 	toLaunch.update_icon()//we update_icon() here so that the door doesnt "flicker on" right after it lands
-	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/flyMeToTheMoon]
+	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/fly_me_to_the_moon]
 	toLaunch.forceMove(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
 		if(launchRandomItem)
