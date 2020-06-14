@@ -86,8 +86,8 @@
 
 	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
 	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
-	to_chat(owner.current, "<B><font size=8 color=red>The following two statements are merely suggestions and advice. You are still a team-oriented antagonist! Do what is best for your gang.</font></B>")
-	to_chat(owner.current, "<B><font size=4 color=red>It's probably not a good idea to fuck with non-gangsters without at least some kind of reason, as this can result in deaths which will result in harder to fight space cops.</font></B>")
+	to_chat(owner.current, "<B><font size=6 color=red>You are still a team-oriented antagonist! Do what is best for your gang.</font></B>")
+	to_chat(owner.current, "<B><font size=4 color=red>Beware, killing innocents will result in a stronger police response.</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Don't blow shit up or make the station uninhabitable, because this can make things unsafe for less well-geared members of your Family.</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [gang_objective]</font>")
 
