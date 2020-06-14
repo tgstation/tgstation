@@ -89,6 +89,8 @@
 	item_flags = EYE_STAB
 	var/bayonet = FALSE	//Can this be attached to a gun?
 	custom_price = 250
+	wound_bonus = -5
+	bare_wound_bonus = 10
 
 /obj/item/kitchen/knife/ComponentInitialize()
 	. = ..()

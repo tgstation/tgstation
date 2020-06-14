@@ -95,16 +95,16 @@
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
-	if(minimum_players > population)
-		return FALSE
-	if(maximum_players > 0 && population > maximum_players)
-		return FALSE
-
 	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
 	if(antag_cap.len && requirements.len != antag_cap.len)
 		message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 		log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+
+	if(minimum_players > population)
+		return FALSE
+	if(maximum_players > 0 && population > maximum_players)
+		return FALSE
 	return (threat_level >= requirements[indice_pop])
 
 /// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the additional threat from scaling up.

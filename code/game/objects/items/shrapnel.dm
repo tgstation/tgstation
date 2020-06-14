@@ -7,11 +7,13 @@
 	icon_state = "large"
 	w_class = WEIGHT_CLASS_TINY
 	item_flags = DROPDEL
+	sharpness = TRUE
 
 /obj/item/shrapnel/stingball // stingbang grenades
 	name = "stingball"
 	embedding = list(embed_chance=90, fall_chance=3, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.7, pain_mult=5, jostle_pain_mult=6, rip_time=15, embed_chance_turf_mod=-100)
 	icon_state = "tiny"
+	sharpness = FALSE
 
 /obj/item/shrapnel/bullet // bullets
 	name = "bullet"
@@ -28,7 +30,7 @@
 
 /obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"
-	damage = 9
+	damage = 8
 	range = 10
 	armour_penetration = -30
 	dismemberment = 5
@@ -37,6 +39,8 @@
 	shrapnel_type = /obj/item/shrapnel
 	ricochet_incidence_leeway = 60
 	hit_stunned_targets = TRUE
+	sharpness = TRUE
+	wound_bonus = 30
 
 /obj/projectile/bullet/shrapnel/mega
 	name = "flying shrapnel hunk"
@@ -63,6 +67,18 @@
 	name = "megastingball pellet"
 	ricochets_max = 6
 	ricochet_chance = 110
+
+/obj/projectile/bullet/pellet/stingball/breaker
+	name = "breakbang pellet"
+	damage = 10
+	wound_bonus = 40
+	sharpness = FALSE
+
+/obj/projectile/bullet/pellet/stingball/shred
+	name = "shredbang pellet"
+	damage = 10
+	wound_bonus = 30
+	sharpness = TRUE
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_stunned_targets = TRUE // ducking will save you from the first wave, but not the rebounds
