@@ -15,6 +15,8 @@
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
+	///Has the app been added to the network yet?
+	var/networked = FALSE
 
 /datum/computer_file/program/bounty_board/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -23,6 +25,9 @@
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
 	var/printer_text = "No Printer Detected."
+	if(!networked)
+		GLOB.allbountyboards += computer
+		networked = TRUE
 	if(card_slot && card_slot.stored_card && card_slot.stored_card.registered_account)
 		current_user = card_slot.stored_card.registered_account
 	if(printer)
@@ -90,6 +95,9 @@
 				computer.say("Account Reset.")
 				return TRUE
 		if("DeleteRequest")
+			if(!current_user)
+				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+				return TRUE
 			if(active_request.owner != current_user.account_holder)
 				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE

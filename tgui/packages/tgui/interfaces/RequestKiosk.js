@@ -46,7 +46,7 @@ export const RequestKiosk = (props, context) => {
                 </LabeledList>
               </Section>
               {Requests?.map(request => (
-                <Section>
+                <Section key={request.name}>
                   <Flex spacing={1} align="baseline">
                     <Flex.Item bold width="310px">
                       {request.owner}
