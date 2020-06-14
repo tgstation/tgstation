@@ -42,7 +42,7 @@
 /datum/antagonist/heretic/on_removal()
 
 	for(var/X in researched_knowledge)
-		var/datum/eldritch_knowledge/EK = X
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_lose(owner.current)
 
 	if(!silent)
@@ -84,7 +84,7 @@
 /datum/antagonist/heretic/process()
 
 	for(var/X in researched_knowledge)
-		var/datum/eldritch_knowledge/EK = X
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_life(owner.current)
 
 /datum/antagonist/heretic/proc/forge_primary_objectives()
