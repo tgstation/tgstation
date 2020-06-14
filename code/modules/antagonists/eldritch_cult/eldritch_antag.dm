@@ -179,7 +179,7 @@
 ////////////////
 
 /datum/antagonist/heretic/proc/gain_knowledge(datum/eldritch_knowledge/EK)
-	if(has_knowledge(EK))
+	if(get_knowledge(EK))
 		return FALSE
 	var/datum/eldritch_knowledge/initialized_knowledge = new EK
 	researched_knowledge[initialized_knowledge.type] = initialized_knowledge
@@ -197,13 +197,8 @@
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
 
-/datum/antagonist/heretic/proc/has_knowledge(datum/eldritch_knowledge/wanted)
-	if(researched_knowledge[wanted])
-		return TRUE
-	return FALSE
-
-/datum/antagonist/heretic/proc/get_knowledge(datum/eldritch_knowledge/wanted)
-	return researched_knowledge[wanted] || FALSE
+/datum/antagonist/heretic/proc/get_knowledge(wanted)
+	return researched_knowledge[wanted]
 
 /datum/antagonist/heretic/proc/get_all_knowledge()
 	return researched_knowledge
@@ -217,7 +212,7 @@
 	var/timer = 5 MINUTES
 
 /datum/objective/stalk/process()
-	if(target?.current.stat != DEAD && (target in view(5,owner.current)))
+	if(owner?.current.stat != DEAD && target?.current.stat != DEAD && (target in view(5,owner.current)))
 		timer -= 1 SECONDS
 	///we don't want to process after the counter reaches 0, otherwise it is wasted processing
 	if(timer <= 0)

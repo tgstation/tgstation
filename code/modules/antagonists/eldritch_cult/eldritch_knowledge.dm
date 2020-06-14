@@ -184,7 +184,8 @@
 	summoned.ghostize(FALSE)
 	summoned.key = C.key
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
-	heretic_monster.set_owner(user)
+	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	heretic_monster.set_owner(master)
 	return TRUE
 
 //Ascension knowledge

@@ -49,7 +49,8 @@
 	humie.faction |= "heretics"
 
 	var/datum/antagonist/heretic_monster/heretic_monster = humie.mind.add_antag_datum(/datum/antagonist/heretic_monster)
-	heretic_monster.set_owner(user)
+	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	heretic_monster.set_owner(master)
 	atoms -= humie
 	ghouls += humie
 
@@ -116,7 +117,8 @@
 	human_target.become_husk()
 	human_target.faction |= "heretics"
 	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
-	heretic_monster.set_owner(user)
+	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	heretic_monster.set_owner(master)
 	return
 
 /datum/eldritch_knowledge/flesh_grasp/proc/check_ghouls(mob/user)
@@ -240,7 +242,8 @@
 			summoned.ghostize(FALSE)
 			summoned.key = ghost_candidate.key
 			var/datum/antagonist/heretic_monster/monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
-			monster.set_owner(user)
+			var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
+			monster.set_owner(master)
 		if("Yes")
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy/prime(loc,TRUE,10)
 			summoned.ghostize(0)

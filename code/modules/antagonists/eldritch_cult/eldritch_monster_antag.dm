@@ -7,7 +7,7 @@
 	job_rank = ROLE_HERETIC
 	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic_beast"
-	var/mob/living/master
+	var/datum/antagonist/heretic/master
 
 /datum/antagonist/heretic_monster/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.add_antag_datum(src)
@@ -24,7 +24,7 @@
 		owner = null
 	return ..()
 
-/datum/antagonist/heretic_monster/proc/set_owner(mob/living/_master)
+/datum/antagonist/heretic_monster/proc/set_owner(datum/antagonist/heretic)
 	master = _master
 	var/datum/objective/master_obj = new
 	master_obj.owner = src
