@@ -76,7 +76,7 @@
 	..()
 	if(M && (hudusers.len == 1))
 		for(var/V in GLOB.aiEyes)
-			var/mob/camera/aiEye/E = V
+			var/mob/camera/ai_eye/E = V
 			E.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
