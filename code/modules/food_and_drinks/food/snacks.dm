@@ -229,7 +229,7 @@ All foods are distributed among various categories. Use common sense.
 		return FALSE
 
 	var/slices_lost = 0
-	if (accuracy >= IS_SHARP_ACCURATE)
+	if (accuracy >= SHARP_POINTY)
 		user.visible_message( \
 			"[user] slices [src].", \
 			"<span class='notice'>You slice [src].</span>" \

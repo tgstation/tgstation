@@ -64,7 +64,7 @@
 	hitsound = null
 	attack_verb_on = list("slipped")
 	clumsy_check = FALSE
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NOT
 	sword_color = "yellow"
 	heat = 0
 	light_color = "#ffff00"
