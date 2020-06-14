@@ -4796,7 +4796,7 @@
 	},
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26

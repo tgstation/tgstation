@@ -16666,7 +16666,7 @@
 	},
 /obj/effect/spawner/lootdrop/aimodule_harmful,
 /obj/item/ai_module/supplied/oxygen,
-/obj/item/ai_module/supplied/protectStation,
+/obj/item/ai_module/supplied/protect_station,
 /obj/item/ai_module/zeroth/onehuman,
 /obj/item/ai_module/reset/purge,
 /turf/open/floor/plasteel/dark,
@@ -23495,7 +23495,7 @@
 /area/storage/tech)
 "bcv" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/RnD_secure,
+/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bcw" = (
@@ -29119,8 +29119,8 @@
 	dir = 4
 	},
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "boP" = (
@@ -41087,7 +41087,7 @@
 	pixel_x = -27
 	},
 /obj/item/folder/blue,
-/obj/item/clothing/head/collectable/HoP{
+/obj/item/clothing/head/collectable/hop{
 	name = "novelty HoP hat"
 	},
 /obj/machinery/light/small{
@@ -41194,7 +41194,7 @@
 /obj/item/toy/gun,
 /obj/item/restraints/handcuffs,
 /obj/structure/table/wood,
-/obj/item/clothing/head/collectable/HoS{
+/obj/item/clothing/head/collectable/hos{
 	name = "novelty HoS hat"
 	},
 /obj/machinery/firealarm{
@@ -43866,15 +43866,15 @@
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/OPlus{
+/obj/item/reagent_containers/blood/o_plus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/BPlus,
-/obj/item/reagent_containers/blood/BMinus,
-/obj/item/reagent_containers/blood/APlus,
-/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/b_plus,
+/obj/item/reagent_containers/blood/b_minus,
+/obj/item/reagent_containers/blood/a_plus,
+/obj/item/reagent_containers/blood/a_minus,
 /obj/item/reagent_containers/blood/lizard,
 /obj/item/reagent_containers/blood/ethereal,
 /obj/item/reagent_containers/blood{
@@ -69794,7 +69794,7 @@
 "gnA" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/space/basic,
 /area/space/nearstation)
 "gnT" = (

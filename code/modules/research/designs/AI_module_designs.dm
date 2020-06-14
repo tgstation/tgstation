@@ -33,7 +33,7 @@
 	desc = "Allows for the construction of a ProtectStation AI Module."
 	id = "protectstation_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
-	build_path = /obj/item/ai_module/supplied/protectStation
+	build_path = /obj/item/ai_module/supplied/protect_station
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 

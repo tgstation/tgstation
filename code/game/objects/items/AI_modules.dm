@@ -201,7 +201,7 @@ AI MODULES
 
 /******************** ProtectStation ********************/
 
-/obj/item/ai_module/supplied/protectStation
+/obj/item/ai_module/supplied/protect_station
 	name = "'ProtectStation' AI Module"
 	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.")
 	lawpos = 5

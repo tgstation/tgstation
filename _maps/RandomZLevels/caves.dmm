@@ -1682,7 +1682,7 @@
 "fu" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/brute,
-/obj/item/reagent_containers/blood/OPlus,
+/obj/item/reagent_containers/blood/o_plus,
 /turf/open/floor/plasteel,
 /area/awaymission/caves/BMP_asteroid)
 "fv" = (
@@ -1823,7 +1823,7 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/toxin,
 /obj/item/storage/firstaid/toxin,
-/obj/item/reagent_containers/blood/OPlus,
+/obj/item/reagent_containers/blood/o_plus,
 /turf/open/floor/plasteel,
 /area/awaymission/caves/BMP_asteroid)
 "fT" = (

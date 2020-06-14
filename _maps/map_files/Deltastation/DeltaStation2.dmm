@@ -5998,7 +5998,7 @@
 "apA" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/clothing/head/collectable/HoP,
+/obj/item/clothing/head/collectable/hop,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -9059,15 +9059,15 @@
 /area/maintenance/port/fore)
 "avu" = (
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "avv" = (
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -10970,8 +10970,8 @@
 /area/maintenance/port/fore)
 "ayZ" = (
 /obj/structure/table/wood,
-/obj/item/canvas/twentythreeXnineteen,
-/obj/item/canvas/nineteenXnineteen,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/nineteen_nineteen,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
 /obj/effect/decal/cleanable/dirt,
@@ -18199,8 +18199,8 @@
 	pixel_y = 32
 	},
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/bar/atrium)
 "aNf" = (
@@ -38735,7 +38735,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/effect/spawner/lootdrop/techstorage/RnD_secure,
+/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/tech)
@@ -60342,7 +60342,7 @@
 	req_access_txt = "20"
 	},
 /obj/structure/window/reinforced,
-/obj/item/ai_module/supplied/protectStation{
+/obj/item/ai_module/supplied/protect_station{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -67931,9 +67931,9 @@
 /area/library)
 "cwr" = (
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXnineteen,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -67948,9 +67948,9 @@
 /area/library)
 "cws" = (
 /obj/structure/easel,
-/obj/item/canvas/nineteenXnineteen,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /obj/machinery/light_switch{
 	pixel_y = 26
 	},
@@ -84973,9 +84973,9 @@
 /area/crew_quarters/fitness/recreation)
 "dbL" = (
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -107825,8 +107825,8 @@
 "dYp" = (
 /obj/structure/easel,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/library/abandoned)

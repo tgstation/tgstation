@@ -1262,7 +1262,7 @@
 /area/security/prison)
 "aes" = (
 /obj/structure/easel,
-/obj/item/canvas/nineteenXnineteen,
+/obj/item/canvas/nineteen_nineteen,
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
@@ -4804,8 +4804,8 @@
 	dir = 4;
 	layer = 2.9
 	},
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -12006,7 +12006,7 @@
 	},
 /obj/item/ai_module/reset/purge,
 /obj/effect/spawner/lootdrop/aimodule_harmful,
-/obj/item/ai_module/supplied/protectStation,
+/obj/item/ai_module/supplied/protect_station,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
@@ -14300,7 +14300,7 @@
 	dir = 4
 	},
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/twentythree_nineteen,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -15455,8 +15455,8 @@
 	amount = 20;
 	layer = 3.3
 	},
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/nineteenXnineteen,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/nineteen_nineteen,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -18323,9 +18323,9 @@
 /area/maintenance/department/cargo)
 "aVI" = (
 /obj/structure/closet,
-/obj/item/canvas/twentythreeXnineteen,
-/obj/item/canvas/nineteenXnineteen,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/canvas/twentythree_twentythree,
 /obj/item/storage/crayons,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -40552,7 +40552,7 @@
 /area/crew_quarters/heads/chief)
 "bWs" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/RnD_secure,
+/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -44114,7 +44114,7 @@
 	dir = 4
 	},
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/twentythree_nineteen,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
 "ciq" = (
@@ -58781,15 +58781,15 @@
 /area/security/detectives_office)
 "xkB" = (
 /obj/structure/closet/crate,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXnineteen,
-/obj/item/canvas/twentythreeXnineteen,
-/obj/item/canvas/twentythreeXnineteen,
-/obj/item/canvas/nineteenXnineteen,
-/obj/item/canvas/nineteenXnineteen,
-/obj/item/canvas/nineteenXnineteen,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/canvas/nineteen_nineteen,
 /obj/item/wirecutters,
 /obj/machinery/firealarm{
 	dir = 1;

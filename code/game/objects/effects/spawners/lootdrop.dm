@@ -429,7 +429,7 @@
 				/obj/item/circuitboard/computer/card
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/RnD_secure
+/obj/effect/spawner/lootdrop/techstorage/rnd_secure
 	name = "secure RnD circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/mecha_control,
