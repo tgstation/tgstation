@@ -3,4 +3,5 @@
 	desc = "Well it ain't Venice"
 	icon = 'icons/obj/gondola.dmi'
 	icon_state = "gondolaboat"
-	default_driver_move = FALSE
+	max_integrity = 9999
+	default_driver_move = TRUE
