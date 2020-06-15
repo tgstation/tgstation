@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bunch of errors appearing on arcade machines and various monitors / computers when powered off."
