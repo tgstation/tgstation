@@ -463,6 +463,7 @@
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 10
 	projectile_energy_cost = 500
+	harmful = TRUE
 	diags_first = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/mecha/combat/honker/M)
