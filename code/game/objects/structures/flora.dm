@@ -13,6 +13,9 @@
 	var/log_amount = 10
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
+	#ifdef EVENTMODE
+	return
+	#endif
 	if(log_amount && (!(flags_1 & NODECONSTRUCT_1)))
 		if(W.get_sharpness() && W.force > 0)
 			if(W.hitsound)
@@ -307,6 +310,7 @@
 	desc = "A little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
+	anchored = 1
 	force = 10
 	throwforce = 13
 	throw_speed = 2

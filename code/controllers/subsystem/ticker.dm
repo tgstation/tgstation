@@ -334,6 +334,7 @@ SUBSYSTEM_DEF(ticker)
 		if(hardcore_player.mind?.special_role)
 			hardcore_player.hardcore_survival_score *= 2 //Double for antags
 		to_chat(hardcore_player, "<span class='notice'>You will gain [round(hardcore_player.hardcore_survival_score)] hardcore random points if you survive this round!</span>")
+	SSair.can_fire = FALSE
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)

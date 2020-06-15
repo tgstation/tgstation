@@ -135,6 +135,10 @@
 	icon_state = "beretdurathread"
 	armor = list("melee" = 15, "bullet" = 5, "laser" = 15, "energy" = 25, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 5)
 
+/obj/item/clothing/head/beret/durathread/cosmetic
+	desc = "Do any of these durathread items actually have durathread in them? Our survey says: no."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
 //Security
 
 /obj/item/clothing/head/HoS

@@ -27,6 +27,9 @@ SUBSYSTEM_DEF(lighting)
 	return ..()
 
 /datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
+#ifdef EVENTMODE
+	return
+#endif
 	MC_SPLIT_TICK_INIT(3)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK

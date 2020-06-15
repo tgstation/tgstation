@@ -9,12 +9,23 @@
 	item_flags = NOBLUDGEON
 
 /obj/item/trash/Initialize(mapload)
+	#ifdef EVENTMODE
+	///AUTO CLEAN
+	if(mapload) // Except if intentionally filthy
+		return ..()
+
+	QDEL_IN(src, 30)
+	return ..()
+	#endif
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 	return ..()
 
 /obj/item/trash/Destroy()
+	#ifdef EVENTMODE
+	return ..()
+	#endif
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)

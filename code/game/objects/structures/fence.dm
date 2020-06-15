@@ -21,7 +21,8 @@
 
 	var/cuttable = TRUE
 	var/hole_size= NO_HOLE
-	var/invulnerable = FALSE
+	var/invulnerable = TRUE
+	max_integrity = 9999
 
 /obj/structure/fence/Initialize()
 	. = ..()

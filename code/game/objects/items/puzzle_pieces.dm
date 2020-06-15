@@ -27,6 +27,32 @@
 	color = "#3bbbdb"
 	puzzle_id = "swordfish"
 
+/obj/item/keycard/jungle
+	name = "Lizard's Eye"
+	desc = "A small hexagonal chunk of stone. It's inscribed with a strange rune, and it's glowing gently."
+	icon_state = "lizard_eye"
+	puzzle_id = "jungletemple"
+
+/obj/item/keycard/jungle/warrior
+	name = "Lizard's Courage"
+	desc = "A small hexagonal chunk of stone. It's inscribed with a strange rune, and it's glowing gently."
+	puzzle_id = "junglewarrior"
+
+/obj/item/keycard/jungle/ranger
+	name = "Lizard's Precision"
+	desc = "A small hexagonal chunk of stone. It's inscribed with a strange rune, and it's glowing gently."
+	puzzle_id = "jungleranger"
+
+/obj/item/keycard/jungle/mage
+	name = "Lizard's Wisdom"
+	desc = "A small hexagonal chunk of stone. It's inscribed with a strange rune, and it's glowing gently."
+	puzzle_id = "junglemage"
+
+/obj/item/keycard/jungle/summoner
+	name = "Lizard's Leadership"
+	desc = "A small hexagonal chunk of stone. It's inscribed with a strange rune, and it's glowing gently."
+	puzzle_id = "junglesummoner"
+
 //***************
 //*****Doors*****
 //***************
@@ -89,6 +115,33 @@
 	desc = "If nautical nonsense be something you wish."
 	puzzle_id = "swordfish"
 
+/obj/machinery/door/keycard/jungle
+	name = "Sun Gate"
+	desc = "It's engraved with strange runes and glyphs. A large carving of a gecko takes up most of the centre, and there's a hexagonal indent where its eye should be."
+	puzzle_id = "jungletemple"
+	icon = 'icons/effects/96x96.dmi'
+	open_message = "The stone slots into place, and the door slides open with a rumble."
+
+/obj/machinery/door/keycard/jungle/warrior
+	name = "Courage Gate"
+	desc = "It's engraved with strange runes and glyphs. A large carving of a gecko takes up most of the centre, and there's a hexagonal indent where its heart should be."
+	puzzle_id = "junglewarrior"
+
+/obj/machinery/door/keycard/jungle/ranger
+	name = "Precision Gate"
+	desc = "It's engraved with strange runes and glyphs. A large carving of a gecko takes up most of the centre, and there's a hexagonal indent where its eye should be."
+	puzzle_id = "jungleranger"
+
+/obj/machinery/door/keycard/jungle/mage
+	name = "Wisdom Gate"
+	desc = "It's engraved with strange runes and glyphs. A large carving of a gecko takes up most of the centre, and there's a hexagonal indent where its brain should be."
+	puzzle_id = "junglemage"
+
+/obj/machinery/door/keycard/jungle/summoner
+	name = "Leadership Gate"
+	desc = "It's engraved with strange runes and glyphs. A large carving of a gecko takes up most of the centre, and there's a hexagonal indent where its hand should be."
+	puzzle_id = "junglesummoner"
+
 //*************************
 //***Box Pushing Puzzles***
 //*************************
@@ -100,6 +153,26 @@
 	icon_state = "laserbox"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+
+/obj/structure/holobox/statue
+	name = "statue of a brave warrior"
+	desc = "A statue of a lizard warrior, clad in imposing armour and armed with a sword and shield."
+	icon_state = "warrior_statue"
+
+/obj/structure/holobox/statue/ranger
+	name = "statue of a precise ranger"
+	desc = "A statue of a lizard ranger, clad in imposing armour and armed with a bow and arrow."
+	icon_state = "ranger_statue"
+
+/obj/structure/holobox/statue/mage
+	name = "statue of a wise mage"
+	desc = "A statue of a lizard mage, clad in imposing armour and armed with a staff."
+	icon_state = "mage_statue"
+
+/obj/structure/holobox/statue/summoner
+	name = "statue of an inspiring summoner"
+	desc = "A statue of a lizard summoner, clad in imposing armour and armed with a whip and staff."
+	icon_state = "summoner_statue"
 
 //Uses the pressure_plate settings for a pretty basic custom pattern that waits for a specific item to trigger. Easy enough to retool for mapping purposes or subtypes.
 /obj/item/pressure_plate/hologrid
@@ -145,3 +218,29 @@
 		trigger()
 		sleep(15)
 		qdel(AM)
+
+/obj/item/pressure_plate/hologrid/jungle
+	name = "statue plinth"
+	desc = "A glowing stone slab, waiting to accept a statue. But which one is correct...?"
+	icon_state = "lasergrid_jungle"
+	specific_item = /obj/structure/holobox/statue
+	reward = /obj/item/keycard/jungle/warrior
+
+/obj/item/pressure_plate/hologrid/jungle/ranger
+	specific_item = /obj/structure/holobox/statue/ranger
+	reward = /obj/item/keycard/jungle/ranger
+
+/obj/item/pressure_plate/hologrid/jungle/mage
+	specific_item = /obj/structure/holobox/statue/mage
+	reward = /obj/item/keycard/jungle/mage
+
+/obj/item/pressure_plate/hologrid/jungle/summoner
+	specific_item = /obj/structure/holobox/statue/summoner
+	reward = /obj/item/keycard/jungle/summoner
+
+/obj/item/pressure_plate/hologrid/jungle/Crossed(atom/movable/AM)
+	. = ..()
+	if(trigger_item && istype(AM, specific_item) && !claimed)
+		AM.anchored = TRUE
+		trigger()
+		sleep(15)

@@ -38,10 +38,12 @@
 		if(stat != DEAD)
 			//Mutations and radiation
 			handle_mutations_and_radiation()
-
+		#ifndef EVENTMODE
 		if(stat != DEAD)
 			//Breathing, if applicable
+
 			handle_breathing(times_fired)
+
 
 		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
@@ -49,7 +51,7 @@
 
 		if (QDELETED(src)) // diseases can qdel the mob via transformations
 			return
-
+		#endif
 		if(stat != DEAD)
 			//Random events (vomiting etc)
 			handle_random_events()

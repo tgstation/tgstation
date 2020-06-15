@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(air)
 	init_order = INIT_ORDER_AIR
 	priority = FIRE_PRIORITY_AIR
 	wait = 5
-	flags = SS_BACKGROUND
+	flags = SS_NO_FIRE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cost_turfs = 0
@@ -309,7 +309,7 @@ SUBSYSTEM_DEF(air)
 			continue
 		T.Initalize_Atmos(times_fired)
 		CHECK_TICK
-
+	return
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len
 		sleep(world.tick_lag)
