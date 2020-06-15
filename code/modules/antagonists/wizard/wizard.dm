@@ -74,10 +74,14 @@
 				objectives += escape_objective
 
 		if(31 to 60)
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = owner
-			steal_objective.find_target()
-			objectives += steal_objective
+			if(prob(50))
+				var/datum/objective/disaster/disaster_objective = new
+				disaster_objective.owner = owner
+				objectives += disaster_objective
+			else
+				var/datum/objective/megafauna/megafauna_objective = new
+				megafauna_objective.owner = owner
+				objectives += megafauna_objective
 
 			if (!(locate(/datum/objective/escape) in objectives))
 				var/datum/objective/escape/escape_objective = new

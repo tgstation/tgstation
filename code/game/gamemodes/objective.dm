@@ -403,6 +403,35 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 				counter++
 	return counter >= 8
 
+//wizard objectives (fairly hard to pull off and stupidly destructive to the station)
+
+/datum/objective/megafauna
+	name = "megafauna"
+	explanation_text = "Ensure a megafauna from the mining area is alive on or near the station at the end of the shift."
+	martyr_compatible = FALSE //while doable will make the objective way easier and instantly end round to finish martyr
+
+/datum/objective/megafauna/check_completion() //get a megafauna from the mining shuttle to the station. good luck!
+	for(var/a in GLOB.mob_living_list)
+		if(!ismegafauna(a))
+			continue
+		var/mob/living/simple_animal/hostile/megafauna/mega = a
+		if(is_station_level(mega.z))
+			return TRUE
+	return FALSE
+
+/datum/objective/disaster
+	name = "disaster"
+	explanation_text = "Create a tesla OR singularity, or something similar and ensure it's still on or near the station at the end of the shift."
+	martyr_compatible = FALSE //while doable will make the objective way easier and instantly end round to finish martyr
+
+/datum/objective/disaster/check_completion() //create something real BAD!
+	for(var/a in GLOB.poi_list)
+		if(istype(a, /obj/singularity))
+			var/obj/singularity/S = a
+			if(is_station_level(S.z))
+				return TRUE
+	return FALSE
+
 /datum/objective/escape
 	name = "escape"
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
