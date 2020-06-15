@@ -47779,7 +47779,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 2;
 	name = "Research and Development Desk";
-	req_one_access_txt = "7;29"
+	req_one_access_txt = "7"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "research_shutters";
@@ -50293,6 +50293,10 @@
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},
+/obj/machinery/camera{
+	c_tag = "Genetics Lab East";
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "clW" = (
@@ -51776,7 +51780,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastright{
 	name = "Research and Development Desk";
-	req_one_access_txt = "7;29"
+	req_one_access_txt = "7"
 	},
 /obj/item/folder/white{
 	pixel_x = 4;
@@ -52000,7 +52004,7 @@
 "cpF" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Genetics Lab Maintenance";
-	req_access_txt = "9, 30"
+	req_access_txt = "9"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -52641,11 +52645,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "cqS" = (
-/obj/machinery/camera{
-	c_tag = "Genetics Lab";
-	dir = 1;
-	network = list("ss13","rd")
-	},
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -53001,7 +53000,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Storage";
-	req_access_txt = "8"
+	req_access_txt = "71"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "toxins_blastdoor";
@@ -53485,7 +53484,7 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Maintenance";
-	req_one_access_txt = "7;47;29"
+	req_one_access_txt = "47"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -53579,6 +53578,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/taperecorder{
+	pixel_x = -3
+	},
+/obj/item/paicard{
+	pixel_x = 4
+	},
+/obj/item/storage/secure/briefcase,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "ctf" = (
@@ -53756,7 +53763,7 @@
 "ctM" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Nanite Laboratory Maintenance";
-	req_one_access_txt = "7;47;29"
+	req_one_access_txt = "7"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -54086,7 +54093,6 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/snacks/grown/banana,
-/obj/effect/landmark/start/geneticist,
 /turf/open/floor/grass,
 /area/science/genetics)
 "cuA" = (
@@ -54180,12 +54186,7 @@
 	},
 /area/crew_quarters/heads/hor)
 "cuP" = (
-/obj/structure/table,
-/obj/item/aicard,
-/obj/item/circuitboard/aicore{
-	pixel_x = -2;
-	pixel_y = 4
-	},
+/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -54196,17 +54197,15 @@
 	},
 /area/crew_quarters/heads/hor)
 "cuR" = (
-/obj/structure/table,
-/obj/item/taperecorder{
-	pixel_x = -3
-	},
-/obj/item/paicard{
-	pixel_x = 4
-	},
-/obj/item/storage/secure/briefcase,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = 24
+	},
+/obj/structure/table,
+/obj/item/aicard,
+/obj/item/circuitboard/aicore{
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -54761,7 +54760,7 @@
 	pixel_y = -29
 	},
 /obj/machinery/modular_computer/console/preset/research{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -55005,7 +55004,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Toxins Storage";
-	req_access_txt = "8"
+	req_access_txt = "71"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -56616,7 +56615,7 @@
 "cCG" = (
 /obj/machinery/door/window/southleft{
 	name = "Mass Driver Door";
-	req_access_txt = "7"
+	req_access_txt = "8"
 	},
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
@@ -58478,7 +58477,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Research and Development Lab";
-	req_one_access_txt = "7;29"
+	req_one_access_txt = "7"
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -58777,7 +58776,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Lab Maintenance";
-	req_one_access_txt = "7;29"
+	req_one_access_txt = "7"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -61672,7 +61671,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Lab";
-	req_access_txt = "47"
+	req_access_txt = "55"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -61862,7 +61861,6 @@
 	c_tag = "Toxins - Launch Area";
 	network = list("ss13","rd")
 	},
-/obj/machinery/suit_storage_unit/rd,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -61964,7 +61962,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Chapel - Starboard";
+	c_tag = "Genetics Lab East";
 	dir = 8
 	},
 /turf/open/floor/plasteel/chapel{
@@ -62088,7 +62086,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Lab";
-	req_access_txt = "47"
+	req_access_txt = "55"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -62613,7 +62611,6 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cSf" = (
@@ -62621,6 +62618,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cSg" = (
@@ -62643,9 +62641,6 @@
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 5
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -62676,7 +62671,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
+	dir = 5
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -64341,10 +64336,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcl" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
+/obj/machinery/camera{
+	c_tag = "Engineering - Foyer - Starboard";
+	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcm" = (
@@ -64508,7 +64503,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 10
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -64516,6 +64511,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 10
+	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcI" = (
@@ -64539,7 +64537,9 @@
 	name = "Cold protection gear"
 	},
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/obj/item/clothing/suit/hooded/wintercoat/science,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcK" = (
@@ -69234,7 +69234,7 @@
 /obj/machinery/camera{
 	c_tag = "Prison Isolation Cell";
 	dir = 8;
-	network = list("ss13","prison" , "isolation")
+	network = list("ss13","prison","isolation")
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
@@ -70856,12 +70856,12 @@
 	brightness = 3;
 	dir = 8
 	},
-/mob/living/simple_animal/mouse/brown/Tom,
 /obj/structure/sink{
 	pixel_y = 29;
 	dir = 2;
 	pixel_x = 0
 	},
+/mob/living/simple_animal/mouse/brown/Tom,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "icO" = (
@@ -73123,7 +73123,7 @@
 "lYP" = (
 /obj/machinery/door/airlock/research{
 	name = "Nanite Laboratory";
-	req_one_access_txt = "7;47;29"
+	req_one_access_txt = "7"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,

@@ -65,6 +65,9 @@
 	heat_capacity = 900
 	hardness = 45
 
+/turf/closed/wall/rust/rust_heretic_act()
+	ScrapeAway()
+
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
@@ -73,6 +76,11 @@
 	max_heat_integrity = 100
 	heat_capacity = 900
 	hardness = 15
+
+/turf/closed/wall/r_wall/rust/rust_heretic_act()
+	if(prob(50))
+		return
+	ScrapeAway()
 
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"
