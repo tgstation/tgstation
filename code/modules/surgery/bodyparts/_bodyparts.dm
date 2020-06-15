@@ -199,12 +199,21 @@
 
 	var/wounding_type = (brute > burn ? WOUND_BLUNT : WOUND_BURN)
 	var/wounding_dmg = max(brute, burn)
-	if(wounding_type == WOUND_BLUNT && sharpness)
-		if(sharpness == SHARP_EDGED)
+
+	var/mangled_state = get_mangled_state()
+
+	if(wounding_type == WOUND_BLUNT)
+		if(mangled_state == BODYPART_MANGLED_BOTH)
+			try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+		else if(mangled_state == BODYPART_MANGLED_SKIN && sharpness)
+			playsound(src, "sound/effects/crackandbleed.ogg", 100)
+			wounding_type = WOUND_BLUNT
+		else if(sharpness == SHARP_EDGED)
 			wounding_type = WOUND_SLASH
-		else
+		else if(sharpness == SHARP_POINTY)
 			wounding_type = WOUND_PIERCE
 	// i know this is effectively the same check as above but i don't know if those can null the damage by rounding and want to be safe
+
 	if(owner && wounding_dmg > 4 && wound_bonus != CANT_WOUND)
 		// if you want to make tox wounds or some other type, this will need to be expanded and made more modular
 		// handle all our wounding stuff
@@ -641,3 +650,45 @@
 		bleed_rate += W.blood_flow
 
 	return bleed_rate
+
+/obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+	if(!prob(wounding_dmg + (get_damage() * 0.5)))
+		return
+
+	var/datum/wound/dismembering
+	switch(wounding_type)
+		if(WOUND_BLUNT)
+			dismembering = new /datum/wound/blunt/loss
+		if(WOUND_SLASH)
+			dismembering = new /datum/wound/slash/loss
+		if(WOUND_PIERCE)
+			dismembering = new /datum/wound/pierce/loss
+
+	dismembering.apply_wound(src)
+	return TRUE
+
+/obj/item/bodypart/proc/get_mangled_state()
+	var/mangled_state = BODYPART_MANGLED_NONE
+	var/dam_mul = 1 //initial(wound_damage_multiplier)
+
+	var/mangled_bone = FALSE
+	var/mangled_skin = FALSE
+
+	// we can only have one wound per type, but remember there's multiple types
+	for(var/i in wounds)
+		var/datum/wound/W = i
+		dam_mul *= W.damage_mulitplier_penalty
+		if(W.severity >= WOUND_SEVERITY_CRITICAL)
+			if(istype(W, /datum/wound/blunt))
+				mangled_bone = TRUE
+			else if(istype(W, /datum/wound/slash) || istype(W, /datum/wound/pierce))
+				mangled_skin = TRUE
+
+	if(mangled_bone && mangled_skin)
+		mangled_state = BODYPART_MANGLED_BOTH
+	else if(mangled_bone)
+		mangled_state = BODYPART_MANGLED_BONE
+	else if(mangled_skin)
+		mangled_state = BODYPART_MANGLED_SKIN
+
+	return mangled_state

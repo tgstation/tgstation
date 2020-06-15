@@ -275,7 +275,7 @@
 	name = "Weeping Avulsion"
 	desc = "Patient's skin is completely torn open, along with significant loss of tissue. Extreme blood loss will lead to quick death without intervention."
 	treat_text = "Immediate bandaging and either suturing or cauterization, followed by supervised resanguination."
-	examine_desc = "is spurting blood at an alarming rate"
+	examine_desc = "is carved down to the bone, spraying blood wildly"
 	occur_text = "is torn open, spraying blood wildly"
 	sound_effect = 'sound/effects/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
@@ -289,21 +289,3 @@
 	status_effect_type = /datum/status_effect/wound/slash/critical
 	scarring_descriptions = list("a winding path of very badly healed scar tissue", "a series of peaks and valleys along a gruesome line of cut scar tissue", "a grotesque snake of indentations and stitching scars")
 
-// TODO: see about moving dismemberment over to this, i'll have to add judging dismembering power/wound potential wrt item size i guess
-/datum/wound/slash/loss
-	name = "Dismembered"
-	desc = "oof ouch!!"
-	occur_text = "is violently dismembered!"
-	sound_effect = 'sound/effects/dismember.ogg'
-	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	severity = WOUND_SEVERITY_LOSS
-	threshold_minimum = 180
-	status_effect_type = null
-
-/datum/wound/slash/loss/apply_wound(obj/item/bodypart/L, silent, datum/wound/slash/old_wound, smited = FALSE)
-	if(!L.dismemberable)
-		qdel(src)
-		return
-
-	L.dismember()
-	qdel(src)

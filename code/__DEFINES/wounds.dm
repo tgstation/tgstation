@@ -48,3 +48,8 @@
 // increment this number when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)
 // saved scars with a version lower than this will be discarded
 #define SCAR_CURRENT_VERSION				1
+
+#define BODYPART_MANGLED_NONE	0
+#define BODYPART_MANGLED_BONE	1
+#define BODYPART_MANGLED_SKIN	2
+#define BODYPART_MANGLED_BOTH	3

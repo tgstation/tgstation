@@ -349,7 +349,7 @@
 	name = "Compound Fracture"
 	desc = "Patient's bones have suffered multiple gruesome fractures, causing significant pain and near uselessness of limb."
 	treat_text = "Immediate binding of affected limb, followed by surgical intervention ASAP."
-	examine_desc = "has a cracked bone sticking out of it"
+	examine_desc = "is completely mangled and shattered, barely held together by muscle"
 	occur_text = "cracks apart, exposing broken bones to open air"
 	severity = WOUND_SEVERITY_CRITICAL
 	interaction_efficiency_penalty = 4

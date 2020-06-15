@@ -1,6 +1,8 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	damage = 60
+	sharpness = SHARP_POINTY
+	wound_bonus = 0
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
