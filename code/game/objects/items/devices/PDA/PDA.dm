@@ -18,6 +18,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	icon_state = "pda"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
+	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	item_flags = NOBLUDGEON

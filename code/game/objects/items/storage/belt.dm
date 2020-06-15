@@ -5,6 +5,7 @@
 	icon_state = "utilitybelt"
 	inhand_icon_state = "utility"
 	worn_icon_state = "utility"
+	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -433,6 +434,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "belt"
 	inhand_icon_state = "security"
+	worn_icon_state = "security"
 
 /obj/item/storage/belt/military/abductor/full/PopulateContents()
 	new /obj/item/screwdriver/abductor(src)

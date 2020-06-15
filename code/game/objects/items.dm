@@ -28,6 +28,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
+	///Override mob worn overlay with invisible overlay. Default is true to allow for a large number of items that do not have an icon when worn, particularly in the belt or suit, to remain invisible instead of displaying a missing texture sprite.
+	var/worn_hidden = TRUE
 	///Icon file for mob worn overlays.
 	var/icon/worn_icon
 	///icon state for mob worn overlays, if null the normal icon_state will be used.

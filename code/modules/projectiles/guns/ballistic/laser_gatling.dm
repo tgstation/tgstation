@@ -7,6 +7,7 @@
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "holstered"
 	inhand_icon_state = "backpack"
+	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK

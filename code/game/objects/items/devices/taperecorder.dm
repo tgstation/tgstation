@@ -4,6 +4,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorder_empty"
 	inhand_icon_state = "analyzer"
+	worn_icon_state = "analyzer"
+	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL

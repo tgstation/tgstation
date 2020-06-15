@@ -252,6 +252,7 @@
 	icon_state = "staffofstorms"
 	inhand_icon_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
+	worn_hidden = FALSE
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 25

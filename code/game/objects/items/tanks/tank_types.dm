@@ -60,6 +60,7 @@
 	name = "plasma tank"
 	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
 	icon_state = "plasma"
+	worn_hidden = TRUE
 	flags_1 = CONDUCT_1
 	slot_flags = null	//they have no straps!
 	force = 8
@@ -167,6 +168,7 @@
 /obj/item/tank/internals/emergency_oxygen/double
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
+	worn_icon_state = "emergency_engi"
 	volume = 8
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
