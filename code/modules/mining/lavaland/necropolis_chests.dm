@@ -1216,7 +1216,7 @@
 	var/bonusloot = rand(1,11)
 	switch(bonusloot)
 		if(1)
-			new /obj/item/soulstone/amybody(src)
+			new /obj/item/soulstone/anybody(src)
 		if(2)
 			new /obj/item/jacobs_ladder(src)
 		if(3)
