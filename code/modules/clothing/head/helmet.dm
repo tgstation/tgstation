@@ -360,21 +360,17 @@
 	. = ..()
 	if(slot != ITEM_SLOT_HEAD)
 		return
-	if(!ismonkey(user))
+	if(!ismonkey(user) || user.ckey)
 		var/mob/living/something = user
 		to_chat(something, "<span class='boldnotice'>You feel a stabbing pain in the back of your head for a moment.</span>")
 		something.apply_damage(5,BRUTE,BODY_ZONE_HEAD,FALSE,FALSE,FALSE) //notably: no damage resist (it's in your helmet), no damage spread (it's in your helmet)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
 	magnification = user //this polls ghosts
-	var/removed_candidate = magnification.ckey //don't poll the guy you're about to ghost
-	if(removed_candidate)
-		to_chat(magnification, "<span class='userdanger'>You feel a stabbing pain in the back of your head for a moment as [src] wipes your personality to a blank slate.</span>")
-		magnification.ghostize(FALSE)
 	visible_message("<span class='warning'>[src] powers up!</span>")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	polling = TRUE
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION) - removed_candidate
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
 	polling = FALSE
 	if(!candidates.len)
 		magnification = null
@@ -384,7 +380,6 @@
 	magnification.key = picked.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	to_chat(magnification, "<span class='notice'>You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!</span>")
-
 	icon_state = "monkeymindup"
 
 /obj/item/clothing/head/helmet/monkey_sentience/Destroy()
@@ -395,15 +390,15 @@
 	if(!magnification) //not put on a viable head
 		return
 	if(!polling)//put on a viable head, but taken off after polling finished.
-		if(magnification.ckey)
+		if(magnification.client)
 			to_chat(magnification, "<span class='userdanger'>You feel your flicker of sentience ripped away from you, as everything becomes dim...</span>")
 			magnification.ghostize(FALSE)
 		if(prob(10))
 			switch(rand(1,4))
 				if(1) //blood rage
 					magnification.aggressive = TRUE
-				if(2) //brain death (death)
-					magnification.death()
+				if(2) //brain death
+					magnification.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
 				if(3) //primal gene (gorilla)
 					magnification.gorillize()
 				if(4) //genetic mass susceptibility (gib)
@@ -412,6 +407,7 @@
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 	playsound(src, "sparks", 100, TRUE)
 	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
+	magnification = null
 	new /obj/effect/decal/cleanable/ash/crematorium(src.loc) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
 
 /obj/item/clothing/head/helmet/monkey_sentience/dropped(mob/user)
