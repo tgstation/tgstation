@@ -194,6 +194,20 @@
 	strip_delay = 80
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/youmustsolvetheriddle
+	name = "top-hat"
+	desc = "<i>You must solve the riddle.</i>"
+	flags_inv = HIDEEARS|HIDEHAIR
+	icon_state = "mrbones"
+	inhand_icon_state = "thunderdome"
+	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90)
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	strip_delay = 80
+	dog_fashion = null
+
 /obj/item/clothing/head/helmet/roman
 	name = "\improper Roman helmet"
 	desc = "An ancient helmet made of bronze and leather."
