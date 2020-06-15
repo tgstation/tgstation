@@ -477,7 +477,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(enemy_stance == "defensive" && enemy_mp < 15)
 			temp += "<br><center><h3>[enemy_name] take some time to get some mp back!<center><h3> "
 			enemy_mp += attack_amount
-		else if (enemy_stance == "defensive" && enemy_mp >= 15)
+
+		else if (enemy_stance == "defensive" && enemy_mp >= 15 && !("magical" in current_enemy_passive))
 			temp += "<br><center><h3>[enemy_name] quickly heal themselves for 5 hp!<center><h3> "
 			enemy_mp -= 15
 			enemy_hp += 5
@@ -490,15 +491,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			LAZYREMOVE(current_enemy_passive, "magical")
 			pissed_off++
 
-		else if("smart" in current_enemy_passive && player_stance == "counter_attack" && enemy_mp > 20)
+		else if("smart" in current_enemy_passive && player_stance == "counter_attack" && enemy_mp >= 20)
 			temp += "<br><center><h3>[enemy_name] blasts you with magic from afar for 10 points of damage before you can counter!<center><h3>"
 			player_hp -= 10
 			enemy_mp -= 20
 
-		else if(enemy_hp >= 20 && enemy_mp >= 30 && enemy_stance == "defensive")
+		else if(enemy_hp >= 20 && enemy_mp >= 40 && enemy_stance == "defensive")
 			temp += "<br><center><h3>[enemy_name] Blasts you with magic from afar!<center><h3>"
-			enemy_mp -= 30
+			enemy_mp -= 40
 			player_hp -= 30
+			enemy_stance = "attack"
 
 		else if(enemy_hp < 20 && enemy_mp >= 20 && enemy_stance == "defensive") //it's a pretty expensive spell so they can't spam it that much
 			temp += "<br><center><h3>[enemy_name] heal themselves with magic and gain back 20 hp!<center><h3>"
@@ -555,7 +557,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 			return
 
-	if (player_hp <= 0)
+	else if (player_hp <= 0)
 		if(timer_id)
 			deltimer(timer_id)
 		gameover = TRUE
