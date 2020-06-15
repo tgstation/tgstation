@@ -58,8 +58,8 @@
 				to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 				return
 		if(!(href_list["move"] in params2list(possible_destinations)))
-			log_admin("[usr] attempted to href dock exploit on [src] with target location \"[href_list["move"]]\"")
-			message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[href_list["move"]]\"")
+			log_admin("[usr] attempted to forge a target location through a href exploit on [src] with target location \"[href_list["move"]]\"")
+			message_admins("[ADMIN_FULLMONTY(usr)] attempted to forge a target location through a href exploit on [src]")
 			return
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)
