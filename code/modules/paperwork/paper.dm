@@ -40,14 +40,14 @@
 	var/info = ""
 
 	/// The (text for the) stamps on the paper.
-	var/list/stamps
-	var/list/stamped
+	var/list/stamps			/// Positioning for the stamp in tgui
+	var/list/stamped		/// Overlay info
 
 	/// This REALLY should be a componenet.  Basicly used during, april fools
 	/// to honk at you
 	var/rigged = 0
 	var/spam_flag = 0
-	///
+
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
 
@@ -55,7 +55,7 @@
 	var/ui_y = 800
 	/// When the sheet can be "filled out"
 	/// This is an associated list
-	var/list/form_fields
+	var/list/form_fields = null
 	var/field_counter = 1
 	/// What edit mode we are in and who is
 	/// writing on it right now
@@ -93,6 +93,8 @@
  **/
 /obj/item/paper/proc/setText(text)
 	info = text
+	form_fields = null
+	field_counter = 0
 	update_icon_state()
 
 /obj/item/paper/pickup(user)
@@ -248,7 +250,7 @@
 			to_chat(user, "You look at the sheet while [edit_usr] edits it")
 		else
 			edit_mode = MODE_READING
-		ui_interact(user)	/// The other ui will be created with just read mode outside of this
+		ui_interact(user)	// The other ui will be created with just read mode outside of this
 
 	. = ..()
 
@@ -269,7 +271,7 @@
 	if(!ui)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 		assets.send(user)
-		/// The x size is because we double the width for the editor
+		// The x size is because we double the width for the editor
 		ui = new(user, src, ui_key, "PaperSheet", name, ui_x, ui_y, master_ui, state)
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -307,7 +309,7 @@
 	data["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
 	data["stamps"] = stamps
 
-	if(edit_usr != null && user != edit_usr)
+	if(edit_usr == null || user != edit_usr)
 		data["edit_mode"] = MODE_READING		/// Eveyone else is just an observer
 	else
 		data["edit_mode"] = edit_mode
@@ -336,7 +338,7 @@
 			if (isnull(stamps))
 				stamps = new/list()
 			if(stamps.len < MAX_PAPER_STAMPS)
-				/// I hate byond when dealing with freaking lists
+				// I hate byond when dealing with freaking lists
 				stamps += list(list(stamp_class, stamp_x,  stamp_y,stamp_r))	/// WHHHHY
 
 				/// This does the overlay stuff
@@ -363,28 +365,28 @@
 			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
 
 			if(paper_len > MAX_PAPER_LENGTH)
-				/// Side note, the only way we should get here is if
-				/// the javascript was modified, somehow, outside of
-				/// byond.
+				// Side note, the only way we should get here is if
+				// the javascript was modified, somehow, outside of
+				// byond.
 				log_paper("[key_name(edit_usr)] writing to paper [name], and overwrote it by [paper_len-MAX_PAPER_LENGTH], aborting")
 				ui_force_close()
 			else if(paper_len == 0)
 				to_chat(usr, pick("Writing block strikes again!", "You forgot to write anthing!"))
 				ui_force_close()
 			else
-				/// Next find the sign marker and replace it with somones sig
-				/// All other processing should of been done in the js module
+				// Next find the sign marker and replace it with somones sig
+				// All other processing should of been done in the js module
 				in_paper = sign_regex.Replace(in_paper, "<font face=\"[SIGNFONT]\"><i>[edit_usr]</i></font>")
-				/// Do the same with form fields
+				// Do the same with form fields
 				log_paper("[key_name(edit_usr)] writing to paper [name]")
 				if(info != in_paper) // this a good idea?
 					to_chat(usr, "You have added to your paper masterpiece!");
 					info = in_paper
-					/// Switch ui to reading mode
 				if(fields && fields.len > 0)
-					for(var/key in fields)	/// In case somone %sign in a field
+					for(var/key in fields)	// In case somone %sign in a field
 						form_fields[key] = sign_regex.Replace(fields[key], "<font face=\"[SIGNFONT]\"><i>[edit_usr]</i></font>")
 
+			/// Switch ui to reading mode
 			edit_mode = MODE_READING
 			edit_usr = null
 			ui_update()

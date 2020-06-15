@@ -220,7 +220,7 @@ class PaperSheetView extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.raw_text !== this.state.raw_text
+    if (nextState.marked !== this.state.marked
       || nextState.stamps.length !== this.state.stamps.length) {
       // ok, we are at the queued state change, lets do an update
       // or do one if the stamps get updated
@@ -258,9 +258,9 @@ class PaperSheetView extends Component {
     const stamp_list = this.state.stamps;
     return (
       <Box position="relative"
-        backgroundColor={backgroundColor} width="100%" height="100%">
+        backgroundColor={backgroundColor} width="100%" height="100%" >
         <Box fillPositionedParent={1} width="100%" height="100%"
-          dangerouslySetInnerHTML={this.state.marked} />
+          dangerouslySetInnerHTML={this.state.marked} p="10px" />
         {stamp_list.map((o, i) => (
           <Stamp key={o[0] + i}
             image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3] }} />
@@ -376,14 +376,6 @@ class PaperSheetEdit extends Component {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.previewSelected !== this.state.previewSelected
-      || this.state.textarea_text !== nextState.textarea_text) {
-      // change tab, so we want to update for sure
-      return true;
-    }
-    return false; // otherwise don't
-  }
   // sets up combined text from state to make the preview to be as close
   // to what it will look like.  Its all fixed once its submited
   createPreview(value) {
@@ -440,14 +432,12 @@ class PaperSheetEdit extends Component {
 
       const final_processing = getAllFields(combined_text);
       if (final_processing) {
-        logger.log("final_processing   " + final_processing[0]);
         act('save', {
           text: final_processing[0],
           form_fields: final_processing[1],
           field_counter: new_counter,
         });
       } else {
-        logger.log("!final_processing   " + combined_text);
         act('save', {
           text: combined_text,
           field_counter: new_counter,
@@ -497,9 +487,13 @@ class PaperSheetEdit extends Component {
                 ? "grey"
                 : "white"}
               selected={this.state.previewSelected === "Preview"}
-              onClick={() => this.setState({
-                previewSelected: "Preview",
-                combined_text: this.createPreview(value),
+              onClick={() => this.setState(() => {
+                const new_state = {
+                  previewSelected: "Preview",
+                  textarea_text: this.state.textarea_text,
+                  combined_text: this.createPreview(this.state.textarea_text),
+                };
+                return new_state;
               })}>
               Preview
             </Tabs.Tab>
@@ -580,20 +574,19 @@ export const PaperSheet = (props, context) => {
       case 0: // min-height="100vh" min-width="100vw"
         return (<PaperSheetView
           value={text}
-          stamps={stamp_list} m={5} />);
+          stamps={stamp_list} />);
       case 1:
         return (<PaperSheetEdit value={text}
           textColor={pen_color}
           fontFamily={pen_font}
           stamps={stamp_list}
           backgroundColor={backgroundColor}
-          m={5}
         />);
       case 2:
         return (<PaperSheetStamper value={text}
           stamps={stamp_list}
           stamp_class={stamp_class}
-          m={5} />);
+        />);
       default:
         return "ERROR ERROR WE CANNOT BE HERE!!";
     }
