@@ -232,7 +232,9 @@
 		if(!selection)
 			return
 		switch(selection)
-			if("Stop Recording" || "Pause")
+			if("Pause")
+				stop()
+			if("Stop Recording")  // yes we actually need 2 seperate stops for the same proc- Hopek
 				stop()
 			if("Record")
 				record()
