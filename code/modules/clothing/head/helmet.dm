@@ -347,6 +347,10 @@
 	var/mob/living/carbon/monkey/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
 	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)
 
+/obj/item/clothing/head/helmet/monkey_sentience/Initialize()
+	. = ..()
+	icon_state = "[icon_state][rand(1,3)]"
+
 /obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
 	. = ..()
 	. += "<span class='boldwarning'>---WARNING: REMOVAL OF HELMET ON SUBJECT MAY LEAD TO:---</span>"
@@ -380,7 +384,7 @@
 	magnification.key = picked.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	to_chat(magnification, "<span class='notice'>You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!</span>")
-	icon_state = "monkeymindup"
+	icon_state = "[icon_state]up"
 
 /obj/item/clothing/head/helmet/monkey_sentience/Destroy()
 	. = ..()
