@@ -1,4 +1,0 @@
-author: "Cobby kills medbots!!!"
-delete-after: True
-changes: 
-  - bugfix: "Medbots that are suppose to heal other damage types than brute now actually do so"
