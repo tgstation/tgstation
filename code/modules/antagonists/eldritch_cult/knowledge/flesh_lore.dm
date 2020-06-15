@@ -25,6 +25,8 @@
 	var/mob/living/carbon/human/humie = locate() in atoms
 	if(!humie)
 		return
+	if(humie.stat != DEAD)
+		return
 
 	humie?.grab_ghost()
 
