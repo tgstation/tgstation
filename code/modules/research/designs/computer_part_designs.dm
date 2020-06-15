@@ -148,7 +148,7 @@
 	id = "APClink"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000)
-	build_path = /obj/item/computer_hardware/recharger/apc
+	build_path = /obj/item/computer_hardware/recharger/apc_recharger
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
