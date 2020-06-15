@@ -240,6 +240,7 @@
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
 	icon_state = "defibcompact"
 	inhand_icon_state = "defibcompact"
+	worn_icon_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 
@@ -257,6 +258,7 @@
 	desc = "A belt-equipped blood-red defibrillator. Can revive through spacesuits, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or agressive manner."
 	icon_state = "defibcombat" //needs defib inhand sprites
 	inhand_icon_state = "defibcombat"
+	worn_icon_state = "defibcombat"
 	combat = TRUE
 	safety = FALSE
 	cooldown_duration = 2.5 SECONDS
@@ -277,6 +279,7 @@
 	desc = "A belt-equipped state-of-the-art defibrillator. Can revive through spacesuits, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or agressive manner."
 	icon_state = "defibnt" //needs defib inhand sprites
 	inhand_icon_state = "defibnt"
+	worn_icon_state = "defibnt"
 	paddle_type = /obj/item/shockpaddles/syndicate/nanotrasen
 
 //paddles

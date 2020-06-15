@@ -11,6 +11,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+
+	/*	!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
+
+		IF YOU ADD MORE ICON CRAP TO THIS
+		ENSURE YOU ALSO ADD THE NEW VARS TO CHAMELEON ITEM_ACTION'S update_item() PROC (/datum/action/item_action/chameleon/change/proc/update_item())
+		WASHING MASHINE'S dye_item() PROC (/obj/item/proc/dye_item())
+		AND ALSO TO THE CHANGELING PROFILE DISGUISE SYSTEMS (/datum/changelingprofile / /datum/antagonist/changeling/proc/create_profile() / /proc/changeling_transform())
+
+		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!	*/
+
 	///icon state for inhand overlays, if null the normal icon_state will be used.
 	var/inhand_icon_state = null
 	///Icon file for left hand inhand overlays
@@ -24,6 +34,15 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/worn_icon_state
 	///Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer
+
+	/*	!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
+
+		IF YOU ADD MORE ICON CRAP TO THIS
+		ENSURE YOU ALSO ADD THE NEW VARS TO CHAMELEON ITEM_ACTION'S update_item() PROC (/datum/action/item_action/chameleon/change/proc/update_item())
+		WASHING MASHINE'S dye_item() PROC (/obj/item/proc/dye_item())
+		AND ALSO TO THE CHANGELING PROFILE DISGUISE SYSTEMS (/datum/changelingprofile / /datum/antagonist/changeling/proc/create_profile() / /proc/changeling_transform())
+
+		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!	*/
 
 	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
 	var/worn_x_dimension = 32
