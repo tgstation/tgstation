@@ -78,6 +78,9 @@
 	//If true living mobs with keys will be kicked to arena exit when resetting the arena instead of deleted
 	var/safe_reset = FALSE
 
+	//special actions for subtypes name = hrefid
+	var/list/custom_specials
+
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	LoadDefaultArenas()
@@ -338,16 +341,17 @@
 			if("outfit")
 				change_outfit(user,team)
 	if(href_list["special"])
-		switch(href_list["special"])
-			if("reset")
-				reset_arena()
-			//Just example in case you want to add more
-			if("randomarena")
-				load_random_arena(user)
-			if("spawntrophy")
-				trophy_for_last_man_standing(user)
-			if("kickall")
-				kick_players_out()
+		if(!special_handler(href_list["special"]))
+			switch(href_list["special"])
+				if("reset")
+					reset_arena()
+				//Just example in case you want to add more
+				if("randomarena")
+					load_random_arena(user)
+				if("spawntrophy")
+					trophy_for_last_man_standing(user)
+				if("kickall")
+					kick_players_out()
 	if(href_list["member_action"])
 		var/ckey = href_list["ckey"]
 		var/team = href_list["team"]
@@ -357,6 +361,9 @@
 	updateUsrDialog()
 
 // Special functions
+
+/obj/machinery/computer/arena/proc/special_handler(special_value)
+	return FALSE
 
 /obj/machinery/computer/arena/proc/load_random_arena(mob/user)
 	if(!length(arena_templates))
@@ -413,6 +420,8 @@
 	dat += "<a href='?src=[REF(src)];special=randomarena'>Load random arena.</a><br>"
 	dat += "<a href='?src=[REF(src)];special=spawntrophy'>Spawn trophies for survivors.</a><br>"
 	dat += "<a href='?src=[REF(src)];special=kickall'>Kick players to exit.</a><br>"
+	for(var/c in custom_specials)
+		dat += "<a href='?src=[REF(src)];special=[custom_specials[c]]'>[c]</a><br>"
 
 	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 500, 600)
 	popup.set_content(dat.Join())

@@ -72,7 +72,8 @@ export const MafiaPanel = (props, context) => {
                 className="candystripe"
                 key={player.ref}
                 label={player.name}>
-                {player.votes !== undefined
+                {!player.alive && (<Box color="red">DEAD</Box>)}
+                {player.votes !== undefined && player.alive
                 && (<Fragment>Votes : {player.votes} </Fragment>)}
                 {
                   !!player.actions && player.actions.map(action => {

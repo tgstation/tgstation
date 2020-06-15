@@ -277,6 +277,7 @@
 		player_info["name"] = R.body.real_name
 		player_info["ref"] = REF(R)
 		player_info["actions"] = actions
+		player_info["alive"] = R.game_status == MAFIA_ALIVE
 		player_data += list(player_info)
 	.["players"] = player_data
 	.["timeleft"] = next_phase_timer ? timeleft(next_phase_timer) : 0
@@ -345,35 +346,22 @@
 	for(var/key in L)
 		. += L[key]
 
-/datum/mafia_controller/proc/find_best_setup(list/ready_players)
+/datum/mafia_controller/proc/find_best_setup(ready_count)
 	var/list/all_setups = GLOB.mafia_setups
 	var/valid_setups = list()
 	for(var/S in all_setups)
 		var/req_players = assoc_value_sum(S)
-		if(req_players <= ready_players.len)
+		if(req_players <= ready_count)
 			valid_setups += list(S)
 	return length(valid_setups) > 0 ? pick(valid_setups) : null
 
-/datum/mafia_controller/proc/sign_up(mob/player)
-	if(player.key in signed_up)
-		signed_up -= player.key
-		to_chat(player,"<span class='warning'>You unregister from next mafia game.</span>")
-	else
-		signed_up += player.key
-		to_chat(player,"<span class='warning'>You register for next mafia game.</span>")
-
 /datum/mafia_controller/proc/basic_setup()
-	var/list/filtered_keys = list()
-	for(var/key in signed_up)
-		if(GLOB.directory[key])
-			filtered_keys += key
-	if(debug)
-		filtered_keys = signed_up.Copy() //DEBUG ONLY
-	var/list/setup = find_best_setup(filtered_keys)
+	var/ready_count = GLOB.minigame_signups.GetCurrentPlayerCount("mafia")
+	var/list/setup = find_best_setup(ready_count)
+	if(!setup)
+		return
 	var/req_players = assoc_value_sum(setup)
-	while(length(filtered_keys) > req_players)
-		pick_n_take(filtered_keys) //Maybe in order so there's queue instead of pick
-	signed_up -= filtered_keys
+	var/list/filtered_keys = GLOB.minigame_signups.GetPlayers("mafia",req_players,!debug)
 	prepare_game(setup,filtered_keys)
 	start_game()
 
@@ -383,7 +371,7 @@
 	var/min_players = 999 // fairly sure mmo mafia is not a thing and i'm lazy
 	for(var/setup in GLOB.mafia_setups)
 		min_players = min(min_players,assoc_value_sum(setup))
-	if(signed_up.len >= min_players)
+	if(GLOB.minigame_signups.GetCurrentPlayerCount("mafia") >= min_players)
 		basic_setup()
 
 /datum/action/innate/mafia_panel
