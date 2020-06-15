@@ -125,6 +125,45 @@
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille")
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
 
+/turf/closed/indestructible/fakenormalglass
+	name = "window"
+	icon_state = "fake_window"
+	opacity = 0
+	smooth = SMOOTH_TRUE
+	icon = 'icons/obj/smooth_structures/window.dmi'
+
+/turf/closed/indestructible/fakenormalglass/Initialize()
+	. = ..()
+	icon_state = null //set the icon state to null, so our base state isn't visible
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
+
+/turf/closed/indestructible/faketintedglass
+	name = "window"
+	icon_state = "fake_window"
+	opacity = 1
+	smooth = SMOOTH_TRUE
+	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
+
+/turf/closed/indestructible/faketintedglass/Initialize()
+	. = ..()
+	icon_state = null //set the icon state to null, so our base state isn't visible
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
+
+/turf/closed/indestructible/fakeshuttleglass
+	name = "window"
+	icon_state = "fake_window"
+	opacity = 0
+	smooth = SMOOTH_TRUE
+	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
+
+/turf/closed/indestructible/fakeshuttleglass/Initialize()
+	. = ..()
+	icon_state = null //set the icon state to null, so our base state isn't visible
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
+
 /turf/closed/indestructible/fakedoor
 	name = "CentCom Access"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
