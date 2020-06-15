@@ -32,5 +32,3 @@ mg2.11 - Dereliction (space ruins mashup) (Author: HouseDev) (Needs: Door Access
 mg2.12 - Into The Engine (Author: HouseDev) (Needs: Door Access Checks/Clutter/Playtest )
 PropHuntTest.dmm - WIP, should contain maps on z1, and working arena on z2
 ```
-
-Bald Orange doesn't know what he's doing.

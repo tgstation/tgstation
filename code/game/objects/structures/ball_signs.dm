@@ -3,7 +3,7 @@
 	desc = "Don't look at it too long!"
 	icon = 'icons/obj/ball-sign-small.dmi'
 	icon_state = "Suit"
-	max_integrity = 99999999
+	max_integrity = 9999
 	buildable_sign = FALSE
 
 /obj/structure/sign/ball/large // PRIVATE PYLE, YOU HAVE SIXTY SECONDS TO EXPLAIN WHY THIS WAS THE ONLY SIGN YOU CODED
