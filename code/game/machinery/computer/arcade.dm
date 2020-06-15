@@ -534,10 +534,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 /obj/machinery/computer/arcade/battle/proc/gameover_check(mob/user)
 	var/xp_gained = 0
-	if (enemy_hp <= 0)
+	if(enemy_hp <= 0)
 		if(!gameover)
 			if(timer_id)
 				deltimer(timer_id)
+			if(player_hp <= 0)
+				player_hp = 1 //let's just pretend the enemy didn't kill you so not both the player and enemy look dead.
 			gameover = TRUE
 			blocked = FALSE
 			temp = "<br><center><h3>[enemy_name] has fallen! Rejoice!<center><h3>"
@@ -555,9 +557,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				prizevend(user)
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
-			return
 
-	else if (player_hp <= 0)
+	else if(player_hp <= 0)
 		if(timer_id)
 			deltimer(timer_id)
 		gameover = TRUE
