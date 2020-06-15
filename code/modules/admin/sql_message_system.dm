@@ -90,7 +90,7 @@
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,
 		"secret" = secret,
-		"expiry" = expiry,
+		"expiry" = expiry || null,
 		"note_severity" = note_severity,
 	))
 	var/pm = "[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""]: [text]"

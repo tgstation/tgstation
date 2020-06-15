@@ -187,7 +187,7 @@
 	},
 /obj/item/coin/antagtoken,
 /obj/item/book/granter/spell/summonitem{
-	name = "an extremely flamboyant book"
+	name = "\proper an extremely flamboyant book"
 	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
