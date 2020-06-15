@@ -1070,7 +1070,7 @@
 			new /obj/item/blood_contract(src)
 		if(3)
 			new /obj/item/gun/magic/staff/spellblade(src)
-		var/bonusloot = rand(1,11)
+	var/bonusloot = rand(1,11)
 	switch(bonusloot)
 		if(1)
 			new /obj/item/soulstone(src)
