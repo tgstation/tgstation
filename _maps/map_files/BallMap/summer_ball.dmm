@@ -1903,28 +1903,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "fd" = (
-/obj/structure/table/wood,
-/obj/item/statuebust{
-	pixel_y = 7
-	},
-/turf/open/floor/plasteel/dark,
-/area/prophunt)
-"fe" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug{
-	pixel_y = -2;
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/food/drinks/mug{
-	pixel_y = 10;
-	pixel_x = 9
-	},
-/obj/item/melee/classic_baton{
-	anchored = 1;
-	desc = "A wooden truncheon. It seems to be more of a decoration than a weapon.";
-	pixel_x = -7;
-	pixel_y = 4
-	},
+/obj/machinery/arena_spawn/green,
 /turf/open/floor/plasteel/dark,
 /area/prophunt)
 "ff" = (
@@ -1949,14 +1928,6 @@
 	},
 /turf/open/floor/plasteel/bluespace,
 /area/prophunt/mg2)
-"fj" = (
-/obj/machinery/door/airlock/grunge{
-	id_tag = "phentrance";
-	name = "Prop Hunt";
-	req_access_txt = "63"
-	},
-/turf/open/floor/plasteel/dark,
-/area/prophunt)
 "fk" = (
 /turf/open/floor/plasteel/dark,
 /area/prophunt)
@@ -1965,6 +1936,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/arena_spawn/red,
 /turf/open/floor/plasteel,
 /area/prophunt)
 "fm" = (
@@ -5029,6 +5001,9 @@
 /area/awaymission/beach)
 "mH" = (
 /obj/effect/baseturf_helper/asteroid,
+/obj/effect/landmark/gondola{
+	checkpoint = 3
+	},
 /turf/open/floor/plating/beach/water,
 /area/awaymission/beach)
 "mI" = (
@@ -6070,6 +6045,12 @@
 /obj/structure/railing,
 /turf/open/floor/plastic,
 /area/crew_quarters/fitness/recreation)
+"qP" = (
+/obj/machinery/door/poddoor{
+	id = "arena default"
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt)
 "qQ" = (
 /obj/machinery/flasher{
 	id = "brig1";
@@ -8027,6 +8008,10 @@
 "wH" = (
 /turf/open/floor/vault,
 /area/awaymission/beach)
+"wK" = (
+/obj/machinery/computer/prophunt_signup,
+/turf/open/floor/carpet/royalblue,
+/area/crew_quarters/abandoned_gambling_den)
 "wM" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
@@ -10958,6 +10943,12 @@
 "Ge" = (
 /turf/closed/wall,
 /area/crew_quarters/fitness/recreation)
+"Gf" = (
+/obj/effect/landmark/gondola{
+	checkpoint = 2
+	},
+/turf/open/floor/plating/beach/water,
+/area/awaymission/beach)
 "Gh" = (
 /turf/open/floor/plasteel/stairs/right{
 	dir = 8
@@ -12638,6 +12629,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
+"Mr" = (
+/obj/effect/landmark/gondola,
+/turf/open/floor/plating/beach/water,
+/area/awaymission/beach)
+"Ms" = (
+/turf/closed/indestructible/fakeglass,
+/area/prophunt)
 "Mu" = (
 /obj/structure/mineral_door/wood,
 /obj/effect/step_trigger/thrower{
@@ -13796,6 +13794,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig/upper)
+"QB" = (
+/obj/vehicle/ridden/gondola,
+/turf/open/floor/plating/beach/water,
+/area/awaymission/beach)
 "QC" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile{
@@ -14129,6 +14131,12 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
 /area/crew_quarters/fitness/recreation)
+"RU" = (
+/obj/effect/landmark/gondola{
+	checkpoint = 4
+	},
+/turf/open/floor/plating/beach/water,
+/area/awaymission/beach)
 "RV" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/plasteel/white,
@@ -17111,7 +17119,7 @@ ab
 ab
 ab
 ab
-ab
+Gf
 ab
 ab
 ab
@@ -81326,6 +81334,19 @@ co
 (253,1,1) = {"
 ZR
 aa
+RU
+QB
+ab
+ab
+QB
+ab
+ab
+QB
+ab
+ab
+ab
+ab
+QB
 ab
 ab
 ab
@@ -81333,35 +81354,22 @@ ab
 ab
 ab
 ab
+QB
 ab
 ab
 ab
 ab
 ab
+QB
 ab
 ab
 ab
 ab
+QB
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Mr
 ab
 ab
 ab
@@ -128722,9 +128730,9 @@ FO
 FE
 FE
 ej
-eu
-fj
-fj
+Ms
+Ms
+Ms
 eu
 ej
 rW
@@ -128978,9 +128986,9 @@ Xa
 FO
 FE
 FE
-eu
+Ms
 fd
-fk
+qP
 fk
 fq
 ej
@@ -129235,9 +129243,9 @@ FO
 FO
 FE
 FE
-eu
-fe
-fk
+Ms
+Ms
+Ms
 fk
 fr
 ej
@@ -129492,7 +129500,7 @@ FE
 FE
 FE
 FE
-eu
+Ms
 ff
 fl
 ex
@@ -129747,9 +129755,9 @@ FE
 FE
 FE
 FE
+wK
 FE
-FE
-eu
+Ms
 fg
 eH
 eH
