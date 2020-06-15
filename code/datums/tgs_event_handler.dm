@@ -35,7 +35,7 @@
 				deltimer(reattach_timer)
 				reattach_timer = null
 		if(TGS_EVENT_WATCHDOG_SHUTDOWN)
-			to_chat(world, "<span class='boldannounce'>Server is shuting down!</span>")
+			to_chat(world, "<span class='boldannounce'>Server is shutting down!</span>")
 
 /datum/tgs_event_handler/impl/proc/LateOnReattach()
 	message_admins("Warning: TGS hasn't notified us of it coming back for a full minute! Is there a problem?")
