@@ -46,8 +46,8 @@
 			continue
 		SEND_SIGNAL(AM, COMSIG_MOVABLE_DISPOSING, src, D)
 		AM.forceMove(src)
-		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
-			var/obj/structure/bigDelivery/T = AM
+		if(istype(AM, /obj/structure/big_delivery) && !hasmob)
+			var/obj/structure/big_delivery/T = AM
 			src.destinationTag = T.sortTag
 		else if(istype(AM, /obj/item/small_delivery) && !hasmob)
 			var/obj/item/small_delivery/T = AM

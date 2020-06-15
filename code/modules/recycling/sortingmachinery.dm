@@ -1,4 +1,4 @@
-/obj/structure/bigDelivery
+/obj/structure/big_delivery
 	name = "large parcel"
 	desc = "A large delivery parcel."
 	icon = 'icons/obj/storage.dmi'
@@ -10,7 +10,7 @@
 	var/obj/item/paper/note
 	var/obj/item/barcode/sticker
 
-/obj/structure/bigDelivery/interact(mob/user)
+/obj/structure/big_delivery/interact(mob/user)
 	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
 	if(!do_after(user, 15, target = user))
 		return
@@ -19,13 +19,13 @@
 	unwrap_contents()
 	qdel(src)
 
-/obj/structure/bigDelivery/Destroy()
+/obj/structure/big_delivery/Destroy()
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(T)
 	return ..()
 
-/obj/structure/bigDelivery/contents_explosion(severity, target)
+/obj/structure/big_delivery/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
@@ -35,7 +35,7 @@
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowobj += AM
 
-/obj/structure/bigDelivery/examine(mob/user)
+/obj/structure/big_delivery/examine(mob/user)
 	. = ..()
 	if(note)
 		if(!in_range(user, src))
@@ -46,7 +46,7 @@
 	if(sticker)
 		. += "There's a barcode attached to the side."
 
-/obj/structure/bigDelivery/attackby(obj/item/W, mob/user, params)
+/obj/structure/big_delivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/O = W
 
@@ -140,7 +140,7 @@
 	else
 		return ..()
 
-/obj/structure/bigDelivery/relay_container_resist(mob/living/user, obj/O)
+/obj/structure/big_delivery/relay_container_resist(mob/living/user, obj/O)
 	if(ismovable(loc))
 		var/atom/movable/AM = loc //can't unwrap the wrapped container if it's inside something.
 		AM.relay_container_resist(user, O)
@@ -159,7 +159,7 @@
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, "<span class='warning'>You fail to remove [O]'s wrapping!</span>")
 
-/obj/structure/bigDelivery/proc/unwrap_contents()
+/obj/structure/big_delivery/proc/unwrap_contents()
 	if(!sticker)
 		return
 	for(var/obj/I in src.GetAllContents())

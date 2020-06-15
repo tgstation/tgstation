@@ -2,7 +2,7 @@
 
 ### This file contains a list of all the areas in your station. Format is as follows:
 
-/area/CATEGORY/OR/DESCRIPTOR/NAME 	(you can make as many subdivisions as you want)
+/area/CATEGORY/OR/DESCRIPTOR/NAME   (you can make as many subdivisions as you want)
 	name = "NICE NAME" 				(not required but makes things really nice)
 	icon = 'ICON FILENAME' 			(defaults to 'icons/turf/areas.dmi')
 	icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
