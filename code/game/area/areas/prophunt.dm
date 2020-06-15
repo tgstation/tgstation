@@ -97,19 +97,19 @@
 			deltimer(autostart_timer)
 
 /obj/machinery/computer/prophunt_signup/proc/try_starting()
-	if(linked_machine && signed_up)
+	if(linked_machine && signed_up.len)
 		manage_arena() // proc can be used to prepare the arena, can add more.
-		for(var/obj/machinery/arena_spawn/S in GLOB.machines)
-			if(S.color == "red")
+		for(var/obj/machinery/arena_spawn/S in GLOB.machines) // get spawns
+			if(S.team == "red")
 				red_spawn = S
-			if(S.color == "green")
+			if(S.team == "green")
 				green_spawn = S
-		var/i = 0
+		var/i = 0 // iteration, we get 4 people.
 		var/mob/hunter = signed_up[1]
 		linked_machine.add_team_member(hunter,ARENA_GREEN_TEAM,hunter.key)
 		linked_machine.spawn_member(green_spawn,hunter.ckey,ARENA_GREEN_TEAM)
-		pop(signed_up)
-		while(i > 5 && signed_up) // gets 4 people, pops them from the list and adds them to the team
+		pop(signed_up) // removes from list
+		while(i > 5 && signed_up.len) // gets 4 people, pops them from the list and adds them to the team
 			var/mob/M = signed_up[1]
 			if(!M.key)
 				pop(signed_up)
@@ -122,8 +122,8 @@
 		var/list/contestants = linked_machine.all_contestants()
 		for(var/mob/contestant in contestants)
 			to_chat(contestant,"<span class='userdanger'>Hiders are red team, seekers are green team. Hiders have 30 seconds to hide! Start now!</span>")
-			new /obj/item/chameleon(contestant.loc)
-		var/hiding_timer = addtimer(CALLBACK(linked_machine, /obj/machinery/computer/arena.proc/set_doors), 30 SECONDS, TIMER_STOPPABLE)
+			new /obj/item/chameleon(contestant.loc) // Everyone gets a chameleon kit. It doesn't matter if we have an excess of these since they won't do much harm.
+		var/hiding_timer = addtimer(CALLBACK(linked_machine, /obj/machinery/computer/arena.proc/set_doors, TRUE), 30 SECONDS, TIMER_STOPPABLE)
 		autostart_timer = addtimer(CALLBACK(src, .proc/end_game), 2 MINUTES, TIMER_STOPPABLE)
 	else
 		deltimer(autostart_timer)
