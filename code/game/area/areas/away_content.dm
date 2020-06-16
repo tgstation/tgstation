@@ -32,7 +32,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	var/death = FALSE // if when you enter this zone, you die
 
 /area/awaymission/mrboneswildride
-	name = "Mr. Bones Wild Ride"
+	name = "House of Spooks"
 	icon_state = "SPOOKEDYA"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = FALSE
