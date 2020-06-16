@@ -191,10 +191,11 @@
 	adjustFireLoss(-maxHealth * 0.5 ,FALSE)
 
 
-/mob/living/simple_animal/hostile/eldritch/armsy/RangedAttack(atom/A, params)
-	target = A
-	AttackingTarget()
+/mob/living/simple_animal/hostile/eldritch/armsy/Shoot(atom/targeted_atom)
 	. = ..()
+	target = targeted_atom
+	AttackingTarget()
+
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
 	if(istype(target,/obj/item/bodypart/r_arm) || istype(target,/obj/item/bodypart/l_arm))
