@@ -100,15 +100,6 @@ export const EmergencyShuttleConsole = (props, context) => {
                   No Active Authorizations
                 </Box>
               )}
-              {authorizations.map(authorization => (
-                <Box
-                  key={authorization.name}
-                  bold
-                  fontSize="16px"
-                  className="candystripe">
-                  {authorization.name} ({authorization.job})
-                </Box>
-              ))}
             </Section>
           </Section>
         </Section>
