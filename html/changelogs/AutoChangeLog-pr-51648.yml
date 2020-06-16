@@ -1,0 +1,4 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - bugfix: "Having Codex Cicatrix in a pocket while sacrificing someone will give you charges now."
