@@ -1,0 +1,4 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - bugfix: "emergency shuttle console no longer lists authorizations twice."
