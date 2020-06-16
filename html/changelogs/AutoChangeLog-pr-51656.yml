@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Engineering scanner goggles are now the correct color when their modes are switched."
