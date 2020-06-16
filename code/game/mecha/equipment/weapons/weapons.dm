@@ -479,7 +479,7 @@
 		return
 
 	if(can_toggle_lethal)
-		return "[..()] </span>&nbsp; <a href='?src=[REF(src)];lethalPunch=1'>[harmful?"Punch":"Pat"] mode</a>"
+		return "[..()] &nbsp; <a href='?src=[REF(src)];lethalPunch=1'>[harmful?"Punch":"Pat"] mode</a>"
 	else
 		return
 
