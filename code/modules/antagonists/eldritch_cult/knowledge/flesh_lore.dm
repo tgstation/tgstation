@@ -23,7 +23,7 @@
 
 /datum/eldritch_knowledge/flesh_ghoul/on_finished_recipe(mob/living/user,list/atoms,loc)
 	var/mob/living/carbon/human/humie = locate() in atoms
-	if(!humie)
+	if(!humie || humie.stat != DEAD)
 		return
 
 	humie?.grab_ghost()
@@ -80,7 +80,7 @@
 
 /datum/eldritch_knowledge/flesh_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!ishuman(target))
+	if(!ishuman(target) || target == user)
 		return
 	var/mob/living/carbon/human/human_target = target
 	var/datum/status_effect/eldritch/eldritch_effect = human_target.has_status_effect(/datum/status_effect/eldritch/rust) || human_target.has_status_effect(/datum/status_effect/eldritch/ash) || human_target.has_status_effect(/datum/status_effect/eldritch/flesh)
@@ -91,6 +91,9 @@
 			var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
 			var/datum/wound/brute/cut/severe/crit_wound = new
 			crit_wound.apply_wound(bodypart)
+
+	if(!human_target || human_target.stat != DEAD)
+		return
 
 	human_target.grab_ghost()
 
@@ -212,7 +215,7 @@
 	gain_text = "Our blood is all the same after all, the owl told me."
 	desc = "You gain a spell that drains enemies health and restores yours."
 	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/ash_leech
+	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/blood_siphon
 	next_knowledge = list(/datum/eldritch_knowledge/spell/rust_wave,/datum/eldritch_knowledge/spell/mad_touch)
 
 /datum/eldritch_knowledge/final/flesh_final
