@@ -27,7 +27,8 @@ GLOBAL_LIST_EMPTY(gondola_route_checkpoint)
 				sleep(5 SECONDS)
 				i++
 			if(prob(25))
-				src.say("[pick("ohh fuggggg","benis :D :D:D:D","hello :DD:: fren","oh fug :D we go this way now")]")
+				var/word = pick("ohh fuggggg","benis :D :D:D:D","hello :DD:: fren","oh fug :D we go this way now","ebin :D")
+				src.say(word)
 			++current_checkpoint
 		if(current_checkpoint == (checkpoints.len + 1))
 			current_checkpoint = 1
