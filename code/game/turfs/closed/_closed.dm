@@ -96,6 +96,12 @@
 	icon = 'icons/turf/walls/plastinum_wall.dmi'
 	icon_state = "shuttle"
 
+/turf/closed/indestructible/riveted/woodenwall
+	name = "wooden wall"
+	desc = "A wall with wooden plating. Stiff."
+	icon = 'icons/turf/walls/wood_wall.dmi'
+	icon_state = "wood"
+
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"
 
