@@ -437,11 +437,16 @@ BLIND     // can't see anything
 		body_parts_covered = NONE
 		slot_flags = NONE
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
-		if(ismob(loc))
-			var/mob/M = loc
-			M.visible_message("<span class='danger'>[M]'s [src.name] fall\s off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] fall\s off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
-			M.dropItemToGround(src)
-		name = "shredded [initial(name)]"
+		var/show_message = TRUE
+		if(isliving(loc))
+			var/mob/living/M = loc
+			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands / eating it if they were a moth.
+				M.visible_message("<span class='danger'>[M]'s [src.name] fall\s off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] fall\s off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
+				M.dropItemToGround(src)
+				show_message = FALSE
+		if(show_message)
+			visible_message("<span class='danger'>[src] fall apart, completely shredded!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+		name = "shredded [initial(name)]" // change the name -after- the message, not before.
 	else
 		..()
 
