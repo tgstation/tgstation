@@ -19,7 +19,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 		to_chat(user,"You unregister from [game_id] game.")
 	else
 		game_q[user.ckey] = user
-		to_chat(user,"You register for [game_id] game.")
+		to_chat(user,"You register for [game_id] game. There's now [length(game_q)] players signed up.")
 	SEND_SIGNAL(src,COMSIG_SIGNUP_SIGNUPS_CHANGED,game_id)
 
 /datum/minigame_signups/proc/GetCurrentPlayerCount(game_id)
@@ -28,7 +28,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	if(debug_mode)
 		return length(game_q)
 	for(var/key in game_q)
-		if(GLOB.directory[key] && GLOB.directory[key] == game_q[key])
+		if(GLOB.directory[key] && GLOB.directory[key].mob == game_q[key])
 			. += 1
 
 //flush to remove from signups
@@ -37,7 +37,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	var/list/game_q = signed_up[game_id]
 	var/list/possible_keys = list()
 	for(var/key in game_q)
-		if(GLOB.directory[key] && GLOB.directory[key] == game_q[key])
+		if(GLOB.directory[key] && GLOB.directory[key].mob == game_q[key])
 			possible_keys += key
 	if(debug_mode)
 		possible_keys = game_q.Copy()
@@ -45,18 +45,23 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 		return
 	for(var/i in 1 to count)
 		var/chosen_key = pick_n_take(possible_keys)
-		result += chosen_key
+		result[chosen_key] = game_q[chosen_key]
 		if(flush)
 			for(var/key in signed_up)
 				var/list/tbr = signed_up[key]
 				tbr -= chosen_key
 	return result
 
+#define PROPHUNT_SIGNUPS 1
+#define PROPHUNT_SETUP 2
+#define PROPHUNT_HIDING 3
+#define PROPHUNT_GAME 4
+
 /obj/prophunt_signup_board
 	name = "Prophunt Game Signup"
 	desc = "Sign up here."
 	icon = 'icons/obj/mafia.dmi'
-	icon_state = "signup"
+	icon_state = "joinme"
 	var/arena_id = "prophunt_arena"
 	var/obj/machinery/computer/arena/prophunt/linked_arena
 
@@ -73,11 +78,18 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 /obj/prophunt_signup_board/attack_hand(mob/living/user)
 	. = ..()
 	GLOB.minigame_signups.SignUpFor(user,"prophunt")
-
-#define PROPHUNT_SIGNUPS 1
-#define PROPHUNT_SETUP 2
-#define PROPHUNT_HIDING 3
-#define PROPHUNT_GAME 4
+	if(linked_arena && linked_arena.game_state != PROPHUNT_SIGNUPS)
+		var/left = 0
+		switch(linked_arena.game_state)
+			if(PROPHUNT_SETUP)
+				left = linked_arena.hiding_time + linked_arena.search_time
+			if(PROPHUNT_HIDING)
+				left = timeleft(linked_arena.next_stage_timer) + linked_arena.search_time
+			if(PROPHUNT_GAME)
+				left = timeleft(linked_arena.next_stage_timer)
+		to_chat(user,"<span class='notice'>Game in progress. Next will start in [DisplayTimeText(left)]</span>")
+	else
+		to_chat(user,"<span class='notice'>Next game will start as soon as there's [linked_arena.hider_count + linked_arena.searcher_count] players signed up.</span>")
 
 // snowflake subtype for prophunt
 /obj/machinery/computer/arena/prophunt
@@ -85,7 +97,6 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	arena_id = "prophunt_arena"
 	var/auto = FALSE //Toggle to start autogame
 	var/game_state = PROPHUNT_SIGNUPS
-	var/list/signed_up = list()
 	var/list/projectors = list()
 	var/list/hiders = list()
 	var/list/searchers = list()
@@ -110,18 +121,29 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 /obj/machinery/computer/arena/prophunt/proc/check_autostart(datum/source,game_id)
 	if(game_id != "prophunt")
 		return
+	try_autostart()
+
+/obj/machinery/computer/arena/prophunt/proc/try_autostart()
 	if(auto && game_state == PROPHUNT_SIGNUPS && GLOB.minigame_signups.GetCurrentPlayerCount("prophunt") > hider_count + searcher_count)
 		start_game()
 
 /obj/machinery/computer/arena/prophunt/proc/debug_signups()
 	debug = TRUE
+	GLOB.minigame_signups.debug_mode = TRUE
+	var/list/prophunt_list = list()
 	for(var/i in 1 to hider_count+searcher_count)
 		var/mob/living/carbon/human/H = new(get_turf(usr))
-		signed_up["[pick(GLOB.first_names_male)]"] = H
+		prophunt_list["[pick(GLOB.first_names_male)]"] = H
+	if(!GLOB.minigame_signups.signed_up["prophunt"])
+		GLOB.minigame_signups.signed_up["prophunt"] = prophunt_list
+	else
+		GLOB.minigame_signups.signed_up["prophunt"] |= prophunt_list
+
 
 /obj/machinery/computer/arena/prophunt/special_handler(special_value)
 	switch(special_value)
 		if("end_prophunt_round")
+			auto = FALSE
 			conclude_round()
 			return TRUE
 		else
@@ -135,13 +157,15 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	game_state = PROPHUNT_SETUP
 	hiders = list()
 	for(var/i in 1 to hider_count)
-		var/chosen_key = pick_n_take(filtered_keys)
-		var/chosen_mob = GLOB.directory[chosen_key]
+		var/chosen_key = pick(filtered_keys)
+		var/chosen_mob = filtered_keys[chosen_key]
+		filtered_keys -= chosen_key
 		hiders += chosen_mob
 	searchers = list()
 	for(var/i in 1 to searcher_count)
-		var/chosen_key = pick_n_take(filtered_keys)
-		var/chosen_mob = GLOB.directory[chosen_key]
+		var/chosen_key = pick(filtered_keys)
+		var/chosen_mob = filtered_keys[chosen_key]
+		filtered_keys -= chosen_key
 		searchers += chosen_mob
 	load_random_arena()
 	send_hiders_in()
@@ -161,6 +185,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	for(var/mob/living/L in searchers)
 		L.forceMove(get_landmark_turf(PROPHUNT_SEARCHER_SPAWN))
 	to_chat(searchers,"<span class='danger'>Search! You got 3 minutes!</span>")
+	to_chat(hiders,"<span class='userdanger'>Search started! Try to stay hidden for 3 minutes!</span>")
 	game_state = PROPHUNT_GAME
 	next_stage_timer = addtimer(CALLBACK(src,.proc/conclude_round),search_time, TIMER_STOPPABLE)
 
@@ -170,6 +195,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	if(next_stage_timer)
 		deltimer(next_stage_timer)
 	game_state = PROPHUNT_SIGNUPS
+	try_autostart()
 
 /obj/effect/landmark/arena/prophunt
 	arena_id = "prophunt_arena"
