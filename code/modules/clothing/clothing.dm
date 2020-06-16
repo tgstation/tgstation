@@ -80,7 +80,7 @@
 	foodtype = CLOTH
 
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent != INTENT_HARM && ismoth(M))
+	if(user.a_intent != INTENT_HARM && ismoth(M))// meme
 		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
 		clothing_as_food.name = name
 		if(clothing_as_food.attack(M, user, def_zone))
@@ -109,8 +109,7 @@
 
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
-	damaged_clothes = CLOTHING_PRISTINE
-	update_clothes_damaged_state()
+	update_clothes_damaged_state(CLOTHING_PRISTINE)
 	obj_integrity = max_integrity
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
 	body_parts_covered = initial(body_parts_covered)
@@ -178,7 +177,6 @@
 		obj_destruction((damage_type == BRUTE ? "melee" : "laser")) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
 		return
 
-	damaged_clothes = CLOTHING_DAMAGED
 	switch(zones_disabled)
 		if(1)
 			name = "damaged [initial(name)]"
@@ -187,7 +185,7 @@
 		if(3 to INFINITY) // take better care of your shit, dude
 			name = "tattered [initial(name)]"
 
-	update_clothes_damaged_state()
+	update_clothes_damaged_state(CLOTHING_DAMAGED)
 
 /obj/item/clothing/Destroy()
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
@@ -343,18 +341,14 @@
 	return .
 
 /obj/item/clothing/obj_break(damage_flag)
-	damaged_clothes = CLOTHING_DAMAGED
-	update_clothes_damaged_state()
+	update_clothes_damaged_state(CLOTHING_DAMAGED)
 	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
 		var/mob/M = loc
 		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
-/obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
-	if(damaging)
-		damaged_clothes = 1
-	else
-		damaged_clothes = 0
+/obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
+	damaged_clothes = damaged_state
 
 /obj/item/clothing/update_overlays()
 	. = ..()
@@ -437,11 +431,10 @@ BLIND     // can't see anything
 		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
 		deconstruct(FALSE)
 	else if(!(damage_flag in list("acid", "fire")))
-		damaged_clothes = CLOTHING_SHREDDED
 		body_parts_covered = NONE
 		name = "shredded [initial(name)]"
 		slot_flags = NONE
-		update_clothes_damaged_state()
+		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(ismob(loc))
 			var/mob/M = loc
 			M.visible_message("<span class='danger'>[M]'s [src.name] falls off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] falls off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
