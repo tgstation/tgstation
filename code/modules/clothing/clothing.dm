@@ -80,7 +80,10 @@
 	foodtype = CLOTH
 
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent != INTENT_HARM && ismoth(M))// meme
+	if(user.a_intent != INTENT_HARM && ismoth(M))
+		if(damaged_clothes == CLOTHING_SHREDDED)
+			to_chat(user, "<span class='notice'>[src] seems pretty torn apart... It probably wouldn't be too tasty.</span>")
+			return
 		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
 		clothing_as_food.name = name
 		if(clothing_as_food.attack(M, user, def_zone))
@@ -432,13 +435,13 @@ BLIND     // can't see anything
 		deconstruct(FALSE)
 	else if(!(damage_flag in list("acid", "fire")))
 		body_parts_covered = NONE
-		name = "shredded [initial(name)]"
 		slot_flags = NONE
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(ismob(loc))
 			var/mob/M = loc
-			M.visible_message("<span class='danger'>[M]'s [src.name] falls off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] falls off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
+			M.visible_message("<span class='danger'>[M]'s [src.name] fall\s off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] fall\s off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
 			M.dropItemToGround(src)
+		name = "shredded [initial(name)]"
 	else
 		..()
 
