@@ -559,3 +559,16 @@
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
 	return
+
+/obj/machinery/door/airlock/wood_large
+	name = "House of Spooks"
+	desc = "Are you prepared for the spookening?!"
+	icon = 'icons/obj/doors/airlocks/glass_large/wood_large.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
+	opacity = 0
+	assemblytype = null
+	glass = TRUE
+	bound_width = 64 // 2x1
+
+/obj/machinery/door/airlock/glass_large/narsie_act()
+	return

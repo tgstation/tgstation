@@ -12,6 +12,12 @@
 	e_cost = 83
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/mrbonesgun
+	projectile_type = /obj/projectile/bullet/a357
+	e_cost = 83
+	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
+	select_name = "kill"
+
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = 200
