@@ -6,7 +6,7 @@
 	name = "Mafia Game Signup"
 	desc = "Sign up here."
 	icon = 'icons/obj/mafia.dmi'
-	icon_state = "signup"
+	icon_state = "joinme"
 	var/game_id = "mafia"
 	var/autostart = FALSE //Will try to start immidiately
 	var/autostart_delay = 1 MINUTES
@@ -15,6 +15,13 @@
 /obj/mafia_game_signup/attack_hand(mob/user)
 	. = ..()
 	GLOB.minigame_signups.SignUpFor(user,game_id)
+	var/datum/mafia_controller/MF = GLOB.mafia_games[game_id]
+	if(autostart && MF)
+		if(MF.phase == MAFIA_PHASE_SETUP)
+			var/left = DisplayTimeText(timeleft(autostart_timer))
+			to_chat(user,"<span class='notice'>Next game will start in [left].</span>")
+		else
+			to_chat(user,"<span class='notice'>Game in progress. Next one will start immidiately after.</span>")
 
 /obj/mafia_game_signup/vv_edit_var(vname, vval)
 	. = ..()

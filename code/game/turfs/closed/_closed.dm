@@ -23,6 +23,9 @@
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
 
+/turf/closed/indestructible/rust_heretic_act()
+	return
+
 /turf/closed/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
@@ -92,6 +95,12 @@
 	desc = "A luxurious wall made out of a plasma-platinum alloy. Effectively impervious to conventional methods of destruction."
 	icon = 'icons/turf/walls/plastinum_wall.dmi'
 	icon_state = "shuttle"
+
+/turf/closed/indestructible/riveted/woodenwall
+	name = "wooden wall"
+	desc = "A wall with wooden plating. Stiff."
+	icon = 'icons/turf/walls/wood_wall.dmi'
+	icon_state = "wood"
 
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"

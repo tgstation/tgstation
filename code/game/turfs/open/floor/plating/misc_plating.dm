@@ -134,6 +134,8 @@
 	icon_state = "sand"
 	baseturfs = /turf/open/floor/plating/beach/sand
 
+	no_replacement = TRUE
+
 /turf/open/floor/plating/beach/coastline_t
 	name = "coastline"
 	desc = "Tide's high tonight. Charge your batons."
