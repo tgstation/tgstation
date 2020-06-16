@@ -45,8 +45,8 @@
 	maxHealth = 80
 	health = 80
 	weather_immunities = list("snow")
-	melee_damage_lower = 17
-	melee_damage_upper = 20
+	melee_damage_lower = 7
+	melee_damage_upper = 10
 	deathmessage = "collapses into a pile of bones!"
 	loot = list(/obj/effect/decal/remains/human,
 				/obj/item/clothing/shoes/winterboots,

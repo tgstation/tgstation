@@ -77,12 +77,12 @@
 /obj/item/teleportation_scroll/no_smoke/teleportscroll(mob/user)
 
 	var/A
-	
+
 	A = input(user, "Area to jump to", "*citrus laugh*", A) as null|anything in GLOB.teleportlocs
 	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
 		return
 	var/area/thearea = GLOB.teleportlocs[A]
-	if(istype(thearea, /area/security/) || istype(thearea, /area/prophunt))
+	if(istype(thearea, /area/security/) || istype(thearea, /area/prophunt) || istype(thearea, /area/awaymission/mrboneswildride))
 		to_chat(user, "You can't go there! Cmom man.")
 		return
 
