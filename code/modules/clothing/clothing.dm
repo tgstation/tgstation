@@ -82,7 +82,7 @@
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent != INTENT_HARM && ismoth(M))
 		if(damaged_clothes == CLOTHING_SHREDDED)
-			to_chat(user, "<span class='notice'>[src] seems pretty torn apart... It probably wouldn't be too tasty.</span>")
+			to_chat(user, "<span class='notice'>[src] seem[gender == PLURAL ? "":"s"] pretty torn apart... [gender == PLURAL ? "They" : "It"] probably wouldn't be too tasty.</span>")
 			return
 		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
 		clothing_as_food.name = name
@@ -345,9 +345,13 @@
 
 /obj/item/clothing/obj_break(damage_flag)
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
-	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
-		var/mob/M = loc
-		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
+
+	if(isliving(loc)) //It's not important enough to warrant a message if it's not on someone
+		var/mob/living/M = loc
+		if(src in M.get_equipped_items(FALSE))
+			to_chat(M, "<span class='warning'>Your [name] start[gender == PLURAL ? "":"s"] to fall apart!</span>")
+		else
+			to_chat(M, "<span class='warning'>[src] start[gender == PLURAL ? "":"s"] to fall apart!</span>")
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
@@ -437,15 +441,13 @@ BLIND     // can't see anything
 		body_parts_covered = NONE
 		slot_flags = NONE
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
-		var/show_message = TRUE
 		if(isliving(loc))
 			var/mob/living/M = loc
 			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands / eating it if they were a moth.
-				M.visible_message("<span class='danger'>[M]'s [src.name] fall\s off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] fall\s off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
+				M.visible_message("<span class='danger'>[M]'s [src.name] fall[gender == PLURAL ? "":"s"] off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] fall[gender == PLURAL ? "":"s"] off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
 				M.dropItemToGround(src)
-				show_message = FALSE
-		if(show_message)
-			visible_message("<span class='danger'>[src] fall apart, completely shredded!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+			else
+				M.visible_message("<span class='danger'>[src] fall[gender == PLURAL ? "":"s"] apart, completely shredded!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 		name = "shredded [initial(name)]" // change the name -after- the message, not before.
 	else
 		..()
