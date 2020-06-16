@@ -502,3 +502,10 @@
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
+
+/obj/effect/temp_visual/source_mic
+	name = "source mic effect 2004 edition"
+	icon_state = "source_mic"
+	layer = ABOVE_MOB_LAYER
+	duration = 15
+	randomdir = 0
