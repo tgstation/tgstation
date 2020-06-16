@@ -51,6 +51,7 @@
 	inhand_icon_state = "mrbonesgun"
 	desc = "It is required for the casino goers to solve the riddle."
 	force = 10
+	fire_sound_volume = 100
 	ammo_type = list(/obj/item/ammo_casing/energy/mrbonesgun)
 	ammo_x_offset = 3
 	selfcharge = 1
