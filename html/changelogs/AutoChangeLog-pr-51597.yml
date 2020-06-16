@@ -1,9 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a scenario where changelings would have missing textures when disguised."
-  - bugfix: "Fixed a scenario where camouflage items would have missing textures."
-  - bugfix: "Items in your suit storage should have less missing textures now."
-  - bugfix: "Restore the ion rifle's unique belt texture."
-  - bugfix: "Fixed a few more belt items having missing textures."
-  - bugfix: "Fixed washing machines sometimes fucking up an item's worn texture."

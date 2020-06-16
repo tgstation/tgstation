@@ -5,6 +5,7 @@
 	job_rank = ROLE_SPACE_DRAGON
 	show_in_antagpanel = TRUE
 	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
 	var/list/datum/mind/carp = list()
 
 /datum/antagonist/space_dragon/greet()
@@ -24,11 +25,11 @@
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	. = ..()
-	
+
 /datum/objective/summon_carp
 	var/datum/antagonist/space_dragon/dragon
 	explanation_text = "Summon and protect the rifts to flood the station with carp."
-	
+
 /datum/antagonist/space_dragon/roundend_report()
 	var/list/parts = list()
 	var/datum/objective/summon_carp/S = locate() in objectives
