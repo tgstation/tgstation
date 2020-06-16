@@ -17,10 +17,12 @@
 	required = "/datum/mutation/human/strong; /datum/mutation/human/radioactive"
 	result = HULK
 
+//Commented in an effort to keep the code for a potential later genetics rework maybe?
+/*
 /datum/generecipe/x_ray
 	required = "/datum/mutation/human/thermal; /datum/mutation/human/radioactive"
 	result = XRAY
-
+*/
 /datum/generecipe/mindread
 	required = "/datum/mutation/human/antenna; /datum/mutation/human/paranoia"
 	result = MINDREAD
