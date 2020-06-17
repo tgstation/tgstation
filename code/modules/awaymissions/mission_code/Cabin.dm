@@ -7,12 +7,12 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/cabin/snowforest
-	name = "Snow Forest"
+	name = "Mt. Labyrinthian Entrance"
 	icon_state = "away"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/awaymission/cabin/snowforest/sovietsurface
-	name = "Snow Forest"
+	name = "Mt. Labyrinthian"
 	icon_state = "awaycontent29"
 	requires_power = FALSE
 
