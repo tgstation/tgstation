@@ -128,7 +128,7 @@ GENE SCANNER
 		return
 
 	if(ispodperson(M)&& !advanced)
-		to_chat(user, "<span class='info'>[M]'s biologal structure is too complicated for the health analyzer.")
+		to_chat(user, "<span class='info'>[M]'s biologal structure is too complex for the health analyzer.")
 		return
 
 	user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
