@@ -77,6 +77,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	move_resist = MOVE_FORCE_OVERPOWERING+1
+	movement_type = GROUND | FLYING
 	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/worm_contract)
 	ranged_cooldown_time = 5
 	ranged = TRUE
