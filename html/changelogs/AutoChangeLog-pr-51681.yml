@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - tweak: "Added scroll bar to ghost Orbit target selection menu."
