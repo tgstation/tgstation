@@ -271,6 +271,17 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
+/obj/item/radio/headset/headset_cent/mrbones
+	name = "nothing"
+	desc = "Uh, you're not wearing anything, dude."
+	icon_state = "mrbones"
+	inhand_icon_state = "cent_headset_alt"
+	keyslot = null
+
+/obj/item/radio/headset/headset_cent/mrbones/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+
 /obj/item/radio/headset/silicon/pai
 	name = "\proper mini Integrated Subspace Transceiver "
 	subspace_transmission = FALSE

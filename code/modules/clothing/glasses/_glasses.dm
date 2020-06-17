@@ -334,6 +334,17 @@
 	icon_state = "bigsunglasses"
 	inhand_icon_state = "bigsunglasses"
 
+/obj/item/clothing/glasses/sunglasses/mrbones
+	name = "nothing"
+	desc = "What are you wearing this for?"
+	icon_state = "mrbonesglasses"
+	inhand_icon_state = "bigsunglasses"
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+
+/obj/item/clothing/glasses/sunglasses/mrbones/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
+
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
 	desc = "Thermals in the shape of glasses."
