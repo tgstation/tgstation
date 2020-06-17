@@ -108,6 +108,15 @@
 	key_third_person = "winks"
 	message = "winks."
 
+/datum/emote/living/carbon/teehee
+	key = "teehee"
+	key_third_person = "teehees"
+	message = "teehees!"
+	message_mime = "appears to teehee!"
+	emote_type = EMOTE_AUDIBLE
+	sound = 'sound/misc/teehee.ogg'
+	cooldown = 5 SECONDS
+
 /datum/emote/living/carbon/circle
 	key = "circle"
 	key_third_person = "circles"
