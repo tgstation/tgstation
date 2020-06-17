@@ -174,17 +174,9 @@
 
 	var/obj/item/paper/P = new(drop_location())
 	var/list/tally = list()
-	tally += "<h1>Voting Results:</h1><hr><ol>"
-	for(var/option in results)
-		tally += "<li>\"<div class='content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
-	tally += "</ol>"
-	/*
-		// Papers dosn't have extra headers anymore.  might need to change this
-		// to markup
-		P.extra_headers = {"
-		<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+	tally += {"
 		<style>
-			.content{
+			.vote_box_content{
 				max-width:250px;
 				display:inline-block;
 				overflow:hidden;
@@ -192,14 +184,20 @@
 				white-space:nowrap;
 				vertical-align:bottom
 			}
-			.content br {
+			.vote_box_content br {
 				display: none;
 			}
-			.content hr {
+			.vote_box_content hr {
 				display: none;
 			}
-		</style>"}
-	*/
+		</style>
+		"}
+
+	tally += "<h1>Voting Results:</h1><hr><ol>"
+	for(var/option in results)
+		tally += "<li>\"<div class='vote_box_content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
+	tally += "</ol>"
+
 	P.info = tally.Join()
 	P.name = "Voting Results"
 	P.update_icon()

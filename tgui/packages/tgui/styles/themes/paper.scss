@@ -104,52 +104,11 @@ $font-size: 24px;
     color: $color-fg;
     $font-size: $font-size;
   }
-  .paper-input {
-    position: relative;
-    display: inline-block;
-    width: 120px;
-    border: none;
-    background: transparent;
-    border-bottom: 1px solid #000;
-    outline: none;
-    background-color:rgba(255, 255, 62, 0.8);
-    padding: 0 4px;
-    margin-right: 2px;
-    line-height: 17px;
-    overflow: visible;
-  }
-
-  .paper-input__baseline {
-    display: inline-block;
-    color: transparent;
-  }
-
-  .paper-input__input {
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border: 0;
-    outline: 0;
-    width: 100%;
-    height: 17px;
-    margin: 0;
-    background-color: transparent;
-    color: inherit;
-
-    &:-ms-input-placeholder {
-      font-style: italic;
-      color: #777;
-      color: rgba(255, 255, 255, 0.45);
-    }
-  }
 
   .paper-field {
     position: relative;
     display: inline-block;
-    width: 120px;
+    
     border: none;
     background: transparent;
     border-bottom: 1px solid #000;

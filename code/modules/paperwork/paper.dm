@@ -160,11 +160,10 @@
 
 
 /obj/item/paper/attack_self(mob/user)
-	if(edit_mode != MODE_READING)
-		log_paper("<span class='warning'>Not sure why, but there is an open ui and its in his hand?</span>")
+	if(edit_usr == user)
+		// we are shifting out of editing mode
 		edit_mode = MODE_READING
 		edit_usr = null
-		return
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		if(!spam_flag)
 			spam_flag = TRUE
@@ -184,9 +183,9 @@
 /obj/item/paper/can_interact(mob/user)
 	if(!..())
 		return FALSE
-	if(resistance_flags & ON_FIRE)		/// Are we on fire?  Hard ot read if so
+	if(resistance_flags & ON_FIRE)		// Are we on fire?  Hard ot read if so
 		return FALSE
-	if(user.is_blind())					/// Even harder to read if your blind...braile? humm
+	if(user.is_blind())					// Even harder to read if your blind...braile? humm
 		return FALSE
 	return user.can_read(src)			// checks if the user can read.
 
@@ -202,8 +201,8 @@
 
 		edit_mode = MODE_WRITING
 		edit_usr = user
-		/// should a crayon be in the same subtype as a pen?  How about a brush or charcoal?
-		/// TODO:  Convert all writing stuff to one type, /obj/item/art_tool maybe?
+		// should a crayon be in the same subtype as a pen?  How about a brush or charcoal?
+		// TODO:  Convert all writing stuff to one type, /obj/item/art_tool maybe?
 		is_crayon = istype(P, /obj/item/toy/crayon);
 		if(is_crayon)
 			var/obj/item/toy/crayon/PEN = P
@@ -379,7 +378,7 @@
 				in_paper = sign_regex.Replace(in_paper, "<font face=\"[SIGNFONT]\"><i>[edit_usr]</i></font>")
 				// Do the same with form fields
 				log_paper("[key_name(edit_usr)] writing to paper [name]")
-				if(info != in_paper) // this a good idea?
+				if(info != in_paper) 
 					to_chat(usr, "You have added to your paper masterpiece!");
 					info = in_paper
 				if(fields && fields.len > 0)

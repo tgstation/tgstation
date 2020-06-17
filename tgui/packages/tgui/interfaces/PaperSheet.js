@@ -5,13 +5,13 @@
  * @author Changes stylemistake
  * @license MIT
  */
-import { Component, createRef } from 'inferno';
-import { Tabs, Box, Flex, Button, TextArea, Input } from '../components';
-import { useBackend, useSharedState, useLocalState } from '../backend';
+import { Component } from 'inferno';
+import { Tabs, Box, Flex, TextArea } from '../components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
-import { classes } from "common/react";
+import { classes, isFalsy } from "common/react";
 // There is a sanatize option in marked but they say its deprecated.
 // Might as well use a proper one then
 
@@ -34,11 +34,7 @@ const walkTokens = token => {
       break;
   }
 };
-/*
 
-
-
-*/
 const sanatize_text = value => {
   // This is VERY important to think first if you NEED
   // the tag you put in here.  We are pushing all this
@@ -50,7 +46,7 @@ const sanatize_text = value => {
       'br', 'code', 'li', 'p', 'pre',
       'span', 'table', 'td', 'tr',
       'th', 'ul', 'ol', 'menu', 'font', 'b',
-      'center', 'input',
+      'center', 'input', 'style',
     ],
   });
 };
@@ -103,19 +99,22 @@ const createIDHeader = index => {
 // the exact amount of spaces
 const field_regex = /\[([_]+)\]/g;
 const field_tag_regex = /\[<\s*input\s*class='paper-field'(.*?)maxlength=(?<maxlength>\d+)(.*?)id='(?<id>paperfield_\d+)'(.*?)\/>\]/gm;
-
-
 const field_id_regex = /id\s*=\s*'(paperfield_\d+)'/g;
 const field_maxlength_regex = /maxlength\s*=\s*(\d+)/g;
 
 const createFields = (txt, font, fontsize, color, counter) => {
   const ret_text = txt.replace(field_regex, (match, p1, offset, string) => {
-    const pixel_width = textWidth(p1, font, fontsize);
     const id = createIDHeader(counter++);
     return "[<input class='paper-field' "
-        + " style='font:" + fontsize + " x" + font + "; color:" + color
-        + "' maxlength=" + p1.length
-        + " id='" + id + "'/>]";
+        + "style='"
+        + "font:" + fontsize + "x " + font + ";"
+        + "color:" + color + ";"
+        + "min-width:" + p1.length + "em;"
+        + "max-width:" + p1.length + "em;"
+        + "'"
+        + " id='" + id + "'"
+        + " maxlength=" + p1.length
+        + "/>]";
   });
   return [counter, ret_text];
 };
@@ -202,6 +201,20 @@ const Stamp = (props, context) => {
     />
   );
 };
+// If the prop dosn't exist OR its not true
+const isFalsyProperty = (obj, prop) => {
+  return Object.prototype.hasOwnProperty.call(obj, prop) && !isFalsy(obj.prop);
+};
+
+const setInputReadonly = (text, readonly) => {
+  return readonly
+    ? text.replace(/<input\s/g, "<input readonly ")
+    : text.replace(/<input\sreadonly\s/g, "<input ");
+};
+
+const parseMarkedText = (text, readonly) => {
+  return setInputReadonly(run_marked_default(text), readonly);
+};
 
 // got to make this a full component if we
 // want to control updates
@@ -213,9 +226,13 @@ class PaperSheetView extends Component {
       stamps,
     } = props;
     this.state = {
-      marked: { __html: run_marked_default(value) },
+      marked: {
+        __html: parseMarkedText(value,
+          isFalsyProperty(props, "readOnly")),
+      },
       raw_text: value,
       stamps: stamps || [],
+      readonly: isFalsyProperty(props),
     };
   }
 
@@ -226,24 +243,36 @@ class PaperSheetView extends Component {
       // or do one if the stamps get updated
       return false;
     }
-    if (nextProps.stamps
-        && nextProps.stamps.length !== this.state.stamps.length) {
-      this.setState({ stamps: nextProps.stamps });
-    }
-    if ((nextProps.value !== this.props.value
-        && nextProps.value !== this.state.raw_text)) {
-      // first check if the parrent updated us
-      // if so queue a state change, then
-      // skip to the state change
-      const {
-        fontFamily,
-        stamps,
-      } = this.props;
-
-      const fixed_text = run_marked_default(nextProps.value);
-
-      const new_state = { marked: { __html: fixed_text },
-        raw_text: nextProps.value };
+    // This is convluted because I want to do a single
+    // update even though its not likely
+    let next_state = {};
+    const stamps_changed = nextProps.stamps
+      && nextProps.stamps.length !== this.state.stamps.length;
+    const value_changed = nextProps.value !== this.props.value
+      && nextProps.value !== this.state.raw_text;
+    const readonly = !isFalsyProperty(nextProps.value, "readOnly");
+    const readonly_changed = readonly !== this.state.readonly;
+    if (stamps_changed || value_changed || readonly_changed) {
+      const new_state = {};
+      if (stamps_changed) {
+        new_state.stamps = nextProps.stamps;
+      }
+      if (readonly_changed) {
+        const fixed_text = parseMarkedText(value_changed
+          ? nextProps.value
+          : this.state.raw_text, readonly);
+        new_state.marked = { __html: fixed_text };
+        new_state.readonly = readonly;
+      }
+      if (value_changed) {
+        if (!readonly_changed) {
+          const fixed_text = parseMarkedText(nextProps.value,
+            this.state.readonly);
+          new_state.marked = { __html: fixed_text };
+        }
+        new_state.raw_text = nextProps.value;
+      }
+      setTimeout(() => console.log("to display: " + this.state.marked.__html), 0);
       this.setState(() => new_state);
     }
     return true;
@@ -256,6 +285,7 @@ class PaperSheetView extends Component {
       ...rest
     } = this.props;
     const stamp_list = this.state.stamps;
+
     return (
       <Box position="relative"
         backgroundColor={backgroundColor} width="100%" height="100%" >
@@ -354,7 +384,9 @@ class PaperSheetStamper extends Component {
         onMouseMove={this.handleMouseMove.bind(this)}
         onwheel={this.handleWheel.bind(this)} {...rest}>
         <PaperSheetView
-          value={value} stamps={stamp_list} />
+          readOnly={1}
+          value={value}
+          stamps={stamp_list} />
         <Stamp
           opacity={0.5} image={current_pos} />
       </Box>
@@ -385,8 +417,12 @@ class PaperSheetEdit extends Component {
       pen_color,
       pen_font,
       is_crayon,
+      field_counter,
     } = data;
-    const sanatized_text = sanatize_text(value + "\n \n");
+
+    const fielded_text = createFields(value+ "\n \n"
+      , pen_font, 12, pen_color, field_counter);
+    const sanatized_text = sanatize_text(fielded_text[1]);
     const combined_text = text
       + setFontinText(sanatized_text, pen_font, pen_color, is_crayon);
     return combined_text;
@@ -422,9 +458,10 @@ class PaperSheetEdit extends Component {
     } = data;
 
     if (new_text && new_text.length > 0) {
-      const sanatized_text = sanatize_text(new_text + "\n \n");
-      const fielded_text = createFields(sanatized_text,
+      const fielded_text = createFields(new_text + "\n \n",
         pen_font, 12, pen_color, field_counter);
+      const sanatized_text = sanatize_text(fielded_text[1] + "\n \n");
+
       const new_counter = fielded_text[0];
 
       const combined_text = text + setFontinText(fielded_text[1],
@@ -533,6 +570,7 @@ class PaperSheetEdit extends Component {
 
           ) || (
             <PaperSheetView
+              readOnly={1}
               value={this.state.combined_text}
               stamps={stamps}
               fontFamily={fontFamily}
