@@ -36273,10 +36273,6 @@
 	},
 /turf/open/floor/plating/icemoon,
 /area/science/test_area)
-"bHx" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/maintenance/aft)
 "bHy" = (
 /obj/structure/closet/crate,
 /obj/machinery/light/small{
@@ -45936,7 +45932,7 @@
 /area/maintenance/disposal/incinerator)
 "cng" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/maintenance/aft)
 "cnj" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -99729,8 +99725,8 @@ rGg
 rGg
 chp
 bzs
-bHx
-bHx
+bPn
+bPn
 cng
 boP
 boP
