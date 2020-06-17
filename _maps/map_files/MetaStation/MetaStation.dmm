@@ -96,6 +96,9 @@
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aaq" = (
@@ -780,6 +783,9 @@
 	},
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abQ" = (
@@ -28932,6 +28938,7 @@
 /area/hallway/primary/central)
 "boN" = (
 /obj/machinery/vending/cola/random,
+/obj/machinery/camera/autoname,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "boO" = (
@@ -31394,6 +31401,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/machinery/camera/autoname,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "buT" = (
@@ -34810,6 +34818,7 @@
 	pixel_y = 8
 	},
 /obj/structure/cable,
+/obj/machinery/light,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bDJ" = (
@@ -36111,6 +36120,10 @@
 	},
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bHj" = (
@@ -37475,6 +37488,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/brown/warning,
+/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "bKo" = (
@@ -40021,6 +40035,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -40458,7 +40475,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bRQ" = (
-/obj/effect/landmark/start/botanist,
+/obj/structure/closet/crate/hydroponics,
+/obj/item/shovel/spade,
+/obj/item/wrench,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/cultivator,
+/obj/item/wirecutters,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bRR" = (
@@ -40495,6 +40517,9 @@
 /obj/item/radio/intercom{
 	pixel_y = -25
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bRT" = (
@@ -40514,6 +40539,9 @@
 "bRV" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -40537,6 +40565,9 @@
 /area/crew_quarters/kitchen)
 "bRY" = (
 /obj/machinery/vending/wardrobe/chef_wardrobe,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -41507,6 +41538,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment{
 	dir = 10
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
@@ -43183,6 +43217,9 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -44323,6 +44360,9 @@
 /area/crew_quarters/kitchen)
 "caQ" = (
 /obj/machinery/deepfryer,
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "caS" = (
@@ -45137,6 +45177,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "cct" = (
@@ -65075,6 +65116,10 @@
 	pixel_y = 23
 	},
 /obj/structure/cable,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "dim" = (
@@ -65147,6 +65192,9 @@
 /obj/machinery/atmospherics/pipe/manifold/dark/visible{
 	dir = 4
 	},
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "dit" = (
@@ -65206,6 +65254,10 @@
 /area/maintenance/port/aft)
 "diz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -67163,6 +67215,9 @@
 /obj/item/radio/intercom{
 	pixel_y = 28
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "ecO" = (
@@ -67295,6 +67350,9 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
@@ -67596,6 +67654,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"eGz" = (
+/obj/structure/cable,
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "eIt" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -67802,6 +67865,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"fbi" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/service)
 "fcn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -67944,6 +68018,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -68776,6 +68853,9 @@
 "grA" = (
 /obj/machinery/vending/hydronutrients,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "gsF" = (
@@ -69565,13 +69645,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 29
 	},
-/obj/structure/closet/crate/hydroponics,
-/obj/item/shovel/spade,
-/obj/item/wrench,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/cultivator,
-/obj/item/wirecutters,
-/obj/structure/table/glass,
+/obj/effect/landmark/start/botanist,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "hBW" = (
@@ -70938,6 +71012,15 @@
 /obj/item/storage/belt/utility,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"jUP" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "jUR" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
@@ -72298,6 +72381,9 @@
 	},
 /obj/machinery/newscaster{
 	pixel_y = -28
+	},
+/obj/machinery/camera/autoname{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
@@ -74491,6 +74577,7 @@
 /obj/item/stack/cable_coil,
 /obj/structure/closet,
 /obj/item/vending_refill/cigarette,
+/obj/machinery/light/small,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "pKP" = (
@@ -75086,6 +75173,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "qBS" = (
@@ -75454,6 +75544,14 @@
 /obj/structure/lattice,
 /turf/closed/wall/r_wall,
 /area/medical/virology)
+"rhS" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "rig" = (
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
@@ -77096,6 +77194,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "tYS" = (
@@ -78673,6 +78774,7 @@
 /area/medical/morgue)
 "wDL" = (
 /obj/machinery/icecream_vat,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "wEh" = (
@@ -114138,7 +114240,7 @@ bWP
 bYh
 bWT
 oRn
-bWR
+rhS
 bST
 ceZ
 cgq
@@ -115142,7 +115244,7 @@ bjp
 bkU
 bmP
 buQ
-bwX
+jUP
 jXM
 buP
 skm
@@ -115665,7 +115767,7 @@ loE
 dCU
 bwS
 bwS
-bwS
+eGz
 bmP
 bKm
 uFd
@@ -116438,7 +116540,7 @@ bDJ
 bFu
 bFr
 iGG
-bKp
+fbi
 fMo
 bNG
 bKp
