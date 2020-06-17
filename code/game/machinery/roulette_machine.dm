@@ -25,7 +25,7 @@
 	icon_state = "idle"
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	anchored = FALSE
+	anchored = TRUE
 	idle_power_usage = 10
 	active_power_usage = 100
 	max_integrity = 500

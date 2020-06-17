@@ -443,6 +443,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/abandoned_gambling_den
 	name = "Casino"
 	icon_state = "abandoned_g_den"
+	ambientsounds = list('sound/ambience/casino_bg.ogg')
 
 /area/crew_quarters/abandoned_gambling_den/secondary
 	icon_state = "abandoned_g_den_2"

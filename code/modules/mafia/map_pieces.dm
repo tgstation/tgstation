@@ -72,3 +72,9 @@
 	GLOB.minigame_signups.signed_up["mafia"] = list("debug_guy_key","the_other_guy","third_loser")
 	GLOB.mafia_setups = list(debug_setup)
 
+/area/mafia
+	name = "Mafia Minigame"
+	icon_state = "Prophunt"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	flags_1 = 0
+	hidden = TRUE

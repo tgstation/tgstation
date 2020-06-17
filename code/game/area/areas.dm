@@ -574,7 +574,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
 		return //General ambience check is below the ship ambience so one can play without the other
 
-	if(prob(35))
+	if(prob(100))
 		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)
