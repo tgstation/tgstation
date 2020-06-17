@@ -49,4 +49,6 @@ Ask ninjanomnom if they're around
 #define RAD_CONTAMINATION_STR_COEFFICIENT 0.25		// Higher means higher strength scaling contamination strength
 #define RAD_DISTANCE_COEFFICIENT 1					// Lower means further rad spread
 
-#define RAD_HALF_LIFE 90							// The half-life of contaminated objects in
+#define RAD_HALF_LIFE 90							// The half-life of contaminated objects in Ticks
+// Because of the way half-life works, (RAD_HALF_LIFE*6) ticks and the thing is clean of all contamination
+// its more like (RAD_HALF_LIFE*4) here because we have a lower threshold of RAD_MOB_SAFE
