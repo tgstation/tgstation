@@ -77,7 +77,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	move_resist = MOVE_FORCE_OVERPOWERING+1
-	movement_type = GROUND | FLYING
+	movement_type = GROUND
 	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/worm_contract)
 	ranged_cooldown_time = 5
 	ranged = TRUE
@@ -136,6 +136,11 @@
 			prev.front = next
 			prev.AIStatus = AI_OFF
 		next = prev
+
+//we are literally a vessel of otherworldly destruction, we bring our own gravity unto this plane
+/mob/living/simple_animal/hostile/eldritch/armsy/has_gravity(turf/T)
+	return TRUE
+
 
 /mob/living/simple_animal/hostile/eldritch/armsy/can_be_pulled()
 	return FALSE
