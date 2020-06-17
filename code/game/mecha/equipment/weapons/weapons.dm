@@ -465,8 +465,10 @@
 	projectile_energy_cost = 500
 	harmful = TRUE
 	diags_first = TRUE
-	var/punch_damage = 35 ///damage done by the glove on contact
-	var/can_toggle_lethal = TRUE ///TRUE - can toggled between lethal and non lethal || FALSE - cannot toggle 
+	/// Damage done by the glove on contact. Also used to determine throw distance (damage / 5)
+	var/punch_damage = 35 
+	/// TRUE - Can toggle between lethal and non-lethal || FALSE - Cannot toggle
+	var/can_toggle_lethal = TRUE 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/mecha/combat/honker/M)
 	if(..())
@@ -482,7 +484,6 @@
 		return "[..()] &nbsp; <a href='?src=[REF(src)];lethalPunch=1'>[harmful?"Punch":"Pat"] mode</a>"
 	else
 		return ..()
-
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/Topic(href, href_list)
 	..()
@@ -520,5 +521,5 @@
 	if(!..())
 		if(ismovable(hit_atom))
 			var/atom/movable/AM = hit_atom
-			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), clamp(throwforce/5, 2, 20), 2) //Throws them equal to damage/5, with a min range of 2 and max range of 20
+			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), clamp(round(throwforce/5), 2, 20), 2) //Throws them equal to damage/5, with a min range of 2 and max range of 20
 		qdel(src)
