@@ -134,7 +134,7 @@ GENE SCANNER
 	user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
 						"<span class='notice'>You analyze [M]'s vitals.</span>")
 
-	if((scanmode == SCANMODE_HEALTH))
+	if(scanmode == SCANMODE_HEALTH)
 		healthscan(user, M, mode, advanced)
 	else if(scanmode == SCANMODE_CHEMICAL)
 		chemscan(user, M)
