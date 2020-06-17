@@ -90,6 +90,9 @@
 /area/hallway/secondary/command)
 "aao" = (
 /obj/machinery/vending/cigarette,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -31
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aap" = (
@@ -31384,6 +31387,9 @@
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
 	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 32
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "buR" = (
@@ -32769,9 +32775,6 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "byL" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "byM" = (
@@ -33366,6 +33369,12 @@
 /area/crew_quarters/bar)
 "bAj" = (
 /obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
+	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -34783,9 +34792,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bDH" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -37331,6 +37337,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/storage/bag/tray,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -37934,7 +37941,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bLK" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -39175,7 +39181,6 @@
 /area/hallway/primary/central)
 "bOS" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/mint,
 /obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -41203,9 +41208,6 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUh" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
@@ -43891,19 +43893,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"caP" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "caQ" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -44741,7 +44730,6 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "cct" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
@@ -64631,9 +64619,6 @@
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/auxiliary)
 "dij" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -66678,6 +66663,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
 	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -28
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "dYm" = (
@@ -66817,9 +66805,6 @@
 /obj/machinery/light_switch{
 	pixel_x = -26
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "efN" = (
@@ -66845,6 +66830,18 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"ego" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "kitchenwindow";
+	name = "kitchen shutters"
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "egq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -67308,6 +67305,7 @@
 /area/maintenance/port/aft)
 "eTF" = (
 /obj/structure/table,
+/obj/item/reagent_containers/food/snacks/mint,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -67697,6 +67695,9 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "ftu" = (
@@ -69007,9 +69008,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -69041,11 +69039,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"hnX" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/carpet,
-/area/crew_quarters/theatre)
 "hog" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -70281,6 +70274,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "jvl" = (
@@ -71669,6 +71663,10 @@
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"lsj" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "lui" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -72109,9 +72107,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /obj/machinery/newscaster{
 	pixel_y = -28
@@ -72966,9 +72961,6 @@
 	brightness = 3;
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -73299,9 +73291,6 @@
 "nYb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -74756,6 +74745,7 @@
 	name = "old sink";
 	pixel_y = 28
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "qby" = (
@@ -75240,17 +75230,6 @@
 /obj/machinery/pinpointer_dispenser,
 /turf/closed/wall,
 /area/quartermaster/qm)
-"qQj" = (
-/obj/item/book/manual/wiki/barman_recipes{
-	pixel_y = 5
-	},
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
 "qQr" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -75695,9 +75674,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -76000,9 +75976,6 @@
 /area/medical/pharmacy)
 "rUj" = (
 /obj/effect/landmark/start/botanist,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
@@ -76336,6 +76309,24 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"snB" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "kitchenwindow";
+	name = "kitchen shutters"
+	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "snF" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/dirt,
@@ -76735,9 +76726,6 @@
 /area/medical/storage)
 "sZF" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -79456,7 +79444,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
@@ -80146,6 +80133,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"yil" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall,
+/area/crew_quarters/bar)
 "yjY" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
@@ -113223,11 +113214,11 @@ kMa
 bFk
 pzW
 mrj
-abS
+yil
 bKe
+ego
 sjP
-sjP
-sjP
+snB
 rph
 rph
 bST
@@ -113480,7 +113471,7 @@ nQb
 bBT
 pzW
 bwO
-qQj
+abS
 bKe
 rAi
 qBD
@@ -113726,7 +113717,7 @@ bhE
 bjp
 bkU
 bBS
-byC
+lsj
 ldU
 bJu
 ldU
@@ -114754,7 +114745,7 @@ bhE
 bjp
 bkU
 bBS
-byC
+lsj
 byC
 btq
 kBE
@@ -116063,7 +116054,7 @@ bQD
 bWU
 vaC
 bZv
-caP
+hlU
 aeV
 bST
 cff
@@ -117075,7 +117066,7 @@ bAu
 sNw
 bAs
 myO
-hnX
+bCc
 bFu
 eeZ
 byN
