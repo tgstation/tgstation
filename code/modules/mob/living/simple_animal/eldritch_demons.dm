@@ -78,6 +78,10 @@
 	melee_damage_upper = 15
 	move_resist = MOVE_FORCE_OVERPOWERING+1
 	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/worm_contract)
+	ranged_cooldown_time = 5
+	ranged = TRUE
+	rapid = 1
+	has_ranged_message = FALSE
 	///Previous segment in the chain
 	var/mob/living/simple_animal/hostile/eldritch/armsy/back
 	///Next segment in the chain
@@ -192,7 +196,6 @@
 
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Shoot(atom/targeted_atom)
-	. = ..()
 	target = targeted_atom
 	AttackingTarget()
 
