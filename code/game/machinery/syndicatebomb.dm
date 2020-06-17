@@ -449,15 +449,14 @@
 			return
 	..()
 
-
 /obj/item/bombcore/chemical/CheckParts(list/parts_list)
+	..()
 	// Using different grenade casings, causes the payload to have different properties.
-	var/obj/item/stock_parts/matter_bin/MB = locate(/obj/item/stock_parts/matter_bin) in parts_list
+	var/obj/item/stock_parts/matter_bin/MB = locate(/obj/item/stock_parts/matter_bin) in src
 	if(MB)
 		max_beakers += MB.rating	// max beakers = 2-5.
-		parts_list -= MB
 		qdel(MB)
-	for(var/obj/item/grenade/chem_grenade/G in parts_list)
+	for(var/obj/item/grenade/chem_grenade/G in src)
 
 		if(istype(G, /obj/item/grenade/chem_grenade/large))
 			var/obj/item/grenade/chem_grenade/large/LG = G
@@ -471,14 +470,14 @@
 				else
 					S.forceMove(drop_location())
 
-		else if(istype(G, /obj/item/grenade/chem_grenade/cryo))
+		if(istype(G, /obj/item/grenade/chem_grenade/cryo))
 			spread_range -= 1 // Reduced range, but increased density.
 			temp_boost -= 100 // minimum of -150K blast.
 
-		else if(istype(G, /obj/item/grenade/chem_grenade/pyro))
+		if(istype(G, /obj/item/grenade/chem_grenade/pyro))
 			temp_boost += 150 // maximum of +350K blast, which is enough to self ignite. Which means a self igniting bomb can't take advantage of other grenade casing properties. Sorry?
 
-		else if(istype(G, /obj/item/grenade/chem_grenade/adv_release))
+		if(istype(G, /obj/item/grenade/chem_grenade/adv_release))
 			time_release += 50 // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
 
 		for(var/obj/item/reagent_containers/glass/B in G)
@@ -488,10 +487,9 @@
 			else
 				B.forceMove(drop_location())
 
-		parts_list -= G
 		qdel(G)
 
-	return ..()
+
 
 
 ///Syndicate Detonator (aka the big red button)///
