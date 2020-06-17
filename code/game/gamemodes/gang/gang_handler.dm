@@ -289,7 +289,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		var/datum/team/gang/G = GG
 		readable_gang_names += "[G.name]"
 	var/finalized_gang_names = english_list(readable_gang_names)
-	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the [midround_ruleset ? "half-hour" : "hour"] 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait an hour. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the [use_dynamic_timing ? "half-hour" : "hour"] 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait [use_dynamic_timing ? "thirty minutes" : "an hour"]. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 	sent_announcement = TRUE
 	check_wanted_level() // i like it when the wanted level updates at the same time as the announcement
 
