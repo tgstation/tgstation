@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "fixed missing icon appearing while wearing wigs, again!"
-  - bugfix: "wigs will once again change inventory icon based on hairstyle"
