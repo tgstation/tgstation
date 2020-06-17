@@ -197,6 +197,12 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	game_state = PROPHUNT_SIGNUPS
 	try_autostart()
 
+/obj/machinery/computer/arena/prophunt/proc/kick_players_out()
+	for(var/mob/M in hiders+searchers)
+		M.forceMove(get_landmark_turf(ARENA_EXIT))
+	. = ..()
+
+
 /obj/effect/landmark/arena/prophunt
 	arena_id = "prophunt_arena"
 
