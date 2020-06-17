@@ -202,20 +202,24 @@
 			cultie.current.client.images -= img
 		//clear the list
 		minds -= cultie
+	GLOB.reality_smash_track.smashes -= src
 	img = null
 	new /obj/effect/broken_illusion(drop_location())
 
 ///Makes the mind able to see this effect
 /obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)
+	//dont runtime if any of these dont exist, we will get em next time.
 	if(cultie.current.client)
-		minds |= cultie
 		cultie.current.client.images |= img
+		minds |= cultie
+
 
 ///Makes the mind not able to see this effect
 /obj/effect/reality_smash/proc/RemoveMind(var/datum/mind/cultie)
-	if(cultie.current.client)
-		minds -= cultie
+	if(cultie?.current?.client)
 		cultie.current.client.images -= img
+		minds -= cultie
+
 
 ///Generates random name
 /obj/effect/reality_smash/proc/generate_name()
