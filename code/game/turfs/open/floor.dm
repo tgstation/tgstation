@@ -207,23 +207,23 @@
 
 /turf/open/floor/singularity_pull(S, current_size)
 	..()
+	var/do_et = FALSE
 	if(current_size == STAGE_THREE)
 		if(prob(30))
-			if(floor_tile)
-				new floor_tile(src)
-				make_plating(TRUE)
+			do_et = TRUE
 	else if(current_size == STAGE_FOUR)
 		if(prob(50))
-			if(floor_tile)
-				new floor_tile(src)
-				make_plating(TRUE)
+			do_et = TRUE
 	else if(current_size >= STAGE_FIVE)
-		if(floor_tile)
-			if(prob(70))
-				new floor_tile(src)
-				make_plating(TRUE)
+		if(prob(70))
+			do_et = TRUE
 		else if(prob(50))
 			ReplaceWithLattice()
+	if(do_et)
+		if(floor_tile)
+			make_plating(TRUE)
+			new floor_tile(src)
+
 
 /turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
 	. = ..()

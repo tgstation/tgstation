@@ -469,6 +469,9 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
 
+/turf/open/floor/plating/asteroid/snow/icemoon/singularity_pull()
+	return
+
 /turf/open/lava/plasma/ice_moon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/ice_moon
