@@ -238,7 +238,7 @@
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	. = ..()
-	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY && largest_rad_pulse > pulse_strength)
+	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY && pulse_strength > largest_rad_pulse)
 		largest_rad_pulse = pulse_strength
 
 /obj/machinery/power/rad_collector/update_overlays()
