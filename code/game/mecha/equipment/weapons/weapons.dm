@@ -466,7 +466,7 @@
 	harmful = TRUE
 	diags_first = TRUE
 	var/punch_damage = 35 ///damage done by the glove on contact
-	var/can_toggle_lethal = TRUE ///TRUE - can toggled between lethal and non lethal || FALSE - cannot toggle
+	var/can_toggle_lethal = TRUE ///TRUE - can toggled between lethal and non lethal || FALSE - cannot toggle 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/mecha/combat/honker/M)
 	if(..())
@@ -481,7 +481,8 @@
 	if(can_toggle_lethal)
 		return "[..()] &nbsp; <a href='?src=[REF(src)];lethalPunch=1'>[harmful?"Punch":"Pat"] mode</a>"
 	else
-		return
+		return ..()
+
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/Topic(href, href_list)
 	..()
