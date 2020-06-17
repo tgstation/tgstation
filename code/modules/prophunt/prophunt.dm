@@ -101,13 +101,13 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	var/list/hiders = list()
 	var/list/searchers = list()
 
-	var/hider_count = 1
-	var/searcher_count = 5
+	var/hider_count = 5
+	var/searcher_count = 1
 
 	teams = list() //We'll handle it here
 	objects_delete_on_leaving_arena = TRUE
 	safe_reset = TRUE
-	var/hiding_time = 2 MINUTES
+	var/hiding_time = 1 MINUTES
 	var/search_time = 3 MINUTES
 	var/next_stage_timer
 	var/debug = FALSE
@@ -131,7 +131,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	debug = TRUE
 	GLOB.minigame_signups.debug_mode = TRUE
 	var/list/prophunt_list = list()
-	for(var/i in 1 to hider_count+searcher_count)
+	for(var/i in 1 to hider_count+searcher_count-1)
 		var/mob/living/carbon/human/H = new(get_turf(usr))
 		prophunt_list["[pick(GLOB.first_names_male)]"] = H
 	if(!GLOB.minigame_signups.signed_up["prophunt"])
@@ -176,8 +176,8 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 		projectors += projector
 		L.forceMove(get_landmark_turf(PROPHUNT_HIDER_SPAWN))
 		L.put_in_hands(projector)
-	to_chat(hiders,"<span class='danger'>Use the chameleon projector to hide! You got 2 minutes!</span>")
-	to_chat(searchers,"<span class='danger'>Hider is now hiding! Wait 2 minutes.</span>")
+	to_chat(hiders,"<span class='danger'>Use the chameleon projector to hide! You got 1 minute!</span>")
+	to_chat(searchers,"<span class='danger'>Hider is now hiding! Wait 1 minute.</span>")
 	game_state = PROPHUNT_HIDING
 	next_stage_timer = addtimer(CALLBACK(src,.proc/send_searchers_in),hiding_time, TIMER_STOPPABLE)
 
@@ -197,7 +197,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	game_state = PROPHUNT_SIGNUPS
 	try_autostart()
 
-/obj/machinery/computer/arena/prophunt/proc/kick_players_out()
+/obj/machinery/computer/arena/prophunt/kick_players_out()
 	for(var/mob/M in hiders+searchers)
 		M.forceMove(get_landmark_turf(ARENA_EXIT))
 	. = ..()

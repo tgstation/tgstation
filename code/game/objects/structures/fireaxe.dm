@@ -14,7 +14,7 @@
 
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
-	fireaxe = new
+	fireaxe = new(src)
 	update_icon()
 
 /obj/structure/fireaxecabinet/Destroy()
