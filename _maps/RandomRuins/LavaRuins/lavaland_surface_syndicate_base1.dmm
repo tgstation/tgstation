@@ -1638,7 +1638,7 @@
 /obj/item/stack/wrapping_paper{
 	pixel_y = 5
 	},
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1834,7 +1834,7 @@
 	name = "Virology Lab Exterior Airlock";
 	req_access_txt = "150"
 	},
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	idDoor = "lavaland_syndie_virology_exterior";
 	idSelf = "lavaland_syndie_virology_control";
 	name = "Virology Access Button";
@@ -2061,7 +2061,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "gX" = (
-/obj/machinery/doorButtons/airlock_controller{
+/obj/machinery/door_buttons/airlock_controller{
 	idExterior = "lavaland_syndie_virology_exterior";
 	idInterior = "lavaland_syndie_virology_interior";
 	idSelf = "lavaland_syndie_virology_control";
@@ -2091,7 +2091,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	idDoor = "lavaland_syndie_virology_interior";
 	idSelf = "lavaland_syndie_virology_control";
 	name = "Virology Access Button";
@@ -4796,7 +4796,7 @@
 	},
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26

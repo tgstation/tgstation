@@ -74,7 +74,7 @@
 		to_chat(owner, "<span class='warning'>You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!</span>")
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 	use_delay = (world.time + abductor_pad_cooldown)
 
@@ -108,7 +108,7 @@
 		to_chat(owner, "<span class='warning'>You can only teleport to one place at a time!</span>")
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 	use_delay = (world.time + teleport_self_cooldown)
 
@@ -148,7 +148,7 @@
 		return
 
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 
 	var/obj/machinery/abductor/console/console = target
 	console.SetDroppoint(remote_eye.loc,owner)

@@ -88,7 +88,7 @@
 	heal_brute = 40
 	self_delay = 40
 	other_delay = 20
-	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
+	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
 
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
@@ -239,7 +239,7 @@
 	heal_burn = 5
 	flesh_regeneration = 2.5
 	sanitization = 0.3
-	grind_results = list(/datum/reagent/medicine/C2/lenturi = 10)
+	grind_results = list(/datum/reagent/medicine/c2/lenturi = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
@@ -392,7 +392,7 @@
 
 	amount = 4
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
+	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
 	novariants = TRUE
 
 /obj/item/stack/medical/bone_gel/attack(mob/living/M, mob/user)

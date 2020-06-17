@@ -244,7 +244,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/storage/pill_bottle/C2/probital = 1,
+		/obj/item/storage/pill_bottle/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -378,13 +378,13 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/potassiodide(src)
 
-/obj/item/storage/pill_bottle/C2/probital
+/obj/item/storage/pill_bottle/probital
 	name = "bottle of probital pills"
 	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
 
-/obj/item/storage/pill_bottle/C2/probital/PopulateContents()
+/obj/item/storage/pill_bottle/probital/PopulateContents()
 	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/pill/C2/probital(src)
+		new /obj/item/reagent_containers/pill/probital(src)
 
 /obj/item/storage/pill_bottle/iron
 	name = "bottle of iron pills"
