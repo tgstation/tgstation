@@ -133,7 +133,6 @@ const getAllFields = txt => {
   let matches;
   let values = {};
   let replace = [];
-  logger.log("getAllFields start");
   while ((matches = field_tag_regex.exec(txt)) !== null) {
     const full_match = matches[0];
     const maxlength = matches.groups.maxlength;
@@ -153,7 +152,6 @@ const getAllFields = txt => {
 
     }
   }
-  logger.log("please work length=" + replace.length);
   // Not alot of easy ways to solve this because the index positions change
   // so replace it is!
   for (const o of replace) {
@@ -272,7 +270,6 @@ class PaperSheetView extends Component {
         }
         new_state.raw_text = nextProps.value;
       }
-      setTimeout(() => console.log("to display: " + this.state.marked.__html), 0);
       this.setState(() => new_state);
     }
     return true;
@@ -352,7 +349,6 @@ class PaperSheetStamper extends Component {
 
   handleWheel(e) {
     const rotate_amount = e.deltaY > 0 ? 15 : -15;
-    logger.log("wheel thing " + rotate_amount);
     if (e.deltaY < 0 && this.state.rotate === 0) {
       this.setState({ rotate: (360+rotate_amount) });
     } else if (e.deltaY > 0 && this.state.rotate === 360) {
@@ -362,7 +358,6 @@ class PaperSheetStamper extends Component {
       this.setState(() => rotate);
     }
     pauseEvent(e);
-    logger.log("while pos: (" + e.deltaY + ", " + rotate_amount+ ")");
   }
 
   render() {
