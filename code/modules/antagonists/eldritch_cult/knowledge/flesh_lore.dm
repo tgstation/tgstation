@@ -23,7 +23,7 @@
 
 /datum/eldritch_knowledge/flesh_ghoul/on_finished_recipe(mob/living/user,list/atoms,loc)
 	var/mob/living/carbon/human/humie = locate() in atoms
-	if(!humie || humie.stat != DEAD)
+	if(QDELETED(humie) || humie.stat != DEAD)
 		return
 
 	humie?.grab_ghost()
@@ -92,7 +92,7 @@
 			var/datum/wound/brute/cut/severe/crit_wound = new
 			crit_wound.apply_wound(bodypart)
 
-	if(!human_target || human_target.stat != DEAD)
+	if(QDELETED(human_target) || human_target.stat != DEAD)
 		return
 
 	human_target.grab_ghost()
