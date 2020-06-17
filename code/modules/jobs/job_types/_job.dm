@@ -169,6 +169,9 @@
 
 	return max(0, minimal_player_age - C.player_age)
 
+/datum/job/proc/get_title(var/mob/living/H)
+	return title
+
 /datum/job/proc/config_check()
 	return TRUE
 
@@ -237,7 +240,7 @@
 		C.access = J.get_access()
 		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
 		C.registered_name = H.real_name
-		C.assignment = J.title
+		C.assignment = J.get_title(H)
 		if(H.age)
 			C.registered_age = H.age
 		C.update_label()

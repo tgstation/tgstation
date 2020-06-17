@@ -17,6 +17,7 @@ Assistant
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+	var/new_player_title = "Intern"
 
 /datum/job/assistant/get_access()
 	if(CONFIG_GET(flag/assistants_have_maint_access) || !CONFIG_GET(flag/jobs_have_minimal_access)) //Config has assistant maint access set
@@ -24,6 +25,14 @@ Assistant
 		. |= list(ACCESS_MAINT_TUNNELS)
 	else
 		return ..()
+/datum/job/assistant/get_title(mob/H)
+	var/final = title
+	var/client/the_client = H.client
+	if(the_client)
+		var/minutes = the_client.get_exp_living(TRUE)
+		if(minutes < (10 HOURS))
+			final = new_player_title
+	return final
 
 /datum/outfit/job/assistant
 	name = "Assistant"
