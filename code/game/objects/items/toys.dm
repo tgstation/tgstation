@@ -526,7 +526,7 @@
 
 
 /*
- * Mech prizes
+ * Mech prizes + MECHA COMBAT!!
  */
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
@@ -626,6 +626,41 @@
 	wants_to_battle = FALSE
 	to_chat(user, "<span class='notice'>You get the feeling they don't want to battle.</span>")
 
+/obj/item/toy/prize/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] begins a fight with [name]! There's no way they can win, it looks like [user.p_theyre()] trying to commit suicide!</span>")
+	
+	in_combat = TRUE
+	sleep(20)
+	SpinAnimation(5, 0)
+	user.adjustBruteLoss(20)
+	sleep(10)
+	user.SpinAnimation(5, 0)
+	sleep(10)
+	SpinAnimation(5, 0)
+	user.adjustBruteLoss(15)
+	sleep(10)
+	SpinAnimation(5, 0)
+	user.adjustBruteLoss(15)
+	sleep(10)
+	if(!quiet)
+		say(special_attack_cry + "!!")
+		user.emote("scream")
+	else
+		SpinAnimation(5, 0)
+	sleep(15)
+	if(!in_range(src, user))
+		say("PATHETIC")
+		return SHAME
+
+	user.adjustBruteLoss(450)
+	in_combat = FALSE
+	say("AN EASY WIN. MY POWER INCREASES WITH THIS OFFERING.")
+	add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
+	max_combat_health = round(max_combat_health*1.5)
+	wins++
+	return BRUTELOSS
+
+
 /obj/item/toy/prize/examine()
 	. = ..()
 	. += "<span class='notice'>This toy's special attack is [special_attack_cry], [special_attack_type_message] </span>"
@@ -694,7 +729,8 @@
 	attacker.in_combat = TRUE
 
 	sleep(15)
-	while(combat_health > 0 && attacker.combat_health > 0)
+	//--THE BATTLE BEGINS--
+	while(combat_health > 0 && attacker.combat_health > 0) 
 
 		//if the two toys aren't next to each other, the battle ends
 		if(!in_range(src, attacker)) 
@@ -727,7 +763,7 @@
 					if(attacker.combat_health <= round(attacker.max_combat_health/3) && special_attack_cooldown == 0) //if health is less than 1/3 and special off CD, use it
 						attacker.special_attack_charged = TRUE
 						attacker_controller.visible_message("<span class='danger'> [attacker.name] begins charging his special attack!! </span>", \
-															"<span class='danger'> You begin charging [attacker.name]\'s special attack! </span>")
+															"<span class='danger'> You begin charging [attacker.name]'s special attack! </span>")
 					else //just attack 
 						attacker.SpinAnimation(5, 0)
 						combat_health--
@@ -766,7 +802,7 @@
 					if(combat_health <= round(max_combat_health/3) && special_attack_cooldown == 0) //if health is less than 1/3 and special off CD, use it
 						special_attack_charged = TRUE
 						referee.visible_message("<span class='danger'> [name] begins charging his special attack!! </span>", \
-												"<span class='danger'> You begin charging [name]\'s special attack! </span>")
+												"<span class='danger'> You begin charging [name]'s special attack! </span>")
 					else //just attack 
 						SpinAnimation(5, 0)
 						attacker.combat_health--
