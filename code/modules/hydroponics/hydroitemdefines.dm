@@ -27,7 +27,9 @@
 			healthscan(user, M, advanced = TRUE)
 		else
 			chemscan(user, M)
-	add_fingerprint(user)
+		add_fingerprint(user)
+		return
+	return ..()
 
 // *************************************
 // Hydroponics Tools
