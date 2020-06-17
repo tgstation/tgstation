@@ -115,7 +115,7 @@
 	message_mime = "appears to teehee!"
 	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/misc/teehee.ogg'
-	cooldown = 5 SECONDS
+	cooldown = TRUE SECONDS
 
 /datum/emote/living/carbon/circle
 	key = "circle"
