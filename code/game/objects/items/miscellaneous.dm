@@ -160,7 +160,7 @@
 	return MANUAL_SUICIDE
 
 /obj/item/virgin_mary
-	name = "A picture of the virgin mary"
+	name = "\proper a picture of the virgin mary"
 	desc = "A small, cheap icon depicting the virgin mother."
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "madonna"

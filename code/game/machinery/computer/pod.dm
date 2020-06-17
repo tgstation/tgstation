@@ -120,7 +120,7 @@
 	title = "Door Controls"
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"

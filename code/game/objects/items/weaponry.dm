@@ -292,7 +292,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 20 //20 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 28 damage on hit due to guaranteed embedding
 	throw_speed = 4
-	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0, "embed_chance_turf_mod" = 15)
+	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
 	armour_penetration = 40
 
 	w_class = WEIGHT_CLASS_SMALL

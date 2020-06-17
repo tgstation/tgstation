@@ -1,6 +1,6 @@
 /obj/vehicle/sealed/car
 	layer = ABOVE_MOB_LAYER
-	anchored = TRUE
+	move_resist = MOVE_FORCE_VERY_STRONG
 	default_driver_move = FALSE
 	var/car_traits = NONE //Bitflag for special behavior such as kidnapping
 	var/engine_sound = 'sound/vehicles/carrev.ogg'
