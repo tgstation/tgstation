@@ -1,3 +1,6 @@
+#define NONE 					0
+#define LAVALAND_RESTRICTED  	1
+
 /obj/item/reagent_containers/hypospray
 	name = "hypospray"
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
@@ -14,6 +17,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	var/ignore_flags = 0
 	var/infinite = FALSE
+	var/hypo_flags = NONE
 
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
@@ -29,7 +33,7 @@
 	if(!iscarbon(M))
 		return FALSE
 	//Checks if the survival pen from mining is used in a low pressure environment.
-	if((!lavaland_equipment_pressure_check(get_turf(user))) && istype(src, /obj/item/reagent_containers/hypospray/medipen/survival))
+	if((!lavaland_equipment_pressure_check(get_turf(user))) && hypo_flags == LAVALAND_RESTRICTED)
 		to_chat(user, "<span class='warning'>The pressure is too high for the injector to work!</span>")
 		return FALSE
 
@@ -224,6 +228,7 @@
 	inhand_icon_state = "stimpen"
 	volume = 60
 	amount_per_transfer_from_this = 60
+	hypo_flags = LAVALAND_RESTRICTED
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5, /datum/reagent/medicine/oxandrolone = 8, /datum/reagent/medicine/sal_acid = 8, /datum/reagent/medicine/morphine = 2)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
