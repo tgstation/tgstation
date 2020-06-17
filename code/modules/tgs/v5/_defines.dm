@@ -12,13 +12,14 @@
 #define DMAPI5_BRIDGE_COMMAND_CHAT_SEND 5
 
 #define DMAPI5_PARAMETER_ACCESS_IDENTIFIER "accessIdentifier"
+#define DMAPI5_PARAMETER_CUSTOM_COMMANDS "customCommands"
+
 #define DMAPI5_RESPONSE_ERROR_MESSAGE "errorMessage"
 
 #define DMAPI5_BRIDGE_PARAMETER_COMMAND_TYPE "commandType"
 #define DMAPI5_BRIDGE_PARAMETER_CURRENT_PORT "currentPort"
 #define DMAPI5_BRIDGE_PARAMETER_VERSION "version"
 #define DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE "chatMessage"
-#define DMAPI5_BRIDGE_PARAMETER_CUSTOM_COMMANDS "customCommands"
 #define DMAPI5_BRIDGE_PARAMETER_MINIMUM_SECURITY_LEVEL "minimumSecurityLevel"
 
 #define DMAPI5_BRIDGE_RESPONSE_NEW_PORT "newPort"
@@ -60,8 +61,10 @@
 #define DMAPI5_TOPIC_COMMAND_CHANGE_PORT 2
 #define DMAPI5_TOPIC_COMMAND_CHANGE_REBOOT_STATE 3
 #define DMAPI5_TOPIC_COMMAND_INSTANCE_RENAMED 4
-#define DMAPI5_TOPIC_COMMAND_CHAT_CHANNELS_UPDATE 4
-#define DMAPI5_TOPIC_COMMAND_SERVER_PORT_UPDATE 5
+#define DMAPI5_TOPIC_COMMAND_CHAT_CHANNELS_UPDATE 5
+#define DMAPI5_TOPIC_COMMAND_SERVER_PORT_UPDATE 6
+#define DMAPI5_TOPIC_COMMAND_HEARTBEAT 7
+#define DMAPI5_TOPIC_COMMAND_WATCHDOG_REATTACH 8
 
 #define DMAPI5_TOPIC_PARAMETER_COMMAND_TYPE "commandType"
 #define DMAPI5_TOPIC_PARAMETER_CHAT_COMMAND "chatCommand"
@@ -70,6 +73,7 @@
 #define DMAPI5_TOPIC_PARAMETER_NEW_REBOOT_STATE "newRebootState"
 #define DMAPI5_TOPIC_PARAMETER_NEW_INSTANCE_NAME "newInstanceName"
 #define DMAPI5_TOPIC_PARAMETER_CHAT_UPDATE "chatUpdate"
+#define DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION "newServerVersion"
 
 #define DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE_MESSAGE "commandResponseMessage"
 #define DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES "chatResponses"
@@ -92,30 +96,3 @@
 #define DMAPI5_CUSTOM_CHAT_COMMAND_NAME "name"
 #define DMAPI5_CUSTOM_CHAT_COMMAND_HELP_TEXT "helpText"
 #define DMAPI5_CUSTOM_CHAT_COMMAND_ADMIN_ONLY "adminOnly"
-
-/*
-The MIT License
-
-Copyright (c) 2020 Jordan Brown
-
-Permission is hereby granted, free of charge,
-to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to
-deal in the Software without restriction, including
-without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom
-the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice
-shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/

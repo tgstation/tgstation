@@ -89,6 +89,9 @@
 /mob/living/silicon/pai/can_buckle()
 	return FALSE
 
+/mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
+	return
+
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(internal_instrument)
 	if(cable)
@@ -281,7 +284,7 @@
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	health = maxHealth - getBruteLoss() - getFireLoss()
+	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
 
 /mob/living/silicon/pai/process()

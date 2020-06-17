@@ -78,22 +78,6 @@
 	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
 
-/turf/open/indestructible/carpet
-	name = "carpet"
-	desc = "Soft velvet carpeting. Feels good between your toes."
-	icon = 'icons/turf/floors/carpet.dmi'
-	icon_state = "carpet"
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/indestructible/carpet)
-	flags_1 = NONE
-	bullet_bounce_sound = null
-	footstep = FOOTSTEP_CARPET
-	barefootstep = FOOTSTEP_CARPET_BAREFOOT
-	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
-
-
 /turf/open/indestructible/necropolis/Initialize()
 	. = ..()
 	if(prob(12))

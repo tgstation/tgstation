@@ -99,7 +99,10 @@
 
 	return TRUE
 
-/turf/open/floor/plating/make_plating()
+/turf/open/floor/plating/rust_heretic_act()
+	ChangeTurf(/turf/open/floor/plating/rust)
+
+/turf/open/floor/plating/make_plating(force = FALSE)
 	return
 
 /turf/open/floor/plating/foam

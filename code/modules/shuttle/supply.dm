@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
-	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all small_item orders grouped
+	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all goody orders grouped
 	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
 	var/list/misc_contents = list() //list of lists of items that each box will contain
 	if(!SSshuttle.shoppinglist.len)
@@ -104,10 +104,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(!empty_turfs.len)
 			break
 		var/price = SO.pack.cost
+		if(SO.applied_coupon)
+			price *= (1 - SO.applied_coupon.discount_pct_off)
+
 		var/datum/bank_account/D
 		if(SO.paying_account) //Someone paid out of pocket
 			D = SO.paying_account
-			price *= 1.1 //TODO make this customizable by the quartermaster
+			if(!SO.pack.goody)
+				price *= 1.1 //TODO make this customizable by the quartermaster
 		else
 			D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
@@ -123,12 +127,15 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
+		QDEL_NULL(SO.applied_coupon)
 
-		if(SO.pack.small_item) //small_item means it gets piled in the miscbox
+		if(SO.pack.goody) //goody means it gets piled in the miscbox
 			if(SO.paying_account)
 				if(!miscboxes.len || !miscboxes[D.account_holder]) //if there's no miscbox for this person
-					miscboxes[D.account_holder] = new /obj/structure/closet/crate/secure/owned(pick_n_take(empty_turfs), SO.paying_account)
-					miscboxes[D.account_holder].name = "small items crate - purchased by [D.account_holder]"
+					miscboxes[D.account_holder] = new /obj/item/storage/lockbox/order(pick_n_take(empty_turfs))
+					var/obj/item/storage/lockbox/order/our_box = miscboxes[D.account_holder]
+					our_box.buyer_account = SO.paying_account
+					miscboxes[D.account_holder].name = "small items case - purchased by [D.account_holder]"
 					misc_contents[D.account_holder] = list()
 				for (var/item in SO.pack.contains)
 					misc_contents[D.account_holder] += item
