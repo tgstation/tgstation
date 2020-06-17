@@ -127,10 +127,14 @@ GENE SCANNER
 					 \n<span class='info'>Body temperature: ???</span>")
 		return
 
+	if(ispodperson(M)&& !advanced)
+		to_chat(user, "<span class='info'>[M]'s biologal structure is too complicated for the health analyzer.")
+		return
+
 	user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
 						"<span class='notice'>You analyze [M]'s vitals.</span>")
 
-	if(scanmode == SCANMODE_HEALTH)
+	if((scanmode == SCANMODE_HEALTH))
 		healthscan(user, M, mode, advanced)
 	else if(scanmode == SCANMODE_CHEMICAL)
 		chemscan(user, M)
