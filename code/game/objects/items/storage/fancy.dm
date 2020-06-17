@@ -137,7 +137,8 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 	custom_price = 75
 	age_restricted = TRUE
-	var/candy = FALSE //for cigarette overlay
+	///for cigarette overlay
+	var/candy = FALSE
 	/// Does this cigarette packet come with a coupon attached?
 	var/spawn_coupon = TRUE
 	/// For VV'ing, set this to true if you want to force the coupon to give an omen
