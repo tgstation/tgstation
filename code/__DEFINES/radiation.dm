@@ -49,4 +49,4 @@ Ask ninjanomnom if they're around
 #define RAD_CONTAMINATION_STR_COEFFICIENT 0.25		// Higher means higher strength scaling contamination strength
 #define RAD_DISTANCE_COEFFICIENT 1					// Lower means further rad spread
 
-#define RAD_HALF_LIFE 90							// The half-life of contaminated objects
+#define RAD_HALF_LIFE 90							// The half-life of contaminated objects in

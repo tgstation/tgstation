@@ -38,7 +38,13 @@
 /datum/component/radioactive/process()
 	if(!prob(50))
 		return
-	radiation_pulse(parent, strength, RAD_DISTANCE_COEFFICIENT*2, FALSE, can_contaminate)
+
+	// Why is strength/4?  So say you are comtaminated with 4000 mev.
+	// Even if you are a few tiles away, even with a *2 to the coefficent you
+	// still get a freaking high dose.  Right next to the guy and your getting most
+	// of it.  But at /4, the contamination you will get will only be 1000
+	// Managable by any of the lower level drugs.  
+	radiation_pulse(parent, strength/4, RAD_DISTANCE_COEFFICIENT*2, FALSE, can_contaminate)
 
 	if(!hl3_release_date)
 		return

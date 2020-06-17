@@ -30,6 +30,7 @@
 	var/bitcoinmining = FALSE
 	///research points stored
 	var/stored_research = 0
+	var/largest_rad_pulse = 0
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
@@ -47,6 +48,13 @@
 /obj/machinery/power/rad_collector/process()
 	if(!loaded_tank)
 		return
+
+	// we only take the biggest rad pulse and ignore all the
+	// wimpy ones that might exist in the chamber
+	if(active)
+		stored_energy += (largest_rad_pulse-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+	largest_rad_pulse = 0
+
 	if(!bitcoinmining)
 		if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
 			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
@@ -230,8 +238,8 @@
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	. = ..()
-	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		stored_energy += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY && largest_rad_pulse > pulse_strength)
+		largest_rad_pulse = pulse_strength
 
 /obj/machinery/power/rad_collector/update_overlays()
 	. = ..()
