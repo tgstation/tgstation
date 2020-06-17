@@ -22,10 +22,6 @@ GLOBAL_LIST_EMPTY(gondola_route_checkpoint)
 	for(var/obj/effect/landmark/gondola/G in checkpoints)
 		if(current_checkpoint == G.checkpoint)
 			walk_towards(src,G.loc,5)
-			var/i = 1
-			while(G.loc != src.loc || i < 5)
-				sleep(5 SECONDS)
-				i++
 			if(prob(25))
 				var/word = pick("ohh fuggggg","benis :D :D:D:D","hello :DD:: fren","oh fug :D we go this way now","ebin :D")
 				src.say(word)
