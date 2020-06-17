@@ -70797,10 +70797,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo";
-	pixel_x = -4
-	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
