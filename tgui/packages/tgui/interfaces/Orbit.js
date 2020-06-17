@@ -119,7 +119,7 @@ export const Orbit = (props, context) => {
 
   return (
     <Window>
-      <Window.Content>
+      <Window.Content scrollable>
         <Section>
           <Input
             fluid

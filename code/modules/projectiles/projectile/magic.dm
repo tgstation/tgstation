@@ -337,9 +337,9 @@
 		else
 			var/obj/O = src
 			if(istype(O, /obj/item/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
 
 	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
