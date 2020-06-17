@@ -1009,7 +1009,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			continue
 		if(ishuman(P))
 			var/mob/living/carbon/human/H = P
-			if(!(H.mob_negates_gravity())
+			if(!H.mob_negates_gravity())
 				continue //You can't pull someone nailed to the deck
 		step_towards(P,center)
 
