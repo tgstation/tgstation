@@ -495,7 +495,7 @@
 
 //GetAllContenst that is reasonable and not stupid
 /mob/living/carbon/proc/get_all_gear()
-	var/list/processing_list = get_equipped_items() + held_items
+	var/list/processing_list = get_equipped_items(include_pockets = TRUE) + held_items
 	listclearnulls(processing_list) // handles empty hands
 	var/i = 0
 	while(i < length(processing_list) )
