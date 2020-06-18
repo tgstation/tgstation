@@ -21,15 +21,15 @@
 				return 1
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
-	if(can_buckle && istype(W, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding_item = W
-		var/mob/living/carried_mob = riding_item.rider
-		if(carried_mob == user) //Piggyback user.
-			return
-		user.unbuckle_mob(carried_mob)
-		return mouse_buckle_handling(carried_mob, user)
-	else
+	if(!can_buckle || !istype(W, /obj/item/riding_offhand))
 		return ..()
+
+	var/obj/item/riding_offhand/riding_item = W
+	var/mob/living/carried_mob = riding_item.rider
+	if(carried_mob == user) //Piggyback user.
+		return
+	user.unbuckle_mob(carried_mob)
+	return mouse_buckle_handling(carried_mob, user)
 
 //literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() being called doesn't mean that you're adjacent to something)
 /atom/movable/attack_robot(mob/living/user)
