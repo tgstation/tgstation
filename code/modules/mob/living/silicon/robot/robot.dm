@@ -526,7 +526,7 @@
 
 //Some sort of magical "modulo" thing which somehow increments lamp power by 2, until it hits the max and resets to 0.
 	lamp_intensity = (lamp_intensity+2) % (lamp_max+2)
-	to_chat(src, "<span class='notice'>[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled"].</span>")
+	to_chat(src, "<span class='notice'>[lamp_intensity ? "Headlamp power set to level [lamp_intensity/2]. Headlamp power consumption rate is now [DisplayEnergy(clamp((lamp_intensity - 2) * 2,1,cell.charge))]/tick" : "Headlamp disabled"].</span>") //the expression "clamp((lamp_intensity - 2) * 2,1,cell.charge)" is taken from robot/life.dm; update it if the power consumption rate of cyborg headlamps is ever changed
 	update_headlamp()
 
 /mob/living/silicon/robot/proc/update_headlamp(turn_off = 0, cooldown = 100)
