@@ -62,6 +62,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
+	var/obj/screen/minigame_signup
+
 /datum/hud/New(mob/owner)
 	mymob = owner
 

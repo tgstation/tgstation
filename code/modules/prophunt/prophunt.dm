@@ -6,6 +6,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 
 /datum/minigame_signups
 	var/list/signed_up = list()
+	var/list/boards = list()
 	var/debug_mode = FALSE
 
 /datum/minigame_signups/proc/SignUpFor(mob/user,game_id)
@@ -13,6 +14,9 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 		return
 	if(!signed_up[game_id])
 		signed_up[game_id] = list()
+	var/obj/signup = boards[game_id]
+	if(istype(signup))
+		signup.before_signup(user)
 	var/list/game_q = signed_up[game_id]
 	if(game_q[user.ckey])
 		game_q -= user.ckey
@@ -21,6 +25,9 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 		game_q[user.ckey] = user
 		to_chat(user,"You register for [game_id] game. There's now [length(game_q)] players signed up.")
 	SEND_SIGNAL(src,COMSIG_SIGNUP_SIGNUPS_CHANGED,game_id)
+
+	if(istype(signup))
+		signup.after_signup(user)
 
 /datum/minigame_signups/proc/GetCurrentPlayerCount(game_id)
 	var/list/game_q = signed_up[game_id]
@@ -62,11 +69,14 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	desc = "Sign up here."
 	icon = 'icons/obj/mafia.dmi'
 	icon_state = "joinme"
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/arena_id = "prophunt_arena"
 	var/obj/machinery/computer/arena/prophunt/linked_arena
 
 /obj/prophunt_signup_board/Initialize()
 	. = ..()
+	GLOB.minigame_signups.boards["prophunt"] = src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/prophunt_signup_board/LateInitialize()
@@ -78,6 +88,8 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 /obj/prophunt_signup_board/attack_hand(mob/living/user)
 	. = ..()
 	GLOB.minigame_signups.SignUpFor(user,"prophunt")
+
+/obj/prophunt_signup_board/after_signup(mob/user)
 	if(linked_arena && linked_arena.game_state != PROPHUNT_SIGNUPS)
 		var/left = 0
 		switch(linked_arena.game_state)

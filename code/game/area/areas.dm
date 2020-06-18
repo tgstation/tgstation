@@ -90,6 +90,8 @@
 
 	var/list/power_usage
 
+	var/no_minigames = FALSE
+
 
 /**
   * A list of teleport locations

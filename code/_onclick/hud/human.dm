@@ -360,6 +360,40 @@
 
 	update_locked_slots()
 
+
+	minigame_signup = new /obj/screen/minigame()
+	minigame_signup.screen_loc = "EAST-4:21, SOUTH+1:7"
+	minigame_signup.hud = src
+	static_inventory += minigame_signup
+
+
+/obj/screen/minigame
+	name = "Minigame Signup"
+	icon = 'icons/obj/mafia.dmi'
+	icon_state = "joinme"
+	screen_loc = "WEST:5,CENTER-3:11"
+	var/in_use = FALSE
+
+/obj/screen/minigame/Click(location, control, params)
+	if(in_use)
+		return
+	var/mob/living/carbon/human/H = usr
+	if(!istype(H))
+		to_chat(H,"<span class='notice'>You can only sign up if you're humanoid.</span>")
+		return
+	var/area/A = get_area(H)
+	if(!A || A.no_minigames)
+		to_chat(H,"<span class='notice'>Can't signup here.</span>")
+		return
+	in_use = TRUE
+	do_signup(H)
+	in_use = FALSE
+
+/obj/screen/minigame/proc/do_signup(mob/living/carbon/human/H)
+	var/chosen = input(H,"Join/Leave which minigame?", "Pick Minigame") as null|anything in GLOB.minigame_signups.boards
+	if(chosen)
+		GLOB.minigame_signups.SignUpFor(H,chosen)
+
 /datum/hud/human/update_locked_slots()
 	if(!mymob)
 		return
