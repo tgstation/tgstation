@@ -1,0 +1,4 @@
+author: "genessee596"
+delete-after: True
+changes: 
+  - tweak: "TCG brand trading cards now show their rarity on the card, with tiers of rarity attached to a background color on the 'N' box on the bottom right corner."
