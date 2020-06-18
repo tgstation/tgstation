@@ -19,7 +19,7 @@
 	ricochet_chance = 50
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
-	wound_bonus = -35
+	wound_bonus = -5
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"

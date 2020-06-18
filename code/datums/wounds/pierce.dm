@@ -34,32 +34,9 @@
 
 	/// The current bandage we have for this wound (maybe move bandages to the limb?)
 	var/obj/item/stack/current_bandage
-	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
-	var/datum/scar/highest_scar
 
 	/// If we're parented to an item stuck inside someone, store it here
-	var/obj/item/parent_item
-
-/datum/wound/pierce/wound_injury(datum/wound/pierce/old_wound = null)
-	blood_flow = initial_flow
-	if(old_wound)
-		blood_flow = max(old_wound.blood_flow, initial_flow)
-		if(old_wound.severity > severity && old_wound.highest_scar)
-			highest_scar = old_wound.highest_scar
-			old_wound.highest_scar = null
-		if(old_wound.current_bandage)
-			current_bandage = old_wound.current_bandage
-			old_wound.current_bandage = null
-
-	if(!highest_scar)
-		highest_scar = new
-		highest_scar.generate(limb, src, add_to_scars=FALSE)
-
-/datum/wound/pierce/remove_wound(ignore_limb, replaced)
-	if(!replaced && highest_scar)
-		already_scarred = TRUE
-		highest_scar.lazy_attach(limb)
-	return ..()
+	var/obj/item/embedded_shrapnel
 
 /datum/wound/pierce/get_examine_description(mob/user)
 	if(!current_bandage)
@@ -99,8 +76,8 @@
 			victim.visible_message("<span class='danger'>Blood soaks through \the [current_bandage] on [victim]'s [limb.name].</span>", "<span class='warning'>Blood soaks through \the [current_bandage] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
 			QDEL_NULL(current_bandage)
 			treat_priority = TRUE
-	else
-		blood_flow -= clot_rate
+	//else
+		//blood_flow -= clot_rate
 
 	if(blood_flow > highest_flow)
 		highest_flow = blood_flow
@@ -113,10 +90,6 @@
 			qdel(src)
 
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
-
-/datum/wound/pierce/check_grab_treatments(obj/item/I, mob/user)
-	if(istype(I, /obj/item/gun/energy/laser))
-		return TRUE
 
 /datum/wound/pierce/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
@@ -238,8 +211,12 @@
 	treat_priority = FALSE
 	I.use(1)
 
+/datum/wound/pierce/proc/embed_pain(bleed_increase)
+	if(!bleed_increase || !embedded_shrapnel || !(embedded_shrapnel in limb.embedded_objects))
+		embedded_shrapnel = null
+		return
 
-/datum/wound/pierce/proc/stuck(obj/item/I)
+	blood_flow += bleed_increase
 
 /datum/wound/pierce/moderate
 	name = "Skin Breakage"
@@ -253,8 +230,8 @@
 	minimum_flow = 0.5
 	max_per_type = 3
 	clot_rate = 0.15
-	threshold_minimum = 20
-	threshold_penalty = 10
+	threshold_minimum = 30
+	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scarring_descriptions = list("a small, faded bruise", "a small twist of reformed skin", "a thumb-sized puncture scar")
 
@@ -270,7 +247,7 @@
 	minimum_flow = 2.75
 	clot_rate = 0.07
 	max_per_type = 4
-	threshold_minimum = 50
+	threshold_minimum = 60
 	threshold_penalty = 25
 	demotes_to = /datum/wound/pierce/moderate
 	status_effect_type = /datum/status_effect/wound/pierce/severe

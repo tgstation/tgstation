@@ -75,7 +75,7 @@
 			bandage_condition = "clean "
 	return "<B>The cuts on [victim.p_their()] [limb.name] are wrapped with [bandage_condition] [current_bandage.name]!</B>"
 
-/datum/wound/brute/cut/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+/datum/wound/slash/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
 		blood_flow += 0.05 * wounding_dmg
 

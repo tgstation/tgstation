@@ -242,7 +242,7 @@
 							"<span class='danger'>Your veins burst from within and unholy flame erupts from your blood!</span>")
 		for(var/repetition in 0 to 2)
 			var/obj/item/bodypart/bodypart = pick(target.bodyparts)
-			var/datum/wound/brute/cut/critical/crit_wound = new
+			var/datum/wound/slash/critical/crit_wound = new
 			crit_wound.apply_wound(bodypart)
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/cleave(target.drop_location())
