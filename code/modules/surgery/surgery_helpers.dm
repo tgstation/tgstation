@@ -130,6 +130,16 @@
 	else
 		return 0.5
 
+/proc/get_internals_modifier(mob/M)
+	var/mob/living/carbon/human/H = M
+	if (!istype(H))
+		return 0.0
+	else if (istype(H.internal,/obj/item/tank/internals/anesthetic))
+		return 0.2
+	else
+		return 0.0
+
+
 
 /proc/get_location_accessible(mob/M, location)
 	var/covered_locations = 0	//based on body_parts_covered
