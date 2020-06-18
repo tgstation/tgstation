@@ -215,7 +215,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/survival
 	name = "survival medipen"
-	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
+	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession, the Nanotransen Exotic Medical Research Division is not responsible for any side effects caused by usage in untested enviroments like space stations."
 	icon_state = "stimpen"
 	inhand_icon_state = "stimpen"
 	volume = 60

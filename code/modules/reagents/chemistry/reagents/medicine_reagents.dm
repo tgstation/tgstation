@@ -1019,13 +1019,19 @@
 
 /datum/reagent/medicine/lavaland_extract
 	name = "Lavaland Extract"
-	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
+	description = "An extract of lavaland atmospheric and mineral elements. Heals the user if exposed to lavaland's microbes, seems to have ill side effects outside of the lavaland zoosphere."
 	color = "#6B372E" //dark and red like lavaland
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
 	can_synth = FALSE
 
 /datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
-	M.heal_bodypart_damage(5,5)
+	var/turf/T = get_turf(M)
+	if(is_mining_level(T.z))
+		M.heal_bodypart_damage(5,5)
+	else
+		M.Dizzy(10)
+		if(prob(15))
+			M.vomit()
 	..()
 	return TRUE
 
