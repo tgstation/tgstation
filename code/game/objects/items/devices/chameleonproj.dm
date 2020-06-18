@@ -190,7 +190,7 @@
 /obj/item/chameleon/prophunt/disrupt(delete_dummy)
 	var/caught = FALSE
 	if(active_dummy)
-		if(gamemaster.gamestate == PROPHUNT_GAME)
+		if(gamemaster.game_state == 4)
 			for(var/mob/M in active_dummy)
 				to_chat(M, "<span class='userdanger'>You've been caught!</span>")
 				caught = TRUE
