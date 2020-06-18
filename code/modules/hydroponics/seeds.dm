@@ -222,20 +222,32 @@
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
 
-	for(var/rid in reagents_add)
-		var/amount = max(1, round(potency * reagents_add[rid], 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
-
-		var/list/data = null
-		if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
-			data = list("blood_type" = "O-")
-		if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
-			// apple tastes of apple.
-			if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
-				var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
-				data = grown_edible.tastes
-
-		T.reagents.add_reagent(rid, amount, data)
-
+	if(istype(T, /obj/item/reagent_containers/food/snacks/grown)) //this is also mostly based on shadok's PR, with some tweaks
+		var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
+		var/edible_max_volume = grown_edible.provide_volume()
+		var/reagent_max_ratio = 0  // Total ratio of chemicals produced
+		var/reagent_max_volume = 0  // Initial calculation of the maximum volume of chemicals produced
+		var/nice_round_numbers = TRUE //can we afford to round the volumes of the added chems?
+		for(var/rid in reagents_add)
+			reagent_max_ratio += reagents_add[rid]
+			reagent_max_volume += max(1, round(potency * reagents_add[rid], 1))
+		if(reagent_max_volume > edible_max_volume) //uh oh, if we don't do something, we're gonna go over the chem cap!
+			nice_round_numbers = FALSE //aren't you tired of being nice?
+		for(var/rid in reagents_add)
+			var/amount = 0
+			if(nice_round_numbers)
+				amount = max(1, round(potency * reagents_add[rid], 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits, provided that nice_round_numbers is TRUE
+			else
+				amount = (reagents_add[rid] / reagent_max_ratio) * edible_max_volume
+			var/list/data = null
+			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
+				data = list("blood_type" = "O-")
+			if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
+				// apple tastes of apple.
+				if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
+					var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
+					data = grown_edible.tastes
+			T.reagents.add_reagent(rid, amount, data)
 
 /// Setters procs ///
 
