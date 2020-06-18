@@ -164,7 +164,7 @@
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
 
-/obj/item/reagent_containers/food/snacks/grown/proc/provide_volume() //idea for this proc shamelessly stolen from shadok's PR
+/obj/item/reagent_containers/food/snacks/grown/proc/provide_volume()
 	if(reagents)
 		return reagents.maximum_volume
 	return FALSE

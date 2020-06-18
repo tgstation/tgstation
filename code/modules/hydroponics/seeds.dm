@@ -222,7 +222,7 @@
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
 
-	if(istype(T, /obj/item/reagent_containers/food/snacks/grown)) //this is also mostly based on shadok's PR, with some tweaks
+	if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
 		var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
 		var/edible_max_volume = grown_edible.provide_volume()
 		var/reagent_max_ratio = 0  // Total ratio of chemicals produced
