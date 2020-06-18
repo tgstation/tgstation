@@ -441,7 +441,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(!iscyborg(user) && !ishuman(user))
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
@@ -729,7 +730,8 @@ GLOBAL_LIST(hub_radial_layer_list)
 /obj/structure/cable/multilayer/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(!iscyborg(user) && !ishuman(user))
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
