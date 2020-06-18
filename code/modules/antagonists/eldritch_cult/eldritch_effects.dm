@@ -110,7 +110,7 @@
 /datum/reality_smash_tracker/proc/ReworkNetwork()
 	listclearnulls(smashes)
 	for(var/mind in targets)
-		if(!mind)
+		if(isnull(mind))
 			stack_trace("A null somehow landed in a list of minds")
 			continue
 		for(var/X in smashes)
