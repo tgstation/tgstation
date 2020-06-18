@@ -73,7 +73,7 @@
 
 /obj/structure/closet/supplypod/extractionpod/specialisedPod(atom/movable/holder)
 	holder.forceMove(pick(GLOB.holdingfacility)) // land in ninja jail
-	open(holder, forced = TRUE)
+	open(holder = holder, forced = TRUE)
 
 /obj/structure/closet/supplypod/Initialize()
 	. = ..()
@@ -130,7 +130,7 @@
 		QDEL_IN(risingPod, 10)
 		reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
 		bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
-		open(holder, forced = TRUE)
+		open(holder = holder, forced = TRUE)
 	else
 		reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
 		bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
@@ -187,13 +187,13 @@
 		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(get_turf(src), src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
 		moveToNullspace()
-		addtimer(CALLBACK(src, .proc/open, benis), openingDelay) //After the openingDelay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
+		addtimer(CALLBACK(src, .proc/open, holder = benis), openingDelay) //After the openingDelay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
 	else if (style == STYLE_SEETHROUGH)
-		open(src)
+		open(holder = src)
 	else
-		addtimer(CALLBACK(src, .proc/open, src), openingDelay) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
+		addtimer(CALLBACK(src, .proc/open, holder = src), openingDelay) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
-/obj/structure/closet/supplypod/open(atom/movable/holder, broken = FALSE, forced = FALSE, force = FALSE) //The holder var represents an atom whose contents we will be working with
+/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE, atom/movable/holder, broken = FALSE, forced = FALSE) //The holder var represents an atom whose contents we will be working with
 	if (!holder)
 		return
 	if (opened) //This is to ensure we don't open something that has already been opened
@@ -257,7 +257,7 @@
 	update_icon()
 
 /obj/structure/closet/supplypod/Destroy()
-	open(src, broken = TRUE) //Lets dump our contents by opening up
+	open(holder = src, broken = TRUE) //Lets dump our contents by opening up
 	. = ..()
 
 //------------------------------------FALLING SUPPLY POD-------------------------------------//

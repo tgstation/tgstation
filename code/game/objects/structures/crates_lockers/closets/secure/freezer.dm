@@ -10,7 +10,7 @@
 	. = ..()
 	recursive_organ_check(src)
 
-/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force)
+/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = TRUE)
 	if(opened || !can_open(user, force))	//dupe check just so we don't let the organs decay when someone fails to open the locker
 		return FALSE
 	recursive_organ_check(src)
