@@ -110,8 +110,9 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	var/auto = FALSE //Toggle to start autogame
 	var/game_state = PROPHUNT_SIGNUPS
 	var/list/projectors = list()
-	var/list/hiders = list()
+	var/list/hiders = list() //NOT A TRUE LIST AFTER GAME STARTS, AS HIDERS WILL GET REMOVED FROM THIS LIST
 	var/list/searchers = list()
+	var/list/total_players = list() //people can get kicked out of hiders, lowering the amount of people still in the game. They will want to know if they won or not though, so here's everyone who played
 
 	var/hider_count = 5
 	var/searcher_count = 1
@@ -156,7 +157,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	switch(special_value)
 		if("end_prophunt_round")
 			auto = FALSE
-			conclude_round()
+			conclude_round(seekers_win = FALSE) //round timed out without all hiders gone, so hiders win
 			return TRUE
 		else
 			return FALSE
@@ -167,24 +168,27 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	if(!filtered_keys)
 		return
 	game_state = PROPHUNT_SETUP
+	total_players = list()
 	hiders = list()
 	for(var/i in 1 to hider_count)
 		var/chosen_key = pick(filtered_keys)
 		var/chosen_mob = filtered_keys[chosen_key]
 		filtered_keys -= chosen_key
 		hiders += chosen_mob
+		total_players += chosen_mob
 	searchers = list()
 	for(var/i in 1 to searcher_count)
 		var/chosen_key = pick(filtered_keys)
 		var/chosen_mob = filtered_keys[chosen_key]
 		filtered_keys -= chosen_key
 		searchers += chosen_mob
+		total_players += chosen_mob
 	load_random_arena()
 	send_hiders_in()
 
 /obj/machinery/computer/arena/prophunt/proc/send_hiders_in()
 	for(var/mob/living/L in hiders)
-		var/obj/item/chameleon/projector = new()
+		var/obj/item/chameleon/prophunt/projector = new(null,src)
 		projectors += projector
 		L.forceMove(get_landmark_turf(PROPHUNT_HIDER_SPAWN))
 		L.put_in_hands(projector)
@@ -196,24 +200,34 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 /obj/machinery/computer/arena/prophunt/proc/send_searchers_in()
 	for(var/mob/living/L in searchers)
 		L.forceMove(get_landmark_turf(PROPHUNT_SEARCHER_SPAWN))
-	to_chat(searchers,"<span class='danger'>Search! You got 3 minutes!</span>")
+	to_chat(searchers,"<span class='danger'>Search! You got 3 minutes! Catching a hider will boot them out of the game!</span>")
 	to_chat(hiders,"<span class='userdanger'>Search started! Try to stay hidden for 3 minutes!</span>")
+	to_chat(hiders,"<span class='userdanger'>WARNING: IF YOUR PROJECTOR GETS DISRUPTED BY THIS POINT, YOU WILL BE COUNTED AS CAUGHT AND BOOTED OUT!</span>")
 	game_state = PROPHUNT_GAME
 	next_stage_timer = addtimer(CALLBACK(src,.proc/conclude_round),search_time, TIMER_STOPPABLE)
 
-/obj/machinery/computer/arena/prophunt/proc/conclude_round()
+/obj/machinery/computer/arena/prophunt/proc/conclude_round(seekers_win = FALSE)//bool
 	QDEL_LIST(projectors)
+	if(seekers_win)
+		to_chat(total_players, "<span class='redtext'>SEEKERS HAVE WON! ALL HIDERS HAVE BEEN CAUGHT!")
+	else
+		to_chat(total_players, "<span class='greentext'>HIDERS HAVE WON! NOT ALL HIDERS WERE CAUGHT!")
 	kick_players_out()
 	if(next_stage_timer)
 		deltimer(next_stage_timer)
 	game_state = PROPHUNT_SIGNUPS
 	try_autostart()
 
+/obj/machinery/computer/arena/prophunt/proc/kick_hider_out(var/mob/player)//used for when you get caught
+	player.forceMove(get_landmark_turf(ARENA_EXIT))
+		hiders -= player
+	if(!hiders.len)
+		conclude_round(seekers_win = TRUE)
+
 /obj/machinery/computer/arena/prophunt/kick_players_out()
 	for(var/mob/M in hiders+searchers)
 		M.forceMove(get_landmark_turf(ARENA_EXIT))
 	. = ..()
-
 
 /obj/effect/landmark/arena/prophunt
 	arena_id = "prophunt_arena"

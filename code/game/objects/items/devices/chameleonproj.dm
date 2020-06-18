@@ -178,3 +178,26 @@
 /obj/effect/dummy/chameleon/Destroy()
 	master.disrupt(0)
 	return ..()
+
+//prophunt projectors (disrupt while seekers are seeking = booted)
+/obj/item/chameleon/prophunt
+	var/obj/machinery/computer/arena/prophunt/gamemaster = null //if this doesn't get set by new, we want it to runtime.
+
+/obj/item/chameleon/prophunt/Initialize(mapload, arenacomputer)
+	. = ..()
+	gamemaster = arenacomputer
+
+/obj/item/chameleon/prophunt/disrupt(delete_dummy)
+	var/caught = FALSE
+	if(active_dummy)
+		if(gamemaster.gamestate == PROPHUNT_GAME)
+			for(var/mob/M in active_dummy)
+				to_chat(M, "<span class='userdanger'>You've been caught!</span>")
+				caught = TRUE
+	. = ..()
+	if(caught)
+		for(var/mob/M in active_dummy)
+			gamemaster.kick_hider_out(M)
+	gamemaster.projectors -= src //don't want them out of the game using their funny little projector and losing twice or some wack stuff
+	//and no, "objects_delete_on_leaving_arena" var doesn't help. that's only for arenas it loads, not equipment for players.
+	qdel(src)
