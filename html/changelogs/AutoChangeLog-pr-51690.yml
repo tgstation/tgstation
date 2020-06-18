@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "pAIs no longer start with a medHUD, secHUD, and diagHUD turned on as soon as they're downloaded, even if they haven't bought any HUDs yet."
