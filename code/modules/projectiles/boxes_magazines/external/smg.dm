@@ -35,7 +35,7 @@
 	max_ammo = 50
 
 /obj/item/ammo_box/magazine/plastikov9mm/update_icon()
-	..()
+	. = ..()
 	if(ammo_count())
 		icon_state = "9x19-50"
 		return
