@@ -35,9 +35,10 @@
 /obj/structure/fluff/spooky_skeleton
 	name = "spooky skeleton"
 	desc = "Spooked ya!"
-	icon = 'icons/mob/human.dmi'
-	icon_state = "skeleton"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "spookedya2"
 	deconstructible = FALSE
+	max_integrity = 9999
 	var/active = FALSE
 	var/spook_var //identification used by the pressure plate
 	var/x_axis = TRUE //determines whether animate uses pixel x/y, false means pixel y
