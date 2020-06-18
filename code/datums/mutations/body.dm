@@ -87,7 +87,6 @@
 	difficulty = 16
 	instability = 5
 	conflicts = list(GIGANTISM)
-	locked = TRUE    // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -238,6 +237,7 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
 	difficulty = 16
+	locked = TRUE    // Default inert species for now, so locked from regular pool.
 
 /datum/mutation/human/stimmed
 	name = "Stimmed"
