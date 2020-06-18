@@ -25856,6 +25856,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bhQ" = (
@@ -25874,6 +25877,9 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -27345,6 +27351,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "blf" = (
@@ -28031,6 +28038,7 @@
 	req_one_access_txt = "12;22;25;37;38;46"
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bmU" = (
@@ -29003,6 +29011,9 @@
 "bpc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bpd" = (
@@ -30854,6 +30865,9 @@
 /obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -36869,14 +36883,15 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "bIE" = (
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 2;
+	sortType = 18
+	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -56925,6 +56940,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cGN" = (
@@ -65167,6 +65183,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "dhR" = (
@@ -67701,9 +67718,8 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "ezE" = (
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 18
+/obj/structure/disposalpipe/junction{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -68821,6 +68837,13 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
+"gjw" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "gjC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -74061,6 +74084,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"oHZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "oIr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -74672,6 +74701,9 @@
 /area/security/prison)
 "pCV" = (
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "pCY" = (
@@ -75396,6 +75428,14 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"qFK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "qGP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/blue{
@@ -77889,6 +77929,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "uVH" = (
@@ -118371,10 +118412,10 @@ avs
 brw
 btv
 bpc
-bpc
+bHl
 cGM
-bpc
-bpc
+bHl
+qFK
 yfd
 byN
 byN
@@ -118621,20 +118662,20 @@ bcD
 bee
 aWv
 bhP
-bjy
+oHZ
 ble
 bmT
-bpc
+bHl
 dhQ
-pCV
+ccD
 pCV
 bwY
 alq
 buV
 btt
 uVk
-bpc
-bpc
+bHl
+bHl
 bIE
 bHl
 bHl
@@ -118878,7 +118919,7 @@ aWw
 aWw
 aWw
 bhQ
-bjp
+gjw
 blf
 bmU
 alq
