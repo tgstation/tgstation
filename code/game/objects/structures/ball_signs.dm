@@ -22,6 +22,14 @@
 	icon = 'icons/obj/ball-sign-large.dmi'
 	icon_state = "Drink"
 
+/obj/structure/sign/ball/large/mafia // I DON'T THINK THE SERVER IS READY FOR THIS GRIEFING YET
+	icon = 'icons/obj/ball-sign-small.dmi'
+	icon_state = "Mafia"
+
+/obj/structure/sign/ball/large/prophunt // JUMP IN THE PIT!!!!
+	icon = 'icons/obj/ball-sign-small.dmi'
+	icon_state = "Prophunt"
+
 /obj/structure/fluff/blackjack
 	name = "Blackjack Table"
 	desc = "The house can't always win, right?"
