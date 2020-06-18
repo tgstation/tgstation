@@ -26,6 +26,11 @@
 	if(QDELETED(humie) || humie.stat != DEAD)
 		return
 
+	check_ghouls(user)
+
+	if(length(ghouls) > max_amt)
+		return
+
 	humie.grab_ghost()
 
 	if(!humie.mind || !humie.client)
@@ -37,7 +42,7 @@
 		humie.ghostize(0)
 		humie.key = C.key
 
-	if(!check_ghouls(user) || HAS_TRAIT(humie,TRAIT_HUSK))
+	if(! || HAS_TRAIT(humie,TRAIT_HUSK))
 		return
 
 	ADD_TRAIT(humie,TRAIT_MUTE,MAGIC_TRAIT)
@@ -56,17 +61,21 @@
 
 /datum/eldritch_knowledge/flesh_ghoul/proc/check_ghouls(mob/living/user)
 
+	if(length(ghouls) == 0)
+		return
+
 	listclearnulls(ghouls)
 
-	for(var/mob/living/carbon/human/ghoul in ghouls)
+	for(var/mob/living/carbon/human/spook in ghouls)
+		if(!ishuman(spook))
+			ghouls -= spook
+			continue
+		var/mob/living/carbon/human/ghoul = spook
 		if(ghoul.stat == DEAD)
 			ghoul?.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
-			ghouls -= ghoul
-			current_amt--
+			ghouls -= spook
+			continue
 
-	if(current_amt >= max_amt)
-		return FALSE
-	return TRUE
 
 /datum/eldritch_knowledge/flesh_grasp
 	name = "Grasp of Flesh"
