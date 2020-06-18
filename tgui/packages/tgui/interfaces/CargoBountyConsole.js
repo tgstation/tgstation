@@ -16,7 +16,7 @@ export const CargoBountyConsole = (props, context) => {
     <Window resizable>
       <Window.Content scrollable>
         <Section
-          title=<BountyHeader /> 
+          title={<BountyHeader />}
           buttons={(
             <Flex>
               <Flex.Item>
