@@ -221,16 +221,22 @@
 /obj/item/seeds/proc/prepare_result(var/obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
-	var/reagent_max = 0
-	for(var/rid in reagents_add)
-		reagent_max += reagents_add[rid]
 	if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
 		var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
+		var/edible_max_volume = grown_edible.provide_volume()
+		var/reagent_max_ratio = 0  // Total ratio of chemicals produced
+		var/reagent_max_volume = 0  // Initial calculation of the maximum volume of chemicals produced
 		for(var/rid in reagents_add)
-			var/reagent_overflow_mod = 1
-			if(reagent_max > 1)
-				reagent_overflow_mod = (reagents_add[rid]/ reagent_max)
-			var/amount = max(1, round((grown_edible.provide_volume())*(potency/100) * reagents_add[rid] * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
+			reagent_max_ratio += reagents_add[rid]
+			reagent_max_volume += reagents_add[rid] * potency
+		for(var/rid in reagents_add)
+			var/reagent_ratio = reagents_add[rid] // Ratio used for calculations, initial behavior is to consider the original ratio
+			if(reagent_max_ratio > 1) // If we're exceeding a total ratio of 1
+				reagent_ratio = (reagents_add[rid]/ reagent_max_ratio) // New ratio proportional to the total ratio
+			var/reagent_volume = potency // Volume amount used for calculations, initial behavior is to consider the amount of chemicals in proportion to potency
+			if(reagent_max_volume > edible_max_volume) // If we're restricted by the maximum volume of chemicals
+				reagent_volume = edible_max_volume // Use maximum volume for calculations
+			var/amount = max(1, round(reagent_volume * reagent_ratio, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
 			var/list/data = null
 			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
 				data = list("blood_type" = "O-")
