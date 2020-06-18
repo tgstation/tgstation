@@ -231,7 +231,7 @@
 			reagent_max_volume += reagents_add[rid] * potency
 		for(var/rid in reagents_add)
 			var/reagent_ratio = reagents_add[rid] // Ratio used for calculations, initial behavior is to consider the original ratio
-			if(reagent_max_ratio > 1) // If we're exceeding a total ratio of 1
+			if((reagent_max_ratio > 1 || (reagent_max_volume > edible_max_volume)) // If we're exceeding a total ratio of 1 or we're exceeding the maximum available volume
 				reagent_ratio = (reagents_add[rid]/ reagent_max_ratio) // New ratio proportional to the total ratio
 			var/reagent_volume = potency // Volume amount used for calculations, initial behavior is to consider the amount of chemicals in proportion to potency
 			if(reagent_max_volume > edible_max_volume) // If we're restricted by the maximum volume of chemicals
