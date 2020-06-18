@@ -45,8 +45,6 @@
 		humie.ghostize(0)
 		humie.key = C.key
 
-
-
 	ADD_TRAIT(humie,TRAIT_MUTE,MAGIC_TRAIT)
 	log_game("[key_name_admin(humie)] has become a voiceless dead, their master is [user.real_name]")
 	humie.revive(full_heal = TRUE, admin_revive = TRUE)
