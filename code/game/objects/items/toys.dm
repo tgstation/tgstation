@@ -537,7 +537,7 @@
 	verb_yell = "beeps"
 	/// Timer when it'll be off cooldown
 	var/timer = 0
-	/// Cooldown between play sessions - 4x longer after a battle
+	/// Cooldown between play sessions - 8x longer after a battle
 	var/cooldown = 25
 	/// If it makes noise when played with
 	var/quiet = FALSE
@@ -622,11 +622,11 @@
   * Arguments
   *		user: the user wanting to do battle
   */
-/obj/item/toy/prize/proc/withdrawOffer(mob/living/user)
+/obj/item/toy/prize/proc/withdrawOffer(mob/living/carbon/user)
 	wants_to_battle = FALSE
 	to_chat(user, "<span class='notice'>You get the feeling they don't want to battle.</span>")
 
-/obj/item/toy/prize/suicide_act(mob/user)
+/obj/item/toy/prize/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins a fight with [name]! There's no way they can win, it looks like [user.p_theyre()] trying to commit suicide!</span>")
 	
 	in_combat = TRUE
@@ -660,30 +660,19 @@
 	wins++
 	return BRUTELOSS
 
-
 /obj/item/toy/prize/examine()
 	. = ..()
 	. += "<span class='notice'>This toy's special attack is [special_attack_cry], [special_attack_type_message] </span>"
 	if(in_combat)
-		. += "DEBUG: Current health is [combat_health]"
-		switch(combat_health)
-			if(-1 to round(max_combat_health*0.25)-1)
-				. += "<span class='notice'>It looks devastated, and not emotionally!</span>"
-			if(round(max_combat_health*0.25) to round(max_combat_health*0.5)-1)
-				. += "<span class='notice'>It looks increasingly worn out!</span>"
-			if(round(max_combat_health*0.5) to round(max_combat_health*0.75)-1)
-				. += "<span class='notice'>It seems to be faltering!</span>"
-			if(round(max_combat_health*0.75) to INFINITY)
-				. += "<span class='notice'>It appears completely healthy and ready to brawl.</span>"
-			else
-				. += "<span class='notice'>It's just vibing.</span>"
-
+		. += "<span class='notice'>This toy's got a maximum health of [max_combat_health]. Currently, it's [combat_health].</span>"
 		if(special_attack_cooldown == 0)
-			. += "<span class='notice'>Its special move light is flashing green.</span>"
+			. += "<span class='notice'>Its special move light is green and is ready!</span>"
 		else
-			. += "<span class='notice'>Its special move light is red.</span>"
+			. += "<span class='notice'>Its special move light is flashing red.</span>"
+	else
+		. += "<span class='notice'>This toy's got a maximum health of [max_combat_health].</span>"
 
-	else if(wins || losses)
+	if(wins || losses)
 		. += "<span class='notice'>This toy has [wins] wins, and [losses] losses.</span>"
 
 /**
@@ -696,8 +685,8 @@
   * 
   * Arguments
   *															
-  *		src:			the defending toy, the toy you hit another toy with to start the battle	(not an arg but relevant / makes it easier to read if you understand)	
-  *		attacker:		the attacking toy, the toy you target with another toy to start the battle. in PvP, this is the opponent's toy
+  *		src:			the defending toy, the toy that is hit by another toy with to start the battle		(not an 'arg' but relevant / makes it easier to read if you understand)	
+  *		attacker:		the attacking toy, the toy you use on another toy to start the battle. in PvP, this is the opponent's toy
   *		referee:		the user, the one who is holding the toys / controlling the fight
   *		opponent:		optional arg used in Mech PvP battles: the other person who is taking part in the fight
   */
@@ -706,13 +695,13 @@
 		return
 		
 	if(timer < world.time)
-		timer = world.time + cooldown*4
+		timer = world.time + cooldown*8
 	else
 		to_chat(referee, "<span class='notice'>[name] isn't ready for battle.</span>")
 		return
 
 	if(attacker.timer < world.time)
-		attacker.timer = world.time + cooldown*4
+		attacker.timer = world.time + cooldown*8
 	else
 		to_chat(referee, "<span class='notice'>[attacker.name] isn't ready for battle.</span>")
 		opponent?.to_chat(opponent, "<span class='notice'>[attacker.name] isn't ready for battle.</span>")
@@ -766,12 +755,14 @@
 															"<span class='danger'> You begin charging [attacker.name]'s special attack! </span>")
 					else //just attack 
 						attacker.SpinAnimation(5, 0)
+						playsound(attacker, 'sound/mecha/mechstep.ogg', 20, TRUE)
 						combat_health--
 						attacker_controller.visible_message("<span class='danger'> [attacker.name] devastates [name]! </span>", \
 															"<span class='danger'> You ram [attacker.name] into [name]! </span>", \
 															"<span class='hear'> You hear hard plastic smacking hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 						if(prob(5))
 							combat_health--
+							playsound(src, 'sound/effects/meteorimpact.ogg', 20, TRUE)
 							attacker_controller.visible_message("<span class='boldwarning'> ...and lands a CRIPPLING BLOW! </span>", \
 																"<span class='boldwarning'> ...and you land a CRIPPLING blow on [name]! </span>", null, COMBAT_MESSAGE_RANGE)							
 
@@ -780,6 +771,8 @@
 					SpinAnimation(5, 0)
 					combat_health--
 					attacker.combat_health--
+					do_sparks(3, FALSE, src)
+					do_sparks(3, FALSE, attacker)
 					if(prob(50))
 						referee.visible_message("<span class='danger'> [attacker.name] and [name] clash dramatically, causing sparks to fly! </span>", \
 												"<span class='danger'> [attacker.name] and [name] clash dramatically, causing sparks to fly! </span>", \
@@ -789,6 +782,7 @@
 															"<span class='danger'> [name] and [attacker.name] clash dramatically, causing sparks to fly! </span>", \
 															"<span class='hear'> You hear hard plastic rubbing against hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 				if(4) //both win
+					playsound(attacker, 'sound/weapons/parry.ogg', 20, TRUE)
 					if(prob(50))
 						referee.visible_message("<span class='danger'> [name]'s attack deflects off of [attacker.name]. </span>", \
 												"<span class='danger'> [name]'s attack deflects off of [attacker.name]. </span>", \
@@ -805,12 +799,14 @@
 												"<span class='danger'> You begin charging [name]'s special attack! </span>")
 					else //just attack 
 						SpinAnimation(5, 0)
+						playsound(src, 'sound/mecha/mechstep.ogg', 20, TRUE)
 						attacker.combat_health--
 						referee.visible_message("<span class='danger'> [name] smashes [attacker.name]! </span>", \
 												"<span class='danger'> You smash [name] into [attacker.name]! </span>", \
 												"<span class='hear'> You hear hard plastic smashing hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 						if(prob(5))
 							attacker.combat_health--
+							playsound(attacker, 'sound/effects/meteorimpact.ogg', 20, TRUE)
 							referee.visible_message("<span class='boldwarning'> ...and lands a CRIPPLING BLOW! </span>", \
 													"<span class='boldwarning'> ...and you land a CRIPPLING blow on [attacker.name]! </span>", null, COMBAT_MESSAGE_RANGE)	
 				else
@@ -819,11 +815,13 @@
 		sleep(10)	
 
 	if(attacker.combat_health <= 0 && combat_health <= 0) //both lose
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 20, TRUE)
 		referee.visible_message("<span class='boldnotice'> MUTUALLY ASSURED DESTRUCTION!! [name] and [attacker.name] both end up destroyed!</span>", \
 								"<span class='boldnotice'> Both [name] and [attacker.name] are destroyed!</span>")		
 	else if(attacker.combat_health <= 0) //src wins
 		wins++
 		attacker.losses++
+		playsound(attacker, 'sound/effects/light_flicker.ogg', 20, TRUE)
 		attacker_controller.visible_message("<span class='notice'> [attacker.name] falls apart!</span>", \
 											"<span class='notice'> [attacker.name] falls apart!</span>", null, COMBAT_MESSAGE_RANGE)
 		if(!quiet)
@@ -833,6 +831,7 @@
 	else if (combat_health <= 0) //attacker wins
 		attacker.wins++
 		losses++	
+		playsound(src, 'sound/effects/light_flicker.ogg', 20, TRUE)
 		referee.visible_message("<span class='notice'> [name] collapses!</span>", \
 								"<span class='notice'> [name] collapses!</span>", null, COMBAT_MESSAGE_RANGE)
 		if(!attacker.quiet)
@@ -870,11 +869,14 @@
 	switch(special_attack_type)
 		if(SPECIAL_ATTACK_DAMAGE) //+2 damage
 			victim.combat_health-=2
+			playsound(src, 'sound/weapons/marauder.ogg', 20, TRUE)
 		if(SPECIAL_ATTACK_HEAL) //+2 healing
 			combat_health+=2
+			playsound(src, 'sound/mecha/mech_shield_raise.ogg', 20, TRUE)
 		if(SPECIAL_ATTACK_UTILITY) //+1 heal, +1 damage
 			victim.combat_health--
 			combat_health++
+			playsound(src, 'sound/mecha/mechmove01.ogg', 20, TRUE)
 		if(SPECIAL_ATTACK_OTHER) //other
 			superSpecialAttack(victim)
 		else
@@ -916,6 +918,7 @@
 	special_attack_cry = "KILLER CLAMP"
 
 /obj/item/toy/prize/deathripley/superSpecialAttack(obj/item/toy/prize/victim) 
+	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 20, TRUE)
 	if(victim.combat_health < combat_health) //Instantly kills the other mech if it's health is below our's.
 		say("EXECUTE!!")
 		victim.combat_health = 0
@@ -948,6 +951,7 @@
 	special_attack_cry = "MEGA HORN"
 
 /obj/item/toy/prize/honk/superSpecialAttack(obj/item/toy/prize/victim) 
+	playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 20, TRUE)
 	victim.special_attack_cooldown = 3 //Adds cooldown to the other mech and gives a minor self heal
 	combat_health++
 
