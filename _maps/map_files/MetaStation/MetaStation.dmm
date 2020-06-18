@@ -35632,6 +35632,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/radio/intercom{
+	dir = 8;
+	pixel_y = -28
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bFs" = (
@@ -36822,9 +36826,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/barsign{
-	pixel_y = -28
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
@@ -37536,9 +37537,13 @@
 	id = "kitchen";
 	name = "Serving Hatch"
 	},
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock{
+	name = "Kitchen";
+	req_access_txt = "0";
+	req_one_access_txt = "25;28"
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -38147,6 +38152,9 @@
 	},
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 6
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -38971,7 +38979,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Kitchen";
-	req_access_txt = "28"
+	req_access_txt = "0";
+	req_one_access_txt = "25;28"
 	},
 /obj/machinery/navbeacon/wayfinding,
 /obj/structure/disposalpipe/segment,
@@ -40654,6 +40663,9 @@
 	},
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 9
+	},
+/obj/machinery/camera/autoname{
+	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -69587,6 +69599,17 @@
 /obj/item/stack/package_wrap,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"hnx" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen";
+	name = "Serving Hatch"
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "hog" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -75587,6 +75610,16 @@
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 10
 	},
+/obj/machinery/button/door{
+	id = "kitchen";
+	name = "Kitchen Shutters Control";
+	pixel_x = 26;
+	pixel_y = 8;
+	req_access_txt = "28"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "qVW" = (
@@ -78763,9 +78796,6 @@
 	dir = 1
 	},
 /obj/machinery/disposal/bin,
-/obj/item/radio/intercom{
-	pixel_y = -25
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -78958,17 +78988,6 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "wzm" = (
-/obj/machinery/button/door{
-	id = "kitchen";
-	name = "Kitchen Shutters Control";
-	pixel_x = -4;
-	pixel_y = 26;
-	req_access_txt = "28"
-	},
-/obj/machinery/camera/autoname,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "wzr" = (
@@ -79770,6 +79789,10 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"xKx" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall,
+/area/crew_quarters/bar)
 "xKy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -113202,7 +113225,7 @@ aZt
 bhE
 bjp
 bkU
-bmP
+xKx
 aao
 aap
 qQP
@@ -114243,7 +114266,7 @@ emW
 bFn
 bHc
 bIw
-bKe
+hnx
 bLM
 hBB
 bOS
@@ -114500,7 +114523,7 @@ qKx
 bFo
 aaL
 nZt
-bKe
+hnx
 bLN
 hBB
 pRR
@@ -114757,7 +114780,7 @@ vYx
 xkR
 urx
 woI
-bKe
+hnx
 wzm
 vuY
 bRS
