@@ -37,7 +37,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	ambientsounds = list('sound/ambience/sea_shanty2.ogg')
+	ambientsounds = list('sound/ambience/scarytheme.ogg')
 
 /area/awaymission/mrboneswildride/Entered(atom/movable/M)
 	. = ..()
