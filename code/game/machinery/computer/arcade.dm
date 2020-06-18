@@ -211,8 +211,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if("shotgun" in current_enemy_passive)
 		chosen_weapon = "shotgun"
-	else
+	else if(weapons)
 		chosen_weapon = pick(weapons)
+	else
+		chosen_weapon = "null gun" //if the weapons list is somehow empty, shouldn't happen but runtimes are sneaky bastards.
 
 	if(player_skill)
 		player_hp += player_skill * 2
