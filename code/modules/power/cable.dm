@@ -439,7 +439,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	return(OXYLOSS)
 
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
-	if(!istype(user) || !iscyborg(user))
+	if(!istype(user))
+		return FALSE
+	if(!iscyborg(user) && !ishuman(user))
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
@@ -725,7 +727,9 @@ GLOBAL_LIST(hub_radial_layer_list)
 	Reload()
 
 /obj/structure/cable/multilayer/proc/check_menu(mob/living/user)
-	if(!istype(user) || !iscyborg(user))
+	if(!istype(user))
+		return FALSE
+	if(!iscyborg(user) && !ishuman(user))
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
