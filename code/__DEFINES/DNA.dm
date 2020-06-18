@@ -20,6 +20,7 @@
 #define RACEMUT		/datum/mutation/human/race
 #define BADSIGHT	/datum/mutation/human/nearsight
 #define LASEREYES	/datum/mutation/human/laser_eyes
+#define LASEREYESLESSER	/datum/mutation/human/laser_eyes/lesser
 #define CHAMELEON	/datum/mutation/human/chameleon
 #define WACKY		/datum/mutation/human/wacky
 #define MUT_MUTE	/datum/mutation/human/mute

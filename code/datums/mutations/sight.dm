@@ -77,6 +77,11 @@
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = BODY_ZONE_HEAD
 	instability = 40
+	var/cooldown_mult = 1
+
+/datum/mutation/human/laser_eyes/lesser //moths can roll this as a dormant mutation
+	name = "Lesser Laser Eyes"
+	cooldown_mult = 1.5
 
 /datum/mutation/human/laser_eyes/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
@@ -103,7 +108,7 @@
 	if(source.a_intent != INTENT_HARM)
 		return
 	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
-	source.changeNext_move(CLICK_CD_RANGE)
+	source.changeNext_move(CLICK_CD_RANGE * cooldown_mult)
 	source.newtonian_move(get_dir(target, source))
 	var/obj/projectile/beam/laser_eyes/LE = new(source.loc)
 	LE.firer = source
