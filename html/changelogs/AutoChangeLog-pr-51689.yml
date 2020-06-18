@@ -1,0 +1,9 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Clothing repair now works."
+  - spellcheck: "Fixed redundant \"shredded x fell apart, completely shredded!\" message when damaging clothing in your hands."
+  - spellcheck: "Added better pronoun handling for clothing that consist of a pair of items (ie shoes, gloves, ect)"
+  - bugfix: "Shredding clothing while holding it will no longer make you drop it."
+  - bugfix: "Shredding clothing while holding it will no longer tell you that it fell off you."
+  - bugfix: "Moths can no longer infinitely eat shredded clothing."
