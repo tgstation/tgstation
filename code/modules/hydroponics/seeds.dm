@@ -221,20 +221,22 @@
 /obj/item/seeds/proc/prepare_result(var/obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
-
+	var/reagent_max = 0
 	for(var/rid in reagents_add)
-		var/amount = max(1, round(potency * reagents_add[rid], 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
-
-		var/list/data = null
-		if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
-			data = list("blood_type" = "O-")
-		if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
-			// apple tastes of apple.
-			if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
-				var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
-				data = grown_edible.tastes
-
-		T.reagents.add_reagent(rid, amount, data)
+		reagent_max += reagents_add[rid]
+	if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
+		var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
+		for(var/rid in reagents_add)
+			var/reagent_overflow_mod = 1
+			if(reagent_max > 1)
+				reagent_overflow_mod = (reagents_add[rid]/ reagent_max)
+			var/amount = max(1, round((grown_edible.provide_volume())*(potency/100) * reagents_add[rid] * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
+			var/list/data = null
+			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
+				data = list("blood_type" = "O-")
+			if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
+				data = grown_edible.tastes // apple tastes of apple.
+			T.reagents.add_reagent(rid, amount, data)
 
 
 /// Setters procs ///

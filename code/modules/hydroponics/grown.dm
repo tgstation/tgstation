@@ -73,10 +73,15 @@
 		var/reag_txt = ""
 		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
 			msg += "<br><span class='info'>*Plant Reagents:*</span>"
+			var/chem_cap = 0
 			for(var/reagent_id in seed.reagents_add)
 				var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
 				var/amt = reagents.get_reagent_amount(reagent_id)
-				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
+				chem_cap += seed.reagents_add[reagent_id]
+				if(chem_cap <= 1)
+					reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
+				else
+					reag_txt += "\n<span class='warning'>- [R.name]: [amt] (OVER 100% CAPACITY)</span>"
 
 		if(reag_txt)
 			msg += "<br><span class='info'>*---------*</span>"
@@ -163,6 +168,11 @@
 			juice_results[juice_results[i]] = nutriment
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
+
+/obj/item/reagent_containers/food/snacks/grown/proc/provide_volume()
+	if(reagents)
+		return reagents.maximum_volume
+	return FALSE
 
 /*
  * Attack self for growns
