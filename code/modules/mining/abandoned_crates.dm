@@ -170,7 +170,7 @@
 				new /obj/item/clothing/head/kitty(src)
 				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
-			new /obj/item/clothing/shoes/kindleKicks(src)
+			new /obj/item/clothing/shoes/kindle_kicks(src)
 		if(65 to 66)
 			new /obj/item/clothing/suit/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
