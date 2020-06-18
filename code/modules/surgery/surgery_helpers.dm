@@ -130,7 +130,7 @@
 	else
 		return 0.5
 
-/proc/get_internals_modifier(mob/M)
+/proc/get_anesthetic_modifier(mob/M)
 	var/mob/living/carbon/human/H = M
 	if (!istype(H))
 		return 0.0
