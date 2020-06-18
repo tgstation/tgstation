@@ -26,8 +26,6 @@
 	if(QDELETED(humie) || humie.stat != DEAD)
 		return
 
-	check_ghouls(user)
-
 	if(length(ghouls) > max_amt)
 		return
 
@@ -57,25 +55,15 @@
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)
 	atoms -= humie
+	RegisterSignal(humie,COMSIG_MOB_DEATH,.proc/remove_ghoul)
 	ghouls += humie
 
-/datum/eldritch_knowledge/flesh_ghoul/proc/check_ghouls(mob/living/user)
-
-	if(length(ghouls) == 0)
-		return
-
-	listclearnulls(ghouls)
-
-	for(var/mob/living/carbon/human/spook in ghouls)
-		if(!ishuman(spook))
-			ghouls -= spook
-			continue
-		var/mob/living/carbon/human/ghoul = spook
-		if(ghoul.stat == DEAD)
-			ghoul?.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
-			ghouls -= spook
-			continue
-
+/datum/eldritch_knowledge/flesh_ghoul/proc/remove_ghoul(datum/source)
+	var/mob/living/carbon/human/humie = source
+	ghouls -= humie
+	var/datum/antagonist/heretic_monster/heretic_monster = humie.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+	humie?.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
+	UnregisterSignal(source,COMSIG_MOB_DEATH,.proc/remove_ghoul)
 
 /datum/eldritch_knowledge/flesh_grasp
 	name = "Grasp of Flesh"
@@ -110,7 +98,6 @@
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
 
-	check_ghouls(user)
 	if(HAS_TRAIT(human_target, TRAIT_HUSK))
 		to_chat(user, "<span class='warning'>You cannot revive a dead ghoul!</span>")
 		return
@@ -122,7 +109,7 @@
 	LAZYADD(spooky_scaries, human_target)
 	log_game("[key_name_admin(human_target)] has become a ghoul, their master is [user.real_name]")
 
-
+	RegisterSignal(human_target,COMSIG_MOB_DEATH,.proc/remove_ghoul)
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
 	human_target.setMaxHealth(25)
 	human_target.health = 25
@@ -133,21 +120,13 @@
 	heretic_monster.set_owner(master)
 	return
 
-/datum/eldritch_knowledge/flesh_grasp/proc/check_ghouls(mob/user)
-	if(LAZYLEN(spooky_scaries) == 0)
-		return
 
-	for(var/spook in spooky_scaries)
-		if(!ishuman(spook))
-			LAZYREMOVE(spooky_scaries, spook)
-			continue
-		var/mob/living/carbon/human/ghoul = spook
-		if(ghoul.stat == DEAD)
-			ghoul?.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
-			LAZYREMOVE(spooky_scaries, spook)
-			continue
-
-	listclearnulls(spooky_scaries)
+/datum/eldritch_knowledge/flesh_ghoul/proc/remove_ghoul(datum/source)
+	var/mob/living/carbon/human/humie = source
+	ghouls -= humie
+	var/datum/antagonist/heretic_monster/heretic_monster = humie.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+	humie?.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
+	UnregisterSignal(source,COMSIG_MOB_DEATH,.proc/remove_ghoul)
 
 /datum/eldritch_knowledge/flesh_mark
 	name = "Mark of flesh"
