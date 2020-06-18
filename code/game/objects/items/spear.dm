@@ -14,7 +14,7 @@
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	attack_verb = list("attacked", "poked", "jabbed", "tore", "lacerated", "gored")
 	sharpness = IS_SHARP
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
