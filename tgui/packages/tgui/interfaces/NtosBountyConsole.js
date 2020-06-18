@@ -16,7 +16,7 @@ export const NtosBountyConsole = (props, context) => {
     <NtosWindow resizable>
       <NtosWindow.Content scrollable>
         <Section
-          title=<BountyHeader /> 
+          title={<BountyHeader />}
           buttons={(
             <Flex>
               <Flex.Item>
