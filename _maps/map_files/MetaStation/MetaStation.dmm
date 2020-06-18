@@ -31487,7 +31487,8 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 1;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/kitchen_coldroom,
 /area/crew_quarters/kitchen/coldroom)
