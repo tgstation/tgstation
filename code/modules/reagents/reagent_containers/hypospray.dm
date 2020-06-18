@@ -30,7 +30,7 @@
 	if(!iscarbon(M))
 		return FALSE
 	//Checks if the survival pen from mining is used in a low pressure environment.
-	if(hypo_flags & LAVALAND_RESTRICTED  && (!lavaland_equipment_pressure_check(get_turf(user))))
+	if((hypo_flags & LAVALAND_RESTRICTED) && !lavaland_equipment_pressure_check(get_turf(user)))
 		to_chat(user, "<span class='warning'>The pressure is too high for the injector to work!</span>")
 		return FALSE
 
