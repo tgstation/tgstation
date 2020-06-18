@@ -207,19 +207,20 @@
 
 /turf/open/floor/singularity_pull(S, current_size)
 	..()
-	var/do_et = FALSE
-	if(current_size == STAGE_THREE)
-		if(prob(30))
-			do_et = TRUE
-	else if(current_size == STAGE_FOUR)
-		if(prob(50))
-			do_et = TRUE
-	else if(current_size >= STAGE_FIVE)
-		if(prob(70))
-			do_et = TRUE
-		else if(prob(50))
-			ReplaceWithLattice()
-	if(do_et)
+	var/sheer = FALSE
+	switch(current_size)
+		if(STAGE_THREE)
+			if(prob(30))
+				sheer = TRUE
+		if(STAGE_FOUR)
+			if(prob(50))
+				sheer = TRUE
+		if(STAGE_FIVE to INFINITY)
+			if(prob(70))
+				sheer = TRUE
+			else if(prob(50) && (/turf/open/space in baseturfs))
+				ReplaceWithLattice()
+	if(sheer)
 		if(floor_tile)
 			make_plating(TRUE)
 			new floor_tile(src)
