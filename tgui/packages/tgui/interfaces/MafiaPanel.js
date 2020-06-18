@@ -3,6 +3,7 @@ import { Flex, Button, LabeledList, Section, Box, Table, TimeDisplay } from '../
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 import { FlexItem } from '../components/Flex';
+import { TableRow, TableCell } from '../components/Table';
 
 export const MafiaPanel = (props, context) => {
   const { act, data } = useBackend(context);
@@ -12,6 +13,7 @@ export const MafiaPanel = (props, context) => {
     phase,
     role_info,
     admin_controls,
+    judgement_phase,
     timeleft,
     all_roles } = data;
   return (
@@ -56,14 +58,16 @@ export const MafiaPanel = (props, context) => {
               </Flex.Item>);
           })}
           { !!admin_controls && (
-            <Fragment>
-              <Flex.Item>
-                <Button onClick={() => act("next_phase")}>Next Phase</Button>
-              </Flex.Item>
-              <FlexItem>
-                <Button onClick={() => act("new_game")}>New Game</Button>
-              </FlexItem>
-            </Fragment>)}
+            <Section title = "ADMIN PANEL">
+              <Fragment>
+                <Flex.Item>
+                  <Button onClick={() => act("next_phase")}>Next Phase</Button>
+                </Flex.Item>
+                <FlexItem>
+                  <Button onClick={() => act("new_game")}>New Game</Button>
+                </FlexItem>
+              </Fragment>)}
+              </Section>
         </Flex>
         <Section title="Players">
           <LabeledList>
@@ -91,6 +95,29 @@ export const MafiaPanel = (props, context) => {
             })}
           </LabeledList>
         </Section>
+        {!!judgement_phase && (
+          <Section title="Judgement">
+            <Table>
+              <TableRow>
+                <TableCell>
+                  If someone is on trial, you can use these buttons to vote them innocent or guilty.
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Fragment>
+                    <Flex.Item>
+                      <Button onClick={() => act("vote_innocent")}>INNOCENT!</Button>
+                    </Flex.Item>
+                    <FlexItem>
+                      <Button onClick={() => act("vote_guilty")}>GUILTY!</Button>
+                    </FlexItem>
+                  </Fragment>
+                </TableCell>
+              </TableRow>
+            </Table>
+          </Section>
+        )}
         <Section title="Roles">
           <Table>
             {!!all_roles && all_roles.map(r => (

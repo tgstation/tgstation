@@ -6,10 +6,12 @@
 
 	var/player_old_bodies = list() //We send players back to their bodies after
 
-	var/day_phase_period = 4 MINUTES
-	var/voting_phase_period = 2 MINUTES
-	var/night_phase_period = 3 MINUTES
-	var/victory_lap_period = 1 MINUTES
+	var/first_day_phase_period = 20 SECONDS
+	var/day_phase_period = 1 MINUTES
+	var/voting_phase_period = 30 SECONDS
+	var/judgement_phase_period = 30 SECONDS //defend yourself! don't get lynched!
+	var/night_phase_period = 45 SECONDS
+	var/victory_lap_period = 30 SECONDS
 
 	var/list/current_setup_text //Redable list of roles in current game
 
@@ -19,7 +21,13 @@
 	var/player_outfit = /datum/outfit/mafia //todo some fluffy outfit
 
 	var/list/landmarks = list()
-	var/list/votes = list()
+	var/list/votes = list() //group voting on one person, like putting people to trial or choosing who to kill as mafia
+
+	//and these are the judgement phase votes, aka people sorting themselves into guilty and innocent lists. whichever has more wins!
+	var/list/judgement_innocent_votes = list()
+	var/list/judgement_guilty_votes = list()
+	var/datum/mafia_role/on_trial = null
+
 	var/next_phase_timer
 
 	var/debug = FALSE
@@ -66,26 +74,54 @@
 	turn += 1
 	phase = MAFIA_PHASE_DAY
 	if(!check_victory())
-		next_phase_timer = addtimer(CALLBACK(src,.proc/start_voting_phase),day_phase_period,TIMER_STOPPABLE)
-		send_message("<span class='big'>Day [turn] started! Voting will start in 4 minutes.</span>")
+		if(turn == 1)
+			send_message("<span class='big'>Day [turn] started! There is no voting on the first day. Say hello to everybody!</span>")
+			next_phase_timer = addtimer(CALLBACK(src,.proc/check_trial),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
+		else
+			send_message("<span class='big'>Day [turn] started! Voting will start in 4 minutes.</span>")
+			next_phase_timer = addtimer(CALLBACK(src,.proc/start_voting_phase),day_phase_period,TIMER_STOPPABLE)
+
 	SStgui.update_uis(src)
 
 
 /datum/mafia_controller/proc/start_voting_phase()
 	phase = MAFIA_PHASE_VOTING
-	next_phase_timer = addtimer(CALLBACK(src, .proc/lynch),voting_phase_period,TIMER_STOPPABLE)
-	send_message("<span class='big'>Voting started! Vote for who you want to see lynched today.</span>")
+	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial),voting_phase_period,TIMER_STOPPABLE)
+	send_message("<span class='big'>Voting started! Vote for who you want to see on trial today.</span>")
 	SStgui.update_uis(src)
 
-/datum/mafia_controller/proc/lynch()
+/datum/mafia_controller/proc/check_trial(verbose = FALSE)
 	var/datum/mafia_role/loser = get_vote_winner("Day")
 	if(loser)
-		send_message("<span class='big'>[loser.body.real_name] wins the day vote and will be killed.</span>")
-		loser.kill(src,lynch=TRUE)
+		send_message("<span class='big'>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</span>")
+		on_trial = loser
+		phase = MAFIA_PHASE_JUDGEMENT
+		next_phase_timer = addtimer(CALLBACK(src, .proc/lynch),judgement_phase_period,TIMER_STOPPABLE)
 		reset_votes("Day")
+	else
+		if(verbose)
+			send_message("<span class='big'>Not enough people have voted to put someone on trial, nobody will be lynched today.</span>")
 	if(!check_victory())
 		lockdown()
 	SStgui.update_uis(src)
+
+/datum/mafia_controller/proc/lynch()
+	for(var/i in judgement_innocent_votes)
+		var/datum/mafia_role/role = i
+		send_message("<span class='green'>[role.body.real_name] voted innocent.</span>")
+	for(var/ii in judgement_guilty_votes)
+		var/datum/mafia_role/role = ii
+		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
+	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
+		send_message("<span class='big red'>Guilty wins majority, [role.body.real_name] has been lynched.</span>")
+		on_trial.kill(src, lynch = TRUE)
+	else
+		send_message("<span class='big green'>Innocent wins majority, [role.body.real_name] has been spared.</span>")
+
+	judgement_innocent_votes = list()
+	judgement_guilty_votes = list()
+	on_trial
+	check_trial()//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
 
 /datum/mafia_controller/proc/check_victory()
 	var/alive_town = 0
@@ -194,7 +230,7 @@
 		if(votes[vt][votee] == role)
 			. += 1
 
-/datum/mafia_controller/proc/get_vote_winner(vt)
+/datum/mafia_controller/proc/get_vote_winner(vt, majority_of_town = FALSE)
 	var/list/tally = list()
 	for(var/votee in votes[vt])
 		if(!tally[votes[vt][votee]])
@@ -202,6 +238,9 @@
 		else
 			tally[votes[vt][votee]] += 1
 	sortTim(tally,/proc/cmp_numeric_dsc,associative=TRUE)
+	if(majority_of_town) //if you send a list, through get_vote_winner, the amount of votes MUST exceed half the town population
+		if(round(length(all_roles)/2) > length(tally)) //town pop / 2 floored greater than highest voted guy's votes
+			return null//so dont
 	return length(tally) ? tally[1] : null
 
 /datum/mafia_controller/proc/get_random_voter(vt)
@@ -251,6 +290,8 @@
 			.["phase"] = "No Game"
 	if(user.client?.holder)
 		.["admin_controls"] = TRUE //show admin buttons to start/setup/stop
+	if(phase == MAFIA_PHASE_JUDGEMENT)
+		.["judgement_phase"] = TRUE //show judgement section
 	var/datum/mafia_role/user_role = player_role_lookup[user]
 	if(user_role)
 		.["role_info"] = list("role" = user_role.name,"desc" = user_role.desc, "action_log" = user_role.role_notes)
@@ -333,6 +374,16 @@
 						return
 					user_role.handle_action(src,params["atype"],target)
 			return TRUE
+		if("vote_innocent")
+			if(phase != MAFIA_PHASE_JUDGEMENT)
+				return
+			judgement_innocent_votes += user_role
+			judgement_guilty_votes -= user_role
+		if("vote_guilty")
+			if(phase != MAFIA_PHASE_JUDGEMENT)
+				return
+			judgement_guilty_votes += user_role
+			judgement_innocent_votes -= user_role
 
 /datum/mafia_controller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, null, force_open)
