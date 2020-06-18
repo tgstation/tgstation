@@ -132,12 +132,12 @@
 
 /proc/get_anesthetic_modifier(mob/M)
 	var/mob/living/carbon/human/H = M
+	var/datum/status_effect/incapacitating/anesthetized/A = H.IsAnesthetized()
 	if (!istype(H))
 		return 0.0
-	else if (istype(H.internal,/obj/item/tank/internals/anesthetic))
+	else if (A)
 		return 0.2
-	else
-		return 0.0
+	return 0.0
 
 
 

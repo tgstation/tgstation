@@ -364,6 +364,8 @@
 #define COMSIG_LIVING_STATUS_IMMOBILIZE "living_immobilize"
 ///from base of mob/living/Unconscious() (amount, update, ignore)
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"
+///from base of mob/living/Anesthetized() (amount, update, ignore)
+#define COMSIG_LIVING_STATUS_ANESTHETIZED "living_anesthetized"
 ///from base of mob/living/Sleeping() (amount, update, ignore)
 #define COMSIG_LIVING_STATUS_SLEEP "living_sleeping"
 	#define COMPONENT_NO_STUN (1<<0)									//For all of them

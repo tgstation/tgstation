@@ -335,6 +335,53 @@
 			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
 		return S
 
+//////////////////////////////ANESTHETIZED/////////////////////////////////////
+
+/mob/living/proc/IsAnesthetized() //If we're anesthetized
+	return has_status_effect(STATUS_EFFECT_ANESTHETIZED)
+
+/mob/living/proc/AmountAnesthetized() //How many deciseconds remain in our anesthetization
+	var/datum/status_effect/incapacitating/anesthetized/A = IsAnesthetized()
+	if(A)
+		return A.duration - world.time
+	return 0
+
+/mob/living/proc/Anesthetized(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_ANESTHETIZED, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun) //If you are immune to sleep, you can't be anesthetized
+		var/datum/status_effect/incapacitating/anesthetized/A = IsAnesthetized()
+		if(A)
+			A.duration = max(world.time + amount, A.duration)
+		else if(amount > 0)
+			A = apply_status_effect(STATUS_EFFECT_ANESTHETIZED, amount, updating)
+		return A
+
+/mob/living/proc/SetAnesthetized(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_ANESTHETIZED, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
+		var/datum/status_effect/incapacitating/anesthetized/A = IsAnesthetized()
+		if(amount <= 0)
+			if(A)
+				qdel(A)
+		else if(A)
+			A.duration = world.time + amount
+		else
+			A = apply_status_effect(STATUS_EFFECT_ANESTHETIZED, amount, updating)
+		return A
+
+/mob/living/proc/AdjustAnesthetized(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_ANESTHETIZED, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
+		var/datum/status_effect/incapacitating/anesthetized/A = IsAnesthetized()
+		if(A)
+			A.duration += amount
+		else if(amount > 0)
+			A = apply_status_effect(STATUS_EFFECT_ANESTHETIZED, amount, updating)
+		return A
+
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
 /mob/living/proc/IsFrozen()

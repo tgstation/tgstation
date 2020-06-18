@@ -42,6 +42,10 @@
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
+//ANESTHETIZED
+/datum/status_effect/incapacitating/anesthetized
+	id = "anesthetized"
+
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
 	id = "immobilized"
