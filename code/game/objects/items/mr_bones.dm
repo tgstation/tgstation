@@ -29,3 +29,62 @@
 			playsound(user, 'sound/voice/mrbones/no.ogg', 50)
 			user.say("No.")
 	new /obj/effect/temp_visual/source_mic(get_turf(user))
+
+
+//haha im using the fluff structures meant solely for decor purposes and giving them UTILITY FUCK YOU
+/obj/structure/fluff/spooky_skeleton
+	name = "spooky skeleton"
+	desc = "Spooked ya!"
+	icon = 'icons/mob/human.dmi'
+	icon_state = "skeleton"
+	deconstructible = FALSE
+	var/active = FALSE
+	var/spook_var //identification used by the pressure plate
+	var/x_axis = TRUE //determines whether animate uses pixel x/y, false means pixel y
+	var/pixel_distance = 32 //distance in pixels for animate, negative values are fine
+	var/popup_time = 5 //how long it takes to reach the end of the animatiom
+	var/popup_delay = 30 //the delay between the skeleton fully popping out and receeding into the wall again
+
+/obj/structure/fluff/spooky_skeleton/Initialize()
+	. = ..()
+	GLOB.spooky_skeletons += src
+	layer = 2
+
+/obj/structure/fluff/spooky_skeleton/Destroy()
+	GLOB.spooky_skeletons.Remove(src)
+	return ..()
+
+/obj/structure/fluff/spooky_skeleton/proc/spook()
+	active = TRUE
+	playsound(src, 'sound/misc/SpookedYa.ogg', 50)
+	if(x_axis)
+		animate(src, pixel_x = pixel_distance, time = popup_time, easing = LINEAR_EASING)
+		layer = initial(layer)
+		sleep(popup_delay)
+		animate(src, pixel_x = initial(pixel_x), time = popup_time, easing = LINEAR_EASING)
+		active = FALSE
+		layer = 2
+	else
+		animate(src, pixel_y = pixel_distance, time = popup_time, easing = LINEAR_EASING)
+		layer = initial(layer)
+		sleep(popup_delay)
+		animate(src, pixel_y = initial(pixel_y), time = popup_time, easing = LINEAR_EASING)
+		layer = 2
+		active = FALSE
+
+/obj/effect/spooky_skeleton_pressurepad
+	name = "spooky pressure plate"
+	desc = "Capable of activating far and distant spooks."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "glassbox_open"
+	invisibility = INVISIBILITY_ABSTRACT
+	anchored = TRUE
+	var/spook_var
+
+/obj/effect/spooky_skeleton_pressurepad/Crossed()
+	. = ..()
+	if(spook_var)
+		for(var/obj/structure/fluff/spooky_skeleton/S in GLOB.spooky_skeletons)
+			if (S.spook_var == spook_var)
+				if(!S.active)
+					S.spook()
