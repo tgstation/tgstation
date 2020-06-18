@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixed staff of animation being able to spawn animated objects inside containers (ie bags)"

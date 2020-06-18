@@ -291,7 +291,7 @@
 			cyclelinkedairlock.cyclelinkedairlock = null
 		cyclelinkedairlock = null
 	if(id_tag)
-		for(var/obj/machinery/doorButtons/D in GLOB.machines)
+		for(var/obj/machinery/door_buttons/D in GLOB.machines)
 			D.removeMe(src)
 	QDEL_NULL(note)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)

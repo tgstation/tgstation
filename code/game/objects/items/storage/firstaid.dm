@@ -244,7 +244,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/storage/pill_bottle/C2/probital = 1,
+		/obj/item/storage/pill_bottle/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -378,13 +378,13 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/potassiodide(src)
 
-/obj/item/storage/pill_bottle/C2/probital
+/obj/item/storage/pill_bottle/probital
 	name = "bottle of probital pills"
 	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
 
-/obj/item/storage/pill_bottle/C2/probital/PopulateContents()
+/obj/item/storage/pill_bottle/probital/PopulateContents()
 	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/pill/C2/probital(src)
+		new /obj/item/reagent_containers/pill/probital(src)
 
 /obj/item/storage/pill_bottle/iron
 	name = "bottle of iron pills"
@@ -517,3 +517,111 @@
 /obj/item/storage/pill_bottle/paxpsych/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/paxpsych(src)
+
+/obj/item/storage/organbox
+	name = "organ transport box"
+	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
+	icon_state = "organbox"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	throw_speed = 3
+	throw_range = 7
+	custom_premium_price = 1100
+	/// var to prevent it freezing the same things over and over
+	var/cooling = FALSE
+
+/obj/item/storage/organbox/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
+	STR.max_combined_w_class = 21
+	STR.set_holdable(list(
+		/obj/item/organ,
+		/obj/item/bodypart,
+		/obj/item/reagent_containers/food/snacks/icecream
+		))
+
+/obj/item/storage/organbox/Initialize()
+	. = ..()
+	create_reagents(100, TRANSPARENT)
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/freeze)
+	RegisterSignal(src, COMSIG_TRY_STORAGE_TAKE, .proc/unfreeze)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/storage/organbox/process()
+	///if there is enough coolant var
+	var/cool = FALSE
+	var/amount = reagents.get_reagent_amount(/datum/reagent/cryostylane)
+	if(amount >= 0.1)
+		reagents.remove_reagent(/datum/reagent/cryostylane, 0.1)
+		cool = TRUE
+	else
+		amount = reagents.get_reagent_amount(/datum/reagent/consumable/ice)
+		if(amount >= 0.3)
+			reagents.remove_reagent(/datum/reagent/consumable/ice, 0.2)
+			cool = TRUE
+	if(!cooling && cool)
+		cooling = TRUE
+		update_icon()
+		for(var/C in contents)
+			freeze(C)
+		return
+	if(cooling && !cool)
+		cooling = FALSE
+		update_icon()
+		for(var/C in contents)
+			unfreeze(C)
+
+/obj/item/storage/organbox/update_icon()
+	. = ..()
+	if(cooling)
+		icon_state = "organbox-working"
+	else
+		icon_state = "organbox"
+
+///freezes the organ and loops bodyparts like heads
+/obj/item/storage/organbox/proc/freeze(datum/source, obj/item/I)
+	if(isorgan(I))
+		var/obj/item/organ/organ = I
+		organ.organ_flags |= ORGAN_FROZEN
+		return
+	if(istype(I, /obj/item/bodypart))
+		var/obj/item/bodypart/B = I
+		for(var/O in B.contents)
+			if(isorgan(O))
+				var/obj/item/organ/organ = O
+				organ.organ_flags |= ORGAN_FROZEN
+
+///unfreezes the organ and loops bodyparts like heads
+/obj/item/storage/organbox/proc/unfreeze(datum/source, obj/item/I)
+	if(isorgan(I))
+		var/obj/item/organ/organ = I
+		organ.organ_flags  &= ~ORGAN_FROZEN
+		return
+	if(istype(I, /obj/item/bodypart))
+		var/obj/item/bodypart/B = I
+		for(var/O in B.contents)
+			if(isorgan(O))
+				var/obj/item/organ/organ = O
+				organ.organ_flags  &= ~ORGAN_FROZEN
+
+/obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+		var/obj/item/reagent_containers/RC = I
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
+		if(units)
+			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
+			return
+	if(istype(I, /obj/item/plunger))
+		to_chat(user, "<span class='notice'>You start furiously plunging [name].</span>")
+		if(do_after(user, 10, target = src))
+			to_chat(user, "<span class='notice'>You finish plunging the [name].</span>")
+			reagents.clear_reagents()
+		return
+	return ..()
+
+/obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is putting [user.p_theyre()] head inside the [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.adjust_bodytemperature(-300)
+	user.apply_status_effect(/datum/status_effect/freon)
+	return (OXYLOSS)

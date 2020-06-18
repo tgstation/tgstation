@@ -54,7 +54,7 @@
 	return FALSE
 
 
-/obj/item/reagent_containers/hypospray/CMO
+/obj/item/reagent_containers/hypospray/cmo
 	list_reagents = list(/datum/reagent/medicine/omnizine = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 

@@ -55,7 +55,7 @@
 	crate.locked = FALSE //Unlock secure crates
 	crate.update_icon()
 	var/obj/structure/closet/supplypod/pod = make_pod()
-	new /obj/effect/DPtarget(LZ, pod, crate)
+	new /obj/effect/dp_target(LZ, pod, crate)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()

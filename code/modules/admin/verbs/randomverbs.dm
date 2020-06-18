@@ -1116,7 +1116,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 						alert("ERROR: Incorrect / improper path given.")
 						return
 				new delivery(pod)
-			new /obj/effect/DPtarget(get_turf(target), pod)
+			new /obj/effect/dp_target(get_turf(target), pod)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD)
 			var/datum/centcom_podlauncher/plaunch  = new(usr)
 			if(!holder)

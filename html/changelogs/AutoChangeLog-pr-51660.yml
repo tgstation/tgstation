@@ -1,4 +1,0 @@
-author: "LoserWasTaken"
-delete-after: True
-changes: 
-  - tweak: "ooc no longer checks if message is ic if round hasn't started"
