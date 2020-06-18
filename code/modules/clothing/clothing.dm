@@ -81,6 +81,9 @@
 
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent != INTENT_HARM && ismoth(M))
+		if(damaged_clothes == CLOTHING_SHREDDED)
+			to_chat(user, "<span class='notice'>[src] seem[p_s()] pretty torn apart... [p_they(TRUE)] probably wouldn't be too tasty.</span>")
+			return
 		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
 		clothing_as_food.name = name
 		if(clothing_as_food.attack(M, user, def_zone))
@@ -109,8 +112,7 @@
 
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
-	damaged_clothes = CLOTHING_PRISTINE
-	update_clothes_damaged_state()
+	update_clothes_damaged_state(CLOTHING_PRISTINE)
 	obj_integrity = max_integrity
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
 	body_parts_covered = initial(body_parts_covered)
@@ -178,7 +180,6 @@
 		obj_destruction((damage_type == BRUTE ? "melee" : "laser")) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
 		return
 
-	damaged_clothes = CLOTHING_DAMAGED
 	switch(zones_disabled)
 		if(1)
 			name = "damaged [initial(name)]"
@@ -187,7 +188,7 @@
 		if(3 to INFINITY) // take better care of your shit, dude
 			name = "tattered [initial(name)]"
 
-	update_clothes_damaged_state()
+	update_clothes_damaged_state(CLOTHING_DAMAGED)
 
 /obj/item/clothing/Destroy()
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
@@ -221,7 +222,7 @@
 /obj/item/clothing/examine(mob/user)
 	. = ..()
 	if(damaged_clothes == CLOTHING_SHREDDED)
-		. += "<span class='warning'><b>It is completely shredded and requires mending before it can be worn again!</b></span>"
+		. += "<span class='warning'><b>[p_theyre(TRUE)] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b></span>"
 		return
 
 	switch (max_heat_protection_temperature)
@@ -343,18 +344,18 @@
 	return .
 
 /obj/item/clothing/obj_break(damage_flag)
-	damaged_clothes = CLOTHING_DAMAGED
-	update_clothes_damaged_state()
-	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
-		var/mob/M = loc
-		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
+	update_clothes_damaged_state(CLOTHING_DAMAGED)
+
+	if(isliving(loc)) //It's not important enough to warrant a message if it's not on someone
+		var/mob/living/M = loc
+		if(src in M.get_equipped_items(FALSE))
+			to_chat(M, "<span class='warning'>Your [name] start[p_s()] to fall apart!</span>")
+		else
+			to_chat(M, "<span class='warning'>[src] start[p_s()] to fall apart!</span>")
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
-/obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
-	if(damaging)
-		damaged_clothes = 1
-	else
-		damaged_clothes = 0
+/obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
+	damaged_clothes = damaged_state
 
 /obj/item/clothing/update_overlays()
 	. = ..()
@@ -437,15 +438,17 @@ BLIND     // can't see anything
 		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
 		deconstruct(FALSE)
 	else if(!(damage_flag in list("acid", "fire")))
-		damaged_clothes = CLOTHING_SHREDDED
 		body_parts_covered = NONE
-		name = "shredded [initial(name)]"
 		slot_flags = NONE
-		update_clothes_damaged_state()
-		if(ismob(loc))
-			var/mob/M = loc
-			M.visible_message("<span class='danger'>[M]'s [src.name] falls off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] falls off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
-			M.dropItemToGround(src)
+		update_clothes_damaged_state(CLOTHING_SHREDDED)
+		if(isliving(loc))
+			var/mob/living/M = loc
+			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands / eating it if they were a moth.
+				M.visible_message("<span class='danger'>[M]'s [src.name] fall[p_s()] off, [p_theyre()] completely shredded!</span>", "<span class='warning'><b>Your [src.name] fall[p_s()] off, [p_theyre()] completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
+				M.dropItemToGround(src)
+			else
+				M.visible_message("<span class='danger'>[src] fall[p_s()] apart, completely shredded!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+		name = "shredded [initial(name)]" // change the name -after- the message, not before.
 	else
 		..()
 
