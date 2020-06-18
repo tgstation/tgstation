@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - tweak: "The hallway on icebox mining is slightly longer. and the ladder deposits you in the locker room."
-  - bugfix: "The icebox mining ladder works again."

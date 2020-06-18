@@ -52,13 +52,13 @@
 	var/rangewarning = 20 //Glows yellow when inside
 	var/hud_type = DATA_HUD_AI_DETECT
 	var/hud_on = FALSE
-	var/mob/camera/aiEye/remote/ai_detector/eye
+	var/mob/camera/ai_eye/remote/ai_detector/eye
 	var/datum/action/item_action/toggle_multitool/toggle_action
 
 /obj/item/multitool/ai_detect/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	eye = new /mob/camera/aiEye/remote/ai_detector()
+	eye = new /mob/camera/ai_eye/remote/ai_detector()
 	toggle_action = new /datum/action/item_action/toggle_multitool(src)
 
 /obj/item/multitool/ai_detect/Destroy()
@@ -132,7 +132,7 @@
 		return
 	var/datum/camerachunk/chunk = GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z)
 	if(chunk && chunk.seenby.len)
-		for(var/mob/camera/aiEye/A in chunk.seenby)
+		for(var/mob/camera/ai_eye/A in chunk.seenby)
 			if(!A.ai_detector_visible)
 				continue
 			var/turf/detect_turf = get_turf(A)
@@ -143,7 +143,7 @@
 				detect_state = PROXIMITY_NEAR
 				break
 
-/mob/camera/aiEye/remote/ai_detector
+/mob/camera/ai_eye/remote/ai_detector
 	name = "AI detector eye"
 	ai_detector_visible = FALSE
 	use_static = USE_STATIC_TRANSPARENT

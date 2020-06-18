@@ -24,7 +24,9 @@
 			display_results(user, target, "<span class='notice'>Blood pools around the incision in [H]'s [parse_zone(target_zone)].</span>",
 				"<span class='notice'>Blood pools around the incision in [H]'s [parse_zone(target_zone)].</span>",
 				"")
-			H.bleed_rate += 3
+			var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
+			if(BP)
+				BP.generic_bleedstacks += 10
 	return ..()
 
 /datum/surgery_step/incise/nobleed //silly friendly!
@@ -42,7 +44,7 @@
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
 	name = "clamp bleeders"
-	implements = list(TOOL_HEMOSTAT = 100, TOOL_WIRECUTTER = 60, /obj/item/stack/packageWrap = 35, /obj/item/stack/cable_coil = 15)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_WIRECUTTER = 60, /obj/item/stack/package_wrap = 35, /obj/item/stack/cable_coil = 15)
 	time = 24
 
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -55,7 +57,9 @@
 		target.heal_bodypart_damage(20,0)
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.bleed_rate = max( (H.bleed_rate - 3), 0)
+		var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
+		if(BP)
+			BP.generic_bleedstacks -= 3
 	return ..()
 
 //retract skin
@@ -94,7 +98,9 @@
 		target.heal_bodypart_damage(45,0)
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.bleed_rate = max( (H.bleed_rate - 3), 0)
+		var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
+		if(BP)
+			BP.generic_bleedstacks -= 3
 	return ..()
 
 
@@ -117,7 +123,7 @@
 	return TRUE
 
 /datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
-	target.apply_damage(50, BRUTE, "[target_zone]")
+	target.apply_damage(50, BRUTE, "[target_zone]", wound_bonus=CANT_WOUND)
 	display_results(user, target, "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>",
 		"<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!</span>",
 		"<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!</span>")

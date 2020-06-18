@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/snappops = 2,
-		/obj/item/toy/talking/AI = 2,
+		/obj/item/toy/talking/ai = 2,
 		/obj/item/toy/talking/codex_gigas = 2,
 		/obj/item/clothing/under/syndicate/tacticool = 2,
 		/obj/item/toy/sword = 2,
@@ -39,16 +39,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/grenade/chem_grenade/glitter/blue = 1,
 		/obj/item/grenade/chem_grenade/glitter/white = 1,
 		/obj/item/toy/eightball = 2,
-		/obj/item/toy/windupToolbox = 2,
+		/obj/item/toy/windup_toolbox = 2,
 		/obj/item/toy/clockwork_watch = 2,
 		/obj/item/toy/toy_dagger = 2,
 		/obj/item/extendohand/acme = 1,
 		/obj/item/hot_potato/harmless/toy = 1,
 		/obj/item/card/emagfake = 1,
 		/obj/item/clothing/shoes/wheelys = 2,
-		/obj/item/clothing/shoes/kindleKicks = 2,
+		/obj/item/clothing/shoes/kindle_kicks = 2,
 		/obj/item/toy/plush/goatplushie = 2,
 		/obj/item/toy/plush/moth = 2,
+		/obj/item/toy/plush/pkplush = 2,
 		/obj/item/storage/belt/military/snack = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
@@ -58,7 +59,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 	icon_screen = "invaders"
 	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
