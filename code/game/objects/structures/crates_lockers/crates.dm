@@ -51,7 +51,7 @@
 	if(manifest)
 		tear_manifest(user)
 
-/obj/structure/closet/crate/open(mob/living/user)
+/obj/structure/closet/crate/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(. && manifest)
 		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
@@ -116,7 +116,7 @@
 //Snowflake organ freezer code
 //Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
 
-/obj/structure/closet/crate/freezer/open()
+/obj/structure/closet/crate/freezer/open(mob/living/user, force = FALSE)
 	recursive_organ_check(src)
 	..()
 
