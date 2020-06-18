@@ -185,7 +185,8 @@
 		/obj/item/plunger,
 		/obj/item/reagent_containers/spray,
 		/obj/item/shears,
-		/obj/item/stack/sticky_tape //surgical tape
+		/obj/item/stack/sticky_tape, //surgical tape
+		/obj/item/gun/magic/staff/healing
 		))
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()

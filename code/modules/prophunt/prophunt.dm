@@ -218,9 +218,9 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	game_state = PROPHUNT_SIGNUPS
 	try_autostart()
 
-/obj/machinery/computer/arena/prophunt/proc/kick_hider_out(var/mob/player)//used for when you get caught
+/obj/machinery/computer/arena/prophunt/proc/kick_hider_out(mob/player)//used for when you get caught
 	player.forceMove(get_landmark_turf(ARENA_EXIT))
-		hiders -= player
+	hiders -= player
 	if(!hiders.len)
 		conclude_round(seekers_win = TRUE)
 
