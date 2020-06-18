@@ -31,6 +31,9 @@
 	if(length(ghouls) > max_amt)
 		return
 
+	if(HAS_TRAIT(humie,TRAIT_HUSK))
+		return
+
 	humie.grab_ghost()
 
 	if(!humie.mind || !humie.client)
@@ -42,8 +45,7 @@
 		humie.ghostize(0)
 		humie.key = C.key
 
-	if(! || HAS_TRAIT(humie,TRAIT_HUSK))
-		return
+
 
 	ADD_TRAIT(humie,TRAIT_MUTE,MAGIC_TRAIT)
 	log_game("[key_name_admin(humie)] has become a voiceless dead, their master is [user.real_name]")
