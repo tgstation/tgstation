@@ -14,8 +14,10 @@
 
 /obj/mafia_game_signup/attack_hand(mob/user)
 	. = ..()
-	GLOB.minigame_signups.SignUpFor(user,game_id)
-	var/datum/mafia_controller/MF = GLOB.mafia_games[game_id]
+    var/datum/mafia_controller/MF = GLOB.mafia_games[game_id]
+    if(!MF)
+        MF = create_mafia_game(game_id)
+    GLOB.minigame_signups.SignUpFor(user,game_id)
 	if(autostart && MF)
 		if(MF.phase == MAFIA_PHASE_SETUP)
 			var/left = DisplayTimeText(timeleft(autostart_timer))
