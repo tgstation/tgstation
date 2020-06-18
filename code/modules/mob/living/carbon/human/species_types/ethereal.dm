@@ -39,6 +39,7 @@
 	var/static/b2 = 149
 	//this is shit but how do i fix it? no clue.
 	var/drain_time = 0 //used to keep ethereals from spam draining power sources
+	inert_mutation = SHOCKTOUCH
 
 /datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	.=..()
