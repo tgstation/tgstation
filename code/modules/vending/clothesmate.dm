@@ -184,7 +184,6 @@
 					/obj/item/clothing/under/color/jumpskirt/maroon = 10,
 					/obj/item/clothing/under/color/rainbow = 10,
 					/obj/item/clothing/under/color/jumpskirt/rainbow = 10,
-					/obj/item/clothing/under/misc/pj = 10,
 					/obj/item/clothing/under/misc/pj/red = 10,
 					/obj/item/clothing/under/misc/pj/blue = 10,
 					/obj/item/clothing/under/misc/psyche = 10,
