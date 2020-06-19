@@ -22,6 +22,7 @@
 	var/player_outfit = /datum/outfit/mafia //todo some fluffy outfit
 
 	var/list/landmarks = list()
+	var/town_center_landmark = null
 	var/list/votes = list() //group voting on one person, like putting people to trial or choosing who to kill as mafia
 
 	//and these are the judgement phase votes, aka people sorting themselves into guilty and innocent lists. whichever has more wins!
@@ -38,7 +39,11 @@
 	src.game_id = game_id
 	GLOB.mafia_games[game_id] = src
 	for(var/obj/effect/landmark/mafia/possible_spawn in GLOB.landmarks_list)
-		if(possible_spawn.game_id == game_id)
+		if(possible_spawn.game_id != game_id)
+			continue
+		if(istype(possible_spawn, /obj/effect/landmark/mafia/town_center))
+			town_center_landmark = possible_spawn
+		else
 			landmarks += possible_spawn
 
 /datum/mafia_controller/Destroy(force, ...)
@@ -96,6 +101,7 @@
 	if(loser)
 		send_message("<span class='big'>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</span>")
 		on_trial = loser
+		on_trial.body.forceMove(get_turf(town_center_landmark))
 		phase = MAFIA_PHASE_JUDGEMENT
 		next_phase_timer = addtimer(CALLBACK(src, .proc/lynch),judgement_phase_period,TIMER_STOPPABLE)
 		reset_votes("Day")
@@ -118,6 +124,7 @@
 		on_trial.kill(src, lynch = TRUE)
 	else
 		send_message("<span class='big green'>Innocent wins majority, [on_trial.body.real_name] has been spared.</span>")
+		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
 	//by now clowns should have killed someone in guilty list, clear this out
 	judgement_innocent_votes = list()
 	judgement_guilty_votes = list()
