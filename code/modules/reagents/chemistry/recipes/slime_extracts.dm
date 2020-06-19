@@ -541,12 +541,12 @@
 	..()
 
 //Rainbow :o)
-/datum/chemical_reaction/slime/slimeRNG
+/datum/chemical_reaction/slime/slime_rng
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow
 
-/datum/chemical_reaction/slime/slimeRNG/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/slime/slime_rng/on_reaction(datum/reagents/holder, created_volume)
 	if(created_volume >= 5)
 		var/obj/item/grenade/clusterbuster/slime/S = new (get_turf(holder.my_atom))
 		S.visible_message("<span class='danger'>Infused with plasma, the core begins to expand uncontrollably!</span>")

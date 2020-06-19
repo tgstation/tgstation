@@ -1,0 +1,6 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a \"Feature\" from 2 years ago. The sm will now pull objects closer to it based on the eer. This includes you, so be careful."
+  - code_imp: "I've documented all of the sms variables."
+  - refactor: "Refactored sm code to be more modular. Badmins do not rejoice!"

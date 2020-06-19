@@ -81,7 +81,7 @@ SUBSYSTEM_DEF(server_maint)
 		if(!thing)
 			continue
 		var/client/C = thing
-		var/datum/chatOutput/co = C.chatOutput
+		var/datum/chat_output/co = C.chatOutput
 		if(co)
 			co.ehjax_send(data = "roundrestart")
 		if(server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite

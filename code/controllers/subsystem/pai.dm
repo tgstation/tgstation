@@ -10,11 +10,11 @@ SUBSYSTEM_DEF(pai)
 
 /datum/controller/subsystem/pai/Topic(href, href_list[])
 	if(href_list["download"])
-		var/datum/paiCandidate/candidate = locate(href_list["candidate"]) in candidates
+		var/datum/pai_candidate/candidate = locate(href_list["candidate"]) in candidates
 		var/obj/item/paicard/card = locate(href_list["device"]) in pai_card_list
 		if(card.pai)
 			return
-		if(istype(card, /obj/item/paicard) && istype(candidate, /datum/paiCandidate))
+		if(istype(card, /obj/item/paicard) && istype(candidate, /datum/pai_candidate))
 			if(check_ready(candidate) != candidate)
 				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(pai)
 			usr << browse(null, "window=findPai")
 
 	if(href_list["new"])
-		var/datum/paiCandidate/candidate = locate(href_list["candidate"]) in candidates
+		var/datum/pai_candidate/candidate = locate(href_list["candidate"]) in candidates
 		var/option = href_list["option"]
 		var/t = ""
 
@@ -77,12 +77,12 @@ SUBSYSTEM_DEF(pai)
 		recruitWindow(usr)
 
 /datum/controller/subsystem/pai/proc/recruitWindow(mob/M)
-	var/datum/paiCandidate/candidate
-	for(var/datum/paiCandidate/c in candidates)
+	var/datum/pai_candidate/candidate
+	for(var/datum/pai_candidate/c in candidates)
 		if(c.key == M.key)
 			candidate = c
 	if(!candidate)
-		candidate = new /datum/paiCandidate()
+		candidate = new /datum/pai_candidate()
 		candidate.key = M.key
 		candidates.Add(candidate)
 
@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(pai)
 /datum/controller/subsystem/pai/proc/spam_again()
 	ghost_spam = FALSE
 
-/datum/controller/subsystem/pai/proc/check_ready(var/datum/paiCandidate/C)
+/datum/controller/subsystem/pai/proc/check_ready(var/datum/pai_candidate/C)
 	if(!C.ready)
 		return FALSE
 	for(var/mob/dead/observer/O in GLOB.player_list)
@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(pai)
 			to_chat(G, "<span class='ghostalert'>[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
-	for(var/datum/paiCandidate/c in SSpai.candidates)
+	for(var/datum/pai_candidate/c in SSpai.candidates)
 		available.Add(check_ready(c))
 	var/dat = ""
 
@@ -175,7 +175,7 @@ SUBSYSTEM_DEF(pai)
 
 	dat += "<table>"
 
-	for(var/datum/paiCandidate/c in available)
+	for(var/datum/pai_candidate/c in available)
 		dat += "<tr class=\"d0\"><td>Name:</td><td>[c.name]</td></tr>"
 		dat += "<tr class=\"d1\"><td>Description:</td><td>[c.description]</td></tr>"
 		dat += "<tr class=\"d0\"><td>Preferred Role:</td><td>[c.role]</td></tr>"
@@ -186,7 +186,7 @@ SUBSYSTEM_DEF(pai)
 
 	user << browse(dat, "window=findPai")
 
-/datum/paiCandidate
+/datum/pai_candidate
 	var/name
 	var/key
 	var/description
