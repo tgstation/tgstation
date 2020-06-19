@@ -194,9 +194,10 @@
 			for(var/mob/M in active_dummy)
 				to_chat(M, "<span class='userdanger'>You've been caught!</span>")
 				caught = TRUE
-	. = ..()
 	if(caught)
 		for(var/mob/M in active_dummy)
 			gamemaster.kick_hider_out(M)
+	. = ..()
+	if(caught)
 		gamemaster.projectors -= src //don't want them out of the game using their funny little projector and losing twice or some wack stuff
 		qdel(src) 	//and no, "objects_delete_on_leaving_arena" var doesn't help. that's only for arenas it loads, not equipment for players.
