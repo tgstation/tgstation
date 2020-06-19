@@ -1,10 +1,10 @@
-"aa" = (/obj/structure/cable,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/white,/area/space)
+"aa" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/white,/area/space)
 "ab" = (/obj/machinery/iv_drip,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/item/radio/intercom{pixel_y = 21},/turf/open/floor/plasteel/white,/area/space)
 "ac" = (/obj/structure/table/optable,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/decal/cleanable/vomit,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/white,/area/space)
 "ad" = (/obj/machinery/computer/operating{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/white,/area/space)
 "ae" = (/obj/structure/closet/secure_closet/medical2,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/space)
 "af" = (/turf/closed/wall,/area/space)
-"ag" = (/obj/structure/cable,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/open/floor/plasteel/white,/area/space)
+"ag" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/open/floor/plasteel/white,/area/space)
 "ah" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/space)
 "ai" = (/obj/structure/closet/secure_closet/CMO,/obj/item/clothing/under/rank/medical/doctor,/obj/item/clothing/head/nursehat,/obj/effect/turf_decal/stripes/line{dir = 5},/obj/item/storage/firstaid/regular,/turf/open/floor/plasteel,/area/space)
 "aj" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on,/obj/effect/decal/cleanable/oil{icon_state = "floor6"},/turf/open/floor/plasteel/white,/area/space)
@@ -14,7 +14,7 @@
 "an" = (/obj/structure/table/reinforced,/obj/item/storage/backpack/duffelbag/med/surgery,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/machinery/button/door{id = "surgeryb"; name = "Privacy Shutters Control"; pixel_y = -26},/turf/open/floor/plasteel/white,/area/space)
 "ao" = (/obj/structure/table/reinforced,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/item/defibrillator,/obj/item/screwdriver,/turf/open/floor/plasteel/white,/area/space)
 "ap" = (/obj/machinery/smartfridge/organ,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/space)
-"aq" = (/obj/machinery/door/airlock/medical/glass{name = "Surgery B"; req_access_txt = "0"},/obj/structure/cable,/obj/machinery/door/firedoor,/obj/structure/disposalpipe/segment,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 1},/turf/open/floor/plasteel/white,/area/space)
+"aq" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/structure/disposalpipe/segment{dir = 6},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/space)
 "ar" = (/obj/effect/spawner/structure/window,/obj/machinery/door/poddoor/preopen{id = "surgeryb"; name = "privacy shutter"},/turf/open/floor/plating,/area/space)
 "as" = (/obj/effect/spawner/structure/window,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/poddoor/preopen{id = "surgeryb"; name = "privacy shutter"},/turf/open/floor/plating,/area/space)
 "at" = (/turf/open/floor/plasteel/white,/area/space)
@@ -30,13 +30,13 @@
 "aD" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/effect/turf_decal/box/white{color = "#52B4E9"},/obj/machinery/holopad,/turf/open/floor/plasteel/white,/area/space)
 "aE" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/components/unary/vent_scrubber/on,/turf/open/floor/plasteel/white,/area/space)
 "aF" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/obj/structure/disposalpipe/segment{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/space)
-"aG" = (/obj/structure/cable,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/structure/disposalpipe/segment{dir = 6},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/space)
-"aH" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/atmospherics/components/unary/vent_pump/on,/obj/structure/cable,/turf/open/floor/plasteel/white,/area/space)
+"aG" = (/obj/machinery/door/airlock/medical/glass{name = "Surgery B"; req_access_txt = "0"},/obj/machinery/door/firedoor,/obj/structure/disposalpipe/segment,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 1},/turf/open/floor/plasteel/white,/area/space)
+"aH" = (/obj/machinery/door/airlock/command{name = "Chief Medical Officer's Quarters"; req_access_txt = "0"},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/space)
 "aI" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/white,/area/space)
 "aJ" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel,/area/space)
-"aK" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 9},/obj/structure/cable,/obj/item/kirbyplants/random,/turf/open/floor/plasteel/white,/area/space)
+"aK" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/turf/open/floor/plasteel/freezer,/area/space)
 "aL" = (/obj/machinery/disposal/bin,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/structure/disposalpipe/trunk{dir = 4},/turf/open/floor/plasteel/white,/area/space)
-"aM" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/structure/disposalpipe/segment{dir = 9},/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel/white,/area/space)
+"aM" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/obj/effect/decal/cleanable/plasma,/turf/open/floor/plasteel/freezer,/area/space)
 "aN" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/structure/filingcabinet/filingcabinet,/obj/machinery/camera{c_tag = "Medbay Psychology Office"; dir = 1; network = list("ss13","medbay")},/turf/open/floor/plasteel/white,/area/space)
 "aO" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/structure/noticeboard{pixel_y = -32},/obj/structure/table/wood,/obj/machinery/computer/med_data/laptop{dir = 1; pixel_y = 4},/turf/open/floor/plasteel/white,/area/space)
 "aP" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/machinery/light_switch{pixel_x = 28},/obj/structure/table/wood,/obj/item/folder/white{pixel_x = -14; pixel_y = 3},/obj/item/paper_bin/carbon{pixel_x = 3; pixel_y = 2},/obj/item/pen,/turf/open/floor/plasteel/white,/area/space)
@@ -46,14 +46,14 @@
 "aT" = (/obj/structure/closet/crate/freezer/blood,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/structure/sign/warning/chemdiamond{pixel_x = -32},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/turf/open/floor/plasteel/freezer,/area/space)
 "aU" = (/obj/machinery/suit_storage_unit/cmo,/obj/effect/turf_decal/stripes/line{dir = 6},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel,/area/space)
 "aV" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/effect/turf_decal/box/white{color = "#52B4E9"},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/item/wrench/medical,/turf/open/floor/plasteel/freezer,/area/space)
-"aW" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/turf/open/floor/plasteel/freezer,/area/space)
-"aX" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/structure/cable,/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/obj/effect/decal/cleanable/plasma,/turf/open/floor/plasteel/freezer,/area/space)
-"aY" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/door/airlock/medical/glass{name = "Medical Freezer"; req_access_txt = "0"},/obj/structure/cable,/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/space)
-"aZ" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plasteel/freezer,/area/space)
-"ba" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/camera{c_tag = "Medbay Cold Room"; dir = 4; network = list("ss13","medbay")},/obj/structure/cable,/turf/open/floor/plasteel/freezer,/area/space)
+"aW" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plasteel/freezer,/area/space)
+"aX" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/door/airlock/medical/glass{name = "Medical Freezer"; req_access_txt = "0"},/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/space)
+"aY" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/camera{c_tag = "Medbay Cold Room"; dir = 4; network = list("ss13","medbay")},/turf/open/floor/plasteel/freezer,/area/space)
+"aZ" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/atmospherics/components/unary/vent_pump/on,/turf/open/floor/plasteel/white,/area/space)
+"ba" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/white,/area/space)
 "bb" = (/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel/white,/area/space)
 "bc" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/components/unary/vent_scrubber/on,/turf/open/floor/plasteel/freezer,/area/space)
-"bd" = (/obj/machinery/door/airlock/command{name = "Chief Medical Officer's Quarters"; req_access_txt = "0"},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel/white,/area/space)
+"bd" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,/obj/structure/chair/office/light,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/space)
 "be" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/space)
 "bf" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/space)
 "bg" = (/obj/machinery/light_switch{pixel_x = 26; pixel_y = 26},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/space)
@@ -77,12 +77,12 @@
 "by" = (/obj/structure/table/glass,/turf/open/floor/plasteel/white,/area/space)
 "bz" = (/obj/effect/decal/cleanable/insectguts,/turf/open/floor/plasteel/white,/area/space)
 "bA" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plasteel/white,/area/space)
-"bB" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/cable,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/white,/area/space)
+"bB" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 9},/obj/item/kirbyplants/random,/turf/open/floor/plasteel/white,/area/space)
 "bC" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plasteel/white,/area/space)
 "bD" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plasteel/white,/area/space)
 "bE" = (/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plasteel/white,/area/space)
 "bF" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/light{dir = 8},/obj/effect/decal/cleanable/dirt/dust,/obj/effect/decal/cleanable/greenglow,/turf/open/floor/plasteel/white,/area/space)
-"bG" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,/obj/structure/chair/office/light,/obj/structure/cable,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/space)
+"bG" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/structure/disposalpipe/segment{dir = 9},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel/white,/area/space)
 "bH" = (/obj/machinery/door/airlock/medical/glass{name = "Medical Freezer"; req_access_txt = "0"},/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/space)
 "bI" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/space)
 "bJ" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/machinery/door/airlock/medical{name = "Psychology"; req_access_txt = "0"},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/space)
@@ -92,15 +92,15 @@
 (1,1,1) = {"
 aaabacadaeaRaibebfahbfbgbh
 agalavajakaRbibjauaJaJblaB
-aGamanaoapaRaUaQbfahaSbqbr
-aqbKafasaraRaRaRbdaRaRaRaR
+aqamanaoapaRaUaQbfahaSbqbr
+aGbKafasaraRaRaRaHaRaRaRaR
 atatatbbbwbxatbkatbbatatby
 bobyatatatatatatatafafafaf
 afafafafafaIatafafafbmbvaw
 aTbsaVaVafatatafaxayazazaA
-aWaXaZaZaYbubCafbFaCaDaEaF
-babcbnbtafbzatafbpaHbBbGaK
-afbHafafafatatafaLaMaNaOaP
+aKaMaWaWaXbubCafbFaCaDaEaF
+aYbcbnbtafbzatafbpaZbabdbB
+afbHafafafatatafaLbGaNaOaP
 atbDbEbybLatatafafbJafafaf
 atbAatatatatbIatatatatatat
 "}

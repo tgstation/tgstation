@@ -1,59 +1,52 @@
 "aa" = (/turf/closed/wall/r_wall,/area/space)
-"ab" = (/obj/structure/cable,/turf/open/floor/circuit,/area/space)
+"ab" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/showcase{desc = "A fake SMES power storage unit."; icon = 'icons/obj/power.dmi'; icon_state = "smes"; name = "power storage unit"},/turf/open/floor/plasteel/dark,/area/space)
 "ac" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/recharge_station,/turf/open/floor/plasteel/dark,/area/space)
 "ad" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/door/poddoor/shutters/preopen{id = "AI Core shutters"; name = "AI core shutters"},/turf/open/floor/plating,/area/space)
-"ae" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable,/turf/open/floor/circuit,/area/space)
+"ae" = (/obj/machinery/status_display/evac{pixel_y = 32},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/power/terminal{dir = 8},/obj/structure/showcase{desc = "An empty plastic shell of a PACMAN generator."; icon = 'icons/obj/power.dmi'; icon_state = "portgen0_0"; name = "P.A.C.M.A.N. type portable generator"},/turf/open/floor/plasteel/dark,/area/space)
 "af" = (/obj/structure/showcase/cyborg/old{dir = 8; pixel_x = 9; pixel_y = 2},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "ag" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/holopad/secure,/turf/open/floor/plasteel/dark,/area/space)
-"ah" = (/obj/machinery/ai_slipper{uses = 10},/obj/structure/cable,/turf/open/floor/circuit,/area/space)
-"ai" = (/obj/machinery/turretid{icon_state = "control_stun"; name = "AI Chamber turret control"; pixel_x = 3; pixel_y = -23},/obj/machinery/door/window{base_state = "leftsecure"; dir = 8; icon_state = "leftsecure"; name = "Primary AI Core Access"; obj_integrity = 300; req_access_txt = "0"},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
-"aj" = (/obj/machinery/requests_console{department = "AI"; departmentType = 5; pixel_x = 30; pixel_y = 30},/obj/machinery/ai_slipper{uses = 10},/obj/machinery/flasher{id = "AI"; pixel_x = 23; pixel_y = -23},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
-"ak" = (/obj/machinery/door/window{base_state = "rightsecure"; dir = 4; icon_state = "rightsecure"; name = "Primary AI Core Access"; obj_integrity = 300; req_access_txt = "0"},/obj/machinery/camera{c_tag = "AI Chamber - Core"; network = list("aicore")},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
-"al" = (/obj/machinery/ai_slipper{uses = 10},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable,/turf/open/floor/circuit,/area/space)
+"ah" = (/obj/machinery/ai_slipper{uses = 10},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
+"ai" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
+"aj" = (/obj/structure/showcase/cyborg/old{dir = 8; pixel_x = 9; pixel_y = 2},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
+"ak" = (/obj/structure/showcase/cyborg/old{dir = 4; pixel_x = -9; pixel_y = 2},/turf/open/floor/circuit,/area/space)
+"al" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance_hatch{name = "MiniSat Maintenance"; req_access_txt = "0"},/turf/open/floor/plasteel/dark,/area/space)
 "am" = (/obj/machinery/flasher{id = "AI"; pixel_x = 25; pixel_y = 25},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/holopad/secure,/turf/open/floor/plasteel/dark,/area/space)
-"an" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/cable,/obj/structure/showcase{desc = "A fake SMES power storage unit."; icon = 'icons/obj/power.dmi'; icon_state = "smes"; name = "power storage unit"},/turf/open/floor/plasteel/dark,/area/space)
-"ao" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/closed/wall/r_wall,/area/space)
-"ap" = (/obj/machinery/status_display/evac{pixel_y = 32},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/power/terminal{dir = 8},/obj/structure/cable,/obj/structure/showcase{desc = "An empty plastic shell of a PACMAN generator."; icon = 'icons/obj/power.dmi'; icon_state = "portgen0_0"; name = "P.A.C.M.A.N. type portable generator"},/turf/open/floor/plasteel/dark,/area/space)
+"an" = (/obj/machinery/atmospherics/components/unary/vent_pump/on,/turf/open/floor/plasteel/dark,/area/space)
+"ao" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
+"ap" = (/obj/machinery/turretid{icon_state = "control_stun"; name = "AI Chamber turret control"; pixel_x = 3; pixel_y = -23},/obj/machinery/door/window{base_state = "leftsecure"; dir = 8; icon_state = "leftsecure"; name = "Primary AI Core Access"; obj_integrity = 300; req_access_txt = "0"},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "aq" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{name = "Auxiliary MiniSat Distribution Port"},/obj/machinery/portable_atmospherics/canister/air,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/wrench,/turf/open/floor/plasteel/dark,/area/space)
 "ar" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/recharge_station,/obj/structure/showcase/cyborg{desc = "A stand with the empty body of an engineering cyborg bolted to it."; dir = 2; icon = 'icons/mob/robots.dmi'; icon_state = "engineer"; name = "engineering cyborg"},/turf/open/floor/plasteel/dark,/area/space)
 "as" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/showcase/cyborg/old{dir = 4; pixel_x = -9; pixel_y = 2},/turf/open/floor/plasteel/dark,/area/space)
 "at" = (/obj/machinery/computer/security/telescreen{dir = 8; name = "Telecomms Camera Monitor"; network = list("ss13"); pixel_x = 26},/obj/machinery/computer/telecomms/monitor{dir = 8; network = "tcommsat"},/turf/open/floor/plasteel/grimy,/area/space)
 "au" = (/obj/item/radio/intercom{freerange = 1; name = "Common Channel"; pixel_x = -27; pixel_y = -7},/obj/item/radio/intercom{freerange = 1; listening = 0; name = "Custom Channel"; pixel_y = -27},/obj/item/radio/intercom{freerange = 1; frequency = 1447; name = "Private Channel"; pixel_x = 27; pixel_y = -7},/obj/machinery/button/door{id = "AI Core shutters"; name = "AI Core shutters control"; pixel_x = 24; pixel_y = -22; req_access_txt = "16"},/obj/structure/showcase/cyborg{desc = "A true to life plastic replica of the station AI."; dir = 2; icon = 'icons/mob/ai.dmi'; icon_state = "ai"; name = "\improper AI"},/turf/open/floor/circuit/green,/area/space)
-"av" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/circuit,/area/space)
-"aw" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/closed/wall/r_wall,/area/space)
+"av" = (/obj/machinery/requests_console{department = "AI"; departmentType = 5; pixel_x = 30; pixel_y = 30},/obj/machinery/ai_slipper{uses = 10},/obj/machinery/flasher{id = "AI"; pixel_x = 23; pixel_y = -23},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
+"aw" = (/obj/machinery/door/window{base_state = "rightsecure"; dir = 4; icon_state = "rightsecure"; name = "Primary AI Core Access"; obj_integrity = 300; req_access_txt = "0"},/obj/machinery/camera{c_tag = "AI Chamber - Core"; network = list("aicore")},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "ax" = (/obj/item/stack/cable_coil/five,/obj/item/taperecorder,/obj/structure/rack,/obj/item/airlock_painter,/turf/open/floor/plasteel/dark,/area/space)
-"ay" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/ai_slipper{uses = 10},/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
-"az" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
-"aA" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
-"aB" = (/obj/structure/showcase/cyborg/old{dir = 8; pixel_x = 9; pixel_y = 2},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
+"ay" = (/obj/structure/table,/obj/item/analyzer,/turf/open/floor/plasteel/dark,/area/space)
+"az" = (/obj/machinery/computer/station_alert{dir = 1},/obj/machinery/light,/obj/machinery/computer/security/telescreen/minisat{dir = 1; pixel_y = -29},/turf/open/floor/plasteel/dark,/area/space)
+"aA" = (/obj/structure/table,/obj/item/radio/intercom{pixel_y = -28},/obj/machinery/computer/monitor{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
+"aB" = (/obj/machinery/camera/motion{c_tag = "MiniSat Maintenance"; dir = 8; network = list("minisat")},/obj/structure/rack,/obj/item/storage/toolbox/electrical{pixel_x = -3; pixel_y = 3},/obj/item/storage/toolbox/mechanical,/obj/item/multitool,/obj/item/melee/flyswatter,/turf/open/floor/plasteel/dark,/area/space)
 "aC" = (/obj/machinery/light{dir = 8},/obj/machinery/status_display/ai{pixel_x = -32},/obj/structure/chair/office,/turf/open/floor/circuit,/area/space)
 "aD" = (/turf/open/floor/circuit,/area/space)
-"aE" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance_hatch{name = "MiniSat Maintenance"; req_access_txt = "0"},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
-"aF" = (/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
-"aG" = (/obj/machinery/atmospherics/components/unary/vent_pump/on,/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
-"aH" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 1},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
-"aI" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
-"aJ" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
+"aE" = (/obj/machinery/door/airlock/hatch{name = "Telecomms Control Room"; req_one_access_txt = "0"},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/navbeacon/wayfinding,/turf/open/floor/plasteel/dark,/area/space)
+"aF" = (/turf/open/floor/plasteel/grimy,/area/space)
+"aG" = (/obj/structure/chair/office{dir = 1},/turf/open/floor/plasteel/grimy,/area/space)
+"aH" = (/obj/machinery/holopad/secure,/turf/open/floor/plasteel/grimy,/area/space)
+"aI" = (/obj/structure/chair/office,/turf/open/floor/plasteel/grimy,/area/space)
+"aJ" = (/obj/machinery/computer/telecomms/server{dir = 8; network = "tcommsat"},/turf/open/floor/plasteel/grimy,/area/space)
 "aK" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "aL" = (/turf/open/floor/plasteel/dark,/area/space)
 "aM" = (/obj/machinery/ai_slipper{uses = 10},/turf/open/floor/circuit,/area/space)
-"aN" = (/obj/structure/table,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable,/obj/item/analyzer,/turf/open/floor/plasteel/dark,/area/space)
-"aO" = (/obj/machinery/computer/station_alert{dir = 1},/obj/machinery/light,/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/obj/machinery/computer/security/telescreen/minisat{dir = 1; pixel_y = -29},/turf/open/floor/plasteel/dark,/area/space)
-"aP" = (/obj/structure/table,/obj/item/radio/intercom{pixel_y = -28},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/computer/monitor{dir = 1},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
-"aQ" = (/obj/machinery/camera/motion{c_tag = "MiniSat Maintenance"; dir = 8; network = list("minisat")},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/obj/structure/rack,/obj/item/storage/toolbox/electrical{pixel_x = -3; pixel_y = 3},/obj/item/storage/toolbox/mechanical,/obj/item/multitool,/obj/item/melee/flyswatter,/turf/open/floor/plasteel/dark,/area/space)
 "aR" = (/obj/structure/table/reinforced,/obj/item/paper_bin{pixel_x = -3; pixel_y = 7},/obj/machinery/firealarm{dir = 4; pixel_x = -26},/turf/open/floor/plasteel/dark,/area/space)
-"aS" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/airlock/highsecurity{name = "AI Chamber"; req_access_txt = "0"},/turf/open/floor/plasteel/dark,/area/space)
 "aT" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "aU" = (/obj/structure/table/reinforced,/obj/item/phone{pixel_x = -3; pixel_y = 3},/obj/item/cigbutt/cigarbutt{pixel_x = 5; pixel_y = -1},/turf/open/floor/plasteel/dark,/area/space)
 "aV" = (/obj/item/radio/intercom{broadcasting = 1; frequency = 1447; listening = 0; name = "Station Intercom (AI Private)"; pixel_x = 0; pixel_y = 26},/turf/open/floor/plasteel/dark,/area/space)
 "aW" = (/obj/structure/chair/office,/turf/open/floor/circuit,/area/space)
-"aX" = (/obj/machinery/door/airlock/hatch{name = "Telecomms Control Room"; req_one_access_txt = "0"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/cable,/obj/machinery/navbeacon/wayfinding,/turf/open/floor/plasteel/dark,/area/space)
 "aY" = (/obj/structure/table/reinforced,/obj/machinery/light/small{dir = 4},/obj/item/aicard,/obj/item/storage/toolbox/emergency,/turf/open/floor/plasteel/dark,/area/space)
 "aZ" = (/obj/item/flashlight,/turf/open/floor/plasteel/dark,/area/space)
 "ba" = (/obj/structure/table/wood,/obj/machinery/light/small{dir = 8},/obj/item/radio/off{pixel_y = 4},/obj/item/screwdriver{pixel_y = 10},/turf/open/floor/plasteel/grimy,/area/space)
 "bb" = (/obj/structure/window/reinforced{dir = 8; layer = 2.9},/turf/open/floor/plasteel/dark,/area/space)
 "bc" = (/obj/structure/window/reinforced{dir = 4},/turf/open/floor/plasteel/dark,/area/space)
-"bd" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable,/turf/open/floor/plasteel/grimy,/area/space)
 "be" = (/obj/item/weldingtool/mini,/turf/open/floor/plasteel/dark,/area/space)
 "bf" = (/obj/item/stock_parts/cell/high/empty,/turf/open/floor/plasteel/dark,/area/space)
 "bg" = (/obj/structure/table/wood,/obj/machinery/status_display/ai{pixel_y = 31},/obj/item/flashlight/lamp,/turf/open/floor/plasteel/grimy,/area/space)
@@ -62,20 +55,15 @@
 "bj" = (/obj/structure/window/reinforced{dir = 4},/turf/open/floor/fakespace,/area/space)
 "bk" = (/obj/structure/window/reinforced{dir = 8; layer = 2.9},/turf/open/floor/fakespace,/area/space)
 "bl" = (/obj/machinery/announcement_system,/turf/open/floor/plasteel/grimy,/area/space)
-"bm" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel/grimy,/area/space)
 "bn" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/plasteel/grimy,/area/space)
 "bo" = (/obj/item/extinguisher,/turf/open/floor/plasteel/dark,/area/space)
 "bp" = (/turf/open/floor/fakespace,/area/space)
 "bq" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/lattice,/turf/open/floor/fakespace,/area/space)
 "br" = (/obj/machinery/computer/message_monitor{dir = 4},/turf/open/floor/plasteel/grimy,/area/space)
-"bs" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable,/obj/machinery/holopad/secure,/turf/open/floor/plasteel/grimy,/area/space)
-"bt" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 8},/obj/structure/chair/office,/obj/structure/cable,/turf/open/floor/plasteel/grimy,/area/space)
-"bu" = (/obj/machinery/computer/telecomms/server{dir = 8; network = "tcommsat"},/obj/structure/cable,/turf/open/floor/plasteel/grimy,/area/space)
 "bv" = (/obj/machinery/microwave{pixel_y = 4},/obj/structure/table/wood,/turf/open/floor/plasteel/grimy,/area/space)
 "bw" = (/obj/item/restraints/handcuffs/cable/zipties/used,/turf/open/floor/plasteel/dark,/area/space)
 "bx" = (/obj/structure/chair/office{dir = 8},/obj/item/paperplane,/turf/open/floor/plasteel/grimy,/area/space)
 "by" = (/obj/structure/table/wood,/obj/machinery/status_display/evac{pixel_y = 31},/obj/item/book/manual/wiki/tcomms,/obj/item/folder/blue,/obj/item/pen,/turf/open/floor/plasteel/grimy,/area/space)
-"bz" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 4},/obj/structure/chair/office{dir = 1},/turf/open/floor/plasteel/grimy,/area/space)
 "bA" = (/obj/machinery/requests_console{announcementConsole = 1; department = "Telecomms Admin"; departmentType = 5; name = "Telecomms RC"; pixel_y = -30},/obj/machinery/firealarm{dir = 8; pixel_x = 24},/obj/item/paper_bin{pixel_x = -1; pixel_y = 6},/obj/structure/table/wood,/turf/open/floor/plasteel/grimy,/area/space)
 "bB" = (/obj/machinery/light/small,/obj/item/storage/box/donkpockets,/obj/structure/table/wood,/turf/open/floor/plasteel/grimy,/area/space)
 "bC" = (/obj/structure/table/reinforced,/obj/item/folder/blue{pixel_y = 2},/obj/item/pen,/obj/item/toy/talking/AI,/turf/open/floor/plasteel/dark,/area/space)
@@ -95,20 +83,19 @@
 "bQ" = (/obj/structure/window/reinforced{dir = 8; layer = 2.9},/obj/structure/lattice,/turf/open/floor/fakespace,/area/space)
 "bR" = (/obj/machinery/light/small,/obj/item/folder,/obj/item/folder,/obj/machinery/camera{c_tag = "Telecomms - Control Room"; dir = 1; network = list("ss13","tcomms")},/obj/structure/table/wood,/obj/item/pen,/obj/item/taperecorder,/turf/open/floor/plasteel/grimy,/area/space)
 "FT" = (/obj/structure/showcase/cyborg/old{dir = 8; pixel_x = 9; pixel_y = 2},/turf/open/floor/circuit,/area/space)
-"XY" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/showcase/cyborg/old{dir = 4; pixel_x = -9; pixel_y = 2},/turf/open/floor/circuit,/area/space)
 
 (1,1,1) = {"
-asabaDaMaDaeafaaanapaqacar
-agahaTaTaTalamaoayazaAaJaB
-aTFTaaadaaXYaTaEaFaGaHaIaI
-aCaDaiajakavaWawaNaOaPaLaQ
-aRaDaaauaaavaUaaaaaaaaaEaa
-aaaSaaaaaabDaaaabHbOaxaLbI
+asaDaDaMaDaDafaaabaeaqacar
+agaMaTaTaTaMamaaahaiaiaiaj
+aTFTaaadaaakaTalaLanaoaLaL
+aCaDapavawaDaWaaayazaAaLaB
+aRaDaaauaaaDaUaaaaaaaaalaa
+aabDaaaaaabDaaaabHbOaxaLbI
 aKaLbeaZbNboaLaVaLbwaLaLaY
 aLbGaLaLaLaLbfaLaLaLaLaLbC
-aaaaaabhaaaaaaaaaaaaaXaaaa
-bjbEaLaLaLbFbkaababybdbgbi
-bpbqbJbMbKbPbpaablbzbmbnat
-bpbqbLaLbcbQbpaabrbxbsbtbu
-bpbqbbaLbcbQbpaabvbBbdbRbA
+aaaaaabhaaaaaaaaaaaaaEaaaa
+bjbEaLaLaLbFbkaababyaFbgbi
+bpbqbJbMbKbPbpaablaGaFbnat
+bpbqbLaLbcbQbpaabrbxaHaIaJ
+bpbqbbaLbcbQbpaabvbBaFbRbA
 "}
