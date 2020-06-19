@@ -1,81 +1,116 @@
 "ak" = (/obj/structure/table/wood,/obj/item/flashlight/lamp,/turf/open/floor/wood,/area/space)
-"aB" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/plating,/area/space)
+"aB" = (/obj/item/paper/fluff/stations/centcom/bulletin,/turf/open/floor/plating,/area/space)
 "aD" = (/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel,/area/space)
-"by" = (/obj/structure/reagent_dispensers,/turf/open/floor/plating,/area/space)
+"by" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/table/reinforced,/obj/item/book/manual/wiki/surgery,/obj/item/storage/fancy/cigarettes/cigpack_uplift,/turf/open/floor/plasteel/white,/area/space)
+"bY" = (/obj/item/stack/spacecash/c20,/obj/item/stack/spacecash/c20{pixel_y = 10},/obj/item/stack/spacecash/c20{pixel_y = 6; pixel_x = 4},/obj/item/stack/spacecash/c20{pixel_x = -4; pixel_y = 4},/obj/item/stack/spacecash/c20{pixel_x = 4; pixel_y = -2},/turf/open/floor/carpet,/area/space)
 "dl" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/space)
+"dK" = (/obj/item/stack/spacecash/c10{pixel_y = -4; pixel_x = -4},/obj/item/stack/spacecash/c10{pixel_y = -1},/obj/item/stack/spacecash/c10{pixel_x = -3; pixel_y = -10},/obj/item/stack/spacecash/c10{pixel_y = 10; pixel_x = -1},/obj/item/stack/spacecash/c10{pixel_x = 6; pixel_y = -10},/obj/item/stack/spacecash/c10{pixel_y = 5; pixel_x = -3},/turf/open/floor/carpet,/area/space)
+"em" = (/obj/item/paper/fluff/awaymissions/academy/class/automotive,/turf/open/floor/carpet,/area/space)
 "eu" = (/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"fx" = (/obj/structure/table,/obj/item/toy/plush/nukeplushie,/turf/open/floor/plating,/area/space)
 "fA" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/bed/roller,/obj/item/pizzabox/pineapple{pixel_y = 6},/turf/open/floor/plasteel/white,/area/space)
 "fB" = (/obj/structure/table/wood,/obj/item/reagent_containers/syringe/contraband/space_drugs,/obj/item/reagent_containers/syringe/contraband/space_drugs{pixel_y = 4; pixel_x = 2},/turf/open/floor/carpet,/area/space)
-"ga" = (/obj/structure/table,/turf/open/floor/plating,/area/space)
-"gy" = (/obj/structure/table,/obj/effect/decal/cleanable/cobweb,/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plating,/area/space)
+"ga" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/chair/office/light,/turf/open/floor/plasteel/white,/area/space)
+"gy" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating{icon_state = "panelscorched"},/area/space)
 "gA" = (/turf/open/floor/plasteel,/area/space)
 "gG" = (/obj/structure/rack,/obj/item/clothing/gloves/color/fyellow,/obj/item/clothing/suit/hazardvest,/obj/item/multitool,/obj/effect/spawner/lootdrop/maintenance,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
 "hm" = (/obj/structure/table/wood,/obj/machinery/newscaster{pixel_y = 32},/obj/item/reagent_containers/food/snacks/grown/cannabis{pixel_y = 3; pixel_x = -5},/obj/item/reagent_containers/food/snacks/grown/cannabis{pixel_x = 8; pixel_y = 9},/obj/item/reagent_containers/food/snacks/grown/cannabis,/obj/item/reagent_containers/food/snacks/grown/cannabis/white{pixel_y = 12; pixel_x = -4},/turf/open/floor/wood,/area/space)
-"hT" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating{icon_state = "panelscorched"},/area/space)
-"jJ" = (/obj/structure/table,/obj/item/folder/white,/obj/item/folder/white,/obj/item/pen,/turf/open/floor/plating,/area/space)
+"hT" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/table/reinforced,/obj/item/storage/box/lights/mixed,/obj/item/cigbutt/cigarbutt,/obj/item/candle{pixel_x = -5},/obj/item/storage/box/matches{pixel_x = 1; pixel_y = -1},/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"ir" = (/obj/item/trash/can/food/peaches,/turf/open/floor/plating,/area/space)
+"is" = (/obj/effect/decal/cleanable/dirt/dust,/obj/item/documents/syndicate/blue,/turf/open/floor/plasteel/white,/area/space)
+"jJ" = (/obj/structure/table,/obj/item/folder/white{pixel_y = 4; pixel_x = 5},/obj/item/folder/white{pixel_y = 3; pixel_x = -8},/obj/item/pen{pixel_y = 11; pixel_x = 7},/obj/item/paper/fluff/awaymissions/snowdin/secnotice,/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{pixel_x = 2; pixel_y = -4},/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{pixel_x = -9; pixel_y = -4},/obj/item/reagent_containers/food/drinks/bottle/gin{pixel_x = -4; pixel_y = 5},/turf/open/floor/plating,/area/space)
+"kC" = (/obj/structure/rack,/obj/item/reagent_containers/food/drinks/bottle/whiskey,/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plating,/area/space)
 "kX" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/rack,/obj/item/skub{name = "medicinal skub"},/obj/item/toy/cattoy,/turf/open/floor/plating,/area/space)
-"lX" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/spawner/lootdrop/maintenance/three,/obj/structure/closet/crate/medical,/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"lm" = (/obj/item/trash/candy,/turf/open/floor/plating,/area/space)
+"lX" = (/obj/effect/decal/cleanable/dirt/dust,/obj/item/documents,/turf/open/floor/plating,/area/space)
+"mQ" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/structure/closet/cardboard,/turf/open/floor/plasteel,/area/space)
 "nT" = (/obj/structure/table/wood,/obj/item/stack/spacecash/c20,/obj/item/stack/spacecash/c20{pixel_y = 10},/obj/item/stack/spacecash/c20{pixel_y = 6; pixel_x = 4},/obj/item/stack/spacecash/c20{pixel_x = -4; pixel_y = 4},/obj/item/stack/spacecash/c20{pixel_x = 4; pixel_y = -2},/turf/open/floor/wood,/area/space)
 "oC" = (/obj/machinery/smartfridge/drying_rack,/turf/open/floor/wood,/area/space)
 "pb" = (/turf/open/floor/plating,/area/space)
 "pE" = (/obj/structure/chair/comfy/black{dir = 4},/turf/open/floor/carpet,/area/space)
+"pK" = (/obj/item/paper/fluff/cargo/bomb,/turf/open/floor/plating,/area/space)
+"pM" = (/obj/item/storage/fancy/cigarettes/cigpack_robustgold{pixel_y = -12},/obj/item/storage/fancy/cigarettes/cigpack_midori{pixel_y = 8; pixel_x = -8},/obj/item/storage/fancy/cigarettes/cigpack_candy{pixel_y = 7; pixel_x = 10},/obj/item/storage/fancy/cigarettes/cigpack_syndicate,/obj/item/cigbutt{pixel_y = 3; pixel_x = 6},/obj/item/cigbutt{pixel_y = 3},/turf/open/floor/plating,/area/space)
 "qD" = (/obj/structure/closet/toolcloset,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel,/area/space)
-"qI" = (/obj/machinery/door/airlock/grunge,/turf/open/floor/plasteel,/area/space)
+"qI" = (/obj/machinery/door/airlock/grunge{name = "Drug Lab"},/turf/open/floor/plasteel,/area/space)
 "qM" = (/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel,/area/space)
 "ri" = (/obj/structure/reagent_dispensers/fueltank,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
-"ru" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/plating,/area/space)
-"sT" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/table/reinforced,/obj/item/book/manual/wiki/surgery,/obj/item/storage/fancy/cigarettes/cigpack_uplift,/turf/open/floor/plasteel/white,/area/space)
+"ru" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/table/reinforced,/obj/item/clothing/gloves/color/blue{desc = "An old pair of nitrile gloves, with no sterile properties."; name = "old nitrile gloves"},/obj/item/clothing/mask/surgical,/obj/item/clothing/suit/apron/surgical,/obj/item/reagent_containers/glass/rag,/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"sT" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/rack,/obj/item/reagent_containers/blood/random,/obj/item/reagent_containers/food/drinks/bottle/vodka,/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"tb" = (/obj/item/trash/can,/turf/open/floor/plating,/area/space)
 "tl" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/reagent_dispensers/water_cooler,/turf/open/floor/plasteel/white,/area/space)
 "vt" = (/obj/structure/table/wood,/obj/item/clothing/mask/cigarette/rollie/cannabis{pixel_x = -5; pixel_y = 3},/obj/item/clothing/mask/cigarette/rollie/cannabis{pixel_y = 4; pixel_x = 5},/obj/item/clothing/mask/cigarette/rollie/cannabis,/turf/open/floor/wood,/area/space)
 "vu" = (/obj/effect/decal/cleanable/dirt/dust,/obj/vehicle/ridden/wheelchair,/turf/open/floor/plating{icon_state = "panelscorched"},/area/space)
+"yc" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/decal/cleanable/dirt/dust,/obj/item/paper/fluff/stations/soap,/turf/open/floor/plating,/area/space)
 "yp" = (/turf/open/floor/carpet,/area/space)
 "ze" = (/obj/effect/decal/cleanable/dirt/dust,/obj/item/reagent_containers/food/drinks/sillycup,/obj/item/reagent_containers/food/drinks/sillycup{pixel_x = -5; pixel_y = 3},/obj/item/reagent_containers/food/drinks/sillycup{pixel_x = 5; pixel_y = 3},/turf/open/floor/plasteel/white,/area/space)
-"zV" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/spawner/lootdrop/memeorgans,/obj/structure/closet/crate/medical,/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"zV" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/windoor_assembly{dir = 2},/turf/open/floor/plasteel/white,/area/space)
 "As" = (/obj/structure/table/wood,/obj/item/storage/fancy/rollingpapers{pixel_y = 1},/obj/item/rollingpaper{pixel_y = 8; pixel_x = 7},/obj/item/rollingpaper{pixel_y = -6; pixel_x = -8},/turf/open/floor/carpet,/area/space)
-"Ax" = (/obj/effect/decal/cleanable/dirt/dust,/obj/machinery/iv_drip,/obj/structure/window/reinforced,/turf/open/floor/plating,/area/space)
+"Ax" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/space)
 "AC" = (/turf/closed/wall,/area/space)
 "AH" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/carpet,/area/space)
-"Cm" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/table/reinforced,/obj/item/storage/box/lights/mixed,/obj/item/cigbutt/cigarbutt,/obj/item/candle{pixel_x = -5},/obj/item/storage/box/matches{pixel_x = 1; pixel_y = -1},/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"Bs" = (/obj/item/stack/sheet/mineral/diamond{amount = 50},/turf/open/floor/wood,/area/space)
+"Cm" = (/obj/effect/decal/cleanable/dirt/dust,/obj/machinery/iv_drip,/obj/structure/window/reinforced,/turf/open/floor/plating,/area/space)
 "Cr" = (/turf/open/floor/wood,/area/space)
 "CC" = (/obj/structure/table/wood,/obj/item/stack/sheet/mineral/silver{amount = 50},/turf/open/floor/wood,/area/space)
 "Ee" = (/obj/structure/rack,/obj/item/electronics/apc,/obj/effect/spawner/lootdrop/maintenance,/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"Ej" = (/obj/machinery/vending/cigarette,/turf/open/floor/plating,/area/space)
 "Ez" = (/obj/structure/table,/obj/item/paper_bin{pixel_x = -2; pixel_y = 5},/turf/open/floor/plating,/area/space)
+"FF" = (/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c100{pixel_y = 6; pixel_x = 3},/obj/item/stack/spacecash/c100{pixel_y = -5; pixel_x = 7},/obj/item/stack/spacecash/c100{pixel_y = 8; pixel_x = 7},/obj/item/stack/spacecash/c100{pixel_y = 7; pixel_x = -5},/turf/open/floor/wood,/area/space)
 "Go" = (/obj/structure/closet,/turf/open/floor/plating,/area/space)
-"Gq" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/chair/office/light,/turf/open/floor/plasteel/white,/area/space)
-"HB" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/windoor_assembly{dir = 2},/turf/open/floor/plasteel/white,/area/space)
+"Gq" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/spawner/lootdrop/maintenance/three,/obj/structure/closet/crate/medical,/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"GH" = (/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/space)
+"HB" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/spawner/lootdrop/memeorgans,/obj/structure/closet/crate/medical,/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"HI" = (/obj/effect/decal/cleanable/dirt/dust,/obj/item/documents/nanotrasen,/turf/open/floor/plasteel/white,/area/space)
+"HU" = (/obj/effect/decal/cleanable/dirt/dust,/obj/item/documents/syndicate/red,/turf/open/floor/plasteel/white,/area/space)
 "Iv" = (/obj/structure/table,/obj/item/storage/toolbox/emergency,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
-"IU" = (/obj/machinery/door/airlock/engineering,/obj/machinery/navbeacon/wayfinding,/turf/open/floor/plasteel,/area/space)
-"Jj" = (/obj/structure/table,/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plating,/area/space)
+"IU" = (/obj/machinery/navbeacon/wayfinding,/obj/machinery/door/airlock/engineering,/turf/open/floor/plasteel,/area/space)
+"Jj" = (/obj/structure/table,/obj/effect/decal/cleanable/cobweb,/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plating,/area/space)
 "Jo" = (/obj/structure/table,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/storage/box/lights/mixed,/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"Ju" = (/obj/structure/closet/firecloset,/obj/machinery/light/small{dir = 4},/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
 "Ka" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/wood,/area/space)
 "Kr" = (/obj/structure/closet/toolcloset,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel,/area/space)
-"MU" = (/turf/open/floor/plating{icon_state = "platingdmg3"},/area/space)
+"Lm" = (/obj/structure/reagent_dispensers/watertank,/turf/open/floor/plating,/area/space)
+"Mz" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/plating,/area/space)
+"MU" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/space)
+"NT" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/trash/can/food/peaches,/turf/open/floor/plasteel,/area/space)
+"NU" = (/obj/item/trash/popcorn{pixel_x = -4; pixel_y = 7},/turf/open/floor/plating,/area/space)
+"Oq" = (/obj/structure/table,/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plating,/area/space)
+"OH" = (/obj/structure/closet/crate{icon_state = "crateopen"},/obj/item/crowbar/red,/obj/effect/spawner/lootdrop/maintenance,/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/open/floor/plasteel,/area/space)
 "OZ" = (/obj/structure/table,/obj/item/flashlight/lamp,/turf/open/floor/plating,/area/space)
 "Pu" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/closet/cardboard,/obj/effect/spawner/lootdrop/maintenance/two,/obj/item/toy/plush/lizardplushie{name = "Tends-the-Wounds"},/turf/open/floor/plasteel/white,/area/space)
+"PM" = (/obj/structure/grille,/turf/open/floor/plating,/area/space)
 "PP" = (/obj/structure/closet/crate,/obj/item/clothing/under/color/lightpurple,/obj/item/stack/spacecash/c200,/turf/open/floor/plating,/area/space)
+"PW" = (/obj/effect/decal/cleanable/dirt,/obj/structure/closet,/obj/effect/spawner/lootdrop/maintenance/three,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
 "Qx" = (/obj/structure/table,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/rods/fifty,/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
-"QN" = (/obj/structure/chair/stool,/turf/open/floor/plating,/area/space)
-"RY" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/table/reinforced,/obj/item/clothing/gloves/color/blue{desc = "An old pair of nitrile gloves, with no sterile properties."; name = "old nitrile gloves"},/obj/item/clothing/mask/surgical,/obj/item/clothing/suit/apron/surgical,/obj/item/reagent_containers/glass/rag,/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"QN" = (/obj/structure/chair/stool,/obj/item/toy/plush/moth,/turf/open/floor/plating,/area/space)
+"RY" = (/obj/structure/sign/poster/random,/turf/closed/wall,/area/space)
 "Sd" = (/obj/structure/table/wood,/obj/item/stack/sheet/mineral/gold{amount = 50},/turf/open/floor/wood,/area/space)
+"Sv" = (/obj/effect/decal/cleanable/dirt/dust,/obj/item/trash/cheesie{pixel_x = -7; pixel_y = 7},/obj/item/trash/cheesie{pixel_y = -2; pixel_x = 8},/turf/open/floor/plating,/area/space)
+"SR" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/vomit/old,/turf/open/floor/plating,/area/space)
+"SX" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/open/floor/plasteel,/area/space)
 "TD" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/space)
+"TE" = (/obj/effect/decal/cleanable/dirt/dust,/obj/item/trash/candy,/turf/open/floor/plating,/area/space)
+"VZ" = (/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel,/area/space)
 "Wf" = (/obj/structure/rack,/obj/item/storage/fancy/rollingpapers{pixel_y = 4; pixel_x = 3},/obj/item/storage/fancy/rollingpapers,/turf/open/floor/wood,/area/space)
-"WM" = (/obj/structure/rack,/turf/open/floor/plating,/area/space)
-"Xt" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/rack,/obj/item/reagent_containers/blood/random,/obj/item/reagent_containers/food/drinks/bottle/vodka,/obj/structure/window/reinforced,/turf/open/floor/plasteel/white,/area/space)
+"WM" = (/obj/structure/rack,/obj/item/toy/plush/beeplushie,/turf/open/floor/plating,/area/space)
+"Xt" = (/mob/living/simple_animal/hostile/cockroach,/turf/open/floor/plating,/area/space)
 "YB" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/space)
+"Zu" = (/obj/effect/decal/cleanable/dirt,/obj/item/paper/fluff/awaymissions/academy/class/biology,/turf/open/floor/plating,/area/space)
 "ZG" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/wood,/area/space)
+"ZL" = (/obj/item/paper/fluff/holodeck/trek_diploma,/turf/open/floor/wood,/area/space)
 
 (1,1,1) = {"
-PuYBkXfAvudltlACriqMqMKrqD
-sTGqhTdldlYBzeACgGgAgAgAaD
-CmRYXtHBAxlXzVACIvJoeuEeQx
-pbpbpbpbpbpbbyACACTDIUACAC
-pbpbpbpbpbpbpbpbpbpbpbACPP
-pbpbrupbpbpbpbACTDaBTDACpb
-ACACqIACGoWMpbACpbpbpbpbpb
-CCSdCrACACACaBACOZQNpbpbMU
-SdKaCrvthmACpbACEzjJpbpbpb
-oCCrpEfBAHACpbaBpbpbpbpbpb
-CrCrpEAsypACpbACgyJjpbpbpb
-ZGCrypypypACaBACgapbpbpbpb
-nTakCrCrWfACpbpbpbpbpbpbpb
+PudlkXfAvuAxtlACriqMqMKrqD
+YBlXYBdlYBiszeACgGgAgAgAaD
+dlTEdlHUycAxdlACIvJoeuEeQx
+bygagySvdlYBHIACACTDIUACAC
+hTrusTzVCmGqHBACpbpbpbACPP
+EjpMpblmpbtbpbACTDaBTDACir
+ACACqIACGoWMirACpbpbpbpbpb
+CCSdCrACACACGHACOZQNpbACAC
+SdKaCrvthmACSRRYEzjJpbpbpb
+oCZLpEfBAHACXtNUlmpbpbpbOH
+BsCrpEAsypACMUJuACJjOqZuPM
+ZGCrdKbYemACSXPWACfxMzNTkC
+nTakCrFFWfACmQACACpKpbVZLm
 "}

@@ -1,38 +1,41 @@
+"aa" = (/obj/effect/turf_decal/stripes/box,/obj/machinery/rnd/production/techfab/department/security,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"ab" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/space)
+"ac" = (/obj/effect/spawner/structure/window/reinforced/tinted,/turf/open/floor/plating,/area/space)
+"ad" = (/obj/effect/spawner/structure/window/reinforced/tinted,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/floor/plating,/area/space)
 "bp" = (/obj/structure/chair/office{dir = 4},/obj/item/radio/intercom{pixel_x = 26; pixel_y = 26},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
 "bS" = (/obj/structure/extinguisher_cabinet{pixel_x = -26; pixel_y = 32},/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
 "cF" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/item/documents,/turf/open/floor/plasteel,/area/space)
 "cY" = (/obj/effect/landmark/secequipment,/obj/effect/turf_decal/bot,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "dZ" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
-"ek" = (/obj/machinery/door/airlock/security{name = "Interrogation Monitoring"; req_access_txt = "63"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/space)
+"ek" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/door/airlock/security{name = "Interrogation"},/turf/open/floor/plasteel/dark,/area/space)
 "eR" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/melee/baton,/turf/open/floor/plasteel,/area/space)
 "eS" = (/obj/machinery/photocopier,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
 "eW" = (/obj/structure/table/reinforced,/obj/item/paper_bin,/obj/item/pen,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "fy" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "gg" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/reagent_containers/food/snacks/donut/jelly,/turf/open/floor/plasteel,/area/space)
 "gL" = (/obj/machinery/holopad,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
-"gS" = (/obj/effect/spawner/structure/window/reinforced/tinted,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/cable,/turf/open/floor/plating,/area/space)
 "hs" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly,/turf/open/floor/plasteel,/area/space)
 "iC" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/machinery/vending/coffee,/turf/open/floor/plasteel,/area/space)
 "jX" = (/obj/structure/table/reinforced,/obj/item/restraints/handcuffs,/obj/item/assembly/flash/handheld,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "lS" = (/obj/item/kirbyplants/random,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
-"lZ" = (/obj/effect/turf_decal/stripes/box,/obj/machinery/rnd/production/techfab/department/security,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/obj/structure/cable,/turf/open/floor/plasteel,/area/space)
 "ms" = (/turf/open/floor/plasteel,/area/space)
 "mG" = (/obj/machinery/computer/secure_data{dir = 8},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "mM" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/paperplane,/turf/open/floor/plasteel/dark,/area/space)
 "mT" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"ng" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/security{name = "Interrogation"},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "nS" = (/obj/machinery/light,/obj/machinery/status_display/ai{pixel_y = -32},/obj/machinery/camera{c_tag = "Security - Office Aft"; dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/documents/syndicate/blue,/turf/open/floor/plasteel,/area/space)
 "pb" = (/obj/structure/table/reinforced,/obj/item/folder/red,/obj/item/flashlight/seclite,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "pT" = (/obj/structure/table/reinforced,/obj/item/clipboard,/obj/item/clothing/accessory/armband/deputy,/obj/item/clothing/accessory/armband/deputy,/obj/item/clothing/accessory/armband/deputy,/obj/item/clothing/accessory/armband/deputy,/obj/item/clothing/accessory/armband/deputy,/obj/item/reagent_containers/food/snacks/donut/jelly/choco,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "pX" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/reagent_containers/food/drinks/mug/coco{pixel_y = -7; pixel_x = 9},/obj/item/reagent_containers/food/drinks/mug/coco,/turf/open/floor/plasteel,/area/space)
-"qH" = (/obj/effect/spawner/structure/window/reinforced,/obj/structure/cable,/turf/open/floor/plating,/area/space)
 "rT" = (/turf/closed/wall/r_wall,/area/space)
 "tm" = (/obj/item/kirbyplants/random,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "tD" = (/obj/item/radio/intercom{frequency = 1423; name = "Interrogation Intercom"; pixel_y = -58},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "uv" = (/obj/effect/landmark/secequipment,/obj/machinery/light/small{dir = 4},/obj/effect/turf_decal/bot,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
-"vD" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/security{name = "Interrogation"; req_access_txt = "63"},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
+"vD" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/door/airlock/security{name = "Interrogation"},/turf/open/floor/plasteel/dark,/area/space)
 "wb" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/paper/fluff/awaymissions/snowdin/profile/sec1,/turf/open/floor/plasteel/dark,/area/space)
 "wN" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/paper/fluff/awaymissions/wildwest/journal/page4,/turf/open/floor/plasteel,/area/space)
 "wP" = (/obj/item/kirbyplants/random,/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"xQ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/security/glass{name = "Security Office"},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "zn" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/documents/nanotrasen,/turf/open/floor/plasteel,/area/space)
 "zY" = (/obj/structure/table/reinforced,/obj/item/folder/red,/obj/item/storage/secure/briefcase,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
 "Aj" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/item/paperplane,/turf/open/floor/plasteel,/area/space)
@@ -49,7 +52,6 @@
 "Ek" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/reagent_containers/food/snacks/donut/jelly/bungo,/turf/open/floor/plasteel,/area/space)
 "EP" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/item/storage/belt/security,/turf/open/floor/plasteel,/area/space)
 "EZ" = (/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/documents/syndicate,/turf/open/floor/plasteel,/area/space)
-"FQ" = (/obj/effect/spawner/structure/window/reinforced/tinted,/obj/structure/cable,/turf/open/floor/plating,/area/space)
 "GA" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/shard{icon_state = "small"},/turf/open/floor/plasteel/dark,/area/space)
 "GP" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/obj/item/documents/syndicate/red,/turf/open/floor/plasteel,/area/space)
 "Jr" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/restraints/handcuffs/cable/zipties/used,/obj/item/restraints/handcuffs/cable/zipties/used{pixel_y = -2; pixel_x = -4},/turf/open/floor/plasteel,/area/space)
@@ -77,7 +79,7 @@
 "Sp" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/item/paper/fluff/awaymissions/moonoutpost19/log/personal,/turf/open/floor/plasteel,/area/space)
 "Sq" = (/obj/item/shard,/obj/item/shard{icon_state = "medium"},/obj/item/stack/rods,/obj/item/stack/rods,/turf/open/floor/plating,/area/space)
 "Tq" = (/obj/machinery/computer/security/telescreen/entertainment{pixel_y = -32},/obj/effect/turf_decal/tile/red{dir = 8},/obj/item/paper/fluff/awaymissions/moonoutpost19/log/gerald,/turf/open/floor/plasteel,/area/space)
-"TF" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/security/glass{name = "Security Office"; req_access_txt = "63"},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"TF" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/machinery/door/airlock/security/glass{name = "Security Office"},/turf/open/floor/plasteel,/area/space)
 "TG" = (/obj/item/storage/pod{pixel_x = 32},/obj/effect/landmark/secequipment,/obj/effect/turf_decal/bot,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "TM" = (/obj/machinery/computer/security{dir = 8},/obj/machinery/status_display/evac{pixel_x = 32},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
 "TV" = (/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
@@ -103,17 +105,17 @@
 "ZW" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/item/vending_refill/coffee,/turf/open/floor/plasteel,/area/space)
 
 (1,1,1) = {"
-KdlSiCrTYFGPmTWzJAlZBQbpTM
-AspXZWqHbSUkKyKyZpMSKhCzmG
-ZDMEKxqHZDXfNRXpZDznKhAjtm
+KdlSiCrTYFGPmTWzJAaaBQbpTM
+AspXZWabbSUkKyKyZpMSKhCzmG
+ZDMEKxabZDXfNRXpZDznKhAjtm
 ggKhEPrTwNXfjXBwDCXxeSCzdZ
-RdKhSpqHDCCzfyZDSfpTYVCzmM
+RdKhSpabDCCzfyZDSfpTYVCzmM
 ZDKhUGTFmsXfpbEkZpMkKOcFcY
-JPKhCzTFYpXfzYeWZDVpKhCzcY
-ZDeRCzqHZpTVOlOlDChsKhCzuv
+JPKhCzxQYpXfzYeWZDVpKhCzcY
+ZDeRCzabZpTVOlOlDChsKhCzuv
 VTKhLbrTLGTqmsZTnSwPEZTVTG
-PGKhYnrTrTrTvDrTrTrTFQekFQ
-ZDJrCzLItmDEdZgLdZFQZLwbtm
-ZDKhCzvDdZLHYaBYGASqdZtDDU
-BMmsKKLIdZLHAkWvdZgSBYOeVt
+PGKhYnrTrTrTvDrTrTrTacekac
+ZDJrCzLItmDEdZgLdZacZLwbtm
+ZDKhCzngdZLHYaBYGASqdZtDDU
+BMmsKKLIdZLHAkWvdZadBYOeVt
 "}
