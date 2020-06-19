@@ -210,17 +210,18 @@
 
 ///Makes the mind able to see this effect
 /obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)
-	//dont runtime if any of these dont exist, we will get em next time.
+	minds |= cultie
 	if(cultie.current.client)
 		cultie.current.client.images |= img
-		minds |= cultie
+
 
 
 ///Makes the mind not able to see this effect
 /obj/effect/reality_smash/proc/RemoveMind(var/datum/mind/cultie)
+	minds -= cultie
 	if(cultie.current.client)
 		cultie.current.client.images -= img
-		minds -= cultie
+
 
 
 ///Generates random name
