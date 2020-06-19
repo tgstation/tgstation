@@ -122,7 +122,7 @@
 		if ((ismob(O) && !isliving(O)) || (is_type_in_typecache(O, GLOB.blacklisted_cargo_types) && !isliving(O))) //We dont want to take ghosts with us, and we don't want blacklisted items going, but we allow mobs.
 			continue
 		O.forceMove(holder) //Put objects inside before we close
-	var/obj/effect/temp_visual/risingPod = new /obj/effect/DPfall(get_turf(holder), src) //Make a nice animation of flying back up
+	var/obj/effect/temp_visual/risingPod = new /obj/effect/dp_fall(get_turf(holder), src) //Make a nice animation of flying back up
 	risingPod.pixel_z = 0 //The initial value of risingPod's pixel_z is 200 because it normally comes down from a high spot
 	animate(risingPod, pixel_z = 200, time = 10, easing = LINEAR_EASING) //Animate our rising pod
 	if (returntobay)
@@ -261,7 +261,7 @@
 	. = ..()
 
 //------------------------------------FALLING SUPPLY POD-------------------------------------//
-/obj/effect/DPfall //Falling pod
+/obj/effect/dp_fall //Falling pod
 	name = ""
 	icon = 'icons/obj/supplypods.dmi'
 	pixel_x = -16
@@ -271,7 +271,7 @@
 	layer = FLY_LAYER//that wasn't flying, that was falling with style!
 	icon_state = ""
 
-/obj/effect/DPfall/Initialize(dropLocation, obj/structure/closet/supplypod/pod)
+/obj/effect/dp_fall/Initialize(dropLocation, obj/structure/closet/supplypod/pod)
 	if (pod.style == STYLE_SEETHROUGH)
 		pixel_x = -16
 		pixel_y = 0
@@ -284,7 +284,7 @@
 	. = ..()
 
 //------------------------------------TEMPORARY_VISUAL-------------------------------------//
-/obj/effect/DPtarget //This is the object that forceMoves the supplypod to it's location
+/obj/effect/dp_target //This is the object that forceMoves the supplypod to it's location
 	name = "Landing Zone Indicator"
 	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
 	icon = 'icons/mob/actions/actions_items.dmi'
@@ -297,7 +297,7 @@
 /obj/effect/ex_act()
 	return
 
-/obj/effect/DPtarget/Initialize(mapload, podParam, single_order = null)
+/obj/effect/dp_target/Initialize(mapload, podParam, single_order = null)
 	. = ..()
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
 		podParam = new podParam() //If its just a path, instantiate it
@@ -326,11 +326,11 @@
 		addtimer(CALLBACK(src, .proc/playFallingSound), soundStartTime)
 	addtimer(CALLBACK(src, .proc/beginLaunch, pod.effectCircle), pod.landingDelay)
 
-/obj/effect/DPtarget/proc/playFallingSound()
+/obj/effect/dp_target/proc/playFallingSound()
 	playsound(src, pod.fallingSound, pod.soundVolume, TRUE, 6)
 
-/obj/effect/DPtarget/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
-	fallingPod = new /obj/effect/DPfall(drop_location(), pod)
+/obj/effect/dp_target/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
+	fallingPod = new /obj/effect/dp_fall(drop_location(), pod)
 	var/matrix/M = matrix(fallingPod.transform) //Create a new matrix that we can rotate
 	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from
 	fallingPod.pixel_x = cos(angle)*400 //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the target
@@ -344,7 +344,7 @@
 	animate(fallingPod, pixel_z = 0, pixel_x = -16, time = pod.fallDuration, , easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, .proc/endLaunch), pod.fallDuration, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
-/obj/effect/DPtarget/proc/endLaunch()
+/obj/effect/dp_target/proc/endLaunch()
 	pod.update_icon()
 	pod.forceMove(drop_location()) //The fallingPod animation is over, now's a good time to forceMove the actual pod into position
 	QDEL_NULL(fallingPod) //Delete the falling pod effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears

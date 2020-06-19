@@ -283,7 +283,7 @@
 	set waitfor = FALSE
 	if(!SSdbcore.Connect())
 		return
-	var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery({"
+	var/datum/db_query/query_round_shuttle_name = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("round")] SET shuttle_name = :name WHERE id = :round_id
 	"}, list("name" = name, "round_id" = GLOB.round_id))
 	query_round_shuttle_name.Execute()

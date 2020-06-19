@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a scenario that allowed infinite resource generation via ore machines."

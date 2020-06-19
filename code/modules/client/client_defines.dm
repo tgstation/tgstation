@@ -102,7 +102,7 @@
 	var/list/clicklimiter
 
 	///goonchat chatoutput of the client
-	var/datum/chatOutput/chatOutput
+	var/datum/chat_output/chatOutput
 
  	///lazy list of all credit object bound to this client
 	var/list/credits
@@ -141,7 +141,7 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
-	var/datum/viewData/view_size
+	var/datum/view_data/view_size
 	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
 	var/list/recent_examines
 

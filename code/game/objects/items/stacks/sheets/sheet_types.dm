@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
  * Plasteel
  */
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
-	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = TRUE), \
+	new/datum/stack_recipe("AI core", /obj/structure/ai_core, 4, time = 50, one_per_turf = TRUE), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
 	null, \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
@@ -304,9 +304,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/blindfold, 2), \
 	null, \
-	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteenXnineteen, 3), \
-	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythreeXnineteen, 4), \
-	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythreeXtwentythree, 5), \
+	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3), \
+	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4), \
+	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5), \
 	))
 
 /obj/item/stack/sheet/cloth
@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes),					\
 		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs),				\
 		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids),						\
-		new /datum/stack_recipe("PDA box", /obj/item/storage/box/PDAs),							\
+		new /datum/stack_recipe("PDA box", /obj/item/storage/box/pdas),							\
 		null,																					\
 
 		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles),			\

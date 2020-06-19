@@ -191,8 +191,8 @@
 /obj/structure/closet/crate/medical,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/healthanalyzer,
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Crew Quarters APC";

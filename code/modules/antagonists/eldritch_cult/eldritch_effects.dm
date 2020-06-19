@@ -167,6 +167,8 @@
 	name = "Pierced reality"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
+	anchored = TRUE
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/broken_illusion/examine(mob/user)
 	if(!IS_HERETIC(user) && ishuman(user))
@@ -178,6 +180,8 @@
 /obj/effect/reality_smash
 	name = "/improper reality smash"
 	icon = 'icons/effects/eldritch.dmi'
+	anchored = TRUE
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
 	var/image_state = "reality_smash"
 	///Who can see us?

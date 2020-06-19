@@ -79,7 +79,7 @@
 /obj/item/ammo_box/magazine/m50
 	name = "handgun magazine (.50ae)"
 	icon_state = "50ae"
-	ammo_type = /obj/item/ammo_casing/a50AE
+	ammo_type = /obj/item/ammo_casing/a50ae
 	caliber = ".50"
 	max_ammo = 7
 	multiple_sprites = AMMO_BOX_PER_BULLET

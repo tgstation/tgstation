@@ -25,7 +25,7 @@
 	miner_fluff_string = "<span class='holoparasite'>You encounter... Diamond, a powerful projectile thrower.</span>"
 	see_invisible = SEE_INVISIBLE_LIVING
 	see_in_dark = 8
-	toggle_button_type = /obj/screen/guardian/ToggleMode
+	toggle_button_type = /obj/screen/guardian/toggle_mode
 	var/list/snares = list()
 	var/toggle = FALSE
 
