@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Defibbing now works properly on ALL species that don't require hearts to survive, as opposed to just plasmamen."
-  - bugfix: "Defibbing now works properly on mobs with the Muscled Veins trait if their heart was removed."

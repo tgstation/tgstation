@@ -220,10 +220,10 @@
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 	icon_state = "hair_vlong"
 	inhand_icon_state = "pwig"
+	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR
 	color = "#000"
 	var/hairstyle = "Very Long Hair"
-	var/hairstyle_icon = "hair_vlong"
 	var/adjustablecolor = TRUE //can color be changed manually?
 
 /obj/item/clothing/head/wig/Initialize(mapload)
@@ -235,7 +235,8 @@
 	if(!S)
 		return
 	else
-		hairstyle_icon = S.icon_state
+		icon_state = S.icon_state
+
 
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
 	. = list()
@@ -243,7 +244,7 @@
 		var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
 		if(!S)
 			return
-		var/mutable_appearance/M = mutable_appearance(S.icon, hairstyle_icon,layer = -HAIR_LAYER)
+		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
 		M.appearance_flags |= RESET_COLOR
 		M.color = color
 		. += M

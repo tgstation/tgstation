@@ -45,6 +45,10 @@
 		var/datum/space_level/D = A
 		if (D.linkage == CROSSLINKED)
 			possible_transtitons += D.z_value
+	if(!length(possible_transtitons)) //No space to throw them to - try throwing them onto mining
+		possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_MINING)
+		if(!length(possible_transtitons)) //Just throw them back on station, if not just runtime.
+			possible_transtitons = SSmapping.levels_by_trait(ZTRAIT_STATION)
 	var/_z = pick(possible_transtitons)
 
 	//now select coordinates for a border turf

@@ -27,6 +27,4 @@
 		if(!istype(new_team))
 			CRASH("Wrong swarmer team type provided to create_team")
 		swarmer_team = new_team
-
-/datum/antagonist/swarmer/get_team()
-	return swarmer_team
+		return ..()
