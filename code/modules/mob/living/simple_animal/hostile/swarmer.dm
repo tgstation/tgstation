@@ -409,7 +409,7 @@
 	else
 		to_chat(src, "<span class='warning'>You do not have the necessary resources to fabricate this object.</span>")
 		return
-	return new fabrication_object(loc)
+	return new fabrication_object(drop_location())
 
 /**
   * Called when a swarmer attempts to consume an object
