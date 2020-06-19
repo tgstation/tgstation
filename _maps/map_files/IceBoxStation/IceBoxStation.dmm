@@ -8715,15 +8715,10 @@
 /turf/closed/wall,
 /area/maintenance/port/fore)
 "auf" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Detective Maintenance";
-	req_access_txt = "4"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/fore)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/vending/wardrobe/det_wardrobe,
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "aug" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -9179,8 +9174,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	name = "Detective Maintenance";
+	req_access_txt = "4"
+	},
 /turf/open/floor/plating,
-/area/maintenance/fore)
+/area/security/detectives_office)
 "avi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -30123,6 +30122,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bts" = (
@@ -30567,7 +30569,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area)
 "but" = (
 /obj/machinery/door/airlock/external{
 	name = "Internal Airlock";
@@ -31725,9 +31727,6 @@
 /turf/closed/wall,
 /area/maintenance/disposal/incinerator)
 "bxi" = (
-/obj/machinery/computer/aifixer{
-	dir = 8
-	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Research Director's Desk";
@@ -31740,8 +31739,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/machinery/computer/rdconsole/core{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/heads/hor)
+/area)
 "bxj" = (
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen/rd,
@@ -40312,7 +40314,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/virology)
+/area)
 "bST" = (
 /obj/machinery/door_buttons/airlock_controller{
 	idExterior = "virology_airlock_exterior";
@@ -52035,6 +52037,9 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/science/xenobiology)
+"hIi" = (
+/turf/open/floor/plating,
+/area)
 "hJq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/medical/glass{
@@ -53626,6 +53631,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"pbq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area)
 "pdB" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/table,
@@ -54030,6 +54041,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"qak" = (
+/turf/closed/wall,
+/area)
 "qas" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/plasteel/white,
@@ -54083,6 +54097,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"qly" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area)
 "qrH" = (
 /obj/machinery/door/window/westleft{
 	base_state = "right";
@@ -55093,8 +55117,8 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/fore)
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "vxh" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/eight,
@@ -55502,6 +55526,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
+"xjy" = (
+/obj/item/storage/book/bible,
+/obj/structure/altar_of_gods,
+/turf/open/floor/plasteel/dark,
+/area/chapel/main)
 "xkP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -82545,7 +82574,7 @@ qHT
 fBs
 dyN
 wUs
-qHT
+auf
 vsa
 avh
 awh
@@ -82802,8 +82831,8 @@ apd
 yay
 mSf
 arW
-apd
-auf
+bLE
+pgP
 apd
 awe
 axy
@@ -92890,7 +92919,7 @@ bzs
 bPn
 bzs
 bus
-bzs
+qak
 bzs
 bPn
 caI
@@ -93145,8 +93174,8 @@ bLT
 bLT
 bLT
 bUY
-bzs
-bAw
+qak
+hIi
 bzs
 buA
 bAw
@@ -93401,8 +93430,8 @@ bNc
 bNc
 bNc
 bTY
-bKH
-bzs
+qly
+qak
 but
 bzs
 bAw
@@ -93915,7 +93944,7 @@ bQD
 bLY
 bMa
 bTZ
-bKH
+qly
 bAw
 bAw
 bAw
@@ -94170,7 +94199,7 @@ bOn
 bOr
 bOr
 bRO
-bSQ
+pbq
 bTZ
 bul
 bup
@@ -102608,7 +102637,7 @@ aFz
 aTe
 aML
 aFz
-aFz
+xjy
 aQw
 aRS
 aRS
