@@ -248,7 +248,7 @@
 			new floor.floor_tile(floor)
 		floor.broken = 0
 		floor.burnt = 0
-		floor.make_plating(1)
+		floor.make_plating(TRUE)
 	if(T.type == /turf/closed/wall && prob(15))
 		new /obj/effect/temp_visual/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/rust)
