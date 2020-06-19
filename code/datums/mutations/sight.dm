@@ -59,12 +59,31 @@
 
 ///X-ray Vision lets you see through walls.
 /datum/mutation/human/thermal/x_ray
-	name = "X Ray Vision"
+	name = "X-Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later //hmb
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 	instability = 35
 	locked = TRUE
 	visionflag = TRAIT_XRAY_VISION
+
+///A mutation that's only found naturally in moths. Gives you a spell that lets you set your vision range.
+/datum/mutation/human/farsight
+	name = "Far Sight"
+	desc = "The user of this genome can see farther than normal."
+	text_gain_indication = "<span class='notice'>You can see the bigger picture now.</span>"
+	instability = 20
+	locked = TRUE
+	power = /obj/effect/proc_holder/spell/targeted/view_range/farsight
+
+/datum/mutation/human/farsight/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	if(owner.client)
+		owner.client.view_size.resetToDefault()
+
+/obj/effect/proc_holder/spell/targeted/view_range/farsight
+	name = "Far Sight"
+	desc = "Hey, I think I can see my house from here!"
 
 ///Laser Eyes lets you shoot lasers from your eyes!
 /datum/mutation/human/laser_eyes
@@ -76,12 +95,6 @@
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = BODY_ZONE_HEAD
-	instability = 40
-	var/cooldown_mult = 1
-
-/datum/mutation/human/laser_eyes/lesser //moths can roll this as a dormant mutation
-	name = "Lesser Laser Eyes"
-	cooldown_mult = 1.5
 
 /datum/mutation/human/laser_eyes/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
@@ -108,7 +121,7 @@
 	if(source.a_intent != INTENT_HARM)
 		return
 	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
-	source.changeNext_move(CLICK_CD_RANGE * cooldown_mult)
+	source.changeNext_move(CLICK_CD_RANGE)
 	source.newtonian_move(get_dir(target, source))
 	var/obj/projectile/beam/laser_eyes/LE = new(source.loc)
 	LE.firer = source

@@ -20,7 +20,6 @@
 #define RACEMUT		/datum/mutation/human/race
 #define BADSIGHT	/datum/mutation/human/nearsight
 #define LASEREYES	/datum/mutation/human/laser_eyes
-#define LASEREYESLESSER	/datum/mutation/human/laser_eyes/lesser
 #define CHAMELEON	/datum/mutation/human/chameleon
 #define WACKY		/datum/mutation/human/wacky
 #define MUT_MUTE	/datum/mutation/human/mute
@@ -56,6 +55,7 @@
 #define SPIDER_WEB	/datum/mutation/human/webbing
 #define MARTYRDOM	/datum/mutation/human/martyrdom
 #define HARS		/datum/mutation/human/headless
+#define FARSIGHT /datum/mutation/human/farsight
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
