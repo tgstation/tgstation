@@ -84,6 +84,7 @@
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	LoadDefaultArenas()
+	default_arenas_loaded = TRUE
 	GenerateAntagHuds()
 
 /obj/machinery/computer/arena/proc/GenerateAntagHuds()

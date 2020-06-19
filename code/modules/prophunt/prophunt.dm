@@ -107,7 +107,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 /obj/machinery/computer/arena/prophunt
 	name = "Prophunt Control"
 	arena_id = "prophunt_arena"
-	var/auto = FALSE //Toggle to start autogame
+	var/auto = TRUE //Toggle to start autogame
 	var/game_state = PROPHUNT_SIGNUPS
 	var/list/projectors = list()
 	var/list/hiders = list() //NOT A TRUE LIST AFTER GAME STARTS, AS HIDERS WILL GET REMOVED FROM THIS LIST
@@ -137,7 +137,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	try_autostart()
 
 /obj/machinery/computer/arena/prophunt/proc/try_autostart()
-	if(auto && game_state == PROPHUNT_SIGNUPS && GLOB.minigame_signups.GetCurrentPlayerCount("prophunt") > hider_count + searcher_count)
+	if(auto && game_state == PROPHUNT_SIGNUPS && GLOB.minigame_signups.GetCurrentPlayerCount("prophunt") >= hider_count + searcher_count)
 		start_game()
 
 /obj/machinery/computer/arena/prophunt/proc/debug_signups()
@@ -239,3 +239,13 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 /obj/effect/landmark/arena/prophunt/searcher_spawn
 	name = "searcher spawn"
 	landmark_tag = PROPHUNT_SEARCHER_SPAWN
+
+/obj/machinery/computer/arena/prophunt/LoadDefaultArenas()
+	. = ..()
+	if(default_arenas_loaded)
+		return
+	var/arena_dir = "_maps/map_files/Prophunt/"
+	var/list/default_arenas = flist(arena_dir)
+	for(var/arena_file in default_arenas)
+		var/simple_name = replacetext(replacetext(arena_file,arena_dir,""),".dmm","")
+		add_new_arena_template(null,arena_dir + arena_file,simple_name)
