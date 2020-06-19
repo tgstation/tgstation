@@ -6,12 +6,12 @@
 
 	var/player_old_bodies = list() //We send players back to their bodies after
 
-	var/first_day_phase_period = 20 SECONDS
-	var/day_phase_period = 1 MINUTES
-	var/voting_phase_period = 30 SECONDS
+	var/first_day_phase_period = 20 SECONDS //say hi to everyone, no voting so no discussion
+	var/day_phase_period = 1 MINUTES //talk with others about the night
+	var/voting_phase_period = 30 SECONDS //vote someone to get put on trial
 	var/judgement_phase_period = 30 SECONDS //defend yourself! don't get lynched!
-	var/night_phase_period = 45 SECONDS
-	var/victory_lap_period = 30 SECONDS
+	var/night_phase_period = 45 SECONDS //mafia talk and pick someone to kill
+	var/victory_lap_period = 20 SECONDS //just waiting around sayin' woop woop
 
 	var/list/current_setup_text //Redable list of roles in current game
 
@@ -86,12 +86,12 @@
 
 /datum/mafia_controller/proc/start_voting_phase()
 	phase = MAFIA_PHASE_VOTING
-	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial),voting_phase_period,TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, TRUE),voting_phase_period,TIMER_STOPPABLE)
 	send_message("<span class='big'>Voting started! Vote for who you want to see on trial today.</span>")
 	SStgui.update_uis(src)
 
 /datum/mafia_controller/proc/check_trial(verbose = FALSE)
-	var/datum/mafia_role/loser = get_vote_winner("Day")
+	var/datum/mafia_role/loser = get_vote_winner("Day", majority_of_town = TRUE)
 	if(loser)
 		send_message("<span class='big'>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</span>")
 		on_trial = loser
@@ -101,8 +101,8 @@
 	else
 		if(verbose)
 			send_message("<span class='big'>Not enough people have voted to put someone on trial, nobody will be lynched today.</span>")
-	if(!check_victory())
-		lockdown()
+		if(!check_victory())
+			lockdown()
 	SStgui.update_uis(src)
 
 /datum/mafia_controller/proc/lynch()
@@ -113,14 +113,14 @@
 		var/datum/mafia_role/role = ii
 		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
-		send_message("<span class='big red'>Guilty wins majority, [role.body.real_name] has been lynched.</span>")
+		send_message("<span class='big red'>Guilty wins majority, [on_trial.body.real_name] has been lynched.</span>")
 		on_trial.kill(src, lynch = TRUE)
 	else
-		send_message("<span class='big green'>Innocent wins majority, [role.body.real_name] has been spared.</span>")
+		send_message("<span class='big green'>Innocent wins majority, [on_trial.body.real_name] has been spared.</span>")
 
 	judgement_innocent_votes = list()
 	judgement_guilty_votes = list()
-	on_trial
+	on_trial = null
 	check_trial()//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
 
 /datum/mafia_controller/proc/check_victory()

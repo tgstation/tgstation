@@ -57,18 +57,34 @@ export const MafiaPanel = (props, context) => {
                 </Button>
               </Flex.Item>);
           })}
-          { !!admin_controls && (
-            <Section title = "ADMIN PANEL">
-              <Fragment>
-                <Flex.Item>
-                  <Button onClick={() => act("next_phase")}>Next Phase</Button>
-                </Flex.Item>
-                <FlexItem>
-                  <Button onClick={() => act("new_game")}>New Game</Button>
-                </FlexItem>
-              </Fragment>)}
-              </Section>
         </Flex>
+        {!!admin_controls && (
+          <Section title="ADMIN CONTROLS">
+            <Table>
+              <TableRow>
+                <TableCell>
+                  DO NOT USE THESE IF YOU ARE PLAYING, ADMIN
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Fragment>
+                    <Flex.Item>
+                      <Button
+                        onClick={() => act("next_phase")}>Next Phase
+                      </Button>
+                    </Flex.Item>
+                    <FlexItem>
+                      <Button
+                        onClick={() => act("new_game")}>New Game
+                      </Button>
+                    </FlexItem>
+                  </Fragment>
+                </TableCell>
+              </TableRow>
+            </Table>
+          </Section>
+        )}
         <Section title="Players">
           <LabeledList>
             {!!players && players.map(player => { return (
@@ -96,26 +112,26 @@ export const MafiaPanel = (props, context) => {
           </LabeledList>
         </Section>
         {!!judgement_phase && (
-          <Section title="Judgement">
+          <Section title="JUDGEMENT">
             <Table>
               <TableRow>
                 <TableCell>
-                  If someone is on trial, you can use these buttons to vote them innocent or guilty.
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Fragment>
-                    <Flex.Item>
-                      <Button onClick={() => act("vote_innocent")}>INNOCENT!</Button>
-                    </Flex.Item>
-                    <FlexItem>
-                      <Button onClick={() => act("vote_guilty")}>GUILTY!</Button>
-                    </FlexItem>
-                  </Fragment>
+                  Use these buttons to vote the accused innocent or guilty!
                 </TableCell>
               </TableRow>
             </Table>
+            <Fragment>
+              <Flex.Item>
+                <Button
+                  onClick={() => act("vote_innocent")}>INNOCENT!
+                </Button>
+              </Flex.Item>
+              <FlexItem>
+                <Button
+                  onClick={() => act("vote_guilty")}>GUILTY!
+                </Button>
+              </FlexItem>
+            </Fragment>
           </Section>
         )}
         <Section title="Roles">
