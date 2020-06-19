@@ -54,6 +54,98 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtype = MEAT | VEGETABLES | FRIED
 
+#define CARPCAKE_MAX_STACK 10
+
+/obj/item/reagent_containers/food/snacks/carpcakes
+	name = "Carpcakes"
+	desc = "A flaky and crunchy fishcake. You can almost make out how crisp the cake is by tapping it with a fork."
+	icon_state = "carpcakes_1"
+	item_state = "carpcakes"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
+	filling_color = "#D2691E"
+	tastes = list("fish" = 1, "breadcrumbs" = 1)
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/carpcakes/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/reagent_containers/food/snacks/carpcake/update_icon()
+	if(contents.len)
+		name = "stack of carpcakes"
+	else
+		name = initial(name)
+	if(contents.len < LAZYLEN(overlays))
+		overlays-=overlays[overlays.len]
+
+/obj/item/reagent_containers/food/snacks/carpcakes/examine(mob/user)
+	var/ingredients_listed = ""
+	var/carpcakeCount = contents.len
+	switch(carpcakeCount)
+		if(0)
+			desc = initial(desc)
+		if(1 to 2)
+			desc = "A stack of crispy carpcakes."
+		if(3 to 6)
+			desc = "A fat stack of crispy carpcakes!"
+		if(7 to 9)
+			desc = "A grand tower of crispy, delicious carpcakes!"
+		if(CARPCAKE_MAX_STACK to INFINITY)
+			desc = "A massive towering spire of crispy, delicious carpcakes. It looks like it could tumble over!"
+	var/originalBites = bitecount
+	if (carpcakeCount)
+		var/obj/item/reagent_containers/food/snacks/S = contents[carpcakeCount]
+		bitecount = S.bitecount
+	. = ..()
+	if (carpcakeCount)
+		for(var/obj/item/reagent_containers/food/snacks/carpcakes/ING in contents)
+			ingredients_listed += "[ING.name], "
+		. += "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)]."
+	bitecount = originalBites
+
+/obj/item/reagent_containers/food/snacks/carpcakes/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/carpcakes/))
+		var/obj/item/reagent_containers/food/snacks/carpcakes/P = I
+		if((contents.len >= CARPCAKE_MAX_STACK) || ((P.contents.len + contents.len) > CARPCAKE_MAX_STACK) || (reagents.total_volume >= volume))
+			to_chat(user, "<span class='warning'>You can't add that many carpcakes to [src]!</span>")
+		else
+			if(!user.transferItemToLoc(I, src))
+				return
+			to_chat(user, "<span class='notice'>You add the [I] to the [name].</span>")
+			P.name = initial(P.name)
+			contents += P
+			update_snack_overlays(P)
+			if (P.contents.len)
+				for(var/V in P.contents)
+					P = V
+					P.name = initial(P.name)
+					contents += P
+					update_snack_overlays(P)
+			P = I
+			P.contents.Cut()
+		return
+	else if(contents.len)
+		var/obj/O = contents[contents.len]
+		return O.attackby(I, user, params)
+	..()
+
+/obj/item/reagent_containers/food/snacks/carpcakes/update_snack_overlays(obj/item/reagent_containers/food/snacks/P)
+	var/mutable_appearance/carpcake = mutable_appearance(icon, "[P.item_state]_[rand(1,3)]")
+	carpcake.pixel_x = rand(-1,1)
+	carpcake.pixel_y = 3 * contents.len - 1
+	add_overlay(carpcake)
+	update_icon()
+
+/obj/item/reagent_containers/food/snacks/carpcakes/attack(mob/M, mob/user, def_zone, stacked = TRUE)
+	if(user.a_intent == INTENT_HARM || !contents.len || !stacked)
+		return ..()
+	var/obj/item/O = contents[contents.len]
+	. = O.attack(M, user, def_zone, FALSE)
+	update_icon()
+
+#undef CARPCAKE_MAX_STACK
+
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/tofu
@@ -199,6 +291,16 @@
 	filling_color = "#FFA07A"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/capsaicin = 6)
 	tastes = list("hot peppers" = 1, "meat" = 3, "cheese" = 1, "sour cream" = 1)
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/tamales
+	name = "tamales"
+	desc = "A beloved dish from Space Mexico!"
+	icon_state = "tamales"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
+	bitesize = 4
+	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/capsaicin = 1)
+	tastes = list("spice" = 1, "meat" = 3, "cheese" = 1, "masa" = 1)
 	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/stewedsoymeat

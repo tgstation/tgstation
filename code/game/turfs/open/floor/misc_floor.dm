@@ -180,3 +180,20 @@
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
 	broken_states = list("damaged")
+
+/turf/open/floor/brass
+	name = "brass stairs"
+	icon = 'icons/obj/stairs.dmi'
+	icon_state = "stairs_b"
+
+/turf/open/floor/brass/north
+	dir = NORTH
+
+/turf/open/floor/brass/south
+	dir = SOUTH
+
+/turf/open/floor/brass/east
+	dir = EAST
+
+/turf/open/floor/brass/west
+	dir = WEST

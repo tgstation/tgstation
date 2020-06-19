@@ -135,6 +135,18 @@
 	result = /obj/item/reagent_containers/food/snacks/enchiladas
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/tamales
+	name = "Tamales"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/reagent_containers/food/snacks/dough = 1,
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/glass/bowl = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/tamales
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/stewedsoymeat
 	name = "Stewed soymeat"
 	reqs = list(

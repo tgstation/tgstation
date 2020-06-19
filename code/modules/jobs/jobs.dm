@@ -4,7 +4,9 @@ GLOBAL_LIST_INIT(command_positions, list(
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
-	"Chief Medical Officer"))
+	"Chief Medical Officer",
+	"Head of Service",
+	"Quartermaster"))
 
 
 GLOBAL_LIST_INIT(engineering_positions, list(
@@ -36,6 +38,7 @@ GLOBAL_LIST_INIT(supply_positions, list(
 
 
 GLOBAL_LIST_INIT(service_positions, list(
+	"Head of Service",
 	"Bartender",
 	"Botanist",
 	"Cook",
@@ -114,6 +117,7 @@ GLOBAL_PROTECT(exp_specialmap)
 	var/static/regex/cap_expand = new("cap(?!tain)")
 	var/static/regex/cmo_expand = new("cmo")
 	var/static/regex/hos_expand = new("hos")
+	var/static/regex/hose_expand = new("hose")
 	var/static/regex/hop_expand = new("hop")
 	var/static/regex/rd_expand = new("rd")
 	var/static/regex/ce_expand = new("ce")
@@ -130,6 +134,7 @@ GLOBAL_PROTECT(exp_specialmap)
 	job = cap_expand.Replace(job, "captain")
 	job = cmo_expand.Replace(job, "chief medical officer")
 	job = hos_expand.Replace(job, "head of security")
+	job = hose_expand.Replace(job, "head of service")
 	job = hop_expand.Replace(job, "head of personnel")
 	job = rd_expand.Replace(job, "research director")
 	job = ce_expand.Replace(job, "chief engineer")

@@ -1,0 +1,38 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/indestructible/rock,/area/ruin/powered/godpainting)
+"c" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"d" = (/turf/open/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"e" = (/obj/structure/stonenarsie,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"f" = (/obj/structure/stoneratvar,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"g" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"h" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"i" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"j" = (/obj/structure/kingspetals,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"k" = (/obj/structure/kingspetals,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"l" = (/obj/structure/basaltpetals2,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"m" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"n" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/ruin/powered/godpainting)
+"o" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"p" = (/obj/structure/basaltpetals1,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"q" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"r" = (/obj/structure/basaltpetals1,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"s" = (/obj/structure/kingspetals{bound_height = 32; bound_width = 32},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+"t" = (/obj/item/gps{gpstag = "Ancient Paintings"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/godpainting)
+
+(1,1,1) = {"
+aaaaddddaaaddaa
+ddddddddddddddd
+dbbbbddbbdbbbdd
+dbbbbbbbbbbbbbd
+dbbccccbccccbbd
+dbbccccbcctcbbd
+dbbecccbfcccbbd
+dbbhcccsclmcbdd
+ddnccockpcclnda
+gdncccckccpcnda
+gdnnqcckclnnnda
+gdnnnnckcnnnnda
+gdddddijgddddda
+aaaagggjgggaaaa
+aaaaaggggraaaaa
+"}

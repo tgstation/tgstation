@@ -80,6 +80,7 @@
 /// Pharmacy access (Chemistry room in Medbay)
 #define ACCESS_PHARMACY 69 ///Nice.
 #define ACCESS_PSYCHOLOGY 70
+#define ACCESS_HOSE 71
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.

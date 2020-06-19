@@ -29,10 +29,12 @@
 	item_state = "waiter"
 
 /obj/item/clothing/under/suit/ratvar
-	name = "possessed suit"
+	name = "Clockwork Suit"
 	desc = "A weird suit. Why does it sound like a clock is ticking?"
 	icon_state = "ratvar_suit"
 	item_state = "ratvar_suit"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /obj/item/clothing/under/suit/blacktwopiece
 	name = "black two piece suit"
@@ -57,9 +59,27 @@
 
 /obj/item/clothing/under/suit/king_attire
 	name = "King's Attire"
-	desc = "A white suit, Lawrence's bandana is being used as an ascot."
+	desc = "An elegant white suit, fit for someone of high class. Occasionally white pedals can be seen falling out of the suit jacket."
 	icon_state = "king_attire"
 	item_state = "king_attire"
+
+/obj/item/clothing/under/suit/old_military_uniform
+	name = "Old Military Uniform"
+	desc = "A military uniform from the Sengoku Period. Upon closer inspection, the suit seems to be a bootleg replica, perfect for cosplayers!"
+	icon_state = "old_military_uniform"
+	item_state = "old_military_uniform"
+
+/obj/item/clothing/under/suit/repurposed_nurse_outfit
+	name = "Repurposed Nurse Outfit"
+	desc = "A borrowed nurse outfit from Medbay. The owner added their own personal touches to the outfit to make it stand out. "
+	icon_state = "repurposed_nurse_outfit"
+	item_state = "repurposed_nurse_outfit"
+
+/obj/item/clothing/under/suit/casual_outfit
+	name = "Casual Outfit"
+	desc = "Easygoing summerwear, perfect for going out and about."
+	icon_state = "casual_outfit"
+	item_state = "casual_outfit"
 
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"

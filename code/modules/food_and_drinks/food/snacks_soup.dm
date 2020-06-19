@@ -38,6 +38,14 @@
 	tastes = list("meat" = 1)
 	foodtype = MEAT
 
+/obj/item/reagent_containers/food/snacks/soup/matzoballsoup
+	name = "matzoball soup"
+	desc = "A simple dumpling soup! It warms you up from the inside out, just the thing you need for those colder days on the job!"
+	icon_state = "matzoballsoup"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("dumplings" = 1, "chicken broth" = 1, "carrot" = 1)
+	foodtype = VEGETABLES
+
 /obj/item/reagent_containers/food/snacks/soup/slime
 	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."

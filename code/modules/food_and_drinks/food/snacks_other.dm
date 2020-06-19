@@ -614,6 +614,15 @@
 	tastes = list("taco" = 4, "meat" = 2, "cheese" = 2)
 	foodtype = MEAT | DAIRY | GRAIN
 
+/obj/item/reagent_containers/food/snacks/taco/spaghetti
+	name = "spaghetti taco"
+	desc = "A taco with...spaghetti and meatballs in it. An odd choice but it brings crunch to a classic meal!"
+	icon_state = "taco_spaghetti"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("taco shell" = 4, "meat" = 2, "cheese" = 2, "spaghetti sauce" = 1)
+	foodtype = MEAT | DAIRY | GRAIN
+
 /obj/item/reagent_containers/food/snacks/branrequests
 	name = "Bran Requests Cereal"
 	desc = "A dry cereal that satiates your requests for bran. Tastes uniquely like raisins and salt."
@@ -764,3 +773,12 @@
 	tastes = list("fried corn" = 1)
 	foodtype = JUNKFOOD | FRIED
 
+/obj/item/reagent_containers/food/snacks/jiggdinner
+	name = "jigg's dinner"
+	desc = "A platter of salted and boiled food. You feel nostalgia and a twinge of sadness eminate from this dish. Its enough to make a certain someone cry."
+	icon_state = "jiggdinner"
+	trash = /obj/item/trash/plate
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/vitamin = 10,)
+	tastes = list("boiled meat" = 1, "carrot" = 1, "potato" = 1, "cabbage" = 1, "onion" = 1)
+	foodtype = MEAT | VEGETABLES

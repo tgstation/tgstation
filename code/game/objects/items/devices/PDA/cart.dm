@@ -105,6 +105,12 @@
 	access = CART_SECURITY
 	spam_enabled = 1
 
+/obj/item/cartridge/hoser
+	name = "\improper ServicePRO cartridge:"
+	icon_state = "cart-s"
+	access = CART_JANITOR | CART_DRONEPHONE | CART_MANIFEST | CART_STATUS_DISPLAY
+	bot_access_flags = CLEAN_BOT
+
 /obj/item/cartridge/curator
 	name = "\improper Lib-Tweet cartridge"
 	icon_state = "cart-s"

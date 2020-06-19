@@ -114,6 +114,11 @@
 	default_cartridge = /obj/item/cartridge/hos
 	icon_state = "pda-hos"
 
+/obj/item/pda/heads/hoser
+	name = "head of service PDA"
+	default_cartridge = /obj/item/cartridge/hoser
+	icon_state = "pda-cook"
+
 /obj/item/pda/heads/ce
 	name = "chief engineer PDA"
 	default_cartridge = /obj/item/cartridge/ce

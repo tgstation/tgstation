@@ -92,6 +92,42 @@
 	tastes = list("cake" = 4, "cream cheese" = 3)
 	foodtype = GRAIN | DAIRY
 
+/obj/item/reagent_containers/food/snacks/store/cake/royalcheese
+	name = "royal cheese cake"
+	desc = "Food fit for a god, you can almost experience what ascension is like."
+	icon_state = "royalcheesecake"
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/royalcheese
+	slices_num = 5
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
+	tastes = list("heaven" = 4, "divinity" = 3)
+	foodtype = GRAIN | DAIRY
+
+/obj/item/reagent_containers/food/snacks/cakeslice/royalcheese
+	name = "royal cheese cake slice"
+	desc = "A slice of heaven."
+	icon_state = "royalcheesecake_slice"
+	filling_color = "#FFFACD"
+	tastes = list("heaven" = 4, "divinity" = 3 )
+	foodtype = GRAIN | DAIRY
+
+/obj/item/reagent_containers/food/snacks/store/cake/lemoncheese
+	name = "lemon cheese cake"
+	desc = "Same old classic cheesecake, but with a bit of lemon in there for some zest!"
+	icon_state = "lemoncheese"
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/lemoncheese
+	slices_num = 5
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
+	tastes = list("cake" = 4, "cream cheese" = 3, "lemon" = 2)
+	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+
+/obj/item/reagent_containers/food/snacks/cakeslice/lemoncheese
+	name = "lemon cheese cake slice"
+	desc = "Slice of zesty goodness."
+	icon_state = "lemoncheese_slice"
+	tastes = list("cake" = 4, "cream cheese" = 3, "lemon" = 2)
+	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+
+
 /obj/item/reagent_containers/food/snacks/store/cake/orange
 	name = "orange cake"
 	desc = "A cake with added orange."

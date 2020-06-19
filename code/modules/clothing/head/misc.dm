@@ -14,6 +14,18 @@
 	icon_state = "policecap_families"
 	item_state = "policecap_families"
 
+/obj/item/clothing/head/old_military_cap
+	name = "Old Military Cap"
+	desc = "A bright and flashy hat, it seems to have a particular crest on it. It looks handmade, the craftsmanship on it seems very authentic."
+	icon_state = "old_military_cap"
+	item_state = "old_military_cap"
+
+/obj/item/clothing/head/eggcellent_hat
+	name = "Eggcellent Hat"
+	desc = "The text on the hat reads 'I'm Eggcellent.' This hat is a symbol of your victory. Congradulations you Monster!"
+	icon_state = "eggcellent_hat"
+	item_state = "eggcellent_hat"
+
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
 	desc = "A powdered wig."
@@ -183,6 +195,12 @@
 	icon_state = "witch"
 	item_state = "witch"
 	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/frenchmaid
+	name = "maid ribbon"
+	desc = "A cute little ribbon with bows on the side."
+	icon_state = "frenchmaid"
+	item_state = "frenchmaid"
 
 /obj/item/clothing/head/chicken
 	name = "chicken suit head"

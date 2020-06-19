@@ -300,3 +300,12 @@
 /obj/item/reagent_containers/food/snacks/butterdog/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
+
+/obj/item/reagent_containers/food/snacks/store/bread/breadbowl
+	name = "bread bowl"
+	desc = "A bowl! Made out of, bread."
+	icon_state = "breadbowl"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 7)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10)
+	tastes = list("bread" = 10)
+	foodtype = GRAIN

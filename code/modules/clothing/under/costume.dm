@@ -61,6 +61,13 @@
 	item_state = "pirate"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/frenchmaid
+	name = "french maid uniform"
+	desc = "A flashier and more revealing maid outfit."
+	icon_state = "frenchmaid"
+	item_state = "frenchmaid"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/soviet
 	name = "soviet uniform"
 	desc = "For the Motherland!"

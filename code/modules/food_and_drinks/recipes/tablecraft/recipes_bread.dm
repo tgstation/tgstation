@@ -111,3 +111,13 @@
 		)
 	result = /obj/item/reagent_containers/food/snacks/breadslice/moldy
 	subcategory = CAT_BREAD
+
+
+/datum/crafting_recipe/food/breadbowl
+	name = "Breadbowl"
+	reqs = list(
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
+		)
+	result =/obj/item/reagent_containers/food/snacks/store/bread/breadbowl
+	subcategory = CAT_BREAD

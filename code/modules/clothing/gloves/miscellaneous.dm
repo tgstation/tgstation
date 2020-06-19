@@ -12,6 +12,22 @@
 	custom_price = 75
 	undyeable = TRUE
 
+/obj/item/clothing/gloves/ratvar
+	name = "Clockwork Gloves"
+	desc = "Large brass gloves. They kind of make you want to hold your arms in an awkward position."
+	icon_state = "ratvargloves"
+	item_state = "ratvargloves"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	undyeable = TRUE
+
+
+/obj/item/clothing/gloves/frenchmaid
+	name = "maid gloves"
+	desc = "Elbow length gloves. Perfect for dusting."
+	icon_state = "frenchmaid"
+	item_state = "frenchmaid"
+	undyeable = TRUE
+
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin.  They're also quite warm."

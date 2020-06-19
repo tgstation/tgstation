@@ -32,7 +32,7 @@ EMOJIS
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-RUN_DELAY 1
+RUN_DELAY 1.5
 WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
@@ -290,11 +290,11 @@ ALLOW_AI_MULTICAM
 #VIRTUAL_REALITY
 
 ## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
-#ROUNDSTART_AWAY
+ROUNDSTART_AWAY
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
-GATEWAY_DELAY 18000
+GATEWAY_DELAY 9000
 
 
 ## ACCESS ###
@@ -311,7 +311,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 #JOBS_HAVE_MINIMAL_ACCESS
 
 ## Uncomment to give assistants maint access.
-#ASSISTANTS_HAVE_MAINT_ACCESS
+ASSISTANTS_HAVE_MAINT_ACCESS
 
 ## Uncoment to give security maint access. Note that if you dectivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
 #SECURITY_HAS_MAINT_ACCESS

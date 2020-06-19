@@ -5,6 +5,35 @@
 	name = "mime shoes"
 	icon_state = "mime"
 
+/obj/item/clothing/shoes/ratvar
+	name = "Clockwork Boots"
+	desc = "Shoes made for a god. Despite how they look, they're not that loud."
+	icon_state = "ratvarshoes"
+	item_state = "ratvarshoes"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/frenchmaid
+	name = "maid shoes"
+	desc = "High heels with thigh-high socks. Careful running in these."
+	icon_state = "frenchmaid"
+	item_state = "frenchmaid"
+	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/old_military_boots
+	name = "Old Military Boots"
+	desc = "Very gaudy boots tailored for a Demon King. Upon closer inspection, the boots are made for cosplay!"
+	icon_state = "old_military_boots"
+	item_state = "old_military_boots"
+	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/casual_boots
+	name = "Casual Boots"
+	desc = "Boots that you can easily put on with no hastle, very convenient!"
+	icon_state = "casual_boots"
+	item_state = "casual_boots"
+	can_be_tied = FALSE
+
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
 	desc = "High speed, low drag combat boots."
@@ -35,7 +64,7 @@
 /obj/item/clothing/shoes/combat/sneakboots/dropped(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
 	return ..()
-	
+
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."

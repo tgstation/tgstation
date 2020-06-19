@@ -597,3 +597,15 @@ datum/crafting_recipe/food/donut/meat
 	)
 	result = /obj/item/reagent_containers/food/snacks/cannoli
 	subcategory = CAT_PASTRY
+
+	/datum/crafting_recipe/food/rugelach
+	name = "rugelach"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/datum/reagent/consumable/cream = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/datum/reagent/consumable/sugar = 3,
+	)
+	result = /obj/item/reagent_containers/food/snacks/cannoli
+	subcategory = CAT_PASTRY

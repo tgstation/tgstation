@@ -23,3 +23,5 @@
 	new /obj/item/storage/photo_album/QM(src)
 	new /obj/item/circuitboard/machine/ore_silo(src)
 	new /obj/item/card/id/departmental_budget/car(src)
+	new /obj/item/clothing/shoes/old_military_boots(src)
+	new /obj/item/clothing/head/old_military_cap(src)

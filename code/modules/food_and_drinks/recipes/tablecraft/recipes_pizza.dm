@@ -101,3 +101,17 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/pizza/pineapple
 	subcategory = CAT_PIZZA
+
+/obj/item/reagent_containers/food/snacks/pizza/abyssaldish
+
+/datum/crafting_recipe/food/abyssalpizza
+	name = "Abyssal Dish pizza"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/bread/breadbowl = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 4,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/reagent_containers/food/snacks/grown/onion= 1,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pizza/meat
+	subcategory = CAT_PIZZA

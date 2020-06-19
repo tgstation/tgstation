@@ -15,6 +15,17 @@
 	result = /obj/item/reagent_containers/food/snacks/soup/meatball
 	subcategory = CAT_SOUP
 
+/datum/crafting_recipe/food/matzoballsoup
+	name = "Matzo ball soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/faggot = 2,
+		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/matzoballsoup
+	subcategory = CAT_SOUP
+
 /datum/crafting_recipe/food/vegetablesoup
 	name = "Vegetable soup"
 	reqs = list(

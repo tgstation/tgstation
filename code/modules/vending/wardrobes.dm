@@ -280,6 +280,7 @@
 					/obj/item/clothing/under/suit/king_attire = 1,
 					/obj/item/clothing/gloves/color/white = 1,
 					/obj/item/clothing/shoes/cowboy/white = 1,
+					/obj/item/clothing/head/eggcellent_hat = 3,
 					/obj/item/clothing/suit/hooded/wintercoat = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV

@@ -22,6 +22,12 @@
 	icon_state = "labcoat_paramedic"
 	item_state = "labcoat_paramedic"
 
+/obj/item/clothing/suit/toggle/labcoat/black
+	name = "black labcoat"
+	desc = "Seems more for style than an actual occupational purpose"
+	icon_state = "labcoat_black"
+	item_state = "labcoat_black"
+
 /obj/item/clothing/suit/toggle/labcoat/mad
 	name = "\proper The Mad's labcoat"
 	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."

@@ -6,7 +6,7 @@
 	icon_state = "fox"
 	icon_living = "fox"
 	icon_dead = "fox_dead"
-	speak = list("Ack-Ack","Ack-Ack-Ack-Ackawoooo","Geckers","Awoo","Tchoff")
+	speak = list("Ack-Ack","Ack-Ack-Ack-Ackawoooo","Awoo","Tchoff")
 	speak_emote = list("geckers", "barks")
 	emote_hear = list("howls.","barks.")
 	emote_see = list("shakes its head.", "shivers.")
@@ -33,3 +33,17 @@
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+
+
+//British Fox
+/mob/living/simple_animal/pet/fox/Rose
+	name = "Rose"
+	desc = "A Red Fox, particularly native to Britain. How did she get here?"
+	gender = FEMALE
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
+	icon_state = "rose"
+	icon_living = "rose"
+	icon_dead = "rose_dead"
+	can_be_held = TRUE
+	held_state = "rose"

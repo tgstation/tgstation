@@ -54,6 +54,15 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT
 
+/obj/item/reagent_containers/food/snacks/pizza/abyssaldish
+	name = "Abyssal Dish Pizza"
+	desc = "A breadbowl with pizza filling. Ezel Malheur's infamous favorite food. ...Would you even call this a pizza anymore...? "
+	icon_state = "abyssaldishpizza"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 8)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 45, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 8)
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "satisfaction?" = 3)
+	foodtype = GRAIN | VEGETABLES| DAIRY | MEAT
+
 /obj/item/reagent_containers/food/snacks/pizza/mushroom
 	name = "mushroom pizza"
 	desc = "Very special pizza."

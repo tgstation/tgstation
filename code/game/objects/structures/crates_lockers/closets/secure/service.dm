@@ -1,0 +1,25 @@
+/obj/structure/closet/secure_closet/hose
+	name = "\proper head of service's locker"
+	req_access = list(ACCESS_HOSE)
+	icon_state = "generic"
+
+/obj/structure/closet/secure_closet/hose/PopulateContents()
+	..()
+	new /obj/item/radio/headset/heads/hoser(src)
+	new /obj/item/clothing/under/rank/civilian/chef(src)
+	new /obj/item/clothing/suit/toggle/chef(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/lightreplacer(src)
+	new /obj/item/kitchen/knife/butcher(src)
+	new /obj/item/kitchen/knife(src)
+	new /obj/item/reagent_containers/glass/bucket(src)
+	new /obj/item/mop(src)
+	new /obj/item/reagent_containers/spray/cleaner(src)
+	new /obj/item/reagent_containers/spray/cleaner(src)
+	new /obj/item/grenade/chem_grenade/cleaner(src)
+	new /obj/item/grenade/chem_grenade/cleaner(src)
+	new /obj/item/grenade/chem_grenade/cleaner(src)
+	new /obj/item/hand_labeler(src)
+	new /obj/item/storage/box/lights/mixed(src)
+	new /obj/item/toy/plush/goatplushieharmless(src)

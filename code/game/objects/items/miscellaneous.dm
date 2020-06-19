@@ -216,3 +216,43 @@
 /obj/item/virgin_mary/proc/manual_suicide(mob/living/user)
 	user.adjustOxyLoss(200)
 	user.death(0)
+
+//im so fucking crazy
+
+/obj/item/mirror
+	name = "hand mirror"
+	desc = "Change your hair on the go!"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "mirror"
+
+/obj/item/mirror/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+
+		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
+		//this is largely copypasted from there.
+
+		//handle facial hair (if necessary)
+		if(H.gender != FEMALE)
+			var/new_style = input(user, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				return	//no tele-grooming
+			if(new_style)
+				H.facial_hairstyle = new_style
+		else
+			H.facial_hairstyle = "Shaved"
+
+		//handle normal hair
+		var/new_style = input(user, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
+		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			return	//no tele-grooming
+		if(HAS_TRAIT(H, TRAIT_BALD))
+			to_chat(H, "<span class='notice'>If only growing back hair were that easy for you...</span>")
+		if(new_style)
+			H.hairstyle = new_style
+
+		H.update_hair()

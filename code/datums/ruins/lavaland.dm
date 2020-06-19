@@ -131,6 +131,14 @@
 	allow_duplicates = FALSE
 	always_place = TRUE
 
+/datum/map_template/ruin/lavaland/godpainting
+	name = "Paintings"
+	id = "painting"
+	description = "A depiction of a battle."
+	suffix = "lavaland_surface_godpainting.dmm"
+	allow_duplicates = FALSE
+	always_place = TRUE
+
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"

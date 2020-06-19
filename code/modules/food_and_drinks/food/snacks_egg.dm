@@ -137,6 +137,36 @@
 		return
 	..()
 
+/obj/item/reagent_containers/food/snacks/eggcellent_plate	//FUCK THIS
+	name = "The Eggcellent"
+	desc = "A hulking mass of eggs, cheese, and chili. It comes with two biscuits to 'help' make the experience easier. If you eat all of it in one sitting, you might win a prize!"
+	icon_state = "eggcellent_plate"
+	trash = /obj/item/trash/plate
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 50, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bitesize = 10
+	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("egg" = 1, "cheese" = 1, "biscuit" = 2, "obesity" = 10)
+	foodtype = MEAT | BREAKFAST | DAIRY | GRAIN
+
+/obj/item/reagent_containers/food/snacks/eggcellent_plate/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/kitchen/fork))
+		var/obj/item/kitchen/fork/F = W
+		if(F.forkload)
+			to_chat(user, "<span class='warning'>You already have some eggcellent on your fork!</span>")
+		else
+			F.icon_state = "forkloaded"
+			user.visible_message("<span class='notice'>[user] takes a piece of the eggcellent with [user.p_their()] fork!</span>", \
+				"<span class='notice'>You take a piece of the eggcellent with your fork.</span>")
+
+			var/datum/reagent/R = pick(reagents.reagent_list)
+			reagents.remove_reagent(R.type, 1)
+			F.forkload = R
+			if(reagents.total_volume <= 0)
+				qdel(src)
+		return
+	..()
+
 /obj/item/reagent_containers/food/snacks/benedict
 	name = "eggs benedict"
 	desc = "There is only one egg on this, how rude."

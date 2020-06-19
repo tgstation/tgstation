@@ -46,3 +46,11 @@ config/title_music/sounds/Sine ride.ogg
 config/title_music/sounds/Pamp radion.ogg
 config/title_music/sounds/Icarus.ogg
 config/title_music/sounds/The artichoke king.ogg
+config/title_music/sounds/Lil B Station.ogg
+config/title_music/sounds/Star Dance.ogg
+config/title_music/sounds/Star Dance.ogg
+config/title_music/sounds/Gastly.ogg
+config/title_music/sounds/Renai Circulation.ogg
+config/title_music/sounds/Tomorrow without you.ogg
+config/title_music/sounds/Neon Starlight.ogg
+config/title_music/sounds/Starfish Island.ogg

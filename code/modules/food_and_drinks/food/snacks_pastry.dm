@@ -755,6 +755,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("pancakes" = 1, "chocolate" = 1)
 
+
 /obj/item/reagent_containers/food/snacks/pancakes/Initialize()
 	. = ..()
 	update_icon()
@@ -842,4 +843,13 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#ffffff"
 	tastes = list("pastry" = 1)
+	foodtype = GRAIN | DAIRY | SUGAR
+
+/obj/item/reagent_containers/food/snacks/rugelach
+	name = "Rugelach"
+	desc = "A treat originating all the way back from old world Poland! Its cream chese filling and dark chocolate accents on a flaky crust all make it feel heavenly."
+	icon_state = "rugelach"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("pastry" = 1, "dark_chocolate" = 1, "cream cheese" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR

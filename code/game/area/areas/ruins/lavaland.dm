@@ -7,6 +7,10 @@
 	icon_state = "dk_yellow"
 	ambientsounds = SPOOKY
 
+/area/ruin/powered/godpainting
+	icon_state = "dk_yellow"
+	ambientsounds = list('sound/ambience/it was for the better.ogg')
+
 /area/ruin/powered/clownplanet
 	name = "Clown Planet"
 	icon_state = "dk_yellow"

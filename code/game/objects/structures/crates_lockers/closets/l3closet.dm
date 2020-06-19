@@ -40,6 +40,7 @@
 	new /obj/item/clothing/head/bio_hood/janitor(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/clothing/neck/collar(src)
 
 
 /obj/structure/closet/l3closet/scientist

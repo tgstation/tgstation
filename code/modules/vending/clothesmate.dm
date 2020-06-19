@@ -107,7 +107,12 @@
 		            /obj/item/clothing/suit/apron/purple_bartender = 2,
 		            /obj/item/clothing/under/rank/civilian/bartender/purple = 2,
 		            /obj/item/clothing/suit/toggle/suspenders/blue = 2,
-		            /obj/item/clothing/suit/toggle/suspenders/gray = 2)
+		            /obj/item/clothing/suit/toggle/suspenders/gray = 2,
+		            /obj/item/clothing/shoes/casual_boots = 1,
+		            /obj/item/clothing/under/suit/casual_outfit = 1,
+		            /obj/item/clothing/suit/comfy_jacket = 1,
+		            /obj/item/clothing/under/suit/repurposed_nurse_outfit = 1,
+		            /obj/item/clothing/suit/toggle/labcoat/black = 1,)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 1,
 					  /obj/item/clothing/under/syndicate/tacticool/skirt = 1,
 		              /obj/item/clothing/mask/balaclava = 1,

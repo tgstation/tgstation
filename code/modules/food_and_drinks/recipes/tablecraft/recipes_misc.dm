@@ -281,6 +281,7 @@
 	result = /obj/item/reagent_containers/food/snacks/taco
 	subcategory = CAT_MISCFOOD
 
+
 /datum/crafting_recipe/food/tacoplain
 	name ="Plain Taco"
 	reqs = list(
@@ -289,6 +290,16 @@
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/taco/plain
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/taco_spaghetti
+	name ="Spaghetti Taco"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/taco/spaghetti
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/branrequests
@@ -349,8 +360,19 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/store/cheesewheel = 1,
 		/obj/item/clothing/head/crown = 1,
-		/datum/reagent/medicine/strange_reagent = 5,
 		/datum/reagent/toxin/mutagen = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/royalcheese
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/jiggdinner
+	name ="Jigg's Dinner"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/grown/carrot = 2,
+		/obj/item/reagent_containers/food/snacks/grown/potato = 2,
+		/obj/item/reagent_containers/food/snacks/grown/onion = 1,
+		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/jiggdinner
 	subcategory = CAT_MISCFOOD
