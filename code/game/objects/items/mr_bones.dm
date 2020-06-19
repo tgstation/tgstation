@@ -4,6 +4,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "voicebox"
 	inhand_icon_state = "voicebox"
+	mouse_opacity = 0
 	var/list/bone_phrases = list("ERROR: Incorrect Answer","Roleplay","No","Solve the Riddle","Repeat","Your Problem")
 
 /obj/item/mr_bones_voice_box/attack_self(mob/user)
