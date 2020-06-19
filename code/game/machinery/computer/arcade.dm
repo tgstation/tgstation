@@ -157,10 +157,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/enemy_mp = 40
 	///Temporary message, for attack messages, etc
 	var/temp = "<br><center><h3>Winners don't use space drugs<center><h3>"
-	///the list of passive skill the enemy currently has
-	var/list/current_enemy_passive
-	///the list of passive skills the enemy can get
-	var/list/enemy_passive_list = list("short temper","poisonous", "smart", "shotgun", "magical", "chonker")
+	///the list of passive skill the enemy currently has. the actual passives are added in the enemy_setup() proc
+	var/list/enemy_passive
 	///if all the enemy's weakpoints have been triggered becomes TRUE
 	var/finishing_move = FALSE
 	///linked to passives, when it's equal or above the max_passive finishing move will become TRUE
@@ -176,19 +174,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/player_mp = 20
 	///used to remember the last three move of the player before this turn.
 	var/list/last_three_move
-	///if the enemy or player died. basically restart the game when TRUE
+	///if the enemy or player died. restart the game when TRUE
 	var/gameover = FALSE
-	///the player cannot make any move while this is set to TRUE. is basically only TRUE during enemy turns.
+	///the player cannot make any move while this is set to TRUE. should only TRUE during enemy turns.
 	var/blocked = FALSE
 	///used to clear the enemy_action proc timer when the game is restarted
 	var/timer_id
 	///weapon used by the enemy, pure fluff.for certain actions
 	var/list/weapons
 	///unique to the emag mode, acts as a time limit where the player dies when it reaches 0.
-	var/bomb_cooldown = 18
+	var/bomb_cooldown = 19
 
 
-///creates the enemy base stats for a new round.
+///creates the enemy base stats for a new round along with the enemy passives
 /obj/machinery/computer/arcade/battle/proc/enemy_setup(player_skill)
 	player_hp = 85
 	player_mp = 20
@@ -199,17 +197,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	finishing_move = FALSE
 	pissed_off = 0
 	last_three_move = null
-	current_enemy_passive = null
 
-	var/list/passive_available = enemy_passive_list.Copy()
-	for(var/i in 1 to max_passive)
-		var/picked_passive = pick_n_take(passive_available)
-		LAZYADD(current_enemy_passive, picked_passive)
+	enemy_passive = list("short_temper" = TRUE, "poisonous" = TRUE, "smart" = TRUE, "shotgun" = TRUE, "magical" = TRUE, "chonker" = TRUE)
+	for(var/i = LAZYLEN(enemy_passive); i > max_passive; i--) //we'll remove passives from the list until we have the number of passive we want
+		var/picked_passive = pick(enemy_passive)
+		LAZYREMOVE(enemy_passive, picked_passive)
 
-	if("chonker" in current_enemy_passive)
+	if(LAZYACCESS(enemy_passive, "chonker"))
 		enemy_hp += 20
 
-	if("shotgun" in current_enemy_passive)
+	if(LAZYACCESS(enemy_passive, "shotgun"))
 		chosen_weapon = "shotgun"
 	else if(weapons)
 		chosen_weapon = pick(weapons)
@@ -369,15 +366,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/battle/proc/enemy_action(player_stance,mob/user)
 	temp = ""
 
-	if(LAZYLEN(last_three_move) < 3) //we keep the last three action of the player in a list here
-		LAZYADD(last_three_move, player_stance)
-
-	else if(LAZYLEN(last_three_move) == 3)
-		LAZYREMOVE(last_three_move, last_three_move[1])
-		LAZYADD(last_three_move, player_stance)
-
-	else if(LAZYLEN(last_three_move) > 3)
-		last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
+	switch(LAZYLEN(last_three_move)) //we keep the last three action of the player in a list here
+		if(0 to 2)
+			LAZYADD(last_three_move, player_stance)
+		if(3)
+			LAZYREMOVE(last_three_move, last_three_move[1])
+			LAZYADD(last_three_move, player_stance)
+		if(4 to INFINITY)
+			last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
 
 	var/enemy_stance
 	var/attack_amount = rand(8,10) //making the attack amount not vary too much so that it's easier to see if the enemy has a shotgun
@@ -387,22 +383,22 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	//if emagged, cuban pete will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
 	if(obj_flags & EMAGGED)
-		if(bomb_cooldown == 18)
-			temp += "<br><center><h3>[enemy_name] takes two valve tank and links them together, what's he planning?<center><h3>"
-		if(bomb_cooldown == 15)
-			temp += "<br><center><h3>[enemy_name] adds a remote control to the tan- ho god is that a bomb?<center><h3>"
-		if(bomb_cooldown == 12)
-			temp += "<br><center><h3>[enemy_name] throws the bomb next to you, you'r too scared to pick it up. <center><h3>"
-		if(bomb_cooldown == 6)
-			temp += "<br><center><h3>[enemy_name]'s hand brushes the remote linked to the bomb, your heart skipped a beat. <center><h3>"
-		if(bomb_cooldown == 2)
-			temp += "<br><center><h3>[enemy_name] is going to press the button! It's now or never! <center><h3>"
-		if(bomb_cooldown == 0)
-			player_hp -= attack_amount * 1000 //hey it's a maxcap we might as well go all in
-		bomb_cooldown--
+		switch(bomb_cooldown--)
+			if(18)
+				temp += "<br><center><h3>[enemy_name] takes two valve tank and links them together, what's he planning?<center><h3>"
+			if(15)
+				temp += "<br><center><h3>[enemy_name] adds a remote control to the tan- ho god is that a bomb?<center><h3>"
+			if(12)
+				temp += "<br><center><h3>[enemy_name] throws the bomb next to you, you'r too scared to pick it up. <center><h3>"
+			if(6)
+				temp += "<br><center><h3>[enemy_name]'s hand brushes the remote linked to the bomb, your heart skipped a beat. <center><h3>"
+			if(2)
+				temp += "<br><center><h3>[enemy_name] is going to press the button! It's now or never! <center><h3>"
+			if(0)
+				player_hp -= attack_amount * 1000 //hey it's a maxcap we might as well go all in
 
 	//yeah I used the shotgun as a passive, you know why? because the shotgun gives +5 attack which is pretty good
-	if("shotgun" in current_enemy_passive)
+	if(LAZYACCESS(enemy_passive, "shotgun"))
 		if(weakpoint_check("shotgun","defend","defend","power_attack"))
 			temp += "<br><center><h3>You manage to disarm [enemy_name] with a surprise power attack and shoot him with his shotgun until it runs out of ammo! <center><h3> "
 			enemy_hp -= 10
@@ -411,13 +407,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			attack_amount += 5
 
 	//heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
-	if("chonker" in current_enemy_passive)
+	if(LAZYACCESS(enemy_passive, "chonker"))
 		if(weakpoint_check("chonker","power_attack","power_attack","power_attack"))
 			temp += "<br><center><h3>After a lot of power attacks you manage to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
 			enemy_hp -= 30
 
 	//smart passive trait, mainly works in tandem with other traits, makes the enemy unable to be counter_attacked
-	if("smart" in current_enemy_passive)
+	if(LAZYACCESS(enemy_passive, "smart"))
 		if(weakpoint_check("smart","defend","defend","attack"))
 			temp += "<br><center><h3>[enemy_name] is confused by your illogical strategy!<center><h3> "
 			attack_amount -= 5
@@ -429,28 +425,29 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		else if(player_stance == "counter_attack")
 			temp += "<br><center><h3>[enemy_name] is not taking your bait. <center><h3> "
-			if("short temper" in current_enemy_passive)
+			if(LAZYACCESS(enemy_passive, "short_temper"))
 				temp += "However controlling their hatred of you still takes a toll on their mental and physical health!"
 				enemy_hp -= 5
 				enemy_mp -= 5
 			enemy_stance = "defensive"
 
 	//short temper passive trait, gets easily baited into being counter attacked but will bypass your counter when low on HP
-	if("short temper" in current_enemy_passive)
-		if(weakpoint_check("short temper","counter_attack","counter_attack","counter_attack"))
+	if(LAZYACCESS(enemy_passive, "short_temper"))
+		if(weakpoint_check("short_temper","counter_attack","counter_attack","counter_attack"))
 			temp += "<br><center><h3>[enemy_name] is getting frustrated at all your counter attacks and throws a tantrum!<center><h3>"
 			enemy_hp -= attack_amount
 
-		else if(player_stance == "counter_attack" && enemy_hp > 30 && !("smart" in current_enemy_passive))
-			temp += "<br><center><h3>[enemy_name] took the bait and allowed you to counter attack for [attack_amount * 2] damage!<center><h3>"
-			player_hp -= attack_amount
-			enemy_hp -= attack_amount * 2
-			enemy_stance = "attack"
+		else if(player_stance == "counter_attack")
+			if(!(LAZYACCESS(enemy_passive, "smart")) && enemy_hp > 30)
+				temp += "<br><center><h3>[enemy_name] took the bait and allowed you to counter attack for [attack_amount * 2] damage!<center><h3>"
+				player_hp -= attack_amount
+				enemy_hp -= attack_amount * 2
+				enemy_stance = "attack"
 
-		else if(player_stance == "counter_attack" && enemy_hp <= 30)
-			temp += "<br><center><h3>[enemy_name] is getting tired of your tricks and breaks through your counter with their [chosen_weapon]!<center><h3>"
-			player_hp -= attack_amount
-			enemy_stance = "attack"
+			else if(enemy_hp <= 30) //will break through the counter when low enough on HP even when smart.
+				temp += "<br><center><h3>[enemy_name] is getting tired of your tricks and breaks through your counter with their [chosen_weapon]!<center><h3>"
+				player_hp -= attack_amount
+				enemy_stance = "attack"
 
 		else if(!enemy_stance)
 			var/added_temp
@@ -480,20 +477,20 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp += "<br><center><h3>[enemy_name] take some time to get some mp back!<center><h3> "
 			enemy_mp += attack_amount
 
-		else if (enemy_stance == "defensive" && enemy_mp >= 15 && !("magical" in current_enemy_passive))
+		else if (enemy_stance == "defensive" && enemy_mp >= 15 && !(LAZYACCESS(enemy_passive, "magical")))
 			temp += "<br><center><h3>[enemy_name] quickly heal themselves for 5 hp!<center><h3> "
 			enemy_mp -= 15
 			enemy_hp += 5
 
 	//magical passive trait, recharges MP nearly every turn it's not blasting you with magic.
-	if("magical" in current_enemy_passive)
+	if(LAZYACCESS(enemy_passive, "magical"))
 		if(player_mp >= 50)
 			temp += "<br><center><h3>the huge amount of magical energy you have acumulated throws [enemy_name] off balance!<center><h3>"
 			enemy_mp = 0
-			LAZYREMOVE(current_enemy_passive, "magical")
+			LAZYREMOVE(enemy_passive, "magical")
 			pissed_off++
 
-		else if("smart" in current_enemy_passive && player_stance == "counter_attack" && enemy_mp >= 20)
+		else if(LAZYACCESS(enemy_passive, "smart") && player_stance == "counter_attack" && enemy_mp >= 20)
 			temp += "<br><center><h3>[enemy_name] blasts you with magic from afar for 10 points of damage before you can counter!<center><h3>"
 			player_hp -= 10
 			enemy_mp -= 20
@@ -513,7 +510,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			enemy_mp += attack_amount
 
 	//poisonous passive trait, while it's less damage added than the shotgun it acts up even when the enemy doesn't attack at all.
-	if("poisonous" in current_enemy_passive)
+	if(LAZYACCESS(enemy_passive, "poisonous"))
 		if(weakpoint_check("poisonous","attack","attack","attack"))
 			temp += "<br><center><h3>your flurry of attack throws back the poisonnous gas at [enemy_name] and makes them choke on it!<center><h3> "
 			enemy_hp -= 5
@@ -530,7 +527,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	gameover_check(user)
 	screen_setup(user)
-	timer_id = null
 	blocked = FALSE
 
 
@@ -540,6 +536,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(!gameover)
 			if(timer_id)
 				deltimer(timer_id)
+				timer_id = null
 			if(player_hp <= 0)
 				player_hp = 1 //let's just pretend the enemy didn't kill you so not both the player and enemy look dead.
 			gameover = TRUE
@@ -563,6 +560,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if(player_hp <= 0)
 		if(timer_id)
 			deltimer(timer_id)
+			timer_id = null
 		gameover = TRUE
 		temp = "<br><center><h3>You have been crushed! GAME OVER<center><h3>"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
@@ -578,8 +576,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(LAZYLEN(last_three_move) < 3)
 		return FALSE
 
-	if(last_three_move[1] == first_move && last_three_move[2] == second_move && last_three_move[3] == third_move && (passive in current_enemy_passive))
-		LAZYREMOVE(current_enemy_passive, passive)
+	if(last_three_move[1] == first_move && last_three_move[2] == second_move && last_three_move[3] == third_move && LAZYACCESS(enemy_passive, passive))
+		LAZYREMOVE(enemy_passive, passive)
 		pissed_off++
 		return TRUE
 	else
@@ -587,8 +585,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 
 /obj/machinery/computer/arcade/battle/Destroy()
-	current_enemy_passive = null
-	enemy_passive_list = null
+	enemy_passive = null
 	weapons = null
 	last_three_move = null
 	return ..() //well boys we did it, lists are no more
