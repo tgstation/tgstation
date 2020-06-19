@@ -1,0 +1,5 @@
+author: "SteelSlayer"
+delete-after: True
+changes: 
+  - code_imp: "Removed a handful of unnecessary variables from intercoms."
+  - refactor: "Refactored intercom's code so that it doesn't need to process() and constantly check whether it's powered or EMP'd every few seconds."
