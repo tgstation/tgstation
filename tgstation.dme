@@ -37,6 +37,7 @@
 #include "code\__DEFINES\configuration.dm"
 #include "code\__DEFINES\construction.dm"
 #include "code\__DEFINES\contracts.dm"
+#include "code\__DEFINES\cooldowns.dm"
 #include "code\__DEFINES\cult.dm"
 #include "code\__DEFINES\diseases.dm"
 #include "code\__DEFINES\DNA.dm"

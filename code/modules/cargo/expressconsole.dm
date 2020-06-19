@@ -192,7 +192,7 @@
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						D.adjust_money(-SO.pack.cost)
-						new /obj/effect/DPtarget(LZ, podType, SO)
+						new /obj/effect/dp_target(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
@@ -210,7 +210,7 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/DPtarget(LZ, podType, SO)
+							new /obj/effect/dp_target(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

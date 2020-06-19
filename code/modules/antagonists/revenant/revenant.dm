@@ -466,9 +466,9 @@
 		return FALSE
 	return TRUE
 
-/datum/objective/revenantFluff
+/datum/objective/revenant_fluff
 
-/datum/objective/revenantFluff/New()
+/datum/objective/revenant_fluff/New()
 	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \
 									 "Avoid killing in plain sight.", \
 									 "Cause as much chaos and anger as you can without being killed.", \
@@ -483,5 +483,5 @@
 	explanation_text = pick(explanationTexts)
 	..()
 
-/datum/objective/revenantFluff/check_completion()
+/datum/objective/revenant_fluff/check_completion()
 	return TRUE

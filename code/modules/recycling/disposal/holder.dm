@@ -46,14 +46,14 @@
 			continue
 		SEND_SIGNAL(AM, COMSIG_MOVABLE_DISPOSING, src, D)
 		AM.forceMove(src)
-		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
-			var/obj/structure/bigDelivery/T = AM
+		if(istype(AM, /obj/structure/big_delivery) && !hasmob)
+			var/obj/structure/big_delivery/T = AM
 			src.destinationTag = T.sortTag
-		else if(istype(AM, /obj/item/smallDelivery) && !hasmob)
-			var/obj/item/smallDelivery/T = AM
+		else if(istype(AM, /obj/item/small_delivery) && !hasmob)
+			var/obj/item/small_delivery/T = AM
 			src.destinationTag = T.sortTag
 		else if(istype(AM, /mob/living/silicon/robot))
-			var/obj/item/destTagger/borg/tagger = locate() in AM
+			var/obj/item/dest_tagger/borg/tagger = locate() in AM
 			if (tagger)
 				src.destinationTag = tagger.currTag
 

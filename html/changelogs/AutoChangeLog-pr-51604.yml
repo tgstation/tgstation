@@ -1,4 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - rscadd: "organ transport box, if filled with cryostylene or ice it ll keep organs and bodyparts like heads inside frozen ( they dont decay)"

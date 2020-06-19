@@ -24,8 +24,8 @@
 /datum/job/ai/after_spawn(mob/H, mob/M, latejoin)
 	. = ..()
 	if(latejoin)
-		var/obj/structure/AIcore/latejoin_inactive/lateJoinCore
-		for(var/obj/structure/AIcore/latejoin_inactive/P in GLOB.latejoin_ai_cores)
+		var/obj/structure/ai_core/latejoin_inactive/lateJoinCore
+		for(var/obj/structure/ai_core/latejoin_inactive/P in GLOB.latejoin_ai_cores)
 			if(P.is_available())
 				lateJoinCore = P
 				GLOB.latejoin_ai_cores -= P
@@ -57,7 +57,7 @@
 	if(!do_special_check)
 		return TRUE
 	for(var/i in GLOB.latejoin_ai_cores)
-		var/obj/structure/AIcore/latejoin_inactive/LAI = i
+		var/obj/structure/ai_core/latejoin_inactive/LAI = i
 		if(istype(LAI))
 			if(LAI.is_available())
 				return TRUE

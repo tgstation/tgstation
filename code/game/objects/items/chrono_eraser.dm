@@ -11,7 +11,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
-	actions_types = list(/datum/action/item_action/equip_unequip_TED_Gun)
+	actions_types = list(/datum/action/item_action/equip_unequip_ted_gun)
 	var/obj/item/gun/energy/chrono_gun/PA = null
 	var/list/erased_minds = list() //a collection of minds from the dead
 
