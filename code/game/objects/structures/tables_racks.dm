@@ -469,7 +469,7 @@
 	icon_state = "r_table"
 	deconstruction_ready = 0
 	buildstack = /obj/item/stack/sheet/plasteel
-	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
+	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table, /obj/structure/table/reinforced/ctf)
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list("melee" = 10, "bullet" = 30, "laser" = 30, "energy" = 100, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)

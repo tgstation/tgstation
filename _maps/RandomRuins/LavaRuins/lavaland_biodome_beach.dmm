@@ -792,7 +792,7 @@
 /area/ruin/powered/beach)
 "xE" = (
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "xS" = (
@@ -1377,9 +1377,9 @@
 "SZ" = (
 /obj/item/storage/crayons,
 /obj/structure/closet/crate/wooden,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Ti" = (

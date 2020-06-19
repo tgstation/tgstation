@@ -32,7 +32,7 @@
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/card/id/captains_spare(src)
-	new /obj/item/storage/photo_album/Captain(src)
+	new /obj/item/storage/photo_album/captain(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -60,7 +60,7 @@
 	new /obj/item/pet_carrier(src)
 	new /obj/item/door_remote/civilian(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
-	new /obj/item/storage/photo_album/HoP(src)
+	new /obj/item/storage/photo_album/hop(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -79,7 +79,7 @@
 	new /obj/item/clothing/under/rank/security/head_of_security/skirt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt/skirt(src)
-	new /obj/item/clothing/head/HoS(src)
+	new /obj/item/clothing/head/hos(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/grey(src)
@@ -94,7 +94,7 @@
 	new /obj/item/gun/energy/e_gun/hos(src)
 	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
-	new /obj/item/storage/photo_album/HoS(src)
+	new /obj/item/storage/photo_album/hos(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"

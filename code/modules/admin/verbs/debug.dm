@@ -115,7 +115,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)
-	for(var/datum/paiCandidate/candidate in SSpai.candidates)
+	for(var/datum/pai_candidate/candidate in SSpai.candidates)
 		if(candidate.key == choice.key)
 			SSpai.candidates.Remove(candidate)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

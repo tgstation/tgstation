@@ -250,21 +250,21 @@
 	begin_month = JULY
 	drone_hat = /obj/item/clothing/head/nursehat
 
-/datum/holiday/UFO
+/datum/holiday/ufo
 	name = "UFO Day"
 	begin_day = 2
 	begin_month = JULY
 	drone_hat = /obj/item/clothing/mask/facehugger/dead
 
-/datum/holiday/UFO/getStationPrefix() //Is such a thing even possible?
+/datum/holiday/ufo/getStationPrefix() //Is such a thing even possible?
 	return pick("Ayy","Truth","Tsoukalos","Mulder","Scully") //Yes it is!
 
-/datum/holiday/USA
+/datum/holiday/usa
 	name = "Independence Day"
 	begin_day = 4
 	begin_month = JULY
 
-/datum/holiday/USA/getStationPrefix()
+/datum/holiday/usa/getStationPrefix()
 	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
 
 /datum/holiday/writer
@@ -520,7 +520,7 @@
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state_on = "entertainment_xmas"
 
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
 
