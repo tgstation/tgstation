@@ -196,6 +196,10 @@
 		I.add_mob_blood(H)
 	H.regenerate_icons()
 
+/datum/outfit/psycho/mafia
+	r_hand = null
+	head = null
+
 /datum/outfit/assassin
 	name = "Assassin"
 

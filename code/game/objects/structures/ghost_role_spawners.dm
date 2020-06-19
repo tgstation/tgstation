@@ -474,6 +474,22 @@
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
 
+/datum/outfit/syndicate_empty/mafia
+	name = "Syndicate Operative Mafia"
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+
+/datum/outfit/syndicate_empty/mafia/post_equip(mob/living/carbon/human/H)
+	var/list/no_drops = list()
+	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
+	for(var/i in no_drops)
+		var/obj/item/I = i
+		ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
 	short_desc = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
