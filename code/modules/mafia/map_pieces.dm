@@ -81,7 +81,7 @@
 
 /obj/mafia_game_signup/debug
 	var/datum/mafia_controller/MF
-	var/list/debug_setup = list(/datum/mafia_role/md=1,/datum/mafia_role/fugitive=1,/datum/mafia_role/detective=1,/datum/mafia_role/mafia=1)
+	var/list/debug_setup = list(/datum/mafia_role/md=1,/datum/mafia_role/obsessed=1,/datum/mafia_role/detective=1,/datum/mafia_role/mafia=1)
 
 /obj/mafia_game_signup/debug/Initialize()
 	. = ..()

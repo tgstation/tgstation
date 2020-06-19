@@ -36,3 +36,6 @@
 	box = /obj/item/storage/box/survival/medical
 
 	chameleon_extras = /obj/item/gun/syringe
+
+/datum/outfit/job/doctor/mafia
+	l_hand = null
