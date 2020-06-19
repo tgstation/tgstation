@@ -27,4 +27,12 @@
 		if(!istype(new_team))
 			CRASH("Wrong swarmer team type provided to create_team")
 		swarmer_team = new_team
-		return ..()
+
+/datum/antagonist/swarmer/get_team()
+	return swarmer_team
+
+//SWARMER
+/mob/living/simple_animal/hostile/swarmer/mind_initialize()
+	..()
+	if(!mind.has_antag_datum(/datum/antagonist/swarmer))
+		mind.add_antag_datum(/datum/antagonist/swarmer)
