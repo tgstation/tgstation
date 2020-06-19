@@ -245,6 +245,8 @@
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
+	if(registered_account)
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 	. += "<span class='notice'><i>There's more information below, you can look again to take a closer look...</i></span>"
 
 /obj/item/card/id/examine_more(mob/user)
