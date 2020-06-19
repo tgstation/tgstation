@@ -19,6 +19,11 @@
 /obj/structure/plaque/static_plaque/golden/captain
 	name = "The Most Robust Captain Award for Robustness"
 
+/obj/structure/plaque/static_plaque/golden/mapper
+	name = "The Cartographer Guild"
+	desc = "Host: CitrusGender <br>Mappers: EOBGames, Fikou, Jerry Derpington, MMMiracles, The John Smith, Trollbreeder, Twaticus, Uomo91 <br>Coders: Anturke, ArcaneMusic, Armhulenn, Bobbahbrown <br>Spriters: Jegub, Kryson, Nabski, Yeeye <br>Additional Help: MrStonedOne, Optiumtact/Oranges"
+	icon_state = "goldenplaque"
+
 //These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
 //See: code>game>objects>structures>signs>_signs.dm
 
