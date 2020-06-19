@@ -89,6 +89,9 @@
 /mob/living/silicon/pai/can_buckle()
 	return FALSE
 
+/mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
+	return
+
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(internal_instrument)
 	if(cable)

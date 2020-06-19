@@ -235,6 +235,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GENERIC_ITEM_TRAIT "generic_item"
 #define UNCONSCIOUS_BLIND "unconscious_blind"
 #define EYE_DAMAGE "eye_damage"
+#define EAR_DAMAGE "ear_damage"
 #define GENETIC_MUTATION "genetic"
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"

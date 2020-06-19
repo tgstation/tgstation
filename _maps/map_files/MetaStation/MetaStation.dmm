@@ -1366,7 +1366,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "acU" = (
@@ -1568,7 +1568,7 @@
 /area/security/prison)
 "adx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 4;
 	name = "Prisoner Transfer"
 	},
@@ -2270,7 +2270,7 @@
 	pixel_y = 30
 	},
 /obj/machinery/computer/med_data/laptop,
-/obj/item/storage/secure/safe/HoS{
+/obj/item/storage/secure/safe/hos{
 	pixel_x = 36;
 	pixel_y = 28
 	},
@@ -5600,7 +5600,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aly" = (
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
@@ -12853,7 +12853,7 @@
 /obj/item/book{
 	desc = "An undeniably handy book.";
 	icon_state = "bookknock";
-	name = "A Simpleton's Guide to Safe-cracking with Stethoscopes"
+	name = "\improper A Simpleton's Guide to Safe-cracking with Stethoscopes"
 	},
 /obj/effect/turf_decal/bot_white/left,
 /obj/effect/turf_decal/tile/neutral{
@@ -16712,9 +16712,9 @@
 /area/quartermaster/storage)
 "aMG" = (
 /obj/structure/table,
-/obj/item/aiModule/core/full/asimov,
+/obj/item/ai_module/core/full/asimov,
 /obj/effect/spawner/lootdrop/aimodule_harmless,
-/obj/item/aiModule/core/freeformcore,
+/obj/item/ai_module/core/freeformcore,
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -16724,7 +16724,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/effect/spawner/lootdrop/aimodule_neutral,
-/obj/item/aiModule/core/full/custom,
+/obj/item/ai_module/core/full/custom,
 /obj/machinery/flasher{
 	id = "AI";
 	pixel_y = 24
@@ -16747,10 +16747,10 @@
 	pixel_y = 24
 	},
 /obj/effect/spawner/lootdrop/aimodule_harmful,
-/obj/item/aiModule/supplied/oxygen,
-/obj/item/aiModule/supplied/protectStation,
-/obj/item/aiModule/zeroth/oneHuman,
-/obj/item/aiModule/reset/purge,
+/obj/item/ai_module/supplied/oxygen,
+/obj/item/ai_module/supplied/protect_station,
+/obj/item/ai_module/zeroth/onehuman,
+/obj/item/ai_module/reset/purge,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "aMJ" = (
@@ -17871,7 +17871,7 @@
 /area/quartermaster/warehouse)
 "aPt" = (
 /obj/structure/table,
-/obj/item/aiModule/supplied/quarantine,
+/obj/item/ai_module/supplied/quarantine,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -17892,7 +17892,7 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "aPx" = (
 /obj/structure/table,
-/obj/item/aiModule/supplied/freeform,
+/obj/item/ai_module/supplied/freeform,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -18298,7 +18298,7 @@
 /area/quartermaster/warehouse)
 "aQz" = (
 /obj/structure/table,
-/obj/item/aiModule/reset,
+/obj/item/ai_module/reset,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -19800,11 +19800,11 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap{
 	pixel_y = 2
 	},
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap{
 	pixel_y = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -21680,7 +21680,7 @@
 "aYn" = (
 /obj/structure/table,
 /obj/item/aicard,
-/obj/item/aiModule/reset,
+/obj/item/ai_module/reset,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "aYo" = (
@@ -21923,7 +21923,7 @@
 	dir = 1;
 	pixel_x = 14
 	},
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 4
 	},
 /obj/structure/disposalpipe/trunk{
@@ -23034,7 +23034,7 @@
 /area/maintenance/starboard/fore)
 "bbk" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/AI,
+/obj/effect/spawner/lootdrop/techstorage/ai,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bbl" = (
@@ -23384,11 +23384,11 @@
 /area/maintenance/port/fore)
 "bbN" = (
 /obj/structure/table,
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap{
 	pixel_x = 2;
 	pixel_y = -3
 	},
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -23577,7 +23577,7 @@
 /area/storage/tech)
 "bcv" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/RnD_secure,
+/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bcw" = (
@@ -24017,7 +24017,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 2
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -24037,11 +24037,11 @@
 /obj/item/hand_labeler{
 	pixel_y = 11
 	},
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap{
 	pixel_x = 2;
 	pixel_y = -3
 	},
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap{
 	pixel_x = 2;
 	pixel_y = -3
 	},
@@ -24063,11 +24063,11 @@
 /area/quartermaster/sorting)
 "bdq" = (
 /obj/structure/table,
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap{
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/destTagger{
+/obj/item/dest_tagger{
 	pixel_x = 4;
 	pixel_y = -2
 	},
@@ -24081,7 +24081,7 @@
 /area/quartermaster/sorting)
 "bdr" = (
 /obj/structure/table,
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap{
 	pixel_x = -9;
 	pixel_y = -9
 	},
@@ -24571,7 +24571,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/poly,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
 "bek" = (
@@ -24844,7 +24844,7 @@
 /area/quartermaster/sorting)
 "bfd" = (
 /obj/structure/table,
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap{
 	pixel_x = -8;
 	pixel_y = -3
 	},
@@ -26538,7 +26538,7 @@
 /obj/item/pen/red{
 	pixel_y = 10
 	},
-/obj/item/destTagger{
+/obj/item/dest_tagger{
 	pixel_x = 9;
 	pixel_y = 10
 	},
@@ -26565,7 +26565,7 @@
 	pixel_y = 6
 	},
 /obj/structure/table,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -27107,7 +27107,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bkp" = (
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 1;
 	name = "Service Deliveries"
 	},
@@ -27120,7 +27120,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "bkq" = (
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 1;
 	name = "Security Deliveries"
 	},
@@ -27133,7 +27133,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "bkr" = (
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 1;
 	name = "Engineering Deliveries"
 	},
@@ -27146,7 +27146,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "bks" = (
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 1;
 	name = "Medical Deliveries"
 	},
@@ -29201,8 +29201,8 @@
 	dir = 4
 	},
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "boP" = (
@@ -29218,8 +29218,8 @@
 /area/crew_quarters/bar)
 "boR" = (
 /obj/structure/table/wood,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
 /obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/machinery/camera{
 	c_tag = "Bar - Backroom"
@@ -30963,7 +30963,7 @@
 	pixel_y = 32
 	},
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/Ian,
+/mob/living/simple_animal/pet/dog/corgi/ian,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bsQ" = (
@@ -32298,7 +32298,7 @@
 /area/crew_quarters/heads/hop)
 "bwj" = (
 /obj/item/hand_labeler,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/structure/table/wood,
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -33849,7 +33849,7 @@
 	pixel_y = -29
 	},
 /obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/Renault,
+/mob/living/simple_animal/pet/fox/renault,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bAf" = (
@@ -34280,7 +34280,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/storage/box/PDAs{
+/obj/item/storage/box/pdas{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -37968,10 +37968,10 @@
 "bJI" = (
 /obj/structure/window/reinforced,
 /obj/structure/table,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -38702,7 +38702,7 @@
 	dir = 8;
 	name = "Disposals Chute"
 	},
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 8;
 	name = "disposals chute";
 	pixel_x = 5
@@ -40225,10 +40225,10 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/stack/packageWrap{
+/obj/item/stack/package_wrap{
 	pixel_x = 6
 	},
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/item/book/manual/chef_recipes{
 	pixel_x = 2;
@@ -41169,7 +41169,7 @@
 	pixel_x = -27
 	},
 /obj/item/folder/blue,
-/obj/item/clothing/head/collectable/HoP{
+/obj/item/clothing/head/collectable/hop{
 	name = "novelty HoP hat"
 	},
 /obj/machinery/light/small{
@@ -41262,7 +41262,7 @@
 	pixel_y = 6
 	},
 /obj/structure/table/wood,
-/obj/item/toy/talking/AI{
+/obj/item/toy/talking/ai{
 	name = "\improper Nanotrasen-brand toy AI";
 	pixel_y = 6
 	},
@@ -41276,7 +41276,7 @@
 /obj/item/toy/gun,
 /obj/item/restraints/handcuffs,
 /obj/structure/table/wood,
-/obj/item/clothing/head/collectable/HoS{
+/obj/item/clothing/head/collectable/hos{
 	name = "novelty HoS hat"
 	},
 /obj/machinery/firealarm{
@@ -43948,15 +43948,15 @@
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/OPlus{
+/obj/item/reagent_containers/blood/o_plus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/BPlus,
-/obj/item/reagent_containers/blood/BMinus,
-/obj/item/reagent_containers/blood/APlus,
-/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/b_plus,
+/obj/item/reagent_containers/blood/b_minus,
+/obj/item/reagent_containers/blood/a_plus,
+/obj/item/reagent_containers/blood/a_minus,
 /obj/item/reagent_containers/blood/lizard,
 /obj/item/reagent_containers/blood/ethereal,
 /obj/item/reagent_containers/blood{
@@ -44213,11 +44213,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bYf" = (
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/green{
@@ -49661,7 +49661,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "ckl" = (
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "ckm" = (
@@ -50595,11 +50595,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cmC" = (
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/yellow,
@@ -50647,8 +50647,8 @@
 /area/science/lab)
 "cmG" = (
 /obj/structure/table,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
@@ -51096,7 +51096,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "cnG" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/chief_medical,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -54809,7 +54809,7 @@
 	},
 /area/crew_quarters/heads/hor)
 "cwS" = (
-/obj/structure/closet/secure_closet/RD,
+/obj/structure/closet/secure_closet/research_director,
 /obj/machinery/keycard_auth{
 	pixel_y = -24
 	},
@@ -62003,8 +62003,8 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -62333,7 +62333,7 @@
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
 "cRv" = (
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	idDoor = "xeno_airlock_exterior";
 	idSelf = "xeno_airlock_control";
 	name = "Access Button";
@@ -64174,7 +64174,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dbZ" = (
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	idDoor = "xeno_airlock_interior";
 	idSelf = "xeno_airlock_control";
 	name = "Access Button";
@@ -64387,7 +64387,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/doorButtons/airlock_controller{
+/obj/machinery/door_buttons/airlock_controller{
 	idExterior = "xeno_airlock_exterior";
 	idInterior = "xeno_airlock_interior";
 	idSelf = "xeno_airlock_control";
@@ -69876,7 +69876,7 @@
 "gnA" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/space/basic,
 /area/space/nearstation)
 "gnT" = (
@@ -70046,7 +70046,7 @@
 	name = "Virology Interior Airlock";
 	req_access_txt = "39"
 	},
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	idDoor = "virology_airlock_interior";
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
@@ -70501,7 +70501,7 @@
 /obj/item/stack/sheet/cardboard{
 	amount = 14
 	},
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "hog" = (
@@ -70934,7 +70934,7 @@
 	dir = 2;
 	pixel_x = 0
 	},
-/mob/living/simple_animal/mouse/brown/Tom,
+/mob/living/simple_animal/mouse/brown/tom,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "icO" = (
@@ -71580,7 +71580,7 @@
 	name = "Virology Exterior Airlock";
 	req_access_txt = "39"
 	},
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	dir = 1;
 	idDoor = "virology_airlock_exterior";
 	idSelf = "virology_airlock_control";
@@ -71872,7 +71872,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/doorButtons/airlock_controller{
+/obj/machinery/door_buttons/airlock_controller{
 	idExterior = "virology_airlock_exterior";
 	idInterior = "virology_airlock_interior";
 	idSelf = "virology_airlock_control";
@@ -76760,7 +76760,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "sjs" = (
-/obj/machinery/disposal/deliveryChute{
+/obj/machinery/disposal/delivery_chute{
 	dir = 1;
 	name = "Science Deliveries"
 	},

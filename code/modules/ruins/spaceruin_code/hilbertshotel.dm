@@ -282,22 +282,22 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         to_chat(user, "<span class='notice'>You peak through the door's bluespace peephole...</span>")
         user.reset_perspective(parentSphere)
         user.set_machine(src)
-        var/datum/action/peepholeCancel/PHC = new
+        var/datum/action/peephole_cancel/PHC = new
         user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
         PHC.Grant(user)
 
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
     if(get_dist(get_turf(src), get_turf(user)) >= 2)
         user.unset_machine()
-        for(var/datum/action/peepholeCancel/PHC in user.actions)
+        for(var/datum/action/peephole_cancel/PHC in user.actions)
             PHC.Trigger()
 
-/datum/action/peepholeCancel
+/datum/action/peephole_cancel
     name = "Cancel View"
     desc = "Stop looking through the bluespace peephole."
     button_icon_state = "cancel_peephole"
 
-/datum/action/peepholeCancel/Trigger()
+/datum/action/peephole_cancel/Trigger()
     . = ..()
     to_chat(owner, "<span class='warning'>You move away from the peephole.</span>")
     owner.reset_perspective()

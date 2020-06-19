@@ -25,8 +25,10 @@
 	var/mob/living/carbon/human/humie = locate() in atoms
 	if(!humie)
 		return
+	if(humie.stat != DEAD)
+		return
 
-	humie?.grab_ghost()
+	humie.grab_ghost()
 
 	if(!humie.mind || !humie.client)
 		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [humie.real_name], a voiceless dead", ROLE_HERETIC, null, ROLE_HERETIC, 50,humie)
