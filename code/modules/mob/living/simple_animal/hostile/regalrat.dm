@@ -80,7 +80,7 @@
 			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 			return
 		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		src.heal_bodypart_damage(10)
+		heal_bodypart_damage(10)
 		qdel(target)
 
 /**
@@ -254,5 +254,5 @@
 			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 			return
 		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		src.heal_bodypart_damage(5)
+		heal_bodypart_damage(5)
 		qdel(target)
