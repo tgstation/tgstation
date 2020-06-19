@@ -17,7 +17,7 @@
 	suit = null
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = null
-	glasses = /obj/item/clothing/glasses/hud/spacecop
+	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/headset_sec
 	mask = null
 	head = /obj/item/clothing/head/spacepolice
