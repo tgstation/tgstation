@@ -1036,8 +1036,10 @@
 	return TRUE
 
 /datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
-	M.adjustBruteLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
-	M.adjustFireLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
+	var/turf/T = get_turf(M)
+	if(is_mining_level(T.z))
+		M.adjustBruteLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
+		M.adjustFireLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(3*REM, 0)
 	..()
 	return TRUE
