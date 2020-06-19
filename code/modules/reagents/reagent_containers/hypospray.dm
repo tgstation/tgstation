@@ -214,13 +214,30 @@
 		icon_state = "[initial(icon_state)]0"
 
 /obj/item/reagent_containers/hypospray/medipen/survival
-	name = "survival medipen"
-	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
+	name = "survival emergency medipen"
+	desc = "A medipen for surviving in the harsh environments, heals most common damage sources. WARNING: May cause organ damage."
+	icon_state = "stimpen"
+	inhand_icon_state = "stimpen"
+	volume = 30
+	amount_per_transfer_from_this = 30
+	list_reagents = list( /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/c2/aiuri = 10, /datum/reagent/medicine/c2/libital = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/inject(mob/living/M, mob/user)
+	user.visible_message("<span class='notice'>[user] is injecting [M] with [name]</span>","<span class='notice'>You are injecting [M] with [name]</span>")
+	if(!lavaland_equipment_pressure_check(get_turf(user)) && do_after(M,5 SECONDS))
+		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)/2
+		return ..()
+	amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
+	return ..()
+
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury
+	name = "survival luxury medipen"
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "stimpen"
 	inhand_icon_state = "stimpen"
 	volume = 60
 	amount_per_transfer_from_this = 60
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5, /datum/reagent/medicine/oxandrolone = 8, /datum/reagent/medicine/sal_acid = 8, /datum/reagent/medicine/morphine = 2)
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
