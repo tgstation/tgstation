@@ -1026,7 +1026,7 @@
 
 /datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
 	var/turf/T = get_turf(M)
-	if(is_mining_level(T.z))
+	if(!is_station_level(T.z))
 		M.heal_bodypart_damage(5,5)
 	else
 		M.Dizzy(10)
@@ -1037,7 +1037,7 @@
 
 /datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
 	var/turf/T = get_turf(M)
-	if(is_mining_level(T.z))
+	if(!is_station_level(T.z))
 		M.adjustBruteLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
 		M.adjustFireLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(3*REM, 0)
