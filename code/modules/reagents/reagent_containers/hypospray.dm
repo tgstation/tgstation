@@ -226,7 +226,7 @@
 	if(!lavaland_equipment_pressure_check(get_turf(user)))
 		to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
 		if(do_after(M,10 SECONDS))
-			amount_per_transfer_from_this = initial(amount_per_transfer_from_this)/2
+			amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5
 			return ..()
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 	return ..()
