@@ -30,6 +30,7 @@
 	del_on_death = TRUE
 	deathmessage = "implodes into itself"
 	faction = list("heretics")
+	simple_mob_flags = SILENCE_RANGED_MESSAGE
 	///Innate spells that are supposed to be added when a beast is created
 	var/list/spells_to_add
 
@@ -82,7 +83,6 @@
 	ranged_cooldown_time = 5
 	ranged = TRUE
 	rapid = 1
-	has_ranged_message = FALSE
 	///Previous segment in the chain
 	var/mob/living/simple_animal/hostile/eldritch/armsy/back
 	///Next segment in the chain

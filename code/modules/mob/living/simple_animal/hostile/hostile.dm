@@ -25,8 +25,6 @@
 	var/rapid_melee = 1			 //Number of melee attacks between each npc pool tick. Spread evenly.
 	var/melee_queue_distance = 4 //If target is close enough start preparing to hit them if we have rapid_melee enabled
 
-	///Check if we should display the message
-	var/has_ranged_message = TRUE
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
@@ -381,7 +379,7 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
 	if(CheckFriendlyFire(A))
 		return
-	if(has_ranged_message)
+	if(!(simple_mob_flags && SILENCE_RANGED_MESSAGE))
 		visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 
