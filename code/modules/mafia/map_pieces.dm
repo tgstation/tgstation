@@ -2,6 +2,9 @@
 	name = "Mafia Player Spawn"
 	var/game_id = "mafia"
 
+/obj/effect/landmark/mafia/town_center
+	name = "Mafia Town Center"
+
 /obj/mafia_game_signup
 	name = "Mafia Game Signup"
 	desc = "Sign up here."

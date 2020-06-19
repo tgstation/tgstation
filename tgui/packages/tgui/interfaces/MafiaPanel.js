@@ -3,7 +3,6 @@ import { Flex, Button, LabeledList, Section, Box, Table, TimeDisplay } from '../
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 import { FlexItem } from '../components/Flex';
-import { TableRow, TableCell } from '../components/Table';
 
 export const MafiaPanel = (props, context) => {
   const { act, data } = useBackend(context);
@@ -60,29 +59,17 @@ export const MafiaPanel = (props, context) => {
         </Flex>
         {!!admin_controls && (
           <Section title="ADMIN CONTROLS">
-            <Table>
-              <TableRow>
-                <TableCell>
-                  DO NOT USE THESE IF YOU ARE PLAYING, ADMIN
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Fragment>
-                    <Flex.Item>
-                      <Button
-                        onClick={() => act("next_phase")}>Next Phase
-                      </Button>
-                    </Flex.Item>
-                    <FlexItem>
-                      <Button
-                        onClick={() => act("new_game")}>New Game
-                      </Button>
-                    </FlexItem>
-                  </Fragment>
-                </TableCell>
-              </TableRow>
-            </Table>
+            DO NOT USE THESE IF YOU ARE PLAYING, ADMIN
+            <Flex.Item>
+              <Button
+                onClick={() => act("next_phase")}>Next Phase
+              </Button>
+            </Flex.Item>
+            <FlexItem>
+              <Button
+                onClick={() => act("new_game")}>New Game
+              </Button>
+            </FlexItem>
           </Section>
         )}
         <Section title="Players">
@@ -113,13 +100,7 @@ export const MafiaPanel = (props, context) => {
         </Section>
         {!!judgement_phase && (
           <Section title="JUDGEMENT">
-            <Table>
-              <TableRow>
-                <TableCell>
-                  Use these buttons to vote the accused innocent or guilty!
-                </TableCell>
-              </TableRow>
-            </Table>
+            Use these buttons to vote the accused innocent or guilty!
             <Fragment>
               <Flex.Item>
                 <Button
