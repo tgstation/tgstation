@@ -223,18 +223,19 @@
 	list_reagents = list( /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/c2/aiuri = 10, /datum/reagent/medicine/c2/libital = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/survival/inject(mob/living/M, mob/user)
-	user.visible_message("<span class='notice'>[user] is injecting [M] with [name]</span>","<span class='notice'>You are injecting [M] with [name]</span>")
-	if(!lavaland_equipment_pressure_check(get_turf(user)) && do_after(M,5 SECONDS))
-		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)/2
-		return ..()
+	if(!lavaland_equipment_pressure_check(get_turf(user)))
+		to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
+		if(do_after(M,10 SECONDS))
+			amount_per_transfer_from_this = initial(amount_per_transfer_from_this)/2
+			return ..()
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 	return ..()
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury
-	name = "survival luxury medipen"
+	name = "luxury medipen"
 	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
-	icon_state = "stimpen"
-	inhand_icon_state = "stimpen"
+	icon_state = "luxpen"
+	inhand_icon_state = "atropen"
 	volume = 60
 	amount_per_transfer_from_this = 60
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
