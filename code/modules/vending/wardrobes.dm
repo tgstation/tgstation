@@ -56,8 +56,6 @@
 					/obj/item/clothing/shoes/laceup = 10,
 					/obj/item/clothing/head/beret/sec = 10,
 					/obj/item/clothing/head/soft/sec = 10,
-					/obj/item/clothing/head/HoS = 10,
-					/obj/item/clothing/head/HoS/beret = 10,
 					/obj/item/clothing/head/warden = 10,
 					/obj/item/clothing/head/warden/drill = 10,
 					/obj/item/clothing/head/beret/sec/navyhos = 10,
