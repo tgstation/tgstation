@@ -120,7 +120,7 @@
 	desc = "It's engraved with strange runes and glyphs. A large carving of a gecko takes up most of the centre, and there's a hexagonal indent where its eye should be."
 	puzzle_id = "jungletemple"
 	icon = 'icons/effects/96x96.dmi'
-	open_message = "The stone slots into place, and the door slides open with a rumble."
+	open_message = "The stone flashes briefly, and the door slides open with a rumble."
 
 /obj/machinery/door/keycard/jungle/warrior
 	name = "Courage Gate"
@@ -155,23 +155,27 @@
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 
 /obj/structure/holobox/statue
+	name = "broken statue"
+	desc = "Oh god oh fuck you shouldn't see this oh fuck"
+
+/obj/structure/holobox/statue/warrior
 	name = "statue of a brave warrior"
-	desc = "A statue of a lizard warrior, clad in imposing armour and armed with a sword and shield."
+	desc = "A statue of a lizard warrior, clad in imposing armour and armed with a sword and shield. Its chest glows dully."
 	icon_state = "warrior_statue"
 
 /obj/structure/holobox/statue/ranger
 	name = "statue of a precise ranger"
-	desc = "A statue of a lizard ranger, clad in imposing armour and armed with a bow and arrow."
+	desc = "A statue of a lizard ranger, clad in imposing armour and armed with a bow and arrow. Its eye glows dully."
 	icon_state = "ranger_statue"
 
 /obj/structure/holobox/statue/mage
 	name = "statue of a wise mage"
-	desc = "A statue of a lizard mage, clad in imposing armour and armed with a staff."
+	desc = "A statue of a lizard mage, clad in imposing armour and armed with a staff. Its head glows dully."
 	icon_state = "mage_statue"
 
 /obj/structure/holobox/statue/summoner
 	name = "statue of an inspiring summoner"
-	desc = "A statue of a lizard summoner, clad in imposing armour and armed with a whip and staff."
+	desc = "A statue of a lizard summoner, clad in imposing armour and armed with a whip and staff. Its hand glows dully."
 	icon_state = "summoner_statue"
 
 //Uses the pressure_plate settings for a pretty basic custom pattern that waits for a specific item to trigger. Easy enough to retool for mapping purposes or subtypes.
@@ -223,7 +227,7 @@
 	name = "statue plinth"
 	desc = "A glowing stone slab, waiting to accept a statue. But which one is correct...?"
 	icon_state = "lasergrid_jungle"
-	specific_item = /obj/structure/holobox/statue
+	specific_item = /obj/structure/holobox/statue/warrior
 	reward = /obj/item/keycard/jungle/warrior
 
 /obj/item/pressure_plate/hologrid/jungle/ranger
