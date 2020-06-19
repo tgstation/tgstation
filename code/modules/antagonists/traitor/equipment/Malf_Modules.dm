@@ -152,11 +152,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /// Doomsday Device: Starts the self-destruct timer. It can only be stopped by killing the AI completely.
 /datum/ai_module/destructive/nuke_station
 	name = "Doomsday Device"
-	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay. Can only be used while on the station, will fail if your core is moved off station or destroyed."
+	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay. Can only be used while inside the AI chamber, will fail if your core is moved out of the chamber or destroyed. Using Mech Domination outside of the AI chamber will deactivate the Doomsday Device."
 	cost = 130
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/nuke_station
-	unlock_text = "<span class='notice'>You slowly, carefully, establish a connection with the on-station self-destruct. You can now activate it at any time.</span>"
+	unlock_text = "<span class='notice'>You slowly, carefully, establish a connection with your onboard self-destruct device. You can now activate it at any time.</span>"
 
 /datum/action/innate/ai/nuke_station
 	name = "Doomsday Device"
@@ -166,8 +166,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/nuke_station/Activate()
 	var/turf/T = get_turf(owner)
-	if(!istype(T) || !is_station_level(T.z))
-		to_chat(owner, "<span class='warning'>You cannot activate the doomsday device while off-station!</span>")
+	if(!istype(T) || !istype(get_area(T), /area/ai_monitored/turret_protected/ai))
+		to_chat(owner, "<span class='warning'>ERROR: Doomsday Device not found. Return to your chamber to activate the Doomsday Device!</span>")
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
@@ -179,69 +179,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	set_us_up_the_bomb(owner)
 
 /datum/action/innate/ai/nuke_station/proc/set_us_up_the_bomb(mob/living/owner)
-	var/pass = prob(10) ? "******" : "hunter2"
-	set waitfor = FALSE
-	to_chat(owner, "<span class='small boldannounce'>run -o -a 'selfdestruct'</span>")
-	sleep(5)
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='small boldannounce'>Running executable 'selfdestruct'...</span>")
-	sleep(rand(10, 30))
-	if(!owner || QDELETED(owner))
-		return
-	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0)
-	to_chat(owner, "<span class='userdanger'>!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!</span>")
-	to_chat(owner, "<span class='boldannounce'>This is a class-3 security violation. This incident will be reported to Central Command.</span>")
-	for(var/i in 1 to 3)
-		sleep(20)
-		if(!owner || QDELETED(owner))
-			return
-		to_chat(owner, "<span class='boldannounce'>Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%</span>")
-	sleep(3)
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' [pass]</span>")
-	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0)
-	sleep(30)
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Welcome, akjv9c88asdf12nb.</span>")
-	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
-	sleep(5)
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='boldnotice'>Arm self-destruct device? (Y/N)</span>")
-	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0)
-	sleep(20)
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='small boldannounce'>Y</span>")
-	sleep(15)
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='boldnotice'>Confirm arming of self-destruct device? (Y/N)</span>")
-	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
-	sleep(10)
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='small boldannounce'>Y</span>")
-	sleep(rand(15, 25))
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='boldnotice'>Please repeat password to confirm.</span>")
-	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
-	sleep(14)
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='small boldannounce'>[pass]</span>")
-	sleep(40)
-	if(!owner || QDELETED(owner))
-		return
-	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Transmitting arming signal...</span>")
-	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
-	sleep(30)
-	if(!owner || QDELETED(owner))
-		return
 	if (owner_AI.stat != DEAD)
 		priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
 		set_security_level("delta")
@@ -294,8 +231,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
-	if(!T || !is_station_level(T.z))
-		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
+	if(!T || !istype(get_area(T), /area/ai_monitored/turret_protected/ai))
+		minor_announce("CONNECTION TO DOOMSDAY DEVICE LOST, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
 		return
