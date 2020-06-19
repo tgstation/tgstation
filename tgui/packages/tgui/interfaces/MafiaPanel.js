@@ -58,8 +58,10 @@ export const MafiaPanel = (props, context) => {
           })}
         </Flex>
         {!!admin_controls && (
-          <Section title="ADMIN CONTROLS">
-            DO NOT USE THESE IF YOU ARE PLAYING, ADMIN
+          <Section
+            title="ADMIN CONTROLS"
+            backgroundColor="red">
+            THESE ARE DEBUG, THEY WILL BREAK THE GAME, DO NOT TOUCH
             <Flex.Item>
               <Button
                 onClick={() => act("next_phase")}>Next Phase
