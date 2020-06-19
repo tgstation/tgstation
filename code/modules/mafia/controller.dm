@@ -128,7 +128,12 @@
 /datum/mafia_controller/proc/check_victory()
 	var/alive_town = 0
 	var/alive_mafia = 0
-	var/solo_present = FALSE
+	var/list/solos_to_ask = list() //need to ask after because first round is counting team sizes
+	var/list/total_victors = null //if this has someone, they won alone. list because side antags can with with people
+	var/blocked_victory = FALSE
+
+	///PHASE ONE: TALLY UP ALL NUMBERS OF PEOPLE STILL ALIVE
+
 	for(var/datum/mafia_role/R in all_roles)
 		if(R.game_status == MAFIA_ALIVE)
 			switch(R.team)
@@ -137,19 +142,35 @@
 				if(MAFIA_TEAM_TOWN)
 					alive_town++
 				if(MAFIA_TEAM_SOLO)
-					solo_present = TRUE
-	if(solo_present && alive_town + alive_mafia <= 1)
-		start_the_end("<span class='big red'>!! TRAITOR VICTORY !!</span>")
-		return TRUE
-	if(alive_mafia == 0 && !solo_present)
+					solos_to_ask += R
+
+	///PHASE TWO: SEND STATS TO SOLO ANTAGS, SEE IF THEY WON OR TOWNS CAN'T WIN
+
+	for(var/datum/mafia_role/solo in solos_to_ask)
+		if(solo.check_total_victory(alive_town, alive_mafia))
+			total_victors += solo
+		else if(solo.block_team_victory(alive_town, alive_mafia))
+			blocked_victory = TRUE
+
+	///PHASE THREE: IF SOLOS WON, SEND A SIGNAL THAT GAME IS ENDING (literally just for fugitives to say they won sorry not sorry)
+	if(length(total_victors))
+		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
+	//solo victories!
+	for(var/datum/mafia_role/winner in total_victors)
+		send_message("<span class='big red'>!! [uppertext(winner.name)] VICTORY !!</span>")
+		start_the_end()
+	if(alive_mafia == 0 && !blocked_victory)
+		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
-	else if(alive_mafia >= alive_town && !solo_present) //guess could change if town nightkill is added
+	else if(alive_mafia >= alive_town && !blocked_victory) //guess could change if town nightkill is added
+		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		return TRUE
 
 /datum/mafia_controller/proc/start_the_end(message)
-	send_message(message)
+	if(message)
+		send_message(message)
 	phase = MAFIA_PHASE_VICTORY_LAP
 	next_phase_timer = addtimer(CALLBACK(src,.proc/end_game),victory_lap_period,TIMER_STOPPABLE)
 

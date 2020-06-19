@@ -22,6 +22,7 @@
 #define COMSIG_MAFIA_NIGHT_START "night_start"
 #define COMSIG_MAFIA_NIGHT_ACTION_PHASE "night_actions"
 #define COMSIG_MAFIA_NIGHT_KILL_PHASE "night_kill"
+#define COMSIG_MAFIA_GAME_END "game_end"
 
 GLOBAL_LIST_EMPTY(mafia_games)
 GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
@@ -64,14 +65,16 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 /datum/mafia_setup/twelve_all
 	name = "12 Player Setup All"
 	roles = list(
-		/datum/mafia_role=4,
+		/datum/mafia_role=2,
 		/datum/mafia_role/md=1,
 		/datum/mafia_role/detective=1,
 		/datum/mafia_role/clown=1,
 		/datum/mafia_role/chaplain=1,
 		/datum/mafia_role/warden=1,
 		/datum/mafia_role/traitor=1,
-		/datum/mafia_role/mafia=3
+		/datum/mafia_role/mafia=3,
+		/datum/mafia_role/fugitive=1,
+		/datum/mafia_role/obsessed=1
 	)
 
 /datum/mafia_setup/twelve_joke
@@ -100,6 +103,32 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/mafia=3
 	)
 
+/datum/mafia_setup/twelve_double_treason
+	name = "12 Player Setup Double Treason"
+	roles = list(
+		/datum/mafia_role=8,
+		/datum/mafia_role/detective=1,
+		/datum/mafia_role/traitor=1,
+		/datum/mafia_role/obsessed=2
+	)
+
+/datum/mafia_setup/twelve_fugitives
+	name = "12 Player Fugitives"
+	roles = list(
+		/datum/mafia_role=7,
+		/datum/mafia_role/mafia=3,
+		/datum/mafia_role/fugitive=2
+	)
+
+/datum/mafia_setup/twelve_fugitives
+	name = "12 Player Traitor Mafia"
+	roles = list(
+		/datum/mafia_role=5,
+		/datum/mafia_role/md=2,
+		/datum/mafia_role/detective=2,
+		/datum/mafia_role/traitor=3
+	)
+
 // 10 Player
 /datum/mafia_setup/ten_A
 	name = "10 Player Setup A"
@@ -123,15 +152,16 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 /datum/mafia_setup/ten_C
 	name = "10 Player Setup C"
 	roles = list(
-		/datum/mafia_role=5,
+		/datum/mafia_role=4,
 		/datum/mafia_role/warden=1,
 		/datum/mafia_role/md=1,
+		/datum/mafia_role/fugitive=1,
 		/datum/mafia_role/traitor=1,
 		/datum/mafia_role/mafia=2)
 
 
-/datum/mafia_setup/nine
-	name = "9 Player Setup"
+/datum/mafia_setup/nine_A
+	name = "9 Player Setup A"
 	roles = list(
 		/datum/mafia_role=3,
 		/datum/mafia_role/md=1,
@@ -140,3 +170,22 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/mafia=3
 	)
 
+/datum/mafia_setup/nine_B
+	name = "9 Player Setup B"
+	roles = list(
+		/datum/mafia_role=3,
+		/datum/mafia_role/warden=1,
+		/datum/mafia_role/detective=1,
+		/datum/mafia_role/obsessed=1,
+		/datum/mafia_role/mafia=2
+	)
+
+/datum/mafia_setup/nine_C
+	name = "9 Player Setup C"
+	roles = list(
+		/datum/mafia_role=3,
+		/datum/mafia_role/warden=1,
+		/datum/mafia_role/detective=1,
+		/datum/mafia_role/fugitive=1,
+		/datum/mafia_role/mafia=2
+	)

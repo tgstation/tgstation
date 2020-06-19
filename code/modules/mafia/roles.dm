@@ -49,6 +49,12 @@
 /datum/mafia_role/proc/add_note(note)
 	role_notes += note
 
+/datum/mafia_role/proc/check_total_victory(alive_town, alive_mafia) //solo antags can win... solo.
+	return FALSE
+
+/datum/mafia_role/proc/block_team_victory(alive_town, alive_mafia) //solo antags can also block team wins.
+	return FALSE
+
 /datum/mafia_role/detective
 	name = "Detective"
 	desc = "You can investigate a single person each night to reveal their team."
@@ -78,14 +84,18 @@
 	var/datum/mafia_role/R = current_investigation
 	if(R)
 		var/team_text
+		var/fluff
 		switch(R.team)
 			if(MAFIA_TEAM_TOWN)
 				team_text = "Town"
+				fluff = "a true member of the station."
 			if(MAFIA_TEAM_MAFIA)
 				team_text = "Mafia"
+				fluff = "an unfeeling, hideous changeling!"
 			if(MAFIA_TEAM_SOLO)
 				team_text = "Solo"
-		to_chat(body,"<span class='warning'>Your investigations reveal that [R.body.real_name] is [team_text].</span>")
+				fluff = "a rogue, with their own objectives..."
+		to_chat(body,"<span class='warning'>Your investigations reveal that [R.body.real_name] is [fluff]</span>")
 		add_note("N[game.turn] - [R.body.real_name] - [team_text]")
 	current_investigation = null
 
@@ -131,7 +141,7 @@
 
 /datum/mafia_role/chaplain
 	name = "Chaplain"
-	desc = "You can communicate with spirits of the dead each night to discover dead crewmembers role."
+	desc = "You can communicate with spirits of the dead each night to discover dead crewmember roles."
 
 	targeted_actions = list("Pray")
 	var/current_target
@@ -221,6 +231,8 @@
 	desc = "You're the informed minority. Use ':j' talk prefix to talk to your comrades"
 	team = MAFIA_TEAM_MAFIA
 
+///SOLO ROLES/// they range from anomalous factors not good or evil to deranged killers that try to win alone.
+
 /datum/mafia_role/traitor
 	name = "Traitor"
 	desc = "You're a solo traitor. You are immune to night kills, can kill every night and you win by outnumbering everyone else."
@@ -233,6 +245,12 @@
 	. = ..()
 	RegisterSignal(src,COMSIG_MAFIA_ON_KILL,.proc/nightkill_immunity)
 	RegisterSignal(game,COMSIG_MAFIA_NIGHT_KILL_PHASE,.proc/try_to_kill)
+
+/datum/mafia_role/traitor/check_total_victory(alive_town, alive_mafia) //serial killers just want teams dead
+	return alive_town + alive_mafia <= 1
+
+/datum/mafia_role/traitor/block_team_victory(alive_town, alive_mafia) //no team can win until they're dead
+	return TRUE //while alive, town AND mafia cannot win (though since mafia know who is who it's pretty easy to win from that point)
 
 /datum/mafia_role/traitor/proc/nightkill_immunity(datum/source,datum/mafia_controller/game,lynch)
 	if(game.phase == MAFIA_PHASE_NIGHT && !lynch)
@@ -256,3 +274,87 @@
 			to_chat(body,"<span class='danger'>Your attempt at killing [current_victim.body] was prevented!</span>")
 	current_victim = null
 
+//just helps read better
+#define FUGITIVE_NOT_PRESERVING 0//will not become night immune tonight
+#define FUGITIVE_WILL_PRESERVE 1 //will become night immune tonight
+
+/datum/mafia_role/fugitive
+	name = "Fugitive"
+	desc = "You're on the run. You can become immune to night kills exactly twice, and you win by surviving to the end of the game with anyone."
+	team = MAFIA_TEAM_SOLO
+	actions = list("Self Preservation")
+	var/charges = 2
+	var/protection_status = FUGITIVE_NOT_PRESERVING
+
+/datum/mafia_role/fugitive/New(datum/mafia_controller/game)
+	. = ..()
+	RegisterSignal(game,COMSIG_MAFIA_NIGHT_START,.proc/night_start)
+	RegisterSignal(game,COMSIG_MAFIA_NIGHT_END,.proc/night_end)
+	RegisterSignal(game,COMSIG_MAFIA_GAME_END,.proc/survived)
+
+/datum/mafia_role/fugitive/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
+	. = ..()
+	if(!charges)
+		to_chat(body,"<span class='danger'>You're out of supplies and cannot protect yourself tonight.</span>")
+		return
+	if(protection_status == FUGITIVE_WILL_PRESERVE)
+		to_chat(body,"<span class='danger'>You decide to not prepare tonight.</span>")
+	else
+		to_chat(body,"<span class='danger'>You decide to prepare for a horrible night.</span>")
+	protection_status = !protection_status
+
+/datum/mafia_role/fugitive/proc/night_start(datum/mafia_controller/game)
+	if(protection_status == FUGITIVE_WILL_PRESERVE)
+		to_chat(body,"<span class='danger'>Your preparations are complete. Nothing could kill you tonight!</span>")
+		RegisterSignal(src,COMSIG_MAFIA_ON_KILL,.proc/prevent_death)
+
+/datum/mafia_role/fugitive/proc/night_end(datum/mafia_controller/game)
+	if(protection_status == FUGITIVE_WILL_PRESERVE)
+		charges--
+		UnregisterSignal(src,COMSIG_MAFIA_ON_KILL)
+		to_chat(body,"<span class='danger'>You are no longer protected. You have [charges] use[charges == 1 ? "" : "s"] left of your power.</span>")
+		protection_status = FUGITIVE_NOT_PRESERVING
+
+/datum/mafia_role/fugitive/proc/prevent_death(datum/mafia_controller/game)
+	to_chat(body,"<span class='userdanger'>You were attacked! Luckily, you were ready for this!</span>")
+	return MAFIA_PREVENT_KILL
+
+/datum/mafia_role/fugitive/proc/survived(datum/mafia_controller/game)
+	if(game_status == MAFIA_ALIVE)
+		game.send_message("<span class='big comradio'>!! FUGITIVE VICTORY !!</span>")
+
+#undef FUGITIVE_NOT_PRESERVING
+#undef FUGITIVE_WILL_PRESERVE
+
+/datum/mafia_role/obsessed
+	name = "Obsessed"
+	desc = "You're completely lost in your own mind. You win by lynching your obsession before you get killed in this mess. Obsession assigned on the first night!"
+	team = MAFIA_TEAM_SOLO
+
+	var/datum/mafia_role/obsession
+	var/lynched_target = FALSE
+
+/datum/mafia_role/obsessed/New(datum/mafia_controller/game) //note: obsession is always a townie
+	. = ..()
+	RegisterSignal(game,COMSIG_MAFIA_NIGHT_START,.proc/find_obsession)
+
+/datum/mafia_role/obsessed/proc/find_obsession(datum/mafia_controller/game)
+	var/list/all_roles_shuffle = shuffle(game.all_roles)
+	for(var/role in all_roles_shuffle)
+		var/datum/mafia_role/possible = role
+		if(possible.team == MAFIA_TEAM_TOWN)
+			obsession = possible
+			break
+	if(!obsession)
+		obsession = pick(all_roles_shuffle) //okay no town just pick anyone here
+	//if you still don't have an obsession you're playing a single player game like i can't help your dumb ass
+	to_chat(body, "<span class='userdanger'>Your obsession is [obsession.body.real_name]! Get them lynched to win!</span>")
+	add_note("N[game.turn] - I vowed to watch my obsession, [obsession.body.real_name], hang!") //it'll always be N1 but whatever
+	RegisterSignal(obsession,COMSIG_MAFIA_ON_KILL,.proc/check_victory)
+	UnregisterSignal(src,COMSIG_MAFIA_NIGHT_START)
+
+/datum/mafia_role/obsessed/proc/check_victory(datum/source,datum/mafia_controller/game,lynch)
+	if(lynch)
+		game.send_message("<span class='big red'>!! OBSESSED VICTORY !!</span>") //red since it's a confirmed townie
+	else
+		to_chat(body, "<span class='userdanger'>Your obsession died alone, WITHOUT YOU THERE! You have failed your objective to lynch them!</span>")
