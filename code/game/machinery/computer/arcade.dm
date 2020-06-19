@@ -288,7 +288,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
 
 		if(finishing_move) //time to bonk that fucker,cuban pete will sometime survive a finishing move.
-			attackamt *= 10
+			attackamt *= 100
 
 		//light attack suck absolute ass but it doesn't cost any MP so it's pretty good to finish an enemy off
 		if (href_list["attack"])
