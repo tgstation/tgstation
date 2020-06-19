@@ -137,8 +137,8 @@
 			continue
 		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location.loc)
 		smashes += RS
-
 	ReworkNetwork()
+
 
 /**
   * Adds a mind to the list of people that can see the reality smashes
@@ -218,7 +218,7 @@
 
 ///Makes the mind not able to see this effect
 /obj/effect/reality_smash/proc/RemoveMind(var/datum/mind/cultie)
-	if(cultie?.current?.client)
+	if(cultie.current.client)
 		cultie.current.client.images -= img
 		minds -= cultie
 
