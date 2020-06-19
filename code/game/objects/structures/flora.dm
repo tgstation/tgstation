@@ -388,10 +388,6 @@
 	/// Amount of the itemstack to drop
 	var/mineAmount = 20
 
-/obj/structure/flora/rock/Initialize()
-	. = ..()
-	icon_state = "[icon_state][rand(1,3)]"
-
 /obj/structure/flora/rock/Destroy()
 	if(mineResult && mineAmount)
 		new mineResult(loc, mineAmount)
