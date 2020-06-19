@@ -88,13 +88,7 @@
 	update_icon()
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
-	if((C.tool_behaviour == TOOL_SHOVEL) && params)
-		new ore_type(src, 2)
-		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You [turfverb] [src].</span>")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
-		make_plating()
-	if(..())
-		return
+	return
 
 /turf/open/floor/grass/fairy //like grass but fae-er
 	name = "fairygrass patch"
