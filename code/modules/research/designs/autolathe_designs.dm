@@ -795,6 +795,16 @@
 	build_path = /obj/item/restraints/handcuffs
 	category = list("hacked", "Security")
 
+/datum/design/secpinpointer
+	name = "Doomsday Pinpointer"
+	desc = "Tracks the locations of nuclear disks and other doomsday devices."
+	id = "secpinpointer"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500)
+	build_path = /obj/item/pinpointer
+	category = list("Security")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/receiver
 	name = "Modular Receiver"
 	id = "receiver"
