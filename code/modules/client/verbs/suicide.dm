@@ -23,6 +23,8 @@
 
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
+	to_chat(src, "No! Everyone has a good time at the ball. You can ghost if you really want to.")
+	return
 	if(!canSuicide())
 		return
 	var/oldkey = ckey
