@@ -26,7 +26,7 @@
 	if(QDELETED(humie) || humie.stat != DEAD)
 		return
 
-	if(length(ghouls) > max_amt)
+	if(length(ghouls) >= max_amt)
 		return
 
 	if(HAS_TRAIT(humie,TRAIT_HUSK))
