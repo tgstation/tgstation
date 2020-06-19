@@ -6,10 +6,13 @@
 
 	var/player_old_bodies = list() //We send players back to their bodies after
 
-	var/day_phase_period = 4 MINUTES
-	var/voting_phase_period = 2 MINUTES
-	var/night_phase_period = 3 MINUTES
-	var/victory_lap_period = 1 MINUTES
+	var/first_day_phase_period = 20 SECONDS //say hi to everyone, no voting so no discussion
+	var/day_phase_period = 1 MINUTES //talk with others about the night
+	var/voting_phase_period = 30 SECONDS //vote someone to get put on trial
+	var/judgement_phase_period = 30 SECONDS //defend yourself! don't get lynched! sometimes skipped
+	var/judgement_lynch_period = 5 SECONDS //just watch a guy die (or live but lol)
+	var/night_phase_period = 45 SECONDS //mafia talk and pick someone to kill
+	var/victory_lap_period = 20 SECONDS //just waiting around sayin' woop woop
 
 	var/list/current_setup_text //Redable list of roles in current game
 
@@ -19,7 +22,13 @@
 	var/player_outfit = /datum/outfit/mafia //todo some fluffy outfit
 
 	var/list/landmarks = list()
-	var/list/votes = list()
+	var/list/votes = list() //group voting on one person, like putting people to trial or choosing who to kill as mafia
+
+	//and these are the judgement phase votes, aka people sorting themselves into guilty and innocent lists. whichever has more wins!
+	var/list/judgement_innocent_votes = list()
+	var/list/judgement_guilty_votes = list()
+	var/datum/mafia_role/on_trial = null
+
 	var/next_phase_timer
 
 	var/debug = FALSE
@@ -66,26 +75,55 @@
 	turn += 1
 	phase = MAFIA_PHASE_DAY
 	if(!check_victory())
-		next_phase_timer = addtimer(CALLBACK(src,.proc/start_voting_phase),day_phase_period,TIMER_STOPPABLE)
-		send_message("<span class='big'>Day [turn] started! Voting will start in 4 minutes.</span>")
+		if(turn == 1)
+			send_message("<span class='big'>Day [turn] started! There is no voting on the first day. Say hello to everybody!</span>")
+			next_phase_timer = addtimer(CALLBACK(src,.proc/check_trial, FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
+		else
+			send_message("<span class='big'>Day [turn] started! Voting will start in 1 minute.</span>")
+			next_phase_timer = addtimer(CALLBACK(src,.proc/start_voting_phase),day_phase_period,TIMER_STOPPABLE)
+
 	SStgui.update_uis(src)
 
 
 /datum/mafia_controller/proc/start_voting_phase()
 	phase = MAFIA_PHASE_VOTING
-	next_phase_timer = addtimer(CALLBACK(src, .proc/lynch),voting_phase_period,TIMER_STOPPABLE)
-	send_message("<span class='big'>Voting started! Vote for who you want to see lynched today.</span>")
+	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, TRUE),voting_phase_period,TIMER_STOPPABLE) //be verbose!
+	send_message("<span class='big'>Voting started! Vote for who you want to see on trial today.</span>")
+	SStgui.update_uis(src)
+
+/datum/mafia_controller/proc/check_trial(verbose = TRUE)
+	var/datum/mafia_role/loser = get_vote_winner("Day")//, majority_of_town = TRUE)
+	if(loser)
+		send_message("<span class='big'>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</span>")
+		on_trial = loser
+		phase = MAFIA_PHASE_JUDGEMENT
+		next_phase_timer = addtimer(CALLBACK(src, .proc/lynch),judgement_phase_period,TIMER_STOPPABLE)
+		reset_votes("Day")
+	else
+		if(verbose)
+			send_message("<span class='big'>Not enough people have voted to put someone on trial, nobody will be lynched today.</span>")
+		if(!check_victory())
+			lockdown()
 	SStgui.update_uis(src)
 
 /datum/mafia_controller/proc/lynch()
-	var/datum/mafia_role/loser = get_vote_winner("Day")
-	if(loser)
-		send_message("<span class='big'>[loser.body.real_name] wins the day vote and will be killed.</span>")
-		loser.kill(src,lynch=TRUE)
-		reset_votes("Day")
-	if(!check_victory())
-		lockdown()
-	SStgui.update_uis(src)
+	for(var/i in judgement_innocent_votes)
+		var/datum/mafia_role/role = i
+		send_message("<span class='green'>[role.body.real_name] voted innocent.</span>")
+	for(var/ii in judgement_guilty_votes)
+		var/datum/mafia_role/role = ii
+		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
+	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
+		send_message("<span class='big red'>Guilty wins majority, [on_trial.body.real_name] has been lynched.</span>")
+		on_trial.kill(src, lynch = TRUE)
+	else
+		send_message("<span class='big green'>Innocent wins majority, [on_trial.body.real_name] has been spared.</span>")
+	//by now clowns should have killed someone in guilty list, clear this out
+	judgement_innocent_votes = list()
+	judgement_guilty_votes = list()
+	on_trial = null
+	//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
+	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, FALSE),judgement_lynch_period,TIMER_STOPPABLE)// small pause to see the guy dead, no verbosity since we already did this
 
 /datum/mafia_controller/proc/check_victory()
 	var/alive_town = 0
@@ -142,7 +180,7 @@
 
 /datum/mafia_controller/proc/start_night()
 	phase = MAFIA_PHASE_NIGHT
-	send_message("<span class='big'>Night [turn] started! Lockdown will end in 4 minutes.</span>")
+	send_message("<span class='big'>Night [turn] started! Lockdown will end in 45 seconds.</span>")
 	send_message("<span class='big'>Vote for who to kill tonight. The killer will be chosen randomly from voters.</span>",MAFIA_TEAM_MAFIA)
 	next_phase_timer = addtimer(CALLBACK(src, .proc/resolve_night),night_phase_period,TIMER_STOPPABLE)
 	SStgui.update_uis(src)
@@ -251,6 +289,10 @@
 			.["phase"] = "No Game"
 	if(user.client?.holder)
 		.["admin_controls"] = TRUE //show admin buttons to start/setup/stop
+	if(phase == MAFIA_PHASE_JUDGEMENT)
+		.["judgement_phase"] = TRUE //show judgement section
+	else
+		.["judgement_phase"] = FALSE
 	var/datum/mafia_role/user_role = player_role_lookup[user]
 	if(user_role)
 		.["role_info"] = list("role" = user_role.name,"desc" = user_role.desc, "action_log" = user_role.role_notes)
@@ -333,6 +375,21 @@
 						return
 					user_role.handle_action(src,params["atype"],target)
 			return TRUE
+		if("vote_innocent")
+			if(phase != MAFIA_PHASE_JUDGEMENT)
+				return
+			to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as INNOCENT!")
+			//
+			judgement_innocent_votes -= user_role//no double voting
+			judgement_guilty_votes -= user_role//no radical centrism
+			judgement_innocent_votes += user_role
+		if("vote_guilty")
+			if(phase != MAFIA_PHASE_JUDGEMENT)
+				return
+			to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as GUILTY!")
+			judgement_innocent_votes -= user_role//no radical centrism
+			judgement_guilty_votes -= user_role//no double voting
+			judgement_guilty_votes += user_role
 
 /datum/mafia_controller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, null, force_open)

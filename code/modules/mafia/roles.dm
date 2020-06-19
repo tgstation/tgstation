@@ -167,7 +167,7 @@
 
 /datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game,lynch)
 	if(lynch)
-		var/datum/mafia_role/victim = game.get_random_voter("Day")
+		var/datum/mafia_role/victim = pick(game.judgement_guilty_votes)
 		game.send_message("<span class='big clown'>[body.real_name] WAS A CLOWN! HONK! They take down [victim.body.real_name] with their last prank.</span>")
 		to_chat(body,"<span class='big green'>!! CLOWN VICTORY !!</span>")
 		victim.kill(game,FALSE)
