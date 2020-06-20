@@ -169,7 +169,7 @@
 
 	return max(0, minimal_player_age - C.player_age)
 
-/datum/job/proc/get_title(var/mob/living/H)
+/datum/job/proc/get_title(mob/living/H)
 	return title
 
 /datum/job/proc/config_check()
