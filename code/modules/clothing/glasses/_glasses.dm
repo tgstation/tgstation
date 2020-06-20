@@ -25,7 +25,7 @@
 /obj/item/clothing/glasses/examine(mob/user)
 	. = ..()
 	if(glass_colour_type && ishuman(user))
-		. += "<span class='notice'>Alt-click to toggle its colors.</span>"
+		. += "<span class='notice'>Alt-click to toggle [p_their()] colors.</span>"
 
 /obj/item/clothing/glasses/visor_toggling()
 	..()

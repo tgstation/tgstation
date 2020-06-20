@@ -27,7 +27,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 //Captain fox
-/mob/living/simple_animal/pet/fox/Renault
+/mob/living/simple_animal/pet/fox/renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox."
 	gender = FEMALE

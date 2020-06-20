@@ -260,6 +260,7 @@
 	handler.gangs_to_generate = (antag_cap[indice_pop] / 2)
 	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
 	handler.midround_ruleset = TRUE
+	handler.use_dynamic_timing = TRUE
 	return handler.pre_setup_analogue()
 
 /datum/dynamic_ruleset/midround/families/execute()

@@ -44,7 +44,7 @@
 	force = 17
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "rended")
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
 	if(!IS_HERETIC(user))

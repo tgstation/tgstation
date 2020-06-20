@@ -140,6 +140,8 @@
 	return ..()
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
+	if(QDELETED(O))
+		return
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))
@@ -185,6 +187,8 @@
 	return dat
 
 /obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+	if(QDELETED(target))
+		return
 	if(istype(target, /obj/item/stack/ore))
 		process_ore(target)
 

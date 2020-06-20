@@ -26,7 +26,7 @@
 		for(var/i in accounts_to_rob)
 			var/datum/bank_account/B = i
 			B.being_dumped = TRUE
-		new /obj/effect/dumpeetTarget(targetturf, user)
+		new /obj/effect/dumpeet_target(targetturf, user)
 		dumped = TRUE
 
 /obj/structure/checkoutmachine
@@ -188,7 +188,7 @@
 		var/datum/bank_account/B = i
 		B.being_dumped = FALSE
 
-/obj/effect/dumpeetFall //Falling pod
+/obj/effect/dumpeet_fall //Falling pod
 	name = ""
 	icon = 'icons/obj/money_machine_64.dmi'
 	pixel_z = 300
@@ -196,29 +196,29 @@
 	layer = FLY_LAYER//that wasn't flying, that was falling with style!
 	icon_state = "missile_blur"
 
-/obj/effect/dumpeetTarget
+/obj/effect/dumpeet_target
 	name = "Landing Zone Indicator"
 	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
 	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	light_range = 2
-	var/obj/effect/dumpeetFall/DF
+	var/obj/effect/dumpeet_fall/DF
 	var/obj/structure/checkoutmachine/dump
 	var/mob/living/carbon/human/bogdanoff
 
 /obj/effect/ex_act()
 	return
 
-/obj/effect/dumpeetTarget/Initialize(mapload, user)
+/obj/effect/dumpeet_target/Initialize(mapload, user)
 	. = ..()
 	bogdanoff = user
 	addtimer(CALLBACK(src, .proc/startLaunch), 100)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
 
-/obj/effect/dumpeetTarget/proc/startLaunch()
-	DF = new /obj/effect/dumpeetFall(drop_location())
+/obj/effect/dumpeet_target/proc/startLaunch()
+	DF = new /obj/effect/dumpeet_fall(drop_location())
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
@@ -227,7 +227,7 @@
 
 
 
-/obj/effect/dumpeetTarget/proc/endLaunch()
+/obj/effect/dumpeet_target/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
 	playsound(src, "explosion", 80, TRUE)
 	dump.forceMove(get_turf(src))

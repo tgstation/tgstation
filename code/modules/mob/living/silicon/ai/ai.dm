@@ -50,7 +50,7 @@
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
-	var/list/datum/AI_Module/current_modules = list()
+	var/list/datum/ai_module/current_modules = list()
 	var/can_dominate_mechs = FALSE
 	var/shunted = FALSE	//1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 
@@ -77,12 +77,12 @@
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
-	var/mob/camera/aiEye/eyeobj
+	var/mob/camera/ai_eye/eyeobj
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
 
-	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
+	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
@@ -104,7 +104,7 @@
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
-		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
+		new/obj/structure/ai_core/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
@@ -201,7 +201,7 @@
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
 	QDEL_NULL(modules_action)
-	for(var/datum/AI_Module/AM in current_modules)
+	for(var/datum/ai_module/AM in current_modules)
 		for(var/datum/action/A in actions)
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
@@ -778,7 +778,7 @@
 			to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>")
 			return
 		ShutOffDoomsdayDevice()
-		var/obj/structure/AIcore/new_core = new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
+		var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		new_core.circuit.battery = battery
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
@@ -1007,7 +1007,7 @@
 	if(!target_ai)
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
 
-/mob/living/silicon/ai/proc/camera_visibility(mob/camera/aiEye/moved_eye)
+/mob/living/silicon/ai/proc/camera_visibility(mob/camera/ai_eye/moved_eye)
 	GLOB.cameranet.visibility(moved_eye, client, all_eyes, USE_STATIC_OPAQUE)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
