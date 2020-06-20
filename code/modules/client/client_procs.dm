@@ -396,7 +396,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	//living hours in the first place
 	if(!connecting_admin && CONFIG_GET(flag/allowlist_previous_players))
 		//Make sure the users exp is loaded
-		if(src.set_exp_from_db())
+		if(src.set_exp_from_db() != -1)
 			// check for living hours requirement
 			var/required_living_minutes = CONFIG_GET(number/allowlist_previous_hours_count) * 60
 			var/living_minutes = src.get_exp_living(TRUE)
