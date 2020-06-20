@@ -369,7 +369,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	
 	//Config that only allows players with previous play experience, requires a database to track
 	//living hours in the first place
-	if(CONFIG_GET(flag/allowlist_previous_players))
+	if(CONFIG_GET(flag/allowlist_previous_players) && !connecting_admin)
 		//Make sure the users exp is loaded
 		if(src.set_exp_from_db())
 			// check for living hours requirement
