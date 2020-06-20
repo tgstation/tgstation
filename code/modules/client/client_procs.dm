@@ -367,7 +367,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			to_chat(src, "Sorry, but the web client is restricted to byond members only.")
 			qdel(src)
 			return 0
-	
+
 	//Config that only allows players with previous play experience, requires a database to track
 	//living hours in the first place
 	if(CONFIG_GET(flag/allowlist_previous_players) && !connecting_admin)
@@ -380,32 +380,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				to_chat(src, "Administrators have set the experienced players allow list on, but have not set a minimum hours requirement, this is not a valid configuration")
 				qdel(src)
 				return 0
-		
-			if(living_minutes < required_living_minutes)
-				to_chat(src, "<span class='warning'>You must have at least [required_living_minutes] minutes of living " \
-					+ "playtime on tg servers to play on this server. You have [living_minutes] minutes. Play more!</span>")
-				qdel(src)
-				return 0
-		else
-			to_chat(src, "The experienced players allow list is configured, but is not setup correctly and user exp cannot be loaded")
-			qdel(src)
-			return 0
 
-
-	//Config that only allows players with previous play experience, requires a database to track
-	//living hours in the first place
-	if(!connecting_admin && CONFIG_GET(flag/allowlist_previous_players))
-		//Make sure the users exp is loaded
-		if(src.set_exp_from_db() != -1)
-			// check for living hours requirement
-			var/required_living_minutes = CONFIG_GET(number/allowlist_previous_hours_count) * 60
-			var/living_minutes = src.get_exp_living(TRUE)
-			if(required_living_minutes <= 0)
-				to_chat(src, "Administrators have set the experienced players allow list on, but have not set a minimum hours requirement, this is not a valid configuration")
-				qdel(src)
-				return 0
-
-			if(living_minutes < required_living_minutes && !(src.ckey in GLOB.interviews.approved_ckeys))
+			if(living_minutes < required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys))
 				if(!CONFIG_GET(flag/allowlist_interview))
 					to_chat(src, "<span class='warning'>You must have at least [required_living_minutes] minutes of living " \
 					+ "playtime on tg servers to play on this server. You have [living_minutes] minutes. Play more!</span>")
@@ -415,7 +391,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			to_chat(src, "The experienced players allow list is configured, but is not setup correctly and user exp cannot be loaded")
 			qdel(src)
 			return 0
-
 
 	if( (world.address == address || !address) && !GLOB.host )
 		GLOB.host = key
