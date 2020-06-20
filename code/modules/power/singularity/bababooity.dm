@@ -1,17 +1,17 @@
 /obj/singularity/bababooity //I have become death, destroyer of codebases.
 	name = "The Spirit of Bababooey"
-	desc = "Bababooey."
+	desc = "You hath spewed bababooey into the void, and it hath spewed it back."
 	icon = 'icons/obj/baba.dmi'
 	icon_state = "booey"
 	pixel_x = -176
 	pixel_y = -176
 	density = FALSE
-	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
-	contained = 0 //Are we going to move around?
-	dissipate = 0 //Do we lose energy over time?
-	move_self = 1 //Do we move on our own?
-	grav_pull = 5 //How many tiles out do we pull?
-	consume_range = 4 //How many tiles out do we eat
+	current_size = 9 
+	contained = 0 
+	dissipate = 0 
+	move_self = 1 
+	grav_pull = 5 
+	consume_range = 4 
 
 
 
@@ -35,10 +35,10 @@
 /obj/singularity/bababooity/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
-		T = get_step(A, A.dir) //please don't slam into a window like a bird, Nar'Sie
+		T = get_step(A, A.dir)
 	forceMove(T)
 
-/obj/singularity/bababooity/ex_act() //No throwing bombs at her either.
+/obj/singularity/bababooity/ex_act()
 	return
 
 
@@ -46,7 +46,7 @@
 	var/list/cultists = list()
 	var/list/noncultists = list()
 
-	for(var/mob/living/carbon/food in GLOB.alive_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
+	for(var/mob/living/carbon/food in GLOB.alive_mob_list)
 		var/turf/pos = get_turf(food)
 		if(!pos || (pos.z != z))
 			continue
