@@ -47,20 +47,11 @@
 	if(cpu)
 		cpu.attack_ghost(user)
 
-/obj/item/modular_computer/emag_act(mob/user)
-	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling
-	var/newemag = FALSE
-	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
-	for(var/datum/computer_file/program/app in drive.stored_files)
-		if(!istype(app))
-			continue
-		if(app.run_emag())
-			newemag = TRUE
-	if(newemag)
-		to_chat(user, "<span class='notice'>A console window momentarily fills the screen, with white text rapidly scrolling past.</span>")
-		return TRUE
-	to_chat(user, "<span class='notice'>A console window fills the screen, but it quickly closes itself after only a few lines are written to it.</span>")
-	return FALSE
+/obj/machinery/modular_computer/emag_act(mob/user)
+	if(!cpu)
+		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
+		return FALSE
+	return (cpu.emag_act(user))
 
 /obj/machinery/modular_computer/update_icon()
 	cut_overlays()
