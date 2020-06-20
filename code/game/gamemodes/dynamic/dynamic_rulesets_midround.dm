@@ -242,6 +242,10 @@
 			continue
 		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			candidates -= player
+			continue
+		if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
+			candidates -= player
+			return
 
 /datum/dynamic_ruleset/midround/families/acceptable(population = 0, threat_level = 0)
 	. = ..()
