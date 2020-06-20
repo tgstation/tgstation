@@ -245,7 +245,6 @@
 			continue
 		if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
 			candidates -= player
-			return
 
 /datum/dynamic_ruleset/midround/families/acceptable(population = 0, threat_level = 0)
 	. = ..()
