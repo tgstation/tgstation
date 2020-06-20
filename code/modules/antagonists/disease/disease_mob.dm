@@ -1,4 +1,4 @@
-#define FREEMOVE_TIME 1200
+#define FREEMOVE_TIME 2 MINUTES
 
 /*
 A mob of type /mob/camera/disease is an overmind coordinating at least one instance of /datum/disease/advance/sentient_disease
@@ -410,3 +410,5 @@ the new instance inside the host to be updated to the template's stats.
 /datum/action/innate/disease_adapt/Activate()
 	var/mob/camera/disease/D = owner
 	D.adaptation_menu()
+
+#undef FREEMOVE_TIME

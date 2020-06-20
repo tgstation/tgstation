@@ -336,3 +336,5 @@
 	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
+
+#undef DEFAULT_MAP_SIZE
