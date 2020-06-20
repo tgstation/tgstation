@@ -1,118 +1,1138 @@
-"aa" = (/obj/machinery/door/firedoor,/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 8},/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"ab" = (/obj/machinery/door/firedoor,/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 4},/obj/machinery/door/airlock/maintenance_hatch,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"ac" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/navbeacon/wayfinding,/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"aE" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/open/space,/area/prophunt/mg2/charlie)
-"aL" = (/obj/effect/turf_decal/tile/blue{dir = 1},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"aP" = (/obj/machinery/power/apc/highcap/five_k{areastring = "/area/ai_monitored/turret_protected/aisat/foyer"; name = "MiniSat Foyer APC"; pixel_y = -23},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/structure/showcase/cyborg/old{dir = 8; pixel_x = 9; pixel_y = 2},/obj/item/paper/crumpled/awaymissions/research/sensitive_info,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"bK" = (/obj/structure/table/wood,/obj/machinery/light/small{dir = 8},/obj/item/radio/off{pixel_y = 4},/obj/item/toy/figure/ninja{pixel_y = -2; pixel_x = 11},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"fD" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/item/gun/ballistic/automatic/toy/unrestricted,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"fI" = (/obj/machinery/holopad/secure,/obj/effect/turf_decal/stripes/end,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"fK" = (/obj/item/paper/crumpled/muddy,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"gV" = (/obj/item/toy/crayon/spraycan,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"hb" = (/obj/structure/showcase/cyborg/old{pixel_y = 20},/obj/effect/turf_decal/tile/blue{dir = 1},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"hF" = (/obj/machinery/status_display/ai{pixel_y = 32},/obj/machinery/computer/security/telescreen{desc = "Used for watching the RD's goons from the safety of his office."; dir = 4; name = "Research Monitor"; network = list("rd"); pixel_x = -28},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/showcase{icon = 'icons/obj/turrets.dmi'; icon_state = "turretCover"},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"ib" = (/obj/machinery/light/small,/obj/item/folder,/obj/item/folder,/obj/machinery/camera{c_tag = "Telecomms - Control Room"; dir = 1; network = list("ss13","tcomms")},/obj/structure/table/wood,/obj/item/pen,/obj/item/toy/xmas_cracker{pixel_y = -5; pixel_x = 1},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"ii" = (/obj/machinery/ai_slipper{uses = 10},/obj/effect/turf_decal/tile/blue{dir = 1},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"kk" = (/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c100{pixel_y = 6; pixel_x = 3},/obj/item/stack/spacecash/c100{pixel_y = -5; pixel_x = 7},/obj/item/stack/spacecash/c100{pixel_y = 8; pixel_x = 7},/obj/item/stack/spacecash/c100{pixel_y = 7; pixel_x = -5},/obj/structure/rack,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"kx" = (/obj/structure/showcase/cyborg/old{pixel_y = 20},/obj/item/toy/xmas_cracker{pixel_y = 5},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"lc" = (/obj/machinery/status_display/evac{pixel_y = 32},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/power/port_gen/pacman,/obj/machinery/power/terminal{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"lj" = (/obj/machinery/light/small{dir = 4},/obj/effect/turf_decal/tile/blue,/mob/living/simple_animal/bot/cleanbot,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"lN" = (/obj/item/toy/plush/nukeplushie,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"lV" = (/obj/machinery/holopad/secure,/obj/item/book/manual/wiki/tcomms,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"nd" = (/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"ng" = (/obj/structure/window/reinforced{dir = 1; layer = 2.9},/obj/structure/window/reinforced,/obj/item/clothing/shoes/clown_shoes,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"nM" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"oK" = (/obj/item/paper/crumpled/awaymissions,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"oM" = (/obj/machinery/status_display/evac{pixel_y = 32},/obj/machinery/computer/security/telescreen/minisat{dir = 8; pixel_x = 28},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/showcase{icon = 'icons/obj/turrets.dmi'; icon_state = "turretCover"},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"pa" = (/obj/machinery/light/small{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"pG" = (/obj/item/ammo_box/foambox,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"qX" = (/obj/structure/window/reinforced,/turf/open/space,/area/prophunt/mg2/charlie)
-"rm" = (/obj/machinery/holopad/secure,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"ry" = (/obj/machinery/light/small{dir = 8},/obj/machinery/airalarm{dir = 4; pixel_x = -22},/obj/effect/turf_decal/tile/blue{dir = 8},/mob/living/simple_animal/bot/floorbot,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"sk" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"su" = (/obj/machinery/computer/teleporter,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"sK" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/turf/open/space,/area/prophunt/mg2/charlie)
-"sU" = (/obj/item/reagent_containers/food/snacks/donkpocket,/obj/item/reagent_containers/food/snacks/donkpocket{pixel_y = -5; pixel_x = -5},/obj/item/reagent_containers/food/snacks/donkpocket{pixel_x = 5; pixel_y = -5},/obj/item/reagent_containers/food/snacks/donkpocket{pixel_x = 4; pixel_y = 7},/obj/item/reagent_containers/food/snacks/donkpocket{pixel_x = -9; pixel_y = 8},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"sZ" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1; layer = 2.9},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"tO" = (/obj/machinery/light,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/pizzabox/meat,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"uV" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/item/gun/ballistic/shotgun/toy/unrestricted,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"ve" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/toy/nuke,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"vf" = (/obj/machinery/announcement_system,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"vK" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/item/book/manual/wiki/medicine,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"wN" = (/obj/item/book/manual/wiki/engineering_hacking,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"xF" = (/obj/structure/showcase/cyborg/old{pixel_y = 20},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"xJ" = (/obj/machinery/computer/telecomms/monitor{dir = 8; network = "tcommsat"},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"ya" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/item/toy/beach_ball/holoball,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"yr" = (/obj/machinery/light_switch{pixel_y = 28},/obj/structure/showcase/cyborg/old{pixel_y = 20},/obj/item/toy/xmas_cracker{pixel_y = -5},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"yN" = (/obj/machinery/requests_console{announcementConsole = 1; department = "Telecomms Admin"; departmentType = 5; name = "Telecomms RC"; pixel_y = -30},/obj/item/paper_bin{pixel_x = -1; pixel_y = 6},/obj/structure/table/wood,/obj/item/toy/plush/slimeplushie,/obj/item/paperplane{pixel_y = 11; pixel_x = 11},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"zb" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"zs" = (/obj/item/toy/nuke,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"AO" = (/obj/structure/window/reinforced{dir = 4},/turf/open/space,/area/prophunt/mg2/charlie)
-"AX" = (/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"Bf" = (/obj/structure/table/wood,/obj/machinery/status_display/evac{pixel_y = 31},/obj/item/book/manual/wiki/tcomms,/obj/item/folder/blue,/obj/item/pen,/obj/item/toy/xmas_cracker{pixel_y = 5},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"BI" = (/obj/item/gun/ballistic/automatic/toy/unrestricted,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"DI" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/item/toy/crayon/spraycan{pixel_y = 4; pixel_x = -3},/obj/item/toy/crayon/spraycan,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Ei" = (/obj/structure/window/reinforced,/turf/open/space/basic,/area/prophunt/mg2/charlie)
-"EM" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"EW" = (/obj/effect/turf_decal/tile/blue,/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"; pixel_y = 18; pixel_x = 6},/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"; pixel_y = 14; pixel_x = 15},/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Ft" = (/turf/closed/wall/r_wall,/area/prophunt/mg2/charlie)
-"Fv" = (/obj/structure/filingcabinet{pixel_x = 3},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"Ge" = (/obj/structure/showcase/cyborg/old{dir = 8; pixel_x = 9; pixel_y = 2},/obj/effect/turf_decal/stripes/line{dir = 1},/obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Hn" = (/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"Hs" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"HM" = (/obj/structure/window/reinforced{dir = 1; layer = 2.9},/obj/structure/window/reinforced,/obj/item/reagent_containers/spray/waterflower,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Jq" = (/obj/item/book/manual/wiki/grenades,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Ki" = (/obj/item/paper/crumpled/robertsworkjournal,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Kn" = (/obj/machinery/teleport/hub,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Ls" = (/obj/item/book/manual/wiki/detective,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"LN" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Nb" = (/obj/machinery/ai_slipper{uses = 10},/mob/living/simple_animal/bot/secbot/pingsky,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Nq" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/item/book/manual/wiki/engineering_guide,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Ns" = (/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Nw" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{name = "Auxiliary MiniSat Distribution Port"},/obj/machinery/portable_atmospherics/canister/air,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"ND" = (/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"NF" = (/obj/structure/holohoop{pixel_y = 25},/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"NI" = (/obj/structure/window/reinforced{dir = 1; layer = 2.9},/obj/structure/window/reinforced,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"NP" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"NX" = (/obj/machinery/computer/message_monitor{dir = 4},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"Oa" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/recharge_station,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"OF" = (/obj/machinery/light/small,/obj/item/storage/box/donkpockets,/obj/structure/table/wood,/obj/item/toy/figure/rd{pixel_y = 14; pixel_x = -12},/obj/item/toy/xmas_cracker{pixel_y = 5; pixel_x = -2},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"OV" = (/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"},/obj/item/toy/sword{desc = "The name alone will probably fool quite a few people."; name = "energy sword"; pixel_y = 5; pixel_x = 11},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Pg" = (/obj/structure/window/reinforced,/obj/item/bikehorn,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Pw" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/open/space,/area/prophunt/mg2/charlie)
-"Px" = (/obj/machinery/camera/motion{c_tag = "MiniSat Maintenance"; dir = 8; network = list("minisat")},/obj/item/stock_parts/cell/high/empty,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Qw" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"QW" = (/obj/machinery/status_display/evac{pixel_y = 32},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/showcase{icon = 'icons/obj/machines/teleporter.dmi'; icon_state = "controller"},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"QY" = (/obj/structure/table/wood,/obj/machinery/status_display/ai{pixel_y = 31},/obj/item/flashlight/lamp,/obj/item/toy/xmas_cracker{pixel_y = -5},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"RU" = (/obj/machinery/light/small{dir = 8},/obj/machinery/camera{c_tag = "MiniSat - Antechamber"; dir = 4; network = list("minisat")},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/item/ammo_box/foambox,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Se" = (/obj/item/toy/plush/snakeplushie,/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Tz" = (/obj/structure/chair/office,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"TK" = (/obj/item/radio/intercom{pixel_y = -28},/obj/structure/rack,/obj/item/paper/fluff/ruins/crashedclownship{pixel_y = -4; pixel_x = -4},/obj/item/paper/fluff/ruins/crashedclownship/true_nation{pixel_y = 3},/obj/item/toy/windupToolbox,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"TM" = (/obj/machinery/light/small{dir = 4},/obj/item/radio/intercom{dir = 8; freerange = 1; name = "Station Intercom (Telecomms)"; pixel_y = 30},/obj/structure/table/wood,/obj/item/phone{pixel_x = -3; pixel_y = 3},/obj/item/cigbutt/cigarbutt{pixel_x = 5; pixel_y = -1},/obj/machinery/computer/security/telescreen{dir = 8; name = "Telecomms Camera Monitor"; network = list("tcomms"); pixel_x = 26},/obj/item/toy/figure/borg{pixel_y = 10; pixel_x = 7},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"UB" = (/obj/item/restraints/handcuffs/cable/zipties/used,/obj/item/restraints/handcuffs/cable/zipties/used{pixel_y = 3; pixel_x = -2},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"UH" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Vk" = (/obj/item/kirbyplants{icon_state = "plant-21"},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"VB" = (/obj/machinery/microwave{pixel_y = 4},/obj/structure/table/wood,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"VL" = (/obj/machinery/computer/telecomms/server{dir = 8; network = "tcommsat"},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"Wb" = (/obj/structure/chair/office{dir = 1},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/charlie)
-"Wh" = (/obj/item/restraints/handcuffs/cable/zipties/used{pixel_y = 11; pixel_x = 10},/obj/item/toy/beach_ball/holoball{pixel_y = -7; pixel_x = -3},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"Ww" = (/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"XA" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/item/paper/crumpled{pixel_y = 3; pixel_x = -4},/obj/item/paper/crumpled,/obj/effect/decal/cleanable/blood,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"YX" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/item/toy/foamblade,/obj/item/toy/foamblade{pixel_x = 3; pixel_y = -5},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/charlie)
-"ZM" = (/obj/structure/window/reinforced{dir = 8},/turf/open/space,/area/prophunt/mg2/charlie)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"ab" = (
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"ac" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/navbeacon/wayfinding,
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"aE" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/prophunt/mg2/charlie)
+"aL" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"aP" = (
+/obj/machinery/power/apc/highcap/five_k{
+	areastring = "/area/ai_monitored/turret_protected/aisat/foyer";
+	name = "MiniSat Foyer APC";
+	pixel_y = -23
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/showcase/cyborg/old{
+	dir = 8;
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/paper/crumpled/awaymissions/research/sensitive_info,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"bK" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/radio/off{
+	pixel_y = 4
+	},
+/obj/item/toy/figure/ninja{
+	pixel_y = -2;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"fD" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/item/gun/ballistic/automatic/toy/unrestricted,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"fI" = (
+/obj/machinery/holopad/secure,
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"fK" = (
+/obj/item/paper/crumpled/muddy,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"gV" = (
+/obj/item/toy/crayon/spraycan,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"hb" = (
+/obj/structure/showcase/cyborg/old{
+	pixel_y = 20
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"hF" = (
+/obj/machinery/status_display/ai{
+	pixel_y = 32
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of his office.";
+	dir = 4;
+	name = "Research Monitor";
+	network = list("rd");
+	pixel_x = -28
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/showcase{
+	icon = 'icons/obj/turrets.dmi';
+	icon_state = "turretCover"
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"ib" = (
+/obj/machinery/light/small,
+/obj/item/folder,
+/obj/item/folder,
+/obj/machinery/camera{
+	c_tag = "Telecomms - Control Room";
+	dir = 1;
+	network = list("ss13","tcomms")
+	},
+/obj/structure/table/wood,
+/obj/item/pen,
+/obj/item/toy/xmas_cracker{
+	pixel_y = -5;
+	pixel_x = 1
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"ii" = (
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"kk" = (
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c100{
+	pixel_y = 6;
+	pixel_x = 3
+	},
+/obj/item/stack/spacecash/c100{
+	pixel_y = -5;
+	pixel_x = 7
+	},
+/obj/item/stack/spacecash/c100{
+	pixel_y = 8;
+	pixel_x = 7
+	},
+/obj/item/stack/spacecash/c100{
+	pixel_y = 7;
+	pixel_x = -5
+	},
+/obj/structure/rack,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"kx" = (
+/obj/structure/showcase/cyborg/old{
+	pixel_y = 20
+	},
+/obj/item/toy/xmas_cracker{
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"lc" = (
+/obj/machinery/status_display/evac{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/power/port_gen/pacman,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"lj" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/mob/living/simple_animal/bot/cleanbot,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"lN" = (
+/obj/item/toy/plush/nukeplushie,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"lV" = (
+/obj/machinery/holopad/secure,
+/obj/item/book/manual/wiki/tcomms,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"nd" = (
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"ng" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/item/clothing/shoes/clown_shoes,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"nM" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"oK" = (
+/obj/item/paper/crumpled/awaymissions,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"oM" = (
+/obj/machinery/status_display/evac{
+	pixel_y = 32
+	},
+/obj/machinery/computer/security/telescreen/minisat{
+	dir = 8;
+	pixel_x = 28
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/showcase{
+	icon = 'icons/obj/turrets.dmi';
+	icon_state = "turretCover"
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"pa" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"pG" = (
+/obj/item/ammo_box/foambox,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"qX" = (
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/prophunt/mg2/charlie)
+"rm" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"ry" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/mob/living/simple_animal/bot/floorbot,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"sk" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"su" = (
+/obj/machinery/computer/teleporter,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"sK" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space,
+/area/prophunt/mg2/charlie)
+"sU" = (
+/obj/item/reagent_containers/food/snacks/donkpocket,
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_y = -5;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"sZ" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"tO" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/pizzabox/meat,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"uV" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/item/gun/ballistic/shotgun/toy/unrestricted,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"ve" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/toy/nuke,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"vf" = (
+/obj/machinery/announcement_system,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"vK" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/book/manual/wiki/medicine,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"wN" = (
+/obj/item/book/manual/wiki/engineering_hacking,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"xF" = (
+/obj/structure/showcase/cyborg/old{
+	pixel_y = 20
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"xJ" = (
+/obj/machinery/computer/telecomms/monitor{
+	dir = 8;
+	network = "tcommsat"
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"ya" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/item/toy/beach_ball/holoball,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"yr" = (
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
+/obj/structure/showcase/cyborg/old{
+	pixel_y = 20
+	},
+/obj/item/toy/xmas_cracker{
+	pixel_y = -5
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"yN" = (
+/obj/machinery/requests_console{
+	announcementConsole = 1;
+	department = "Telecomms Admin";
+	departmentType = 5;
+	name = "Telecomms RC";
+	pixel_y = -30
+	},
+/obj/item/paper_bin{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/obj/structure/table/wood,
+/obj/item/toy/plush/slimeplushie,
+/obj/item/paperplane{
+	pixel_y = 11;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"zb" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"zs" = (
+/obj/item/toy/nuke,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"AO" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space,
+/area/prophunt/mg2/charlie)
+"AX" = (
+/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"Bf" = (
+/obj/structure/table/wood,
+/obj/machinery/status_display/evac{
+	pixel_y = 31
+	},
+/obj/item/book/manual/wiki/tcomms,
+/obj/item/folder/blue,
+/obj/item/pen,
+/obj/item/toy/xmas_cracker{
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"BI" = (
+/obj/item/gun/ballistic/automatic/toy/unrestricted,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"DI" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/toy/crayon/spraycan{
+	pixel_y = 4;
+	pixel_x = -3
+	},
+/obj/item/toy/crayon/spraycan,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Ei" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/prophunt/mg2/charlie)
+"EM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"EW" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/item/toy/sword{
+	desc = "The name alone will probably fool quite a few people.";
+	name = "energy sword";
+	pixel_y = 18;
+	pixel_x = 6
+	},
+/obj/item/toy/sword{
+	desc = "The name alone will probably fool quite a few people.";
+	name = "energy sword";
+	pixel_y = 14;
+	pixel_x = 15
+	},
+/obj/item/toy/sword{
+	desc = "The name alone will probably fool quite a few people.";
+	name = "energy sword"
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Ft" = (
+/turf/closed/wall/r_wall,
+/area/prophunt/mg2/charlie)
+"Fv" = (
+/obj/structure/filingcabinet{
+	pixel_x = 3
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"Ge" = (
+/obj/structure/showcase/cyborg/old{
+	dir = 8;
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Hn" = (
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"Hs" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"HM" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/item/reagent_containers/spray/waterflower,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Jq" = (
+/obj/item/book/manual/wiki/grenades,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Ki" = (
+/obj/item/paper/crumpled/robertsworkjournal,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Kn" = (
+/obj/machinery/teleport/hub,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Ls" = (
+/obj/item/book/manual/wiki/detective,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"LN" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Nb" = (
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/mob/living/simple_animal/bot/secbot/pingsky,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Nq" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/book/manual/wiki/engineering_guide,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Ns" = (
+/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Nw" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	name = "Auxiliary MiniSat Distribution Port"
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"ND" = (
+/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"NF" = (
+/obj/structure/holohoop{
+	pixel_y = 25
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"NI" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"NP" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"NX" = (
+/obj/machinery/computer/message_monitor{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"Oa" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"OF" = (
+/obj/machinery/light/small,
+/obj/item/storage/box/donkpockets,
+/obj/structure/table/wood,
+/obj/item/toy/figure/rd{
+	pixel_y = 14;
+	pixel_x = -12
+	},
+/obj/item/toy/xmas_cracker{
+	pixel_y = 5;
+	pixel_x = -2
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"OV" = (
+/obj/item/toy/sword{
+	desc = "The name alone will probably fool quite a few people.";
+	name = "energy sword"
+	},
+/obj/item/toy/sword{
+	desc = "The name alone will probably fool quite a few people.";
+	name = "energy sword";
+	pixel_y = 5;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Pg" = (
+/obj/structure/window/reinforced,
+/obj/item/bikehorn,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Pw" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/prophunt/mg2/charlie)
+"Px" = (
+/obj/machinery/camera/motion{
+	c_tag = "MiniSat Maintenance";
+	dir = 8;
+	network = list("minisat")
+	},
+/obj/item/stock_parts/cell/high/empty,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Qw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"QW" = (
+/obj/machinery/status_display/evac{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/showcase{
+	icon = 'icons/obj/machines/teleporter.dmi';
+	icon_state = "controller"
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"QY" = (
+/obj/structure/table/wood,
+/obj/machinery/status_display/ai{
+	pixel_y = 31
+	},
+/obj/item/flashlight/lamp,
+/obj/item/toy/xmas_cracker{
+	pixel_y = -5
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"RU" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat - Antechamber";
+	dir = 4;
+	network = list("minisat")
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/item/ammo_box/foambox,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Se" = (
+/obj/item/toy/plush/snakeplushie,
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Tz" = (
+/obj/structure/chair/office,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"TK" = (
+/obj/item/radio/intercom{
+	pixel_y = -28
+	},
+/obj/structure/rack,
+/obj/item/paper/fluff/ruins/crashedclownship{
+	pixel_y = -4;
+	pixel_x = -4
+	},
+/obj/item/paper/fluff/ruins/crashedclownship/true_nation{
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"TM" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Station Intercom (Telecomms)";
+	pixel_y = 30
+	},
+/obj/structure/table/wood,
+/obj/item/phone{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/machinery/computer/security/telescreen{
+	dir = 8;
+	name = "Telecomms Camera Monitor";
+	network = list("tcomms");
+	pixel_x = 26
+	},
+/obj/item/toy/figure/borg{
+	pixel_y = 10;
+	pixel_x = 7
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"UB" = (
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/obj/item/restraints/handcuffs/cable/zipties/used{
+	pixel_y = 3;
+	pixel_x = -2
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"UH" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Vk" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"VB" = (
+/obj/machinery/microwave{
+	pixel_y = 4
+	},
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"VL" = (
+/obj/machinery/computer/telecomms/server{
+	dir = 8;
+	network = "tcommsat"
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"Wb" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/charlie)
+"Wh" = (
+/obj/item/restraints/handcuffs/cable/zipties/used{
+	pixel_y = 11;
+	pixel_x = 10
+	},
+/obj/item/toy/beach_ball/holoball{
+	pixel_y = -7;
+	pixel_x = -3
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"Ww" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"XA" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/paper/crumpled{
+	pixel_y = 3;
+	pixel_x = -4
+	},
+/obj/item/paper/crumpled,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"YX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/toy/foamblade,
+/obj/item/toy/foamblade{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/charlie)
+"ZM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/prophunt/mg2/charlie)
 
 (1,1,1) = {"
-suQWKnFthFhbNFxFoMFtlcNwOa
-aLuViiFtRUfDfIyapaFtYXQwGe
-JqrmndaandUBNbpGBIabLsNsnM
-WwtOaPFtKiWhzsOVlNFtkkTKPx
-NPFtFtFtryvegVEWljFtFtFtSe
-HsZMFtFtFtFtacFtFtFtFtAOHs
-HsZMFtbKBfkxwNyrQYTMFtAOHs
-DIZMUHvfWbAXHnfKskxJUHAOHs
-HsZMUHNXzbsUlVNDTzVLUHAOvK
-NqZMFtVBOFVkoKFvibyNFtAOHs
-HsZMFtFtFtFtNPFtFtFtFtAOHs
-HsPwqXqXqXsKHsPwqXEiqXaEEM
-XAsZNINIngNIPgHMNINININILN
+su
+aL
+Jq
+Ww
+NP
+Hs
+Hs
+DI
+Hs
+Nq
+Hs
+Hs
+XA
+"}
+(2,1,1) = {"
+QW
+uV
+rm
+tO
+Ft
+ZM
+ZM
+ZM
+ZM
+ZM
+ZM
+Pw
+sZ
+"}
+(3,1,1) = {"
+Kn
+ii
+nd
+aP
+Ft
+Ft
+Ft
+UH
+UH
+Ft
+Ft
+qX
+NI
+"}
+(4,1,1) = {"
+Ft
+Ft
+aa
+Ft
+Ft
+Ft
+bK
+vf
+NX
+VB
+Ft
+qX
+NI
+"}
+(5,1,1) = {"
+hF
+RU
+nd
+Ki
+ry
+Ft
+Bf
+Wb
+zb
+OF
+Ft
+qX
+ng
+"}
+(6,1,1) = {"
+hb
+fD
+UB
+Wh
+ve
+Ft
+kx
+AX
+sU
+Vk
+Ft
+sK
+NI
+"}
+(7,1,1) = {"
+NF
+fI
+Nb
+zs
+gV
+ac
+wN
+Hn
+lV
+oK
+NP
+Hs
+Pg
+"}
+(8,1,1) = {"
+xF
+ya
+pG
+OV
+EW
+Ft
+yr
+fK
+ND
+Fv
+Ft
+Pw
+HM
+"}
+(9,1,1) = {"
+oM
+pa
+BI
+lN
+lj
+Ft
+QY
+sk
+Tz
+ib
+Ft
+qX
+NI
+"}
+(10,1,1) = {"
+Ft
+Ft
+ab
+Ft
+Ft
+Ft
+TM
+xJ
+VL
+yN
+Ft
+Ei
+NI
+"}
+(11,1,1) = {"
+lc
+YX
+Ls
+kk
+Ft
+Ft
+Ft
+UH
+UH
+Ft
+Ft
+qX
+NI
+"}
+(12,1,1) = {"
+Nw
+Qw
+Ns
+TK
+Ft
+AO
+AO
+AO
+AO
+AO
+AO
+aE
+NI
+"}
+(13,1,1) = {"
+Oa
+Ge
+nM
+Px
+Se
+Hs
+Hs
+Hs
+vK
+Hs
+Hs
+EM
+LN
 "}

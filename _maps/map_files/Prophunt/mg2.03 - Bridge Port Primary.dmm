@@ -1,134 +1,1404 @@
-"ak" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"ar" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"aA" = (/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"bm" = (/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/structure/table/reinforced,/obj/item/paper/fluff/jobs/medical/hippocratic,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"bC" = (/obj/item/radio/intercom{pixel_x = -26; pixel_y = 26},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/chair/office{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"ce" = (/obj/structure/window/reinforced{dir = 4},/turf/open/floor/fakespace,/area/prophunt/mg2/delta)
-"cg" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/paper/fluff/ruins/deepstorage/water_concern,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"cT" = (/obj/effect/turf_decal/plaque{icon_state = "L14"},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"cX" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"dy" = (/obj/structure/table/reinforced,/obj/item/paper_bin,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"dY" = (/obj/item/radio/intercom{pixel_x = 26; pixel_y = 26},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/chair/office{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"eX" = (/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"fK" = (/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/caramel,/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/blumpkin{pixel_y = -6; pixel_x = 8},/turf/open/floor/carpet,/area/prophunt/mg2/delta)
-"fV" = (/obj/machinery/status_display/ai,/turf/closed/wall,/area/prophunt/mg2/delta)
-"gs" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/prophunt/mg2/delta)
-"gD" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/decal/cleanable/dirt,/obj/structure/table/reinforced,/obj/item/aicard,/obj/item/multitool,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"gM" = (/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/structure/table/reinforced,/obj/item/paper/fluff/jobs/security/beepsky_mom,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"he" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/decal/cleanable/dirt,/obj/item/trash/candy,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"hF" = (/obj/structure/window/reinforced,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/documents,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"hM" = (/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/trash/raisins,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"kN" = (/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/paper/fluff/ruins/deepstorage/recycling_notice,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"kU" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/aicard,/obj/item/storage/secure/briefcase,/obj/structure/rack,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"lb" = (/obj/effect/turf_decal/plaque{icon_state = "L3"},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"lj" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/table/wood,/obj/item/restraints/handcuffs,/obj/item/assembly/flash/handheld,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/delta)
-"lv" = (/obj/structure/lattice,/turf/open/floor/fakespace,/area/prophunt/mg2/delta)
-"lJ" = (/obj/structure/table/wood,/obj/structure/window/reinforced{dir = 8},/obj/item/storage/fancy/donut_box,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/delta)
-"ma" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/prophunt/mg2/delta)
-"me" = (/obj/effect/turf_decal/plaque{icon_state = "L2"},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"nP" = (/obj/machinery/requests_console{announcementConsole = 1; department = "Bridge"; departmentType = 5; name = "Bridge RC"; pixel_x = -32; pixel_y = -32},/obj/machinery/camera{c_tag = "Bridge - Command Chair"; dir = 1; name = "command camera"},/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/choco,/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/berry{pixel_y = 5; pixel_x = -6},/turf/open/floor/carpet,/area/prophunt/mg2/delta)
-"ph" = (/obj/structure/table/reinforced,/obj/machinery/status_display/ai{pixel_y = 32},/obj/item/restraints/handcuffs,/obj/item/assembly/flash/handheld,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"pq" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/paper/fluff/shuttles,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"px" = (/obj/effect/turf_decal/plaque{icon_state = "L5"},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"qa" = (/obj/item/paper/fluff/ruins/oldstation/protosleep,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/delta)
-"qe" = (/obj/structure/chair/comfy/brown{color = "#596479"; dir = 1},/obj/item/toy/plush/beeplushie,/turf/open/floor/carpet,/area/prophunt/mg2/delta)
-"qt" = (/obj/item/radio/intercom{pixel_y = -26},/obj/effect/turf_decal/plaque{icon_state = "L12"},/obj/item/trash/energybar,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"qH" = (/obj/item/radio/intercom{pixel_x = 26; pixel_y = -26},/obj/machinery/keycard_auth{pixel_x = -7; pixel_y = -38},/obj/item/paper/fluff/ruins/listeningstation/reports/april,/turf/open/floor/carpet,/area/prophunt/mg2/delta)
-"qT" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/chair/office{dir = 1},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"ro" = (/obj/effect/decal/cleanable/dirt,/obj/item/trash/semki,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"su" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/documents/photocopy,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"sy" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/reagent_containers/food/snacks/donut/choco{pixel_y = -7; pixel_x = -3},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"sI" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/decal/cleanable/dirt,/obj/structure/table/reinforced,/obj/item/storage/fancy/donut_box,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"ta" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/item/trash/can,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"ti" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"tl" = (/turf/closed/wall/r_wall,/area/prophunt/mg2/delta)
-"tm" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/decal/cleanable/dirt,/obj/item/documents/syndicate/mining,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"tp" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/trash/syndi_cakes{pixel_x = -10},/obj/item/documents/syndicate/blue,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"vc" = (/obj/item/trash/chips,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"xq" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/prophunt/mg2/delta)
-"xA" = (/obj/effect/turf_decal/plaque{icon_state = "L6"},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"yK" = (/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/item/trash/tray,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"yW" = (/obj/effect/turf_decal/plaque{icon_state = "L1"},/obj/item/trash/candle,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"zr" = (/obj/machinery/computer/prisoner/management,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"zC" = (/obj/machinery/door/poddoor/preopen{id = "bridgewindows"; name = "Bridge View Blast door"},/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/prophunt/mg2/delta)
-"zI" = (/obj/item/kirbyplants/random,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Bp" = (/obj/effect/turf_decal/plaque{icon_state = "L11"},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Bt" = (/obj/structure/table/reinforced,/obj/machinery/light{dir = 4},/obj/item/wrench,/obj/item/assembly/timer,/obj/item/assembly/signaler,/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Bx" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/effect/decal/cleanable/dirt,/obj/item/paper/fluff/ruins/listeningstation/reports/september,/turf/open/floor/plating,/area/prophunt/mg2/delta)
-"BA" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/effect/decal/cleanable/dirt,/obj/item/trash/syndi_cakes,/turf/open/floor/plating,/area/prophunt/mg2/delta)
-"BQ" = (/obj/structure/table/reinforced,/obj/machinery/recharger,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"BU" = (/obj/machinery/status_display/evac,/turf/closed/wall,/area/prophunt/mg2/delta)
-"BZ" = (/obj/structure/window/reinforced,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/documents/nanotrasen,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Ch" = (/obj/machinery/computer/security,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Ck" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/decal/cleanable/dirt,/obj/item/reagent_containers/food/snacks/donut{pixel_y = 4; pixel_x = -5},/obj/item/reagent_containers/food/snacks/donut,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Co" = (/obj/effect/turf_decal/plaque{icon_state = "L10"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"CA" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/item/paper/fluff/ruins/listeningstation/reports/october,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Di" = (/obj/machinery/computer{desc = "You mean I can't call the shuttle and greif the ball? NO FUN!!!"; name = "Broken Console"},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/delta)
-"Dl" = (/obj/structure/window/reinforced,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Dt" = (/turf/open/floor/fakespace,/area/prophunt/mg2/delta)
-"DY" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/machinery/recharger,/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Ei" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Fd" = (/obj/structure/table/reinforced,/obj/machinery/computer/security/telescreen{desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office."; name = "Research Monitor"; network = list("rd","minisat"); pixel_y = 2},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Fo" = (/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Fp" = (/turf/closed/wall,/area/prophunt/mg2/delta)
-"Gl" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/camera_film{pixel_x = 6; pixel_y = 7},/obj/item/camera_film{pixel_x = -3; pixel_y = 5},/obj/item/camera_film{pixel_y = 9},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Hq" = (/obj/effect/turf_decal/plaque{icon_state = "L8"},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"HP" = (/obj/structure/table/wood,/obj/structure/window/reinforced{dir = 4},/obj/item/flashlight/lamp,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/delta)
-"Jo" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/obj/effect/turf_decal/plaque{icon_state = "L4"},/obj/effect/decal/cleanable/dirt,/obj/item/trash/can/food/peaches,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Kr" = (/obj/effect/turf_decal/tile/neutral,/obj/item/trash/boritos,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"KA" = (/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"KI" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Lb" = (/obj/structure/table/reinforced,/obj/machinery/light{dir = 8},/obj/item/storage/firstaid/regular,/obj/effect/turf_decal/tile/blue{dir = 1},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Lm" = (/obj/effect/turf_decal/plaque{icon_state = "L13"},/obj/effect/decal/cleanable/dirt,/obj/item/trash/plate,/obj/item/trash/plate{pixel_x = 2},/obj/item/trash/plate{pixel_x = 2; pixel_y = 4},/obj/item/trash/plate{pixel_x = -9},/obj/item/trash/plate{pixel_x = 2; pixel_y = -1},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Lp" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/reagent_containers/food/snacks/donut/berry{pixel_y = -4; pixel_x = 11},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"LJ" = (/obj/structure/window/reinforced{dir = 8},/turf/open/floor/fakespace,/area/prophunt/mg2/delta)
-"LW" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/trash/waffles,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"MP" = (/obj/structure/fireaxecabinet{pixel_y = -28},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/reagent_containers/food/snacks/donut/choco{pixel_y = 11; pixel_x = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"MX" = (/obj/structure/table/wood,/obj/machinery/computer/security/wooden_tv,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/delta)
-"Nr" = (/obj/structure/chair/office{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"NI" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/paper/fluff/sop,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Og" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/trash/popcorn{pixel_x = -4; pixel_y = 7},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"OH" = (/obj/structure/table/reinforced,/obj/item/clipboard,/obj/item/mining_voucher,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Pj" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/decal/cleanable/dirt,/obj/item/paper/fluff/ruins/deepstorage/hydro_notice,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Qq" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/decal/cleanable/dirt,/obj/item/reagent_containers/food/snacks/donut/berry{pixel_y = 6; pixel_x = -10},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"QB" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/documents/syndicate/red,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"QF" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"QL" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/mopbucket,/obj/item/mop,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Rb" = (/obj/structure/table/wood,/obj/structure/window/reinforced{dir = 4},/obj/item/folder/blue,/obj/item/pen,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/item/storage/fancy/cigarettes/cigpack_robust{desc = "Smoked by the robust. Malcolm's prefered brand."; name = "Cowboy Killers"; pixel_x = -7; pixel_y = -5},/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/delta)
-"Ss" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/cell_charger,/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Su" = (/obj/machinery/holopad,/obj/item/folder/documents,/turf/open/floor/carpet,/area/prophunt/mg2/delta)
-"SF" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/camera_film,/obj/item/camera_film{pixel_x = 4; pixel_y = 5},/obj/item/camera_film{pixel_x = -3; pixel_y = 2},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"SO" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Th" = (/obj/structure/table/wood,/obj/structure/window/reinforced{dir = 4},/obj/item/paper_bin,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/delta)
-"TC" = (/obj/effect/turf_decal/tile/neutral,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"TN" = (/obj/structure/table/reinforced,/obj/machinery/status_display/evac{pixel_y = 32},/obj/item/storage/box/ids,/obj/item/storage/box/PDAs{pixel_x = 4; pixel_y = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Ui" = (/obj/effect/turf_decal/plaque{icon_state = "L7"},/obj/effect/decal/cleanable/dirt,/obj/item/trash/cheesie{pixel_x = -7},/obj/item/trash/cheesie{pixel_y = -2; pixel_x = 8},/obj/item/trash/cheesie,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Um" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"UY" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/paper/fluff/ruins/djstation,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Vm" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/table/wood,/obj/item/taperecorder,/turf/open/floor/plasteel/grimy,/area/prophunt/mg2/delta)
-"Vx" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/camera,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Wq" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/documents/syndicate,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"WE" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Xl" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/paper/fluff/ruins/listeningstation/reports/july,/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Xr" = (/obj/effect/turf_decal/plaque{icon_state = "L9"},/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Xv" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/effect/decal/cleanable/dirt,/obj/item/paper/fluff/ruins/listeningstation/reports/november,/turf/open/floor/plating,/area/prophunt/mg2/delta)
-"Xw" = (/obj/machinery/computer/secure_data,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Yy" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/item/trash/sosjerky,/turf/open/floor/plasteel,/area/prophunt/mg2/delta)
-"Zh" = (/obj/structure/rack,/obj/machinery/light/small,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/book/manual/wiki/security_space_law,/obj/item/book/manual/wiki/detective{pixel_x = 4; pixel_y = 3},/turf/open/floor/plasteel/dark,/area/prophunt/mg2/delta)
-"Zq" = (/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/bungo,/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/apple{pixel_x = 5; pixel_y = -7},/turf/open/floor/carpet,/area/prophunt/mg2/delta)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"ar" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"aA" = (
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"bm" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/paper/fluff/jobs/medical/hippocratic,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"bC" = (
+/obj/item/radio/intercom{
+	pixel_x = -26;
+	pixel_y = 26
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"ce" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/prophunt/mg2/delta)
+"cg" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/paper/fluff/ruins/deepstorage/water_concern,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"cT" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L14"
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"cX" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"dy" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"dY" = (
+/obj/item/radio/intercom{
+	pixel_x = 26;
+	pixel_y = 26
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"eX" = (
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"fK" = (
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/caramel,
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/blumpkin{
+	pixel_y = -6;
+	pixel_x = 8
+	},
+/turf/open/floor/carpet,
+/area/prophunt/mg2/delta)
+"fV" = (
+/obj/machinery/status_display/ai,
+/turf/closed/wall,
+/area/prophunt/mg2/delta)
+"gs" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/prophunt/mg2/delta)
+"gD" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/item/aicard,
+/obj/item/multitool,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"gM" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/paper/fluff/jobs/security/beepsky_mom,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"he" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/candy,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"hF" = (
+/obj/structure/window/reinforced,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/documents,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"hM" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/trash/raisins,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"kN" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/paper/fluff/ruins/deepstorage/recycling_notice,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"kU" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/aicard,
+/obj/item/storage/secure/briefcase,
+/obj/structure/rack,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"lb" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L3"
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"lj" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/restraints/handcuffs,
+/obj/item/assembly/flash/handheld,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/delta)
+"lv" = (
+/obj/structure/lattice,
+/turf/open/floor/fakespace,
+/area/prophunt/mg2/delta)
+"lJ" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/delta)
+"ma" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/prophunt/mg2/delta)
+"me" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L2"
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"nP" = (
+/obj/machinery/requests_console{
+	announcementConsole = 1;
+	department = "Bridge";
+	departmentType = 5;
+	name = "Bridge RC";
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/obj/machinery/camera{
+	c_tag = "Bridge - Command Chair";
+	dir = 1;
+	name = "command camera"
+	},
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/choco,
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/berry{
+	pixel_y = 5;
+	pixel_x = -6
+	},
+/turf/open/floor/carpet,
+/area/prophunt/mg2/delta)
+"ph" = (
+/obj/structure/table/reinforced,
+/obj/machinery/status_display/ai{
+	pixel_y = 32
+	},
+/obj/item/restraints/handcuffs,
+/obj/item/assembly/flash/handheld,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"pq" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/paper/fluff/shuttles,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"px" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L5"
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"qa" = (
+/obj/item/paper/fluff/ruins/oldstation/protosleep,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/delta)
+"qe" = (
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/obj/item/toy/plush/beeplushie,
+/turf/open/floor/carpet,
+/area/prophunt/mg2/delta)
+"qt" = (
+/obj/item/radio/intercom{
+	pixel_y = -26
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L12"
+	},
+/obj/item/trash/energybar,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"qH" = (
+/obj/item/radio/intercom{
+	pixel_x = 26;
+	pixel_y = -26
+	},
+/obj/machinery/keycard_auth{
+	pixel_x = -7;
+	pixel_y = -38
+	},
+/obj/item/paper/fluff/ruins/listeningstation/reports/april,
+/turf/open/floor/carpet,
+/area/prophunt/mg2/delta)
+"qT" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"ro" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/semki,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"su" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/documents/photocopy,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"sy" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/donut/choco{
+	pixel_y = -7;
+	pixel_x = -3
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"sI" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"ta" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/trash/can,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"ti" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"tl" = (
+/turf/closed/wall/r_wall,
+/area/prophunt/mg2/delta)
+"tm" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/documents/syndicate/mining,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"tp" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/trash/syndi_cakes{
+	pixel_x = -10
+	},
+/obj/item/documents/syndicate/blue,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"vc" = (
+/obj/item/trash/chips,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"xq" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/prophunt/mg2/delta)
+"xA" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L6"
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"yK" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/item/trash/tray,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"yW" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L1"
+	},
+/obj/item/trash/candle,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"zr" = (
+/obj/machinery/computer/prisoner/management,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"zC" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "bridgewindows";
+	name = "Bridge View Blast door"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/prophunt/mg2/delta)
+"zI" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Bp" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L11"
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Bt" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/wrench,
+/obj/item/assembly/timer,
+/obj/item/assembly/signaler,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Bx" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/paper/fluff/ruins/listeningstation/reports/september,
+/turf/open/floor/plating,
+/area/prophunt/mg2/delta)
+"BA" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/syndi_cakes,
+/turf/open/floor/plating,
+/area/prophunt/mg2/delta)
+"BQ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"BU" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall,
+/area/prophunt/mg2/delta)
+"BZ" = (
+/obj/structure/window/reinforced,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/documents/nanotrasen,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Ch" = (
+/obj/machinery/computer/security,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Ck" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/donut{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/donut,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Co" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L10"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"CA" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/paper/fluff/ruins/listeningstation/reports/october,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Di" = (
+/obj/machinery/computer{
+	desc = "You mean I can't call the shuttle and greif the ball? NO FUN!!!";
+	name = "Broken Console"
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/delta)
+"Dl" = (
+/obj/structure/window/reinforced,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Dt" = (
+/turf/open/floor/fakespace,
+/area/prophunt/mg2/delta)
+"DY" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/recharger,
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Ei" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Fd" = (
+/obj/structure/table/reinforced,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office.";
+	name = "Research Monitor";
+	network = list("rd","minisat");
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Fo" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Fp" = (
+/turf/closed/wall,
+/area/prophunt/mg2/delta)
+"Gl" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/camera_film{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/camera_film{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/camera_film{
+	pixel_y = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Hq" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L8"
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"HP" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/flashlight/lamp,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/delta)
+"Jo" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/can/food/peaches,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Kr" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/trash/boritos,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"KA" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"KI" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Lb" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/storage/firstaid/regular,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Lm" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L13"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/plate,
+/obj/item/trash/plate{
+	pixel_x = 2
+	},
+/obj/item/trash/plate{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/trash/plate{
+	pixel_x = -9
+	},
+/obj/item/trash/plate{
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Lp" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/donut/berry{
+	pixel_y = -4;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"LJ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/prophunt/mg2/delta)
+"LW" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/trash/waffles,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"MP" = (
+/obj/structure/fireaxecabinet{
+	pixel_y = -28
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/donut/choco{
+	pixel_y = 11;
+	pixel_x = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"MX" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/security/wooden_tv,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/delta)
+"Nr" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"NI" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/paper/fluff/sop,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Og" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/trash/popcorn{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"OH" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/mining_voucher,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Pj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/paper/fluff/ruins/deepstorage/hydro_notice,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Qq" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/donut/berry{
+	pixel_y = 6;
+	pixel_x = -10
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"QB" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/documents/syndicate/red,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"QF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"QL" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/mopbucket,
+/obj/item/mop,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Rb" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/folder/blue,
+/obj/item/pen,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_robust{
+	desc = "Smoked by the robust. Malcolm's prefered brand.";
+	name = "Cowboy Killers";
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/delta)
+"Ss" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/cell_charger,
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Su" = (
+/obj/machinery/holopad,
+/obj/item/folder/documents,
+/turf/open/floor/carpet,
+/area/prophunt/mg2/delta)
+"SF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/camera_film,
+/obj/item/camera_film{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/camera_film{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"SO" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Th" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/paper_bin,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/delta)
+"TC" = (
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"TN" = (
+/obj/structure/table/reinforced,
+/obj/machinery/status_display/evac{
+	pixel_y = 32
+	},
+/obj/item/storage/box/ids,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Ui" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L7"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/cheesie{
+	pixel_x = -7
+	},
+/obj/item/trash/cheesie{
+	pixel_y = -2;
+	pixel_x = 8
+	},
+/obj/item/trash/cheesie,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Um" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"UY" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/paper/fluff/ruins/djstation,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Vm" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/taperecorder,
+/turf/open/floor/plasteel/grimy,
+/area/prophunt/mg2/delta)
+"Vx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/camera,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Wq" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/documents/syndicate,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"WE" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Xl" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/paper/fluff/ruins/listeningstation/reports/july,
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Xr" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L9"
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Xv" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/paper/fluff/ruins/listeningstation/reports/november,
+/turf/open/floor/plating,
+/area/prophunt/mg2/delta)
+"Xw" = (
+/obj/machinery/computer/secure_data,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Yy" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/trash/sosjerky,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/delta)
+"Zh" = (
+/obj/structure/rack,
+/obj/machinery/light/small,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/detective{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/dark,
+/area/prophunt/mg2/delta)
+"Zq" = (
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/bungo,
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/apple{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/turf/open/floor/carpet,
+/area/prophunt/mg2/delta)
 
 (1,1,1) = {"
-YyKItaKIheCAQFvcaAaAaAroaA
-cXPjWEyWlbpxUiXrBpLmFocXak
-TCKrTCmeJoxAHqCoqtcTKAhMkN
-xqxqBAxqFpxqxqxqFpxqBxxqxq
-DtceXvLJlvDtDtDtlvcegsLJDt
-zCxqmaxqtlzCzCzCtlxqgsxqzC
-zCDYSOSsphzrChXwTNgMyKbmzC
-tlLbUmtpNINrqTNrpqsuUmBttl
-OHbCUYUmLWUmcgUmSFUmXldYFd
-OgWqUmeXhFtiDlBZDlGlUmVxUm
-UmsyLpQqljqaDiMXHPzIarQBQL
-MPtiCktmVmfKqeSuRbZhEitikU
-FpBUsIgDlJnPZqqHThfVdyBQtl
+Yy
+cX
+TC
+xq
+Dt
+zC
+zC
+tl
+OH
+Og
+Um
+MP
+Fp
+"}
+(2,1,1) = {"
+KI
+Pj
+Kr
+xq
+ce
+xq
+DY
+Lb
+bC
+Wq
+sy
+ti
+BU
+"}
+(3,1,1) = {"
+ta
+WE
+TC
+BA
+Xv
+ma
+SO
+Um
+UY
+Um
+Lp
+Ck
+sI
+"}
+(4,1,1) = {"
+KI
+yW
+me
+xq
+LJ
+xq
+Ss
+tp
+Um
+eX
+Qq
+tm
+gD
+"}
+(5,1,1) = {"
+he
+lb
+Jo
+Fp
+lv
+tl
+ph
+NI
+LW
+hF
+lj
+Vm
+lJ
+"}
+(6,1,1) = {"
+CA
+px
+xA
+xq
+Dt
+zC
+zr
+Nr
+Um
+ti
+qa
+fK
+nP
+"}
+(7,1,1) = {"
+QF
+Ui
+Hq
+xq
+Dt
+zC
+Ch
+qT
+cg
+Dl
+Di
+qe
+Zq
+"}
+(8,1,1) = {"
+vc
+Xr
+Co
+xq
+Dt
+zC
+Xw
+Nr
+Um
+BZ
+MX
+Su
+qH
+"}
+(9,1,1) = {"
+aA
+Bp
+qt
+Fp
+lv
+tl
+TN
+pq
+SF
+Dl
+HP
+Rb
+Th
+"}
+(10,1,1) = {"
+aA
+Lm
+cT
+xq
+ce
+xq
+gM
+su
+Um
+Gl
+zI
+Zh
+fV
+"}
+(11,1,1) = {"
+aA
+Fo
+KA
+Bx
+gs
+gs
+yK
+Um
+Xl
+Um
+ar
+Ei
+dy
+"}
+(12,1,1) = {"
+ro
+cX
+hM
+xq
+LJ
+xq
+bm
+Bt
+dY
+Vx
+QB
+ti
+BQ
+"}
+(13,1,1) = {"
+aA
+ak
+kN
+xq
+Dt
+zC
+zC
+tl
+Fd
+Um
+QL
+kU
+tl
 "}

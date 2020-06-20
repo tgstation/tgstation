@@ -1,112 +1,1118 @@
-"aa" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/decal/cleanable/dirt/dust,/obj/effect/decal/cleanable/greenglow,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"ab" = (/obj/machinery/portable_atmospherics/canister/oxygen{filled = 0},/obj/effect/turf_decal/box/white{color = "#52B4E9"},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/item/wrench/medical,/turf/open/floor/plasteel/freezer,/area/prophunt/mg2/juliett)
-"ac" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/machinery/door/airlock/medical{name = "Psychology"; req_access_txt = "0"},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"ad" = (/obj/effect/turf_decal/box/white{color = "#52B4E9"},/obj/machinery/holopad,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"ae" = (/obj/structure/table/glass,/obj/item/storage/firstaid,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"af" = (/turf/closed/wall,/area/prophunt/mg2/juliett)
-"ag" = (/obj/effect/spawner/structure/window,/obj/machinery/door/poddoor/preopen{id = "surgeryb"; name = "privacy shutter"},/obj/effect/decal/cleanable/glass,/turf/open/floor/plating,/area/prophunt/mg2/juliett)
-"ah" = (/obj/item/taperecorder,/obj/effect/decal/cleanable/blood/footprints{icon_state = "blood1"; dir = 8},/obj/machinery/light/dim{icon_state = "tube"; dir = 1},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"ai" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aj" = (/obj/effect/spawner/structure/window,/obj/machinery/door/poddoor/preopen{id = "surgeryb"; name = "privacy shutter"},/turf/open/floor/plating,/area/prophunt/mg2/juliett)
-"ak" = (/turf/closed/wall/r_wall,/area/prophunt/mg2/juliett)
-"al" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"am" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/status_display/evac{pixel_x = -32; req_access_txt = "70"},/obj/structure/closet/secure_closet/psychology,/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"an" = (/obj/machinery/iv_drip,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/item/radio/intercom{pixel_y = 21},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"ao" = (/obj/structure/table/optable,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/decal/cleanable/vomit,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"ap" = (/obj/machinery/computer/operating{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aq" = (/obj/structure/closet/secure_closet/medical2,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/machinery/light/small{dir = 4},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"ar" = (/obj/structure/closet/secure_closet/CMO,/obj/item/clothing/under/rank/medical/doctor,/obj/item/clothing/head/nursehat,/obj/effect/turf_decal/stripes/line{dir = 5},/obj/item/storage/firstaid/regular,/turf/open/floor/plasteel,/area/prophunt/mg2/juliett)
-"as" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/carpet,/area/prophunt/mg2/juliett)
-"at" = (/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"au" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"av" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aw" = (/obj/item/radio/intercom{pixel_x = 28},/obj/structure/table/wood,/obj/item/flashlight/lamp/green{pixel_y = 4},/turf/open/floor/carpet,/area/prophunt/mg2/juliett)
-"ax" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/structure/bookcase/random/reference,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"ay" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/structure/reagent_dispensers/water_cooler,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"az" = (/turf/open/floor/carpet,/area/prophunt/mg2/juliett)
-"aA" = (/obj/structure/chair/comfy/brown{dir = 8},/turf/open/floor/carpet,/area/prophunt/mg2/juliett)
-"aB" = (/obj/structure/chair/office/light,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aC" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue,/obj/item/kirbyplants/random,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aD" = (/obj/structure/closet/crate/freezer/blood,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/structure/sign/warning/chemdiamond{pixel_x = -32},/turf/open/floor/plasteel/freezer,/area/prophunt/mg2/juliett)
-"aE" = (/obj/structure/closet/crate/freezer/blood,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/freezer,/area/prophunt/mg2/juliett)
-"aF" = (/obj/machinery/disposal/bin,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aG" = (/obj/structure/dresser,/obj/structure/mirror{pixel_x = 26},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aH" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aI" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aJ" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/turf/open/floor/plasteel/freezer,/area/prophunt/mg2/juliett)
-"aK" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/decal/cleanable/plasma,/turf/open/floor/plasteel/freezer,/area/prophunt/mg2/juliett)
-"aL" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/freezer,/area/prophunt/mg2/juliett)
-"aM" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aN" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/structure/filingcabinet/filingcabinet,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aO" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/structure/noticeboard{pixel_y = -32},/obj/structure/table/wood,/obj/machinery/computer/med_data/laptop{dir = 1; pixel_y = 4},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aP" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/machinery/light_switch{pixel_x = 28},/obj/structure/table/wood,/obj/item/folder/white{pixel_x = -14; pixel_y = 3},/obj/item/paper_bin/carbon{pixel_x = 3; pixel_y = 2},/obj/item/pen,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aQ" = (/obj/machinery/holopad,/obj/effect/turf_decal/box/white{color = "#52B4E9"},/obj/effect/decal/cleanable/robot_debris,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aR" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on,/obj/effect/decal/cleanable/oil{icon_state = "floor6"},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aS" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/machinery/light/small{icon_state = "bulb"; dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aT" = (/obj/machinery/door/airlock/medical/glass{name = "Medical Freezer"; req_access_txt = "0"},/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aU" = (/obj/machinery/light{dir = 8},/obj/machinery/status_display/ai{pixel_x = -32},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/prophunt/mg2/juliett)
-"aV" = (/obj/effect/decal/cleanable/blood/splatter,/obj/machinery/light/broken,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aW" = (/obj/machinery/door/airlock/medical/glass{name = "Medical Freezer"; req_access_txt = "0"},/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aX" = (/obj/machinery/door/airlock/medical/glass{name = "Surgery B"; req_access_txt = "0"},/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aY" = (/obj/machinery/door/airlock/command{name = "Chief Medical Officer's Quarters"; req_access_txt = "0"},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"aZ" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"ba" = (/obj/machinery/light_switch{pixel_x = 26; pixel_y = 26},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bb" = (/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bc" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/atmospherics/components/unary/vent_scrubber/on,/turf/open/floor/plasteel/freezer,/area/prophunt/mg2/juliett)
-"bd" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel,/area/prophunt/mg2/juliett)
-"be" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel,/area/prophunt/mg2/juliett)
-"bf" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel,/area/prophunt/mg2/juliett)
-"bg" = (/obj/structure/bed,/obj/item/bedsheet/cmo,/obj/machinery/status_display/evac{pixel_x = 32},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/decal/cleanable/dirt/dust,/obj/machinery/light/dim{icon_state = "tube"; dir = 4},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bi" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel,/area/prophunt/mg2/juliett)
-"bj" = (/obj/structure/table/reinforced,/obj/item/storage/backpack/duffelbag/med/surgery,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/machinery/button/door{id = "surgeryb"; name = "Privacy Shutters Control"; pixel_y = -26},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bk" = (/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/machinery/light_switch{pixel_x = -26; pixel_y = -5},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bl" = (/obj/machinery/smartfridge/organ,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bm" = (/obj/structure/sign/poster/official/get_your_legs{pixel_y = 32},/obj/structure/chair/sofa/right,/obj/item/toy/plush/moth,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/carpet,/area/prophunt/mg2/juliett)
-"bn" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/machinery/airalarm{dir = 1; pixel_y = -22},/obj/machinery/light,/obj/item/healthanalyzer,/turf/open/floor/plasteel/freezer,/area/prophunt/mg2/juliett)
-"bo" = (/obj/item/storage/firstaid/brute,/obj/structure/table/glass,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bp" = (/obj/machinery/suit_storage_unit/cmo,/obj/effect/turf_decal/stripes/line{dir = 6},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel,/area/prophunt/mg2/juliett)
-"bq" = (/obj/structure/table/glass,/obj/machinery/computer/med_data/laptop{dir = 1; pixel_y = 4},/obj/machinery/newscaster{pixel_y = -32},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/reagent_containers/food/drinks/britcup{pixel_x = 3; pixel_y = 9},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"br" = (/obj/item/radio/intercom{pixel_y = -26},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bs" = (/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/machinery/disposal/bin,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bt" = (/obj/machinery/smartfridge/organ,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue{dir = 4},/turf/open/floor/plasteel/freezer,/area/prophunt/mg2/juliett)
-"bu" = (/obj/effect/decal/cleanable/dirt,/obj/item/flashlight/pen,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bv" = (/obj/structure/chair/sofa/left,/obj/item/storage/firstaid/regular,/turf/open/floor/carpet,/area/prophunt/mg2/juliett)
-"bw" = (/obj/item/storage/pill_bottle,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bx" = (/obj/item/surgicaldrill,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"by" = (/obj/structure/table/glass,/obj/item/storage/backpack,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bz" = (/obj/machinery/computer/security/telescreen/entertainment{pixel_y = -32},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bA" = (/obj/structure/table/wood,/obj/item/flashlight/lamp,/obj/structure/sign/nanotrasen{pixel_x = 32},/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bB" = (/obj/structure/table/reinforced,/obj/effect/turf_decal/tile/blue{dir = 8},/obj/effect/turf_decal/tile/blue,/obj/item/defibrillator,/obj/item/screwdriver,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bC" = (/obj/effect/decal/cleanable/blood/footprints{icon_state = "blood1"; dir = 8},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bD" = (/obj/item/flashlight/pen,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bE" = (/obj/effect/decal/cleanable/vomit,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bF" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bG" = (/obj/effect/decal/cleanable/oil{icon_state = "floor5"},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bH" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/table/glass,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bI" = (/obj/effect/decal/cleanable/plastic,/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bJ" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/obj/item/gamer_pamphlet,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bK" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bL" = (/obj/item/scalpel,/obj/item/stack/medical/gauze,/obj/structure/table/glass,/obj/machinery/light/small{icon_state = "bulb"; dir = 4},/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bM" = (/obj/effect/decal/cleanable/robot_debris,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bN" = (/obj/effect/decal/cleanable/plasma,/obj/effect/decal/cleanable/insectguts,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bO" = (/obj/effect/decal/cleanable/greenglow,/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bP" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bQ" = (/obj/machinery/light/small,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bR" = (/obj/machinery/light/small{icon_state = "bulb"; dir = 4},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
-"bS" = (/obj/machinery/atmospherics/components/unary/vent_pump/on,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel/white,/area/prophunt/mg2/juliett)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"ab" = (
+/obj/machinery/portable_atmospherics/canister/oxygen{
+	filled = 0
+	},
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/item/wrench/medical,
+/turf/open/floor/plasteel/freezer,
+/area/prophunt/mg2/juliett)
+"ac" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/door/airlock/medical{
+	name = "Psychology";
+	req_access_txt = "0"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"ad" = (
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"ae" = (
+/obj/structure/table/glass,
+/obj/item/storage/firstaid,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"af" = (
+/turf/closed/wall,
+/area/prophunt/mg2/juliett)
+"ag" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/preopen{
+	id = "surgeryb";
+	name = "privacy shutter"
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/prophunt/mg2/juliett)
+"ah" = (
+/obj/item/taperecorder,
+/obj/effect/decal/cleanable/blood/footprints{
+	icon_state = "blood1";
+	dir = 8
+	},
+/obj/machinery/light/dim{
+	icon_state = "tube";
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"ai" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aj" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/preopen{
+	id = "surgeryb";
+	name = "privacy shutter"
+	},
+/turf/open/floor/plating,
+/area/prophunt/mg2/juliett)
+"ak" = (
+/turf/closed/wall/r_wall,
+/area/prophunt/mg2/juliett)
+"al" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"am" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/status_display/evac{
+	pixel_x = -32;
+	req_access_txt = "70"
+	},
+/obj/structure/closet/secure_closet/psychology,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"an" = (
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	pixel_y = 21
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"ao" = (
+/obj/structure/table/optable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/vomit,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"ap" = (
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aq" = (
+/obj/structure/closet/secure_closet/medical2,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"ar" = (
+/obj/item/clothing/under/rank/medical/doctor,
+/obj/item/clothing/head/nursehat,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/juliett)
+"as" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet,
+/area/prophunt/mg2/juliett)
+"at" = (
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"au" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"av" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aw" = (
+/obj/item/radio/intercom{
+	pixel_x = 28
+	},
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 4
+	},
+/turf/open/floor/carpet,
+/area/prophunt/mg2/juliett)
+"ax" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"ay" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"az" = (
+/turf/open/floor/carpet,
+/area/prophunt/mg2/juliett)
+"aA" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/prophunt/mg2/juliett)
+"aB" = (
+/obj/structure/chair/office/light,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aC" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/item/kirbyplants/random,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aD" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/sign/warning/chemdiamond{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/freezer,
+/area/prophunt/mg2/juliett)
+"aE" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/freezer,
+/area/prophunt/mg2/juliett)
+"aF" = (
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aG" = (
+/obj/structure/dresser,
+/obj/structure/mirror{
+	pixel_x = 26
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aH" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aI" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aJ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/prophunt/mg2/juliett)
+"aK" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/plasteel/freezer,
+/area/prophunt/mg2/juliett)
+"aL" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/prophunt/mg2/juliett)
+"aM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aN" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/filingcabinet/filingcabinet,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aO" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/noticeboard{
+	pixel_y = -32
+	},
+/obj/structure/table/wood,
+/obj/machinery/computer/med_data/laptop{
+	dir = 1;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aP" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light_switch{
+	pixel_x = 28
+	},
+/obj/structure/table/wood,
+/obj/item/folder/white{
+	pixel_x = -14;
+	pixel_y = 3
+	},
+/obj/item/paper_bin/carbon{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/pen,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aQ" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aR" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor6"
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aS" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aT" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Freezer";
+	req_access_txt = "0"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aU" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/status_display/ai{
+	pixel_x = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/juliett)
+"aV" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/light/broken,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aW" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medical Freezer";
+	req_access_txt = "0"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aX" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Surgery B";
+	req_access_txt = "0"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aY" = (
+/obj/machinery/door/airlock/command{
+	name = "Chief Medical Officer's Quarters";
+	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"aZ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"ba" = (
+/obj/machinery/light_switch{
+	pixel_x = 26;
+	pixel_y = 26
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bb" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bc" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel/freezer,
+/area/prophunt/mg2/juliett)
+"bd" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/juliett)
+"be" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/juliett)
+"bf" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/juliett)
+"bg" = (
+/obj/structure/bed,
+/obj/item/bedsheet/cmo,
+/obj/machinery/status_display/evac{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/dim{
+	icon_state = "tube";
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bi" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/juliett)
+"bj" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/button/door{
+	id = "surgeryb";
+	name = "Privacy Shutters Control";
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bk" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light_switch{
+	pixel_x = -26;
+	pixel_y = -5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bl" = (
+/obj/machinery/smartfridge/organ,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bm" = (
+/obj/structure/sign/poster/official/get_your_legs{
+	pixel_y = 32
+	},
+/obj/structure/chair/sofa/right,
+/obj/item/toy/plush/moth,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet,
+/area/prophunt/mg2/juliett)
+"bn" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/machinery/light,
+/obj/item/healthanalyzer,
+/turf/open/floor/plasteel/freezer,
+/area/prophunt/mg2/juliett)
+"bo" = (
+/obj/item/storage/firstaid/brute,
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bp" = (
+/obj/machinery/suit_storage_unit/cmo,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel,
+/area/prophunt/mg2/juliett)
+"bq" = (
+/obj/structure/table/glass,
+/obj/machinery/computer/med_data/laptop{
+	dir = 1;
+	pixel_y = 4
+	},
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/drinks/britcup{
+	pixel_x = 3;
+	pixel_y = 9
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"br" = (
+/obj/item/radio/intercom{
+	pixel_y = -26
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bs" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/disposal/bin,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bt" = (
+/obj/machinery/smartfridge/organ,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/prophunt/mg2/juliett)
+"bu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/pen,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bv" = (
+/obj/structure/chair/sofa/left,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/carpet,
+/area/prophunt/mg2/juliett)
+"bw" = (
+/obj/item/storage/pill_bottle,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bx" = (
+/obj/item/surgicaldrill,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"by" = (
+/obj/structure/table/glass,
+/obj/item/storage/backpack,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bz" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bA" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bB" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/item/defibrillator,
+/obj/item/screwdriver,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bC" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	icon_state = "blood1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bD" = (
+/obj/item/flashlight/pen,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bE" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bG" = (
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor5"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bI" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bJ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/gamer_pamphlet,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bK" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bL" = (
+/obj/item/scalpel,
+/obj/item/stack/medical/gauze,
+/obj/structure/table/glass,
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bM" = (
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bN" = (
+/obj/effect/decal/cleanable/plasma,
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bO" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bP" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bQ" = (
+/obj/machinery/light/small,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bR" = (
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
+"bS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plasteel/white,
+/area/prophunt/mg2/juliett)
 
 (1,1,1) = {"
-boaeatatbDatatafafafbmbvaw
-atatbFbbbwbxatafaxayasazaA
-atbGbQatatbFatacaaatadaial
-afafafafafatatafambSaIaBaC
-aDaEababafbFbEafaFaHaNaOaP
-aJaKaLaLaTatbRafafacafafaf
-aLbcbnbtafaIatbNahbCbOatbH
-afaWafafafatbIatbFatbPbKbL
-bMbFatatatbuaVatbFbFatatby
-afagaXajajakakakaYakakakak
-aZanaoapaqakaraubJavaubaaG
-aSaMaQaRalakaUbibdbebebfbg
-bkbsbjbBblakbpbqauavbrbzbA
+bo
+at
+at
+af
+aD
+aJ
+aL
+af
+bM
+af
+aZ
+aS
+bk
+"}
+(2,1,1) = {"
+ae
+at
+bG
+af
+aE
+aK
+bc
+aW
+bF
+ag
+an
+aM
+bs
+"}
+(3,1,1) = {"
+at
+bF
+bQ
+af
+ab
+aL
+bn
+af
+at
+aX
+ao
+aQ
+bj
+"}
+(4,1,1) = {"
+at
+bb
+at
+af
+ab
+aL
+bt
+af
+at
+aj
+ap
+aR
+bB
+"}
+(5,1,1) = {"
+bD
+bw
+at
+af
+af
+aT
+af
+af
+at
+aj
+aq
+al
+bl
+"}
+(6,1,1) = {"
+at
+bx
+bF
+at
+bF
+at
+aI
+at
+bu
+ak
+ak
+ak
+ak
+"}
+(7,1,1) = {"
+at
+at
+at
+at
+bE
+bR
+at
+bI
+aV
+ak
+ar
+aU
+bp
+"}
+(8,1,1) = {"
+af
+af
+ac
+af
+af
+af
+bN
+at
+at
+ak
+au
+bi
+bq
+"}
+(9,1,1) = {"
+af
+ax
+aa
+am
+aF
+af
+ah
+bF
+bF
+aY
+bJ
+bd
+au
+"}
+(10,1,1) = {"
+af
+ay
+at
+bS
+aH
+ac
+bC
+at
+bF
+ak
+av
+be
+av
+"}
+(11,1,1) = {"
+bm
+as
+ad
+aI
+aN
+af
+bO
+bP
+at
+ak
+au
+be
+br
+"}
+(12,1,1) = {"
+bv
+az
+ai
+aB
+aO
+af
+at
+bK
+at
+ak
+ba
+bf
+bz
+"}
+(13,1,1) = {"
+aw
+aA
+al
+aC
+aP
+af
+bH
+bL
+by
+ak
+aG
+bg
+bA
 "}
