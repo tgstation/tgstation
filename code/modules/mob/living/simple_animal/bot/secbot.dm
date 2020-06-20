@@ -56,6 +56,37 @@
 	desc = "It's Commander Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
 	commissioned = FALSE
 
+/mob/living/simple_animal/bot/secbot/beepsky/coffeesky
+	name = "Officer Coffesky"
+	desc = "It's Officer Coffeesky! He's got an energizing attitude and he's always out there to help people start their day off right!"
+	icon = 'icons/mob/coffeecart.dmi'
+	icon_state = "coffeecartloaded"
+	health = 99999
+	maxHealth = 99999
+	commissioned = FALSE
+
+/mob/living/simple_animal/bot/secbot/beepsky/coffeesky/Adjacent(target)
+    return (get_dist(src, target) <= 4)
+
+/mob/living/simple_animal/bot/secbot/beepsky/coffeesky/interact(mob/user)
+	speak(pick("Everyone could use a new nice cup of joe!","No talkie before coffee!","Enjoy your coffee, friend :)","Everything is nicer with a joe!","You, me, Coffee time."))
+	new /obj/item/reagent_containers/food/drinks/coffee(src.loc)
+
+/mob/living/simple_animal/bot/secbot/beepsky/coffeesky/attempt_handcuff(mob/living/carbon/C)
+	back_to_idle()
+
+/mob/living/simple_animal/bot/secbot/beepsky/coffeesky/stun_attack(mob/living/carbon/C, harm = FALSE)
+	speak("You look like you could use a picker-upper!")
+	var/obj/throw_item = new /obj/item/reagent_containers/food/drinks/coffee(src.loc)
+	throw_item.throw_at(C, 16, 3, src)
+	visible_message("<span class='danger'>[src] launches [throw_item] at [target]!</span>")
+	C.visible_message("<span class='danger'>[src] coffees [C]!</span>",\
+							"<span class='userdanger'>[src] hits you with coffee!</span>")
+
+/mob/living/simple_animal/bot/secbot/update_icon()
+	. = ..()
+	icon_state = "[initial(icon_state)]"
+
 /mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
 	. = ..()
 	resize = 0.8

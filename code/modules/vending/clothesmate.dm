@@ -200,7 +200,6 @@
 					/obj/item/clothing/under/pants/jeans = 10,
 					/obj/item/clothing/under/pants/khaki = 10,
 					/obj/item/clothing/under/pants/camo = 10,
-					/obj/item/clothing/under/shorts = 10,
 					/obj/item/clothing/under/shorts/red = 10,
 					/obj/item/clothing/under/shorts/green = 10,
 					/obj/item/clothing/under/shorts/blue = 10,
