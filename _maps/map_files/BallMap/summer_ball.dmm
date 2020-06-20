@@ -6299,7 +6299,7 @@
 	name = "NTSS Spirit of Freedom Upper Deck"
 	})
 "are" = (
-/obj/structure/showcase/cyborg/old,
+/obj/machinery/computer/blackjack/high_roller,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned{
 	name = "NTSS Spirit of Freedom Upper Deck"
@@ -9319,7 +9319,7 @@
 	},
 /area/mafia)
 "axX" = (
-/obj/structure/showcase/cyborg/old,
+/obj/machinery/computer/blackjack,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "axY" = (
@@ -10677,7 +10677,7 @@
 /turf/open/floor/carpet/green,
 /area/crew_quarters/abandoned_gambling_den)
 "aBH" = (
-/obj/structure/showcase/cyborg/old,
+/obj/machinery/computer/blackjack,
 /turf/open/floor/carpet/green,
 /area/crew_quarters/abandoned_gambling_den)
 "aBI" = (
@@ -17108,7 +17108,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge/meeting_room/council)
 "aSg" = (
-/obj/structure/showcase/cyborg/old,
+/obj/machinery/computer/blackjack/high_roller,
 /turf/open/floor/plasteel/dark,
 /area/bridge/meeting_room/council)
 "aSh" = (
@@ -23435,7 +23435,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/dorms)
 "kkz" = (
-/obj/structure/showcase/cyborg/old,
+/obj/machinery/computer/blackjack,
 /obj/structure/fluff{
 	deconstructible = 0;
 	desc = "The flickering gives you a headache.";
@@ -23456,7 +23456,7 @@
 /turf/open/floor/grass,
 /area/quartermaster/sorting)
 "kqh" = (
-/obj/structure/showcase/cyborg/old,
+/obj/machinery/computer/blackjack,
 /obj/structure/fluff{
 	deconstructible = 0;
 	desc = "The flickering gives you a headache.";

@@ -724,8 +724,7 @@
 
 
 /obj/item/toy/cards
-	resistance_flags = FLAMMABLE
-	max_integrity = 50
+	max_integrity = 999999999999999
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
@@ -734,6 +733,9 @@
 	var/card_throw_speed = 3
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
+	var/value = 0
+	maptext_x = 16
+	maptext_y = 23
 
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
@@ -769,6 +771,19 @@
 		for(var/person in list("Jack", "Queen", "King"))
 			cards += "[person] of [suit]"
 
+/obj/item/toy/cards/proc/determine_value(obj/item/toy/cards/singlecard/C)
+	var/V = copytext(C.cardname,1,2)
+	if(text2num(V))
+		if(V != "1")
+			return text2num(V)
+		else 
+			return 10
+	else
+		if(V == "A") // Ace
+			return 11
+		else // King, Queen, or Jack
+			return 10
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
@@ -789,6 +804,7 @@
 	choice = cards[1]
 	H.cardname = choice
 	H.parentdeck = src
+	H.value = determine_value(H)
 	var/O = src
 	H.apply_card_vars(H,O)
 	popleft(cards)
@@ -872,6 +888,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/list/currenthand = list()
 	var/choice = null
+	maptext_x = 16
+	maptext_y = 26
 
 /obj/item/toy/cards/cardhand/attack_self(mob/user)
 	var/list/handradial = list()
@@ -911,10 +929,32 @@
 		cardUser.put_in_hands(N)
 		to_chat(cardUser, "<span class='notice'>You also take [currenthand[1]] and hold it.</span>")
 
+/obj/item/toy/cards/cardhand/proc/split()
+	var/choice = currenthand[currenthand.len]
+	var/O = src
+	var/obj/item/toy/cards/singlecard/C = new/obj/item/toy/cards/singlecard(src.loc)
+	currenthand -= choice
+	C.parentdeck = parentdeck
+	C.cardname = choice
+	C.apply_card_vars(C,O)
+	C.value = determine_value(C)
+	C.pixel_x = 16
+	src.pixel_x = 0
+	if(length(currenthand) == 1)
+		var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(src.loc)
+		N.parentdeck = parentdeck
+		N.cardname = currenthand[1]
+		N.apply_card_vars(N,O)
+		N.value = determine_value(N)
+		N.pixel_x = 0
+		qdel(src)
+		return list(N,C)
+
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
+			src.value = src.value + C.value
 			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			qdel(C)
 			interact(user)
@@ -1003,11 +1043,28 @@
 		src.name = "card"
 		src.pixel_x = -5
 
+/obj/item/toy/cards/singlecard/proc/flip_card() // verb doesn't seem to be working.
+	if(!flipped)
+		src.flipped = 1
+		if (cardname)
+			src.icon_state = "sc_[cardname]_[deckstyle]"
+			src.name = src.cardname
+		else
+			src.icon_state = "sc_Ace of Spades_[deckstyle]"
+			src.name = "What Card"
+		src.pixel_x = 5
+	else if(flipped)
+		src.flipped = 0
+		src.icon_state = "singlecard_down_[deckstyle]"
+		src.name = "card"
+		src.pixel_x = -5
+
 /obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/))
 		var/obj/item/toy/cards/singlecard/C = I
 		if(C.parentdeck == src.parentdeck)
 			var/obj/item/toy/cards/cardhand/H = new/obj/item/toy/cards/cardhand(user.loc)
+			H.value = src.value + C.value
 			H.currenthand += C.cardname
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
@@ -1071,6 +1128,15 @@
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
 	resistance_flags = NONE
+
+/obj/item/toy/cards/deck/split_test
+
+/obj/item/toy/cards/deck/split_test/populate_deck()
+	icon_state = "deck_[deckstyle]_full"
+	var/i = 52
+	while(i > 0)
+		cards += "10 of Hearts"
+		i--
 
 /*
  * Fake nuke
