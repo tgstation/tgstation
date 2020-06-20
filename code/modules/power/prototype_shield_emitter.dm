@@ -42,7 +42,7 @@
 /obj/machinery/power/proto_sh_emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
-		message_admins("Prototype Shield Emitter deleted at [ADMIN_VERBOSEJMP(T)]")
+		stack_trace("Prototype Shield Emitter deleted at [ADMIN_VERBOSEJMP(T)]")
 		log_game("Prototype Shield Emitter deleted at [AREACOORD(T)]")
 	QDEL_LIST(signs)
 	return ..()
@@ -87,8 +87,9 @@
 	return TRUE
 
 /obj/machinery/power/proto_sh_emitter/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 	default_deconstruction_screwdriver(user, "proto_sh_emitter-open", "proto_sh_emitter", I)
 	return TRUE
 
@@ -98,12 +99,12 @@
 		return
 	if(!powered() && apc_power == TRUE)
 		apc_power = FALSE
-		var/turf/Turf = get_turf(src)
+		var/turf/loc_turf = get_turf(src)
 		is_on = FALSE
 		QDEL_LIST(signs)
 		update_icon_state()
-		message_admins("[src] turned off at [ADMIN_VERBOSEJMP(Turf)]")
-		log_game("[src] turned off at [AREACOORD(Turf)]")
+		message_admins("[src] turned off at [ADMIN_VERBOSEJMP(loc_turf)]")
+		log_game("[src] turned off at [AREACOORD(loc_turf)]")
 
 /obj/machinery/power/proto_sh_emitter/interact(mob/user)
 	add_fingerprint(user)
@@ -134,49 +135,51 @@
 *This proc builds the barriers
 **/
 /obj/machinery/power/proto_sh_emitter/proc/build_barrier(SWxi,SWyi,NExi,NEyi,SWxo,SWyo,NExo,NEyo,mob/user)
-	///Stores the outline of the room to generate
-	var/list/outline
-	///Stores the internal turfs of the room to generate
-	var/list/internal
-	var/turf/EmitterTurf = get_turf(src)
 	to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
-	if(do_after(user, 1.5 SECONDS, target = src))
-		to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
-		message_admins("[src] turned on at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
-		log_game("[src] turned on at [AREACOORD(EmitterTurf)] by [key_name(user)]")
-		is_on = TRUE
-		update_icon_state()
-		switch(dir) //this part check the direction of the machine and create the block in front of it
-			if(NORTH)
-				LAZYADD(internal, block(locate(x - SWxi, y + SWyi, z), locate(x + NExi, y + NEyi, z)))
-				LAZYADD(outline, block(locate(x - SWxo, y + SWyo, z), locate(x + NExo, y + NEyo, z)) - internal)
-			if(SOUTH)
-				LAZYADD(internal, block(locate(x - NExi, y - SWyi, z), locate(x + SWxi, y - NEyi, z)))
-				LAZYADD(outline, block(locate(x - NExo, y - SWyo, z), locate(x + SWxo, y - NEyo, z)) - internal)
-			if(EAST)
-				LAZYADD(internal, block(locate(x + SWyi, y - NExi, z), locate(x + NEyi, y + SWxi, z)))
-				LAZYADD(outline, block(locate(x + SWyo, y - NExo, z), locate(x + NEyo, y + SWxo, z)) - internal)
-			if(WEST)
-				LAZYADD(internal, block(locate(x - SWyi, y - SWxi, z), locate(x - NEyi, y + NExi, z)))
-				LAZYADD(outline, block(locate(x - SWyo, y - SWxo, z), locate(x - NEyo, y + NExo, z)) - internal)
-		for(var/turf in outline)
-			new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
-			LAZYREMOVE(outline, turf)
-		for(var/turf in internal)
-			new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
-			LAZYREMOVE(internal, turf)
+	if(!do_after(user, 1.5 SECONDS, target = src))
+		return
+	to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
+	//Stores the outline of the room to generate
+	var/list/outline = list()
+	//Stores the internal turfs of the room to generate
+	var/list/internal = list()
+	var/turf/EmitterTurf = get_turf(src)
+	message_admins("[src] turned on at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
+	log_game("[src] turned on at [AREACOORD(EmitterTurf)] by [key_name(user)]")
+	is_on = TRUE
+	update_icon_state()
+	switch(dir) //this part check the direction of the machine and create the block in front of it
+		if(NORTH)
+			internal.Add(block(locate(x - SWxi, y + SWyi, z), locate(x + NExi, y + NEyi, z)))
+			outline.Add(block(locate(x - SWxo, y + SWyo, z), locate(x + NExo, y + NEyo, z)) - internal)
+		if(SOUTH)
+			internal.Add(block(locate(x - NExi, y - SWyi, z), locate(x + SWxi, y - NEyi, z)))
+			outline.Add(block(locate(x - NExo, y - SWyo, z), locate(x + SWxo, y - NEyo, z)) - internal)
+		if(EAST)
+			internal.Add(block(locate(x + SWyi, y - NExi, z), locate(x + NEyi, y + SWxi, z)))
+			outline.Add(block(locate(x + SWyo, y - NExo, z), locate(x + NEyo, y + SWxo, z)) - internal)
+		if(WEST)
+			internal.Add(block(locate(x - SWyi, y - SWxi, z), locate(x - NEyi, y + NExi, z)))
+			outline.Add(block(locate(x - SWyo, y - SWxo, z), locate(x - NEyo, y + NExo, z)) - internal)
+	for(var/turf in outline)
+		new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+		outline.Remove(turf)
+	for(var/turf in internal)
+		new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
+		internal.Remove(turf)
 
 ///This proc removes the barriers
 /obj/machinery/power/proto_sh_emitter/proc/remove_barrier(mob/user)
 	var/turf/EmitterTurf = get_turf(src)
 	to_chat(user, "<span class='warning'>You start to turn off the [src] and the generated shields!</span>")
-	if(do_after(user, 3.5 SECONDS, target = src))
-		to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
-		message_admins("[src] turned off at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
-		log_game("[src] turned off at [AREACOORD(EmitterTurf)] by [key_name(user)]")
-		is_on = FALSE
-		QDEL_LIST(signs)
-		update_icon_state()
+	if(!do_after(user, 3.5 SECONDS, target = src))
+		return
+	to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
+	message_admins("[src] turned off at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
+	log_game("[src] turned off at [AREACOORD(EmitterTurf)] by [key_name(user)]")
+	is_on = FALSE
+	update_icon_state()
+	QDEL_LIST(signs)
 /** The vars you'll see in the proc() are referred to a mob looking north and they define a CORNER; NEx NEy refers to the North East CORNER x and y coordinates,
 *all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis). This way of naming the vars
 *won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup

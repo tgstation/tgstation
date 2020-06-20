@@ -338,7 +338,7 @@
 ///Proc that allows the windows to be melted, the damage dealt goes from 1 to 15
 /obj/structure/window/proc/adjacent_fire_act(temperature)
 	if(temperature > heat_capacity)
-		take_damage(clamp((temperature - heat_capacity)/10, 1, 15), BURN, 0, 0)
+		take_damage(clamp((temperature - heat_capacity) * 0.1, 1, 15), BURN, NONE, FALSE)
 
 /obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
 	return null

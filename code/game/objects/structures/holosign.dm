@@ -136,6 +136,7 @@
 	var/area/a = get_area(src)
 	a.addStaticPower(-power_consumption, AREA_USAGE_STATIC_EQUIP)
 	LAZYREMOVE(shield_projector.signs, src)
+	shield_projector = null
 	return ..()
 
 ///Proc that takes the thermal conductivity of the turf its on and store it inside a variable
