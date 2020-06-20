@@ -274,6 +274,11 @@
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "venus"
 
+/obj/structure/statue/sandstone/goose
+	name = "statue of birdboat"
+	desc = "Vomits less than the real thing. Hopefully, anyway."
+	icon_state = "goose_statue"
+
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
