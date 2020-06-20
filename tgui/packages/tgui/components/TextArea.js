@@ -30,15 +30,7 @@ export class TextArea extends Component {
     const {
       dontUseTabForIndent = false,
     } = props;
-    // found this hack that expands the text area without
-    // having to hard set rows all the time
-    // there has GOT to be a better way though
-    this.autoresize = () => {
-      if (this.fillerRef && this.textareaRef) {
-      //  this.fillerRef.current.innerHTML =
-      //  this.textareaRef.current.value.replace(/\n/g, '<br/>');
-      }
-    };
+
     this.handleOnInput = e => {
       const { editing } = this.state;
       const { onInput } = this.props;
@@ -48,7 +40,6 @@ export class TextArea extends Component {
       if (onInput) {
         onInput(e, e.target.value);
       }
-      this.autoresize();
     };
     this.handleOnChange = e => {
       const { editing } = this.state;
@@ -59,7 +50,6 @@ export class TextArea extends Component {
       if (onChange) {
         onChange(e, e.target.value);
       }
-      this.autoresize();
     };
     this.handleKeyPress = e => {
       const { editing } = this.state;
@@ -70,7 +60,6 @@ export class TextArea extends Component {
       if (onKeyPress) {
         onKeyPress(e, e.target.value);
       }
-      this.autoresize();
     };
     this.handleKeyDown = e => {
       const { editing } = this.state;
@@ -94,7 +83,6 @@ export class TextArea extends Component {
       if (onKeyDown) {
         onKeyDown(e, e.target.value);
       }
-      this.autoresize();
     };
     this.handleFocus = e => {
       const { editing } = this.state;
@@ -119,7 +107,6 @@ export class TextArea extends Component {
     const input = this.textareaRef.current;
     if (input) {
       input.value = toInputValue(nextValue);
-      this.autoresize();
     }
   }
 
@@ -130,7 +117,6 @@ export class TextArea extends Component {
     const input = this.textareaRef.current;
     if (input && !editing && prevValue !== nextValue) {
       input.value = toInputValue(nextValue);
-      this.autoresize();
     }
   }
 
@@ -152,6 +138,7 @@ export class TextArea extends Component {
       onBlur,
       onEnter,
       value,
+      maxLength,
       placeholder,
       ...boxProps
     } = this.props;
@@ -167,12 +154,10 @@ export class TextArea extends Component {
           'TextArea',
           fluid && 'TextArea--fluid',
           className,
-
         ])}
         {...rest}>
 
         <textarea
-          value={value}
           ref={this.textareaRef}
           className="TextArea__textarea"
           placeholder={placeholder}
@@ -181,7 +166,8 @@ export class TextArea extends Component {
           onKeyPress={this.handleKeyPress}
           onInput={this.handleOnInput}
           onFocus={this.handleFocus}
-          onBlur={this.handleBlur} />
+          onBlur={this.handleBlur}
+          maxLength={maxLength} />
       </Box>
     );
   }

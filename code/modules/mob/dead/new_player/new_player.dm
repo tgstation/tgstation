@@ -41,6 +41,9 @@
 	return
 
 /mob/dead/new_player/proc/new_player_panel()
+	if (client?.interviewee)
+		return
+
 	var/output = "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
@@ -91,7 +94,6 @@
 
 	output += "</center>"
 
-	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
@@ -101,8 +103,8 @@
 	if(src != usr)
 		return 0
 
-	if(!client)
-		return 0
+	if(client?.interviewee)
+		return FALSE
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -524,3 +526,21 @@
 
 		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
 	return TRUE
+
+/**
+  * Prepares a client for the interview system, and provides them with a new interview
+  *
+  * This proc will both prepare the user by removing all verbs from them, as well as
+  * giving them the interview form and forcing it to appear.
+  */
+/mob/dead/new_player/proc/register_for_interview()
+	// first we detain them
+	for (var/v in client.verbs)
+		client.verbs -= v
+	verbs.Cut()
+
+	// then we create the interview form and give them the verb to open it
+	var/datum/interview/I = GLOB.interviews.interview_for_client(client)
+	if (I)
+		I.ui_interact(src)
+	verbs += /mob/dead/new_player/proc/open_interview

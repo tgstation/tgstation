@@ -177,3 +177,6 @@
 
 	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
+
+	/// If the client is currently under the restrictions of the interview system
+	var/interviewee = FALSE
