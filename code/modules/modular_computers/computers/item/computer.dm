@@ -197,7 +197,8 @@
 /obj/item/modular_computer/emag_act(mob/user)
 	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling
 	var/newemag = FALSE
-	for(var/datum/computer_file/program/app in all_components[MC_HDD].stored_files)
+	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
+	for(var/datum/computer_file/program/app in drive.stored_files)
 		if(!istype(app))
 			continue
 		if(app.run_emag())
