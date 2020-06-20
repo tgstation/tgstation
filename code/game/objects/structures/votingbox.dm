@@ -174,28 +174,30 @@
 
 	var/obj/item/paper/P = new(drop_location())
 	var/list/tally = list()
+	tally += {"
+		<style>
+			.vote_box_content{
+				max-width:250px;
+				display:inline-block;
+				overflow:hidden;
+				text-overflow:ellipsis;
+				white-space:nowrap;
+				vertical-align:bottom
+			}
+			.vote_box_content br {
+				display: none;
+			}
+			.vote_box_content hr {
+				display: none;
+			}
+		</style>
+		"}
+
 	tally += "<h1>Voting Results:</h1><hr><ol>"
 	for(var/option in results)
-		tally += "<li>\"<div class='content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
+		tally += "<li>\"<div class='vote_box_content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
 	tally += "</ol>"
-	P.extra_headers = {"
-	<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
-	<style>
-		.content{
-			max-width:250px;
-			display:inline-block;
-			overflow:hidden;
-			text-overflow:ellipsis;
-			white-space:nowrap;
-			vertical-align:bottom
-		}
-		.content br {
-			display: none;
-		}
-		.content hr {
-			display: none;
-		}
-	</style>"}
+
 	P.info = tally.Join()
 	P.name = "Voting Results"
 	P.update_icon()

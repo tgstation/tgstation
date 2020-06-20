@@ -288,7 +288,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			oldorgan.Remove(C,TRUE)
 			QDEL_NULL(oldorgan)
 
-		if(!oldorgan && should_have && !(initial(neworgan.zone) in excluded_zones))
+		if(oldorgan)
+			oldorgan.setOrganDamage(0)
+		else if(should_have && !(initial(neworgan.zone) in excluded_zones))
 			used_neworgan = TRUE
 			neworgan.Insert(C, TRUE, FALSE)
 

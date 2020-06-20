@@ -129,7 +129,7 @@
 	/obj/item/toy/balloon,
 	/obj/item/toy/gun,
 	/obj/item/toy/sword,
-	/obj/item/toy/talking/AI,
+	/obj/item/toy/talking/ai,
 	/obj/item/toy/talking/owl,
 	/obj/item/toy/talking/griffin,
 	/obj/item/toy/minimeteor,
@@ -151,7 +151,7 @@
 	/obj/item/toy/prize/clarke,
 	/obj/item/toy/plush/carpplushie,
 	/obj/item/toy/redbutton,
-	/obj/item/toy/windupToolbox,
+	/obj/item/toy/windup_toolbox,
 	/obj/item/clothing/head/collectable/rabbitears)
 	new won(where)
 	new/obj/item/reagent_containers/food/snacks/chocolateegg(where)

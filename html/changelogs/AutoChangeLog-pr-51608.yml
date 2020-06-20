@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Airlocks will now immediately show their unrestricted access sides when created via RCD."

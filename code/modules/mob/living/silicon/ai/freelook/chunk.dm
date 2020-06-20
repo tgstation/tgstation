@@ -18,7 +18,7 @@
 
 // Add an AI eye to the chunk, then update if changed.
 
-/datum/camerachunk/proc/add(mob/camera/aiEye/eye)
+/datum/camerachunk/proc/add(mob/camera/ai_eye/eye)
 	eye.visibleCameraChunks += src
 	seenby += eye
 	if(changed)
@@ -26,7 +26,7 @@
 
 // Remove an AI eye from the chunk, then update if changed.
 
-/datum/camerachunk/proc/remove(mob/camera/aiEye/eye, remove_static_with_last_chunk = TRUE)
+/datum/camerachunk/proc/remove(mob/camera/ai_eye/eye, remove_static_with_last_chunk = TRUE)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 	if(remove_static_with_last_chunk && !eye.visibleCameraChunks.len)
