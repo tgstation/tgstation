@@ -700,10 +700,10 @@
 							/obj/item/clothing/under/costume/saints,
 							/obj/item/clothing/head/saints,
 							/obj/item/clothing/shoes/saints)
-	free_clothes = list(/obj/item/clothing/suit/morningstar,
-							/obj/item/clothing/under/costume/morningstar,
-							/obj/item/clothing/head/morningstar,
-							/obj/item/clothing/shoes/morningstar,
+	free_clothes = list(/obj/item/clothing/suit/saints,
+							/obj/item/clothing/under/costume/saints,
+							/obj/item/clothing/head/saints,
+							/obj/item/clothing/shoes/saints,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "TODO: Add Objective"
 	antag_hud_name = "TheSaints"
