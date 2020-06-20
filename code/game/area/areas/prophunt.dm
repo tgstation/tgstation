@@ -4,6 +4,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	flags_1 = 0
 	hidden = TRUE
+	no_minigames = TRUE
 
 /area/prophunt/mg2
 	name = "\improper PropHunt Area"

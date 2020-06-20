@@ -38,6 +38,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	ambientsounds = list('sound/ambience/scarytheme.ogg')
+	no_minigames = TRUE
 
 /area/awaymission/mrboneswildride/Entered(atom/movable/M)
 	. = ..()
