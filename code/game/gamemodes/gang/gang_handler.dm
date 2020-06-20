@@ -59,6 +59,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/gang_balance_cap = 5
 	/// Whether the handler corresponds to a ruleset that does not trigger at round start. Should be set externally only if applicable; used internally.
 	var/midround_ruleset = FALSE
+	/// Whether we want to use the 30 to 15 minute timer instead of the 60 to 30 minute timer, for Dynamic.
+	var/use_dynamic_timing = FALSE
 	/// Keeps track of the amount of deaths since the calling of pre_setup_analogue() if this is a midround handler. Used to prevent a high wanted level due to a large amount of deaths during the shift prior to the activation of this handler / the midround ruleset.
 	var/deaths_during_shift_at_beginning = 0
 
@@ -287,7 +289,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		var/datum/team/gang/G = GG
 		readable_gang_names += "[G.name]"
 	var/finalized_gang_names = english_list(readable_gang_names)
-	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the [midround_ruleset ? "half-hour" : "hour"] 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait an hour. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the [use_dynamic_timing ? "half-hour" : "hour"] 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait [use_dynamic_timing ? "thirty minutes" : "an hour"]. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 	sent_announcement = TRUE
 	check_wanted_level() // i like it when the wanted level updates at the same time as the announcement
 
@@ -352,19 +354,19 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	switch(newlevel)
 		if(2)
 			if(!sent_second_announcement) // when you hear that they're "arriving in 5 minutes," that's a goddamn guarantee
-				end_time = start_time + ((50 MINUTES) / (midround_ruleset ? 2 : 1))
+				end_time = start_time + ((50 MINUTES) / (use_dynamic_timing ? 2 : 1))
 			announcement_message = "Small amount of police vehicles have been spotted en route towards [station_name()]."
 		if(3)
 			if(!sent_second_announcement)
-				end_time = start_time + ((40 MINUTES) / (midround_ruleset ? 2 : 1))
+				end_time = start_time + ((40 MINUTES) / (use_dynamic_timing ? 2 : 1))
 			announcement_message = "A large detachment police vehicles have been spotted en route towards [station_name()]."
 		if(4)
 			if(!sent_second_announcement)
-				end_time = start_time + ((35 MINUTES) / (midround_ruleset ? 2 : 1))
+				end_time = start_time + ((35 MINUTES) / (use_dynamic_timing ? 2 : 1))
 			announcement_message = "A detachment of top-trained agents has been spotted on their way to [station_name()]."
 		if(5)
 			if(!sent_second_announcement)
-				end_time = start_time + ((30 MINUTES) / (midround_ruleset ? 2 : 1))
+				end_time = start_time + ((30 MINUTES) / (use_dynamic_timing ? 2 : 1))
 			announcement_message = "The fleet enroute to [station_name()] now consists of national guard personnel."
 	if(!midround_ruleset) // stops midround rulesets from announcing janky ass times
 		announcement_message += "  They will arrive at the [(end_time - start_time) / (1 MINUTES)] minute mark."
@@ -378,19 +380,19 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	switch(newlevel)
 		if(1)
 			if(!sent_second_announcement)
-				end_time = start_time + ((60 MINUTES) / (midround_ruleset ? 2 : 1))
+				end_time = start_time + ((60 MINUTES) / (use_dynamic_timing ? 2 : 1))
 			announcement_message = "There are now only a few police vehicle headed towards [station_name()]."
 		if(2)
 			if(!sent_second_announcement)
-				end_time = start_time + ((50 MINUTES) / (midround_ruleset ? 2 : 1))
+				end_time = start_time + ((50 MINUTES) / (use_dynamic_timing ? 2 : 1))
 			announcement_message = "There seem to be fewer police vehicles headed towards [station_name()]."
 		if(3)
 			if(!sent_second_announcement)
-				end_time = start_time + ((40 MINUTES) / (midround_ruleset ? 2 : 1))
+				end_time = start_time + ((40 MINUTES) / (use_dynamic_timing ? 2 : 1))
 			announcement_message = "There are no longer top-trained agents in the fleet headed towards [station_name()]."
 		if(4)
 			if(!sent_second_announcement)
-				end_time = start_time + ((35 MINUTES) / (midround_ruleset ? 2 : 1))
+				end_time = start_time + ((35 MINUTES) / (use_dynamic_timing ? 2 : 1))
 			announcement_message = "The convoy enroute to [station_name()] seems to no longer consist of national guard personnel."
 	if(!midround_ruleset)
 		announcement_message += "  They will arrive at the [(end_time - start_time) / (1 MINUTES)] minute mark."
