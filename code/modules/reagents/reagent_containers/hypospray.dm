@@ -224,10 +224,10 @@
 
 /obj/item/reagent_containers/hypospray/medipen/survival/inject(mob/living/M, mob/user)
 	if(!lavaland_equipment_pressure_check(get_turf(user)))
-		if(target in user.do_afters)
+		if(M in user.do_afters)
 			return
 		to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
-		if(do_after(user,10 SECONDS, target = M))
+		if(do_mob(user, M ,10 SECONDS))
 			amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5
 			return ..()
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
