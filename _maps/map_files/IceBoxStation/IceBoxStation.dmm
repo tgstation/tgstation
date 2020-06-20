@@ -27876,7 +27876,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "boi" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/computer/crew{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
