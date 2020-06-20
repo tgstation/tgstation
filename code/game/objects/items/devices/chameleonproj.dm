@@ -181,23 +181,46 @@
 
 //prophunt projectors (disrupt while seekers are seeking = booted)
 /obj/item/chameleon/prophunt
-	var/obj/machinery/computer/arena/prophunt/gamemaster = null //if this doesn't get set by new, we want it to runtime.
+	var/caught = FALSE
+	var/deleting = FALSE
+	var/mob/living/carbon/human/hider = null //if this doesn't get set by new, we want it to runtime.
+	var/obj/machinery/computer/arena/prophunt/gamemaster = null //see above
+	var/obj/item/clothing/head/cone/default_prop //shitcode i know the ball is in one day so seriously shut the fuck up
 
-/obj/item/chameleon/prophunt/Initialize(mapload, arenacomputer)
+/obj/item/chameleon/prophunt/Initialize(mapload, arenacomputer, _hider)
 	. = ..()
 	gamemaster = arenacomputer
+	hider = _hider
+	ADD_TRAIT(src, TRAIT_NODROP, ADMIN_TRAIT)
 
-/obj/item/chameleon/prophunt/disrupt(delete_dummy)
-	var/caught = FALSE
+	//so SOMETHING is saved in your projector
+	default_prop = new(src)
+	var/obj/temp = new/obj()
+	temp.appearance = default_prop.appearance
+	temp.layer = initial(default_prop.layer) // scanning things in your inventory
+	temp.plane = initial(default_prop.plane)
+	saved_appearance = temp.appearance
+	qdel(default_prop)
+
+/obj/item/chameleon/prophunt/disrupt(delete_dummy) //all the caught + deleting vars are so this doesn't repeat itself
+	var/tripped = FALSE
 	if(active_dummy)
-		if(gamemaster.game_state == 4)
-			for(var/mob/M in active_dummy)
-				to_chat(M, "<span class='userdanger'>You've been caught!</span>")
-				caught = TRUE
-	if(caught)
-		for(var/mob/M in active_dummy)
-			gamemaster.kick_hider_out(M)
+		if(gamemaster.game_state == 4 && !caught)//seekers out
+			to_chat(hider, "<span class='userdanger'>You've been caught!</span>")
+			caught = TRUE//now you can't get caught anymore, repeating the loop
+			tripped = TRUE //this will only be true for the first time this is called aka first time you get caught
+			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread //spark here to show you caught someone
+			spark_system.set_up(5, 0, src)
+			spark_system.attach(src)
+			spark_system.start()
+			gamemaster.kick_hider_out(hider)
 	. = ..()
-	if(caught)
+	if(caught && tripped) //caught will always be true after the first catch, but tripped will only be true if it's the first time caught. we REALLY don't want to repeat this...
+		deleting = TRUE
 		gamemaster.projectors -= src //don't want them out of the game using their funny little projector and losing twice or some wack stuff
 		qdel(src) 	//and no, "objects_delete_on_leaving_arena" var doesn't help. that's only for arenas it loads, not equipment for players.
+
+/obj/item/chameleon/prophunt/proc/force_disguise()
+	if(!active_dummy)
+		to_chat(hider, "<span class='userdanger'>HIDING TIME IS UP! Disguising as your saved prop...</span>")
+		toggle(hider) //doesn't have safety but really what can people do, this is a 3 hour event STOP BOTHERING ME

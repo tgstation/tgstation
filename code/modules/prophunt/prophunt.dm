@@ -59,10 +59,11 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 				tbr -= chosen_key
 	return result
 
-#define PROPHUNT_SIGNUPS 1
-#define PROPHUNT_SETUP 2
-#define PROPHUNT_HIDING 3
-#define PROPHUNT_GAME 4
+#define PROPHUNT_SIGNUPS 1 //waiting for players
+#define PROPHUNT_SETUP 2 //very short phase where we set the game up for hiders
+#define PROPHUNT_HIDING 3 //hiders hiding
+#define PROPHUNT_GAME 4 //seekers finding hiders
+#define PROPHUNT_CLEANUP 5 //very short phase where we clean up projectors and other stuff
 
 /obj/prophunt_signup_board
 	name = "Prophunt Game Signup"
@@ -188,7 +189,7 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 
 /obj/machinery/computer/arena/prophunt/proc/send_hiders_in()
 	for(var/mob/living/L in hiders)
-		var/obj/item/chameleon/prophunt/projector = new(null,src)
+		var/obj/item/chameleon/prophunt/projector = new(null,src,L)
 		projectors += projector
 		L.forceMove(get_landmark_turf(PROPHUNT_HIDER_SPAWN))
 		L.put_in_hands(projector)
@@ -200,18 +201,22 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 /obj/machinery/computer/arena/prophunt/proc/send_searchers_in()
 	for(var/mob/living/L in searchers)
 		L.forceMove(get_landmark_turf(PROPHUNT_SEARCHER_SPAWN))
+	for(var/P in projectors)
+		var/obj/item/chameleon/prophunt/proj = P
+		proj.force_disguise()//so you can't be a human immune to the seeker
 	to_chat(searchers,"<span class='danger'>Search! You got 3 minutes! Catching a hider will boot them out of the game!</span>")
 	to_chat(hiders,"<span class='userdanger'>Search started! Try to stay hidden for 3 minutes!</span>")
 	to_chat(hiders,"<span class='userdanger'>WARNING: IF YOUR PROJECTOR GETS DISRUPTED BY THIS POINT, YOU WILL BE COUNTED AS CAUGHT AND BOOTED OUT!</span>")
 	game_state = PROPHUNT_GAME
-	next_stage_timer = addtimer(CALLBACK(src,.proc/conclude_round),search_time, TIMER_STOPPABLE)
+	next_stage_timer = addtimer(CALLBACK(src,.proc/conclude_round, FALSE),search_time, TIMER_STOPPABLE)
 
-/obj/machinery/computer/arena/prophunt/proc/conclude_round(seekers_win = FALSE)//bool
+/obj/machinery/computer/arena/prophunt/proc/conclude_round(seekers_win = FALSE)
+	game_state = PROPHUNT_CLEANUP
 	QDEL_LIST(projectors)
 	if(seekers_win)
-		to_chat(total_players, "<span class='redtext'>SEEKERS HAVE WON! ALL HIDERS HAVE BEEN CAUGHT!")
+		to_chat(total_players, "<span class='redtext'>SEEKERS HAVE CAUGHT EVERYONE!</span>")
 	else
-		to_chat(total_players, "<span class='greentext'>HIDERS HAVE WON! NOT ALL HIDERS WERE CAUGHT!")
+		to_chat(total_players, "<span class='greentext'>HIDERS HAVE AVOIDED CAPTURE!</span>")
 	kick_players_out()
 	if(next_stage_timer)
 		deltimer(next_stage_timer)
@@ -219,10 +224,13 @@ GLOBAL_DATUM_INIT(minigame_signups,/datum/minigame_signups,new)
 	try_autostart()
 
 /obj/machinery/computer/arena/prophunt/proc/kick_hider_out(mob/player)//used for when you get caught
+	to_chat(total_players, "<span class='userdanger'>[player] has been caught by the seekers, and removed from the game!</span>")
 	player.forceMove(get_landmark_turf(ARENA_EXIT))
 	hiders -= player
 	if(!hiders.len)
 		conclude_round(seekers_win = TRUE)
+	else
+		to_chat(total_players, "<span class='bold notice'>There are [hiders.len] players left in the game.</span>")
 
 /obj/machinery/computer/arena/prophunt/kick_players_out()
 	for(var/mob/M in hiders+searchers)
