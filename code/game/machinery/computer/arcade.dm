@@ -372,7 +372,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			LAZYADD(last_three_move, player_stance)
 		if(3)
 			for(var/i = 1; i < LAZYLEN(last_three_move); i++)
-				last_three_move[i] = last_three_move[i + 1]
+				last_three_move[i] = LAZYACCESS(last_three_move, i + 1)
 			last_three_move[LAZYLEN(last_three_move)] = player_stance
 
 		if(4 to INFINITY)
