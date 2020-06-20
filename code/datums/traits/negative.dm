@@ -53,17 +53,48 @@
 		H.put_in_hands(B)
 	H.regenerate_icons()
 
+	/* A couple of brain tumor stats for anyone curious / looking at this quirk for balancing:
+	 * - It takes less 16 minute 40 seconds to die from brain death due to a brain tumor.
+	 * - It takes 1 minutes 40 seconds to take 10% (20 organ damage) brain damage.
+	 * - 5u mannitol will heal 12.5% (25 organ damage) brain damage
+	 */
 /datum/quirk/brainproblems
 	name = "Brain Tumor"
 	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
 	value = -3
+	var/where
 	gain_text = "<span class='danger'>You feel smooth.</span>"
 	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
 	hardcore_value = 12
 
+/datum/quirk/brainproblems/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/pills = new /obj/item/storage/pill_bottle/mannitol/braintumor()
+	var/list/slots = list(
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK,
+		"in your hands" = ITEM_SLOT_HANDS
+	)
+	where = H.equip_in_one_of_slots(pills, slots, FALSE) || "at your feet"
+
+/datum/quirk/brainproblems/post_add()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(where == "in your backpack")
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of mannitol pills [where] to keep you alive until you can secure a supply of medication. Don't rely on it too much!</span>")
+
 /datum/quirk/brainproblems/on_process()
-	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
+	//If we're frozen, why does our brain hurt?
+	if(IS_IN_STASIS(quirk_holder)) 
+		return
+	//Having mannitol in you will also pause the brain damage (so it heals an even 2 brain damage instead of 1.8)
+	else if(quirk_holder.reagents.has_reagent(/datum/reagent/medicine/mannitol, needs_metabolizing = TRUE))
+		return
+	else
+		quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 
 /datum/quirk/deafness
 	name = "Deaf"

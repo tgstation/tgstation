@@ -133,6 +133,11 @@
 	list_reagents = list(/datum/reagent/medicine/mannitol = 50)
 	rename_with_volume = TRUE
 
+//Lower quantity mannitol pills (50u pills heal 250 brain damage, 5u pills heal 25)
+/obj/item/reagent_containers/pill/mannitol/braintumor
+	desc = "Used to treat symptoms for brain tumors."
+	list_reagents = list(/datum/reagent/medicine/mannitol = 5)
+
 /obj/item/reagent_containers/pill/mutadone
 	name = "mutadone pill"
 	desc = "Used to treat genetic damage."
