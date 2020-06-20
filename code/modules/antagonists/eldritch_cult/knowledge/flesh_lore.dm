@@ -61,7 +61,7 @@
 /datum/eldritch_knowledge/flesh_ghoul/proc/remove_ghoul(datum/source)
 	var/mob/living/carbon/human/humie = source
 	ghouls -= humie
-	humie?.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
+	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 	UnregisterSignal(source,COMSIG_MOB_DEATH,.proc/remove_ghoul)
 
 /datum/eldritch_knowledge/flesh_grasp
@@ -123,7 +123,7 @@
 /datum/eldritch_knowledge/flesh_grasp/proc/remove_ghoul(datum/source)
 	var/mob/living/carbon/human/humie = source
 	spooky_scaries -= humie
-	humie?.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
+	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 	UnregisterSignal(source,COMSIG_MOB_DEATH,.proc/remove_ghoul)
 
 /datum/eldritch_knowledge/flesh_mark
