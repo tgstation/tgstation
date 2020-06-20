@@ -40,10 +40,11 @@
 		assets = get_asset_datum(/datum/asset/simple/arcade)
 		assets.send(user)
 		var/headername
-		if(device_theme == "ntos")
-			headername = "NtOS Main Menu"
-		if(device_theme == "syndicate")
-			headername = "Syndix Main Menu"
+		switch(device_theme)
+			if("ntos")
+				headername = "NtOS Main Menu"
+			if("syndicate")
+				headername = "Syndix Main Menu"
 		ui = new(user, src, ui_key, "NtosMain", headername, 400, 500, master_ui, state)
 		ui.open()
 		ui.set_autoupdate(state = 1)

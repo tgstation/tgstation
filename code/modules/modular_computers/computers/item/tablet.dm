@@ -42,5 +42,5 @@
 	device_theme = "syndicate"
 
 /obj/item/modular_computer/tablet/nukeops/emag_act(mob/user)
-	to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"MEMORY CODE INJECTION DETECTED AND SUCCESSFULLY QUARANTINED\" message.</span>")
+	to_chat(user, "<span class='notice'>You swipe \the [src]. It's screen briefly shows a message reading \"MEMORY CODE INJECTION DETECTED AND SUCCESSFULLY QUARANTINED\".</span>")
 	return FALSE

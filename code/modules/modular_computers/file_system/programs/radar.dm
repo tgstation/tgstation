@@ -29,9 +29,10 @@
 	var/pointercolor = "green"
 
 /datum/computer_file/program/radar/run_program(mob/living/user)
-	if(..())
+	. = ..()
+	if(.)
 		START_PROCESSING(SSfastprocess, src)
-		return TRUE
+		return
 	return FALSE
 
 /datum/computer_file/program/radar/kill_program(forced = FALSE)
@@ -42,7 +43,7 @@
 
 /datum/computer_file/program/radar/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	. = ..()
+	return ..()
 
 /datum/computer_file/program/radar/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -104,13 +105,13 @@
 			pointer="caret-down"
 
 	var/list/trackinfo = list(
-		locx = locx,
-		locy = locy,
-		userot = userot,
-		rot = rot,
-		arrowstyle = arrowstyle,
-		color = pointercolor,
-		pointer = pointer,
+		"locx" = locx,
+		"locy" = locy,
+		"userot" = userot,
+		"rot" = rot,
+		"arrowstyle" = arrowstyle,
+		"color" = pointercolor,
+		"pointer" = pointer,
 		)
 	return trackinfo
 

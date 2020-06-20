@@ -20,6 +20,7 @@
 	var/download_netspeed = 0
 	var/downloaderror = ""
 	var/obj/item/modular_computer/my_computer = null
+	var/emagged = FALSE
 	var/list/main_repo
 	var/list/antag_repo
 
@@ -27,6 +28,13 @@
 	. = ..()
 	main_repo = SSnetworks.station_network.available_station_software
 	antag_repo = SSnetworks.station_network.available_antag_software
+
+/datum/computer_file/program/ntnetdownload/run_emag()
+	if(emagged)
+		return FALSE
+	emagged = TRUE
+	return TRUE
+
 
 /datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)
@@ -38,7 +46,7 @@
 		return 0
 
 	// Attempting to download antag only program, but without having emagged/syndicate computer. No.
-	if(PRG.available_on_syndinet && !((computer.obj_flags & EMAGGED) || (computer.device_theme = "syndicate")))
+	if(PRG.available_on_syndinet && !emagged)
 		return 0
 
 	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
@@ -150,7 +158,7 @@
 			"size" = P.size,
 		)))
 	data["hackedavailable"] = FALSE
-	if(computer.obj_flags & EMAGGED) // If we are running on emagged computer we have access to some "bonus" software
+	if(emagged) // If we are running on emagged computer we have access to some "bonus" software
 		var/list/hacked_programs[0]
 		for(var/S in antag_repo)
 			var/datum/computer_file/program/P = S
@@ -194,6 +202,7 @@
 	requires_ntnet = 0
 	ui_header = "downloader_finished.gif"
 	tgui_id = "NtosNetDownloader"
+	emagged = TRUE
 
 /datum/computer_file/program/ntnetdownload/syndicate/run_program()
 	. = ..()
