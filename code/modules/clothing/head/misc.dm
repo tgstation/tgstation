@@ -472,3 +472,33 @@
 	desc = "Hee-ho!"
 	icon_state = "JackFrostHat"
 	inhand_icon_state = "JackFrostHat"
+
+/obj/item/clothing/head/irs
+	name = "internal revenue service cap"
+	icon_state = "irs_hat"
+	inhand_icon_state = "irs_hat"
+
+/obj/item/clothing/head/pg
+	name = "powder ganger beanie"
+	icon_state = "pg_hat"
+	inhand_icon_state = "pg_hat"
+
+/obj/item/clothing/head/tmc
+	name = "Lost M.C. bandana"
+	icon_state = "tmc_hat"
+	inhand_icon_state = "tmc_hat"
+
+/obj/item/clothing/head/deckers
+	name = "Decker headphones"
+	icon_state = "decker_hat"
+	inhand_icon_state = "decker_hat"
+
+/obj/item/clothing/head/morningstar
+	name = "Morningstar beret"
+	icon_state = "morningstar_hat"
+	inhand_icon_state = "morningstar_hat"
+
+/obj/item/clothing/head/saints
+	name = "Saints hat"
+	icon_state = "saints_hat"
+	inhand_icon_state = "saints_hat"

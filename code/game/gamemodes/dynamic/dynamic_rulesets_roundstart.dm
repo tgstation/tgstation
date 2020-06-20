@@ -510,7 +510,7 @@
 	cost = 30
 	requirements = list(101,101,101,101,101,70,40,10,10,10)
 	flags = HIGHLANDER_RULESET
-	minimum_players = 36
+	minimum_players = 20
 	antag_cap = list(6,6,6,6,6,6,6,6,6,6)
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler

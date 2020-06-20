@@ -3,7 +3,7 @@
 	config_tag = "families"
 	antag_flag = ROLE_FAMILIES
 	false_report_weight = 5
-	required_players = 40
+	required_players = 20
 	required_enemies = 6
 	recommended_enemies = 6
 	announce_span = "danger"

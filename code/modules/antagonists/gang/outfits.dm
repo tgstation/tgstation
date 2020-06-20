@@ -17,27 +17,26 @@
 	suit = null
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = null
-	glasses = /obj/item/clothing/glasses/hud/spacecop
+	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/headset_sec
 	mask = null
 	head = /obj/item/clothing/head/spacepolice
-	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
+	belt = null
 	r_pocket = /obj/item/lighter
 	l_pocket = /obj/item/restraints/handcuffs
 	id = /obj/item/card/id
+	r_hand = /obj/item/gun/energy/e_gun/mini
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,
-	/obj/item/shield/riot/tele = 1,
-	/obj/item/ammo_box/magazine/m45 = 3,
-	/obj/item/ammo_box/c45 = 2)
+	/obj/item/shield/riot/tele = 1)
 
 
 /datum/outfit/families_police/beatcop/armored
 	name = "Families: Armored Beat Cop"
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	head = /obj/item/clothing/head/helmet/blueshirt
-	belt = /obj/item/gun/ballistic/shotgun/automatic/combat
+	r_hand = /obj/item/gun/energy/e_gun
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,
@@ -49,7 +48,7 @@
 	suit = /obj/item/clothing/suit/armor/riot
 	head = /obj/item/clothing/head/helmet/riot
 	gloves = /obj/item/clothing/gloves/combat
-	belt = /obj/item/gun/ballistic/shotgun/automatic/combat
+	r_hand = /obj/item/gun/ballistic/shotgun/automatic/combat
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,
@@ -60,8 +59,8 @@
 	name = "Families: Space FBI Officer"
 	suit = /obj/item/clothing/suit/armor/laserproof
 	head = /obj/item/clothing/head/helmet/riot
-	belt = /obj/item/gun/ballistic/automatic/proto/unrestricted
 	gloves = /obj/item/clothing/gloves/combat
+	r_hand = /obj/item/gun/energy/laser/hellgun
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,
@@ -74,7 +73,7 @@
 	uniform = /obj/item/clothing/under/syndicate/camo
 	suit = /obj/item/clothing/suit/armor/laserproof
 	head = /obj/item/clothing/head/beret/durathread
-	belt = /obj/item/gun/energy/laser/scatter
+	r_hand = /obj/item/gun/energy/pulse/carbine
 	gloves = /obj/item/clothing/gloves/combat
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,

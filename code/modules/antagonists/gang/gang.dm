@@ -82,10 +82,9 @@
 	..()
 
 /datum/antagonist/gang/greet()
-	to_chat(owner.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
-
 	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
 	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
+	to_chat(owner.current, "<B><font size=2 color=red>Your uniform is armored. Wear it!</font></B>")
 	to_chat(owner.current, "<B><font size=6 color=red>You are still a team-oriented antagonist! Do what is best for your gang.</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Beware, killing innocents will result in a stronger police response.</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [gang_objective]</font>")
@@ -128,6 +127,7 @@
 	if(istype(owner.current, /mob/living/carbon/human))
 		for(var/C in my_gang.free_clothes)
 			var/obj/O = new C(owner.current)
+			O.armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 20, "acid" = 20, "wound" = 20)
 			var/list/slots = list (
 				"backpack" = ITEM_SLOT_BACKPACK,
 				"left pocket" = ITEM_SLOT_LPOCKET,
@@ -524,10 +524,12 @@
 							/obj/item/clothing/under/costume/dutch,
 							/obj/item/clothing/suit/dutch,
 							/obj/item/clothing/head/bowler,
-							/obj/item/clothing/mask/bandana/black)
+							/obj/item/clothing/mask/bandana/black,
+							/obj/item/clothing/shoes/cowboy)
 	free_clothes = list(/obj/item/clothing/under/costume/dutch,
 						/obj/item/clothing/head/bowler,
 						/obj/item/clothing/suit/dutch,
+						/obj/item/clothing/shoes/cowboy,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "Listen here, fellas. I have a plan. Just one more score on this crappy little po-dunk station. Gold bars, friends. Get all the gold out of the silos, and leave nothing behind! Spread the gold amongst yourselves for the escape plan, make sure everyone has at least 1 bar. After this, it'll be space mangos at Tahiti. You just gotta have a little faith."
 	antag_hud_name = "Dutch"
@@ -547,4 +549,185 @@
 	var/datum/component/material_container/mat_container = S.GetComponent(/datum/component/material_container)
 	if(mat_container.materials[SSmaterials.GetMaterialRef(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
 		return FALSE
+	return TRUE
+
+/datum/antagonist/gang/irs
+	show_in_antagpanel = TRUE
+	name = "Internal Revenue Service Agent"
+	roundend_category = "IRS Agents"
+	gang_name = "Internal Revenue Service"
+	gang_id = "IRS"
+	acceptable_clothes = list(/obj/item/clothing/suit/irs,
+							/obj/item/clothing/under/costume/irs,
+							/obj/item/clothing/head/irs)
+	free_clothes = list(/obj/item/clothing/suit/irs,
+							/obj/item/clothing/under/costume/irs,
+							/obj/item/clothing/head/irs,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TODO: Add Objective"
+	antag_hud_name = "IRS"
+
+/datum/antagonist/gang/irs/check_gang_objective()
+	return TRUE
+
+/datum/antagonist/gang/osi
+	show_in_antagpanel = TRUE
+	name = "Office of Secret Intelligence Agent"
+	roundend_category = "O.S.I. Agents"
+	gang_name = "Office of Secret Intelligence"
+	gang_id = "OSI"
+	acceptable_clothes = list(/obj/item/clothing/suit/osi,
+							/obj/item/clothing/under/costume/osi,
+							/obj/item/clothing/glasses/sunglasses/osi)
+	free_clothes = list(/obj/item/clothing/suit/osi,
+							/obj/item/clothing/under/costume/osi,
+							/obj/item/clothing/glasses/sunglasses/osi,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TODO: Add Objective"
+	antag_hud_name = "OSI"
+
+/datum/antagonist/gang/osi/check_gang_objective()
+	return TRUE
+
+/datum/antagonist/gang/tmc
+	show_in_antagpanel = TRUE
+	name = "The Lost M.C. Biker"
+	roundend_category = "Lost M.C. Bikers"
+	gang_name = "The Lost M.C."
+	gang_id = "TMC"
+	acceptable_clothes = list(/obj/item/clothing/suit/tmc,
+							/obj/item/clothing/under/costume/tmc,
+							/obj/item/clothing/head/tmc)
+	free_clothes = list(/obj/item/clothing/suit/tmc,
+							/obj/item/clothing/under/costume/tmc,
+							/obj/item/clothing/head/tmc,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TODO: Add Objective"
+	antag_hud_name = "LostMC"
+
+/datum/antagonist/gang/tmc/check_gang_objective()
+	return TRUE
+
+/datum/antagonist/gang/pg
+	show_in_antagpanel = TRUE
+	name = "Powder Ganger"
+	roundend_category = "Powder Gangers"
+	gang_name = "Powder Gangers"
+	gang_id = "PG"
+	acceptable_clothes = list(/obj/item/clothing/suit/pg,
+							/obj/item/clothing/under/costume/pg,
+							/obj/item/clothing/head/pg)
+	free_clothes = list(/obj/item/clothing/suit/pg,
+							/obj/item/clothing/under/costume/pg,
+							/obj/item/clothing/head/pg,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TODO: Add Objective"
+	antag_hud_name = "PowderGang"
+
+/datum/antagonist/gang/pg/check_gang_objective()
+	return TRUE
+
+/datum/antagonist/gang/driscoll
+	show_in_antagpanel = TRUE
+	name = "O'Driscoll Gangster"
+	roundend_category = "O'Driscoll's Gangsters"
+	gang_name = "O'Driscoll's Gang"
+	gang_id = "DB"
+	acceptable_clothes = list(/obj/item/clothing/suit/driscoll,
+							/obj/item/clothing/under/costume/driscoll,
+							/obj/item/clothing/mask/gas/driscoll,
+							/obj/item/clothing/shoes/cowboy)
+	free_clothes = list(/obj/item/clothing/suit/pg,
+							/obj/item/clothing/under/costume/pg,
+							/obj/item/clothing/mask/gas/driscoll,
+							/obj/item/clothing/shoes/cowboy,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TODO: Add Objective"
+	antag_hud_name = "Drill"
+
+/datum/antagonist/gang/driscoll/check_gang_objective()
+	return TRUE
+
+/datum/antagonist/gang/deckers
+	show_in_antagpanel = TRUE
+	name = "Decker"
+	roundend_category = "Deckers"
+	gang_name = "Deckers"
+	gang_id = "DK"
+	acceptable_clothes = list(/obj/item/clothing/suit/deckers,
+							/obj/item/clothing/under/costume/deckers,
+							/obj/item/clothing/head/deckers,
+							/obj/item/clothing/shoes/deckers)
+	free_clothes = list(/obj/item/clothing/suit/deckers,
+							/obj/item/clothing/under/costume/deckers,
+							/obj/item/clothing/head/deckers,
+							/obj/item/clothing/shoes/deckers,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TODO: Add Objective"
+	antag_hud_name = "Deckers"
+
+/datum/antagonist/gang/deckers/check_gang_objective()
+	return TRUE
+
+/datum/antagonist/gang/morningstar
+	show_in_antagpanel = TRUE
+	name = "Morningstar Member"
+	roundend_category = "Morningstar Member"
+	gang_name = "Morningstar"
+	gang_id = "MS"
+	acceptable_clothes = list(/obj/item/clothing/suit/morningstar,
+							/obj/item/clothing/under/costume/morningstar,
+							/obj/item/clothing/head/morningstar,
+							/obj/item/clothing/shoes/morningstar)
+	free_clothes = list(/obj/item/clothing/suit/morningstar,
+							/obj/item/clothing/under/costume/morningstar,
+							/obj/item/clothing/head/morningstar,
+							/obj/item/clothing/shoes/morningstar,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TODO: Add Objective"
+	antag_hud_name = "MorningStar"
+
+/datum/antagonist/gang/morningstar/check_gang_objective()
+	return TRUE
+
+/datum/antagonist/gang/saints
+	show_in_antagpanel = TRUE
+	name = "Third Street Saints Gangster"
+	roundend_category = "Third Street Saints Gangsters"
+	gang_name = "Third Street Saints"
+	gang_id = "TSS"
+	acceptable_clothes = list(/obj/item/clothing/suit/saints,
+							/obj/item/clothing/under/costume/saints,
+							/obj/item/clothing/head/saints,
+							/obj/item/clothing/shoes/saints)
+	free_clothes = list(/obj/item/clothing/suit/morningstar,
+							/obj/item/clothing/under/costume/morningstar,
+							/obj/item/clothing/head/morningstar,
+							/obj/item/clothing/shoes/morningstar,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TODO: Add Objective"
+	antag_hud_name = "TheSaints"
+
+/datum/antagonist/gang/saints/check_gang_objective()
+	return TRUE
+
+/datum/antagonist/gang/phantom
+	show_in_antagpanel = TRUE
+	name = "Phantom Thief"
+	roundend_category = "Phantom Thieves"
+	gang_name = "Phantom Thieves of Hearts"
+	gang_id = "PT"
+	acceptable_clothes = list(/obj/item/clothing/suit/phantom,
+							/obj/item/clothing/under/costume/phantom,
+							/obj/item/clothing/glasses/sunglasses/phantom,
+							/obj/item/clothing/shoes/phantom)
+	free_clothes = list(/obj/item/clothing/suit/phantom,
+							/obj/item/clothing/under/costume/phantom,
+							/obj/item/clothing/glasses/sunglasses/phantom,
+							/obj/item/clothing/shoes/phantom,
+						/obj/item/toy/crayon/spraycan)
+	gang_objective = "TODO: Add Objective"
+	antag_hud_name = "PhantomThieves"
+
+/datum/antagonist/gang/phantom/check_gang_objective()
 	return TRUE
