@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build and Publish to Registry
+      - name: Build and Publish Docker Image to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: tgstation/tgstation

@@ -3,7 +3,7 @@ on: [pull_request]
 jobs:
   docker_build:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Build Artifacts Docker Image
     steps:
       - uses: actions/checkout@v2
 
