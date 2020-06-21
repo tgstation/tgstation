@@ -6,7 +6,7 @@
 
 // .50AE (Desert Eagle)
 
-/obj/projectile/bullet/a50AE
+/obj/projectile/bullet/a50ae
 	name = ".50AE bullet"
 	damage = 60
 
@@ -19,6 +19,8 @@
 	ricochet_chance = 50
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
+	wound_bonus = -35
+	sharpness = TRUE
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -46,6 +48,7 @@
 	damage = 15
 	armour_penetration = -30
 	ricochets_max = 0
+	wound_bonus = 0
 	shrapnel_type = /obj/item/shrapnel/bullet/c38/dumdum
 
 /obj/projectile/bullet/c38/trac

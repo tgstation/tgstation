@@ -141,7 +141,7 @@
 	return ..()
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
-/mob/living/simple_animal/mouse/brown/Tom
+/mob/living/simple_animal/mouse/brown/tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."
 	response_help_continuous = "pets"

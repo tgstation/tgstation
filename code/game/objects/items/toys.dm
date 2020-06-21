@@ -384,7 +384,7 @@
 	resistance_flags = FLAMMABLE
 
 
-/obj/item/toy/windupToolbox
+/obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
 	icon_state = "his_grace"
@@ -396,7 +396,7 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	attack_verb = list("robusted")
 
-/obj/item/toy/windupToolbox/attack_self(mob/user)
+/obj/item/toy/windup_toolbox/attack_self(mob/user)
 	if(!active)
 		icon_state = "his_grace_awakened"
 		to_chat(user, "<span class='notice'>You wind up [src], it begins to rumble.</span>")
@@ -407,7 +407,7 @@
 	else
 		to_chat(user, "<span class='warning'>[src] is already active!</span>")
 
-/obj/item/toy/windupToolbox/proc/Rumble()
+/obj/item/toy/windup_toolbox/proc/Rumble()
 	var/static/list/transforms
 	if(!transforms)
 		var/matrix/M1 = matrix()
@@ -424,7 +424,7 @@
 	animate(transform=transforms[3], time=0.2)
 	animate(transform=transforms[4], time=0.3)
 
-/obj/item/toy/windupToolbox/proc/stopRumble()
+/obj/item/toy/windup_toolbox/proc/stopRumble()
 	icon_state = initial(icon_state)
 	active = FALSE
 	animate(src, transform=matrix())
@@ -454,6 +454,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "katana"
 	inhand_icon_state = "katana"
+	worn_icon_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -663,13 +664,13 @@
 /*
  * AI core prizes
  */
-/obj/item/toy/talking/AI
+/obj/item/toy/talking/ai
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/talking/AI/generate_messages()
+/obj/item/toy/talking/ai/generate_messages()
 	return list(generate_ion_law())
 
 /obj/item/toy/talking/codex_gigas
@@ -689,7 +690,7 @@
 		"<span class='notice'>You hear a soft click.</span>")
 
 /obj/item/toy/talking/codex_gigas/generate_messages()
-	var/datum/fakeDevil/devil = new
+	var/datum/fake_devil/devil = new
 	var/list/messages = list()
 	messages += "Some fun facts about: [devil.truename]"
 	messages += "[GLOB.lawlorify[LORE][devil.bane]]"
@@ -795,6 +796,7 @@
 	user.put_in_hands(H)
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
+	return H
 
 /obj/item/toy/cards/deck/update_icon_state()
 	switch(cards.len)
@@ -1053,7 +1055,6 @@
 	newobj.card_attack_verb = sourceobj.card_attack_verb
 	newobj.attack_verb = newobj.card_attack_verb
 
-
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
 */
@@ -1208,6 +1209,7 @@
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "dread_ipad"
+	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0

@@ -210,6 +210,8 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	resistance_flags = FIRE_PROOF
 	species = "polypore" // silence unit test
+	genes = list(/datum/plant_gene/trait/fire_resistance)
+	graft_gene = /datum/plant_gene/trait/fire_resistance
 
 /obj/item/seeds/lavaland/cactus
 	name = "pack of fruiting cactus seeds"

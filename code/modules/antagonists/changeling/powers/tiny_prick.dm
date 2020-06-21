@@ -211,7 +211,7 @@
 	target.blur_eyes(40)
 	return TRUE
 
-/datum/action/changeling/sting/LSD
+/datum/action/changeling/sting/lsd
 	name = "Hallucination Sting"
 	desc = "We cause mass terror to our victim."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
@@ -219,12 +219,12 @@
 	chemical_cost = 10
 	dna_cost = 1
 
-/datum/action/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
+/datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "LSD sting")
 	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
 	return TRUE
 
-/datum/action/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)
+/datum/action/changeling/sting/lsd/proc/hallucination_time(mob/living/carbon/target)
 	if(target)
 		target.hallucination = max(90, target.hallucination)
 
