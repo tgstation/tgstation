@@ -151,6 +151,8 @@
 	var/bare_wound_bonus = 0
 	///If the attacks from this are sharp
 	var/sharpness = FALSE
+	///Generic flags
+	var/simple_mob_flags = NONE
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
