@@ -166,7 +166,6 @@
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
 	icon_state = "penlight"
 	inhand_icon_state = ""
-	worn_hidden = FALSE
 	worn_icon_state = "pen"
 	flags_1 = CONDUCT_1
 	brightness_on = 2

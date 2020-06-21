@@ -1,7 +1,6 @@
 /obj/item/gun/magic/staff
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = /obj/item/ammo_casing/magic/nothing
-	worn_hidden = TRUE
 	worn_icon_state = null
 	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
@@ -15,7 +14,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"
 	inhand_icon_state = "staffofchange"
-	worn_hidden = FALSE
 
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
@@ -24,7 +22,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/animate
 	icon_state = "staffofanimation"
 	inhand_icon_state = "staffofanimation"
-	worn_hidden = FALSE
 
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
@@ -33,7 +30,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
-	worn_hidden = FALSE
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
@@ -45,7 +41,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/chaos
 	icon_state = "staffofchaos"
 	inhand_icon_state = "staffofchaos"
-	worn_hidden = FALSE
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
@@ -66,7 +61,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/door
 	icon_state = "staffofdoor"
 	inhand_icon_state = "staffofdoor"
-	worn_hidden = FALSE
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
@@ -78,7 +72,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/honk
 	icon_state = "honker"
 	inhand_icon_state = "honker"
-	worn_hidden = FALSE
 	max_charges = 4
 	recharge_rate = 8
 

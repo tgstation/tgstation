@@ -285,7 +285,6 @@
 /obj/item/nullrod/staff
 	icon_state = "godstaff-red"
 	inhand_icon_state = "godstaff-red"
-	worn_hidden = FALSE
 	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -311,7 +310,6 @@
 /obj/item/nullrod/claymore
 	icon_state = "claymore_gold"
 	inhand_icon_state = "claymore_gold"
-	worn_hidden = FALSE
 	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -332,7 +330,6 @@
 /obj/item/nullrod/claymore/darkblade
 	icon_state = "cultblade"
 	inhand_icon_state = "cultblade"
-	worn_hidden = TRUE
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
@@ -345,7 +342,6 @@
 /obj/item/nullrod/claymore/chainsaw_sword
 	icon_state = "chainswordon"
 	inhand_icon_state = "chainswordon"
-	worn_hidden = TRUE
 	name = "sacred chainsaw sword"
 	desc = "Suffer not a heretic to live."
 	slot_flags = ITEM_SLOT_BELT
@@ -357,7 +353,6 @@
 /obj/item/nullrod/claymore/glowing
 	icon_state = "swordon"
 	inhand_icon_state = "swordon"
-	worn_hidden = TRUE
 	name = "force weapon"
 	desc = "The blade glows with the power of faith. Or possibly a battery."
 	slot_flags = ITEM_SLOT_BELT
@@ -375,7 +370,6 @@
 	desc = "Once the harbinger of an interdimensional war, its sharpness fluctuates wildly."
 	icon_state = "multiverse"
 	inhand_icon_state = "multiverse"
-	worn_hidden = TRUE
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -388,7 +382,6 @@
 	icon = 'icons/obj/transforming_energy.dmi'
 	icon_state = "swordblue"
 	inhand_icon_state = "swordblue"
-	worn_hidden = TRUE
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
 	slot_flags = ITEM_SLOT_BELT
 
@@ -420,7 +413,6 @@
 /obj/item/nullrod/scythe
 	icon_state = "scythe1"
 	inhand_icon_state = "scythe1"
-	worn_hidden = FALSE
 	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
@@ -507,7 +499,6 @@
 /obj/item/nullrod/scythe/talking/chainsword
 	icon_state = "chainswordon"
 	inhand_icon_state = "chainswordon"
-	worn_hidden = TRUE
 	name = "possessed chainsaw sword"
 	desc = "Suffer not a heretic to live."
 	chaplain_spawnable = FALSE

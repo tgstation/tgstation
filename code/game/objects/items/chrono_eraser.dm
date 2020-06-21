@@ -6,7 +6,6 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronobackpack"
 	inhand_icon_state = "backpack"
-	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY

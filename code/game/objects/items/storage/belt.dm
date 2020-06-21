@@ -5,7 +5,6 @@
 	icon_state = "utilitybelt"
 	inhand_icon_state = "utility"
 	worn_icon_state = "utility"
-	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT

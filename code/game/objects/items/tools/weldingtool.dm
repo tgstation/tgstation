@@ -6,7 +6,6 @@
 	icon_state = "welder"
 	inhand_icon_state = "welder"
 	worn_icon_state = "welder"
-	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1

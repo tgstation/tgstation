@@ -7,7 +7,6 @@
 	icon_state = "hydro"
 	inhand_icon_state = "analyzer"
 	worn_icon_state = "analyzer"
-	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -132,7 +131,6 @@
 
 /obj/item/scythe
 	icon_state = "scythe0"
-	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "scythe"

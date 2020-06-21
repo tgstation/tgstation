@@ -1,7 +1,6 @@
 //spears
 /obj/item/spear
 	icon_state = "spearglass0"
-	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "spear"

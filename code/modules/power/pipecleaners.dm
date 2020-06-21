@@ -185,7 +185,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "pipecleaner"
 	inhand_icon_state = "pipecleaner"
 	worn_icon_state = "coil"
-	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_amount = MAXCOIL

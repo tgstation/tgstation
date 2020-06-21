@@ -12,7 +12,6 @@ LINEN BINS
 	righthand_file = 'icons/mob/inhands/misc/bedsheet_righthand.dmi'
 	icon_state = "sheetwhite"
 	inhand_icon_state = "sheetwhite"
-	worn_hidden = FALSE
 	slot_flags = ITEM_SLOT_NECK
 	layer = MOB_LAYER
 	throwforce = 0

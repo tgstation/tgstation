@@ -9,7 +9,6 @@
 	throwforce = 10
 	inhand_icon_state = "pickaxe"
 	worn_icon_state = "pickaxe"
-	worn_hidden = FALSE
 	worn_icon = 'icons/mob/clothing/belt.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'

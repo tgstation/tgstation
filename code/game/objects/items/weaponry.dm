@@ -55,7 +55,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
 	inhand_icon_state = "claymore"
-	worn_hidden = FALSE
 	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -211,7 +210,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
-	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -849,7 +847,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 //HF blade
 /obj/item/vibro_weapon
 	icon_state = "hfrequency0"
-	worn_hidden = FALSE
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "vibro sword"
