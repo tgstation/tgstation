@@ -19,7 +19,7 @@
 		to_chat(user, "As a police officer, you can't join this family. However, you pretend to accept it to keep your cover up.")
 		for(var/threads in team_to_use.free_clothes)
 			var/obj/O = new threads(get_turf(user))
-			O.armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 20, "acid" = 20, "wound" = 20)
+			O.armor = list("melee" = 7.5, "bullet" = 7.5, "laser" = 7.5, "energy" = 7.5, "bomb" = 7.5, "bio" = 7.5, "rad" = 7.5, "fire" = 7.5, "acid" = 7.5, "wound" = 7.5)
 		qdel(src)
 		return
 	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
@@ -42,7 +42,7 @@
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
 		var/obj/O = new threads(get_turf(user))
-		O.armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 20, "acid" = 20, "wound" = 20)
+		O.armor = list("melee" = 7.5, "bullet" = 7.5, "laser" = 7.5, "energy" = 7.5, "bomb" = 7.5, "bio" = 7.5, "rad" = 7.5, "fire" = 7.5, "acid" = 7.5, "wound" = 7.5)
 	if (!isnull(handler) && !handler.gangbangers.Find(user.mind)) // if we have a handler and they're not tracked by it
 		handler.gangbangers += user.mind
 	team_to_use.adjust_points(30)
