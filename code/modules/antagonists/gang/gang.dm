@@ -637,8 +637,8 @@
 							/obj/item/clothing/under/costume/driscoll,
 							/obj/item/clothing/mask/gas/driscoll,
 							/obj/item/clothing/shoes/cowboy)
-	free_clothes = list(/obj/item/clothing/suit/pg,
-							/obj/item/clothing/under/costume/pg,
+	free_clothes = list(/obj/item/clothing/suit/driscoll,
+							/obj/item/clothing/under/costume/driscoll,
 							/obj/item/clothing/mask/gas/driscoll,
 							/obj/item/clothing/shoes/cowboy,
 						/obj/item/toy/crayon/spraycan)
