@@ -227,11 +227,12 @@
 	if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
 		var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
 		for(var/rid in reagents_add)
-			var/reagent_overflow_mod = 1
+			var/reagent_overflow_mod = reagents_add[rid]
 			if(reagent_max > 1)
 				reagent_overflow_mod = (reagents_add[rid]/ reagent_max)
-			var/amount = max(1, round((grown_edible.provide_volume())*(potency/100) * reagents_add[rid] * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
-			var/list/data = null
+			var/edible_vol = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
+			var/amount = max(1, round((edible_vol)*(potency/100) * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
+			var/list/data
 			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
 				data = list("blood_type" = "O-")
 			if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
