@@ -133,3 +133,30 @@
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5
+	var/list/allowed_tank_containers = list( //This is pretty much just so we avoid attacking every random pipe and whatever on the same tile
+		/obj/machinery/power/rad_collector,
+		/obj/machinery/portable_atmospherics
+		)
+
+/obj/item/crowbar/cyborg/pre_attack(atom/A, mob/user, params) //Special snowflake handling for loading tanks into machines
+	if(user.a_intent == "harm")
+		return ..()
+	if(istype(A, /obj/item/tank))
+		var/obj/item/tank/tank = A
+		var/atom/tankloc = tank.loc
+		var/turf/targetturf = get_step(tank, get_dir(user, tank))
+
+		for(var/obj/machinery/machine in targetturf.contents)
+			var/matched = FALSE
+			for(var/container in allowed_tank_containers)
+				if(istype(machine, container))
+					matched = TRUE
+					break
+			if(!matched)
+				continue
+
+			tank.melee_attack_chain(user, machine, params)
+			if(tankloc != tank.loc) //if it's been moved, we should stop
+				playsound(user, 'sound/items/jaws_pry.ogg', 50)
+				to_chat(user, "<span class='notice'>You carefully leverage the [tank] into [machine]</span>")
+				return TRUE

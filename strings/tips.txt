@@ -86,6 +86,7 @@ As a Cyborg, you are impervious to fires and heat. If you are rogue, you can rel
 As a Cyborg, you are extremely vulnerable to EMPs as EMPs both stun you and damage you. The ion rifle in the armory or a traitor with an EMP kit can kill you in seconds.
 As a Service Cyborg, your spray can knocks people down. However, it is blocked by masks and glasses.
 As an Engineering Cyborg, you can attach air alarm/fire alarm/APC frames to walls by placing them on the floor and using a screwdriver on them.
+As an Engineering Cyborg, you can use your crowbar to insert air tanks into canisters or radiation collectors. You can also use it to pull tanks from a dispenser at random.
 As a Medical Cyborg, you can fully perform surgery and even augment people.
 As a Janitor Cyborg, you are the bane of all slaughter demons and even Bubblegum himself. Cleaning up blood stains will severely gimp them.
 As the Chief Engineer, you can rename areas or create entirely new ones using your station blueprints.

@@ -53,6 +53,15 @@
 	else if(I.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, I, time = 20)
 		return
+	else if(I.tool_behaviour == TOOL_CROWBAR)
+		if(!contents.len)
+			to_chat(user, "<span class='warn'>The [src] is empty!</span>")
+			return
+		var/obj/item/tank/tank = pick(contents)
+		tank.forceMove(get_turf(src))
+		playsound(user, 'sound/items/crowbar.ogg', 50)
+		update_icon()
+		return
 	else if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='notice'>[I] does not fit into [src].</span>")
 		return
