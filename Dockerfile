@@ -33,7 +33,9 @@ FROM dm_base as build
 
 COPY . .
 
-RUN DreamMaker -max_errors 0 tgstation.dme && tools/deploy.sh /deploy
+RUN DreamMaker -max_errors 0 tgstation.dme \
+    && tools/deploy.sh /deploy \
+	&& rm /deploy/*.dll
 
 FROM dm_base
 
