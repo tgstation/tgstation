@@ -31,45 +31,6 @@
 	/// How much flow we've already sutured
 	var/sutured
 
-	/// If we're parented to an item stuck inside someone, store it here
-	var/obj/item/embedded_shrapnel
-
-/*
-// disabled pending me thinking of a way that embedded shrapnel having their own wounds is fun and workable
-/datum/wound/pierce/get_examine_description(mob/user)
-	if(!embedded_shrapnel && !limb.current_gauze)
-		return ..()
-
-	var/msg = "[victim.p_their(TRUE)] [limb.name]"
-	var/extra_desc
-
-	if(embedded_shrapnel)
-		var/how_bad = "bleeding"
-		switch(severity)
-			if(WOUND_SEVERITY_MODERATE)
-				how_bad = "small"
-			if(WOUND_SEVERITY_SEVERE)
-				how_bad = "streaming"
-			if(WOUND_SEVERITY_CRITICAL)
-				how_bad = "gushing"
-		extra_desc = " has a [how_bad] puncture wound, plugged by an embedded [icon2html(embedded_shrapnel, user)] [embedded_shrapnel.name]"
-	else if(limb.current_gauze)
-		var/bandage_condition = "decent"
-		switch(limb.current_gauze.absorption_capacity)
-			if(0 to 1.25)
-				bandage_condition = "nearly ruined"
-			if(1.25 to 2.75)
-				bandage_condition = "badly worn"
-			if(2.75 to 4)
-				bandage_condition = "slightly bloodied"
-			if(4 to INFINITY)
-				bandage_condition = "clean"
-		extra_desc = " is wrapped with [bandage_condition] [limb.current_gauze.name]"
-
-	msg += "<B>[msg][extra_desc]!</B>"
-	return msg
-*/
-
 /datum/wound/pierce/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
 		blood_flow += 0.05 * wounding_dmg
@@ -94,8 +55,6 @@
 	if(blood_flow > highest_flow)
 		highest_flow = blood_flow
 
-
-/* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
 
 /datum/wound/pierce/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/suture))
@@ -124,14 +83,6 @@
 		try_treating(I, user)
 	else if(demotes_to)
 		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
-
-
-/datum/wound/pierce/proc/embed_pain(bleed_increase)
-	if(!bleed_increase || !embedded_shrapnel || !(embedded_shrapnel in limb.embedded_objects))
-		embedded_shrapnel = null
-		return
-
-	blood_flow += bleed_increase
 
 /datum/wound/pierce/moderate
 	name = "Minor Breakage"

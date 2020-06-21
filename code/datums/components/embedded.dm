@@ -23,11 +23,6 @@
 
 */
 
-/// Ripping an object out by hand with at least a severe piercing wound has (this * severity value)% chance to cause a slash wound one level down
-#define EMBED_WOUND_RIP_COEFF 25
-/// Same as above, but for using a hemostat to directly remove the embed without proper surgery
-#define EMBED_WOUND_HEMO_COEFF 15
-
 /datum/component/embedded
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	var/obj/item/bodypart/limb
@@ -45,9 +40,6 @@
 	var/jostle_chance
 	var/jostle_pain_mult
 	var/pain_stam_pct
-
-	/// If we generate a piercing wound on our target, we'll delete this or exchange it for a slashing wound depending on how this is pulled out
-	var/datum/wound/pierce/stuck_wound
 
 	///if both our pain multiplier and jostle pain multiplier are 0, we're harmless and can omit most of the damage related stuff
 	var/harmful
@@ -92,8 +84,6 @@
 	START_PROCESSING(SSdcs, src)
 	var/mob/living/carbon/victim = parent
 
-
-
 	limb.embedded_objects |= weapon // on the inside... on the inside...
 	weapon.forceMove(victim)
 	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/weaponDeleted)
@@ -107,8 +97,6 @@
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		damage += weapon.w_class * impact_pain_mult
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
-		RegisterSignal(parent, COMSIG_CARBON_GAIN_WOUND, .proc/checkAddedWound)
-		addtimer(CALLBACK(src, .proc/clearWoundCheck), 2)
 
 	if(damage > 0)
 		var/armor = victim.run_armor_check(limb.body_zone, "bullet", "Your armor has protected your [limb.name].", "Your armor has softened hit to your [limb.name].",I.armour_penetration)
@@ -129,10 +117,9 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, .proc/ripOut)
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, .proc/safeRemove)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/checkRipping)
 
 /datum/component/embedded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL))
 
 /datum/component/embedded/process()
 	var/mob/living/carbon/victim = parent
@@ -153,12 +140,7 @@
 
 	if(harmful && prob(chance))
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=TRUE, wound_bonus = CANT_WOUND)
-		var/wound_message
-
-		if(stuck_wound)
-			stuck_wound.embed_pain(1-pain_stam_pct)
-			wound_message = ", causing more internal bleeding"
-		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] hurts[wound_message]!</span>")
+		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] hurts!</span>")
 
 	if(prob(fall_chance))
 		fallOut()
@@ -167,59 +149,6 @@
 ////////////BEHAVIOR PROCS//////////////
 ////////////////////////////////////////
 
-
-/datum/component/embedded/proc/checkAddedWound(mob/living/carbon/victim, datum/wound/pierce/W, obj/item/bodypart/BP)
-	if(BP != limb || !istype(W))
-		return
-	// we'll just assume that if we gained a piercing wound at roughly this point that it's from this
-	stuck_wound = W
-	stuck_wound.embedded_shrapnel = weapon
-	UnregisterSignal(parent, COMSIG_CARBON_GAIN_WOUND)
-	RegisterSignal(parent, COMSIG_CARBON_LOSE_WOUND, .proc/removeWoundSignal)
-
-/datum/component/embedded/proc/removeWoundSignal(mob/living/carbon/victim, datum/wound/W, obj/item/bodypart/L)
-	if(parent && stuck_wound && stuck_wound == W)
-		stuck_wound = null
-		UnregisterSignal(parent, COMSIG_CARBON_GAIN_WOUND)
-
-/datum/component/embedded/proc/clearWoundCheck(mob/living/carbon/victim, datum/wound/W, obj/item/bodypart/L)
-	if(parent)
-		UnregisterSignal(parent, COMSIG_CARBON_GAIN_WOUND)
-
-/datum/component/embedded/proc/checkRipping(mob/living/carbon/victim, obj/item/I, mob/user, params)
-	if(user == victim || I.tool_behaviour != TOOL_HEMOSTAT || user.a_intent != INTENT_HELP)
-		return
-
-	if(user.grab_state < GRAB_AGGRESSIVE || user.pulling != victim)
-		return
-
-	user.visible_message("<span class='danger'>[user] begins ripping [weapon] out of [victim]'s [limb.name].</span>", "<span class='warning'>You begin ripping [weapon] out of [victim]'s [limb.name]...</span>", ignored_mobs=victim)
-	to_chat(victim, "<span class='userdanger'>[user] begins ripping [weapon] out of your [limb.name]!</span>")
-	INVOKE_ASYNC(src, .proc/hemoRip, victim, I, user, params)
-	return COMPONENT_NO_AFTERATTACK
-
-/datum/component/embedded/proc/hemoRip(mob/living/carbon/victim, obj/item/I, mob/user, params)
-	if(!do_after(user, rip_time * 0.75, target = victim))
-		return
-	if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
-		qdel(src)
-		return
-
-	if(harmful)
-		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND) //It hurts to rip it out, get surgery you dingus.
-		victim.emote("scream")
-		if(stuck_wound && stuck_wound.severity >= WOUND_SEVERITY_SEVERE && prob(stuck_wound.severity * EMBED_WOUND_HEMO_COEFF))
-			var/slash_severity = /datum/wound/slash/moderate
-			if(stuck_wound.severity == WOUND_SEVERITY_CRITICAL)
-				slash_severity = new /datum/wound/slash/severe
-			limb.force_wound_upwards(slash_severity)
-
-	user.visible_message("<span class='danger'>[user] tears [weapon] out of [victim]'s [limb.name].</span>", "<span class='danger'>You tear [weapon] out of [victim]'s [limb.name]!</span>", ignored_mobs=victim)
-	to_chat(victim, "<span class='userdanger'>[user] tears [weapon] out of your [limb.name]!</span>")
-
-	safeRemove()
-	return COMPONENT_NO_AFTERATTACK
 
 /// Called every time a carbon with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the carbon is crawling or walking.
 /datum/component/embedded/proc/jostleCheck()
@@ -230,7 +159,7 @@
 
 	if(harmful && prob(chance))
 		var/damage = weapon.w_class * jostle_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=TRUE, wound_bonus = CANT_WOUND)
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] jostles and stings!</span>")
 
 
@@ -240,35 +169,28 @@
 
 	if(harmful)
 		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=TRUE, wound_bonus = CANT_WOUND)
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) // can wound
 
 	victim.visible_message("<span class='danger'>[weapon] falls [harmful ? "out" : "off"] of [victim.name]'s [limb.name]!</span>", "<span class='userdanger'>[weapon] falls [harmful ? "out" : "off"] of your [limb.name]!</span>")
 	safeRemove()
+
 
 /// Called when a carbon with an object embedded/stuck to them inspects themselves and clicks the appropriate link to begin ripping the item out. This handles the ripping attempt, descriptors, and dealing damage, then calls safe_remove()
 /datum/component/embedded/proc/ripOut(datum/source, obj/item/I, obj/item/bodypart/limb)
 	if(I != weapon || src.limb != limb)
 		return
-
 	var/mob/living/carbon/victim = parent
 	var/time_taken = rip_time * weapon.w_class
 	victim.visible_message("<span class='warning'>[victim] attempts to remove [weapon] from [victim.p_their()] [limb.name].</span>","<span class='notice'>You attempt to remove [weapon] from your [limb.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
-
 	if(!do_after(victim, time_taken, target = victim))
 		return
 	if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
 		qdel(src)
 		return
-
 	if(harmful)
 		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=TRUE) //It hurts to rip it out, get surgery you dingus.
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus.
 		victim.emote("scream")
-		if(stuck_wound && stuck_wound.severity >= WOUND_SEVERITY_SEVERE && prob(stuck_wound.severity * EMBED_WOUND_RIP_COEFF))
-			var/slash_severity = /datum/wound/slash/moderate
-			if(stuck_wound.severity == WOUND_SEVERITY_CRITICAL)
-				slash_severity = new /datum/wound/slash/severe
-			limb.force_wound_upwards(slash_severity)
 
 	victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
 	safeRemove(TRUE)
@@ -298,6 +220,3 @@
 		to_chat(victim, "<span class='userdanger'>\The [weapon] that was embedded in your [limb.name] disappears!</span>")
 
 	qdel(src)
-
-#undef EMBED_WOUND_RIP_COEFF
-#undef EMBED_WOUND_HEMO_COEFF
