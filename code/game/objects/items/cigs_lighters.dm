@@ -39,7 +39,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/match/proc/matchignite()
 	if(!lit && !burnt)
-		playsound(src, "sound/items/match_strike.ogg", 15, TRUE)
+		playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
 		lit = TRUE
 		icon_state = "match_lit"
 		damtype = "fire"
