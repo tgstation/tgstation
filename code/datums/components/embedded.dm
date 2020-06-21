@@ -108,7 +108,7 @@
 		damage += weapon.w_class * impact_pain_mult
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 		RegisterSignal(parent, COMSIG_CARBON_GAIN_WOUND, .proc/checkAddedWound)
-		addtimer(CALLBACK(src, .proc/clearWoundCheck), 0.5 SECONDS)
+		addtimer(CALLBACK(src, .proc/clearWoundCheck), 2)
 
 	if(damage > 0)
 		var/armor = victim.run_armor_check(limb.body_zone, "bullet", "Your armor has protected your [limb.name].", "Your armor has softened hit to your [limb.name].",I.armour_penetration)
@@ -173,7 +173,7 @@
 		return
 	// we'll just assume that if we gained a piercing wound at roughly this point that it's from this
 	stuck_wound = W
-	stuck_wound.stuck(weapon)
+	stuck_wound.embedded_shrapnel = weapon
 	UnregisterSignal(parent, COMSIG_CARBON_GAIN_WOUND)
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_WOUND, .proc/removeWoundSignal)
 

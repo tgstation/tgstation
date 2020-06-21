@@ -23,11 +23,11 @@
 
 /obj/item/shrapnel/bullet/c38 // .38 round
 	name = "\improper .38 bullet"
-	embedding = list(embed_chance=30, fall_chance=7, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=10)
+	embedding = list(embed_chance=50, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=10)
 
 /obj/item/shrapnel/bullet/c38/dumdum // .38 DumDum round
 	name = "\improper .38 DumDum bullet"
-	embedding = list(embed_chance=70, fall_chance=7, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	embedding = list(embed_chance=70, fall_chance=3, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 
 /obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"

@@ -20,6 +20,7 @@
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 	wound_bonus = -5
+	shrapnel_type = /obj/item/shrapnel/bullet/c38
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"

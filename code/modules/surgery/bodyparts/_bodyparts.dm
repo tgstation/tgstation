@@ -87,6 +87,8 @@
 	var/last_maxed
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
+	/// If we have a gauze wrapping currently applied (not including splints)
+	var/obj/item/stack/current_gauze
 
 
 /obj/item/bodypart/examine(mob/user)
@@ -293,14 +295,15 @@
 					replaced_wound = existing_wound
 
 		if(initial(possible_wound.threshold_minimum) < injury_roll)
+			var/datum/wound/new_wound
 			if(replaced_wound)
-				var/datum/wound/new_wound = replaced_wound.replace_wound(possible_wound)
+				new_wound = replaced_wound.replace_wound(possible_wound)
 				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll)
 			else
-				var/datum/wound/new_wound = new possible_wound
+				new_wound = new possible_wound
 				new_wound.apply_wound(src)
 				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll)
-			return
+			return new_wound
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
 /obj/item/bodypart/proc/force_wound_upwards(specific_woundtype, smited = FALSE)
@@ -692,3 +695,14 @@
 		mangled_state = BODYPART_MANGLED_SKIN
 
 	return mangled_state
+
+/obj/item/bodypart/proc/apply_gauze(obj/item/I)
+	QDEL_NULL(current_gauze)
+	current_gauze = new I.type(src)
+	current_gauze.amount = 1
+	I.use(1)
+
+/obj/item/bodypart/proc/remove_gauze()
+
+	victim.visible_message("<span class='danger'>Pus soaks through \the [limb.current_gauze] on [victim]'s [limb.name].</span>", "<span class='warning'>Pus soaks through \the [limb.current_gauze] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	QDEL_NULL(current_gauze)

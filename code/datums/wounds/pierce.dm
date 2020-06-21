@@ -32,28 +32,41 @@
 	/// How much flow we've already sutured
 	var/sutured
 
-	/// The current bandage we have for this wound (maybe move bandages to the limb?)
-	var/obj/item/stack/current_bandage
-
 	/// If we're parented to an item stuck inside someone, store it here
 	var/obj/item/embedded_shrapnel
 
 /datum/wound/pierce/get_examine_description(mob/user)
-	if(!current_bandage)
+	if(!embedded_shrapnel && !limb.current_gauze)
 		return ..()
 
-	var/bandage_condition = ""
-	// how much life we have left in these bandages
-	switch(current_bandage.absorption_capacity)
-		if(0 to 1.25)
-			bandage_condition = "nearly ruined "
-		if(1.25 to 2.75)
-			bandage_condition = "badly worn "
-		if(2.75 to 4)
-			bandage_condition = "slightly bloodied "
-		if(4 to INFINITY)
-			bandage_condition = "clean "
-	return "<B>The cuts on [victim.p_their()] [limb.name] are wrapped with [bandage_condition] [current_bandage.name]!</B>"
+	var/msg = "[victim.p_their(TRUE)] [limb.name]"
+	var/extra_desc
+
+	if(embedded_shrapnel)
+		var/how_bad = "bleeding"
+		switch(severity)
+			if(WOUND_SEVERITY_MODERATE)
+				how_bad = "small"
+			if(WOUND_SEVERITY_SEVERE)
+				how_bad = "streaming"
+			if(WOUND_SEVERITY_CRITICAL)
+				how_bad = "gushing"
+		extra_desc = " has a [how_bad] puncture wound, plugged by an embedded [icon2html(embedded_shrapnel, user)] [embedded_shrapnel.name]"
+	else if(limb.current_gauze)
+		var/bandage_condition = "decent"
+		switch(limb.current_gauze.absorption_capacity)
+			if(0 to 1.25)
+				bandage_condition = "nearly ruined"
+			if(1.25 to 2.75)
+				bandage_condition = "badly worn"
+			if(2.75 to 4)
+				bandage_condition = "slightly bloodied"
+			if(4 to INFINITY)
+				bandage_condition = "clean"
+		extra_desc = " is wrapped with [bandage_condition] [limb.current_gauze.name]"
+
+	msg += "<B>[msg][extra_desc]!</B>"
+	return msg
 
 /datum/wound/pierce/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
@@ -67,14 +80,14 @@
 	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulant))
 		blood_flow -= 0.25
 
-	if(current_bandage)
+	if(limb.current_gauze)
 		if(clot_rate > 0)
 			blood_flow -= clot_rate
-		blood_flow -= current_bandage.absorption_rate
-		current_bandage.absorption_capacity -= current_bandage.absorption_rate
-		if(current_bandage.absorption_capacity < 0)
-			victim.visible_message("<span class='danger'>Blood soaks through \the [current_bandage] on [victim]'s [limb.name].</span>", "<span class='warning'>Blood soaks through \the [current_bandage] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
-			QDEL_NULL(current_bandage)
+		blood_flow -= limb.current_gauze.absorption_rate
+		limb.current_gauze.absorption_capacity -= limb.current_gauze.absorption_rate
+		if(limb.current_gauze.absorption_capacity < 0)
+			victim.visible_message("<span class='danger'>Blood soaks through \the [limb.current_gauze] on [victim]'s [limb.name].</span>", "<span class='warning'>Blood soaks through \the [limb.current_gauze] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+			QDEL_NULL(limb.current_gauze)
 			treat_priority = TRUE
 	//else
 		//blood_flow -= clot_rate
@@ -82,95 +95,20 @@
 	if(blood_flow > highest_flow)
 		highest_flow = blood_flow
 
-	if(blood_flow < minimum_flow)
-		if(demotes_to)
-			replace_wound(demotes_to)
-		else
-			to_chat(victim, "<span class='green'>The cut on your [limb.name] has stopped bleeding!</span>")
-			qdel(src)
 
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
 
 /datum/wound/pierce/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/gun/energy/laser))
-		las_cauterize(I, user)
-	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature() > 300)
-		tool_cauterize(I, user)
-	else if(istype(I, /obj/item/stack/medical/gauze))
+	if(istype(I, /obj/item/stack/medical/gauze))
 		bandage(I, user)
 	else if(istype(I, /obj/item/stack/medical/suture))
 		suture(I, user)
 
-/datum/wound/pierce/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
-		return FALSE
-
-	if(!isfelinid(user))
-		return FALSE
-
-	lick_wounds(user)
-	return TRUE
-
-/// if a felinid is licking this cut to reduce bleeding
-/datum/wound/pierce/proc/lick_wounds(mob/living/carbon/human/user)
-	if(INTERACTING_WITH(user, victim))
-		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
-		return
-
-	user.visible_message("<span class='notice'>[user] begins licking the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You begin licking the wounds on [victim]'s [limb.name]...</span>", ignored_mobs=victim)
-	to_chat(victim, "<span class='notice'>[user] begins to lick the wounds on your [limb.name].</span")
-	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
-		return
-
-	user.visible_message("<span class='notice'>[user] licks the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You lick some of the wounds on [victim]'s [limb.name]</span>", ignored_mobs=victim)
-	to_chat(victim, "<span class='green'>[user] licks the wounds on your [limb.name]!</span")
-	blood_flow -= 0.5
-
-	if(blood_flow > minimum_flow)
-		try_handling(user)
-	else if(demotes_to)
-		to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
 
 /datum/wound/pierce/on_xadone(power)
 	. = ..()
 	blood_flow -= 0.03 * power // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
-/// If someone's putting a laser gun up to our cut to cauterize it
-/datum/wound/pierce/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
-	var/self_penalty_mult = (user == victim ? 1.25 : 1)
-	user.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim]'s [limb.name]...</span>", "<span class='userdanger'>You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
-	if(!do_after(user, base_treat_time  * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
-		return
-	var/damage = lasgun.chambered.BB.damage
-	lasgun.chambered.BB.wound_bonus -= 30
-	lasgun.chambered.BB.damage *= self_penalty_mult
-	if(!lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone))
-		return
-	victim.emote("scream")
-	blood_flow -= damage / (5 * self_penalty_mult) // 20 / 5 = 4 bloodflow removed, p good
-	cauterized += damage / (5 * self_penalty_mult)
-	victim.visible_message("<span class='warning'>The cuts on [victim]'s [limb.name] scar over!</span>")
-
-/// If someone is using either a cautery tool or something with heat to cauterize this cut
-/datum/wound/pierce/proc/tool_cauterize(obj/item/I, mob/user)
-	var/self_penalty_mult = (user == victim ? 1.5 : 1)
-	user.visible_message("<span class='danger'>[user] begins cauterizing [victim]'s [limb.name] with [I]...</span>", "<span class='danger'>You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
-	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER) || 1
-	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
-		return
-
-	user.visible_message("<span class='green'>[user] cauterizes some of the bleeding on [victim].</span>", "<span class='green'>You cauterize some of the bleeding on [victim].</span>")
-	limb.receive_damage(burn = 2 + severity, wound_bonus = CANT_WOUND)
-	if(prob(30))
-		victim.emote("scream")
-	var/blood_cauterized = (0.6 / self_penalty_mult)
-	blood_flow -= blood_cauterized
-	cauterized += blood_cauterized
-
-	if(blood_flow > minimum_flow)
-		try_treating(I, user)
-	else if(demotes_to)
-		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
 
 /// If someone is using a suture to close this cut
 /datum/wound/pierce/proc/suture(obj/item/stack/medical/suture/I, mob/user)
@@ -192,9 +130,9 @@
 
 /// If someone is using gauze on this cut
 /datum/wound/pierce/proc/bandage(obj/item/stack/I, mob/user)
-	if(current_bandage)
-		if(current_bandage.absorption_capacity > I.absorption_capacity + 1)
-			to_chat(user, "<span class='warning'>The [current_bandage] on [victim]'s [limb.name] is still in better condition than your [I.name]!</span>")
+	if(limb.current_gauze)
+		if(limb.current_gauze.absorption_capacity > I.absorption_capacity + 1)
+			to_chat(user, "<span class='warning'>The [limb.current_gauze] on [victim]'s [limb.name] is still in better condition than your [I.name]!</span>")
 			return
 		else
 			user.visible_message("<span class='warning'>[user] begins rewrapping the cuts on [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>You begin rewrapping the cuts on [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
@@ -205,11 +143,12 @@
 		return
 
 	user.visible_message("<span class='green'>[user] applies [I] to [victim]'s [limb.name].</span>", "<span class='green'>You bandage some of the bleeding on [user == victim ? "yourself" : "[victim]"].</span>")
-	QDEL_NULL(current_bandage)
-	current_bandage = new I.type(limb)
-	current_bandage.amount = 1
+	QDEL_NULL(limb.current_gauze)
+	limb.current_gauze = new I.type(limb)
+	limb.current_gauze.amount = 1
 	treat_priority = FALSE
 	I.use(1)
+
 
 /datum/wound/pierce/proc/embed_pain(bleed_increase)
 	if(!bleed_increase || !embedded_shrapnel || !(embedded_shrapnel in limb.embedded_objects))
@@ -219,11 +158,11 @@
 	blood_flow += bleed_increase
 
 /datum/wound/pierce/moderate
-	name = "Skin Breakage"
+	name = "Minor Breakage"
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
 	treat_text = "Treat afffected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // lol shove your bruised arm out into space, ss13 logic
-	examine_desc = "has a dark bruise, slowly oozing blood"
-	occur_text = "spurts out a thin stream of blood from the impact"
+	examine_desc = "has a small, circular hole, gently bleeding"
+	occur_text = "spurts out a thin stream of blood"
 	sound_effect = 'sound/effects/blood1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 2
@@ -240,7 +179,7 @@
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and organ damage."
 	treat_text = "Close sources of internal bleeding, then repair punctures in skin."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
-	occur_text = "looses a violent spray of blood and flesh through both sides of the impact site"
+	occur_text = "looses a violent spray of blood, revealing a pierced wound"
 	sound_effect = 'sound/effects/blood2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 3.25

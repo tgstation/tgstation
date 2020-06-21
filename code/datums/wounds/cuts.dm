@@ -7,7 +7,7 @@
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
 	wound_type = WOUND_LIST_SLASH
-	treatable_by = list(/obj/item/stack/medical/suture, /obj/item/stack/medical/gauze)
+	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY
 	treat_priority = TRUE
@@ -32,8 +32,6 @@
 	/// How much flow we've already sutured
 	var/sutured
 
-	/// The current bandage we have for this wound (maybe move bandages to the limb?)
-	var/obj/item/stack/current_bandage
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
@@ -44,9 +42,6 @@
 		if(old_wound.severity > severity && old_wound.highest_scar)
 			highest_scar = old_wound.highest_scar
 			old_wound.highest_scar = null
-		if(old_wound.current_bandage)
-			current_bandage = old_wound.current_bandage
-			old_wound.current_bandage = null
 
 	if(!highest_scar)
 		highest_scar = new
@@ -59,12 +54,12 @@
 	return ..()
 
 /datum/wound/slash/get_examine_description(mob/user)
-	if(!current_bandage)
+	if(!limb.current_gauze)
 		return ..()
 
 	var/bandage_condition = ""
 	// how much life we have left in these bandages
-	switch(current_bandage.absorption_capacity)
+	switch(limb.current_gauze.absorption_capacity)
 		if(0 to 1.25)
 			bandage_condition = "nearly ruined "
 		if(1.25 to 2.75)
@@ -73,7 +68,7 @@
 			bandage_condition = "slightly bloodied "
 		if(4 to INFINITY)
 			bandage_condition = "clean "
-	return "<B>The cuts on [victim.p_their()] [limb.name] are wrapped with [bandage_condition] [current_bandage.name]!</B>"
+	return "<B>The cuts on [victim.p_their()] [limb.name] are wrapped with [bandage_condition] [limb.current_gauze.name]!</B>"
 
 /datum/wound/slash/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
@@ -87,14 +82,14 @@
 	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulant))
 		blood_flow -= 0.25
 
-	if(current_bandage)
+	if(limb.current_gauze)
 		if(clot_rate > 0)
 			blood_flow -= clot_rate
-		blood_flow -= current_bandage.absorption_rate
-		current_bandage.absorption_capacity -= current_bandage.absorption_rate
-		if(current_bandage.absorption_capacity < 0)
-			victim.visible_message("<span class='danger'>Blood soaks through \the [current_bandage] on [victim]'s [limb.name].</span>", "<span class='warning'>Blood soaks through \the [current_bandage] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
-			QDEL_NULL(current_bandage)
+		blood_flow -= limb.current_gauze.absorption_rate
+		limb.current_gauze.absorption_capacity -= limb.current_gauze.absorption_rate
+		if(limb.current_gauze.absorption_capacity < 0)
+			victim.visible_message("<span class='danger'>Blood soaks through \the [limb.current_gauze] on [victim]'s [limb.name].</span>", "<span class='warning'>Blood soaks through \the [limb.current_gauze] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+			QDEL_NULL(limb.current_gauze)
 			treat_priority = TRUE
 	else
 		blood_flow -= clot_rate
@@ -120,8 +115,6 @@
 		las_cauterize(I, user)
 	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature() > 300)
 		tool_cauterize(I, user)
-	else if(istype(I, /obj/item/stack/medical/gauze))
-		bandage(I, user)
 	else if(istype(I, /obj/item/stack/medical/suture))
 		suture(I, user)
 
@@ -213,27 +206,6 @@
 		try_treating(I, user)
 	else if(demotes_to)
 		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
-
-/// If someone is using gauze on this cut
-/datum/wound/slash/proc/bandage(obj/item/stack/I, mob/user)
-	if(current_bandage)
-		if(current_bandage.absorption_capacity > I.absorption_capacity + 1)
-			to_chat(user, "<span class='warning'>The [current_bandage] on [victim]'s [limb.name] is still in better condition than your [I.name]!</span>")
-			return
-		else
-			user.visible_message("<span class='warning'>[user] begins rewrapping the cuts on [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>You begin rewrapping the cuts on [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
-	else
-		user.visible_message("<span class='warning'>[user] begins wrapping the cuts on [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>You begin wrapping the cuts on [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
-	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER) || 1
-	if(!do_after(user, base_treat_time * time_mod, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
-		return
-
-	user.visible_message("<span class='green'>[user] applies [I] to [victim]'s [limb.name].</span>", "<span class='green'>You bandage some of the bleeding on [user == victim ? "yourself" : "[victim]"].</span>")
-	QDEL_NULL(current_bandage)
-	current_bandage = new I.type(limb)
-	current_bandage.amount = 1
-	treat_priority = FALSE
-	I.use(1)
 
 
 /datum/wound/slash/moderate

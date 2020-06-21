@@ -132,8 +132,23 @@
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/M, mob/user, silent)
 	var/obj/item/bodypart/limb = M.get_bodypart(check_zone(user.zone_selected))
-	if(limb)
-		to_chat(user, "<span class='warning'>There's no bleeding on [user==M ? "your" : "[M]'s"] [limb.name]</span>")
+	if(!limb)
+		to_chat(user, "<span class='notice'>There's nothing there to bandage!</span>")
+		return
+	else if(!LAZYLEN(limb.wounds))
+		to_chat(user, "<span class='notice'>There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.name]!</span>") // good problem to have imo
+		return
+	else if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 0.8 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
+		to_chat(user, "<span class='warning'>The bandage currently on [user==M ? "your" : "[M]'s"] [limb.name] is still in good condition!</span>")
+		return
+
+	user.visible_message("<span class='warning'>[user] begins rewrapping the wounds on [M]'s [limb.name] with [src]...</span>", "<span class='warning'>You begin rewrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.name] with [src]...</span>")
+	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER) || 1
+	if(!do_after(user, (user == M ? self_delay : other_delay) * time_mod, target=M))
+		return
+
+	user.visible_message("<span class='green'>[user] applies [src] to [M]'s [limb.name].</span>", "<span class='green'>You bandage the wounds on [user == M ? "yourself" : "[M]'s"] [limb.name].</span>")
+	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
 	amount = 12

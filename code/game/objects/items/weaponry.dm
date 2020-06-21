@@ -296,7 +296,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	armour_penetration = 40
 
 	w_class = WEIGHT_CLASS_SMALL
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
 
