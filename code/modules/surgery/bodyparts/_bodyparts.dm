@@ -217,27 +217,35 @@
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
 
+	// what kind of wounds we're gonna roll for, take the greater between brute and burn, then if it's brute, we subdivide based on sharpness
 	var/wounding_type = (brute > burn ? WOUND_BLUNT : WOUND_BURN)
 	var/wounding_dmg = max(brute, burn)
 
 	var/mangled_state = get_mangled_state()
 
+	// we only care about dismemberment stuff/sharpness for blunt damage
 	if(wounding_type == WOUND_BLUNT)
-		if(mangled_state == BODYPART_MANGLED_BOTH)
-			try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
-		else if(mangled_state == BODYPART_MANGLED_SKIN && sharpness)
-			playsound(src, "sound/effects/crackandbleed.ogg", 100)
-			wounding_type = WOUND_BLUNT
-			wounding_dmg *= 0.75
-		else if(sharpness == SHARP_EDGED)
+		// first we check the sharpness var to see if we're slashing or piercing rather than plain blunt
+		if(sharpness == SHARP_EDGED)
 			wounding_type = WOUND_SLASH
 		else if(sharpness == SHARP_POINTY)
 			wounding_type = WOUND_PIERCE
-	// i know this is effectively the same check as above but i don't know if those can null the damage by rounding and want to be safe
 
-	if(owner && wounding_dmg > 4 && wound_bonus != CANT_WOUND)
-		// if you want to make tox wounds or some other type, this will need to be expanded and made more modular
-		// handle all our wounding stuff
+		// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
+		// So a big sharp weapon is still all you need to destroy a limb
+		if(mangled_state == BODYPART_MANGLED_SKIN && sharpness)
+			playsound(src, "sound/effects/crackandbleed.ogg", 100)
+			wounding_type = WOUND_BLUNT
+			if(sharpness == SHARP_EDGED)
+				wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
+			if(sharpness == SHARP_POINTY)
+				wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
+
+		// if both the skin and the bone are destroyed, and we're doing more than 10 damage, we're ripe to try dismembering
+		else if(mangled_state == BODYPART_MANGLED_BOTH && wounding_dmg >= DISMEMBER_MINIMUM_DAMAGE)
+			try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+
+	if(owner && wounding_dmg >= 5 && wound_bonus != CANT_WOUND)
 		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
 	var/can_inflict = max_damage - get_damage()
@@ -340,8 +348,6 @@
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0
 	var/injury_mod = 0
-
-	//var/bwb = 0
 
 	if(owner && ishuman(owner))
 		var/mob/living/carbon/human/H = owner

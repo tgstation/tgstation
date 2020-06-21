@@ -23,7 +23,7 @@
 
 /obj/item/shrapnel/bullet/c38 // .38 round
 	name = "\improper .38 bullet"
-	embedding = list(embed_chance=50, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=10)
+	embedding = list(embed_chance=15, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=10)
 
 /obj/item/shrapnel/bullet/c38/dumdum // .38 DumDum round
 	name = "\improper .38 DumDum bullet"
@@ -40,7 +40,7 @@
 	shrapnel_type = /obj/item/shrapnel
 	ricochet_incidence_leeway = 60
 	hit_stunned_targets = TRUE
-	sharpness = TRUE
+	sharpness = SHARP_EDGED
 	wound_bonus = 30
 
 /obj/projectile/bullet/shrapnel/mega

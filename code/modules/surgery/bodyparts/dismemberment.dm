@@ -155,8 +155,12 @@
 	forceMove(Tsec)
 
 /obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
-	if(!prob(wounding_dmg + (get_damage() * 0.5)))
-		return
+	var/base_chance = wounding_dmg + (get_damage() / max_damage * 50) // how much damage we dealt with this blow, + 50% of the damage percentage we already had on this bodypart
+	for(var/i in wounds)
+		var/datum/wound/W = i
+		if(istype(W, /datum/wound/blunt/critical)) // we only require a severe bone break, but if there's a critical bone break, we'll add 10% more
+			base_chance += 10
+			break
 
 	var/datum/wound/dismembering
 	switch(wounding_type)
@@ -170,14 +174,22 @@
 	dismembering.apply_wound(src)
 	return TRUE
 
+/**
+  * get_mangled_state() returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)
+  *
+  * Dismemberment requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture (severe bone), at which point
+  * we start rolling for dismembering. There's a few
+  *
+  *
+  * Arguments:
+  * *
+  */
 /obj/item/bodypart/proc/get_mangled_state()
 	var/mangled_state = BODYPART_MANGLED_NONE
-	var/dam_mul = 1 //initial(wound_damage_multiplier)
 
 	// we can (generally) only have one wound per type, but remember there's multiple types
 	for(var/i in wounds)
 		var/datum/wound/W = i
-		dam_mul *= W.damage_mulitplier_penalty
 		if(istype(W, /datum/wound/blunt) && W.severity >= WOUND_SEVERITY_SEVERE)
 			mangled_state |= BODYPART_MANGLED_BONE
 		else if((istype(W, /datum/wound/slash) || istype(W, /datum/wound/pierce)) && W.severity >= WOUND_SEVERITY_CRITICAL)

@@ -113,7 +113,7 @@
 	minimum_flow = 2.75
 	clot_rate = 0.07
 	max_per_type = 4
-	threshold_minimum = 90
+	threshold_minimum = 65
 	threshold_penalty = 25
 	demotes_to = /datum/wound/pierce/moderate
 	status_effect_type = /datum/status_effect/wound/pierce/severe
@@ -131,7 +131,7 @@
 	minimum_flow = 4
 	clot_rate = -0.05 // critical cuts actively get worse instead of better
 	max_per_type = 5
-	threshold_minimum = 120
+	threshold_minimum = 100
 	threshold_penalty = 40
 	demotes_to = /datum/wound/pierce/severe
 	status_effect_type = /datum/status_effect/wound/pierce/critical
