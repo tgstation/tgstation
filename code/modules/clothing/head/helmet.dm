@@ -416,6 +416,7 @@
 
 /obj/item/clothing/head/helmet/monkey_sentience/dropped(mob/user)
 	. = ..()
+	if(magnification || polling)
 	qdel(src)//runs disconnect code
 
 
