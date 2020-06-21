@@ -70,7 +70,7 @@
 			playsound(src, 'sound/machines/synth_no.ogg', 5, TRUE)
 		else
 			to_chat(user, "<span class='warning'>[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [newbrain] again.</span>")
-			playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 5, TRUE)
+			playsound(src, 'sound/machines/triple_beep.ogg', 5, TRUE)
 
 		brainmob.reset_perspective()
 		brain = newbrain

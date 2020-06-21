@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/cardpack/resin
 	name = "Trading Card Pack: Resin Frontier Booster Pack"
 	desc = "Contains six cards of varying rarity from the Resin Frontier set. Collect them all!"
-	icon = 'icons/obj/tcg_xenos.dmi'
+	icon = 'icons/runtime/tcg/xenos.dmi'
 	icon_state = "cardpack_resin"
 	series = "resinfront"
 	contains_coin = 0
