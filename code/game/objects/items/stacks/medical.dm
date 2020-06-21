@@ -142,7 +142,7 @@
 		to_chat(user, "<span class='warning'>The bandage currently on [user==M ? "your" : "[M]'s"] [limb.name] is still in good condition!</span>")
 		return
 
-	user.visible_message("<span class='warning'>[user] begins rewrapping the wounds on [M]'s [limb.name] with [src]...</span>", "<span class='warning'>You begin rewrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.name] with [src]...</span>")
+	user.visible_message("<span class='warning'>[user] begins wrapping the wounds on [M]'s [limb.name] with [src]...</span>", "<span class='warning'>You begin wrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.name] with [src]...</span>")
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER) || 1
 	if(!do_after(user, (user == M ? self_delay : other_delay) * time_mod, target=M))
 		return

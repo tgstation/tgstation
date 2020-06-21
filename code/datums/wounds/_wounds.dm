@@ -72,10 +72,6 @@
 	/// If we need to process each life tick
 	var/processes = FALSE
 
-	/// If TRUE and an item that can treat multiple different types of coexisting wounds (gauze can be used to splint broken bones, staunch bleeding, and cover burns), we get first dibs if we come up first for it, then become nonpriority.
-	/// Otherwise, if no untreated wound claims the item, we cycle through the non priority wounds and pick a random one who can use that item.
-	var/treat_priority = FALSE
-
 	/// If having this wound makes currently makes the parent bodypart unusable
 	var/disabling
 
@@ -115,6 +111,10 @@
   * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
   */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
+	if(severity == WOUND_SEVERITY_LOSS)
+		apply_dismember(L, silent, old_wound, smited)
+		return
+
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner))
 		qdel(src)
 		return
@@ -167,6 +167,19 @@
 		wound_injury(old_wound)
 		second_wind()
 
+/datum/wound/proc/apply_dismember(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
+	if(!L.can_dismember())
+		qdel(src)
+		return
+
+	var/mob/living/carbon/victim = L.owner
+	var/msg = "<b><span class='danger'>[victim]'s [L.name] [occur_text]!</span></b>"
+
+	victim.visible_message(msg, "<span class='userdanger'>Your [L.name] [occur_text]!</span>")
+
+	L.dismember()
+	qdel(src)
+
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
 	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
@@ -181,7 +194,7 @@
 		SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 	if(limb && !ignore_limb)
 		LAZYREMOVE(limb.wounds, src)
-		limb.update_wounds()
+		limb.update_wounds(replaced)
 
 /**
   * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)

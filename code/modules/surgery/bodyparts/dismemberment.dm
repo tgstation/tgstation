@@ -154,7 +154,36 @@
 
 	forceMove(Tsec)
 
+/obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+	if(!prob(wounding_dmg + (get_damage() * 0.5)))
+		return
 
+	var/datum/wound/dismembering
+	switch(wounding_type)
+		if(WOUND_BLUNT)
+			dismembering = new /datum/wound/blunt/loss
+		if(WOUND_SLASH)
+			dismembering = new /datum/wound/slash/loss
+		if(WOUND_PIERCE)
+			dismembering = new /datum/wound/pierce/loss
+
+	dismembering.apply_wound(src)
+	return TRUE
+
+/obj/item/bodypart/proc/get_mangled_state()
+	var/mangled_state = BODYPART_MANGLED_NONE
+	var/dam_mul = 1 //initial(wound_damage_multiplier)
+
+	// we can (generally) only have one wound per type, but remember there's multiple types
+	for(var/i in wounds)
+		var/datum/wound/W = i
+		dam_mul *= W.damage_mulitplier_penalty
+		if(istype(W, /datum/wound/blunt) && W.severity >= WOUND_SEVERITY_SEVERE)
+			mangled_state |= BODYPART_MANGLED_BONE
+		else if((istype(W, /datum/wound/slash) || istype(W, /datum/wound/pierce)) && W.severity >= WOUND_SEVERITY_CRITICAL)
+			mangled_state |= BODYPART_MANGLED_SKIN
+
+	return mangled_state
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/LB, mob/living/carbon/C)

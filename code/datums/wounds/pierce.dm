@@ -10,7 +10,6 @@
 	treatable_by = list(/obj/item/stack/medical/suture, /obj/item/stack/medical/gauze)
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY
-	treat_priority = TRUE
 	base_treat_time = 3 SECONDS
 
 	/// How much blood we start losing when this wound is first applied
@@ -35,6 +34,8 @@
 	/// If we're parented to an item stuck inside someone, store it here
 	var/obj/item/embedded_shrapnel
 
+/*
+// disabled pending me thinking of a way that embedded shrapnel having their own wounds is fun and workable
 /datum/wound/pierce/get_examine_description(mob/user)
 	if(!embedded_shrapnel && !limb.current_gauze)
 		return ..()
@@ -67,6 +68,7 @@
 
 	msg += "<B>[msg][extra_desc]!</B>"
 	return msg
+*/
 
 /datum/wound/pierce/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
@@ -85,10 +87,7 @@
 			blood_flow -= clot_rate
 		blood_flow -= limb.current_gauze.absorption_rate
 		limb.current_gauze.absorption_capacity -= limb.current_gauze.absorption_rate
-		if(limb.current_gauze.absorption_capacity < 0)
-			victim.visible_message("<span class='danger'>Blood soaks through \the [limb.current_gauze] on [victim]'s [limb.name].</span>", "<span class='warning'>Blood soaks through \the [limb.current_gauze] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
-			QDEL_NULL(limb.current_gauze)
-			treat_priority = TRUE
+
 	//else
 		//blood_flow -= clot_rate
 
@@ -99,9 +98,7 @@
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
 
 /datum/wound/pierce/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/medical/gauze))
-		bandage(I, user)
-	else if(istype(I, /obj/item/stack/medical/suture))
+	if(istype(I, /obj/item/stack/medical/suture))
 		suture(I, user)
 
 
@@ -128,27 +125,6 @@
 	else if(demotes_to)
 		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
 
-/// If someone is using gauze on this cut
-/datum/wound/pierce/proc/bandage(obj/item/stack/I, mob/user)
-	if(limb.current_gauze)
-		if(limb.current_gauze.absorption_capacity > I.absorption_capacity + 1)
-			to_chat(user, "<span class='warning'>The [limb.current_gauze] on [victim]'s [limb.name] is still in better condition than your [I.name]!</span>")
-			return
-		else
-			user.visible_message("<span class='warning'>[user] begins rewrapping the cuts on [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>You begin rewrapping the cuts on [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
-	else
-		user.visible_message("<span class='warning'>[user] begins wrapping the cuts on [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>You begin wrapping the cuts on [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
-	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER) || 1
-	if(!do_after(user, base_treat_time * time_mod, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
-		return
-
-	user.visible_message("<span class='green'>[user] applies [I] to [victim]'s [limb.name].</span>", "<span class='green'>You bandage some of the bleeding on [user == victim ? "yourself" : "[victim]"].</span>")
-	QDEL_NULL(limb.current_gauze)
-	limb.current_gauze = new I.type(limb)
-	limb.current_gauze.amount = 1
-	treat_priority = FALSE
-	I.use(1)
-
 
 /datum/wound/pierce/proc/embed_pain(bleed_increase)
 	if(!bleed_increase || !embedded_shrapnel || !(embedded_shrapnel in limb.embedded_objects))
@@ -169,7 +145,7 @@
 	minimum_flow = 0.5
 	max_per_type = 3
 	clot_rate = 0.15
-	threshold_minimum = 30
+	threshold_minimum = 40
 	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scarring_descriptions = list("a small, faded bruise", "a small twist of reformed skin", "a thumb-sized puncture scar")
@@ -186,7 +162,7 @@
 	minimum_flow = 2.75
 	clot_rate = 0.07
 	max_per_type = 4
-	threshold_minimum = 60
+	threshold_minimum = 90
 	threshold_penalty = 25
 	demotes_to = /datum/wound/pierce/moderate
 	status_effect_type = /datum/status_effect/wound/pierce/severe
@@ -204,7 +180,7 @@
 	minimum_flow = 4
 	clot_rate = -0.05 // critical cuts actively get worse instead of better
 	max_per_type = 5
-	threshold_minimum = 80
+	threshold_minimum = 120
 	threshold_penalty = 40
 	demotes_to = /datum/wound/pierce/severe
 	status_effect_type = /datum/status_effect/wound/pierce/critical

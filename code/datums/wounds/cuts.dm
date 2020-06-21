@@ -10,7 +10,6 @@
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY
-	treat_priority = TRUE
 	base_treat_time = 3 SECONDS
 
 	/// How much blood we start losing when this wound is first applied
@@ -86,11 +85,7 @@
 		if(clot_rate > 0)
 			blood_flow -= clot_rate
 		blood_flow -= limb.current_gauze.absorption_rate
-		limb.current_gauze.absorption_capacity -= limb.current_gauze.absorption_rate
-		if(limb.current_gauze.absorption_capacity < 0)
-			victim.visible_message("<span class='danger'>Blood soaks through \the [limb.current_gauze] on [victim]'s [limb.name].</span>", "<span class='warning'>Blood soaks through \the [limb.current_gauze] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
-			QDEL_NULL(limb.current_gauze)
-			treat_priority = TRUE
+		limb.seep_gauze(limb.current_gauze.absorption_rate)
 	else
 		blood_flow -= clot_rate
 

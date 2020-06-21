@@ -51,10 +51,7 @@
   * See: [/obj/item/proc/melee_attack_chain]
   */
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	var/val = SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params)
-	testing("Return: [val] | Expected [COMPONENT_NO_AFTERATTACK]")
-	if(val & COMPONENT_NO_AFTERATTACK)
-		testing("True")
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
 	return FALSE
 

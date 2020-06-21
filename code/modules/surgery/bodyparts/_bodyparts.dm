@@ -151,8 +151,26 @@
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
 		playsound(T, 'sound/misc/splort.ogg', 50, TRUE, -1)
+	if(current_gauze)
+		QDEL_NULL(current_gauze)
+	for(var/X in get_organs())
+		var/obj/item/organ/O = X
+		O.transfer_to_limb(src, owner)
 	for(var/obj/item/I in src)
 		I.forceMove(T)
+
+/obj/item/bodypart/proc/get_organs()
+	if(!owner)
+		return
+
+	var/list/our_organs
+	for(var/X in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
+		var/obj/item/organ/O = X
+		var/org_zone = check_zone(O.zone)
+		if(org_zone == body_zone)
+			LAZYADD(our_organs, O)
+
+	return our_organs
 
 /obj/item/bodypart/proc/consider_processing()
 	if(stamina_dam > DAMAGE_PRECISION)
@@ -210,6 +228,7 @@
 		else if(mangled_state == BODYPART_MANGLED_SKIN && sharpness)
 			playsound(src, "sound/effects/crackandbleed.ogg", 100)
 			wounding_type = WOUND_BLUNT
+			wounding_dmg *= 0.75
 		else if(sharpness == SHARP_EDGED)
 			wounding_type = WOUND_SLASH
 		else if(sharpness == SHARP_POINTY)
@@ -623,13 +642,24 @@
 		if(istype(W, checking_type))
 			return W
 
-/// very rough start for updating efficiency and other stats on a body part whenever a wound is gained/lost
-/obj/item/bodypart/proc/update_wounds()
+/**
+  * update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status
+  *
+  * Covers tabulating the damage multipliers we have from wounds (burn specifically), as well as deleting our gauze wrapping if we don't have any wounds that can use bandaging
+  *
+  * Arguments:
+  * * replaced- If true, this is being called from the remove_wound() of a wound that's being replaced, so the bandage that already existed is still relevant, but the new wound hasn't been added yet
+  */
+/obj/item/bodypart/proc/update_wounds(replaced = FALSE)
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
 
-	// we can only have one wound per type, but remember there's multiple types
+	// we can (normally) only have one wound per type, but remember there's multiple types (smites like :B:loodless can generate multiple cuts on a limb)
 	for(var/datum/wound/W in wounds)
 		dam_mul *= W.damage_mulitplier_penalty
+
+	if(!LAZYLEN(wounds) && current_gauze && !replaced)
+		owner.visible_message("<span class='notice'>\The [current_gauze] on [owner]'s [name] fall away.</span>", "<span class='notice'>The [current_gauze] on your [name] fall away.</span>")
+		QDEL_NULL(current_gauze)
 
 	wound_damage_multiplier = dam_mul
 	update_disabled()
@@ -654,55 +684,27 @@
 
 	return bleed_rate
 
-/obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
-	if(!prob(wounding_dmg + (get_damage() * 0.5)))
+
+/obj/item/bodypart/proc/apply_gauze(obj/item/stack/I)
+	if(!istype(I) || !I.absorption_capacity)
 		return
-
-	var/datum/wound/dismembering
-	switch(wounding_type)
-		if(WOUND_BLUNT)
-			dismembering = new /datum/wound/blunt/loss
-		if(WOUND_SLASH)
-			dismembering = new /datum/wound/slash/loss
-		if(WOUND_PIERCE)
-			dismembering = new /datum/wound/pierce/loss
-
-	dismembering.apply_wound(src)
-	return TRUE
-
-/obj/item/bodypart/proc/get_mangled_state()
-	var/mangled_state = BODYPART_MANGLED_NONE
-	var/dam_mul = 1 //initial(wound_damage_multiplier)
-
-	var/mangled_bone = FALSE
-	var/mangled_skin = FALSE
-
-	// we can only have one wound per type, but remember there's multiple types
-	for(var/i in wounds)
-		var/datum/wound/W = i
-		dam_mul *= W.damage_mulitplier_penalty
-		if(W.severity >= WOUND_SEVERITY_CRITICAL)
-			if(istype(W, /datum/wound/blunt))
-				mangled_bone = TRUE
-			else if(istype(W, /datum/wound/slash) || istype(W, /datum/wound/pierce))
-				mangled_skin = TRUE
-
-	if(mangled_bone && mangled_skin)
-		mangled_state = BODYPART_MANGLED_BOTH
-	else if(mangled_bone)
-		mangled_state = BODYPART_MANGLED_BONE
-	else if(mangled_skin)
-		mangled_state = BODYPART_MANGLED_SKIN
-
-	return mangled_state
-
-/obj/item/bodypart/proc/apply_gauze(obj/item/I)
 	QDEL_NULL(current_gauze)
 	current_gauze = new I.type(src)
 	current_gauze.amount = 1
 	I.use(1)
 
-/obj/item/bodypart/proc/remove_gauze()
-
-	victim.visible_message("<span class='danger'>Pus soaks through \the [limb.current_gauze] on [victim]'s [limb.name].</span>", "<span class='warning'>Pus soaks through \the [limb.current_gauze] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
-	QDEL_NULL(current_gauze)
+/**
+  * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
+  *
+  * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages fall off and we're left with nothing.
+  *
+  * Arguments:
+  * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
+  */
+/obj/item/bodypart/proc/seep_gauze(seep_amt = 0)
+	if(!current_gauze)
+		return
+	current_gauze.absorption_capacity -= seep_amt
+	if(current_gauze.absorption_capacity < 0)
+		owner.visible_message("<span class='danger'>\The [current_gauze] on [owner]'s [name] fall away in rags.</span>", "<span class='warning'>\The [current_gauze] on your [name] fall away in rags.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+		QDEL_NULL(current_gauze)

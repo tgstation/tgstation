@@ -11,9 +11,6 @@
 	sound_effect = 'sound/effects/crack1.ogg'
 	wound_type = WOUND_LIST_BLUNT
 
-	/// The item we're currently splinted with, if there is one
-	var/obj/item/stack/splinted
-
 	/// Have we been taped?
 	var/taped
 	/// Have we been bone gel'd?
@@ -126,39 +123,29 @@
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
-	if(!(wounding_type in list(WOUND_SLASH, WOUND_BURN)) || !splinted || wound_bonus == CANT_WOUND)
-		return
-
-	splinted.take_damage(wounding_dmg, damage_type = (wounding_type == WOUND_SLASH ? BRUTE : BURN), sound_effect = FALSE)
-	if(QDELETED(splinted))
-		var/destroyed_verb = (wounding_type == WOUND_SLASH ? "torn" : "burned")
-		victim.visible_message("<span class='danger'>The splint securing [victim]'s [limb.name] is [destroyed_verb] away!</span>", "<span class='danger'><b>The splint securing your [limb.name] is [destroyed_verb] away!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
-		splinted = null
-		treat_priority = TRUE
-		update_inefficiencies()
 
 
 /datum/wound/blunt/get_examine_description(mob/user)
-	if(!splinted && !gelled && !taped)
+	if(!limb.current_gauze && !gelled && !taped)
 		return ..()
 
 	var/msg = ""
-	if(!splinted)
+	if(!limb.current_gauze)
 		msg = "<B>[victim.p_their(TRUE)] [limb.name] [examine_desc]"
 	else
-		var/splint_condition = ""
+		var/sling_condition = ""
 		// how much life we have left in these bandages
-		switch(splinted.obj_integrity / splinted.max_integrity * 100)
+		switch(limb.current_gauze.obj_integrity / limb.current_gauze.max_integrity * 100)
 			if(0 to 25)
-				splint_condition = "just barely "
+				sling_condition = "just barely "
 			if(25 to 50)
-				splint_condition = "loosely "
+				sling_condition = "loosely "
 			if(50 to 75)
-				splint_condition = "mostly "
+				sling_condition = "mostly "
 			if(75 to INFINITY)
-				splint_condition = "tightly "
+				sling_condition = "tightly "
 
-		msg = "<B>[victim.p_their(TRUE)] [limb.name] is [splint_condition] fastened in a splint of [splinted.name]</B>"
+		msg = "<B>[victim.p_their(TRUE)] [limb.name] is [sling_condition] fastened in a sling of [limb.current_gauze.name]</B>"
 
 	if(taped)
 		msg += ", <span class='notice'>and appears to be reforming itself under some surgical tape!</span>"
@@ -174,44 +161,23 @@
 
 /datum/wound/blunt/proc/update_inefficiencies()
 	if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		if(splinted)
-			limp_slowdown = initial(limp_slowdown) * splinted.splint_factor
+		if(limb.current_gauze)
+			limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
 		else
 			limp_slowdown = initial(limp_slowdown)
 		victim.apply_status_effect(STATUS_EFFECT_LIMP)
 	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		if(splinted)
-			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * splinted.splint_factor)
+		if(limb.current_gauze)
+			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * limb.current_gauze.splint_factor)
 		else
 			interaction_efficiency_penalty = interaction_efficiency_penalty
 
-	if(initial(disabling) && splinted)
+	if(initial(disabling) && limb.current_gauze)
 		disabling = FALSE
 	else if(initial(disabling))
 		disabling = TRUE
 
 	limb.update_wounds()
-
-/*
-	BEWARE OF REDUNDANCY AHEAD THAT I MUST PARE DOWN
-*/
-
-/datum/wound/blunt/proc/splint(obj/item/stack/I, mob/user)
-	if(splinted && splinted.splint_factor >= I.splint_factor)
-		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
-		return
-
-	user.visible_message("<span class='danger'>[user] begins splinting [victim]'s [limb.name] with [I].</span>", "<span class='warning'>You begin splinting [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
-
-	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
-		return
-
-	user.visible_message("<span class='green'>[user] finishes splinting [victim]'s [limb.name]!</span>", "<span class='green'>You finish splinting [user == victim ? "your" : "[victim]'s"] [limb.name]!</span>")
-	treat_priority = FALSE
-	splinted = new I.type(limb)
-	splinted.amount = 1
-	I.use(1)
-	update_inefficiencies()
 
 /*
 	Moderate (Joint Dislocation)
@@ -328,18 +294,17 @@
 /datum/wound/blunt/severe
 	name = "Hairline Fracture"
 	desc = "Patient's bone has suffered a crack in the foundation, causing serious pain and reduced limb functionality."
-	treat_text = "Recommended light surgical application of bone gel, though splinting will prevent worsening situation."
-	examine_desc = "appears bruised and grotesquely swollen"
-
+	treat_text = "Recommended light surgical application of bone gel, though a sling of medical gauze will prevent worsening situation."
+	examine_desc = "appears grotesquely swollen, its attachment weakened"
 	occur_text = "sprays chips of bone and develops a nasty looking bruise"
+
 	severity = WOUND_SEVERITY_SEVERE
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
 	threshold_minimum = 60
 	threshold_penalty = 30
-	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/gauze, /obj/item/stack/medical/bone_gel)
+	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/severe
-	treat_priority = TRUE
 	scarring_descriptions = list("a faded, fist-sized bruise", "a vaguely triangular peel scar")
 	brain_trauma_group = BRAIN_TRAUMA_MILD
 	trauma_cycle_cooldown = 1.5 MINUTES
@@ -349,8 +314,9 @@
 	name = "Compound Fracture"
 	desc = "Patient's bones have suffered multiple gruesome fractures, causing significant pain and near uselessness of limb."
 	treat_text = "Immediate binding of affected limb, followed by surgical intervention ASAP."
-	examine_desc = "is completely mangled and shattered, barely held together by muscle"
+	examine_desc = "is mangled and pulped, seemingly held together by tissue alone"
 	occur_text = "cracks apart, exposing broken bones to open air"
+
 	severity = WOUND_SEVERITY_CRITICAL
 	interaction_efficiency_penalty = 4
 	limp_slowdown = 9
@@ -358,9 +324,8 @@
 	threshold_minimum = 115
 	threshold_penalty = 50
 	disabling = TRUE
-	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/gauze, /obj/item/stack/medical/bone_gel)
+	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/critical
-	treat_priority = TRUE
 	scarring_descriptions = list("a section of janky skin lines and badly healed scars", "a large patch of uneven skin tone", "a cluster of calluses")
 	brain_trauma_group = BRAIN_TRAUMA_SEVERE
 	trauma_cycle_cooldown = 2.5 MINUTES
@@ -439,8 +404,6 @@
 		gel(I, user)
 	else if(istype(I, /obj/item/stack/sticky_tape/surgical))
 		tape(I, user)
-	else if(istype(I, /obj/item/stack/medical/gauze))
-		splint(I, user)
 
 /datum/wound/blunt/get_scanner_description(mob/user)
 	. = ..()

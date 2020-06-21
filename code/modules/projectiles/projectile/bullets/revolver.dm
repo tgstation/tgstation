@@ -19,7 +19,7 @@
 	ricochet_chance = 50
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
-	wound_bonus = -5
+	wound_bonus = -30
 	shrapnel_type = /obj/item/shrapnel/bullet/c38
 
 /obj/projectile/bullet/c38/match
@@ -50,6 +50,7 @@
 	armour_penetration = -30
 	ricochets_max = 0
 	wound_bonus = 0
+	bare_wound_bonus = 15
 	shrapnel_type = /obj/item/shrapnel/bullet/c38/dumdum
 	sharpness = SHARP_EDGED
 

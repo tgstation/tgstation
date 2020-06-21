@@ -15,8 +15,9 @@
 	wound_resistance = 10
 
 /obj/item/bodypart/chest/can_dismember(obj/item/I)
-	if(!((owner.stat == DEAD) || owner.InFullCritical()))
+	if(!((owner.stat == DEAD) || owner.InFullCritical()) || !get_organs())
 		return FALSE
+
 	return ..()
 
 /obj/item/bodypart/chest/Destroy()
