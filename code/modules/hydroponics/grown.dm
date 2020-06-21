@@ -78,10 +78,9 @@
 				var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
 				var/amt = reagents.get_reagent_amount(reagent_id)
 				chem_cap += seed.reagents_add[reagent_id]
-				if(chem_cap <= 1)
-					reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
-				else
-					reag_txt += "\n<span class='warning'>- [R.name]: [amt] (OVER 100% CAPACITY)</span>"
+				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
+			if(chem_cap > 1)
+				msg += "<br><span class='warning'>- Reagent Traits Over 100% Production</span></br>"
 
 		if(reag_txt)
 			msg += "<br><span class='info'>*---------*</span>"
