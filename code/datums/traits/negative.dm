@@ -1,5 +1,11 @@
 //predominantly negative traits
 
+/// Defines for locations of items being added to your inventory on spawn
+#define LOCATION_LPOCKET "in your left pocket"
+#define LOCATION_RPOCKET "in your right pocket"
+#define LOCATION_BACKPACK "in your backpack"
+#define LOCATION_HANDS "in your hands"
+
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."
@@ -62,26 +68,27 @@
 	name = "Brain Tumor"
 	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
 	value = -3
-	var/where
 	gain_text = "<span class='danger'>You feel smooth.</span>"
 	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
 	hardcore_value = 12
+	/// Location of the bottle of pills on spawn
+	var/where
 
 /datum/quirk/brainproblems/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/pills = new /obj/item/storage/pill_bottle/mannitol/braintumor()
 	var/list/slots = list(
-		"in your left pocket" = ITEM_SLOT_LPOCKET,
-		"in your right pocket" = ITEM_SLOT_RPOCKET,
-		"in your backpack" = ITEM_SLOT_BACKPACK,
-		"in your hands" = ITEM_SLOT_HANDS
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS
 	)
 	where = H.equip_in_one_of_slots(pills, slots, FALSE) || "at your feet"
 
 /datum/quirk/brainproblems/post_add()
-	var/mob/living/carbon/human/H = quirk_holder
-	if(where == "in your backpack")
+	if(where == LOCATION_BACKPACK)
+		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of mannitol pills [where] to keep you alive until you can secure a supply of medication. Don't rely on it too much!</span>")
@@ -91,10 +98,9 @@
 	if(IS_IN_STASIS(quirk_holder)) 
 		return
 	//Having mannitol in you will also pause the brain damage (so it heals an even 2 brain damage instead of 1.8)
-	else if(quirk_holder.reagents.has_reagent(/datum/reagent/medicine/mannitol, needs_metabolizing = TRUE))
+	if(quirk_holder.reagents.has_reagent(/datum/reagent/medicine/mannitol, needs_metabolizing = TRUE))
 		return
-	else
-		quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
+	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 
 /datum/quirk/deafness
 	name = "Deaf"
@@ -219,15 +225,15 @@
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
-		"in your left pocket" = ITEM_SLOT_LPOCKET,
-		"in your right pocket" = ITEM_SLOT_RPOCKET,
-		"in your backpack" = ITEM_SLOT_BACKPACK,
-		"in your hands" = ITEM_SLOT_HANDS
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS
 	)
 	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
 /datum/quirk/family_heirloom/post_add()
-	if(where == "in your backpack")
+	if(where == LOCATION_BACKPACK)
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
@@ -537,9 +543,9 @@
 	if (accessory_type)
 		accessory_instance = new accessory_type(current_turf)
 	var/list/slots = list(
-		"in your left pocket" = ITEM_SLOT_LPOCKET,
-		"in your right pocket" = ITEM_SLOT_RPOCKET,
-		"in your backpack" = ITEM_SLOT_BACKPACK
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK
 	)
 	where_drug = H.equip_in_one_of_slots(drug_instance, slots, FALSE) || "at your feet"
 	if (accessory_instance)
@@ -547,7 +553,7 @@
 	announce_drugs()
 
 /datum/quirk/junkie/post_add()
-	if(where_drug == "in your backpack" || where_accessory == "in your backpack")
+	if(where_drug == LOCATION_BACKPACK || where_accessory == LOCATION_BACKPACK)
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
@@ -610,3 +616,8 @@
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 	hardcore_value = 9
+
+#undef LOCATION_LPOCKET
+#undef LOCATION_RPOCKET
+#undef LOCATION_BACKPACK
+#undef LOCATION_HANDS
