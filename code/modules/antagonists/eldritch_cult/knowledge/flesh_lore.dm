@@ -124,7 +124,7 @@
 	var/mob/living/carbon/human/humie = source
 	spooky_scaries -= humie
 	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
-	UnregisterSignal(source,COMSIG_MOB_DEATH,.proc/remove_ghoul)
+	UnregisterSignal(source, COMSIG_MOB_DEATH)
 
 /datum/eldritch_knowledge/flesh_mark
 	name = "Mark of flesh"
