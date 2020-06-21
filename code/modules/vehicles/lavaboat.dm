@@ -15,7 +15,7 @@
 /obj/vehicle/ridden/lavaboat/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.keytype = list(/obj/item/oar)
+	D.keytype = /obj/item/oar
 	D.allowed_turf_typecache = typecacheof(allowed_turf)
 
 /obj/item/oar

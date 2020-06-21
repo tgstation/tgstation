@@ -157,15 +157,15 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
-/datum/atom_hud/alternate_appearance/basic/blessedAware
+/datum/atom_hud/alternate_appearance/basic/blessed_aware
 
-/datum/atom_hud/alternate_appearance/basic/blessedAware/New()
+/datum/atom_hud/alternate_appearance/basic/blessed_aware/New()
 	..()
 	for(var/mob in GLOB.mob_list)
 		if(mobShouldSee(mob))
 			add_hud_to(mob)
 
-/datum/atom_hud/alternate_appearance/basic/blessedAware/mobShouldSee(mob/M)
+/datum/atom_hud/alternate_appearance/basic/blessed_aware/mobShouldSee(mob/M)
 	if(M.mind && (M.mind.assigned_role == "Chaplain"))
 		return TRUE
 	if (istype(M, /mob/living/simple_animal/hostile/construct/wraith))
@@ -174,15 +174,15 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
-/datum/atom_hud/alternate_appearance/basic/onePerson
+/datum/atom_hud/alternate_appearance/basic/one_person
 	var/mob/seer
 
-/datum/atom_hud/alternate_appearance/basic/onePerson/mobShouldSee(mob/M)
+/datum/atom_hud/alternate_appearance/basic/one_person/mobShouldSee(mob/M)
 	if(M == seer)
 		return TRUE
 	return FALSE
 
-/datum/atom_hud/alternate_appearance/basic/onePerson/New(key, image/I, mob/living/M)
+/datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, mob/living/M)
 	..(key, I, FALSE)
 	seer = M
 	add_hud_to(seer)

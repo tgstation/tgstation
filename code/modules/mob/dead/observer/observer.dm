@@ -55,6 +55,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
+	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
 
 /mob/dead/observer/Initialize()
@@ -166,6 +167,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	updateallghostimages()
 
+	QDEL_NULL(orbit_menu)
 	QDEL_NULL(spawners_menu)
 	return ..()
 
@@ -275,6 +277,8 @@ Works together with spawning an observer, noted above.
 			ghost.key = key
 			if(!can_reenter_corpse)	// Disassociates observer mind from the body mind
 				ghost.mind = null
+			else
+				ghost.mind.current?.med_hud_set_status()
 			return ghost
 
 /*
@@ -424,10 +428,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois(skip_mindless=1)
-	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
-	var/mob/target = mobs[input]
-	ManualFollow(target)
+	if(!orbit_menu)
+		orbit_menu = new(src)
+
+	orbit_menu.ui_interact(src)
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
@@ -646,6 +650,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/view_manifest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"
+
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
 
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"

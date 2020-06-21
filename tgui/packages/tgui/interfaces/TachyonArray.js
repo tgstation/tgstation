@@ -86,17 +86,20 @@ export const TachyonArrayContent = (props, context) => {
                 <LabeledList.Item label="Epicenter Radius">
                   {activeRecord.factual_epicenter_radius}
                   {activeRecord.theory_epicenter_radius
-                  && " (Theoretical: [activeRecord.theory_epicenter_radius])"}
+                  && " (Theoretical: "
+                  + activeRecord.theory_epicenter_radius + ")"}
                 </LabeledList.Item>
                 <LabeledList.Item label="Outer Radius">
                   {activeRecord.factual_outer_radius}
                   {activeRecord.theory_outer_radius
-                  && " (Theoretical: [activeRecord.theory_outer_radius])"}
+                  && " (Theoretical: "
+                  + activeRecord.theory_outer_radius + ")"}
                 </LabeledList.Item>
                 <LabeledList.Item label="Shockwave Radius">
                   {activeRecord.factual_shockwave_radius}
                   {activeRecord.theory_shockwave_radius
-                  && " (Theoretical: [activeRecord.theory_shockwave_radius])"}
+                  && " (Theoretical: "
+                  + activeRecord.theory_shockwave_radius + ")"}
                 </LabeledList.Item>
               </LabeledList>
             </Section>

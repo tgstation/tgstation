@@ -390,21 +390,21 @@
 			if("cat")
 				M.change_mob_type( /mob/living/simple_animal/pet/cat , null, null, delmob )
 			if("runtime")
-				M.change_mob_type( /mob/living/simple_animal/pet/cat/Runtime , null, null, delmob )
+				M.change_mob_type( /mob/living/simple_animal/pet/cat/runtime , null, null, delmob )
 			if("corgi")
 				M.change_mob_type( /mob/living/simple_animal/pet/dog/corgi , null, null, delmob )
 			if("ian")
-				M.change_mob_type( /mob/living/simple_animal/pet/dog/corgi/Ian , null, null, delmob )
+				M.change_mob_type( /mob/living/simple_animal/pet/dog/corgi/ian , null, null, delmob )
 			if("pug")
 				M.change_mob_type( /mob/living/simple_animal/pet/dog/pug , null, null, delmob )
 			if("crab")
 				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
 			if("coffee")
-				M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
+				M.change_mob_type( /mob/living/simple_animal/crab/coffee , null, null, delmob )
 			if("parrot")
 				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
 			if("polyparrot")
-				M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
+				M.change_mob_type( /mob/living/simple_animal/parrot/poly , null, null, delmob )
 			if("constructjuggernaut")
 				M.change_mob_type( /mob/living/simple_animal/hostile/construct/juggernaut , null, null, delmob )
 			if("constructartificer")
@@ -575,7 +575,7 @@
 	else if(href_list["messageedits"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/datum/DBQuery/query_get_message_edits = SSdbcore.NewQuery(
+		var/datum/db_query/query_get_message_edits = SSdbcore.NewQuery(
 			"SELECT edits FROM [format_table_name("messages")] WHERE id = :message_id",
 			list("message_id" = href_list["messageedits"])
 		)
@@ -1701,7 +1701,7 @@
 										R.activate_module(I)
 
 		if(pod)
-			new /obj/effect/DPtarget(target, pod)
+			new /obj/effect/dp_target(target, pod)
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

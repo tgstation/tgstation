@@ -86,8 +86,8 @@
 
 	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
 	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
-	to_chat(owner.current, "<B><font size=4 color=red>Don't fuck with non-gangsters unless they fuck with you first.</font></B>")
-	to_chat(owner.current, "<B><font size=4 color=red>Don't blow shit up or make the station uninhabitable.</font></B>")
+	to_chat(owner.current, "<B><font size=6 color=red>You are still a team-oriented antagonist! Do what is best for your gang.</font></B>")
+	to_chat(owner.current, "<B><font size=4 color=red>Beware, killing innocents will result in a stronger police response.</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [gang_objective]</font>")
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
