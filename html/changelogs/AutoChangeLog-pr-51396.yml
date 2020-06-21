@@ -1,0 +1,5 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - code_imp: "Reagent exposure proc names now accurately describe their function."
+  - refactor: "Reagent exposure code is less `istype` dependent."
