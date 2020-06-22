@@ -19,7 +19,6 @@
 	name = "bullet"
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
-	item_flags = NONE
 
 /obj/item/shrapnel/bullet/c38 // .38 round
 	name = "\improper .38 bullet"

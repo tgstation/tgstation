@@ -217,13 +217,14 @@
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
 
+
 	// what kind of wounds we're gonna roll for, take the greater between brute and burn, then if it's brute, we subdivide based on sharpness
 	var/wounding_type = (brute > burn ? WOUND_BLUNT : WOUND_BURN)
 	var/wounding_dmg = max(brute, burn)
 
 	var/mangled_state = get_mangled_state()
 
-	// we only care about dismemberment stuff/sharpness for blunt damage
+	// this following block is for brute damage, to see if we're dealing with blunt, slash, or pierce, and how we're interacting with bones and skin if necessary
 	if(wounding_type == WOUND_BLUNT)
 		// first we check the sharpness var to see if we're slashing or piercing rather than plain blunt
 		if(sharpness == SHARP_EDGED)
@@ -245,6 +246,8 @@
 		else if(mangled_state == BODYPART_MANGLED_BOTH && wounding_dmg >= DISMEMBER_MINIMUM_DAMAGE)
 			try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
+
+	// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 	if(owner && wounding_dmg >= 5 && wound_bonus != CANT_WOUND)
 		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
@@ -309,6 +312,17 @@
 		if(WOUND_BURN)
 			wounds_checking = WOUND_LIST_BURN
 
+	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		var/list/clothing = H.clothingonpart(src)
+		for(var/c in clothing)
+			var/obj/item/clothing/clothes_check = c
+			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
+			if(clothes_check.armor.getRating("wound"))
+				bare_wound_bonus = 0
+				break
+
 	//cycle through the wounds of the relevant category from the most severe down
 	for(var/PW in wounds_checking)
 		var/datum/wound/possible_wound = PW
@@ -345,6 +359,16 @@
 	var/datum/wound/new_wound = new potential_wound
 	new_wound.apply_wound(src, smited = smited)
 
+/**
+  * check_wounding_mods() is where we handle the various modifiers of a wound roll
+  *
+  * A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, if we have a bare_wound_bonus to apply, plus the plain wound_bonus
+  * We also flick through all of the wounds we currently have on this limb and add their threshold penalties, so that having lots of bad wounds makes you more liable to get hurt worse
+  * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
+  *
+  * Arguments:
+  * * It's the same ones on [receive_damage()]
+  */
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0
 	var/injury_mod = 0
@@ -422,12 +446,11 @@
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
 
-		// TODO: figure if i'm keeping disabling to broken bones only
-		if((get_damage(TRUE) >= max_damage) || (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) && (get_damage(TRUE) >= (max_damage * 0.6)))) //Easy limb disable disables the limb at 40% health instead of 0%
+		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
 			if(!last_maxed)
 				owner.emote("scream")
 				last_maxed = TRUE
-			if(!is_organic_limb())
+			if(!is_organic_limb() || stamina_dam >= max_damage)
 				return BODYPART_DISABLED_DAMAGE
 		else if(disabled && (get_damage(TRUE) <= (max_damage * 0.8))) // reenabled at 80% now instead of 50% as of wounds update
 			last_maxed = FALSE

@@ -1,22 +1,25 @@
 #define WOUND_DAMAGE_EXPONENT	1.4
 
+#define WOUND_MINIMUM_DAMAGE		5 // an attack must do this much damage after armor in order to roll for being a wound (incremental pressure damage need not apply)
+#define DISMEMBER_MINIMUM_DAMAGE	10 // an attack must do this much damage after armor in order to be eliigible to dismember a suitably mushed bodypart
+
 #define WOUND_SEVERITY_TRIVIAL	0 // for jokey/meme wounds like stubbed toe, no standard messages/sounds or second winds
 #define WOUND_SEVERITY_MODERATE	1
 #define WOUND_SEVERITY_SEVERE	2
 #define WOUND_SEVERITY_CRITICAL	3
 #define WOUND_SEVERITY_LOSS		4 // theoretical total limb loss, like dismemberment for cuts
 
-#define WOUND_BLUNT		0
-#define WOUND_SLASH		1
-#define WOUND_PIERCE	2
-#define WOUND_BURN		3
+#define WOUND_BLUNT		0 // any brute weapon/attack that doesn't have sharpness. rolls for blunt bone wounds
+#define WOUND_SLASH		1 // any brute weapon/attack with sharpness = SHARP_EDGED. rolls for slash wounds
+#define WOUND_PIERCE	2 // any brute weapon/attack with sharpness = SHARP_POINTY. rolls for piercing wounds
+#define WOUND_BURN		3 // any concentrated burn attack (lasers really). rolls for burning wounds
 
 // How much determination reagent to add each time someone gains a new wound in [/datum/wound/proc/second_wind()]
 #define WOUND_DETERMINATION_MODERATE	1
 #define WOUND_DETERMINATION_SEVERE		2.5
 #define WOUND_DETERMINATION_CRITICAL	5
 
-#define WOUND_DETERMINATION_MAX			10
+#define WOUND_DETERMINATION_MAX			10 // the max amount of determination you can have
 
 // set wound_bonus on an item or attack to this to disable checking wounding for the attack
 #define CANT_WOUND -100
@@ -49,6 +52,10 @@
 // saved scars with a version lower than this will be discarded
 #define SCAR_CURRENT_VERSION				1
 
+// With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable:
+// 	1. Skin is mangled: A critical slash or pierce wound on that limb
+// 	2. Bone is mangled: At least a severe bone wound on that limb
+// see [/obj/item/bodypart/proc/get_mangled_state()] for more information
 #define BODYPART_MANGLED_NONE	0
 #define BODYPART_MANGLED_BONE	1
 #define BODYPART_MANGLED_SKIN	2

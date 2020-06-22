@@ -45,15 +45,23 @@
 	shrapnel_type = NONE
 	sharpness = SHARP_NONE
 
+// premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
 	name = ".38 DumDum bullet"
 	damage = 15
 	armour_penetration = -30
 	ricochets_max = 0
-	wound_bonus = 0
-	bare_wound_bonus = 15
 	shrapnel_type = /obj/item/shrapnel/bullet/c38/dumdum
 	sharpness = SHARP_EDGED
+	wound_bonus = 15
+	bare_wound_bonus = 15
+	/// dumdums are more effective at bleeding people out in close quarters
+	var/wound_falloff_tile = -5
+
+/obj/projectile/bullet/c38/dumdum/Range()
+	..()
+	wound_bonus += wound_falloff_tile
+	bare_wound_bonus += wound_falloff_tile
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"

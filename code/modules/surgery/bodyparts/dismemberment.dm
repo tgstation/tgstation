@@ -154,6 +154,40 @@
 
 	forceMove(Tsec)
 
+/**
+  * get_mangled_state() is relevant for flesh and bone bodyparts, and returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)
+  *
+  * Dismemberment for flesh and bone requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture
+  * (severe bone), at which point we can start rolling for dismembering. The attack must also deal at least 10 damage, and must be a brute attack of some kind (sorry for now, cakehat, maybe later)
+  *
+  * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_SKIN if our skin is broken, BODYPART_MANGLED_BONE if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
+  */
+/obj/item/bodypart/proc/get_mangled_state()
+	var/mangled_state = BODYPART_MANGLED_NONE
+
+	// we can (generally) only have one wound per type, but remember there's multiple types
+	for(var/i in wounds)
+		var/datum/wound/W = i
+		if(istype(W, /datum/wound/blunt) && W.severity >= WOUND_SEVERITY_SEVERE)
+			mangled_state |= BODYPART_MANGLED_BONE
+		else if((istype(W, /datum/wound/slash) || istype(W, /datum/wound/pierce)) && W.severity >= WOUND_SEVERITY_CRITICAL)
+			mangled_state |= BODYPART_MANGLED_SKIN
+
+	return mangled_state
+
+/**
+  * try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it
+  *
+  * Mangling is described in the above proc, [/obj/item/bodypart/proc/get_mangled_state()]. This simply makes the roll for whether we actually dismember or not
+  * using how damaged the limb already is, and how much damage this blow was for. If we have a critical bone wound instead of just a severe, we add +10% to the roll.
+  * Lastly, we choose which kind of dismember we want based on the wounding type we hit with
+  *
+  * Arguments:
+  * * wounding_type: Either WOUND_BLUNT, WOUND_SLASH, or WOUND_PIERCE, basically only matters for the dismember message
+  * * wounding_dmg: The damage of the strike that prompted this roll, higher damage = higher chance
+  * * wound_bonus: Not actually used right now, but maybe someday
+  * * bare_wound_bonus: ditto above
+  */
 /obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 	var/base_chance = wounding_dmg + (get_damage() / max_damage * 50) // how much damage we dealt with this blow, + 50% of the damage percentage we already had on this bodypart
 	for(var/i in wounds)
@@ -173,29 +207,6 @@
 
 	dismembering.apply_wound(src)
 	return TRUE
-
-/**
-  * get_mangled_state() returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)
-  *
-  * Dismemberment requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture (severe bone), at which point
-  * we start rolling for dismembering. There's a few
-  *
-  *
-  * Arguments:
-  * *
-  */
-/obj/item/bodypart/proc/get_mangled_state()
-	var/mangled_state = BODYPART_MANGLED_NONE
-
-	// we can (generally) only have one wound per type, but remember there's multiple types
-	for(var/i in wounds)
-		var/datum/wound/W = i
-		if(istype(W, /datum/wound/blunt) && W.severity >= WOUND_SEVERITY_SEVERE)
-			mangled_state |= BODYPART_MANGLED_BONE
-		else if((istype(W, /datum/wound/slash) || istype(W, /datum/wound/pierce)) && W.severity >= WOUND_SEVERITY_CRITICAL)
-			mangled_state |= BODYPART_MANGLED_SKIN
-
-	return mangled_state
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/LB, mob/living/carbon/C)
