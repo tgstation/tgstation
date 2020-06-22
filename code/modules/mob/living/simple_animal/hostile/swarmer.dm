@@ -122,7 +122,7 @@
 		
 /mob/living/simple_animal/hostile/swarmer/MiddleClickOn(atom/A)
 	. = ..()
-	if(dronelist.len == 0)
+	if(!LAZYLEN(dronelist))
 		return
 	var/turf/T = get_turf(A)
 	if(!T)
