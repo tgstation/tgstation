@@ -19,7 +19,7 @@
 	ricochet_chance = 50
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
-	wound_bonus = -30
+	wound_bonus = -25
 	bare_wound_bonus = 10
 	shrapnel_type = /obj/item/shrapnel/bullet/c38
 
@@ -53,7 +53,7 @@
 	ricochets_max = 0
 	shrapnel_type = /obj/item/shrapnel/bullet/c38/dumdum
 	sharpness = SHARP_EDGED
-	wound_bonus = 15
+	wound_bonus = 20
 	bare_wound_bonus = 15
 	/// dumdums are more effective at bleeding people out in close quarters
 	var/wound_falloff_tile = -5

@@ -14,26 +14,40 @@
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
-	/// When we have less than this amount of flow, either from treatment or clotting, we demote to a lower cut or are healed of the wound
-	var/minimum_flow
-	/// How fast our blood flow will naturally decrease per tick, not only do larger cuts bleed more faster, they clot slower
-	var/clot_rate
+	/// If gauzed, what percent of the internal bleeding actually clots of the total absorption rate
+	var/gauzed_clot_rate
 
-	/// Once the blood flow drops below minimum_flow, we demote it to this type of wound. If there's none, we're all better
-	var/demotes_to
-
-	/// How much staunching per type (cautery, suturing, bandaging) you can have before that type is no longer effective for this cut NOT IMPLEMENTED
-	var/max_per_type
-	/// The maximum flow we've had so far
-	var/highest_flow
 	/// How much flow we've already cauterized
 	var/cauterized
 	/// How much flow we've already sutured
 	var/sutured
+	/// When hit on this bodypart, we have this chance of losing some blood + the incoming damage
+	var/internal_bleeding_chance
+	/// If we let off blood when hit, the max blood lost is this * the incoming damage
+	var/internal_bleeding_coefficient
 
 /datum/wound/pierce/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
-		blood_flow += 0.05 * wounding_dmg
+	if(victim.stat == DEAD || wounding_dmg < 5)
+		return
+	if(victim.blood_volume && prob(internal_bleeding_chance + wounding_dmg))
+		if(limb.current_gauze && limb.current_gauze.splint_factor)
+			wounding_dmg *= (1 - limb.current_gauze.splint_factor)
+		var/blood_bled = rand(1, wounding_dmg * internal_bleeding_coefficient) // 12 brute toolbox can cause up to 15/18/21 bloodloss on mod/sev/crit
+		switch(blood_bled)
+			if(1 to 6)
+				victim.bleed(blood_bled, TRUE)
+			if(7 to 13)
+				victim.visible_message("<span class='smalldanger'>[victim] coughs up a bit of blood from the blow to [victim.p_their()] [limb.name].</span>", "<span class='danger'>You cough up a bit of blood from the blow to your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+				victim.bleed(blood_bled, TRUE)
+			if(14 to 19)
+				victim.visible_message("<span class='smalldanger'>[victim] spits out a string of blood from the blow to [victim.p_their()] [limb.name]!</span>", "<span class='danger'>You spit out a string of blood from the blow to your [limb.name]!</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				victim.bleed(blood_bled)
+			if(20 to INFINITY)
+				victim.visible_message("<span class='danger'>[victim] chokes up a spray of blood from the blow to [victim.p_their()] [limb.name]!</span>", "<span class='danger'><b>You choke up on a spray of blood from the blow to your [limb.name]!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
+				victim.bleed(blood_bled)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 /datum/wound/pierce/handle_process()
 	blood_flow = min(blood_flow, WOUND_CUT_MAX_BLOODFLOW)
@@ -44,22 +58,15 @@
 		blood_flow -= 0.25
 
 	if(limb.current_gauze)
-		if(clot_rate > 0)
-			blood_flow -= clot_rate
-		blood_flow -= limb.current_gauze.absorption_rate
+		blood_flow -= limb.current_gauze.absorption_rate * gauzed_clot_rate
 		limb.current_gauze.absorption_capacity -= limb.current_gauze.absorption_rate
 
-	//else
-		//blood_flow -= clot_rate
-
-	if(blood_flow > highest_flow)
-		highest_flow = blood_flow
-
+	if(blood_flow <= 0)
+		qdel(src)
 
 /datum/wound/pierce/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/suture))
 		suture(I, user)
-
 
 /datum/wound/pierce/on_xadone(power)
 	. = ..()
@@ -76,13 +83,12 @@
 	user.visible_message("<span class='green'>[user] stitches up some of the bleeding on [victim].</span>", "<span class='green'>You stitch up some of the bleeding on [user == victim ? "yourself" : "[victim]"].</span>")
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	blood_flow -= blood_sutured
-	sutured += blood_sutured
 	limb.heal_damage(I.heal_brute, I.heal_burn)
 
-	if(blood_flow > minimum_flow)
+	if(blood_flow > 0)
 		try_treating(I, user)
-	else if(demotes_to)
-		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
+	else
+		to_chat(user, "<span class='green'>You successfully close the hole in [user == victim ? "your" : "[victim]'s"] [limb.name].</span>")
 
 /datum/wound/pierce/moderate
 	name = "Minor Breakage"
@@ -92,10 +98,10 @@
 	occur_text = "spurts out a thin stream of blood"
 	sound_effect = 'sound/effects/blood1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
-	initial_flow = 2
-	minimum_flow = 0.5
-	max_per_type = 3
-	clot_rate = 0.15
+	initial_flow = 1.5
+	gauzed_clot_rate = 0.8
+	internal_bleeding_chance = 30
+	internal_bleeding_coefficient = 1.25
 	threshold_minimum = 40
 	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
@@ -109,13 +115,12 @@
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
 	sound_effect = 'sound/effects/blood2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
-	initial_flow = 3.25
-	minimum_flow = 2.75
-	clot_rate = 0.07
-	max_per_type = 4
+	initial_flow = 2.25
+	gauzed_clot_rate = 0.6
+	internal_bleeding_chance = 60
+	internal_bleeding_coefficient = 1.5
 	threshold_minimum = 65
 	threshold_penalty = 25
-	demotes_to = /datum/wound/pierce/moderate
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scarring_descriptions = list("an ink-splat shaped pocket of scar tissue", "a long-faded puncture wound", "a tumbling puncture hole with evidence of faded stitching")
 
@@ -127,12 +132,11 @@
 	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
-	initial_flow = 4.25
-	minimum_flow = 4
-	clot_rate = -0.05 // critical cuts actively get worse instead of better
-	max_per_type = 5
+	initial_flow = 3
+	gauzed_clot_rate = 0.4
+	internal_bleeding_chance = 80
+	internal_bleeding_coefficient = 1.75
 	threshold_minimum = 100
 	threshold_penalty = 40
-	demotes_to = /datum/wound/pierce/severe
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scarring_descriptions = list("a rippling shockwave of scar tissue", "a wide, scattered cloud of shrapnel marks", "a gruesome multi-pronged puncture scar")

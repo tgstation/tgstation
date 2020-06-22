@@ -51,8 +51,8 @@
 	var/list/treatable_by_grabbed
 	/// Tools with the specified tool flag will also be able to try directly treating this wound
 	var/treatable_tool
-	/// Set to TRUE if we don't give a shit about the patient's comfort and are allowed to just use any random sharp thing on this wound. Will require an aggressive grab or more to perform
-	var/treatable_sharp
+	/// Can we use a bandage/gauze on this wound in some kind of way?
+	var/accepts_gauze = TRUE
 	/// How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery
 	var/base_treat_time = 5 SECONDS
 
@@ -316,7 +316,11 @@
   * * mob/user: The user examining the wound's owner, if that matters
   */
 /datum/wound/proc/get_examine_description(mob/user)
-	return "<B>[victim.p_their(TRUE)] [limb.name] [examine_desc]!</B>"
+	. = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
+	if(severity <= WOUND_SEVERITY_MODERATE)
+		. = "[.]."
+	else
+		. = "<B>[.]!</B>"
 
 /datum/wound/proc/get_scanner_description(mob/user)
 	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
