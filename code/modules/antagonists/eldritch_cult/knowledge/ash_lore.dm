@@ -155,7 +155,7 @@
 	gain_text = "At first i didn't know these instruments of war, but the priest told me to use them."
 	desc = "Gives AOE spell that causes heavy bleeding and blood loss."
 	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/pointed/ash_cleave
+	spell_to_add = /obj/effect/proc_holder/spell/pointed/cleave
 	next_knowledge = list(/datum/eldritch_knowledge/summon/raw_prophet,/datum/eldritch_knowledge/spell/area_conversion)
 
 /datum/eldritch_knowledge/final/ash_final
