@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Science are now able to print DNA Scanner boards. Boards associated with Genetics are now only printable in Science and have been removed from Medical printers."
