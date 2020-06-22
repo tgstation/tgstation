@@ -373,7 +373,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(3)
 			for(var/i = 1; i < LAZYLEN(last_three_move); i++)
 				last_three_move[i] = last_three_move[i + 1]
-			last_three_move[LAZYLEN(last_three_move)] = player_stance
+			last_three_move[3] = player_stance
 
 		if(4 to INFINITY)
 			last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
