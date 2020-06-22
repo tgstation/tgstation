@@ -140,6 +140,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/extra_price = 50
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
+	///The sound the vendor uses when you vend an item
+	var/vending_sound = 'sound/machines/machine_vend.ogg'
   	/**
 	  * Is this item on station or not
 	  *
@@ -474,7 +476,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	visible_message("<span class='notice'>[src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!</span>")
 
 	for(var/i in 1 to freebies)
-		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+		playsound(src, vending_sound, 50, TRUE, extrarange = -3)
 		for(var/datum/data/vending_product/R in shuffle(product_records))
 
 			if(R.amount <= 0) //Try to use a record that actually has something to dump.
@@ -837,13 +839,16 @@ GLOBAL_LIST_EMPTY(vending_products)
 					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 					log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
-				say("Thank you for shopping with [src]!")
+				if(vend_reply)
+					say(vend_reply)
+				else
+					say("Thank you for shopping with [src]!")
 				purchase_message_cooldown = world.time + 5 SECONDS
 				last_shopper = usr
 			use_power(5)
 			if(icon_vend) //Show the vending animation if needed
 				flick(icon_vend,src)
-			playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+			playsound(src, vending_sound, 50, TRUE, extrarange = -3)
 			new R.product_path(get_turf(src))
 			R.amount--
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
