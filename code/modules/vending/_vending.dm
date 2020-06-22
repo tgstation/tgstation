@@ -849,8 +849,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(icon_vend) //Show the vending animation if needed
 				flick(icon_vend,src)
 			playsound(src, vending_sound, 50, TRUE, extrarange = -3)
-			new R.product_path(get_turf(src))
+			var/vended = new R.product_path(get_turf(src))
 			R.amount--
+			usr.put_in_hands(vended)
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 

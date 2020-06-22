@@ -20,8 +20,16 @@
 	vending_sound = 'sound/effects/cashregister.ogg'
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "faceless"
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
+	layer = MOB_LAYER
 	///Corpse spawned when vendor is deconstructed (MURDERED)
 	var/corpse = /obj/effect/mob_spawn/human/corpse
+	///Phrases used when you talk to the NPC
+	var/list/lore = list("Hello! I am the test NPC.",
+						"Man, shut the fuck up."
+						)
+	///List of items able to be sold to the npc
+	var/list/wanted_items = list()
 
 /obj/machinery/vending/npc/Initialize()
 	. = ..()
@@ -31,6 +39,15 @@
 	QDEL_NULL(Radio)
 
 /obj/machinery/vending/npc/attackby(obj/item/I, mob/user, params)
+	return
+
+/obj/machinery/vending/npc/crowbar_act(mob/living/user, obj/item/I)
+	return
+
+/obj/machinery/vending/npc/wrench_act(mob/living/user, obj/item/I)
+	return
+
+/obj/machinery/vending/npc/screwdriver_act(mob/living/user, obj/item/I)
 	return
 
 /obj/machinery/vending/npc/deconstruct(disassembled = TRUE)
@@ -44,13 +61,60 @@
 /obj/machinery/vending/npc/emag_act(mob/user)
 	return
 
-/obj/machinery/vending/npc/attack_hand(mob/user)
-	. = ..()
+/obj/machinery/vending/npc/interact(mob/user)
 	face_atom(user)
+	var/list/npc_options = list(
+		"Buy" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_buy"),
+		"Sell" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_sell"),
+		"Talk" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_talk")
+		)
+	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(npc_result)
+		if("Buy")
+			return ui_interact(user)
+		if("Sell")
+			return try_sell(user)
+		if("Talk")
+			return deep_lore(user)
+	return FALSE
 
 /obj/machinery/vending/npc/ui_act(action, params)
 	. = ..()
 	face_atom(usr)
+
+/obj/machinery/vending/npc/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+/obj/machinery/vending/npc/proc/try_sell(mob/user)
+	var/obj/item/activehanditem = user.get_active_held_item()
+	var/obj/item/inactivehanditem = user.get_inactive_held_item()
+	if(is_type_in_list(activehanditem, wanted_items))
+		if(istype(activehanditem, /obj/item/stack))
+			var/obj/item/stack/stackoverflow = activehanditem
+			generate_cash((wanted_items[stackoverflow.type]) * stackoverflow.amount, user)
+			stackoverflow.use(stackoverflow.amount)
+			return
+		generate_cash(wanted_items[activehanditem.type], user)
+		return
+	else if (is_type_in_list(inactivehanditem, wanted_items))
+		generate_cash(wanted_items[inactivehanditem.type], user)
+		qdel(inactivehanditem)
+		return
+	else
+		say("Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk.")
+
+/obj/machinery/vending/npc/proc/deep_lore(mob/user)
+	say(pick(lore))
+
+/obj/machinery/vending/npc/proc/generate_cash(value, mob/user)
+	var/obj/item/holochip/chip = new /obj/item/holochip(src, value)
+	user.put_in_hands(chip)
 
 /obj/machinery/vending/npc/mrbones
 	name = "Mr. Bones"
@@ -63,15 +127,18 @@
 	products = list(/obj/item/clothing/head/helmet/skull = 1,
 					/obj/item/clothing/mask/bandana/skull = 1,
 					/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull = 5,
-					/obj/item/reagent_containers/food/condiment/milk = 5,
-					/obj/item/instrument/trombone/spectral = 1
+					/obj/item/instrument/trombone/spectral = 1,
+					/obj/item/shovel/serrated = 1
 					)
 	product_ads = "Why's there so little traffic, is this a skeleton crew?;You should buy like there's no to-marrow!"
 	vend_reply = "Bone appetit!"
-	icon_state = "skeleton"
+	icon_state = "mrbones"
 	gender = MALE
-	corpse = /obj/effect/mob_spawn/human/skeleton/mrbones
-
-/obj/effect/mob_spawn/human/skeleton/mrbones
-	mob_name = "Mr. Bones"
-	mob_gender = MALE
+	corpse = /obj/effect/decal/remains
+	lore = list("Hello, I am Mr. Bones!",
+				"The ride never ends!",
+				"I'd really like a refreshing carton of milk!",
+				"I'm willing to play big prices for BONES! Need materials to make merch, eh?"
+				)
+	wanted_items = list(/obj/item/reagent_containers/food/condiment/milk = 1000,
+						/obj/item/stack/sheet/bone = 420)
