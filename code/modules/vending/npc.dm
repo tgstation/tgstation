@@ -48,6 +48,12 @@
 	. = ..()
 	face_atom(user)
 
+/obj/machinery/vending/npc/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	face_atom(usr)
+
 /obj/machinery/vending/npc/mrbones
 	name = "Mr. Bones"
 	desc = "The ride never ends!"
