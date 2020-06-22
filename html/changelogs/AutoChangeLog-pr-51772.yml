@@ -1,0 +1,4 @@
+author: "Kathy Ryals"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Box wires and pipes near R&D, as well as the door that got deleted."
