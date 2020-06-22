@@ -36,7 +36,7 @@
 	if(trait_path)
 		stored_trait = new trait_path
 	else
-		stored_trait = new /datum/plant_gene/trait/repeated_harvest 
+		stored_trait = new /datum/plant_gene/trait/repeated_harvest
 	icon_state = pick(
 		10 ; "graft_plant" , \
 		5 ; "graft_flower" , \
@@ -62,3 +62,14 @@
 	if(stored_trait)
 		text += "- Graftable Traits: [stored_trait.get_name()] -\n"
 	return text
+
+/obj/item/graft/eyes //I refuse to appologise for art
+	name = "Dusty Plant Graft"
+	parent_name = "George Melons"
+	lifespan = 20
+	endurance = 20
+	production = 5
+	weed_rate = 5
+	weed_chance = 10
+	yield = 5
+	stored_trait = /datum/plant_gene/trait/eyes

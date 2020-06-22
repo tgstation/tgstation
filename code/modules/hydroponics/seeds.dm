@@ -233,7 +233,10 @@
 			if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
 				var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
 				data = grown_edible.tastes
-
+				for(var/i in genes)
+					if(istype(i, /datum/plant_gene/trait/brewing) && grown_edible.distill_reagent)
+						T.reagents.add_reagent(grown_edible.distill_reagent, amount)
+						continue
 		T.reagents.add_reagent(rid, amount, data)
 
 

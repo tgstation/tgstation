@@ -160,6 +160,7 @@
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 30
+	graft_gene = /datum/plant_gene/trait/eyes
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
 	seed = /obj/item/seeds/plump/walkingmushroom
