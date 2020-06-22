@@ -9,6 +9,7 @@
 	severity = WOUND_SEVERITY_LOSS
 	threshold_minimum = 180
 	status_effect_type = null
+	scarring_descriptions = list("is several skintone shades paler than the rest of the body", "is a gruesome patchwork of artificial flesh", "has a large series of attachment scars at the articulation points")
 
 /datum/wound/pierce/loss
 	name = "Dismembered"
@@ -19,6 +20,7 @@
 	severity = WOUND_SEVERITY_LOSS
 	threshold_minimum = 180
 	status_effect_type = null
+	scarring_descriptions = list("is several skintone shades paler than the rest of the body", "is a gruesome patchwork of artificial flesh", "has a large series of attachment scars at the articulation points")
 
 /datum/wound/blunt/loss
 	name = "Dismembered"
@@ -29,3 +31,4 @@
 	severity = WOUND_SEVERITY_LOSS
 	threshold_minimum = 180
 	status_effect_type = null
+	scarring_descriptions = list("is several skintone shades paler than the rest of the body", "is a gruesome patchwork of artificial flesh", "has a large series of attachment scars at the articulation points")

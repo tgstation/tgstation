@@ -244,7 +244,8 @@
 
 		// if both the skin and the bone are destroyed, and we're doing more than 10 damage, we're ripe to try dismembering
 		else if(mangled_state == BODYPART_MANGLED_BOTH && wounding_dmg >= DISMEMBER_MINIMUM_DAMAGE)
-			try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+			if(try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+				return
 
 
 	// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage

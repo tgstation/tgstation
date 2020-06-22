@@ -1168,7 +1168,7 @@
 			else
 				wound_type = forced_type
 		else
-			wound_type = pick(WOUND_LIST_BLUNT + WOUND_LIST_SLASH + WOUND_LIST_BURN)
+			wound_type = pick(WOUND_LIST_BLUNT + WOUND_LIST_SLASH + WOUND_LIST_BURN + WOUND_LIST_PIERCE)
 
 		var/datum/wound/W = new wound_type
 		S.generate(BP, W)

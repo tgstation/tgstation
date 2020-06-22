@@ -26,6 +26,9 @@
 	/// If we let off blood when hit, the max blood lost is this * the incoming damage
 	var/internal_bleeding_coefficient
 
+/datum/wound/pierce/wound_injury(datum/wound/old_wound)
+	blood_flow = initial_flow
+
 /datum/wound/pierce/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat == DEAD || wounding_dmg < 5)
 		return

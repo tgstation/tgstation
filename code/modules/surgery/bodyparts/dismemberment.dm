@@ -196,6 +196,9 @@
 			base_chance += 10
 			break
 
+	if(!prob(base_chance))
+		return
+
 	var/datum/wound/dismembering
 	switch(wounding_type)
 		if(WOUND_BLUNT)
@@ -467,5 +470,7 @@
 			qdel(L)
 			return FALSE
 		var/datum/scar/S = new
-		S.generate_amputated(L)
+		var/datum/wound/slash/loss/phantom_loss = new // stolen valor, really
+		S.generate(L, phantom_loss)
+		QDEL_NULL(phantom_loss)
 		return TRUE

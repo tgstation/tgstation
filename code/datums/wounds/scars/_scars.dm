@@ -64,22 +64,7 @@
 			visibility = 5
 		if(WOUND_SEVERITY_LOSS)
 			visibility = 7
-
-/datum/scar/proc/generate_amputated(obj/item/bodypart/BP)
-	if(!(BP.body_zone in applicable_zones))
-		qdel(src)
-		return
-	limb = BP
-	severity = WOUND_SEVERITY_LOSS
-	if(limb.owner)
-		victim = limb.owner
-	LAZYADD(limb.scars, src)
-	if(victim)
-		LAZYADD(victim.all_scars, src)
-
-	description = pick(list("is several skintone shades paler than the rest of the body", "is a gruesome patchwork of artificial flesh", "has a large series of attachment scars at the articulation points"))
-	precise_location = "amputation"
-	visibility = 7
+			precise_location = "amputation"
 
 /// Used when we finalize a scar from a healing cut
 /datum/scar/proc/lazy_attach(obj/item/bodypart/BP, datum/wound/W)
@@ -110,7 +95,6 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			visibility = 5
 		if(WOUND_SEVERITY_LOSS)
-			//precise_location = "amputation" // for scar saving/loading reasons
 			visibility = 7
 	return TRUE
 
