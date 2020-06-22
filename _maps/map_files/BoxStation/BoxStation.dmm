@@ -24603,7 +24603,16 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "buH" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "buI" = (
@@ -44810,6 +44819,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"gWc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/door/airlock/research{
+	name = "Research Access";
+	req_access_txt = "47"
+	},
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "gWd" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -95859,7 +95885,7 @@ bpS
 bsO
 bfV
 bvx
-buH
+gWc
 byf
 byf
 byf
