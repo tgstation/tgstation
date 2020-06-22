@@ -53,7 +53,7 @@
 			target.visible_message("<span class='danger'>[user] squirts something into [target]'s eyes!</span>", \
 									"<span class='userdanger'>[user] squirts something into your eyes!</span>")
 
-			reagents.reaction(target, TOUCH, fraction)
+			reagents.expose(target, TOUCH, fraction)
 			var/mob/M = target
 			var/R
 			if(reagents)

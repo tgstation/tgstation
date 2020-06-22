@@ -1,7 +1,0 @@
-author: "WarlockD"
-delete-after: True
-changes: 
-  - bugfix: "Preview works now"
-  - bugfix: "Clicking on \"save\" now previews correctly"
-  - tweak: "Form fields now sized correctly"
-  - tweak: "Form fields now save the data"
