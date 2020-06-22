@@ -1,0 +1,5 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - rscadd: "Nuke Ops (and Lone Ops) now start with a Syndicate-themed tablet, rather than the pinpointer. The Syndicate tablet comes pre-installed with an app that replaces the function of disk pinpointers."
+  - rscadd: "Lifeline and Fission360, the apps that track suit sensors and nuke disks respectively, now show the tracking status on the screen of the tablet/laptop object itself, without needing to keep the window open."
