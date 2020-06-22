@@ -489,7 +489,7 @@
 	name = "Auto-Distilling Composition"
 
 /datum/plant_gene/trait/eyes
-	name = "Occulary Mimicry"
+	name = "Oculary Mimicry"
 	var/mutable_appearance/googly
 
 /datum/plant_gene/trait/eyes/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)

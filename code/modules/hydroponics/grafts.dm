@@ -62,14 +62,3 @@
 	if(stored_trait)
 		text += "- Graftable Traits: [stored_trait.get_name()] -\n"
 	return text
-
-/obj/item/graft/eyes //I refuse to appologise for art
-	name = "Dusty Plant Graft"
-	parent_name = "George Melons"
-	lifespan = 20
-	endurance = 20
-	production = 5
-	weed_rate = 5
-	weed_chance = 10
-	yield = 5
-	stored_trait = /datum/plant_gene/trait/eyes

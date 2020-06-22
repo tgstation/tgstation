@@ -97,4 +97,4 @@
 	desc = "The water within this melon has been compressed and fermented into rich alcohol."
 	icon_state = "barrelmelon"
 	filling_color = "#b47b31"
-	distill_reagent = /datum/reagent/medicine/antihol //You can call it a stack overflow.
+	distill_reagent = /datum/reagent/medicine/antihol //You can call it a integer overflow.
