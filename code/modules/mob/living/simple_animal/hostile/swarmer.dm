@@ -597,7 +597,7 @@
 			if(iscyborg(L))
 				L.Paralyze(100)
 			qdel(src)
-	..()
+	return ..()
 
 /**
   * Called when a swarmer attempts to create a trap
