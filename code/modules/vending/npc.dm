@@ -61,6 +61,11 @@
 /obj/machinery/vending/npc/emag_act(mob/user)
 	return
 
+/obj/machinery/vending/npc/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(istype(AM, /obj/item))
+		return
+	..()
+
 /obj/machinery/vending/npc/interact(mob/user)
 	face_atom(user)
 	var/list/npc_options = list(
