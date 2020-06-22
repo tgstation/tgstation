@@ -92,7 +92,7 @@
 		log_combat(user, M, "fed", reagents.log_list())
 
 	var/fraction = min(10/reagents.total_volume, 1)
-	reagents.reaction(M, INGEST, fraction)
+	reagents.expose(M, INGEST, fraction)
 	reagents.trans_to(M, 10, transfered_by = user)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return 1

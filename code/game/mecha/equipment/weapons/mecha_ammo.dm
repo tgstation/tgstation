@@ -9,7 +9,7 @@
 	var/rounds = 0
 	var/round_term = "round"
 	var/direct_load //For weapons where we re-load the weapon itself rather than adding to the ammo storage.
-	var/load_audio = "sound/weapons/gun_magazine_insert_empty_1.ogg"
+	var/load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
 	var/ammo_type
 
 /obj/item/mecha_ammo/proc/update_name()
@@ -62,7 +62,7 @@
 	rounds = 6
 	round_term = "missile"
 	direct_load = TRUE
-	load_audio = "sound/weapons/bulletinsert.ogg"
+	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
 	ammo_type = "missiles_br"
 
 /obj/item/mecha_ammo/missiles_he
@@ -72,7 +72,7 @@
 	rounds = 8
 	round_term = "missile"
 	direct_load = TRUE
-	load_audio = "sound/weapons/bulletinsert.ogg"
+	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
 	ammo_type = "missiles_he"
 
 

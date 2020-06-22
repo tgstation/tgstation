@@ -16,7 +16,7 @@
 	color = "#8BA6E9"
 	taste_description = "brain freeze"
 
-/datum/reagent/blob/cryogenic_poison/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/cryogenic_poison/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	if(M.reagents)
 		M.reagents.add_reagent(/datum/reagent/consumable/frostoil, 0.3*reac_volume)
