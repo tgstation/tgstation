@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - tweak: "Obsession picture objective no longer needs the obsessed themselves to be in the picture."
-  - bugfix: "Obsession picture objective now works properly."
