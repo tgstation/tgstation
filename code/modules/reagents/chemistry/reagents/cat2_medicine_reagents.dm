@@ -189,7 +189,7 @@
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/hercuri/reaction_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
+/datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
 	if(method != VAPOR)
 		return
 
@@ -412,7 +412,7 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/c2/instabitaluri/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/c2/instabitaluri/expose_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		var/mob/living/carbon/carbies = M
 		if (carbies.stat == DEAD)

@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Belts in Delta EVA and the Ashwalker Ruins no longer show up as ERRORs."
