@@ -50,8 +50,6 @@
 
 /obj/machinery/vending/npc/ui_act(action, params)
 	. = ..()
-	if(.)
-		return
 	face_atom(usr)
 
 /obj/machinery/vending/npc/mrbones
