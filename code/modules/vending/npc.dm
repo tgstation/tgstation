@@ -1,3 +1,4 @@
+//Vending NPC's, they are vendors that seem a bit more human, might be useful for mapping/admin events
 /obj/machinery/vending/npc
 	name = "Vending NPC"
 	desc = "Come buy some!"
@@ -13,13 +14,14 @@
 	verb_ask = "asks"
 	verb_exclaim = "exclaims"
 	speech_span = null
-	age_restrictions = FALSE
+	age_restrictions = FALSE //hey kid, wanna buy some?
 	use_power = NO_POWER_USE
 	onstation_override = TRUE
 	vending_sound = 'sound/effects/cashregister.ogg'
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "faceless"
-	var/corpse
+	///Corpse spawned when vendor is deconstructed (MURDERED)
+	var/corpse = /obj/effect/mob_spawn/human/corpse
 
 /obj/machinery/vending/npc/Initialize()
 	. = ..()
@@ -31,11 +33,6 @@
 /obj/machinery/vending/npc/attackby(obj/item/I, mob/user, params)
 	return
 
-/obj/machinery/vending/npc/Destroy()
-	if(corpse)
-		new corpse(src)
-	return ..()
-
 /obj/machinery/vending/npc/deconstruct(disassembled = TRUE)
 	if(corpse)
 		new corpse(src)
@@ -46,6 +43,10 @@
 
 /obj/machinery/vending/npc/emag_act(mob/user)
 	return
+
+/obj/machinery/vending/npc/attack_hand(mob/user)
+	. = ..()
+	face_atom(user)
 
 /obj/machinery/vending/npc/mrbones
 	name = "Mr. Bones"
