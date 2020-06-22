@@ -372,7 +372,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			LAZYADD(last_three_move, player_stance)
 		if(3)
 			for(var/i = 1; i < LAZYLEN(last_three_move); i++)
-				last_three_move[i] = LAZYACCESS(last_three_move, i + 1)
+				last_three_move[i] = last_three_move[i + 1]
 			last_three_move[LAZYLEN(last_three_move)] = player_stance
 
 		if(4 to INFINITY)
@@ -573,7 +573,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 
-	user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
+	if(gameover)
+		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 
 
 ///used to check if the last three move of the player are the one we want in the right order and if the passive's weakpoint has been triggered yet
