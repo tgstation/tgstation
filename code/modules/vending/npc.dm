@@ -78,6 +78,7 @@
 			return try_sell(user)
 		if("Talk")
 			return deep_lore(user)
+	face_atom(user)
 	return FALSE
 
 /obj/machinery/vending/npc/ui_act(action, params)
