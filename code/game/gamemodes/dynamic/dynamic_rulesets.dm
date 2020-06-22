@@ -196,7 +196,7 @@
 /// Checks if candidates are connected and if they are banned or don't want to be the antagonist.
 /datum/dynamic_ruleset/roundstart/trim_candidates()
 	for(var/mob/dead/new_player/P in candidates)
-		if(!P.client || !P.mind) // Are they connected?
+		if (!P.client || !P.mind) // Are they connected?
 			candidates.Remove(P)
 		else if(!mode.check_age(P.client, minimum_required_age))
 			candidates.Remove(P)
