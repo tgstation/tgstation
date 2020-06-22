@@ -230,7 +230,7 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/rezadone/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/medicine/rezadone/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	. = ..()
 	if(iscarbon(M))
 		var/mob/living/carbon/patient = M
@@ -323,7 +323,7 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/medicine/mine_salve/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
 			M.adjust_nutrition(-5)
@@ -756,7 +756,7 @@
 	if(chems.has_reagent(type, 1))
 		mytray.spawnplant()
 
-/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/medicine/strange_reagent/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat != DEAD)
 		return ..()
 	if(M.suiciding || M.hellbound) //they are never coming back
@@ -907,7 +907,7 @@
 	color = "#CC23FF"
 	taste_description = "jelly"
 
-/datum/reagent/medicine/regen_jelly/reaction_mob(mob/living/M, reac_volume)
+/datum/reagent/medicine/regen_jelly/expose_mob(mob/living/M, reac_volume)
 	if(M && ishuman(M) && reac_volume >= 0.5)
 		var/mob/living/carbon/human/H = M
 		H.hair_color = "C2F"
@@ -1272,7 +1272,7 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/polypyr/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/medicine/polypyr/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M) && reac_volume >= 0.5)
 			var/mob/living/carbon/human/H = M
