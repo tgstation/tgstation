@@ -17,7 +17,6 @@
 	var/list/current_setup_text //Redable list of roles in current game
 
 	var/game_id //Used to sync all parts - signup boards, spawns, night curtains, defaults to "mafia"
-	var/list/signed_up = list()
 
 	var/player_outfit = /datum/outfit/mafia //todo some fluffy outfit
 

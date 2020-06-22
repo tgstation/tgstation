@@ -872,7 +872,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mafia_signup()
 
 /mob/dead/observer/proc/mafia_signup()
-	if(!src.client)
+	if(!client)
 		return
 	if(!isobserver(src))
 		to_chat(usr, "<span class='warning'>You must be a ghost to join mafia!</span>")
@@ -880,12 +880,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/datum/mafia_controller/game = GLOB.mafia_games["mafia"] //this needs to change if you want multiple mafia games up at once.
 	if(!game)
 		game = create_mafia_game("mafia")
-	if(src.client in game.signed_up)
-		game.signed_up -= src.client
+	if(src.client in GLOB.mafia_signup)
+		GLOB.mafia_signup -= client
 		to_chat(usr, "<span class='notice'>You unregister from Mafia.</span>")
 		return //don't need warnings, and decreasing signed_up size isn't going to get a game going
 	else
-		game.signed_up += src.client
+		GLOB.mafia_signup += client
 		to_chat(usr, "<span class='notice'>You register to Mafia. Attempting to start game... (If there are not enough players, nothing will happen)</span>")
 	if(game.phase != MAFIA_PHASE_SETUP)
 		to_chat(usr, "<span class='notice'>Mafia is currently in progress, you will be signed up for next round.</span>")
