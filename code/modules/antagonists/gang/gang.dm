@@ -127,7 +127,7 @@
 	if(istype(owner.current, /mob/living/carbon/human))
 		for(var/C in my_gang.free_clothes)
 			var/obj/O = new C(owner.current)
-			O.armor = list("melee" = 7.5, "bullet" = 7.5, "laser" = 7.5, "energy" = 7.5, "bomb" = 7.5, "bio" = 7.5, "rad" = 7.5, "fire" = 7.5, "acid" = 7.5, "wound" = 7.5)
+			O.armor = getArmor(7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5)
 			var/list/slots = list (
 				"backpack" = ITEM_SLOT_BACKPACK,
 				"left pocket" = ITEM_SLOT_LPOCKET,
