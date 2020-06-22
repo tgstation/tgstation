@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	if(isliving(target))
 		if(prob(35))
 			StartAction(30)
-			DisperseTarget(target)
+			PrepareTarget(target)
 		else
 			var/mob/living/L = target
 			L.attack_animal(src)
