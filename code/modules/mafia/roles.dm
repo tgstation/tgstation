@@ -73,59 +73,13 @@
 /datum/mafia_role/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, null, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "MafiaPanel", "Mafia", 500, 500, master_ui, state)
+		ui = new(user, src, ui_key, "MafiaRole", "Help", 500, 500, master_ui, state)
 		ui.set_autoupdate(FALSE)
 		ui.open()
-/*
+
 /datum/mafia_controller/ui_data(mob/user)
 	. = ..()
-	switch(phase)
-		if(MAFIA_PHASE_DAY,MAFIA_PHASE_VOTING)
-			.["phase"] = "Day [turn]"
-		if(MAFIA_PHASE_NIGHT)
-			.["phase"] = "Night [turn]"
-		else
-			.["phase"] = "No Game"
-	if(user.client?.holder)
-		.["admin_controls"] = TRUE //show admin buttons to start/setup/stop
-	if(phase == MAFIA_PHASE_JUDGEMENT)
-		.["judgement_phase"] = TRUE //show judgement section
-	else
-		.["judgement_phase"] = FALSE
-	var/datum/mafia_role/user_role = player_role_lookup[user]
-	if(user_role)
-		.["role_info"] = list("role" = user_role.name,"desc" = user_role.desc, "action_log" = user_role.role_notes)
-		var/actions = list()
-		for(var/action in user_role.actions)
-			if(user_role.validate_action_target(src,action,null))
-				actions += action
-		.["actions"] = actions
-	var/list/player_data = list()
-	for(var/datum/mafia_role/R in all_roles)
-		var/list/player_info = list()
-		var/list/actions = list()
-		//Awful snowflake, could use generalizing
-		if(phase == MAFIA_PHASE_VOTING)
-			player_info["votes"] = get_vote_count(R,"Day")
-			if(R.game_status == MAFIA_ALIVE && R != user_role)
-				actions += "Vote"
-		if(phase == MAFIA_PHASE_NIGHT && user_role.team == MAFIA_TEAM_MAFIA && R.game_status == MAFIA_ALIVE && R.team != MAFIA_TEAM_MAFIA)
-			actions += "Kill Vote"
-		if(user_role)
-			for(var/action in user_role.targeted_actions)
-				if(user_role.validate_action_target(src,action,R))
-					actions += action
-		player_info["name"] = R.body.real_name
-		player_info["ref"] = REF(R)
-		player_info["actions"] = actions
-		player_info["alive"] = R.game_status == MAFIA_ALIVE
-		player_data += list(player_info)
-	.["players"] = player_data
-	.["timeleft"] = next_phase_timer ? timeleft(next_phase_timer) : 0
 
-	//Not sure on this, should this info be visible
-	.["all_roles"] = current_setup_text
-*/
 /datum/mafia_role/detective
 	name = "Detective"
 	desc = "You can investigate a single person each night to reveal their team."

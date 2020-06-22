@@ -489,10 +489,10 @@
 /datum/mafia_controller/proc/try_autostart()
 	if(phase != MAFIA_PHASE_SETUP)
 		return
-	var/min_players = 999 // fairly sure mmo mafia is not a thing and i'm lazy
+	var/min_players = INFINITY // fairly sure mmo mafia is not a thing and i'm lazy
 	for(var/setup in GLOB.mafia_setups)
 		min_players = min(min_players,assoc_value_sum(setup))
-	if(GLOB.mafia_setups >= min_players)
+	if(GLOB.mafia_signup.len >= min_players)//enough people to try and make something
 		basic_setup()
 
 /datum/action/innate/mafia_panel

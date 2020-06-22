@@ -864,6 +864,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(usr, "<span class='warning'>Can't become a pAI candidate while not dead!</span>")
 
+/mob/dead/observer/verb/mafia_game_signup()
+	set category = "Ghost"
+	set name = "Signup for Mafia"
+	set desc = "Sign up for a game of Mafia to pass the time while dead."
+
+	mafia_signup()
+
+/mob/dead/observer/proc/mafia_signup()
+	if(!src.client)
+		return
+	if(!isobserver(src))
+		to_chat(usr, "<span class='warning'>You must be a ghost to join mafia!</span>")
+		return
+	var/datum/mafia_controller/game = GLOB.mafia_games["mafia"] //this needs to change if you want multiple mafia games up at once.
+	if(!game)
+		game = create_mafia_game("mafia")
+	if(src.client in game.signed_up)
+		game.signed_up -= src.client
+		to_chat(usr, "<span class='notice'>You unregister from Mafia.</span>")
+		return //don't need warnings, and decreasing signed_up size isn't going to get a game going
+	else
+		game.signed_up += src.client
+		to_chat(usr, "<span class='notice'>You register to Mafia. Attempting to start game... (If there are not enough players, nothing will happen)</span>")
+	if(game.phase != MAFIA_PHASE_SETUP)
+		to_chat(usr, "<span class='notice'>Mafia is currently in progress, you will be signed up for next round.</span>")
+	else
+		game.try_autostart()
+
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering

@@ -1,0 +1,48 @@
+"a" = (/turf/closed/indestructible/riveted,/area/mafia)
+"b" = (/turf/closed/indestructible/riveted/plastinum,/area/mafia)
+"c" = (/turf/closed/wall/rust,/area/mafia)
+"d" = (/turf/open/floor/plating,/area/mafia)
+"e" = (/turf/open/floor/plating{icon_state = "platingdmg3"},/area/mafia)
+"f" = (/turf/open/floor/plating{icon_state = "panelscorched"},/area/mafia)
+"g" = (/obj/mafia_game_board,/turf/open/floor/plating{icon_state = "platingdmg3"},/area/mafia)
+"h" = (/obj/structure/grille/indestructable,/turf/open/floor/plating,/area/mafia)
+"i" = (/turf/open/floor/plating{icon_state = "platingdmg1"},/area/mafia)
+"j" = (/obj/machinery/door/airlock/maintenance_hatch{max_integrity = 99999; name = "Maintenance"},/obj/effect/mapping_helpers/airlock/locked,/turf/open/floor/plating,/area/mafia)
+"k" = (/obj/mafia_game_board,/turf/open/floor/plating,/area/mafia)
+"l" = (/obj/structure/closet/cabinet{anchored = 1},/turf/open/floor/plasteel/dark,/area/mafia)
+"m" = (/obj/effect/landmark/mafia,/turf/open/floor/plasteel/dark,/area/mafia)
+"n" = (/obj/effect/landmark/mafia,/turf/open/floor/plasteel,/area/mafia)
+"o" = (/obj/structure/closet/cabinet{anchored = 1},/turf/open/floor/plasteel,/area/mafia)
+"p" = (/obj/machinery/door/poddoor/preopen{desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream."; id = "mafia"; max_integrity = 99999; name = "Station Night Shutters"},/turf/closed/indestructible/fakeglass,/area/mafia)
+"q" = (/turf/open/floor/plasteel/dark,/area/mafia)
+"r" = (/turf/open/floor/plasteel,/area/mafia)
+"s" = (/turf/open/floor/fakespace,/area/mafia)
+"t" = (/turf/open/floor/plasteel/solarpanel,/area/mafia)
+"u" = (/obj/effect/baseturf_helper/asteroid,/obj/effect/landmark/mafia/town_center,/turf/open/floor/plasteel/solarpanel,/area/mafia)
+"v" = (/obj/mafia_game_board,/turf/open/floor/plating{icon_state = "panelscorched"},/area/mafia)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaa
+abbbbbbbbbbbbbbbbbbbbba
+abbbbbcccccccccccbbbbba
+abcccccddddedddfcccccba
+abcghiddbbjbjbbdddhkcba
+abchdbbbblmbnobbbbihcba
+abcddbonppqprppmlbddcba
+abcdejrrrbqbrbqqqjddcba
+abcdbbpbrpqprpqbpbbecba
+abcdblmbpppppppbnobdcba
+abcdjqqqqpstsprrrrjdcba
+abcebbpbpptutppbpbbdcba
+abcdjrrrrpstspqqqqjdcba
+abcdbonbpppppppbmlbdcba
+abcdbbpbqprpqprbpbbdcba
+abcddjqqqbrbqbrrrjddcba
+abcddblmpprpqppnobedcba
+abchibbbbonbmlbbbbdhcba
+abckhdddbbjbjbbdddhvcba
+abcccccdddeddiddcccccba
+abbbbbcccccccccccbbbbba
+abbbbbbbbbbbbbbbbbbbbba
+aaaaaaaaaaaaaaaaaaaaaaa
+"}

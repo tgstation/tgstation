@@ -192,3 +192,10 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/fugitive=1,
 		/datum/mafia_role/mafia=2
 	)
+
+/datum/mafia_setup/two_test
+	name = "2 Player Test"
+	roles = list(
+		/datum/mafia_role=1,
+		/datum/mafia_role/mafia=1
+	)
