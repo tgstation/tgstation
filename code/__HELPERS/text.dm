@@ -13,10 +13,6 @@
  * SQL sanitization
  */
 
-// Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
-/proc/sanitizeSQL(t)
-	return SSdbcore.Quote("[t]")
-
 /proc/format_table_name(table as text)
 	return CONFIG_GET(string/feedback_tableprefix) + table
 
@@ -822,11 +818,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	catch
 		return
 
-/proc/num2loadingbar(percent as num, var/numSquares = 20)
-	var/loadstring = ""
-	for (var/i in 1 to numSquares)
-		if (i <= numSquares - percent*numSquares)
-			loadstring += "▮"
-		else
-			loadstring += "▯"
-	return "\[" + loadstring + "]"
+/proc/num2loadingbar(percent as num, var/numSquares = 20, var/reverse = FALSE) 
+	var/loadstring = "" 
+	for (var/i in 1 to numSquares) 
+		var/limit = reverse ? numSquares - percent*numSquares : percent*numSquares
+		if (i <= limit) 
+			loadstring += "█" 
+		else 
+			loadstring += "░" 
+	return "\[" + loadstring + "]" 

@@ -80,7 +80,7 @@
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
-		apply_damage(I.force, I.damtype, affecting)
+		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -128,6 +128,11 @@
 			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 				if(S.next_step(user, user.a_intent))
 					return 1
+
+	for(var/datum/wound/W in all_wounds)
+		if(W.try_handling(user))
+			return 1
+
 	return 0
 
 
@@ -394,16 +399,16 @@
 			Paralyze((stun_pwr*effect_amount)*0.1)
 			Knockdown(stun_pwr*effect_amount)
 
-		if(istype(ears) && (deafen_pwr || damage_pwr))
+		if(ears && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount
 			var/deaf = deafen_pwr * effect_amount
-			adjustEarDamage(ear_damage,deaf)
+			ears.adjustEarDamage(ear_damage,deaf)
 
 			if(ears.damage >= 15)
 				to_chat(src, "<span class='warning'>Your ears start to ring badly!</span>")
 				if(prob(ears.damage - 5))
 					to_chat(src, "<span class='userdanger'>You can't hear anything!</span>")
-					ears.damage = min(ears.damage, ears.maxHealth)
+					ears.damage = min(ears.damage, ears.maxHealth) // does this actually do anything useful? all this would do is set an upper bound on damage, is this supposed to be a max?
 					// you need earmuffs, inacusiate, or replacement
 			else if(ears.damage >= 5)
 				to_chat(src, "<span class='warning'>Your ears start to ring!</span>")
@@ -429,5 +434,31 @@
 /mob/living/carbon/can_hear()
 	. = FALSE
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
-	if(istype(ears) && !ears.deaf)
+	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
 		. = TRUE
+
+
+/mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(isnull(.))
+		return
+	if(. <= 50)
+		if(getOxyLoss() > 50)
+			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+	else if(getOxyLoss() <= 50)
+		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+
+/mob/living/carbon/proc/get_interaction_efficiency(zone)
+	var/obj/item/bodypart/limb = get_bodypart(zone)
+	if(!limb)
+		return
+
+/mob/living/carbon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(isnull(.))
+		return
+	if(. <= 50)
+		if(getOxyLoss() > 50)
+			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+	else if(getOxyLoss() <= 50)
+		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)

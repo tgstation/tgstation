@@ -64,6 +64,7 @@
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
 	tackle = TT
+	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
@@ -420,7 +421,7 @@
 
 ///A special case for splatting for handling windows
 /datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)
-	playsound(user, "sound/effects/Glasshit.ogg", 140, TRUE)
+	playsound(user, 'sound/effects/Glasshit.ogg', 140, TRUE)
 
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i = 0, i < speed, i++)

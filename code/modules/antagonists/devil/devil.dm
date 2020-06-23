@@ -91,6 +91,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	job_rank = ROLE_DEVIL
 	antag_hud_type = ANTAG_HUD_DEVIL
 	antag_hud_name = "devil"
+	show_to_ghosts = TRUE
 	var/obligation
 	var/ban
 	var/bane
@@ -145,7 +146,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	if(GLOB.allDevils[lowertext(name)])
 		return GLOB.allDevils[lowertext(name)]
 	else
-		var/datum/fakeDevil/devil = new /datum/fakeDevil(name)
+		var/datum/fake_devil/devil = new /datum/fake_devil(name)
 		GLOB.allDevils[lowertext(name)] = devil
 		return devil
 
@@ -556,7 +557,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	return parts.Join("<br>")
 
 //A simple super light weight datum for the codex gigas.
-/datum/fakeDevil
+/datum/fake_devil
 	var/truename
 	var/bane
 	var/obligation
@@ -564,7 +565,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/banish
 	var/ascendable
 
-/datum/fakeDevil/New(name = randomDevilName())
+/datum/fake_devil/New(name = randomDevilName())
 	truename = name
 	bane = randomdevilbane()
 	obligation = randomdevilobligation()

@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/boss
-	name = "A Perfectly Generic Boss Placeholder"
+	name = "\improper A Perfectly Generic Boss Placeholder"
 	desc = ""
 	robust_searching = 1
 	stat_attack = UNCONSCIOUS

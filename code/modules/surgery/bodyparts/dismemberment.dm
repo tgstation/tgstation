@@ -16,9 +16,10 @@
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] is violently dismembered!</B></span>")
 	C.emote("scream")
+	playsound(get_turf(C), 'sound/effects/dismember.ogg', 80, TRUE)
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
 
@@ -81,11 +82,12 @@
 
 
 //limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special)
+/obj/item/bodypart/proc/drop_limb(special, dismembered)
 	if(!owner)
 		return
 	var/atom/Tsec = owner.drop_location()
 	var/mob/living/carbon/C = owner
+	SEND_SIGNAL(C, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
 	update_limb(1)
 	C.bodyparts -= src
 
@@ -95,6 +97,15 @@
 			// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
 			C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 			C.hand_bodyparts[held_index] = null
+
+	for(var/thing in scars)
+		var/datum/scar/S = thing
+		S.victim = null
+		LAZYREMOVE(owner.all_scars, S)
+
+	for(var/thing in wounds)
+		var/datum/wound/W = thing
+		W.remove_wound(TRUE)
 
 	owner = null
 
@@ -278,7 +289,7 @@
 		O.drop_limb(1)
 
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special)
-	if(SEND_SIGNAL(C, COMSIG_LIVING_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
+	if(SEND_SIGNAL(C, COMSIG_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		return FALSE
 	. = TRUE
 	moveToNullspace()
@@ -307,6 +318,15 @@
 
 	for(var/obj/item/organ/O in contents)
 		O.Insert(C)
+
+	for(var/thing in scars)
+		var/datum/scar/S = thing
+		S.victim = C
+		LAZYADD(C.all_scars, thing)
+
+	for(var/i in wounds)
+		var/datum/wound/W = i
+		W.apply_wound(src, TRUE)
 
 	update_bodypart_damage_state()
 

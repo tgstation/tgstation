@@ -76,6 +76,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
+#define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
@@ -186,7 +187,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good....
 
 //non-mob traits
-#define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+#define TRAIT_PARALYSIS				"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
 
 ///Used for managing KEEP_TOGETHER in [appearance_flags]
 #define TRAIT_KEEP_TOGETHER 	"keep-together"
@@ -234,6 +235,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GENERIC_ITEM_TRAIT "generic_item"
 #define UNCONSCIOUS_BLIND "unconscious_blind"
 #define EYE_DAMAGE "eye_damage"
+#define EAR_DAMAGE "ear_damage"
 #define GENETIC_MUTATION "genetic"
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
@@ -257,6 +259,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
+#define CRIT_HEALTH_TRAIT "crit_health"
+#define OXYLOSS_TRAIT "oxyloss"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"

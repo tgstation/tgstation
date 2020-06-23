@@ -49,14 +49,14 @@
 	var/list/reagents_add
 	// Format: "reagent_id" = potency multiplier
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
-	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
+	// Total amount of any reagent in plant is calculated by formula: max(round(potency * multiplier), 1)
 	///If the chance below passes, then this many weeds sprout during growth
 	var/weed_rate = 1
 	///Percentage chance per tray update to grow weeds
 	var/weed_chance = 5
 	///Determines if the plant has had a graft removed or not.
 	var/grafted = FALSE
-	///Trait to be applied when grafting a plant.
+	///Type-path of trait to be applied when grafting a plant.
 	var/graft_gene
 
 /obj/item/seeds/Initialize(mapload, nogenes = 0)
@@ -562,9 +562,7 @@
   * Returns the created graft.
   */
 /obj/item/seeds/proc/create_graft()
-	var/obj/item/graft/snip = new
-	if(graft_gene)
-		snip.stored_trait = graft_gene
+	var/obj/item/graft/snip = new(loc, graft_gene)
 	snip.parent_seed = src
 	snip.parent_name = plantname
 	snip.name += "([plantname])"
@@ -592,7 +590,7 @@
 /obj/item/seeds/proc/apply_graft(obj/item/graft/snip)
 	var/datum/plant_gene/trait/new_trait = snip.stored_trait
 	if(new_trait?.can_add(src))
-		genes += new_trait
+		genes += new_trait.Copy()
 
 	// Adjust stats based on graft stats.
 	src.lifespan	= round(clamp(max(src.lifespan,		(src.lifespan	+(2/3)*(snip.lifespan	-src.lifespan)		)),0,100))

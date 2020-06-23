@@ -48,7 +48,6 @@
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
-	var/bleed_rate = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/name_override //For temporary visible name changes
@@ -63,3 +62,5 @@
 	var/account_id
 
 	var/hardcore_survival_score = 0
+	/// For agendered spessmen, which body type to use
+	var/body_type = MALE

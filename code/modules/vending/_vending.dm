@@ -494,7 +494,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	var/crit_case
 	if(crit)
-		crit_case = rand(1,5)
+		crit_case = rand(1,6)
 
 	if(forcecrit)
 		crit_case = forcecrit
@@ -507,7 +507,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(istype(C))
 				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
 
-				if(crit_case != 5) // the head asplode case has its own description
+				if(crit_case < 5) // the body/head asplode case has its own description
 					C.visible_message("<span class='danger'>[C] is crushed by [src]!</span>", \
 						"<span class='userdanger'>You are crushed by [src]!</span>")
 
@@ -517,10 +517,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 						C.bleed(150)
 						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
 						if(l)
-							l.receive_damage(brute=200, updating_health=TRUE)
+							l.receive_damage(brute=200)
 						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
 						if(r)
-							r.receive_damage(brute=200, updating_health=TRUE)
+							r.receive_damage(brute=200)
 						if(l || r)
 							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
 								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
@@ -542,7 +542,18 @@ GLOBAL_LIST_EMPTY(vending_products)
 						// the new paraplegic gets like 4 lines of losing their legs so skip them
 						visible_message("<span class='danger'>[C]'s spinal cord is obliterated with a sickening crunch!</span>", ignored_mobs = list(C))
 						C.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
-					if(5) // skull squish!
+					if(5) // limb squish!
+						for(var/i in C.bodyparts)
+							var/obj/item/bodypart/squish_part = i
+							if(squish_part.is_organic_limb())
+								//var/type_wound = pick(WOUND_LIST_BONE)
+								var/type_wound = pick(list(/datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/moderate))
+								squish_part.force_wound_upwards(type_wound)
+							else
+								squish_part.receive_damage(brute=30)
+						C.visible_message("<span class='danger'>[C]'s body is maimed underneath the mass of [src]!</span>", \
+							"<span class='userdanger'>Your body is maimed underneath the mass of [src]!</span>")
+					if(6) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
 							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath [src]!</span>", \
@@ -552,7 +563,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 							qdel(O)
 							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
 
-				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
+				if(prob(30))
+					C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE) // the 30% chance to spread the damage means you escape breaking any bones
+				else
+					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5) // otherwise, deal it to 2 random limbs (or the same one) which will likely shatter something
+					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5)
 				C.AddElement(/datum/element/squish, 80 SECONDS)
 			else
 				L.visible_message("<span class='danger'>[L] is crushed by [src]!</span>", \
