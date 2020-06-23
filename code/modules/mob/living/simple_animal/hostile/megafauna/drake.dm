@@ -4,8 +4,8 @@
 #define SWOOP_DAMAGEABLE 1
 #define SWOOP_INVULNERABLE 2
 
-#define DRAKE_FIRE_TEMP 500
-#define DRAKE_FIRE_EXPOSURE 50
+#define DRAKE_FIRE_TEMP 500 //used whenever the drake generates a hotspot
+#define DRAKE_FIRE_EXPOSURE 50 //used whenever the drake generates a hotspot
 
 /*
 
