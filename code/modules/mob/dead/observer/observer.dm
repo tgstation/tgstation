@@ -881,11 +881,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!game)
 		game = create_mafia_game("mafia")
 	if(src.client in GLOB.mafia_signup)
-		GLOB.mafia_signup -= client
+		GLOB.mafia_signup -= ckey
 		to_chat(usr, "<span class='notice'>You unregister from Mafia.</span>")
 		return //don't need warnings, and decreasing signed_up size isn't going to get a game going
 	else
-		GLOB.mafia_signup += client
+		GLOB.mafia_signup[ckey] = client
 		to_chat(usr, "<span class='notice'>You register to Mafia. Attempting to start game... (If there are not enough players, nothing will happen)</span>")
 	if(game.phase != MAFIA_PHASE_SETUP)
 		to_chat(usr, "<span class='notice'>Mafia is currently in progress, you will be signed up for next round.</span>")

@@ -453,12 +453,12 @@
 	var/ready_count = length(GLOB.mafia_signup)
 	var/list/setup = find_best_setup(ready_count)
 	if(!setup)
+		to_chat(world,"no setup found")
 		return
 	var/req_players = assoc_value_sum(setup) //12
 
 	//final list for all the players who will be in this game
 	var/list/filtered_keys = list()
-
 	//cuts invalid players from signups (disconnected/not a ghost)
 	var/list/possible_keys = list()
 	for(var/key in GLOB.mafia_signup)
@@ -469,9 +469,12 @@
 				continue
 		GLOB.mafia_signup -= key //not valid to play when we checked so remove them from signups
 
+	to_chat(world,"here4")
 	//if there were not enough players, don't start. we already trimmed the list to now hold only valid signups
 	if(length(possible_keys) < req_players)
+		to_chat(world,"not enough peeps")
 		return
+	to_chat(world,"PASSED return")
 
 	//if there were too many players, still start but only make filtered keys as big as it needs to be (cut excess)
 	//also removes people who do get into final player list from the signup so they have to sign up again when game ends
