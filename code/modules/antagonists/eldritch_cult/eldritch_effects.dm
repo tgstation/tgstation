@@ -85,47 +85,29 @@
 /**
   * #Reality smash tracker
   *
-  * Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
+  * Stupid fucking data holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
   *
   * Tracks relevant data, generates relevant data, useful tool
   */
 /datum/reality_smash_tracker
-	///list of tracked reality smashes
-	var/list/smashes = list()
-	///List of mobs with ability to see the smashes
-	var/list/targets = list()
+	///How many smashes exist?
+	var/smash_num = 0
+	///How many targets do we track?
+	var/target_amount = 0
 
 /datum/reality_smash_tracker/Destroy(force, ...)
 	if(GLOB.reality_smash_track == src)
-		stack_trace("/datum/reality_smash_tracker was deleted. Heretics may no longer access any influences. Fix it or call coder support")
-	QDEL_LIST(smashes)
-	targets.Cut()
+		stack_trace("/datum/reality_smash_tracker was deleted. This should never ever happen, no new influences may be generated.")
 	return ..()
-
-/**
-  * Automatically fixes the target and smash network
-  *
-  * Fixes any bugs that are caused by late Generate() or exchanging clients
-  */
-/datum/reality_smash_tracker/proc/ReworkNetwork()
-	listclearnulls(smashes)
-	for(var/mind in targets)
-		if(isnull(mind))
-			stack_trace("A null somehow landed in a list of minds")
-			continue
-		for(var/X in smashes)
-			var/obj/effect/reality_smash/reality_smash = X
-			reality_smash.AddMind(mind)
 
 /**
   * Generates a set amount of reality smashes based on the N value
   *
   * Automatically creates more reality smashes
   */
-/datum/reality_smash_tracker/proc/_Generate()
-	var/targ_len = length(targets)
-	var/smash_len = length(smashes)
-	var/number = targ_len * 6 - smash_len
+/datum/reality_smash_tracker/proc/Generate(_num = 1)
+	target_amount += _num
+	var/number = target_amount * 7 - smash_num
 
 	for(var/i in 0 to number)
 
@@ -135,35 +117,8 @@
 		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			continue
-		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location.loc)
-		smashes += RS
-	ReworkNetwork()
-
-
-/**
-  * Adds a mind to the list of people that can see the reality smashes
-  *
-  * Use this whenever you want to add someone to the list
-  */
-/datum/reality_smash_tracker/proc/AddMind(var/datum/mind/M)
-	RegisterSignal(M.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
-	targets |= M
-	_Generate()
-	for(var/X in smashes)
-		var/obj/effect/reality_smash/reality_smash = X
-		reality_smash.AddMind(M)
-
-
-/**
-  * Removes a mind from the list of people that can see the reality smashes
-  *
-  * Use this whenever you want to remove someone from the list
-  */
-/datum/reality_smash_tracker/proc/RemoveMind(var/datum/mind/M)
-	UnregisterSignal(M.current,COMSIG_MOB_LOGIN)
-	targets -= M
-	for(var/obj/effect/reality_smash/RS in smashes)
-		RS.RemoveMind(M)
+		new /obj/effect/reality_smash(chosen_location)
+		smash_num++
 
 /obj/effect/broken_illusion
 	name = "Pierced reality"
@@ -171,6 +126,16 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/effect/broken_illusion/attack_tk_grab(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if(IS_HERETIC(human_user))
+		to_chat(human_user,"<span class='warning'>You better know not to tempt the forces out of your control!</span>")
+	else
+		to_chat(human_user,"<span class='boldwarning'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
+		human_user.gib()
 
 /obj/effect/broken_illusion/examine(mob/user)
 	if(!IS_HERETIC(user) && ishuman(user))
@@ -182,18 +147,13 @@
 /obj/effect/reality_smash
 	name = "/improper reality smash"
 	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "reality_smash"
 	anchored = TRUE
+	invisibility = INVISIBILITY_LEVEL_ONE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
-	var/image_state = "reality_smash"
-	///Who can see us?
-	var/list/minds = list()
-	///Tracked image
-	var/image/img
 
 /obj/effect/reality_smash/Initialize()
 	. = ..()
-	img = image(icon, src, image_state, OBJ_LAYER)
 	generate_name()
 
 /obj/effect/reality_smash/Destroy()
@@ -202,35 +162,12 @@
 
 ///Custom effect that happens on destruction
 /obj/effect/reality_smash/proc/on_destroy()
-	for(var/cm in minds)
-		var/datum/mind/cultie = cm
-		if(cultie.current?.client)
-			cultie.current.client.images -= img
-		//clear the list
-		minds -= cultie
-	GLOB.reality_smash_track.smashes -= src
-	img = null
+	GLOB.reality_smash_track.smash_num--
 	new /obj/effect/broken_illusion(drop_location())
-
-///Makes the mind able to see this effect
-/obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)
-	minds |= cultie
-	if(cultie.current.client)
-		cultie.current.client.images |= img
-
-
-
-///Makes the mind not able to see this effect
-/obj/effect/reality_smash/proc/RemoveMind(var/datum/mind/cultie)
-	minds -= cultie
-	if(cultie.current.client)
-		cultie.current.client.images -= img
-
-
 
 ///Generates random name
 /obj/effect/reality_smash/proc/generate_name()
-	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful")
-	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze")
+	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful","Arrogant","Threatening","Peaceful","Aggressive")
+	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze","Grasp","Sight","Whisper","Flow","Touch","Veil")
 
 	name = pick(prefix) + " " + pick(postfix)

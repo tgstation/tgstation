@@ -33,7 +33,7 @@
 		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
 		gain_knowledge(/datum/eldritch_knowledge/living_heart)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
-	GLOB.reality_smash_track.AddMind(owner)
+	GLOB.reality_smash_track.Generate()
 	START_PROCESSING(SSprocessing,src)
 	if(give_equipment)
 		equip_cultist()
@@ -49,7 +49,7 @@
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
-	GLOB.reality_smash_track.RemoveMind(owner)
+	GLOB.reality_smash_track.target_amount--
 	STOP_PROCESSING(SSprocessing,src)
 
 	return ..()
@@ -121,8 +121,10 @@
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
+
 	if(mob_override)
 		current = mob_override
+	current.see_invisible = INVISIBILITY_LEVEL_ONE
 	add_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "heretics"
@@ -132,6 +134,7 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
+	current.see_invisible = initial(current.see_invisible)
 	remove_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "heretics"

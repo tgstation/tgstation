@@ -4,8 +4,8 @@
 
 #define SEE_INVISIBLE_LIVING 25
 
-//#define SEE_INVISIBLE_LEVEL_ONE 35 //currently unused
-//#define INVISIBILITY_LEVEL_ONE 35 //currently unused
+#define SEE_INVISIBLE_LEVEL_ONE 35
+#define INVISIBILITY_LEVEL_ONE 35
 
 //#define SEE_INVISIBLE_LEVEL_TWO 45 //currently unused
 //#define INVISIBILITY_LEVEL_TWO 45 //currently unused
