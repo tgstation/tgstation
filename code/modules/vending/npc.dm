@@ -1,4 +1,10 @@
-//Vending NPC's, they are vendors that seem a bit more human, might be useful for mapping/admin events
+/**
+  * # Vending NPC
+  *
+  * A vendor that has some dialogue options with radials, allows for selling items and is immune to regular vendor stuff like tipping, using power or being deconstructed
+  *
+  */
+
 /obj/machinery/vending/npc
 	name = "Vending NPC"
 	desc = "Come buy some!"
@@ -28,7 +34,7 @@
 	var/list/lore = list("Hello! I am the test NPC.",
 						"Man, shut the fuck up."
 						)
-	///List of items able to be sold to the npc
+	///List of items able to be sold to the NPC
 	var/list/wanted_items = list()
 
 /obj/machinery/vending/npc/Initialize()
@@ -82,7 +88,7 @@
 		if("Sell")
 			return try_sell(user)
 		if("Talk")
-			return deep_lore(user)
+			return deep_lore()
 	face_atom(user)
 	return FALSE
 
@@ -90,6 +96,13 @@
 	. = ..()
 	face_atom(usr)
 
+/**
+  * Checks if the user is ok to use the radial
+  *
+  * Checks if the user is not a mob or is incapacitated or not adjacent to the source of the radial, in those cases returns FALSE, otherwise returns TRUE
+  * Arguments:
+  * * user - The mob checking the menu
+  */
 /obj/machinery/vending/npc/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
@@ -97,16 +110,29 @@
 		return FALSE
 	return TRUE
 
+/**
+  * Tries to call sell_item on one of the user's held items, if fail gives a chat message
+  *
+  * Gets both items in the user's hands, and then tries to call sell_item on them, if both fail, he gives a chat message
+  * Arguments:
+  * * user - The mob trying to sell something
+  */
 /obj/machinery/vending/npc/proc/try_sell(mob/user)
 	var/obj/item/activehanditem = user.get_active_held_item()
 	var/obj/item/inactivehanditem = user.get_inactive_held_item()
 	if(!(sell_item(user, activehanditem)||sell_item(user, inactivehanditem)))
 		say("Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk.")
 
-/obj/machinery/vending/npc/proc/deep_lore(mob/user)
+///Makes the NPC say one picked thing from the lore list variable, can be overriden for fun stuff
+/obj/machinery/vending/npc/proc/deep_lore()
 	say(pick(lore))
 
-
+/**
+  * Checks if an item is in the list of wanted items and if it is after a Yes/No radial returns generate_cash with the value of the item for the NPC
+  * Arguments:
+  * * user - The mob trying to sell something
+  * * selling - The item being sold
+  */
 /obj/machinery/vending/npc/proc/sell_item(mob/user, selling)
 	var/obj/item/sellitem = selling
 	if(is_type_in_list(sellitem, wanted_items))
@@ -117,11 +143,11 @@
 			)
 		var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 		if(!check_menu(user))
-			return FALSE
+			return TRUE
 		face_atom(user)
 		if(npc_result != "Yes")
 			say("What a shame, tell me if you changed your mind.")
-			return FALSE
+			return TRUE
 		say("Pleasure doing business with you.")
 		if(istype(sellitem, /obj/item/stack))
 			var/obj/item/stack/stackoverflow = sellitem
@@ -133,13 +159,19 @@
 		return TRUE
 	return FALSE
 
+/**
+  * Creates a holochip the value set by the proc and puts it in the user's hands
+  * Arguments:
+  * * value - The amount of cash that will be on the holochip
+  * * user - The mob we put the holochip in hands of
+  */
 /obj/machinery/vending/npc/proc/generate_cash(value, mob/user)
 	var/obj/item/holochip/chip = new /obj/item/holochip(src, value)
 	user.put_in_hands(chip)
 
 /obj/machinery/vending/npc/mrbones
 	name = "Mr. Bones"
-	desc = "The ride never ends!"
+	desc = "A skeleton merchant, he seems very humerus."
 	verb_say = "rattles"
 	vending_sound = 'sound/voice/hiss2.ogg'
 	speech_span = SPAN_SANS
