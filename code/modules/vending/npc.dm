@@ -140,32 +140,38 @@
   */
 /obj/machinery/vending/npc/proc/sell_item(mob/user, selling)
 	var/obj/item/sellitem = selling
-	if(is_type_in_list(sellitem, wanted_items))
-		say("Hey, you've got an item that interests me, I'd like to buy that [sellitem], I'll give you [wanted_items[sellitem.type]] cash for it, deal?")
-		var/list/npc_options = list(
-			"Yes" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_yes"),
-			"No" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_no")
-			)
-		var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-		if(!check_menu(user))
-			return TRUE
-		face_atom(user)
-		if(npc_result != "Yes")
-			say("What a shame, tell me if you changed your mind.")
-			return TRUE
-		say("Pleasure doing business with you.")
-		playsound(src, vending_sound, 50, TRUE, extrarange = -3)
-		if(istype(sellitem, /obj/item/stack))
-			var/obj/item/stack/stackoverflow = sellitem
-			log_econ("[stackoverflow] has been sold to [src] by [user] for [wanted_items[stackoverflow.type] * stackoverflow.amount] cash.")
-			generate_cash(wanted_items[stackoverflow.type] * stackoverflow.amount, user)
-			stackoverflow.use(stackoverflow.amount)
-			return TRUE
-		log_econ("[sellitem] has been sold to [src] by [user] for [wanted_items[sellitem.type]] cash.")
-		generate_cash(wanted_items[sellitem.type], user)
-		qdel(sellitem)
+	var/progressive_type = ""
+	var/cost
+	for(var/type_level in splittext("[sellitem.type]","/"))
+		progressive_type += ("/"+type_level)
+		if(text2path(progressive_type) in wanted_items)
+			cost = wanted_items[text2path(progressive_type)]
+	if(!cost)
+		return FALSE
+	say("Hey, you've got an item that interests me, I'd like to buy that [sellitem], I'll give you [cost] cash for it, deal?")
+	var/list/npc_options = list(
+		"Yes" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_yes"),
+		"No" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_no")
+		)
+	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
 		return TRUE
-	return FALSE
+	face_atom(user)
+	if(npc_result != "Yes")
+		say("What a shame, tell me if you changed your mind.")
+		return TRUE
+	say("Pleasure doing business with you.")
+	playsound(src, vending_sound, 50, TRUE, extrarange = -3)
+	if(istype(sellitem, /obj/item/stack))
+		var/obj/item/stack/stackoverflow = sellitem
+		log_econ("[stackoverflow] has been sold to [src] by [user] for [cost * stackoverflow.amount] cash.")
+		generate_cash(cost * stackoverflow.amount, user)
+		stackoverflow.use(stackoverflow.amount)
+		return TRUE
+	log_econ("[sellitem] has been sold to [src] by [user] for [cost] cash.")
+	generate_cash(cost, user)
+	qdel(sellitem)
+	return TRUE
 
 /**
   * Creates a holochip the value set by the proc and puts it in the user's hands
