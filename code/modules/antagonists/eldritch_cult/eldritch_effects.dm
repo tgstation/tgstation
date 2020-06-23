@@ -171,22 +171,61 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	///List of possible effects
+	var/static/list/effect_list = list("Heat","Cool","Idle")
+	///The effect we chose
+	var/effect
+
+
+/obj/effect/broken_illusion/Initialize()
+	. = ..()
+	effect = pick(effect_list)
+	if(effect != "Idle")
+		name = effect+"ing "+name
+	START_PROCESSING(SSobj,src)
+
+/obj/effect/broken_illusion/process()
+	switch(effect)
+		if("Heat")
+			change_temp_on_turf(1)
+		if("Cool")
+			change_temp_on_turf(-1)
+
+/obj/effect/broken_illusion/proc/change_temp_on_turf(_temp = 0)
+	var/turf/current_turf = get_turf(src)
+	var/datum/gas_mixture/env = current_turf.return_air()
+	env.temperature += _temp
+
+/obj/effect/broken_illusion/attack_hand(mob/living/user)
+	if(!ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/human_user = user
+	if(IS_HERETIC(human_user))
+		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
+	else
+		var/obj/item/bodypart/arm = human_user.get_active_hand()
+		if(prob(25))
+			to_chat(human_user,"<span class='userdanger'>Otherwordly presence tears your arm aparts into atoms as you try to touch the hole in the very fabric of reality!</span>")
+			arm.dismember()
+			qdel(arm)
+		else
+			to_chat(human_user,"<span class='danger'>You pull your hand away from the hole as the eldritch energy flails trying to catch onto the existance itself!</span>")
 
 /obj/effect/broken_illusion/attack_tk(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
 	if(IS_HERETIC(human_user))
-		to_chat(human_user,"<span class='warning'>You know better than to tempt forces out of your control.!</span>")
+		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
 	else
 		//a very elaborate way to suicide
-		to_chat(human_user,"<span class='boldwarning'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
-		var/obj/item/bodypart/head/head = human_user.bodyparts
+		to_chat(human_user,"<span class='userdanger'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
+		var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
 		human_user.ghostize()
+		head.dismember()
 		qdel(head)
-		human_user.update_body_parts_head_only()
 		var/datum/effect_system/reagents_explosion/explosion = new()
-		explosion.set_up(5 , get_turf(human_user), 0, 0)
+		explosion.set_up(1, get_turf(human_user), 1, 0)
 		explosion.start()
 
 /obj/effect/broken_illusion/examine(mob/user)
