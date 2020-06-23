@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "onZImpact no longer does throw_impact. This was broken anyways. Code must now manually handle multiz falling impacts. This fixes runtimes occuring whenever something fell."

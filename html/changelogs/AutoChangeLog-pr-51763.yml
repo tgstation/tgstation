@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixed stealth implants not properly boxing the user, and doors not shocking"
-  - refactor: "Renamed COOLDOWN_CHECK to COOLDOWN_FINISHED"

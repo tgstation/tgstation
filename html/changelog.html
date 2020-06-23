@@ -51,6 +51,49 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">23 June 2020</h2>
+			<h3 class="author">Kathy Ryals updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed Box wires and pipes near R&D, as well as the door that got deleted.</li>
+			</ul>
+			<h3 class="author">LemonInTheDark updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed stealth implants not properly boxing the user, and doors not shocking</li>
+				<li class="refactor">Renamed COOLDOWN_CHECK to COOLDOWN_FINISHED</li>
+				<li class="rscdel">Removed some old unused clockcult status effects</li>
+			</ul>
+			<h3 class="author">LemonInTheDark, Heather Shadelight updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Changed some portal sprites, hope ya like em :)</li>
+			</ul>
+			<h3 class="author">Paxilmaniac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">PP-95 smg and it's magazine</li>
+				<li class="tweak">replaced mosin with pp-95 in the nuke op uplink</li>
+			</ul>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">Fixed logging / admin message coordinate handling for items being held by mobs / in containers / in containers inside other containers giving nullspace / 0,0,0 location references.</li>
+			</ul>
+			<h3 class="author">Timberpoes updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Belts in Delta EVA and the Ashwalker Ruins no longer show up as ERRORs.</li>
+				<li class="bugfix">Science are now able to print DNA Scanner boards. Boards associated with Genetics are now only printable in Science and have been removed from Medical printers.</li>
+			</ul>
+			<h3 class="author">bobbahbrown updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Removed exploitable world/topic command server_hop</li>
+			</ul>
+			<h3 class="author">silicons updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">onZImpact no longer does throw_impact. This was broken anyways. Code must now manually handle multiz falling impacts. This fixes runtimes occuring whenever something fell.</li>
+			</ul>
+			<h3 class="author">zxaber updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Nuke Ops (and Lone Ops) now start with a Syndicate-themed tablet, rather than the pinpointer. The Syndicate tablet comes pre-installed with an app that replaces the function of disk pinpointers.</li>
+				<li class="rscadd">Lifeline and Fission360, the apps that track suit sensors and nuke disks respectively, now show the tracking status on the screen of the tablet/laptop object itself, without needing to keep the window open.</li>
+			</ul>
+
 			<h2 class="date">22 June 2020</h2>
 			<h3 class="author">EdgeLordExe updated:</h3>
 			<ul class="changes bgimages16">
@@ -1803,62 +1846,6 @@
 			<h3 class="author">uomo91 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="spellcheck">Changes "thats" to "that's" on some descriptions of pickaxes.</li>
-			</ul>
-
-			<h2 class="date">21 April 2020</h2>
-			<h3 class="author">ArcaneMusic updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Botanical Toolbelts can now be made at the biogenerator, and holds most botanical tools.</li>
-				<li class="rscadd">The Floral Somatoray has been given a new, 3rd mode, able to mutate plant species.</li>
-				<li class="rscadd">Using a Somatoray on a tray enables you to lock in a specific mutation if a plant has multiple mutations, at the cost of plant endurance.</li>
-				<li class="tweak">Plant Analyzers now have a toggle-able mode to scan either the chemical traits or the plant stats, to cut down on chat spam.</li>
-				<li class="tweak">Plant Trays and dirt patches now start with 10 units of EZ Nutrient.</li>
-				<li class="tweak">Mutagen has been made slightly less toxic overall.</li>
-				<li class="balance">Plant trays now passively decrease their toxicity based on the tray's parts, without randomness.</li>
-				<li class="tweak">Science goggles, or any other reagent scanning equipment will enable you to see plant reagent traits on examine.</li>
-				<li class="balance">Instability now affects plants with lower instability tiers. (100 instability would have the effects of the 20, 40, 60,and 80+ instability tiers).</li>
-				<li class="bugfix">Irrigation now works properly again.</li>
-				<li class="bugfix">Plant trays with full nutrient tanks can be watered again.</li>
-			</ul>
-			<h3 class="author">Arkatos updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Radial menu options will now always be clearly visible to the user.</li>
-			</ul>
-			<h3 class="author">Cartographer-D updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Completely New Cargo Layout</li>
-				<li class="rscdel">The Small Security Room by the Vault has been replaced with Maintenance</li>
-				<li class="tweak">Crate Returns are now easier to find and use</li>
-				<li class="tweak">Tool Storage is smaller but more interesting!</li>
-				<li class="tweak">The Mail Room and Offices have been combined</li>
-				<li class="balance">Cargo Warehouse is now more prominent and easier to break into</li>
-				<li class="balance">MULEs now have their own isolated room.</li>
-				<li class="balance">There are now easier ways to mail "packages" to departments</li>
-			</ul>
-			<h3 class="author">Ghilker updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added H2 gas</li>
-				<li class="rscadd">Added H2 gas burn (reaction with o2, similar to tritium but without the radiations)</li>
-				<li class="rscadd">Added Electrolyzer (machine to make H2, requires power cell, once turned on and with h2o in the air will start converting it to h2 and o2 with the reaction 2H2O -> 2H2 + O2. Upgrading the parts will increase the amount of converted H2O and the efficency of the cell)</li>
-				<li class="rscadd">Added H2 interaction with SM (similar to trit, less radiation emission, same heat production and a bit of heat protection)</li>
-				<li class="rscadd">H2 reaction with N2 to make ammonia crystals (reaction in open air to make the crystals, temperatures between 0 °C and - 120° C, more N2 than H2)</li>
-				<li class="rscadd">H2 reaction with bz as catalyst at high heat and pressure (over 1e6 for both) to make metal hydrogen</li>
-				<li class="rscadd">metallic hydrogen golem (one of endish atmosian goal)</li>
-				<li class="tweak">changed fusion to use h2 instead of co2, everything else is still the same</li>
-				<li class="tweak">plasma burn now produces h2o too (a quarter of the produced co2)</li>
-				<li class="tweak">H2O vapor now slip under 30 °C so that plasma fires are not hellish</li>
-				<li class="imageadd">added electrolyzer sprites (reuse of some unused ones)</li>
-				<li class="imageadd">added ammonia crystals sprites remove: fusion no longer generate stim and nitryl</li>
-			</ul>
-			<h3 class="author">Toastgoats updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imagedel">Nanotrasen's current stock of Buckin' Bronco© applejack liquor has been recalled after studies showed trace amounts of horse meat.</li>
-				<li class="imageadd">Buckin Bronco Brewing Co has recently announced the release of a new and improved recipe! Be sure to try some at your local Nanotrasen bar!</li>
-			</ul>
-			<h3 class="author">stylemistake updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">tgui 3.0</li>
-				<li class="bugfix">tgui: Fixed the personal crafting interface.</li>
 			</ul>
 		</div>
 

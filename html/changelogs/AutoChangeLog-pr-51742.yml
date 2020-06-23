@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - admin: "Fixed logging / admin message coordinate handling for items being held by mobs / in containers / in containers inside other containers giving nullspace / 0,0,0 location references."
