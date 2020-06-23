@@ -142,7 +142,11 @@
 	var/obj/item/sellitem = selling
 	var/progressive_type = ""
 	var/cost
+	if(!sellitem)
+		return FALSE
 	for(var/type_level in splittext("[sellitem.type]","/"))
+		if(type_level == "")
+			continue
 		progressive_type += ("/"+type_level)
 		if(text2path(progressive_type) in wanted_items)
 			cost = wanted_items[text2path(progressive_type)]
