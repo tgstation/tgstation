@@ -151,11 +151,13 @@
 		say("Pleasure doing business with you.")
 		if(istype(sellitem, /obj/item/stack))
 			var/obj/item/stack/stackoverflow = sellitem
+			log_econ("[stackoverflow] has been sold to [src] by [user] for [wanted_items[stackoverflow.type] * stackoverflow.amount] cash.")
 			generate_cash(wanted_items[stackoverflow.type] * stackoverflow.amount, user)
 			stackoverflow.use(stackoverflow.amount)
 			return TRUE
+		log_econ("[sellitem] has been sold to [src] by [user] for [wanted_items[sellitem.type]] cash.")
+		generate_cash(wanted_items[sellitem.type], user
 		qdel(sellitem)
-		generate_cash(wanted_items[sellitem.type], user)
 		return TRUE
 	return FALSE
 
