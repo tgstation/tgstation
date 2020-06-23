@@ -67758,8 +67758,8 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "ezE" = (
-/obj/structure/disposalpipe/junction{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -72447,9 +72447,7 @@
 /area/medical/virology)
 "lLO" = (
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
+/obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "lLQ" = (
@@ -77117,9 +77115,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "tgQ" = (
@@ -79285,9 +79280,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "wNt" = (
@@ -79464,6 +79457,10 @@
 "wWE" = (
 /obj/machinery/biogenerator,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenhydro";
+	name = "Service Shutter"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "wYb" = (
