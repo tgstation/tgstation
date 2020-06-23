@@ -124,7 +124,7 @@
 
 	if(mob_override)
 		current = mob_override
-	current.see_invisible = INVISIBILITY_LEVEL_ONE
+	current.see_invisible = SEE_INVISIBLE_LEVEL_ONE
 	add_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "heretics"
