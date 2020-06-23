@@ -94,12 +94,9 @@
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of mannitol pills [where] to keep you alive until you can secure a supply of medication. Don't rely on it too much!</span>")
 
 /datum/quirk/brainproblems/on_process()
-	//If we're frozen, why does our brain hurt?
-	if(IS_IN_STASIS(quirk_holder)) 
+	if(HAS_TRAIT(quirk_holder, TRAIT_TUMOR_SUPPRESSED))
 		return
-	//Having mannitol in you will also pause the brain damage (so it heals an even 2 brain damage instead of 1.8)
-	if(quirk_holder.reagents.has_reagent(/datum/reagent/medicine/mannitol, needs_metabolizing = TRUE))
-		return
+		
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 
 /datum/quirk/deafness
