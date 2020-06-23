@@ -189,7 +189,7 @@
 	vend_reply = "Bone appetit!"
 	icon_state = "mrbones"
 	gender = MALE
-	corpse = /obj/effect/decal/remains
+	corpse = /obj/effect/decal/remains/human
 	lore = list("Hello, I am Mr. Bones!",
 				"The ride never ends!",
 				"I'd really like a refreshing carton of milk!",
