@@ -664,12 +664,15 @@
 	if(isnull(A))
 		return null
 
-	if(!istype(R))
+	if(ispath(R))
 		R = get_reagent(R)
-		if(isnull(R))
-			return null
+	if(isnull(R))
+		return null
 
-	return A.expose_reagents(list(R = R.volume * volume_modifier), src, method, volume_modifier, show_message)
+	// Do not move this inline, BYOND interprets list(R = R.volume * volume_modifier) as list("R" = R.volume * volume_modifier) and you end up passing a string instead of a datum.
+	var/reagent_to_expose = list()
+	reagent_to_expose[R] = R.volume * volume_modifier
+	return A.expose_reagents(reagent_to_expose, src, method, volume_modifier, show_message)
 
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()
