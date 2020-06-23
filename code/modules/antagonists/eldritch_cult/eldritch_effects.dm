@@ -135,7 +135,7 @@
 		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			continue
-		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location.loc)
+		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location)
 		smashes += RS
 	ReworkNetwork()
 
@@ -171,6 +171,23 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/effect/broken_illusion/attack_tk(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if(IS_HERETIC(human_user))
+		to_chat(human_user,"<span class='warning'>You know better than to tempt forces out of your control.!</span>")
+	else
+		//a very elaborate way to suicide
+		to_chat(human_user,"<span class='boldwarning'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
+		var/obj/item/bodypart/head/head = human_user.bodyparts
+		human_user.ghostize()
+		qdel(head)
+		human_user.update_body_parts_head_only()
+		var/datum/effect_system/reagents_explosion/explosion = new()
+		explosion.set_up(5 , get_turf(human_user), 0, 0)
+		explosion.start()
 
 /obj/effect/broken_illusion/examine(mob/user)
 	if(!IS_HERETIC(user) && ishuman(user))
@@ -230,7 +247,7 @@
 
 ///Generates random name
 /obj/effect/reality_smash/proc/generate_name()
-	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful")
-	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze")
+	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful","Arrogant","Threatening","Peaceful","Aggressive")
+	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze","Grasp","Sight","Whisper","Flow","Touch","Veil","Thought","Imperfection","Blemish","Blush")
 
 	name = pick(prefix) + " " + pick(postfix)
