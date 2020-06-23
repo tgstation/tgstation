@@ -118,6 +118,7 @@
 		var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 		if(!check_menu(user))
 			return FALSE
+		face_atom(user)
 		if(npc_result != "Yes")
 			say("What a shame, tell me if you changed your mind.")
 			return FALSE
@@ -127,6 +128,7 @@
 			generate_cash(wanted_items[stackoverflow.type] * stackoverflow.amount, user)
 			stackoverflow.use(stackoverflow.amount)
 			return TRUE
+		qdel(sellitem)
 		generate_cash(wanted_items[sellitem.type], user)
 		return TRUE
 	return FALSE
