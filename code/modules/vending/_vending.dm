@@ -839,19 +839,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 					log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
-				if(vend_reply)
-					say(vend_reply)
-				else
-					say("Thank you for shopping with [src]!")
+				say(vend_reply ? vend_reply : "Thank you for shopping with [src]!")
 				purchase_message_cooldown = world.time + 5 SECONDS
 				last_shopper = usr
 			use_power(5)
 			if(icon_vend) //Show the vending animation if needed
 				flick(icon_vend,src)
 			playsound(src, vending_sound, 50, TRUE, extrarange = -3)
-			var/vended = new R.product_path(get_turf(src))
+			usr.put_in_hands(new R.product_path(get_turf(src)))
 			R.amount--
-			usr.put_in_hands(vended)
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 
