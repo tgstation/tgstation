@@ -16,45 +16,7 @@
 
 GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto chemistry items
 	list(//trash
-		/obj/item/trash/can = 1,
 		/obj/item/trash/raisins = 1,
-		/obj/item/trash/candy = 1,
-		/obj/item/trash/cheesie = 1,
-		/obj/item/trash/chips = 1,
-		/obj/item/trash/popcorn = 1,
-		/obj/item/trash/sosjerky = 1,
-		/obj/item/trash/plate = 1,
-		/obj/item/trash/pistachios = 1,
-
-		/obj/item/poster/random_contraband = 1,
-		/obj/item/poster/random_official = 1,
-		/obj/item/folder/yellow = 1,
-		/obj/item/hand_labeler = 1,
-		/obj/item/pen = 1,
-		/obj/item/paper = 1,
-		/obj/item/paper/crumpled = 1,
-		/obj/item/photo/old = 1,
-		/obj/item/disk/data = 1,
-		/obj/item/stack/sheet/cardboard = 1,
-		/obj/item/storage/box = 1,
-
-		/obj/item/reagent_containers/food/drinks/drinkingglass = 1,
-		/obj/item/coin/silver = 1,
-		/obj/effect/decal/cleanable/ash = 1,
-		/obj/item/cigbutt = 1,
-		/obj/item/camera = 1,
-		/obj/item/camera_film = 1,
-		/obj/item/light/bulb = 1,
-		/obj/item/light/tube = 1,
-		/obj/item/reagent_containers/food/snacks/urinalcake = 1,
-
-		/obj/item/airlock_painter = 1,
-		/obj/item/rack_parts = 1,
-		/obj/item/clothing/mask/breath = 1,
-		/obj/item/shard = 1,
-
-		/obj/item/reagent_containers/pill/floorpill = 1,
-		/obj/item/toy/eightball = 1,
 		) = 8,
 
 	list(//tier 1 stock parts
