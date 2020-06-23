@@ -75,7 +75,7 @@
 		)
 	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
-		return
+		return FALSE
 	switch(npc_result)
 		if("Buy")
 			return ui_interact(user)
@@ -100,23 +100,36 @@
 /obj/machinery/vending/npc/proc/try_sell(mob/user)
 	var/obj/item/activehanditem = user.get_active_held_item()
 	var/obj/item/inactivehanditem = user.get_inactive_held_item()
-	if(is_type_in_list(activehanditem, wanted_items))
-		if(istype(activehanditem, /obj/item/stack))
-			var/obj/item/stack/stackoverflow = activehanditem
-			generate_cash((wanted_items[stackoverflow.type]) * stackoverflow.amount, user)
-			stackoverflow.use(stackoverflow.amount)
-			return
-		generate_cash(wanted_items[activehanditem.type], user)
-		return
-	else if (is_type_in_list(inactivehanditem, wanted_items))
-		generate_cash(wanted_items[inactivehanditem.type], user)
-		qdel(inactivehanditem)
-		return
-	else
+	if(!(sell_item(user, activehanditem)||sell_item(user, inactivehanditem)))
 		say("Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk.")
 
 /obj/machinery/vending/npc/proc/deep_lore(mob/user)
 	say(pick(lore))
+
+
+/obj/machinery/vending/npc/proc/sell_item(mob/user, selling)
+	var/obj/item/sellitem = selling
+	if(is_type_in_list(sellitem, wanted_items))
+		say("Hey, you've got an item that interests me, I'd like to buy that [sellitem], I'll give you [wanted_items[sellitem.type]] cash for it, deal?")
+		var/list/npc_options = list(
+			"Yes" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_yes"),
+			"No" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_no")
+			)
+		var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+		if(!check_menu(user))
+			return FALSE
+		if(npc_result != "Yes")
+			say("What a shame, tell me if you changed your mind.")
+			return FALSE
+		say("Pleasure doing business with you.")
+		if(istype(sellitem, /obj/item/stack))
+			var/obj/item/stack/stackoverflow = sellitem
+			generate_cash(wanted_items[stackoverflow.type] * stackoverflow.amount, user)
+			stackoverflow.use(stackoverflow.amount)
+			return TRUE
+		generate_cash(wanted_items[sellitem.type], user)
+		return TRUE
+	return FALSE
 
 /obj/machinery/vending/npc/proc/generate_cash(value, mob/user)
 	var/obj/item/holochip/chip = new /obj/item/holochip(src, value)
