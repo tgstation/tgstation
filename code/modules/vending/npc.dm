@@ -28,6 +28,7 @@
 	icon_state = "faceless"
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	layer = MOB_LAYER
+	products = list(/obj/item/reagent_containers/food/snacks/burger/ghost = 1)
 	///Corpse spawned when vendor is deconstructed (MURDERED)
 	var/corpse = /obj/effect/mob_spawn/human/corpse
 	///Phrases used when you talk to the NPC
@@ -35,7 +36,7 @@
 						"Man, shut the fuck up."
 						)
 	///List of items able to be sold to the NPC
-	var/list/wanted_items = list()
+	var/list/wanted_items = list(/obj/item/ectoplasm = 100)
 
 /obj/machinery/vending/npc/Initialize()
 	. = ..()
@@ -74,11 +75,15 @@
 
 /obj/machinery/vending/npc/interact(mob/user)
 	face_atom(user)
-	var/list/npc_options = list(
-		"Buy" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_buy"),
-		"Sell" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_sell"),
-		"Talk" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_talk")
-		)
+	var/list/npc_options = list()
+	if(products.len)
+		npc_options += list("Buy" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_buy"))
+	if(lore.len)
+		npc_options += list("Talk" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_talk"))
+	if(wanted_items.len)
+		npc_options += list("Sell" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_sell"))
+	if(!(npc_options.len))
+		return FALSE
 	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return FALSE
