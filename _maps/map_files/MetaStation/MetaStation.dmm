@@ -40451,9 +40451,7 @@
 /obj/item/storage/crayons,
 /obj/item/toy/crayon/spraycan,
 /obj/item/toy/crayon/spraycan{
-	pixel_x = -4;
-	pixel_y = -4;
-	step_x = 0
+	pixel_x = -4
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -63639,6 +63637,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
+"cZS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/wood,
+/area/library)
 "dap" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/chair{
@@ -68782,12 +68788,6 @@
 /obj/item/reagent_containers/food/snacks/snowcones/clown,
 /turf/open/floor/grass/snow/safe,
 /area/maintenance/port/aft)
-"eMW" = (
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
-/turf/open/floor/wood,
-/area/library)
 "eNA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -70147,14 +70147,6 @@
 "gQV" = (
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
-"gRO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/structure/cable,
-/obj/machinery/holopad,
-/turf/open/floor/wood,
-/area/library)
 "gTj" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -76887,12 +76879,6 @@
 	},
 /turf/open/floor/carpet,
 /area/library)
-"sDY" = (
-/obj/structure/sign/painting/library{
-	pixel_y = 32
-	},
-/turf/open/floor/carpet,
-/area/library)
 "sEG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -77868,6 +77854,12 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
+"uPM" = (
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/library)
 "uRM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -78003,6 +77995,10 @@
 /obj/structure/table/wood,
 /obj/item/radio/intercom{
 	pixel_y = -29
+	},
+/obj/structure/sign/painting/library_private{
+	pixel_x = -32;
+	pixel_y = -32
 	},
 /turf/open/floor/engine/cult,
 /area/library)
@@ -79443,6 +79439,12 @@
 "xrj" = (
 /turf/closed/wall,
 /area/medical/paramedic)
+"xrL" = (
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/turf/open/floor/carpet,
+/area/library)
 "xse" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -100241,7 +100243,7 @@ bLk
 bzE
 bue
 bPS
-gRO
+cZS
 bBs
 bBs
 bue
@@ -100485,8 +100487,8 @@ bod
 hxH
 bsG
 bue
-sDY
-eMW
+xrL
+uPM
 bue
 bBu
 bwc
@@ -100742,8 +100744,8 @@ boe
 plu
 bsH
 bue
-sDY
-eMW
+xrL
+uPM
 bue
 bzE
 bwc
@@ -100999,8 +101001,8 @@ bof
 bql
 lCP
 bue
-sDY
-eMW
+xrL
+uPM
 bue
 bBv
 bwc
@@ -101256,8 +101258,8 @@ bog
 bqv
 bsI
 bue
-sDY
-eMW
+xrL
+uPM
 bue
 cUT
 bwc
