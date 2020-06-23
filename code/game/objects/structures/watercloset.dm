@@ -12,11 +12,29 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
 	var/buildstackamount = 1
 
+	// Chance that there's something hanging around in the cistern
+	var/loot_chance = 33
+
 /obj/structure/toilet/Initialize()
 	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
 
+	if(prob(loot_chance))
+		spawn_loot()
+
+/obj/structure/toilet/proc/spawn_loot()
+	var/loot = GLOB.maintenance_loot
+	var/spawn_type = pickweight(loot)
+	while(islist(spawn_type))
+		spawn_type = pickweight(spawn_type)
+
+	var/obj/item/I = new spawn_type(src)
+	// Can't spawn items which we wouldn't accept being hidden in the toilet in the first place
+	if (!istype(I) || (w_items + I.w_class) >= WEIGHT_CLASS_HUGE)
+		qdel(I)
+	else
+		w_items += I.w_class
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	. = ..()
@@ -141,6 +159,9 @@
 /obj/structure/toilet/greyscale
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
+
+/obj/structure/toilet/greyscale/built
+	loot_chance = 0
 
 /obj/structure/urinal
 	name = "urinal"
