@@ -152,7 +152,7 @@
 			cost = wanted_items[text2path(progressive_type)]
 	if(!cost)
 		return FALSE
-	say("Hey, you've got an item that interests me, I'd like to buy that [sellitem], I'll give you [cost] cash for it, deal?")
+	say("Hey, you've got an item that interests me, I'd like to buy that [sellitem], I'll give you [cost] cash for each one of it, deal?")
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_no")
