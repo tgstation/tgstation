@@ -75,7 +75,7 @@
 		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
-	var/final_composed = "<span class='announce'>PR: [input[keyword]]</span>"
+	var/final_composed = "<span class='announce'>PR: [html_encode(input[keyword])]</span>"
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
@@ -155,7 +155,7 @@
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date
 	.["hub"] = GLOB.hub_visibility
-	
+
 
 	var/list/adm = get_admin_counts()
 	var/list/presentmins = adm["present"]
@@ -174,13 +174,13 @@
 	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 	// Amount of world's ticks in seconds, useful for calculating round duration
-	
+
 	//Time dilation stats.
 	.["time_dilation_current"] = SStime_track.time_dilation_current
 	.["time_dilation_avg"] = SStime_track.time_dilation_avg
 	.["time_dilation_avg_slow"] = SStime_track.time_dilation_avg_slow
 	.["time_dilation_avg_fast"] = SStime_track.time_dilation_avg_fast
-	
+
 	//pop cap stats
 	.["soft_popcap"] = CONFIG_GET(number/soft_popcap) || 0
 	.["hard_popcap"] = CONFIG_GET(number/hard_popcap) || 0
@@ -192,4 +192,4 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
-	
+
