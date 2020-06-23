@@ -156,7 +156,7 @@
 			stackoverflow.use(stackoverflow.amount)
 			return TRUE
 		log_econ("[sellitem] has been sold to [src] by [user] for [wanted_items[sellitem.type]] cash.")
-		generate_cash(wanted_items[sellitem.type], user
+		generate_cash(wanted_items[sellitem.type], user)
 		qdel(sellitem)
 		return TRUE
 	return FALSE
