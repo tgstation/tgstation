@@ -147,6 +147,7 @@
 /obj/structure/toilet/secret
 	var/obj/item/secret
 	var/secret_type = null
+	loot_chance = 0  // Don't want RNG to conflict with the mapper's vision
 
 /obj/structure/toilet/secret/Initialize(mapload)
 	. = ..()
