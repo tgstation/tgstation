@@ -468,6 +468,12 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 			to_chat(user, "<span class='notice'>You stamp the cardboard! It's a clown box! Honk!</span>")
 			if (amount >= 0)
 				new/obj/item/storage/box/clown(droploc) //bugfix
+	if(istype(I, /obj/item/stamp/chameleon) && !istype(loc, /obj/item/storage))
+		var/atom/droploc = drop_location()
+		if(use(1))
+			to_chat(user, "<span class='notice'>You stamp the cardboard in a sinister way.</span>")
+			if (amount >= 0)
+				new/obj/item/storage/box/syndie_kit(droploc)
 	else
 		. = ..()
 
