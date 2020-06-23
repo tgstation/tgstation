@@ -154,6 +154,7 @@
 			say("What a shame, tell me if you changed your mind.")
 			return TRUE
 		say("Pleasure doing business with you.")
+		playsound(src, vending_sound, 50, TRUE, extrarange = -3)
 		if(istype(sellitem, /obj/item/stack))
 			var/obj/item/stack/stackoverflow = sellitem
 			log_econ("[stackoverflow] has been sold to [src] by [user] for [wanted_items[stackoverflow.type] * stackoverflow.amount] cash.")
