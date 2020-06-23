@@ -166,18 +166,29 @@
 		RS.RemoveMind(M)
 
 /obj/effect/broken_illusion
-	name = "Pierced reality"
+	name = "\proper pierced reality" // That's pierced reality. Not "the" pierced reality
+	desc = "The light tubes flicker like shadows. Dreams ripple behind the surface of bathroom mirrors. I must be careful not to drift from the waking world."
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/effect/broken_illusion/Initialize()
+	. = ..()
+
+	// Brain damage can cause messages, so we want to do the damage after the examine text, so it makes sense
+	RegisterSignal(src, COMSIG_ATOM_POST_EXAMINATE, .proc/brain_melting)
+
 /obj/effect/broken_illusion/examine(mob/user)
+	. = ..()
+
+	if(!IS_HERETIC(user) && ishuman(user))
+		. += "<span class='warning'>Light LEAKS through the CRACKS. My mind is BRIGHTER than it EVER was. THE HIGHER I RISE THE MORE I SEE.</span>"
+
+/obj/effect/broken_illusion/proc/brain_melting(datum/source, mob/user)
 	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this!</span>")
-		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10)
-	. = ..()
+		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
 
 /obj/effect/reality_smash
 	name = "/improper reality smash"

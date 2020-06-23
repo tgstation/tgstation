@@ -63,6 +63,8 @@
 #define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"
 ///from base of atom/examine(): (/mob)
 #define COMSIG_PARENT_EXAMINE "atom_examine"
+///from base of /mob/verb/examinate(): (atom/target)
+#define COMSIG_ATOM_POST_EXAMINATE "atom_post_examinate"
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
 #define COMSIG_PARENT_EXAMINE_MORE "atom_examine_more"                    ///from base of atom/examine_more(): (/mob)

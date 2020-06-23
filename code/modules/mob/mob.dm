@@ -432,6 +432,7 @@
 
 	to_chat(src, result.Join("\n"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
+	SEND_SIGNAL(A, COMSIG_ATOM_POST_EXAMINATE, src)
 
 /mob/proc/clear_from_recent_examines(atom/A)
 	if(QDELETED(A) || !client)
