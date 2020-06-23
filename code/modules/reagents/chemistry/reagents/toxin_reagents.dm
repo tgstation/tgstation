@@ -11,6 +11,15 @@
 	var/toxpwr = 1.5
 	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
 
+/**
+  * Should a human's liver, in normal conditions, filter this toxin?
+  *
+  * Defaults to TRUE by default, may be overriden by specific toxins
+  * that can be beneficial under certain conditions.
+  */
+/datum/reagent/toxin/proc/liver_filter(mob/living/carbon/C, obj/item/organ/liver/L)
+	. = TRUE
+
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
@@ -236,13 +245,28 @@
 
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
-	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients. it counteracts their symptoms and anchors them to reality."
+	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients, it counteracts their symptoms and anchors them to reality."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	taste_description = "sourness"
+	metabolization_rate = REAGENTS_METABOLISM
+
+/datum/reagent/toxin/mindbreaker/liver_filter(mob/living/carbon/C, obj/item/organ/liver/L)
+	if(C.has_trauma_type(/datum/brain_trauma/mild/hallucinations))
+		. = FALSE
+	else
+		. = TRUE
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M)
-	M.hallucination += 5
+	if(M.has_trauma_type(/datum/brain_trauma/mild/hallucinations))
+		// If the toxin is "anchoring" a patient, it lasts longer in their system
+		metabolization_rate = initial(metabolization_rate) * 0.2
+		M.apply_status_effect(/datum/status_effect/hallucination_suppression)
+		// If you're smoking a Leary's Delight, the microdoses of mindbreaker will keep you sane
+		// Since the status effect duration is refreshed each time
+	else
+		M.hallucination += 5
+		metabolization_rate = initial(metabolization_rate)
 	return ..()
 
 /datum/reagent/toxin/plantbgone

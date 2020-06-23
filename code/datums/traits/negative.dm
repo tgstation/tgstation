@@ -415,30 +415,47 @@
 	hardcore_value = 4
 
 /datum/quirk/insanity
-	name = "Reality Dissociation Syndrome"
+	name = "Reality Dissociation Syndrome"  // also known as permament schitzophrenia
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. <b>This is not a license to grief.</b>"
 	value = -2
-	//no mob trait because it's handled uniquely
-	gain_text = "<span class='userdanger'>...</span>"
-	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
-	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
+	//no mob trait because it's handled by the gaining/losing of the trauma
+	gain_text = null
+	lose_text = null
+	medical_record_text = "Patient suffers from acute schizophrenia and experiences vivid hallucinations."
 	hardcore_value = 6
+	var/datum/brain_trauma/mild/hallucinations/trauma
+	var/where_pack  /// where the emergency Leary's are
+	var/where_lighter /// where the lighter for smoking your Leary's is
 
-/datum/quirk/insanity/on_process()
-	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
-		quirk_holder.hallucination = 0
-		return
-	if(prob(2)) //we'll all be mad soon enough
-		madness()
+/datum/quirk/insanity/add()
+	trauma = new()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/quirk/insanity/proc/madness()
-	quirk_holder.hallucination += rand(10, 25)
+/datum/quirk/insanity/remove()
+	qdel(trauma)
+
+/datum/quirk/insanity/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+
+	var/list/slots = list(
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK
+	)
+	var/learys = new /obj/item/storage/fancy/cigarettes/cigpack_mindbreaker(get_turf(H))
+	var/lighter = new /obj/item/lighter/greyscale(get_turf(H))
+
+	where_pack = H.equip_in_one_of_slots(learys, slots, FALSE) || "at your feet"
+	where_lighter = H.equip_in_one_of_slots(lighter, slots, FALSE) || "at your feet"
 
 /datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
 		return
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
+
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a packet of Leary's Delight [where_pack], and a lighter [where_lighter], which can keep the visions at bay. Make good use of them, they're technically illegal.</span>")
 
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"

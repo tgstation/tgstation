@@ -75,6 +75,22 @@
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
 
+
+/datum/status_effect/hallucination_suppression
+	id = "hallucination_supression"
+	duration = 11 SECONDS  /// default cigarette drag time + 1 second
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/hallucination_suppression/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_NO_HALLUCINATION, "[STATUS_EFFECT_TRAIT]_[id]")
+
+/datum/status_effect/hallucination_suppression/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_NO_HALLUCINATION, "[STATUS_EFFECT_TRAIT]_[id]")
+
+
 /datum/status_effect/bounty
 	id = "bounty"
 	status_type = STATUS_EFFECT_UNIQUE

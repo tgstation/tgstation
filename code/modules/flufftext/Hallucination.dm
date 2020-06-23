@@ -31,6 +31,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 	hallucination--
 
+	// Hallucination stat continues to tick down, but actual effects are supressed
+	if(HAS_TRAIT(src, TRAIT_NO_HALLUCINATION))
+		return
+
 	if(world.time < next_hallucination)
 		return
 

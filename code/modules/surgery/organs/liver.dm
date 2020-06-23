@@ -34,6 +34,8 @@
 			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
 				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
+					if(!T.liver_filter(C, src))
+						continue
 					var/thisamount = C.reagents.get_reagent_amount(T.type)
 					if (thisamount && thisamount <= toxTolerance)
 						C.reagents.remove_reagent(T.type, 1)

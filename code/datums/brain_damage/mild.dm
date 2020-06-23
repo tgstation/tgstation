@@ -5,6 +5,8 @@
 /datum/brain_trauma/mild
 
 /datum/brain_trauma/mild/hallucinations
+	// Has a special interaction with /datum/reagent/toxin/mindbreaker
+	// If this trauma is present, the toxin becomes beneficial
 	name = "Hallucinations"
 	desc = "Patient suffers constant hallucinations."
 	scan_desc = "schizophrenia"

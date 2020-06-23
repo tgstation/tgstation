@@ -263,7 +263,7 @@
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 
 /mob/living/carbon/hallucinating()
-	if(hallucination)
+	if(hallucination && !HAS_TRAIT(src, TRAIT_NO_HALLUCINATION))
 		return TRUE
 	else
 		return FALSE
