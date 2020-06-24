@@ -150,7 +150,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
 	inhand_icon_state = "decalsprayer"
-	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	var/stored_dir = 2
 	var/stored_color = ""
 	var/stored_decal = "warningline"
