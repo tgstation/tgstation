@@ -176,12 +176,6 @@
 	if(use_paint(user) && isturf(F))
 		F.AddComponent(/datum/component/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_STRONG, color, null, null, alpha)
 
-/obj/item/airlock_painter/decal/attack_self(mob/user)
-	if((ink) && (ink.charges >= 1))
-		to_chat(user, "<span class='notice'>[src] beeps to prevent you from removing the toner until out of charges.</span>")
-		return
-	. = ..()
-
 /obj/item/airlock_painter/decal/AltClick(mob/user)
 	. = ..()
 	ui_interact(user)
