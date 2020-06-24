@@ -9,7 +9,7 @@
 					/obj/item/reagent_containers/food/snacks/breadslice/moldy = 15,
 					/obj/item/reagent_containers/food/drinks/ice/prison = 12,
 					/obj/item/reagent_containers/food/snacks/candy_corn/prison = 6,
-					/obj/item/reagent_containers/food/snacks/no_raisin/beepsky = 2)
+					/obj/item/reagent_containers/food/snacks/no_raisin/beepsky = 4)
 	contraband = list(/obj/item/kitchen/knife = 6,
 					  /obj/item/reagent_containers/food/drinks/coffee = 12,
 					  /obj/item/tank/internals/emergency_oxygen = 6,
