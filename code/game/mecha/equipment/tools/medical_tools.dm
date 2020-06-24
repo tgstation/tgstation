@@ -262,7 +262,7 @@
 	. = ..()
 	create_reagents(max_volume, NO_REACT)
 	syringes = new
-	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine",/datum/reagent/medicine/C2/multiver="Multiver")
+	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine",/datum/reagent/medicine/c2/multiver="Multiver")
 	processed_reagents = new
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
@@ -330,7 +330,7 @@
 								R += "[A.name] ([num2text(A.volume)]"
 						mechsyringe.icon_state = initial(mechsyringe.icon_state)
 						mechsyringe.icon = initial(mechsyringe.icon)
-						mechsyringe.reagents.reaction(M, INJECT)
+						mechsyringe.reagents.expose(M, INJECT)
 						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = originaloccupant)
 						M.take_bodypart_damage(2)
 						log_combat(originaloccupant, M, "shot", "syringegun")

@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Fixed ghosting making your body look undefibbable to a medical HUD."

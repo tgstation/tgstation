@@ -180,7 +180,7 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
-				reagents.reaction(M, INJECT, reagents.total_volume)
+				reagents.expose(M, INJECT, reagents.total_volume)
 				reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 
 
@@ -195,7 +195,7 @@
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these won't show up if the pen is off
+	attack_verb = list("slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut") //these won't show up if the pen is off
 	sharpness = IS_SHARP
 	var/on = FALSE
 

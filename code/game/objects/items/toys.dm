@@ -99,9 +99,9 @@
 		else
 			T = get_turf(src)
 		T.visible_message("<span class='danger'>[src] bursts!</span>","<span class='hear'>You hear a pop and a splash.</span>")
-		reagents.reaction(T)
+		reagents.expose(T)
 		for(var/atom/A in T)
-			reagents.reaction(A)
+			reagents.expose(A)
 		icon_state = "burst"
 		qdel(src)
 
@@ -382,7 +382,7 @@
 	resistance_flags = FLAMMABLE
 
 
-/obj/item/toy/windupToolbox
+/obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
 	icon_state = "his_grace"
@@ -394,7 +394,7 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	attack_verb = list("robusted")
 
-/obj/item/toy/windupToolbox/attack_self(mob/user)
+/obj/item/toy/windup_toolbox/attack_self(mob/user)
 	if(!active)
 		icon_state = "his_grace_awakened"
 		to_chat(user, "<span class='notice'>You wind up [src], it begins to rumble.</span>")
@@ -405,7 +405,7 @@
 	else
 		to_chat(user, "<span class='warning'>[src] is already active!</span>")
 
-/obj/item/toy/windupToolbox/proc/Rumble()
+/obj/item/toy/windup_toolbox/proc/Rumble()
 	var/static/list/transforms
 	if(!transforms)
 		var/matrix/M1 = matrix()
@@ -422,7 +422,7 @@
 	animate(transform=transforms[3], time=0.2)
 	animate(transform=transforms[4], time=0.3)
 
-/obj/item/toy/windupToolbox/proc/stopRumble()
+/obj/item/toy/windup_toolbox/proc/stopRumble()
 	icon_state = initial(icon_state)
 	active = FALSE
 	animate(src, transform=matrix())
@@ -568,13 +568,13 @@
 /*
  * AI core prizes
  */
-/obj/item/toy/talking/AI
+/obj/item/toy/talking/ai
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/talking/AI/generate_messages()
+/obj/item/toy/talking/ai/generate_messages()
 	return list(generate_ion_law())
 
 /obj/item/toy/talking/codex_gigas
@@ -594,7 +594,7 @@
 		"<span class='notice'>You hear a soft click.</span>")
 
 /obj/item/toy/talking/codex_gigas/generate_messages()
-	var/datum/fakeDevil/devil = new
+	var/datum/fake_devil/devil = new
 	var/list/messages = list()
 	messages += "Some fun facts about: [devil.truename]"
 	messages += "[GLOB.lawlorify[LORE][devil.bane]]"
@@ -1387,7 +1387,7 @@
 	name = "Security Officer action figure"
 	icon_state = "secofficer"
 	toysay = "I am the law!"
-	toysound = 'sound/voice/complionator/dredd.ogg'
+	toysound = 'sound/runtime/complionator/dredd.ogg'
 
 /obj/item/toy/figure/virologist
 	name = "Virologist action figure"

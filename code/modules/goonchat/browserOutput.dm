@@ -9,7 +9,7 @@ For the main html chat area
   * The chatOutput datum exists to handle the goonchat browser.
   * On client, created on Client/New()
   */
-/datum/chatOutput
+/datum/chat_output
 	/// The client that owns us.
 	var/client/owner
 	/// How many times client data has been checked
@@ -25,7 +25,7 @@ For the main html chat area
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
 	var/adminMusicVolume = 25 //This is for the Play Global Sound verb
 
-/datum/chatOutput/New(client/C)
+/datum/chat_output/New(client/C)
 	owner = C
 	messageQueue = list()
 	connectionHistory = list()
@@ -35,7 +35,7 @@ For the main html chat area
   * Aborts if a problem is encountered.
   * Async because this is called from Client/New.
   */
-/datum/chatOutput/proc/start()
+/datum/chat_output/proc/start()
 	set waitfor = FALSE
 	//Check for existing chat
 	if(!owner)
@@ -57,7 +57,7 @@ For the main html chat area
 	return TRUE
 
 /// Loads goonchat and sends assets.
-/datum/chatOutput/proc/load()
+/datum/chat_output/proc/load()
 	set waitfor = FALSE
 	if(!owner)
 		return
@@ -68,7 +68,7 @@ For the main html chat area
 	owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=browseroutput")
 
 /// Interprets input from the client. Will send data back if required.
-/datum/chatOutput/Topic(href, list/href_list)
+/datum/chat_output/Topic(href, list/href_list)
 	if(usr.client != owner)
 		return TRUE
 
@@ -108,7 +108,7 @@ For the main html chat area
 
 
 /// Called on chat output done-loading by JS.
-/datum/chatOutput/proc/doneLoading()
+/datum/chat_output/proc/doneLoading()
 	if(loaded)
 		return
 
@@ -130,7 +130,7 @@ For the main html chat area
 	SEND_TEXT(owner, "<span class=\"userdanger\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
 
 /// Hides the standard output and makes the browser visible.
-/datum/chatOutput/proc/showChat()
+/datum/chat_output/proc/showChat()
 	winset(owner, "output", "is-visible=false")
 	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
 
@@ -138,12 +138,12 @@ For the main html chat area
 /proc/syncChatRegexes()
 	for (var/user in GLOB.clients)
 		var/client/C = user
-		var/datum/chatOutput/Cchat = C.chatOutput
+		var/datum/chat_output/Cchat = C.chatOutput
 		if (Cchat && !Cchat.broken && Cchat.loaded)
 			Cchat.syncRegex()
 
 /// Used to dynamically add regexes to the browser output. Currently only used by the IC filter.
-/datum/chatOutput/proc/syncRegex()
+/datum/chat_output/proc/syncRegex()
 	var/list/regexes = list()
 
 	if (config.ic_filter_regex)
@@ -157,7 +157,7 @@ For the main html chat area
 		ehjax_send(data = list("syncRegex" = regexes))
 
 /// Sends json encoded data to the browser.
-/datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
+/datum/chat_output/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
@@ -171,7 +171,7 @@ For the main html chat area
   ** "start" determines the start time of the sound
   ** "end" determines when the musics stops playing
   */
-/datum/chatOutput/proc/sendMusic(music, list/extra_data)
+/datum/chat_output/proc/sendMusic(music, list/extra_data)
 	if(!findtext(music, GLOB.is_http_protocol))
 		return
 	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
@@ -184,16 +184,16 @@ For the main html chat area
 	ehjax_send(data = music_data)
 
 /// Stops music playing throw the browser.
-/datum/chatOutput/proc/stopMusic()
+/datum/chat_output/proc/stopMusic()
 	ehjax_send(data = "stopMusic")
 
 /// Setter for adminMusicVolume. Sanitizes the value to between 0 and 100.
-/datum/chatOutput/proc/setMusicVolume(volume = "")
+/datum/chat_output/proc/setMusicVolume(volume = "")
 	if(volume)
 		adminMusicVolume = clamp(text2num(volume), 0, 100)
 
 /// Sends client connection details to the chat to handle and save
-/datum/chatOutput/proc/sendClientData()
+/datum/chat_output/proc/sendClientData()
 	//Get dem deets
 	var/list/deets = list("clientData" = list())
 	deets["clientData"]["ckey"] = owner.ckey
@@ -203,7 +203,7 @@ For the main html chat area
 	ehjax_send(data = data)
 
 /// Called by client, sent data to investigate (cookie history so far)
-/datum/chatOutput/proc/analyzeClientData(cookie = "")
+/datum/chat_output/proc/analyzeClientData(cookie = "")
 	//Spam check
 	if(world.time  >  next_time_to_clear)
 		next_time_to_clear = world.time + (3 SECONDS)
@@ -250,11 +250,11 @@ For the main html chat area
 	cookieSent = TRUE
 
 /// Called by js client every 60 seconds
-/datum/chatOutput/proc/ping()
+/datum/chat_output/proc/ping()
 	return "pong"
 
 /// Called by js client on js error
-/datum/chatOutput/proc/debug(error)
+/datum/chat_output/proc/debug(error)
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
 /// Global chat proc. to_chat_immediate will circumvent SSchat and send data as soon as possible.
@@ -321,11 +321,11 @@ For the main html chat area
 	SSchat.queue(target, message, handle_whitespace, trailing_newline, confidential)
 
 /// Dark mode light mode stuff. Yell at KMC if this breaks! (See darkmode.dm for documentation)
-/datum/chatOutput/proc/swaptolightmode()
+/datum/chat_output/proc/swaptolightmode()
 	owner.force_white_theme()
 
 /// Light mode stuff. (See darkmode.dm for documentation)
-/datum/chatOutput/proc/swaptodarkmode()
+/datum/chat_output/proc/swaptodarkmode()
 	owner.force_dark_theme()
 
 #undef MAX_COOKIE_LENGTH

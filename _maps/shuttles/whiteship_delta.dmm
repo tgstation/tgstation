@@ -2207,7 +2207,7 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/random,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,

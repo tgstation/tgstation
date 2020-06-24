@@ -228,7 +228,7 @@
 /datum/action/item_action/toggle_barrier_spread
 	name = "Toggle Barrier Spread"
 
-/datum/action/item_action/equip_unequip_TED_Gun
+/datum/action/item_action/equip_unequip_ted_gun
 	name = "Equip/Unequip TED Gun"
 
 /datum/action/item_action/toggle_paddles
@@ -519,10 +519,9 @@
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
-	///Cooldown between deploys. Uses world.time
-	var/cooldown = 0
 	///The type of closet this action spawns.
 	var/boxtype = /obj/structure/closet/cardboard/agent
+	COOLDOWN_DECLARE(box_cooldown)
 
 ///Handles opening and closing the box.
 /datum/action/item_action/agent_box/Trigger()
@@ -538,11 +537,12 @@
 	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
 		to_chat(owner, "<span class='warning'>You need more space to activate this implant!</span>")
 		return
-	if(cooldown < world.time - 100)
-		var/box = new boxtype(owner.drop_location())
-		owner.forceMove(box)
-		cooldown = world.time
-		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+	if(!COOLDOWN_FINISHED(src, box_cooldown))
+		return
+	COOLDOWN_START(src, box_cooldown, 10 SECONDS)
+	var/box = new boxtype(owner.drop_location())
+	owner.forceMove(box)
+	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
 //Preset for spells
 /datum/action/spell_action
@@ -699,7 +699,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "wheelys"
 
-/datum/action/item_action/kindleKicks
+/datum/action/item_action/kindle_kicks
 	name = "Activate Kindle Kicks"
 	desc = "Kick you feet together, activating the lights in your Kindle Kicks."
 	icon_icon = 'icons/mob/actions/actions_items.dmi'

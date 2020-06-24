@@ -170,8 +170,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/component_injector
 	name = "Component Injector"
 	late = TRUE
-	var/target_type
-	var/target_name
+	var/all = FALSE //Will inject into all fitting the criteria if true, otherwise first found
+	var/target_type //Will inject into atoms of this type
+	var/target_name //Will inject into atoms with this name
 	var/component_type
 
 //Late init so everything is likely ready and loaded (no warranty)
@@ -188,8 +189,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			continue
 		var/cargs = build_args()
 		A._AddComponent(cargs)
+		if(!all)
+			qdel(src)
+			return
+	if(all)
 		qdel(src)
-		return
 
 /obj/effect/mapping_helpers/component_injector/proc/build_args()
 	return list(component_type)
@@ -205,6 +209,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		CRASH("Wrong disease type passed in.")
 	var/datum/disease/D = new disease_type()
 	return list(component_type,D)
+
+/obj/effect/mapping_helpers/component_injector/areabound
+	name = "Areabound Injector"
+	icon_state = "component_areabound"
+	component_type = /datum/component/areabound
+	target_type = /atom/movable
 
 /obj/effect/mapping_helpers/dead_body_placer
 	name = "Dead Body placer"

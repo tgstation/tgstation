@@ -13,7 +13,7 @@
 /obj/item/gang_induction_package/attack_self(mob/living/user)
 	..()
 	if(HAS_TRAIT(user, TRAIT_MINDSHIELD))
-		to_chat(user, "Your mind vehemently refuses to accept the family's ideologies.")
+		to_chat(user, "You attended a seminar on not signing up for a gang and are not interested.")
 		return
 	if(user.mind.has_antag_datum(/datum/antagonist/ert/families))
 		to_chat(user, "As a police officer, you can't join this family. However, you pretend to accept it to keep your cover up.")

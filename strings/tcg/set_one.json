@@ -2,7 +2,7 @@
 	"templates": [
 		{
 			"template": "default",
-			"icon": "icons/obj/tcg.dmi",
+			"icon": "icons/runtime/tcg/default.dmi",
 			"series": "coreset2020"
 		}
 	],

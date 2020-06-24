@@ -43,7 +43,7 @@
 	force = 20
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
 /obj/item/melee/synthetic_arm_blade/Initialize()
@@ -185,7 +185,7 @@
 	var/stamina_damage = 55 // Do we deal stamina damage.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
-	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
+	var/on_stun_sound = 'sound/effects/woodhit.ogg' // Default path to sound for when we stun.
 	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
 	var/on = TRUE // Are we on or off.
 

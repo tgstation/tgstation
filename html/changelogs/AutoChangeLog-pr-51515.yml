@@ -1,0 +1,4 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - rscadd: "Boxstation and Icebox medbays have been completely reworked"
