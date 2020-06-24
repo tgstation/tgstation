@@ -12,7 +12,7 @@
 /proc/clear_references(datum/D)
 	return
 
-/client/verb/view_refs(atom/D) //it actually supports datums as well but byond no likey
+/client/proc/view_refs(atom/D) //it actually supports datums as well but byond no likey
 	set category = "Debug"
 	set name = "View References"
 
