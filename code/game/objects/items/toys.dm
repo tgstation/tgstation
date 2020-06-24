@@ -527,9 +527,9 @@
 	qdel(src)
 
 
-/*
- * Mech prizes + MECHA COMBAT!!
- */
+/**
+  * Mech prizes + MECHA COMBAT!!
+  */
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
@@ -540,7 +540,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	/// Timer when it'll be off cooldown
 	var/timer = 0
-	/// Cooldown between play sessions - 8x longer after a battle
+	/// Cooldown between play sessions - 20x longer after a battle
 	var/cooldown = 1.5 SECONDS
 	/// If it makes noise when played with
 	var/quiet = FALSE
@@ -583,6 +583,62 @@
 		else
 			special_attack_type_message = "a mystery move, even I don't know."
 
+/**
+  *	this proc combines "sleep" while also checking for if the battle should continue 
+  *
+  *	this goes through some of the checks - the toys need to be next to each other to fight!
+  *	if it's player vs themself: They need to be able to "control" both mechs (either must be adjacent or using TK)
+  *	if it's player vs player: Both players need to be able to "control" their mechs (either must be adjacent or using TK)
+  *	if it's player vs mech (suicide): the mech needs to be in range of the player
+  *	if all the checks are TRUE, it does the sleeps, and returns TRUE. Otherwise, it returns FALSE.
+  *	Arguments:
+  *	* delay - the amount of time the sleep at the end of the check will sleep for
+  *	* attacker: - the attacking toy in the battle.
+  *	* attacker_controller - the controller of the attacking toy. there should ALWAYS be an attacker_controller
+  *	* opponent - (optional) the defender controller in the battle, for PvP
+  */
+/obj/item/toy/prize/proc/combat_sleep(var/delay, obj/item/toy/prize/attacker, mob/living/carbon/attacker_controller, mob/living/carbon/opponent)
+	if(!attacker_controller)
+		return FALSE
+	
+	if(!attacker) //if there's no attacker, then attacker_controller IS the attacker
+		if(!in_range(src, attacker_controller))
+			attacker_controller.visible_message("<span class='suicide'>[attacker_controller] is running from [src]! The coward!</span>")
+			return FALSE
+	else // if there's an attacker, we can procede as normal
+		if(!in_range(src, attacker)) //and the two toys aren't next to each other, the battle ends
+			attacker_controller.visible_message("<span class='notice'> [attacker] and [src] separate, ending the battle. </span>", \
+								"<span class='notice'> [attacker] and [src] separate, ending the battle. </span>")
+			return FALSE
+
+		//dead men tell no tales, incapacitated men fight no fights
+		if(attacker_controller.incapacitated())
+			return FALSE
+		//if the attacker_controller isn't next to the attacking toy (and doesn't have telekinesis), the battle ends
+		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(TK)))
+			attacker_controller.visible_message("<span class='notice'> [attacker_controller.name] seperates from [attacker], ending the battle.</span>", \
+								"<span class='notice'> You separate from [attacker], ending the battle. </span>")
+			return FALSE
+
+		//if it's PVP and the opponent is not next to the defending(src) toy (and doesn't have telekinesis), the battle ends
+		if(opponent)
+			if(opponent.incapacitated())
+				return FALSE
+			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(TK)))
+				opponent.visible_message("<span class='notice'> [opponent.name] seperates from [src], ending the battle.</span>", \
+							"<span class='notice'> You separate from [src], ending the battle. </span>")
+				return FALSE
+		//if it's not PVP and the attacker_controller isn't next to the defending toy (and doesn't have telekinesis), the battle ends
+		else
+			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(TK)))
+				attacker_controller.visible_message("<span class='notice'> [attacker_controller.name] seperates from [src] and [attacker], ending the battle.</span>", \
+									"<span class='notice'> You separate [attacker] and [src], ending the battle. </span>")
+				return FALSE
+
+	//if all that is good, then we can sleep peacefully
+	sleep(delay)
+	return TRUE
+
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
 	if(timer < world.time)
@@ -600,14 +656,20 @@
 	if(loc == user)
 		attack_self(user)
 
-/obj/item/toy/prize/attackby(obj/item/I, mob/living/user) //I is user's toy
-	if(istype(I, /obj/item/toy/prize)) //if you attack a mech with a mech, initiate combat between them 
-		var/obj/item/toy/prize/P = I
+/**
+  * If you attack a mech with a mech, initiate combat between them 
+  */
+/obj/item/toy/prize/attackby(obj/item/user_toy, mob/living/user)
+	if(istype(user_toy, /obj/item/toy/prize)) 
+		var/obj/item/toy/prize/P = user_toy
 		if(check_battle_start(user, P))
 			mecha_brawl(P, user)
 	..()
 
-/obj/item/toy/prize/attack(mob/living/carbon/human/target, mob/living/carbon/human/user) //src is user's toy
+/**
+  * Attack is called from the user's toy, aimed at target(another human), checking for target's toy.
+  */
+/obj/item/toy/prize/attack(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(target == user)
 		to_chat(user, "<span class='notice'>Target another toy mech if you want to start a battle with yourself.</span>")
 		return
@@ -626,7 +688,7 @@
 
 				//slap them with the metaphorical white glove
 				if(P.wants_to_battle) //if the target mech wants to battle, initiate the battle from their POV
-					mecha_brawl(P, target, user) //P = challenger's mech / SRC = defender's mech / user = defender / target = challenger
+					mecha_brawl(P, target, user) //P = defender's mech / SRC = attacker's mech / target = defender / user = attacker
 					P.wants_to_battle = FALSE
 					return
 
@@ -640,17 +702,29 @@
 	..()
 
 /**
+  * Overrides attack_tk - Sorry, you have to be face to face to initiate a battle, it's good sportsmanship
+  */
+/obj/item/toy/prize/attack_tk(mob/user)
+	if(timer < world.time)
+		to_chat(user, "<span class='notice'>You telekinetically play with [src].</span>")
+		timer = world.time + cooldown
+		if(!quiet)
+			playsound(user, 'sound/mecha/mechstep.ogg', 20, TRUE)
+
+/**
   * Resets the request for battle.
   *
   * For use in a timer, this proc resets the wants_to_battle variable after a short period.
-  * Arguments
-  *		user: the user wanting to do battle
+  * Arguments:
+  * * user - the user wanting to do battle
   */
 /obj/item/toy/prize/proc/withdraw_offer(mob/living/carbon/user)
 	if(wants_to_battle)
 		wants_to_battle = FALSE
 		to_chat(user, "<span class='notice'>You get the feeling they don't want to battle.</span>")
-
+/**
+  * Starts a battle, toy mech vs player. Player... doesn't win.
+  */
 /obj/item/toy/prize/suicide_act(mob/living/carbon/user)
 	if(in_combat)
 		to_chat(user, "<span class='notice'>[src] is in battle, let it finish first.</span>")
@@ -660,30 +734,29 @@
 	
 	in_combat = TRUE
 	sleep(1.5 SECONDS)
-	SpinAnimation(5, 0)
-	user.adjustBruteLoss(20)
-	user.adjustStaminaLoss(40)
-	sleep(1 SECONDS)
-	user.SpinAnimation(5, 0)
-	combat_health-- //we scratched it!
-	sleep(1 SECONDS)
-	SpinAnimation(5, 0)
-	user.adjustBruteLoss(15)
-	user.adjustStaminaLoss(30)
-	sleep(1 SECONDS)
-	SpinAnimation(5, 0)
-	user.adjustBruteLoss(15)
-	user.adjustStaminaLoss(30)
-	sleep(1 SECONDS)
-	if(!quiet)
-		say(special_attack_cry + "!!")
-		user.emote("scream")
-	else
-		SpinAnimation(5, 0)
-	sleep(1.5 SECONDS)
-	if(!in_range(src, user)) //run away? coward
-		say("PATHETIC")
-		return SHAME
+	for(var/i in 1 to 4)
+		switch(i)
+			if(1) 
+				SpinAnimation(5, 0)
+				user.adjustBruteLoss(25)
+				user.adjustStaminaLoss(50)
+			if(2)
+				user.SpinAnimation(5, 0)
+				combat_health-- //we scratched it!
+			if(3)
+				SpinAnimation(5, 0)
+				user.adjustBruteLoss(25)
+				user.adjustStaminaLoss(50)
+			if(4)
+				say(special_attack_cry + "!!")
+				user.emote("scream")
+				user.adjustStaminaLoss(25)
+
+		if(!combat_sleep(1 SECONDS, null, user))
+			say("PATHETIC.")
+			combat_health = max_combat_health
+			in_combat = FALSE
+			return SHAME
 
 	user.adjustBruteLoss(450)
 
@@ -708,19 +781,24 @@
 		. += "<span class='notice'>This toy has [wins] wins, and [losses] losses.</span>"
 
 /**
+  * Override the say proc if they're mute
+  */
+/obj/item/toy/prize/say()
+	if(!quiet)
+		. = ..()
+
+/**
   * The 'master' proc of the mech battle. Processes the entire battle's events and makes sure it start and finishes correctly.
   *
+  * src is the defending toy, and the battle proc is called on it to begin the battle.
   * After going through a few checks at the beginning to ensure the battle can start properly, the battle begins a loop that lasts
   * until either toy has no more health. During this loop, it also ensures the mechs stay in combat range of each other.
   * It will then randomly decide attacks for each toy, occasionally making one or the other use their special attack.
   * When either mech has no more health, the loop ends, and it displays the victor and the loser while updating their stats and resetting them.
-  * 
-  * Arguments
-  *															
-  *		src:			the defending toy, the toy that is hit by the attacker to start the battle	
-  *		attacker:		the attacking toy, the toy in the attacker_controller's hands
-  *		attacker_controller:	the user, the one who is holding the toys / controlling the fight
-  *		opponent:		optional arg used in Mech PvP battles: the other person who is taking part in the fight (controls src)
+  * Arguments:
+  *	* attacker - the attacking toy, the toy in the attacker_controller's hands
+  *	* attacker_controller - the user, the one who is holding the toys / controlling the fight
+  *	* opponent - optional arg used in Mech PvP battles: the other person who is taking part in the fight (controls src)
   */
 /obj/item/toy/prize/proc/mecha_brawl(obj/item/toy/prize/attacker, mob/living/carbon/attacker_controller, mob/living/carbon/opponent)
 	//A GOOD DAY FOR A SWELL BATTLE!
@@ -740,41 +818,11 @@
 	timer = world.time + cooldown*20
 	attacker.timer = world.time + attacker.cooldown*20
 
-	sleep(1.5 SECONDS)
+	sleep(1 SECONDS)
 	//--THE BATTLE BEGINS--
 	while(combat_health > 0 && attacker.combat_health > 0 && battle_length < MAX_BATTLE_LENGTH) 
-
-		//the toys need to be next to each other to fight!
-		//if it's player vs themself: They need to be able to "control" both mechs (either adjacent or using TK)
-		//if it's player vs player: Both players need to be able to "control" their mechs (either adjacent or using TK)
-
-		//if the two toys aren't next to each other, the battle ends
-		if(!in_range(src, attacker))
-			attacker_controller.visible_message("<span class='notice'> [attacker] and [src] separate, ending the battle. </span>", \
-								"<span class='notice'> [attacker] and [src] separate, ending the battle. </span>")
-			break
-		//dead men tell no tales, incapacitated men fight no fights
-		if(attacker_controller.incapacitated())
-			break
-		//if the attacker_controller isn't next to the attacking toy (and doesn't have telekinesis), the battle ends
-		if((!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(TK))))
-			attacker_controller.visible_message("<span class='notice'> [attacker_controller.name] seperates from [attacker], ending the battle.</span>", \
-								"<span class='notice'> You separate from [attacker], ending the battle. </span>")
-			break
-		//if it's PVP and the opponent is not next to the defending(src) toy (and doesn't have telekinesis), the battle ends
-		if(opponent)
-			if(opponent.incapacitated())
-				break
-			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(TK)))
-				opponent.visible_message("<span class='notice'> [opponent.name] seperates from [src], ending the battle.</span>", \
-							"<span class='notice'> You separate from [src], ending the battle. </span>")
-				break
-		//if it's not PVP and the attacker_controller isn't next to the defending toy (and doesn't have telekinesis), the battle ends
-		else
-			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(TK)))
-				attacker_controller.visible_message("<span class='notice'> [attacker_controller.name] seperates from [src] and [attacker], ending the battle.</span>", \
-									"<span class='notice'> You separate [attacker] and [src], ending the battle. </span>")
-				break
+		if(!combat_sleep(0.5 SECONDS, attacker, attacker_controller, opponent)) //combat_sleep checks everything we need to have checked for combat to continue
+			break 
 
 		//before we do anything - deal with charged attacks
 		if(special_attack_charged)
@@ -861,10 +909,10 @@
 										"<span class='notice'> You don't know what to do next.</span>")		
 
 		battle_length++																											
-		sleep(1 SECONDS)	
+		sleep(0.5 SECONDS)
 
 	/// Lines chosen for the winning mech
-	var/list/winlines = list("YOU'RE NOTHING BUT SCRAP!", "I'LL YIELD TO NONE!", "GLORY IS MINE!", "AN EASY FIGHT.", "YOU SHOULD HAVE NEVER FACED ME.")
+	var/list/winlines = list("YOU'RE NOTHING BUT SCRAP!", "I'LL YIELD TO NONE!", "GLORY IS MINE!", "AN EASY FIGHT.", "YOU SHOULD HAVE NEVER FACED ME.", "ROCKED AND SOCKED.")
 
 	if(attacker.combat_health <= 0 && combat_health <= 0) //both lose
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 20, TRUE)
@@ -876,8 +924,7 @@
 		playsound(attacker, 'sound/effects/light_flicker.ogg', 20, TRUE)
 		attacker_controller.visible_message("<span class='notice'> [attacker] falls apart!</span>", \
 							"<span class='notice'> [attacker] falls apart!</span>", null, COMBAT_MESSAGE_RANGE)
-		if(!quiet)
-			say("[pick(winlines)]")
+		say("[pick(winlines)]")
 		src_controller.visible_message("<span class='notice'> [src] destroys [attacker] and walks away victorious!</span>", \
 						"<span class='notice'> You raise up [src] victoriously over [attacker]!</span>")
 	else if (combat_health <= 0) //attacker wins
@@ -886,15 +933,13 @@
 		playsound(src, 'sound/effects/light_flicker.ogg', 20, TRUE)
 		src_controller.visible_message("<span class='notice'> [src] collapses!</span>", \
 						"<span class='notice'> [src] collapses!</span>", null, COMBAT_MESSAGE_RANGE)
-		if(!attacker.quiet)
-			attacker.say("[pick(winlines)]")
+		attacker.say("[pick(winlines)]")
 		attacker_controller.visible_message("<span class='notice'> [attacker] demolishes [src] and walks away victorious!</span>", \
 							"<span class='notice'> You raise up [attacker] proudly over [src]</span>!")
 	else //both win?
-		if(!quiet)
-			say("I WENT EASY ON YOU.")
-		if(!attacker.quiet)
-			attacker.say("OF COURSE YOU DID.")
+		say("NEXT TIME.")
+		//don't want to make this a one sided conversation
+		quiet? attacker.say("I WENT EASY ON YOU.") : attacker.say("OF COURSE.")
 
 	in_combat = FALSE
 	attacker.in_combat = FALSE
@@ -910,12 +955,10 @@
   * Both SRC and attacker (if attacker is included) timers are checked if they're on cooldown, and 
   * both SRC and attacker (if attacker is included) are checked if they are in combat already.
   * If any of the above are true, the proc returns FALSE and sends a message to user (and target, if included) otherwise, it returns TRUE
-  * 
-  * Arguments
-  *															
-  *		user:		the user who is initiating the battle
-  *		attacker:	optional arg for checking two mechs at once 
-  *		target:		optional arg used in Mech PvP battles (if used, attacker is target's toy)
+  * Arguments:
+  *	* user: the user who is initiating the battle
+  *	* attacker: optional arg for checking two mechs at once 
+  *	* target: optional arg used in Mech PvP battles (if used, attacker is target's toy)
   */
 /obj/item/toy/prize/proc/check_battle_start(mob/living/carbon/user, obj/item/toy/prize/attacker, mob/living/carbon/target) 
 	if(attacker && attacker.in_combat)
@@ -941,14 +984,11 @@
   * Processes any special attack moves that happen in the battle (called in the mechaBattle proc). 
   *
   * Makes the toy shout their special attack cry and updates its cooldown. Then, does the special attack.
-  * Arguments
-  *															
-  *		src:		the toy, doing its special move(not an arg but relevant) 	
-  *		victim:		the toy being hit by the special move
+  * Arguments:
+  *	* victim - the toy being hit by the special move
   */
 /obj/item/toy/prize/proc/special_attack_move(obj/item/toy/prize/victim) 
-	if(!quiet)
-		say(special_attack_cry + "!!")
+	say(special_attack_cry + "!!")
 
 	special_attack_charged = FALSE
 	special_attack_cooldown = 3
@@ -973,9 +1013,8 @@
   * Base proc for 'other' special attack moves. 
   *
   * This one is only for inheritance, each mech with an 'other' type move has their procs below. 
-  * Arguments												
-  *		src:		the toy, doing its super special move(not an arg but relevant) 	
-  *		victim:		the toy being hit by the super special move (doesn't necessarily need to be used)
+  * Arguments:
+  *	* victim - the toy being hit by the super special move (doesn't necessarily need to be used)
   */
 /obj/item/toy/prize/proc/super_special_attack(obj/item/toy/prize/victim) 
 	visible_message("<span class='notice'> [src] does a cool flip.</span>")
@@ -1089,7 +1128,7 @@
 	quiet = TRUE
 	max_combat_health = 4
 	special_attack_type = SPECIAL_ATTACK_OTHER
-	special_attack_type_message = "has a lower cooldown than normal special moves and deals damage."
+	special_attack_type_message = "has a lower cooldown than normal special moves, increases the opponent's cooldown, and deals damage."
 	special_attack_cry = "*wave"
 
 /obj/item/toy/prize/reticence/super_special_attack(obj/item/toy/prize/victim) 
