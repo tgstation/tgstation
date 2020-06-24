@@ -224,7 +224,7 @@
 
 
 /obj/item/paper/examine_more(mob/user)
-	create_ui(user)
+	ui_interact(user)
 
 
 /obj/item/paper/can_interact(mob/user)
