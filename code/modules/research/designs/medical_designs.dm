@@ -463,7 +463,7 @@
 	
 /datum/design/clownservo
 	name = "Snappop Waddle Servo"
-	desc = "Alledgedly a violation of clown rights"
+	desc = "An alleged violation of clown rights"
 	id = "clownservo"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
