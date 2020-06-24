@@ -584,18 +584,18 @@
 			special_attack_type_message = "a mystery move, even I don't know."
 
 /**
-  *	this proc combines "sleep" while also checking for if the battle should continue 
+  * this proc combines "sleep" while also checking for if the battle should continue 
   *
-  *	this goes through some of the checks - the toys need to be next to each other to fight!
-  *	if it's player vs themself: They need to be able to "control" both mechs (either must be adjacent or using TK)
-  *	if it's player vs player: Both players need to be able to "control" their mechs (either must be adjacent or using TK)
-  *	if it's player vs mech (suicide): the mech needs to be in range of the player
-  *	if all the checks are TRUE, it does the sleeps, and returns TRUE. Otherwise, it returns FALSE.
-  *	Arguments:
-  *	* delay - the amount of time the sleep at the end of the check will sleep for
-  *	* attacker: - the attacking toy in the battle.
-  *	* attacker_controller - the controller of the attacking toy. there should ALWAYS be an attacker_controller
-  *	* opponent - (optional) the defender controller in the battle, for PvP
+  * this goes through some of the checks - the toys need to be next to each other to fight!
+  * if it's player vs themself: They need to be able to "control" both mechs (either must be adjacent or using TK)
+  * if it's player vs player: Both players need to be able to "control" their mechs (either must be adjacent or using TK)
+  * if it's player vs mech (suicide): the mech needs to be in range of the player
+  * if all the checks are TRUE, it does the sleeps, and returns TRUE. Otherwise, it returns FALSE.
+  * Arguments:
+  * * delay - the amount of time the sleep at the end of the check will sleep for
+  * * attacker - the attacking toy in the battle.
+  * * attacker_controller - the controller of the attacking toy. there should ALWAYS be an attacker_controller
+  * * opponent - (optional) the defender controller in the battle, for PvP
   */
 /obj/item/toy/prize/proc/combat_sleep(var/delay, obj/item/toy/prize/attacker, mob/living/carbon/attacker_controller, mob/living/carbon/opponent)
 	if(!attacker_controller)
@@ -736,20 +736,17 @@
 	sleep(1.5 SECONDS)
 	for(var/i in 1 to 4)
 		switch(i)
-			if(1) 
+			if(1, 3) 
 				SpinAnimation(5, 0)
+				playsound(src, 'sound/mecha/mechstep.ogg', 30, TRUE)
 				user.adjustBruteLoss(25)
 				user.adjustStaminaLoss(50)
 			if(2)
 				user.SpinAnimation(5, 0)
+				playsound(user, 'sound/weapons/smash.ogg', 20, TRUE)
 				combat_health-- //we scratched it!
-			if(3)
-				SpinAnimation(5, 0)
-				user.adjustBruteLoss(25)
-				user.adjustStaminaLoss(50)
 			if(4)
 				say(special_attack_cry + "!!")
-				user.emote("scream")
 				user.adjustStaminaLoss(25)
 
 		if(!combat_sleep(1 SECONDS, null, user))
@@ -758,6 +755,7 @@
 			in_combat = FALSE
 			return SHAME
 
+	sleep(0.5 SECONDS)
 	user.adjustBruteLoss(450)
 
 	in_combat = FALSE
@@ -796,9 +794,9 @@
   * It will then randomly decide attacks for each toy, occasionally making one or the other use their special attack.
   * When either mech has no more health, the loop ends, and it displays the victor and the loser while updating their stats and resetting them.
   * Arguments:
-  *	* attacker - the attacking toy, the toy in the attacker_controller's hands
-  *	* attacker_controller - the user, the one who is holding the toys / controlling the fight
-  *	* opponent - optional arg used in Mech PvP battles: the other person who is taking part in the fight (controls src)
+  * * attacker - the attacking toy, the toy in the attacker_controller's hands
+  * * attacker_controller - the user, the one who is holding the toys / controlling the fight
+  * * opponent - optional arg used in Mech PvP battles: the other person who is taking part in the fight (controls src)
   */
 /obj/item/toy/prize/proc/mecha_brawl(obj/item/toy/prize/attacker, mob/living/carbon/attacker_controller, mob/living/carbon/opponent)
 	//A GOOD DAY FOR A SWELL BATTLE!
@@ -956,9 +954,9 @@
   * both SRC and attacker (if attacker is included) are checked if they are in combat already.
   * If any of the above are true, the proc returns FALSE and sends a message to user (and target, if included) otherwise, it returns TRUE
   * Arguments:
-  *	* user: the user who is initiating the battle
-  *	* attacker: optional arg for checking two mechs at once 
-  *	* target: optional arg used in Mech PvP battles (if used, attacker is target's toy)
+  * * user: the user who is initiating the battle
+  * * attacker: optional arg for checking two mechs at once 
+  * * target: optional arg used in Mech PvP battles (if used, attacker is target's toy)
   */
 /obj/item/toy/prize/proc/check_battle_start(mob/living/carbon/user, obj/item/toy/prize/attacker, mob/living/carbon/target) 
 	if(attacker && attacker.in_combat)
@@ -985,7 +983,7 @@
   *
   * Makes the toy shout their special attack cry and updates its cooldown. Then, does the special attack.
   * Arguments:
-  *	* victim - the toy being hit by the special move
+  * * victim - the toy being hit by the special move
   */
 /obj/item/toy/prize/proc/special_attack_move(obj/item/toy/prize/victim) 
 	say(special_attack_cry + "!!")
@@ -1014,7 +1012,7 @@
   *
   * This one is only for inheritance, each mech with an 'other' type move has their procs below. 
   * Arguments:
-  *	* victim - the toy being hit by the super special move (doesn't necessarily need to be used)
+  * * victim - the toy being hit by the super special move (doesn't necessarily need to be used)
   */
 /obj/item/toy/prize/proc/super_special_attack(obj/item/toy/prize/victim) 
 	visible_message("<span class='notice'> [src] does a cool flip.</span>")
