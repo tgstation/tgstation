@@ -214,7 +214,7 @@
 	
 /obj/item/reagent_containers/food/drinks/bottle/maltliquor
 	name = "Rabid Bear Malt Liquor"
-	desc = "a 40 full of malt liquor, kicks stronger than, well, a rabid bear."
+	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
 	icon_state = "maltliquorbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 100)
 
