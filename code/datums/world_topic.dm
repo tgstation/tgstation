@@ -102,16 +102,6 @@
 /datum/world_topic/news_report/Run(list/input)
 	minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
-/datum/world_topic/server_hop
-	keyword = "server_hop"
-
-/datum/world_topic/server_hop/Run(list/input)
-	var/expected_key = input[keyword]
-	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(O.key == expected_key)
-			new /obj/screen/splash(O.client, TRUE)
-			break
-
 /datum/world_topic/adminmsg
 	keyword = "adminmsg"
 	require_comms_key = TRUE
@@ -155,7 +145,7 @@
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date
 	.["hub"] = GLOB.hub_visibility
-	
+
 
 	var/list/adm = get_admin_counts()
 	var/list/presentmins = adm["present"]
@@ -174,13 +164,13 @@
 	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 	// Amount of world's ticks in seconds, useful for calculating round duration
-	
+
 	//Time dilation stats.
 	.["time_dilation_current"] = SStime_track.time_dilation_current
 	.["time_dilation_avg"] = SStime_track.time_dilation_avg
 	.["time_dilation_avg_slow"] = SStime_track.time_dilation_avg_slow
 	.["time_dilation_avg_fast"] = SStime_track.time_dilation_avg_fast
-	
+
 	//pop cap stats
 	.["soft_popcap"] = CONFIG_GET(number/soft_popcap) || 0
 	.["hard_popcap"] = CONFIG_GET(number/hard_popcap) || 0
@@ -192,4 +182,4 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
-	
+
