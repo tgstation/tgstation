@@ -16,6 +16,9 @@
 	set category = "Debug"
 	set name = "View References"
 
+	if(!check_rights(R_DEBUG))
+		return
+
 	var/list/backrefs = get_back_references(D)
 	if(isnull(backrefs))
 		usr << browse("Reference tracking not enabled", "window=ref_view")
