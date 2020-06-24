@@ -10,7 +10,6 @@
 #define MODE_READING 0
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
-#define MODE_HELPSHEET 3
 
 
 /**
@@ -76,41 +75,6 @@
 	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = "white"
-	var/static/help_info = {"
-<span style="color:'black';font-family:'Verdana';"><center>Paper now uses Markup!</center>
-
-<h1 id="-h1-heading"># H1 Heading</h1>
-<h2 id="-h2-heading">## H2 Heading</h2>
-<h3 id="-h3-heading">### H3 Heading</h3>
-<h4 id="-h4-heading">#### H4 Heading</h4>
-<h5 id="-h5-heading">#### H5 Heading</h5>
-<p><strong>Bold</strong> Just suround with two *<br><em>Italic</em>  Just suround with one *</p>
-<ul>
-<li><p>Preformated<br>Begin each line with two spaces or more to make the text look exactly like you typed it</p>
-</li>
-<li><p>Ordered List<br>Just type “1.” for the first item, “2.” second item, etc</p>
-</li>
-</ul>
-<ol>
-<li>Like this</li>
-</ol>
-<ul>
-<li><p>Unordered List<br>Just use “-“ in front of a sentence</p>
-</li>
-<li><p>Code<br>Put code between two ` or start a line withthree ``` for blocks</p>
-<pre><code>This is a code block</code></pre>
-</li>
-<li><p>Horizontal Line<br> Just type three “-“</p>
-</li>
-</ul>
-<hr>
-<p>No links or images are supported but some standard html formating is supported<br>
-To sign your name just type %s or %sign at the end of a line<br>
-If you want to use forms, just place a bracket with underlines.   The more underlines the more charaters it supports<br>
-Like so \[<strong><strong>_____</strong></strong>\]  \[<input type="text" style="font:'12x Verdana';color:'black';min-width:86px;max-width:86px;" id="paperfield_1" maxlength=13 size=13 />\]<br>
-When you fill in a form field, you cannot erase it.</p>
-</span>
-"}
 	/// What's actually written on the paper.
 	var/info = ""
 
@@ -260,19 +224,7 @@ When you fill in a form field, you cannot erase it.</p>
 
 
 /obj/item/paper/examine_more(mob/user)
-	ui_interact(user)
-
-
-/obj/item/paper/verb/help()
-	set name = "Paper Help"
-	set category = "Object"
-	set src in usr
-
-	// cut paper?  the sky is the limit!
-	var/datum/ui_state/default/paper_state/state = new
-	state.edit_mode = MODE_HELPSHEET
-	src.create_ui(usr, state)	// The other ui will be created with just read mode outside of this
-
+	create_ui(user)
 
 
 /obj/item/paper/can_interact(mob/user)
@@ -404,18 +356,13 @@ When you fill in a form field, you cannot erase it.</p>
 	var/datum/ui_state/default/paper_state/state = ui.state
 
 	// Should all this go in static data and just do a forced update?
-	if(state.edit_mode == MODE_HELPSHEET)
-		data["edit_mode"] = MODE_READING
-		data["text"] = help_info
-	else
-		data["edit_mode"] = state.edit_mode
-		data["text"] = info
-
+	data["text"] = info
 	data["max_length"] = MAX_PAPER_LENGTH
 	data["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling?
 	data["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
 	data["stamps"] = stamps
 
+	data["edit_mode"] = state.edit_mode
 	data["edit_usr"] = "[ui.user]";
 
 	// pen info for editing
