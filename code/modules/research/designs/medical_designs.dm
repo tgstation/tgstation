@@ -460,6 +460,17 @@
 	build_path = /obj/item/organ/cyberimp/chest/thrusters
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	
+/datum/design/clownservo
+	name = "Snappop Waddle Servo"
+	desc = "Alledgedly a violation of clown rights"
+	id = "clownservo"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/cyberimp/leg/clownservo
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /////////////////////////////////////////
 ////////////Regular Implants/////////////
