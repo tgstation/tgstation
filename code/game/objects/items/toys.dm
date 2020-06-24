@@ -752,6 +752,9 @@
 			attacker_controller.visible_message("<span class='notice'> [attacker] and [src] separate, ending the battle. </span>", \
 								"<span class='notice'> [attacker] and [src] separate, ending the battle. </span>")
 			break
+		//dead men tell no tales, incapacitated men fight no fights
+		if(attacker_controller.incapacitated())
+			break
 		//if the attacker_controller isn't next to the attacking toy (and doesn't have telekinesis), the battle ends
 		if((!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(TK))))
 			attacker_controller.visible_message("<span class='notice'> [attacker_controller.name] seperates from [attacker], ending the battle.</span>", \
@@ -759,6 +762,8 @@
 			break
 		//if it's PVP and the opponent is not next to the defending(src) toy (and doesn't have telekinesis), the battle ends
 		if(opponent)
+			if(opponent.incapacitated())
+				break
 			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(TK)))
 				opponent.visible_message("<span class='notice'> [opponent.name] seperates from [src], ending the battle.</span>", \
 							"<span class='notice'> You separate from [src], ending the battle. </span>")
