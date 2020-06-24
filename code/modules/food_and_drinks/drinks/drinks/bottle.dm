@@ -211,6 +211,12 @@
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
+	
+/obj/item/reagent_containers/food/drinks/bottle/maltliquor
+	name = "Rabid Bear Malt Liquor"
+	desc = "a 40 full of malt liquor, kicks stronger than, well, a rabid bear."
+	icon_state = "maltliquorbottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/holywater
 	name = "flask of holy water"

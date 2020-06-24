@@ -112,6 +112,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "greenbeerglass"
 	glass_name = "glass of green beer"
 	glass_desc = "A freezing pint of green beer. Festive."
+	
+/datum/reagent/consumable/ethanol/beer/maltliquor
+	name = "Malt Liquor"
+	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety is super strength, super cheap, and super terrible."
+	boozepwr = 35
+	taste_description = "sweet corn beer and the hood life"
+	glass_name = "glass of malt liquor"
+	glass_desc = "A freezing pint of malt liquor."
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/carbon/M)
 	if(M.color != color)
