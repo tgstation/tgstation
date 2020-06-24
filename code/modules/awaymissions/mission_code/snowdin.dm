@@ -247,13 +247,6 @@
 											  "<span class='userdanger'>Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!</span>")
 
 
-/obj/vehicle/ridden/lavaboat/plasma
-	name = "plasma boat"
-	desc = "A boat used for traversing the streams of plasma without turning into an icecube."
-	icon_state = "goliath_boat"
-	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	resistance_flags = FREEZE_PROOF
-	can_buckle = TRUE
 ///////////	papers
 
 

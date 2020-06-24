@@ -363,3 +363,23 @@
 /datum/status_effect/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
+
+/datum/status_effect/speed_boost
+	id = "speed_boost"
+	duration = 2 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/speed_boost/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, TRUE)
+	return ..()
+
+/datum/status_effect/speed_boost/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, TRUE)
+
+/datum/movespeed_modifier/status_speed_boost
+	multiplicative_slowdown = -0.25

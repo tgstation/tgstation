@@ -33,7 +33,7 @@ Difficulty: Hard
 	loot = list()
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1)
-	crusher_loot = list(/obj/item/book/granter/martial/carp)
+	crusher_loot = list(/obj/item/crusher_trophy/wendigo_horn)
 	wander = FALSE
 	del_on_death = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -114,14 +114,6 @@ Difficulty: Hard
 			teleport()
 		if(3)
 			disorienting_scream()
-
-/mob/living/simple_animal/hostile/megafauna/wendigo/Life()
-	. = ..()
-	if(!.)
-		return
-	if(target || get_dist(src, starting) < 12)
-		return
-	do_teleport(src, starting, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/Move(atom/newloc, direct)
 	if(!can_move)
@@ -222,3 +214,22 @@ Difficulty: Hard
 	invocation = "RAAAAAAAAWR!"
 	convert_damage = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
+
+/obj/item/crusher_trophy/wendigo_horn
+	name = "wendigo horn"
+	desc = "A horn from the head of an unstoppable beast."
+	icon_state = "wendigo_horn"
+	denied_type = /obj/item/crusher_trophy/wendigo_horn
+
+/obj/item/crusher_trophy/wendigo_horn/effect_desc()
+	return "melee hits inflict twice as much damage"
+
+/obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.AddComponent(/datum/component/two_handed, force_wielded=40)
+
+/obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.AddComponent(/datum/component/two_handed, force_wielded=20)

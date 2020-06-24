@@ -28,7 +28,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 3, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide = 1)
 	loot = list()
-	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
+	crusher_loot = /obj/item/crusher_trophy/bear_paw
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -62,3 +62,20 @@
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."
 	faction = list("neutral")
+
+/obj/item/crusher_trophy/bear_paw
+	name = "polar bear paw"
+	desc = "It's a polar bear paw."
+	icon_state = "bear_paw"
+	denied_type = /obj/item/crusher_trophy/bear_paw
+
+/obj/item/crusher_trophy/bear_paw/effect_desc()
+	return "mark detonation to attack twice if you are below half your life"
+
+/obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
+	if(user.health / user.maxHealth > 0.5)
+		return
+	var/obj/item/I = user.get_active_held_item()
+	if(!I)
+		return
+	I.melee_attack_chain(user, target, null)

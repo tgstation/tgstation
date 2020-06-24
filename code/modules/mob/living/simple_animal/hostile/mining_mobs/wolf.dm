@@ -30,7 +30,7 @@
 	pull_force = MOVE_FORCE_WEAK
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/stack/sheet/sinew/wolf = 2, /obj/item/stack/sheet/bone = 2)
 	loot = list()
-	crusher_loot = /obj/item/crusher_trophy/watcher_wing
+	crusher_loot = /obj/item/crusher_trophy/wolf_ear
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -58,3 +58,15 @@
 		return
 	adjustHealth(-maxHealth*0.025)
 	retreat_message_said = FALSE
+
+/obj/item/crusher_trophy/wolf_ear
+	name = "wolf ear"
+	desc = "It's a wolf ear."
+	icon_state = "wolf_ear"
+	denied_type = /obj/item/crusher_trophy/wolf_ear
+
+/obj/item/crusher_trophy/wolf_ear/effect_desc()
+	return "mark detonation to gain a slight speed boost temporarily"
+
+/obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
+	user.apply_status_effect(/datum/status_effect/speed_boost, 5)
