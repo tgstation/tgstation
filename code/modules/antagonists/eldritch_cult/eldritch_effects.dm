@@ -171,30 +171,6 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	///List of possible effects
-	var/static/list/effect_list = list("Heat","Cool","Idle")
-	///The effect we chose
-	var/effect
-
-
-/obj/effect/broken_illusion/Initialize()
-	. = ..()
-	effect = pick(effect_list)
-	if(effect != "Idle")
-		name = effect+"ing "+name
-	START_PROCESSING(SSobj,src)
-
-/obj/effect/broken_illusion/process()
-	switch(effect)
-		if("Heat")
-			change_temp_on_turf(1)
-		if("Cool")
-			change_temp_on_turf(-1)
-
-/obj/effect/broken_illusion/proc/change_temp_on_turf(_temp = 0)
-	var/turf/current_turf = get_turf(src)
-	var/datum/gas_mixture/env = current_turf.return_air()
-	env.temperature += _temp
 
 /obj/effect/broken_illusion/attack_hand(mob/living/user)
 	if(!ishuman(user))
