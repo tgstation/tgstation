@@ -481,9 +481,12 @@
 	for(var/i in 1 to req_players)
 		var/chosen_key = pick_n_take(possible_keys)
 		filtered_keys += chosen_key
-		for(var/key in GLOB.mafia_signup)
-			var/list/tbr = GLOB.mafia_signup[key]
-			tbr -= chosen_key
+		GLOB.mafia_signup -= chosen_key
+	//small message about not getting into this game for clarity on why they didn't get in
+	for(var/unpicked in possible_keys)
+		var/client/unpicked_client = GLOB.directory[unpicked]
+		to_chat(unpicked_client, "<span class='danger'>Sorry, the starting mafia game has too many players and you were not picked.</span>")
+		to_chat(unpicked_client, "<span class='warning'>You're still signed up, and have another chance to join when the one starting now finishes.</span>")
 
 	prepare_game(setup,filtered_keys)
 	start_game()
