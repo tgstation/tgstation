@@ -98,6 +98,14 @@
 	foodtype = FRUIT
 	value = FOOD_RARE
 
+/obj/item/reagent_containers/food/snacks/no_raisin/beepsky
+	name = "4 raisins"
+	desc = "You know what you did..."
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ethanol/beepsky_smash = 4)
+	junkiness = 0
+	foodtype = FRUIT
+	value = FOOD_RARE
+
 /obj/item/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
 	icon_state = "space_twinkie"
