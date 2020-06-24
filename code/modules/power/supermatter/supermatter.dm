@@ -1007,9 +1007,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				var/obj/structure/closet/toggle = P
 				toggle.open(force = TRUE)
 			continue
-		if(ishuman(P))
-			var/mob/living/carbon/human/H = P
-			if(!H.mob_negates_gravity())
+		if(ismob(P))
+			var/mob/M = P
+			if(M.mob_negates_gravity())
 				continue //You can't pull someone nailed to the deck
 		step_towards(P,center)
 

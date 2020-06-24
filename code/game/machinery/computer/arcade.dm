@@ -371,8 +371,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(0 to 2)
 			LAZYADD(last_three_move, player_stance)
 		if(3)
-			LAZYREMOVE(last_three_move, last_three_move[1])
-			LAZYADD(last_three_move, player_stance)
+			for(var/i in 1 to 2)
+				last_three_move[i] = last_three_move[i + 1]
+			last_three_move[3] = player_stance
+
 		if(4 to INFINITY)
 			last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
 
@@ -570,6 +572,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(obj_flags & EMAGGED)
 			user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
+
+	if(gameover)
 		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 
 

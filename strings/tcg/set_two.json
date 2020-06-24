@@ -2,7 +2,7 @@
 	"templates": [
 		{
 			"template": "default",
-			"icon": "icons/obj/tcg_xenos.dmi",
+			"icon": "icons/runtime/tcg/xenos.dmi",
 			"series": "resinfront"
 		}
 	],
