@@ -12,6 +12,7 @@ export const MafiaPanel = (props, context) => {
     phase,
     role_info,
     admin_controls,
+    judgement_phase,
     timeleft,
     all_roles } = data;
   return (
@@ -55,16 +56,24 @@ export const MafiaPanel = (props, context) => {
                 </Button>
               </Flex.Item>);
           })}
-          { !!admin_controls && (
-            <Fragment>
-              <Flex.Item>
-                <Button onClick={() => act("next_phase")}>Next Phase</Button>
-              </Flex.Item>
-              <FlexItem>
-                <Button onClick={() => act("new_game")}>New Game</Button>
-              </FlexItem>
-            </Fragment>)}
         </Flex>
+        {!!admin_controls && (
+          <Section
+            title="ADMIN CONTROLS"
+            backgroundColor="red">
+            THESE ARE DEBUG, THEY WILL BREAK THE GAME, DO NOT TOUCH
+            <Flex.Item>
+              <Button
+                onClick={() => act("next_phase")}>Next Phase
+              </Button>
+            </Flex.Item>
+            <FlexItem>
+              <Button
+                onClick={() => act("new_game")}>New Game
+              </Button>
+            </FlexItem>
+          </Section>
+        )}
         <Section title="Players">
           <LabeledList>
             {!!players && players.map(player => { return (
@@ -72,7 +81,8 @@ export const MafiaPanel = (props, context) => {
                 className="candystripe"
                 key={player.ref}
                 label={player.name}>
-                {player.votes !== undefined
+                {!player.alive && (<Box color="red">DEAD</Box>)}
+                {player.votes !== undefined && player.alive
                 && (<Fragment>Votes : {player.votes} </Fragment>)}
                 {
                   !!player.actions && player.actions.map(action => {
@@ -90,6 +100,23 @@ export const MafiaPanel = (props, context) => {
             })}
           </LabeledList>
         </Section>
+        {!!judgement_phase && (
+          <Section title="JUDGEMENT">
+            Use these buttons to vote the accused innocent or guilty!
+            <Fragment>
+              <Flex.Item>
+                <Button
+                  onClick={() => act("vote_innocent")}>INNOCENT!
+                </Button>
+              </Flex.Item>
+              <FlexItem>
+                <Button
+                  onClick={() => act("vote_guilty")}>GUILTY!
+                </Button>
+              </FlexItem>
+            </Fragment>
+          </Section>
+        )}
         <Section title="Roles">
           <Table>
             {!!all_roles && all_roles.map(r => (
