@@ -56,8 +56,8 @@
 	starting_node = TRUE
 	display_name = "Basic Medical Equipment"
 	description = "Basic medical tools and equipment."
-	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs", "scalpel", "circular_saw", "bonesetter", "surgicaldrill", "retractor", "cautery", "hemostat",
-					"surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker", "dropper", "defibmountdefault", "surgical_tape")
+	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat",
+					"surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker", "dropper", "defibmountdefault")
 
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
@@ -377,7 +377,7 @@
 	description = "Honk?!"
 	prereq_ids = list("base")
 	design_ids = list("air_horn", "honker_main", "honker_peri", "honker_targ", "honk_chassis", "honk_head", "honk_torso", "honk_left_arm", "honk_right_arm",
-	"honk_left_leg", "honk_right_leg", "mech_banana_mortar", "mech_mousetrap_mortar", "mech_honker", "mech_punching_face", "implant_trombone", "borg_transform_clown")
+	"honk_left_leg", "honk_right_leg", "mech_banana_mortar", "mech_mousetrap_mortar", "mech_honker", "mech_punching_face", "implant_trombone", "borg_transform_clown", "clownservo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -430,7 +430,7 @@
 	design_ids = list("s-receiver", "s-bus", "s-broadcaster", "s-processor", "s-hub", "s-server", "s-relay", "comm_monitor", "comm_server",
 	"s-ansible", "s-filter", "s-amplifier", "ntnet_relay", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter", "s-messaging")
 
-/datum/techweb_node/integrated_hud
+/datum/techweb_node/integrated_HUDs
 	id = "integrated_HUDs"
 	display_name = "Integrated HUDs"
 	description = "The usefulness of computerized records, projected straight onto your eyepiece!"
@@ -439,7 +439,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 	export_price = 5000
 
-/datum/techweb_node/nvg_tech
+/datum/techweb_node/NVGtech
 	id = "NVGtech"
 	display_name = "Night Vision Technology"
 	description = "Allows seeing in the dark without actual light!"
@@ -1089,7 +1089,7 @@
 	hidden = TRUE
 	experimental = TRUE
 
-/datum/techweb_node/mauna_mug
+/datum/techweb_node/Mauna_Mug
 	id = "mauna_mug"
 	display_name = "Mauna Mug"
 	description = "A bored scientist was thinking to himself for very long...and then realized his coffee got cold! He made this invention to solve this extreme problem."
