@@ -503,7 +503,7 @@
 	desc = "1/13"
 	max_combat_health = 3
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
-	special_attack_cry = "OMEGA DRILL"
+	special_attack_cry = "GIGA DRILL BREAK"
 
 /obj/item/toy/prize/fireripley
 	name = "toy Firefighting Ripley"
