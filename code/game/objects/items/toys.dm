@@ -548,11 +548,11 @@
 	var/wants_to_battle = FALSE
 	/// TRUE = in combat currently || FALSE = Not in combat
 	var/in_combat = FALSE
-	///	The mech's health in battle
+	/// The mech's health in battle
 	var/combat_health = 0 
 	/// The mech's max combat health
 	var/max_combat_health = 0
-	///	TRUE = the special attack is charged || FALSE = not charged
+	/// TRUE = the special attack is charged || FALSE = not charged
 	var/special_attack_charged = FALSE
 	/// What type of special attack they use - SPECIAL_ATTACK_DAMAGE, SPECIAL_ATTACK_HEAL, SPECIAL_ATTACK_UTILITY, SPECIAL_ATTACK_OTHER
 	var/special_attack_type = 0	
@@ -717,16 +717,16 @@
   * 
   * Arguments
   *															
-  *		src:					the defending toy, the toy that is hit by the attacker to start the battle	
-  *		attacker:				the attacking toy, the toy in the attacker_controller's hands
+  *		src:			the defending toy, the toy that is hit by the attacker to start the battle	
+  *		attacker:		the attacking toy, the toy in the attacker_controller's hands
   *		attacker_controller:	the user, the one who is holding the toys / controlling the fight
-  *		opponent:				optional arg used in Mech PvP battles: the other person who is taking part in the fight (controls src)
+  *		opponent:		optional arg used in Mech PvP battles: the other person who is taking part in the fight (controls src)
   */
 /obj/item/toy/prize/proc/mechaBrawl(obj/item/toy/prize/attacker, mob/living/carbon/attacker_controller, mob/living/carbon/opponent)
 	//A GOOD DAY FOR A SWELL BATTLE!
 	attacker_controller.visible_message("<span class='danger'> [attacker_controller.name] collides [attacker] with [src]! Looks like they're preparing for a brawl! </span>", \
-										"<span class='danger'> You collide [attacker] into [src], sparking a fierce battle! </span>", \
-										"<span class='hear'> You hear hard plastic smacking into hard plastic.</span>", COMBAT_MESSAGE_RANGE)
+						"<span class='danger'> You collide [attacker] into [src], sparking a fierce battle! </span>", \
+						"<span class='hear'> You hear hard plastic smacking into hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 
 	/// Who's in control of the defender (src)?
 	var/mob/living/carbon/src_controller = (opponent)? opponent : attacker_controller
@@ -750,35 +750,35 @@
 		//if the two toys aren't next to each other, the battle ends
 		if(!in_range(src, attacker))
 			attacker_controller.visible_message("<span class='notice'> [attacker] and [src] separate, ending the battle. </span>", \
-												"<span class='notice'> [attacker] and [src] separate, ending the battle. </span>")
+								"<span class='notice'> [attacker] and [src] separate, ending the battle. </span>")
 			break
 		//if the attacker_controller isn't next to the attacking toy (and doesn't have telekinesis), the battle ends
 		if((!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(TK))))
 			attacker_controller.visible_message("<span class='notice'> [attacker_controller.name] seperates from [attacker], ending the battle.</span>", \
-												"<span class='notice'> You separate from [attacker], ending the battle. </span>")
+								"<span class='notice'> You separate from [attacker], ending the battle. </span>")
 			break
 		//if it's PVP and the opponent is not next to the defending(src) toy (and doesn't have telekinesis), the battle ends
 		if(opponent)
 			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(TK)))
 				opponent.visible_message("<span class='notice'> [opponent.name] seperates from [src], ending the battle.</span>", \
-										"<span class='notice'> You separate from [src], ending the battle. </span>")
+							"<span class='notice'> You separate from [src], ending the battle. </span>")
 				break
 		//if it's not PVP and the attacker_controller isn't next to the defending toy (and doesn't have telekinesis), the battle ends
 		else
 			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(TK)))
 				attacker_controller.visible_message("<span class='notice'> [attacker_controller.name] seperates from [src] and [attacker], ending the battle.</span>", \
-													"<span class='notice'> You separate [attacker] and [src], ending the battle. </span>")
+									"<span class='notice'> You separate [attacker] and [src], ending the battle. </span>")
 				break
 
 		//before we do anything - deal with charged attacks
 		if(special_attack_charged)
 			src_controller.visible_message("<span class='danger'> [src] unleashes its special attack!! </span>", \
-											"<span class='danger'> You unleash [src]'s special attack! </span>")
+							"<span class='danger'> You unleash [src]'s special attack! </span>")
 			specialAttackMove(attacker)
 		else if(attacker.special_attack_charged)
 
 			attacker_controller.visible_message("<span class='danger'> [attacker] unleashes its special attack!! </span>", \
-												"<span class='danger'> You unleash [attacker]'s special attack! </span>")
+								"<span class='danger'> You unleash [attacker]'s special attack! </span>")
 			attacker.specialAttackMove(src)
 		else
 			//process the cooldowns
@@ -793,19 +793,19 @@
 					if(attacker.special_attack_cooldown == 0 && attacker.combat_health <= round(attacker.max_combat_health/3)) //if health is less than 1/3 and special off CD, use it
 						attacker.special_attack_charged = TRUE
 						attacker_controller.visible_message("<span class='danger'> [attacker] begins charging its special attack!! </span>", \
-															"<span class='danger'> You begin charging [attacker]'s special attack! </span>")
+											"<span class='danger'> You begin charging [attacker]'s special attack! </span>")
 					else //just attack 
 						attacker.SpinAnimation(5, 0)
 						playsound(attacker, 'sound/mecha/mechstep.ogg', 30, TRUE)
 						combat_health--
 						attacker_controller.visible_message("<span class='danger'> [attacker] devastates [src]! </span>", \
-															"<span class='danger'> You ram [attacker] into [src]! </span>", \
-															"<span class='hear'> You hear hard plastic smacking hard plastic.</span>", COMBAT_MESSAGE_RANGE)
+											"<span class='danger'> You ram [attacker] into [src]! </span>", \
+											"<span class='hear'> You hear hard plastic smacking hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 						if(prob(5))
 							combat_health--
 							playsound(src, 'sound/effects/meteorimpact.ogg', 20, TRUE)
 							attacker_controller.visible_message("<span class='boldwarning'> ...and lands a CRIPPLING BLOW! </span>", \
-																"<span class='boldwarning'> ...and you land a CRIPPLING blow on [src]! </span>", null, COMBAT_MESSAGE_RANGE)							
+												"<span class='boldwarning'> ...and you land a CRIPPLING blow on [src]! </span>", null, COMBAT_MESSAGE_RANGE)							
 
 				if(4) //both lose
 					attacker.SpinAnimation(5, 0)
@@ -816,43 +816,43 @@
 					do_sparks(2, FALSE, attacker)
 					if(prob(50))
 						attacker_controller.visible_message("<span class='danger'> [attacker] and [src] clash dramatically, causing sparks to fly! </span>", \
-															"<span class='danger'> [attacker] and [src] clash dramatically, causing sparks to fly! </span>", \
-															"<span class='hear'> You hear hard plastic rubbing against hard plastic.</span>", COMBAT_MESSAGE_RANGE)
+											"<span class='danger'> [attacker] and [src] clash dramatically, causing sparks to fly! </span>", \
+											"<span class='hear'> You hear hard plastic rubbing against hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 					else
 						src_controller.visible_message("<span class='danger'> [src] and [attacker] clash dramatically, causing sparks to fly! </span>", \
-														"<span class='danger'> [src] and [attacker] clash dramatically, causing sparks to fly! </span>", \
-														"<span class='hear'> You hear hard plastic rubbing against hard plastic.</span>", COMBAT_MESSAGE_RANGE)
+										"<span class='danger'> [src] and [attacker] clash dramatically, causing sparks to fly! </span>", \
+										"<span class='hear'> You hear hard plastic rubbing against hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 				if(5) //both win
 					playsound(attacker, 'sound/weapons/parry.ogg', 20, TRUE)
 					if(prob(50))
 						attacker_controller.visible_message("<span class='danger'> [src]'s attack deflects off of [attacker]. </span>", \
-															"<span class='danger'> [src]'s attack deflects off of [attacker]. </span>", \
-															"<span class='hear'> You hear hard plastic bouncing off hard plastic.</span>", COMBAT_MESSAGE_RANGE)
+											"<span class='danger'> [src]'s attack deflects off of [attacker]. </span>", \
+											"<span class='hear'> You hear hard plastic bouncing off hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 					else
 						src_controller.visible_message("<span class='danger'> [attacker]'s attack deflects off of [src]. </span>", \
-														"<span class='danger'> [attacker]'s attack deflects off of [src]. </span>", \
-														"<span class='hear'> You hear hard plastic bouncing off hard plastic.</span>", COMBAT_MESSAGE_RANGE)
+										"<span class='danger'> [attacker]'s attack deflects off of [src]. </span>", \
+										"<span class='hear'> You hear hard plastic bouncing off hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 
 				if(6 to 8) //defender wins
 					if(special_attack_cooldown == 0 && combat_health <= round(max_combat_health/3)) //if health is less than 1/3 and special off CD, use it
 						special_attack_charged = TRUE
 						src_controller.visible_message("<span class='danger'> [src] begins charging its special attack!! </span>", \
-														"<span class='danger'> You begin charging [src]'s special attack! </span>")
+										"<span class='danger'> You begin charging [src]'s special attack! </span>")
 					else //just attack 
 						SpinAnimation(5, 0)
 						playsound(src, 'sound/mecha/mechstep.ogg', 30, TRUE)
 						attacker.combat_health--
 						src_controller.visible_message("<span class='danger'> [src] smashes [attacker]! </span>", \
-														"<span class='danger'> You smash [src] into [attacker]! </span>", \
-														"<span class='hear'> You hear hard plastic smashing hard plastic.</span>", COMBAT_MESSAGE_RANGE)
+										"<span class='danger'> You smash [src] into [attacker]! </span>", \
+										"<span class='hear'> You hear hard plastic smashing hard plastic.</span>", COMBAT_MESSAGE_RANGE)
 						if(prob(5))
 							attacker.combat_health--
 							playsound(attacker, 'sound/effects/meteorimpact.ogg', 20, TRUE)
 							src_controller.visible_message("<span class='boldwarning'> ...and lands a CRIPPLING BLOW! </span>", \
-															"<span class='boldwarning'> ...and you land a CRIPPLING blow on [attacker]! </span>", null, COMBAT_MESSAGE_RANGE)	
+											"<span class='boldwarning'> ...and you land a CRIPPLING blow on [attacker]! </span>", null, COMBAT_MESSAGE_RANGE)	
 				else
 					attacker_controller.visible_message("<span class='notice'> [src] and [attacker] stand around awkwardly.</span>", \
-														"<span class='notice'> You don't know what to do next.</span>")		
+										"<span class='notice'> You don't know what to do next.</span>")		
 
 		battle_length++																											
 		sleep(10)	
@@ -863,27 +863,27 @@
 	if(attacker.combat_health <= 0 && combat_health <= 0) //both lose
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 20, TRUE)
 		attacker_controller.visible_message("<span class='boldnotice'> MUTUALLY ASSURED DESTRUCTION!! [src] and [attacker] both end up destroyed!</span>", \
-											"<span class='boldnotice'> Both [src] and [attacker] are destroyed!</span>")		
+							"<span class='boldnotice'> Both [src] and [attacker] are destroyed!</span>")		
 	else if(attacker.combat_health <= 0) //src wins
 		wins++
 		attacker.losses++
 		playsound(attacker, 'sound/effects/light_flicker.ogg', 20, TRUE)
 		attacker_controller.visible_message("<span class='notice'> [attacker] falls apart!</span>", \
-											"<span class='notice'> [attacker] falls apart!</span>", null, COMBAT_MESSAGE_RANGE)
+							"<span class='notice'> [attacker] falls apart!</span>", null, COMBAT_MESSAGE_RANGE)
 		if(!quiet)
 			say("[pick(winlines)]")
 		src_controller.visible_message("<span class='notice'> [src] destroys [attacker] and walks away victorious!</span>", \
-										"<span class='notice'> You raise up [src] victoriously over [attacker]!</span>")
+						"<span class='notice'> You raise up [src] victoriously over [attacker]!</span>")
 	else if (combat_health <= 0) //attacker wins
 		attacker.wins++
 		losses++	
 		playsound(src, 'sound/effects/light_flicker.ogg', 20, TRUE)
 		src_controller.visible_message("<span class='notice'> [src] collapses!</span>", \
-										"<span class='notice'> [src] collapses!</span>", null, COMBAT_MESSAGE_RANGE)
+						"<span class='notice'> [src] collapses!</span>", null, COMBAT_MESSAGE_RANGE)
 		if(!attacker.quiet)
 			attacker.say("[pick(winlines)]")
 		attacker_controller.visible_message("<span class='notice'> [attacker] demolishes [src] and walks away victorious!</span>", \
-											"<span class='notice'> You raise up [attacker] proudly over [src]</span>!")
+							"<span class='notice'> You raise up [attacker] proudly over [src]</span>!")
 	else //both win?
 		if(!quiet)
 			say("I WENT EASY ON YOU.")
@@ -907,9 +907,9 @@
   * 
   * Arguments
   *															
-  *		user:			the user who is initiating the battle
-  *		attacker:		optional arg for checking two mechs at once 
-  *		target:			optional arg used in Mech PvP battles (if used, attacker is target's toy)
+  *		user:		the user who is initiating the battle
+  *		attacker:	optional arg for checking two mechs at once 
+  *		target:		optional arg used in Mech PvP battles (if used, attacker is target's toy)
   */
 /obj/item/toy/prize/proc/checkBattleStart(mob/living/carbon/user, obj/item/toy/prize/attacker, mob/living/carbon/target) 
 	if(attacker && attacker.in_combat)
@@ -937,8 +937,8 @@
   * Makes the toy shout their special attack cry and updates its cooldown. Then, does the special attack.
   * Arguments
   *															
-  *		src:			the toy, doing its special move(not an arg but relevant) 	
-  *		victim:			the toy being hit by the special move
+  *		src:		the toy, doing its special move(not an arg but relevant) 	
+  *		victim:		the toy being hit by the special move
   */
 /obj/item/toy/prize/proc/specialAttackMove(obj/item/toy/prize/victim) 
 	if(!quiet)
@@ -968,8 +968,8 @@
   *
   * This one is only for inheritance, each mech with an 'other' type move has their procs below. 
   * Arguments												
-  *		src:			the toy, doing its super special move(not an arg but relevant) 	
-  *		victim:			the toy being hit by the super special move (doesn't necessarily need to be used)
+  *		src:		the toy, doing its super special move(not an arg but relevant) 	
+  *		victim:		the toy being hit by the super special move (doesn't necessarily need to be used)
   */
 /obj/item/toy/prize/proc/superSpecialAttack(obj/item/toy/prize/victim) 
 	visible_message("<span class='notice'> [src] does a cool flip.</span>")
