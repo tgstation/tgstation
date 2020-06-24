@@ -66,7 +66,7 @@
 										"<span class='userdanger'>You catch [I] in mid-air!</span>")
 						throw_mode_off()
 						return 1
-	..()
+	return ..()
 
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
