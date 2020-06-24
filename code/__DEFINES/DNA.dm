@@ -134,6 +134,8 @@
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device"
+#define ORGAN_SLOT_RIGHT_LEG_AUG "r_leg_device"
+#define ORGAN_SLOT_LEFT_LEG_AUG "l_leg_device"
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
