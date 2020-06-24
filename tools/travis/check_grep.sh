@@ -66,7 +66,7 @@ do
             echo "found invalid file reference to $filename in _maps/$json"
             st=1
         fi
-    done < <(jq -r '.map_file' $json)
+    done < <(jq -r '[.map_file] | flatten | .[]' $json)
 done
 
 exit $st
