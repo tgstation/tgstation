@@ -541,7 +541,7 @@
 	/// Timer when it'll be off cooldown
 	var/timer = 0
 	/// Cooldown between play sessions - 8x longer after a battle
-	var/cooldown = 25
+	var/cooldown = 1.5 SECONDS
 	/// If it makes noise when played with
 	var/quiet = FALSE
 	/// TRUE = Offering battle to someone || FALSE = Not offering battle
@@ -603,8 +603,8 @@
 /obj/item/toy/prize/attackby(obj/item/I, mob/living/user) //I is user's toy
 	if(istype(I, /obj/item/toy/prize)) //if you attack a mech with a mech, initiate combat between them 
 		var/obj/item/toy/prize/P = I
-		if(checkBattleStart(user, P))
-			mechaBrawl(P, user)
+		if(check_battle_start(user, P))
+			mecha_brawl(P, user)
 	..()
 
 /obj/item/toy/prize/attack(mob/living/carbon/human/target, mob/living/carbon/human/user) //src is user's toy
@@ -615,18 +615,18 @@
 		if(wants_to_battle) //prevent spamming someone with offers
 			to_chat(user, "<span class='notice'>You already are offering battle to someone!</span>")
 			return
-		if(!checkBattleStart(user)) //if the user's mech isn't ready, don't bother checking
+		if(!check_battle_start(user)) //if the user's mech isn't ready, don't bother checking
 			return
 
 		for(var/obj/item/I in target.held_items)
 			if(istype(I, /obj/item/toy/prize)) //if you attack someone with a mech who's also holding a mech, offer to battle them
 				var/obj/item/toy/prize/P = I
-				if(!P.checkBattleStart(target, null, user)) //check if the attacker mech is ready
+				if(!P.check_battle_start(target, null, user)) //check if the attacker mech is ready
 					break
 
 				//slap them with the metaphorical white glove
 				if(P.wants_to_battle) //if the target mech wants to battle, initiate the battle from their POV
-					mechaBrawl(P, target, user) //P = challenger's mech / SRC = defender's mech / user = defender / target = challenger
+					mecha_brawl(P, target, user) //P = challenger's mech / SRC = defender's mech / user = defender / target = challenger
 					P.wants_to_battle = FALSE
 					return
 
@@ -634,7 +634,7 @@
 		to_chat(user, "<span class='notice'>You offer battle to [target.name]!</span>")
 		to_chat(target, "<span class='notice'><b>[user.name] wants to battle with [user.p_their()] [name]!</b> <i>Attack them with a toy mech to initiate combat.</i></span>")
 		wants_to_battle = TRUE
-		addtimer(CALLBACK(src, .proc/withdrawOffer, user), 60)
+		addtimer(CALLBACK(src, .proc/withdraw_offer, user), 6 SECONDS)
 		return
 
 	..()
@@ -646,7 +646,7 @@
   * Arguments
   *		user: the user wanting to do battle
   */
-/obj/item/toy/prize/proc/withdrawOffer(mob/living/carbon/user)
+/obj/item/toy/prize/proc/withdraw_offer(mob/living/carbon/user)
 	if(wants_to_battle)
 		wants_to_battle = FALSE
 		to_chat(user, "<span class='notice'>You get the feeling they don't want to battle.</span>")
@@ -659,28 +659,28 @@
 	user.visible_message("<span class='suicide'>[user] begins a fight [user.p_they()] can't win with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	
 	in_combat = TRUE
-	sleep(20)
+	sleep(1.5 SECONDS)
 	SpinAnimation(5, 0)
 	user.adjustBruteLoss(20)
 	user.adjustStaminaLoss(40)
-	sleep(10)
+	sleep(1 SECONDS)
 	user.SpinAnimation(5, 0)
 	combat_health-- //we scratched it!
-	sleep(10)
+	sleep(1 SECONDS)
 	SpinAnimation(5, 0)
 	user.adjustBruteLoss(15)
 	user.adjustStaminaLoss(30)
-	sleep(10)
+	sleep(1 SECONDS)
 	SpinAnimation(5, 0)
 	user.adjustBruteLoss(15)
 	user.adjustStaminaLoss(30)
-	sleep(10)
+	sleep(1 SECONDS)
 	if(!quiet)
 		say(special_attack_cry + "!!")
 		user.emote("scream")
 	else
 		SpinAnimation(5, 0)
-	sleep(15)
+	sleep(1.5 SECONDS)
 	if(!in_range(src, user)) //run away? coward
 		say("PATHETIC")
 		return SHAME
@@ -722,7 +722,7 @@
   *		attacker_controller:	the user, the one who is holding the toys / controlling the fight
   *		opponent:		optional arg used in Mech PvP battles: the other person who is taking part in the fight (controls src)
   */
-/obj/item/toy/prize/proc/mechaBrawl(obj/item/toy/prize/attacker, mob/living/carbon/attacker_controller, mob/living/carbon/opponent)
+/obj/item/toy/prize/proc/mecha_brawl(obj/item/toy/prize/attacker, mob/living/carbon/attacker_controller, mob/living/carbon/opponent)
 	//A GOOD DAY FOR A SWELL BATTLE!
 	attacker_controller.visible_message("<span class='danger'> [attacker_controller.name] collides [attacker] with [src]! Looks like they're preparing for a brawl! </span>", \
 						"<span class='danger'> You collide [attacker] into [src], sparking a fierce battle! </span>", \
@@ -736,10 +736,11 @@
 	in_combat = TRUE
 	attacker.in_combat = TRUE
 
-	timer = world.time + cooldown*8 
-	attacker.timer = world.time + attacker.cooldown*8
+	//1.5 second cooldown * 20 = 30 second cooldown after a fight
+	timer = world.time + cooldown*20
+	attacker.timer = world.time + attacker.cooldown*20
 
-	sleep(15)
+	sleep(1.5 SECONDS)
 	//--THE BATTLE BEGINS--
 	while(combat_health > 0 && attacker.combat_health > 0 && battle_length < MAX_BATTLE_LENGTH) 
 
@@ -779,12 +780,12 @@
 		if(special_attack_charged)
 			src_controller.visible_message("<span class='danger'> [src] unleashes its special attack!! </span>", \
 							"<span class='danger'> You unleash [src]'s special attack! </span>")
-			specialAttackMove(attacker)
+			special_attack_move(attacker)
 		else if(attacker.special_attack_charged)
 
 			attacker_controller.visible_message("<span class='danger'> [attacker] unleashes its special attack!! </span>", \
 								"<span class='danger'> You unleash [attacker]'s special attack! </span>")
-			attacker.specialAttackMove(src)
+			attacker.special_attack_move(src)
 		else
 			//process the cooldowns
 			if(special_attack_cooldown > 0)
@@ -860,7 +861,7 @@
 										"<span class='notice'> You don't know what to do next.</span>")		
 
 		battle_length++																											
-		sleep(10)	
+		sleep(1 SECONDS)	
 
 	/// Lines chosen for the winning mech
 	var/list/winlines = list("YOU'RE NOTHING BUT SCRAP!", "I'LL YIELD TO NONE!", "GLORY IS MINE!", "AN EASY FIGHT.", "YOU SHOULD HAVE NEVER FACED ME.")
@@ -916,7 +917,7 @@
   *		attacker:	optional arg for checking two mechs at once 
   *		target:		optional arg used in Mech PvP battles (if used, attacker is target's toy)
   */
-/obj/item/toy/prize/proc/checkBattleStart(mob/living/carbon/user, obj/item/toy/prize/attacker, mob/living/carbon/target) 
+/obj/item/toy/prize/proc/check_battle_start(mob/living/carbon/user, obj/item/toy/prize/attacker, mob/living/carbon/target) 
 	if(attacker && attacker.in_combat)
 		to_chat(user, "<span class='notice'>[target?target.p_their() : "Your" ] [attacker.name] is in combat.</span>")
 		target?.to_chat(target, "<span class='notice'>Your [attacker.name] is in combat.</span>")
@@ -945,7 +946,7 @@
   *		src:		the toy, doing its special move(not an arg but relevant) 	
   *		victim:		the toy being hit by the special move
   */
-/obj/item/toy/prize/proc/specialAttackMove(obj/item/toy/prize/victim) 
+/obj/item/toy/prize/proc/special_attack_move(obj/item/toy/prize/victim) 
 	if(!quiet)
 		say(special_attack_cry + "!!")
 
@@ -964,7 +965,7 @@
 			combat_health++
 			playsound(src, 'sound/mecha/mechmove01.ogg', 30, TRUE)
 		if(SPECIAL_ATTACK_OTHER) //other
-			superSpecialAttack(victim)
+			super_special_attack(victim)
 		else
 			say("I FORGOT MY SPECIAL ATTACK...")
 
@@ -976,7 +977,7 @@
   *		src:		the toy, doing its super special move(not an arg but relevant) 	
   *		victim:		the toy being hit by the super special move (doesn't necessarily need to be used)
   */
-/obj/item/toy/prize/proc/superSpecialAttack(obj/item/toy/prize/victim) 
+/obj/item/toy/prize/proc/super_special_attack(obj/item/toy/prize/victim) 
 	visible_message("<span class='notice'> [src] does a cool flip.</span>")
 
 /obj/item/toy/prize/ripley
@@ -1003,7 +1004,7 @@
 	special_attack_type_message = "instantly destroys the opposing mech if its health is less than this mech's health."
 	special_attack_cry = "KILLER CLAMP"
 
-/obj/item/toy/prize/deathripley/superSpecialAttack(obj/item/toy/prize/victim) 
+/obj/item/toy/prize/deathripley/super_special_attack(obj/item/toy/prize/victim) 
 	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 20, TRUE)
 	if(victim.combat_health < combat_health) //Instantly kills the other mech if it's health is below our's.
 		say("EXECUTE!!")
@@ -1036,7 +1037,7 @@
 	special_attack_type_message = "puts the opposing mech's special move on cooldown and heals this mech."
 	special_attack_cry = "MEGA HORN"
 
-/obj/item/toy/prize/honk/superSpecialAttack(obj/item/toy/prize/victim) 
+/obj/item/toy/prize/honk/super_special_attack(obj/item/toy/prize/victim) 
 	playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 20, TRUE)
 	victim.special_attack_cooldown = 3 //Adds cooldown to the other mech and gives a minor self heal
 	combat_health++
@@ -1091,7 +1092,7 @@
 	special_attack_type_message = "has a lower cooldown than normal special moves and deals damage."
 	special_attack_cry = "*wave"
 
-/obj/item/toy/prize/reticence/superSpecialAttack(obj/item/toy/prize/victim) 
+/obj/item/toy/prize/reticence/super_special_attack(obj/item/toy/prize/victim) 
 	special_attack_cooldown-- //Has a lower cooldown...
 	victim.special_attack_cooldown++ //and increases the opponent's cooldown by 1...
 	victim.combat_health-- //and some free damage.
