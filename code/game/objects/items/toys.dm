@@ -593,6 +593,13 @@
 	else
 		. = ..()
 
+/obj/item/toy/prize/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(loc == user)
+		attack_self(user)
+
 /obj/item/toy/prize/attackby(obj/item/I, mob/living/user) //I is user's toy
 	if(istype(I, /obj/item/toy/prize)) //if you attack a mech with a mech, initiate combat between them 
 		var/obj/item/toy/prize/P = I
