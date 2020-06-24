@@ -196,13 +196,14 @@
 	else
 		//a very elaborate way to suicide
 		to_chat(human_user,"<span class='userdanger'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
+		human_user.ghostize()
 		var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
 		if(head)
 			head.dismember()
 			qdel(head)
 		else
 			human_user.gib()
-		human_user.ghostize()
+
 		var/datum/effect_system/reagents_explosion/explosion = new()
 		explosion.set_up(1, get_turf(human_user), 1, 0)
 		explosion.start()
