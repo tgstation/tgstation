@@ -131,7 +131,7 @@
 
 	var/msg = ""
 	if(!limb.current_gauze)
-		msg = "<B>[victim.p_their(TRUE)] [limb.name] [examine_desc]"
+		msg = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
 	else
 		var/sling_condition = ""
 		// how much life we have left in these bandages
@@ -145,7 +145,7 @@
 			if(75 to INFINITY)
 				sling_condition = "tightly "
 
-		msg = "<B>[victim.p_their(TRUE)] [limb.name] is [sling_condition] fastened in a sling of [limb.current_gauze.name]</B>"
+		msg = "[victim.p_their(TRUE)] [limb.name] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
 
 	if(taped)
 		msg += ", <span class='notice'>and appears to be reforming itself under some surgical tape!</span>"
@@ -153,7 +153,7 @@
 		msg += ", <span class='notice'>with fizzing flecks of blue bone gel sparking off the bone!</span>"
 	else
 		msg +=  "!"
-	return "[msg]</B>"
+	return "<B>[msg]</B>"
 
 /*
 	New common procs for /datum/wound/blunt/
@@ -172,10 +172,8 @@
 		else
 			interaction_efficiency_penalty = interaction_efficiency_penalty
 
-	if(initial(disabling) && limb.current_gauze)
-		disabling = FALSE
-	else if(initial(disabling))
-		disabling = TRUE
+	if(initial(disabling))
+		disabling = !limb.current_gauze
 
 	limb.update_wounds()
 

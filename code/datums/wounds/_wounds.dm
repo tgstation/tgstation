@@ -111,10 +111,6 @@
   * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
   */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
-	if(severity == WOUND_SEVERITY_LOSS)
-		apply_dismember(L, silent, old_wound, smited)
-		return
-
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner))
 		qdel(src)
 		return
@@ -124,6 +120,10 @@
 		if(organic_only && ((NOBLOOD in H.dna.species.species_traits) || !L.is_organic_limb()))
 			qdel(src)
 			return
+
+	if(severity == WOUND_SEVERITY_LOSS)
+		apply_dismember(L, silent, old_wound, smited)
+		return
 
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
@@ -317,10 +317,7 @@
   */
 /datum/wound/proc/get_examine_description(mob/user)
 	. = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
-	if(severity <= WOUND_SEVERITY_MODERATE)
-		. = "[.]."
-	else
-		. = "<B>[.]!</B>"
+	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
 
 /datum/wound/proc/get_scanner_description(mob/user)
 	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
