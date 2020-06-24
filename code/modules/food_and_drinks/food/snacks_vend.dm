@@ -100,7 +100,9 @@
 
 /obj/item/reagent_containers/food/snacks/no_raisin/beepsky
 	name = "4 raisins"
+	icon_state = "4_raisins"
 	desc = "You know what you did..."
+	trash = /obj/item/trash/raisins/beepsky
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ethanol/beepsky_smash = 4)
 	junkiness = 0
 	foodtype = FRUIT

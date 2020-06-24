@@ -24,6 +24,9 @@
 	name = "\improper 4no raisins"
 	icon_state= "4no_raisins"
 
+/obj.item/trash/raisins/beepsky
+	icon_state= "4_raisins"
+
 /obj/item/trash/candy
 	name = "candy"
 	icon_state= "candy"
