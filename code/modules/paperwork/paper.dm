@@ -223,6 +223,10 @@
 	update_icon_state()
 
 
+/obj/item/paper/examine_more(mob/user)
+	create_ui(user)
+
+
 /obj/item/paper/can_interact(mob/user)
 	if(!..())
 		return FALSE
