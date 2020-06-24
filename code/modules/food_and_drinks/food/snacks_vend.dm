@@ -103,7 +103,7 @@
 	icon_state = "4_raisins"
 	desc = "You know what you did..."
 	trash = /obj/item/trash/raisins/beepsky
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ethanol/beepsky_smash = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ethanol/beepsky_smash = 4)
 	junkiness = 0
 	foodtype = FRUIT
 	value = FOOD_RARE
