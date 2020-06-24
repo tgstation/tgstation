@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		new /datum/pipe_info/disposal("Trunk",			/obj/structure/disposalpipe/trunk),
 		new /datum/pipe_info/disposal("Bin",			/obj/machinery/disposal/bin, PIPE_ONEDIR),
 		new /datum/pipe_info/disposal("Outlet",			/obj/structure/disposaloutlet),
-		new /datum/pipe_info/disposal("Chute",			/obj/machinery/disposal/deliveryChute),
+		new /datum/pipe_info/disposal("Chute",			/obj/machinery/disposal/delivery_chute),
 	)
 ))
 

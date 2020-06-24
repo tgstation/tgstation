@@ -393,7 +393,7 @@
 "bV" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/circuit_imprinter,
-/obj/item/aiModule/core/full/drone{
+/obj/item/ai_module/core/full/drone{
 	pixel_x = -4;
 	pixel_y = -2
 	},
@@ -3911,7 +3911,7 @@
 /turf/template_noop,
 /area/space/nearstation)
 "ZM" = (
-/obj/machinery/droneDispenser/derelict,
+/obj/machinery/drone_dispenser/derelict,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 

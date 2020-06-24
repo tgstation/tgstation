@@ -104,7 +104,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 
-	C << link("[addr]?server_hop=[key]")
+	C << link("[addr]")
 
 /mob/dead/proc/update_z(new_z) // 1+ to register, null to unregister
 	if (registered_z != new_z)

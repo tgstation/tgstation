@@ -1,69 +1,4 @@
-//Largely beneficial effects go here, even if they have drawbacks. An example is provided in Shadow Mend.
-
-/datum/status_effect/shadow_mend
-	id = "shadow_mend"
-	duration = 30
-	alert_type = /obj/screen/alert/status_effect/shadow_mend
-
-/obj/screen/alert/status_effect/shadow_mend
-	name = "Shadow Mend"
-	desc = "Shadowy energies wrap around your wounds, sealing them at a price. After healing, you will slowly lose health every three seconds for thirty seconds."
-	icon_state = "shadow_mend"
-
-/datum/status_effect/shadow_mend/on_apply()
-	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
-	playsound(owner, 'sound/magic/teleport_app.ogg', 50, TRUE)
-	return ..()
-
-/datum/status_effect/shadow_mend/tick()
-	owner.adjustBruteLoss(-15)
-	owner.adjustFireLoss(-15)
-
-/datum/status_effect/shadow_mend/on_remove()
-	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
-	playsound(owner, 'sound/magic/teleport_diss.ogg', 50, TRUE)
-	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
-
-
-/datum/status_effect/void_price
-	id = "void_price"
-	duration = 300
-	tick_interval = 30
-	alert_type = /obj/screen/alert/status_effect/void_price
-
-/obj/screen/alert/status_effect/void_price
-	name = "Void Price"
-	desc = "Black tendrils cinch tightly against you, digging wicked barbs into your flesh."
-	icon_state = "shadow_mend"
-
-/datum/status_effect/void_price/tick()
-	SEND_SOUND(owner, sound('sound/magic/summon_karp.ogg', volume = 25))
-	owner.adjustBruteLoss(3)
-
-
-/datum/status_effect/cyborg_power_regen
-	id = "power_regen"
-	duration = 100
-	alert_type = /obj/screen/alert/status_effect/power_regen
-	var/power_to_give = 0 //how much power is gained each tick
-
-/datum/status_effect/cyborg_power_regen/on_creation(mob/living/new_owner, new_power_per_tick)
-	. = ..()
-	if(. && isnum(new_power_per_tick))
-		power_to_give = new_power_per_tick
-
-/obj/screen/alert/status_effect/power_regen
-	name = "Power Regeneration"
-	desc = "You are quickly regenerating power!"
-	icon_state = "power_regen"
-
-/datum/status_effect/cyborg_power_regen/tick()
-	var/mob/living/silicon/robot/cyborg = owner
-	if(!istype(cyborg) || !cyborg.cell)
-		qdel(src)
-		return
-	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, TRUE)
-	cyborg.cell.give(power_to_give)
+//Largely beneficial effects go here, even if they have drawbacks.
 
 /datum/status_effect/his_grace
 	id = "his_grace"
@@ -277,7 +212,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 
 //Hippocratic Oath: Applied when the Rod of Asclepius is activated.
-/datum/status_effect/hippocraticOath
+/datum/status_effect/hippocratic_oath
 	id = "Hippocratic Oath"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
@@ -287,19 +222,19 @@
 	var/hand
 	var/deathTick = 0
 
-/datum/status_effect/hippocraticOath/on_apply()
+/datum/status_effect/hippocratic_oath/on_apply()
 	//Makes the user passive, it's in their oath not to harm!
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.add_hud_to(owner)
 	return ..()
 
-/datum/status_effect/hippocraticOath/on_remove()
+/datum/status_effect/hippocratic_oath/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)
 
-/datum/status_effect/hippocraticOath/tick()
+/datum/status_effect/hippocratic_oath/tick()
 	if(owner.stat == DEAD)
 		if(deathTick < 4)
 			deathTick += 1
@@ -364,10 +299,10 @@
 				var/mob/living/simple_animal/SM = L
 				SM.adjustHealth(-3.5, forced = TRUE)
 
-/datum/status_effect/hippocraticOath/proc/consume_owner()
+/datum/status_effect/hippocratic_oath/proc/consume_owner()
 	owner.visible_message("<span class='notice'>[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.</span>")
 	var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
-	var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/oxandrolone)
+	var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/oxandrolone)
 	healSnake.poison_type = pick(chems)
 	healSnake.name = "Asclepius's Snake"
 	healSnake.real_name = "Asclepius's Snake"
