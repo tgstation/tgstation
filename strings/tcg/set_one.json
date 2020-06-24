@@ -1152,7 +1152,7 @@
 			"resolve": 0,
 			"faction": "Colourless",
 			"summoncost": 2,
-			"cardtype": "Ability",
+			"cardtype": "Event",
 			"cardsubtype": "Instant",
 			"series": "coreset2020",
 			"rarity": "uncommon"
@@ -1167,7 +1167,7 @@
 			"resolve": 0,
 			"faction": "Nanotrasen",
 			"summoncost": 3,
-			"cardtype": "Ability",
+			"cardtype": "Event",
 			"cardsubtype": "Instant",
 			"series": "coreset2020",
 			"rarity": "uncommon"
@@ -1182,7 +1182,7 @@
 			"resolve": 0,
 			"faction": "",
 			"summoncost": 1,
-			"cardtype": "Ability",
+			"cardtype": "Event",
 			"cardsubtype": "Instant",
 			"series": "coreset2020",
 			"rarity": "common"
@@ -1190,14 +1190,14 @@
 		{
 			"id": "adrenals",
 			"name": "Adrenals",
-			"desc": "A potent mixture of stimulants, designed to enhance a soldier's ability in the field. Technically illegal in Terragov's jurisdiction.",
+			"desc": "A potent mixture of stimulants, designed to enhance a soldier's ability in the field. Technically illegal in Terragov territory, but since when has that stopped anyone?",
 			"rules": "Grant 2 power and 1 resolve to a Creature card that you control.",
-			"icon_state" = ""
+			"icon_state": "",
 			"power": "+2",
 			"resolve": "+1",
 			"faction": "Syndicate",
 			"summoncost": 1,
-			"cardtype": "Ability",
+			"cardtype": "Event",
 			"cardsubtype": "Instant",
 			"series": "coreset2020",
 			"rarity": "common"
@@ -1233,19 +1233,34 @@
 			"rarity": "common"
 		},
 		{
-			"id": "ashie_knife",
-			"name": "Ashwalker Blade",
-			"desc": "The ashwalkers are known for their wickedly sharp bone blades. They are also known for routine human sacrifice. The two tend to go hand in hand.",
-			"rules": "When the equipped Creature destroys an enemy Creature, summon a 1/1 Ashwalker Token Creature with Hivemind.",
+			"id": "just_losses",
+			"name": "Justifiable Casualties",
+			"desc": "War is hell. Soldiers die. The strongest, they live.",
+			"rules": "Sacrifice two creatures from your battlefield, then summon a creature from your hand at no mana cost.",
 			"icon_state": "",
 			"power": 1,
-			"resolve": 0,
+			"resolve": 1,
+			"faction": "",
+			"summoncost": 2,
+			"cardtype": "Event",
+			"cardsubtype": "Instant",
+			"series": "coreset2020",
+			"rarity": "uncommon"
+		},
+		{
+			"id": "blue_warp",
+			"name": "Bluespace Flux",
+			"desc": "Despite being a revolutionary new technology, bluespace still has some... kinks that need sorted out.",
+			"rules": "While this card is active, once a round during the play phase each player may pay 2 mana to summon the top card from their deck.",
+			"icon_state": "",
+			"power": 1,
+			"resolve": 1,
 			"faction": "",
 			"summoncost": 3,
-			"cardtype": "Equipment",
-			"cardsubtype": "Weapon",
+			"cardtype": "Battlefield",
+			"cardsubtype": "Anomaly",
 			"series": "coreset2020",
-			"rarity": "rare"
+			"rarity": "common"
 		}
 	]
 }
