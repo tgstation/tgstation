@@ -322,7 +322,7 @@
 			if(isAI(O))
 				var/mob/living/silicon/ai/AI = O
 				if(AI.control_disabled || (AI.stat == DEAD))
-					return
+					continue
 				if(U.name == "Unknown")
 					to_chat(AI, "<span class='name'>[U]</span> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				else
