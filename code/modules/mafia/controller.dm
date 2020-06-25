@@ -4,8 +4,6 @@
 	var/phase = MAFIA_PHASE_SETUP
 	var/turn = 0
 
-	var/player_old_bodies = list() //We send players back to their bodies after
-
 	var/first_day_phase_period = 20 SECONDS //say hi to everyone, no voting so no discussion
 	var/day_phase_period = 1 MINUTES //talk with others about the night
 	var/voting_phase_period = 30 SECONDS //vote someone to get put on trial
@@ -84,10 +82,10 @@
 	phase = MAFIA_PHASE_DAY
 	if(!check_victory())
 		if(turn == 1)
-			send_message("<span class='big'>Day [turn] started! There is no voting on the first day. Say hello to everybody!</span>")
+			send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
 			next_phase_timer = addtimer(CALLBACK(src,.proc/check_trial, FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
 		else
-			send_message("<span class='big'>Day [turn] started! Voting will start in 1 minute.</span>")
+			send_message("<b>Day [turn] started! Voting will start in 1 minute.</b>")
 			next_phase_timer = addtimer(CALLBACK(src,.proc/start_voting_phase),day_phase_period,TIMER_STOPPABLE)
 
 	SStgui.update_uis(src)
@@ -96,13 +94,13 @@
 /datum/mafia_controller/proc/start_voting_phase()
 	phase = MAFIA_PHASE_VOTING
 	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, TRUE),voting_phase_period,TIMER_STOPPABLE) //be verbose!
-	send_message("<span class='big'>Voting started! Vote for who you want to see on trial today.</span>")
+	send_message("<b>Voting started! Vote for who you want to see on trial today.</b>")
 	SStgui.update_uis(src)
 
 /datum/mafia_controller/proc/check_trial(verbose = TRUE)
 	var/datum/mafia_role/loser = get_vote_winner("Day")//, majority_of_town = TRUE)
 	if(loser)
-		send_message("<span class='big'>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</span>")
+		send_message("<b>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</b>")
 		on_trial = loser
 		on_trial.body.forceMove(get_turf(town_center_landmark))
 		phase = MAFIA_PHASE_JUDGEMENT
@@ -110,7 +108,7 @@
 		reset_votes("Day")
 	else
 		if(verbose)
-			send_message("<span class='big'>Not enough people have voted to put someone on trial, nobody will be lynched today.</span>")
+			send_message("<b>Not enough people have voted to put someone on trial, nobody will be lynched today.</b>")
 		if(!check_victory())
 			lockdown()
 	SStgui.update_uis(src)
@@ -123,10 +121,10 @@
 		var/datum/mafia_role/role = ii
 		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
-		send_message("<span class='big red'>Guilty wins majority, [on_trial.body.real_name] has been lynched.</span>")
+		send_message("<span class='red'><b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b></span>")
 		on_trial.kill(src, lynch = TRUE)
 	else
-		send_message("<span class='big green'>Innocent wins majority, [on_trial.body.real_name] has been spared.</span>")
+		send_message("<span class='green'><b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b></span>")
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
 	//by now clowns should have killed someone in guilty list, clear this out
 	judgement_innocent_votes = list()
@@ -190,16 +188,10 @@
 	next_phase_timer = addtimer(CALLBACK(src,.proc/end_game),victory_lap_period,TIMER_STOPPABLE)
 
 /datum/mafia_controller/proc/end_game()
-	restore_player_bodies()
-	player_old_bodies = list()
 	QDEL_LIST(all_roles)
 	turn = 0
 	votes = list()
 	phase = MAFIA_PHASE_SETUP
-
-/datum/mafia_controller/proc/restore_player_bodies()
-	for(var/mob/living/old_body in player_old_bodies)
-		old_body.key = player_old_bodies[old_body]
 
 /datum/mafia_controller/proc/lockdown()
 	toggle_night_curtains(close=TRUE)
@@ -216,8 +208,8 @@
 
 /datum/mafia_controller/proc/start_night()
 	phase = MAFIA_PHASE_NIGHT
-	send_message("<span class='big'>Night [turn] started! Lockdown will end in 45 seconds.</span>")
-	send_message("<span class='big'>Vote for who to kill tonight. The killer will be chosen randomly from voters.</span>",MAFIA_TEAM_MAFIA)
+	send_message("<b>Night [turn] started! Lockdown will end in 45 seconds.</b>")
+	send_message("<b>Vote for who to kill tonight. The killer will be chosen randomly from voters.</b>",MAFIA_TEAM_MAFIA)
 	next_phase_timer = addtimer(CALLBACK(src, .proc/resolve_night),night_phase_period,TIMER_STOPPABLE)
 	SStgui.update_uis(src)
 
@@ -297,18 +289,10 @@
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)
 		var/client/player_client = GLOB.directory[role.player_key]
-		var/mob/living/old_body
 		if(player_client)
-			player_client.prefs.copy_to(H, antagonist = TRUE) ///yikes
-			old_body = player_client.mob
-		else
-			//warn about guy being afk on start
-			for(var/mob/living/M in GLOB.mob_list)
-				if(M.key == role.player_key)
-					old_body = M
-					break
-		if(istype(old_body))
-			player_old_bodies[old_body] = role.player_key
+			player_client.prefs.copy_to(H, antagonist = TRUE) ///i mean, it will cause github issue reports if this happens so sure throw it in
+			if(initial(H.dna.species.changesource_flags) & RACE_SWAP) //if the game wouldn't randomly give you this species then it's too dangerous to exist
+				H.set_species(/datum/species/human)
 		role.body = H
 		player_role_lookup[H] = role
 		H.key = role.player_key
@@ -383,8 +367,14 @@
 				return TRUE
 	if(!user_role)//ghosts
 		return
+	//User actions THAT ALLOW THE DEAD
+	switch(action)
+		if("mf_role_lookup")
+			to_chat(user_role.body,"Will be here next time I promise! -armhulen")
+			//user_role.ui_interact(user_role.body)
 	if(user_role.game_status == MAFIA_DEAD)//dead people?
 		return
+	var/self_voting = user_role == on_trial ? TRUE : FALSE //used to block people from voting themselves innocent or guilty
 	//User actions
 	switch(action)
 		if("mf_action")
@@ -414,14 +404,14 @@
 					user_role.handle_action(src,params["atype"],target)
 			return TRUE
 		if("vote_innocent")
-			if(phase != MAFIA_PHASE_JUDGEMENT)
+			if(phase != MAFIA_PHASE_JUDGEMENT && !self_voting)
 				return
 			to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as INNOCENT!")
 			judgement_innocent_votes -= user_role//no double voting
 			judgement_guilty_votes -= user_role//no radical centrism
 			judgement_innocent_votes += user_role
 		if("vote_guilty")
-			if(phase != MAFIA_PHASE_JUDGEMENT)
+			if(phase != MAFIA_PHASE_JUDGEMENT && !self_voting)
 				return
 			to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as GUILTY!")
 			judgement_innocent_votes -= user_role//no radical centrism
@@ -453,7 +443,6 @@
 	var/ready_count = length(GLOB.mafia_signup)
 	var/list/setup = find_best_setup(ready_count)
 	if(!setup)
-		to_chat(world,"no setup found")
 		return
 	var/req_players = assoc_value_sum(setup) //12
 
@@ -469,12 +458,9 @@
 				continue
 		GLOB.mafia_signup -= key //not valid to play when we checked so remove them from signups
 
-	to_chat(world,"here4")
 	//if there were not enough players, don't start. we already trimmed the list to now hold only valid signups
 	if(length(possible_keys) < req_players)
-		to_chat(world,"not enough peeps")
 		return
-	to_chat(world,"PASSED return")
 
 	//if there were too many players, still start but only make filtered keys as big as it needs to be (cut excess)
 	//also removes people who do get into final player list from the signup so they have to sign up again when game ends

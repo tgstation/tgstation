@@ -8,19 +8,86 @@
 
 //town
 
-/datum/outfit/job/assistant/mafia
+/datum/outfit/mafia/assistant
+	name = "Mafia Assistant"
 
-/datum/outfit/job/assistant/mafia/pre_equip(mob/living/carbon/human/H)
-	..() //we set it to random colors
-	if(H.jumpsuit_style == PREF_SUIT) //then overwrite that to be rainbow jumpsuit
-		uniform = /obj/item/clothing/under/color/rainbow
-	else
-		uniform = /obj/item/clothing/under/color/jumpskirt/rainbow
+	/obj/item/clothing/under/color/rainbow
+
+/datum/outfit/mafia/detective
+	name = "Mafia Detective"
+
+	uniform = /obj/item/clothing/under/rank/security/detective
+	neck = /obj/item/clothing/neck/tie/detective
+	shoes = /obj/item/clothing/shoes/sneakers/brown
+	suit = /obj/item/clothing/suit/det_suit
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/fedora/det_hat
+	mask = /obj/item/clothing/mask/cigarette
+
+/datum/outfit/mafia/psychologist
+	name = "Mafia Psychologist"
+
+	uniform = /obj/item/clothing/under/suit/black
+	shoes = /obj/item/clothing/shoes/laceup
+
+/datum/outfit/mafia/md
+	name = "Mafia Medical Doctor"
+
+	uniform = /obj/item/clothing/under/rank/medical/doctor
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	suit =  /obj/item/clothing/suit/toggle/labcoat
+
+/datum/outfit/mafia/chaplain
+	name = "Mafia Chaplain"
+
+	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+
+/datum/outfit/mafia/clown
+	name = "Mafia Clown"
+
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	mask = /obj/item/clothing/mask/gas/clown_hat
+
+/datum/outfit/mafia/lawyer
+	name = "Mafia Lawyer"
+
+	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
+	suit = /obj/item/clothing/suit/toggle/lawyer
+	shoes = /obj/item/clothing/shoes/laceup
+
+
+
 
 //mafia
 
-/datum/outfit/mafialing
+/datum/outfit/mafia/changeling
 	head = /obj/item/clothing/head/helmet/changeling
 	suit = /obj/item/clothing/suit/armor/changeling
 
 //solo
+
+/datum/outfit/mafia/fugitive
+	name = "Mafia Fugitive"
+
+	uniform = /obj/item/clothing/under/rank/prisoner
+	shoes = /obj/item/clothing/shoes/sneakers/orange
+
+/datum/outfit/mafia/obsessed
+	name = "Mafia Obsessed"
+	uniform = /obj/item/clothing/under/misc/overalls
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	gloves = /obj/item/clothing/gloves/color/latex
+	mask = /obj/item/clothing/mask/surgical
+	suit = /obj/item/clothing/suit/apron
+
+/datum/outfit/mafia/obsessed/post_equip(mob/living/carbon/human/H)
+	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
+		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
+	H.regenerate_icons()
+
+/datum/outfit/mafia/traitor
+	name = "Mafia Traitor"
+
+	head = /obj/item/clothing/head/helmet/changeling
+	suit = /obj/item/clothing/suit/armor/changeling

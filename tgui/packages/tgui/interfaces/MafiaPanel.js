@@ -118,6 +118,12 @@ export const MafiaPanel = (props, context) => {
           </Section>
         )}
         <Section title="Roles">
+          <Button
+            icon="arrow-left"
+            color="green"
+            disabled="true"
+            content="Role Lookup (COMING SOON!)"
+            onClick={() => act('mf_role_lookup')} />
           <Table>
             {!!all_roles && all_roles.map(r => (
               <Table.Row key={r}>

@@ -874,6 +874,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/mafia_signup()
 	if(!client)
 		return
+	if(!SSticker.HasRoundStarted())
+		to_chat(usr, "<span class='warning'>Wait for the game to start!</span>")
+		return
 	if(!isobserver(src))
 		to_chat(usr, "<span class='warning'>You must be a ghost to join mafia!</span>")
 		return

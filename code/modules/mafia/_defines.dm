@@ -1,6 +1,6 @@
-#define MAFIA_TEAM_TOWN 1
-#define MAFIA_TEAM_MAFIA 2
-#define MAFIA_TEAM_SOLO 3
+#define MAFIA_TEAM_TOWN "town"
+#define MAFIA_TEAM_MAFIA "mafia"
+#define MAFIA_TEAM_SOLO "solo"
 
 #define MAFIA_PHASE_SETUP 1
 #define MAFIA_PHASE_DAY 2
@@ -68,12 +68,13 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 /datum/mafia_setup/twelve_all
 	name = "12 Player Setup All"
 	roles = list(
-		/datum/mafia_role=2,
+		/datum/mafia_role=1,
+		/datum/mafia_role/psychologist=1,
 		/datum/mafia_role/md=1,
 		/datum/mafia_role/detective=1,
 		/datum/mafia_role/clown=1,
 		/datum/mafia_role/chaplain=1,
-		/datum/mafia_role/warden=1,
+		/datum/mafia_role/lawyer=1,
 		/datum/mafia_role/traitor=1,
 		/datum/mafia_role/mafia=3,
 		/datum/mafia_role/fugitive=1,
@@ -94,7 +95,7 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 	roles = list(
 		/datum/mafia_role=4,
 		/datum/mafia_role/chaplain=1,
-		/datum/mafia_role/warden=2,
+		/datum/mafia_role/lawyer=2,
 		/datum/mafia_role/mafia=3
 	)
 
@@ -118,20 +119,24 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 /datum/mafia_setup/twelve_fugitives
 	name = "12 Player Fugitives"
 	roles = list(
-		/datum/mafia_role=7,
+		/datum/mafia_role=6,
+		/datum/mafia_role/psychologist=1,
 		/datum/mafia_role/mafia=3,
 		/datum/mafia_role/fugitive=2
 	)
 
-/datum/mafia_setup/twelve_fugitives
+/datum/mafia_setup/twelve_traitor_mafia
 	name = "12 Player Traitor Mafia"
 	roles = list(
-		/datum/mafia_role=5,
+		/datum/mafia_role=3,
+		/datum/mafia_role/psychologist=2,
 		/datum/mafia_role/md=2,
 		/datum/mafia_role/detective=2,
 		/datum/mafia_role/traitor=3
 	)
 
+//DISABLED FOR THE TIME BEING: SINCE THIS IS NOW A DEADCHAT MINIGAME, WE WANT MAX PLAYERS #NERFORNOTHING
+/*
 // 10 Player
 /datum/mafia_setup/ten_A
 	name = "10 Player Setup A"
@@ -192,13 +197,13 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/fugitive=1,
 		/datum/mafia_role/mafia=2
 	)
-
-/*
+*/
 /datum/mafia_setup/three_test
 	name = "3 Player Test"
 	roles = list(
 		/datum/mafia_role/chaplain=1,
-		/datum/mafia_role/md=1,
+		/datum/mafia_role/psychologist=1,
 		/datum/mafia_role/mafia=1
 	)
+/*
 */
