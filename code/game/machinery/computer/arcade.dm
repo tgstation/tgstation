@@ -600,7 +600,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	\nshort temper -> counter, counter, counter\
 	\npoisonous -> light attack, light attack, light attack\
 	\nchonker -> power attack, power attack, power attack</span>")
-	return
+	return ..()
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
