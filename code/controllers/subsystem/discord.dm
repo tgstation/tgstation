@@ -166,7 +166,8 @@ SUBSYSTEM_DEF(discord)
 	var/list/channels_to_use = list()
 	for(var/I in world.TgsChatChannelInfo())
 		var/datum/tgs_chat_channel/channel = I
-		if(channel.tag == channel_tag)
+		var/list/applicable_tags = splittext(channel.tag, ",")
+		if(channel_tag in applicable_tags)
 			channels_to_use += channel
 
 	if(channels_to_use.len)
