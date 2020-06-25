@@ -313,6 +313,70 @@
 	mask = /obj/item/clothing/mask/breath
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
 	r_pocket = /obj/item/flashlight/glowstick
+//Moffuchi's pizza parlor,located in the icemoon's caves, is home to chef Moffuchi and his apprentice. They run their resturant for hungery miners and adventurers, but mostly for cash
+/obj/effect/mob_spawn/human/mothchef
+	name = "locked freezer"
+	desc = "You can hear fluttering from inside this freezer,<i>is there a moth in there</i>?"
+	mob_name = "pizzaria   manager"
+	icon = 'icons/obj/crates.dmi'
+	icon_state = "freezer"
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	id_job = "Pizzaria Manager"
+	id_access = "cook"
+	mob_species = /datum/species/moth
+	short_desc = "You are the moon-renowned chef Moffuchi."
+	flavour_text = "Now that you have escaped the freezer you locked yourself in last night, it is time to bring glory \
+	to the Moffuchi name by making pizzas for all to enjoy! Though your resturant has recently been crushed and sunken underground by \
+	a Nanotrasen research facility, optimism leads you to belive the new arrivals may become regulars at your pizza parlor!"
+	uniform = /obj/item/clothing/under/rank/civilian/chef
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	mask = /obj/item/clothing/mask/fakemoustache/italian
+	suit = /obj/item/clothing/suit/toggle/chef
+	l_pocket = /obj/item/seeds/tomato
+	id = /obj/item/card/id
+	id_access_list = list(28)
+
+/obj/effect/mob_spawn/human/mothchef/Destroy()
+	new/obj/structure/closet/crate/freezer(get_turf(src))
+	return ..()
+
+/obj/effect/mob_spawn/human/mothchef/special(mob/living/L)
+	//Possible names based on famous chefs, real or fictional.
+	var/moth_name = pick("Hank","Gordon","Guy","Chef","Willy","Brad","Bobby","Alton")
+	L.fully_replace_character_name(null,"[moth_name] Moffuchi")
+	var/mob/living/carbon/human/H = L
+	var/obj/item/worn = H.wear_id
+	var/obj/item/card/id/id = worn.GetID()
+	id.registered_name = L.real_name
+	id.update_label()
+
+/obj/effect/mob_spawn/human/mothsouschef
+	name = "locked freezer"
+	desc = "You can hear fluttering from inside this freezer,<i>is there a moth in there</i>?"
+	mob_name = "pizzaria assistant manager"
+	icon = 'icons/obj/crates.dmi'
+	icon_state = "freezer"
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	id_job = "Pizzaria Assistant Manager"
+	mob_species = /datum/species/moth
+	short_desc = "You are the apprentice of the great chef Moffuchi."
+	flavour_text = "You have spent years following in chef Moffuchi's footsteps, going as far as to sleep \
+	in one of their freezers at the pizza parlor every night. Chef Moffuchi says it increases your knowlege of the culinary \
+	arts to the point that you're \"Paid in knowlege\"! Though the resturant has recently been crushed and sunken underground by a \
+	Nanotrasen research facility, optimism leads you to belive the new arrivals may become regulars at the pizza parlor!"
+	uniform = /obj/item/clothing/under/suit/waiter
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	l_pocket = /obj/item/seeds/tomato
+	id = /obj/item/card/id
+	id_access_list = list(28)
+
+/obj/effect/mob_spawn/human/mothsouschef/Destroy()
+	new/obj/structure/closet/crate/freezer(get_turf(src))
+	return ..()
 
 //Prisoner containment sleeper: Spawns in crashed prison ships in lavaland. Ghosts become escaped prisoners and are advised to find a way out of the mess they've gotten themselves into.
 /obj/effect/mob_spawn/human/prisoner_transport

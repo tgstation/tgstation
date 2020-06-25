@@ -109,3 +109,10 @@
 	Seem very intent on research and individual liberty, and also geology-based naming?"
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
+
+/datum/map_template/ruin/icemoon/underground/moth_pizza
+	name = "Moffuchis Pizzaria"
+	id = "moth-pizzaria"
+	description = "Moon-renowned chef Moffuchi has ran his resturant for years on the surface of the ice moon. That was until SS13's deployment crushed and submerged the diner \
+	deep into the snow"
+	suffix = "icemoon_underground_moth_pizza.dmm"
