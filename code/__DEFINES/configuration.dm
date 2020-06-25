@@ -9,3 +9,9 @@
 #define CONFIG_ENTRY_LOCKED 1
 /// can't see value
 #define CONFIG_ENTRY_HIDDEN 2
+
+/// The main configuration .txt file loaded
+#define DEFAULT_CONFIGURATION_FILE "config.txt"
+
+/// The token used to include other config files
+#define CONFIGURATION_INCLUDE_TOKEN "$include"
