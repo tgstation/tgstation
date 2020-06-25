@@ -21,7 +21,7 @@
 	ricochet_auto_aim_range = 3
 	wound_bonus = -25
 	bare_wound_bonus = 10
-	shrapnel_type = /obj/item/shrapnel/bullet/c38
+	embedding = list(embed_chance=15, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=10)
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -44,6 +44,7 @@
 	ricochet_decay_damage = 0.8
 	shrapnel_type = NONE
 	sharpness = SHARP_NONE
+	embedding = null
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
@@ -51,17 +52,12 @@
 	damage = 15
 	armour_penetration = -30
 	ricochets_max = 0
-	shrapnel_type = /obj/item/shrapnel/bullet/c38/dumdum
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
 	bare_wound_bonus = 15
-	/// dumdums are more effective at bleeding people out in close quarters
-	var/wound_falloff_tile = -5
-
-/obj/projectile/bullet/c38/dumdum/Range()
-	..()
-	wound_bonus += wound_falloff_tile
-	bare_wound_bonus += wound_falloff_tile
+	embedding = list(embed_chance=75, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	wound_falloff_tile = -5
+	embed_falloff_tile = -15
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"

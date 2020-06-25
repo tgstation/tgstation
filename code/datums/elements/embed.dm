@@ -34,9 +34,10 @@
 	if(!isitem(target) && !isprojectile(target))
 		return ELEMENT_INCOMPATIBLE
 
+	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
+
 	if(isitem(target))
 		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbed)
-		RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
 		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, .proc/tryForceEmbed)
 		RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, .proc/detachFromWeapon)
@@ -63,7 +64,7 @@
 	if(isitem(target))
 		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE, COMSIG_EMBED_TRY_FORCE, COMSIG_ITEM_DISABLE_EMBED))
 	else
-		UnregisterSignal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT))
+		UnregisterSignal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_ELEMENT_ATTACH))
 
 
 /// Checking to see if we're gonna embed into a human
@@ -107,7 +108,7 @@
 	return TRUE
 
 ///A different embed element has been attached, so we'll detach and let them handle things
-/datum/element/embed/proc/severancePackage(obj/item/weapon, datum/element/E)
+/datum/element/embed/proc/severancePackage(obj/weapon, datum/element/E)
 	if(istype(E, /datum/element/embed))
 		Detach(weapon)
 
@@ -134,13 +135,16 @@
 		return // we don't care
 
 	var/obj/item/payload = new payload_type(get_turf(hit))
+	if(istype(payload, /obj/item/shrapnel/bullet))
+		payload.name = P.name
+	payload.embedding = P.embedding
+	payload.updateEmbedding()
 	var/mob/living/carbon/C = hit
 	var/obj/item/bodypart/limb = C.get_bodypart(hit_zone)
 	if(!limb)
 		limb = C.get_bodypart()
 
-	if(!payload.tryEmbed(limb))
-		payload.failedEmbed()
+	payload.tryEmbed(limb)
 	Detach(P)
 
 /**
@@ -172,4 +176,5 @@
 		hit_zone = limb.body_zone
 		C = limb.owner
 
-	return checkEmbed(I, C, hit_zone, forced=TRUE)
+	checkEmbed(I, C, hit_zone, forced=TRUE)
+	return TRUE
