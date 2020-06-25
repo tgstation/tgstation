@@ -181,7 +181,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.incapacitated() || !usr.is_literate())
+	if(usr.incapacitated() || !usr.can_read(src))
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -191,7 +191,11 @@
 			H.update_damage_hud()
 			return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
-	if((loc == usr && usr.stat == CONSCIOUS))
+	if(!usr.can_read(src))
+		return
+	if(usr.incapacitated())
+		return
+	if(loc == usr)
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
@@ -232,9 +236,7 @@
 		return FALSE
 	if(resistance_flags & ON_FIRE)		// Are we on fire?  Hard ot read if so
 		return FALSE
-	if(user.is_blind())					// Even harder to read if your blind...braile? humm
-		return FALSE
-	return user.can_read(src)			// checks if the user can read.
+	return user.can_read(src)			// checks if the user is blind / can read.
 
 
 /**
@@ -243,11 +245,28 @@
  ** not sure how tgui handles many producers?
 **/
 /obj/item/paper/proc/create_ui(mob/user, datum/ui_state/default/paper_state/state)
+	if(!user.can_read(src))
+		return
 	ui_interact(user, "main", null, FALSE, null, state)
 
 
 /obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
-	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+	if(P.get_temperature())
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
+			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
+								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
+			user.dropItemToGround(P)
+			user.adjust_fire_stacks(1)
+			user.IgniteMob()
+			return
+
+		user.dropItemToGround(src)
+		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
+		close_all_ui()
+		fire_act()
+	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+		if(!user.can_read(src))
+			return
 		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
 			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
@@ -269,6 +288,8 @@
 		create_ui(user, state)
 		return
 	else if(istype(P, /obj/item/stamp))
+		if(!user.can_read(src))
+			return
 
 		var/datum/ui_state/default/paper_state/state = new
 		state.edit_mode = MODE_STAMPING	// we are read only becausse the sheet is full
@@ -281,26 +302,8 @@
 
 		create_ui(user, state)
 		return /// Normaly you just stamp, you don't need to read the thing
-	else if(P.get_temperature())
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
-			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
-								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
-			user.dropItemToGround(P)
-			user.adjust_fire_stacks(1)
-			user.IgniteMob()
-			return
 
-		user.dropItemToGround(src)
-		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-		close_all_ui()
-		fire_act()
-	else
-		// cut paper?  the sky is the limit!
-		var/datum/ui_state/default/paper_state/state = new
-		state.edit_mode = MODE_READING
-		create_ui(user, state)	// The other ui will be created with just read mode outside of this
-
-	. = ..()
+	return ..()
 
 
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
@@ -315,6 +318,9 @@
 	cut_overlay("paper_onfire_overlay")
 
 /obj/item/paper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/default/paper_state/state = new)
+	if(!user.can_read(src))
+		ui_close(user)
+		return
 	ui_key = "main-[REF(user)]"
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -380,6 +386,9 @@
 
 /obj/item/paper/ui_act(action, params, datum/tgui/ui, datum/ui_state/default/paper_state/state)
 	if(..())
+		return
+	if(!usr.can_read(src)) //you're fukken blind mate, what are you even doing right now
+		ui_close(usr)
 		return
 	switch(action)
 		if("stamp")
