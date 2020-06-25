@@ -316,6 +316,8 @@
 	parts += medal_report()
 	//Station Goals
 	parts += goal_report()
+	//Economy
+	parts += market_report()
 
 	listclearnulls(parts)
 
@@ -456,6 +458,31 @@
 			var/datum/station_goal/G = V
 			parts += G.get_result()
 		return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
+
+///Generate a report for how much money is on station, as well as the richest crewmember on the station.
+/datum/controller/subsystem/ticker/proc/market_report()
+	var/list/parts = list()
+	parts += "<span class='header'>Station Economic Summary:</span>"
+	///This is the richest account on station at roundend.
+	var/datum/bank_account/mr_moneybags
+	///This is the station's total wealth at the end of the round.
+	var/station_vault = 0
+	for(var/i in SSeconomy.bank_accounts)
+		if(istype(i, /datum/bank_account/department) || istype(i, /datum/bank_account/remote))
+			continue
+		var/datum/bank_account/current_acc = i
+		station_vault += current_acc.account_balance
+		if(!mr_moneybags)
+			mr_moneybags = current_acc
+		if(mr_moneybags.account_balance < current_acc.account_balance)
+			mr_moneybags = current_acc
+	parts += "<div class='panel stationborder'>Overall, there were [station_vault] credits collected by crew this shift.</div>"
+	log_econ("Roundend credit total: [station_vault] credits.")
+	if(mr_moneybags)
+		parts += "<div class='panel clockborder'>The most affulent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
+	else
+		parts += "div class = panel redborder'>Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
+	return parts
 
 /datum/controller/subsystem/ticker/proc/medal_report()
 	if(GLOB.commendations.len)
