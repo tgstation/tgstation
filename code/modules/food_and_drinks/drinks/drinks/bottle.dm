@@ -213,7 +213,7 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
 	
 /obj/item/reagent_containers/food/drinks/bottle/maltliquor
-	name = "Rabid Bear malt liquor"
+	name = "\improper Rabid Bear malt liquor"
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
 	icon_state = "maltliquorbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 100)
