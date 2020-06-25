@@ -265,6 +265,8 @@
 /obj/machinery/porta_turret/ui_host(mob/user)
 	if(has_cover && cover)
 		return cover
+	if(base)
+		return base
 	return src
 
 /obj/machinery/porta_turret/power_change()
