@@ -31501,6 +31501,7 @@
 	name = "Station Intercom (Telecomms)";
 	pixel_y = 26
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOp" = (
@@ -31607,6 +31608,7 @@
 /area/science/misc_lab)
 "bOC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOD" = (
@@ -32114,6 +32116,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bPS" = (
@@ -32385,6 +32388,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bQL" = (
@@ -33354,6 +33358,7 @@
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bTJ" = (
@@ -33578,6 +33583,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bUE" = (
@@ -34179,6 +34185,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWu" = (
@@ -34193,6 +34200,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWv" = (
@@ -34202,6 +34210,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWw" = (
@@ -34278,6 +34287,7 @@
 	name = "Telecomms Monitoring APC";
 	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWI" = (
@@ -34309,6 +34319,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bWL" = (
@@ -35001,6 +35012,7 @@
 "bYF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bYG" = (
@@ -44716,6 +44728,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
+"glP" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/tcommsat/computer)
 "gny" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 10
@@ -83137,7 +83156,7 @@ bNI
 bHE
 bVJ
 bOo
-bOD
+glP
 bQb
 bZv
 bSd

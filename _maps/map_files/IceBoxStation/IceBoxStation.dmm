@@ -38713,6 +38713,7 @@
 	name = "Station Intercom (Telecomms)";
 	pixel_y = 26
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOq" = (
@@ -38801,6 +38802,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOE" = (
@@ -39327,6 +39329,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bPS" = (
@@ -39624,6 +39627,7 @@
 	req_access_txt = "19; 61"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bQL" = (
@@ -40600,6 +40604,7 @@
 "bTI" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bTJ" = (
@@ -40829,6 +40834,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bUz" = (
@@ -41434,6 +41440,7 @@
 /area/science/research)
 "bWs" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWt" = (
@@ -41454,12 +41461,14 @@
 	dir = 4
 	},
 /obj/machinery/navbeacon/wayfinding,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWw" = (
@@ -41530,6 +41539,13 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/tcommsat/computer";
+	dir = 1;
+	name = "Telecomms Monitoring APC";
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWI" = (
@@ -41555,6 +41571,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bWL" = (
@@ -42266,6 +42283,7 @@
 /area/hallway/primary/aft)
 "bYF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bYG" = (
@@ -52059,6 +52077,13 @@
 	},
 /turf/closed/wall,
 /area/maintenance/starboard)
+"gyr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/tcommsat/computer)
 "gCA" = (
 /obj/machinery/button/door{
 	id = "xenobio8";
@@ -85544,7 +85569,7 @@ bNI
 bUB
 bVJ
 bOl
-bOC
+gyr
 bPQ
 bQK
 bYF
