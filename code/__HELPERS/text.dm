@@ -837,8 +837,5 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/loadstring = ""
 	for (var/i in 1 to numSquares)
 		var/limit = reverse ? numSquares - percent*numSquares : percent*numSquares
-		if (i <= limit)
-			loadstring += "█"
-		else
-			loadstring += "░"
-	return "\[" + loadstring + "]"
+		loadstring += i <= limit ? "█" : "░"
+	return "\[[loadstring]\]"
