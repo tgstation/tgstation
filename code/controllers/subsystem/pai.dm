@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(pai)
 
 		switch(option)
 			if("name")
-				t = sanitize_name(stripped_input(usr, "Enter a name for your pAI", "pAI Name", candidate.name, MAX_NAME_LEN))
+				t = sanitize_name(stripped_input(usr, "Enter a name for your pAI", "pAI Name", candidate.name, MAX_NAME_LEN),allow_numbers = TRUE)
 				if(t)
 					candidate.name = t
 			if("desc")
