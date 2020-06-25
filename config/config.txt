@@ -451,15 +451,17 @@ MINUTE_CLICK_LIMIT 400
 #ERROR_MSG_DELAY 50
 
 
-## Chat Announce Options
-## Various messages to be sent to game chats
-## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4
-## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
+## Game Chat Message Options
+## Various messages to be sent to connected chat channels.
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4.
+## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
 ## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
 
-## Send a message with the station name starting a new game. Also required for the notify function
+## Send a message with the station name starting a new game.
 #CHAT_ANNOUNCE_NEW_GAME
 
+## Ping users who use the `notify` command when a new game starts.
+#CHAT_NEW_GAME_NOTIFICATIONS
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 #DEBUG_ADMIN_HREFS

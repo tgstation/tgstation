@@ -32,7 +32,7 @@
 				var/obj/effect/decal/cleanable/C = O
 				cleaner?.mind.adjust_experience(/datum/skill/cleaning, max(round(C.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT,1),0)) //it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
 				qdel(O)
-	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
+	reagents.expose(A, TOUCH, 10)	//Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER),0.1)

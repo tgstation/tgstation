@@ -2359,7 +2359,7 @@
 /turf/open/floor/plasteel,
 /area/science)
 "BD" = (
-/obj/structure/closet/secure_closet/CMO{
+/obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -2436,7 +2436,7 @@
 /turf/open/floor/plasteel,
 /area/science)
 "Iy" = (
-/obj/structure/closet/secure_closet/RD{
+/obj/structure/closet/secure_closet/research_director{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue,

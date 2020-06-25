@@ -34,6 +34,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/checkoutmachine
 	)))
 
+/// How many goody orders we can fit in a lockbox before we upgrade to a crate
+#define GOODY_FREE_SHIPPING_MAX 5
+/// How much to charge oversized goody orders
+#define CRATE_TAX 700
+
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
 	id = "supply"
@@ -100,6 +105,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/value = 0
 	var/purchases = 0
+	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
+
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
@@ -110,8 +117,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		var/datum/bank_account/D
 		if(SO.paying_account) //Someone paid out of pocket
 			D = SO.paying_account
+			var/list/current_buyer_orders = goodies_by_buyer[SO.paying_account] // so we can access the length a few lines down
 			if(!SO.pack.goody)
 				price *= 1.1 //TODO make this customizable by the quartermaster
+
+			// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
+			else if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
+				price += CRATE_TAX
+				D.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
 		else
 			D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
@@ -121,6 +134,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 
 		if(SO.paying_account)
+			if(SO.pack.goody)
+				LAZYADD(goodies_by_buyer[SO.paying_account], SO)
 			D.bank_card_talk("Cargo order #[SO.id] has shipped. [price] credits have been charged to your bank account.")
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - SO.pack.cost) //Cargo gets the handling fee
@@ -129,30 +144,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSshuttle.orderhistory += SO
 		QDEL_NULL(SO.applied_coupon)
 
-		if(SO.pack.goody) //goody means it gets piled in the miscbox
-			if(SO.paying_account)
-				if(!miscboxes.len || !miscboxes[D.account_holder]) //if there's no miscbox for this person
-					miscboxes[D.account_holder] = new /obj/item/storage/lockbox/order(pick_n_take(empty_turfs))
-					var/obj/item/storage/lockbox/order/our_box = miscboxes[D.account_holder]
-					our_box.buyer_account = SO.paying_account
-					miscboxes[D.account_holder].name = "small items case - purchased by [D.account_holder]"
-					misc_contents[D.account_holder] = list()
-				for (var/item in SO.pack.contains)
-					misc_contents[D.account_holder] += item
-				misc_order_num[D.account_holder] = "[misc_order_num[D.account_holder]]#[SO.id]  "
-			else //No private payment, so we just stuff it all into a generic crate
-				if(!miscboxes.len || !miscboxes["Cargo"])
-					miscboxes["Cargo"] = new /obj/structure/closet/crate/secure(pick_n_take(empty_turfs))
-					miscboxes["Cargo"].name = "small items crate"
-					misc_contents["Cargo"] = list()
-					miscboxes["Cargo"].req_access = list()
-				for (var/item in SO.pack.contains)
-					misc_contents["Cargo"] += item
-					//new item(miscboxes["Cargo"])
-				if(SO.pack.access)
-					miscboxes["Cargo"].req_access += SO.pack.access
-				misc_order_num["Cargo"] = "[misc_order_num["Cargo"]]#[SO.id]  "
-		else
+		if(!SO.pack.goody) //we handle goody crates below
 			SO.generate(pick_n_take(empty_turfs))
 
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
@@ -160,6 +152,31 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(SO.pack.dangerous)
 			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
+
+	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
+	// then we send it in a crate (including the CRATE_TAX cost), otherwise send it in a free shipping case
+	for(var/D in goodies_by_buyer)
+		var/list/buying_account_orders = goodies_by_buyer[D]
+		var/datum/bank_account/buying_account = D
+		var/buyer = buying_account.account_holder
+
+		if(buying_account_orders.len > GOODY_FREE_SHIPPING_MAX) // no free shipping, send a crate
+			var/obj/structure/closet/crate/secure/owned/our_crate = new /obj/structure/closet/crate/secure/owned(pick_n_take(empty_turfs))
+			our_crate.buyer_account = buying_account
+			our_crate.name = "goody crate - purchased by [buyer]"
+			miscboxes[buyer] = our_crate
+		else //free shipping in a case
+			miscboxes[buyer] = new /obj/item/storage/lockbox/order(pick_n_take(empty_turfs))
+			var/obj/item/storage/lockbox/order/our_case = miscboxes[buyer]
+			our_case.buyer_account = buying_account
+			miscboxes[buyer].name = "goody case - purchased by [buyer]"
+		misc_contents[buyer] = list()
+
+		for(var/O in buying_account_orders)
+			var/datum/supply_order/our_order = O
+			for (var/item in our_order.pack.contains)
+				misc_contents[buyer] += item
+			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id]  "
 
 	for(var/I in miscboxes)
 		var/datum/supply_order/SO = new/datum/supply_order()
@@ -208,3 +225,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	SSshuttle.centcom_message = msg
 	investigate_log("Shuttle contents sold for [D.account_balance - presale_points] credits. Contents: [ex.exported_atoms ? ex.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+
+#undef GOODY_FREE_SHIPPING_MAX
+#undef CRATE_TAX

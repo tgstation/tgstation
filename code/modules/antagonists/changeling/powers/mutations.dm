@@ -160,8 +160,10 @@
 	throw_range = 0
 	throw_speed = 0
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
+	wound_bonus = -60
+	bare_wound_bonus = 20
 	var/can_drop = FALSE
 	var/fake = FALSE
 

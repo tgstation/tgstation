@@ -1,7 +1,7 @@
 
 /obj/item/storage/box/syndicate
 
-/obj/item/storage/box/syndicate/bundle_A/PopulateContents()
+/obj/item/storage/box/syndicate/bundle_a/PopulateContents()
 	switch (pickweight(list("recon" = 2, "bloodyspai" = 3, "stealth" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "sniper" = 1, "metaops" = 1)))
 		if("recon")
 			new /obj/item/clothing/glasses/thermal/xray(src) // ~8 tc?
@@ -72,10 +72,10 @@
 			new /obj/item/implanter/storage(src)
 
 		if("hacker")
-			new /obj/item/aiModule/syndicate(src)
+			new /obj/item/ai_module/syndicate(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/encryptionkey/binary(src)
-			new /obj/item/aiModule/toyAI(src)
+			new /obj/item/ai_module/toy_ai(src)
 			new /obj/item/multitool/ai_detect(src)
 			new /obj/item/storage/toolbox/syndicate(src)
 			new /obj/item/camera_bug(src)
@@ -117,9 +117,10 @@
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/grenade/c4 (src) // 1 tc
 			new /obj/item/grenade/c4 (src) // 1 tc
-			new /obj/item/card/emag(src) // 6 tc
+			new /obj/item/card/emag(src) // 4 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
 
-/obj/item/storage/box/syndicate/bundle_B/PopulateContents()
+/obj/item/storage/box/syndicate/bundle_b/PopulateContents()
 	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 1, "mr_freeze" = 2)))
 		if("bond")
 			new /obj/item/gun/ballistic/automatic/pistol(src)
@@ -229,7 +230,7 @@
 			<ol>
 				<li>Open the Syndicate Contract Uplink program.</li>
 				<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>
-				<li>The payment number shown in brackets is the bonus you'll recieve when bringing your target <b>alive</b>. You recieve the
+				<li>The payment number shown in brackets is the bonus you'll receive when bringing your target <b>alive</b>. You receive the
 				other number regardless of if they were alive or dead.</li>
 				<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them
 				inside the pod.</li>

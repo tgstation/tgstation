@@ -16,7 +16,7 @@
 
 /datum/chemical_reaction/itching_powder
 	results = list(/datum/reagent/toxin/itching_powder = 3)
-	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/ammonia = 1, /datum/reagent/medicine/C2/multiver = 1)
+	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/ammonia = 1, /datum/reagent/medicine/c2/multiver = 1)
 
 /datum/chemical_reaction/facid
 	results = list(/datum/reagent/toxin/acid/fluacid = 4)
@@ -62,7 +62,7 @@
 
 /datum/chemical_reaction/mindbreaker
 	results = list(/datum/reagent/toxin/mindbreaker = 5)
-	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/hydrogen = 1, /datum/reagent/medicine/C2/multiver = 1)
+	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/hydrogen = 1, /datum/reagent/medicine/c2/multiver = 1)
 
 /datum/chemical_reaction/heparin
 	results = list(/datum/reagent/toxin/heparin = 4)

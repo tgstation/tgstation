@@ -35,9 +35,9 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/tickdrift = 0
 
 	var/sleep_delta = 1
-	
+
 	///Only run ticker subsystems for the next n ticks.
-	var/skip_ticks = 0 
+	var/skip_ticks = 0
 
 	var/make_runtime = 0
 
@@ -174,9 +174,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	if(delay)
 		sleep(delay)
 
-	if(tgs_prime)
-		world.TgsInitializationComplete()
-
 	if(init_sss)
 		init_subtypes(/datum/controller/subsystem, subsystems)
 
@@ -208,6 +205,9 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	// Set world options.
 	world.change_fps(CONFIG_GET(number/fps))
 	var/initialized_tod = REALTIMEOFDAY
+
+	if(tgs_prime)
+		world.TgsInitializationComplete()
 
 	if(sleep_offline_after_initializations)
 		world.sleep_offline = TRUE
@@ -451,7 +451,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				break
 			queue_node_flags = queue_node.flags
 			queue_node_priority = queue_node.queued_priority
-			
+
 			if (!(queue_node_flags & SS_TICKER) && skip_ticks)
 				queue_node = queue_node.queue_next
 				continue
@@ -595,7 +595,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 /datum/controller/master/proc/laggy_byond_map_update_incoming()
 	if (!skip_ticks)
 		skip_ticks = 1
-		
+
 
 /datum/controller/master/stat_entry()
 	if(!statclick)

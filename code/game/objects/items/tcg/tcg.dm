@@ -4,10 +4,13 @@ GLOBAL_LIST_EMPTY(cached_rarity_table)
 //Global list of all cards by series, with cards cached by rarity to make those lookups faster
 GLOBAL_LIST_EMPTY(cached_cards)
 
+#define DEFAULT_TCG_DMI_ICON 'icons/runtime/tcg/default.dmi'
+#define DEFAULT_TCG_DMI "icons/runtime/tcg/default.dmi"
+
 /obj/item/tcgcard
 	name = "Coder"
 	desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
-	icon = 'icons/obj/tcg.dmi'
+	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "runtime"
 	w_class = WEIGHT_CLASS_TINY
 	 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
@@ -63,7 +66,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
 	desc = "Contains six complete fuckups by the coders. Report this on github please!"
-	icon = 'icons/obj/tcg.dmi'
+	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "cardback_nt"
 	w_class = WEIGHT_CLASS_TINY
 	///The card series to look in
@@ -92,7 +95,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
 	desc = "Contains six cards of varying rarity from the 2560 Core Set. Collect them all!"
-	icon = 'icons/obj/tcg.dmi'
+	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "cardpack_series1"
 	series = "coreset2020"
 	contains_coin = 10
@@ -100,7 +103,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/cardpack/resin
 	name = "Trading Card Pack: Resin Frontier Booster Pack"
 	desc = "Contains six cards of varying rarity from the Resin Frontier set. Collect them all!"
-	icon = 'icons/obj/tcg_xenos.dmi'
+	icon = 'icons/runtime/tcg/xenos.dmi'
 	icon_state = "cardpack_resin"
 	series = "resinfront"
 	contains_coin = 0
@@ -150,7 +153,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/coin/thunderdome
 	name = "Thunderdome Flipper"
 	desc = "A Thunderdome TCG flipper, for deciding who gets to go first. Also conveniently acts as a counter, for various purposes."
-	icon = 'icons/obj/tcg.dmi'
+	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "coin_nanotrasen"
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
@@ -167,6 +170,25 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/coin/thunderdome/dropped(mob/user, silent)
 	. = ..()
 	transform = matrix(0.4,0,0,0,0.4,0)
+
+/obj/item/storage/card_binder
+	name = "card binder"
+	desc = "The perfect way to keep your collection of cards safe and valuable."
+	icon = DEFAULT_TCG_DMI_ICON
+	icon_state = "binder"
+	inhand_icon_state = "album"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_SMALL
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+
+/obj/item/storage/card_binder/Initialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/tcgcard))
+	STR.max_combined_w_class = 120
+	STR.max_items = 60
 
 ///Returns a list of cards ids of card_cnt weighted by rarity from the pack's tables that have matching series, with gnt_cnt of the guarenteed table.
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)
@@ -203,6 +225,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 			log_runtime("The index [rarity] of rarity_table does not exist in the global cache")
 	return toReturn
 
+//All of these values should be overriden by either a template or a card itself
 /datum/card
 	///Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD IN AS SERIES, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
 	var/id = "coder"
@@ -210,14 +233,14 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
 	///This handles any extra rules for the card, i.e. extra attributes, special effects, etc. If you've played any other card game, you know how this works.
 	var/rules = "There are no rules here. There is no escape. No Recall or Intervention can work in this place."
-	var/icon = "icons/obj/tcg.dmi"
-	var/icon_state = "runtime"
+	var/icon = DEFAULT_TCG_DMI
+	var/icon_state = "template"
 	///What it costs to summon this card to the battlefield.
 	var/summoncost = -1
 	///How hard this card hits (by default)
-	var/power = 0
+	var/power = -1
 	///How hard this card can get hit (by default)
-	var/resolve = 0
+	var/resolve = -1
 	///Someone please come up with a ruleset so I can comment this
 	var/faction = "socks"
 	///Used to define the behaviour the card uses during the game.
@@ -225,7 +248,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	///An extra descriptor for the card. Combined with the cardtype for a larger card descriptor, i.e. Creature- Xenomorph, Spell- Instant, that sort of thing. For creatures, this has no effect, for spells, this is important.
 	var/cardsubtype = "Weeb"
 	///Defines the series that the card originates from, this is *very* important for spawning the cards via packs.
-	var/series = "coreset2020"
+	var/series = "hunter2"
 	///The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
 	var/rarity = "uber rare to the extreme"
 
@@ -259,22 +282,48 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 ///Checks the passed type list for missing raritys, or raritys out of bounds
 /proc/checkCardpacks(cardPackList)
+	var/toReturn = ""
 	for(var/cardPack in cardPackList)
 		var/obj/item/cardpack/pack = new cardPack()
 		//Lets see if someone made a type yeah?
 		if(!GLOB.cached_cards[pack.series])
-			message_admins("[pack.series] does not have any related cards")
+			toReturn += "[pack.series] does not have any cards in it\n"
 			continue
 		for(var/card in GLOB.cached_cards[pack.series]["ALL"])
 			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"][card]
+			if(template.rarity == "ALL")
+				toReturn += "[pack.type] has a rarity [template.rarity] on the card [template.id] that needs to be changed to something that isn't \"ALL\"\n"
+				continue
 			if(!(template.rarity in pack.rarity_table))
-				message_admins("[pack.type] has a rarity [template.rarity] on the card [template.id] that does not exist")
+				toReturn += "[pack.type] has a rarity [template.rarity] on the card [template.id] that does not exist\n"
 				continue
 		//Lets run a check to see if all the rarities exist that we want to exist exist
 		for(var/I in pack.rarity_table)
 			if(!GLOB.cached_cards[pack.series][I])
-				message_admins("[pack.type] does not have the required rarity [I]")
+				toReturn += "[pack.type] does not have the required rarity [I]\n"
 		qdel(pack)
+	return toReturn
+
+///Checks the global card list for cards that don't override all the default values of the card datum
+/proc/checkCardDatums()
+	var/toReturn = ""
+	var/datum/thing = new()
+	for(var/series in GLOB.cached_cards)
+		var/cards = GLOB.cached_cards[series]["ALL"]
+		for(var/card in cards)
+			var/datum/card/target = GLOB.cached_cards[series]["ALL"][card]
+			var/toAdd = "The card [target.id] in [series] has the following default variables:"
+			var/shouldAdd = FALSE
+			for(var/a in (target.vars ^ thing.vars))
+				if(a == "icon" && target.vars[a] == DEFAULT_TCG_DMI)
+					continue
+				if(target.vars[a] == initial(target.vars[a]))
+					shouldAdd = TRUE
+					toAdd += "\n[a] with a value of [target.vars[a]]"
+			if(shouldAdd)
+				toReturn += toAdd
+	qdel(thing)
+	return toReturn
 
 ///Used to test open a large amount of cardpacks
 /proc/checkCardDistribution(cardPack, batchSize, batchCount, guaranteed)
@@ -322,5 +371,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		if(!GLOB.cached_cards[c.series][c.rarity])
 			GLOB.cached_cards[c.series][c.rarity] = list()
 		GLOB.cached_cards[c.series][c.rarity] += c.id
-		//And series too, why not, it's semi cheap
+		//Let's actually store the datum here
 		GLOB.cached_cards[c.series]["ALL"][c.id] = c
+
+#undef DEFAULT_TCG_DMI_ICON
+#undef DEFAULT_TCG_DMI
