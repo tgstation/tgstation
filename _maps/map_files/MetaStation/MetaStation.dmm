@@ -74913,8 +74913,8 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	acted_explosions = 2;
 	areastring = "/area/medical/chemistry";
+	dir = 8;
 	name = "Chemistry APC";
 	pixel_x = -26
 	},
