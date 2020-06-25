@@ -200,20 +200,21 @@
 		ui.open()
 
 /obj/machinery/porta_turret/ui_data(mob/user)
-	var/list/data = list()
-	data["locked"] = locked
-	data["on"] = on
-	data["check_weapons"] = turret_flags & TURRET_FLAG_AUTH_WEAPONS
-	data["neutralize_criminals"] = turret_flags & TURRET_FLAG_SHOOT_CRIMINALS
-	data["neutralize_all"] = turret_flags & TURRET_FLAG_SHOOT_ALL
-	data["neutralize_unidentified"] = turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS
-	data["neutralize_nonmindshielded"] = turret_flags & TURRET_FLAG_SHOOT_UNSHIELDED
-	data["neutralize_cyborgs"] = turret_flags & TURRET_FLAG_SHOOT_BORGS
-	data["ignore_heads"] = turret_flags & TURRET_FLAG_SHOOT_HEADS
-	data["manual_control"] = manual_control
-	data["silicon_user"] = FALSE
-	data["allow_manual_control"] = FALSE
-	data["lasertag_turret"] = istype(src, /obj/machinery/porta_turret/lasertag)
+	var/list/data = list(
+		"locked" = locked,
+		"on" = on,
+		"check_weapons" = turret_flags & TURRET_FLAG_AUTH_WEAPONS,
+		"neutralize_criminals" = turret_flags & TURRET_FLAG_SHOOT_CRIMINALS,
+		"neutralize_all" = turret_flags & TURRET_FLAG_SHOOT_ALL,
+		"neutralize_unidentified" = turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS,
+		"neutralize_nonmindshielded" = turret_flags & TURRET_FLAG_SHOOT_UNSHIELDED,
+		"neutralize_cyborgs" = turret_flags & TURRET_FLAG_SHOOT_BORGS,
+		"ignore_heads" = turret_flags & TURRET_FLAG_SHOOT_HEADS,
+		"manual_control" = manual_control,
+		"silicon_user" = FALSE,
+		"allow_manual_control" = FALSE,
+		"lasertag_turret" = istype(src, /obj/machinery/porta_turret/lasertag),
+	)
 	if(issilicon(user))
 		data["silicon_user"] = TRUE
 		if(!manual_control)
@@ -342,7 +343,6 @@
 	addtimer(CALLBACK(src, .proc/toggle_on, TRUE), 6 SECONDS)
 	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
-
 /obj/machinery/porta_turret/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
@@ -384,8 +384,6 @@
 		invisibility = 0
 		spark_system.start()	//creates some sparks because they look cool
 		qdel(cover)	//deletes the cover - no need on keeping it there!
-
-
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
@@ -472,7 +470,6 @@
 		targets -= M
 		if(target(M))
 			return 1
-
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
 	if(!anchored)
@@ -617,7 +614,6 @@
 	src.mode = mode
 	power_change()
 
-
 /datum/action/turret_toggle
 	name = "Toggle Mode"
 	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
@@ -731,7 +727,6 @@
 	stun_projectile =  /obj/projectile/beam/laser
 	stun_projectile_sound = 'sound/weapons/laser.ogg'
 	faction = list("neutral","silicon","turret")
-
 
 /obj/machinery/porta_turret/syndicate/pod
 	integrity_failure = 0.5

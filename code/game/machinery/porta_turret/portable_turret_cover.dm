@@ -24,19 +24,13 @@
 //I'm not fixing it because i'm fucking bored of this code already, but someone should just reroute these to the parent turret's procs.
 
 /obj/machinery/porta_turret_cover/attack_ai(mob/user)
-	. = ..()
-	if(.)
-		return
-	return parent_turret.attack_ai(user)
+	return ..() || parent_turret.attack_ai(user)
 
 /obj/machinery/porta_turret_cover/attack_robot(mob/user)
 	return ..() || parent_turret.attack_robot(user)
 
 /obj/machinery/porta_turret_cover/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	return parent_turret.attack_hand(user)
+	return ..() || parent_turret.attack_hand(user)
 
 /obj/machinery/porta_turret_cover/attack_ghost(mob/user)
 	return ..() || parent_turret.attack_ghost(user)
