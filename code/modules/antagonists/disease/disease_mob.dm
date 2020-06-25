@@ -1,3 +1,5 @@
+#define FREEMOVE_TIME 2 MINUTES
+
 /*
 A mob of type /mob/camera/disease is an overmind coordinating at least one instance of /datum/disease/advance/sentient_disease
 that has infected a host. All instances in a host will be synchronized with the stats of the overmind's disease_template. Any
@@ -23,7 +25,6 @@ the new instance inside the host to be updated to the template's stats.
 
 	var/freemove = TRUE
 	var/freemove_end = 0
-	var/const/freemove_time = 1200
 	var/freemove_end_timerid
 
 	var/datum/action/innate/disease_adapt/adaptation_menu_action
@@ -67,8 +68,8 @@ the new instance inside the host to be updated to the template's stats.
 
 	browser = new /datum/browser(src, "disease_menu", "Adaptation Menu", 1000, 770, src)
 
-	freemove_end = world.time + freemove_time
-	freemove_end_timerid = addtimer(CALLBACK(src, .proc/infect_random_patient_zero), freemove_time, TIMER_STOPPABLE)
+	freemove_end = world.time + FREEMOVE_TIME
+	freemove_end_timerid = addtimer(CALLBACK(src, .proc/infect_random_patient_zero), FREEMOVE_TIME, TIMER_STOPPABLE)
 
 /mob/camera/disease/Destroy()
 	. = ..()
@@ -409,3 +410,5 @@ the new instance inside the host to be updated to the template's stats.
 /datum/action/innate/disease_adapt/Activate()
 	var/mob/camera/disease/D = owner
 	D.adaptation_menu()
+
+#undef FREEMOVE_TIME

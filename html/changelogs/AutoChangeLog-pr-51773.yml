@@ -1,4 +1,0 @@
-author: "Caldony"
-delete-after: True
-changes: 
-  - bugfix: "fixed a bug with the battle arcade game where the combos would sometimes not register correctly."
