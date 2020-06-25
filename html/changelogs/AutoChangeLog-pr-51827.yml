@@ -1,4 +1,0 @@
-author: "dearmochi"
-delete-after: True
-changes: 
-  - bugfix: "Fix thrown bolas (and other items) bypassing weapon/shield blocking"
