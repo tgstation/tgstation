@@ -21,8 +21,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	/// Timer when it'll be off cooldown
 	var/timer = 0
-	/// Cooldown between play sessions - 20x longer after a battle
+	/// Cooldown between play sessions
 	var/cooldown = 1.5 SECONDS
+	/// Cooldown multiplier after a battle (by default: battle cooldowns are 30 seconds)
+	var/cooldown_multiplier = 20
 	/// If it makes noise when played with
 	var/quiet = FALSE
 	/// TRUE = Offering battle to someone || FALSE = Not offering battle
@@ -294,8 +296,8 @@
 	attacker.in_combat = TRUE
 
 	//1.5 second cooldown * 20 = 30 second cooldown after a fight
-	timer = world.time + cooldown*20
-	attacker.timer = world.time + attacker.cooldown*20
+	timer = world.time + cooldown*cooldown_multiplier
+	attacker.timer = world.time + attacker.cooldown*attacker.cooldown_multiplier
 
 	sleep(1 SECONDS)
 	//--THE BATTLE BEGINS--
@@ -501,15 +503,15 @@
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
 	desc = "1/13"
-	max_combat_health = 3
+	max_combat_health = 4 //200 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "GIGA DRILL BREAK"
 
-/obj/item/toy/prize/fireripley
+/obj/item/toy/prize/fireripley //rip
 	name = "toy Firefighting Ripley"
 	desc = "2/13"
 	icon_state = "fireripleytoy"
-	max_combat_health = 4
+	max_combat_health = 5 //250 integrity?
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "FIRE SHIELD"
 
@@ -517,7 +519,7 @@
 	name = "toy Deathsquad Ripley"
 	desc = "3/13"
 	icon_state = "deathripleytoy"
-	max_combat_health = 5
+	max_combat_health = 5 //250 integrity
 	special_attack_type = SPECIAL_ATTACK_OTHER
 	special_attack_type_message = "instantly destroys the opposing mech if its health is less than this mech's health."
 	special_attack_cry = "KILLER CLAMP"
@@ -534,7 +536,7 @@
 	name = "toy Gygax"
 	desc = "4/13"
 	icon_state = "gygaxtoy"
-	max_combat_health = 5
+	max_combat_health = 5 //250 integrity
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "SUPER SERVOS"
 
@@ -542,7 +544,7 @@
 	name = "toy Durand"
 	desc = "5/13"
 	icon_state = "durandtoy"
-	max_combat_health = 6
+	max_combat_health = 6 //400 integrity
 	special_attack_type = SPECIAL_ATTACK_HEAL
 	special_attack_cry = "SHIELD OF PROTECTION"
 
@@ -550,21 +552,21 @@
 	name = "toy H.O.N.K."
 	desc = "6/13"
 	icon_state = "honktoy"
-	max_combat_health = 4
+	max_combat_health = 4 //140 integrity
 	special_attack_type = SPECIAL_ATTACK_OTHER
 	special_attack_type_message = "puts the opposing mech's special move on cooldown and heals this mech."
 	special_attack_cry = "MEGA HORN"
 
 /obj/item/toy/prize/honk/super_special_attack(obj/item/toy/prize/victim) 
 	playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 20, TRUE)
-	victim.special_attack_cooldown = 3 //Adds cooldown to the other mech and gives a minor self heal
+	victim.special_attack_cooldown += 3 //Adds cooldown to the other mech and gives a minor self heal
 	combat_health++
 
 /obj/item/toy/prize/marauder
 	name = "toy Marauder"
 	desc = "7/13"
 	icon_state = "maraudertoy"
-	max_combat_health = 7
+	max_combat_health = 7 //500 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "BEAM BLAST"
 
@@ -572,7 +574,7 @@
 	name = "toy Seraph"
 	desc = "8/13"
 	icon_state = "seraphtoy"
-	max_combat_health = 8
+	max_combat_health = 8 //550 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "ROCKET BARRAGE"
 
@@ -580,7 +582,7 @@
 	name = "toy Mauler"
 	desc = "9/13"
 	icon_state = "maulertoy"
-	max_combat_health = 8
+	max_combat_health = 7 //500 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "BULLET STORM"
 
@@ -588,7 +590,7 @@
 	name = "toy Odysseus"
 	desc = "10/13"
 	icon_state = "odysseustoy"
-	max_combat_health = 4
+	max_combat_health = 4 //120 integrity
 	special_attack_type = SPECIAL_ATTACK_HEAL
 	special_attack_cry = "MECHA BEAM"
 
@@ -596,7 +598,7 @@
 	name = "toy Phazon"
 	desc = "11/13"
 	icon_state = "phazontoy"
-	max_combat_health = 6
+	max_combat_health = 6 //200 integrity
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "NO-CLIP"
 
@@ -605,7 +607,7 @@
 	desc = "12/13"
 	icon_state = "reticencetoy"
 	quiet = TRUE
-	max_combat_health = 4
+	max_combat_health = 4 //100 integrity
 	special_attack_type = SPECIAL_ATTACK_OTHER
 	special_attack_type_message = "has a lower cooldown than normal special moves, increases the opponent's cooldown, and deals damage."
 	special_attack_cry = "*wave"
@@ -619,7 +621,7 @@
 	name = "toy Clarke"
 	desc = "13/13"
 	icon_state = "clarketoy"
-	max_combat_health = 4
+	max_combat_health = 4 //200 integrity
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "ROLL OUT"
 
