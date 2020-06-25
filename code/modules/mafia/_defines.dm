@@ -198,6 +198,7 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/mafia=2
 	)
 */
+/*
 /datum/mafia_setup/three_test
 	name = "3 Player Test"
 	roles = list(
@@ -205,5 +206,4 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/psychologist=1,
 		/datum/mafia_role/mafia=1
 	)
-/*
 */
