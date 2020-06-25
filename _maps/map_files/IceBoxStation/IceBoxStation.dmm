@@ -30641,6 +30641,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "bub" = (
@@ -33876,7 +33880,6 @@
 	},
 /turf/closed/wall,
 /area/quartermaster/miningdock)
-<<<<<<< HEAD
 "bBI" = (
 /obj/machinery/power/apc{
 	areastring = "/area/hallway/secondary/service";
@@ -33891,14 +33894,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
-"bBJ" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
-=======
->>>>>>> upstream/master
 "bBK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	icon_state = "trimline_fill";
@@ -52723,8 +52718,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-<<<<<<< HEAD
-=======
 "iYh" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -52736,17 +52729,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
-"jbf" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/secondary/service";
-	dir = 1;
-	name = "Service Hall APC";
-	pixel_y = 23
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/service)
->>>>>>> upstream/master
 "jcM" = (
 /obj/machinery/camera{
 	c_tag = "Public Mining Ladder";
