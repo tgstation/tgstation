@@ -270,7 +270,7 @@
 /datum/mafia_role/psychologist/New(datum/mafia_controller/game)
 	. = ..()
 	RegisterSignal(game,COMSIG_MAFIA_NIGHT_START,.proc/try_to_visit)
-	RegisterSignal(game,COMSIG_MAFIA_NIGHT_END,.proc/reveal)
+	RegisterSignal(game,COMSIG_MAFIA_NIGHT_END,.proc/therapy_reveal)
 
 /datum/mafia_role/psychologist/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
@@ -294,8 +294,7 @@
 	if(current_target)
 		add_note("N[game.turn] - [current_target.body.real_name] - Revealed true identity")
 
-/datum/mafia_role/psychologist/proc/reveal(datum/mafia_controller/game)
-	. = ..()
+/datum/mafia_role/psychologist/proc/therapy_reveal(datum/mafia_controller/game)
 	if(current_target)
 		to_chat(body,"<span class='warning'>You have revealed the true nature of the [current_target]!</span>")
 		current_target.reveal_role(verbose = TRUE)
@@ -421,7 +420,7 @@
 	name = "Obsessed"
 	desc = "You're completely lost in your own mind. You win by lynching your obsession before you get killed in this mess. Obsession assigned on the first night!"
 	team = MAFIA_TEAM_SOLO
-	revealed_outfit = /datum/outfit/psycho // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
+	revealed_outfit = /datum/outfit/mafia/obsessed // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
 
 	solo_counts_as_town = TRUE //after winning or whatever, can side with whoever. they've already done their objective!
 	var/datum/mafia_role/obsession

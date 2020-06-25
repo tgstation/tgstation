@@ -11,7 +11,7 @@
 /datum/outfit/mafia/assistant
 	name = "Mafia Assistant"
 
-	/obj/item/clothing/under/color/rainbow
+	uniform = /obj/item/clothing/under/color/rainbow
 
 /datum/outfit/mafia/detective
 	name = "Mafia Detective"
