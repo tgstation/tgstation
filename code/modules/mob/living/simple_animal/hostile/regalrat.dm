@@ -73,6 +73,16 @@
 	else if(istype(user,/mob/living/simple_animal/hostile/regalrat))
 		. += "<span class='warning'>Who is this foolish false king? This will not stand!</span>"
 
+/mob/living/simple_animal/hostile/regalrat/AttackingTarget()
+	. = ..()
+	if(istype(target, /obj/item/reagent_containers/food/snacks/cheesewedge))
+		if (health >= maxHealth)
+			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
+			return
+		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
+		heal_bodypart_damage(10)
+		qdel(target)
+
 /**
   *This action creates trash, money, dirt, and cheese.
   */
@@ -236,3 +246,13 @@
 				visible_message("<span class='warning'>[src] chews through the [C]. It looks unharmed!</span>")
 				playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 				C.deconstruct()
+
+/mob/living/simple_animal/hostile/rat/AttackingTarget()
+	. = ..()
+	if(istype(target, /obj/item/reagent_containers/food/snacks/cheesewedge))
+		if (health >= maxHealth)
+			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
+			return
+		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
+		heal_bodypart_damage(5)
+		qdel(target)

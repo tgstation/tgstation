@@ -346,10 +346,9 @@
 
 /// Handles exposing an object to reagents.
 /obj/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
-	. = ..()
-	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
+	if((. = ..()) & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
-		R.expose_obj(src, reagents[R] || (R.volume * volume_modifier))
+		. |= R.expose_obj(src, reagents[R])
