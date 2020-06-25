@@ -30,10 +30,7 @@
 	return parent_turret.attack_ai(user)
 
 /obj/machinery/porta_turret_cover/attack_robot(mob/user)
-	. = ..()
-	if(.)
-		return
-	return parent_turret.attack_robot(user)
+	return ..() || parent_turret.attack_robot(user)
 
 /obj/machinery/porta_turret_cover/attack_hand(mob/user)
 	. = ..()
@@ -42,10 +39,7 @@
 	return parent_turret.attack_hand(user)
 
 /obj/machinery/porta_turret_cover/attack_ghost(mob/user)
-	. = ..()
-	if(.)
-		return
-	return parent_turret.attack_ghost(user)
+	return ..() || parent_turret.attack_ghost(user)
 
 /obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && !parent_turret.on)
