@@ -29,6 +29,11 @@
 		return
 	return parent_turret.attack_ai(user)
 
+/obj/machinery/porta_turret_cover/attack_robot(mob/user)
+	. = ..()
+	if(.)
+		return
+	return parent_turret.attack_robot(user)
 
 /obj/machinery/porta_turret_cover/attack_hand(mob/user)
 	. = ..()
@@ -36,6 +41,11 @@
 		return
 	return parent_turret.attack_hand(user)
 
+/obj/machinery/porta_turret_cover/attack_ghost(mob/user)
+	. = ..()
+	if(.)
+		return
+	return parent_turret.attack_ghost(user)
 
 /obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && !parent_turret.on)
@@ -58,7 +68,6 @@
 		if(parent_turret.allowed(user))
 			parent_turret.locked = !parent_turret.locked
 			to_chat(user, "<span class='notice'>Controls are now [parent_turret.locked ? "locked" : "unlocked"].</span>")
-			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
 	else if(I.tool_behaviour == TOOL_MULTITOOL && !parent_turret.locked)
