@@ -21298,6 +21298,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bjY" = (
@@ -49915,10 +49916,9 @@
 /obj/machinery/cell_charger,
 /obj/machinery/power/apc{
 	areastring = "/area/medical/medbay/lobby";
-	dir = 1;
+	dir = 4;
 	name = "Medbay Lobby APC";
-	pixel_x = 25;
-	pixel_y = 23
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -93126,10 +93126,10 @@ aYV
 pLy
 bev
 bfK
+bfK
 bhi
 bhi
-bhi
-bhi
+bfK
 bfK
 eZL
 jrn
