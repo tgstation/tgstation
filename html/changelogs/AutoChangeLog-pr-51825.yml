@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Bank cards will now still give you notifications if you're standing next to another player who has them disabled."
