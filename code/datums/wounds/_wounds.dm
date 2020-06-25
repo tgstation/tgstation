@@ -303,8 +303,15 @@
 	if(cryo_progress > 33 * severity)
 		qdel(src)
 
+/// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
+/datum/wound/proc/on_stasis()
+	return
+
 /// Called when we're crushed in an airlock or firedoor, for one of the improvised joint dislocation fixes
 /datum/wound/proc/crush()
+	return
+
+/datum/wound/proc/drag_bleed_amt()
 	return
 
 /**

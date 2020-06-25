@@ -73,8 +73,28 @@
 	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
 		blood_flow += 0.05 * wounding_dmg
 
+/datum/wound/slash/drag_bleed_amt()
+	// say we have 3 severe cuts with 3 blood flow each, pretty reasonable
+	// compare with being at 100 brute damage before, where you bled (brute/100 * 2), = 2 blood per tile
+	var/bleed_amt = min(blood_flow * 0.1, 1) // 3 * 3 * 0.1 = 0.9 blood total, less than before! the share here is .6 blood of course.
+
+	if(limb.current_gauze) // gauze stops all bleeding from dragging on this limb, but wears the gauze out quicker
+		limb.seep_gauze(bleed_amt * 0.33)
+		return
+	testing("blood from drag [name]: [bleed_amt]")
+	return bleed_amt
+
 /datum/wound/slash/handle_process()
-	blood_flow = min(blood_flow, WOUND_CUT_MAX_BLOODFLOW)
+	if(victim.stat == DEAD)
+		blood_flow -= max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN)
+		if(blood_flow < minimum_flow)
+			if(demotes_to)
+				replace_wound(demotes_to)
+			else
+				qdel(src)
+			return
+
+	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
 	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
 		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
@@ -98,6 +118,15 @@
 		else
 			to_chat(victim, "<span class='green'>The cut on your [limb.name] has stopped bleeding!</span>")
 			qdel(src)
+
+
+/datum/wound/slash/on_stasis()
+	if(blood_flow < minimum_flow)
+		if(demotes_to)
+			replace_wound(demotes_to)
+		else
+			qdel(src)
+		return
 
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
 

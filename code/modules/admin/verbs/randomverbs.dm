@@ -1069,6 +1069,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 									ADMIN_PUNISHMENT_NUGGET,
 									ADMIN_PUNISHMENT_CRACK,
 									ADMIN_PUNISHMENT_BLEED,
+									ADMIN_PUNISHMENT_PERFORATE,
 									ADMIN_PUNISHMENT_SCARIFY
 									)
 
@@ -1170,6 +1171,18 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				var/type_wound = pick(list(/datum/wound/slash/severe, /datum/wound/slash/moderate))
 				slice_part.force_wound_upwards(type_wound, smited=TRUE)
 				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate))
+				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe))
+				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+		if(ADMIN_PUNISHMENT_PERFORATE)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/C = target
+			for(var/obj/item/bodypart/slice_part in C.bodyparts)
+				var/type_wound = pick(list(/datum/wound/pierce/severe, /datum/wound/slash/moderate))
+				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+				type_wound = pick(list(/datum/wound/pierce/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate))
 				slice_part.force_wound_upwards(type_wound, smited=TRUE)
 				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe))
 				slice_part.force_wound_upwards(type_wound, smited=TRUE)

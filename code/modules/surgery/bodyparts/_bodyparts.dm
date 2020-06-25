@@ -281,6 +281,31 @@
 	update_disabled()
 	return update_bodypart_damage_state() || .
 
+/// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds (note this doesn't let sharp go to bone)
+/obj/item/bodypart/proc/painless_wound_roll(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus)
+	if(!owner || phantom_wounding_dmg <= 5 || wound_bonus == CANT_WOUND)
+		return
+
+	var/mangled_state = get_mangled_state()
+	var/original_type = wounding_type
+	// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
+	// So a big sharp weapon is still all you need to destroy a limb
+	if(mangled_state == BODYPART_MANGLED_SKIN)
+		playsound(src, "sound/effects/crackandbleed.ogg", 100)
+		wounding_type = WOUND_BLUNT
+		if(wounding_type == WOUND_SLASH)
+			phantom_wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
+		if(wounding_type == WOUND_PIERCE)
+			phantom_wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
+
+	// if both the skin and the bone are destroyed, and we're doing more than 10 damage, we're ripe to try dismembering
+	else if(mangled_state == BODYPART_MANGLED_BOTH && phantom_wounding_dmg >= DISMEMBER_MINIMUM_DAMAGE)
+		if(try_dismember(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus))
+			return
+
+	wounding_type = original_type
+	check_wounding(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus)
+
 /**
   * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
   *

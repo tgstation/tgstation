@@ -682,7 +682,15 @@
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
+				var/bleed_amt
+				if(iscarbon(src))
+					var/mob/living/carbon/C = src
+					for(var/i in C.all_wounds)
+						var/datum/wound/W = i
+						bleed_amt += W.drag_bleed_amt()
+				else
+					bleed_amt = max(1, brute_ratio * 2)
+				blood_volume = max(blood_volume - bleed_amt, 0) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
 					newdir = newdir | direction

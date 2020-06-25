@@ -53,7 +53,7 @@
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 /datum/wound/pierce/handle_process()
-	blood_flow = min(blood_flow, WOUND_CUT_MAX_BLOODFLOW)
+	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
 	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
 		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
