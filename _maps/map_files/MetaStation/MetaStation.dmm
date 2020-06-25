@@ -21916,7 +21916,7 @@
 "aYY" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=3-Central-Port";
-	location = "2.2-Leaving-Storage"
+	location = "2.1-Leaving-Storage"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -21978,7 +21978,7 @@
 "aZi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=2.1-Storage";
+	codes_txt = "patrol;next_patrol=2.1-Leaving-Storage";
 	location = "1.5-Fore-Central"
 	},
 /obj/effect/turf_decal/plaque{
@@ -55365,7 +55365,9 @@
 	req_one_access_txt = "29"
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "czi" = (
@@ -76861,7 +76863,7 @@
 	dir = 1
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/medical/virology)
 "svg" = (
 /obj/structure/lattice,
 /obj/structure/girder/reinforced,
@@ -107485,8 +107487,8 @@ car
 car
 car
 cxA
-sVa
 car
+sVa
 cAi
 ctF
 car

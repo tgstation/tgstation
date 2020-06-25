@@ -24818,23 +24818,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"buH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/research{
-	name = "Research Division Access";
-	req_access_txt = "47"
-	},
-/turf/open/floor/plasteel/white,
-/area/science/research)
 "buI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 1
@@ -48207,8 +48190,9 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/science/nanite";
+	dir = 8;
 	name = "Nanite Lab APC";
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1

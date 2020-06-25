@@ -53640,8 +53640,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/apc{
 	areastring = "/area/science/nanite";
+	dir = 8;
 	name = "Nanite Lab APC";
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
