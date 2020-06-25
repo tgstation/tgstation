@@ -502,7 +502,7 @@
 			if(target.InCritical())
 				target.death()
 			target.adjustFireLoss(20)
-			var/obj/effect/temp_visual/cleave = new /obj/effect/temp_visual/eldritch_smoke(target.drop_location())
+			new /obj/effect/temp_visual/eldritch_smoke(target.drop_location())
 			human_user.adjustBruteLoss(-10)
 			human_user.adjustFireLoss(-10)
 			human_user.adjustStaminaLoss(-10)
