@@ -33,6 +33,8 @@
 	var/req_access_txt = "0"
 	var/list/req_one_access
 	var/req_one_access_txt = "0"
+	/// Custom fire overlay icon
+	var/custom_fire_overlay
 
 	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
@@ -342,7 +344,7 @@
 	if(acid_level)
 		. += GLOB.acid_overlay
 	if(resistance_flags & ON_FIRE)
-		. += GLOB.fire_overlay
+		. += custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay
 
 /// Handles exposing an object to reagents.
 /obj/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)

@@ -33,8 +33,3 @@
 			As a participant in the Nanotrasen Gateway Project, you will be on the frontiers of space. \
 			Though complete safety is assured, participants are advised to prepare for inhospitable \
 			environs."
-
-//we don't want the silly text overlay!
-/obj/item/paper/pamphlet/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)

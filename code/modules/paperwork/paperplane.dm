@@ -3,6 +3,7 @@
 	desc = "Paper, folded in the shape of a plane."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paperplane"
+	custom_fire_overlay = "paperplane_onfire"
 	throw_range = 7
 	throw_speed = 1
 	throwforce = 0

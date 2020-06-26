@@ -212,7 +212,7 @@
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
-	
+
 /obj/item/reagent_containers/food/drinks/bottle/maltliquor
 	name = "\improper Rabid Bear malt liquor"
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
@@ -528,7 +528,7 @@
 		log_bomber(user, "has primed a", src, "for detonation")
 
 		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
-		add_overlay(GLOB.fire_overlay)
+		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
 		if(!isGlass)
 			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
 
@@ -550,7 +550,7 @@
 			to_chat(user, "<span class='danger'>The flame's spread too far on it!</span>")
 			return
 		to_chat(user, "<span class='info'>You snuff out the flame on [src].</span>")
-		cut_overlay(GLOB.fire_overlay)
+		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
 		active = 0
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno

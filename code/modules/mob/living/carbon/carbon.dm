@@ -924,7 +924,7 @@
 		var/obj/item/I = X
 		I.acid_level = 0 //washes off the acid on our clothes
 		I.extinguish() //extinguishes our clothes
-		I.cut_overlay(GLOB.fire_overlay, TRUE)
+		I.cut_overlay(I.custom_fire_overlay ? I.custom_fire_overlay : GLOB.fire_overlay, TRUE)
 	..()
 
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
