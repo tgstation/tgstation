@@ -91,7 +91,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			loaded_item = S
 		else
 			qdel(S)
-	else
+	if(thing)
 		qdel(thing)
 	if (!innermode)
 		update_icon()
@@ -124,6 +124,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
 		if(destroy_item(loaded_item))
 			linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
+			loaded_item = null
 
 	else
 		var/list/point_value = techweb_item_point_check(loaded_item)
@@ -143,6 +144,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(destroy_item(loaded_item))
 			linked_console.stored_research.add_point_list(point_value)
 			linked_console.stored_research.deconstructed_items[loaded_type] = point_value
+			loaded_item = null
+	update_icon()
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()
