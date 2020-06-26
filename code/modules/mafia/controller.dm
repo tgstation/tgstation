@@ -241,9 +241,21 @@
 
 /datum/mafia_controller/proc/start_night()
 	phase = MAFIA_PHASE_NIGHT
+	var/alive_mafia = 0
+	var/alive_revolt = 0
+
+	for(var/datum/mafia_role/R in all_roles)
+		if(R.game_status == MAFIA_ALIVE)
+			switch(R.team)
+				if(MAFIA_TEAM_MAFIA)
+					alive_mafia++
+				if(MAFIA_TEAM_REVOLUTION)
+					alive_revolt++
 	send_message("<b>Night [turn] started! Lockdown will end in 45 seconds.</b>")
-	send_message("<b>Vote for who to kill tonight. The killer will be chosen randomly from voters.</b>",MAFIA_TEAM_MAFIA)
-	send_message("<b>Vote for who to kill tonight. The killer will be chosen randomly from voters. The <span class='notice'>Head Revolutionary</span> will convert someone to your cause tonight.</b>",MAFIA_TEAM_REVOLUTION)
+	if(alive_mafia)
+		send_message("<b>Vote for who to kill tonight. The killer will be chosen randomly from voters.</b>",MAFIA_TEAM_MAFIA)
+	if(alive_revolt)
+		send_message("<b>Vote for who to kill tonight. The killer will be chosen randomly from voters. The <span class='notice'>Head Revolutionary</span> will convert someone to your cause tonight.</b>",MAFIA_TEAM_REVOLUTION)
 	next_phase_timer = addtimer(CALLBACK(src, .proc/resolve_night),night_phase_period,TIMER_STOPPABLE)
 	SStgui.update_uis(src)
 
@@ -560,7 +572,7 @@
 	return TRUE
 
 /datum/saymode/mafia_revolutionaries
-	key = "v"
+	key = "z"
 
 /datum/saymode/mafia_revolutionaries/handle_message(mob/living/user, message, datum/language/language)
 	for(var/key in GLOB.mafia_games)
