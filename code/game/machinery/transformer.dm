@@ -7,9 +7,9 @@
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	density = FALSE
-	var/transform_dead = 0
-	var/transform_standing = 0
-	var/cooldown_duration = 600 // 1 minute
+	var/transform_dead = TRUE
+	var/transform_standing = FALSE
+	var/cooldown_duration = 5 SECONDS
 	var/cooldown = 0
 	var/cooldown_timer
 	var/robot_cell_charge = 5000
@@ -84,10 +84,6 @@
 
 	playsound(src.loc, 'sound/items/welder.ogg', 50, TRUE)
 	H.emote("scream") // It is painful
-	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
-
-	// Sleep for a couple of ticks to allow the human to see the pain
-	sleep(5)
 
 	use_power(5000) // Use a lot of power.
 	var/mob/living/silicon/robot/R = H.Robotize()
@@ -103,7 +99,6 @@
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/R)
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
-	sleep(30)
 	if(R)
 		R.SetLockdown(0)
 		R.notify_ai(NEW_BORG)

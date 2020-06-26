@@ -7,8 +7,9 @@
 
 /obj/item/borg/stun
 	name = "electrically-charged arm"
+	desc = "An electrically-charged arm capable of frying electronics."
 	icon_state = "elecarm"
-	var/charge_cost = 30
+	var/charge_cost = 300
 
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
@@ -22,15 +23,14 @@
 			return
 
 	user.do_attack_animation(M)
-	M.Paralyze(100)
-	M.apply_effect(EFFECT_STUTTER, 5)
+	M.emp_act(EMP_HEAVY)
 
 	M.visible_message("<span class='danger'>[user] prods [M] with [src]!</span>", \
 					"<span class='userdanger'>[user] prods you with [src]!</span>")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
-	log_combat(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
+	log_combat(user, M, "EMP'd", src, "(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/cyborghug
 	name = "hugging module"
