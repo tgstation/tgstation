@@ -563,7 +563,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	if(M.is_eyes_covered())
 		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "<span class='warning'>You failed failed to stab [M.p_their()] eyes, you need to remove [M.p_their()] eye protection first!</span>")
+		to_chat(user, "<span class='warning'>You failed to stab [M.p_their()] eyes, you need to remove [M.p_their()] eye protection first!</span>")
 		return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
