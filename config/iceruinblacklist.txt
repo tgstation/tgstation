@@ -5,7 +5,7 @@
 
 ##RESPAWN
 #_maps/RandomRuins/AnywhereRuins/golem_ship.dmm
-#_maps/RandomRuins/IceRuins/icemoon_underground_moth_pizza.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_moth_pizza.dmm
 
 ##MEGAFAUNA
 #_maps/RandomRuins/IceRuins/icemoon_surface_mining_site.dmm

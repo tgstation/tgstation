@@ -1,8 +1,7 @@
 "aa" = (/obj/machinery/light{dir = 8},/turf/open/floor/plastic,/area/ruin/unpowered/mothresturant)
 "ab" = (/obj/effect/mob_spawn/human/mothchef,/turf/open/floor/plastic,/area/ruin/unpowered/mothresturant)
-"ac" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/door/poddoor/shutters/preopen{id = "moffuchi"; name = "wildlife prevention shutters"},/turf/open/floor/plating,/area/ruin/unpowered/mothkitchen)
+"ac" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/ruin/unpowered/mothkitchen)
 "ad" = (/turf/closed/wall,/area/ruin/unpowered/mothkitchen)
-"ae" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/door/poddoor/shutters/preopen{id = "moffuchi"; name = "wildlife prevention shutters"},/turf/open/floor/plating,/area/ruin/unpowered/mothresturant)
 "af" = (/obj/machinery/door/airlock/maintenance{name = "Kitchen Maintenance"; req_access_txt = "28"},/turf/open/floor/plastic,/area/ruin/unpowered/mothkitchen)
 "ag" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable,/obj/machinery/door/airlock/maintenance{name = "Maintenance Access"; req_access_txt = "28"},/turf/open/floor/plasteel/freezer,/area/ruin/unpowered/mothresturant)
 "ah" = (/obj/structure/table,/obj/item/sharpener,/turf/open/floor/plastic,/area/ruin/unpowered/mothkitchen)
@@ -72,7 +71,6 @@
 "cs" = (/turf/open/floor/plating/asteroid/snow/icemoon,/area/icemoon/underground/explored)
 "cZ" = (/obj/structure/reagent_dispensers/watertank,/turf/open/floor/plating,/area/ruin/unpowered/mothkitchen)
 "dP" = (/obj/item/mop,/obj/item/caution,/obj/item/reagent_containers/glass/bucket,/obj/item/storage/bag/trash,/turf/open/floor/plating,/area/ruin/unpowered/mothkitchen)
-"et" = (/obj/machinery/button/door{id = "moffuchi"; name = "wildlife prevention button"; pixel_x = 8; pixel_y = -4},/turf/closed/wall,/area/ruin/unpowered/mothresturant)
 "eu" = (/obj/item/vending_refill/cola,/obj/item/vending_refill/coffee{pixel_y = 2; pixel_x = 2},/obj/item/vending_refill/cigarette{pixel_y = 4; pixel_x = 4},/obj/item/chair/plastic,/obj/item/chair/plastic,/obj/item/chair/plastic,/obj/item/chair/plastic,/turf/open/floor/plating,/area/ruin/unpowered/mothkitchen)
 "eN" = (/obj/machinery/space_heater,/turf/open/floor/plating,/area/ruin/unpowered/mothresturant)
 "eQ" = (/obj/machinery/light/small{dir = 1},/obj/machinery/power/port_gen/pacman,/obj/structure/cable,/turf/open/floor/plating,/area/ruin/unpowered/mothresturant)
@@ -85,7 +83,7 @@
 "hM" = (/obj/effect/decal/cleanable/oil,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/turf/open/floor/plating,/area/ruin/unpowered/mothresturant)
 "ir" = (/turf/template_noop,/area/template_noop)
 "iE" = (/obj/machinery/vending/dinnerware{onstation = 0},/turf/open/floor/plastic,/area/ruin/unpowered/mothkitchen)
-"je" = (/obj/structure/table,/obj/item/reagent_containers/food/condiment/enzyme,/turf/open/floor/plastic,/area/ruin/unpowered/mothkitchen)
+"je" = (/obj/structure/table,/obj/item/reagent_containers/food/condiment/enzyme,/obj/item/gps{gpstag = "Greasy Signal"; pixel_x = 5},/turf/open/floor/plastic,/area/ruin/unpowered/mothkitchen)
 "jo" = (/obj/structure/table,/obj/machinery/microwave{pixel_y = 11},/turf/open/floor/plastic,/area/ruin/unpowered/mothkitchen)
 "jt" = (/obj/structure/sink/kitchen{pixel_y = -4},/turf/closed/wall,/area/ruin/unpowered/mothkitchen)
 "kM" = (/obj/machinery/airalarm/unlocked,/turf/closed/wall,/area/ruin/unpowered/mothresturant)
@@ -156,14 +154,14 @@ csacNhmhnfmNnfmNnonyadnXokoCpdbQpwqgqgqgcsir
 csacmgmNqBmhmhnfqFahadrWswbQsGsUtoalqgqgcscs
 csacuYvYwewnwUaVyiyzyDyYzbzzABbQbQANbQbQcscs
 csadadadaibjBeadajadadBjBkbQBVbQamanaobQcscs
-cscsaeFjFFGqbPapaqarasauavawaxayazaAaBaecscs
-ircsaeLSMdMhMpaCaDaEaFaGaFaDaHaIaDaJaxaecscs
-cscsbQetaaGqGzaKaxaLaMaNaOaxaPaxaxaQaRaecscs
+cscsmwFjFFGqbPapaqarasauavawaxayazaAaBmwcscs
+ircsmwLSMdMhMpaCaDaEaFaGaFaDaHaIaDaJaxmwcscs
+cscsbQbQaaGqGzaKaxaLaMaNaOaxaPaxaxaQaRmwcscs
 cscscsbQabUUVXaSaxaTaUaxaUaxaxaWaWYsbQbQcscs
-cscscsbQbQbQbQaXaxaxaxaxaxaYaZbabbaeDJcscsir
-cscscsCSsysybQbcbdbQbebabfbQaeaeaeaecscsirir
-ircscsMXMXMXaebgbhmwbibkblaecscscscscscsirir
-irircscscscsbQbnbobmaeaeaebQcscsoKcsDJiririr
+cscscsbQbQbQbQaXaxaxaxaxaxaYaZbabbmwDJcscsir
+cscscsCSsysybQbcbdbQbebabfbQmwmwmwmwcscsirir
+ircscsMXMXMXmwbgbhmwbibkblmwcscscscscscsirir
+irircscscscsbQbnbobmmwmwmwbQcscsoKcsDJiririr
 irircscscscscsqgqgcscscscscscscsiriririririr
 iriririrircswuqgqgulcscscscsiriririririririr
 "}

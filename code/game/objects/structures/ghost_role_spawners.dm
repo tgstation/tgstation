@@ -313,6 +313,7 @@
 	mask = /obj/item/clothing/mask/breath
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
 	r_pocket = /obj/item/flashlight/glowstick
+
 //Moffuchi's pizza parlor,located in the icemoon's caves, is home to chef Moffuchi and his apprentice. They run their resturant for hungery miners and adventurers, but mostly for cash
 /obj/effect/mob_spawn/human/mothchef
 	name = "locked freezer"
@@ -328,8 +329,8 @@
 	mob_species = /datum/species/moth
 	short_desc = "You are the moon-renowned chef Moffuchi."
 	flavour_text = "Now that you have escaped the freezer you locked yourself in last night, it is time to bring glory \
-	to the Moffuchi name by making pizzas for all to enjoy! Though your resturant has recently been crushed and sunken underground by \
-	a Nanotrasen research facility, optimism leads you to belive the new arrivals may become regulars at your pizza parlor!"
+	to the Moffuchi name by making pizzas for all to enjoy! Though the nearby and newly constructed Nanotrasen research facility \
+	has its own inferior cafeteria, optimism leads you to belive the new arrivals may become regulars at the pizza parlor!"
 	uniform = /obj/item/clothing/under/rank/civilian/chef
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	mask = /obj/item/clothing/mask/fakemoustache/italian
@@ -364,10 +365,10 @@
 	id_job = "Pizzaria Assistant Manager"
 	mob_species = /datum/species/moth
 	short_desc = "You are the apprentice of the great chef Moffuchi."
-	flavour_text = "You have spent years following in chef Moffuchi's footsteps, going as far as to sleep \
-	in one of their freezers at the pizza parlor every night. Chef Moffuchi says it increases your knowlege of the culinary \
-	arts to the point that you're \"Paid in knowlege\"! Though the resturant has recently been crushed and sunken underground by a \
-	Nanotrasen research facility, optimism leads you to belive the new arrivals may become regulars at the pizza parlor!"
+	flavour_text = "You have spent years following in chef Moffuchi's footsteps, going as far as to sleep in \
+	one of their freezers at the pizza parlor every night. Chef Moffuchi says it increases your knowlege of the culinary \
+	arts to the point that you're \"Paid in knowlege\"! Though the nearby and newly constructed Nanotrasen research facility \
+	has its own inferior cafeteria, optimism leads you to belive the new arrivals may become regulars at the pizza parlor!"
 	uniform = /obj/item/clothing/under/suit/waiter
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	l_pocket = /obj/item/seeds/tomato
