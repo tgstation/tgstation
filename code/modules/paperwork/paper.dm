@@ -247,14 +247,14 @@
 
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, params)
-	var/temperature_to_use = I.get_temperature()
-	if(!temperature_to_use)
+	var/ignition_message = I.ignition_effect(src, user)
+	if(!ignition_message)
 		return
 	. = TRUE
-	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
 		user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 							"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
-		if(user.is_holding(I)) //in case it involves TK memes
+		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
 			user.dropItemToGround(I)
 		user.adjust_fire_stacks(1)
 		user.IgniteMob()
@@ -262,9 +262,9 @@
 
 	if(user.is_holding(src)) //no TK shit here.
 		user.dropItemToGround(src)
-	user.visible_message("<span class='danger'>[user] lights [src] ablaze with [I]!</span>", "<span class='danger'>You light [src] on fire!</span>")
+	user.visible_message(ignition_message)
 	add_fingerprint(user)
-	fire_act(temperature_to_use)
+	fire_act(I.get_temperature())
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(burn_paper_product_attackby_check(P, user, params))
