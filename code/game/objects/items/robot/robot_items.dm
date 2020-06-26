@@ -7,7 +7,7 @@
 
 /obj/item/borg/stun
 	name = "electrically-charged arm"
-	desc = "An electrically-charged arm capable of frying electronics."
+	desc = "An electrically-charged arm capable of emitting a targeted EMP."
 	icon_state = "elecarm"
 	var/charge_cost = 300
 
