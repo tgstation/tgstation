@@ -317,7 +317,7 @@
 /obj/effect/mob_spawn/human/mothchef
 	name = "locked freezer"
 	desc = "You can hear fluttering from inside this freezer,<i>is there a moth in there</i>?"
-	mob_name = "pizzaria   manager"
+	mob_name = "pizzaria manager"
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "freezer"
 	roundstart = FALSE
