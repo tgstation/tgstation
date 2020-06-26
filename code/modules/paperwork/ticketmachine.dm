@@ -213,7 +213,7 @@
 	maptext = saved_maptext //For some reason, storage code removes all maptext off objs, this stops its number from being wiped off when taken out of storage.
 
 /obj/item/ticket_machine_ticket/attackby(obj/item/P, mob/living/carbon/human/user, params) //Stolen from papercode
-	if(burn_paper_product_attackby_check(P, user, params))
+	if(burn_paper_product_attackby_check(P, user))
 		return
 
 	return ..()

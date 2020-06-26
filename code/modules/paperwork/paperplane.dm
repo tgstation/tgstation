@@ -77,7 +77,7 @@
 	user.put_in_hands(internal_paper_tmp)
 
 /obj/item/paperplane/attackby(obj/item/P, mob/living/carbon/human/user, params)
-	if(burn_paper_product_attackby_check(P, user, params))
+	if(burn_paper_product_attackby_check(P, user))
 		return
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		to_chat(user, "<span class='warning'>You should unfold [src] before changing it!</span>")

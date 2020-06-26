@@ -1010,7 +1010,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			attack_self(loc)
 
 /obj/item/newspaper/attackby(obj/item/W, mob/living/user, params)
-	if(burn_paper_product_attackby_check(W, user, params))
+	if(burn_paper_product_attackby_check(W, user))
 		return
 
 	if(istype(W, /obj/item/pen))

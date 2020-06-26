@@ -246,12 +246,12 @@
 	ui_interact(user, "main", null, FALSE, null, state)
 
 
-/obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, params)
+/obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
 	var/ignition_message = I.ignition_effect(src, user)
 	if(!ignition_message)
 		return
 	. = TRUE
-	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
+	if(!bypass_clumsy && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
 		user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 							"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
 		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
@@ -267,7 +267,7 @@
 	fire_act(I.get_temperature())
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
-	if(burn_paper_product_attackby_check(P, user, params))
+	if(burn_paper_product_attackby_check(P, user))
 		close_all_ui(user)
 		return
 
@@ -315,9 +315,8 @@
 
 
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
-	..()
-	if(!(resistance_flags & FIRE_PROOF))
-		add_overlay("paper_onfire_overlay")
+	. = ..()
+	if(.)
 		info = "[stars(info)]"
 
 

@@ -114,7 +114,7 @@
 	max_integrity = 50
 
 /obj/item/paperslip/attackby(obj/item/I, mob/living/user, params)
-	if(burn_paper_product_attackby_check(I, user, params))
+	if(burn_paper_product_attackby_check(I, user))
 		return
 	return ..()
 
