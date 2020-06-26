@@ -44,7 +44,7 @@
 	///Phrase said when you accept selling a thing to the NPC.
 	var/itemsellacceptphrase = "Pleasure doing business with you."
 	///Phrase said when the NPC finds an item in the wanted_items list in your hands.
-	var/interestedphrase = "Hey, you've got an item that interests me, I'd like to buy that [sellitem], I'll give you [cost] cash for each one of it, deal?"
+	var/interestedphrase = "Hey, you've got an item that interests me, I'd like to buy it, I'll give you some cash for it, deal?"
 
 /obj/machinery/vending/npc/Initialize()
 	. = ..()
