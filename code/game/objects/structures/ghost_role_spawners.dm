@@ -335,9 +335,10 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 	suit = /obj/item/clothing/suit/toggle/chef
-	l_pocket = /obj/item/seeds/tomato
+	l_pocket = /obj/item/seeds/wheat
 	id = /obj/item/card/id
 	id_access_list = list(28)
+	assignedrole = "restaurant employee"
 
 /obj/effect/mob_spawn/human/mothchef/Destroy()
 	new/obj/structure/closet/crate/freezer(get_turf(src))
@@ -374,6 +375,7 @@
 	l_pocket = /obj/item/seeds/tomato
 	id = /obj/item/card/id
 	id_access_list = list(28)
+	assignedrole = "restaurant employee"
 
 /obj/effect/mob_spawn/human/mothsouschef/Destroy()
 	new/obj/structure/closet/crate/freezer(get_turf(src))
