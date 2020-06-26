@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "eye stabbing returns a normal attack if it fails instead of doing nothing"
