@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "The Nanite Host Scan program can now scan the host for wounds."

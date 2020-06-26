@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed revenant's light overload ability not blowing lights in a square if there was another broken/burnt out/empty light in it."

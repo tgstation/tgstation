@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a scenario where you would be unable to offer someone an item if you already had a pending item offer with someone else standing near you."

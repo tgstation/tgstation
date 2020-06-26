@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - tweak: "Nanotrasen now uses smaller fonts on ID's to show age and account information, requiring a closer look to read"

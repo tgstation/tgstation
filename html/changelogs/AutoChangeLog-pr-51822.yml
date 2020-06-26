@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed bronze golems' gong ability not working if there was a dead mob on screen."
-  - bugfix: "Fixed bone golems' bonechill ability not working if there was any mobs that were undead, resistant to cold, or also golems on screen."

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed showing a piece of paper to a camera not working if there was an AI that had died or has remote access disabled."

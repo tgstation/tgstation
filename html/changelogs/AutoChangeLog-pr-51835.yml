@@ -1,5 +1,0 @@
-author: "WarlockD"
-delete-after: True
-changes: 
-  - rscadd: "Suit cell charge on stat panel"
-  - bugfix: "Suit cell gauge works now"
