@@ -421,10 +421,6 @@
 <br>
 Congratulations! You are now trained for invasive xenobiology research!"}
 
-/obj/item/paper/guides/antag/abductor/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
-
 /obj/item/paper/guides/antag/abductor/AltClick()
 	return //otherwise it would fold into a paperplane.
 
