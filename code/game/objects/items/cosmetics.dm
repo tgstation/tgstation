@@ -106,6 +106,7 @@
 	icon_state = "razor"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
+	sharpness = IS_SHARP
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!</span>")
