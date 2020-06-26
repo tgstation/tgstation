@@ -37,6 +37,14 @@
 						)
 	///List of items able to be sold to the NPC
 	var/list/wanted_items = list(/obj/item/ectoplasm = 100)
+	///Phrase said when NPC finds none of your inhand items in wanted_items.
+	var/itemrejectphrase = "Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk."
+	///Phrase said when you cancel selling a thing to the NPC.
+	var/itemsellcancelphrase = "What a shame, tell me if you changed your mind."
+	///Phrase said when you accept selling a thing to the NPC.
+	var/itemsellacceptphrase = "Pleasure doing business with you."
+	///Phrase said when the NPC finds an item in the wanted_items list in your hands.
+	var/interestedphrase = "Hey, you've got an item that interests me, I'd like to buy that [sellitem], I'll give you [cost] cash for each one of it, deal?"
 
 /obj/machinery/vending/npc/Initialize()
 	. = ..()
@@ -126,7 +134,7 @@
 	var/obj/item/activehanditem = user.get_active_held_item()
 	var/obj/item/inactivehanditem = user.get_inactive_held_item()
 	if(!(sell_item(user, activehanditem)||sell_item(user, inactivehanditem)))
-		say("Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk.")
+		say(itemrejectphrase)
 
 ///Makes the NPC say one picked thing from the lore list variable, can be overriden for fun stuff
 /obj/machinery/vending/npc/proc/deep_lore()
@@ -152,7 +160,7 @@
 			cost = wanted_items[text2path(progressive_type)]
 	if(!cost)
 		return FALSE
-	say("Hey, you've got an item that interests me, I'd like to buy that [sellitem], I'll give you [cost] cash for each one of it, deal?")
+	say(interestedphrase)
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_no")
@@ -162,9 +170,9 @@
 		return TRUE
 	face_atom(user)
 	if(npc_result != "Yes")
-		say("What a shame, tell me if you changed your mind.")
+		say(itemsellcancelphrase)
 		return TRUE
-	say("Pleasure doing business with you.")
+	say(itemsellacceptphrase)
 	playsound(src, vending_sound, 50, TRUE, extrarange = -3)
 	if(istype(sellitem, /obj/item/stack))
 		var/obj/item/stack/stackoverflow = sellitem
