@@ -1010,3 +1010,159 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		jostle_pain_mult = (!isnull(embedding["jostle_pain_mult"]) ? embedding["jostle_pain_mult"] : EMBEDDED_JOSTLE_PAIN_MULTIPLIER),\
 		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT))
 	return TRUE
+
+/// How many different types of mats will be counted in a bite?
+#define MAX_BONUS_MATS_PER_BITE 2 
+
+/* 
+ * On accidental consumption: when you somehow end up eating an item accidentally (currently, this is used for when items are hidden in food like bread or cake)
+ * 
+ * The base proc will check if the item is sharp and has a decent force.
+ * Then, it checks the item's mat datums for the effects it applies afterwards. 
+ * Then, it checks tiny items.
+ * After all that, it returns TRUE if the item is set to be discovered. Otherwise, it returns FALSE.
+ *
+ * This works similarily to /suicide_act: if you want an item to have a unique interaction, go to that item
+ * and give it an /on_accidental_consumption proc override. For a simple example of this, check out the nuke disk.
+ *
+ * Arguments
+ * * M - the mob accidentally consuming the item
+ * * user - the mob feeding M the item - usually, it's the same as M
+ * * source_item - the item that held the item being consumed - bread, cake, etc
+ * * discover_after - if the item will be discovered after being chomped
+ */
+/obj/item/proc/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	/// If source_item is a snack, we can adjust its taste
+	var/obj/item/reagent_containers/food/snacks/store/S = source_item
+	if(!source_item && !istype(S))
+		S = null
+
+	if(get_sharpness() && force >= 5) //if we've got something sharp with a decent force (ie, not plastic)
+		M.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
+		M.losebreath += 2
+		if(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds in their chest, cause a lot of pain
+			M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
+			M.losebreath += 6
+			discover_after = FALSE
+
+		M.emote("scream")
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bit something they shouldn't have!</span>", \
+							"<span class='boldwarning'>OH GOD! Was that a crunch? That didn't feel good at all!!</span>")
+
+		if(S && S.tastes && S.tastes.len) //is that blood in my mouth?
+			S.tastes += "iron"
+			S.tastes["iron"] = 2
+
+	else if(custom_materials && custom_materials.len) //if we've got materials, lets see whats in it
+		/// How many 'bonus' mats have we found? You can only be affected by two 'bonus' material datums by default
+		var/found_mats = 0
+
+		//Bonus mats (plasma, uranium, etc) applies minor effects
+
+		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/plasma)])
+			M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8)) 
+			if(S && S.tastes && S.tastes.len)
+				S.tastes += "bitterness"
+				S.tastes["bitterness"] = 3
+			found_mats++
+
+		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/uranium)])
+			M.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
+			found_mats++
+
+		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/bluespace)])
+			M.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
+			if(S && S.tastes && S.tastes.len)
+				S.tastes += "blue"
+				S.tastes["blue"] = 3 //tastes like... blue
+			found_mats++
+
+		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/bananium)])
+			if(S && S.tastes && S.tastes.len)
+				S.tastes += "banana"
+				S.tastes["banana"] = 3
+			found_mats++
+
+		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/hot_ice)])
+			M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 6)) 
+			if(S && S.tastes && S.tastes.len)
+				S.tastes += "salt"
+				S.tastes["salt"] = 3
+			found_mats++
+
+		//Primary mats (glass, iron, etc) in order of hardness (something with both iron and glass probably won't shatter when you bite into it)
+
+		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/adamantine)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/runite)])
+			M.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
+
+		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/diamond)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/titanium)])
+			M.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+
+		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+			M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5) //oof my tooth
+
+		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/wood)])
+			M.apply_damage(5, BRUTE, BODY_ZONE_HEAD) //oof my tooth
+			if(S && S.tastes && S.tastes.len)
+				S.tastes += "wood chips and sawdust"
+				S.tastes["wood chips and sawdust"] = 3
+
+		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
+			M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
+			//biting glass doesn't mean you swallow the glass, but it DOES leave the shard in there if you keep eating like an idiot
+			/// The glass shard that is spawned into the source item
+			var/obj/item/shard/broken_glass = null
+
+			if(istype(src, /obj/item/reagent_containers)) //if it's a glass reagent container...
+				if(reagents.reagent_list && reagents.reagent_list.len)
+					for(var/P in reagents.reagent_list)
+						if(istype(P, /datum/reagent/toxin/plasma) || istype(P, /datum/reagent/stable_plasma))
+							broken_glass = new /obj/item/shard/plasma(src) //if there's plasma in the beaker, make a plasma glass shard
+							break
+			
+			if(!broken_glass)
+				if(found_mats && custom_materials[SSmaterials.GetMaterialRef(/datum/material/plasma)])
+					broken_glass = new /obj/item/shard/plasma(src) //or if it's plasma glass, make a plasma glass shard
+				else
+					broken_glass = new /obj/item/shard(src) //and if it's normal glass, make a normal shard
+
+			playsound(M, "shatter", 25, TRUE)
+			if(source_item)
+				source_item.contents += broken_glass //puts the glass back into the source item...
+				source_item.contents -= src
+			else
+				broken_glass.on_accidental_consumption(M, user)
+
+			qdel(src)
+
+		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/plastic)])
+			M.adjust_disgust(17) //(33 +  17 = 50) finding metal is pretty disgusting, but finding plastic is always the worst
+		
+		M.adjust_disgust(33)
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something hard.</span>", \
+						"<span class='warning'>Eugh! Did I just bite into something?</span>")
+
+	else if(w_class == WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
+		/// M's chest (for cavity implanting the item)
+		var/obj/item/bodypart/chest/CV = M.get_bodypart(BODY_ZONE_CHEST)
+		if(CV.cavity_item)
+			M.vomit(5, TRUE, distance = 0)
+			forceMove(drop_location())
+			to_chat(M, "<span class='warning'>You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]</span>")
+		else
+			M.transferItemToLoc(src, M, TRUE)
+			M.losebreath += 2
+			CV.cavity_item = src 
+			to_chat(M, "<span class='warning'>You swallow hard. [source_item? "Something small was in \the [source_item]..." : ""]</span>")
+		discover_after = FALSE
+
+	else
+		to_chat(M, "<span class='warning'>[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] </span>")
+
+	//Just in case - can't discover something that doesn't exist
+	if(QDELETED(src))
+		return FALSE
+
+	return discover_after
+
+#undef MAX_BONUS_MATS_PER_BITE

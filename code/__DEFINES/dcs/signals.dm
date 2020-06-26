@@ -612,6 +612,8 @@
 
 ///from base of obj/item/reagent_containers/food/snacks/attack(): (mob/living/eater, mob/feeder)
 #define COMSIG_FOOD_EATEN "food_eaten"
+///from items with edible components, check if you like the food without actually eating it (still applies disgust):  (1, mob/M)
+#define COMSIG_EDIBLE_CHECK_LIKED "check_food_liked"
 
 //Gibs
 

@@ -46,6 +46,26 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
+/* 
+ * On accidental consumption, 'spend' the ammo, and add in some gunpowder
+ */
+/obj/item/ammo_casing/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	if(BB != null)
+		BB = null
+		update_icon()
+		if(source_item && source_item.reagents)
+			source_item.reagents.add_reagent(/datum/reagent/gunpowder, source_item.reagents.total_volume*(2/3))
+
+			var/obj/item/reagent_containers/food/snacks/store/S = source_item
+			if(istype(S))
+				if(S.tastes && S.tastes.len)
+					S.tastes += "salt"
+					S.tastes["salt"] = 3
+
+		M.reagents.add_reagent(/datum/reagent/gunpowder, 3)
+	
+	return ..()
+
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
 	if(!BB)

@@ -126,6 +126,51 @@
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
 	useable = FALSE //You can't use it anymore after eating it you spaztic
 
+/* 
+ * On accidental consumption, cause organ damage and check if they like eating organs
+ */
+/obj/item/organ/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	if(organ_flags & ORGAN_SYNTHETIC) //Future idea: Make synthetic organs special
+		return ..()
+
+	if(organ_flags & ORGAN_FROZEN) //Future idea: Make frozen organs special
+		return TRUE
+
+	applyOrganDamage(25)
+	OnEatFrom(M, user)
+	if(istype(src, /obj/item/organ/brain)) //brain takes some extra damage
+		applyOrganDamage(25)
+		M.adjust_disgust(100) 
+	else if(istype(src, /obj/item/organ/heart)) //heart makes a puddle of blood
+		var/turf/T = get_turf(drop_location())
+		var/obj/effect/decal/cleanable/blood/B = locate() in T 
+		if(!B)
+			B = new(T)
+
+	if(source_item)
+		var/obj/item/reagent_containers/food/snacks/store/S = source_item
+		if(istype(S))
+			if(S.tastes && S.tastes.len)
+				S.tastes += "meat"
+				S.tastes["meat"] = 3
+
+	if(organ_flags & ORGAN_EDIBLE)
+		SEND_SIGNAL(src, COMSIG_EDIBLE_CHECK_LIKED, M)
+		
+	//[lizards without deviant tastes OR voracious people] who also aren't vegetarians wont seem to mind
+	if(((islizard(M) && !M.has_quirk(/datum/quirk/deviant_tastes)) || M.has_quirk(/datum/quirk/voracious)) && !M.has_quirk(/datum/quirk/vegetarian))
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something strange.</span>", \
+						"<span class='warning'>Huh, did I just bite into a [name]?</span>")
+	else 
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something awful!</span>", \
+						"<span class='boldwarning'>Ew!! Did I just bite into \a [name]?!</span>")
+
+	if((damage >= maxHealth) && !istype(src, /obj/item/organ/brain))
+		discover_after = FALSE
+		qdel(src) //oops, all gone 
+		
+	return discover_after
+
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
