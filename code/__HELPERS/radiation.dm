@@ -22,6 +22,22 @@
 			continue
 		processing_list += thing.contents
 
+/*
+** Gets the total amount of radioactive contamination an object has including
+** its contents.
+*/
+/proc/get_rad_contamination(atom/location)
+	var/rad_strength = 0
+	for(var/i in get_rad_contents(A)) // Yes it's intentional that you can't detect radioactive things under rad protection. Gives traitors a way to hide their glowing green rocks.
+		var/atom/thing = i
+		if(!thing)
+			continue
+		var/datum/component/radioactive/radiation = thing.GetComponent(/datum/component/radioactive)
+		if(radiation)
+			rad_strength += radiation.strength
+	return rad_strength
+
+
 /proc/radiation_pulse(atom/source, intensity, range_modifier, log=FALSE, can_contaminate=TRUE)
 	if(!SSradiation.can_fire)
 		return

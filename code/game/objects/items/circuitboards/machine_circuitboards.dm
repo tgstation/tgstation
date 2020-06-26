@@ -1117,6 +1117,16 @@
 	icon_state = "service"
 	build_path = /obj/machinery/rnd/production/techfab/department/service
 
+/obj/item/circuitboard/machine/washing_machine
+	name = "Washing Machine (Machine Board)"
+	icon_state = "service"
+	build_path = /obj/machinery/washing_machine
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/sheet/beaker = 1)
+	needs_anchored = FALSE
+	
 //Supply
 
 /obj/item/circuitboard/machine/mining_equipment_vendor

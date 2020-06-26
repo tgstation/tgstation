@@ -132,20 +132,65 @@ GLOBAL_LIST_INIT(dye_registry, list(
 ))
 
 /obj/machinery/washing_machine
-	name = "washing machine"
+	name = "Washing Machine"
 	desc = "Gets rid of those pesky bloodstains, or your money back!"
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_1_0"
 	density = TRUE
 	state_open = TRUE
-	var/busy = FALSE
+	circuit = /obj/item/circuitboard/machine/washing_machine
+	use_power = IDLE_POWER_USE // we are not using auto processing
+	idle_power_usage = 5
+	active_power_usage = 60
+	power_channel = AREA_USAGE_EQUIP
+	processing_flags = START_PROCESSING_MANUALLY
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+
+
+	var/ticks_end = 0	// this just saves an addTimer call
+	var/ticks_till_power = 0	// this emulates the evey 20 ticks for auto_power_use rule
 	var/bloody_mess = 0
 	var/obj/item/color_source
+
+	// changes under upgraded components
+	var/ticks_till_finished = 200
 	var/max_wash_capacity = 5
+	var/clean_mode = CLEAN_WEAK
 
 /obj/machinery/washing_machine/ComponentInitialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
+
+/obj/machinery/washing_machine/RefreshParts()
+	var/E
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+		E += B.rating
+	var/I
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		I += M.rating
+
+	max_wash_capacity  = initial(max_wash_capacity) * E
+	ticks_till_finished = initial(ticks_till_finished) / I
+	var/IE = I + E
+	if(IE > 7) // all bluespace parts
+		clean_mode = CLEAN_IMPRESSIVE
+	else if(IE > 5)
+		clean_mode = CLEAN_MEDIUM
+	else if(IE > 3)
+		clean_mode = CLEAN_MEDIUM
+	else
+		clean_mode = CLEAN_WEAK
+
+/obj/machinery/washing_machine/default_pry_open(obj/item/I)
+	. = !(state_open || panel_open || is_operational() || locked || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
+	if(.)
+		I.play_tool_sound(src, 50)
+		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
+		open_machine()
+
+/obj/machinery/suit_storage_unit/dump_contents()
+	dropContents()
+	color_source = null
 
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
@@ -163,16 +208,36 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(bloody_mess)
 		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
 		return
-	busy = TRUE
+ 	use_power(active_power_use)
+	if(is_operational())
+		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
+		return
 	update_icon()
-	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
+	ticks_end = ticks_till_finished + world.timeofday
+	ticks_till_power = 0	// its run on first tick
+	use_power = ACTIVE_POWER_USE
+	begin_processing()
 
-	START_PROCESSING(SSfastprocess, src)
+/obj/machinery/washing_machine/ power_change()
+
+/obj/machinery/washing_machine/power_change()
+/obj/machinery/ntnet_relay/process()
+	if(is_operational())
+
 
 /obj/machinery/washing_machine/process()
-	if(!busy)
-		animate(src, transform=matrix(), time=2)
+	if(world.timeofday >= ticks_till_power)
+		// This emulates the machine process evey 20 ticks
+		if(is_operational() && auto_use_power())
+			ticks_till_power = world.timeofday + 20
+		else
+			wash_cycle(FALSE)
+			return PROCESS_KILL // just an early return in case we use the last of the power
+
+	if(world.timeofday >= ticks_end)
+		wash_cycle(TRUE)	// this is async so don't worry about it
 		return PROCESS_KILL
+
 	if(anchored)
 		if(prob(5))
 			var/matrix/M = new
@@ -187,17 +252,37 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		animate(src, transform=M, time=2)
 
 /obj/machinery/washing_machine/proc/clean_blood()
-	if(!busy)
+	if(current_ticks)
 		bloody_mess = FALSE
 		update_icon()
+/*
+** This proc finishes the wash.  It is async so fast proc dosn't have to wait
+** on it finishing.  It washes even the contents so you don't even have to
+** take it out of the backpack!  Just don't put an rcd in there
+**
+*/
+/obj/machinery/washing_machine/proc/wash_cycle(wash_items)
+	set waitfor = FALSE	// this is called from process so we don't want to wait
+	animate(src, transform=matrix(), time=2)
+	ticks_end = 0
+	power_use = IDLE_POWER_USE
+	if(!wash_items)
+		update_icon()
+		return
 
-/obj/machinery/washing_machine/proc/wash_cycle()
-	for(var/X in contents)
-		var/atom/movable/AM = X
-		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-		AM.machine_wash(src)
+	// copied from suit decontamination
+	var/list/things_to_clear = list() //Done this way since using GetAllContents on the machine itself would include circuitry and such.
+	for(var/atom/movable/AM in contents)
+		things_to_clear += AM.GetAllContents()
 
-	busy = FALSE
+	for(var/atom/movable/AM in things_to_clear)
+		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, clean_mode)
+		// contaimation can be removed with soap and water so there:P
+		var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
+		if(contamination)
+			qdel(contamination)
+		AM.machine_wash(src) // mabye somone can give the washing machine some love and change this to a signal
+
 	if(color_source)
 		qdel(color_source)
 		color_source = null
@@ -276,12 +361,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	container_resist(user)
 
 /obj/machinery/washing_machine/container_resist(mob/living/user)
-	if(!busy)
+	if(!current_ticks)
 		add_fingerprint(user)
 		open_machine()
 
 /obj/machinery/washing_machine/update_icon_state()
-	if(busy)
+	if(current_ticks)
 		icon_state = "wm_running_[bloody_mess]"
 	else if(bloody_mess)
 		icon_state = "wm_[state_open]_blood"
@@ -294,8 +379,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(panel_open)
 		. += "wm_panel"
 
+/obj/machinery/washing_machine/on_deconstruction()
+	dump_contents()
+	. = ..()
+
 /obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
-	if(panel_open && !busy && default_unfasten_wrench(user, W))
+	if(panel_open && !current_ticks && default_unfasten_wrench(user, W))
 		return
 
 	if(default_deconstruction_screwdriver(user, null, null, W))
@@ -329,7 +418,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	. = ..()
 	if(.)
 		return
-	if(busy)
+	if(current_ticks)
 		to_chat(user, "<span class='warning'>[src] is busy!</span>")
 		return
 
@@ -349,11 +438,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		state_open = FALSE //close the door
 		update_icon()
 
-/obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(drop_location(), 2)
-	qdel(src)
 
-/obj/machinery/washing_machine/open_machine(drop = 1)
-	..()
+/obj/machinery/washing_machine/open_machine(drop = TRUE)
 	density = TRUE //because machinery/open_machine() sets it to 0
 	color_source = null
+	. = ..()

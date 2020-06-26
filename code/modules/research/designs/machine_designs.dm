@@ -441,6 +441,13 @@
 	build_path = /obj/item/circuitboard/machine/vendor
 	category = list ("Misc. Machinery")
 
+/datum/design/board/washing_machine
+	name = "Washing Machine (Machine Board)"
+	desc = "The circuit board for a washing machine."
+	id = "washing_machine"
+	build_path = /obj/item/circuitboard/machine/washing_machine
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/board/ore_redemption
 	name = "Machine Design (Ore Redemption Board)"

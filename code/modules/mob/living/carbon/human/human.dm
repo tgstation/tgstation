@@ -1099,9 +1099,9 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
-/mob/living/carbon/human/washed(var/atom/washer)
-	. = ..()
-	if(wear_suit)
+/mob/living/carbon/human/washed(var/atom/washer, clean_mode = CLEAN_STRENGTH_BLOOD)
+	. = ..(washer, clean_mode)
+	if(wear_suit && wear_suit.washed(washer))
 		update_inv_wear_suit()
 	else if(w_uniform && w_uniform.washed(washer))
 		update_inv_w_uniform()
@@ -1115,7 +1115,7 @@
 	var/list/obscured = check_obscured_slots()
 
 	if(gloves && !(HIDEGLOVES in obscured) && gloves.washed(washer))
-		SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)  // WHY!?!?
 
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))

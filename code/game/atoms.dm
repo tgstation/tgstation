@@ -924,8 +924,8 @@
 
 
 ///Proc for being washed by a shower
-/atom/proc/washed(var/atom/washer)
-	. = SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+/atom/proc/washed(var/atom/washer, clean_mode = CLEAN_WEAK)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_mode)
 	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 
 	var/datum/component/radioactive/healthy_green_glow = GetComponent(/datum/component/radioactive)
@@ -934,9 +934,9 @@
 	var/strength = healthy_green_glow.strength
 	if(strength <= RAD_BACKGROUND_RADIATION)
 		qdel(healthy_green_glow)
-		return
-	healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)) * 0.2)
-
+	else
+		healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)) * 0.2)
+	return TRUE	// This has to be true for so many updates to work
 
 /**
   * call back when a var is edited on this atom

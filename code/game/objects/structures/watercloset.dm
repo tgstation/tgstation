@@ -355,8 +355,9 @@
 			busy = FALSE
 			return 1
 		busy = FALSE
-		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-		O.acid_level = 0
+		O.washed(src, CLEAN_STRENGTH_BLOOD)
+		O.acid_level = 0	// NOTE: Somone change this to a component, it still dosn't update
+
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)
 		reagents.reaction(O, TOUCH)
