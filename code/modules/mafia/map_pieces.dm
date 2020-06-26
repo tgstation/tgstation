@@ -43,9 +43,22 @@
 /datum/map_template/mafia/syndicate
 	name = "Syndicate Megastation"
 	description = "Yes, it's a very confusing day at the Megastation. Will the syndicate conflict resolution operatives succeed?"
-	suffix = "mafia_syndicate.dmm"
+	suffix = "mafia_syndie.dmm"
 
 /datum/map_template/mafia/lavaland
 	name = "Lavaland Excursion"
-	description = "The station has no idea what's going down on lavaland right now. Should have never unearthed those changelings... and syndicate operatives...?"
+	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors... even a revolution!"
 	suffix = "mafia_lavaland.dmm"
+
+/datum/map_template/mafia/ufo
+	name = "Alien Mothership"
+	description = "The haunted ghost UFO tour has gone south and now it's up to our fine townies and scare seekers to kill the actual real alien changelings..."
+	suffix = "mafia_ufo.dmm"
+
+/*
+
+/datum/map_template/mafia/necropolis
+	name = "Necropolis Showdown"
+	description = "The townies have shown up to try and suss out who truly ruined the art direction of SS13. No hurt feelings intended!"
+	suffix = "mafia_necropolis.dmm"
+*/

@@ -12,6 +12,9 @@
 	var/night_phase_period = 45 SECONDS //mafia talk and pick someone to kill
 	var/victory_lap_period = 20 SECONDS //just waiting around sayin' woop woop
 
+	var/datum/map_template/mafia/current_map
+	var/datum/map_generator/massdelete/map_deleter
+
 	var/list/current_setup_text //Redable list of roles in current game
 
 	var/game_id //Used to sync all parts - signup boards, spawns, night curtains, defaults to "mafia"
@@ -35,20 +38,36 @@
 	. = ..()
 	src.game_id = game_id
 	GLOB.mafia_games[game_id] = src
-	for(var/obj/effect/landmark/mafia/possible_spawn in GLOB.landmarks_list)
-		if(possible_spawn.game_id != game_id)
-			continue
-		if(istype(possible_spawn, /obj/effect/landmark/mafia/town_center))
-			town_center_landmark = possible_spawn
-		else
-			landmarks += possible_spawn
+	map_deleter = new
 
 /datum/mafia_controller/Destroy(force, ...)
 	. = ..()
 	end_game()
 	GLOB.mafia_games[game_id] = null
+	qdel(map_deleter)
 
 /datum/mafia_controller/proc/prepare_game(setup_list,ready_players)
+
+	var/list/possible_maps = subtypesof(/datum/map_template/mafia)
+	var/turf/spawn_area = MAFIA_MAP_START_TURF
+	current_map = pick(possible_maps)
+	current_map = new current_map
+
+	if(!spawn_area)
+		CRASH("No spawn area detected for Mafia!")
+	if(!current_map.load(spawn_area))
+		CRASH("Loading mafia map failed!")
+	map_deleter.defineRegion(MAFIA_MAP_START_TURF, MAFIA_MAP_END_TURF, replace = TRUE) //so we're ready to mass delete when round ends
+
+	if(!landmarks.len)//we grab town center when we grab landmarks, if there is none (the first game signed up for let's grab them post load)
+		for(var/obj/effect/landmark/mafia/possible_spawn in GLOB.landmarks_list)
+			if(possible_spawn.game_id != game_id)
+				continue
+			if(istype(possible_spawn, /obj/effect/landmark/mafia/town_center))
+				town_center_landmark = possible_spawn
+			else
+				landmarks += possible_spawn
+
 	current_setup_text = list()
 	for(var/rtype in setup_list)
 		for(var/i in 1 to setup_list[rtype])
@@ -68,10 +87,10 @@
 		if(team && R.team != team)
 			continue
 		to_chat(R.body,msg)
-	var/team_suffix = team ? "([uppertext(team)])" : ""
+	var/team_suffix = team ? "([uppertext(team)] CHAT)" : ""
 	for(var/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, town_center_landmark)
-		to_chat(M, "MAFIA: [link] [msg] [team_suffix]")
+		to_chat(M, "[link] MAFIA: [msg] [team_suffix]")
 
 /datum/mafia_controller/proc/start_game()
 	create_bodies()
@@ -82,6 +101,7 @@
 	phase = MAFIA_PHASE_DAY
 	if(!check_victory())
 		if(turn == 1)
+			send_message("<span class='notice'><b>The selected map is [current_map.name]!</b></br>[current_map.description]</span>")
 			send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
 			next_phase_timer = addtimer(CALLBACK(src,.proc/check_trial, FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
 		else
@@ -136,6 +156,7 @@
 /datum/mafia_controller/proc/check_victory()
 	var/alive_town = 0
 	var/alive_mafia = 0
+	var/alive_revolution = 0
 	var/list/solos_to_ask = list() //need to ask after because first round is counting team sizes
 	var/list/total_victors = null //if this has someone, they won alone. list because side antags can with with people
 	var/blocked_victory = FALSE
@@ -149,6 +170,8 @@
 					alive_mafia++
 				if(MAFIA_TEAM_TOWN)
 					alive_town++
+				if(MAFIA_TEAM_REVOLUTION)
+					alive_revolution++
 				if(MAFIA_TEAM_SOLO)
 					if(R.solo_counts_as_town)
 						alive_town++
@@ -166,16 +189,23 @@
 	if(length(total_victors))
 		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
 	//solo victories!
+	var/solo_end = FALSE
 	for(var/datum/mafia_role/winner in total_victors)
 		send_message("<span class='big red'>!! [uppertext(winner.name)] VICTORY !!</span>")
+		solo_end = TRUE
+	if(solo_end)
 		start_the_end()
-	if(alive_mafia == 0 && !blocked_victory)
+	if(alive_mafia == 0 && alive_revolution == 0 && !blocked_victory && !alive_revolution)
 		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
-	else if(alive_mafia >= alive_town && !blocked_victory) //guess could change if town nightkill is added
+	else if(alive_mafia >= alive_town + alive_revolution && !blocked_victory && !alive_revolution) //guess could change if town nightkill is added
 		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
+		return TRUE
+	else if(alive_revolution >= alive_town + alive_mafia && !blocked_victory && !alive_revolution)
+		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
+		start_the_end("<span class='big'>!! REVOLUTION VICTORY !!</span>")
 		return TRUE
 
 /datum/mafia_controller/proc/start_the_end(message)
@@ -188,6 +218,9 @@
 	next_phase_timer = addtimer(CALLBACK(src,.proc/end_game),victory_lap_period,TIMER_STOPPABLE)
 
 /datum/mafia_controller/proc/end_game()
+
+	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
+
 	QDEL_LIST(all_roles)
 	turn = 0
 	votes = list()
@@ -210,6 +243,7 @@
 	phase = MAFIA_PHASE_NIGHT
 	send_message("<b>Night [turn] started! Lockdown will end in 45 seconds.</b>")
 	send_message("<b>Vote for who to kill tonight. The killer will be chosen randomly from voters.</b>",MAFIA_TEAM_MAFIA)
+	send_message("<b>Vote for who to kill tonight. The killer will be chosen randomly from voters. The <span class='notice'>Head Revolutionary</span> will convert someone to your cause tonight.</b>",MAFIA_TEAM_REVOLUTION)
 	next_phase_timer = addtimer(CALLBACK(src, .proc/resolve_night),night_phase_period,TIMER_STOPPABLE)
 	SStgui.update_uis(src)
 
@@ -221,13 +255,18 @@
 	if(R)
 		R.kill(src)
 	reset_votes("Mafia")
+	//resolve mafia kill, todo also unsnowflake this
+	var/datum/mafia_role/R2 = get_vote_winner("Revolution")
+	if(R2)
+		R2.kill(src)
+	reset_votes("Revolution")
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_END)
 	toggle_night_curtains(close=FALSE)
 	start_day()
 	SStgui.update_uis(src)
 
-/datum/mafia_controller/proc/vote_for(datum/mafia_role/voter,datum/mafia_role/target,vt)
+/datum/mafia_controller/proc/vote_for(datum/mafia_role/voter,datum/mafia_role/target,vt, teams)
 	if(!votes[vt])
 		votes[vt] = list()
 	var/old_vote = votes[vt][voter]
@@ -235,15 +274,14 @@
 		votes[vt] -= voter
 	else
 		votes[vt][voter] = target
-	if(vt=="Day")
-		if(old_vote && old_vote == target)
-			send_message("<span class='notice'>[voter.body.real_name] retracts their vote for [target.body.real_name]!</span>")
-		else
-			send_message("<span class='notice'>[voter.body.real_name] voted for [target.body.real_name]!</span>")
-			target.body.update_icon() //Update the vote display
-		if(old_vote)
-			var/datum/mafia_role/old = old_vote
-			old.body.update_icon()
+	if(old_vote && old_vote == target)
+		send_message("<span class='notice'>[voter.body.real_name] retracts their vote for [target.body.real_name]!</span>", team = teams)
+	else
+		send_message("<span class='notice'>[voter.body.real_name] voted for [target.body.real_name]!</span>",team = teams)
+	if(!teams)
+		target.body.update_icon() //Update the vote display if it's a public vote
+		var/datum/mafia_role/old = old_vote
+		old.body.update_icon()
 
 /datum/mafia_controller/proc/reset_votes(vt)
 	var/list/bodies_to_update = list()
@@ -331,7 +369,9 @@
 			if(R.game_status == MAFIA_ALIVE && R != user_role)
 				actions += "Vote"
 		if(phase == MAFIA_PHASE_NIGHT && user_role.team == MAFIA_TEAM_MAFIA && R.game_status == MAFIA_ALIVE && R.team != MAFIA_TEAM_MAFIA)
-			actions += "Kill Vote"
+			actions += "Mafia Kill Vote"
+		if(phase == MAFIA_PHASE_NIGHT && user_role.team == MAFIA_TEAM_REVOLUTION && R.game_status == MAFIA_ALIVE && R.team != MAFIA_TEAM_REVOLUTION)
+			actions += "Revolution Kill Vote"
 		if(user_role)
 			for(var/action in user_role.targeted_actions)
 				if(user_role.validate_action_target(src,action,R))
@@ -391,10 +431,15 @@
 					if(phase != MAFIA_PHASE_VOTING)
 						return
 					vote_for(user_role,target,vt="Day")
-				if("Kill Vote")
+				if("Mafia Kill Vote")
 					if(phase != MAFIA_PHASE_NIGHT || user_role.team != MAFIA_TEAM_MAFIA)
 						return
-					vote_for(user_role,target,vt="Mafia")
+					vote_for(user_role,target,"Mafia", MAFIA_TEAM_MAFIA)
+					to_chat(user_role.body,"You will vote for [target.body.real_name] for tonights killing.")
+				if("Revolution Kill Vote")
+					if(phase != MAFIA_PHASE_NIGHT || user_role.team != MAFIA_TEAM_REVOLUTION)
+						return
+					vote_for(user_role,target,"Revolution", MAFIA_TEAM_REVOLUTION)
 					to_chat(user_role.body,"You will vote for [target.body.real_name] for tonights killing.")
 				else
 					if(!user_role.targeted_actions.Find(params["atype"]))
@@ -510,6 +555,19 @@
 		if(!R || R.team != MAFIA_TEAM_MAFIA)
 			continue
 		MF.send_message("<span class='changeling'><b>[R.body.real_name]:</b> [message]</span>",MAFIA_TEAM_MAFIA)
+		return FALSE
+	return TRUE
+
+/datum/saymode/mafia_revolutionaries
+	key = "v"
+
+/datum/saymode/mafia_revolutionaries/handle_message(mob/living/user, message, datum/language/language)
+	for(var/key in GLOB.mafia_games)
+		var/datum/mafia_controller/MF = GLOB.mafia_games[key]
+		var/datum/mafia_role/R = MF.player_role_lookup[user]
+		if(!R || R.team != MAFIA_TEAM_REVOLUTION)
+			continue
+		MF.send_message("<span class='rose'><b>[R.body.real_name]:</b> [message]</span>",MAFIA_TEAM_REVOLUTION)
 		return FALSE
 	return TRUE
 

@@ -41,7 +41,7 @@
 	to_chat(body,"<span class='danger'>You are [name].</span>")
 	to_chat(body,"<span class='danger'>[desc].</span>")
 	switch(team)
-		if(MAFIA_TEAM_MAFIA)
+		if(MAFIA_TEAM_MAFIA, MAFIA_TEAM_REVOLUTION)
 			to_chat(body,"<span class='danger'>You and your co-conspirators win if you outnumber crewmembers.</span>")
 		if(MAFIA_TEAM_TOWN)
 			to_chat(body,"<span class='danger'>You are a crewmember. Find out and lynch the changelings!</span>")
@@ -52,6 +52,9 @@
 /datum/mafia_role/proc/reveal_role(datum/mafia_controller/game, verbose = FALSE)
 	if(verbose && !revealed)
 		game.send_message("<span class='big bold notice'>It is revealed that the true role of [body] [game_status == MAFIA_ALIVE ? "is" : "was"] [name]!</span>")
+	var/list/oldoutfit = body.get_equipped_items()
+	for(var/thing in oldoutfit)
+		qdel(thing)
 	body.equipOutfit(revealed_outfit)
 	revealed = TRUE
 
@@ -120,6 +123,9 @@
 			if(MAFIA_TEAM_MAFIA)
 				team_text = "Mafia"
 				fluff = "an unfeeling, hideous changeling!"
+			if(MAFIA_TEAM_REVOLUTION)
+				team_text = "Revolution"
+				fluff = "a member of a violent revolution!"
 			if(MAFIA_TEAM_SOLO)
 				team_text = "Solo"
 				fluff = "a rogue, with their own objectives..."
@@ -245,9 +251,9 @@
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"roleblock",current_target) & MAFIA_PREVENT_ACTION || game_status != MAFIA_ALIVE) //Got lynched or roleblocked by another lawyer.
 		current_target = null
 	if(current_target)
+		to_chat(current_target.body,"<span class='big red'>YOU HAVE BEEN BLOCKED! YOU CANNOT PERFORM ANY ACTIONS TONIGHT.</span>")
 		RegisterSignal(current_target,COMSIG_MAFIA_CAN_PERFORM_ACTION, .proc/prevent_action)
 		add_note("N[game.turn] - [current_target.body.real_name] - Blocked")
-		to_chat(current_target.body,"<span class='big red'>YOU HAVE BEEN BLOCKED! YOU CANNOT PERFORM ANY ACTIONS TONIGHT.</span>")
 
 /datum/mafia_role/lawyer/proc/release(datum/mafia_controller/game)
 	. = ..()
@@ -277,7 +283,7 @@
 	if(!.)
 		return FALSE
 	if(!can_use)
-		to_chat(body,"<span class='warning'>You've already revealed someone this game!</span>")
+		return FALSE
 	if(game.phase == MAFIA_PHASE_NIGHT)
 		return FALSE
 	if(target.game_status != MAFIA_ALIVE)
@@ -297,13 +303,9 @@
 /datum/mafia_role/psychologist/proc/therapy_reveal(datum/mafia_controller/game)
 	if(current_target)
 		to_chat(body,"<span class='warning'>You have revealed the true nature of the [current_target]!</span>")
-		current_target.reveal_role(verbose = TRUE)
+		current_target.reveal_role(game, verbose = TRUE)
 		current_target = null
 		can_use = FALSE
-
-/datum/mafia_role/psychologist/proc/prevent_action(datum/source)
-	if(game_status == MAFIA_ALIVE) //in case we got killed while revealing
-		return MAFIA_PREVENT_ACTION
 
 ///MAFIA ROLES/// only one until i rework this to allow more, they're the "anti-town" working to kill off townies to win
 
@@ -313,7 +315,19 @@
 	team = MAFIA_TEAM_MAFIA
 	revealed_outfit = /datum/outfit/mafia/changeling
 
+///REVOLUTIONARY ROLES/// only two here, the headrev leads the revolution and town wins if they kill them. otherwise, each night headrev makes revs and revs decide who to kill
 
+/datum/mafia_role/head_revolutionary
+	name = "Head Revolutionary"
+	desc = "You're a head revolutionary. Convert someone each night, changing their job to revolutionary! They will then amongst themselves vote on who to kill for you."
+	team = MAFIA_TEAM_REVOLUTION
+	revealed_outfit = /datum/outfit/mafia/head_revolutionary
+
+/datum/mafia_role/revolutionary
+	name = "Revolutionary"
+	desc = "You're a brainwashed freedom fighter. Use :z to speak to other revolutionaries. VIVA LA REVOLUTION!!"
+	team = MAFIA_TEAM_REVOLUTION
+	revealed_outfit = /datum/outfit/mafia/changeling
 
 ///SOLO ROLES/// they range from anomalous factors not good or evil to deranged killers that try to win alone.
 

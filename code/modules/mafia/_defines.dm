@@ -1,5 +1,6 @@
 #define MAFIA_TEAM_TOWN "town"
 #define MAFIA_TEAM_MAFIA "mafia"
+#define MAFIA_TEAM_REVOLUTION "revolutionary"
 #define MAFIA_TEAM_SOLO "solo"
 
 #define MAFIA_PHASE_SETUP 1
@@ -11,6 +12,12 @@
 
 #define MAFIA_ALIVE 1
 #define MAFIA_DEAD 2
+
+//MAPPING CLEANUP AND PLACEMENT VARS (WE GENERATE AND MASS DELETE THE MAP.)
+//also these have to change if you want multiple games, in the future
+//#define MAFIA_MAP_COORDINATES locate(135,141,1) //also center of the map
+#define MAFIA_MAP_START_TURF locate(124,130,1) //bottom left corner
+#define MAFIA_MAP_END_TURF locate(147,153,1) //top right corner
 
 #define COMSIG_MAFIA_ON_KILL "mafia_onkill"
 #define MAFIA_PREVENT_KILL 1
@@ -26,7 +33,7 @@
 
 //list of ghosts who want to play mafia, every time someone enters the list it checks to see if enough are in
 GLOBAL_LIST_EMPTY(mafia_signup)
-GLOBAL_LIST_EMPTY(mafia_games)//kept incase anyone wants multiple games going
+GLOBAL_LIST_EMPTY(mafia_games)//kept incase anyone wants multiple games going but it will require a lot of work to make this happen
 GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 
 /proc/generate_mafia_setups()
@@ -93,8 +100,9 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 /datum/mafia_setup/twelve_lockdown
 	name = "12 Player Setup Lockdown"
 	roles = list(
-		/datum/mafia_role=4,
-		/datum/mafia_role/chaplain=1,
+		/datum/mafia_role=5,
+		/datum/mafia_role/md=1,
+		/datum/mafia_role/detective=1,
 		/datum/mafia_role/lawyer=2,
 		/datum/mafia_role/mafia=3
 	)
@@ -198,7 +206,9 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/mafia=2
 	)
 */
+
 /*
+
 /datum/mafia_setup/three_test
 	name = "3 Player Test"
 	roles = list(
