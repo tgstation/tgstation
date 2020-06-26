@@ -69,7 +69,7 @@
 	grid = new/list(width,height)
 	for(var/x in 1 to width)
 		for(var/y in 1 to height)
-			grid[x][y] = canvas_color
+			grid[x][y] = lowertext(canvas_color)
 
 /obj/item/canvas/attack_self(mob/user)
 	. = ..()
@@ -113,7 +113,7 @@
 				return FALSE
 			var/x = text2num(params["x"])
 			var/y = text2num(params["y"])
-			grid[x][y] = color
+			grid[x][y] = lowertext(color)
 			used = TRUE
 			update_icon()
 			. = TRUE
@@ -362,7 +362,7 @@
 	var/h = I.Height() + 1
 	for(var/x in 1 to width)
 		for(var/y in 1 to height)
-			grid[x][y] = I.GetPixel(x,h-y)
+			grid[x][y] = lowertext(I.GetPixel(x,h-y))
 
 //Presets for art gallery mapping, for paintings to be shared across stations
 /obj/structure/sign/painting/library
