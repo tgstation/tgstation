@@ -39,8 +39,8 @@
 	suffix = "fountain_hall.dmm"
 
 /datum/map_template/ruin/icemoon/surface/moth_pizza
-	name = "Moffuchis Pizzaria"
-	id = "moth-pizzaria"
+	name = "Moffuchi's Pizzeria"
+	id = "moth-pizzeria"
 	description = "Moon-renowned chef Moffuchi has ran his resturant for years on the surface of the ice moon for the hungry inhabitants within, and for cash!"
 	suffix = "icemoon_surface_moth_pizza.dmm"
 

@@ -11,9 +11,9 @@
 	mood_message = "<span class='nicegreen'>This place reminds me of home.</span>\n"
 
 /area/ruin/unpowered/mothresturant
-	name = "Moffuchis Pizza"
+	name = "Moffuchi's Pizzeria"
 	icon_state = "dk_yellow"
 
 /area/ruin/unpowered/mothkitchen
-	name = "Moffuchis Kitchen"
+	name = "Moffuchi's Kitchen"
 	icon_state = "dk_yellow"

@@ -318,13 +318,13 @@
 /obj/effect/mob_spawn/human/mothchef
 	name = "locked freezer"
 	desc = "You can hear fluttering from inside this freezer,<i>is there a moth in there</i>?"
-	mob_name = "pizzaria manager"
+	mob_name = "pizzeria manager"
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "freezer"
 	roundstart = FALSE
 	death = FALSE
 	random = TRUE
-	id_job = "Pizzaria Manager"
+	id_job = "Pizzeria Manager"
 	id_access = "cook"
 	mob_species = /datum/species/moth
 	short_desc = "You are the moon-renowned chef Moffuchi."
@@ -356,13 +356,13 @@
 /obj/effect/mob_spawn/human/mothsouschef
 	name = "locked freezer"
 	desc = "You can hear fluttering from inside this freezer,<i>is there a moth in there</i>?"
-	mob_name = "pizzaria assistant manager"
+	mob_name = "pizzeria assistant manager"
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "freezer"
 	roundstart = FALSE
 	death = FALSE
 	random = TRUE
-	id_job = "Pizzaria Assistant Manager"
+	id_job = "Pizzeria Assistant Manager"
 	mob_species = /datum/species/moth
 	short_desc = "You are the apprentice of the great chef Moffuchi."
 	flavour_text = "You have spent years following in chef Moffuchi's footsteps, going as far as to sleep in \
