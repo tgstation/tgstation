@@ -472,9 +472,7 @@
 			continue
 		var/datum/bank_account/current_acc = i
 		station_vault += current_acc.account_balance
-		if(!mr_moneybags)
-			mr_moneybags = current_acc
-		if(mr_moneybags.account_balance < current_acc.account_balance)
+		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
 			mr_moneybags = current_acc
 	parts += "<div class='panel stationborder'>Overall, there were [station_vault] credits collected by crew this shift.</div>"
 	log_econ("Roundend credit total: [station_vault] credits.")
