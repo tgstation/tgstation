@@ -78,6 +78,7 @@
 	color = "white"
 	/// What's actually written on the paper.
 	var/info = ""
+	var/show_written_words = TRUE
 
 	/// The (text for the) stamps on the paper.
 	var/list/stamps			/// Positioning for the stamp in tgui
@@ -163,8 +164,8 @@
 
 
 /obj/item/paper/update_icon_state()
-	if(info && (initial(icon_state) == "paper"))
-		icon_state = "paper_words"
+	if(info && show_written_words)
+		icon_state = "[initial(icon_state)]_words"
 
 /obj/item/paper/ui_base_html(html)
 	/// This might change in a future PR
@@ -452,6 +453,7 @@
 	name = "paper scrap"
 	icon_state = "scrap"
 	slot_flags = null
+	show_written_words = FALSE
 
 /obj/item/paper/crumpled/update_icon_state()
 	return
