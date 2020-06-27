@@ -29,7 +29,7 @@
 /obj/item/assembly/signaler/anomaly/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_ANALYZER)
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code].</span>")
-	..()
+	return ..()
 
 //Anomaly cores
 /obj/item/assembly/signaler/anomaly/pyro
@@ -61,4 +61,3 @@
 	desc = "The neutralized core of a vortex anomaly. It won't sit still, as if some invisible force is acting on it. It'd probably be valuable for research."
 	icon_state = "vortex_core"
 	anomaly_type = /obj/effect/anomaly/bhole
-
