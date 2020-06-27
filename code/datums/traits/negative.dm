@@ -593,7 +593,7 @@
 
 /datum/quirk/allergic/on_spawn()
 	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist
-	for(var/i in 0 to 6)
+	for(var/i in 0 to 5)
 		var/chem = pick(chem_list)
 		chem_list -= chem
 		allergies += chem
