@@ -585,7 +585,7 @@
 	desc = "Ever since you were a kid, you've been allergic to certain chemicals..."
 	value = -2
 	gain_text = "<span class='danger'>You feel your immune system shift.</span>"
-	lose_text = "<span class='notice'>You fell your immune system phase back into perfect shape.</span>"
+	lose_text = "<span class='notice'>You feel your immune system phase back into perfect shape.</span>"
 	medical_record_text = "Patient's immune system responds violently to certain chemicals."
 	hardcore_value = 3
 	var/list/allergies = list()
