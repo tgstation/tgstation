@@ -2450,6 +2450,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/ctf)
+"gt" = (
+/obj/effect/landmark/mafia_game_area,
+/turf/open/space/basic,
+/area/space)
 "gu" = (
 /turf/closed/indestructible/splashscreen,
 /area/start)
@@ -49882,7 +49886,7 @@ aa
 aa
 aa
 aa
-aa
+gt
 aa
 aa
 aa

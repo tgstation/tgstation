@@ -62,19 +62,10 @@
 //mafia
 
 /datum/outfit/mafia/changeling
+	name = "Mafia Changeling"
+
 	head = /obj/item/clothing/head/helmet/changeling
 	suit = /obj/item/clothing/suit/armor/changeling
-
-//revolutionary
-
-/datum/outfit/mafia/head_revolutionary
-
-	uniform = /obj/item/clothing/suit/hooded/flashsuit
-	//flash suit uniform
-
-/datum/outfit/mafia/revolutionary
-
-	mask = /obj/item/clothing/mask/gas
 
 //solo
 
@@ -100,5 +91,6 @@
 /datum/outfit/mafia/traitor
 	name = "Mafia Traitor"
 
-	head = /obj/item/clothing/head/helmet/changeling
-	suit = /obj/item/clothing/suit/armor/changeling
+	mask = /obj/item/clothing/mask/gas/syndicate
+	uniform = /obj/item/clothing/under/syndicate/tacticool
+	shoes = /obj/item/clothing/shoes/jackboots

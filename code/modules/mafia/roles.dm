@@ -1,6 +1,7 @@
 /datum/mafia_role
 	var/name = "Assistant"
 	var/desc = "You are a crewmember without any special abilities."
+	var/win_condition = "All Mafia and Solo killing roles are dead."
 	var/team = MAFIA_TEAM_TOWN
 
 	var/player_key
@@ -14,7 +15,7 @@
 	var/list/targeted_actions = list()
 
 	//so mafia have to also kill them to have a majority
-	var/solo_counts_as_town = FALSE//I KNOW IT'S JANK BUT ONLY SET THIS FOR SOLO ANTAGS NOT TOWNIES THEMSELVES THEY'RE AUTO COUNTED
+	var/solo_counts_as_town = FALSE //(don't set this for town)
 
 	var/game_status = MAFIA_ALIVE
 
@@ -41,7 +42,7 @@
 	to_chat(body,"<span class='danger'>You are [name].</span>")
 	to_chat(body,"<span class='danger'>[desc].</span>")
 	switch(team)
-		if(MAFIA_TEAM_MAFIA, MAFIA_TEAM_REVOLUTION)
+		if(MAFIA_TEAM_MAFIA)
 			to_chat(body,"<span class='danger'>You and your co-conspirators win if you outnumber crewmembers.</span>")
 		if(MAFIA_TEAM_TOWN)
 			to_chat(body,"<span class='danger'>You are a crewmember. Find out and lynch the changelings!</span>")
@@ -74,6 +75,27 @@
 
 /datum/mafia_role/proc/block_team_victory(alive_town, alive_mafia) //solo antags can also block team wins.
 	return FALSE
+
+/datum/mafia_role/proc/show_help(clueless)
+	var/list/result = list()
+	var/team_desc = ""
+	var/team_span = ""
+	var/the = TRUE
+	switch(team)
+		if(MAFIA_TEAM_TOWN)
+			team_desc = "Town"
+			team_span = "nicegreen"
+		if(MAFIA_TEAM_MAFIA)
+			team_desc = "Mafia"
+			team_span = "red"
+		if(MAFIA_TEAM_SOLO)
+			team_desc = "Nobody"
+			team_span = "comradio"
+			the = FALSE
+	result += "<span class='notice'>The <span class='bold'>[name]</span> is aligned with [the ? "the " : ""]<span class='[team_span]'>[team_desc]</span></span>"
+	result += "<span class='bold notice'>\"[desc]\"</span>"
+	result += "<span class='notice'>[name] wins when [win_condition]</span>"
+	to_chat(clueless, result.Join("</br>"))
 
 /datum/mafia_role/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, null, force_open)
@@ -123,9 +145,6 @@
 			if(MAFIA_TEAM_MAFIA)
 				team_text = "Mafia"
 				fluff = "an unfeeling, hideous changeling!"
-			if(MAFIA_TEAM_REVOLUTION)
-				team_text = "Revolution"
-				fluff = "a member of a violent revolution!"
 			if(MAFIA_TEAM_SOLO)
 				team_text = "Solo"
 				fluff = "a rogue, with their own objectives..."
@@ -244,7 +263,7 @@
 
 /datum/mafia_role/lawyer/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
-	to_chat(body,"<span class='warning'>You will visit [target.body.real_name] tonight.</span>")
+	to_chat(body,"<span class='warning'>You will block [target.body.real_name] tonight.</span>")
 	current_target = target
 
 /datum/mafia_role/lawyer/proc/try_to_roleblock(datum/mafia_controller/game)
@@ -291,7 +310,7 @@
 
 /datum/mafia_role/psychologist/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
-	to_chat(body,"<span class='warning'>You will visit [target.body.real_name] tonight.</span>")
+	to_chat(body,"<span class='warning'>You will reveal [target.body.real_name] tonight.</span>")
 	current_target = target
 
 /datum/mafia_role/psychologist/proc/try_to_visit(datum/mafia_controller/game)
@@ -315,28 +334,15 @@
 	team = MAFIA_TEAM_MAFIA
 	revealed_outfit = /datum/outfit/mafia/changeling
 
-///REVOLUTIONARY ROLES/// only two here, the headrev leads the revolution and town wins if they kill them. otherwise, each night headrev makes revs and revs decide who to kill
-
-/datum/mafia_role/head_revolutionary
-	name = "Head Revolutionary"
-	desc = "You're a head revolutionary. Convert someone each night, changing their job to revolutionary! They will then amongst themselves vote on who to kill for you."
-	team = MAFIA_TEAM_REVOLUTION
-	revealed_outfit = /datum/outfit/mafia/head_revolutionary
-
-/datum/mafia_role/revolutionary
-	name = "Revolutionary"
-	desc = "You're a brainwashed freedom fighter. Use :z to speak to other revolutionaries. VIVA LA REVOLUTION!!"
-	team = MAFIA_TEAM_REVOLUTION
-	revealed_outfit = /datum/outfit/mafia/changeling
-
 ///SOLO ROLES/// they range from anomalous factors not good or evil to deranged killers that try to win alone.
 
 /datum/mafia_role/traitor
 	name = "Traitor"
 	desc = "You're a solo traitor. You are immune to night kills, can kill every night and you win by outnumbering everyone else."
+	win_condition = "killing everyone."
 	team = MAFIA_TEAM_SOLO
 	targeted_actions = list("Night Kill")
-	revealed_outfit = /datum/outfit/syndicate_empty // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
+	revealed_outfit = /datum/outfit/mafia/traitor
 
 	var/datum/mafia_role/current_victim
 
@@ -380,6 +386,7 @@
 /datum/mafia_role/fugitive
 	name = "Fugitive"
 	desc = "You're on the run. You can become immune to night kills exactly twice, and you win by surviving to the end of the game with anyone."
+	win_condition = "surviving to the end of the game, with anyone"
 	team = MAFIA_TEAM_SOLO
 	actions = list("Self Preservation")
 	var/charges = 2
@@ -433,6 +440,7 @@
 /datum/mafia_role/obsessed
 	name = "Obsessed"
 	desc = "You're completely lost in your own mind. You win by lynching your obsession before you get killed in this mess. Obsession assigned on the first night!"
+	win_condition = "lynching their obsession"
 	team = MAFIA_TEAM_SOLO
 	revealed_outfit = /datum/outfit/mafia/obsessed // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
 

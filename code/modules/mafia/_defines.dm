@@ -1,6 +1,5 @@
 #define MAFIA_TEAM_TOWN "town"
 #define MAFIA_TEAM_MAFIA "mafia"
-#define MAFIA_TEAM_REVOLUTION "revolutionary"
 #define MAFIA_TEAM_SOLO "solo"
 
 #define MAFIA_PHASE_SETUP 1
@@ -12,12 +11,6 @@
 
 #define MAFIA_ALIVE 1
 #define MAFIA_DEAD 2
-
-//MAPPING CLEANUP AND PLACEMENT VARS (WE GENERATE AND MASS DELETE THE MAP.)
-//also these have to change if you want multiple games, in the future
-//#define MAFIA_MAP_COORDINATES locate(135,141,1) //also center of the map
-#define MAFIA_MAP_START_TURF locate(124,130,1) //bottom left corner
-#define MAFIA_MAP_END_TURF locate(147,153,1) //top right corner
 
 #define COMSIG_MAFIA_ON_KILL "mafia_onkill"
 #define MAFIA_PREVENT_KILL 1
@@ -108,7 +101,7 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 	)
 
 /datum/mafia_setup/twelve_rip
-	name = "12 Player Setup rip"
+	name = "12 Player Setup RIP"
 	roles = list(
 		/datum/mafia_role=8,
 		/datum/mafia_role/traitor=1,

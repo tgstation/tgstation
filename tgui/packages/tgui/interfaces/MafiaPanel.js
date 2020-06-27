@@ -10,7 +10,7 @@ export const MafiaPanel = (props, context) => {
     players,
     actions,
     phase,
-    role_info,
+    roleinfo,
     admin_controls,
     judgement_phase,
     timeleft,
@@ -19,7 +19,7 @@ export const MafiaPanel = (props, context) => {
     <Window resizable>
       <Window.Content>
         <Section title={phase}>
-          {!!role_info && (
+          {!!roleinfo && (
             <Table>
               <Table.Row>
                 <Table.Cell>
@@ -28,21 +28,14 @@ export const MafiaPanel = (props, context) => {
               </Table.Row>
               <Table.Row>
                 <Table.Cell bold>
-                  You are a {role_info.role}
+                  You are a {roleinfo.role}
                 </Table.Cell>
               </Table.Row>
               <Table.Row bold>
                 <Table.Cell>
-                  {role_info.desc}
+                  {roleinfo.desc}
                 </Table.Cell>
               </Table.Row>
-              {!!role_info.action_log && role_info.action_log.map(log_line => (
-                <Table.Row key={log_line}>
-                  <Table.Cell>
-                    {role_info.action_log}
-                  </Table.Cell>
-                </Table.Row>
-              ))}
             </Table>
           )}
         </Section>
@@ -61,17 +54,13 @@ export const MafiaPanel = (props, context) => {
           <Section
             title="ADMIN CONTROLS"
             backgroundColor="red">
-            THESE ARE DEBUG, THEY WILL BREAK THE GAME, DO NOT TOUCH
-            <Flex.Item>
-              <Button
-                onClick={() => act("next_phase")}>Next Phase
-              </Button>
-            </Flex.Item>
-            <FlexItem>
-              <Button
-                onClick={() => act("new_game")}>New Game
-              </Button>
-            </FlexItem>
+            THESE ARE DEBUG, THEY WILL BREAK THE GAME, DO NOT TOUCH <br />
+            <Button
+              onClick={() => act("next_phase")}>Next Phase
+            </Button>
+            <Button
+              onClick={() => act("new_game")}>New Game
+            </Button>
           </Section>
         )}
         <Section title="Players">
@@ -102,38 +91,58 @@ export const MafiaPanel = (props, context) => {
         </Section>
         {!!judgement_phase && (
           <Section title="JUDGEMENT">
-            Use these buttons to vote the accused innocent or guilty!
-            <Fragment>
-              <Flex.Item>
-                <Button
-                  onClick={() => act("vote_innocent")}>INNOCENT!
-                </Button>
-              </Flex.Item>
-              <FlexItem>
-                <Button
-                  onClick={() => act("vote_guilty")}>GUILTY!
-                </Button>
-              </FlexItem>
-            </Fragment>
+            <Flex justify="space-around">
+              <Button
+                icon="smile-beam"
+                color="green"
+                onClick={() => act("vote_innocent")}>INNOCENT!
+              </Button>
+              Use these buttons to vote the accused innocent or guilty!
+              <Button
+                icon="angry"
+                color="red"
+                onClick={() => act("vote_guilty")}>GUILTY!
+              </Button>
+            </Flex>
           </Section>
         )}
-        <Section title="Roles">
-          <Button
-            icon="arrow-left"
-            color="green"
-            disabled="true"
-            content="Role Lookup (COMING SOON!)"
-            onClick={() => act('mf_role_lookup')} />
-          <Table>
-            {!!all_roles && all_roles.map(r => (
-              <Table.Row key={r}>
-                <Table.Cell bold>
-                  {r}
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table>
-        </Section>
+        <Flex mt={1}>
+          <Flex.Item grow={1} basis={0}>
+            <Section
+              title="Roles">
+              <Table>
+                {!!all_roles && all_roles.map(r => (
+                  <Table.Row key={r}>
+                    <Table.Cell bold>
+                      <Flex justify="space-between">
+                        {r}
+                        <Button
+                          content="?"
+                          onClick={() => act("mf_lookup", { atype: r })}
+                        />
+                      </Flex>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table>
+            </Section>
+          </Flex.Item>
+          <Flex.Item grow={2} basis={0}>
+            <Section
+              title="Notes">
+              <Table>
+                {!!roleinfo.action_log && roleinfo.action_log.map(log_line => (
+                  <Table.Row key={log_line}>
+                    <Table.Cell>
+                      {log_line}
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table>
+            </Section>
+          </Flex.Item>
+        </Flex>
+
       </Window.Content>
     </Window>
   );

@@ -1,3 +1,7 @@
+/obj/effect/landmark/mafia_game_area //locations where mafia will be loaded by the datum
+	name = "Mafia Area Spawn"
+	var/game_id = "mafia"
+
 /obj/effect/landmark/mafia
 	name = "Mafia Player Spawn"
 	var/game_id = "mafia"
