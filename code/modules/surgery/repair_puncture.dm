@@ -4,10 +4,10 @@
 #define REALIGN_INNARDS 1
 #define WELD_VEINS		2
 
-///// Debride burnt flesh
+///// Repair puncture wounds
 /datum/surgery/repair_puncture
 	name = "Repair puncture"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/repair_innards, /datum/surgery_step/seal_veins, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/repair_innards, /datum/surgery_step/seal_veins, /datum/surgery_step/close) // repeat between steps 2 and 3 until healed
 	target_mobtypes = list(/mob/living/carbon)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
@@ -22,7 +22,7 @@
 
 //SURGERY STEPS
 
-///// Debride
+///// realign the blood vessels so we can reweld them
 /datum/surgery_step/repair_innards
 	name = "realign blood vessels"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCALPEL = 85, TOOL_WIRECUTTER = 40)
@@ -59,12 +59,12 @@
 
 /datum/surgery_step/repair_innards/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
 	..()
-	display_results(user, target, "<span class='notice'>You carve away some of the healthy flesh from [target]'s [parse_zone(target_zone)].</span>",
-		"<span class='notice'>[user] carves away some of the healthy flesh from [target]'s [parse_zone(target_zone)] with [tool]!</span>",
-		"<span class='notice'>[user] carves away some of the healthy flesh from  [target]'s [parse_zone(target_zone)]!</span>")
-	surgery.operated_bodypart.receive_damage(brute=rand(4,8), sharpness=SHARP_EDGED)
+	display_results(user, target, "<span class='notice'>You jerk apart some of the blood vessels in [target]'s [parse_zone(target_zone)].</span>",
+		"<span class='notice'>[user] jerks apart some of the blood vessels in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
+		"<span class='notice'>[user] jerk apart some of the blood vessels in [target]'s [parse_zone(target_zone)]!</span>")
+	surgery.operated_bodypart.receive_damage(brute=rand(4,8), sharpness=SHARP_EDGED, wound_bonus = 10)
 
-///// Dressing burns
+///// Sealing the vessels back together
 /datum/surgery_step/seal_veins
 	name = "weld veins" // if your doctor says they're going to weld your blood vessels back together, you're either A) on SS13, or B) in grave mortal peril
 	implements = list(TOOL_CAUTERY = 100, /obj/item/gun/energy/laser = 90, TOOL_WELDER = 70, /obj/item = 30)
@@ -100,7 +100,7 @@
 		else
 			to_chat(user, "<span class='green'>You've repaired all the internal damage in [target]'s [parse_zone(target_zone)]!</span>")
 	else
-		to_chat(user, "<span class='warning'>[target] has no burns there!</span>")
+		to_chat(user, "<span class='warning'>[target] has no puncture there!</span>")
 	return ..()
 
 /datum/surgery_step/seal_veins/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)

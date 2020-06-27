@@ -75,8 +75,8 @@
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 10
-	wound_bonus = 0
+	damage = 7.5
+	wound_bonus = 10
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubbershot pellet"

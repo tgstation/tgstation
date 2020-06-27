@@ -4,7 +4,7 @@
 		return TRUE
 
 //Dismember a limb
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE)
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/C = owner
@@ -17,7 +17,8 @@
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
 	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
-	//C.visible_message("<span class='danger'><B>[C]'s [src.name] is violently dismembered!</B></span>")
+	if(!silent)
+		C.visible_message("<span class='danger'><B>[C]'s [src.name] is violently dismembered!</B></span>")
 	C.emote("scream")
 	playsound(get_turf(C), 'sound/effects/dismember.ogg', 80, TRUE)
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
@@ -34,6 +35,7 @@
 		burn()
 		return TRUE
 	add_mob_blood(C)
+	C.bleed(rand(20, 40))
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -199,16 +201,9 @@
 	if(!prob(base_chance))
 		return
 
-	var/datum/wound/dismembering
-	switch(wounding_type)
-		if(WOUND_BLUNT)
-			dismembering = new /datum/wound/blunt/loss
-		if(WOUND_SLASH)
-			dismembering = new /datum/wound/slash/loss
-		if(WOUND_PIERCE)
-			dismembering = new /datum/wound/pierce/loss
+	var/datum/wound/loss/dismembering = new
+	dismembering.apply_dismember(src, wounding_type)
 
-	dismembering.apply_wound(src)
 	return TRUE
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
@@ -470,7 +465,7 @@
 			qdel(L)
 			return FALSE
 		var/datum/scar/S = new
-		var/datum/wound/slash/loss/phantom_loss = new // stolen valor, really
+		var/datum/wound/loss/phantom_loss = new // stolen valor, really
 		S.generate(L, phantom_loss)
 		QDEL_NULL(phantom_loss)
 		return TRUE

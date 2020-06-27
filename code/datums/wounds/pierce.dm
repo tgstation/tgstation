@@ -7,10 +7,10 @@
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
 	wound_type = WOUND_LIST_PIERCE
-	treatable_by = list(/obj/item/stack/medical/suture, /obj/item/stack/medical/gauze)
-	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
+	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tool = TOOL_CAUTERY
 	base_treat_time = 3 SECONDS
+	accepts_gauze = TRUE
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
@@ -55,6 +55,11 @@
 /datum/wound/pierce/handle_process()
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
+	if(victim.bodytemperature < (BODYTEMP_NORMAL -  10))
+		blood_flow -= 0.2
+		if(prob(5))
+			to_chat(victim, "<span class='notice'>You feel the [lowertext(name)] in your [limb.name] firming up from the cold!</span>")
+
 	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
 		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulant))
@@ -70,6 +75,8 @@
 /datum/wound/pierce/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/suture))
 		suture(I, user)
+	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature() > 300)
+		tool_cauterize(I, user)
 
 /datum/wound/pierce/on_xadone(power)
 	. = ..()
@@ -84,7 +91,7 @@
 	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 	user.visible_message("<span class='green'>[user] stitches up some of the bleeding on [victim].</span>", "<span class='green'>You stitch up some of the bleeding on [user == victim ? "yourself" : "[victim]"].</span>")
-	var/blood_sutured = I.stop_bleeding / self_penalty_mult
+	var/blood_sutured = I.stop_bleeding / self_penalty_mult * 0.5
 	blood_flow -= blood_sutured
 	limb.heal_damage(I.heal_brute, I.heal_burn)
 
@@ -93,10 +100,28 @@
 	else
 		to_chat(user, "<span class='green'>You successfully close the hole in [user == victim ? "your" : "[victim]'s"] [limb.name].</span>")
 
+/// If someone is using either a cautery tool or something with heat to cauterize this pierce
+/datum/wound/pierce/proc/tool_cauterize(obj/item/I, mob/user)
+	var/self_penalty_mult = (user == victim ? 1.5 : 1)
+	user.visible_message("<span class='danger'>[user] begins cauterizing [victim]'s [limb.name] with [I]...</span>", "<span class='danger'>You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
+	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER) || 1
+	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
+		return
+
+	user.visible_message("<span class='green'>[user] cauterizes some of the bleeding on [victim].</span>", "<span class='green'>You cauterize some of the bleeding on [victim].</span>")
+	limb.receive_damage(burn = 2 + severity, wound_bonus = CANT_WOUND)
+	if(prob(30))
+		victim.emote("scream")
+	var/blood_cauterized = (0.6 / self_penalty_mult) * 0.5
+	blood_flow -= blood_cauterized
+
+	if(blood_flow > 0)
+		try_treating(I, user)
+
 /datum/wound/pierce/moderate
 	name = "Minor Breakage"
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
-	treat_text = "Treat afffected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // lol shove your bruised arm out into space, ss13 logic
+	treat_text = "Treat affected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // lol shove your bruised arm out into space, ss13 logic
 	examine_desc = "has a small, circular hole, gently bleeding"
 	occur_text = "spurts out a thin stream of blood"
 	sound_effect = 'sound/effects/blood1.ogg'
@@ -105,14 +130,14 @@
 	gauzed_clot_rate = 0.8
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
-	threshold_minimum = 40
+	threshold_minimum = 30
 	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scarring_descriptions = list("a small, faded bruise", "a small twist of reformed skin", "a thumb-sized puncture scar")
 
 /datum/wound/pierce/severe
 	name = "Open Puncture"
-	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and organ damage."
+	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and reduced limb stability."
 	treat_text = "Close sources of internal bleeding, then repair punctures in skin."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
@@ -122,7 +147,7 @@
 	gauzed_clot_rate = 0.6
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
-	threshold_minimum = 65
+	threshold_minimum = 50
 	threshold_penalty = 25
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scarring_descriptions = list("an ink-splat shaped pocket of scar tissue", "a long-faded puncture wound", "a tumbling puncture hole with evidence of faded stitching")
@@ -130,7 +155,7 @@
 /datum/wound/pierce/critical
 	name = "Ruptured Cavity"
 	desc = "Patient's internal tissue and circulatory system is shredded, causing significant internal bleeding and damage to internal organs."
-	treat_text = "Surgical stabilization of damaged innards, followed by patching open holes in skin."
+	treat_text = "Surgical repair of puncture wound, followed by supervised resanguination."
 	examine_desc = "is ripped clear through, barely held together by exposed bone"
 	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/blood3.ogg'

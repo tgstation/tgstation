@@ -121,10 +121,6 @@
 			qdel(src)
 			return
 
-	if(severity == WOUND_SEVERITY_LOSS)
-		apply_dismember(L, silent, old_wound, smited)
-		return
-
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
 	for(var/i in L.wounds)
@@ -166,19 +162,6 @@
 	if(!demoted)
 		wound_injury(old_wound)
 		second_wind()
-
-/datum/wound/proc/apply_dismember(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
-	if(!L.can_dismember())
-		qdel(src)
-		return
-
-	var/mob/living/carbon/victim = L.owner
-	var/msg = "<b><span class='danger'>[victim]'s [L.name] [occur_text]!</span></b>"
-
-	victim.visible_message(msg, "<span class='userdanger'>Your [L.name] [occur_text]!</span>")
-
-	L.dismember()
-	qdel(src)
 
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
@@ -229,6 +212,8 @@
 			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_SEVERE)
 		if(WOUND_SEVERITY_CRITICAL)
 			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_CRITICAL)
+		if(WOUND_SEVERITY_LOSS)
+			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_LOSS)
 
 /**
   * try_treating() is an intercept run from [/mob/living/carbon/attackby()] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.

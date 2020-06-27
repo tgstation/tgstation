@@ -18,6 +18,7 @@
 #define WOUND_DETERMINATION_MODERATE	1
 #define WOUND_DETERMINATION_SEVERE		2.5
 #define WOUND_DETERMINATION_CRITICAL	5
+#define WOUND_DETERMINATION_LOSS		7.5
 
 #define WOUND_DETERMINATION_MAX			10 // the max amount of determination you can have
 
@@ -26,7 +27,7 @@
 
 // list in order of highest severity to lowest
 #define WOUND_LIST_BLUNT		list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate)
-#define WOUND_LIST_SLASH		list(/datum/wound/slash/loss, /datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate)
+#define WOUND_LIST_SLASH		list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate)
 #define WOUND_LIST_PIERCE		list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate)
 #define WOUND_LIST_BURN		list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate)
 

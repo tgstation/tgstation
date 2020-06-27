@@ -19,7 +19,7 @@
 	ricochet_chance = 50
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
-	wound_bonus = -25
+	wound_bonus = -30
 	bare_wound_bonus = 10
 	embedding = list(embed_chance=15, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=10)
 
@@ -54,7 +54,7 @@
 	ricochets_max = 0
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
-	bare_wound_bonus = 15
+	bare_wound_bonus = 20
 	embedding = list(embed_chance=75, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 	wound_falloff_tile = -5
 	embed_falloff_tile = -15
