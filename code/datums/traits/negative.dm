@@ -581,28 +581,36 @@
 	hardcore_value = 9
 
 /datum/quirk/allergic
-	name = "Extreme Allergy"
-	desc = "Ever since you were a kid you always were allergic to certain medicals..."
+	name = "Extreme Medicine Allergy"
+	desc = "Ever since you were a kid you always were allergic to certain chemicals..."
 	value = -2
 	gain_text = "<span class='danger'>You feel your immune system shift.</span>"
 	lose_text = "<span class='notice'>You fell your immune system phase back into perfect shape.</span>"
-	medical_record_text = "Patient's immune system responds violently to certain medication."
+	medical_record_text = "Patient's immune system responds violently to certain chemicals."
 	hardcore_value = 3
-	var/list/med_allergies = list()
+	var/list/allergies = list()
 
 /datum/quirk/allergic/on_spawn()
+	var/list/chem_list = subtypesof(/datum/reagent/medicine)- /datum/reagent/medicine/c2
 	for(var/i in 0 to 5)
-		var/datum/reagent/chem = pick(typesof(/datum/reagent/medicine)+typesof(/datum/reagent/consumable))
-		med_allergies += chem
-		to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [chem.name], make sure not to consume any of it!</span>")
-	. = ..()
+		var/chem = pick(chem_list)
+		chem_list -= chem
+		allergies += chem
+
+/datum/quirk/allergic/post_add()
+	var/display = ""
+	for(var/C in allergies)
+		var/datum/reagent/chemical = C
+		display += initial(chemical.name) + ", "
+	name = "Extreme " + display +"Allergies"
+	to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [display]make sure not to consume any of it!</span>")
 
 /datum/quirk/allergic/on_process()
 	. = ..()
 	if(!iscarbon(quirk_holder))
 		return
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
-	for(var/M in med_allergies)
+	for(var/M in allergies)
 		var/datum/reagent/med = M
 		if(carbon_quirk_holder.reagents.has_reagent(med) && !carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 			carbon_quirk_holder.adjustToxLoss(5)
