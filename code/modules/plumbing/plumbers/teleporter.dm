@@ -1,7 +1,7 @@
 ///A bluespace input pipe for plumbing
 /obj/machinery/plumbing/sender
 	name = "chemical beacon"
-	desc = "A bluespace anchor for chemicals. Does not require power."
+	desc = "A bluespace anchor for chemicals. Does not require power. Use a multitool linked to a Chemical Recipient on this machine to start teleporting reagents."
 	icon_state = "beacon"
 
 	density = FALSE

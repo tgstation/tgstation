@@ -797,7 +797,7 @@ RLD
 	max_matter = 100
 	matter_divisor = 20
 
-//The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
+///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
