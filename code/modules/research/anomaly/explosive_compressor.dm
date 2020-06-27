@@ -40,15 +40,15 @@
 
 /obj/machinery/research/explosive_compressor/CtrlClick(mob/living/user)
 	. = ..()
-	if(istype(user) && user.Adjacent(src) && (user.mobility_flags & MOBILITY_USE))
-		if(!inserted_core)
-			to_chat(user, "<span class='warning'>There is no core inserted.</span>")
-			return
-		else
-			inserted_core.forceMove(get_turf(user))
-			to_chat(user, "<span class='notice'>You remove [inserted_core] from [src].</span>")
-			user.put_in_hands(inserted_core)
-			inserted_core = null
+	if(!istype(user) || !user.Adjacent(src) || !(user.mobility_flags & MOBILITY_USE))
+		return
+	if(!inserted_core)
+		to_chat(user, "<span class='warning'>There is no core inserted.</span>")
+		return
+	inserted_core.forceMove(get_turf(user))
+	to_chat(user, "<span class='notice'>You remove [inserted_core] from [src].</span>")
+	user.put_in_hands(inserted_core)
+	inserted_core = null
 
 /**
   * Says (no, literally) the data of required explosive power for a certain anomaly type.
