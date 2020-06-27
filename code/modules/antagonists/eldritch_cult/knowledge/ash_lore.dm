@@ -27,7 +27,7 @@
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/ashen_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	. = FALSE
+	. = ..()
 	if(!iscarbon(target))
 		return
 
