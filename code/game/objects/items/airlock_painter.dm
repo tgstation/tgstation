@@ -87,7 +87,7 @@
 		// make some colorful reagent, and apply it to the lungs
 		L.create_reagents(10)
 		L.reagents.add_reagent(/datum/reagent/colorful_reagent, 10)
-		L.reagents.reaction(L, TOUCH, 1)
+		L.reagents.expose(L, TOUCH, 1)
 
 		// TODO maybe add some colorful vomit?
 
@@ -100,7 +100,7 @@
 	else if(can_use(user) && !L)
 		user.visible_message("<span class='suicide'>[user] is spraying toner on [user.p_them()]self from [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
 		user.reagents.add_reagent(/datum/reagent/colorful_reagent, 1)
-		user.reagents.reaction(user, TOUCH, 1)
+		user.reagents.expose(user, TOUCH, 1)
 		return TOXLOSS
 
 	else

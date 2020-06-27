@@ -382,6 +382,7 @@
 				L.transferItemToLoc(M, src)
 			else
 				M.forceMove(src)
+	parts_list.Cut()
 
 ///Hook for multiz???
 /atom/proc/update_multiz(prune_on_fail = FALSE)
@@ -434,6 +435,26 @@
 /// Is this atom drainable of reagents
 /atom/proc/is_drainable()
 	return reagents && (reagents.flags & DRAINABLE)
+
+/** Handles exposing this atom to a list of reagents.
+  *
+  * Sends COMSIG_ATOM_EXPOSE_REAGENTS
+  * Calls expose_atom() for every reagent in the reagent list.
+  *
+  * Arguments:
+  * - [reagents][/list]: The list of reagents the atom is being exposed to.
+  * - [source][/datum/reagents]: The reagent holder the reagents are being sourced from.
+  * - method: How the atom is being exposed to the reagents.
+  * - volume_modifier: Volume multiplier.
+  * - show_message: Whether to display anything to mobs when they are exposed.
+  */
+/atom/proc/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
+	if((. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, method, volume_modifier, show_message)) & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	for(var/reagent in reagents)
+		var/datum/reagent/R = reagent
+		. |= R.expose_atom(src, reagents[R])
 
 /// Are you allowed to drop this atom
 /atom/proc/AllowDrop()

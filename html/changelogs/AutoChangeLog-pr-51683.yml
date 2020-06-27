@@ -1,0 +1,4 @@
+author: "KathyRyals"
+delete-after: True
+changes: 
+  - rscdel: "The Xray mutation can no longer be obtained via combining radioactive and thermal eyes."

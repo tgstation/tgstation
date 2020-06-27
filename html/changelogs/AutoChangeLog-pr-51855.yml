@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - server: "TGS4 channel tags will now use ',' as a delimiter to indicate multiple tags."

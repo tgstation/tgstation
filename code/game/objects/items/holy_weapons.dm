@@ -318,7 +318,7 @@
 	block_chance = 30
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -343,7 +343,7 @@
 	name = "sacred chainsaw sword"
 	desc = "Suffer not a heretic to live."
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	attack_verb = list("sawed", "tore", "lacerated", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //slower than a real saw
@@ -406,7 +406,7 @@
 	force = 4.13
 	throwforce = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 
 /obj/item/nullrod/scythe
 	icon_state = "scythe1"
@@ -501,7 +501,7 @@
 	chaplain_spawnable = FALSE
 	force = 30
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	attack_verb = list("sawed", "tore", "lacerated", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5 //faster than normal saw
@@ -527,7 +527,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT
 	sharpness = IS_SHARP
-	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	attack_verb = list("sawed", "tore", "lacerated", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 2 //slower than a real saw
@@ -545,7 +545,7 @@
 	desc = "Used for absolutely hilarious sacrifices."
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = IS_SHARP
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 
 /obj/item/nullrod/pride_hammer
 	icon_state = "pride"
@@ -664,7 +664,7 @@
 	sharpness = IS_SHARP
 	slot_flags = null
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)

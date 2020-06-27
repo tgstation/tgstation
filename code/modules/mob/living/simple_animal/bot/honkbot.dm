@@ -193,7 +193,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	if(spam_flag == 0)
 		if(ishuman(C))
 			C.stuttering = 20
-			C.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
+			var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+			if (ears && !HAS_TRAIT_FROM(C, TRAIT_DEAF, CLOTHING_TRAIT))
+				ears.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
 			C.Jitter(50)
 			C.Paralyze(60)
 			var/mob/living/carbon/human/H = C

@@ -1,0 +1,11 @@
+on: [pull_request]
+
+jobs:
+  docker_build:
+    runs-on: ubuntu-latest
+    name: Build Artifacts Docker Image
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        run: docker build . -f Dockerfile

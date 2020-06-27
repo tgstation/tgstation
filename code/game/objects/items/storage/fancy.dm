@@ -135,17 +135,21 @@
 	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
-	var/candy = FALSE //for cigarette overlay
 	custom_price = 75
 	age_restricted = TRUE
+	///for cigarette overlay
+	var/candy = FALSE
+	/// Does this cigarette packet come with a coupon attached?
 	var/spawn_coupon = TRUE
+	/// For VV'ing, set this to true if you want to force the coupon to give an omen
+	var/rigged_omen = FALSE
 
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len == 0 && spawn_coupon)
 		to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
 		var/obj/item/coupon/attached_coupon = new
 		user.put_in_hands(attached_coupon)
-		attached_coupon.generate()
+		attached_coupon.generate(rigged_omen)
 		attached_coupon = null
 		spawn_coupon = FALSE
 		name = "discarded cigarette packet"

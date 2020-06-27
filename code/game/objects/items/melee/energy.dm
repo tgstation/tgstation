@@ -78,7 +78,7 @@
 	w_class_on = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 	armour_penetration = 100
-	attack_verb_off = list("attacked", "chopped", "cleaved", "torn", "cut")
+	attack_verb_off = list("attacked", "chopped", "cleaved", "tore", "lacerated", "cut")
 	attack_verb_on = list()
 	light_color = "#40ceff"
 

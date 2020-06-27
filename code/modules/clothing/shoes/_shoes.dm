@@ -94,7 +94,7 @@
 		restore_offsets(user)
 	. = ..()
 
-/obj/item/clothing/shoes/update_clothes_damaged_state()
+/obj/item/clothing/shoes/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc

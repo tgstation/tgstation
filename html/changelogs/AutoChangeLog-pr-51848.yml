@@ -1,0 +1,4 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - tweak: "Mansus grasp now wont proc on things it shouldnt proc on, tl;dr you wont loose your charges by missclicking on a tile."

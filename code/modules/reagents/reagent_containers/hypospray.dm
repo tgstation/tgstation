@@ -40,7 +40,7 @@
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.reaction(M, INJECT, fraction)
+		reagents.expose(M, INJECT, fraction)
 
 		if(M.reagents)
 			var/trans = 0

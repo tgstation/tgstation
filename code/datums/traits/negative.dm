@@ -104,7 +104,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/heirloom_type
 
-	if(is_species(H, /datum/species/moth) && prob(50))
+	if(ismoth(H) && prob(50))
 		heirloom_type = /obj/item/flashlight/lantern/heirloom_moth
 	else
 		switch(quirk_holder.mind.assigned_role)

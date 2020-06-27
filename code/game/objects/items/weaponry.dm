@@ -43,7 +43,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 
 /obj/item/sord/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so shitty.</span>", \
@@ -63,7 +63,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
 	max_integrity = 200
@@ -217,7 +217,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 10
 	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
 	max_integrity = 200
@@ -351,7 +351,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = 23
 		icon_state = "switchblade_ext"
-		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+		attack_verb = list("slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		sharpness = IS_SHARP
 	else
@@ -467,7 +467,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 0
 	throw_speed = 0
 	sharpness = IS_SHARP
-	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	attack_verb = list("sawed", "tore", "lacerated", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
