@@ -582,7 +582,7 @@
 
 /datum/quirk/allergic
 	name = "Extreme Medicine Allergy"
-	desc = "Ever since you were a kid you always were allergic to certain chemicals..."
+	desc = "Ever since you were a kid, you've been allergic to certain chemicals..."
 	value = -2
 	gain_text = "<span class='danger'>You feel your immune system shift.</span>"
 	lose_text = "<span class='notice'>You fell your immune system phase back into perfect shape.</span>"
@@ -615,14 +615,15 @@
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 	for(var/M in allergies)
 		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(M)
-		if(instantiated_med)
-			//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
-			if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
-				instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
-				return //intentionally stops the entire proc so we avoid the organ damage after the loop
-			instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
-			carbon_quirk_holder.adjustToxLoss(3)
-			carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine,5)
-			if(prob(10))
-				carbon_quirk_holder.vomit()
-				carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
+		if(!instantiated_med)
+			continue
+		//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
+		if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
+			return //intentionally stops the entire proc so we avoid the organ damage after the loop
+		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
+		carbon_quirk_holder.adjustToxLoss(3)
+		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine,5)
+		if(prob(10))
+			carbon_quirk_holder.vomit()
+			carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
