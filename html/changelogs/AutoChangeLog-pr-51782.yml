@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - rscadd: "Added new heretic blade sprites! One for the Ashen Blade, Rusted Blade and Flesh Blade"
+  - rscadd: "The blades have some descriptions now."
+  - bugfix: "Fixed some infiltrator toolbox sprites (hopefully)."
+  - tweak: "Some eldritch items have had their descriptions and text altered to be a bit more legible and flavourful."
