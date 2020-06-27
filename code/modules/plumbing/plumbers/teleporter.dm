@@ -45,10 +45,8 @@
 
 ///Transfer reagents and display a flashing icon
 /obj/machinery/plumbing/sender/proc/teleport_chemicals(obj/machinery/plumbing/receiver/R, amount)
-	flick_overlay(image(initial(icon_state) + "_flash", src), GLOB.clients, 6)
+	flick(initial(icon_state) + "_flash", src)
 	reagents.trans_to(R, amount, round_robin = TRUE)
-
-
 
 ///A bluespace output pipe for plumbing. Supports multiple recipients. Must be constructed with a circuit board
 /obj/machinery/plumbing/receiver
@@ -94,7 +92,7 @@
 
 		S.teleport_chemicals(src, pull_amount)
 
-		flick_overlay(image(initial(icon_state) + "_flash", src), GLOB.clients, 8)
+		flick(initial(icon_state) + "_flash", src)
 
 		next_index++
 
