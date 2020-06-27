@@ -45,7 +45,7 @@
 
 ///Transfer reagents and display a flashing icon
 /obj/machinery/plumbing/sender/proc/teleport_chemicals(obj/machinery/plumbing/receiver/R, amount)
-	flick_overlay(initial(icon_state) + "_flash", GLOB.clients, 6)
+	flick_overlay(image(initial(icon_state) + "_flash", this), GLOB.clients, 6)
 	reagents.trans_to(R, amount, round_robin = TRUE)
 
 
@@ -93,7 +93,8 @@
 			return
 
 		S.teleport_chemicals(src, pull_amount)
-		flick_overlay(initial(icon_state) + "_flash", GLOB.clients, 8)
+
+		flick_overlay(image(initial(icon_state) + "_flash", this), GLOB.clients, 8)
 
 		next_index++
 
