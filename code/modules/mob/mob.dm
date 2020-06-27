@@ -39,8 +39,8 @@
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
 	ghostize()
-	..()
-	return QDEL_HINT_HARDDEL
+	return ..()
+
 
 /**
   * Intialize a mob
