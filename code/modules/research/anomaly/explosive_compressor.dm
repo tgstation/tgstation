@@ -91,7 +91,8 @@
 			return
 		inserted_core = I
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-	else if(istype(I, /obj/item/transfer_valve))
+		return
+	if(istype(I, /obj/item/transfer_valve))
 		// If they don't have a bomb core inserted, don't let them insert this. If they do, insert and do implosion.
 		if(!inserted_core)
 			to_chat(user, "<span class='warning'>There is no core inserted in [src]. What would be the point of detonating an implosion without a core?</span>")
