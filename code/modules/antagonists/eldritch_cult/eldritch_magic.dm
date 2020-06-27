@@ -48,7 +48,7 @@
 	catchphrase = "R'CH T'H TR'TH"
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	var/use_charge = FALSE
+
 	if(!proximity_flag || target == user)
 		return
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
@@ -60,6 +60,7 @@
 	var/datum/mind/M = user.mind
 	var/datum/antagonist/heretic/cultie = M.has_antag_datum(/datum/antagonist/heretic)
 
+	var/use_charge = FALSE
 	if(iscarbon(target))
 		use_charge = TRUE
 		var/mob/living/carbon/C = target

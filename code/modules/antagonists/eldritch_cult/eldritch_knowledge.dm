@@ -97,7 +97,7 @@
   * Gives addtional effects to mansus grasp spell
   */
 /datum/eldritch_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	return
+	return FALSE
 
 
 /**
