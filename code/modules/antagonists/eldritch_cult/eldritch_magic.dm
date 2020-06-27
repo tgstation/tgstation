@@ -497,8 +497,9 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	for(var/mob/living/carbon/target in view(7,user))
-		if(target.stat != DEAD && target.on_fire)
-			//This is essentially a death mark, use this to finish your opponent quicker.
+		if(target.stat == DEAD || !target.on_fire)
+			continue
+		//This is essentially a death mark, use this to finish your opponent quicker.
 			if(target.InCritical())
 				target.death()
 			target.adjustFireLoss(20)
@@ -509,5 +510,4 @@
 			human_user.adjustStaminaLoss(-10)
 			human_user.adjustToxLoss(-10)
 			human_user.adjustOxyLoss(-10)
-
 
