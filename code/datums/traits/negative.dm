@@ -603,6 +603,7 @@
 		var/datum/reagent/chemical = C
 		display += initial(chemical.name) + ", "
 	name = "Extreme " + display +"Allergies"
+	quirk_holder.add_memory("You are extremely allergic to : [display]")
 	to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [display]make sure not to consume any of it!</span>")
 
 /datum/quirk/allergic/on_process()
