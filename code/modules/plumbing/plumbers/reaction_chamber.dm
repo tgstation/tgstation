@@ -8,6 +8,7 @@
 	reagent_flags = TRANSPARENT | NO_REACT
 	ui_x = 250
 	ui_y = 225
+
 	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
