@@ -40,15 +40,15 @@
 
 /obj/machinery/research/explosive_compressor/CtrlClick(mob/living/user)
 	. = ..()
-	if(istype(user) && user.Adjacent(src) && (user.mobility_flags & MOBILITY_USE))
-		if(!inserted_core)
-			to_chat(user, "<span class='warning'>There is no core inserted.</span>")
-			return
-		else
-			inserted_core.forceMove(get_turf(user))
-			to_chat(user, "<span class='notice'>You remove [inserted_core] from [src].</span>")
-			user.put_in_hands(inserted_core)
-			inserted_core = null
+	if(!istype(user) || !user.Adjacent(src) || !(user.mobility_flags & MOBILITY_USE))
+		return
+	if(!inserted_core)
+		to_chat(user, "<span class='warning'>There is no core inserted.</span>")
+		return
+	inserted_core.forceMove(get_turf(user))
+	to_chat(user, "<span class='notice'>You remove [inserted_core] from [src].</span>")
+	user.put_in_hands(inserted_core)
+	inserted_core = null
 
 /**
   * Says (no, literally) the data of required explosive power for a certain anomaly type.
@@ -91,14 +91,15 @@
 			return
 		inserted_core = I
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-	else if(istype(I, /obj/item/transfer_valve))
+		return
+	if(istype(I, /obj/item/transfer_valve))
 		// If they don't have a bomb core inserted, don't let them insert this. If they do, insert and do implosion.
 		if(!inserted_core)
 			to_chat(user, "<span class='warning'>There is no core inserted in [src]. What would be the point of detonating an implosion without a core?</span>")
 			return
-		var/obj/item/transfer_valve/V = I
-		if(!V.ready())
-			to_chat(user, "<span class='warning'>[V] is incomplete.</span>")
+		var/obj/item/transfer_valve/valve = I
+		if(!valve.ready())
+			to_chat(user, "<span class='warning'>[valve] is incomplete.</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand.</span>")
