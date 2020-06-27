@@ -96,9 +96,9 @@
 		if(!inserted_core)
 			to_chat(user, "<span class='warning'>There is no core inserted in [src]. What would be the point of detonating an implosion without a core?</span>")
 			return
-		var/obj/item/transfer_valve/V = I
-		if(!V.ready())
-			to_chat(user, "<span class='warning'>[V] is incomplete.</span>")
+		var/obj/item/transfer_valve/valve = I
+		if(!valve.ready())
+			to_chat(user, "<span class='warning'>[valve] is incomplete.</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand.</span>")
