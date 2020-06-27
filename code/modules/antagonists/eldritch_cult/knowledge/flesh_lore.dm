@@ -75,7 +75,7 @@
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/flesh_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	. = FALSE
+	. = ..()
 	if(!ishuman(target) || target == user)
 		return
 	var/mob/living/carbon/human/human_target = target
