@@ -503,6 +503,7 @@
 				target.death()
 			target.adjustFireLoss(20)
 			new /obj/effect/temp_visual/eldritch_smoke(target.drop_location())
+			human_user.ExtinguishMob()
 			human_user.adjustBruteLoss(-10)
 			human_user.adjustFireLoss(-10)
 			human_user.adjustStaminaLoss(-10)
