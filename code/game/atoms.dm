@@ -99,6 +99,20 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	///Icon-smoothing behavior.
+	var/smooth = SMOOTH_FALSE
+	///Smoothing variable
+	var/top_left_corner
+	///Smoothing variable
+	var/top_right_corner
+	///Smoothing variable
+	var/bottom_left_corner
+	///Smoothing variable
+	var/bottom_right_corner
+	///Type path list this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
+	var/list/canSmoothWith = null
+
+
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
@@ -236,6 +250,9 @@
 
 	targeted_by = null
 	QDEL_NULL(light)
+
+	if(smooth & SMOOTH_QUEUED)
+		SSicon_smooth.remove_from_queues(src)
 
 	return ..()
 
@@ -974,7 +991,7 @@
 		flags_1 |= ADMIN_SPAWNED_1
 	. = ..()
 	switch(var_name)
-		if(NAMEOF(src, color))
+		if("color")
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
 
 /**
@@ -1289,15 +1306,13 @@
   * * base_roll- Base wounding ability of an attack is a random number from 1 to (dealt_damage ** WOUND_DAMAGE_EXPONENT). This is the number that was rolled in there, before mods
   */
 /proc/log_wound(atom/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
-	if(QDELETED(victim) || !suffered_wound)
-		return
-	var/message = "has suffered: [suffered_wound][suffered_wound.limb ? " to [suffered_wound.limb.name]" : null]"// maybe indicate if it's a promote/demote?
+	var/message = "has suffered: [suffered_wound] to [suffered_wound.limb.name]" // maybe indicate if it's a promote/demote?
 
 	if(dealt_damage)
 		message += " | Damage: [dealt_damage]"
 		// The base roll is useful since it can show how lucky someone got with the given attack. For example, dealing a cut
 		if(base_roll)
-			message += " (rolled [base_roll]/[dealt_damage ** WOUND_DAMAGE_EXPONENT])"
+			message += "(rolled [base_roll]/[dealt_damage ** WOUND_DAMAGE_EXPONENT])"
 
 	if(dealt_wound_bonus)
 		message += " | WB: [dealt_wound_bonus]"
@@ -1322,12 +1337,6 @@
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
-
-/obj/item/update_filters()
-	. = ..()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])

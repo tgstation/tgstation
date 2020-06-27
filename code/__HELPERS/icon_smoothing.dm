@@ -45,14 +45,6 @@
 #define DEFAULT_UNDERLAY_ICON 			'icons/turf/floors.dmi'
 #define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
 
-/atom/var/smooth = SMOOTH_FALSE
-/atom/var/top_left_corner
-/atom/var/top_right_corner
-/atom/var/bottom_left_corner
-/atom/var/bottom_right_corner
-/atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-/atom/movable/var/can_be_unanchored = FALSE
-/turf/var/list/fixed_underlay = null
 
 /proc/calculate_adjacencies(atom/A)
 	if(!A.loc)
@@ -385,12 +377,10 @@
 
 //SSicon_smooth
 /proc/queue_smooth(atom/A)
-	if(!A.smooth || A.smooth & SMOOTH_QUEUED)
+	if(!A.smooth)
 		return
 
-	SSicon_smooth.smooth_queue += A
-	SSicon_smooth.can_fire = 1
-	A.smooth |= SMOOTH_QUEUED
+	SSicon_smooth.add_to_queue(A)
 
 
 //Example smooth wall
