@@ -7,17 +7,16 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	var/source
-
 	var/hl3_release_date //the half-life measured in ticks
 	var/strength
 	var/can_contaminate
+	var/glow = 0
 
 /datum/component/radioactive/Initialize(_strength=0, _source, _half_life=RAD_HALF_LIFE, _can_contaminate=TRUE)
 	strength = _strength
 	source = _source
 	hl3_release_date = _half_life
 	can_contaminate = _can_contaminate
-
 	if(istype(parent, /atom))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/rad_examine)
 		if(istype(parent, /obj/item))
@@ -25,27 +24,39 @@
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
 	else
 		return COMPONENT_INCOMPATIBLE
-
 	if(strength > RAD_MINIMUM_CONTAMINATION)
 		SSradiation.warn(src)
-
+	//Let's make er glow
+	var/atom/master = parent
+	master.filters += filter(type="outline", color = "#39ff1470", size = 2)
+	glow = master.filters.len
+	addtimer(CALLBACK(src, .proc/glow_loop, master), rand(1,19))//Things should look uneven
 	START_PROCESSING(SSradiation, src)
 
 /datum/component/radioactive/Destroy()
 	STOP_PROCESSING(SSradiation, src)
+	var/atom/master = parent
+	if(glow)
+		master.filters -= master.filters[glow]
+		glow = 0
 	return ..()
 
 /datum/component/radioactive/process()
 	if(!prob(50))
 		return
 	radiation_pulse(parent, strength, RAD_DISTANCE_COEFFICIENT*2, FALSE, can_contaminate)
-
 	if(!hl3_release_date)
 		return
 	strength -= strength / hl3_release_date
 	if(strength <= RAD_BACKGROUND_RADIATION)
 		qdel(src)
 		return PROCESS_KILL
+
+/datum/component/radioactive/proc/glow_loop(atom/master)
+	if(!glow)
+		return
+	animate(master.filters[glow], alpha = 190, time = 10, loop = -1)
+	animate(alpha = 70, time = 10)
 
 /datum/component/radioactive/InheritComponent(datum/component/C, i_am_original, _strength, _source, _half_life, _can_contaminate)
 	if(!i_am_original)
