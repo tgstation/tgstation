@@ -621,8 +621,7 @@
 				instantiated_med.metabolizing = FALSE
 				return
 			carbon_quirk_holder.adjustToxLoss(5)
-			if(prob(20))
-				carbon_quirk_holder.vomit()
 			if(prob(10))
+				carbon_quirk_holder.vomit()
 				carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
 
