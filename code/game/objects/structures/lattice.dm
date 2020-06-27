@@ -28,8 +28,10 @@
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
 	for(var/obj/structure/lattice/LAT in loc)
-		if(LAT != src)
-			QDEL_IN(LAT, 0)
+		if(LAT == src)
+			continue
+		stack_trace("multiple lattices found in ([loc.x], [loc.y], [loc.z])")
+		return INITIALIZE_HINT_QDEL
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
