@@ -161,6 +161,7 @@
 	if(!cost)
 		return FALSE
 	say(interestedphrase)
+	to_chat(user, "<span class='notice'>You will receive [cost] credits for each one of [sellitem].</span>")
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_no")
