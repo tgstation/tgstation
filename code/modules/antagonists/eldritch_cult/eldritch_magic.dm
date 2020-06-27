@@ -48,27 +48,33 @@
 	catchphrase = "R'CH T'H TR'TH"
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
+
+	if(!proximity_flag || target == user)
 		return
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
 			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
-			return
+			return ..()
 	var/datum/mind/M = user.mind
 	var/datum/antagonist/heretic/cultie = M.has_antag_datum(/datum/antagonist/heretic)
 
+	var/use_charge = FALSE
 	if(iscarbon(target))
+		use_charge = TRUE
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(10)
 		C.AdjustKnockdown(5 SECONDS)
 		C.adjustStaminaLoss(80)
 	var/list/knowledge = cultie.get_all_knowledge()
+
 	for(var/X in knowledge)
 		var/datum/eldritch_knowledge/EK = knowledge[X]
-		EK.on_mansus_grasp(target, user, proximity_flag, click_parameters)
-	return ..()
+		if(EK.on_mansus_grasp(target, user, proximity_flag, click_parameters))
+			use_charge = TRUE
+	if(use_charge)
+		return ..()
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"

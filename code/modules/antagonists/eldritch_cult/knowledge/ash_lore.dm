@@ -34,6 +34,7 @@
 	var/mob/living/carbon/C = target
 	var/datum/status_effect/eldritch/E = C.has_status_effect(/datum/status_effect/eldritch/rust) || C.has_status_effect(/datum/status_effect/eldritch/ash) || C.has_status_effect(/datum/status_effect/eldritch/flesh)
 	if(E)
+		. = TRUE
 		E.on_effect()
 		for(var/X in user.mind.spell_list)
 			if(!istype(X,/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp))
@@ -42,6 +43,7 @@
 			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.75),MG.charge_max) // refunds 75% of charge.
 	var/atom/throw_target = get_edge_target_turf(C, user.dir)
 	if(!C.anchored)
+		. = TRUE
 		C.throw_at(throw_target, rand(4,8), 14, user)
 	return
 

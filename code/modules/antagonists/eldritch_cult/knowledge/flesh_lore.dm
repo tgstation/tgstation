@@ -81,6 +81,7 @@
 	var/mob/living/carbon/human/human_target = target
 	var/datum/status_effect/eldritch/eldritch_effect = human_target.has_status_effect(/datum/status_effect/eldritch/rust) || human_target.has_status_effect(/datum/status_effect/eldritch/ash) || human_target.has_status_effect(/datum/status_effect/eldritch/flesh)
 	if(eldritch_effect)
+		. = TRUE
 		eldritch_effect.on_effect()
 		if(iscarbon(target))
 			var/mob/living/carbon/carbon_target = target
@@ -107,7 +108,8 @@
 
 	LAZYADD(spooky_scaries, human_target)
 	log_game("[key_name_admin(human_target)] has become a ghoul, their master is [user.real_name]")
-
+	//we change it to true only after we know they passed all the checks
+	. = TRUE
 	RegisterSignal(human_target,COMSIG_MOB_DEATH,.proc/remove_ghoul)
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
 	human_target.setMaxHealth(25)
