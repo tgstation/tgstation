@@ -589,10 +589,11 @@
 	medical_record_text = "Patient's immune system responds violently to certain chemicals."
 	hardcore_value = 3
 	var/list/allergies = list()
+	var/list/blacklist = list(/datum/reagent/medicine/c2,/datum/reagent/medicine/epinephrine,/datum/reagent/medicine/adminordrazine,/datum/reagent/medicine/omnizine/godblood)
 
 /datum/quirk/allergic/on_spawn()
-	var/list/chem_list = subtypesof(/datum/reagent/medicine)- /datum/reagent/medicine/c2 - /datum/reagent/medicine/epinephrine
-	for(var/i in 0 to 10)
+	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist
+	for(var/i in 0 to 6)
 		var/chem = pick(chem_list)
 		chem_list -= chem
 		allergies += chem
@@ -604,7 +605,7 @@
 		display += initial(chemical.name) + ", "
 	name = "Extreme " + display +"Allergies"
 	medical_record_text = "Patient's immune system responds violently to [display]"
-	quirk_holder.add_memory("You are extremely allergic to : [display]")
+	quirk_holder?.mind.store_memory("You are allergic to [display]")
 	to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [display]make sure not to consume any of it!</span>")
 
 /datum/quirk/allergic/on_process()
@@ -613,14 +614,15 @@
 		return
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 	for(var/M in allergies)
-		var/datum/reagent/med = M
-		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(med)
+		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(M)
 		if(instantiated_med)
 			//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
 			if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
-				instantiated_med.metabolizing = FALSE
+				instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
 				return
-			carbon_quirk_holder.adjustToxLoss(5)
+			instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
+			carbon_quirk_holder.adjustToxLoss(3)
+			carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine,5)
 			if(prob(10))
 				carbon_quirk_holder.vomit()
 				carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)

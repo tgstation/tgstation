@@ -36,3 +36,5 @@
 //used by chem masters and pill presses
 #define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
 #define RANDOM_PILL_STYLE 22 //Dont change this one though
+
+#define ALLERGIC_REMOVAL_SKIP "Allergy"
