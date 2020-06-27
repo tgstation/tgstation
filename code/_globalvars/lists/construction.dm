@@ -13,5 +13,6 @@ GLOBAL_LIST_INIT(plumbing_constructables, list(
 	/obj/machinery/plumbing/liquid_pump = 35,
 	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/splitter = 15
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/sender = 20
 ))

@@ -1,9 +1,12 @@
-//A bluespace input pipe for plumbing
+///A bluespace input pipe for plumbing
 /obj/machinery/plumbing/sender
 	name = "chemical beacon"
 	desc = "A bluespace anchor for chemicals. Does not require power."
-	icon_state = "disposal"
+	icon_state = "beacon"
 
+	density = FALSE
+
+	///whoever we teleport our chems to
 	var/obj/machinery/plumbing/receiver/target = null
 
 /obj/machinery/plumbing/sender/Initialize(mapload, bolt)
@@ -20,23 +23,47 @@
 		to_chat(user, "<span class='warning'>Invalid buffer.</span>")
 		return
 
-	target = M.buffer
-	target.senders += src
+	if(target)
+		lose_teleport_target()
+
+	set_teleport_target(M.buffer)
+
 	to_chat(user, "<span class='green'>You succesfully link [src] to the [M.buffer].</span>")
 	return TRUE
 
+///Lose our previous target and make our previous target lose us. Seperate proc because I feel like I'll need this again
+/obj/machinery/plumbing/sender/proc/lose_teleport_target()
+	target.senders.Remove(src)
+	target = null
+	icon_state = initial(icon_state)
 
-//A bluespace output pipe for plumbing. Supports multiple recipients. Must be constructed with a circuit board
+///Set a receiving plumbing object
+/obj/machinery/plumbing/sender/proc/set_teleport_target(new_target)
+	target = new_target
+	target.senders.Add(src)
+	icon_state = initial(icon_state) + "_idle"
+
+///Transfer reagents and display a flashing icon
+/obj/machinery/plumbing/sender/proc/teleport_chemicals(obj/machinery/plumbing/receiver/R, amount)
+	flick_overlay(initial(icon_state) + "_flash", GLOB.clients, 6)
+	reagents.trans_to(R, amount, round_robin = TRUE)
+
+
+
+///A bluespace output pipe for plumbing. Supports multiple recipients. Must be constructed with a circuit board
 /obj/machinery/plumbing/receiver
 	name = "chemical recipient"
-	desc = "Receives chemicals from one or more chemical beacons. Use a multitool on this machine and then all subsequent chemical beacons."
-	icon_state = "disposal"
+	desc = "Receives chemicals from one or more chemical beacons. Use a multitool on this machine and then all subsequent chemical beacons. Reset by opening the \
+	panel and cutting the main wire."
+	icon_state = "recipient"
 
-	//How much chemicals we can teleport per process
+	buffer = 150
+
+	///How much chemicals we can teleport per process
 	var/pull_amount = 20
-	//All synced up chemical beacons we can tap from
+	///All synced up chemical beacons we can tap from
 	var/list/senders = list()
-	//We only grab one machine per process, so store which one is next
+	///We only grab one machine per process, so store which one is next
 	var/next_index = 1
 
 /obj/machinery/plumbing/receiver/Initialize(mapload, bolt)
@@ -53,7 +80,7 @@
 	return TRUE
 
 /obj/machinery/plumbing/receiver/process()
-	if(machine_stat & NOPOWER)
+	if(machine_stat & NOPOWER || panel_open)
 		return
 
 	if(senders.len)
@@ -61,6 +88,39 @@
 			next_index = 1
 
 		var/obj/machinery/plumbing/sender/S = senders[next_index]
-		S.reagents.trans_to(src, pull_amount, round_robin = TRUE)
+		if(QDELETED(S))
+			senders.Remove(S)
+			return
+
+		S.teleport_chemicals(src, pull_amount)
+		flick_overlay(initial(icon_state) + "_flash", GLOB.clients, 8)
 
 		next_index++
+
+///Notify all senders to forget us
+/obj/machinery/plumbing/receiver/proc/lose_senders()
+	for(var/obj/machinery/plumbing/sender/S in senders)
+		if(S == null)
+			continue
+		S.lose_teleport_target()
+
+	senders = list()
+
+/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, icon_state + "_open", initial(icon_state), I))
+		update_icon()
+		return
+
+	if(default_pry_open(I))
+		return
+
+	if(default_deconstruction_crowbar(I))
+		return
+
+	return ..()
+
+/obj/machinery/plumbing/receiver/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
+
+	if(panel_open)
+		lose_senders()
