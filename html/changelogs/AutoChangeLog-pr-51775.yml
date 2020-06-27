@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - balance: "The tox purging threshold for livers has been changed from 3u to 3u * [liver's health]/[liver's maximum health]."

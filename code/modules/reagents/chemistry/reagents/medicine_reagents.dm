@@ -717,6 +717,14 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
+	. = TRUE
+	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
+		holder.remove_reagent(/datum/reagent/toxin/lexorin, 2)
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1)
+		if(prob(20))
+			holder.add_reagent(/datum/reagent/toxin/histamine, 4)
+		..()
+		return
 	if(M.health <= M.crit_threshold)
 		M.adjustToxLoss(-0.5*REM, 0)
 		M.adjustBruteLoss(-0.5*REM, 0)
@@ -727,7 +735,6 @@
 	if(M.losebreath < 0)
 		M.losebreath = 0
 	M.adjustStaminaLoss(-0.5*REM, 0)
-	. = 1
 	if(prob(20))
 		M.AdjustAllImmobility(-20, FALSE)
 	..()

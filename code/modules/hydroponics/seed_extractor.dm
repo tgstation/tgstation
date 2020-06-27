@@ -64,19 +64,16 @@
 	/// Associated list of seeds, they are all weak refs.  We check the len to see how many refs we have for each
 	// seed
 	var/list/piles = list()
-	/// Starting constants for Refresh parts
-	var/const/staring_max_seeds = 1000
-	var/const/staring_seed_multiplier = 1
-	var/max_seeds = staring_max_seeds
-	var/seed_multiplier = staring_seed_multiplier
+	var/max_seeds = 1000
+	var/seed_multiplier = 1
 	ui_x = 1000
 	ui_y = 400
 
 /obj/machinery/seed_extractor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		max_seeds = staring_max_seeds * B.rating
+		max_seeds = initial(max_seeds) * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		seed_multiplier = staring_seed_multiplier * M.rating
+		seed_multiplier = initial(seed_multiplier) * M.rating
 
 /obj/machinery/seed_extractor/examine(mob/user)
 	. = ..()
