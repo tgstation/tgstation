@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - admin: "Fixed some bad areacoord messages when teleporting around."
