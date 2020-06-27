@@ -591,8 +591,8 @@
 	var/list/allergies = list()
 
 /datum/quirk/allergic/on_spawn()
-	var/list/chem_list = subtypesof(/datum/reagent/medicine)- /datum/reagent/medicine/c2
-	for(var/i in 0 to 5)
+	var/list/chem_list = subtypesof(/datum/reagent/medicine)- /datum/reagent/medicine/c2 - /datum/reagent/medicine/epinephrine
+	for(var/i in 0 to 10)
 		var/chem = pick(chem_list)
 		chem_list -= chem
 		allergies += chem
@@ -603,6 +603,7 @@
 		var/datum/reagent/chemical = C
 		display += initial(chemical.name) + ", "
 	name = "Extreme " + display +"Allergies"
+	medical_record_text = "Patient's immune system responds violently to [display]"
 	quirk_holder.add_memory("You are extremely allergic to : [display]")
 	to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [display]make sure not to consume any of it!</span>")
 
@@ -613,7 +614,12 @@
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 	for(var/M in allergies)
 		var/datum/reagent/med = M
-		if(carbon_quirk_holder.reagents.has_reagent(med) && !carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(med)
+		if(instantiated_med)
+			//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
+			if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+				instantiated_med.metabolizing = FALSE
+				return
 			carbon_quirk_holder.adjustToxLoss(5)
 			if(prob(20))
 				carbon_quirk_holder.vomit()
