@@ -35,12 +35,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "ii" = (
-/obj/effect/mob_spawn/human/hermit{
-	flavour_text = "You've been living on the ice moon for at least 40 years now! You've survived the ice whelps, hunted those damn bears and tamed a few wolves. What do those outsiders want?";
-	mob_name = "a grumy old man";
-	name = "Cryostasis bed";
-	short_desc = "You've been hunting polar bears for 40 years now! What do these 'NaniteTrans' newcomers want?"
-	},
+/obj/effect/mob_spawn/human/hermit,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "lH" = (
