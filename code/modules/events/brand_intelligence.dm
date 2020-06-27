@@ -32,7 +32,7 @@
 
 /datum/round_event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in GLOB.machines)
-		if(!is_station_level(V.z) || !(V.refill_canister)) //checking for canister is probably dumb but it works i guess
+		if(!is_station_level(V.z) || (V.use_power == NO_POWER_USE)) //checking for power usage is probably dumb but it works i guess
 			continue
 		vendingMachines.Add(V)
 	if(!vendingMachines.len)
