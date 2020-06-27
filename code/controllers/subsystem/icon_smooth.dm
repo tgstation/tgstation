@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(icon_smooth)
 		can_fire = TRUE
 
 /datum/controller/subsystem/icon_smooth/proc/remove_from_queues(atom/thing)
-	thing &= ~SMOOTH_QUEUED
+	thing.smooth &= ~SMOOTH_QUEUED
 	smooth_queue -= thing
 	blueprint_queue -= thing
 	deferred -= thing
