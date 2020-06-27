@@ -579,3 +579,35 @@
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 	hardcore_value = 9
+
+/datum/quirk/allergic
+	name = "Extreme Allergy"
+	desc = "Ever since you were a kid you always were allergic to certain medicals..."
+	value = -2
+	gain_text = "<span class='danger'>You feel your immune system shift.</span>"
+	lose_text = "<span class='notice'>You fell your immune system phase back into perfect shape.</span>"
+	medical_record_text = "Patient's immune system responds violently to certain medication."
+	hardcore_value = 3
+	var/list/med_allergies = list()
+
+/datum/quirk/allergic/on_spawn()
+	for(var/i in 0 to 5)
+		var/datum/reagent/chem = pick(typesof(/datum/reagent/medicine)+typesof(/datum/reagent/consumable))
+		med_allergies += chem
+		to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [chem.name], make sure not to consume any of it!</span>")
+	. = ..()
+
+/datum/quirk/allergic/on_process()
+	. = ..()
+	if(!iscarbon(quirk_holder))
+		return
+	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
+	for(var/M in med_allergies)
+		var/datum/reagent/med = M
+		if(carbon_quirk_holder.reagents.has_reagent(med) && !carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+			carbon_quirk_holder.adjustToxLoss(5)
+			if(prob(20))
+				carbon_quirk_holder.vomit()
+			if(prob(10))
+				carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
+
