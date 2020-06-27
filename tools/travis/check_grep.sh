@@ -54,16 +54,19 @@ if grep -i 'centcomm' _maps/**/*.dmm; then
 fi;
 if ls _maps/*.json | grep -P "[A-Z]"; then
     echo "Uppercase in a map json detected, these must be all lowercase."
-	st=1
+    st=1
 fi;
 for json in _maps/*.json
 do
-    filename="_maps/$(jq -r '.map_path' $json)/$(jq -r '.map_file' $json)"
-    if [ ! -f $filename ]
-    then
-        echo "found invalid file reference to $filename in _maps/$json"
-        st=1
-    fi
+    map_path=$(jq -r '.map_path' $json)
+    while read map_file; do
+        filename="_maps/$map_path/$map_file"
+        if [ ! -f $filename ]
+        then
+            echo "found invalid file reference to $filename in _maps/$json"
+            st=1
+        fi
+    done < <(jq -r '[.map_file] | flatten | .[]' $json)
 done
 
 exit $st

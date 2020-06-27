@@ -20,12 +20,9 @@
 
 /obj/item/reagent_containers/food/snacks/donut/Initialize()
 	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 	if(prob(30))
 		decorate_donut()
-
-/obj/item/reagent_containers/food/snacks/donut/Initialize()
-	. = ..()
-	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/donut/proc/decorate_donut()
 	if(is_decorated || !decorated_icon)

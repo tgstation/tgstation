@@ -32,12 +32,14 @@
 
 /obj/item/melee/sickly_blade
 	name = "Sickly blade"
-	desc = "Twisted sickle with an ornamental eye. The eyes looks at you."
+	desc = "A sickly green crescent blade, decorated with an ornamental eye. You feel like you're being watched..."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eldritch_blade"
 	inhand_icon_state = "eldritch_blade"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_NORMAL
@@ -48,7 +50,7 @@
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
 	if(!IS_HERETIC(user))
-		to_chat(user,"<span class='danger'>Echoes of the breat beyond break your mind!</span>")
+		to_chat(user,"<span class='danger'>You feel a pulse of some alien intellect lash out at your mind!</span>")
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
 		return FALSE
@@ -66,16 +68,25 @@
 
 /obj/item/melee/sickly_blade/rust
 	name = "Rusted Blade"
+	desc = "This crescent blade is decrepit, wasting to dust. Yet still it bites, catching flesh with jagged, rotten teeth."
+	icon_state = "rust_blade"
+	inhand_icon_state = "rust_blade"
 
 /obj/item/melee/sickly_blade/ash
 	name = "Ashen Blade"
+	desc = "Molten and unwrought, a hunk of metal warped to cinders and slag. Unmade, it aspires to be more than it is, and shears soot-filled wounds with a blunt edge."
+	icon_state = "ash_blade"
+	inhand_icon_state = "ash_blade"
 
 /obj/item/melee/sickly_blade/flesh
 	name = "Flesh Blade"
+	desc = "A crescent blade born from a fleshwarped creature. Keenly aware, it seeks to spread to others the excruitations it has endured from dread origins."
+	icon_state = "flesh_blade"
+	inhand_icon_state = "flesh_blade"
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
-	desc = "Eldritch medallion that let's you see."
+	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. You see your own beating heart, and the pulse of a thousand others."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eye_medalion"
 	w_class = WEIGHT_CLASS_SMALL
@@ -95,6 +106,7 @@
 
 /obj/item/clothing/neck/eldritch_amulet/piercing
 	name = "Piercing Eldritch Medallion"
+	desc = "A strange medallion. Peering through the crystalline surface, the light refracts into new and terrifying spectrums of color. You see yourself, reflected off cascading mirrors, warped into improbable shapes."
 	trait = TRAIT_XRAY_VISION
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch
