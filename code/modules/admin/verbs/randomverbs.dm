@@ -1178,14 +1178,46 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(!iscarbon(target))
 				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
 				return
+
+			var/list/how_fucked_is_this_dude = list("A little", "A lot", "So fucking much", "FUCK THIS DUDE")
+			var/hatred = input("How much do you hate this guy?") in how_fucked_is_this_dude
+			var/repetitions
+			var/shots_per_limb_per_rep = 2
+			var/damage
+			switch(hatred)
+				if("A little")
+					repetitions = 1
+					damage = 5
+				if("A lot")
+					repetitions = 2
+					damage = 8
+				if("So fucking much")
+					repetitions = 3
+					damage = 10
+				if("FUCK THIS DUDE")
+					repetitions = 4
+					damage = 10
+
 			var/mob/living/carbon/C = target
-			for(var/obj/item/bodypart/slice_part in C.bodyparts)
-				var/type_wound = pick(list(/datum/wound/pierce/severe, /datum/wound/slash/moderate))
-				slice_part.force_wound_upwards(type_wound, smited=TRUE)
-				type_wound = pick(list(/datum/wound/pierce/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate))
-				slice_part.force_wound_upwards(type_wound, smited=TRUE)
-				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe))
-				slice_part.force_wound_upwards(type_wound, smited=TRUE)
+			var/list/open_adj_turfs = get_adjacent_open_turfs(C)
+			var/list/wound_bonuses = list(15, 70, 110, 250)
+
+			var/delay_per_shot = 1
+			var/delay_counter = 1
+
+			testing("Repetitions [repetitions]")
+			C.Immobilize(5 SECONDS)
+			for(var/wound_bonus_rep in 1 to repetitions)
+				for(var/obj/item/bodypart/slice_part in C.bodyparts)
+					var/shots_this_limb = 0
+					for(var/t in shuffle(open_adj_turfs))
+						var/turf/open/OT = t
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/firing_squad, C, OT, slice_part.body_zone, wound_bonuses[wound_bonus_rep], damage), delay_counter)
+						delay_counter += delay_per_shot
+						shots_this_limb++
+						if(shots_this_limb > shots_per_limb_per_rep)
+							break
+
 		if(ADMIN_PUNISHMENT_SCARIFY)
 			if(!iscarbon(target))
 				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
@@ -1195,6 +1227,19 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			to_chat(C, "<span class='warning'>You feel your body grow jaded and torn...</span>")
 
 	punish_log(target, punishment)
+
+/proc/firing_squad(mob/living/carbon/C, turf/open/OT, body_zone, wound_bonus, damage)
+	if(!C.get_bodypart(body_zone))
+		return
+	playsound(C, 'sound/weapons/gun/revolver/shot.ogg', 100)
+	var/obj/projectile/bullet/smite/divine_wrath = new(OT)
+	divine_wrath.damage = damage
+	divine_wrath.wound_bonus = wound_bonus
+	divine_wrath.original = C
+	divine_wrath.def_zone = body_zone
+	divine_wrath.spread = 0
+	divine_wrath.preparePixelProjectile(C, OT)
+	divine_wrath.fire()
 
 /client/proc/punish_log(whom, punishment)
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(whom)] with [punishment]."

@@ -29,14 +29,16 @@
 		if(WOUND_PIERCE)
 			occur_text = "is pierced through the last tissue holding it together, severing it completely!"
 
-	var/mob/living/carbon/victim = L.owner
-	if(prob(40))
-		victim.confused += 5
+	victim = L.owner
 
 	var/msg = "<b><span class='danger'>[victim]'s [L.name] [occur_text]!</span></b>"
 
 	victim.visible_message(msg, "<span class='userdanger'>Your [L.name] [occur_text]!</span>")
 
+	limb = L
+	if(!limb || !victim)
+		return
+	severity = WOUND_SEVERITY_LOSS
 	second_wind()
 	L.dismember()
 	qdel(src)
