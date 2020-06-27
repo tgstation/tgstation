@@ -17,10 +17,6 @@
 	required = "/datum/mutation/human/strong; /datum/mutation/human/radioactive"
 	result = HULK
 
-/datum/generecipe/x_ray
-	required = "/datum/mutation/human/thermal; /datum/mutation/human/radioactive"
-	result = XRAY
-
 /datum/generecipe/mindread
 	required = "/datum/mutation/human/antenna; /datum/mutation/human/paranoia"
 	result = MINDREAD
