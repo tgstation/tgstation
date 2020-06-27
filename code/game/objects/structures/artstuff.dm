@@ -69,7 +69,7 @@
 	grid = new/list(width,height)
 	for(var/x in 1 to width)
 		for(var/y in 1 to height)
-			grid[x][y] = lowertext(canvas_color)
+			grid[x][y] = canvas_color
 
 /obj/item/canvas/attack_self(mob/user)
 	. = ..()
@@ -113,7 +113,7 @@
 				return FALSE
 			var/x = text2num(params["x"])
 			var/y = text2num(params["y"])
-			grid[x][y] = lowertext(color)
+			grid[x][y] = color
 			used = TRUE
 			update_icon()
 			. = TRUE
@@ -343,7 +343,7 @@
 		stack_trace("Invalid persistence_id - [persistence_id]")
 		return
 	var/data = C.get_data_string()
-	var/md5 = md5(data)
+	var/md5 = md5(lowertext(data))
 	var/list/current = SSpersistence.paintings[persistence_id]
 	if(!current)
 		current = list()
@@ -362,7 +362,7 @@
 	var/h = I.Height() + 1
 	for(var/x in 1 to width)
 		for(var/y in 1 to height)
-			grid[x][y] = lowertext(I.GetPixel(x,h-y))
+			grid[x][y] = I.GetPixel(x,h-y)
 
 //Presets for art gallery mapping, for paintings to be shared across stations
 /obj/structure/sign/painting/library
@@ -387,7 +387,7 @@
 		if(!persistence_id || !C)
 			to_chat(user,"<span class='warning'>This is not a persistent painting.</span>")
 			return
-		var/md5 = md5(C.get_data_string())
+		var/md5 = md5(lowertext(C.get_data_string()))
 		var/author = C.author_ckey
 		var/list/current = SSpersistence.paintings[persistence_id]
 		if(current)
