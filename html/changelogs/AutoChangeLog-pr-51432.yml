@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - rscadd: "An explosion compressor has been added to science. It makes raw anomaly cores into proper anomaly cores using prepared TTVs of a specific required blast radius."
