@@ -26,6 +26,33 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=400)
 
+
+
+
+/obj/item/locator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+  	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+  	if(!ui)
+    	ui = new(user, src, ui_key, "BluespaceLocator", name, 300, 300, master_ui, state)
+   		ui.open()
+
+/obj/item/locator/ui_data(mob/user)
+  	var/list/data = list()
+	data["health"] = health
+	data["color"] = color
+
+  	return data
+
+/obj/machinery/my_machine/ui_act(action, params)
+  	if(..())
+    	return
+  	if(action == "change_color")
+    	var/new_color = params["color"]
+   		if(!(color in allowed_coors))
+     		return FALSE
+    	color = new_color
+    	. = TRUE
+  	update_icon()
+
 /obj/item/locator/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
