@@ -140,6 +140,7 @@
 					else
 						distance_str = "very weak"
 			track_implants += list(list(name = W.imp_in.name, direction = dir2text(get_dir(sr, tr)), distance = distance_str))
+			data["trackimplants"] = track_implants
 	return data
 
 /obj/machinery/my_machine/ui_act(action, params)
