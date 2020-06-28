@@ -288,7 +288,7 @@
   *
   * Proc used to allow a swarmer to create a trap.  Checks if a trap is on the tile, then if the swarmer can afford, and then places the trap.
   */
-/mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
+/mob/living/simple_animal/hostile/swarmer/proc/create_trap()
 	set name = "Create trap"
 	set category = "Swarmer"
 	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 4 resources."
