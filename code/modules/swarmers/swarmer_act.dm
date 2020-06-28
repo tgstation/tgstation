@@ -98,7 +98,7 @@
 	return TRUE
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	S.DisIntegrate(src)
+	actor.DisIntegrate(src)
 	if(!QDELETED(actor)) //If it got blown up no need to turn it off.
 		toggle_cam(actor, FALSE)
 	return TRUE
