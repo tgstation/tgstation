@@ -105,3 +105,7 @@
 			GLOB.request_list.Remove(active_request)
 			return TRUE
 	. = TRUE
+
+/datum/computer_file/program/bounty_board/Destroy()
+	GLOB.allbountyboards -= computer
+	. = ..()
