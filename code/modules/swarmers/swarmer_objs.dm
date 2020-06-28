@@ -74,7 +74,7 @@
 		return FALSE
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
 	newswarmer.key = user.key
-	addtimer(CALLBACK(src, .proc/release_swarmer, newswarmer), 300)
+	addtimer(CALLBACK(src, .proc/release_swarmer, newswarmer), 30 SECONDS)
 	to_chat(newswarmer, "<b>SWARMER CONSTURCTION INITIALIZED.  TIME TO COMPLETION: 30 SECONDS</b>")
 	processing_swarmer = TRUE
 	return TRUE
