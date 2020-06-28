@@ -122,13 +122,13 @@
 	. = ..()
 	if(!LAZYLEN(dronelist))
 		return
-	var/turf/T = get_turf(A)
-	if(!T)
+	var/turf/clicked_turf = get_turf(A)
+	if(!clicked_turf)
 		return
 	for(var/d in dronelist)
 		var/mob/living/simple_animal/hostile/drone = d
 		drone.LoseTarget()
-		drone.Goto(T, drone.move_to_delay)
+		drone.Goto(clicked_turf, drone.move_to_delay)
 
 /mob/living/simple_animal/hostile/swarmer/CtrlClickOn(atom/A)
 	face_atom(A)
