@@ -12,8 +12,8 @@
 /obj/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return FALSE
-	for(var/mob/living/L in contents)
-		if(!issilicon(L) && !isbrain(L))
+	for(var/mob/living/living_content in contents)
+		if(!issilicon(living_content) && !isbrain(living_content))
 			to_chat(S, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
 			return FALSE
 	return ..()
