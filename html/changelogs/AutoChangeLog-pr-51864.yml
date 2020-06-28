@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an exploit that would allow you to destroy round-critical / indestructible items with folders."
