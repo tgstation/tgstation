@@ -154,11 +154,10 @@
 	if(!isturf(loc))
 		to_chat(src, "<span class='warning'>This is not a suitable location for fabrication. We need more space.</span>")
 		return
-	if(resources >= fabrication_cost)
-		resources -= fabrication_cost
-	else
+	if(resources < fabrication_cost)
 		to_chat(src, "<span class='warning'>You do not have the necessary resources to fabricate this object.</span>")
 		return
+	resources -= fabrication_cost
 	return new fabrication_object(drop_location())
 
 /**
