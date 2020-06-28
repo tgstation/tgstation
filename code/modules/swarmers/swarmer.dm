@@ -261,10 +261,10 @@
 /mob/living/simple_animal/hostile/swarmer/proc/dismantle_machine(obj/machinery/target)
 	do_attack_animation(target)
 	to_chat(src, "<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>")
-	var/obj/effect/temp_visual/swarmer/dismantle/D = new /obj/effect/temp_visual/swarmer/dismantle(get_turf(target))
-	D.pixel_x = target.pixel_x
-	D.pixel_y = target.pixel_y
-	D.pixel_z = target.pixel_z
+	var/obj/effect/temp_visual/swarmer/dismantle/dismantle_effect = new /obj/effect/temp_visual/swarmer/dismantle(get_turf(target))
+	dismantle_effect.pixel_x = target.pixel_x
+	dismantle_effect.pixel_y = target.pixel_y
+	dismantle_effect.pixel_z = target.pixel_z
 	if(do_mob(src, target, 100))
 		to_chat(src, "<span class='info'>Dismantling complete.</span>")
 		var/atom/target_loc = target.drop_location()
