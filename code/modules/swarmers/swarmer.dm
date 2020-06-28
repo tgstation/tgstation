@@ -210,7 +210,7 @@
   * Arguments:
   * * target - The entity the swarmer is trying to teleport away
   */
-/mob/living/simple_animal/hostile/swarmer/proc/PrepareTarget(mob/living/target)
+/mob/living/simple_animal/hostile/swarmer/proc/prepare_target(mob/living/target)
 	if(target == src)
 		return
 
