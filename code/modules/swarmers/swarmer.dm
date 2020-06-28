@@ -358,7 +358,7 @@
   *
   * Proc used to allow a swarmer self-repair.  If the swarmer does not move after a period of time, then it will heal fully
   */
-/mob/living/simple_animal/hostile/swarmer/proc/RepairSelf()
+/mob/living/simple_animal/hostile/swarmer/proc/repair_self()
 	set name = "Self Repair"
 	set category = "Swarmer"
 	set desc = "Attempts to repair damage to our body. You will have to remain motionless until repairs are complete."
