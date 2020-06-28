@@ -25,7 +25,7 @@
 
 /datum/chemical_reaction/nitracid
 	results = list(/datum/reagent/toxin/acid/nitracid = 2)
-	required_reagents = list(/datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/nitrogen = 1, , /datum/reagent/hydrogen_peroxide = 1)
+	required_reagents = list(/datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/nitrogen = 1,  /datum/reagent/hydrogen_peroxide = 1)
 	required_temp = 480
 
 /datum/chemical_reaction/sulfonal
