@@ -29311,6 +29311,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/research/explosive_compressor,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3,
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -49031,6 +49032,13 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 11
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = -2
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "mJM" = (
