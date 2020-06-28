@@ -172,24 +172,23 @@
 	if(resources + resource_gain > max_resources)
 		to_chat(src, "<span class='warning'>We cannot hold more materials!</span>")
 		return TRUE
-	if(resource_gain)
-		resources += resource_gain
-		do_attack_animation(target)
-		changeNext_move(CLICK_CD_RAPID)
-		var/obj/effect/temp_visual/swarmer/integrate/I = new /obj/effect/temp_visual/swarmer/integrate(get_turf(target))
-		I.pixel_x = target.pixel_x
-		I.pixel_y = target.pixel_y
-		I.pixel_z = target.pixel_z
-		if(istype(target, /obj/item/stack))
-			var/obj/item/stack/S = target
-			S.use(1)
-			if(S.amount)
-				return TRUE
-		qdel(target)
-		return TRUE
-	else
+	if(!resource_gain)
 		to_chat(src, "<span class='warning'>[target] is incompatible with our internal matter recycler.</span>")
-	return FALSE
+		return FALSE
+	resources += resource_gain
+	do_attack_animation(target)
+	changeNext_move(CLICK_CD_RAPID)
+	var/obj/effect/temp_visual/swarmer/integrate/I = new /obj/effect/temp_visual/swarmer/integrate(get_turf(target))
+	I.pixel_x = target.pixel_x
+	I.pixel_y = target.pixel_y
+	I.pixel_z = target.pixel_z
+	if(istype(target, /obj/item/stack))
+		var/obj/item/stack/S = target
+		S.use(1)
+		if(S.amount)
+			return TRUE
+	qdel(target)
+	return TRUE
 
 /**
   * Called when a swarmer attempts to destroy a structure
