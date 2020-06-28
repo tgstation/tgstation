@@ -315,8 +315,9 @@
 	if(resources < 4)
 		to_chat(src, "<span class='warning'>We do not have the resources for this!</span>")
 		return
-	if(do_mob(src, src, 10))
-		Fabricate(/obj/structure/swarmer/blockade, 4)
+	if(!do_mob(src, src, 1 SECONDS))
+		return
+	Fabricate(/obj/structure/swarmer/blockade, 4)
 
 /**
   * Called when a swarmer attempts to create a drone
