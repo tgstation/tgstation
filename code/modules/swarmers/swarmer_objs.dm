@@ -70,7 +70,7 @@
   */
 /obj/structure/swarmer_beacon/proc/que_swarmer(mob/user)
 	var/swarm_ask = alert("Become a swarmer?", "Do you wish to consume the station?", "Yes", "No")
-	if(swarm_ask == "No" || !src || QDELETED(src) || QDELETED(user) || processing_swarmer)
+	if(swarm_ask == "No" || QDELETED(src) || QDELETED(user) || processing_swarmer)
 		return FALSE
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
 	newswarmer.key = user.key
