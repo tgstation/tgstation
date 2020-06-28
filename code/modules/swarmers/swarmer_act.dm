@@ -24,13 +24,12 @@
 /**
   * Return used to determine how many resources a swarmer gains when consuming an object
   */
-/obj/proc/IntegrateAmount()
+/obj/proc/integrate_amount()
 	return 0
 
-/obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
-	if(custom_materials)
-		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
-			return 1
+/obj/item/integrate_amount() //returns the amount of resources gained when eating this item
+	if(custom_materials && (custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)]))
+		return 1
 	return ..()
 
 /obj/item/gun/swarmer_act()//Stops you from eating the entire armory
