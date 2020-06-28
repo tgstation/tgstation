@@ -25,3 +25,5 @@
 	new /obj/item/card/id/departmental_budget/car(src)
 	new /obj/item/clothing/shoes/old_military_boots(src)
 	new /obj/item/clothing/head/old_military_cap(src)
+	new /obj/item/clothing/suit/old_military_jacket(src)
+	new /obj/item/clothing/under/suit/old_military_uniform(src)

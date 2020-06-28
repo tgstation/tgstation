@@ -26,7 +26,7 @@
 	jobtype = /datum/job/qm
 
 	belt = /obj/item/pda/quartermaster
-	ears = /obj/item/radio/headset/headset_cargo
+	ears = /obj/item/radio/headset/heads/quartermaster
 	uniform = /obj/item/clothing/under/rank/cargo/qm
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses

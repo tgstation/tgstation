@@ -1,4 +1,4 @@
-// Used for translating channels to tokens on examination
+e// Used for translating channels to tokens on examination
 GLOBAL_LIST_INIT(channel_tokens, list(
 	RADIO_CHANNEL_COMMON = RADIO_KEY_COMMON,
 	RADIO_CHANNEL_SCIENCE = RADIO_TOKEN_SCIENCE,
@@ -231,6 +231,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/heads/hoser
 	name = "\proper the head of service's headset"
 	desc = "The headset of the guy stopping us from starving."
+	icon_state = "com_headset"
+	keyslot = new /obj/item/encryptionkey/heads/hop
+
+/obj/item/radio/headset/heads/quartermaster
+	name = "\proper the quartermaster's headset"
+	desc = "The headset of the guy who thinks Cargonia is funny."
 	icon_state = "com_headset"
 	keyslot = new /obj/item/encryptionkey/heads/hop
 
