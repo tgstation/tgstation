@@ -287,7 +287,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aaM" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aaN" = (
@@ -32794,12 +32794,12 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "byB" = (
-/obj/structure/table/wood/bar,
 /obj/item/clothing/mask/cigarette/cigar,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "byC" = (
@@ -74831,7 +74831,6 @@
 /area/crew_quarters/toilet/auxiliary)
 "pEK" = (
 /obj/structure/table/reinforced,
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -75764,6 +75763,14 @@
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /turf/open/floor/grass,
 /area/medical/virology)
+"qUk" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "qUR" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
@@ -77289,11 +77296,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "tyf" = (
-/obj/structure/table/wood/bar,
 /obj/item/clothing/head/fedora,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "tyz" = (
@@ -77507,6 +77514,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "tQf" = (
@@ -114443,7 +114451,7 @@ bWO
 bYg
 bWT
 caM
-tYS
+qUk
 bST
 dDr
 cgq
