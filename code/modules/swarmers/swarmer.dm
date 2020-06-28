@@ -350,7 +350,7 @@
   *
   * Returns the type of the swarmer to be created
   */
-/mob/living/simple_animal/hostile/swarmer/proc/SwarmerTypeToCreate()
+/mob/living/simple_animal/hostile/swarmer/proc/swarmer_type_to_create()
 	return /mob/living/simple_animal/hostile/swarmer/melee
 
 /**
