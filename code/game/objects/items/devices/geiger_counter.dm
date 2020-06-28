@@ -143,7 +143,7 @@
 		return TRUE
 
 /obj/item/geiger_counter/proc/scan(atom/A, mob/user)
-	var/rad_strength = get_rad_contamination(altPatient)
+	var/rad_strength = get_rad_contamination(A)
 
 	if(isliving(A))
 		var/mob/living/M = A
