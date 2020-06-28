@@ -78,17 +78,17 @@
 				// Translate this distance into a signal strength string
 				switch(distance)
 					if (1 to 4)
-						direct = "very strong"
+						distance_str = "very strong"
 					if (5 to 9)
-						direct = "strong"
+						distance_str = "strong"
 					if (10 to 19)
-						direct = "weak"
+						distance_str = "weak"
 					else
-						direct = "very weak"
+						distance_str = "very weak"
 
 				// Add the tele beacon to our list.
 				// temp += "[W.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
-				tele_beacons += list(list(name = W.name, direction = dir2text(get_dir(sr, tr)), distance = direct))
+				tele_beacons += list(list(name = W.name, direction = dir2text(get_dir(sr, tr)), distance = distance_str))
 
 		data["telebeacons"] = tele_beacons
 
@@ -116,6 +116,30 @@
 							direct = "weak"
 					temp += "[W.imp_in.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 		*/
+
+		var/list/track_implants = list()
+
+		for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
+			if (!W.imp_in || !isliving(W.loc))
+				continue
+			else
+				var/mob/living/M = W.loc
+				if (M.stat == DEAD)
+					if (M.timeofdeath + W.lifespan_postmortem < world.time)
+						continue
+			var/turf/tr = get_turf(W)
+			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
+			var/distance_str
+			switch(distance)
+					if (1 to 4)
+						distance_str = "very strong"
+					if (5 to 9)
+						distance_str = "strong"
+					if (10 to 19)
+						distance_str = "weak"
+					else
+						distance_str = "very weak"
+			track_implants += list(list(name = W.imp_in.name, direction = dir2text(get_dir(sr, tr)), distance = distance_str))
 	return data
 
 /obj/machinery/my_machine/ui_act(action, params)
