@@ -49,8 +49,8 @@
 /obj/effect/swarmer_act()
 	return FALSE
 
-/obj/effect/decal/cleanable/robot_debris/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DisIntegrate(src)
+/obj/effect/decal/cleanable/robot_debris/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	actor.dis_integrate(src)
 	qdel(src)
 	return TRUE
 
