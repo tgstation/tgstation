@@ -247,8 +247,10 @@ const MedicalKioskScanResults3 = (props, context) => {
     clone_health,
     brain_damage,
     brain_health,
-    rad_status,
-    rad_value,
+    rad_contamination_status,
+    rad_contamination_value,
+    rad_sickness_status,
+    rad_sickness_value,
     trauma_status,
   } = data;
   return (
@@ -282,12 +284,20 @@ const MedicalKioskScanResults3 = (props, context) => {
         </LabeledList.Item>
         <LabeledList.Divider />
         <LabeledList.Item
-          label="Radiation Status">
-          {rad_status}
+          label="Radiation Sickness Status">
+          {rad_sickness_status}
         </LabeledList.Item>
         <LabeledList.Item
-          label="Irradiation Percentage">
-          {rad_value}%
+          label="Radiation Sickness Percentage">
+          {rad_sickness_value}%
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Radiation Contamination Status">
+          {rad_contamination_status}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Radiation Contamination Percentage">
+          {rad_contamination_value}%
         </LabeledList.Item>
       </LabeledList>
     </Section>
