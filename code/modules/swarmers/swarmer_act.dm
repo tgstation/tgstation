@@ -210,22 +210,22 @@
 			return FALSE
 	return ..()
 
-/obj/machinery/hydroponics/soil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This object does not contain enough materials to work with.</span>")
+/obj/machinery/hydroponics/soil/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This object does not contain enough materials to work with.</span>")
 	return FALSE
 
-/obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Destroying this object would cause a catastrophic chain reaction. Aborting.</span>")
+/obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>Destroying this object would cause a catastrophic chain reaction. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/field/containment/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
+/obj/machinery/field/containment/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/power/shieldwallgen/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Destroying this object would have an unpredictable effect on structure integrity. Aborting.</span>")
+/obj/machinery/power/shieldwallgen/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>Destroying this object would have an unpredictable effect on structure integrity. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/shieldwall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
+/obj/machinery/shieldwall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
 	return FALSE
