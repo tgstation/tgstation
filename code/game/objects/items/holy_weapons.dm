@@ -285,7 +285,6 @@
 /obj/item/nullrod/staff
 	icon_state = "godstaff-red"
 	inhand_icon_state = "godstaff-red"
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	name = "red holy staff"
@@ -310,7 +309,6 @@
 /obj/item/nullrod/claymore
 	icon_state = "claymore_gold"
 	inhand_icon_state = "claymore_gold"
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "holy claymore"
@@ -413,7 +411,6 @@
 /obj/item/nullrod/scythe
 	icon_state = "scythe1"
 	inhand_icon_state = "scythe1"
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "reaper scythe"

@@ -3,8 +3,6 @@
 	desc = "A heavy-duty, multifaceted energy rifle with three modes. Preferred by front-line combat personnel."
 	icon_state = "pulse"
 	inhand_icon_state = null
-	worn_icon_state = null
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	modifystate = TRUE
@@ -43,8 +41,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	icon_state = "pulse_carbine"
 	inhand_icon_state = null
-	worn_icon_state = "gun"
-	worn_icon = 'icons/mob/clothing/belt.dmi'
 	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
 	can_flashlight = TRUE
 	flight_x_offset = 18
@@ -60,8 +56,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	icon_state = "pulse_pistol"
 	inhand_icon_state = "gun"
-	worn_icon_state = "gun"
-	worn_icon = 'icons/mob/clothing/belt.dmi'
 	cell_type = "/obj/item/stock_parts/cell/pulse/pistol"
 
 /obj/item/gun/energy/pulse/pistol/loyalpin

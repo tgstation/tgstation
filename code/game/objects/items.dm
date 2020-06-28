@@ -28,8 +28,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
-	///Override mob worn overlay with invisible overlay. Explicitly sets an item to be hidden when worn by displaying a pre-defined icon 'icons/misc/hidden.dmi' and icon_state "hidden" as defined in human_update_icons.dm.
-	var/worn_hidden = FALSE
 	///Icon file for mob worn overlays.
 	var/icon/worn_icon
 	///icon state for mob worn overlays, if null the normal icon_state will be used.

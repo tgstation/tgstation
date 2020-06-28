@@ -282,7 +282,6 @@
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY

@@ -4,8 +4,6 @@
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = null
-	worn_icon = 'icons/mob/clothing/back.dmi'
-	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_STANDARD
@@ -71,8 +69,6 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	if(.)
 		spread = 36
 		can_bayonet = FALSE
-		worn_icon_state = "gun"
-		worn_icon = 'icons/mob/clothing/belt.dmi'
 		update_icon()
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)

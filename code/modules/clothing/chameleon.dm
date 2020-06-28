@@ -224,7 +224,6 @@
 		I.lefthand_file = initial(picked_item.lefthand_file)
 		I.righthand_file = initial(picked_item.righthand_file)
 		I.inhand_icon_state = initial(picked_item.inhand_icon_state)
-		I.worn_hidden = initial(picked_item.worn_hidden)
 		I.worn_icon = initial(picked_item.worn_icon)
 		I.worn_icon_state = initial(picked_item.worn_icon_state)
 		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))

@@ -3,7 +3,6 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	worn_icon_state = null
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	inhand_icon_state = "shotgun"
@@ -49,18 +48,6 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off  = TRUE
-
-/obj/item/gun/ballistic/shotgun/riot/sawoff(mob/user)
-	. = ..()
-	if(.)
-		weapon_weight = WEAPON_MEDIUM
-		inhand_icon_state = "gun"
-		worn_icon_state = "gun"
-		worn_icon = 'icons/mob/clothing/belt.dmi'
-		lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-		righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-		inhand_x_dimension = 32
-		inhand_y_dimension = 32
 
 // Automatic Shotguns//
 
@@ -193,13 +180,6 @@
 	. = ..()
 	if(.)
 		weapon_weight = WEAPON_MEDIUM
-		inhand_icon_state = "gun"
-		worn_icon_state = "gun"
-		worn_icon = 'icons/mob/clothing/belt.dmi'
-		lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-		righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-		inhand_x_dimension = 32
-		inhand_y_dimension = 32
 
 // IMPROVISED SHOTGUN //
 
@@ -248,8 +228,6 @@
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
 		slung = 0
 		update_icon()
-		worn_icon_state = "gun"
-		worn_icon = null
 		lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 

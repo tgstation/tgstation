@@ -55,7 +55,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
 	inhand_icon_state = "claymore"
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'

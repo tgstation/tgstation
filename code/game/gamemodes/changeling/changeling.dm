@@ -135,7 +135,6 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		C.lefthand_file = chosen_prof.lefthand_file_list[slot]
 		C.righthand_file = chosen_prof.righthand_file_list[slot]
 		C.inhand_icon_state = chosen_prof.inhand_icon_state_list[slot]
-		C.worn_hidden = chosen_prof.worn_hidden_list[slot]
 		C.worn_icon = chosen_prof.worn_icon_list[slot]
 		C.worn_icon_state = chosen_prof.worn_icon_state_list[slot]
 		if(equip)

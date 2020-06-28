@@ -112,7 +112,6 @@
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff"
 	inhand_icon_state = "coil"
-	worn_icon_state = "coil"
 	color = "#ff0000"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'

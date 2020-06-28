@@ -495,10 +495,10 @@ generate/load female uniform sprites matching all previously decided variables
 	if(override_state)
 		t_state = override_state
 	else
-		t_state = !isinhands ? (worn_hidden ? "hidden" : (worn_icon_state ? worn_icon_state : icon_state)) : (inhand_icon_state ? inhand_icon_state : icon_state)
+		t_state = !isinhands ? (worn_icon_state ? worn_icon_state : icon_state) : (inhand_icon_state ? inhand_icon_state : icon_state)
 
 	//Find a valid icon file from variables+arguments
-	var/file2use = !isinhands ? (worn_hidden ? 'icons/misc/hidden.dmi' : (worn_icon ? worn_icon : default_icon_file)) : default_icon_file
+	var/file2use = !isinhands ? (worn_icon ? worn_icon : default_icon_file) : default_icon_file
 
 	//Find a valid layer from variables+arguments
 	var/layer2use = alternate_worn_layer ? alternate_worn_layer : default_layer

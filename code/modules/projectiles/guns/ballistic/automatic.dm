@@ -285,7 +285,6 @@
 	icon_state = "sniper"
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 90
 	vary_fire_sound = FALSE
@@ -320,7 +319,6 @@
 	icon_state = "surplus"
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = null
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
 	fire_delay = 30

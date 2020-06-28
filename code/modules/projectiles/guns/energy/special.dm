@@ -4,7 +4,6 @@
 	icon_state = "ionrifle"
 	inhand_icon_state = null	//so the human update icon uses the icon_state instead.
 	worn_icon_state = null
-	worn_icon = 'icons/mob/clothing/back.dmi'
 	shaded_charge = TRUE
 	can_flashlight = TRUE
 	w_class = WEIGHT_CLASS_HUGE
@@ -21,8 +20,6 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
-	worn_icon_state = "ioncarbine"
-	worn_icon = 'icons/mob/clothing/belt.dmi'	//Carbine doesn't have a belt_mirror state so use the available state if in suit storage
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	pin = null

@@ -303,7 +303,6 @@
 			prof.lefthand_file_list[slot] = I.lefthand_file
 			prof.righthand_file_list[slot] = I.righthand_file
 			prof.inhand_icon_state_list[slot] = I.inhand_icon_state
-			prof.worn_hidden_list[slot] = I.worn_hidden
 			prof.worn_icon_list[slot] = I.worn_icon
 			prof.worn_icon_state_list[slot] = I.worn_icon_state
 			prof.exists_list[slot] = 1
@@ -518,7 +517,6 @@
 	var/list/lefthand_file_list = list()
 	var/list/righthand_file_list = list()
 	var/list/inhand_icon_state_list = list()
-	var/list/worn_hidden_list = list()
 	var/list/worn_icon_list = list()
 	var/list/worn_icon_state_list = list()
 
@@ -545,7 +543,6 @@
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
 	newprofile.socks = socks
-	newprofile.worn_hidden_list = worn_hidden_list.Copy()
 	newprofile.worn_icon_list = worn_icon_list.Copy()
 	newprofile.worn_icon_state_list = worn_icon_state_list.Copy()
 
