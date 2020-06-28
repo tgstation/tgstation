@@ -18,14 +18,10 @@ export const NtosBountyConsole = (props, context) => {
         <Section
           title={<BountyHeader />}
           buttons={(
-            <Flex>
-              <Flex.Item>
-                <Button
-                  icon="print"
-                  content="Print Bounty List"
-                  onClick={() => act('Print')} />
-              </Flex.Item>
-            </Flex>
+            <Button
+              icon="print"
+              content="Print Bounty List"
+              onClick={() => act('Print')} />
           )}>
           <Table border>
             <Table.Row 
