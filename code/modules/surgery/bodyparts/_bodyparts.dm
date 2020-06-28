@@ -737,6 +737,8 @@
 		var/datum/wound/W = thing
 		bleed_rate += W.blood_flow
 
+	if(owner.mobility_flags & ~MOBILITY_STAND)
+		bleed_rate *= 0.75
 	return bleed_rate
 
 

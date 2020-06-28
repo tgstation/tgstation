@@ -81,7 +81,7 @@
 	if(limb.current_gauze) // gauze stops all bleeding from dragging on this limb, but wears the gauze out quicker
 		limb.seep_gauze(bleed_amt * 0.33)
 		return
-	testing("blood from drag [name]: [bleed_amt]")
+
 	return bleed_amt
 
 /datum/wound/slash/handle_process()

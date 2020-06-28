@@ -138,7 +138,7 @@
 /datum/wound/pierce/severe
 	name = "Open Puncture"
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and reduced limb stability."
-	treat_text = "Close sources of internal bleeding, then repair punctures in skin."
+	treat_text = "Repair punctures in skin by suture or cautery, extreme cold may also work."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
 	sound_effect = 'sound/effects/blood2.ogg'
