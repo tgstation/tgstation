@@ -30,8 +30,8 @@ GLOBAL_LIST_EMPTY(request_list)
 		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
 /obj/machinery/bounty_board/Destroy()
-	. = ..()
 	GLOB.allbountyboards -= src
+	. = ..()
 
 /obj/machinery/bounty_board/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -40,10 +40,9 @@ GLOBAL_LIST_EMPTY(request_list)
 		if(current_card.registered_account)
 			current_user = current_card.registered_account
 			return TRUE
-		else
-			to_chat(user, "There's no account assigned with this ID.")
-			return TRUE
-	else if(istype(I, /obj/item/bounty_card))
+		to_chat(user, "There's no account assigned with this ID.")
+		return TRUE
+	if(istype(I, /obj/item/bounty_card))
 		if(!current_user)
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 			return TRUE
@@ -60,7 +59,7 @@ GLOBAL_LIST_EMPTY(request_list)
 			i.say("New bounty has been added!")
 			playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
 		qdel(I)
-	else if(I.tool_behaviour == TOOL_WRENCH)
+	if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
@@ -73,8 +72,6 @@ GLOBAL_LIST_EMPTY(request_list)
 				to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 				new /obj/item/wallframe/bounty_board(loc)
 			qdel(src)
-	else
-		return ..()
 
 /obj/machinery/bounty_board/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -94,6 +91,9 @@ GLOBAL_LIST_EMPTY(request_list)
 		if(request.applicants)
 			for(var/datum/bank_account/j in request.applicants)
 				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
+	var/obj/item/card/id/id_card = user.get_idcard()
+	if(id_card?.registered_account)
+		current_user = id_card.registered_account
 	if(current_user)
 		data["AccountName"] = current_user.account_holder
 	data["Requests"] = formatted_requests
@@ -153,10 +153,11 @@ GLOBAL_LIST_EMPTY(request_list)
 
 /obj/item/bounty_card
 	name = "bounty card"
-	desc = "Can be filled out, then inserted into a request console to create a bounty."
+	desc = "Can be filled out, then inserted into a request kiosk to create a bounty."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "bountycard"
 	w_class = WEIGHT_CLASS_TINY
+	///When filled out, the bounty card holds a bounty datum inside itself which is finished by the bounty board.
 	var/datum/station_request/new_request
 
 /obj/item/bounty_card/attack_self(mob/user)
@@ -176,9 +177,10 @@ GLOBAL_LIST_EMPTY(request_list)
 
 /obj/item/bounty_card/examine(mob/user)
 	. = ..()
-	if(new_request)
-		. += ("[new_request.description]")
-		. += ("The Price on this bounty is set for [new_request.value] credits.")
+	if(!new_request)
+		return
+	. += ("[new_request.description]")
+	. += ("The Price on this bounty is set for [new_request.value] credits.")
 
 /obj/item/wallframe/bounty_board
 	name = "disassembled bounty board"
