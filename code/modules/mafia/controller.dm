@@ -147,6 +147,7 @@
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
 		send_message("<span class='red'><b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b></span>")
 		on_trial.kill(src, lynch = TRUE)
+		addtimer(CALLBACK(src, .proc/send_home, on_trial),judgement_lynch_period)
 	else
 		send_message("<span class='green'><b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b></span>")
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
@@ -156,6 +157,9 @@
 	on_trial = null
 	//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
 	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, FALSE),judgement_lynch_period,TIMER_STOPPABLE)// small pause to see the guy dead, no verbosity since we already did this
+
+/datum/mafia_controller/proc/send_home(datum/mafia_role/role)
+	role.body.forceMove(get_turf(role.assigned_landmark))
 
 /datum/mafia_controller/proc/check_victory()
 	var/alive_town = 0
@@ -210,7 +214,6 @@
 		send_message(message)
 	for(var/datum/mafia_role/R in all_roles)
 		R.reveal_role(src)
-		R.body.Stun(INFINITY,ignore_canstun = TRUE)//so they don't grief the area around them with their outfit
 	phase = MAFIA_PHASE_VICTORY_LAP
 	next_phase_timer = addtimer(CALLBACK(src,.proc/end_game),victory_lap_period,TIMER_STOPPABLE)
 
@@ -281,7 +284,8 @@
 	if(!teams)
 		target.body.update_icon() //Update the vote display if it's a public vote
 		var/datum/mafia_role/old = old_vote
-		old.body.update_icon()
+		if(old)
+			old.body.update_icon()
 
 /datum/mafia_controller/proc/reset_votes(vt)
 	var/list/bodies_to_update = list()
@@ -330,7 +334,7 @@
 		var/client/player_client = GLOB.directory[role.player_key]
 		if(player_client)
 			player_client.prefs.copy_to(H, antagonist = TRUE) ///i mean, it will cause github issue reports if this happens so sure throw it in
-			if(initial(H.dna.species.changesource_flags) & RACE_SWAP) //if the game wouldn't randomly give you this species then it's too dangerous to exist
+			if(H.dna.species.outfit_important_for_life) //plasmamen
 				H.set_species(/datum/species/human)
 		role.body = H
 		player_role_lookup[H] = role
@@ -360,21 +364,22 @@
 			if(user_role.validate_action_target(src,action,null))
 				actions += action
 		.["actions"] = actions
+		.["role_theme"] = user_role.special_theme
 	var/list/player_data = list()
 	for(var/datum/mafia_role/R in all_roles)
 		var/list/player_info = list()
 		var/list/actions = list()
-		//Awful snowflake, could use generalizing
-		if(phase == MAFIA_PHASE_VOTING)
-			player_info["votes"] = get_vote_count(R,"Day")
-			if(R.game_status == MAFIA_ALIVE && R != user_role)
-				actions += "Vote"
-		if(phase == MAFIA_PHASE_NIGHT && user_role.team == MAFIA_TEAM_MAFIA && R.game_status == MAFIA_ALIVE && R.team != MAFIA_TEAM_MAFIA)
-			actions += "Kill Vote"
-		if(user_role)
+		if(user_role) //not observer
 			for(var/action in user_role.targeted_actions)
 				if(user_role.validate_action_target(src,action,R))
 					actions += action
+			//Awful snowflake, could use generalizing
+			if(phase == MAFIA_PHASE_VOTING)
+				player_info["votes"] = get_vote_count(R,"Day")
+				if(R.game_status == MAFIA_ALIVE && R != user_role)
+					actions += "Vote"
+			if(phase == MAFIA_PHASE_NIGHT && user_role.team == MAFIA_TEAM_MAFIA && R.game_status == MAFIA_ALIVE && R.team != MAFIA_TEAM_MAFIA)
+				actions += "Kill Vote"
 		player_info["name"] = R.body.real_name
 		player_info["ref"] = REF(R)
 		player_info["actions"] = actions
@@ -404,9 +409,18 @@
 					deltimer(next_phase_timer)
 					tc.InvokeAsync()
 				return TRUE
-	if(!user_role)//ghosts
-		return
-	//User actions THAT ALLOW THE DEAD
+			if("players_home")
+				var/list/failed = list()
+				for(var/datum/mafia_role/player in all_roles)
+					if(!player.body)
+						failed += player
+						continue
+					player.body.forceMove(get_turf(player.assigned_landmark))
+				if(failed.len)
+					to_chat(usr, "howdy armhulen :) here's the list of players that had null bodies on the pull:")
+					for(var/i in failed)
+						var/datum/mafia_role/fail = i
+						to_chat(usr, fail.player_key)
 	switch(action)
 		if("mf_lookup") //atype == Psychologist x1
 			var/raw_role = params["atype"]
@@ -417,7 +431,7 @@
 					helper = role
 					break
 			helper.show_help(usr)
-	if(user_role.game_status == MAFIA_DEAD)//dead people?
+	if(!user_role || user_role.game_status == MAFIA_DEAD)//ghosts, dead people?
 		return
 	var/self_voting = user_role == on_trial ? TRUE : FALSE //used to block people from voting themselves innocent or guilty
 	//User actions

@@ -51,7 +51,7 @@
 
 /datum/map_template/mafia/lavaland
 	name = "Lavaland Excursion"
-	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors... even a revolution!"
+	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors, and fucking lawyers."
 	suffix = "mafia_lavaland.dmm"
 
 /datum/map_template/mafia/ufo
@@ -60,7 +60,6 @@
 	suffix = "mafia_ufo.dmm"
 
 /*
-
 /datum/map_template/mafia/necropolis
 	name = "Necropolis Showdown"
 	description = "The townies have shown up to try and suss out who truly ruined the art direction of SS13. No hurt feelings intended!"

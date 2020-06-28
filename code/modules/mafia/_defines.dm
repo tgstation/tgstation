@@ -103,9 +103,11 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 /datum/mafia_setup/twelve_rip
 	name = "12 Player Setup RIP"
 	roles = list(
-		/datum/mafia_role=8,
-		/datum/mafia_role/traitor=1,
-		/datum/mafia_role/mafia=3
+		/datum/mafia_role=6,
+		/datum/mafia_role/md=1,
+		/datum/mafia_role/detective=1,
+		/datum/mafia_role/mafia=3,
+		/datum/mafia_role/traitor=1
 	)
 
 /datum/mafia_setup/twelve_double_treason
@@ -199,9 +201,7 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/mafia=2
 	)
 */
-
 /*
-
 /datum/mafia_setup/three_test
 	name = "3 Player Test"
 	roles = list(

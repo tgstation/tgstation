@@ -11,12 +11,15 @@ export const MafiaPanel = (props, context) => {
     actions,
     phase,
     roleinfo,
+    role_theme,
     admin_controls,
     judgement_phase,
     timeleft,
     all_roles } = data;
   return (
-    <Window resizable>
+    <Window
+      theme={role_theme}
+      resizable>
       <Window.Content>
         <Section title={phase}>
           {!!roleinfo && (
@@ -55,10 +58,18 @@ export const MafiaPanel = (props, context) => {
             title="ADMIN CONTROLS"
             backgroundColor="red">
             THESE ARE DEBUG, THEY WILL BREAK THE GAME, DO NOT TOUCH <br />
+            Also because an admin did it: do not gib
+            anyone! It will runtime the game to death! <br />
             <Button
+              icon="arrow-right"
               onClick={() => act("next_phase")}>Next Phase
             </Button>
             <Button
+              icon="home"
+              onClick={() => act("players_home")}>Send All Players Home
+            </Button>
+            <Button
+              icon="radiation"
               onClick={() => act("new_game")}>New Game
             </Button>
           </Section>
@@ -71,7 +82,7 @@ export const MafiaPanel = (props, context) => {
                 key={player.ref}
                 label={player.name}>
                 {!player.alive && (<Box color="red">DEAD</Box>)}
-                {player.votes !== undefined && player.alive
+                {player.votes !== undefined && !!player.alive
                 && (<Fragment>Votes : {player.votes} </Fragment>)}
                 {
                   !!player.actions && player.actions.map(action => {
@@ -94,19 +105,19 @@ export const MafiaPanel = (props, context) => {
             <Flex justify="space-around">
               <Button
                 icon="smile-beam"
-                color="green"
+                color="good"
                 onClick={() => act("vote_innocent")}>INNOCENT!
               </Button>
               Use these buttons to vote the accused innocent or guilty!
               <Button
                 icon="angry"
-                color="red"
+                color="bad"
                 onClick={() => act("vote_guilty")}>GUILTY!
               </Button>
             </Flex>
           </Section>
         )}
-        <Flex mt={1}>
+        <Flex mt={1} spacing={1}>
           <Flex.Item grow={1} basis={0}>
             <Section
               title="Roles">
@@ -131,7 +142,8 @@ export const MafiaPanel = (props, context) => {
             <Section
               title="Notes">
               <Table>
-                {!!roleinfo.action_log && roleinfo.action_log.map(log_line => (
+                {roleinfo !== undefined && !!roleinfo.action_log
+                && roleinfo.action_log.map(log_line => (
                   <Table.Row key={log_line}>
                     <Table.Cell>
                       {log_line}

@@ -1,7 +1,7 @@
 /datum/mafia_role
 	var/name = "Assistant"
 	var/desc = "You are a crewmember without any special abilities."
-	var/win_condition = "All Mafia and Solo killing roles are dead."
+	var/win_condition = "all Mafia and Solo killing roles are dead."
 	var/team = MAFIA_TEAM_TOWN
 
 	var/player_key
@@ -18,6 +18,8 @@
 	var/solo_counts_as_town = FALSE //(don't set this for town)
 
 	var/game_status = MAFIA_ALIVE
+
+	var/special_theme //set this to something cool for antagonists and their window will look different
 
 	var/list/role_notes = list()
 
@@ -39,7 +41,7 @@
 	. = ..()
 
 /datum/mafia_role/proc/greet()
-	to_chat(body,"<span class='danger'>You are [name].</span>")
+	to_chat(body,"<span class='danger'>You are the [name].</span>")
 	to_chat(body,"<span class='danger'>[desc].</span>")
 	switch(team)
 		if(MAFIA_TEAM_MAFIA)
@@ -51,7 +53,9 @@
 
 //please take care with this, they can break shit with their equipment unless you specifically disallow them (aka stun at the end of the game)
 /datum/mafia_role/proc/reveal_role(datum/mafia_controller/game, verbose = FALSE)
-	if(verbose && !revealed)
+	if(revealed)
+		return
+	if(verbose)
 		game.send_message("<span class='big bold notice'>It is revealed that the true role of [body] [game_status == MAFIA_ALIVE ? "is" : "was"] [name]!</span>")
 	var/list/oldoutfit = body.get_equipped_items()
 	for(var/thing in oldoutfit)
@@ -222,22 +226,6 @@
 		add_note("N[game.turn] - [R.body.real_name] - [R.name]")
 		current_target = null
 
-/datum/mafia_role/clown
-	name = "Clown"
-	desc = "If you are lynched you take down one of your voters with you and win. HONK!"
-	revealed_outfit = /datum/outfit/mafia/clown
-
-/datum/mafia_role/clown/New(datum/mafia_controller/game)
-	. = ..()
-	RegisterSignal(src,COMSIG_MAFIA_ON_KILL,.proc/prank)
-
-/datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game,lynch)
-	if(lynch)
-		var/datum/mafia_role/victim = pick(game.judgement_guilty_votes)
-		game.send_message("<span class='big clown'>[body.real_name] WAS A CLOWN! HONK! They take down [victim.body.real_name] with their last prank.</span>")
-		to_chat(body,"<span class='big green'>!! CLOWN VICTORY !!</span>")
-		victim.kill(game,FALSE)
-
 /datum/mafia_role/lawyer
 	name = "Lawyer"
 	desc = "You can choose a person during the day to provide extensive legal advice to during the night, preventing night actions."
@@ -299,13 +287,7 @@
 
 /datum/mafia_role/psychologist/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
-	if(!.)
-		return FALSE
-	if(!can_use)
-		return FALSE
-	if(game.phase == MAFIA_PHASE_NIGHT)
-		return FALSE
-	if(target.game_status != MAFIA_ALIVE)
+	if(!. || !can_use || game.phase == MAFIA_PHASE_NIGHT || target.game_status != MAFIA_ALIVE || target.revealed || target == src)
 		return FALSE
 
 /datum/mafia_role/psychologist/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
@@ -333,6 +315,7 @@
 	desc = "You're a member of the changeling hive. Use ':j' talk prefix to talk to your fellow lings."
 	team = MAFIA_TEAM_MAFIA
 	revealed_outfit = /datum/outfit/mafia/changeling
+	special_theme = "syndicate"
 
 ///SOLO ROLES/// they range from anomalous factors not good or evil to deranged killers that try to win alone.
 
@@ -343,6 +326,7 @@
 	team = MAFIA_TEAM_SOLO
 	targeted_actions = list("Night Kill")
 	revealed_outfit = /datum/outfit/mafia/traitor
+	special_theme = "syndicate"
 
 	var/datum/mafia_role/current_victim
 
@@ -473,3 +457,21 @@
 	else
 		to_chat(body, "<span class='userdanger'>You have failed your objective to lynch [obsession.body]!</span>")
 	UnregisterSignal(source,COMSIG_MAFIA_ON_KILL)
+
+/datum/mafia_role/clown
+	name = "Clown"
+	desc = "If you are lynched you take down one of your voters with you and win. HONK!"
+	win_condition = "Get themselves lynched!"
+	revealed_outfit = /datum/outfit/mafia/clown
+	team = MAFIA_TEAM_SOLO
+
+/datum/mafia_role/clown/New(datum/mafia_controller/game)
+	. = ..()
+	RegisterSignal(src,COMSIG_MAFIA_ON_KILL,.proc/prank)
+
+/datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game,lynch)
+	if(lynch)
+		var/datum/mafia_role/victim = pick(game.judgement_guilty_votes)
+		game.send_message("<span class='big clown'>[body.real_name] WAS A CLOWN! HONK! They take down [victim.body.real_name] with their last prank.</span>")
+		to_chat(body,"<span class='big green'>!! CLOWN VICTORY !!</span>")
+		victim.kill(game,FALSE)
