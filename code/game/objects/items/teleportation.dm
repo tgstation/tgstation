@@ -26,11 +26,11 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=400)
 
-/obj/item/locator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-  	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-  	if(!ui)
-    	ui = new(user, src, ui_key, "BluespaceLocator", name, 300, 300, master_ui, state)
-   		ui.open()
+/obj/item/locator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "BluespaceLocator", name, 300, 300, master_ui, state)
+		ui.open()
 
 /obj/item/locator/ui_data(mob/user)
 	var/list/data = list()
@@ -86,21 +86,20 @@
 			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
 			var/distance_str
 			switch(distance)
-					if (1 to 4)
-						distance_str = "very strong"
-					if (5 to 9)
-						distance_str = "strong"
-					if (10 to 19)
-						distance_str = "weak"
-					else
-						distance_str = "very weak"
+				if (1 to 4)
+					distance_str = "very strong"
+				if (5 to 9)
+					distance_str = "strong"
+				if (10 to 19)
+					distance_str = "weak"
+				else
+					distance_str = "very weak"
 			track_implants += list(list(name = W.imp_in.name, direction = dir2text(get_dir(sr, tr)), distance = distance_str))
 		data["trackimplants"] = track_implants
 	return data
 
 /obj/machinery/my_machine/ui_act(action, params)
-  	if(..())
-    	return
+  	if(..()) return
 
 /*
  * Hand-tele
