@@ -379,13 +379,15 @@
 		set_light(3)
 		if(!mind)
 			return
-		for(var/mob/living/simple_animal/hostile/swarmer/melee/drone in dronelist)
+		for(var/d in dronelist)
+			var/mob/living/simple_animal/hostile/swarmer/melee/drone = d
 			drone.set_light(3)
 	else
 		set_light(0)
 		if(!mind)
 			return
-		for(var/mob/living/simple_animal/hostile/swarmer/melee/drone in dronelist)
+		for(var/d in dronelist)
+			var/mob/living/simple_animal/hostile/swarmer/melee/drone = d
 			drone.set_light(0)
 
 /**
