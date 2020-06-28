@@ -197,7 +197,7 @@
   * Arguments:
   * * target - The material or object the swarmer is attempting to destroy
   */
-/mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(atom/movable/target)
+/mob/living/simple_animal/hostile/swarmer/proc/dis_integrate(atom/movable/target)
 	new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
