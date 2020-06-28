@@ -55,7 +55,7 @@
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 2
 	weight = 4
-	cost = 15
+	cost = 10
 	scaling_cost = 10
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	antag_cap = list(2,2,2,2,2,2,2,2,2,2)	// Can pick 3 per team, but rare enough it doesn't matter.
