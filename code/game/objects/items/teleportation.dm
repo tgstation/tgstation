@@ -39,26 +39,6 @@
 	var/turf/sr = get_turf(src)
 
 	if (sr)
-		// Beacon Signals Code
-		/*
-		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
-			if (!W.renamed)
-				continue
-			var/turf/tr = get_turf(W)
-			if (tr.z == sr.z && tr)
-				var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-				if (direct < 5)
-					direct = "very strong"
-				else
-					if (direct < 10)
-						direct = "strong"
-					else
-						if (direct < 20)
-							direct = "weak"
-						else
-							direct = "very weak"
-				temp += "[W.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
-		*/
 		// Check every teleport beacon.
 		var/list/tele_beacons = list()
 		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
@@ -92,31 +72,6 @@
 
 		data["telebeacons"] = tele_beacons
 
-		// Implant Signals Code
-		/*
-		for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
-			if (!W.imp_in || !isliving(W.loc))
-				continue
-			else
-				var/mob/living/M = W.loc
-				if (M.stat == DEAD)
-					if (M.timeofdeath + W.lifespan_postmortem < world.time)
-						continue
-
-			var/turf/tr = get_turf(W)
-			if (tr.z == sr.z && tr)
-				var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-				if (direct < 20)
-					if (direct < 5)
-						direct = "very strong"
-					else
-						if (direct < 10)
-							direct = "strong"
-						else
-							direct = "weak"
-					temp += "[W.imp_in.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
-		*/
-
 		var/list/track_implants = list()
 
 		for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
@@ -140,7 +95,7 @@
 					else
 						distance_str = "very weak"
 			track_implants += list(list(name = W.imp_in.name, direction = dir2text(get_dir(sr, tr)), distance = distance_str))
-			data["trackimplants"] = track_implants
+		data["trackimplants"] = track_implants
 	return data
 
 /obj/machinery/my_machine/ui_act(action, params)
