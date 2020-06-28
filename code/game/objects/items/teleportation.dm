@@ -26,9 +26,6 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=400)
 
-
-
-
 /obj/item/locator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
   	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
   	if(!ui)
@@ -36,11 +33,90 @@
    		ui.open()
 
 /obj/item/locator/ui_data(mob/user)
-  	var/list/data = list()
-	data["health"] = health
-	data["color"] = color
+	var/list/data = list()
 
-  	return data
+	// Get our current turf location.
+	var/turf/sr = get_turf(src)
+
+	if (sr)
+		// Beacon Signals Code
+		/*
+		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
+			if (!W.renamed)
+				continue
+			var/turf/tr = get_turf(W)
+			if (tr.z == sr.z && tr)
+				var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
+				if (direct < 5)
+					direct = "very strong"
+				else
+					if (direct < 10)
+						direct = "strong"
+					else
+						if (direct < 20)
+							direct = "weak"
+						else
+							direct = "very weak"
+				temp += "[W.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+		*/
+		// Check every teleport beacon.
+		var/list/tele_beacons = list()
+		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
+			// If it has not been renamed, skip it.
+			if (!W.renamed)
+				continue
+
+			// Get the tracking beacon's turf location.
+			var/turf/tr = get_turf(W)
+
+			// Make sure it's on a turf and that its Z-level matches the tracker's Z-level
+			if (tr && tr.z == sr.z)
+				// Get the distance between the beacon's turf and our turf
+				var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
+				var/distance_str
+
+				// Translate this distance into a signal strength string
+				switch(distance)
+					if (1 to 4)
+						direct = "very strong"
+					if (5 to 9)
+						direct = "strong"
+					if (10 to 19)
+						direct = "weak"
+					else
+						direct = "very weak"
+
+				// Add the tele beacon to our list.
+				// temp += "[W.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+				tele_beacons += list(list(name = W.name, direction = dir2text(get_dir(sr, tr)), distance = direct))
+
+		data["telebeacons"] = tele_beacons
+
+		// Implant Signals Code
+		/*
+		for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
+			if (!W.imp_in || !isliving(W.loc))
+				continue
+			else
+				var/mob/living/M = W.loc
+				if (M.stat == DEAD)
+					if (M.timeofdeath + W.lifespan_postmortem < world.time)
+						continue
+
+			var/turf/tr = get_turf(W)
+			if (tr.z == sr.z && tr)
+				var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
+				if (direct < 20)
+					if (direct < 5)
+						direct = "very strong"
+					else
+						if (direct < 10)
+							direct = "strong"
+						else
+							direct = "weak"
+					temp += "[W.imp_in.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+		*/
+	return data
 
 /obj/machinery/my_machine/ui_act(action, params)
   	if(..())
