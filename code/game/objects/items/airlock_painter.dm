@@ -150,7 +150,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
 	inhand_icon_state = "decalsprayer"
-	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	var/stored_dir = 2
 	var/stored_color = ""
 	var/stored_decal = "warningline"
@@ -175,12 +175,6 @@
 		return
 	if(use_paint(user) && isturf(F))
 		F.AddComponent(/datum/component/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_STRONG, color, null, null, alpha)
-
-/obj/item/airlock_painter/decal/attack_self(mob/user)
-	if((ink) && (ink.charges >= 1))
-		to_chat(user, "<span class='notice'>[src] beeps to prevent you from removing the toner until out of charges.</span>")
-		return
-	. = ..()
 
 /obj/item/airlock_painter/decal/AltClick(mob/user)
 	. = ..()

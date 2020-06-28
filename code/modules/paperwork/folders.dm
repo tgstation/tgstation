@@ -54,6 +54,14 @@
 			name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
 
 
+/obj/item/folder/Destroy()
+	for(var/obj/important_thing in contents)
+		if(!(important_thing.resistance_flags & INDESTRUCTIBLE))
+			continue
+		important_thing.forceMove(drop_location()) //don't destroy round critical content such as objective documents.
+	return ..()
+
+
 /obj/item/folder/attack_self(mob/user)
 	var/dat = "<title>[name]</title>"
 
