@@ -173,7 +173,7 @@
 	minimum_distance = 5
 	icon_state = "syndicate_pistol"
 	icon_living = "syndicate_pistol"
-	casingtype = /obj/item/ammo_casing/c10mm
+	casingtype = /obj/item/ammo_casing/c9mm
 	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 	dodging = FALSE
@@ -294,6 +294,9 @@
 	maxHealth = 25
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	wound_bonus = -10
+	bare_wound_bonus = 20
+	sharpness = TRUE
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	attack_verb_continuous = "cuts"

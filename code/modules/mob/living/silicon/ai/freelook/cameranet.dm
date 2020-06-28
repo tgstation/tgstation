@@ -71,7 +71,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 				C.images += obscured
 
 	for(var/V in moved_eyes)
-		var/mob/camera/aiEye/eye = V
+		var/mob/camera/ai_eye/eye = V
 		var/list/visibleChunks = list()
 		if(eye.loc)
 			// 0xf = 15

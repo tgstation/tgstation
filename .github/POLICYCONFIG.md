@@ -22,11 +22,12 @@ You can access the string of text through the `get_policy(keyword)` proc, this t
 
 This will return a configured string of text, or blank/null if no policy string is set.
 
-This is also accessible to the user if they use `/client/verb/policy()` which will display to them a list of all the policy texts for keywords applicable to the mob, you can add/modify the list of keywords by modifying the `get_policy_keywords()` proc of a mob type where that is relevant.
+This is also accessible to the user if they use `/client/verb/policy()` which will display to them a list of all the policy texts for keywords applicable to the mob, you can add/modify the list of keywords by modifying the `get_policy_keywords()` proc of a mob type where that is relevant. **If you cannot use the verb to get your policy at any point, the feature is considered to NOT be supported.**
 
-### Example
-Here is a simple example taken from the slime pyroclastic event
-```
+### Relaying Specific Policy To Players, Example
+
+Here is a simple example taken from the slime pyroclastic event to relay specific policy.
+```DM
 var/policy = get_policy(ROLE_PYROCLASTIC_SLIME)
 if (policy)
 	to_chat(S, policy)

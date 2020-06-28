@@ -252,3 +252,9 @@ You can light a cigar on a supermatter crystal.
 Using sticky tape on items can make them stick to people and walls! Be careful, grenades might stick to your hand during the moment of truth!
 In a pinch, stripping yourself naked will give you a sizeable resistance to being tackled. What do you value more, your freedom or your dignity?
 Wearing riot armor makes you significantly more effective at performing tackle takedowns, but will use extra stamina with each leap! It will also significantly protect you from other tackles!
+As a Changeling, your Regenerate Limbs power will quickly heal all of your wounds, but they'll still leave scars. Changelings can use Fleshmend to get rid of scars, or you can ingest Carpotoxin to get rid of them like a normal person.
+Stasis beds halt ALL passive life functions, including regeneration. If your patient isn't responding to treatment, especially with cut or burn wounds, try unbuckling them!
+Epipens contain a powerful coagulant that drastically reduces bleeding on all open cuts. If you don't have time to properly treat someone with lots of cuts, stick them with a pen to buy some time!
+If a patient has an absurd amount of wounds, putting them in cryo will slowly treat all of their wounds simultaneously.
+Anything you can light a cigarette with, you can use to cauterize a bleeding wound. Technically, that includes the supermatter.
+Moderate and Severe cuts will slowly clot by themselves and don't require immediate attention on their own. Critical cuts will actively get worse with time, and are an immediate threat to the patient's life.

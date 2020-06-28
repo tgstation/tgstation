@@ -11,8 +11,21 @@
 	var/invoke_msg
 	var/favor_cost = 0
 
+/datum/religion_rites/New()
+	. = ..()
+	if(!GLOB?.religious_sect)
+		return
+	LAZYADD(GLOB.religious_sect.active_rites, src)
+
+/datum/religion_rites/Destroy()
+	if(!GLOB?.religious_sect)
+		return
+	LAZYREMOVE(GLOB.religious_sect.active_rites, src)
+	return ..()
+
+
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
-/datum/religion_rites/proc/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/proc/perform_rite(mob/living/user, atom/religious_tool)
 	if(GLOB.religious_sect?.favor < favor_cost)
 		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
 		return FALSE
@@ -40,8 +53,8 @@
 
 
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
-/datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	GLOB.religious_sect.on_riteuse(user,AOG)
+/datum/religion_rites/proc/invoke_effect(mob/living/user, atom/religious_tool)
+	GLOB.religious_sect.on_riteuse(user,religious_tool)
 	return TRUE
 
 
@@ -57,17 +70,30 @@
 	invoke_msg = "... Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
 	favor_cost = 500
 
-/datum/religion_rites/synthconversion/perform_rite(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!AOG?.buckled_mobs?.len)
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
+/datum/religion_rites/synthconversion/perform_rite(mob/living/user, atom/religious_tool)
+	if(!ismovable(religious_tool))
+		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
 		return FALSE
+	var/atom/movable/movable_reltool = religious_tool
+	if(!movable_reltool)
+		return FALSE
+	if(!LAZYLEN(movable_reltool.buckled_mobs))
+		. = FALSE
+		if(!movable_reltool.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
+			to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
+			return
+		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [movable_reltool].</span>")
+		return
 	return ..()
 
-/datum/religion_rites/synthconversion/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!AOG?.buckled_mobs?.len)
+/datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
+	if(!ismovable(religious_tool))
+		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
+	var/atom/movable/movable_reltool = religious_tool
+	if(!movable_reltool?.buckled_mobs?.len)
 		return FALSE
 	var/mob/living/carbon/human/human2borg
-	for(var/i in AOG.buckled_mobs)
+	for(var/i in movable_reltool.buckled_mobs)
 		if(istype(i,/mob/living/carbon/human))
 			human2borg = i
 			break

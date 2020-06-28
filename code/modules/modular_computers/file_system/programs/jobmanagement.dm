@@ -6,7 +6,7 @@
 	transfer_access = ACCESS_HEADS
 	requires_ntnet = 0
 	size = 4
-	tgui_id = "ntos_job_manager"
+	tgui_id = "NtosJobManager"
 	ui_x = 400
 	ui_y = 620
 

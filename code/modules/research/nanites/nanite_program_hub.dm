@@ -40,6 +40,18 @@
 	else
 		..()
 
+/obj/machinery/nanite_program_hub/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_screwdriver(user, "nanite_program_hub_t", "nanite_program_hub", I)
+
+/obj/machinery/nanite_program_hub/crowbar_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_crowbar(I)
+
 /obj/machinery/nanite_program_hub/proc/eject(mob/living/user)
 	if(!disk)
 		return
@@ -56,7 +68,7 @@
 /obj/machinery/nanite_program_hub/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_program_hub", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "NaniteProgramHub", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/nanite_program_hub/ui_data()

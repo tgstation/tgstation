@@ -91,7 +91,7 @@
 /obj/machinery/computer/cargo/express/ui_interact(mob/living/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "cargo_express", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "CargoExpress", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
@@ -192,7 +192,7 @@
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						D.adjust_money(-SO.pack.cost)
-						new /obj/effect/DPtarget(LZ, podType, SO)
+						new /obj/effect/dp_target(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
@@ -210,7 +210,7 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/DPtarget(LZ, podType, SO)
+							new /obj/effect/dp_target(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

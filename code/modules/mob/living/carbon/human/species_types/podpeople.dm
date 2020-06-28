@@ -11,6 +11,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.25
 	heatmod = 1.5
+	payday_modifier = 0.75
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
@@ -59,3 +60,8 @@
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/projectile/energy/florayield)
 			H.set_nutrition(min(H.nutrition+30, NUTRITION_LEVEL_FULL))
+		if(/obj/projectile/energy/florarevolution)
+			H.show_message("<span class='notice'>The radiation beam leaves you feeling disoriented!</span>")
+			H.Dizzy(15)
+			H.emote("flip")
+			H.emote("spin")

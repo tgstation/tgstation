@@ -95,7 +95,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "codex_gigas", name, 450, 450, master_ui, state)
+		ui = new(user, src, ui_key, "CodexGigas", name, 450, 450, master_ui, state)
 		ui.open()
 
 /obj/item/book/codex_gigas/ui_data(mob/user)

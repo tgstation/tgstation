@@ -43,16 +43,22 @@
 	if(.) //damage was dealt
 		new /obj/effect/temp_visual/impact_effect/ion(loc)
 
-/obj/structure/emergency_shield/sanguine
-	name = "sanguine barrier"
-	desc = "A potent shield summoned by cultists to defend their rites."
-	icon_state = "shield-red"
-	max_integrity = 60
 
-/obj/structure/emergency_shield/sanguine/emp_act(severity)
+/obj/structure/emergency_shield/cult
+	name = "cult barrier"
+	desc = "A shield summoned by cultists to keep heretics away."
+	max_integrity = 100
+	icon_state = "shield-red"
+
+/obj/structure/emergency_shield/cult/emp_act(severity)
 	return
 
-/obj/structure/emergency_shield/invoker
+/obj/structure/emergency_shield/cult/narsie
+	name = "sanguine barrier"
+	desc = "A potent shield summoned by cultists to defend their rites."
+	max_integrity = 60
+
+/obj/structure/emergency_shield/cult/weak
 	name = "Invoker's Shield"
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals."
 	color = "#FF0000"
@@ -60,9 +66,40 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_MOB_LAYER
 
-/obj/structure/emergency_shield/invoker/emp_act(severity)
-	return
+/obj/structure/emergency_shield/cult/barrier
+	density = FALSE //toggled on right away by the parent rune
+	CanAtmosPass = ATMOS_PASS_DENSITY
+	///The rune that created the shield itself. Used to delete the rune when the shield is destroyed.
+	var/obj/effect/rune/parent_rune
 
+/obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user)
+	parent_rune.attack_hand(user)
+
+/obj/structure/emergency_shield/cult/barrier/attack_animal(mob/living/simple_animal/user)
+	if(iscultist(user))
+		parent_rune.attack_animal(user)
+	else
+		..()
+
+/obj/structure/emergency_shield/cult/barrier/Destroy()
+	if(parent_rune)
+		parent_rune.visible_message("<span class='danger'>The [parent_rune] fades away as [src] is destroyed!</span>")
+		QDEL_NULL(parent_rune)
+	..()
+
+/**
+*Turns the shield on and off.
+*
+*The shield has 2 states: on and off. When on, it will block movement,projectiles, items, etc. and be clearly visible, and block atmospheric gases.
+*When off, the rune no longer blocks anything and turns invisible.
+*The barrier itself is not intended to interact with the conceal runes cult spell for balance purposes.
+*/
+/obj/structure/emergency_shield/cult/barrier/proc/Toggle()
+	density = !density
+	air_update_turf(1)
+	invisibility = initial(invisibility)
+	if(!density)
+		invisibility = INVISIBILITY_OBSERVER
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"

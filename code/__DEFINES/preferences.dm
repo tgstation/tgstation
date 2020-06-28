@@ -21,6 +21,7 @@
 #define DEADMIN_POSITION_SECURITY	(1<<18)
 #define DEADMIN_POSITION_SILICON	(1<<19)
 #define SOUND_ENDOFROUND		(1<<20)
+#define ADMIN_IGNORE_CULT_GHOST	(1<<21)
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_ENDOFROUND|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS)
 
@@ -45,6 +46,16 @@
 #define PARALLAX_MED     1
 #define PARALLAX_LOW     2
 #define PARALLAX_DISABLE 3 //this option must be the highest number
+
+#define PIXEL_SCALING_AUTO 0
+#define PIXEL_SCALING_1X 1
+#define PIXEL_SCALING_1_2X 1.5
+#define PIXEL_SCALING_2X 2
+#define PIXEL_SCALING_3X 3
+
+#define SCALING_METHOD_NORMAL "normal"
+#define SCALING_METHOD_DISTORT "distort"
+#define SCALING_METHOD_BLUR "blur"
 
 #define PARALLAX_DELAY_DEFAULT world.tick_lag
 #define PARALLAX_DELAY_MED     1
@@ -85,6 +96,7 @@
 #define JP_HIGH 3
 
 //randomised elements
+#define RANDOM_HARDCORE "random_hardcore"
 #define RANDOM_NAME "random_name"
 #define RANDOM_NAME_ANTAG "random_name_antag"
 #define RANDOM_BODY "random_body"

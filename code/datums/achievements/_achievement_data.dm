@@ -32,7 +32,10 @@
 	set waitfor = FALSE
 
 	var/list/kv = list()
-	var/datum/DBQuery/Query = SSdbcore.NewQuery("SELECT achievement_key,value FROM [format_table_name("achievements")] WHERE ckey = '[sanitizeSQL(owner_ckey)]'")
+	var/datum/db_query/Query = SSdbcore.NewQuery(
+		"SELECT achievement_key,value FROM [format_table_name("achievements")] WHERE ckey = :ckey",
+		list("ckey" = owner_ckey)
+	)
 	if(!Query.Execute())
 		qdel(Query)
 		return
@@ -59,8 +62,8 @@
 		data[achievement_type] = A.load(owner_ckey)
 		original_cached_data[achievement_type] = data[achievement_type]
 
-///Unlocks an achievement of a specific type.
-/datum/achievement_data/proc/unlock(achievement_type, mob/user)
+///Unlocks an achievement of a specific type. achievement type is a typepath to the award, user is the mob getting the award, and value is an optional value to be used for defining a score to add to the leaderboard
+/datum/achievement_data/proc/unlock(achievement_type, mob/user, value = 1)
 	if(!SSachievements.achievements_enabled)
 		return
 	var/datum/award/A = SSachievements.awards[achievement_type]
@@ -71,7 +74,7 @@
 		data[achievement_type] = TRUE
 		A.on_unlock(user) //Only on default achievement, as scores keep going up.
 	else if(istype(A, /datum/award/score))
-		data[achievement_type] += 1
+		data[achievement_type] += value
 
 ///Getter for the status/score of an achievement
 /datum/achievement_data/proc/get_achievement_status(achievement_type)
@@ -97,7 +100,7 @@
 	if(!ui)
 		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
 		assets.send(user)
-		ui = new(user, src, ui_key, "achievements", "Achievements Menu", 800, 1000, master_ui, state)
+		ui = new(user, src, ui_key, "Achievements", "Achievements Menu", 540, 680, master_ui, state)
 		ui.open()
 
 /datum/achievement_data/ui_data(mob/user)

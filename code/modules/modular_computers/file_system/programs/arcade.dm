@@ -6,7 +6,7 @@
 	requires_ntnet = FALSE
 	network_destination = "arcade network"
 	size = 6
-	tgui_id = "ntos_arcade"
+	tgui_id = "NtosArcade"
 	ui_x = 450
 	ui_y = 350
 

@@ -49,6 +49,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/reagent_containers/food/snacks/urinalcake = 1,
 
 		/obj/item/airlock_painter = 1,
+		/obj/item/airlock_painter/decal = 1,
 		/obj/item/rack_parts = 1,
 		/obj/item/clothing/mask/breath = 1,
 		/obj/item/shard = 1,
@@ -106,6 +107,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/stack/rods/twentyfive = 1,
 		/obj/item/stack/sheet/metal/twenty = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
+		/obj/item/sign = 1,
 
 		//assemblies
 		/obj/item/assembly/infra = 1,
@@ -116,7 +118,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/assembly/igniter = 1,
 		/obj/item/assembly/health = 1,
 
-		/obj/item/stack/packageWrap = 1,
+		/obj/item/stack/package_wrap = 1,
 		) = 1,
 
 	list(//medical and chemicals
@@ -166,6 +168,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/grenade/iedcasing/spawned = 1,
 		/obj/item/melee/baton/cattleprod = 1,
 		/obj/item/throwing_star = 1,
+		/obj/item/pen/fountain = 1,
 		) = 8,
 
 	list(//equipment
@@ -192,7 +195,8 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
 		/obj/item/beacon = 1,
 		/obj/item/weaponcrafting/receiver = 1,
-		/obj/item/paper/fluff/stations/soap =1, //recipes count as crafting.
+		/obj/item/paper/fluff/stations/soap = 1, //recipes count as crafting.
+		/obj/item/plaque = 1,
 		) = 8,
 
 	list(//medical and chemicals
@@ -254,6 +258,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 #define maint_common_weight 4500
 #define maint_uncommon_weight 1000
 #define maint_oddity_weight 1 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
+#define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
 
 //Loot pool used by default maintenance loot spawners
 GLOBAL_LIST_INIT(maintenance_loot, list(

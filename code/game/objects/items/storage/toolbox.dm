@@ -2,7 +2,7 @@
 	name = "toolbox"
 	desc = "Danger. Very robust."
 	icon_state = "toolbox_default"
-	item_state = "toolbox_default"
+	inhand_icon_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -19,6 +19,7 @@
 	material_flags = MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
+	wound_bonus = 5
 
 /obj/item/storage/toolbox/Initialize()
 	. = ..()
@@ -42,7 +43,7 @@
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
 	icon_state = "red"
-	item_state = "toolbox_red"
+	inhand_icon_state = "toolbox_red"
 	material_flags = NONE
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
@@ -67,7 +68,7 @@
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
-	item_state = "toolbox_blue"
+	inhand_icon_state = "toolbox_blue"
 	material_flags = NONE
 
 /obj/item/storage/toolbox/mechanical/PopulateContents()
@@ -95,9 +96,9 @@
 
 /obj/item/storage/toolbox/mechanical/old/clean
 	name = "toolbox"
-	desc = "A old, blue toolbox, it looks robust."
+	desc = "An old, blue toolbox, it looks robust."
 	icon_state = "oldtoolboxclean"
-	item_state = "toolbox_blue"
+	inhand_icon_state = "toolbox_blue"
 	has_latches = FALSE
 	force = 19
 	throwforce = 22
@@ -129,7 +130,7 @@
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
-	item_state = "toolbox_yellow"
+	inhand_icon_state = "toolbox_yellow"
 	material_flags = NONE
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
@@ -148,7 +149,7 @@
 /obj/item/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
-	item_state = "toolbox_syndi"
+	inhand_icon_state = "toolbox_syndi"
 	force = 15
 	throwforce = 18
 	material_flags = NONE
@@ -170,7 +171,7 @@
 /obj/item/storage/toolbox/drone
 	name = "mechanical toolbox"
 	icon_state = "blue"
-	item_state = "toolbox_blue"
+	inhand_icon_state = "toolbox_blue"
 	material_flags = NONE
 
 /obj/item/storage/toolbox/drone/PopulateContents()
@@ -187,7 +188,7 @@
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
-	item_state = "artistic_toolbox"
+	inhand_icon_state = "artistic_toolbox"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
 
@@ -213,7 +214,7 @@
 	name = "ammo box"
 	desc = "It contains a few clips."
 	icon_state = "ammobox"
-	item_state = "ammobox"
+	inhand_icon_state = "ammobox"
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound =  'sound/items/handling/ammobox_pickup.ogg'
 
@@ -230,7 +231,7 @@
 	name = "insidious case"
 	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
 	icon_state = "infiltrator_case"
-	item_state = "infiltrator_case"
+	inhand_icon_state = "infiltrator_case"
 	force = 15
 	throwforce = 18
 	w_class = WEIGHT_CLASS_NORMAL

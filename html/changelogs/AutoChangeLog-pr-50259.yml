@@ -1,5 +1,0 @@
-author: "Akrilla"
-delete-after: True
-changes: 
-  - rscadd: "Readds the dropoff locator - points to where you need to dropoff your target."
-  - tweak: "Contract tablet hides other contracts while there's an active one."

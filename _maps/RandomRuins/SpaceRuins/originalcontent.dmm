@@ -825,9 +825,9 @@
 	dir = 6
 	},
 /obj/structure/table/wood,
-/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythree_twentythree,
 /obj/item/canvas,
-/obj/item/canvas/nineteenXnineteen,
+/obj/item/canvas/nineteen_nineteen,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "co" = (

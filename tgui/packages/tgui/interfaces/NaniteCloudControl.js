@@ -1,10 +1,10 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Grid, LabeledList, NoticeBox, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 
-export const NaniteDiskBox = props => {
-  const { state } = props;
-  const { data } = state;
+export const NaniteDiskBox = (props, context) => {
+  const { data } = useBackend(context);
   const {
     has_disk,
     has_program,
@@ -32,7 +32,7 @@ export const NaniteDiskBox = props => {
   );
 };
 
-export const NaniteInfoBox = props => {
+export const NaniteInfoBox = (props, context) => {
   const { program } = props;
 
   const {
@@ -162,8 +162,8 @@ export const NaniteInfoBox = props => {
   );
 };
 
-export const NaniteCloudBackupList = props => {
-  const { act, data } = useBackend(props);
+export const NaniteCloudBackupList = (props, context) => {
+  const { act, data } = useBackend(context);
   const cloud_backups = data.cloud_backups || [];
   return (
     cloud_backups.map(backup => (
@@ -179,8 +179,8 @@ export const NaniteCloudBackupList = props => {
   );
 };
 
-export const NaniteCloudBackupDetails = props => {
-  const { act, data } = useBackend(props);
+export const NaniteCloudBackupDetails = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     current_view,
     disk,
@@ -229,13 +229,13 @@ export const NaniteCloudBackupDetails = props => {
             )}>
             <Section>
               <NaniteInfoBox program={program} />
-              {!!can_rule && (
+              {(!!can_rule || !!program.has_rules) && (
                 <Section
                   mt={-2}
                   title="Rules"
                   level={2}
-                  buttons={(
-                    <Button
+                  buttons={(!!can_rule
+                    && <Button
                       icon="plus"
                       content="Add Rule from Disk"
                       color="good"
@@ -245,7 +245,7 @@ export const NaniteCloudBackupDetails = props => {
                   )}>
                   {program.has_rules ? (
                     rules.map(rule => (
-                      <Fragment key={rule.display}>
+                      <Box key={rule.display}>
                         <Button
                           icon="minus-circle"
                           color="bad"
@@ -253,8 +253,8 @@ export const NaniteCloudBackupDetails = props => {
                             program_id: program.id,
                             rule_id: rule.id,
                           })} />
-                        {rule.display}
-                      </Fragment>
+                        {` ${rule.display}`}
+                      </Box>
                     ))
                   ) : (
                     <Box color="bad">
@@ -271,9 +271,8 @@ export const NaniteCloudBackupDetails = props => {
   );
 };
 
-export const NaniteCloudControl = props => {
-  const { state } = props;
-  const { act, data } = useBackend(props);
+export const NaniteCloudControl = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     has_disk,
     current_view,
@@ -281,52 +280,54 @@ export const NaniteCloudControl = props => {
   } = data;
 
   return (
-    <Fragment>
-      <Section
-        title="Program Disk"
-        buttons={(
-          <Button
-            icon="eject"
-            content="Eject"
-            disabled={!has_disk}
-            onClick={() => act('eject')} />
-        )}>
-        <NaniteDiskBox state={state} />
-      </Section>
-      <Section
-        title="Cloud Storage"
-        buttons={(
-          current_view ? (
+    <Window resizable>
+      <Window.Content scrollable>
+        <Section
+          title="Program Disk"
+          buttons={(
             <Button
-              icon="arrow-left"
-              content="Return"
-              onClick={() => act('set_view', {
-                view: 0,
-              })} />
-          ) : (
-            <Fragment>
-              {"New Backup: "}
-              <NumberInput
-                value={new_backup_id}
-                minValue={1}
-                maxValue={100}
-                stepPixelSize={4}
-                width="39px"
-                onChange={(e, value) => act('update_new_backup_value', {
-                  value: value,
-                })} />
+              icon="eject"
+              content="Eject"
+              disabled={!has_disk}
+              onClick={() => act('eject')} />
+          )}>
+          <NaniteDiskBox />
+        </Section>
+        <Section
+          title="Cloud Storage"
+          buttons={(
+            current_view ? (
               <Button
-                icon="plus"
-                onClick={() => act('create_backup')} />
-            </Fragment>
-          )
-        )}>
-        {!data.current_view ? (
-          <NaniteCloudBackupList state={state} />
-        ) : (
-          <NaniteCloudBackupDetails state={state} />
-        )}
-      </Section>
-    </Fragment>
+                icon="arrow-left"
+                content="Return"
+                onClick={() => act('set_view', {
+                  view: 0,
+                })} />
+            ) : (
+              <Fragment>
+                {"New Backup: "}
+                <NumberInput
+                  value={new_backup_id}
+                  minValue={1}
+                  maxValue={100}
+                  stepPixelSize={4}
+                  width="39px"
+                  onChange={(e, value) => act('update_new_backup_value', {
+                    value: value,
+                  })} />
+                <Button
+                  icon="plus"
+                  onClick={() => act('create_backup')} />
+              </Fragment>
+            )
+          )}>
+          {!data.current_view ? (
+            <NaniteCloudBackupList />
+          ) : (
+            <NaniteCloudBackupDetails />
+          )}
+        </Section>
+      </Window.Content>
+    </Window>
   );
 };

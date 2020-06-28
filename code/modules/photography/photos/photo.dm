@@ -5,7 +5,7 @@
 	name = "photo"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "photo"
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50

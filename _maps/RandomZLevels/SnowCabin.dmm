@@ -1830,7 +1830,7 @@
 	id = "TheRealSecretPlace";
 	name = "\improper Tear In The Fabric of Reality"
 	},
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	desc = "Holding the record for about 500 years now.";
 	name = "The Most Annoying Organization Ever";
 	pixel_y = 32
@@ -3940,7 +3940,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
 "kn" = (
-/obj/structure/sign/basic{
+/obj/structure/sign{
 	pixel_x = 32
 	},
 /turf/open/floor/plating/asteroid/snow{

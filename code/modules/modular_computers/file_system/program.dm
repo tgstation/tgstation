@@ -38,6 +38,8 @@
 	var/ui_y = 700
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 	var/ui_header = null
+	///Assets specific to programs
+	var/list/special_assets = list()
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -72,7 +74,7 @@
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
-			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>")
+			to_chat(user, "<span class='danger'>\The [computer] flashes a \"Hardware Error - Incompatible software\" warning.</span>")
 		return 0
 	return 1
 
@@ -148,6 +150,20 @@
 		return 1
 	return 0
 
+/**
+  *
+  *Called by the device when it is emagged.
+  *
+  *Emagging the device allows certain programs to unlock new functions. However, the program will
+  *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
+  *The device will allow an emag to be run multiple times, so the user can re-emag to run the
+  *override again, should they download something new. The run_emag() proc should return TRUE if
+  *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
+  *emag functions).
+**/
+/datum/computer_file/program/proc/run_emag()
+	return FALSE
+
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
@@ -161,6 +177,9 @@
 	if(!ui && tgui_id)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
+		for(var/i in special_assets)
+			assets = get_asset_datum(i)
+			assets.send(user)
 
 		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y, state = state)
 		ui.open()

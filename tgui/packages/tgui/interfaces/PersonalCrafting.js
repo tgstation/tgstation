@@ -1,13 +1,120 @@
-import { map } from 'common/collections';
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, LabeledList, Section, Tabs } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Button, Dimmer, Flex, Icon, LabeledList, Section, Tabs } from '../components';
+import { Window } from '../layouts';
 
-const CraftingList = props => {
+export const PersonalCrafting = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    busy,
+    display_craftable_only,
+    display_compact,
+  } = data;
+  const crafting_recipes = data.crafting_recipes || {};
+  // Sort everything into flat categories
+  const categories = [];
+  const recipes = [];
+  for (let category of Object.keys(crafting_recipes)) {
+    const subcategories = crafting_recipes[category];
+    if ('has_subcats' in subcategories) {
+      for (let subcategory of Object.keys(subcategories)) {
+        if (subcategory === 'has_subcats') {
+          continue;
+        }
+        // Push category
+        categories.push({
+          name: subcategory,
+          category,
+          subcategory,
+        });
+        // Push recipes
+        const _recipes = subcategories[subcategory];
+        for (let recipe of _recipes) {
+          recipes.push({
+            ...recipe,
+            category: subcategory,
+          });
+        }
+      }
+      continue;
+    }
+    // Push category
+    categories.push({
+      name: category,
+      category,
+    });
+    // Push recipes
+    const _recipes = crafting_recipes[category];
+    for (let recipe of _recipes) {
+      recipes.push({
+        ...recipe,
+        category,
+      });
+    }
+  }
+  // Sort out the tab state
+  const [tab, setTab] = useLocalState(
+    context, 'tab', categories[0]?.name);
+  const shownRecipes = recipes
+    .filter(recipe => recipe.category === tab);
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        {!!busy && (
+          <Dimmer fontSize="32px">
+            <Icon name="cog" spin={1} />
+            {' Crafting...'}
+          </Dimmer>
+        )}
+        <Section
+          title="Personal Crafting"
+          buttons={(
+            <Fragment>
+              <Button.Checkbox
+                content="Compact"
+                checked={display_compact}
+                onClick={() => act('toggle_compact')} />
+              <Button.Checkbox
+                content="Craftable Only"
+                checked={display_craftable_only}
+                onClick={() => act('toggle_recipes')} />
+            </Fragment>
+          )}>
+          <Flex>
+            <Flex.Item>
+              <Tabs vertical>
+                {categories.map(category => (
+                  <Tabs.Tab
+                    key={category.name}
+                    selected={category.name === tab}
+                    onClick={() => {
+                      setTab(category.name);
+                      // Backend expects `0` or '' to indicate no subcategory
+                      act('set_category', {
+                        category: category.category,
+                        subcategory: category.subcategory,
+                      });
+                    }}>
+                    {category.name}
+                  </Tabs.Tab>
+                ))}
+              </Tabs>
+            </Flex.Item>
+            <Flex.Item grow={1} basis={0}>
+              <CraftingList craftables={shownRecipes} />
+            </Flex.Item>
+          </Flex>
+        </Section>
+      </Window.Content>
+    </Window>
+  );
+};
+
+const CraftingList = (props, context) => {
   const {
     craftables = [],
   } = props;
-  const { act, data } = useBackend(props);
+  const { act, data } = useBackend(context);
   const {
     craftability = {},
     display_compact,
@@ -76,100 +183,4 @@ const CraftingList = props => {
       </Section>
     );
   });
-};
-
-export const PersonalCrafting = props => {
-  const { state } = props;
-  const { act, data } = useBackend(props);
-  const {
-    busy,
-    display_craftable_only,
-    display_compact,
-  } = data;
-
-  const craftingRecipes = map((subcategory, category) => {
-    const hasSubcats = ('has_subcats' in subcategory);
-    const firstSubcatName = Object.keys(subcategory)
-      .find(name => name !== 'has_subcats');
-    return {
-      category,
-      subcategory,
-      hasSubcats,
-      firstSubcatName,
-    };
-  })(data.crafting_recipes || {});
-
-  // Shows an overlay when crafting an item
-  const busyBox = !!busy && (
-    <Dimmer
-      fontSize="40px"
-      textAlign="center">
-      <Box mt={30}>
-        <Icon name="cog" spin={1} />
-        {' Crafting...'}
-      </Box>
-    </Dimmer>
-  );
-
-  return (
-    <Fragment>
-      {busyBox}
-      <Section
-        title="Personal Crafting"
-        buttons={(
-          <Fragment>
-            <Button
-              icon={display_compact ? "check-square-o" : "square-o"}
-              content="Compact"
-              selected={display_compact}
-              onClick={() => act('toggle_compact')} />
-            <Button
-              icon={display_craftable_only ? "check-square-o" : "square-o"}
-              content="Craftable Only"
-              selected={display_craftable_only}
-              onClick={() => act('toggle_recipes')} />
-          </Fragment>
-        )}>
-        <Tabs>
-          {craftingRecipes.map(recipe => (
-            <Tabs.Tab
-              key={recipe.category}
-              label={recipe.category}
-              onClick={() => act('set_category', {
-                category: recipe.category,
-                // Backend expects "0" or "" to indicate no subcategory
-                subcategory: recipe.firstSubcatName,
-              })}>
-              {() => !recipe.hasSubcats && (
-                <CraftingList
-                  craftables={recipe.subcategory}
-                  state={state} />
-              ) || (
-                <Tabs vertical>
-                  {map((value, name) => {
-                    if (name === "has_subcats") {
-                      return;
-                    }
-                    return (
-                      <Tabs.Tab
-                        label={name}
-                        onClick={() => act('set_category', {
-                          subcategory: name,
-                        })}>
-                        {() => (
-                          <CraftingList
-                            craftables={value}
-                            state={state} />
-                        )}
-                      </Tabs.Tab>
-                    );
-                  })(recipe.subcategory)}
-                </Tabs>
-              )}
-            </Tabs.Tab>
-          ))}
-        </Tabs>
-      </Section>
-    </Fragment>
-  );
 };

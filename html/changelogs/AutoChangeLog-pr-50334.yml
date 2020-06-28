@@ -1,8 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some phobia reactions forcing people with abductor tongues to speak out loud"
-  - bugfix: "Causing a monkey powder reaction in a monkey cube now deletes the monkey cube"
-  - bugfix: "Mech teleporters can now only select a destination within 7 tiles and on the same Z-level"
-  - bugfix: "Space ninjas can now properly extract research data from technology disks"
-  - bugfix: "You can no longer attempt to tackle items that are in your inventory"

@@ -33,9 +33,9 @@
 			if(!R.emagged)
 				var/new_ai
 				if(user)
-					new_ai = select_active_ai(user)
+					new_ai = select_active_ai(user, R.z)
 				else
-					new_ai = select_active_ai(R)
+					new_ai = select_active_ai(R, R.z)
 				R.notify_ai(DISCONNECT)
 				if(new_ai && (new_ai != R.connected_ai))
 					R.connected_ai = new_ai

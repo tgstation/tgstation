@@ -382,7 +382,7 @@
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
 	icon_state = "carpplush"
-	item_state = "carp_plushie"
+	inhand_icon_state = "carp_plushie"
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	squeak_override = list('sound/weapons/bite.ogg'=1)
 
@@ -498,7 +498,7 @@
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon_state = "plushie_lizard"
-	item_state = "plushie_lizard"
+	inhand_icon_state = "plushie_lizard"
 	attack_verb = list("clawed", "hissed", "tail slapped")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
@@ -506,7 +506,7 @@
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
 	icon_state = "plushie_snake"
-	item_state = "plushie_snake"
+	inhand_icon_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
 	squeak_override = list('sound/weapons/bite.ogg' = 1)
 
@@ -514,7 +514,7 @@
 	name = "operative plushie"
 	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
 	icon_state = "plushie_nuke"
-	item_state = "plushie_nuke"
+	inhand_icon_state = "plushie_nuke"
 	attack_verb = list("shot", "nuked", "detonated")
 	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
 
@@ -522,7 +522,7 @@
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
 	icon_state = "plushie_slime"
-	item_state = "plushie_slime"
+	inhand_icon_state = "plushie_slime"
 	attack_verb = list("blorbled", "slimed", "absorbed")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
@@ -531,7 +531,7 @@
 	name = "awakened plushie"
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
 	icon_state = "plushie_awake"
-	item_state = "plushie_awake"
+	inhand_icon_state = "plushie_awake"
 
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
@@ -541,7 +541,7 @@
 	name = "bee plushie"
 	desc = "A cute toy that resembles an even cuter bee."
 	icon_state = "plushie_h"
-	item_state = "plushie_h"
+	inhand_icon_state = "plushie_h"
 	attack_verb = list("stung")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
@@ -556,123 +556,13 @@
 	name = "strange goat plushie"
 	icon_state = "goat"
 	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
-
-/obj/item/toy/plush/goatplushie/angry
-	var/mob/living/carbon/target
-	throwforce = 6
-	var/cooldown = 0
-	var/cooldown_modifier = 20
-
-/obj/item/toy/plush/goatplushie/angry/Initialize()
-	. = ..()
-	START_PROCESSING(SSprocessing, src)
-
-/obj/item/toy/plush/goatplushie/angry/process()
-	if (prob(25) && !target)
-		var/list/targets_to_pick_from = list()
-		for(var/mob/living/carbon/C in view(7, src))
-			if(considered_alive(C.mind) && !faction_check(list("goat"), C.faction, FALSE))
-				targets_to_pick_from += C
-		if (!targets_to_pick_from.len)
-			return
-		target = pick(targets_to_pick_from)
-		visible_message("<span class='notice'>[src] stares at [target].</span>")
-	if (world.time > cooldown && target)
-		ram()
-
-/obj/item/toy/plush/goatplushie/angry/proc/ram()
-	if(prob(90) && isturf(loc) && considered_alive(target.mind) && !faction_check(list("goat"), target.faction, FALSE))
-		throw_at(target, 10, 10)
-		visible_message("<span class='danger'>[src] rams [target]!</span>")
-		cooldown = world.time + cooldown_modifier
-	target = null
-	visible_message("<span class='notice'>[src] looks disinterested.</span>")
-
-/obj/item/toy/plush/goatplushie/angry/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
-	return ..()
-
-/obj/item/toy/plush/goatplushie
-	squeak_override = list('sound/items/goatsound.ogg'=1)
-
-/obj/item/toy/plush/goatplushie/angry/realgoat
-	name = "goat plushie"
-	icon_state = "realgoat"
-
-/obj/item/toy/plush/realgoat
-	name = "goat plushie"
-	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same... or at least it would if it wasn't a normal plushie."
-	icon_state = "realgoat"
-	squeak_override = list('sound/items/goatsound.ogg'=1)
-
-/obj/item/toy/plush/goatplushie/angry/kinggoat
-	name = "King Goat Plushie"
-	desc = "A plushie depicting the king of all goats."
-	icon_state = "kinggoat"
-	throwforce = 25
-	force = 25
-	attack_verb = list("chomped")
-	gender = MALE
-
-/obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat
-	name = "Ascended King Goat Plushie"
-	desc = "A plushie depicting the god of all goats."
-	icon_state = "ascendedkinggoat"
-	throwforce = 30
-	force = 30
-	divine = TRUE
-
-/obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat/attackby(obj/item/I,mob/living/user,params)
-	if(I.get_sharpness())
-		user.visible_message("<span class='notice'>[user] attempts to destroy [src]!</span>", "<span class='suicide'>[I] bounces off [src]'s back before breaking into millions of pieces... [src] glares at [user]!</span>") // You fucked up now son
-		I.play_tool_sound(src)
-		qdel(I)
-		user.gib()
-
-/obj/item/toy/plush/goatplushie/angry/kinggoat/attackby(obj/item/I,mob/living/user,params)
-	if(I.get_sharpness())
-		user.visible_message("<span class='notice'>[user] rips [src] to shreds!</span>", "<span class='notice'>[src]'s death has attracted the attention of the king goat plushie guards!</span>")
-		I.play_tool_sound(src)
-		qdel(src)
-		var/turf/location = get_turf(user)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
-		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/cabbage))
-		user.visible_message("<span class='notice'>[user] watches as [src] takes a bite out of the cabbage!</span>", "<span class='notice'>[src]'s fur starts glowing. It seems they have ascended!</span>")
-		playsound(src, 'sound/items/eatfood.ogg', 50, 1)
-		qdel(I)
-		qdel(src)
-		var/turf/location = get_turf(user)
-		new/obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat(location)
-
-
-/obj/item/toy/plush/goatplushie/angry/guardgoat
-	name = "guard goat plushie"
-	desc = "A plushie depicting one of the King Goat's guards, tasked to protect the king at all costs."
-	icon_state = "guardgoat"
-	throwforce = 10
-
-/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat
-	name = "royal guard goat plushie"
-	desc = "A plushie depicting one of the royal King Goat's guards, tasked to protecting the king at all costs and training new goat guards."
-	icon_state = "royalguardgoat"
-	throwforce = 15
+	squeak_override = list('sound/weapons/punch1.ogg'=1)
 
 /obj/item/toy/plush/moth
 	name = "moth plushie"
 	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
 	icon_state = "moffplush"
-	item_state = "moffplush"
+	inhand_icon_state = "moffplush"
 	attack_verb = list("fluttered", "flapped")
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
 ///Used to track how many people killed themselves with item/toy/plush/moth
@@ -694,6 +584,14 @@
 		forceMove(random_open_spot)
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 	return MANUAL_SUICIDE
+
+/obj/item/toy/plush/pkplush
+	name = "peacekeeper plushie"
+	desc = "A plushie depicting a peacekeeper cyborg. Only you can prevent human harm!"
+	icon_state = "pkplush"
+	inhand_icon_state = "pkplush"
+	attack_verb = list("hugged", "squeezed")
+	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)
 
 /obj/item/toy/plush/talking
 	name = "talking plush"
@@ -746,7 +644,7 @@
 	desc = "A Fumo Station series 1 plush of the Chief Engineer! Collect all the heads of staff!"
 	messages = list("Of course!", "Those are my current laws.", "You're an amazing person!", "Please don't say something so weird. We don't need anything like that!", "Please don't associate me with Eugene.", "You're doing such a good job!", "What's a femboy...?")
 	icon_state = "guirec"
-	item_state = "guirec"
+	inhand_icon_state = "guirec"
 	gender = MALE
 
 /obj/item/toy/plush/talking/guirec/attackby(obj/item/I,mob/living/user,params)
@@ -763,7 +661,7 @@
 	desc = "A Fumo Station series 1 plush of the Chief Engineer, but something seems wrong. You can faintly hear a clock ticking"
 	messages = list("Organic.", "...You wouldn't happen to have any cheesecake, would you?", "I hate the King of Goats.", "I arise once more!!", "Pathetic.", "Don't associate me with that witch Nar'sie!", "This is the promised 'humanity's love'?", "I'm...small.")
 	icon_state = "ratvar"
-	item_state = "ratvar"
+	inhand_icon_state = "ratvar"
 	gender = MALE
 
 /obj/item/toy/plush/talking/chef
@@ -771,7 +669,7 @@
 	desc = "A Fumo Station series 1 plush of the Head of Service! Collect all the heads of staff!"
 	messages = list("You'd all starve without me, huh?", "Rescinding of the Eight Boundaries...", "I'll make Gramps proud.", "...What do you mean you can make walls out of pizza.", "Pete talks to me, you know.", "This is all just a dream...")
 	icon_state = "chef"
-	item_state = "chef"
+	inhand_icon_state = "chef"
 	gender = MALE
 
 /obj/item/toy/plush/talking/chef/attackby(obj/item/I,mob/living/user,params)
@@ -788,7 +686,7 @@
 	desc = "A Fumo Station series 1 plush of the Head of Service, but something seems wrong. You can faintly hear a goat bleating."
 	messages = list("Welcome to my courtyard.", "I hope Ratvar isn't too upset...", "Please be kind to my Guest.", "Please do calm down! We could chat over cheesecake!", "*bleats* Excuse me...", "Humans have unlimited potential...")
 	icon_state = "king"
-	item_state = "king"
+	inhand_icon_state = "king"
 	gender = MALE
 
 /obj/item/toy/plush/talking/rushia
@@ -796,7 +694,7 @@
 	desc = "A leaked Fumo Station series 2 plush of the Janitor! This shouldn't be here!!"
 	messages = list("Uweh...", "Ish alwight!", "*boot eating noises*", "*flutter flutter*")
 	icon_state = "rushia"
-	item_state = "rushia"
+	inhand_icon_state = "rushia"
 	gender = FEMALE
 
 /obj/item/toy/plush/talking/rushia/attackby(obj/item/I,mob/living/user,params)
@@ -813,7 +711,7 @@
 	desc = "Something happened to the janitor plushie. No matter what kind of light you put her under, she's always obscured in shadow. Freaky..."
 	messages = list("...", "Sorry about this", "...", "...", "Tetsu...", "...", "I'm... scared.")
 	icon_state = "reshia"
-	item_state = "reshia"
+	inhand_icon_state = "reshia"
 	gender = FEMALE
 
 /obj/item/toy/plush/talking/reshia/attackby(obj/item/I,mob/living/user,params)
@@ -829,7 +727,7 @@
 	name = "possessed janitor plushie"
 	desc = "Something is seriously wrong."
 	messages = list("I have risen!", "You'll look good in this.", "KYAHAHAHAHAHAHAHAHA", "Congratula~tions~!", "Where's that little boy?", "*cackle cackle cackle*")
-	item_state = "narshia"
+	inhand_icon_state = "narshia"
 	icon_state = "narshia"
 	gender = FEMALE
 
@@ -837,7 +735,7 @@
 	name = "captain plushie"
 	desc = "A Fumo Station series 1 plush of the Captain! Collect all the heads of staff!"
 	messages = list("You could've just asked to come in.", "I'll get to the bottom of this.", "Could you all please clean up after yourselves for once?", "Feels nice to have a family again...", "The only good God is a dead one.", "Of course Runtime is a crew member!")
-	item_state = "tay"
+	inhand_icon_state = "tay"
 	icon_state = "tay"
 	gender = MALE
 
@@ -845,7 +743,7 @@
 	name = "head of security plushie"
 	desc = "A Fumo Station series 1 plush of the Head of Security! Collect all the heads of staff!"
 	messages = list("*coughs*", "You're a good kid.", "Here's looking at you, kid.", "Go ahead, make my day.", "I've got this theory about the station...", "My lungs are fine. Fuck off.")
-	item_state = "ulyssa"
+	inhand_icon_state = "ulyssa"
 	icon_state = "ulyssa"
 	gender = FEMALE
 
@@ -853,6 +751,6 @@
 	name = "head of research plushie"
 	desc = "A Fumo Station series 1 plush of the Head of Research! Collect all the heads of staff!"
 	messages = list("The ends justify the means.", "*adjusts glasses*", "I will not die a preventable death this shift. Don't be rude.", "What the bloody hell is ToonTown??", "I assure you everyone does not hate me.", "If you find any strange objects, make sure to bring them to me.")
-	item_state = "eugene"
+	inhand_icon_state = "eugene"
 	icon_state = "eugene"
 	gender = MALE

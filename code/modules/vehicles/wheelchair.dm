@@ -9,8 +9,10 @@
 	legs_required = 0	//You'll probably be using this if you don't have legs
 	canmove = TRUE
 	density = FALSE		//Thought I couldn't fix this one easily, phew
-	// Run speed delay is multiplied with this for vehicle move delay.
+	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7
+	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
+	var/overlay_icon = "wheelchair_overlay"
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
@@ -91,7 +93,7 @@
 
 /obj/vehicle/ridden/wheelchair/proc/handle_rotation_overlayed()
 	cut_overlays()
-	var/image/V = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
+	var/image/V = image(icon = icon, icon_state = overlay_icon, layer = FLY_LAYER, dir = src.dir)
 	add_overlay(V)
 
 
@@ -113,3 +115,13 @@
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
 		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / user.get_num_arms()
 	return ..()
+
+
+/obj/vehicle/ridden/wheelchair/gold
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+	desc = "Damn, he's been through a lot."
+	icon_state = "gold_wheelchair"
+	overlay_icon = "gold_wheelchair_overlay"
+	max_integrity = 200
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 0, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 40)
+	custom_materials = list(/datum/material/gold = 10000)

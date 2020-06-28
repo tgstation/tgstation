@@ -7377,7 +7377,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 6
 	},
-/obj/machinery/doorButtons/airlock_controller{
+/obj/machinery/door_buttons/airlock_controller{
 	idExterior = "snowdin_turbine_exterior";
 	idInterior = "snowdin_turbine_interior";
 	idSelf = "snowdin_turbine_access";
@@ -7700,7 +7700,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	idDoor = "snowdin_turbine_interior";
 	idSelf = "snowdin_turbine_access";
 	layer = 3.1;
@@ -7721,7 +7721,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "Mix To Turbine"
 	},
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	idDoor = "snowdin_turbine_exterior";
 	idSelf = "snowdin_turbine_access";
 	name = "Turbine airlock control";
@@ -12786,7 +12786,7 @@
 /obj/structure/statue/snow/snowman{
 	name = "Snow-Luc Price"
 	},
-/obj/item/clothing/head/HoS{
+/obj/item/clothing/head/hos{
 	pixel_y = 10
 	},
 /turf/open/floor/plating/asteroid/snow,

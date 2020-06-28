@@ -96,8 +96,13 @@
 
 /obj/structure/guncase/contents_explosion(severity, target)
 	for(var/atom/A in contents)
-		A.ex_act(severity++, target)
-		CHECK_TICK
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += A
 
 /obj/structure/guncase/shotgun
 	name = "shotgun locker"

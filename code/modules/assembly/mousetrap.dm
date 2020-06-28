@@ -2,7 +2,7 @@
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
-	item_state = "mousetrap"
+	inhand_icon_state = "mousetrap"
 	custom_materials = list(/datum/material/iron=100)
 	attachable = TRUE
 	var/armed = FALSE

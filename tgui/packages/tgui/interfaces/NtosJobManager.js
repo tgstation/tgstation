@@ -1,8 +1,19 @@
 import { useBackend } from '../backend';
 import { Button, Section, Table, NoticeBox, Dimmer, Box } from '../components';
+import { NtosWindow } from '../layouts';
 
-export const NtosJobManager = props => {
-  const { act, data } = useBackend(props);
+export const NtosJobManager = (props, context) => {
+  return (
+    <NtosWindow resizable>
+      <NtosWindow.Content scrollable>
+        <NtosJobManagerContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+export const NtosJobManagerContent = (props, context) => {
+  const { act, data } = useBackend(context);
 
   const {
     authed,
@@ -26,8 +37,7 @@ export const NtosJobManager = props => {
           <Box
             bold
             textAlign="center"
-            fontSize="20px"
-            mt={10}>
+            fontSize="20px">
             On Cooldown: {cooldown}s
           </Box>
         </Dimmer>

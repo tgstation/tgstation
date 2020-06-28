@@ -42,13 +42,18 @@
 		return ..()
 	if(istype(I, /obj/item/reagent_containers))
 		if(istype(I, /obj/item/reagent_containers/food) && !istype(I, /obj/item/reagent_containers/food/drinks))
-			if(HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
+			var/obj/item/reagent_containers/food/food_item = I
+			if(HAS_TRAIT(food_item, TRAIT_NODROP) || (food_item.item_flags & (ABSTRACT | DROPDEL)))
 				return ..()
+			else if(food_item.foodtype & GRILLED)
+				to_chat(user, "<span class='notice'>[food_item] has already been grilled!</span>")
+				return
 			else if(!grill_fuel)
 				to_chat(user, "<span class='warning'>There is not enough fuel!</span>")
 				return
-			else if(!grilled_item && user.transferItemToLoc(I, src))
-				grilled_item = I
+			else if(!grilled_item && user.transferItemToLoc(food_item, src))
+				grilled_item = food_item
+				grilled_item.foodtype |= GRILLED
 				to_chat(user, "<span class='notice'>You put the [grilled_item] on [src].</span>")
 				update_icon()
 				grill_loop.start()

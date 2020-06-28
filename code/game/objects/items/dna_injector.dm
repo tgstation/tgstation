@@ -249,14 +249,6 @@
 	name = "\improper DNA injector (Mute)"
 	add_mutations = list(MUT_MUTE)
 
-/obj/item/dnainjector/antismile
-	name = "\improper DNA injector (Anti-Smile)"
-	remove_mutations = list(SMILE)
-
-/obj/item/dnainjector/smilemut
-	name = "\improper DNA injector (Smile)"
-	add_mutations = list(SMILE)
-
 /obj/item/dnainjector/unintelligiblemut
 	name = "\improper DNA injector (Unintelligible)"
 	add_mutations = list(UNINTELLIGIBLE)
@@ -360,12 +352,12 @@
 	name = "\improper DNA injector (Anti-Shock Touch)"
 	remove_mutations = list(SHOCKTOUCH)
 
-/obj/item/dnainjector/spacialinstability
-	name = "\improper DNA injector (Spacial Instability)"
+/obj/item/dnainjector/spatialinstability
+	name = "\improper DNA injector (Spatial Instability)"
 	add_mutations = list(BADBLINK)
 
-/obj/item/dnainjector/antispacialinstability
-	name = "\improper DNA injector (Anti-Spacial Instability)"
+/obj/item/dnainjector/antispatialinstability
+	name = "\improper DNA injector (Anti-Spatial Instability)"
 	remove_mutations = list(BADBLINK)
 
 /obj/item/dnainjector/acidflesh

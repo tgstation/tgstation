@@ -145,6 +145,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/select_spiral_attack()
 	telegraph()
+	icon_state = "eva_attack"
 	if(health < maxHealth/3)
 		return double_spiral()
 	visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
@@ -172,6 +173,7 @@ Difficulty: Very Hard
 		shoot_projectile(start_turf, counter * 22.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		SLEEP_CHECK_DEATH(1)
+	icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
 	if(!isnum(set_angle) && (!marker || marker == loc))
@@ -249,6 +251,14 @@ Difficulty: Very Hard
 		AT.pixel_y += random_y
 	return ..()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/float(on) //we don't want this guy to float, messes up his animations
+	if(throwing)
+		return
+	if(on && !(movement_type & FLOATING))
+		setMovetype(movement_type | FLOATING)
+	else if(!on && (movement_type & FLOATING))
+		setMovetype(movement_type & ~FLOATING)
+
 /obj/projectile/colossus
 	name ="death bolt"
 	icon_state= "chronobolt"
@@ -262,7 +272,10 @@ Difficulty: Very Hard
 /obj/projectile/colossus/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
+		if(isobj(target))
+			SSexplosions.medobj += target
+		else
+			SSexplosions.medturf += target
 
 
 
@@ -505,7 +518,7 @@ Difficulty: Very Hard
 			NewFlora = list(/obj/structure/flora/grass/green, /obj/structure/flora/grass/brown, /obj/structure/flora/grass/both)
 		if("jungle") //Beneficial due to actually having breathable air. Plus, monkeys and bows and arrows.
 			NewTerrainFloors = /turf/open/floor/grass
-			NewTerrainWalls = /turf/closed/wall/mineral/sandstone
+			NewTerrainWalls = /turf/closed/wall/mineral/wood
 			NewTerrainChairs = /obj/structure/chair/wood
 			NewTerrainTables = /obj/structure/table/wood
 			NewFlora = list(/obj/structure/flora/ausbushes/sparsegrass, /obj/structure/flora/ausbushes/fernybush, /obj/structure/flora/ausbushes/leafybush,

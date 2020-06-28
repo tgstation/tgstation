@@ -4,6 +4,7 @@
 #ifdef UNIT_TESTS
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
+#include "card_mismatch.dm"
 #include "component_tests.dm"
 #include "plantgrowth_tests.dm"
 #include "reagent_id_typos.dm"

@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		new /datum/pipe_info/disposal("Trunk",			/obj/structure/disposalpipe/trunk),
 		new /datum/pipe_info/disposal("Bin",			/obj/machinery/disposal/bin, PIPE_ONEDIR),
 		new /datum/pipe_info/disposal("Outlet",			/obj/structure/disposaloutlet),
-		new /datum/pipe_info/disposal("Chute",			/obj/machinery/disposal/deliveryChute),
+		new /datum/pipe_info/disposal("Chute",			/obj/machinery/disposal/delivery_chute),
 	)
 ))
 
@@ -248,7 +248,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
 		assets.send(user)
 
-		ui = new(user, src, ui_key, "rpd", name, 425, 515, master_ui, state)
+		ui = new(user, src, ui_key, "RapidPipeDispenser", name, 425, 515, master_ui, state)
 		ui.open()
 
 /obj/item/pipe_dispenser/ui_data(mob/user)

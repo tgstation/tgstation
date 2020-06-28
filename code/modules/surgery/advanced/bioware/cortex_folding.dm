@@ -6,11 +6,11 @@
 				/datum/surgery_step/clamp_bleeders,
 				/datum/surgery_step/incise,
 				/datum/surgery_step/incise,
-				/datum/surgery_step/imprint_cortex,
+				/datum/surgery_step/fold_cortex,
 				/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	bioware_target = BIOWARE_LIGAMENTS
+	bioware_target = BIOWARE_CORTEX
 
 /datum/surgery/advanced/bioware/cortex_folding/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)

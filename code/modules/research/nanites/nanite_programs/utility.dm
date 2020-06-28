@@ -34,11 +34,19 @@
 /datum/nanite_program/monitoring/enable_passive_effect()
 	. = ..()
 	SSnanites.nanite_monitored_mobs |= host_mob
+	if(ishuman(host_mob))
+		var/mob/living/carbon/human/H = host_mob
+		if(!(H in GLOB.nanite_sensors_list))
+			GLOB.nanite_sensors_list |= H
 	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/monitoring/disable_passive_effect()
 	. = ..()
 	SSnanites.nanite_monitored_mobs -= host_mob
+	if(ishuman(host_mob))
+		var/mob/living/carbon/human/H = host_mob
+		GLOB.nanite_sensors_list -= H
+
 	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/self_scan
@@ -51,7 +59,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/self_scan/register_extra_settings()
-	extra_settings[NES_SCAN_TYPE] = new /datum/nanite_extra_setting/type("Medical", list("Medical", "Chemical", "Nanite"))
+	extra_settings[NES_SCAN_TYPE] = new /datum/nanite_extra_setting/type("Medical", list("Medical", "Chemical", "Wound", "Nanite"))
 
 /datum/nanite_program/self_scan/on_trigger(comm_message)
 	if(host_mob.stat == DEAD)
@@ -62,6 +70,8 @@
 			healthscan(host_mob, host_mob)
 		if("Chemical")
 			chemscan(host_mob, host_mob)
+		if("Wound")
+			woundscan(host_mob, host_mob)
 		if("Nanite")
 			SEND_SIGNAL(host_mob, COMSIG_NANITE_SCAN, host_mob, TRUE)
 
@@ -160,7 +170,7 @@
 	if(!host_mob.client) //less brainpower
 		points *= 0.25
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points))
-	
+
 /datum/nanite_program/researchplus
 	name = "Neural Network"
 	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts."
@@ -184,7 +194,7 @@
 		SSnanites.neural_network_count--
 	else
 		SSnanites.neural_network_count -= 0.25
-	
+
 /datum/nanite_program/researchplus/active_effect()
 	if(!iscarbon(host_mob))
 		return
@@ -234,7 +244,7 @@
 	var/spread_cooldown = 0
 
 /datum/nanite_program/spreading/active_effect()
-	if(spread_cooldown < world.time)
+	if(world.time < spread_cooldown)
 		return
 	spread_cooldown = world.time + 50
 	var/list/mob/living/target_hosts = list()
