@@ -335,13 +335,15 @@
 	if(!isturf(loc))
 		to_chat(src, "<span class='warning'>This is not a suitable location for replicating ourselves. We need more room.</span>")
 		return
-	if(do_mob(src, src, 50))
-		var/createtype = SwarmerTypeToCreate()
-		if(createtype)
-			var/mob/newswarmer = Fabricate(createtype, 20)
-			LAZYADD(dronelist, newswarmer)
-			RegisterSignal(newswarmer, COMSIG_PARENT_QDELETING, .proc/remove_drone, newswarmer)
-			playsound(loc,'sound/items/poster_being_created.ogg',20, TRUE, -1)
+	if(!do_mob(src, src, 5 SECONDS))
+		return
+	var/createtype = SwarmerTypeToCreate()
+	if(!createtype)
+		return
+	var/mob/newswarmer = Fabricate(createtype, 20)
+	LAZYADD(dronelist, newswarmer)
+	RegisterSignal(newswarmer, COMSIG_PARENT_QDELETING, .proc/remove_drone, newswarmer)
+	playsound(loc,'sound/items/poster_being_created.ogg', 20, TRUE, -1)
 
 /**
   * Used to determine what type of swarmer a swarmer should create
