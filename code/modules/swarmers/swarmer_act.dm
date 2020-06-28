@@ -6,7 +6,7 @@
   * * S - A reference to the swarmer doing the interaction
   */
 /atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	actor.DisIntegrate(src)
+	actor.dis_integrate(src)
 	return TRUE //return TRUE/FALSE whether or not an AI swarmer should try this swarmer_act() again, NOT whether it succeeded.
 
 /obj/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
@@ -77,7 +77,7 @@
 	return TRUE
 
 /obj/machinery/light/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DisIntegrate(src)
+	S.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
@@ -92,33 +92,33 @@
 			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			S.target = null
 			return FALSE
-	S.DisIntegrate(src)
+	S.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	actor.DisIntegrate(src)
+	actor.dis_integrate(src)
 	if(!QDELETED(actor)) //If it got blown up no need to turn it off.
 		toggle_cam(actor, FALSE)
 	return TRUE
 
 /obj/machinery/particle_accelerator/control_box/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DisIntegrate(src)
+	S.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DisIntegrate(src)
+	S.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/gravity_generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DisIntegrate(src)
+	S.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/vending/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)//It's more visually interesting than dismantling the machine
-	S.DisIntegrate(src)
+	S.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/turretid/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DisIntegrate(src)
+	S.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/chem_dispenser/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
