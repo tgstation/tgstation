@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "Stackers deposit to the silo when picking up stacks from the input side."
