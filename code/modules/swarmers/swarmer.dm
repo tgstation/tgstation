@@ -258,7 +258,7 @@
   * Arguments:
   * * target - The machine the swarmer is attempting to disassemble
   */
-/mob/living/simple_animal/hostile/swarmer/proc/DismantleMachine(obj/machinery/target)
+/mob/living/simple_animal/hostile/swarmer/proc/dismantle_machine(obj/machinery/target)
 	do_attack_animation(target)
 	to_chat(src, "<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>")
 	var/obj/effect/temp_visual/swarmer/dismantle/D = new /obj/effect/temp_visual/swarmer/dismantle(get_turf(target))
