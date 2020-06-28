@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Adds the Cargo Bounty UI as a modular app, with cargo access."
+  - tweak: "The Cargo Bounty UI has been revamped."
+  - tweak: "Cargo tablets now come preinstalled with the price tagger and cargo bounty apps."
