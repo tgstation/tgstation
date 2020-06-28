@@ -375,7 +375,7 @@
   *
   * Proc used to allow a swarmer to toggle its  light on and off.  If a swarmer has any drones, change their light settings to match their master's.
   */
-/mob/living/simple_animal/hostile/swarmer/proc/ToggleLight()
+/mob/living/simple_animal/hostile/swarmer/proc/toggle_light()
 	if(!light_range)
 		set_light(3)
 		if(!mind)
