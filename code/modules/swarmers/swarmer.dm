@@ -365,9 +365,10 @@
 	if(!isturf(loc))
 		return
 	to_chat(src, "<span class='info'>Attempting to repair damage to our body, stand by...</span>")
-	if(do_mob(src, src, 100))
-		adjustHealth(-maxHealth)
-		to_chat(src, "<span class='info'>We successfully repaired ourselves.</span>")
+	if(!do_mob(src, src, 10 SECONDS))
+		return
+	adjustHealth(-maxHealth)
+	to_chat(src, "<span class='info'>We successfully repaired ourselves.</span>")
 
 /**
   * Called when a swarmer toggles its light
