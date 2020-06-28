@@ -305,7 +305,7 @@
   *
   * Proc used to allow a swarmer to create a barricade.  Checks if a barricade is on the tile, then if the swarmer can afford it, and then will attempt to create a barricade after a second delay.
   */
-/mob/living/simple_animal/hostile/swarmer/proc/CreateBarricade()
+/mob/living/simple_animal/hostile/swarmer/proc/create_barricade()
 	set name = "Create barricade"
 	set category = "Swarmer"
 	set desc = "Creates a barricade that will stop anything but swarmers and disabler beams from passing through.  Costs 4 resources."
