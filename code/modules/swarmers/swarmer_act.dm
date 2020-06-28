@@ -72,8 +72,8 @@
 /obj/structure/disposalpipe/swarmer_act()
 	return FALSE
 
-/obj/machinery/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DismantleMachine(src)
+/obj/machinery/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	actor.dismantle_machine(src)
 	return TRUE
 
 /obj/machinery/light/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
