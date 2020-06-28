@@ -267,19 +267,20 @@
 	D.pixel_z = target.pixel_z
 	if(do_mob(src, target, 100))
 		to_chat(src, "<span class='info'>Dismantling complete.</span>")
-		var/atom/Tsec = target.drop_location()
-		new /obj/item/stack/sheet/metal(Tsec, 5)
-		for(var/obj/item/I in target.component_parts)
-			I.forceMove(Tsec)
-		var/obj/effect/temp_visual/swarmer/disintegration/N = new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
-		N.pixel_x = target.pixel_x
-		N.pixel_y = target.pixel_y
-		N.pixel_z = target.pixel_z
+		var/atom/target_loc = target.drop_location()
+		new /obj/item/stack/sheet/metal(target_loc, 5)
+		for(var/p in target.component_parts)
+			var/obj/item/part = p
+			part.forceMove(target_loc)
+		var/obj/effect/temp_visual/swarmer/disintegration/disintegration_effect = new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
+		disintegration_effect.pixel_x = target.pixel_x
+		disintegration_effect.pixel_y = target.pixel_y
+		disintegration_effect.pixel_z = target.pixel_z
 		target.dropContents()
 		if(istype(target, /obj/machinery/computer))
-			var/obj/machinery/computer/C = target
-			if(C.circuit)
-				C.circuit.forceMove(Tsec)
+			var/obj/machinery/computer/computer_target = target
+			if(computer_target.circuit)
+				computer_target.circuit.forceMove(target_loc)
 		qdel(target)
 
 /**
