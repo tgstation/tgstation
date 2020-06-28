@@ -69,7 +69,11 @@
 	description = "The spider clan has grown bored of just kidnapping people and keeping them in a boxed room for an hour, so now it's 15 minutes with changelings!"
 	suffix = "mafia_spiderclan.dmm"
 
+//disabled maps due to bugs (hopefully this doesn't exist by the time it's merged)
+
+/*
 /datum/map_template/mafia/gothic
-	name = "Spider Clan Kidnapping"
+	name = "The map with coffins but not vampires"
 	description = "Vampires not included. What, you expected a funny little story? I got nothing!"
 	suffix = "mafia_gothic.dmm"
+*/
