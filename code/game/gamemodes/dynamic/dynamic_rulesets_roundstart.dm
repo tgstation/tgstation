@@ -56,7 +56,7 @@
 	required_candidates = 2
 	weight = 4
 	cost = 15
-	scaling_cost = 15
+	scaling_cost = 10
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	antag_cap = list(2,2,2,2,2,2,2,2,2,2)	// Can pick 3 per team, but rare enough it doesn't matter.
 	var/list/datum/team/brother_team/pre_brother_teams = list()
