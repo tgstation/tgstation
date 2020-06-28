@@ -207,7 +207,7 @@
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
 	if(altPatient.has_dna()) //Blood levels Information
-		if(altPatient.bleed_rate)
+		if(altPatient.is_bleeding())
 			bleed_status = "Patient is currently bleeding!"
 		if(blood_percent <= 80)
 			blood_warning = " Patient has low blood levels. Seek a large meal, or iron supplements."

@@ -48,7 +48,6 @@
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
-	var/bleed_rate = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/name_override //For temporary visible name changes

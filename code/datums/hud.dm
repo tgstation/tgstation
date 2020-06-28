@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag(),
 	ANTAG_HUD_GANGSTER = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_SPACECOP = new/datum/atom_hud/antag(),
+	ANTAG_HUD_HERETIC = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_BLOODSUCKER = new/datum/atom_hud/antag/bloodsucker()	// FULPSTATION // Maybe always put this last, just like in atom_hud.dm? Also, add a comma to the guy above me.
 	))
 

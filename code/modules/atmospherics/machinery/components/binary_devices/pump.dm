@@ -61,21 +61,7 @@
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 
-	var/output_starting_pressure = air2.return_pressure()
-
-	if((target_pressure - output_starting_pressure) < 0.01)
-		//No need to pump gas if target is already reached!
-		return
-
-	//Calculate necessary moles to transfer using PV=nRT
-	if((air1.total_moles() > 0) && (air1.temperature>0))
-		var/pressure_delta = target_pressure - output_starting_pressure
-		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
-
-		//Actually transfer the gas
-		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
-		air2.merge(removed)
-
+	if(air1.pump_gas_to(air2, target_pressure))
 		update_parents()
 
 //Radio remote control

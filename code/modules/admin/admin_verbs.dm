@@ -167,10 +167,11 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_overlay_log,
 	/client/proc/reload_configuration,
 	/client/proc/reload_cards,
-	/client/proc/validate_cardpacks,
+	/client/proc/validate_cards,
 	/client/proc/test_cardpack_distribution,
 	/client/proc/print_cards,
 	/datum/admins/proc/create_or_modify_area,
+	/client/proc/view_refs
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -565,15 +566,18 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		return
 	reloadAllCardFiles(SStrading_card_game.card_files, SStrading_card_game.card_directory)
 
-/client/proc/validate_cardpacks()
-	set name = "Validate Cardpacks"
+/client/proc/validate_cards()
+	set name = "Validate Cards"
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))
 		return
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
-	checkCardpacks(SStrading_card_game.card_packs)
+	var/message = checkCardpacks(SStrading_card_game.card_packs)
+	message += checkCardDatums()
+	if(message)
+		message_admins(message)
 
 /client/proc/test_cardpack_distribution()
 	set name = "Test Cardpack Distribution"

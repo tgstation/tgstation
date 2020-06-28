@@ -143,7 +143,7 @@
 	else
 		dat += "Current Game Mode: <B>[SSticker.mode.name]</B><BR>"
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))	// Currently only used by dynamic. If more start using this, find a better way.
-		dat += "<a href='?_src_=holder;[HrefToken()];gamemode_panel=1'>Gamemode Panel</a><br>"
+		dat += "<a href='?_src_=holder;[HrefToken()];gamemode_panel=1'>Game Mode Panel</a><br>"
 	dat += "Round Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B><BR>"
 	dat += "<B>Emergency shuttle</B><BR>"
 	if(EMERGENCY_IDLE_OR_RECALLED)

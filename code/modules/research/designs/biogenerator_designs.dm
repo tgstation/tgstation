@@ -122,6 +122,14 @@
 	make_reagents = list(/datum/reagent/toxin/pestkiller = 30)
 	category = list("initial","Botany Chemicals")
 
+/datum/design/org_pest_spray
+	name = "30u Organic Pest Killer"
+	id = "org_pest_spray"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 80)
+	make_reagents = list(/datum/reagent/toxin/pestkiller/organic = 30)
+	category = list("initial","Botany Chemicals")
+
 /datum/design/cloth
 	name = "Roll of Cloth"
 	id = "cloth"

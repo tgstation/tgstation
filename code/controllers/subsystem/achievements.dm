@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(achievements)
 /datum/controller/subsystem/achievements/proc/update_metadata()
 	var/list/current_metadata = list()
 	//select metadata here
-	var/datum/DBQuery/Q = SSdbcore.NewQuery("SELECT achievement_key,achievement_version FROM [format_table_name("achievement_metadata")]")
+	var/datum/db_query/Q = SSdbcore.NewQuery("SELECT achievement_key,achievement_version FROM [format_table_name("achievement_metadata")]")
 	if(!Q.Execute(async = TRUE))
 		qdel(Q)
 		return

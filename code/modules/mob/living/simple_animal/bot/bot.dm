@@ -1058,3 +1058,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(I)
 		I.icon_state = null
 	path.Cut(1, 2)
+
+/mob/living/simple_animal/bot/rust_heretic_act()
+	adjustBruteLoss(400)

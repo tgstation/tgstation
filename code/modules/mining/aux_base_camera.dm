@@ -1,22 +1,22 @@
 //Aux base construction console
-/mob/camera/aiEye/remote/base_construction
+/mob/camera/ai_eye/remote/base_construction
 	name = "construction holo-drone"
 	move_on_shuttle = 1 //Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "construction_drone"
 	var/area/starting_area
 
-/mob/camera/aiEye/remote/base_construction/Initialize()
+/mob/camera/ai_eye/remote/base_construction/Initialize()
 	. = ..()
 	starting_area = get_area(loc)
 
-/mob/camera/aiEye/remote/base_construction/setLoc(var/t)
+/mob/camera/ai_eye/remote/base_construction/setLoc(var/t)
 	var/area/curr_area = get_area(t)
 	if(curr_area == starting_area || istype(curr_area, /area/shuttle/auxiliary_base))
 		return ..()
 	//While players are only allowed to build in the base area, but consoles starting outside the base can move into the base area to begin work.
 
-/mob/camera/aiEye/remote/base_construction/relaymove(mob/user, direct)
+/mob/camera/ai_eye/remote/base_construction/relaymove(mob/user, direct)
 	dir = direct //This camera eye is visible as a drone, and needs to keep the dir updated
 	..()
 
@@ -74,7 +74,7 @@
 		spawn_spot = src
 
 
-	eyeobj = new /mob/camera/aiEye/remote/base_construction(get_turf(spawn_spot))
+	eyeobj = new /mob/camera/ai_eye/remote/base_construction(get_turf(spawn_spot))
 	eyeobj.origin = src
 
 
@@ -130,7 +130,7 @@
 /datum/action/innate/aux_base //Parent aux base action
 	icon_icon = 'icons/mob/actions/actions_construction.dmi'
 	var/mob/living/C //Mob using the action
-	var/mob/camera/aiEye/remote/base_construction/remote_eye //Console's eye mob
+	var/mob/camera/ai_eye/remote/base_construction/remote_eye //Console's eye mob
 	var/obj/machinery/computer/camera_advanced/base_construction/B //Console itself
 
 /datum/action/innate/aux_base/Activate()

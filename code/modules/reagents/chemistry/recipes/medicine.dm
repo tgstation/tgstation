@@ -14,12 +14,12 @@
 
 /datum/chemical_reaction/oculine
 	results = list(/datum/reagent/medicine/oculine = 3)
-	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
+	required_reagents = list(/datum/reagent/medicine/c2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
 	mix_message = "The mixture bubbles noticeably and becomes a dark grey color!"
 
 /datum/chemical_reaction/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/multiver = 1)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/c2/multiver = 1)
 	mix_message = "The mixture sputters loudly and becomes a light grey color!"
 
 /datum/chemical_reaction/synaptizine
@@ -39,8 +39,8 @@
 	required_reagents = list(/datum/reagent/toxin/plasma = 5, /datum/reagent/iron = 5, /datum/reagent/consumable/sugar = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
 
 /datum/chemical_reaction/instabitaluri
-	results = list(/datum/reagent/medicine/C2/instabitaluri = 3)
-	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1)
+	results = list(/datum/reagent/medicine/c2/instabitaluri = 3)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/c2/libital = 1)
 
 /datum/chemical_reaction/calomel
 	results = list(/datum/reagent/medicine/calomel = 2)
@@ -108,7 +108,7 @@
 
 /datum/chemical_reaction/antihol
 	results = list(/datum/reagent/medicine/antihol = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/copper = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/c2/multiver = 1, /datum/reagent/copper = 1)
 
 /datum/chemical_reaction/cryoxadone
 	results = list(/datum/reagent/medicine/cryoxadone = 3)

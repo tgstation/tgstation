@@ -77,7 +77,7 @@ Borg Hypospray
 
 /obj/item/reagent_containers/borghypo/proc/del_reagent(datum/reagent/reagent)
 	reagent_ids -= reagent
-	if(istype(reagent, /datum/reagent/medicine/C2))
+	if(istype(reagent, /datum/reagent/medicine/c2))
 		reagent_names -= C2NAMEREAGENT
 	else
 		reagent_names -= initial(reagent.name)

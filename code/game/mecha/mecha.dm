@@ -156,6 +156,9 @@
 /obj/mecha/get_cell()
 	return cell
 
+/obj/mecha/rust_heretic_act()
+	take_damage(500,  BRUTE)
+
 /obj/mecha/Destroy()
 	if(occupant)
 		occupant.SetSleeping(destruction_sleep_duration)
@@ -778,7 +781,7 @@
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
-			AI.linked_core = new /obj/structure/AIcore/deactivated(AI.loc)
+			AI.linked_core = new /obj/structure/ai_core/deactivated(AI.loc)
 			if(AI.can_dominate_mechs)
 				if(occupant) //Oh, I am sorry, were you using that?
 					to_chat(AI, "<span class='warning'>Pilot detected! Forced ejection initiated!</span>")
@@ -1080,7 +1083,7 @@
 
 	if(L && L.client)
 		L.update_mouse_pointer()
-		L.client.view_size.resetToDefault() 
+		L.client.view_size.resetToDefault()
 		zoom_mode = 0
 
 /////////////////////////

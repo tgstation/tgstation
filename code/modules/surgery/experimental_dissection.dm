@@ -27,7 +27,7 @@
 	time = 125
 	silicons_obey_prob = TRUE
 	repeatable = TRUE
-	experience_given = 0 //experience recieved scales with what's being dissected + which step you're doing.
+	experience_given = 0 //experience received scales with what's being dissected + which step you're doing.
 
 /datum/surgery_step/dissection/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] starts dissecting [target].</span>", "<span class='notice'>You start dissecting [target].</span>")
@@ -72,7 +72,7 @@
 /datum/surgery_step/dissection/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	user.visible_message("<span class='notice'>[user] dissects [target], enhancing their medical knowledge!", "<span class='notice'>You dissect [target] and receive some healing experience!</span>")
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
+	target.apply_damage(80, BRUTE, L, wound_bonus=CANT_WOUND)
 	ADD_TRAIT(target, TRAIT_DISSECTED, "[surgery.name]")
 	repeatable = FALSE
 	experience_given = check_value(target, surgery)
@@ -81,7 +81,7 @@
 /datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] dissects [target]!</span>", "<span class='notice'>You attempt to dissect [target], but do not find anything particularly interesting.</span>")
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
+	target.apply_damage(80, BRUTE, L, wound_bonus=CANT_WOUND)
 	return TRUE
 
 /datum/surgery/advanced/experimental_dissection/adv

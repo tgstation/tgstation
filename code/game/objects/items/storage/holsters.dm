@@ -4,6 +4,7 @@
 	desc = "A rather plain but still badass looking holster with a single pouch that can hold a small firearm."
 	icon_state = "holster"
 	inhand_icon_state = "holster"
+	worn_icon_state = "holster"
 	alternate_worn_layer = UNDER_SUIT_LAYER
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
@@ -56,6 +57,7 @@
 	desc = "A two pouched hip holster that uses chameleon technology to disguise itself and any guns in it."
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
+	worn_icon_state = "syndicate_holster"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/holster/chameleon/Initialize()
@@ -100,6 +102,7 @@
 	desc = "A deep shoulder holster capable of holding almost any form of ballistic weaponry."
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
+	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/holster/nukie/ComponentInitialize()

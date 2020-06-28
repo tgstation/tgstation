@@ -1,6 +1,6 @@
 language: generic
 os: linux
-dist: xenial
+dist: bionic
 
 branches:
   except:
@@ -61,23 +61,20 @@ jobs:
             - gcc-multilib
             - g++-7
             - g++-7-multilib
-            - libmariadb-client-lgpl-dev:i386
-            - libmariadbd-dev
+            - libssl1.1:i386
+            - zlib1g:i386
       cache:
         directories:
           - $HOME/BYOND
-          - $HOME/libmariadb
       install:
         - tools/travis/install_byond.sh
         - source $HOME/BYOND/byond/bin/byondsetup
-        - tools/travis/install_libmariadb.sh
         - tools/travis/install_rust_g.sh
       before_script:
         - mysql -u root -e 'CREATE DATABASE tg_travis;'
         - mysql -u root tg_travis < SQL/tgstation_schema.sql
         - mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'
         - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
-        - tools/travis/build_bsql.sh
       script:
         - tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme || travis_terminate 1
         - tools/travis/run_server.sh

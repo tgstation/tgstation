@@ -29,5 +29,6 @@ export { ProgressBar } from './ProgressBar';
 export { Section } from './Section';
 export { Slider } from './Slider';
 export { Table } from './Table';
+export { TextArea } from './TextArea';
 export { Tabs } from './Tabs';
 export { Tooltip } from './Tooltip';

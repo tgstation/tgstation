@@ -29,6 +29,12 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/old)
 	ammo_x_offset = 3
 
+/obj/item/gun/energy/laser/hellgun
+	name ="hellfire laser gun"
+	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. This pattern of laser gun became infamous for the gruesome burn wounds it caused, and was quietly discontinued once it began to affect NT's reputation."
+	icon_state = "hellgun"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
+
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
@@ -101,6 +107,7 @@
 	damage += 7
 	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
 
+///X-ray gun
 /obj/item/gun/energy/xray
 	name = "\improper X-ray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated X-ray blasts that pass through multiple soft targets and heavier materials."

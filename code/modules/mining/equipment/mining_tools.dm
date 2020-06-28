@@ -8,6 +8,7 @@
 	force = 15
 	throwforce = 10
 	inhand_icon_state = "pickaxe"
+	worn_icon_state = "pickaxe"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -45,6 +46,7 @@
 	name = "silver-plated pickaxe"
 	icon_state = "spickaxe"
 	inhand_icon_state = "spickaxe"
+	worn_icon_state = "spickaxe"
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
@@ -53,6 +55,7 @@
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
 	inhand_icon_state = "dpickaxe"
+	worn_icon_state = "dpickaxe"
 	toolspeed = 0.3
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
@@ -91,6 +94,7 @@
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	inhand_icon_state = "jackhammer"
+	worn_icon_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'

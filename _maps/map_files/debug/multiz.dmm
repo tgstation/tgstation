@@ -415,7 +415,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bF" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/chief_medical,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bG" = (

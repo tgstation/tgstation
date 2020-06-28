@@ -17,6 +17,7 @@
 #define ROLE_ALIEN				"Xenomorph"
 #define ROLE_PAI				"pAI"
 #define ROLE_CULTIST			"Cultist"
+#define ROLE_HERETIC			"Heretic"
 #define ROLE_BLOB				"Blob"
 #define ROLE_NINJA				"Space Ninja"
 #define ROLE_MONKEY				"Monkey"
@@ -67,7 +68,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker, // FULPSTATION
 	ROLE_MONSTERHUNTER, // FULPSTATION
 	ROLE_SENTIENCE,
-	ROLE_FAMILIES = /datum/game_mode/gang
+	ROLE_FAMILIES = /datum/game_mode/gang,
+	ROLE_HERETIC = /datum/game_mode/heretics
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

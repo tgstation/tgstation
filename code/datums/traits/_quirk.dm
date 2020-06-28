@@ -67,7 +67,14 @@
 		return
 	on_process()
 
-/mob/living/proc/get_trait_string(medical, category) //helper string. gets a string of all the traits the mob has
+/**
+  * get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria
+  *
+  * Arguments:
+  * * Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name
+  * * Category- Which types of quirks we want to print out. Defaults to everything
+  */
+/mob/living/proc/get_quirk_string(medical, category = CAT_QUIRK_ALL) //helper string. gets a string of all the quirks the mob has
 	var/list/dat = list()
 	switch(category)
 		if(CAT_QUIRK_ALL)

@@ -104,8 +104,8 @@ The use of the : operator to override type safety checks is not allowed. You mus
 ### Type paths must begin with a /
 eg: `/datum/thing`, not `datum/thing`
 
-### Type paths must be lowercase
-eg: `/datum/thing/blue`, not `datum/thing/BLUE` or `datum/thing/Blue`
+### Type paths must be snake case
+eg: `/datum/thing/blue_bird`, not `datum/thing/BLUEBIRD` or `datum/thing/BlueBird` or `datum/thing/Bluebird` or `datum/thing/blueBird`
 
 ### Datum type paths must began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.

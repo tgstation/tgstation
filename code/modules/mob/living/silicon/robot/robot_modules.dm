@@ -282,11 +282,13 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
+		/obj/item/bonesetter,
 		/obj/item/shockpaddles/cyborg, //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
 		/obj/item/extinguisher/mini,
 		/obj/item/holobed_projector/robot, //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/stack/medical/bone_gel/cyborg,
 		/obj/item/organ_storage,
 		/obj/item/soap/nanotrasen, //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
 		/obj/item/borg/lollipop)
@@ -653,7 +655,7 @@
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/destTagger/borg,
+		/obj/item/dest_tagger/borg,
 		/obj/item/stack/cable_coil/cyborg,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,

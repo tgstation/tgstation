@@ -186,7 +186,7 @@
 		painting_name = new_name
 		SStgui.update_uis(src)
 
-/obj/item/canvas/nineteenXnineteen
+/obj/item/canvas/nineteen_nineteen
 	icon_state = "19x19"
 	width = 19
 	height = 19
@@ -197,7 +197,7 @@
 	framed_offset_x = 8
 	framed_offset_y = 9
 
-/obj/item/canvas/twentythreeXnineteen
+/obj/item/canvas/twentythree_nineteen
 	icon_state = "23x19"
 	width = 23
 	height = 19
@@ -208,7 +208,7 @@
 	framed_offset_x = 6
 	framed_offset_y = 8
 
-/obj/item/canvas/twentythreeXtwentythree
+/obj/item/canvas/twentythree_twentythree
 	icon_state = "23x23"
 	width = 23
 	height = 23

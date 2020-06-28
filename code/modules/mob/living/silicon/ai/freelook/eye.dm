@@ -3,7 +3,7 @@
 // An invisible (no icon) mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
 
-/mob/camera/aiEye
+/mob/camera/ai_eye
 	name = "Inactive AI Eye"
 
 	icon_state = "ai_camera"
@@ -18,13 +18,13 @@
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
 
-/mob/camera/aiEye/Initialize()
+/mob/camera/ai_eye/Initialize()
 	. = ..()
 	GLOB.aiEyes += src
 	update_ai_detect_hud()
 	setLoc(loc, TRUE)
 
-/mob/camera/aiEye/proc/update_ai_detect_hud()
+/mob/camera/ai_eye/proc/update_ai_detect_hud()
 	var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 	var/list/old_images = hud_list[AI_DETECT_HUD]
 	if(!ai_detector_visible)
@@ -56,7 +56,7 @@
 	hud_list[AI_DETECT_HUD] = new_images
 	hud.add_to_hud(src)
 
-/mob/camera/aiEye/proc/get_visible_turfs()
+/mob/camera/ai_eye/proc/get_visible_turfs()
 	if(!isturf(loc))
 		return list()
 	var/client/C = GetViewerClient()
@@ -68,7 +68,7 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/aiEye/proc/setLoc(T, force_update = FALSE)
+/mob/camera/ai_eye/proc/setLoc(T, force_update = FALSE)
 	if(ai)
 		if(!isturf(ai.loc))
 			return
@@ -95,7 +95,7 @@
 			ai.master_multicam.refresh_view()
 
 //it uses setLoc not forceMove, talks to the sillycone and not the camera mob
-/mob/camera/aiEye/zMove(dir, feedback = FALSE)
+/mob/camera/ai_eye/zMove(dir, feedback = FALSE)
 	if(dir != UP && dir != DOWN)
 		return FALSE
 	var/turf/target = get_step_multiz(src, dir)
@@ -110,18 +110,18 @@
 	setLoc(target, TRUE)
 	return TRUE
 
-/mob/camera/aiEye/canZMove(direction, turf/target) //cameras do not respect these FLOORS you speak so much of
+/mob/camera/ai_eye/canZMove(direction, turf/target) //cameras do not respect these FLOORS you speak so much of
 	return TRUE
 
-/mob/camera/aiEye/Move()
+/mob/camera/ai_eye/Move()
 	return 0
 
-/mob/camera/aiEye/proc/GetViewerClient()
+/mob/camera/ai_eye/proc/GetViewerClient()
 	if(ai)
 		return ai.client
 	return null
 
-/mob/camera/aiEye/Destroy()
+/mob/camera/ai_eye/Destroy()
 	if(ai)
 		ai.all_eyes -= src
 		ai = null
@@ -188,7 +188,7 @@
 /mob/living/silicon/ai/proc/create_eye()
 	if(eyeobj)
 		return
-	eyeobj = new /mob/camera/aiEye()
+	eyeobj = new /mob/camera/ai_eye()
 	all_eyes += eyeobj
 	eyeobj.ai = src
 	eyeobj.setLoc(loc)
@@ -211,7 +211,7 @@
 	acceleration = !acceleration
 	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
-/mob/camera/aiEye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+/mob/camera/ai_eye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
 		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)

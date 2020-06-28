@@ -185,17 +185,17 @@
 	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE)
 	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-				continue
+		if(!M.can_hear())
+			continue
 		var/turf/turf_check = get_turf(M)
 		if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
 			continue
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.stuttering += 20
-		M.adjustEarDamage(0, 30)
+		var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+		if(ears)
+			ears.adjustEarDamage(0, 30)
 		M.Paralyze(60)
 		if(prob(30))
 			M.Stun(200)
@@ -466,13 +466,36 @@
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 10
 	projectile_energy_cost = 500
+	harmful = TRUE
 	diags_first = TRUE
+	/// Damage done by the glove on contact. Also used to determine throw distance (damage / 5)
+	var/punch_damage = 35 
+	/// TRUE - Can toggle between lethal and non-lethal || FALSE - Cannot toggle
+	var/can_toggle_lethal = TRUE 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
 			return 1
 	return 0
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/get_equip_info()
+	if(!chassis)
+		return
+
+	if(can_toggle_lethal)
+		return "[..()] &nbsp; <a href='?src=[REF(src)];lethalPunch=1'>[harmful?"Punch":"Pat"] mode</a>"
+	else
+		return ..()
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/Topic(href, href_list)
+	..()
+	if(href_list["lethalPunch"])
+		harmful = !harmful
+		if(harmful)
+			chassis?.occupant_message("<span class='warning'>Lethal Fisting Enabled.</span>")
+		else
+			chassis?.occupant_message("<span class='warning'>Lethal Fisting Disabled.</span>")
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(target)
 	. = ..()
@@ -482,6 +505,12 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/proj_init(obj/item/punching_glove/PG)
 	if(!istype(PG))
 		return
+
+	if(harmful)
+		PG.throwforce = punch_damage
+	else
+		PG.throwforce = 0
+
 	 //has to be low sleep or it looks weird, the beam doesn't exist for very long so it's a non-issue
 	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20, maxdistance = missile_range + 2, beam_sleep_time = 1)
 
@@ -495,5 +524,5 @@
 	if(!..())
 		if(ismovable(hit_atom))
 			var/atom/movable/AM = hit_atom
-			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
+			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), clamp(round(throwforce/5), 2, 20), 2) //Throws them equal to damage/5, with a min range of 2 and max range of 20
 		qdel(src)
