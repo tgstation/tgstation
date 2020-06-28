@@ -889,7 +889,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return //don't need warnings, and decreasing signed_up size isn't going to get a game going
 	else
 		GLOB.mafia_signup[ckey] = client
-		to_chat(usr, "<span class='notice'>You register to Mafia. Attempting to start game... (If there are not enough players, nothing will happen)</span>")
+		to_chat(usr, "<span class='notice'>You sign up for Mafia.</span>")
+	to_chat(usr, "<span class='bold notice'>The game currently has [GLOB.mafia_signup.len]/12 players signed up.</span>")
 	if(game.phase != MAFIA_PHASE_SETUP)
 		to_chat(usr, "<span class='notice'>Mafia is currently in progress, you will be signed up for next round.</span>")
 	else

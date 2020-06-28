@@ -101,16 +101,6 @@
 	result += "<span class='notice'>[name] wins when [win_condition]</span>"
 	to_chat(clueless, result.Join("</br>"))
 
-/datum/mafia_role/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, null, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "MafiaRole", "Help", 500, 500, master_ui, state)
-		ui.set_autoupdate(FALSE)
-		ui.open()
-
-/datum/mafia_controller/ui_data(mob/user)
-	. = ..()
-
 /datum/mafia_role/detective
 	name = "Detective"
 	desc = "You can investigate a single person each night to reveal their team."
@@ -213,7 +203,7 @@
 	. = ..()
 	if(!.)
 		return
-	return game.phase == MAFIA_PHASE_NIGHT && target.game_status == MAFIA_DEAD && target != src
+	return game.phase == MAFIA_PHASE_NIGHT && target.game_status == MAFIA_DEAD && target != src && !target.revealed
 
 /datum/mafia_role/chaplain/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
 	to_chat(body,"<span class='warning'>You will commune with the spirit of [target.body.real_name] tonight.</span>")
@@ -237,8 +227,16 @@
 
 /datum/mafia_role/lawyer/New(datum/mafia_controller/game)
 	. = ..()
+	RegisterSignal(game,COMSIG_MAFIA_SUNDOWN,.proc/roleblock_text)
 	RegisterSignal(game,COMSIG_MAFIA_NIGHT_START,.proc/try_to_roleblock)
 	RegisterSignal(game,COMSIG_MAFIA_NIGHT_END,.proc/release)
+
+/datum/mafia_role/lawyer/proc/roleblock_text(datum/mafia_controller/game)
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"roleblock",current_target) & MAFIA_PREVENT_ACTION || game_status != MAFIA_ALIVE) //Got lynched or roleblocked by another lawyer.
+		current_target = null
+	if(current_target)
+		to_chat(current_target.body,"<span class='big bold red'>YOU HAVE BEEN BLOCKED! YOU CANNOT PERFORM ANY ACTIONS TONIGHT.</span>")
+		add_note("N[game.turn] - [current_target.body.real_name] - Blocked")
 
 /datum/mafia_role/lawyer/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
@@ -251,21 +249,22 @@
 
 /datum/mafia_role/lawyer/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
-	to_chat(body,"<span class='warning'>You will block [target.body.real_name] tonight.</span>")
-	current_target = target
+	if(target == current_target)
+		current_target = null
+		to_chat(body,"<span class='warning'>You have decided against blocking anyone tonight.</span>")
+	else
+		current_target = target
+		to_chat(body,"<span class='warning'>You will block [target.body.real_name] tonight.</span>")
 
 /datum/mafia_role/lawyer/proc/try_to_roleblock(datum/mafia_controller/game)
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"roleblock",current_target) & MAFIA_PREVENT_ACTION || game_status != MAFIA_ALIVE) //Got lynched or roleblocked by another lawyer.
-		current_target = null
 	if(current_target)
-		to_chat(current_target.body,"<span class='big red'>YOU HAVE BEEN BLOCKED! YOU CANNOT PERFORM ANY ACTIONS TONIGHT.</span>")
 		RegisterSignal(current_target,COMSIG_MAFIA_CAN_PERFORM_ACTION, .proc/prevent_action)
-		add_note("N[game.turn] - [current_target.body.real_name] - Blocked")
 
 /datum/mafia_role/lawyer/proc/release(datum/mafia_controller/game)
 	. = ..()
 	if(current_target)
 		UnregisterSignal(current_target)
+		current_target = null
 
 /datum/mafia_role/lawyer/proc/prevent_action(datum/source)
 	if(game_status == MAFIA_ALIVE) //in case we got killed while imprisoning sk - bad luck edge
@@ -316,6 +315,15 @@
 	team = MAFIA_TEAM_MAFIA
 	revealed_outfit = /datum/outfit/mafia/changeling
 	special_theme = "syndicate"
+	win_condition = "they become majority, dooming the town."
+	//var/team_killer = FALSE
+
+/datum/mafia_role/mafia/New(datum/mafia_controller/game)
+	. = ..()
+	RegisterSignal(game,COMSIG_MAFIA_SUNDOWN,.proc/mafia_text)
+
+/datum/mafia_role/mafia/proc/mafia_text(datum/mafia_controller/source)
+	to_chat(body,"<b>Vote for who to kill tonight. The killer will be chosen randomly from voters.</b>")
 
 ///SOLO ROLES/// they range from anomalous factors not good or evil to deranged killers that try to win alone.
 
@@ -424,7 +432,7 @@
 /datum/mafia_role/obsessed
 	name = "Obsessed"
 	desc = "You're completely lost in your own mind. You win by lynching your obsession before you get killed in this mess. Obsession assigned on the first night!"
-	win_condition = "lynching their obsession"
+	win_condition = "lynching their obsession."
 	team = MAFIA_TEAM_SOLO
 	revealed_outfit = /datum/outfit/mafia/obsessed // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
 
@@ -434,13 +442,13 @@
 
 /datum/mafia_role/obsessed/New(datum/mafia_controller/game) //note: obsession is always a townie
 	. = ..()
-	RegisterSignal(game,COMSIG_MAFIA_NIGHT_START,.proc/find_obsession)
+	RegisterSignal(game,COMSIG_MAFIA_SUNDOWN,.proc/find_obsession)
 
 /datum/mafia_role/obsessed/proc/find_obsession(datum/mafia_controller/game)
 	var/list/all_roles_shuffle = shuffle(game.all_roles)
 	for(var/role in all_roles_shuffle)
 		var/datum/mafia_role/possible = role
-		if(possible.team == MAFIA_TEAM_TOWN)
+		if(possible.team == MAFIA_TEAM_TOWN && possible.game_status != MAFIA_DEAD)
 			obsession = possible
 			break
 	if(!obsession)
@@ -449,11 +457,12 @@
 	to_chat(body, "<span class='userdanger'>Your obsession is [obsession.body.real_name]! Get them lynched to win!</span>")
 	add_note("N[game.turn] - I vowed to watch my obsession, [obsession.body.real_name], hang!") //it'll always be N1 but whatever
 	RegisterSignal(obsession,COMSIG_MAFIA_ON_KILL,.proc/check_victory)
-	UnregisterSignal(src,COMSIG_MAFIA_NIGHT_START)
+	UnregisterSignal(game,COMSIG_MAFIA_SUNDOWN)
 
 /datum/mafia_role/obsessed/proc/check_victory(datum/source,datum/mafia_controller/game,lynch)
 	if(lynch)
-		game.send_message("<span class='big red'>!! OBSESSED VICTORY !!</span>") //red since it's a confirmed townie
+		game.send_message("<span class='big comradio'>!! OBSESSED VICTORY !!</span>")
+		reveal_role(game, FALSE)
 	else
 		to_chat(body, "<span class='userdanger'>You have failed your objective to lynch [obsession.body]!</span>")
 	UnregisterSignal(source,COMSIG_MAFIA_ON_KILL)
@@ -461,7 +470,7 @@
 /datum/mafia_role/clown
 	name = "Clown"
 	desc = "If you are lynched you take down one of your voters with you and win. HONK!"
-	win_condition = "Get themselves lynched!"
+	win_condition = "get themselves lynched!"
 	revealed_outfit = /datum/outfit/mafia/clown
 	team = MAFIA_TEAM_SOLO
 
@@ -473,5 +482,5 @@
 	if(lynch)
 		var/datum/mafia_role/victim = pick(game.judgement_guilty_votes)
 		game.send_message("<span class='big clown'>[body.real_name] WAS A CLOWN! HONK! They take down [victim.body.real_name] with their last prank.</span>")
-		to_chat(body,"<span class='big green'>!! CLOWN VICTORY !!</span>")
+		game.send_message("<span class='big clown'>!! CLOWN VICTORY !!</span>")
 		victim.kill(game,FALSE)

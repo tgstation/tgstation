@@ -93,6 +93,9 @@
 		to_chat(R.body,msg)
 	var/team_suffix = team ? "([uppertext(team)] CHAT)" : ""
 	for(var/M in GLOB.dead_mob_list)
+		var/mob/spectator = M
+		if(!(spectator in GLOB.mafia_signup) || player_role_lookup[spectator.ckey] == null)
+			continue
 		var/link = FOLLOW_LINK(M, town_center_landmark)
 		to_chat(M, "[link] MAFIA: [msg] [team_suffix]")
 
@@ -241,17 +244,8 @@
 
 /datum/mafia_controller/proc/start_night()
 	phase = MAFIA_PHASE_NIGHT
-	var/alive_mafia = FALSE
-
-	for(var/datum/mafia_role/R in all_roles)
-		if(R.game_status == MAFIA_ALIVE)
-			switch(R.team)
-				if(MAFIA_TEAM_MAFIA)
-					alive_mafia = TRUE
-					break
 	send_message("<b>Night [turn] started! Lockdown will end in 45 seconds.</b>")
-	if(alive_mafia)
-		send_message("<b>Vote for who to kill tonight. The killer will be chosen randomly from voters.</b>",MAFIA_TEAM_MAFIA)
+	SEND_SIGNAL(src,COMSIG_MAFIA_SUNDOWN)
 	next_phase_timer = addtimer(CALLBACK(src, .proc/resolve_night),night_phase_period,TIMER_STOPPABLE)
 	SStgui.update_uis(src)
 
@@ -261,7 +255,12 @@
 	//resolve mafia kill, todo unsnowflake this
 	var/datum/mafia_role/R = get_vote_winner("Mafia")
 	if(R)
-		R.kill(src)
+		var/datum/mafia_role/killer = get_random_voter("Mafia")
+		if(SEND_SIGNAL(killer,COMSIG_MAFIA_CAN_PERFORM_ACTION,src,"mafia killing",R) & MAFIA_PREVENT_ACTION)
+			send_message("<span class='danger'>[killer.body.real_name] was unable to attack [R.body.real_name] tonight!</span>",MAFIA_TEAM_MAFIA)
+		else
+			send_message("<span class='danger'>[killer.body.real_name] has attacked [R.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
+			R.kill(src)
 	reset_votes("Mafia")
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_END)

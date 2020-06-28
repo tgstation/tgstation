@@ -57,11 +57,19 @@
 /datum/map_template/mafia/ufo
 	name = "Alien Mothership"
 	description = "The haunted ghost UFO tour has gone south and now it's up to our fine townies and scare seekers to kill the actual real alien changelings..."
-	suffix = "mafia_ufo.dmm"
+	suffix = "mafia_ayylmao.dmm"
 
-/*
 /datum/map_template/mafia/necropolis
 	name = "Necropolis Showdown"
 	description = "The townies have shown up to try and suss out who truly ruined the art direction of SS13. No hurt feelings intended!"
 	suffix = "mafia_necropolis.dmm"
-*/
+
+/datum/map_template/mafia/spider_clan
+	name = "Spider Clan Kidnapping"
+	description = "The spider clan has grown bored of just kidnapping people and keeping them in a boxed room for an hour, so now it's 15 minutes with changelings!"
+	suffix = "mafia_spiderclan.dmm"
+
+/datum/map_template/mafia/gothic
+	name = "Spider Clan Kidnapping"
+	description = "Vampires not included. What, you expected a funny little story? I got nothing!"
+	suffix = "mafia_gothic.dmm"

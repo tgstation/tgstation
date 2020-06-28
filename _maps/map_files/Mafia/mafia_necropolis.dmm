@@ -17,11 +17,10 @@
 /area/mafia)
 "f" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/cult/friendly{
-	damage_deflection = 21;
-	max_integrity = 99999;
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi';
 	name = "Maintenance";
-	normal_integrity = 99999
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
 	},
 /turf/open/indestructible/necropolis/air,
 /area/mafia)
@@ -58,7 +57,9 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/turf/closed/indestructible/riveted/boss/see_through,
+/turf/closed/indestructible/riveted/boss/see_through{
+	color = "#add8e6"
+	},
 /area/mafia)
 "l" = (
 /obj/structure/stone_tile/block/cracked,
@@ -80,18 +81,16 @@
 /turf/open/lava/smooth,
 /area/mafia)
 "p" = (
-/obj/structure/stone_tile/surrounding/cracked,
-/obj/structure/stone_tile/surrounding_tile/burnt,
-/obj/structure/stone_tile/center/cracked,
-/turf/open/lava/smooth,
+/obj/effect/landmark/mafia,
+/turf/open/floor/plating/asteroid/basalt,
 /area/mafia)
 "q" = (
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/lava/smooth,
 /area/mafia)
 "r" = (
-/obj/effect/landmark/mafia,
-/turf/open/floor/plating/asteroid/basalt,
+/obj/structure/stone_tile/surrounding,
+/turf/open/lava/smooth,
 /area/mafia)
 "s" = (
 /obj/machinery/door/poddoor/preopen{
@@ -100,19 +99,15 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/obj/effect/temp_visual/hierophant/wall{
-	duration = 1e+008
+/turf/closed/indestructible/riveted/hierophant{
+	opacity = 0
 	},
-/turf/open/indestructible/hierophant/two,
 /area/mafia)
 "t" = (
+/obj/structure/stone_tile/surrounding/cracked,
 /obj/structure/stone_tile/surrounding_tile/burnt,
-/obj/structure/stone_tile/surrounding_tile/burnt{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
+/obj/structure/stone_tile/center/cracked,
+/obj/effect/landmark/mafia,
 /turf/open/lava/smooth,
 /area/mafia)
 "u" = (
@@ -133,9 +128,8 @@
 /turf/open/indestructible/hierophant,
 /area/mafia)
 "x" = (
-/obj/structure/stone_tile/slab/burnt,
-/obj/effect/landmark/mafia,
-/turf/open/lava/smooth,
+/obj/mafia_game_board,
+/turf/open/indestructible/necropolis/air,
 /area/mafia)
 "y" = (
 /obj/structure/stone_tile/block/burnt,
@@ -149,63 +143,69 @@
 /turf/open/lava/smooth,
 /area/mafia)
 "A" = (
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 8
+	},
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/obj/structure/stone_tile/cracked,
+/obj/effect/landmark/mafia,
 /turf/open/lava/smooth,
 /area/mafia)
 "B" = (
+/obj/effect/mapping_helpers/airlock/locked{
+	max_integrity = 99999
+	},
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi';
+	name = "Maintenance";
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	},
+/turf/open/indestructible/necropolis/air,
+/area/mafia)
+"C" = (
 /obj/structure/stone_tile/slab/cracked{
 	dir = 6
 	},
 /turf/open/lava/smooth,
 /area/mafia)
-"C" = (
+"D" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /obj/structure/stone_tile/block,
 /turf/open/lava/smooth,
 /area/mafia)
-"D" = (
+"E" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
 /turf/open/lava/smooth,
 /area/mafia)
-"E" = (
+"F" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/surrounding_tile/burnt{
 	dir = 4
 	},
 /turf/open/lava/smooth,
 /area/mafia)
-"F" = (
+"G" = (
 /obj/structure/stone_tile/block/burnt{
 	dir = 4
 	},
 /turf/open/lava/smooth,
 /area/mafia)
-"G" = (
-/obj/structure/stone_tile/surrounding,
+"H" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
 /obj/effect/landmark/mafia,
 /turf/open/lava/smooth,
-/area/mafia)
-"H" = (
-/obj/effect/hierophant,
-/obj/effect/landmark/mafia/town_center,
-/turf/open/indestructible/hierophant/two,
 /area/mafia)
 "I" = (
-/obj/structure/stone_tile/slab/cracked{
-	dir = 6
-	},
-/obj/effect/landmark/mafia,
-/turf/open/lava/smooth,
-/area/mafia)
-"J" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
@@ -213,14 +213,16 @@
 /obj/effect/landmark/mafia,
 /turf/open/lava/smooth,
 /area/mafia)
-"K" = (
+"J" = (
 /obj/structure/stone_tile/block/burnt,
 /obj/effect/landmark/mafia,
 /turf/open/lava/smooth,
 /area/mafia)
-"L" = (
-/obj/mafia_game_board,
-/turf/open/indestructible/necropolis/air,
+"K" = (
+/obj/effect/baseturf_helper/asteroid,
+/obj/effect/hierophant,
+/obj/effect/landmark/mafia/town_center,
+/turf/open/indestructible/hierophant/two,
 /area/mafia)
 
 (1,1,1) = {"
@@ -303,7 +305,7 @@ a
 b
 b
 c
-L
+x
 e
 d
 d
@@ -317,7 +319,7 @@ d
 d
 d
 e
-L
+x
 c
 b
 b
@@ -359,9 +361,9 @@ b
 f
 b
 g
-t
+A
 b
-i
+p
 j
 b
 f
@@ -381,15 +383,15 @@ c
 d
 b
 j
-i
+p
 k
-G
+r
 u
 k
 i
-r
+i
 k
-C
+D
 g
 b
 d
@@ -405,7 +407,7 @@ c
 d
 d
 b
-r
+i
 i
 b
 b
@@ -414,8 +416,8 @@ b
 i
 b
 b
-D
-J
+E
+I
 b
 d
 d
@@ -439,7 +441,7 @@ k
 i
 k
 q
-E
+F
 k
 b
 b
@@ -491,7 +493,7 @@ s
 i
 i
 i
-r
+p
 f
 d
 c
@@ -510,7 +512,7 @@ b
 k
 s
 w
-H
+K
 w
 s
 k
@@ -529,7 +531,7 @@ b
 c
 d
 f
-r
+p
 i
 i
 i
@@ -539,9 +541,9 @@ w
 w
 s
 q
-F
-B
-K
+G
+C
+J
 f
 d
 c
@@ -605,7 +607,7 @@ c
 d
 d
 b
-x
+m
 o
 b
 b
@@ -615,7 +617,7 @@ y
 b
 b
 i
-r
+p
 b
 d
 d
@@ -631,13 +633,13 @@ c
 d
 b
 g
-p
+t
 k
-r
+i
 i
 k
 z
-I
+C
 k
 i
 j
@@ -659,9 +661,9 @@ b
 f
 b
 j
-i
+p
 b
-A
+H
 g
 b
 f
@@ -686,7 +688,7 @@ b
 b
 f
 b
-f
+B
 b
 b
 d
@@ -703,7 +705,7 @@ a
 b
 b
 c
-L
+x
 e
 d
 d
@@ -717,7 +719,7 @@ d
 d
 d
 e
-L
+x
 c
 b
 b

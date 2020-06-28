@@ -18,10 +18,14 @@
 #define COMSIG_MAFIA_CAN_PERFORM_ACTION "mafia_can_perform_action"
 #define MAFIA_PREVENT_ACTION 1
 
-#define COMSIG_MAFIA_NIGHT_END "night_end"
+//in order of events + game end
+
+#define COMSIG_MAFIA_SUNDOWN "sundown" //the rest of these phases are at the end of the night when shutters raise, in a different order of resolution
 #define COMSIG_MAFIA_NIGHT_START "night_start"
 #define COMSIG_MAFIA_NIGHT_ACTION_PHASE "night_actions"
 #define COMSIG_MAFIA_NIGHT_KILL_PHASE "night_kill"
+#define COMSIG_MAFIA_NIGHT_END "night_end"
+
 #define COMSIG_MAFIA_GAME_END "game_end"
 
 //list of ghosts who want to play mafia, every time someone enters the list it checks to see if enough are in
