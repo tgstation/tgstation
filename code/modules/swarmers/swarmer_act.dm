@@ -5,8 +5,8 @@
   * Arguments:
   * * S - A reference to the swarmer doing the interaction
   */
-/atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DisIntegrate(src)
+/atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	actor.DisIntegrate(src)
 	return TRUE //return TRUE/FALSE whether or not an AI swarmer should try this swarmer_act() again, NOT whether it succeeded.
 
 /obj/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
