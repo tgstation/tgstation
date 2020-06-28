@@ -103,7 +103,7 @@
 
 	// Reagents (NOT Blood!)
 	if(target.reagents && target.reagents.total_volume)
-		target.reagents.reaction(owner.current, INGEST, 1 / target.reagents.total_volume) // Run Reaction: what happens when what they have mixes with what I have?
+		//target.reagents.reaction(owner.current, INGEST, 1 / target.reagents.total_volume) // Run Reaction: what happens when what they have mixes with what I have?	DEAD CODE MUST REWORK
 		target.reagents.trans_to(owner.current, 1)	// Run transfer of 1 unit of reagent from them to me.
 
 	// Blood Gulp Sound
@@ -175,8 +175,8 @@
 
 	// No Bleeding
 	if (ishuman(owner.current))
-		var/mob/living/carbon/human/H = owner.current
-		H.bleed_rate = 0
+		//var/mob/living/carbon/human/H = owner.current		DEAD CODE MUST REWORK
+		//H.bleed_rate = 0		DEAD CODE MUST REWORK
 
 	// Damage Heal: Do I have damage to ANY bodypart?
 	if (iscarbon(owner.current))

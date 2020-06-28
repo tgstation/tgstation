@@ -158,16 +158,16 @@
 	var/searJuices = H.getFireLoss_nonProsthetic() / 10
 
 	// Step 2) Bleed out those juices by warmth, minus burn damage.
-	H.bleed_rate = clamp((H.bodytemperature - 285) / 20 - searJuices, 0, 5) // Every 20 points above 285 increases bleed rate. Don't worry, you're cold blooded.
+	//--H.bleed_rate = clamp((H.bodytemperature - 285) / 20 - searJuices, 0, 5) // Every 20 points above 285 increases bleed rate. Don't worry, you're cold blooded.	DEAD CODE MUST REWORK
 
 	// Step 3) If we're salted, we'll bleed more (it gets reset next tick)
-	if (dehydrate > 0)
+	/*if (dehydrate > 0)			DEAD CODE MUST REWORK TO FIT WOUNDS PR SOMEHOW
 		H.bleed_rate += 2
 		dehydrate -= 0.5
 
 	// Replenish Blood Faster! (But only if you actually make blood)
 	if (dehydrate <= 0 && H.bleed_rate <= 0 && H.blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(H, TRAIT_NOMARROW))
-		H.blood_volume += 2
+		H.blood_volume += 2*/
 
 // TO-DO // Drop lots of meat on gib?
 /datum/species/beefman/spec_death(gibbed, mob/living/carbon/human/H)
@@ -270,14 +270,15 @@
 
 /datum/species/beefman/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	// Bleed On
-	if (user != target && user.bleed_rate)
-		target.add_mob_blood(user)
+	/*if (user != target && user.bleed_rate)	DEAD CODE MUST REWORK TO FIT WOUNDS PR SOMEHOW
+		target.add_mob_blood(user)*/
 	return ..()
 
 /datum/species/beefman/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	// Bleed On
-	if (user != target && user.bleed_rate)
+	/*if (user != target && user.bleed_rate)	DEAD CODE MUST REWORK TO FIT WOUNDS PR SOMEHOW
 		target.add_mob_blood(user) //  from atoms.dm, this is how you bloody something!
+		*/
 	return ..()
 
 /datum/species/beefman/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
@@ -317,8 +318,9 @@
 
 /datum/species/beefman/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	// Bleed On
-	if (user != target && user.bleed_rate)
+	/*if (user != target && user.bleed_rate)	DEAD CODE MUST REWORK TO FIT WOUNDS PR SOMEHOW
 		target.add_mob_blood(user) //  from atoms.dm, this is how you bloody something!
+		*/
 	return ..()
 
 /datum/species/beefman/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
@@ -489,7 +491,7 @@
 
 	// Apply meat's Reagents to Me
 	if(inMeatObj.reagents && inMeatObj.reagents.total_volume)
-		inMeatObj.reagents.reaction(owner, INJECT, inMeatObj.reagents.total_volume) // Run Reaction: what happens when what they have mixes with what I have?
+		//inMeatObj.reagents.reaction(owner, INJECT, inMeatObj.reagents.total_volume) // Run Reaction: what happens when what they have mixes with what I have?	DEAD CODE MUST REWORK
 		inMeatObj.reagents.trans_to(owner, inMeatObj.reagents.total_volume)	// Run transfer of 1 unit of reagent from them to me.
 
 	qdel(inMeatObj)
@@ -521,7 +523,7 @@
 
 		// Apply my Reagents to Meat
 		if(inOwner.reagents && inOwner.reagents.total_volume)
-			inOwner.reagents.reaction(newMeat, INJECT, 20 / inOwner.reagents.total_volume) // Run Reaction: what happens when what they have mixes with what I have?
+			//inOwner.reagents.reaction(newMeat, INJECT, 20 / inOwner.reagents.total_volume) // Run Reaction: what happens when what they have mixes with what I have?	DEAD CODE MUST REWORK
 			inOwner.reagents.trans_to(newMeat, 20)	// Run transfer of 1 unit of reagent from them to me.
 
 		. = newMeat // Return MEAT

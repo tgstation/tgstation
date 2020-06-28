@@ -45,7 +45,7 @@
 	//name = "Tricordrazine"
 	//id = /datum/reagent/medicine/CF/tricordrazine
 	results = list(/datum/reagent/medicine/CF/tricordrazine = 3)
-	required_reagents = list(/datum/reagent/medicine/CF/bicaridine = 1, /datum/reagent/medicine/CF/kelotane = 1, /datum/reagent/medicine/CF/antitoxin = 1, /datum/reagent/medicine/C2/convermol = 1, /datum/reagent/medicine/CF/trekamol = 1)
+	required_reagents = list(/datum/reagent/medicine/CF/bicaridine = 1, /datum/reagent/medicine/CF/kelotane = 1, /datum/reagent/medicine/CF/antitoxin = 1, /datum/reagent/medicine/c2/convermol = 1, /datum/reagent/medicine/CF/trekamol = 1)
 	mix_message = "The solution warps into a superior gold, space-worthy liquid."
 
 //**Additional Chems (not T5)

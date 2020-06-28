@@ -106,8 +106,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 	// Mentor PM
-	if (mentor_client_procs(href_list)) //FULP
-		return //ALSO FULP
+	/*if (mentor_client_procs(href_list)) //FULP
+		return ALSO FULP*/
 
 	switch(href_list["_src_"])
 		if("holder")

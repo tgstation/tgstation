@@ -2373,7 +2373,7 @@
 #include "code\modules\mapping\space_management\space_transition.dm"
 #include "code\modules\mapping\space_management\traits.dm"
 #include "code\modules\mapping\space_management\zlevel_manager.dm"
-#include "code\modules\mentor_fulp\follow.dm"
+/*#include "code\modules\mentor_fulp\follow.dm"
 #include "code\modules\mentor_fulp\mentor.dm"
 #include "code\modules\mentor_fulp\mentor_bindings_fulp.dm"
 #include "code\modules\mentor_fulp\mentor_clientprocs_fulp.dm"
@@ -2384,7 +2384,7 @@
 #include "code\modules\mentor_fulp\mentor_verbs.dm"
 #include "code\modules\mentor_fulp\mentorhelp.dm"
 #include "code\modules\mentor_fulp\mentorpm.dm"
-#include "code\modules\mentor_fulp\mentorsay.dm"
+#include "code\modules\mentor_fulp\mentorsay.dm"*/
 #include "code\modules\mining\abandoned_crates.dm"
 #include "code\modules\mining\aux_base.dm"
 #include "code\modules\mining\aux_base_camera.dm"

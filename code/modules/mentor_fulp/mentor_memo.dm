@@ -1,4 +1,4 @@
-/client/proc/mentor_memo()
+/*/client/proc/mentor_memo()
 	set name = "Mentor Memos"
 	set category = "Server"
 	if(!check_rights(0))
@@ -27,7 +27,7 @@
 	if(!SSdbcore.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/sql_ckey = sanitizeSQL(ckey)
+	var/sql_ckey = ckey
 	switch(task)
 		if("Write")
 			var/datum/DBQuery/query_memocheck = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")] WHERE ckey = '[sql_ckey]'")
@@ -169,3 +169,4 @@
 				message_admins("[key_name_admin(src)] has removed [target_sql_ckey]'s mentor memo.")
 			qdel(query_memodellist)
 			qdel(query_memodel)
+*/

@@ -1,4 +1,4 @@
-/datum/ai_laws/dungeon_master
+/*/datum/ai_laws/dungeon_master
 	name = "Dungeon Master"
 	id = "dm"
 	inherent = list("You are the Dungeon Master and must guide the crew on their quest through space.",\
@@ -8,4 +8,5 @@
 
 /obj/item/aiModule/core/full/dungeon_master
 	name = "'Dungeon Master' Core AI Module"
-	law_id = "dm"
+	law_id = "dm"*/
+//this is throwing an error and i dont have time to fix it right now

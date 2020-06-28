@@ -238,7 +238,7 @@
 				playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
 				if (ishuman(target))
 					var/mob/living/carbon/human/H = target
-					H.bleed_rate += 5
+					//H.bleed_rate += 5		DEAD CODE MUST REWORK TO FIT WOUNDS PR SOMEHOW
 				target.add_splatter_floor(get_turf(target))
 				user.add_mob_blood(target) // Put target's blood on us. The donor goes in the ( )
 				target.add_mob_blood(target)

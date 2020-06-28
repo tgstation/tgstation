@@ -170,7 +170,7 @@
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/hercuri = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
-		/obj/item/reagent_containers/pill/patch/silversulfadiazine = 3,	//FULP
+		///obj/item/reagent_containers/pill/patch/silversulfadiazine = 3,	//FULP
 		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
 
@@ -196,7 +196,7 @@
 	    /obj/item/storage/pill_bottle/multiver/less = 1,
 		/obj/item/reagent_containers/syringe/syriniver = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
-		/obj/item/reagent_containers/pill/charcoal = 3,	//FULP
+		///obj/item/reagent_containers/pill/charcoal = 3,	//FULP
 		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -245,7 +245,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/libital = 3,
-		/obj/item/reagent_containers/pill/patch/stypticpowder = 3,	//FULP
+		///obj/item/reagent_containers/pill/patch/stypticpowder = 3,	//FULP
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
@@ -264,8 +264,8 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/instabitaluri = 3,
-		/obj/item/reagent_containers/medigel/stypticpowder = 2,	//FULP
-		/obj/item/reagent_containers/medigel/silversulfadiazine = 2,	//FULP
+		///obj/item/reagent_containers/medigel/stypticpowder = 2,	//FULP
+		///obj/item/reagent_containers/medigel/silversulfadiazine = 2,	//FULP
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)

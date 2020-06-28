@@ -426,7 +426,7 @@
 			if(show_message)
 				to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/C2/instabitaluri) + reac_volume >= SYNTHFLESH_HUSKFIX_THRESHOLD)) //FULPSTATION MEDBORG CHANGES -Surrealistik Feb 2020
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/instabitaluri) + reac_volume >= SYNTHFLESH_HUSKFIX_THRESHOLD)) //FULPSTATION MEDBORG CHANGES -Surrealistik Feb 2020
 				carbies.cure_husk("burn")
 				carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 	..()

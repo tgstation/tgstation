@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(mentor_datums)
+/*GLOBAL_LIST_EMPTY(mentor_datums)
 GLOBAL_PROTECT(mentor_datums)
 
 GLOBAL_VAR_INIT(mentor_href_token, GenerateToken())
@@ -89,4 +89,4 @@ GLOBAL_PROTECT(mentor_href_token)
 
 // new client var: mentor_datum. Acts the same way holder does towards admin: it holds the mentor datum. if set, the guy's a mentor.
 /client
-	var/datum/mentors/mentor_datum
+	var/datum/mentors/mentor_datum*/

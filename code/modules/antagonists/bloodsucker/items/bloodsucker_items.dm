@@ -46,7 +46,7 @@
 		var/gulp_size = 5
 		var/fraction = min(gulp_size / reagents.total_volume, 1)
 		//checkLiked(fraction, M) // Blood isn't food, sorry.
-		reagents.reaction(M, INGEST, fraction)
+		//reagents.reaction(M, INGEST, fraction)	DEAD CODE MUST REWORK
 		reagents.trans_to(M, gulp_size)
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 

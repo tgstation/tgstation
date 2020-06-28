@@ -47,7 +47,7 @@ GLOBAL_VAR(restart_counter)
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 	load_admins()
-	load_mentors()
+	//load_mentors()
 
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can

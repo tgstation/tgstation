@@ -1,4 +1,4 @@
-/client/New()
+/*/client/New()
 	. = ..()
 	mentor_datum_set()
 
@@ -34,3 +34,4 @@
 /client/proc/is_mentor() // admins are mentors too.
 	if(mentor_datum || check_rights_for(src, R_ADMIN,0))
 		return TRUE
+*/

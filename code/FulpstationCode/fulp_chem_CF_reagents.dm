@@ -35,7 +35,7 @@ var/synthTricHeal = 1
 	metabolization_rate = 0.4
 	overdose_threshold = 40
 
-/datum/reagent/medicine/CF/bicaridine/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/bicaridine/expose_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -67,7 +67,7 @@ var/synthTricHeal = 1
 	metabolization_rate = 0.4
 	overdose_threshold = 40
 
-/datum/reagent/medicine/CF/synth_bicaridine/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/synth_bicaridine/expose_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -99,7 +99,7 @@ var/synthTricHeal = 1
 	metabolization_rate = 0.4
 	overdose_threshold = 40
 
-/datum/reagent/medicine/CF/kelotane/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/kelotane/expose_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -117,7 +117,7 @@ var/synthTricHeal = 1
 		M.adjustFireLoss(-keloHeal*REMF, 0)
 	. = ..()
 
-/datum/reagent/medicine/CF/kelotane/overdose_process(mob/living/M)	
+/datum/reagent/medicine/CF/kelotane/overdose_process(mob/living/M)
 	kel1 = FALSE
 	M.adjustFireLoss(keloHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
@@ -131,7 +131,7 @@ var/synthTricHeal = 1
 	metabolization_rate = 0.4
 	overdose_threshold = 40
 
-/datum/reagent/medicine/CF/synth_kelotane/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/synth_kelotane/expose_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -149,7 +149,7 @@ var/synthTricHeal = 1
 		M.adjustFireLoss(-synthKeloHeal*REMF, 0)
 	. = ..()
 
-/datum/reagent/medicine/CF/synth_kelotane/overdose_process(mob/living/M)	
+/datum/reagent/medicine/CF/synth_kelotane/overdose_process(mob/living/M)
 	kel2 = FALSE
 	M.adjustFireLoss(synthKeloHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
@@ -164,7 +164,7 @@ var/synthTricHeal = 1
 	metabolization_rate = 0.4
 	overdose_threshold = 40
 
-/datum/reagent/medicine/CF/antitoxin/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/antitoxin/expose_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -182,7 +182,7 @@ var/synthTricHeal = 1
 		M.adjustToxLoss(-toxHeal*REMF, 0)
 	. = ..()
 
-/datum/reagent/medicine/CF/antitoxin/overdose_process(mob/living/M)	
+/datum/reagent/medicine/CF/antitoxin/overdose_process(mob/living/M)
 	tox1 = FALSE
 	M.adjustToxLoss(toxHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
@@ -196,7 +196,7 @@ var/synthTricHeal = 1
 	metabolization_rate = 0.4
 	overdose_threshold = 40
 
-/datum/reagent/medicine/CF/synth_antitoxin/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/synth_antitoxin/expose_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -214,7 +214,7 @@ var/synthTricHeal = 1
 		M.adjustToxLoss(-synthToxHeal*REMF, 0)
 	. = ..()
 
-/datum/reagent/medicine/CF/synth_antitoxin/overdose_process(mob/living/M)	
+/datum/reagent/medicine/CF/synth_antitoxin/overdose_process(mob/living/M)
 	tox2 = FALSE
 	M.adjustToxLoss(synthToxHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
@@ -229,7 +229,7 @@ var/synthTricHeal = 1
 	metabolization_rate = 0.4
 	overdose_threshold = 60
 
-/datum/reagent/medicine/CF/tricordrazine/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/tricordrazine/expose_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -239,7 +239,7 @@ var/synthTricHeal = 1
 			tri1 = TRUE
 		else
 			M.reagents.remove_reagent(/datum/reagent/medicine/CF/tricordrazine, reac_volume)
-		
+
 	..()
 	. = 1
 
@@ -251,7 +251,7 @@ var/synthTricHeal = 1
 		M.adjustOxyLoss(-tricHeal*REMF, 0)
 	. = ..()
 
-/datum/reagent/medicine/CF/tricordrazine/overdose_process(mob/living/M)	
+/datum/reagent/medicine/CF/tricordrazine/overdose_process(mob/living/M)
 	tri1 = FALSE
 	M.adjustBruteLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustFireLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
@@ -268,7 +268,7 @@ var/synthTricHeal = 1
 	metabolization_rate = 0.4
 	overdose_threshold = 60
 
-/datum/reagent/medicine/CF/synth_tricordrazine/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/synth_tricordrazine/expose_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -278,7 +278,7 @@ var/synthTricHeal = 1
 			tri2 = TRUE
 		else
 			M.reagents.remove_reagent(/datum/reagent/medicine/CF/synth_tricordrazine, reac_volume)
-		
+
 	..()
 	. = 1
 
@@ -290,7 +290,7 @@ var/synthTricHeal = 1
 		M.adjustOxyLoss(-synthTricHeal*REMF, 0)
 	. = ..()
 
-/datum/reagent/medicine/CF/synth_tricordrazine/overdose_process(mob/living/M)	
+/datum/reagent/medicine/CF/synth_tricordrazine/overdose_process(mob/living/M)
 	tri2 = FALSE
 	M.adjustBruteLoss(synthTricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustFireLoss(synthTricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
@@ -314,7 +314,7 @@ var/synthTricHeal = 1
 	reagent_state = SOLID
 	metabolization_rate = 0.2
 
-/datum/reagent/medicine/CF/charcoal/reaction_mob(mob/living/M, method=INGEST, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/charcoal/expose_mob(mob/living/M, method=INGEST, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -339,7 +339,7 @@ var/synthTricHeal = 1
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/CF/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/CF/synthflesh/expose_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		if (M.stat == DEAD)
 			show_message = 0
@@ -396,7 +396,7 @@ var/synthTricHeal = 1
 	color = "#FF9696"
 	overdose_threshold = 45
 
-/datum/reagent/medicine/CF/styptic/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/styptic/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
 			M.adjustToxLoss(0.5*reac_volume)
@@ -429,7 +429,7 @@ var/synthTricHeal = 1
     color = "#C8A5DC"
     overdose_threshold = 45
 
-/datum/reagent/medicine/CF/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/silver_sulfadiazine/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
     if(iscarbon(M) && M.stat != DEAD)
         if(method in list(INGEST, VAPOR, INJECT))
             M.adjustToxLoss(0.5*reac_volume)

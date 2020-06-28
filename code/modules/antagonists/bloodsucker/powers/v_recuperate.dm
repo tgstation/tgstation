@@ -41,8 +41,8 @@
 		if (C.getStaminaLoss() < 60)
 			C.adjustStaminaLoss(25, forced = TRUE)
 		// Stop Bleeding
-		if (istype(H) && H.bleed_rate > 0 && rand(20) == 0)
-			H.bleed_rate --
+		//if (istype(H) && H.bleed_rate > 0 && rand(20) == 0)
+			//H.bleed_rate --DEAD CODE MUST REWORK TO FIT WOUNDS PR SOMEHOW
 
 		C.Jitter(5)
 
