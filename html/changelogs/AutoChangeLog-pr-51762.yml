@@ -1,6 +1,0 @@
-author: "XRandomXManX"
-delete-after: True
-changes: 
-  - rscdel: "Removed Decal Painter from BEPIS Minor Rewards"
-  - rscadd: "Added Decal Painter to the Basic Tools Research Node"
-  - rscadd: "Added Decal Painter to Maintenance Loot alongside the Airlock Painter"
