@@ -127,7 +127,8 @@
 	var/turf/T = get_turf(A)
 	if(!T)
 		return
-	for(var/mob/living/simple_animal/hostile/drone in dronelist)
+	for(var/d in dronelist)
+		var/mob/living/simple_animal/hostile/drone = d
 		drone.LoseTarget()
 		drone.Goto(T, drone.move_to_delay)
 
