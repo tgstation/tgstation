@@ -218,8 +218,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	use_power = ACTIVE_POWER_USE
 	begin_processing()
 
-/obj/machinery/washing_machine/ power_change()
-
 /obj/machinery/washing_machine/power_change()
 /obj/machinery/ntnet_relay/process()
 	if(is_operational())
@@ -273,15 +271,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	// copied from suit decontamination
 	var/list/things_to_clear = list() //Done this way since using GetAllContents on the machine itself would include circuitry and such.
 	for(var/atom/movable/AM in contents)
+	/obj/item/storage/backpack
 		things_to_clear += AM.GetAllContents()
 
+	// So currently machine_wash has a bunch of procs depending on the object thrown into
+	// the machine.  atom/movable is the basic washed(src,clean_mode) so unless that object
+	// does something special, just use the inherted
 	for(var/atom/movable/AM in things_to_clear)
-		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, clean_mode)
-		// contaimation can be removed with soap and water so there:P
-		var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
-		if(contamination)
-			qdel(contamination)
-		AM.machine_wash(src) // mabye somone can give the washing machine some love and change this to a signal
+		AM.machine_wash(src, clean_mode)
 
 	if(color_source)
 		qdel(color_source)
@@ -314,7 +311,9 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	return FALSE
 
 //what happens to this object when washed inside a washing machine
-/atom/movable/proc/machine_wash(obj/machinery/washing_machine/WM)
+//Also a cheap way to stop the washine machine from washing unnecessary  stuff
+/atom/movable/proc/machine_wash(obj/machinery/washing_machine/WM, clean_mode)
+	washed(src, clean_mode)
 	return
 
 /obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/WM)
@@ -330,6 +329,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	gib()
 
 /obj/item/machine_wash(obj/machinery/washing_machine/WM)
+	. = ..()
 	if(WM.color_source)
 		dye_item(WM.color_source.dye_color)
 
@@ -344,10 +344,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/WM)
 	freshly_laundered = TRUE
 	addtimer(VARSET_CALLBACK(src, freshly_laundered, FALSE), 5 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
-	..()
+	. = ..()
 
 /obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/WM)
-	..()
+	. = ..()
 	held_mob.machine_wash(WM)
 
 /obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/WM)
@@ -355,7 +355,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		chained = 0
 		slowdown = SHOES_SLOWDOWN
 		new /obj/item/restraints/handcuffs(loc)
-	..()
+	. = ..()
 
 /obj/machinery/washing_machine/relaymove(mob/user)
 	container_resist(user)

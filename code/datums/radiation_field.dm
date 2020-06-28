@@ -1,3 +1,13 @@
+/*
+** Radiation field is a simulation of ionizing radiation.  Basicly, its an
+** invisiable lamp that will kill you and power the station.  While the
+** waves were fine, they added a bit of stress on the servers.  Especialy
+** when a bunch of idiots contaminated themslves or stacked a bunch of
+** urainuam folding chairs.  So instead a field is made using the code
+** from shield gen.  So instead of random datums created and shooting
+** from a source, a field will follow around from this source
+*/
+
 /datum/radiation_wave
 	/// The thing that spawned this radiation wave
 	var/source
@@ -98,7 +108,7 @@
 			continue
 		if (thing.rad_insulation != RAD_NO_INSULATION)
 			intensity *= (1-((1-thing.rad_insulation)/width))
-
+// code copyed form line of sight
 /datum/radiation_wave/proc/radiate(list/atoms, strength)
 	var/can_contam = strength >= RAD_MINIMUM_CONTAMINATION
 	var/contamination_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
