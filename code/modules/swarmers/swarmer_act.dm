@@ -201,12 +201,11 @@
 	to_chat(actor, "<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>")
 	return FALSE
 
-/obj/structure/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/structure/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/turf/here = get_turf(src)
-	for(var/A in here.contents)
-		var/obj/structure/cable/C = A
-		if(istype(C))
-			to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
+	for(var/a in here.contents)
+		if(istype(a, /obj/structure/cable))
+			to_chat(actor, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 			return FALSE
 	return ..()
 
