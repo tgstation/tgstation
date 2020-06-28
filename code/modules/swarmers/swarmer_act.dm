@@ -41,11 +41,10 @@
 /obj/structure/lattice/catwalk/swarmer_catwalk/swarmer_act()
 	return FALSE
 
-/obj/structure/swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	if(S.AIStatus == AI_ON)
+/obj/structure/swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	if(actor.AIStatus == AI_ON)
 		return FALSE
-	else
-		return ..()
+	return ..()
 
 /obj/effect/swarmer_act()
 	return FALSE
