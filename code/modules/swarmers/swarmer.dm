@@ -445,8 +445,9 @@ mob/living/simple_animal/hostile/swarmer/proc/remove_drone(mob/drone, force)
 
 /obj/projectile/beam/disabler/swarmer/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(.)	
-		if(!istype(target, /mob/living/simple_animal) || !istype(firer, /mob/living/simple_animal/hostile/swarmer))
-			return
-		var/mob/living/simple_animal/hostile/swarmer/swarmer = firer
-		swarmer.TeleportTarget(target)
+	if(!.)
+		return
+	if(!istype(target, /mob/living/simple_animal) || !istype(firer, /mob/living/simple_animal/hostile/swarmer))
+		return
+	var/mob/living/simple_animal/hostile/swarmer/swarmer = firer
+	swarmer.TeleportTarget(target)
