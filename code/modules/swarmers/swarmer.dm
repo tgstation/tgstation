@@ -113,12 +113,10 @@
 /mob/living/simple_animal/hostile/swarmer/AttackingTarget()
 	if(!isliving(target))
 		return target.swarmer_act(src)
-	else if(iscyborg(target))
+	if(iscyborg(target))
 		var/mob/living/silicon/borg = target
 		borg.adjustBruteLoss(melee_damage_lower)
-		return ..()
-	else
-		return ..()
+	return ..()
 		
 /mob/living/simple_animal/hostile/swarmer/MiddleClickOn(atom/A)
 	. = ..()
