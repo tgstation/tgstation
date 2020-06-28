@@ -138,7 +138,7 @@
 		return
 	if(!A.Adjacent(src))
 		return
-	PrepareTarget(src)
+	prepare_target(src)
 
 ////END CTRL CLICK FOR SWARMERS////
 
@@ -168,7 +168,7 @@
   * * target - The material or object the swarmer is attempting to consume
   */
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(obj/target)
-	var/resource_gain = target.IntegrateAmount()
+	var/resource_gain = target.integrate_amount()
 	if(resources + resource_gain > max_resources)
 		to_chat(src, "<span class='warning'>We cannot hold more materials!</span>")
 		return TRUE
@@ -223,7 +223,7 @@
 	if(!do_mob(src, target, 30))
 		return
 		
-	TeleportTarget(target)
+	teleport_target(target)
 		
 /mob/living/simple_animal/hostile/swarmer/proc/teleport_target(mob/living/target)
 	var/turf/open/floor/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
@@ -337,7 +337,7 @@
 		return
 	if(!do_mob(src, src, 5 SECONDS))
 		return
-	var/createtype = SwarmerTypeToCreate()
+	var/createtype = swarmer_type_to_create()
 	if(!createtype)
 		return
 	var/mob/newswarmer = Fabricate(createtype, 20)
@@ -450,4 +450,4 @@ mob/living/simple_animal/hostile/swarmer/proc/remove_drone(mob/drone, force)
 	if(!istype(target, /mob/living/simple_animal) || !istype(firer, /mob/living/simple_animal/hostile/swarmer))
 		return
 	var/mob/living/simple_animal/hostile/swarmer/swarmer = firer
-	swarmer.TeleportTarget(target)
+	swarmer.teleport_target(target)
