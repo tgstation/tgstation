@@ -324,7 +324,7 @@
   *
   * Proc used to allow a swarmer to create a drone.  Checks if the swarmer can afford the drone, then creates it after 5 seconds, and also registers it to the creating swarmer so it can command it
   */
-/mob/living/simple_animal/hostile/swarmer/proc/CreateSwarmer()
+/mob/living/simple_animal/hostile/swarmer/proc/create_swarmer()
 	set name = "Replicate"
 	set category = "Swarmer"
 	set desc = "Creates a duplicate of ourselves, capable of protecting us while we complete our objectives."
