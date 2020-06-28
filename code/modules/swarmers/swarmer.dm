@@ -226,25 +226,25 @@
 	TeleportTarget(target)
 		
 /mob/living/simple_animal/hostile/swarmer/proc/TeleportTarget(mob/living/target)
-	var/turf/open/floor/F
-	F = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+	var/turf/open/floor/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
 
-	if(!F)
+	if(!safe_turf )
 		return
 	// If we're getting rid of a human, slap some energy cuffs on
 	// them to keep them away from us a little longer
 
-	var/mob/living/carbon/human/H = target
-	if(ishuman(target) && (!H.handcuffed))
-		H.handcuffed = new /obj/item/restraints/handcuffs/energy/used(H)
-		H.update_handcuffed()
-		log_combat(src, H, "handcuffed")
+	if(ishuman(target))
+		var/mob/living/carbon/human/victim = target
+		if(!victim.handcuffed)
+			victim.handcuffed = new /obj/item/restraints/handcuffs/energy/used(victim)
+			victim.update_handcuffed()
+			log_combat(src, victim, "handcuffed")
 
-	var/datum/effect_system/spark_spread/S = new
-	S.set_up(4,0,get_turf(target))
-	S.start()
-	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
-	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
+	var/datum/effect_system/spark_spread/sparks = new
+	sparks.set_up(4,0,get_turf(target))
+	sparks.start()
+	playsound(src, 'sound/effects/sparks4.ogg', 50, TRUE)
+	do_teleport(target, safe_turf , 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	if(!(flags & SHOCK_TESLA))
