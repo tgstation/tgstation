@@ -109,12 +109,12 @@
 
 /obj/structure/swarmer/trap/Crossed(atom/movable/AM)
 	if(isliving(AM))
-		var/mob/living/L = AM
-		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
+		var/mob/living/living_crosser = AM
+		if(!istype(living_crosser, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, TRUE, -1)
-			L.electrocute_act(0, src, 1, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
-			if(iscyborg(L))
-				L.Paralyze(100)
+			living_crosser.electrocute_act(0, src, 1, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
+			if(iscyborg(living_crosser))
+				living_crosser.Paralyze(100)
 			qdel(src)
 	return ..()
 	
