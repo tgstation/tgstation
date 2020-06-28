@@ -189,16 +189,16 @@
 			return TRUE
 	return ..()
 
-/obj/item/stack/cable_coil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)//Wiring would be too effective as a resource
-	to_chat(S, "<span class='warning'>This object does not contain enough materials to work with.</span>")
+/obj/item/stack/cable_coil/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)//Wiring would be too effective as a resource
+	to_chat(actor, "<span class='warning'>This object does not contain enough materials to work with.</span>")
 	return FALSE
 
-/obj/machinery/porta_turret/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>")
+/obj/machinery/porta_turret/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/porta_turret_cover/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>")
+/obj/machinery/porta_turret_cover/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>")
 	return FALSE
 
 /obj/structure/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
