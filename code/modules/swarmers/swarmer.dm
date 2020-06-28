@@ -404,7 +404,7 @@
 		var/mob/M = i
 		if(isswarmer(M))
 			to_chat(M, rendered)
-		if(isobserver(M))
+		else if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [rendered]")
 
