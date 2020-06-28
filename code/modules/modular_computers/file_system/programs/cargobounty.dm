@@ -37,15 +37,14 @@
 /datum/computer_file/program/bounty/ui_act(action,params)
 	if(..())
 		return
-	var/datum/bounty/cashmoney = locate(params["bounty"]) in GLOB.bounties_list
 	switch(action)
 		if("ClaimBounty")
+			var/datum/bounty/cashmoney = locate(params["bounty"]) in GLOB.bounties_list
 			if(cashmoney)
 				cashmoney.claim()
-			return
+			return TRUE
 		if("Print")
 			if(printer_ready < world.time)
 				printer_ready = world.time + PRINTER_TIMEOUT
 				print_paper()
 				return
-	. = TRUE
