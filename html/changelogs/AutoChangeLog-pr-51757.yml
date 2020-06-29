@@ -1,6 +1,0 @@
-author: "and KathyRyals"
-delete-after: True
-changes: 
-  - tweak: "Nanotrasen found out about the amount of expensive chemicals served in survival medipens and cut them down to safe costs..."
-  - rscadd: "...And they turned the old medipen into a luxury"
-  - rscdel: "Lavaland Extract was found to break laws of physics and was removed from existance"
