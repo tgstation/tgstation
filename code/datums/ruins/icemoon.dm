@@ -78,6 +78,12 @@
 	description = "You'll fight and fight and just keep fighting."
 	suffix = "icemoon_underground_wrath.dmm"
 
+/datum/map_template/ruin/lavaland/hermit
+	name = "Frozen Shack"
+	id = "hermitshack"
+	description = "A place of shelter for a lone hermit, scraping by to live another day."
+	suffix = "icemoon_underground_hermit.dmm"
+
 /datum/map_template/ruin/icemoon/underground/lavaland
 	name = "Lavaland Site"
 	id = "lavalandsite"
