@@ -70,7 +70,6 @@
 					/obj/item/clothing/head/soft/paramedic = 4,
 					/obj/item/clothing/suit/apron/surgical = 4,
 					/obj/item/clothing/mask/surgical = 4,
-					/obj/item/clothing/suit/hooded/wintercoat/med/para = 4,
 					/obj/item/clothing/shoes/sneakers/brown/digitigrade = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
@@ -389,7 +388,6 @@
 					/obj/item/clothing/head/taqiyahred = 3,
 					/obj/item/clothing/head/beanie/rasta = 1,
 					/obj/item/clothing/shoes/sneakers/brown/digitigrade = 1,
-					/obj/item/clothing/suit/hooded/wintercoat/service/chap = 2,
 					/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1)
 	contraband = list(/obj/item/toy/plush/plushvar = 1,
 					/obj/item/toy/plush/narplush = 1,
