@@ -24,13 +24,6 @@
 	name = "armaments beacon"
 	desc = "Contains a set of armaments for the chaplain."
 
-/obj/item/choice_beacon/holy/canUseBeacon(mob/living/user)
-	if(user.mind && user.mind.holy_role)
-		return ..()
-	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
-		return FALSE
-
 /obj/item/choice_beacon/holy/generate_display_names()
 	var/static/list/holy_item_list
 	if(!holy_item_list)
