@@ -79,4 +79,5 @@
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,
-	/obj/item/shield/riot/tele = 1)
+	/obj/item/shield/riot/tele = 1,
+	/obj/item/ammo_box/magazine/m556 = 3)
