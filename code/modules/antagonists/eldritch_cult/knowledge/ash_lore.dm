@@ -34,6 +34,7 @@
 	var/mob/living/carbon/C = target
 	var/datum/status_effect/eldritch/E = C.has_status_effect(/datum/status_effect/eldritch/rust) || C.has_status_effect(/datum/status_effect/eldritch/ash) || C.has_status_effect(/datum/status_effect/eldritch/flesh)
 	if(E)
+		. = TRUE
 		E.on_effect()
 		for(var/X in user.mind.spell_list)
 			if(!istype(X,/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp))
@@ -42,6 +43,7 @@
 			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.75),MG.charge_max) // refunds 75% of charge.
 	var/atom/throw_target = get_edge_target_turf(C, user.dir)
 	if(!C.anchored)
+		. = TRUE
 		C.throw_at(throw_target, rand(4,8), 14, user)
 	return
 
@@ -87,13 +89,13 @@
 	. = ..()
 	chosen_mob.cure_blind(MAGIC_TRAIT)
 
-/datum/eldritch_knowledge/spell/mad_touch
-	name = "Touch of Madness"
-	gain_text = "Take what's yours."
+/datum/eldritch_knowledge/spell/flame_birth
+	name = "Flame Birth"
+	gain_text = "Nightwatcher was a man of principles, and yet he arose from the chaos he vowed to protect from."
 	desc = "Short range spell that allows you to curse someone with massive sanity loss."
 	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/pointed/touch/mad_touch
-	next_knowledge = list(/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/final/ash_final)
+	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
+	next_knowledge = list(/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/final/ash_final)
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/ash_blade_upgrade
@@ -101,7 +103,7 @@
 	gain_text = "May the sun burn the heretics."
 	desc = "Your blade of choice will now add firestacks."
 	cost = 2
-	next_knowledge = list(/datum/eldritch_knowledge/spell/mad_touch)
+	next_knowledge = list(/datum/eldritch_knowledge/spell/flame_birth)
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
 	route = PATH_ASH
 
@@ -156,7 +158,7 @@
 	desc = "Gives AOE spell that causes heavy bleeding and blood loss."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/cleave
-	next_knowledge = list(/datum/eldritch_knowledge/summon/raw_prophet,/datum/eldritch_knowledge/spell/area_conversion)
+	next_knowledge = list(/datum/eldritch_knowledge/spell/rust_wave,/datum/eldritch_knowledge/spell/flame_birth)
 
 /datum/eldritch_knowledge/final/ash_final
 	name = "Ashlord's rite"
