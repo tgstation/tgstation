@@ -1,0 +1,8 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed pamphlets having the wrong icon."
+  - bugfix: "Fixed pamphlets and a couple of guides never showing that they're on fire."
+  - bugfix: "Paper will no longer infinitely add new fire overlays while they're on fire."
+  - bugfix: "Paper planes will now use the proper icon while on fire."
+  - rscadd: "Added support for custom fire overlays for objects. Set the custom_fire_overlay var to change it!"
