@@ -246,6 +246,7 @@
 	new /obj/item/clothing/under/rank/prisoner( src )
 	new /obj/item/clothing/under/rank/prisoner/skirt( src )
 	new /obj/item/clothing/shoes/sneakers/orange( src )
+	new /obj/item/clothing/suit/hooded/wintercoat/sec/pris( src )
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "courtroom locker"
