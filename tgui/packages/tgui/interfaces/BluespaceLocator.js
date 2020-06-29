@@ -81,7 +81,6 @@ const SignalLocator = (props, context) => {
         value={20 - distance}
         minValue={0}
         maxValue={20}
-        color="red"
         children={
           <Icon
           name="arrow-up"
