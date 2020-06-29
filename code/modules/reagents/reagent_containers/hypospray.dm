@@ -215,7 +215,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/survival
 	name = "survival emergency medipen"
-	desc = "A medipen for surviving in harsh environments, heals most common damage sources. WARNING: May cause organ damage."
+	desc = "A medipen for surviving in harsh environments. Heals most common damage types. WARNING: May cause organ damage."
 	icon_state = "stimpen"
 	inhand_icon_state = "stimpen"
 	volume = 30
@@ -229,14 +229,12 @@
 			return
 		to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
 		if(do_mob(user, M ,10 SECONDS))
-			amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 			return ..()
-	amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 	return ..()
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	name = "luxury medipen"
-	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 62u of chems into a single medipen. Contains rare and powerful chemicals used to aid in the exploration of very inhospitable enviroments. WARNING: CONTAINS PENTHRITE, DO NOT MIX WITH EPINEPHRINE OR ATROPINE. CONTAINS MORPHINE, DO NOT INJECT MULTIPLE PENS IN RAPID SUCCESSION."
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 62u of chemicals into a single medipen. Contains rare and powerful chemicals used to aid in the exploration of very inhospitable enviroments. WARNING: CONTAINS PENTHRITE, DO NOT MIX WITH EPINEPHRINE OR ATROPINE. CONTAINS MORPHINE, DO NOT INJECT MULTIPLE PENS IN RAPID SUCCESSION."
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
 	volume = 62
