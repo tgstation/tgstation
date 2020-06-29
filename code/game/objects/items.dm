@@ -1093,16 +1093,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		//Primary mats (glass, iron, etc) in order of hardness (something with both iron and glass probably won't shatter when you bite into it)
 
 		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/adamantine)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/runite)])
-			M.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
+			M.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10) //oof my tooth
 
-		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/diamond)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/titanium)])
+		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/diamond)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/titanium)])
 			M.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 
 		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
-			M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5) //oof my tooth
+			M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5) 
 
 		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/wood)])
-			M.apply_damage(5, BRUTE, BODY_ZONE_HEAD) //oof my tooth
+			M.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
 			if(S && S.tastes && S.tastes.len)
 				S.tastes += "wood chips and sawdust"
 				S.tastes["wood chips and sawdust"] = 3

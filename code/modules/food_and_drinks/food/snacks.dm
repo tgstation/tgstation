@@ -28,7 +28,6 @@ Here is an example of the new formatting for anyone who wants to add more food i
 
 All foods are distributed among various categories. Use common sense.
 */
-
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "Yummy."
