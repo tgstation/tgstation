@@ -250,6 +250,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		id = newid
 	update_icon()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
+	wires = new /datum/wires/conveyor(src)
 
 /obj/machinery/conveyor_switch/Destroy()
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
@@ -332,6 +333,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		transfer_fingerprints_to(C)
 		to_chat(user, "<span class='notice'>You detach the conveyor switch.</span>")
 		qdel(src)
+	if(is_wire_tool(I))
+		wires.interact(user)
+		return TRUE
 
 /obj/machinery/conveyor_switch/oneway
 	icon_state = "conveyor_switch_oneway"
