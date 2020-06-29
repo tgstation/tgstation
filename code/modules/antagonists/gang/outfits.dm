@@ -74,7 +74,7 @@
 	uniform = /obj/item/clothing/under/syndicate/camo
 	suit = /obj/item/clothing/suit/armor/laserproof
 	head = /obj/item/clothing/head/beret/durathread
-	belt = /obj/item/gun/energy/laser/scatter
+	belt = /obj/item/gun/ballistic/automatic/ar
 	gloves = /obj/item/clothing/gloves/combat
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
