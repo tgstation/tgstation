@@ -410,3 +410,31 @@ SUBSYSTEM_DEF(persistence)
 		if(!ending_human.client)
 			return
 		ending_human.client.prefs.save_character()
+
+// Removes paintings with invalid md5
+/datum/controller/subsystem/persistence/proc/prune_persistent_paintings()
+	var/list/invalid = list()
+	for(var/pid in SSpersistence.paintings)
+		var/list/pruned_category = list()
+		var/list/current = SSpersistence.paintings[pid]
+		if(!current)
+			current = list()
+		for(var/list/entry in current)
+			var/png = "data/paintings/[pid]/[entry["md5"]].png"
+			if(!fexists(png))
+				continue
+			var/icon/I = new(png)
+			var/w = I.Width()
+			var/h = I.Height()
+			var/list/data = list()
+			for(var/y in 1 to h)
+				for(var/x in 1 to w)
+					data += lowertext(I.GetPixel(x,h + 1 -y))
+			var proper_hash = md5(lowertext(data.Join("")))
+			if(entry["md5"] != proper_hash)
+				invalid += entry["title"]
+				continue
+			else
+				pruned_category += list(entry)
+		SSpersistence.paintings[pid] = pruned_category
+	to_chat(usr,"Removed entries: [english_list(invalid)]")
