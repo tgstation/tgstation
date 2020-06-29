@@ -467,6 +467,8 @@
 	var/datum/bank_account/mr_moneybags
 	///This is the station's total wealth at the end of the round.
 	var/station_vault = 0
+	///How many players joined the round.
+	var/total_players = GLOB.joined_player_list.len
 	for(var/i in SSeconomy.bank_accounts)
 		if(istype(i, /datum/bank_account/department) || istype(i, /datum/bank_account/remote))
 			continue
@@ -476,8 +478,9 @@
 			mr_moneybags = current_acc
 		if(mr_moneybags.account_balance < current_acc.account_balance)
 			mr_moneybags = current_acc
-	parts += "<div class='panel stationborder'>Overall, there were [station_vault] credits collected by crew this shift.</div>"
-	log_econ("Roundend credit total: [station_vault] credits.")
+	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.</div>"
+	parts += "<div class='panel stationborder'>An average of [station_vault/total_players] credits were collected.</div>"
+	log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
 	if(mr_moneybags)
 		parts += "<div class='panel clockborder'>The most affulent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
 	else
