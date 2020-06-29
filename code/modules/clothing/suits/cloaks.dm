@@ -42,6 +42,8 @@
 /obj/item/clothing/neck/cloak/cap
 	name = "captain's cloak"
 	desc = "Worn by the commander of Space Station 13."
+	icon = 'icons/fulpicons/goldens_treasures/cloaks.dmi'
+	worn_icon = 'icons/fulpicons/goldens_treasures/neck.dmi'
 	icon_state = "capcloak"
 
 /obj/item/clothing/neck/cloak/hop
