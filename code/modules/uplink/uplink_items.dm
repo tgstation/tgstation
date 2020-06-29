@@ -2004,3 +2004,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	limited_stock = 1
 	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/badass/meathook
+	name = "Butcher's Meat Hook"
+	desc = "A brutal cleaver on a long chain, it allows you to pull people to your location."
+	item = /obj/item/gun/magic/hook
+	cost = 11
+	restricted_roles = list("Cook")
