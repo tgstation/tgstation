@@ -70,6 +70,11 @@
 	if(blood_flow <= 0)
 		qdel(src)
 
+/datum/wound/pierce/on_stasis()
+	. = ..()
+	if(blood_flow <= 0)
+		qdel(src)
+
 /datum/wound/pierce/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/suture))
 		suture(I, user)
@@ -122,7 +127,7 @@
 /datum/wound/pierce/moderate
 	name = "Minor Breakage"
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
-	treat_text = "Treat affected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // lol shove your bruised arm out into space, ss13 logic
+	treat_text = "Treat affected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // space is cold in ss13, so it's like an ice pack!
 	examine_desc = "has a small, circular hole, gently bleeding"
 	occur_text = "spurts out a thin stream of blood"
 	sound_effect = 'sound/effects/blood1.ogg'

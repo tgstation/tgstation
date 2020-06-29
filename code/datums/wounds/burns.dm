@@ -232,6 +232,20 @@
 	else if(istype(I, /obj/item/flashlight/pen/paramedic))
 		uv(I, user)
 
+// people complained about burns not healing on stasis beds, so in addition to checking if it's cured, they also get the special ability to very slowly heal on stasis beds if they have the healing effects stored
+/datum/wound/burn/on_stasis()
+	. = ..()
+	if(flesh_healing > 0)
+		flesh_damage = max(0, flesh_damage - 0.2)
+
+	if((flesh_damage <= 0) && (infestation <= 1))
+		to_chat(victim, "<span class='green'>The burns on your [limb.name] have cleared up!</span>")
+		qdel(src)
+		return
+
+	if(sanitization > 0)
+		infestation = max(0, infestation - WOUND_BURN_SANITIZATION_RATE * 0.2)
+
 /datum/wound/burn/on_synthflesh(amount)
 	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
 

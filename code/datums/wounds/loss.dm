@@ -4,7 +4,6 @@
 	desc = "oof ouch!!"
 
 	sound_effect = 'sound/effects/dismember.ogg'
-	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	severity = WOUND_SEVERITY_LOSS
 	threshold_minimum = 180
 	status_effect_type = null
@@ -20,6 +19,8 @@
 		if(organic_only && ((NOBLOOD in H.dna.species.species_traits) || !L.is_organic_limb()))
 			qdel(src)
 			return
+
+	already_scarred = TRUE // so we don't scar a limb we don't have. If I add different levels of amputation desc, do it here
 
 	switch(wounding_type)
 		if(WOUND_BLUNT)
