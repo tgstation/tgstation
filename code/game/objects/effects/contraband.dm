@@ -6,7 +6,7 @@
 /obj/item/poster
 	name = "poorly coded poster"
 	desc = "You probably shouldn't be holding this."
-	icon = 'icons/obj/contraband.dmi'
+	icon = 'icons/Fulpicons/fulpcontraband.dmi' // take from fulpstation posters file
 	force = 0
 	resistance_flags = FLAMMABLE
 	var/poster_type
@@ -48,7 +48,7 @@
 	name = "poster"
 	var/original_name
 	desc = "A large piece of space-resistant printed paper."
-	icon = 'icons/obj/contraband.dmi'
+	icon = 'icons/Fulpicons/fulpcontraband.dmi'
 	anchored = TRUE
 	buildable_sign = FALSE //Cannot be unwrenched from a wall.
 	var/ruined = FALSE
@@ -582,7 +582,7 @@
 
 /obj/structure/sign/poster/official/nanomichi_ad
 	name = "Nanomichi Ad"
-	desc = " A poster advertising Nanomichi brand audio cassettes."
+	desc = "A poster advertising Nanomichi brand audio cassettes."
 	icon_state = "poster30_legit"
 
 /obj/structure/sign/poster/official/twelve_gauge
@@ -614,5 +614,65 @@
 	name = "Dick Gumshue"
 	desc = "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
 	icon_state = "poster36_legit"
+
+/obj/structure/sign/poster/official/moth1
+	name = "Safety Moth - Poisoning"
+	desc = "This informational poster uses Safety Moth(TM) to ask the viewer not to poison the station donuts." //created by Azlanon and AyyRobotics, used with permission
+	icon_state = "poster37_legit"
+
+/obj/structure/sign/poster/official/moth2
+	name = "Safety Moth - BoH"
+	desc = "This informational poster uses Safety Moth(TM) to inform the viewer of the dangers of Bags of Holding." //created by Azlanon and AyyRobotics, used with permission
+	icon_state = "poster38_legit"
+
+/obj/structure/sign/poster/official/moth3
+	name = "Safety Moth - Hardhats"
+	desc = "This informational poster uses Safety Moth(TM) to tell the viewer to wear hardhats at all times. It's like a lamp for your head!" //created by Azlanon and AyyRobotics, used with permission
+	icon_state = "poster39_legit"
+
+/obj/structure/sign/poster/official/moth4
+	name = "Safety Moth - Smokey?"
+	desc = "Only YOU can prevent plasma fires." //created by Azlanon and AyyRobotics, used with permission
+	icon_state = "poster40_legit"
+
+/obj/structure/sign/poster/official/moth5
+	name = "Safety Moth - Piping"
+	desc = "This informational poster uses Safety Moth(TM) to advise atmospheric technicians on the efficient usage of pipes. Proper pipe placement prevents poor performance!" //created by Azlanon and AyyRobotics, used with permission
+	icon_state = "poster41_legit"
+
+/obj/structure/sign/poster/official/moth6
+	name = "Safety Moth - Supermatter"
+	desc = "This informational poster uses Safety Moth(TM) to promote proper safety equipment when working near a Supermatter Crystal." //created by Azlanon and AyyRobotics, used with permission
+	icon_state = "poster42_legit"
+
+/obj/structure/sign/poster/official/moth7
+	name = "Safety Moth - Methamphetamine"
+	desc = "This informational poster uses Safety Moth(TM) to tell the viewer to seek CMO approval before cooking methamphetamine. You shouldn't even be making this." //created by Azlanon and AyyRobotics, used with permission
+	icon_state = "poster43_legit"
+
+/obj/structure/sign/poster/official/moth8
+	name = "Safety Moth - Epipen"
+	desc = "This informational poster uses Safety Moth(TM) to recommend the use of epipens to prevent organ rot."
+	icon_state = "poster44_legit"
+
+/obj/structure/sign/poster/official/moth9
+	name = "Safety Moth - Delamination Safety Precautions"
+	desc = "This informational poster uses Safety Moth(TM) to tell the viewer to take cover in lockers when the Supermatter Crystal is delaminating. Running away might be a better strategy." //created by Azlanon and AyyRobotics, used with permission
+	icon_state = "poster45_legit"
+
+/obj/structure/sign/poster/official/smile
+	name = "Smile"
+	desc = "Turn that frown upside down!"
+	icon_state = "poster46_legit"
+
+/obj/structure/sign/poster/official/we_watch
+	name = "We Watch"
+	desc = "Big Brother is always watching."
+	icon_state = "poster47_legit"
+
+/obj/structure/sign/poster/official/hang_in_there
+	name = "Hang In There"
+	desc = "A poster advising you to stay sane. Stay on that branch, little kitty!"
+	icon_state = "poster48_legit"
 
 #undef PLACE_SPEED
