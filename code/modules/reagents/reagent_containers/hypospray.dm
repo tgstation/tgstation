@@ -225,7 +225,7 @@
 /obj/item/reagent_containers/hypospray/medipen/survival/inject(mob/living/M, mob/user)
 	if(!lavaland_equipment_pressure_check(get_turf(user)))
 		if(M in user.do_afters)
-			to_chat(user,"<span class='notice'>You are already releasing the low-pressure gauge!</span>")
+			to_chat(user,"<span class='notice'>You are too busy to use \the [src]!</span>")
 			return
 		to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
 		if(do_mob(user, M ,10 SECONDS))
