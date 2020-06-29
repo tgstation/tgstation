@@ -1034,7 +1034,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
 	/// If source_item is a snack, we can adjust its taste
 	var/obj/item/reagent_containers/food/snacks/store/S = source_item
-	if(!source_item && !istype(S))
+	if(!istype(S))
 		S = null
 
 	if(get_sharpness() && force >= 5) //if we've got something sharp with a decent force (ie, not plastic)
