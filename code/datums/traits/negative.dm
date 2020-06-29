@@ -607,6 +607,16 @@
 	medical_record_text = "Patient's immune system responds violently to [display]"
 	quirk_holder?.mind.store_memory("You are allergic to [display]")
 	to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [display]make sure not to consume any of it!</span>")
+	if(!ishuman(quirk_holder))
+		return
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/obj/item/clothing/accessory/allergy_dogtag/dogtag = new(get_turf(human_holder))
+	var/list/slots = list (
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS
+	)
+	dogtag.display = display
+	human_holder.equip_in_one_of_slots(dogtag, slots , qdel_on_fail = TRUE)
 
 /datum/quirk/allergic/on_process()
 	. = ..()
@@ -623,7 +633,7 @@
 			return //intentionally stops the entire proc so we avoid the organ damage after the loop
 		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
 		carbon_quirk_holder.adjustToxLoss(3)
-		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine,5)
+		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine,3)
 		if(prob(10))
 			carbon_quirk_holder.vomit()
 			carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
