@@ -120,6 +120,8 @@
 		return "Authorization failure. Contact mothership immediately."
 
 	var/point_reward = 0
+	if(!H)
+		return "Invalid or missing specimen."
 	if(H in history)
 		return "Specimen already in database."
 	if(H.stat == DEAD)

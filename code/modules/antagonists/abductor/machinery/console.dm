@@ -18,7 +18,7 @@
 	icon_state = "console"
 	density = TRUE
 	ui_x = 600
-	ui_y = 600
+	ui_y = 532
 	var/obj/item/abductor/gizmo/gizmo
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment
@@ -90,72 +90,17 @@
 	var/list/data = list()
 	data["compactMode"] = compact_mode
 	data["experiment"] = experiment ? TRUE : FALSE
-	data["points"] = null
-	data["credits"] = null
 	if(experiment)
 		data["points"] = experiment.points
 		data["credits"] = experiment.credits
 	data["pad"] = pad ? TRUE : FALSE
-	data["gizmo"] = null
 	if(pad)
 		data["gizmo"] = gizmo && gizmo.marked ? TRUE : FALSE
 	data["vest"] = vest ? TRUE : FALSE
-	data["vest_mode"] = null
-	data["vest_lock"] = null
 	if(vest)
 		data["vest_mode"] = vest.mode
 		data["vest_lock"] = HAS_TRAIT_FROM(vest, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
 	return data
-
-/*
-	var/dat = ""
-	dat += "<H3> Abductsoft 3000 </H3>"
-
-	if(experiment)
-		var/points = experiment.points
-		var/credits = experiment.credits
-		dat += "Collected Samples : [points] <br>"
-		dat += "Gear Credits: [credits] <br>"
-		dat += "<b>Transfer data in exchange for supplies:</b><br>"
-		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton (2 Credits)</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device (2 Credits)</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=chem_dispenser'>Reagent Synthesizer (2 Credits)</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=shrink_ray'>Shrink Ray Blaster (2 Credits)</a><br>"
-		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=silencer'>Radio Silencer</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=tool'>Science Tool</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=tongue'>Superlingual Matrix</a><br>"
-	else
-		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
-
-	if(pad)
-		dat += "<span class='bad'>Emergency Teleporter System.</span>"
-		dat += "<span class='bad'>Consider using primary observation console first.</span>"
-		dat += "<a href='?src=[REF(src)];teleporter_send=1'>Activate Teleporter</A><br>"
-		if(gizmo && gizmo.marked)
-			dat += "<a href='?src=[REF(src)];teleporter_retrieve=1'>Retrieve Mark</A><br>"
-		else
-			dat += "<span class='linkOff'>Retrieve Mark</span><br>"
-	else
-		dat += "<span class='bad'>NO TELEPAD DETECTED</span></br>"
-
-	if(vest)
-		dat += "<h4> Agent Vest Mode </h4><br>"
-		var/mode = vest.mode
-		if(mode == VEST_STEALTH)
-			dat += "<a href='?src=[REF(src)];flip_vest=1'>Combat</A>"
-			dat += "<span class='linkOff'>Stealth</span>"
-		else
-			dat += "<span class='linkOff'>Combat</span>"
-			dat += "<a href='?src=[REF(src)];flip_vest=1'>Stealth</A>"
-
-		dat+="<br>"
-		dat += "<a href='?src=[REF(src)];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<a href='?src=[REF(src)];toggle_vest=1'>[HAS_TRAIT_FROM(vest, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT) ? "Unlock" : "Lock"] Vest</a><br>"
-	else
-		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
-*/
 
 /obj/machinery/abductor/console/ui_act(action, list/params)
 	. = ..()
@@ -171,7 +116,7 @@
 			for(var/key in buyable_items)
 				var/datum/abductor_gear/AG = buyable_items[key]
 				if(AG.name == item_name)
-					Dispense(AG.type, AG.cost)
+					Dispense(AG.build_path, AG.cost)
 					return TRUE
 		if("teleporter_send")
 			TeleporterSend()
