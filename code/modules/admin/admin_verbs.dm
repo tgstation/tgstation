@@ -124,8 +124,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
 	/client/proc/panicbunker,
-	/client/proc/toggle_hub/*,
-	/client/proc/mentor_memo FULP*/
+	/client/proc/toggle_hub
+	///client/proc/mentor_memo //FULP
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)

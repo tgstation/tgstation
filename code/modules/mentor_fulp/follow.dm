@@ -1,4 +1,4 @@
-/*/client/proc/mentor_follow(mob/living/M)
+/client/proc/mentor_follow(mob/living/M)
 	if(!is_mentor())
 		return
 	if(isnull(M))
@@ -24,4 +24,3 @@
 	to_chat(GLOB.admins, "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is no longer following <EM>[key_name(mentor_datum.following)]</span>")
 	log_mentor("[key_name(usr)] stopped following [key_name(mentor_datum.following)]")
 	mentor_datum.following = null
-*/

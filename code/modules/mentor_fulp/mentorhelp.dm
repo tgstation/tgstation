@@ -1,4 +1,4 @@
-/*/client/verb/mentorhelp(msg as text)
+/client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
 	set name = "Mentorhelp"
 
@@ -96,4 +96,3 @@
 		. += " (<a href='?_src_=mentor;mentor_follow=[REF(M)];[MentorHrefToken(TRUE)]'>F</a>)"
 
 	return .
-*/

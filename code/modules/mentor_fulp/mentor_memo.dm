@@ -1,4 +1,4 @@
-/*/client/proc/mentor_memo()
+/client/proc/mentor_memo()
 	set name = "Mentor Memos"
 	set category = "Server"
 	if(!check_rights(0))
@@ -169,4 +169,3 @@
 				message_admins("[key_name_admin(src)] has removed [target_sql_ckey]'s mentor memo.")
 			qdel(query_memodellist)
 			qdel(query_memodel)
-*/
