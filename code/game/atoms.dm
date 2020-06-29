@@ -950,7 +950,7 @@
 	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 
 	var/datum/component/radioactive/healthy_green_glow = GetComponent(/datum/component/radioactive)
-	if(!QDELETED(healthy_green_glow)
+	if(!QDELETED(healthy_green_glow))
 		healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)))
 		if(healthy_green_glow.strength <= RAD_BACKGROUND_RADIATION)
 			qdel(healthy_green_glow)
