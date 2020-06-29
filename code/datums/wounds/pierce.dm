@@ -62,8 +62,6 @@
 
 	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
 		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
-	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulant))
-		blood_flow -= 0.25
 
 	if(limb.current_gauze)
 		blood_flow -= limb.current_gauze.absorption_rate * gauzed_clot_rate
@@ -82,6 +80,9 @@
 	. = ..()
 	blood_flow -= 0.03 * power // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
+/datum/wound/pierce/on_synthflesh(power)
+	. = ..()
+	blood_flow -= 0.05 * power // 20u * 0.05 = -1 blood flow, less than with slashes but still good considering smaller bleed rates
 
 /// If someone is using a suture to close this cut
 /datum/wound/pierce/proc/suture(obj/item/stack/medical/suture/I, mob/user)

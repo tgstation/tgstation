@@ -201,6 +201,11 @@
 		M.ExtinguishMob()
 	..()
 
+/datum/reagent/water/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(M.blood_volume)
+		M.blood_volume += 0.1 // water is good for you!
+
 /datum/reagent/water/holywater
 	name = "Holy Water"
 	description = "Water blessed by some deity."
@@ -233,6 +238,8 @@
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
+	if(M.blood_volume)
+		M.blood_volume += 0.1 // water is good for you!
 	if(!data)
 		data = list("misc" = 1)
 	data["misc"]++

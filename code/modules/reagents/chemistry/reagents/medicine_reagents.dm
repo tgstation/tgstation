@@ -270,7 +270,7 @@
 
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
-	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a temporary blood substitute."
+	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a temporary blood substitute, as well as slowly speeding blood regeneration."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -278,6 +278,7 @@
 	taste_description = "sweetness and salt"
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
+	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add this much to their actual blood per tick
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
 	if(last_added)
@@ -287,7 +288,7 @@
 		var/amount_to_add = min(M.blood_volume, volume*5)
 		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
 		last_added = new_blood_level - M.blood_volume
-		M.blood_volume = new_blood_level
+		M.blood_volume = new_blood_level + extra_regen
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
@@ -1326,10 +1327,47 @@
 	L.Dizzy(0)
 	L.Jitter(0)
 
-// handled in cut wounds process
+// helps bleeding wounds clot faster
 /datum/reagent/medicine/coagulant
 	name = "Sanguirite"
-	description = "A coagulant used to help open cuts clot faster."
+	description = "A proprietary coagulant used to help bleeding wounds clot faster."
 	reagent_state = LIQUID
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 20
+	var/clot_rate = 0.25
+
+/datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(!M.blood_volume || !M.all_wounds)
+		return
+
+	for(var/i in M.all_wounds)
+		var/datum/wound/W = i
+		W.blood_flow = max(0, W.blood_flow - clot_rate)
+
+/datum/reagent/medicine/coagulant/overdose_process(mob/living/M)
+	. = ..()
+	if(!M.blood_volume)
+		return
+
+	if(prob(15))
+		M.losebreath += rand(2,4)
+		M.adjustOxyLoss(rand(1,3))
+		if(prob(30))
+			to_chat(M, "<span class='danger'>You can feel your blood clotting up in your veins!</span>")
+		else if(prob(10))
+			to_chat(M, "<span class='userdanger'>You feel like your blood has stopped moving!</span>")
+
+		if(prob(50))
+			var/obj/item/organ/lungs/our_lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
+			our_lungs.applyOrganDamage(1)
+		else
+			var/obj/item/organ/heart/our_heart = M.getorganslot(ORGAN_SLOT_HEART)
+			our_heart.applyOrganDamage(1)
+
+// can be synthesized on station rather than bought. made by grinding a banana peel, heating it up, then mixing the banana peel powder with salglu
+/datum/reagent/medicine/coagulant/weak
+	name = "Synthi-Sanguirite"
+	description = "A synthetic coagulant used to help bleeding wounds clot faster. Not quite as effective as name brand Sanguirite."
+	clot_rate = 0.15

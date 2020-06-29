@@ -76,7 +76,7 @@
 /datum/wound/slash/drag_bleed_amt()
 	// say we have 3 severe cuts with 3 blood flow each, pretty reasonable
 	// compare with being at 100 brute damage before, where you bled (brute/100 * 2), = 2 blood per tile
-	var/bleed_amt = min(blood_flow * 0.1, 1) // 3 * 3 * 0.1 = 0.9 blood total, less than before! the share here is .6 blood of course.
+	var/bleed_amt = min(blood_flow * 0.1, 1) // 3 * 3 * 0.1 = 0.9 blood total, less than before! the share here is .3 blood of course.
 
 	if(limb.current_gauze) // gauze stops all bleeding from dragging on this limb, but wears the gauze out quicker
 		limb.seep_gauze(bleed_amt * 0.33)
@@ -98,8 +98,6 @@
 
 	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
 		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
-	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulant))
-		blood_flow -= 0.25
 
 	if(limb.current_gauze)
 		if(clot_rate > 0)
@@ -175,6 +173,10 @@
 /datum/wound/slash/on_xadone(power)
 	. = ..()
 	blood_flow -= 0.03 * power // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
+
+/datum/wound/slash/on_synthflesh(power)
+	. = ..()
+	blood_flow -= 0.075 * power // 20u * 0.075 = -1.5 blood flow, pretty good for how little effort it is
 
 /// If someone's putting a laser gun up to our cut to cauterize it
 /datum/wound/slash/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)

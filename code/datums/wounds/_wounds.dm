@@ -288,6 +288,10 @@
 	if(cryo_progress > 33 * severity)
 		qdel(src)
 
+/// When synthflesh is applied to the victim, we call this. No sense in setting up an entire chem reaction system for wounds when we only care for a few chems. Probably will change in the future
+/datum/wound/proc/on_synthflesh(power)
+	return
+
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
 /datum/wound/proc/on_stasis()
 	return

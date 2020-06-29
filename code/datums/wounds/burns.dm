@@ -232,8 +232,7 @@
 	else if(istype(I, /obj/item/flashlight/pen/paramedic))
 		uv(I, user)
 
-/// basic support for instabitaluri/synthflesh healing flesh damage, more chem support in the future
-/datum/wound/burn/proc/regenerate_flesh(amount)
+/datum/wound/burn/on_synthflesh(amount)
 	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
 
 // we don't even care about first degree burns, straight to second
