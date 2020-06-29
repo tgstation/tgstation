@@ -87,5 +87,7 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair(null))
 		if (href_list["invisible_box"])
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box(null))
+	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in H.mind.spell_list) //if they're not a mime, give them the ability to declare a vow of silence so that they can actually use the mime spell that they just learned
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)
 	to_chat(usr, "<span class='notice'>The book disappears into thin air.</span>")
 	qdel(src)
