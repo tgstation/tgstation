@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Section, Divider, Collapsible, Icon } from '../components';
+import { Section, Divider, Collapsible, Icon, ProgressBar } from '../components';
 import { Window } from '../layouts';
 
 const directionToIcon = {
@@ -65,20 +65,36 @@ const TrackingImplants = (props, context) => {
 };
 
 const SignalLocator = (props, context) => {
-  const {
+  var {
     name,
     direction,
     distance,
   } = props;
+  if (distance >= 20){
+    return
+  }
   return (
     <Collapsible
       key={name}
       title={name}>
-      Direction :
-      <Icon
-        name="arrow-up"
-        rotation={direction} />
-      , {distance}
+      <ProgressBar
+        value={20 - distance}
+        minValue={0}
+        maxValue={20}
+        color="red"
+        children={
+          <Icon
+          name="arrow-up"
+          rotation={direction}
+         />
+        }
+        ranges={{
+          red: [0,5],
+          yellow: [5,15],
+          green: [15,20],
+        }
+}
+      />
     </Collapsible>
   );
 };

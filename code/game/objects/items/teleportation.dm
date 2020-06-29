@@ -53,22 +53,7 @@
 			if (tr && tr.z == sr.z)
 				// Get the distance between the beacon's turf and our turf
 				var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-				var/distance_str
-
-				// Translate this distance into a signal strength string
-				switch(distance)
-					if (1 to 4)
-						distance_str = "very strong"
-					if (5 to 9)
-						distance_str = "strong"
-					if (10 to 19)
-						distance_str = "weak"
-					else
-						distance_str = "very weak"
-
-				// Add the tele beacon to our list.
-				// temp += "[W.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
-				tele_beacons += list(list(name = W.name, direction = dir2text(get_dir(sr, tr)), distance = distance_str))
+				tele_beacons += list(list(name = W.name, direction = dir2text(get_dir(sr, tr)), distance = distance))
 
 		data["telebeacons"] = tele_beacons
 
@@ -84,17 +69,7 @@
 						continue
 			var/turf/tr = get_turf(W)
 			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-			var/distance_str
-			switch(distance)
-				if (1 to 4)
-					distance_str = "very strong"
-				if (5 to 9)
-					distance_str = "strong"
-				if (10 to 19)
-					distance_str = "weak"
-				else
-					distance_str = "very weak"
-			track_implants += list(list(name = W.imp_in.name, direction = dir2text(get_dir(sr, tr)), distance = distance_str))
+			track_implants += list(list(name = W.imp_in.name, direction = dir2text(get_dir(sr, tr)), distance = distance))
 		data["trackimplants"] = track_implants
 	return data
 
