@@ -289,7 +289,7 @@
 /obj/structure/sign/painting/update_icon_state()
 	. = ..()
 	if(C && C.generated_icon)
-		icon_state = null
+		icon_state = "frame-overlay"
 	else
 		icon_state = "frame-empty"
 
