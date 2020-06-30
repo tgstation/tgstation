@@ -364,7 +364,7 @@
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
-	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space. Comes with a magical rebreather that removes your need to breathe without needing an air tank to do so."
+	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space. Comes with a magical rebreather that removes your need to breathe without needing an air tank to do so. Also comes with a pair of sandals and enchanted (and, more importantly, insulated) gloves."
 	item_path = /obj/item/clothing/suit/space/hardsuit/wizard
 	category = "Defensive"
 
@@ -426,7 +426,7 @@
 
 /datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
-	desc = "An ensorceled suit of armour, protected by a powerful shield. The shield can completely negate sixteen attacks before being permanently depleted."
+	desc = "An ensorceled suit of armour, protected by a powerful shield. The shield can completely negate sixteen attacks before being permanently depleted. Also comes with a pair of sandals and enchanted (and, more importantly, insulated) gloves."
 	item_path = /obj/item/clothing/suit/space/hardsuit/shielded/wizard
 	limit = 1
 	category = "Defensive"
