@@ -491,3 +491,123 @@
 	if(prob(15))
 		M.adjustToxLoss(2, 0)
 	..()
+
+/datum/reagent/drug/maint
+	name = "Maintanance Drugs"
+	addiction_type = /datum/reagent/drug/maint
+
+/datum/reagent/drug/maint/addiction_act_stage1(mob/living/M)
+	. = ..()
+	M.Jitter(1)
+
+/datum/reagent/drug/maint/addiction_act_stage2(mob/living/M)
+	. = ..()
+	M.Jitter(2)
+	if(prob(15))
+		M.emote(pick("twitch","drool"))
+
+/datum/reagent/drug/maint/addiction_act_stage3(mob/living/M)
+	. = ..()
+	M.Jitter(1)
+	M.adjustToxLoss(2)
+	if(prob(5))
+		M.drop_all_held_items()
+	if(prob(15))
+		M.emote(pick("twitch","drool"))
+
+/datum/reagent/drug/maint/addiction_act_stage4(mob/living/M)
+	. = ..()
+	M.Jitter(2)
+	M.adjustToxLoss(3)
+	if(prob(10))
+		M.drop_all_held_items()
+	if(prob(30))
+		M.emote(pick("twitch","drool"))
+
+/datum/reagent/drug/maint/powder
+	name = "Maintanance Powder"
+	description = "An unknown powder that you most likely gotten from an assistant, a bored chemist... or cooked yourself. It is a refined form of tar that enhances your mental ability, making you learn stuff a lot faster."
+	reagent_state = SOLID
+	color = "#ffffff"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 15
+	addiction_threshold = 5
+
+/datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN,0.1)
+	if(!M.mind)
+		return
+	var/datum/mind/living_mind = M.mind
+	// 5x if you want to OD, you can potentially go higher, but good luck managing the brain damage.
+	living_mind.experience_modifier = max(1,round(volume/3,0.1))
+
+/datum/reagent/drug/maint/powder/on_mob_delete(mob/living/L)
+	. = ..()
+	if(!L.mind)
+		return
+	var/datum/mind/living_mind = L.mind
+	living_mind.experience_modifier = initial(living_mind.experience_modifier)
+
+/datum/reagent/drug/maint/powder/overdose_process(mob/living/M)
+	. = ..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/humie = M
+	humier.adjustOrganLoss(ORGAN_SLOT_BRAIN,3)
+
+/datum/reagent/drug/maint/sludge
+	name = "Maintanance Sludge"
+	description = "An unknown sludge that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Half refined, it fills your body with itself, making it more resistant to wound, but causes toxins to accumulate."
+	reagent_state = LIQUID
+	color = "#203d2c"
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 25
+	addiction_threshold = 10
+
+/datum/reagent/drug/maint/sludge/on_mob_add(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L,TRAIT_HARDLIMBDISABLE,type)
+
+/datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	M.adjustToxLoss(1.5)
+
+/datum/reagent/drug/maint/sludge/on_mob_delete(mob/living/L)
+	. = ..()
+	REMOVE_TRAIT(L,TRAIT_HARDLIMBDISABLE,type)
+
+/datum/reagent/drug/maint/sludge/overdose_process(mob/living/M)
+	. = ..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/humie = M
+	//You will be vomiting so the damage is really for a few ticks before you flush it out of your system
+	humie.adjustToxLoss(5)
+	humie.vomit()
+
+/datum/reagent/drug/maint/tar
+	name = "Maintanance Tar"
+	description = "An unknown tar that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Raw tar, straight from the floor. It can help you with escaping bad situations at the cost of liver damage."
+	reagent_state = LIQUID
+	color = "#000000"
+	overdose_threshold = 30
+	addiction_threshold = 10
+
+/datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	humie.adjustOrganLoss(ORGAN_SLOT_LIVER,1.5)
+	M.AdjustStun(-10, FALSE)
+	M.AdjustKnockdown(-10, FALSE)
+	M.AdjustUnconscious(-10, FALSE)
+	M.AdjustParalyzed(-10, FALSE)
+	M.AdjustImmobilized(-10, FALSE)
+
+/datum/reagent/drug/maint/tar/overdose_process(mob/living/M)
+	. = ..()
+	humie.adjustOrganLoss(ORGAN_SLOT_LIVER,3)
+	M.AdjustStun(10, FALSE)
+	M.AdjustKnockdown(10, FALSE)
+	M.AdjustUnconscious(10, FALSE)
+	M.AdjustParalyzed(10, FALSE)
+	M.AdjustImmobilized(10, FALSE)
