@@ -243,7 +243,31 @@
 	ui_interact(user, "main", null, FALSE, null, state)
 
 
-/obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
+/obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
+	var/ignition_message = I.ignition_effect(src, user)
+	if(!ignition_message)
+		return
+	. = TRUE
+	if(!bypass_clumsy && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
+		user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
+							"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
+		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
+			user.dropItemToGround(I)
+		user.adjust_fire_stacks(1)
+		user.IgniteMob()
+		return
+
+	if(user.is_holding(src)) //no TK shit here.
+		user.dropItemToGround(src)
+	user.visible_message(ignition_message)
+	add_fingerprint(user)
+	fire_act(I.get_temperature())
+
+/obj/item/paper/attackby(obj/item/P, mob/living/user, params)
+	if(burn_paper_product_attackby_check(P, user))
+		close_all_ui()
+		return
+
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
 			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
@@ -278,31 +302,18 @@
 
 		create_ui(user, state)
 		return /// Normaly you just stamp, you don't need to read the thing
-	else if(P.get_temperature())
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
-			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
-								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
-			user.dropItemToGround(P)
-			user.adjust_fire_stacks(1)
-			user.IgniteMob()
-			return
-
-		user.dropItemToGround(src)
-		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-		close_all_ui()
-		fire_act()
 	else
 		// cut paper?  the sky is the limit!
 		var/datum/ui_state/default/paper_state/state = new
 		state.edit_mode = MODE_READING
 		create_ui(user, state)	// The other ui will be created with just read mode outside of this
 
-	. = ..()
+	return ..()
 
 
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
-	if(!(resistance_flags & FIRE_PROOF))
+	if(.)
 		info = "[stars(info)]"
 
 /obj/item/paper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/default/paper_state/state = new)
