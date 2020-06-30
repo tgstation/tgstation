@@ -350,7 +350,7 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/store/Initialize()
 	. = ..()
 	if(reagents?.total_volume)
-			volume_on_creation = reagents.total_volume
+		volume_on_creation = reagents.total_volume
 
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
