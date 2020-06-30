@@ -479,7 +479,7 @@
 	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.</div>"
 	if(total_players > 0)
 		parts += "<div class='panel stationborder'>An average of [station_vault/total_players] credits were collected.</div>"
-	log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
+		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
 	if(mr_moneybags)
 		parts += "<div class='panel clockborder'>The most affulent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
 	else
