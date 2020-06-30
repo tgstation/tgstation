@@ -92,16 +92,16 @@ const VendingImage = (props, context) => {
   } = data;
   return (
     <Section m={1}>
-        <img
-          src={`data:image/jpeg;base64,${product_icon}`}
-          height="96"
-          width="96"
-          align="center"
-          style={{
-            '-ms-interpolation-mode': 'nearest-neighbor',
-            'vertical-align': 'middle',
-            'horizontal-align': 'middle',
-          }} />
+      <img
+        src={`data:image/jpeg;base64,${product_icon}`}
+        height="96"
+        width="96"
+        align="center"
+        style={{
+          '-ms-interpolation-mode': 'nearest-neighbor',
+          'vertical-align': 'middle',
+          'horizontal-align': 'middle',
+        }} />
     </Section>
   );
 };
