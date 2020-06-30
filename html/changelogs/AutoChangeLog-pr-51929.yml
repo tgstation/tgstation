@@ -1,0 +1,4 @@
+author: "ATH1909"
+delete-after: True
+changes: 
+  - bugfix: "Freon's warning message no longer depends on the presence of nitryl in your lungs."
