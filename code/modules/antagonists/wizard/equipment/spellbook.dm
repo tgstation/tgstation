@@ -364,7 +364,7 @@
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
-	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
+	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space. Comes with a magical rebreather that removes your need to breathe without needing an air tank to do so."
 	item_path = /obj/item/clothing/suit/space/hardsuit/wizard
 	category = "Defensive"
 
