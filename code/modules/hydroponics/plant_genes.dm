@@ -373,7 +373,12 @@
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		qdel(G)
 
-
+/**
+  * A plant trait that causes the plant's capacity to double.
+  *
+  * When harvested, the plant's individual capacity is set to double it's default.
+  * However, the plant is also going to be limited to half as many products from yield, so 2 yield will only produce 1 plant as a result.
+  */
 /datum/plant_gene/trait/maxchem
 	// 2x to max reagents volume.
 	name = "Densified Chemicals"
@@ -461,7 +466,7 @@
 	if(!(G.resistance_flags & FIRE_PROOF))
 		G.resistance_flags |= FIRE_PROOF
 
-///Invasive spreading lets the plant jump to other trays, the spreadinhg plant won't replace plants of the same type.
+///Invasive spreading lets the plant jump to other trays, the spreading plant won't replace plants of the same type.
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
 
@@ -485,9 +490,20 @@
 			HY.update_icon()
 			HY.visible_message("<span class='warning'>The [H.myseed.plantname] spreads!</span>")
 
+/**
+  * A plant trait that causes the plant's food reagents to ferment instead.
+  *
+  * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
+  * This exception is executed in seeds.dm under 'prepare_result'.
+  */
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
 
+/**
+  * A plant trait that causes the plant to gain aesthetic googly eyes.
+  *
+  * Has no functional purpose outside of causing japes, adds eyes over the plant's sprite, which are adjusted for size by potency.
+  */
 /datum/plant_gene/trait/eyes
 	name = "Oculary Mimicry"
 	var/mutable_appearance/googly
