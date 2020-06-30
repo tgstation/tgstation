@@ -332,7 +332,7 @@
 		mafia_panel.Grant(H)
 		var/client/player_client = GLOB.directory[role.player_key]
 		if(player_client)
-			player_client.prefs.copy_to(H, antagonist = TRUE) ///i mean, it will cause github issue reports if this happens so sure throw it in
+			player_client.prefs.copy_to(H)
 			if(H.dna.species.outfit_important_for_life) //plasmamen
 				H.set_species(/datum/species/human)
 		role.body = H
@@ -557,19 +557,6 @@
 
 /datum/action/innate/mafia_panel/Activate()
 	parent.ui_interact(owner)
-
-/datum/saymode/mafia
-	key = "j"
-
-/datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
-	for(var/key in GLOB.mafia_games)
-		var/datum/mafia_controller/MF = GLOB.mafia_games[key]
-		var/datum/mafia_role/R = MF.player_role_lookup[user]
-		if(!R || R.team != MAFIA_TEAM_MAFIA)
-			continue
-		MF.send_message("<span class='changeling'><b>[R.body.real_name]:</b> [message]</span>",MAFIA_TEAM_MAFIA)
-		return FALSE
-	return TRUE
 
 /proc/create_mafia_game(game_key)
 	if(GLOB.mafia_games[game_key])

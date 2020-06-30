@@ -30,7 +30,6 @@
 
 //list of ghosts who want to play mafia, every time someone enters the list it checks to see if enough are in
 GLOBAL_LIST_EMPTY(mafia_signup)
-GLOBAL_LIST_EMPTY(mafia_games)//kept incase anyone wants multiple games going but it will require a lot of work to make this happen
 GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 
 /proc/generate_mafia_setups()
@@ -142,69 +141,6 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/traitor=3
 	)
 
-//DISABLED FOR THE TIME BEING: SINCE THIS IS NOW A DEADCHAT MINIGAME, WE WANT MAX PLAYERS #NERFORNOTHING
-/*
-// 10 Player
-/datum/mafia_setup/ten_A
-	name = "10 Player Setup A"
-	roles = list(
-		/datum/mafia_role=6,
-		/datum/mafia_role/detective=1,
-		/datum/mafia_role/clown=1,/datum/mafia_role/mafia=3
-		)
-
-/datum/mafia_setup/ten_B
-	name = "10 Player Setup B"
-	roles = list(
-		/datum/mafia_role=3,
-		/datum/mafia_role/warden=1,
-		/datum/mafia_role/md=1,
-		/datum/mafia_role/detective=1,
-		/datum/mafia_role/chaplain=1,
-		/datum/mafia_role/mafia=3
-	)
-
-/datum/mafia_setup/ten_C
-	name = "10 Player Setup C"
-	roles = list(
-		/datum/mafia_role=4,
-		/datum/mafia_role/warden=1,
-		/datum/mafia_role/md=1,
-		/datum/mafia_role/fugitive=1,
-		/datum/mafia_role/traitor=1,
-		/datum/mafia_role/mafia=2)
-
-
-/datum/mafia_setup/nine_A
-	name = "9 Player Setup A"
-	roles = list(
-		/datum/mafia_role=3,
-		/datum/mafia_role/md=1,
-		/datum/mafia_role/detective=1,
-		/datum/mafia_role/chaplain=1,
-		/datum/mafia_role/mafia=3
-	)
-
-/datum/mafia_setup/nine_B
-	name = "9 Player Setup B"
-	roles = list(
-		/datum/mafia_role=3,
-		/datum/mafia_role/warden=1,
-		/datum/mafia_role/detective=1,
-		/datum/mafia_role/obsessed=1,
-		/datum/mafia_role/mafia=2
-	)
-
-/datum/mafia_setup/nine_C
-	name = "9 Player Setup C"
-	roles = list(
-		/datum/mafia_role=3,
-		/datum/mafia_role/warden=1,
-		/datum/mafia_role/detective=1,
-		/datum/mafia_role/fugitive=1,
-		/datum/mafia_role/mafia=2
-	)
-*/
 /*
 /datum/mafia_setup/three_test
 	name = "3 Player Test"

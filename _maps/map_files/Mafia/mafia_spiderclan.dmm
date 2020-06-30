@@ -3,7 +3,11 @@
 /turf/closed/indestructible/riveted,
 /area/mafia)
 "b" = (
-/turf/closed/indestructible/riveted/plastinum,
+/obj/structure/closet/cabinet{
+	anchored = 1
+	},
+/obj/item/reagent_containers/food/snacks/sashimi,
+/turf/open/floor/carpet/black,
 /area/mafia)
 "c" = (
 /turf/closed/wall/rust,
@@ -69,8 +73,7 @@
 	anchored = 1
 	},
 /obj/item/reagent_containers/food/snacks/sashimi,
-/obj/item/reagent_containers/food/drinks/bottle/sake,
-/turf/open/floor/carpet/black,
+/turf/open/floor/wood,
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
@@ -79,11 +82,10 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/obj/structure/window/paperframe{
-	max_integrity = 50000;
-	opacity = 0
+/turf/closed/indestructible/fakeglass{
+	icon = 'icons/obj/smooth_structures/paperframes.dmi';
+	icon_state = "paper"
 	},
-/turf/open/floor/wood,
 /area/mafia)
 "q" = (
 /turf/open/floor/wood,
@@ -254,11 +256,11 @@ S
 S
 j
 S
-l
+o
 q
 S
 r
-o
+b
 S
 j
 S
@@ -276,7 +278,7 @@ c
 c
 d
 S
-o
+b
 r
 p
 m
@@ -286,7 +288,7 @@ r
 n
 p
 q
-l
+o
 S
 d
 c
@@ -352,7 +354,7 @@ d
 S
 l
 p
-b
+S
 p
 p
 p
@@ -362,7 +364,7 @@ p
 p
 S
 p
-o
+b
 S
 d
 c
@@ -402,7 +404,7 @@ e
 S
 S
 p
-b
+S
 p
 p
 t
@@ -450,9 +452,9 @@ S
 c
 d
 S
-o
-p
 b
+p
+S
 p
 p
 p
@@ -462,7 +464,7 @@ p
 p
 S
 p
-l
+o
 S
 i
 c
@@ -526,7 +528,7 @@ c
 c
 d
 S
-l
+o
 q
 p
 n
@@ -536,7 +538,7 @@ q
 m
 p
 r
-o
+b
 S
 d
 c
@@ -554,11 +556,11 @@ S
 S
 j
 S
-o
+b
 r
 S
 q
-l
+o
 S
 j
 S

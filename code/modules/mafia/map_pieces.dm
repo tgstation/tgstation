@@ -33,41 +33,45 @@
 
 /datum/map_template/mafia
 	var/description = ""
-	var/suffix = ""
 
 /datum/map_template/mafia/New()
-	mappath = "_maps/map_files/Mafia/" + suffix
+	mappath = "" + suffix
 	..(path = mappath)
 
 /datum/map_template/mafia/summerball
 	name = "Summerball 2020"
 	description = "The original, the OG. The 2020 Summer ball was where mafia came from, with this map."
-	suffix = "mafia_ball.dmm"
+	mappath = "_maps/map_files/Mafia/mafia_ball.dmm"
 
 /datum/map_template/mafia/syndicate
 	name = "Syndicate Megastation"
 	description = "Yes, it's a very confusing day at the Megastation. Will the syndicate conflict resolution operatives succeed?"
-	suffix = "mafia_syndie.dmm"
+	mappath = "_maps/map_files/Mafia/mafia_syndie.dmm"
 
 /datum/map_template/mafia/lavaland
 	name = "Lavaland Excursion"
-	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors, and fucking lawyers."
-	suffix = "mafia_lavaland.dmm"
+	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors, and worst of all... lawyers roleblocking you every night."
+	mappath = "_maps/map_files/Mafia/mafia_lavaland.dmm"
 
 /datum/map_template/mafia/ufo
 	name = "Alien Mothership"
 	description = "The haunted ghost UFO tour has gone south and now it's up to our fine townies and scare seekers to kill the actual real alien changelings..."
-	suffix = "mafia_ayylmao.dmm"
-
-/datum/map_template/mafia/necropolis
-	name = "Necropolis Showdown"
-	description = "The townies have shown up to try and suss out who truly ruined the art direction of SS13. No hurt feelings intended!"
-	suffix = "mafia_necropolis.dmm"
+	mappath = "_maps/map_files/Mafia/mafia_ayylmao.dmm"
 
 /datum/map_template/mafia/spider_clan
 	name = "Spider Clan Kidnapping"
-	description = "The spider clan has grown bored of just kidnapping people and keeping them in a boxed room for an hour, so now it's 15 minutes with changelings!"
-	suffix = "mafia_spiderclan.dmm"
+	description = "New and improved spider clan kidnappings are a lot less boring and have a lot more lynching. Damn westaboos!"
+	mappath = "_maps/map_files/Mafia/mafia_spiderclan.dmm"
+
+/datum/map_template/mafia/snowy
+	name = "Snowdin"
+	description = "Based off of the icey moon map of the same name, the guy who reworked it pretty much did it for nothing since away missions are disabled but at least he'll get this...?"
+	mappath = "_maps/map_files/Mafia/mafia_snow.dmm"
+
+/datum/map_template/mafia/frog
+	name = "Tribunal at the Toad Temple"
+	description = "THE FROG DEEMS YOU UNWORTHY."
+	mappath = "_maps/map_files/Mafia/mafia_frog.dmm"
 
 //disabled maps due to bugs (hopefully this doesn't exist by the time it's merged)
 
@@ -76,4 +80,9 @@
 	name = "The map with coffins but not vampires"
 	description = "Vampires not included. What, you expected a funny little story? I got nothing!"
 	suffix = "mafia_gothic.dmm"
+
+/datum/map_template/mafia/necropolis
+	name = "Necropolis Showdown"
+	description = "The townies have shown up to try and suss out who truly ruined the art direction of SS13. No hurt feelings intended!"
+	suffix = "mafia_necropolis.dmm"
 */
