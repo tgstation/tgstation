@@ -14,7 +14,7 @@
 
 	flags_ricochet = RICOCHET_HARD
 
-	///Hardness - 40 is used as a modifier for objects trying to embed in this (hardness of 30 results in a -10% chance)
+	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
 	var/sheet_type = /obj/item/stack/sheet/metal
@@ -136,16 +136,40 @@
 		dismantle_wall(1)
 		return
 
-/turf/closed/wall/attack_hulk(mob/user) //Hulks can't destroy walls, but they can dent them and be loud all they want.
+/turf/closed/wall/attack_hulk(mob/living/carbon/user)
 	..()
-	if(prob(20))
+	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
+	if(!arm)
+		return
+	if(arm.disabled)
+		return
+	if(prob(hardness))
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-	add_dent(WALL_DENT_HIT)
-	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-	user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
-		"<span class='danger'>You smash \the [src], but it doesn't seem to budge!</span>", \
-		"<span class='hear'>You hear a booming smash!</span>")
+		hulk_recoil(arm)
+		dismantle_wall(1)
+
+	else
+		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+		add_dent(WALL_DENT_HIT)
+		user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
+					"<span class='danger'>You smash \the [src]!</span>", \
+					"<span class='hear'>You hear a booming smash!</span>")
 	return TRUE
+
+/**
+  *Deals damage back to the hulk.
+  *
+  *When a hulk manages to break a wall using their hulk smash, this deals back damage to the arm used.
+  *This is in its own proc just to be easily overridden by other wall types. Default allows for three
+  *smashed walls per arm. Also, we use CANT_WOUND here because wounds are random. Wounds are applied
+  *by hulk code based on arm damage and checked after an attack completes.
+  *Arguments:
+  **arg1 is the arm to deal damage to.
+ */
+
+/turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm)
+	arm.receive_damage(brute = 25, blocked = 0, wound_bonus = CANT_WOUND)
 
 /turf/closed/wall/attack_hand(mob/user)
 	. = ..()
