@@ -17,23 +17,23 @@ export const Vendatray = (props, context) => {
   return (
     <Window>
       <Window.Content>
-        <Flex 
+        <Flex
           mb={1}>
           <Flex.Item
             mr={1}>
-            <Section 
+            <Section
               maxWidth="150px"
               fontSize="20px">
               <b>{product_name ? product_name : "Empty"}</b>
             </Section>
-            <Section 
+            <Section
               minWidth="100px"
               minHeight="45px"
               align="center">
               <Box fontSize="20px">
                 Price:
               </Box>
-              <i>{product_name ? product_cost : "N/A"} credits</i>
+              <i>{product_name ? product_cost : "N/A"} Cr</i>
             </Section>
           </Flex.Item>
           <Flex.Item>
@@ -42,7 +42,7 @@ export const Vendatray = (props, context) => {
             )}
           </Flex.Item>
         </Flex>
-        {registered?( 
+        {registered?(
           <Section italics>
             <Box m={0.5}>
               Pays to the account of {owner_name}.
