@@ -5,11 +5,14 @@
 	icon_state = "experiment-open"
 	density = FALSE
 	state_open = TRUE
+	ui_x = 330
+	ui_y = 207
 	var/points = 0
 	var/credits = 0
 	var/list/history
 	var/list/abductee_minds
-	var/flash = " - || - "
+	/// Machine feedback message
+	var/flash = "Awaiting subject."
 	var/obj/machinery/abductor/console/console
 	var/message_cooldown = 0
 	var/breakout_time = 450
@@ -21,13 +24,6 @@
 	if(isabductor(target))
 		return
 	close_machine(target)
-
-/obj/machinery/abductor/experiment/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	experimentUI(user)
 
 /obj/machinery/abductor/experiment/open_machine()
 	if(!state_open && !panel_open)
@@ -60,121 +56,81 @@
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
-/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
-	var/icon/photo = null
-	var/g = (H.gender == FEMALE) ? "f" : "m"
-	if(H.dna.species.use_skintones)
-		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]")
-	else
-		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]")
-		photo.Blend("#[H.dna.features["mcolor"]]", ICON_MULTIPLY)
+/obj/machinery/abductor/experiment/ui_status(mob/user)
+	if(user == occupant)
+		return UI_CLOSE
+	return ..()
 
-	var/icon/eyes
-	if(EYECOLOR in H.dna.species.species_traits)
-		eyes = icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes")
-		eyes.Blend("#[H.eye_color]", ICON_MULTIPLY)
+/obj/machinery/abductor/experiment/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "ProbingConsole", name, ui_x, ui_y, master_ui, state)
+		ui.open()
 
-	var/datum/sprite_accessory/S
-	S = GLOB.hairstyles_list[H.hairstyle]
-	if(S && (HAIR in H.dna.species.species_traits))
-		var/icon/hair = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
-		hair.Blend("#[H.hair_color]", ICON_MULTIPLY)
-		eyes.Blend(hair, ICON_OVERLAY)
-
-	S = GLOB.facial_hairstyles_list[H.facial_hairstyle]
-	if(S && (FACEHAIR in H.dna.species.species_traits))
-		var/icon/facial = icon("icon" = S.icon, "icon_state" = "[S.icon_state]")
-		facial.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
-		eyes.Blend(facial, ICON_OVERLAY)
-
-	if(eyes)
-		photo.Blend(eyes, ICON_OVERLAY)
-
-	var/icon/splat = icon("icon" = 'icons/mob/dam_mob.dmi',"icon_state" = "chest30")
-	photo.Blend(splat,ICON_OVERLAY)
-
-	return photo
-
-/obj/machinery/abductor/experiment/proc/experimentUI(mob/user)
-	var/dat
-	dat += "<h3> Experiment </h3>"
-	if(occupant)
-		var/obj/item/photo/P = new
-		P.picture = new
-		P.picture.picture_image = icon(dissection_icon(occupant), dir = SOUTH)
-		user << browse_rsc(P.picture.picture_image, "dissection_img")
-		dat += "<table><tr><td>"
-		dat += "<img src=dissection_img height=80 width=80>" //Avert your eyes
-		dat += "</td><td>"
-		dat += "<a href='?src=[REF(src)];experiment=1'>Probe</a><br>"
-		dat += "<a href='?src=[REF(src)];experiment=2'>Dissect</a><br>"
-		dat += "<a href='?src=[REF(src)];experiment=3'>Analyze</a><br>"
-		dat += "</td></tr></table>"
-	else
-		dat += "<span class='linkOff'>Experiment </span>"
-
-	if(!occupant)
-		dat += "<h3>Machine Unoccupied</h3>"
-	else
-		dat += "<h3>Subject Status : </h3>"
-		dat += "[occupant.name] => "
-		var/mob/living/mob_occupant = occupant
-		switch(mob_occupant.stat)
-			if(CONSCIOUS)
-				dat += "<span class='good'>Conscious</span>"
-			if(UNCONSCIOUS)
-				dat += "<span class='average'>Unconscious</span>"
-			else // DEAD
-				dat += "<span class='bad'>Deceased</span>"
-	dat += "<br>"
-	dat += "[flash]"
-	dat += "<br>"
-	dat += "<a href='?src=[REF(src)];refresh=1'>Scan</a>"
-	dat += "<a href='?src=[REF(src)];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
-	var/datum/browser/popup = new(user, "experiment", "Probing Console", 300, 300)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/abductor/experiment/Topic(href, href_list)
-	if(..() || usr == occupant)
-		return
-	usr.set_machine(src)
-	if(href_list["refresh"])
-		updateUsrDialog()
-		return
-	if(href_list["open"])
-		open_machine()
-		return
-	if(href_list["close"])
-		close_machine()
-		return
+/obj/machinery/abductor/experiment/ui_data(mob/user)
+	var/list/data = list()
+	data["open"] = state_open
+	data["feedback"] = flash
+	data["occupant"] = occupant ? TRUE : FALSE
+	data["occupant_name"] = null
+	data["occupant_status"] = null
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
-		if(mob_occupant.stat != DEAD)
-			if(href_list["experiment"])
-				flash = Experiment(occupant,href_list["experiment"],usr)
-	updateUsrDialog()
-	add_fingerprint(usr)
+		data["occupant_name"] = mob_occupant.name
+		data["occupant_status"] = mob_occupant.stat
+	return data
 
-/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type,mob/user)
+/obj/machinery/abductor/experiment/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("door")
+			if(state_open)
+				close_machine()
+				return TRUE
+			else
+				open_machine()
+				return TRUE
+		if("experiment")
+			if(!occupant)
+				return
+			var/mob/living/mob_occupant = occupant
+			if(mob_occupant.stat == DEAD)
+				return
+			flash = experiment(occupant, params["experiment_type"], usr)
+			return TRUE
+
+/**
+  * experiment: Performs selected experiment on occupant mob, resulting in a point reward on success
+  *
+  * Arguments:
+  * * occupant The mob inside the machine
+  * * type The type of experiment to be performed
+  * * user The mob starting the experiment
+  */
+/obj/machinery/abductor/experiment/proc/experiment(mob/occupant, type, mob/user)
 	LAZYINITLIST(history)
 	var/mob/living/carbon/human/H = occupant
 
 	var/datum/antagonist/abductor/user_abductor = user.mind.has_antag_datum(/datum/antagonist/abductor)
 	if(!user_abductor)
-		return "<span class='bad'>Authorization failure. Contact mothership immidiately.</span>"
+		return "Authorization failure. Contact mothership immediately."
 
 	var/point_reward = 0
+	if(!H)
+		return "Invalid or missing specimen."
 	if(H in history)
-		return "<span class='bad'>Specimen already in database.</span>"
+		return "Specimen already in database."
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
-		return "<span class='bad'>Specimen deceased.</span>"
+		return "Specimen deceased."
 	var/obj/item/organ/heart/gland/GlandTest = locate() in H.internal_organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
-		return "<span class='bad'>No glands detected!</span>"
+		return "No glands detected!"
 	if(H.mind != null && H.ckey != null)
 		LAZYINITLIST(abductee_minds)
 		LAZYADD(history, H)
@@ -197,22 +153,27 @@
 			point_reward++
 		if(point_reward > 0)
 			open_machine()
-			SendBack(H)
+			send_back(H)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 			points += point_reward
 			credits += point_reward
-			return "<span class='good'>Experiment successful! [point_reward] new data-points collected.</span>"
+			return "Experiment successful! [point_reward] new data-points collected."
 		else
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
-			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
+			return "Experiment failed! No replacement organ detected."
 	else
 		say("Brain activity nonexistent - disposing sample...")
 		open_machine()
-		SendBack(H)
-		return "<span class='bad'>Specimen braindead - disposed.</span>"
+		send_back(H)
+		return "Specimen braindead - disposed."
 
-
-/obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
+/**
+  * send_back: Sends a mob back to a selected teleport location if safe
+  *
+  * Arguments:
+  * * H The human mob to be sent back
+  */
+/obj/machinery/abductor/experiment/proc/send_back(mob/living/carbon/human/H)
 	H.Sleeping(160)
 	H.uncuff()
 	if(console && console.pad && console.pad.teleport_target)
@@ -221,7 +182,6 @@
 	//Area not chosen / It's not safe area - teleport to arrivals
 	SSjob.SendToLateJoin(H, FALSE)
 	return
-
 
 /obj/machinery/abductor/experiment/update_icon_state()
 	if(state_open)
