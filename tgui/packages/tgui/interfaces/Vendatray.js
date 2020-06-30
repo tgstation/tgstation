@@ -40,7 +40,6 @@ export const Vendatray = (props, context) => {
             {!!product_name && (
               <VendingImage />
             )}
-		
           </Flex.Item>
         </Flex>
         {registered?( 
@@ -93,7 +92,6 @@ const VendingImage = (props, context) => {
   } = data;
   return (
     <Section m={1}>
-      {
         <img
           src={`data:image/jpeg;base64,${product_icon}`}
           height="96"
@@ -104,7 +102,6 @@ const VendingImage = (props, context) => {
             'vertical-align': 'middle',
             'horizontal-align': 'middle',
           }} />
-      }
     </Section>
   );
 };
