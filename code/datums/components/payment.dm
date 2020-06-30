@@ -58,4 +58,5 @@
 		return FALSE
 	target.transfer_money(card.registered_account, cost)
 	card.registered_account.bank_card_talk("[cost] credits deducted from your account.")
+	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 	return TRUE
