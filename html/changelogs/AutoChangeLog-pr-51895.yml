@@ -1,0 +1,5 @@
+author: "Iatots"
+delete-after: True
+changes: 
+  - rscadd: "runtime station has a small genetics section now"
+  - bugfix: "runtime station doesn't run out of power anymore"
