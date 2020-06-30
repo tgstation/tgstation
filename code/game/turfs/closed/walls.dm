@@ -169,7 +169,7 @@
  */
 
 /turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm)
-	arm.receive_damage(brute = 25, blocked = 0, wound_bonus = CANT_WOUND)
+	arm.receive_damage(brute = 20, blocked = 0, wound_bonus = CANT_WOUND)
 
 /turf/closed/wall/attack_hand(mob/user)
 	. = ..()
