@@ -571,7 +571,7 @@
 
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/M)
 	. = ..()
-	M.adjustToxLoss(1)
+	M.adjustToxLoss(0.5)
 
 /datum/reagent/drug/maint/sludge/on_mob_delete(mob/living/L)
 	. = ..()
