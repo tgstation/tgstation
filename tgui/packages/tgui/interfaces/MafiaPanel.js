@@ -15,7 +15,8 @@ export const MafiaPanel = (props, context) => {
     admin_controls,
     judgement_phase,
     timeleft,
-    all_roles } = data;
+    all_roles,
+   } = data;
   return (
     <Window
       theme={role_theme}
@@ -43,15 +44,14 @@ export const MafiaPanel = (props, context) => {
           )}
         </Section>
         <Flex>
-          {!!actions && actions.map(action => {
-            return (
-              <Flex.Item key={action}>
-                <Button
-                  onClick={() => act("mf_action", { atype: action })}>
-                  {action}
-                </Button>
-              </Flex.Item>);
-          })}
+          {!!actions && actions.map(action => (
+            <Flex.Item key={action}>
+              <Button
+                onClick={() => act("mf_action", { atype: action })}>
+                {action}
+              </Button>
+            </Flex.Item>
+          ))}
         </Flex>
         {!!admin_controls && (
           <Section
@@ -62,15 +62,18 @@ export const MafiaPanel = (props, context) => {
             anyone! It will runtime the game to death! <br />
             <Button
               icon="arrow-right"
-              onClick={() => act("next_phase")}>Next Phase
+              onClick={() => act("next_phase")}>
+              Next Phase
             </Button>
             <Button
               icon="home"
-              onClick={() => act("players_home")}>Send All Players Home
+              onClick={() => act("players_home")}>
+              Send All Players Home
             </Button>
             <Button
               icon="radiation"
-              onClick={() => act("new_game")}>New Game
+              onClick={() => act("new_game")}>
+              New Game
             </Button>
           </Section>
         )}
@@ -89,10 +92,10 @@ export const MafiaPanel = (props, context) => {
                     return (
                       <Button
                         key={action}
-                        onClick={
-                        // eslint-disable-next-line indent
-      () => act("mf_targ_action", { atype: action, target: player.ref })
-                        }>
+                        onClick={() => act('mf_targ_action', {
+                          atype: action,
+                          target: player.ref,
+                        })}>
                         {action}
                       </Button>); })
                 }
@@ -106,13 +109,15 @@ export const MafiaPanel = (props, context) => {
               <Button
                 icon="smile-beam"
                 color="good"
-                onClick={() => act("vote_innocent")}>INNOCENT!
+                onClick={() => act("vote_innocent")}>
+                INNOCENT!
               </Button>
               Use these buttons to vote the accused innocent or guilty!
               <Button
                 icon="angry"
                 color="bad"
-                onClick={() => act("vote_guilty")}>GUILTY!
+                onClick={() => act("vote_guilty")}>
+                GUILTY!
               </Button>
             </Flex>
           </Section>
