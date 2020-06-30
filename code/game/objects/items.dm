@@ -1029,7 +1029,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  * * M - the mob accidentally consuming the item
  * * user - the mob feeding M the item - usually, it's the same as M
  * * source_item - the item that held the item being consumed - bread, cake, etc
- * * discover_after - if the item will be discovered after being chomped
+ * * discover_after - if the item will be discovered after being chomped (FALSE will usually mean it was swallowed, TRUE will usually mean it was bitten into and discovered)
  */
 /obj/item/proc/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
 	/// If source_item is a snack, we can adjust its taste
@@ -1049,11 +1049,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bit something they shouldn't have!</span>", \
 							"<span class='boldwarning'>OH GOD! Was that a crunch? That didn't feel good at all!!</span>")
 
-		if(S && S.tastes && S.tastes.len) //is that blood in my mouth?
+		if(S?.tastes?.len) //is that blood in my mouth?
 			S.tastes += "iron"
 			S.tastes["iron"] = 2
 
-	else if(custom_materials && custom_materials.len) //if we've got materials, lets see whats in it
+	else if(custom_materials?.len) //if we've got materials, lets see whats in it
 		/// How many 'bonus' mats have we found? You can only be affected by two 'bonus' material datums by default
 		var/found_mats = 0
 
@@ -1061,7 +1061,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/plasma)])
 			M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8)) 
-			if(S && S.tastes && S.tastes.len)
+			if(S?.tastes?.len)
 				S.tastes += "bitterness"
 				S.tastes["bitterness"] = 3
 			found_mats++
@@ -1072,20 +1072,20 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/bluespace)])
 			M.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
-			if(S && S.tastes && S.tastes.len)
+			if(S?.tastes?.len)
 				S.tastes += "blue"
 				S.tastes["blue"] = 3 //tastes like... blue
 			found_mats++
 
 		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/bananium)])
-			if(S && S.tastes && S.tastes.len)
+			if(S?.tastes?.len)
 				S.tastes += "banana"
 				S.tastes["banana"] = 3
 			found_mats++
 
 		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/hot_ice)])
 			M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 6)) 
-			if(S && S.tastes && S.tastes.len)
+			if(S?.tastes?.len)
 				S.tastes += "salt"
 				S.tastes["salt"] = 3
 			found_mats++
@@ -1103,7 +1103,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/wood)])
 			M.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-			if(S && S.tastes && S.tastes.len)
+			if(S?.tastes?.len)
 				S.tastes += "wood chips and sawdust"
 				S.tastes["wood chips and sawdust"] = 3
 

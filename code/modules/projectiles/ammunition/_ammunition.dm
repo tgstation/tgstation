@@ -53,7 +53,7 @@
 	if(BB != null)
 		BB = null
 		update_icon()
-		if(source_item && source_item.reagents)
+		if(source_item?.reagents)
 			source_item.reagents.add_reagent(/datum/reagent/gunpowder, source_item.reagents.total_volume*(2/3))
 
 			var/obj/item/reagent_containers/food/snacks/store/S = source_item

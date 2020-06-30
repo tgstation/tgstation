@@ -190,9 +190,7 @@ All foods are distributed among various categories. Use common sense.
 			return 0
 	if(user.a_intent != INTENT_DISARM)
 		var/sharp = W.get_sharpness()
-		if(sharp)
-			if(slice(sharp, W, user))
-				return 1
+		return sharp && slice(sharp, W, user)
 	else
 		..()
 
@@ -351,38 +349,37 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/store/Initialize()
 	. = ..()
-	if(reagents)
-		if(reagents.total_volume)
+	if(reagents?.total_volume)
 			volume_on_creation = reagents.total_volume
 
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		return 0
+		return FALSE
 
 	if((bypass_weight_limit || W.w_class <= WEIGHT_CLASS_SMALL)) 
 		if(W.get_sharpness() && user.a_intent != INTENT_DISARM)
-			return 0
+			return FALSE
 		if(istype(W, /obj/item/storage))
-			return 0
+			return FALSE
 		if(stored_item)
-			return 0
+			return FALSE
 		if(!iscarbon(user))
-			return 0
+			return FALSE
 		if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
-			return 0
+			return FALSE
 		user.visible_message("<span class='notice'>[user.name] begins inserting [W] into [src].</span>", \
 						"<span class='notice'>You start to insert the [W] into \the [src].</span>")
 		if(!do_after(user, 1.5 SECONDS, target = src))
-			return 0			
+			return FALSE			
 		to_chat(user, "<span class='notice'>You slip [W] inside [src].</span>")
 		user.transferItemToLoc(W, src)
 		log_message("[key_name(user)] inserted [W.name] into [src.name] at [AREACOORD(src)]", LOG_ATTACK)
 		add_fingerprint(user)
 		contents += W
 		stored_item = TRUE
-		return 1 // no afterattack here
+		return TRUE // no afterattack here
 
 /obj/item/reagent_containers/food/snacks/store/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!..())
@@ -397,7 +394,7 @@ All foods are distributed among various categories. Use common sense.
 	if(stored_item)
 		for(var/obj/item/I in contents)
 			if(istype(I, /obj/item/reagent_containers/food/snacks))
-				return 0
+				return FALSE
 			if(prob(good_chance_of_discovery))
 				discovered = TRUE
 				to_chat(M, "<span class='warning'>It feels like there's something in this [src.name]...!</span>")

@@ -140,25 +140,24 @@
 	OnEatFrom(M, user)
 	if(istype(src, /obj/item/organ/brain)) //brain takes some extra damage
 		applyOrganDamage(25)
-		M.adjust_disgust(100) 
+		if(!iszombie(M)) //brains...
+			M.adjust_disgust(50)
 	else if(istype(src, /obj/item/organ/heart)) //heart makes a puddle of blood
 		var/turf/T = get_turf(drop_location())
 		var/obj/effect/decal/cleanable/blood/B = locate() in T 
 		if(!B)
 			B = new(T)
 
-	if(source_item)
 		var/obj/item/reagent_containers/food/snacks/store/S = source_item
-		if(istype(S))
-			if(S.tastes && S.tastes.len)
-				S.tastes += "meat"
-				S.tastes["meat"] = 3
+		if(S?.tastes?.len && istype(S))
+			S.tastes += "meat"
+			S.tastes["meat"] = 3
 
 	if(organ_flags & ORGAN_EDIBLE)
 		SEND_SIGNAL(src, COMSIG_EDIBLE_CHECK_LIKED, M)
 		
-	//[lizards without deviant tastes OR voracious people] who also aren't vegetarians wont seem to mind
-	if(((islizard(M) && !M.has_quirk(/datum/quirk/deviant_tastes)) || M.has_quirk(/datum/quirk/voracious)) && !M.has_quirk(/datum/quirk/vegetarian))
+	//people who like gross food or are voracious (voracious people wouldn't even notice)
+	if(((M.dna.species.liked_food & GROSS) && (M.dna.species.liked_food & MEAT)) || M.has_quirk(/datum/quirk/voracious))
 		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something strange.</span>", \
 						"<span class='warning'>Huh, did I just bite into a [name]?</span>")
 	else 

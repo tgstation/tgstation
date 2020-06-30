@@ -161,7 +161,7 @@
 /obj/item/reagent_containers/syringe/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	to_chat(M, "<span class='boldwarning'>There's a syringe in \the [source_item]!!</span>")
 	M.apply_damage(5, BRUTE, BODY_ZONE_HEAD) 
-	if(reagents && reagents.total_volume)
+	if(reagents?.total_volume)
 		reagents.trans_to(M, round(reagents.total_volume*(2/3)), transfered_by = user, method = INJECT)
 
 	return discover_after
