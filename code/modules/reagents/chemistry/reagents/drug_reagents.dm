@@ -571,7 +571,7 @@
 
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/M)
 	. = ..()
-	M.adjustToxLoss(1.5)
+	M.adjustToxLoss(1)
 
 /datum/reagent/drug/maint/sludge/on_mob_delete(mob/living/L)
 	. = ..()
@@ -610,11 +610,7 @@
 /datum/reagent/drug/maint/tar/overdose_process(mob/living/M)
 	. = ..()
 
-	M.AdjustStun(10, FALSE)
-	M.AdjustKnockdown(10, FALSE)
-	M.AdjustUnconscious(10, FALSE)
-	M.AdjustParalyzed(10, FALSE)
-	M.AdjustImmobilized(10, FALSE)
+	M.adjustToxLoss(5)
 	if(!ishuman(M))
 		return
 	var/mob/living/carbon/human/humie = M
