@@ -476,6 +476,12 @@
 ///from [/obj/effect/mine/proc/triggermine]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"
 
+// /obj signals for economy
+///called when the payment component tries to charge an account.
+#define COMSIG_OBJ_ATTEMPT_CHARGE "obj_attempt_simple_charge"
+///called when a printer tries to charge an account.
+#define COMSIG_OBJ_ATTEMPT_CHARGE_PRINTER "obj_attempt_simple_charge_print"
+
 // /obj/item signals for economy
 ///called when an item is sold by the exports subsystem
 #define COMSIG_ITEM_SOLD "item_sold"

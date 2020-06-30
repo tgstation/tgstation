@@ -29,6 +29,10 @@
 	var/mob/living/ass //i can't believe i didn't write a stupid-ass comment about this var when i first coded asscopy.
 	var/busy = FALSE
 
+/obj/machinery/photocopier/Initialize()
+	. = ..()
+	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), "Clinical")
+
 /obj/machinery/photocopier/ui_interact(mob/user)
 	. = ..()
 	var/list/dat = list("Photocopier<BR><BR>")
@@ -58,6 +62,8 @@
 		if(copy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
+					if(SEND_SIGNAL(usr, COMSIG_OBJ_ATTEMPT_CHARGE_PRINTER, usr))
+						break
 					var/copy_as_paper = 1
 					if(istype(copy, /obj/item/paper/contract/employment))
 						var/obj/item/paper/contract/employment/E = copy
