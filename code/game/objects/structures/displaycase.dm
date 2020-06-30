@@ -396,6 +396,106 @@
 	src.icon = I
 	return
 
+/obj/structure/displaycase/forsale/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "Vendatray", name, 300, 300, master_ui, state)
+		ui.open()
+
+/obj/structure/displaycase/forsale/ui_data(mob/user)
+	var/list/data = list()
+	var/register = FALSE
+	if(payments_acc)
+		register = TRUE
+		data["owner_name"] = payments_acc.account_holder
+	if(showpiece)
+		data["product_name"] = capitalize(showpiece.name)
+		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
+		data["product_icon"] = base64
+	data["registered"] = register
+	data["product_cost"] = sale_price
+	data["tray_open"] = open
+	return data
+
+/obj/structure/displaycase/forsale/ui_act(action, params)
+	if(..())
+		return
+	var/obj/item/card/id/potential_acc = usr.get_idcard(hand_first = TRUE)
+	switch(action)
+		if("Buy")
+			if(!showpiece)
+				to_chat(usr, "<span class='notice'>There's nothing for sale.</span>")
+				return TRUE
+			if(broken)
+				to_chat(usr, "<span class='notice'>[src] appears to be broken.</span>")
+				return TRUE
+			if(!payments_acc)
+				to_chat(usr, "<span class='notice'>[src] hasn't been registered yet.</span>")
+				return TRUE
+			var/confirm = alert(usr, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
+			if(confirm == "Cancel" || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				return TRUE
+			if(!potential_acc)
+				to_chat(usr, "<span class='notice'>No ID card detected.</span>")
+				return
+			var/datum/bank_account/account = potential_acc.registered_account
+			if(!account)
+				to_chat(usr, "<span class='notice'>[potential_acc] has no account registered!</span>")
+				return
+			if(!account.has_money(sale_price))
+				to_chat(usr, "<span class='notice'>You do not possess the funds to purchase this.</span>")
+				return TRUE
+			else
+				account.adjust_money(-sale_price)
+				if(payments_acc)
+					payments_acc.adjust_money(sale_price)
+				usr.put_in_hands(showpiece)
+				to_chat(usr, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
+				icon = 'icons/obj/stationobjs.dmi'
+				flick("laserbox_vend", src)
+				showpiece = null
+				update_icon()
+				return TRUE
+		if("Open")
+			if(!payments_acc)
+				to_chat(usr, "<span class='notice'>[src] hasn't been registered yet.</span>")
+				return TRUE
+			if(!potential_acc || !potential_acc.registered_account)
+				return
+			if(!check_access(potential_acc))
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				return
+			toggle_lock()
+		if("Register")
+			if(payments_acc)
+				return
+			if(!potential_acc || !potential_acc.registered_account)
+				return
+			if(!check_access(potential_acc))
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				return
+			payments_acc = potential_acc.registered_account
+			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		if("Adjust")
+			if(!check_access(potential_acc) || potential_acc.registered_account != payments_acc)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				return
+
+			var/new_price_input = input(usr,"Set the sale price for this vend-a-tray.","new price",0) as num|null
+			if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
+				to_chat(usr, "<span class='warning'>[src] rejects your new price.</span>")
+				return
+			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
+				to_chat(usr, "<span class='warning'>You need to get closer!</span>")
+				return
+			new_price_input = clamp(round(new_price_input, 1), 10, 1000)
+			sale_price = new_price_input
+			to_chat(usr, "<span class='notice'>The cost is now set to [sale_price].</span>")
+			return TRUE
+
+	. = TRUE
 /obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
 	if(isidcard(I))
 		//Card Registration
@@ -403,57 +503,28 @@
 		if(!potential_acc.registered_account)
 			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
 			return
-		if(!payments_acc && potential_acc.registered_account)
-			payments_acc = potential_acc.registered_account
+		if(payments_acc == potential_acc.registered_account)
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use your ID on grab intent to change the sale price, or disarm intent to open the tray.</span>")
+			toggle_lock()
 			return
-		//Buying the contained item with the ID.
-		switch(user.a_intent)
-			if(INTENT_HELP)
-				if(!showpiece)
-					to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
-					return TRUE
-				if(broken)
-					to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
-					return TRUE
-				var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
-				if(confirm == "Cancel" || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-					return TRUE
-				var/datum/bank_account/account = potential_acc.registered_account
-				if(!account.has_money(sale_price))
-					to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
-					return TRUE
-				else
-					account.adjust_money(-sale_price)
-					if(payments_acc)
-						payments_acc.adjust_money(sale_price)
-					user.put_in_hands(showpiece)
-					to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
-					playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
-					icon = 'icons/obj/stationobjs.dmi'
-					flick("laserbox_vend", src)
-					showpiece = null
-					update_icon()
-					return TRUE
-			//Setting the object's price.
-			if(INTENT_GRAB)
-				var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
-				if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
-					to_chat(user, "<span class='warning'>The vend-a-tray rejects your new price.</span>")
-					return
-				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
-					to_chat(user, "<span class='warning'>You need to get closer!</span>")
-					return
-				new_price_input = clamp(round(new_price_input, 1), 10, 1000)
-				sale_price = new_price_input
-				to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
-				return TRUE
-			if(INTENT_DISARM || INTENT_HARM)
-				if(payments_acc && payments_acc != potential_acc.registered_account)
-					to_chat(user, "<span class='warning'>This Vend-a-tray is already registered!</span>")
-					return
-	if(I.tool_behaviour == TOOL_WRENCH && open && user.a_intent == INTENT_HELP )
+	if(istype(I, /obj/item/pda))
+		return TRUE
+	. = ..()
+
+
+/obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(obj_integrity <= (integrity_failure *  max_integrity))
+		to_chat(user, "<span class='notice'>You start recalibrating [src]'s hover field...</span>")
+		if(do_after(user, 20, target = src))
+			broken = 0
+			obj_integrity = max_integrity
+			update_icon()
+		return TRUE
+
+/obj/structure/displaycase/forsale/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(open && user.a_intent == INTENT_HELP )
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
 		else
@@ -467,22 +538,9 @@
 				to_chat(user, "<span class='notice'>You secure [src].</span>")
 			anchored = !anchored
 			return
-	else if(I.tool_behaviour == TOOL_WRENCH && !open && user.a_intent == INTENT_HELP)
+	else if(!open && user.a_intent == INTENT_HELP)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
 		return
-	if(istype(I, /obj/item/pda))
-		return TRUE
-	. = ..()
-
-/obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(obj_integrity <= (integrity_failure *  max_integrity))
-		to_chat(user, "<span class='notice'>You start recalibrating [src]'s hover field...</span>")
-		if(do_after(user, 20, target = src))
-			broken = 0
-			obj_integrity = max_integrity
-			update_icon()
-		return TRUE
 
 /obj/structure/displaycase/forsale/emag_act(mob/user)
 	. = ..()
