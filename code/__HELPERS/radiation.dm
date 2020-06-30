@@ -43,3 +43,14 @@
 		var/turf/_source_T = isturf(source) ? source : get_turf(source)
 		log_game("Radiation pulse with intensity: [intensity] and range modifier: [range_modifier] in [loc_name(_source_T)] ")
 	return TRUE
+
+/proc/get_rad_contamination(atom/location)
+	var/rad_strength = 0
+	for(var/i in get_rad_contents(location)) // Yes it's intentional that you can't detect radioactive things under rad protection. Gives traitors a way to hide their glowing green rocks.
+		var/atom/thing = i
+		if(!thing)
+			continue
+		var/datum/component/radioactive/radiation = thing.GetComponent(/datum/component/radioactive)
+		if(radiation && rad_strength < radiation.strength)
+			rad_strength = radiation.strength
+	return rad_strength
