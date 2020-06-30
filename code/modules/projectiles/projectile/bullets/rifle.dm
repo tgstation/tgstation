@@ -17,6 +17,8 @@
 /obj/projectile/bullet/a762
 	name = "7.62 bullet"
 	damage = 60
+	wound_bonus = -40
+	wound_falloff_tile = 0
 
 /obj/projectile/bullet/a762_enchanted
 	name = "enchanted 7.62 bullet"
