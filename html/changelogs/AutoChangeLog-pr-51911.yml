@@ -1,0 +1,4 @@
+author: "ATH1909"
+delete-after: True
+changes: 
+  - tweak: "The messages from attempting to feed someone the contents of a glass container (including, say, disease bottles or vaccine bottles) will now mention the name of the aforementioned container."

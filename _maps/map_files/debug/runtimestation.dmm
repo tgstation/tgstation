@@ -826,18 +826,28 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/medical/medbay)
 "cK" = (
+/obj/machinery/light,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
 "cL" = (
-/obj/structure/table,
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /obj/item/disk/surgery/debug,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
 "cN" = (
@@ -1277,12 +1287,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "es" = (
-/obj/machinery/light,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
@@ -2393,11 +2403,26 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"DW" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/computer/scan_consolenew{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white/corner,
+/area/medical/medbay)
 "EA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/construction)
+"EB" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 27
+	},
+/turf/open/floor/plasteel,
+/area/medical/medbay)
 "EG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -6637,9 +6662,9 @@ aa
 ae
 ab
 sE
-an
 sE
-an
+sE
+sE
 sE
 ab
 bv
@@ -6729,9 +6754,9 @@ aa
 ae
 ab
 sE
-ao
-ao
-ao
+an
+sE
+an
 sE
 ab
 bv
@@ -6820,11 +6845,11 @@ aa
 aa
 ae
 ab
-ab
-ab
+sE
+an
 ao
-ab
-ab
+an
+sE
 ab
 bv
 bJ
@@ -6912,11 +6937,11 @@ aa
 aa
 ae
 ac
-ac
+ab
 ab
 ao
 ab
-ac
+ab
 ac
 bv
 bK
@@ -8396,8 +8421,8 @@ dH
 by
 Qt
 by
-cm
-cK
+EB
+DW
 by
 cS
 cS
