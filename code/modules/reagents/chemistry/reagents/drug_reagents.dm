@@ -554,7 +554,7 @@
 	if(!ishuman(M))
 		return
 	var/mob/living/carbon/human/humie = M
-	humier.adjustOrganLoss(ORGAN_SLOT_BRAIN,3)
+	humie.adjustOrganLoss(ORGAN_SLOT_BRAIN,3)
 
 /datum/reagent/drug/maint/sludge
 	name = "Maintanance Sludge"
@@ -596,18 +596,26 @@
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/M)
 	. = ..()
-	humie.adjustOrganLoss(ORGAN_SLOT_LIVER,1.5)
+
 	M.AdjustStun(-10, FALSE)
 	M.AdjustKnockdown(-10, FALSE)
 	M.AdjustUnconscious(-10, FALSE)
 	M.AdjustParalyzed(-10, FALSE)
 	M.AdjustImmobilized(-10, FALSE)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/humie = M
+	humie.adjustOrganLoss(ORGAN_SLOT_LIVER,1.5)
 
 /datum/reagent/drug/maint/tar/overdose_process(mob/living/M)
 	. = ..()
-	humie.adjustOrganLoss(ORGAN_SLOT_LIVER,3)
+
 	M.AdjustStun(10, FALSE)
 	M.AdjustKnockdown(10, FALSE)
 	M.AdjustUnconscious(10, FALSE)
 	M.AdjustParalyzed(10, FALSE)
 	M.AdjustImmobilized(10, FALSE)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/humie = M
+	humie.adjustOrganLoss(ORGAN_SLOT_LIVER,3)
