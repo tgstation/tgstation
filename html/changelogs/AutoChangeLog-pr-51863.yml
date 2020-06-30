@@ -1,0 +1,7 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed newspapers not being flammable."
+  - bugfix: "Standardized how paper products are burned. You're now able to ignite newspapers, folders, and photographs with lights/welders/hot stuff!"
+  - bugfix: "Igniting a piece of paper will no longer cause it to teleport to your feet."
+  - bugfix: "Fixed some paper interactions not leaving fingerprints on the object."
