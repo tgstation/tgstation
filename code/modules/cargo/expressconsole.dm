@@ -57,6 +57,8 @@
 	..()
 
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)
+	return ///McAirstrikes will have to wait
+	
 	if(obj_flags & EMAGGED)
 		return
 	if(user)
