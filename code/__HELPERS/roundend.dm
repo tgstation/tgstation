@@ -316,7 +316,7 @@
 	parts += medal_report()
 	//Station Goals
 	parts += goal_report()
-	//Economy
+	//Economy & Money
 	parts += market_report()
 
 	listclearnulls(parts)
