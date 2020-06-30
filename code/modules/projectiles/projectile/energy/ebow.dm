@@ -1,6 +1,7 @@
 /obj/projectile/energy/bolt //ebow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
+	zone_deviation = FALSE
 	damage = 15
 	damage_type = TOX
 	nodamage = FALSE

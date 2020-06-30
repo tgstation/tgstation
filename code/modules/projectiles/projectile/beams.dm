@@ -2,6 +2,7 @@
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	zone_accuracy_factor = 3
 	damage = 20
 	light_range = 2
 	damage_type = BURN
@@ -65,7 +66,8 @@
 /obj/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
-	damage = 5
+	zone_accuracy_factor = 1
+	damage = 12.5
 
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
@@ -85,9 +87,10 @@
 /obj/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 30
+	damage = 40
 	damage_type = STAMINA
 	flag = "energy"
+	zone_deviation = FALSE
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser

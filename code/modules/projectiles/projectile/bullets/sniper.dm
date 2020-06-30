@@ -3,6 +3,7 @@
 /obj/projectile/bullet/p50
 	name =".50 bullet"
 	speed = 0.4
+	zone_deviation = FALSE
 	damage = 70
 	paralyze = 100
 	dismemberment = 50
