@@ -6,8 +6,8 @@
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/hitsound_on = 'sound/weapons/blade1.ogg'
-	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	var/list/attack_verb_off = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
+	var/list/attack_verb_off = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_SMALL
 	var/bonus_active = FALSE //If the faction damage bonus is active
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects

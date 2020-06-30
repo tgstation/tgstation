@@ -33,7 +33,7 @@
 				ban["message"] = "[reason]"
 
 			if(SSdbcore.Connect())
-				var/datum/DBQuery/query_create_stickyban = SSdbcore.NewQuery({"
+				var/datum/db_query/query_create_stickyban = SSdbcore.NewQuery({"
 					INSERT INTO [format_table_name("stickyban")] (ckey, reason, banning_admin)
 					VALUES (:ckey, :message, :banning_admin)
 				"}, list("ckey" = ckey, "message" = ban["message"], "banning_admin" = usr.ckey))
@@ -119,7 +119,7 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				var/datum/DBQuery/query_remove_stickyban_alt = SSdbcore.NewQuery(
+				var/datum/db_query/query_remove_stickyban_alt = SSdbcore.NewQuery(
 					"DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = :ckey AND matched_ckey = :alt",
 					list("ckey" = ckey, "alt" = alt)
 				)
@@ -153,7 +153,7 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				var/datum/DBQuery/query_edit_stickyban = SSdbcore.NewQuery(
+				var/datum/db_query/query_edit_stickyban = SSdbcore.NewQuery(
 					"UPDATE [format_table_name("stickyban")] SET reason = :reason WHERE ckey = :ckey",
 					list("reason" = reason, "ckey" = ckey)
 				)
@@ -203,7 +203,7 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				var/datum/DBQuery/query_exempt_stickyban_alt = SSdbcore.NewQuery(
+				var/datum/db_query/query_exempt_stickyban_alt = SSdbcore.NewQuery(
 					"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = :ckey AND matched_ckey = :alt",
 					list("ckey" = ckey, "alt" = alt)
 				)
@@ -253,7 +253,7 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
-				var/datum/DBQuery/query_unexempt_stickyban_alt = SSdbcore.NewQuery(
+				var/datum/db_query/query_unexempt_stickyban_alt = SSdbcore.NewQuery(
 					"UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = :ckey AND matched_ckey = :alt",
 					list("ckey" = ckey, "alt" = alt)
 				)

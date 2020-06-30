@@ -69,9 +69,9 @@
 	/// The togglable small sprite action
 	var/small_sprite_type = /datum/action/small_sprite/megafauna/spacedragon
 	/// The innate ability to use wing gust
-	var/datum/action/innate/space_dragon/gustAttack/gust
+	var/datum/action/innate/space_dragon/gust_attack/gust
 	/// The innate ability to summon rifts
-	var/datum/action/innate/space_dragon/summonRift/rift
+	var/datum/action/innate/space_dragon/summon_rift/rift
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
@@ -360,12 +360,12 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	background_icon_state = "bg_default"
 	icon_icon = 'icons/mob/actions/actions_space_dragon.dmi'
 
-/datum/action/innate/space_dragon/gustAttack
+/datum/action/innate/space_dragon/gust_attack
 	name = "Gust Attack"
 	button_icon_state = "gust_attack"
 	desc = "Use your wings to knock back foes with gusts of air, pushing them away and stunning them.  Using this too often will leave you vulnerable for longer periods of time."
 
-/datum/action/innate/space_dragon/gustAttack/Activate()
+/datum/action/innate/space_dragon/gust_attack/Activate()
 	var/mob/living/simple_animal/hostile/space_dragon/S = owner
 	if(S.using_special)
 		return
@@ -373,12 +373,12 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	S.icon_state = "spacedragon_gust"
 	S.useGust(0)
 
-/datum/action/innate/space_dragon/summonRift
+/datum/action/innate/space_dragon/summon_rift
 	name = "Summon Rift"
 	button_icon_state = "carp_rift"
 	desc = "Summon a rift to bring forth a horde of space carp."
 
-/datum/action/innate/space_dragon/summonRift/Activate()
+/datum/action/innate/space_dragon/summon_rift/Activate()
 	var/mob/living/simple_animal/hostile/space_dragon/S = owner
 	if(S.using_special)
 		return

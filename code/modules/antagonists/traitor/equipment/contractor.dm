@@ -229,7 +229,7 @@
 	to_chat(partner_mind.current, "\n<span class='alertwarning'>[user.real_name] is your superior. Follow any, and all orders given by them. You're here to support their mission only.</span>")
 	to_chat(partner_mind.current, "<span class='alertwarning'>Should they perish, or be otherwise unavailable, you're to assist other active agents in this mission area to the best of your ability.</span>\n\n")
 
-	new /obj/effect/DPtarget(free_location, arrival_pod)
+	new /obj/effect/dp_target(free_location, arrival_pod)
 
 /datum/contractor_item/blackout
 	name = "Blackout"

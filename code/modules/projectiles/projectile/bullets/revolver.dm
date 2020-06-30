@@ -6,7 +6,7 @@
 
 // .50AE (Desert Eagle)
 
-/obj/projectile/bullet/a50AE
+/obj/projectile/bullet/a50ae
 	name = ".50AE bullet"
 	damage = 60
 

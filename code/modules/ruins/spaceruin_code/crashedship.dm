@@ -2,22 +2,22 @@
 
 //Areas
 
-/area/awaymission/BMPship
+/area/awaymission/bmpship
 	name = "BMP Asteroids"
 	icon_state = "away"
 
 
-/area/awaymission/BMPship/Aft
+/area/awaymission/bmpship/aft
 	name = "Aft Block"
 	icon_state = "away1"
 	requires_power = TRUE
 
-/area/awaymission/BMPship/Midship
+/area/awaymission/bmpship/midship
 	name = "Midship Block"
 	icon_state = "away2"
 	requires_power = TRUE
 
-/area/awaymission/BMPship/Fore
+/area/awaymission/bmpship/fore
 	name = "Fore Block"
 	icon_state = "away3"
 	requires_power = TRUE

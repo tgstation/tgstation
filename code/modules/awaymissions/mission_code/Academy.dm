@@ -331,7 +331,7 @@
 		if(17)
 			//Tator Kit
 			T.visible_message("<span class='userdanger'>A suspicious box appears!</span>")
-			new /obj/item/storage/box/syndicate/bundle_A(drop_location())
+			new /obj/item/storage/box/syndicate/bundle_a(drop_location())
 			do_smoke(0, drop_location())
 		if(18)
 			//Captain ID

@@ -115,9 +115,6 @@
 	linked_techweb = SSresearch.science_tech
 	if(damagetype_healer == "all")
 		return
-	var/obj/item/storage/firstaid/FA = firstaid
-	if(initial(FA.damagetype_healed))
-		damagetype_healer = initial(FA.damagetype_healed)
 
 /mob/living/simple_animal/bot/medbot/update_mobility()
 	. = ..()

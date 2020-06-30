@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(discord)
 /datum/controller/subsystem/discord/proc/lookup_id(lookup_ckey)
 	//We cast the discord ID to varchar to prevent BYOND mangling
 	//it into it's scientific notation
-	var/datum/DBQuery/query_get_discord_id = SSdbcore.NewQuery(
+	var/datum/db_query/query_get_discord_id = SSdbcore.NewQuery(
 		"SELECT CAST(discord_id AS CHAR(25)) FROM [format_table_name("player")] WHERE ckey = :ckey",
 		list("ckey" = lookup_ckey)
 	)
@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(discord)
 
 // Returns ckey from ID
 /datum/controller/subsystem/discord/proc/lookup_ckey(lookup_id)
-	var/datum/DBQuery/query_get_discord_ckey = SSdbcore.NewQuery(
+	var/datum/db_query/query_get_discord_ckey = SSdbcore.NewQuery(
 		"SELECT ckey FROM [format_table_name("player")] WHERE discord_id = :discord_id",
 		list("discord_id" = lookup_id)
 	)
@@ -110,7 +110,7 @@ SUBSYSTEM_DEF(discord)
 
 // Finalises link
 /datum/controller/subsystem/discord/proc/link_account(ckey)
-	var/datum/DBQuery/link_account = SSdbcore.NewQuery(
+	var/datum/db_query/link_account = SSdbcore.NewQuery(
 		"UPDATE [format_table_name("player")] SET discord_id = :discord_id WHERE ckey = :ckey",
 		list("discord_id" = account_link_cache[ckey], "ckey" = ckey)
 	)
@@ -120,7 +120,7 @@ SUBSYSTEM_DEF(discord)
 
 // Unlink account (Admin verb used)
 /datum/controller/subsystem/discord/proc/unlink_account(ckey)
-	var/datum/DBQuery/unlink_account = SSdbcore.NewQuery(
+	var/datum/db_query/unlink_account = SSdbcore.NewQuery(
 		"UPDATE [format_table_name("player")] SET discord_id = NULL WHERE ckey = :ckey",
 		list("ckey" = ckey)
 	)
@@ -152,7 +152,7 @@ SUBSYSTEM_DEF(discord)
   * Sends a message to TGS chat channels.
   *
   * message - The message to send.
-  * channel_tag - Required. If "", the message with be sent to all connected (Game-type for TGS3) channels. Otherwise, it will be sent to TGS4 channels with that tag.
+  * channel_tag - Required. If "", the message with be sent to all connected (Game-type for TGS3) channels. Otherwise, it will be sent to TGS4 channels with that tag (Delimited by ','s).
   */
 /proc/send2chat(message, channel_tag)
 	if(channel_tag == null || !world.TgsAvailable())
@@ -166,7 +166,8 @@ SUBSYSTEM_DEF(discord)
 	var/list/channels_to_use = list()
 	for(var/I in world.TgsChatChannelInfo())
 		var/datum/tgs_chat_channel/channel = I
-		if(channel.tag == channel_tag)
+		var/list/applicable_tags = splittext(channel.tag, ",")
+		if(channel_tag in applicable_tags)
 			channels_to_use += channel
 
 	if(channels_to_use.len)

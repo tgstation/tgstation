@@ -38,7 +38,7 @@ const BasicSection = (props, context) => {
   const things = source.filter(searchFor(searchText));
   things.sort(compareNumberedText);
   return source.length > 0 && (
-    <Section title={title}>
+    <Section title={`${title} - (${source.length})`}>
       {things.map(thing => (
         <Button
           key={thing.name}
@@ -119,9 +119,10 @@ export const Orbit = (props, context) => {
 
   return (
     <Window>
-      <Window.Content>
+      <Window.Content scrollable>
         <Section>
           <Input
+            autoFocus
             fluid
             value={searchText}
             onInput={(_, value) => setSearchText(value)}

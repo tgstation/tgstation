@@ -1,17 +1,17 @@
-/datum/mapGeneratorModule/bottomLayer/shuttleFloor
+/datum/map_generator_module/bottom_layer/shuttle_floor
 	spawnableTurfs = list(/turf/open/floor/plasteel/shuttle = 100)
 
-/datum/mapGeneratorModule/border/shuttleWalls
+/datum/map_generator_module/border/shuttle_walls
 	spawnableAtoms = list()
 	spawnableTurfs = list(/turf/closed/wall/mineral/titanium = 100)
 // Generators
 
-/datum/mapGenerator/shuttle/full
-	modules = list(/datum/mapGeneratorModule/bottomLayer/shuttleFloor, \
-		/datum/mapGeneratorModule/border/shuttleWalls,\
-		/datum/mapGeneratorModule/bottomLayer/repressurize)
+/datum/map_generator/shuttle/full
+	modules = list(/datum/map_generator_module/bottom_layer/shuttle_floor, \
+		/datum/map_generator_module/border/shuttle_walls,\
+		/datum/map_generator_module/bottom_layer/repressurize)
 	buildmode_name = "Pattern: Shuttle Room"
 
-/datum/mapGenerator/shuttle/floor
-	modules = list(/datum/mapGeneratorModule/bottomLayer/shuttleFloor)
+/datum/map_generator/shuttle/floor
+	modules = list(/datum/map_generator_module/bottom_layer/shuttle_floor)
 	buildmode_name = "Block: Shuttle Floor"

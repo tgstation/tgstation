@@ -3615,7 +3615,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jq" = (
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
@@ -4799,7 +4799,7 @@
 "lS" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/holofloor/hyperspace,
-/area/centcom/supplypod/flyMeToTheMoon)
+/area/centcom/supplypod/fly_me_to_the_moon)
 "lT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -5191,7 +5191,7 @@
 "mK" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/stack/cable_coil,
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/green{
@@ -5656,7 +5656,7 @@
 	pixel_y = -24
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/stack/cable_coil,
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/neutral{
@@ -6176,7 +6176,7 @@
 /area/centcom/supply)
 "ot" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light{
@@ -7041,7 +7041,7 @@
 /area/centcom/ferry)
 "pS" = (
 /obj/structure/table,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "pT" = (
@@ -9426,7 +9426,7 @@
 /area/centcom/ferry)
 "uP" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/crowbar/power,
 /obj/item/wrench,
 /obj/item/hand_labeler,
@@ -11155,7 +11155,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "ze" = (
-/obj/structure/closet/secure_closet/ertEngi,
+/obj/structure/closet/secure_closet/ert_engi,
 /obj/structure/sign/directions/engineering{
 	pixel_y = 24
 	},
@@ -11163,7 +11163,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "zf" = (
-/obj/structure/closet/secure_closet/ertEngi,
+/obj/structure/closet/secure_closet/ert_engi,
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
@@ -11212,7 +11212,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "zj" = (
-/obj/structure/closet/secure_closet/ertCom,
+/obj/structure/closet/secure_closet/ert_com,
 /obj/structure/sign/directions/command{
 	pixel_y = 24
 	},
@@ -12611,7 +12611,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "CB" = (
-/obj/structure/closet/secure_closet/ertMed,
+/obj/structure/closet/secure_closet/ert_med,
 /obj/structure/sign/directions/medical{
 	dir = 1;
 	pixel_y = -24
@@ -12622,7 +12622,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "CC" = (
-/obj/structure/closet/secure_closet/ertMed,
+/obj/structure/closet/secure_closet/ert_med,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_y = -32;
@@ -12658,14 +12658,14 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "CF" = (
-/obj/structure/closet/secure_closet/ertSec,
+/obj/structure/closet/secure_closet/ert_sec,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "CG" = (
-/obj/structure/closet/secure_closet/ertSec,
+/obj/structure/closet/secure_closet/ert_sec,
 /obj/structure/sign/directions/security{
 	dir = 1;
 	pixel_y = -24
@@ -17149,7 +17149,7 @@
 /area/centcom/holding)
 "NE" = (
 /turf/open/floor/plasteel,
-/area/centcom/supplypod/podStorage)
+/area/centcom/supplypod/pod_storage)
 "NG" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";

@@ -11,7 +11,7 @@
 	var/datum/objective/revenant/objective = new
 	objective.owner = owner
 	objectives += objective
-	var/datum/objective/revenantFluff/objective2 = new
+	var/datum/objective/revenant_fluff/objective2 = new
 	objective2.owner = owner
 	objectives += objective2
 
