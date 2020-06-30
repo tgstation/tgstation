@@ -192,12 +192,21 @@
 
 
 /obj/item/seeds/proc/harvest(mob/user)
+	///Reference to the tray/soil the seeds are planted in.
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	///Count used for creating the correct amount of results to the harvest.
 	var/t_amount = 0
+	///List of plants all harvested from the same batch.
 	var/list/result = list()
+	///Tile of the harvester to deposit the growables.
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	///Name of the grown products.
 	var/product_name
-	while(t_amount < getYield())
+	///The Number of products produced by the plant, typically the yield. Modified by Densified Chemicals.
+	var/product_count = getYield()
+	if(get_gene(/datum/plant_gene/trait/maxchem))
+		product_count = clamp(round(product_count/2),0,5)
+	while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = lowertext(parent.myseed.plantname)
