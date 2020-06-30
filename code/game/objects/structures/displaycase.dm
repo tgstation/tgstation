@@ -370,7 +370,7 @@
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents."
 	density = FALSE
 	max_integrity = 100
-	req_access = list(ACCESS_KITCHEN)
+	req_access = null
 	showpiece_type = /obj/item/reagent_containers/food
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
@@ -561,3 +561,7 @@
 		playsound(src, "shatter", 70, TRUE)
 		update_icon()
 		trigger_alarm() //In case it's given an alarm anyway.
+
+/obj/structure/displaycase/forsale/kitchen
+	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
+	req_access = list(ACCESS_KITCHEN)
