@@ -1,0 +1,10 @@
+author: "TaF"
+delete-after: True
+changes: 
+  - rscadd: "Adds an invisible/hidden icon that can be used for items that may not be in need of a sprite."
+  - tweak: "Weapons sawn off show a worn icon after being sawn."
+  - tweak: "Energy weapons properly show ammo depletion when worn. Icons for this are still a work in progress."
+  - bugfix: "Fixes neckerchief icon overlay issue."
+  - bugfix: "Fixes nanite scanner in_hand icon."
+  - bugfix: "Fixes 23 items with common worn icons."
+  - rscdel: "Removes duplicate null icon in back slot icon file"
