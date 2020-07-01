@@ -495,6 +495,7 @@
 /datum/reagent/drug/maint
 	name = "Maintanance Drugs"
 	addiction_type = /datum/reagent/drug/maint
+	can_synth = FALSE
 
 /datum/reagent/drug/maint/addiction_act_stage1(mob/living/M)
 	. = ..()
@@ -532,6 +533,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
 	addiction_threshold = 5
+	can_synth = TRUE
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -564,6 +566,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 	addiction_threshold = 10
+	can_synth = TRUE
 
 /datum/reagent/drug/maint/sludge/on_mob_add(mob/living/L)
 	. = ..()
@@ -595,6 +598,7 @@
 	color = "#000000"
 	overdose_threshold = 30
 	addiction_threshold = 10
+	can_synth = TRUE
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/M)
 	. = ..()
