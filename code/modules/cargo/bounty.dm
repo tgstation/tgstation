@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 			qdel(thing)
 	return matched_one
 
-// Returns FALSE if the bounty is incompatible with the current bounties.
+/// Returns FALSE if the bounty is incompatible with the current bounties.
 /proc/try_add_bounty(datum/bounty/new_bounty)
 	if(!new_bounty || !new_bounty.name || !new_bounty.description)
 		return FALSE
@@ -76,8 +76,13 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	return TRUE
 
 // Returns a new bounty of random type, but does not add it to GLOB.bounties_list.
-/proc/random_bounty()
-	switch(rand(1, 13))
+/proc/random_bounty(var/guided = 0)
+	var/bounty_num
+	if(guided)
+		bounty_num = guided
+	else
+		bounty_num = rand(1,13)
+	switch(bounty_num)
 		if(1)
 			var/subtype = pick(subtypesof(/datum/bounty/item/assistant))
 			return new subtype

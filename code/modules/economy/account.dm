@@ -9,6 +9,8 @@
 	var/add_to_accounts = TRUE
 	var/account_id
 	var/being_dumped = FALSE //pink levels are rising
+	var/datum/bounty/civilian_bounty
+	var/bounty_timer = 0
 
 /datum/bank_account/New(newname, job, modifier = 1)
 	if(add_to_accounts)
@@ -58,7 +60,7 @@
 	else
 		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
 		if(D)
-			if(!transfer_money(D, money_to_transfer))
+			if(!transfer_money(D, round(money_to_transfer/2)))
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
