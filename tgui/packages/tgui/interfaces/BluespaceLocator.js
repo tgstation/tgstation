@@ -14,7 +14,7 @@ const directionToIcon = {
 };
 
 export const BluespaceLocator = (props, context) => {
-  const [tab, setTab] = useSharedState(context, "tab", "beacon");
+  const [tab, setTab] = useSharedState(context, "tab", "implant");
   return (
     <Window resizable>
       <Window.Content scrollable>
