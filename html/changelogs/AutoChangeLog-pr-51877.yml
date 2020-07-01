@@ -1,5 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - tweak: "Revenants, being spirits, can now hear ghost gang banter."
-  - bugfix: "Revenant speech color is now readable when using Darkmode."
