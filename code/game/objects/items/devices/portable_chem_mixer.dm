@@ -197,4 +197,3 @@
 			replace_beaker(usr)
 			update_icon()
 			. = TRUE
-			
