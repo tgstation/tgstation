@@ -41,6 +41,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	operating = TRUE
 	update_move_direction()
+	begin_processing()
 
 /obj/machinery/conveyor/auto/update()
 	. = ..()
