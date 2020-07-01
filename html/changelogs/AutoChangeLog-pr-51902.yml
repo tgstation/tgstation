@@ -1,5 +1,0 @@
-author: "WarlockD"
-delete-after: True
-changes: 
-  - rscadd: "Medical Kiosk shows rad contamination"
-  - bugfix: "Medical Kiosk gives better directions on rad sickness"
