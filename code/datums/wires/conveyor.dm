@@ -1,6 +1,7 @@
 /datum/wires/conveyor
 	holder_type = /obj/machinery/conveyor_switch
 	proper_name = "conveyor"
+	/// var holder that logs who put the assembly inside and gets transfered to the switch on pulse
 	var/mob/fingerman
 
 /datum/wires/conveyor/New(atom/holder)
@@ -14,4 +15,3 @@
 /datum/wires/conveyor/interactable(mob/user)
 	fingerman = user
 	return TRUE
-
