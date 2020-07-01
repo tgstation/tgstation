@@ -544,11 +544,11 @@
 	// 5x if you want to OD, you can potentially go higher, but good luck managing the brain damage.
 	living_mind.experience_modifier = max(1,round(volume/3,0.1))
 
-/datum/reagent/drug/maint/powder/on_mob_delete(mob/living/L)
+/datum/reagent/drug/maint/powder/on_mob_end_metabolize(mob/living/M)
 	. = ..()
-	if(!L.mind)
+	if(!M.mind)
 		return
-	var/datum/mind/living_mind = L.mind
+	var/datum/mind/living_mind = M.mind
 	living_mind.experience_modifier = initial(living_mind.experience_modifier)
 
 /datum/reagent/drug/maint/powder/overdose_process(mob/living/M)
@@ -560,7 +560,7 @@
 
 /datum/reagent/drug/maint/sludge
 	name = "Maintanance Sludge"
-	description = "An unknown sludge that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Half refined, it fills your body with itself, making it more resistant to wound, but causes toxins to accumulate."
+	description = "An unknown sludge that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Half refined, it fills your body with itself, making it more resistant to wounds, but causes toxins to accumulate."
 	reagent_state = LIQUID
 	color = "#203d2c"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
@@ -568,7 +568,8 @@
 	addiction_threshold = 10
 	can_synth = TRUE
 
-/datum/reagent/drug/maint/sludge/on_mob_add(mob/living/L)
+/datum/reagent/drug/maint/sludge/on_mob_metabolize(mob/living/L)
+
 	. = ..()
 	ADD_TRAIT(L,TRAIT_HARDLIMBDISABLE,type)
 
@@ -576,9 +577,9 @@
 	. = ..()
 	M.adjustToxLoss(0.5)
 
-/datum/reagent/drug/maint/sludge/on_mob_delete(mob/living/L)
+/datum/reagent/drug/maint/sludge/on_mob_end_metabolize(mob/living/M)
 	. = ..()
-	REMOVE_TRAIT(L,TRAIT_HARDLIMBDISABLE,type)
+	REMOVE_TRAIT(M,TRAIT_HARDLIMBDISABLE,type)
 
 /datum/reagent/drug/maint/sludge/overdose_process(mob/living/M)
 	. = ..()
