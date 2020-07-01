@@ -103,9 +103,10 @@
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = !isnull(reagents.has_reagent(/datum/reagent/toxin/plasma, 5)) //has_reagent returns the reagent datum
+	/obj/item/stock_parts/cell/on_reagent_change(changetype)
+	if (reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
+		rigged = TRUE //has_reagent returns 0 (FALSE) if there is no reagent
 	..()
-
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
