@@ -40107,9 +40107,6 @@
 	},
 /area/crew_quarters/kitchen)
 "bQF" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
 /obj/effect/landmark/event_spawn,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -40588,18 +40585,12 @@
 	pixel_x = -6;
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 4
-	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
 /area/crew_quarters/kitchen)
 "bRS" = (
 /obj/machinery/holopad,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -40608,9 +40599,6 @@
 	},
 /area/crew_quarters/kitchen)
 "bRT" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -69053,14 +69041,6 @@
 /obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"grA" = (
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 1
-	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "gsF" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -69822,7 +69802,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
 "hBB" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "hDr" = (
@@ -71377,9 +71356,6 @@
 /area/quartermaster/storage)
 "kjg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -71966,7 +71942,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "kWZ" = (
@@ -72172,7 +72147,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "lqa" = (
@@ -72239,14 +72213,6 @@
 "lxj" = (
 /turf/closed/wall/r_wall,
 /area/space)
-"lyI" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "lzk" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -74963,9 +74929,6 @@
 /area/maintenance/aft)
 "pVb" = (
 /obj/effect/landmark/start/cook,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "pVq" = (
@@ -78305,9 +78268,6 @@
 /area/medical/virology)
 "vuY" = (
 /obj/effect/landmark/start/cook,
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 8
-	},
 /turf/open/floor/plasteel/cafeteria,
 /area/space)
 "vvb" = (
@@ -79083,9 +79043,6 @@
 "wyV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -113833,9 +113790,9 @@ bBS
 qRO
 tZv
 tyf
-tZv
+aas
 aaM
-byC
+bwX
 qKx
 iUy
 mlm
@@ -114361,7 +114318,7 @@ bLM
 hBB
 bOS
 bQD
-lyI
+bLK
 wWE
 bUi
 bVs
@@ -114875,7 +114832,7 @@ wzm
 vuY
 bRS
 bQF
-grA
+bLK
 rBy
 bUk
 bVv
