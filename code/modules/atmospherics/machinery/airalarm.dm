@@ -384,7 +384,7 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "toggle_filter", "widenet", "scrubbing")
+		if("power", "toggle_filter", "widenet", "scrubbing", "direction")
 			send_signal(device_id, list("[action]" = params["val"]), usr)
 			. = TRUE
 		if("excheck")

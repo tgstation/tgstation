@@ -17,12 +17,36 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "console"
 	density = TRUE
+	ui_x = 600
+	ui_y = 532
 	var/obj/item/abductor/gizmo/gizmo
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment
 	var/obj/machinery/abductor/pad/pad
 	var/obj/machinery/computer/camera_advanced/abductor/camera
 	var/list/datum/icon_snapshot/disguises = list()
+	/// Currently selected gear category
+	var/selected_cat
+	/// Dictates if the compact mode of the interface is on or off
+	var/compact_mode = FALSE
+	/// Possible gear to be dispensed
+	var/list/possible_gear
+
+/obj/machinery/abductor/console/Initialize(mapload)
+	. = ..()
+	possible_gear = get_abductor_gear()
+
+/**
+  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
+  */
+/obj/machinery/abductor/console/proc/get_abductor_gear()
+	var/list/filtered_modules = list()
+	for(var/path in GLOB.abductor_gear)
+		var/datum/abductor_gear/AG = new path
+		if(!filtered_modules[AG.category])
+			filtered_modules[AG.category] = list()
+		filtered_modules[AG.category][AG] = AG
+	return filtered_modules
 
 /obj/machinery/abductor/console/attack_hand(mob/user)
 	. = ..()
@@ -32,96 +56,91 @@
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user,100, target = src))
 			TeleporterSend()
-		return
-	user.set_machine(src)
-	var/dat = ""
-	dat += "<H3> Abductsoft 3000 </H3>"
 
+/obj/machinery/abductor/console/ui_status(mob/user)
+	if(!isabductor(user) && !isobserver(user))
+		return UI_CLOSE
+	return ..()
+
+/obj/machinery/abductor/console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "AbductorConsole", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/obj/machinery/abductor/console/ui_static_data(mob/user)
+	var/list/data = list()
+	data["categories"] = list()
+	for(var/category in possible_gear)
+		var/list/cat = list(
+			"name" = category,
+			"items" = (category == selected_cat ? list() : null))
+		for(var/gear in possible_gear[category])
+			var/datum/abductor_gear/AG = possible_gear[category][gear]
+			cat["items"] += list(list(
+				"name" = AG.name,
+				"cost" = AG.cost,
+				"desc" = AG.description,
+			))
+		data["categories"] += list(cat)
+	return data
+
+/obj/machinery/abductor/console/ui_data(mob/user)
+	var/list/data = list()
+	data["compactMode"] = compact_mode
+	data["experiment"] = experiment ? TRUE : FALSE
 	if(experiment)
-		var/points = experiment.points
-		var/credits = experiment.credits
-		dat += "Collected Samples : [points] <br>"
-		dat += "Gear Credits: [credits] <br>"
-		dat += "<b>Transfer data in exchange for supplies:</b><br>"
-		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton (2 Credits)</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device (2 Credits)</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=chem_dispenser'>Reagent Synthesizer (2 Credits)</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=shrink_ray'>Shrink Ray Blaster (2 Credits)</a><br>"
-		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=silencer'>Radio Silencer</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=tool'>Science Tool</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=tongue'>Superlingual Matrix</a><br>"
-	else
-		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
-
+		data["points"] = experiment.points
+		data["credits"] = experiment.credits
+	data["pad"] = pad ? TRUE : FALSE
 	if(pad)
-		dat += "<span class='bad'>Emergency Teleporter System.</span>"
-		dat += "<span class='bad'>Consider using primary observation console first.</span>"
-		dat += "<a href='?src=[REF(src)];teleporter_send=1'>Activate Teleporter</A><br>"
-		if(gizmo && gizmo.marked)
-			dat += "<a href='?src=[REF(src)];teleporter_retrieve=1'>Retrieve Mark</A><br>"
-		else
-			dat += "<span class='linkOff'>Retrieve Mark</span><br>"
-	else
-		dat += "<span class='bad'>NO TELEPAD DETECTED</span></br>"
-
+		data["gizmo"] = gizmo && gizmo.marked ? TRUE : FALSE
+	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
-		dat += "<h4> Agent Vest Mode </h4><br>"
-		var/mode = vest.mode
-		if(mode == VEST_STEALTH)
-			dat += "<a href='?src=[REF(src)];flip_vest=1'>Combat</A>"
-			dat += "<span class='linkOff'>Stealth</span>"
-		else
-			dat += "<span class='linkOff'>Combat</span>"
-			dat += "<a href='?src=[REF(src)];flip_vest=1'>Stealth</A>"
+		data["vest_mode"] = vest.mode
+		data["vest_lock"] = HAS_TRAIT_FROM(vest, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
+	return data
 
-		dat+="<br>"
-		dat += "<a href='?src=[REF(src)];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<a href='?src=[REF(src)];toggle_vest=1'>[HAS_TRAIT_FROM(vest, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT) ? "Unlock" : "Lock"] Vest</a><br>"
-	else
-		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
-	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/abductor/console/Topic(href, href_list)
-	if(..())
+/obj/machinery/abductor/console/ui_act(action, list/params)
+	. = ..()
+	if(.)
 		return
 
-	usr.set_machine(src)
-	if(href_list["teleporter_send"])
-		TeleporterSend()
-	else if(href_list["teleporter_retrieve"])
-		TeleporterRetrieve()
-	else if(href_list["flip_vest"])
-		FlipVest()
-	else if(href_list["toggle_vest"])
-		if(vest)
+	switch(action)
+		if("buy")
+			var/item_name = params["name"]
+			var/list/buyable_items = list()
+			for(var/category in possible_gear)
+				buyable_items += possible_gear[category]
+			for(var/key in buyable_items)
+				var/datum/abductor_gear/AG = buyable_items[key]
+				if(AG.name == item_name)
+					Dispense(AG.build_path, AG.cost)
+					return TRUE
+		if("teleporter_send")
+			TeleporterSend()
+			return TRUE
+		if("teleporter_retrieve")
+			TeleporterRetrieve()
+			return TRUE
+		if("flip_vest")
+			FlipVest()
+			return TRUE
+		if("toggle_vest")
+			if(!vest)
+				return
 			vest.toggle_nodrop()
-	else if(href_list["select_disguise"])
-		SelectDisguise()
-	else if(href_list["dispense"])
-		switch(href_list["dispense"])
-			if("baton")
-				Dispense(/obj/item/melee/baton/abductor,cost=2)
-			if("helmet")
-				Dispense(/obj/item/clothing/head/helmet/abductor)
-			if("silencer")
-				Dispense(/obj/item/abductor/silencer)
-			if("tool")
-				Dispense(/obj/item/abductor/gizmo)
-			if("vest")
-				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
-			if("mind_device")
-				Dispense(/obj/item/abductor/mind_device,cost=2)
-			if("chem_dispenser")
-				Dispense(/obj/item/abductor_machine_beacon/chem_dispenser,cost=2)
-			if("tongue")
-				Dispense(/obj/item/organ/tongue/abductor)
-			if("shrink_ray")
-				Dispense(/obj/item/gun/energy/shrink_ray,cost=2)
-	updateUsrDialog()
+			return TRUE
+		if("select_disguise")
+			SelectDisguise()
+			return TRUE
+		if("select")
+			selected_cat = params["category"]
+			return TRUE
+		if("compact_toggle")
+			compact_mode = !compact_mode
+			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
 	if(pad && gizmo && gizmo.marked)
@@ -161,7 +180,6 @@
 	if(pad)
 		pad.teleport_target = location
 		to_chat(user, "<span class='notice'>Location marked as test subject release point.</span>")
-
 
 /obj/machinery/abductor/console/Initialize(mapload)
 	..()
@@ -231,8 +249,6 @@
 		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 	else
 		return ..()
-
-
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
 	if(experiment && experiment.credits >= cost)
