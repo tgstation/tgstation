@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "The damage taken from being thrown into a wall should now use the same wound_bonus value as the damage you'd take from being thrown into a human would use."
