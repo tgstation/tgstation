@@ -1,6 +1,6 @@
 /obj/item/storage/portable_chem_mixer
 	name = "Portable Chemical Mixer"
-	desc = "A portable device for mixing chemicals. Use screwdriver to open and close internal beaker storage."
+	desc = "A portable device that dispenses and mixes chemicals. All necessary reagents need to be supplied with beakers. A label indicates that a screwdriver is required to open it for refills. This device can be worn on a belt. The letters 'S&T' are imprinted on the side."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
 	w_class = WEIGHT_CLASS_HUGE
@@ -115,7 +115,8 @@
 			ui_interact(user)
 			return
 		else
-			return ..()
+			to_chat(user, "<span class='notice'>The portable chemical mixer is currently open and its contents can be accessed.</span>")
+			return
 	return
 	
 /obj/item/storage/portable_chem_mixer/MouseDrop(obj/over_object)
