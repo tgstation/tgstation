@@ -103,7 +103,6 @@
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	/obj/item/stock_parts/cell/on_reagent_change(changetype)
 	if (reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
 		rigged = TRUE //has_reagent returns 0 (FALSE) if there is no reagent
 	..()
