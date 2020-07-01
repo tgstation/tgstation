@@ -74,24 +74,26 @@ const TrackingImplants = (props, context) => {
 };
 
 const SignalLocator = (props, context) => {
+  const { data } = useBackend(context);
+
+  const { trackingrange } = data;
+
   const {
     name,
     direction,
     distance,
   } = props;
-  if (distance >= 20) {
-    return;
-  }
+
   return (
     <ProgressBar
       mb={1}
-      value={20 - distance}
+      value={trackingrange - distance}
       minValue={0}
-      maxValue={20}
+      maxValue={trackingrange}
       ranges={{
-        red: [0, 5],
-        yellow: [5, 15],
-        green: [15, 20],
+        red: [0, trackingrange/3],
+        yellow: [trackingrange/3, 2 * (trackingrange/3)],
+        green: [2 * (trackingrange/3), trackingrange],
       }}>
       {name}
       <Icon

@@ -1,4 +1,3 @@
-
 #define SOURCE_PORTAL 1
 #define DESTINATION_PORTAL 2
 
@@ -25,6 +24,7 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=400)
+	var/tracking_range = 20
 
 /obj/item/locator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -34,6 +34,8 @@
 
 /obj/item/locator/ui_data(mob/user)
 	var/list/data = list()
+
+	data["trackingrange"] = tracking_range;
 
 	// Get our current turf location.
 	var/turf/sr = get_turf(src)
@@ -50,9 +52,21 @@
 			if (tr && tr.z == sr.z)
 				// Get the distance between the beacon's turf and our turf
 				var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-				var/area/A = get_area(W)
+
+				// If the target is too far away, skip over this beacon.
+				if(distance > tracking_range)
+					continue
+
+				var/beacon_name
+
+				if(W.renamed)
+					beacon_name = W.name
+				else
+					var/area/A = get_area(W)
+					beacon_name = A.name
+
 				var/D =  dir2text(get_dir(sr, tr))
-				tele_beacons += list(list(name = A.name, direction = D, distance = distance))
+				tele_beacons += list(list(name = beacon_name, direction = D, distance = distance))
 
 		data["telebeacons"] = tele_beacons
 
@@ -68,6 +82,10 @@
 						continue
 			var/turf/tr = get_turf(W)
 			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
+
+			if(distance > tracking_range)
+				continue
+
 			var/D =  dir2text(get_dir(sr, tr))
 			track_implants += list(list(name = W.imp_in.name, direction = D, distance = distance))
 		data["trackimplants"] = track_implants
