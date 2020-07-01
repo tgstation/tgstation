@@ -26,8 +26,12 @@
 /obj/item/soulstone/anybody
 	usability = TRUE
 
+/obj/item/soulstone/anybody/wizard
+	desc = "An artificial replica of a fragment of the legendary treasure known simply as the 'Soul Stone'."
+
 /obj/item/soulstone/anybody/revolver
 	old_shard = TRUE
+	desc = "What did you THINK was gonna happen?"
 
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'

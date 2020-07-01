@@ -77,7 +77,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"
 	desc = "This spell reaches into Nar'Sie's realm, summoning one of the legendary fragments across time and space."
-
 	school = "conjuration"
 	charge_max = 2400
 	clothes_req = FALSE
@@ -96,6 +95,11 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
 	summon_type = list(/obj/item/soulstone/anybody)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/wizard
+	name = "Create Soulstone"
+	desc = "This spell creates an artificial replica of a fragment of the Soul Stone." //fun fact: while the shards are called "soulstone shards", the legendary artifact itself is known as the "Soul Stone"
+	charge_max = 600
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified
 	summon_type = list(/obj/item/soulstone/anybody/purified)

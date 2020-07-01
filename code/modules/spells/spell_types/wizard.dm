@@ -195,8 +195,8 @@
 	cast_sound = 'sound/magic/summon_karp.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
-	name = "Artificer"
-	desc = "This spell conjures a construct which may be controlled by Shades."
+	name = "Create Construct Shell"
+	desc = "This spell creates a construct shell that can be piloted by a shade."
 	school = "conjuration"
 	charge_max = 600
 	clothes_req = FALSE

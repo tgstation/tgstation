@@ -309,8 +309,14 @@
 
 /datum/spellbook_entry/item/spellblade
 	name = "Spellblade"
-	desc = "A sword capable of firing blasts of energy which rip targets limb from limb."
+	desc = "A sword capable of firing blasts of energy that can rip targets limb from limb."
 	item_path = /obj/item/gun/magic/staff/spellblade
+	cost = 1
+
+/datum/spellbook_entry/item/katana
+	name = "Katana"
+	desc = "An elegant and intricately crafted weapon, modeled after the primary weapon of legendary Kensei/Mage Boldyris Gait."
+	item_path = /obj/item/katana
 
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
@@ -339,8 +345,8 @@
 	category = "Defensive"
 
 /datum/spellbook_entry/item/soulstones
-	name = "Six Soul Stone Shards and the spell Artificer"
-	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
+	name = "Six Soulstone Shards, Create Construct Shell, and Create Soulstone Shard"
+	desc = "Soulstone shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Create Construct Shell allows you to create arcane machines for the captured souls to pilot, and the spell Create Soulstone Shard allows you to create more shards in case you run out of them."
 	item_path = /obj/item/storage/belt/soulstone/full
 	category = "Assistance"
 
@@ -348,12 +354,13 @@
 	. =..()
 	if(.)
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(null))
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/wizard(null))
 	return .
 
 /datum/spellbook_entry/item/necrostone
-	name = "A Necromantic Stone"
-	desc = "A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command."
-	item_path = /obj/item/necromantic_stone
+	name = "Necromantic Stone"
+	desc = "A stone enchanted with the ability to resurrect dead individuals as skeletal thralls for you to command. Can sustain up to three skeleton thralls at any given time."
+	item_path = /obj/item/necromantic_stone/wizard
 	category = "Assistance"
 
 /datum/spellbook_entry/item/wands

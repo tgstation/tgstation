@@ -193,7 +193,7 @@
 /////////////////////////////////////////Necromantic Stone///////////////////
 
 /obj/item/necromantic_stone
-	name = "necromantic stone"
+	name = "ancient necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
@@ -202,10 +202,25 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
-	var/unlimited = 0
+	///if set to TRUE, this stone will have no cap to the amount of thralls it can have active at the same time (the normal cap is 3 thralls at any given time).
+	var/unlimited = FALSE
+	///if set to TRUE, each skeleton raised by this stone will, upon being raised, have its inventory dumped on the ground and be equipped with a set of "roman" gear, including an incredibly powerful claymore
+	var/oldstone = TRUE
 
 /obj/item/necromantic_stone/unlimited
-	unlimited = 1
+	name = "stone of supreme necromancy" //idk it was the best name I could come up with
+	unlimited = TRUE
+	oldstone = TRUE //yeah, I know it inherits this value from ancient necromantic stones, I just did this for clarity
+
+/obj/item/necromantic_stone/unlimited/newstone
+	name = "greater necromantic stone"
+	unlimited = TRUE
+	oldstone = FALSE
+
+/obj/item/necromantic_stone/wizard //this is the necromantic stone that wizards can buy
+	name = "necromantic stone"
+	unlimited = FALSE
+	oldstone = FALSE
 
 /obj/item/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(!istype(M))
@@ -236,11 +251,12 @@
 	M.revive(full_heal = TRUE, admin_revive = TRUE)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(M, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
+	to_chat(M, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist and serve [user.p_them()] as best as you are able to, even if it costs you your new unlife!</span>")
 
-	equip_roman_skeleton(M)
+	if(oldstone)
+		equip_roman_skeleton(M)
 
-	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
+	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ". Currently has [spooky_scaries.len]/3 active thralls."]"
 
 /obj/item/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.
