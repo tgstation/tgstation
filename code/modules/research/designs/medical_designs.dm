@@ -288,7 +288,7 @@
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 	materials = list(/datum/material/plastic = 5000, /datum/material/iron = 10000, /datum/material/glass = 3000)
-	build_path = /obj/item/portable_chem_mixer
+	build_path = /obj/item/storage/portable_chem_mixer
 	category = list("Equipment")
 
 /////////////////////////////////////////
