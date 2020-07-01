@@ -11,7 +11,7 @@
 /datum/surgery/advanced/wing_reconstruction/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
-	if((target.dna.features["moth_wings"] == "Burnt Off") && target.dna.features["original_moth_wings"] !=null)
+	if(target.dna.features["moth_wings"] == "Burnt Off")
 		return TRUE
 
 /datum/surgery_step/wing_reconstruction
@@ -32,7 +32,9 @@
 	display_results(user, target, "<span class='notice'>You succeed in reconstructing [target]'s wings.</span>",
 		"<span class='notice'>[user] successfully reconstructs [target]'s wings!</span>",
 		"<span class='notice'>[user] completes the surgery on [target]'s wings.</span>")
-	H.dna.features["moth_wings"] = H.dna.features["original_moth_wings"]
-	H.dna.features.Remove("original_moth_wings")
+	if(H.dna.features["original_moth_wings"] != null)
+		H.dna.features["moth_wings"] = H.dna.features["original_moth_wings"]
+	if(H.dna.features["original_moth_wings"] == null)
+		H.dna.features["moth_wings"] = "Plain"
 	H.update_mutant_bodyparts()
 	return ..()
