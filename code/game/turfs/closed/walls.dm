@@ -167,7 +167,6 @@
   *Arguments:
   **arg1 is the arm to deal damage to.
  */
-
 /turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm)
 	arm.receive_damage(brute = 20, blocked = 0, wound_bonus = CANT_WOUND)
 
