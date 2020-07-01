@@ -551,10 +551,10 @@
 
 /datum/reagent/drug/maint/powder/overdose_process(mob/living/M)
 	. = ..()
-	if(!ishuman(M))
+	if(!iscarbon(M))
 		return
-	var/mob/living/carbon/human/humie = M
-	humie.adjustOrganLoss(ORGAN_SLOT_BRAIN,3)
+	var/mob/living/carbon/human/carbie = M
+	carbie.adjustOrganLoss(ORGAN_SLOT_BRAIN,3)
 
 /datum/reagent/drug/maint/sludge
 	name = "Maintanance Sludge"
@@ -579,12 +579,12 @@
 
 /datum/reagent/drug/maint/sludge/overdose_process(mob/living/M)
 	. = ..()
-	if(!ishuman(M))
+	if(!iscarbon(M))
 		return
-	var/mob/living/carbon/human/humie = M
+	var/mob/living/carbon/human/carbie = M
 	//You will be vomiting so the damage is really for a few ticks before you flush it out of your system
-	humie.adjustToxLoss(5)
-	humie.vomit()
+	carbie.adjustToxLoss(5)
+	carbie.vomit()
 
 /datum/reagent/drug/maint/tar
 	name = "Maintanance Tar"
@@ -611,7 +611,7 @@
 	. = ..()
 
 	M.adjustToxLoss(5)
-	if(!ishuman(M))
+	if(!iscarbon(M))
 		return
-	var/mob/living/carbon/human/humie = M
-	humie.adjustOrganLoss(ORGAN_SLOT_LIVER,3)
+	var/mob/living/carbon/human/carbie = M
+	carbie.adjustOrganLoss(ORGAN_SLOT_LIVER,3)
