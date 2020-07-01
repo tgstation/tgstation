@@ -526,7 +526,7 @@
 		M.emote(pick("twitch","drool"))
 
 /datum/reagent/drug/maint/powder
-	name = "Maintanance Powder"
+	name = "Maintenance Powder"
 	description = "An unknown powder that you most likely gotten from an assistant, a bored chemist... or cooked yourself. It is a refined form of tar that enhances your mental ability, making you learn stuff a lot faster."
 	reagent_state = SOLID
 	color = "#ffffff"
@@ -559,7 +559,7 @@
 	carbie.adjustOrganLoss(ORGAN_SLOT_BRAIN,3)
 
 /datum/reagent/drug/maint/sludge
-	name = "Maintanance Sludge"
+	name = "Maintenance Sludge"
 	description = "An unknown sludge that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Half refined, it fills your body with itself, making it more resistant to wounds, but causes toxins to accumulate."
 	reagent_state = LIQUID
 	color = "#203d2c"
@@ -593,7 +593,7 @@
 		carbie.vomit()
 
 /datum/reagent/drug/maint/tar
-	name = "Maintanance Tar"
+	name = "Maintenance Tar"
 	description = "An unknown tar that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Raw tar, straight from the floor. It can help you with escaping bad situations at the cost of liver damage."
 	reagent_state = LIQUID
 	color = "#000000"
