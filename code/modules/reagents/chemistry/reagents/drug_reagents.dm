@@ -583,8 +583,10 @@
 		return
 	var/mob/living/carbon/human/carbie = M
 	//You will be vomiting so the damage is really for a few ticks before you flush it out of your system
-	carbie.adjustToxLoss(5)
-	carbie.vomit()
+	carbie.adjustToxLoss(1)
+	if(prob(10))
+		carbie.adjustToxLoss(5)
+		carbie.vomit()
 
 /datum/reagent/drug/maint/tar
 	name = "Maintanance Tar"
