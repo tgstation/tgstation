@@ -360,7 +360,7 @@
 /datum/spellbook_entry/item/necrostone
 	name = "Necromantic Stone"
 	desc = "A stone enchanted with the ability to resurrect dead individuals as skeletal thralls for you to command. Can sustain up to three skeleton thralls at any given time."
-	item_path = /obj/item/necromantic_stone/wizard
+	item_path = /obj/item/necromantic_stone
 	category = "Assistance"
 
 /datum/spellbook_entry/item/wands

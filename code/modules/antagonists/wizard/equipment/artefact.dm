@@ -193,7 +193,7 @@
 /////////////////////////////////////////Necromantic Stone///////////////////
 
 /obj/item/necromantic_stone
-	name = "ancient necromantic stone"
+	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
@@ -205,22 +205,22 @@
 	///if set to TRUE, this stone will have no cap to the amount of thralls it can have active at the same time (the normal cap is 3 thralls at any given time).
 	var/unlimited = FALSE
 	///if set to TRUE, each skeleton raised by this stone will, upon being raised, have its inventory dumped on the ground and be equipped with a set of "roman" gear, including an incredibly powerful claymore
-	var/oldstone = TRUE
+	var/oldstone = FALSE
 
 /obj/item/necromantic_stone/unlimited
 	name = "stone of supreme necromancy" //idk it was the best name I could come up with
 	unlimited = TRUE
-	oldstone = TRUE //yeah, I know it inherits this value from ancient necromantic stones, I just did this for clarity
+	oldstone = TRUE
 
-/obj/item/necromantic_stone/unlimited/newstone
+/obj/item/necromantic_stone/greater
 	name = "greater necromantic stone"
 	unlimited = TRUE
 	oldstone = FALSE
 
-/obj/item/necromantic_stone/wizard //this is the necromantic stone that wizards can buy
-	name = "necromantic stone"
+/obj/item/necromantic_stone/oldstone
+	name = "ancient necromantic stone"
 	unlimited = FALSE
-	oldstone = FALSE
+	oldstone = TRUE
 
 /obj/item/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(!istype(M))
