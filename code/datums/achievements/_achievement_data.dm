@@ -32,7 +32,7 @@
 	set waitfor = FALSE
 
 	var/list/kv = list()
-	var/datum/DBQuery/Query = SSdbcore.NewQuery(
+	var/datum/db_query/Query = SSdbcore.NewQuery(
 		"SELECT achievement_key,value FROM [format_table_name("achievements")] WHERE ckey = :ckey",
 		list("ckey" = owner_ckey)
 	)

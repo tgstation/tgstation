@@ -109,7 +109,7 @@
 			arguments["commit_hash"] = GLOB.revdata.originmastercommit
 		if(to_set.len)
 			arguments["round_id"] = GLOB.round_id
-			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery(
+			var/datum/db_query/query_round_game_mode = SSdbcore.NewQuery(
 				"UPDATE [format_table_name("round")] SET [to_set.Join(", ")] WHERE id = :round_id",
 				arguments
 			)
@@ -270,9 +270,6 @@
 
 	return 0
 
-
-/datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
-	return 0
 
 /datum/game_mode/proc/send_intercept()
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"

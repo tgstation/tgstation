@@ -93,19 +93,19 @@
 					if(!M.can_inject())
 						continue
 					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
-						D.reagents.reaction(M, VAPOR)
+						D.reagents.expose(M, VAPOR)
 						puff_reagent_left -= 1
 						var/contained = D.reagents.log_list() // looks like more copypasta but now the reagents are in a different place fuck you old coder
 						log_combat(user, M,  "sprayed with", src, addition="which had [contained]")
 				else if(!range_left)
-					D.reagents.reaction(T, VAPOR)
+					D.reagents.expose(T, VAPOR)
 			else
-				D.reagents.reaction(T, VAPOR)
+				D.reagents.expose(T, VAPOR)
 				if(ismob(T))
 					puff_reagent_left -= 1
 
 		if(puff_reagent_left > 0 && (!stream_mode || !range_left))
-			D.reagents.reaction(get_turf(D), VAPOR)
+			D.reagents.expose(get_turf(D), VAPOR)
 			puff_reagent_left -= 1
 
 		if(puff_reagent_left <= 0) // we used all the puff so we delete it.
@@ -140,7 +140,7 @@
 		return
 	if(isturf(usr.loc) && src.loc == usr)
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
-		reagents.reaction(usr.loc)
+		reagents.expose(usr.loc)
 		src.reagents.clear_reagents()
 
 /obj/item/reagent_containers/spray/on_reagent_change(changetype)
@@ -410,4 +410,4 @@
 	name = "medical spray (hercuri)"
 	desc = "A medical spray bottle.This one contains hercuri, a medicine used to negate the effects of dangerous high-temperature environments. Careful not to freeze the patient!"
 	icon_state = "sprayer_large"
-	list_reagents = list(/datum/reagent/medicine/C2/hercuri = 100)
+	list_reagents = list(/datum/reagent/medicine/c2/hercuri = 100)

@@ -583,7 +583,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/comm)
 "bA" = (
-/obj/structure/AIcore/deactivated,
+/obj/structure/ai_core/deactivated,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "bB" = (

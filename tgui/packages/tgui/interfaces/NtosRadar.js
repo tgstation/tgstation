@@ -104,7 +104,7 @@ export const NtosRadarContent = (props, context) => {
               position="absolute"
               size={2}
               color={target.color}
-              top={((target.locy * 10) + 29) + 'px'}
+              top={((target.locy * 10) + 19) + 'px'}
               left={((target.locx * 10) + 16) + 'px'}
             />
           )}

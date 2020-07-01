@@ -9,7 +9,7 @@
 
 #define HOLORECORD_MAX_LENGTH 200
 
-/mob/camera/aiEye/remote/holo/setLoc()
+/mob/camera/ai_eye/remote/holo/setLoc()
 	. = ..()
 	var/obj/machinery/holopad/H = origin
 	H?.move_hologram(eye_user, loc)
@@ -27,12 +27,12 @@
 	var/obj/machinery/holopad/connected_holopad	//the one that answered the call (may be null)
 	var/list/dialed_holopads	//all things called, will be cleared out to just connected_holopad once answered
 
-	var/mob/camera/aiEye/remote/holo/eye	//user's eye, once connected
+	var/mob/camera/ai_eye/remote/holo/eye	//user's eye, once connected
 	var/obj/effect/overlay/holo_pad_hologram/hologram	//user's hologram, once connected
 	var/datum/action/innate/end_holocall/hangup	//hangup action
 
 	var/call_start_time
-	var/head_call = FALSE //calls from a head of staff autoconnect, if the recieving pad is not secure.
+	var/head_call = FALSE //calls from a head of staff autoconnect, if the receiving pad is not secure.
 
 //creates a holocall made by `caller` from `calling_pad` to `callees`
 /datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
@@ -88,6 +88,7 @@
 	dialed_holopads.Cut()
 
 	if(calling_holopad)
+		calling_holopad.calling = FALSE
 		calling_holopad.outgoing_call = null
 		calling_holopad.SetLightsAndPower()
 		calling_holopad = null
@@ -154,6 +155,7 @@
 	if(!Check())
 		return
 
+	calling_holopad.calling = FALSE
 	hologram = H.activate_holo(user)
 	hologram.HC = src
 
@@ -189,7 +191,6 @@
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
 				calling_holopad.say("No answer received.")
-				calling_holopad.temp = ""
 
 	if(!.)
 		testing("Holocall Check fail")

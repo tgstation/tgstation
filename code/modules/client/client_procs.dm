@@ -205,7 +205,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
-	chatOutput = new /datum/chatOutput(src)
+	chatOutput = new /datum/chat_output(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
@@ -505,7 +505,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	if(!SSdbcore.Connect())
 		return
-	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery(
+	var/datum/db_query/query_get_related_ip = SSdbcore.NewQuery(
 		"SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON(:address) AND ckey != :ckey",
 		list("address" = address, "ckey" = ckey)
 	)
@@ -516,7 +516,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	while(query_get_related_ip.NextRow())
 		related_accounts_ip += "[query_get_related_ip.item[1]], "
 	qdel(query_get_related_ip)
-	var/datum/DBQuery/query_get_related_cid = SSdbcore.NewQuery(
+	var/datum/db_query/query_get_related_cid = SSdbcore.NewQuery(
 		"SELECT ckey FROM [format_table_name("player")] WHERE computerid = :computerid AND ckey != :ckey",
 		list("computerid" = computer_id, "ckey" = ckey)
 	)
@@ -534,7 +534,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (!GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
 			return
 	var/new_player
-	var/datum/DBQuery/query_client_in_db = SSdbcore.NewQuery(
+	var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
 		"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",
 		list("ckey" = ckey)
 	)
@@ -559,7 +559,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 		new_player = 1
 		account_join_date = findJoinDate()
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery({"
+		var/datum/db_query/query_add_player = SSdbcore.NewQuery({"
 			INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`)
 			VALUES (:ckey, :key, Now(), :round_id, Now(), :round_id, INET_ATON(:ip), :computerid, :adminrank, :account_join_date)
 		"}, list("ckey" = ckey, "key" = key, "round_id" = GLOB.round_id, "ip" = address, "computerid" = computer_id, "adminrank" = admin_rank, "account_join_date" = account_join_date || null))
@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			account_join_date = "Error"
 			account_age = -1
 	qdel(query_client_in_db)
-	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery(
+	var/datum/db_query/query_get_client_age = SSdbcore.NewQuery(
 		"SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = :ckey",
 		list("ckey" = ckey)
 	)
@@ -590,7 +590,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				if(!account_join_date)
 					account_age = -1
 				else
-					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery(
+					var/datum/db_query/query_datediff = SSdbcore.NewQuery(
 						"SELECT DATEDIFF(Now(), :account_join_date)",
 						list("account_join_date" = account_join_date)
 					)
@@ -602,7 +602,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 					qdel(query_datediff)
 	qdel(query_get_client_age)
 	if(!new_player)
-		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery(
+		var/datum/db_query/query_log_player = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = :round_id, ip = INET_ATON(:ip), computerid = :computerid, lastadminrank = :admin_rank, accountjoindate = :account_join_date WHERE ckey = :ckey",
 			list("round_id" = GLOB.round_id, "ip" = address, "computerid" = computer_id, "admin_rank" = admin_rank, "account_join_date" = account_join_date || null, "ckey" = ckey)
 		)
@@ -612,7 +612,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		qdel(query_log_player)
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery({"
+	var/datum/db_query/query_log_connection = SSdbcore.NewQuery({"
 		INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`)
 		VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid)
 	"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id))
@@ -640,7 +640,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/validate_key_in_db()
 	var/sql_key
-	var/datum/DBQuery/query_check_byond_key = SSdbcore.NewQuery(
+	var/datum/db_query/query_check_byond_key = SSdbcore.NewQuery(
 		"SELECT byond_key FROM [format_table_name("player")] WHERE ckey = :ckey",
 		list("ckey" = ckey)
 	)
@@ -660,7 +660,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			var/regex/R = regex("\\tkey = \"(.+)\"")
 			if(R.Find(F))
 				var/web_key = R.group[1]
-				var/datum/DBQuery/query_update_byond_key = SSdbcore.NewQuery(
+				var/datum/db_query/query_update_byond_key = SSdbcore.NewQuery(
 					"UPDATE [format_table_name("player")] SET byond_key = :byond_key WHERE ckey = :ckey",
 					list("byond_key" = web_key, "ckey" = ckey)
 				)
@@ -680,7 +680,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/static/tokens = list()
 	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
 	var/static/cidcheck_spoofckeys = list()
-	var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery(
+	var/datum/db_query/query_cidcheck = SSdbcore.NewQuery(
 		"SELECT computerid FROM [format_table_name("player")] WHERE ckey = :ckey",
 		list("ckey" = ckey)
 	)
@@ -759,7 +759,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/add_system_note(system_ckey, message)
 	//check to see if we noted them in the last day.
-	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery(
+	var/datum/db_query/query_get_notes = SSdbcore.NewQuery(
 		"SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = :targetckey AND adminckey = :adminckey AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)",
 		list("targetckey" = ckey, "adminckey" = system_ckey)
 	)

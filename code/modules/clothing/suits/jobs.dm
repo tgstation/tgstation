@@ -119,6 +119,7 @@
 	desc = "They suspend the illusion of the mime's play."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
+	worn_icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	togglename = "straps"
 

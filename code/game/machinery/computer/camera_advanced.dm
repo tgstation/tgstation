@@ -5,7 +5,7 @@
 	icon_keyboard = "security_key"
 	var/list/z_lock = list() // Lock use to these z levels
 	var/lock_override = NONE
-	var/mob/camera/aiEye/remote/eyeobj
+	var/mob/camera/ai_eye/remote/eyeobj
 	var/mob/living/current_user = null
 	var/list/networks = list("ss13")
 	var/datum/action/innate/camera_off/off_action = new
@@ -166,7 +166,7 @@
 	if(should_supress_view_changes )
 		user.client.view_size.supress()
 
-/mob/camera/aiEye/remote
+/mob/camera/ai_eye/remote
 	name = "Inactive Camera Eye"
 	ai_detector_visible = FALSE
 	var/sprint = 10
@@ -178,25 +178,25 @@
 	var/visible_icon = 0
 	var/image/user_image = null
 
-/mob/camera/aiEye/remote/update_remote_sight(mob/living/user)
+/mob/camera/ai_eye/remote/update_remote_sight(mob/living/user)
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
 	user.sight = SEE_TURFS | SEE_BLACKNESS
 	user.see_in_dark = 2
 	return 1
 
-/mob/camera/aiEye/remote/Destroy()
+/mob/camera/ai_eye/remote/Destroy()
 	if(origin && eye_user)
 		origin.remove_eye_control(eye_user,src)
 	origin = null
 	. = ..()
 	eye_user = null
 
-/mob/camera/aiEye/remote/GetViewerClient()
+/mob/camera/ai_eye/remote/GetViewerClient()
 	if(eye_user)
 		return eye_user.client
 	return null
 
-/mob/camera/aiEye/remote/setLoc(T)
+/mob/camera/ai_eye/remote/setLoc(T)
 	if(eye_user)
 		T = get_turf(T)
 		if (T)
@@ -212,7 +212,7 @@
 				user_image = image(icon,loc,icon_state,FLY_LAYER)
 				eye_user.client.images += user_image
 
-/mob/camera/aiEye/remote/relaymove(mob/user,direct)
+/mob/camera/ai_eye/remote/relaymove(mob/user,direct)
 	var/initial = initial(sprint)
 	var/max_sprint = 50
 
@@ -239,7 +239,7 @@
 	if(!target || !isliving(target))
 		return
 	var/mob/living/C = target
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin
 	console.remove_eye_control(target)
 
@@ -252,7 +252,7 @@
 	if(!target || !isliving(target))
 		return
 	var/mob/living/C = target
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
 
 	var/list/L = list()

@@ -59,7 +59,7 @@
 						"<span class='userdanger'>You feel a terrible pain in your chest, as if your heart has stopped!</span>")
 				H.adjustStaminaLoss(60)
 				H.set_heartattack(TRUE)
-				H.reagents.add_reagent(/datum/reagent/medicine/C2/penthrite, 3) // To give the victim a final chance to shock their heart before losing consciousness
+				H.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite, 3) // To give the victim a final chance to shock their heart before losing consciousness
 				cure()
 	else
 		cure()

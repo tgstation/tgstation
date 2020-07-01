@@ -207,7 +207,7 @@
 										/obj/machinery/field/containment,
 										/obj/structure/disposalpipe,
 										/obj/structure/disposaloutlet,
-										/obj/machinery/disposal/deliveryChute,
+										/obj/machinery/disposal/delivery_chute,
 										/obj/machinery/camera,
 										/obj/structure/sign,
 										/obj/machinery/gateway,

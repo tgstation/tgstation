@@ -76,7 +76,7 @@
 	..()
 	if(M && (hudusers.len == 1))
 		for(var/V in GLOB.aiEyes)
-			var/mob/camera/aiEye/E = V
+			var/mob/camera/ai_eye/E = V
 			E.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
@@ -189,7 +189,7 @@
 	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		if(key || get_ghost(FALSE, TRUE))
+		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES))
 			holder.icon_state = "huddefib"
 		else
 			holder.icon_state = "huddead"

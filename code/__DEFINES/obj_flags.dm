@@ -56,3 +56,8 @@
 #define ORGAN_VITAL				(1<<4)	//Currently only the brain
 #define ORGAN_EDIBLE			(1<<5)	//is a snack? :D
 #define ORGAN_SYNTHETIC_EMP		(1<<6)	//Synthetic organ affected by an EMP. Deteriorates over time.
+
+/// Integrity defines for clothing (not flags but close enough)
+#define CLOTHING_PRISTINE	0 // We have no damage on the clothing
+#define CLOTHING_DAMAGED	1 // There's some damage on the clothing but it still has at least one functioning bodypart and can be equipped
+#define CLOTHING_SHREDDED	2 // The clothing is useless and cannot be equipped unless repaired first

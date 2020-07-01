@@ -4,7 +4,7 @@
 
 //Bot defines, placed here so they can be read by other things!
 #define BOT_STEP_DELAY 4 //Delay between movemements
-#define BOT_STEP_MAX_RETRIES 5 //Maximum times a bot will retry to step from its position 
+#define BOT_STEP_MAX_RETRIES 5 //Maximum times a bot will retry to step from its position
 
 #define DEFAULT_SCAN_RANGE		7	//default view range for finding targets.
 
@@ -28,6 +28,7 @@
 #define BOT_WAIT_FOR_NAV	16	// waiting for nav computation
 #define BOT_NO_ROUTE		17	// no destination beacon found (or no route)
 #define BOT_SHOWERSTANCE	18	// cleaning unhygienic humans
+#define BOT_TIPPED			19	// someone tipped a medibot over ;_;
 
 //Bot types
 #define SEC_BOT				(1<<0)	// Secutritrons (Beepsky) and ED-209s

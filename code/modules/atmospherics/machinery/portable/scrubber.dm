@@ -42,7 +42,7 @@
 
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
-	///function used to check the limit of the scrubbers and also set the amount of damage that the scrubber can recieve, if the heat and pressure are way higher than the limit the more damage will be done
+	///function used to check the limit of the scrubbers and also set the amount of damage that the scrubber can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
 		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
 		return

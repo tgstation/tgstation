@@ -60,10 +60,10 @@ SUBSYSTEM_DEF(stickyban)
 /datum/controller/subsystem/stickyban/proc/Populatedbcache()
 	var/newdbcache = list() //so if we runtime or the db connection dies we don't kill the existing cache
 
-	var/datum/DBQuery/query_stickybans = SSdbcore.NewQuery("SELECT ckey, reason, banning_admin, datetime FROM [format_table_name("stickyban")] ORDER BY ckey")
-	var/datum/DBQuery/query_ckey_matches = SSdbcore.NewQuery("SELECT stickyban, matched_ckey, first_matched, last_matched, exempt FROM [format_table_name("stickyban_matched_ckey")] ORDER BY first_matched")
-	var/datum/DBQuery/query_cid_matches = SSdbcore.NewQuery("SELECT stickyban, matched_cid, first_matched, last_matched FROM [format_table_name("stickyban_matched_cid")] ORDER BY first_matched")
-	var/datum/DBQuery/query_ip_matches = SSdbcore.NewQuery("SELECT stickyban, INET_NTOA(matched_ip), first_matched, last_matched FROM [format_table_name("stickyban_matched_ip")] ORDER BY first_matched")
+	var/datum/db_query/query_stickybans = SSdbcore.NewQuery("SELECT ckey, reason, banning_admin, datetime FROM [format_table_name("stickyban")] ORDER BY ckey")
+	var/datum/db_query/query_ckey_matches = SSdbcore.NewQuery("SELECT stickyban, matched_ckey, first_matched, last_matched, exempt FROM [format_table_name("stickyban_matched_ckey")] ORDER BY first_matched")
+	var/datum/db_query/query_cid_matches = SSdbcore.NewQuery("SELECT stickyban, matched_cid, first_matched, last_matched FROM [format_table_name("stickyban_matched_cid")] ORDER BY first_matched")
+	var/datum/db_query/query_ip_matches = SSdbcore.NewQuery("SELECT stickyban, INET_NTOA(matched_ip), first_matched, last_matched FROM [format_table_name("stickyban_matched_ip")] ORDER BY first_matched")
 
 	SSdbcore.QuerySelect(list(query_stickybans, query_ckey_matches, query_cid_matches, query_ip_matches))
 
@@ -156,7 +156,7 @@ SUBSYSTEM_DEF(stickyban)
 	if (!ban["message"])
 		ban["message"] = "Evasion"
 
-	var/datum/DBQuery/query_create_stickyban = SSdbcore.NewQuery(
+	var/datum/db_query/query_create_stickyban = SSdbcore.NewQuery(
 		"INSERT IGNORE INTO [format_table_name("stickyban")] (ckey, reason, banning_admin) VALUES (:ckey, :message, :admin)",
 		list("ckey" = ckey, "message" = ban["message"], "admin" = ban["admin"])
 	)

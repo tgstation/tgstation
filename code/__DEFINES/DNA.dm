@@ -126,6 +126,8 @@
 #define AGENDER			16
 /// Do not draw eyes or eyeless overlay
 #define NOEYESPRITES	17
+/// If this species can be scarred (fleshy)
+#define CAN_SCAR		18
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

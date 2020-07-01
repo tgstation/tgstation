@@ -134,8 +134,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		qdel(D)
 		return
 
-	if(istype(W, /obj/item/aiModule))
-		var/obj/item/aiModule/MOD = W
+	if(istype(W, /obj/item/ai_module))
+		var/obj/item/ai_module/MOD = W
 		if(!opened)
 			to_chat(user, "<span class='warning'>You need access to the robot's insides to do that!</span>")
 			return

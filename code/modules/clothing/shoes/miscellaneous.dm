@@ -335,23 +335,23 @@
 	QDEL_NULL(W)
 	. = ..()
 
-/obj/item/clothing/shoes/kindleKicks
+/obj/item/clothing/shoes/kindle_kicks
 	name = "Kindle Kicks"
 	desc = "They'll sure kindle something in you, and it's not childhood nostalgia..."
 	icon_state = "kindleKicks"
 	inhand_icon_state = "kindleKicks"
-	actions_types = list(/datum/action/item_action/kindleKicks)
+	actions_types = list(/datum/action/item_action/kindle_kicks)
 	var/lightCycle = 0
 	var/active = FALSE
 
-/obj/item/clothing/shoes/kindleKicks/ui_action_click(mob/user, action)
+/obj/item/clothing/shoes/kindle_kicks/ui_action_click(mob/user, action)
 	if(active)
 		return
 	active = TRUE
 	set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
 	addtimer(CALLBACK(src, .proc/lightUp), 5)
 
-/obj/item/clothing/shoes/kindleKicks/proc/lightUp(mob/user)
+/obj/item/clothing/shoes/kindle_kicks/proc/lightUp(mob/user)
 	if(lightCycle < 15)
 		set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
 		lightCycle += 1
