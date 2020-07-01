@@ -42,9 +42,6 @@
 		// Check every teleport beacon.
 		var/list/tele_beacons = list()
 		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
-			// If it has not been renamed, skip it.
-			if (!W.renamed)
-				continue
 
 			// Get the tracking beacon's turf location.
 			var/turf/tr = get_turf(W)
@@ -53,7 +50,9 @@
 			if (tr && tr.z == sr.z)
 				// Get the distance between the beacon's turf and our turf
 				var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-				tele_beacons += list(list(name = W.name, direction = dir2text(get_dir(sr, tr)), distance = distance))
+				var/area/A = get_area(W)
+				var/D =  dir2text(get_dir(sr, tr))
+				tele_beacons += list(list(name = A.name, direction = D, distance = distance))
 
 		data["telebeacons"] = tele_beacons
 
@@ -69,7 +68,8 @@
 						continue
 			var/turf/tr = get_turf(W)
 			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-			track_implants += list(list(name = W.imp_in.name, direction = dir2text(get_dir(sr, tr)), distance = distance))
+			var/D =  dir2text(get_dir(sr, tr))
+			track_implants += list(list(name = W.imp_in.name, direction = D, distance = distance))
 		data["trackimplants"] = track_implants
 	return data
 
