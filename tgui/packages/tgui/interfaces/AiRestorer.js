@@ -2,6 +2,7 @@ import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
+import DOMPurify from 'dompurify';
 
 export const AiRestorer = () => {
   return (
@@ -84,7 +85,7 @@ export const AiRestorerContent = (props, context) => {
           <Section title="Laws" level={2}>
             {laws.map(law => (
               <Box key={law} className="candystripe">
-                {law}
+                {DOMPurify.sanitize(law, { USE_PROFILES: { html: false } })}
               </Box>
             ))}
           </Section>

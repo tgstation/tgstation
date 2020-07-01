@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
 import { BlockQuote, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
+import DOMPurify from 'dompurify';
 
 export const Intellicard = (props, context) => {
   const { act, data } = useBackend(context);
@@ -61,7 +62,7 @@ export const Intellicard = (props, context) => {
               <LabeledList.Item label="Laws">
                 {laws.map(law => (
                   <BlockQuote key={law}>
-                    {law}
+                    {DOMPurify.sanitize(law, { USE_PROFILES: { html: false } })}
                   </BlockQuote>
                 ))}
               </LabeledList.Item>
