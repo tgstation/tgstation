@@ -90,7 +90,7 @@
 			if(obj_flags & EMAGGED)
 				authenticated = TRUE
 				auth_id = "Unknown (Unknown):"
-				log_activity("[auth_id] attempted to log into the terminal")
+				log_activity("[auth_id] logged in to the terminal")
 				return
 			var/obj/item/card/id/ID = operator.get_idcard(TRUE)
 			if(ID && istype(ID))
