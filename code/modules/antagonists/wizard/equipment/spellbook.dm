@@ -307,17 +307,6 @@
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/gun/magic/staff/chaos
 
-/datum/spellbook_entry/item/spellblade
-	name = "Spellblade"
-	desc = "A sword capable of firing blasts of energy that can rip targets limb from limb."
-	item_path = /obj/item/gun/magic/staff/spellblade
-	cost = 1
-
-/datum/spellbook_entry/item/katana
-	name = "Katana"
-	desc = "An elegant and intricately crafted weapon, modeled after the primary weapon of legendary Kensei/Mage Boldyris Gait."
-	item_path = /obj/item/katana
-
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid walls into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
@@ -337,6 +326,17 @@
 	desc = "A staff that shoots lockers. It eats anyone it hits on its way, leaving a welded locker with your victims behind."
 	item_path = /obj/item/gun/magic/staff/locker
 	category = "Defensive"
+
+/datum/spellbook_entry/item/spellblade
+	name = "Spellblade"
+	desc = "A sword capable of firing blasts of energy that can rip targets limb from limb."
+	item_path = /obj/item/gun/magic/staff/spellblade
+	cost = 1
+
+/datum/spellbook_entry/item/katana
+	name = "Katana"
+	desc = "An elegant and intricately crafted weapon, modeled after the primary weapon of legendary Kensai/Mage Boldyris Gait."
+	item_path = /obj/item/katana
 
 /datum/spellbook_entry/item/scryingorb
 	name = "Scrying Orb"
