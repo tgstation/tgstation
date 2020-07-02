@@ -12,8 +12,7 @@
 	ui_x = 600
 	ui_y = 230
 	status_report = "Ready for delivery."
-	warmup_time = 100
-	sending = FALSE
+	var/obj/item/card/id/inserted_scan_id
 
 /obj/machinery/computer/piratepad_control/civilian/Initialize()
 	. = ..()
@@ -21,27 +20,12 @@
 
 /obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
-	if(istype(I, /obj/item/card/id))
-		var/obj/item/card/id/swiped = I
-		if(!swiped.registered_account)
-			return
-		var/datum/bank_account/pot_acc = swiped.registered_account
-		if(pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES))
-			return FALSE
-		var/datum/bounty/crumbs = random_bounty() //It's a good scene from War Dogs (2016).
-		crumbs.reward = (crumbs.reward/ (rand(2,4)))
-		to_chat(user, "<span class='notice'>You swipe [swiped], and have a new civilian bounty!</span>")
-		if(istype(crumbs, /datum/bounty/item))
-			var/datum/bounty/item/slice = crumbs
-			to_chat(user, "<span class='bounty'>[crumbs.description]. Quantity = [slice.required_count] . Reward: = [crumbs.reward].</span>")
-		if(istype(crumbs, /datum/bounty/reagent))
-			var/datum/bounty/reagent/tall_glass = crumbs
-			to_chat(user, "<span class='bounty'>[crumbs.description]. Quantity = [tall_glass.required_volume] . Reward: = [crumbs.reward].</span>")
-		pot_acc.bounty_timer = world.time
+	if(isidcard(I))
+		if(id_insert(user, I, inserted_scan_id))
+			inserted_scan_id = I
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
-	. = ..()
-	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))
+	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
 		pad = I.buffer
 		return TRUE
@@ -58,56 +42,154 @@
 
 /obj/machinery/computer/piratepad_control/civilian/recalc()
 	if(sending)
-		return
+		return FALSE
 
-	status_report = "Predicted value: "
-	var/value = 0
-	var/datum/export_report/ex = new
+	if(!inserted_scan_id)
+		return FALSE
+	if(!inserted_scan_id.registered_account.civilian_bounty)
+		return FALSE
+	status_report = "Civilian Bounty: "
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
-		export_item_and_contents(AM, EXPORT_CARGO, apply_elastic = TRUE, dry_run = TRUE, external_report = ex)
-	for(var/datum/export/E in ex.total_amount)
-		status_report += E.total_printout(ex,notes = FALSE)
-		status_report += " "
-		value += ex.total_value[E]
-	if(!value)
-		status_report += "0"
+		if(inserted_scan_id.registered_account.civilian_bounty.applies_to(AM))
+			status_report += "Target Applicable"
+			return
+	status_report += "Not Applicable"
 
 /obj/machinery/computer/piratepad_control/civilian/send()
 	if(!sending)
 		return
-
-	var/datum/export_report/ex = new
-
+	if(!inserted_scan_id)
+		return FALSE
+	if(!inserted_scan_id.registered_account.civilian_bounty)
+		return FALSE
+	var/duty_fulfilled = FALSE
+	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
-		export_item_and_contents(AM, EXPORT_CARGO, apply_elastic = TRUE, delete_unsold = FALSE, external_report = ex)
-
-	status_report = "Sold: "
-	var/value = 0
-	for(var/datum/export/E in ex.total_amount)
-		var/export_text = E.total_printout(ex,notes = FALSE) //Don't want nanotrasen messages, makes no sense here.
-		if(!export_text)
-			continue
-
-		status_report += export_text
-		status_report += " "
-		value += ex.total_value[E]
-
-	if(!total_report)
-		total_report = ex
-	else
-		total_report.exported_atoms += ex.exported_atoms
-		for(var/datum/export/E in ex.total_amount)
-			total_report.total_amount[E] += ex.total_amount[E]
-			total_report.total_value[E] += ex.total_value[E]
-	points += value
-	if(!value)
-		status_report += "Nothing"
+		if(curr_bounty.applies_to(AM))
+			status_report += "Bounty Target Found."
+			duty_fulfilled = TRUE
+			qdel(AM)
+			break
+	if(!duty_fulfilled)
+		return
+	//Pay for the bounty with the ID's department funds.
+	inserted_scan_id.registered_account.transfer_money(SSeconomy.get_dep_account(inserted_scan_id.registered_account.account_job.paycheck_department), curr_bounty.reward)
 
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
 	sending = FALSE
+
+/obj/machinery/computer/piratepad_control/civilian/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "CivCargoHoldTerminal", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
+	var/list/data = list()
+	data["points"] = points
+	data["pad"] = pad ? TRUE : FALSE
+	data["sending"] = sending
+	data["status_report"] = status_report
+	data["id_inserted"] = inserted_scan_id
+	if(inserted_scan_id && inserted_scan_id.registered_account)
+		data["id_bounty_info"] = inserted_scan_id.registered_account.bounty_text()
+		data["id_bounty_value"] = inserted_scan_id.registered_account.bounty_value()
+	return data
+
+/obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
+	if(..())
+		return
+	if(!pad)
+		return
+	switch(action)
+		if("recalc")
+			recalc()
+		if("send")
+			start_sending()
+		if("stop")
+			stop_sending()
+		if("bounty")
+			if(!inserted_scan_id || !inserted_scan_id.registered_account)
+				return
+			var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
+			if(pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES))
+				to_chat(usr, "<span class='warning'>You already have a civilian bounty, try again in [(pot_acc.bounty_timer + 5 MINUTES)-world.time]!</span>")
+				return FALSE
+			var/datum/bounty/crumbs = random_bounty() //It's a good scene from War Dogs (2016).
+			crumbs.reward = (crumbs.reward/ (rand(2,4)))
+			pot_acc.bounty_timer = world.time
+			pot_acc.civilian_bounty = crumbs
+		if("eject")
+			id_eject(usr, inserted_scan_id)
+	. = TRUE
+
+
+/obj/machinery/computer/piratepad_control/civilian/proc/id_insert(mob/user, obj/item/inserting_item, obj/item/target)
+	var/obj/item/card/id/card_to_insert = inserting_item
+	var/holder_item = FALSE
+
+	if(!isidcard(card_to_insert))
+		card_to_insert = inserting_item.RemoveID()
+		holder_item = TRUE
+
+	if(!card_to_insert || !user.transferItemToLoc(card_to_insert, src))
+		return FALSE
+
+	if(target)
+		if(holder_item && inserting_item.InsertID(target))
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		else
+			id_eject(user, target)
+
+	user.visible_message("<span class='notice'>[user] inserts \the [card_to_insert] into \the [src].</span>",
+						"<span class='notice'>You insert \the [card_to_insert] into \the [src].</span>")
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	updateUsrDialog()
+	return TRUE
+
+/obj/machinery/computer/piratepad_control/civilian/proc/id_eject(mob/user, obj/target)
+	if(!target)
+		to_chat(user, "<span class='warning'>That slot is empty!</span>")
+		return FALSE
+	else
+		target.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(target)
+		user.visible_message("<span class='notice'>[user] gets \the [target] from \the [src].</span>", \
+							"<span class='notice'>You get \the [target] from \the [src].</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		inserted_scan_id = null
+		updateUsrDialog()
+		return TRUE
+
+
+///Beacon to launch a new bounty setup when activated.
+/obj/item/civ_bounty_beacon
+	name = "civilian bounty beacon"
+	desc = "N.T. approved civilian bounty beacon, toss it down and you will have a bounty pad and computer delivered to you."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "floor_beacon"
+	var/uses = 2
+
+/obj/item/civ_bounty_beacon/attack_self()
+	if(!uses)
+		return
+	loc.visible_message("<span class='warning'>\The [src] begins to beep loudly!</span>")
+	if(uses <= 0)
+		qdel()
+	addtimer(CALLBACK(src, .proc/launch_payload), 40)
+
+/obj/item/civ_bounty_beacon/proc/launch_payload()
+	switch(uses)
+		if(2)
+			new /obj/machinery/piratepad/civilian(drop_location())
+		if(1)
+			new /obj/machinery/computer/piratepad_control/civilian(drop_location())
+	uses = uses - 1
