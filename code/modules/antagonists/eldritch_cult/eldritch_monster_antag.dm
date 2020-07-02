@@ -40,4 +40,4 @@
 
 /datum/antagonist/heretic_monster/remove_innate_effects(mob/living/mob_override)
 	. = ..()
-	remove_antag_hud(antag_hud_type, antag_hud_name, owner.current)
+	remove_antag_hud(antag_hud_type, owner.current)
