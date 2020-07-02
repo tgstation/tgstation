@@ -1,5 +1,6 @@
 GLOBAL_LIST_EMPTY(allbountyboards)
 GLOBAL_LIST_EMPTY(request_list)
+#define MAX_DESC_LENGTH = 140
 /**
   * A machine that acts basically like a quest board.
   * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
@@ -98,6 +99,9 @@ GLOBAL_LIST_EMPTY(request_list)
 		data["AccountName"] = current_user.account_holder
 	data["Requests"] = formatted_requests
 	data["Applicants"] = formatted_applicants
+
+	data["text"] = info
+	data["max_length"] = MAX_DESC_LENGTH
 	return data
 
 /obj/machinery/bounty_board/ui_act(action, list/params)
