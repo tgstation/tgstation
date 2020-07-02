@@ -195,7 +195,6 @@ const ApcControlScene = (props, context) => {
             <Button
               icon={apc.operating ? 'power-off' : 'times'}
               color={apc.operating ? 'good' : 'bad'}
-              tooltip={apc.operating ? 'On' : 'Off'}
               onClick={() => act('breaker',
                 { ref: apc.ref }
               )}
@@ -313,13 +312,10 @@ const AreaStatusColorBox = props => {
   const { target, status, apc, act } = props;
   const power = Boolean(status & 2);
   const mode = Boolean(status & 1);
-  const tooltipText = (power ? 'On' : 'Off')
-    + ` [${mode ? 'auto' : 'manual'}]`;
   return (
     <Button
       icon={mode ? 'sync' : 'power-off'}
       color={power ? 'good' : 'bad'}
-      tooltip={tooltipText}
       onClick={() => act('toggle-minor', {
         type: target,
         value: statusChange(status),
