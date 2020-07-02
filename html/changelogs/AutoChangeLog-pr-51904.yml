@@ -1,0 +1,5 @@
+author: "WarlockD"
+delete-after: True
+changes: 
+  - bugfix: "Your suit now washes under the shower"
+  - bugfix: "Sink now cleans properly"
