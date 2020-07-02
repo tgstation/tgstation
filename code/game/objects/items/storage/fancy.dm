@@ -68,6 +68,7 @@
 	icon_state = "donutbox_inner"
 	icon_type = "donut"
 	spawn_type = /obj/item/reagent_containers/food/snacks/donut
+	fancy_open = TRUE
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
