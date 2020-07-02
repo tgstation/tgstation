@@ -3,7 +3,7 @@
 /turf/closed/mineral/random/snow/more_caves,
 /area/icemoon/surface/outdoors/unexplored)
 "b" = (
-/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/obj/structure/sign/poster/contraband/lusty_benomorph,
 /turf/closed/indestructible/syndicate,
 /area/icemoon/surface/outdoors)
 "c" = (
@@ -22,7 +22,7 @@
 /area/icemoon/surface/outdoors)
 "f" = (
 /obj/structure/falsewall/plastitanium,
-/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/obj/structure/sign/poster/contraband/lusty_benomorph,
 /turf/open/floor/mineral/diamond,
 /area/icemoon/surface/outdoors)
 

@@ -48,10 +48,10 @@
 	unit_name = "gondola hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/gondola)
 
-/datum/export/stack/skin/xeno
+/datum/export/stack/skin/beno
 	cost = 500
 	unit_name = "alien hide"
-	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
+	export_types = list(/obj/item/stack/sheet/animalhide/beno)
 
 /datum/export/stack/licenseplate
 	cost = 25

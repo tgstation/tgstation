@@ -1721,7 +1721,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
+/obj/structure/sign/poster/contraband/lusty_benomorph{
 	pixel_x = 32
 	},
 /obj/structure/table/wood,

@@ -3714,7 +3714,7 @@
 /obj/item/clothing/head/wig,
 /obj/item/clothing/head/wizard/fake,
 /obj/item/clothing/head/wizard/santa,
-/obj/item/clothing/head/xenos,
+/obj/item/clothing/head/benos,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "IA" = (

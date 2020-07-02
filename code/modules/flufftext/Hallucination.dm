@@ -228,24 +228,24 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	flood_image_holders = list()
 	return ..()
 
-/obj/effect/hallucination/simple/xeno
+/obj/effect/hallucination/simple/beno
 	image_icon = 'icons/mob/alien.dmi'
 	image_state = "alienh_pounce"
 
-/obj/effect/hallucination/simple/xeno/Initialize(mapload, mob/living/carbon/T)
+/obj/effect/hallucination/simple/beno/Initialize(mapload, mob/living/carbon/T)
 	. = ..()
 	name = "alien hunter ([rand(1, 1000)])"
 
-/obj/effect/hallucination/simple/xeno/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/effect/hallucination/simple/beno/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	update_icon("alienh_pounce")
 	if(hit_atom == target && target.stat!=DEAD)
 		target.Paralyze(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class='userdanger'>[name] pounces on you!</span>")
 
 /datum/hallucination/xeno_attack
-	//Xeno crawls from nearby vent,jumps at you, and goes back in
+	//Beno crawls from nearby vent,jumps at you, and goes back in
 	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
-	var/obj/effect/hallucination/simple/xeno/xeno = null
+	var/obj/effect/hallucination/simple/beno/beno = null
 
 /datum/hallucination/xeno_attack/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
@@ -256,18 +256,18 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			break
 	if(pump)
 		feedback_details += "Vent Coords: [pump.x],[pump.y],[pump.z]"
-		xeno = new(pump.loc,target)
+		beno = new(pump.loc,target)
 		sleep(10)
-		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-		xeno.throw_at(target,7,1, xeno, FALSE, TRUE)
+		beno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
+		beno.throw_at(target,7,1, beno, FALSE, TRUE)
 		sleep(10)
-		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-		xeno.throw_at(pump,7,1, xeno, FALSE, TRUE)
+		beno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
+		beno.throw_at(pump,7,1, beno, FALSE, TRUE)
 		sleep(10)
-		var/xeno_name = xeno.name
+		var/xeno_name = beno.name
 		to_chat(target, "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>")
 		sleep(30)
-		qdel(xeno)
+		qdel(beno)
 		to_chat(target, "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>")
 	qdel(src)
 

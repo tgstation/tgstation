@@ -65,7 +65,7 @@
 				playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
 				to_chat(L, "<span class='userdanger'>[src] burns you!</span>")
 
-//xenomorph corrosive acid
+//benomorph corrosive acid
 /obj/effect/acid/alien
 	var/target_strength = 30
 

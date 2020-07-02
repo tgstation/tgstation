@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/eff
 GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/effect/meteor/big=75, \
 						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/tunguska = 1)) //for catastrophic meteor event
 
-GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
+GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/beno=1)) //for meaty ore event
 
 GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
@@ -317,17 +317,17 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	A.ex_act(hitpwr)
 	get_hit()
 
-//Meaty Ore Xeno edition
-/obj/effect/meteor/meaty/xeno
+//Meaty Ore Beno edition
+/obj/effect/meteor/meaty/beno
 	color = "#5EFF00"
-	meteordrop = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno, /obj/item/organ/tongue/alien)
-	meteorgibs = /obj/effect/gibspawner/xeno
+	meteordrop = list(/obj/item/reagent_containers/food/snacks/meat/slab/beno, /obj/item/organ/tongue/alien)
+	meteorgibs = /obj/effect/gibspawner/beno
 
-/obj/effect/meteor/meaty/xeno/Initialize()
+/obj/effect/meteor/meaty/beno/Initialize()
 	meteordrop += subtypesof(/obj/item/organ/alien)
 	return ..()
 
-/obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
+/obj/effect/meteor/meaty/beno/ram_turf(turf/T)
 	if(!isspaceturf(T))
 		new /obj/effect/decal/cleanable/xenoblood(T)
 

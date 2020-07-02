@@ -16,7 +16,7 @@
 	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-l")
 
 /mob/living/carbon/alien/larva/spawn_dust()
-	new /obj/effect/decal/remains/xeno(loc)
+	new /obj/effect/decal/remains/beno(loc)
 
 /mob/living/carbon/alien/larva/dust_animation()
 	new /obj/effect/temp_visual/dust_animation(loc, "dust-l")

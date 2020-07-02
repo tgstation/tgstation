@@ -162,7 +162,7 @@
 	user.forceMove(loc)
 	update_icon()
 
-// monkeys and xenos can only pull the flush lever
+// monkeys and benos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
 	if(machine_stat & BROKEN)
 		return

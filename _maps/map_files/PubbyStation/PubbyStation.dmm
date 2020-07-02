@@ -50122,7 +50122,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "fLG" = (
-/obj/effect/decal/remains/xeno,
+/obj/effect/decal/remains/beno,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "fNv" = (
@@ -52093,7 +52093,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "jQh" = (
-/obj/item/stack/sheet/animalhide/xeno,
+/obj/item/stack/sheet/animalhide/beno,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},

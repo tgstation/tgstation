@@ -303,7 +303,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "Observer-Start"
 	icon_state = "observer_start"
 
-//xenos, morphs and nightmares spawn here
+//benos, morphs and nightmares spawn here
 /obj/effect/landmark/xeno_spawn
 	name = "xeno_spawn"
 	icon_state = "xeno_spawn"

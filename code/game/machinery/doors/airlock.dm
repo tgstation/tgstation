@@ -1178,7 +1178,7 @@
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(isElectrified())
 		add_fingerprint(user)
-		shock(user, 100) //Mmm, fried xeno!
+		shock(user, 100) //Mmm, fried beno!
 		return
 	if(!density) //Already open
 		return ..()

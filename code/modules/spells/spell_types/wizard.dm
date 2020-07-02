@@ -282,7 +282,7 @@
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 			AM.safe_throw_at(throwtarget, ((clamp((maxthrow - (clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
+/obj/effect/proc_holder/spell/aoe_turf/repulse/beno //i fixed conflicts only to find out that this is in the WIZARD file instead of the beno file?!
 	name = "Tail Sweep"
 	desc = "Throw back attackers with a sweep of your tail."
 	sound = 'sound/magic/tail_swing.ogg'
@@ -298,7 +298,7 @@
 	action_background_icon_state = "bg_alien"
 	anti_magic_check = FALSE
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/beno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, TRUE, TRUE)

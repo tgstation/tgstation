@@ -8,8 +8,8 @@
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
 	speed = 0
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
-							/obj/item/stack/sheet/animalhide/xeno = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/beno = 4,
+							/obj/item/stack/sheet/animalhide/beno = 1)
 	maxHealth = 125
 	health = 125
 	harm_intent_damage = 5
@@ -86,8 +86,8 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	move_to_delay = 4
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
-							/obj/item/stack/sheet/animalhide/xeno = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/beno = 4,
+							/obj/item/stack/sheet/animalhide/beno = 1)
 	projectiletype = /obj/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
@@ -137,8 +137,8 @@
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 10,
-							/obj/item/stack/sheet/animalhide/xeno = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/beno = 10,
+							/obj/item/stack/sheet/animalhide/beno = 2)
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 
@@ -158,7 +158,7 @@
 		clear_alert("temp")
 
 /mob/living/simple_animal/hostile/alien/maid
-	name = "lusty xenomorph maid"
+	name = "lusty benomorph maid"
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	a_intent = INTENT_HELP

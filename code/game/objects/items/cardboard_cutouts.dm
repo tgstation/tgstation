@@ -26,8 +26,8 @@
 		"Revolutionary" = image(icon = src.icon, icon_state = "cutout_viva"),
 		"Wizard" = image(icon = src.icon, icon_state = "cutout_wizard"),
 		"Shadowling" = image(icon = src.icon, icon_state = "cutout_shadowling"),
-		"Xenomorph" = image(icon = src.icon, icon_state = "cutout_fukken_xeno"),
-		"Xenomorph Maid" = image(icon = src.icon, icon_state = "cutout_lusty"),
+		"Benomorph" = image(icon = src.icon, icon_state = "cutout_fukken_xeno"),
+		"Benomorph Maid" = image(icon = src.icon, icon_state = "cutout_lusty"),
 		"Swarmer" = image(icon = src.icon, icon_state = "cutout_swarmer"),
 		"Ash Walker" = image(icon = src.icon, icon_state = "cutout_free_antag"),
 		"Deathsquad Officer" = image(icon = src.icon, icon_state = "cutout_deathsquad"),
@@ -156,15 +156,15 @@
 			name = "Unknown"
 			desc = "A cardboard cutout of a shadowling."
 			icon_state = "cutout_shadowling"
-		if("Xenomorph")
+		if("Benomorph")
 			name = "alien hunter ([rand(1, 999)])"
-			desc = "A cardboard cutout of a xenomorph."
+			desc = "A cardboard cutout of a benomorph."
 			icon_state = "cutout_fukken_xeno"
 			if(prob(25))
 				alpha = 75 //Spooky sneaking!
-		if("Xenomorph Maid")
-			name = "lusty xenomorph maid ([rand(1, 999)])"
-			desc = "A cardboard cutout of a xenomorph maid."
+		if("Benomorph Maid")
+			name = "lusty benomorph maid ([rand(1, 999)])"
+			desc = "A cardboard cutout of a benomorph maid."
 			icon_state = "cutout_lusty"
 		if("Swarmer")
 			name = "Swarmer ([rand(1, 999)])"

@@ -76,7 +76,7 @@
 "r" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/effect/decal/remains/xeno,
+/obj/effect/decal/remains/beno,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 

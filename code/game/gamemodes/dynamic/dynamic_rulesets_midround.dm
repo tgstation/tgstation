@@ -419,13 +419,13 @@
 
 //////////////////////////////////////////////
 //                                          //
-//           XENOMORPH (GHOST)              //
+//           BENOMORPH (GHOST)              //
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph
+/datum/dynamic_ruleset/midround/from_ghosts/benomorph
 	name = "Alien Infestation"
-	antag_datum = /datum/antagonist/xeno
+	antag_datum = /datum/antagonist/beno
 	antag_flag = ROLE_ALIEN
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
@@ -436,7 +436,7 @@
 	repeatable = TRUE
 	var/list/vents = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
+/datum/dynamic_ruleset/midround/from_ghosts/benomorph/execute()
 	// 50% chance of being incremented by one
 	required_candidates += prob(50)
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
@@ -454,7 +454,7 @@
 		return FALSE
 	. = ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/generate_ruleset_body(mob/applicant)
+/datum/dynamic_ruleset/midround/from_ghosts/benomorph/generate_ruleset_body(mob/applicant)
 	var/obj/vent = pick_n_take(vents)
 	var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
 	new_xeno.key = applicant.key

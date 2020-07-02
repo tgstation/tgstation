@@ -291,10 +291,10 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/shadyjims
 
 /obj/item/storage/fancy/cigarettes/cigpack_xeno
-	name = "\improper Xeno Filtered packet"
+	name = "\improper Beno Filtered packet"
 	desc = "Loaded with 100% pure slime. And also nicotine."
 	icon_state = "slime"
-	spawn_type = /obj/item/clothing/mask/cigarette/xeno
+	spawn_type = /obj/item/clothing/mask/cigarette/beno
 
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis
 	name = "\improper Freak Brothers' Special packet"

@@ -177,7 +177,7 @@
 		if(ismonkey(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/monkey
 		else if(isalien(C))
-			typeofskin = /obj/item/stack/sheet/animalhide/xeno
+			typeofskin = /obj/item/stack/sheet/animalhide/beno
 	var/occupant_volume
 	if(occupant?.reagents)
 		occupant_volume = occupant.reagents.total_volume

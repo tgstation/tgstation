@@ -674,7 +674,7 @@
 			var/list/icon_list = list(
 				"default" = 'icons/mob/ai.dmi',
 				"floating face" = 'icons/mob/ai.dmi',
-				"xeno queen" = 'icons/mob/alien.dmi',
+				"beno queen" = 'icons/mob/alien.dmi',
 				"horror" = 'icons/mob/ai.dmi',
 				"clock" = 'icons/mob/ai.dmi'
 				)
@@ -683,7 +683,7 @@
 			if(input)
 				qdel(holo_icon)
 				switch(input)
-					if("xeno queen")
+					if("beno queen")
 						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
 					else
 						holo_icon = getHologramIcon(icon(icon_list[input], input))

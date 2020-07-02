@@ -1,5 +1,5 @@
 /obj/effect/spawner/xeno_egg_delivery
-	name = "xeno egg delivery"
+	name = "beno egg delivery"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "egg_growing"
 	var/announcement_time = 1200

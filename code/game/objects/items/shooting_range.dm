@@ -46,7 +46,7 @@
 
 /obj/item/target/alien
 	icon_state = "target_q"
-	desc = "A shooting target that looks like a xenomorphic alien."
+	desc = "A shooting target that looks like a benomorphic alien."
 	hp = 2350
 
 /obj/item/target/alien/anchored

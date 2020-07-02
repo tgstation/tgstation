@@ -5029,7 +5029,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "kL" = (
 /obj/effect/decal/cleanable/xenoblood,
-/obj/effect/decal/remains/xeno{
+/obj/effect/decal/remains/beno{
 	desc = "They look like the remains of something... alien. The front of skull appears to have been completely obliterated."
 	},
 /obj/effect/turf_decal/tile/bar,

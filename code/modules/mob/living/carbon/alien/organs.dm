@@ -109,11 +109,11 @@
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	..()
 	M.faction |= ROLE_ALIEN
-	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
+	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, "beno immune")
 
 /obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
+	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, "beno immune")
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
@@ -144,7 +144,7 @@
 	if(QDELETED(src)) //In case the node is deleted
 		return
 	recent_queen_death = 0
-	if(!owner) //In case the xeno is butchered or subjected to surgery after death.
+	if(!owner) //In case the beno is butchered or subjected to surgery after death.
 		return
 	to_chat(owner, "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>")
 	owner.clear_alert("alien_noqueen")

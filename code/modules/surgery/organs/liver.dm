@@ -63,7 +63,7 @@
 
 /obj/item/organ/liver/fly
 	name = "insectoid liver"
-	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.
+	icon_state = "liver-x" //benomorph liver? It's just a black liver so it fits.
 	desc = "A mutant liver designed to handle the unique diet of a flyperson."
 	alcohol_tolerance = 0.007 //flies eat vomit, so a lower alcohol tolerance is perfect!
 
@@ -77,7 +77,7 @@
 	icon_state = "liver-x" // Same sprite as fly-person liver.
 	desc = "A liver that used to belong to a killer alien, who knows what it used to eat."
 	toxLethality = LIVER_DEFAULT_TOX_LETHALITY * 2.5 // rejects its owner early after too much punishment
-	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
+	toxTolerance = 15 // complete toxin immunity like benos have would be too powerful
 
 /obj/item/organ/liver/cybernetic
 	name = "basic cybernetic liver"

@@ -105,7 +105,7 @@
 	foodtype = GRAIN | TOXIC
 	value = FOOD_LEGENDARY
 
-/obj/item/reagent_containers/food/snacks/burger/xeno
+/obj/item/reagent_containers/food/snacks/burger/beno
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"

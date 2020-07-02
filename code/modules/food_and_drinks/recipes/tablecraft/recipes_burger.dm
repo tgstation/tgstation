@@ -55,12 +55,12 @@
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/xenoburger
-	name = "Xeno burger"
+	name = "Beno burger"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/meat/steak/xeno = 1,
+		/obj/item/reagent_containers/food/snacks/meat/steak/beno = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/burger/xeno
+	result = /obj/item/reagent_containers/food/snacks/burger/beno
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/bearger

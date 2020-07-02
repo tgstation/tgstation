@@ -19,7 +19,7 @@
 	-	IMPORTANT NOTE 2, if you want a player to become a ghost, use mob.ghostize() It does all the hard work for you.
 
 	-	When creating a new mob which will be a new IC character (e.g. putting a shade in a construct or randomly selecting
-		a ghost to become a xeno during an event). Simply assign the key or ckey like you've always done.
+		a ghost to become a beno during an event). Simply assign the key or ckey like you've always done.
 
 			new_mob.key = key
 

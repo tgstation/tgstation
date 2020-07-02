@@ -206,8 +206,8 @@
 	desc = "A poster condemning the station's security forces."
 	icon_state = "poster3"
 
-/obj/structure/sign/poster/contraband/lusty_xenomorph
-	name = "Lusty Xenomorph"
+/obj/structure/sign/poster/contraband/lusty_benomorph
+	name = "Lusty Benomorph"
 	desc = "A heretical poster depicting the titular star of an equally heretical book."
 	icon_state = "poster4"
 
@@ -368,8 +368,8 @@
 	icon_state = "poster35"
 
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6
-	name = "Busty Backdoor Xeno Babes 6"
-	desc = "Get a load, or give, of these all natural Xenos!"
+	name = "Busty Backdoor Beno Babes 6"
+	desc = "Get a load, or give, of these all natural Benos!"
 	icon_state = "poster36"
 
 /obj/structure/sign/poster/contraband/robust_softdrinks

@@ -14,7 +14,7 @@
 #define ROLE_MALF				"Malf AI"
 #define ROLE_REV				"Revolutionary"
 #define ROLE_REV_HEAD			"Head Revolutionary"
-#define ROLE_ALIEN				"Xenomorph"
+#define ROLE_ALIEN				"Benomorph"
 #define ROLE_PAI				"pAI"
 #define ROLE_CULTIST			"Cultist"
 #define ROLE_HERETIC			"Heretic"

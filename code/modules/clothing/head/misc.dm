@@ -200,9 +200,9 @@
 	icon_state = "bearpelt"
 	inhand_icon_state = "bearpelt"
 
-/obj/item/clothing/head/xenos
-	name = "xenos helmet"
-	icon_state = "xenos"
+/obj/item/clothing/head/benos
+	name = "benos helmet"
+	icon_state = "benos"
 	inhand_icon_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	clothing_flags = SNUG_FIT

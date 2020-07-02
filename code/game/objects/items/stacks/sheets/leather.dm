@@ -87,23 +87,23 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	icon_state = "sheet-lizard"
 	inhand_icon_state = "sheet-lizard"
 
-/obj/item/stack/sheet/animalhide/xeno
+/obj/item/stack/sheet/animalhide/beno
 	name = "alien hide"
 	desc = "The skin of a terrible creature."
 	singular_name = "alien hide piece"
-	icon_state = "sheet-xeno"
-	inhand_icon_state = "sheet-xeno"
+	icon_state = "sheet-beno"
+	inhand_icon_state = "sheet-beno"
 
 GLOBAL_LIST_INIT(xeno_recipes, list ( \
-	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1), \
-	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2), \
+	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/benos, 1), \
+	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/benos, 2), \
 	))
 
-/obj/item/stack/sheet/animalhide/xeno/get_main_recipes()
+/obj/item/stack/sheet/animalhide/beno/get_main_recipes()
 	. = ..()
 	. += GLOB.xeno_recipes
 
-//don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
+//don't see anywhere else to put these, maybe together they could be used to make the benos suit?
 /obj/item/stack/sheet/xenochitin
 	name = "alien chitin"
 	desc = "A piece of the hide of a terrible creature."

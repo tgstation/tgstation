@@ -4373,7 +4373,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lj" = (
-/obj/effect/decal/remains/xeno,
+/obj/effect/decal/remains/beno,
 /obj/effect/decal/cleanable/glitter/blue{
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
@@ -4529,7 +4529,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/obj/effect/decal/remains/xeno/larva,
+/obj/effect/decal/remains/beno/larva,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lB" = (

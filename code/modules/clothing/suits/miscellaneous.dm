@@ -124,7 +124,7 @@
 
 /obj/item/clothing/suit/imperium_monk
 	name = "\improper Imperium monk suit"
-	desc = "Have YOU killed a xeno today?"
+	desc = "Have YOU killed a beno today?"
 	icon_state = "imperium_monk"
 	inhand_icon_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -475,10 +475,10 @@
 	icon_state = "gothcoat"
 	inhand_icon_state = "gothcoat"
 
-/obj/item/clothing/suit/xenos
-	name = "xenos suit"
+/obj/item/clothing/suit/benos
+	name = "benos suit"
 	desc = "A suit made out of chitinous alien hide."
-	icon_state = "xenos"
+	icon_state = "benos"
 	inhand_icon_state = "xenos_helm"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT

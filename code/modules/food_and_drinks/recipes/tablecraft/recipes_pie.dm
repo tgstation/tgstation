@@ -34,10 +34,10 @@
 	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/xenopie
-	name = "Xeno pie"
+	name = "Beno pie"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet/xeno = 1
+		/obj/item/reagent_containers/food/snacks/meat/cutlet/beno = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pie/xemeatpie
 	subcategory = CAT_PIE

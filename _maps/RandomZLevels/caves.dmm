@@ -788,7 +788,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "cA" = (
-/obj/effect/decal/remains/xeno,
+/obj/effect/decal/remains/beno,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14"
 	},

@@ -17,7 +17,7 @@
  *		Foam armblade
  *		Toy big red button
  *		Beach ball
- *		Toy xeno
+ *		Toy beno
  *      Kitty toys!
  *		Snowballs
  *		Clockwork Watches
@@ -1242,14 +1242,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /*
- * Xenomorph action figure
+ * Benomorph action figure
  */
 
 /obj/item/toy/toy_xeno
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "toy_xeno"
-	name = "xenomorph action figure"
-	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
+	name = "benomorph action figure"
+	desc = "MEGA presents the new Benos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 

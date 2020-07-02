@@ -198,15 +198,15 @@
 	foodtype = RAW | MEAT
 
 
-/obj/item/reagent_containers/food/snacks/meat/slab/xeno
-	name = "xeno meat"
+/obj/item/reagent_containers/food/snacks/meat/slab/beno
+	name = "beno meat"
 	desc = "A slab of meat."
 	icon_state = "xenomeat"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	bitesize = 4
 	filling_color = "#32CD32"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/xeno
-	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/xeno
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/beno
+	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/beno
 	tastes = list("meat" = 1, "acid" = 1)
 	foodtype = RAW | MEAT
 
@@ -348,8 +348,8 @@
 	name = "bear steak"
 	tastes = list("meat" = 1, "salmon" = 1)
 
-/obj/item/reagent_containers/food/snacks/meat/steak/xeno
-	name = "xeno steak"
+/obj/item/reagent_containers/food/snacks/meat/steak/beno
+	name = "beno steak"
 	tastes = list("meat" = 1, "acid" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/spider
@@ -424,9 +424,9 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/bear
 	tastes = list("meat" = 1, "salmon" = 1)
 
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet/xeno
-	name = "raw xeno cutlet"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/xeno
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet/beno
+	name = "raw beno cutlet"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/beno
 	tastes = list("meat" = 1, "acid" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet/spider
@@ -477,8 +477,8 @@
 	name = "bear cutlet"
 	tastes = list("meat" = 1, "salmon" = 1)
 
-/obj/item/reagent_containers/food/snacks/meat/cutlet/xeno
-	name = "xeno cutlet"
+/obj/item/reagent_containers/food/snacks/meat/cutlet/beno
+	name = "beno cutlet"
 	tastes = list("meat" = 1, "acid" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet/spider

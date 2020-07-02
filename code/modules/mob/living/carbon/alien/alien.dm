@@ -1,7 +1,7 @@
 /mob/living/carbon/alien
 	name = "alien"
 	icon = 'icons/mob/alien.dmi'
-	gender = FEMALE //All xenos are girls!!
+	gender = FEMALE //All benos are girls!!
 	dna = null
 	faction = list(ROLE_ALIEN)
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -10,7 +10,7 @@
 	verb_say = "hisses"
 	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
-	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
+	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/beno
 
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add

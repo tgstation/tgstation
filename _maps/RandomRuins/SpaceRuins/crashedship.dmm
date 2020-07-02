@@ -1179,7 +1179,7 @@
 /area/awaymission/bmpship/aft)
 "ey" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/gibspawner/xeno,
+/obj/effect/gibspawner/beno,
 /turf/open/floor/plating,
 /area/awaymission/bmpship/midship)
 "eC" = (
@@ -1326,7 +1326,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
 "fe" = (
-/obj/effect/gibspawner/xeno,
+/obj/effect/gibspawner/beno,
 /turf/open/floor/plating,
 /area/awaymission/bmpship/midship)
 "ff" = (

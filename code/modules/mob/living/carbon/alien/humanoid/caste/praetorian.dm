@@ -7,7 +7,7 @@
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/Initialize()
 	real_name = name
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/beno(src))
 	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
 	. = ..()
 

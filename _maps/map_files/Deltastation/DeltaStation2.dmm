@@ -80431,7 +80431,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cTz" = (
-/obj/effect/decal/remains/xeno,
+/obj/effect/decal/remains/beno,
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/circuit/green,
 /area/science/xenobiology)
@@ -115342,7 +115342,7 @@
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "sfo" = (
-/obj/effect/decal/remains/xeno,
+/obj/effect/decal/remains/beno,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "sfN" = (

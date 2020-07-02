@@ -17,7 +17,7 @@
 	name = "Xenomeat bread"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet/xeno = 3,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet/beno = 3,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 3
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/bread/xenomeat

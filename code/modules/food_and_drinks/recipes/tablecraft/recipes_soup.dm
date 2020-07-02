@@ -45,7 +45,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet/xeno = 2
+		/obj/item/reagent_containers/food/snacks/meat/cutlet/beno = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/wingfangchu
 	subcategory = CAT_SOUP

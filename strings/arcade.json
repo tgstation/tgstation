@@ -171,7 +171,7 @@
 		"Spess Don Juan",
 		"St. Valentine",
 		"Waifu",
-		"Xenomorph Maid"
+		"Benomorph Maid"
 	],
 
 	"rpg_enemy_halloween": [
@@ -243,7 +243,7 @@
 		"toolbox",
 		"welder"
 	],
-	
+
 	"rpg_weapon_valentines": [
 		"bouquet of deathnettles",
 		"candy-heart shotgun",
@@ -254,7 +254,7 @@
 		"thorny rose",
 		"toolbox of chocolates"
 	],
-	
+
 	"rpg_weapon_halloween": [
 		"chainsaw",
 		"heavy gravestone",
@@ -265,7 +265,7 @@
 		"spectral blade",
 		"wooden stake"
 	],
-	
+
 	"rpg_weapon_xmas": [
 		"bike horn playing carols",
 		"blunt fruitcake",

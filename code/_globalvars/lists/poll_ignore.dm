@@ -25,7 +25,7 @@
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_SENTIENCE_POTION = "Sentience potion",
 	POLL_IGNORE_POSSESSED_BLADE = "Possessed blade",
-	POLL_IGNORE_ALIEN_LARVA = "Xenomorph larva",
+	POLL_IGNORE_ALIEN_LARVA = "Benomorph larva",
 	POLL_IGNORE_SYNDICATE = "Syndicate",
 	POLL_IGNORE_HOLOPARASITE = "Holoparasite",
 	POLL_IGNORE_POSIBRAIN = "Positronic brain",

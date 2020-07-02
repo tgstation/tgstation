@@ -11004,7 +11004,7 @@
 /turf/open/floor/grass,
 /area/wizard_station)
 "yJ" = (
-/obj/effect/decal/remains/xeno/larva,
+/obj/effect/decal/remains/beno/larva,
 /turf/open/floor/grass,
 /area/wizard_station)
 "yK" = (
@@ -11732,7 +11732,7 @@
 /turf/open/floor/grass,
 /area/wizard_station)
 "AB" = (
-/obj/effect/decal/remains/xeno,
+/obj/effect/decal/remains/beno,
 /turf/open/floor/grass,
 /area/wizard_station)
 "AH" = (
@@ -11928,7 +11928,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "Bi" = (
-/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/beno,
 /turf/open/floor/grass,
 /area/wizard_station)
 "Bo" = (
@@ -14490,10 +14490,10 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath,
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath,
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath,
-/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/beno,
+/obj/item/reagent_containers/food/snacks/meat/slab/beno,
+/obj/item/reagent_containers/food/snacks/meat/slab/beno,
+/obj/item/reagent_containers/food/snacks/meat/slab/beno,
 /obj/item/reagent_containers/food/snacks/spaghetti,
 /obj/item/reagent_containers/food/snacks/spaghetti,
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet,

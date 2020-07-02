@@ -4138,9 +4138,9 @@
 	},
 /obj/item/kitchen/rollingpin,
 /obj/structure/closet/crate,
-/obj/item/clothing/suit/xenos,
+/obj/item/clothing/suit/benos,
 /obj/item/clothing/suit/monkeysuit,
-/obj/item/clothing/head/xenos,
+/obj/item/clothing/head/benos,
 /obj/item/clothing/mask/gas/monkeymask,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -80306,7 +80306,7 @@
 	icon_state = "oldcomp";
 	name = "Gamer Computer"
 	},
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
+/obj/structure/sign/poster/contraband/lusty_benomorph{
 	pixel_x = -32
 	},
 /obj/item/toy/katana{

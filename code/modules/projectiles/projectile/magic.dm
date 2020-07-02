@@ -186,7 +186,7 @@
 	var/mob/living/new_mob
 
 	if(!randomize)
-		randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+		randomize = pick("monkey","robot","slime","beno","humanoid","animal")
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -212,7 +212,7 @@
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 
-		if("xeno")
+		if("beno")
 			var/Xe
 			if(M.ckey)
 				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/carbon/alien/humanoid/sentinel)

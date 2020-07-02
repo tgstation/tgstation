@@ -352,8 +352,8 @@
 			var/mob/living/carbon/C = L
 			for(var/datum/wound/W in C.all_wounds)
 				W.crush(DOOR_CRUSH_DAMAGE)
-		if(isalien(L))  //For xenos
-			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
+		if(isalien(L))  //For benos
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Benos go into crit after aproximately the same amount of crushes as humans.
 			L.emote("roar")
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
@@ -365,7 +365,7 @@
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)
-		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
+		//add_blood doesn't work for borgs/benos, but add_blood_floor does.
 		L.add_splatter_floor(location)
 		log_combat(src, L, "crushed")
 	for(var/obj/mecha/M in get_turf(src))

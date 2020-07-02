@@ -62,7 +62,7 @@
 				to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
 				var/gibtype = /obj/effect/gibspawner/generic
 				if(isalien(M))
-					gibtype = /obj/effect/gibspawner/xeno
+					gibtype = /obj/effect/gibspawner/beno
 				for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
 					if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
 						new gibtype(get_turf(possiblevent))

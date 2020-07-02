@@ -88,7 +88,7 @@
 /area/ruin/unpowered/syndicate_lava_base/telecomms
 	name = "Syndicate Lavaland Telecommunications"
 
-//Xeno Nest
+//Beno Nest
 
 /area/ruin/unpowered/xenonest
 	name = "The Hive"

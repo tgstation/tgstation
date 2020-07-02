@@ -186,14 +186,14 @@
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."), forced = "robotic transformation")
 
 
-/datum/disease/transformation/xeno
+/datum/disease/transformation/beno
 
-	name = "Xenomorph Transformation"
+	name = "Benomorph Transformation"
 	cure_text = "Spaceacillin & Glycerol"
 	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/glycerol)
 	cure_chance = 5
 	agent = "Rip-LEY Alien Microbes"
-	desc = "This disease changes the victim into a xenomorph."
+	desc = "This disease changes the victim into a benomorph."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= list()
@@ -204,7 +204,7 @@
 	new_form = /mob/living/carbon/alien/humanoid/hunter
 	bantype = ROLE_ALIEN
 
-/datum/disease/transformation/xeno/stage_act()
+/datum/disease/transformation/beno/stage_act()
 	..()
 	switch(stage)
 		if(3)
@@ -213,7 +213,7 @@
 				affected_mob.Unconscious(40)
 		if(4)
 			if (prob(20))
-				affected_mob.say(pick("You look delicious.", "Going to... devour you...", "Hsssshhhhh!"), forced = "xenomorph transformation")
+				affected_mob.say(pick("You look delicious.", "Going to... devour you...", "Hsssshhhhh!"), forced = "benomorph transformation")
 
 
 /datum/disease/transformation/slime

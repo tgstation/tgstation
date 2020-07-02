@@ -9,7 +9,7 @@
 	shift_underlay_only = FALSE
 	hide = TRUE
 
-	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for benomorphs
 
 	var/injecting = 0
 

@@ -7,8 +7,8 @@
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
-	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+	pressure_resistance = 200 //Because big, stompy benos should not be blown around like paper.
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/beno = 20, /obj/item/stack/sheet/animalhide/beno = 3)
 
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
@@ -36,7 +36,7 @@
 
 	real_name = src.name
 
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/beno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
 	smallsprite.Grant(src)
 	return ..()

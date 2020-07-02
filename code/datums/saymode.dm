@@ -62,11 +62,11 @@
 	return FALSE
 
 
-/datum/saymode/xeno
+/datum/saymode/beno
 	key = "a"
 	mode = MODE_ALIEN
 
-/datum/saymode/xeno/handle_message(mob/living/user, message, datum/language/language)
+/datum/saymode/beno/handle_message(mob/living/user, message, datum/language/language)
 	if(user.hivecheck())
 		user.alien_talk(message)
 	return FALSE
