@@ -1,10 +1,11 @@
-import { Box, Section, Button, Table, Icon, Flex, Tabs } from '../components';
+import { Box, Section, Button, Table, Icon, Dimmer, Tabs } from '../components';
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { Window, Fragment } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { pureComponentHooks } from 'common/react';
+import { FlexItem } from '../components/Flex';
 
 export const ApcControl = (props, context) => {
   const { data } = useBackend(context);
@@ -20,22 +21,20 @@ export const ApcControl = (props, context) => {
 
 const ApcLoggedOut = (props, context) => {
   const { act, data } = useBackend(context);
-  const emagged = data.emagged;
+  const text = data.emagged === 1 ? 'Open' : 'Log In';
   return (
     <Window.Content>
-      <Button
-        fluid
-        color={'good'}
-        tooltip={emagged ? 'Open' : 'Log In'}
-        onClick={() => act('log-in')}>
-        Log In
-      </Button>
+      <Button fluid
+        color={data.emagged === 1 ? '' :'good'}
+        tooltip={text}
+        content={text}
+        onClick={() => act('log-in')} />
     </Window.Content>
   );
 };
 
 const ApcLoggedIn = (props, context) => {
-  const { act } = useBackend(context);
+  const { act, data } = useBackend(context);
   const [
     tabIndex,
     setTabIndex,
@@ -60,6 +59,12 @@ const ApcLoggedIn = (props, context) => {
           Log View Panel
         </Tabs.Tab>
       </Tabs>
+      {data.restoring === 1&& (
+        <Dimmer fontSize="32px">
+          <Icon name="cog" spin={1} />
+          {' Resetting...'}
+        </Dimmer>
+      )}
       {tabIndex === 1 && (
         <Fragment>
           <ControlPanel />
@@ -84,6 +89,81 @@ const ApcLoggedIn = (props, context) => {
 const powerRank = str => {
   const unit = String(str.split(' ')[1]).toLowerCase();
   return ['w', 'kw', 'mw', 'gw'].indexOf(unit);
+};
+
+const ControlPanel = (props, context) => {
+  const { act, data } = useBackend(context);
+  const emagged = data.emagged;
+  const logging = data.logging;
+  const [
+    sortByField,
+    setSortByField,
+  ] = useLocalState(context, 'sortByField', null);
+  return (
+    <Section>
+      <Box mb={1}>
+        <Box inline mr={2} color="label">
+          Sort by:
+        </Box>
+        <Button.Checkbox
+          checked={sortByField === 'name'}
+          content="Name"
+          onClick={() => setSortByField(sortByField !== 'name' && 'name')} />
+        <Button.Checkbox
+          checked={sortByField === 'charge'}
+          content="Charge"
+          onClick={() => setSortByField(
+            sortByField !== 'charge' && 'charge'
+          )} />
+        <Button.Checkbox
+          checked={sortByField === 'draw'}
+          content="Draw"
+          onClick={() => setSortByField(sortByField !== 'draw' && 'draw')} />
+        {emagged === 1 && (
+          <Fragment>
+            <Button color={(logging === 1 ? "bad" : "good")}
+              content={(logging === 1 ? "Stop Logging" : "Restore Logging")}
+              onClick={() => act('toggle-logs')}
+              right={13}
+              position="fixed"
+            />
+            <Button content="Reset Console"
+              onClick={() => act('restore-console')}
+              right={5}
+              position="fixed"
+            />
+          </Fragment>
+        )}
+        <Button color={'bad'}
+          content="Log Out"
+          right={0}
+          position="fixed"
+          tooltip={'Log Out'}
+          onClick={() => act('log-out')}
+        />
+      </Box>
+      <Table.Row header>
+        <Table.Cell>
+          Area
+        </Table.Cell>
+        <Table.Cell collapsing>
+          Charge
+        </Table.Cell>
+        <Table.Cell collapsing textAlign="right">
+          Draw
+        </Table.Cell>
+        <Table.Cell collapsing title="Equipment">
+          Eqp
+        </Table.Cell>
+        <Table.Cell collapsing title="Lighting">
+          Lgt
+        </Table.Cell>
+        <Table.Cell collapsing title="Environment">
+          Env
+        </Table.Cell>
+      </Table.Row>
+    </Section>
+  );
 };
 
 const ApcControlScene = (props, context) => {
@@ -135,10 +215,10 @@ const ApcControlScene = (props, context) => {
               charge={apc.charge}
             />
           </Table.Cell>
-          <Table.Cell textAlign="right">
+          <Table.Cell collapsing textAlign="right">
             {apc.load}
           </Table.Cell>
-          <Table.Cell>
+          <Table.Cell collapsing>
             <AreaStatusColorBox
               target={"equipment"}
               status={apc.eqp}
@@ -146,7 +226,7 @@ const ApcControlScene = (props, context) => {
               act={act}
             />
           </Table.Cell>
-          <Table.Cell>
+          <Table.Cell collapsing>
             <AreaStatusColorBox
               target={"lighting"}
               status={apc.lgt}
@@ -154,7 +234,7 @@ const ApcControlScene = (props, context) => {
               act={act}
             />
           </Table.Cell>
-          <Table.Cell>
+          <Table.Cell collapsing>
             <AreaStatusColorBox
               target={"environ"}
               status={apc.env}
@@ -167,79 +247,6 @@ const ApcControlScene = (props, context) => {
     </Table>
   );
 };
-
-const ControlPanel = (props, context) => {
-  const { act, data } = useBackend(context);
-  const emagged = data.emagged;
-  const logging = data.logging;
-  const [
-    sortByField,
-    setSortByField,
-  ] = useLocalState(context, 'sortByField', null);
-  return (
-    <Section>
-      <Box mb={1}>
-        <Box inline mr={2} color="label">
-          Sort by:
-        </Box>
-        <Button.Checkbox
-          checked={sortByField === 'name'}
-          content="Name"
-          onClick={() => setSortByField(sortByField !== 'name' && 'name')} />
-        <Button.Checkbox
-          checked={sortByField === 'charge'}
-          content="Charge"
-          onClick={() => setSortByField(
-            sortByField !== 'charge' && 'charge'
-          )} />
-        <Button.Checkbox
-          checked={sortByField === 'draw'}
-          content="Draw"
-          onClick={() => setSortByField(sortByField !== 'draw' && 'draw')} />
-        <Button color={(logging === 1 ? "bad" : "good")}
-          content={emagged
-            && (logging === 1 ? "Stop Logging" : "Restore Logging")}
-          onClick={() => act('toggle-logs')}
-          right={14}
-          position="fixed"
-        />
-        <Button content={emagged && ("Reset Console")}
-          onClick={() => act('restore-console')}
-          right={5}
-          position="fixed"
-        />
-        <Button color={'bad'}
-          right={0}
-          position="fixed"
-          tooltip={'Log Out'}
-          onClick={() => act('log-out')}>
-          Log Out
-        </Button>
-      </Box>
-      <Table.Row header>
-        <Table.Cell>
-          Area
-        </Table.Cell>
-        <Table.Cell collapsing>
-          Charge
-        </Table.Cell>
-        <Table.Cell textAlign="right">
-          Draw
-        </Table.Cell>
-        <Table.Cell collapsing title="Equipment">
-          Eqp
-        </Table.Cell>
-        <Table.Cell collapsing title="Lighting">
-          Lgt
-        </Table.Cell>
-        <Table.Cell collapsing title="Environment">
-          Env
-        </Table.Cell>
-      </Table.Row>
-    </Section>
-  );
-};
-
 
 const LogPanel = (props, context) => {
   const { data } = useBackend(context);
@@ -325,7 +332,7 @@ const AreaStatusColorBox = props => {
 const statusChange = status => {
   // mode flip power flip both flip
   // 0, 2, 3
-  return (status == 0) ? 2 : (status == 2) ? 3 : 0;
+  return (status === 0) ? 2 : (status === 2) ? 3 : 0;
 };
 
 AreaStatusColorBox.defaultHooks = pureComponentHooks;

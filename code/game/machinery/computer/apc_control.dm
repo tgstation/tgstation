@@ -11,7 +11,9 @@
 	var/should_log = TRUE
 	var/restoring = FALSE
 	var/list/logs
-	var/auth_id = "\[NULL\]"
+	var/auth_id = "\[NULL\]:"
+	ui_x = 700
+	ui_y = 800
 
 /obj/machinery/computer/apc_control/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -43,7 +45,7 @@
 	operator = user
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "ApcControl", "APC Controller", 500, 800, master_ui, state)
+		ui = new(user, src, ui_key, "ApcControl", "APC Controller", ui_x, ui_y, master_ui, state)
 		ui.open()
 
 
@@ -97,21 +99,26 @@
 /obj/machinery/computer/apc_control/ui_act(action, params)
 	if(..())
 		return
-	message_admins(action)
-	for(var/a in params)
-		message_admins("[a] [params[a]]")
 	switch(action)
 		if("log-in")
+			if(obj_flags & EMAGGED)
+				authenticated = TRUE
+				auth_id = "Unknown (Unknown):"
+				log_activity("[auth_id] attempted to log into the terminal")
+				return
 			var/obj/item/card/id/ID = operator.get_idcard(TRUE)
 			if(ID && istype(ID))
 				if(check_access(ID))
 					authenticated = TRUE
-					auth_id = "[ID.registered_name] ([ID.assignment])"
+					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] logged in to the terminal")
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 				else
-					auth_id = "[ID.registered_name] ([ID.assignment])"
+					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] attempted to log into the terminal")
+				return
+			auth_id = "Unknown (Unknown):"
+			log_activity("[auth_id] attempted to log into the terminal")
 		if("log-out")
 			log_activity("[auth_id] logged out of the terminal")
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
@@ -122,7 +129,7 @@
 			log_game("[key_name(operator)] set the logs of [src] in [AREACOORD(src)] [should_log ? "On" : "Off"]")
 		if("restore-console")
 			restoring = TRUE
-			addtimer(CALLBACK(src, .proc/restore_comp), rand(1,2) * 9)
+			addtimer(CALLBACK(src, .proc/restore_comp), rand(3,5) * 9)
 		if("access-apc")
 			var/ref = params["ref"]
 			playsound(src, "terminal_type", 50, FALSE)
@@ -194,8 +201,7 @@
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)
 		return
-	var/op_string = auth_id ? auth_id : "\[NULL OPERATOR\]"
-	LAZYADD(logs, "([station_time_timestamp()]): [op_string] [log_text]")
+	LAZYADD(logs, "([station_time_timestamp()]): [auth_id] [log_text]")
 
 /obj/machinery/computer/apc_control/proc/restore_comp()
 	obj_flags &= ~EMAGGED
