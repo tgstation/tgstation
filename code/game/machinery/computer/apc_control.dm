@@ -61,21 +61,7 @@
 
 	for(var/entry in logs)
 		data["logs"] += list(list("entry" = entry))
-	//Log in/out
-	//Check log, TAB
-	//EMAG warning
-	//"<font color='#FF0000'>WARNING: Logging functionality partially disabled from outside source.</font><br>"
-	//Restore button
-	//"<a href='?src=[REF(src)];restore_logging=1'>Restore logging functionality?</a><br>"
-	//"<a href='?src=[REF(src)];check_apcs=1'>Return</a>"
-	//Header
-	//"<i>Filters</i><br>"
-	//Search
-	//"<b>Name:</b> <a href='?src=[REF(src)];name_filter=1'>[result_filters["Name"] ? result_filters["Name"] : "None set"]</a><br>"
-	//Constrains? Should remove in favor of sorting
-	//"<b>Charge:</b> <a href='?src=[REF(src)];above_filter=1'>\>[result_filters["Charge Above"] ? result_filters["Charge Above"] : "NaN"]%</a> and <a href='?src=[REF(src)];below_filter=1'>\<[result_filters["Charge Below"] ? result_filters["Charge Below"] : "NaN"]%</a><br>"
-	//Toggle
-	//"<b>Accessible:</b> <a href='?src=[REF(src)];access_filter=1'>[result_filters["Responsive"] ? "Non-Responsive Only" : "All"]</a><br><br>"
+
 	for(var/apc in GLOB.apcs_list)
 		if(check_apc(apc))
 			var/obj/machinery/power/apc/A = apc
