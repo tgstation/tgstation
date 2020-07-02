@@ -21,6 +21,7 @@
 	a_intent = INTENT_HARM //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
+	buckle_prevents_pull = TRUE // No pulling loaded shit
 
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
@@ -51,6 +52,8 @@
 
 	var/obj/item/stock_parts/cell/cell
 	var/bloodiness = 0
+	///The amount of steps we should take until we rest for a time.
+	var/num_steps = 0
 
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
@@ -105,7 +108,7 @@
 		cell.forceMove(loc)
 		cell = null
 		visible_message("<span class='notice'>[user] crowbars out the power cell from [src].</span>",
-						"<span class='notice'>You pry the powercell out of [src].</span>")
+						"<span class='notice'>You pry the power cell out of [src].</span>")
 	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
@@ -458,25 +461,17 @@
 		return
 	if(on)
 		var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
-		var/num_steps = 0
-		switch(speed)
-			if(0)
-				// do nothing
-			if(1)
-				num_steps = 10
-			if(2)
-				num_steps = 5
-			if(3)
-				num_steps = 3
+		if(!speed)//Devide by zero man bad
+			return
+		num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
+		if(mode != BOT_IDLE)
+			START_PROCESSING(SSfastprocess, src)
 
-		if(num_steps)
-			process_bot()
-			num_steps--
-			if(mode != BOT_IDLE)
-				var/process_timer = addtimer(CALLBACK(src, .proc/process_bot), 2, TIMER_LOOP|TIMER_STOPPABLE)
-				addtimer(CALLBACK(GLOBAL_PROC, /proc/deltimer, process_timer), (num_steps*2) + 1)
-
-/mob/living/simple_animal/bot/mulebot/proc/process_bot()
+/mob/living/simple_animal/bot/mulebot/process()
+	if(num_steps <= 0)
+		STOP_PROCESSING(SSfastprocess, src)
+		return
+	num_steps--
 	if(!on || client)
 		return
 	update_icon()
@@ -664,7 +659,7 @@
 				if(!paicard)
 					log_combat(src, L, "knocked down")
 					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-					L.Paralyze(160)
+					L.Knockdown(8 SECONDS)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()

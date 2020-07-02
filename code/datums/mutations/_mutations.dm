@@ -23,7 +23,7 @@
 	var/instability = 0 //instability the holder gets when the mutation is not native
 	var/blocks = 4 //Amount of those big blocks with gene sequences
 	var/difficulty = 8 //Amount of missing sequences. Sometimes it removes an entire pair for 2 points
-	var/timed = FALSE   //Boolean to easily check if we're going to self destruct
+	var/timed = FALSE   //Boolean to easily check if we're going to self-destruct
 	var/alias           //'Mutation #49', decided every round to get some form of distinction between undiscovered mutations
 	var/scrambled = FALSE //Wheter we can read it if it's active. To avoid cheesing with mutagen
 	var/class           //Decides player accesibility, sorta

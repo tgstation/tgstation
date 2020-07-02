@@ -419,7 +419,7 @@ export const CentcomPodLauncherContent = (props, context) => {
                 This gondola can control when he wants to deliver his supplies
                 if he has a smart enough mind, so offer up his body to ghosts
                 for maximum enjoyment. (Make sure to turn off bluespace and
-                set a arbitrarily high open-time if you do!
+                set an arbitrarily high open-time if you do!
               `}
               onClick={() => act('styleGondola')} />
             <Button

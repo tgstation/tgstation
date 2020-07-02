@@ -1,4 +1,4 @@
-/obj/structure/AIcore
+/obj/structure/ai_core
 	density = TRUE
 	anchored = FALSE
 	name = "\improper AI core"
@@ -12,12 +12,12 @@
 	var/obj/item/mmi/brain
 	var/can_deconstruct = TRUE
 
-/obj/structure/AIcore/Initialize()
+/obj/structure/ai_core/Initialize()
 	. = ..()
 	laws = new
 	laws.set_laws_config()
 
-/obj/structure/AIcore/handle_atom_del(atom/A)
+/obj/structure/ai_core/handle_atom_del(atom/A)
 	if(A == circuit)
 		circuit = null
 		if((state != GLASS_CORE) && (state != AI_READY_CORE))
@@ -28,7 +28,7 @@
 	. = ..()
 
 
-/obj/structure/AIcore/Destroy()
+/obj/structure/ai_core/Destroy()
 	if(circuit)
 		qdel(circuit)
 		circuit = null
@@ -37,7 +37,7 @@
 		brain = null
 	return ..()
 
-/obj/structure/AIcore/latejoin_inactive
+/obj/structure/ai_core/latejoin_inactive
 	name = "networked AI core"
 	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
 	can_deconstruct = FALSE
@@ -48,12 +48,12 @@
 	var/safety_checks = TRUE
 	var/active = TRUE
 
-/obj/structure/AIcore/latejoin_inactive/examine(mob/user)
+/obj/structure/ai_core/latejoin_inactive/examine(mob/user)
 	. = ..()
 	. += "Its transmitter seems to be <b>[active? "on" : "off"]</b>."
 	. += "<span class='notice'>You could [active? "deactivate" : "activate"] it with a multitool.</span>"
 
-/obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
+/obj/structure/ai_core/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
 		return FALSE
 	if(!safety_checks)
@@ -72,22 +72,22 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/AIcore/latejoin_inactive/attackby(obj/item/P, mob/user, params)
+/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/P, mob/user, params)
 	if(P.tool_behaviour == TOOL_MULTITOOL)
 		active = !active
 		to_chat(user, "<span class='notice'>You [active? "activate" : "deactivate"] \the [src]'s transmitters.</span>")
 		return
 	return ..()
 
-/obj/structure/AIcore/latejoin_inactive/Initialize()
+/obj/structure/ai_core/latejoin_inactive/Initialize()
 	. = ..()
 	GLOB.latejoin_ai_cores += src
 
-/obj/structure/AIcore/latejoin_inactive/Destroy()
+/obj/structure/ai_core/latejoin_inactive/Destroy()
 	GLOB.latejoin_ai_cores -= src
 	return ..()
 
-/obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
+/obj/structure/ai_core/attackby(obj/item/P, mob/user, params)
 	if(P.tool_behaviour == TOOL_WRENCH)
 		return default_unfasten_wrench(user, P, 20)
 	if(!anchored)
@@ -175,11 +175,11 @@
 						to_chat(user, "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>")
 					return
 
-				if(istype(P, /obj/item/aiModule))
+				if(istype(P, /obj/item/ai_module))
 					if(brain && brain.laws.id != DEFAULT_AI_LAWID)
 						to_chat(user, "<span class='warning'>The installed [brain.name] already has set laws!</span>")
 						return
-					var/obj/item/aiModule/module = P
+					var/obj/item/ai_module/module = P
 					module.install(laws, user)
 					return
 
@@ -255,7 +255,7 @@
 					return
 	return ..()
 
-/obj/structure/AIcore/update_icon_state()
+/obj/structure/ai_core/update_icon_state()
 	switch(state)
 		if(EMPTY_CORE)
 			icon_state = "0"
@@ -273,7 +273,7 @@
 		if(AI_READY_CORE)
 			icon_state = "ai-empty"
 
-/obj/structure/AIcore/deconstruct(disassembled = TRUE)
+/obj/structure/ai_core/deconstruct(disassembled = TRUE)
 	if(state == GLASS_CORE)
 		new /obj/item/stack/sheet/rglass(loc, 2)
 	if(state >= CABLED_CORE)
@@ -284,13 +284,13 @@
 	new /obj/item/stack/sheet/plasteel(loc, 4)
 	qdel(src)
 
-/obj/structure/AIcore/deactivated
+/obj/structure/ai_core/deactivated
 	name = "inactive AI"
 	icon_state = "ai-empty"
 	anchored = TRUE
 	state = AI_READY_CORE
 
-/obj/structure/AIcore/deactivated/Initialize()
+/obj/structure/ai_core/deactivated/Initialize()
 	. = ..()
 	circuit = new(src)
 
@@ -310,7 +310,7 @@ That prevents a few funky behaviors.
 			return FALSE
 	return TRUE
 
-/obj/structure/AIcore/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
+/obj/structure/ai_core/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(state != AI_READY_CORE || !..())
 		return
  //Transferring a carded AI to a core.

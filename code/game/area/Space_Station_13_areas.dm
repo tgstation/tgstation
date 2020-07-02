@@ -2,7 +2,7 @@
 
 ### This file contains a list of all the areas in your station. Format is as follows:
 
-/area/CATEGORY/OR/DESCRIPTOR/NAME 	(you can make as many subdivisions as you want)
+/area/CATEGORY/OR/DESCRIPTOR/NAME   (you can make as many subdivisions as you want)
 	name = "NICE NAME" 				(not required but makes things really nice)
 	icon = 'ICON FILENAME' 			(defaults to 'icons/turf/areas.dmi')
 	icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
@@ -1120,6 +1120,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Technical Storage"
 	icon_state = "aux_storage"
 
+/area/storage/mining
+	name = "Public Mining Storage"
+	icon_state = "mining"
+
 //Construction
 
 /area/construction
@@ -1217,11 +1221,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "AI Satellite Antechamber"
 	icon_state = "ai_interior"
 
-/area/ai_monitored/turret_protected/AIsatextAS
+/area/ai_monitored/turret_protected/ai_sat_ext_as
 	name = "AI Sat Ext"
 	icon_state = "ai_sat_east"
 
-/area/ai_monitored/turret_protected/AIsatextAP
+/area/ai_monitored/turret_protected/ai_sat_ext_ap
 	name = "AI Sat Ext"
 	icon_state = "ai_sat_west"
 

@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	desc = "Some rods. Can be used for building or something."
 	singular_name = "metal rod"
 	icon_state = "rods"
-	item_state = "rods"
+	inhand_icon_state = "rods"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 9
@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	desc = "Treated, specialized metal rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
 	singular_name = "heat resistant rod"
 	icon_state = "rods"
-	item_state = "rods"
+	inhand_icon_state = "rods"
 	color = "#5286b9ff"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_NORMAL

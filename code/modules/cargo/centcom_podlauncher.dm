@@ -19,7 +19,7 @@
 //Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc
 //Some effect groups are choices, while other are booleans. This is because some effects can stack, while others dont (ex: you can stack explosion and quiet, but you cant stack ordered launch and random launch)
 /datum/centcom_podlauncher
-	var/static/list/ignored_atoms = typecacheof(list(null, /mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object, /obj/effect/particle_effect/sparks, /obj/effect/DPtarget, /obj/effect/supplypod_selector ))
+	var/static/list/ignored_atoms = typecacheof(list(null, /mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object, /obj/effect/particle_effect/sparks, /obj/effect/dp_target, /obj/effect/supplypod_selector ))
 	var/turf/oldTurf //Keeps track of where the user was at if they use the "teleport to centcom" button, so they can go back
 	var/client/holder //client of whoever is using this datum
 	var/area/bay //What bay we're using to launch shit from.
@@ -48,7 +48,7 @@
 		var/mob/M = H
 		holder = M.client //if its a mob, assign the mob's client to holder
 	bay =  locate(/area/centcom/supplypod/loading/one) in GLOB.sortedAreas //Locate the default bay (one) from the centcom map
-	temp_pod = new(locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas) //Create a new temp_pod in the podStorage area on centcom (so users are free to look at it and change other variables if needed)
+	temp_pod = new(locate(/area/centcom/supplypod/pod_storage) in GLOB.sortedAreas) //Create a new temp_pod in the podStorage area on centcom (so users are free to look at it and change other variables if needed)
 	orderedArea = createOrderedArea(bay) //Order all the turfs in the selected bay (top left to bottom right) to a single list. Used for the "ordered" mode (launchChoice = 1)
 
 /datum/centcom_podlauncher/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, \
@@ -79,7 +79,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	data["effectLimb"] = temp_pod.effectLimb //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
 	data["effectOrgans"] = temp_pod.effectOrgans //If true, yeets the organs out of any bodies caught under the pod when it lands
 	data["effectBluespace"] = temp_pod.bluespace //If true, the pod deletes (in a shower of sparks) after landing
-	data["effectStealth"] = temp_pod.effectStealth //If true, a target icon isnt displayed on the turf where the pod will land
+	data["effectStealth"] = temp_pod.effectStealth //If true, a target icon isn't displayed on the turf where the pod will land
 	data["effectQuiet"] = temp_pod.effectQuiet //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
 	data["effectMissile"] = temp_pod.effectMissile //If true, the pod deletes the second it lands. If you give it an explosion, it will act like a missile exploding as it hits the ground
 	data["effectCircle"] = temp_pod.effectCircle //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
@@ -184,7 +184,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 				if (isnull(boomInput[i]))
 					return
 				if (!isnum(boomInput[i])) //If the user doesn't input a number, set that specific explosion value to zero
-					alert(usr, "That wasnt a number! Value set to default (zero) instead.")
+					alert(usr, "That wasn't a number! Value set to default (zero) instead.")
 					boomInput = 0
 			explosionChoice = 1
 			temp_pod.explosionSize = boomInput
@@ -206,7 +206,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			if (isnull(damageInput))
 				return
 			if (!isnum(damageInput)) //Sanitize the input for damage to deal.s
-				alert(usr, "That wasnt a number! Value set to default (zero) instead.")
+				alert(usr, "That wasn't a number! Value set to default (zero) instead.")
 				damageInput = 0
 			damageChoice = 1
 			temp_pod.damage = damageInput
@@ -290,7 +290,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			if (isnull(timeInput))
 				return
 			if (!isnum(timeInput)) //Sanitize input, if it doesnt check out, error and set to default
-				alert(usr, "That wasnt a number! Value set to default ([initial(temp_pod.fallDuration)*0.1]) instead.")
+				alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.fallDuration)*0.1]) instead.")
 				timeInput = initial(temp_pod.fallDuration)
 			temp_pod.fallDuration = 10 * timeInput
 			. = TRUE
@@ -302,7 +302,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			if (isnull(timeInput))
 				return
 			if (!isnum(timeInput)) //Sanitize input, if it doesnt check out, error and set to default
-				alert(usr, "That wasnt a number! Value set to default ([initial(temp_pod.landingDelay)*0.1]) instead.")
+				alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.landingDelay)*0.1]) instead.")
 				timeInput = initial(temp_pod.landingDelay)
 			temp_pod.landingDelay = 10 * timeInput
 			. = TRUE
@@ -314,7 +314,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			if (isnull(timeInput))
 				return
 			if (!isnum(timeInput)) //Sanitize input
-				alert(usr, "That wasnt a number! Value set to default ([initial(temp_pod.openingDelay)*0.1]) instead.")
+				alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.openingDelay)*0.1]) instead.")
 				timeInput = initial(temp_pod.openingDelay)
 			temp_pod.openingDelay = 10 *  timeInput
 			. = TRUE
@@ -326,13 +326,13 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			if (isnull(timeInput))
 				return
 			if (!isnum(timeInput))
-				alert(usr, "That wasnt a number! Value set to default ([initial(temp_pod.departureDelay)*0.1]) instead.")
+				alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.departureDelay)*0.1]) instead.")
 				timeInput = initial(temp_pod.departureDelay)
 			temp_pod.departureDelay = 10 * timeInput
 			. = TRUE
 
 		////////////////////////////ADMIN SOUNDS//////////////////
-		if("fallingSound") //Admin sound from a local file that plays when the pod lands
+		if("fallSound") //Admin sound from a local file that plays when the pod lands
 			if ((temp_pod.fallingSound) != initial(temp_pod.fallingSound))
 				temp_pod.fallingSound = initial(temp_pod.fallingSound)
 				temp_pod.fallingSoundLength = initial(temp_pod.fallingSoundLength)
@@ -344,7 +344,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			if (isnull(timeInput))
 				return
 			if (!isnum(timeInput))
-				alert(usr, "That wasnt a number! Value set to default ([initial(temp_pod.fallingSoundLength)*0.1]) instead.")
+				alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.fallingSoundLength)*0.1]) instead.")
 			temp_pod.fallingSound = soundInput
 			temp_pod.fallingSoundLength = 10 * timeInput
 			. = TRUE
@@ -527,7 +527,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	numTurfs = 0 //Counts the number of turfs that can be launched (remember, supplypods either launch all at once or one turf-worth of items at a time)
 	acceptableTurfs = list()
 	for (var/turf/T in orderedArea) //Go through the orderedArea list
-		if (typecache_filter_list_reverse(T.contents, ignored_atoms).len != 0) //if there is something in this turf that isnt in the blacklist, we consider this turf "acceptable" and add it to the acceptableTurfs list
+		if (typecache_filter_list_reverse(T.contents, ignored_atoms).len != 0) //if there is something in this turf that isn't in the blacklist, we consider this turf "acceptable" and add it to the acceptableTurfs list
 			acceptableTurfs.Add(T) //Because orderedArea was an ordered linear list, acceptableTurfs will be as well.
 			numTurfs ++
 
@@ -553,7 +553,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = DuplicateObject(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
 	toLaunch.bay = bay //Bay is currently a nonstatic expression, so it cant go into toLaunch using DuplicateObject
 	toLaunch.update_icon()//we update_icon() here so that the door doesnt "flicker on" right after it lands
-	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/flyMeToTheMoon]
+	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/fly_me_to_the_moon]
 	toLaunch.forceMove(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
 		if(launchRandomItem)
@@ -569,7 +569,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		else
 			for (var/atom/movable/O in launchList) //If we aren't cloning the objects, just go through the launchList
 				O.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
-	new /obj/effect/DPtarget(A, toLaunch) //Then, create the DPTarget effect, which will eventually forceMove the temp_pod to it's location
+	new /obj/effect/dp_target(A, toLaunch) //Then, create the DPTarget effect, which will eventually forceMove the temp_pod to it's location
 	if (launchClone)
 		launchCounter++ //We only need to increment launchCounter if we are cloning objects.
 		//If we aren't cloning objects, taking and removing the first item each time from the acceptableTurfs list will inherently iterate through the list in order

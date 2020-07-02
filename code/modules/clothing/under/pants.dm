@@ -5,7 +5,7 @@
 	can_adjust = FALSE
 	custom_price = 60
 	icon = 'icons/obj/clothing/under/shorts_pants.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
+	worn_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
 
 /obj/item/clothing/under/pants/classicjeans
 	name = "classic jeans"

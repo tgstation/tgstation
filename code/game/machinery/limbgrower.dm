@@ -98,10 +98,10 @@
 				return
 
 
-			var/synth_cost = being_built.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff
+			var/synth_cost = being_built.reagents_list[/datum/reagent/medicine/c2/instabitaluri]*prod_coeff
 			var/power = max(2000, synth_cost/5)
 
-			if(reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, being_built.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff))
+			if(reagents.has_reagent(/datum/reagent/medicine/c2/instabitaluri, being_built.reagents_list[/datum/reagent/medicine/c2/instabitaluri]*prod_coeff))
 				busy = TRUE
 				use_power(power)
 				flick("limbgrower_fill",src)
@@ -115,8 +115,8 @@
 	return
 
 /obj/machinery/limbgrower/proc/build_item()
-	if(reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, being_built.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff))	//sanity check, if this happens we are in big trouble
-		reagents.remove_reagent(/datum/reagent/medicine/C2/instabitaluri,being_built.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff)
+	if(reagents.has_reagent(/datum/reagent/medicine/c2/instabitaluri, being_built.reagents_list[/datum/reagent/medicine/c2/instabitaluri]*prod_coeff))	//sanity check, if this happens we are in big trouble
+		reagents.remove_reagent(/datum/reagent/medicine/c2/instabitaluri,being_built.reagents_list[/datum/reagent/medicine/c2/instabitaluri]*prod_coeff)
 		var/buildpath = being_built.build_path
 		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
 			build_limb(buildpath)
@@ -217,12 +217,12 @@
 	return dat
 
 /obj/machinery/limbgrower/proc/can_build(datum/design/D)
-	return (reagents.has_reagent(/datum/reagent/medicine/C2/instabitaluri, D.reagents_list[/datum/reagent/medicine/C2/instabitaluri]*prod_coeff)) //Return whether the machine has enough instabitaluri to produce the design
+	return (reagents.has_reagent(/datum/reagent/medicine/c2/instabitaluri, D.reagents_list[/datum/reagent/medicine/c2/instabitaluri]*prod_coeff)) //Return whether the machine has enough instabitaluri to produce the design
 
 /obj/machinery/limbgrower/proc/get_design_cost(datum/design/D)
 	var/dat
-	if(D.reagents_list[/datum/reagent/medicine/C2/instabitaluri])
-		dat += "[D.reagents_list[/datum/reagent/medicine/C2/instabitaluri] * prod_coeff] SynthFlesh (instabitaluri)"
+	if(D.reagents_list[/datum/reagent/medicine/c2/instabitaluri])
+		dat += "[D.reagents_list[/datum/reagent/medicine/c2/instabitaluri] * prod_coeff] SynthFlesh (instabitaluri)"
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)

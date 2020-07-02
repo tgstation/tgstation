@@ -28,7 +28,7 @@
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
-	item_state = "backing"
+	inhand_icon_state = "backing"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -84,7 +84,7 @@
 		unwrenched_sign.desc = "[desc] It can be placed on a wall."
 		unwrenched_sign.icon_state = icon_state
 		unwrenched_sign.sign_path = type
-		unwrenched_sign.custom_materials = custom_materials //This is here so picture frames and wooden things don't get messed up.
+		unwrenched_sign.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
 		unwrenched_sign.is_editable = is_editable
 	unwrenched_sign.obj_integrity = obj_integrity //Transfer how damaged it is.
 	unwrenched_sign.setDir(dir)
@@ -181,7 +181,7 @@
 		else
 			desc = initial(desc) //If you're changing it to a blank sign, just use obj/item/sign's description.
 		icon_state = initial(sign_type.icon_state)
-		sign_path = sign_type	
+		sign_path = sign_type
 		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
 		return
 	return ..()

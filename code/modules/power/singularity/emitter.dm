@@ -376,7 +376,7 @@
 	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	var/view_range = 12
+	var/view_range = 4.5
 	var/datum/action/innate/protoemitter/firing/auto
 
 //BUCKLE HOOKS
@@ -391,7 +391,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
+			buckled_mob.client.view_size.resetToDefault()
 	auto.Remove(buckled_mob)
 	. = ..()
 
@@ -407,7 +407,7 @@
 	M.pixel_y = 14
 	layer = 4.1
 	if(M.client)
-		M.client.change_view(view_range)
+		M.client.view_size.setTo(view_range)
 	if(!auto)
 		auto = new()
 	auto.Grant(M, src)

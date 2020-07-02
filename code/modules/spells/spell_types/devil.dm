@@ -24,7 +24,7 @@
 	item_type = /obj/item/instrument/violin/golden
 	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
 	invocation_type = "whisper"
-	invocation = "I aint have this much fun since Georgia."
+	invocation = "I ain't had this much fun since Georgia."
 	action_icon_state = "golden_violin"
 	name = "Summon golden violin"
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'

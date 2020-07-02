@@ -30,37 +30,11 @@
 
 	var/datum/tgs_chat_command/sc = custom_commands[command]
 	if(sc)
-		var/textResponse = sc.Run(u, params)
+		var/text_response = sc.Run(u, params)
 		var/list/topic_response = list()
-		if(textResponse != null)
-			topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE_MESSAGE] = textResponse
-		return topic_response
+		if(!istext(text_response))
+			TGS_ERROR_LOG("Custom command [command] should return a string! Got: \"[text_response]\"")
+			text_response = null
+		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE_MESSAGE] = text_response
+		return json_encode(topic_response)
 	return TopicResponse("Unknown custom chat command: [command]!")
-
-/*
-
-The MIT License
-
-Copyright (c) 2020 Jordan Brown
-
-Permission is hereby granted, free of charge,
-to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to
-deal in the Software without restriction, including
-without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom
-the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice
-shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/

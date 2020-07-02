@@ -3,7 +3,7 @@
 	desc = "Something has gone wrong!"
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "plasma"
-	item_state = ""	//no inhands
+	inhand_icon_state = ""	//no inhands
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_SMALL
 	var/above_suit = FALSE
@@ -88,7 +88,7 @@
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
-	item_state = "waistcoat"
+	inhand_icon_state = "waistcoat"
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -96,7 +96,7 @@
 	name = "maid apron"
 	desc = "The best part of a maid costume."
 	icon_state = "maidapron"
-	item_state = "maidapron"
+	inhand_icon_state = "maidapron"
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -187,7 +187,7 @@
 	desc = "An award for distinguished combat and sacrifice in defence of Nanotrasen's commercial interests. Often awarded to security staff."
 
 /obj/item/clothing/accessory/medal/silver/excellence
-	name = "the head of personnel award for outstanding achievement in the field of excellence"
+	name = "\proper the head of personnel award for outstanding achievement in the field of excellence"
 	desc = "Nanotrasen's dictionary defines excellence as \"the quality or condition of being excellent\". This is awarded to those rare crewmembers who fit that definition."
 
 /obj/item/clothing/accessory/medal/gold
@@ -232,7 +232,7 @@
 
 /obj/item/clothing/accessory/armband
 	name = "red armband"
-	desc = "An fancy red armband!"
+	desc = "A fancy red armband!"
 	icon_state = "redband"
 	attachment_slot = null
 

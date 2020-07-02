@@ -1,7 +1,7 @@
 
 /datum/chemical_reaction/sterilizine
 	results = list(/datum/reagent/space_cleaner/sterilizine = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/chlorine = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/c2/multiver = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/lube
 	results = list(/datum/reagent/lube = 4)
@@ -401,14 +401,14 @@
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/drug/space_drugs = 1, /datum/reagent/medicine/cryoxadone = 1, /datum/reagent/consumable/triple_citrus = 1)
 
 /datum/chemical_reaction/life
-	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/C2/instabitaluri = 1, /datum/reagent/blood = 1)
+	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/instabitaluri = 1, /datum/reagent/blood = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
 	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life (hostile)") //defaults to HOSTILE_SPAWN
 
 /datum/chemical_reaction/life_friendly
-	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/C2/instabitaluri = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/instabitaluri = 1, /datum/reagent/consumable/sugar = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/life_friendly/on_reaction(datum/reagents/holder, created_volume)

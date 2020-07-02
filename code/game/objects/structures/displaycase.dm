@@ -293,7 +293,7 @@
 		return
 
 	if(is_locked)
-		to_chat(user, "<span class='warning'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
+		to_chat(user, "<span class='warning'>The case is shut tight with an old-fashioned physical lock. Maybe you should ask the curator for the key?</span>")
 		return
 
 	if(!added_roundstart)
@@ -376,7 +376,7 @@
 	glass_fix = FALSE //Fixable with tools instead.
 	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
-	///The Account which will recieve payment for purchases. Set by the first ID to swipe the tray.
+	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
 
 /obj/structure/displaycase/forsale/update_icon()	//remind me to fix my shitcode later

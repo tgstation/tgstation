@@ -383,6 +383,30 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return locate(x,y,A.z)
 
+/**
+  * Get ranged target turf, but with direct targets as opposed to directions
+  *
+  * Starts at atom A and gets the exact angle between A and target
+  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+  * Arguments:
+  * * A - Initial Firer / Position
+  * * target - Target to aim towards
+  * * range - Distance of returned target turf from A
+  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+  */
+/proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
+	var/angle = ATAN2(target.x - A.x, target.y - A.y)
+	if(offset)
+		angle += offset
+	var/turf/T = get_turf(A)
+	for(var/i in 1 to range)
+		var/turf/check = locate(A.x + cos(angle) * i, A.y + sin(angle) * i, A.z)
+		if(!check)
+			break
+		T = check
+
+	return T
+
 
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
@@ -1076,6 +1100,12 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		if (isnull(value))
 			return
 	value = trim(value)
+
+	var/random = FALSE
+	if(findtext(value, "?"))
+		value = replacetext(value, "?", "")
+		random = TRUE
+
 	if(!isnull(value) && value != "")
 		matches = filter_fancy_list(matches, value)
 
@@ -1085,10 +1115,12 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	var/chosen
 	if(matches.len==1)
 		chosen = matches[1]
+	else if(random)
+		chosen = pick(matches) || null
 	else
 		chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in sortList(matches)
-		if(!chosen)
-			return
+	if(!chosen)
+		return
 	chosen = matches[chosen]
 	return chosen
 
@@ -1494,28 +1526,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		for(var/i in 1 to items_list[each_item])
 			new each_item(where_to)
 
-//sends a message to chat
-//config_setting should be one of the following
-//null - noop
-//empty string - use TgsTargetBroadcast with admin_only = FALSE
-//other string - use TgsChatBroadcast with the tag that matches config_setting, only works with TGS4, if using TGS3 the above method is used
-/proc/send2chat(message, config_setting)
-	if(config_setting == null || !world.TgsAvailable())
-		return
-
-	var/datum/tgs_version/version = world.TgsVersion()
-	if(config_setting == "" || version.suite == 3)
-		world.TgsTargetedChatBroadcast(message, FALSE)
-		return
-
-	var/list/channels_to_use = list()
-	for(var/I in world.TgsChatChannelInfo())
-		var/datum/tgs_chat_channel/channel = I
-		if(channel.tag == config_setting)
-			channels_to_use += channel
-
-	if(channels_to_use.len)
-		world.TgsChatBroadcast()
 
 /proc/num2sign(numeric)
 	if(numeric > 0)

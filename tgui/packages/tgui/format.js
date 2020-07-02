@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { clamp, round, toFixed } from 'common/math';
 
 const SI_SYMBOLS = [

@@ -8,7 +8,7 @@
 	desc = "Real bruh moment if you ever see this. Probably tell a c*der or something."
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "smokewhite"
-	item_state = "smoke"
+	inhand_icon_state = "smoke"
 	slot_flags = ITEM_SLOT_BELT
 	///It's extremely important to keep this list up to date. It helps to generate the insightful description of the smokebomb
 	var/static/list/bruh_moment = list("Dank", "Hip", "Lit", "Based", "Robust", "Bruh", "Nyagger")

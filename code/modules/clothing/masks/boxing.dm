@@ -2,7 +2,7 @@
 	name = "balaclava"
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
-	item_state = "balaclava"
+	inhand_icon_state = "balaclava"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
@@ -15,14 +15,14 @@
 	name = "infiltrator balaclava"
 	desc = "It makes you feel safe in your anonymity, but for a stealth outfit you sure do look obvious that you're up to no good. It seems to have a built in heads-up display."
 	icon_state = "syndicate_balaclava"
-	item_state = "syndicate_balaclava"
+	inhand_icon_state = "syndicate_balaclava"
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 100, "acid" = 40)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	
+
 	var/voice_unknown = FALSE ///This makes it so that your name shows up as unknown when wearing the mask.
 
 /obj/item/clothing/mask/infiltrator/equipped(mob/living/carbon/human/user, slot)
@@ -47,7 +47,7 @@
 	name = "Luchador Mask"
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
 	icon_state = "luchag"
-	item_state = "luchag"
+	inhand_icon_state = "luchag"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	modifies_speech = TRUE
@@ -80,19 +80,19 @@
 	name = "Tecnicos Mask"
 	desc = "Worn by robust fighters who uphold justice and fight honorably."
 	icon_state = "luchador"
-	item_state = "luchador"
+	inhand_icon_state = "luchador"
 
 /obj/item/clothing/mask/luchador/rudos
 	name = "Rudos Mask"
 	desc = "Worn by robust fighters who are willing to do anything to win."
 	icon_state = "luchar"
-	item_state = "luchar"
+	inhand_icon_state = "luchar"
 
 /obj/item/clothing/mask/russian_balaclava
 	name = "russian balaclava"
 	desc = "Protects your face from snow."
 	icon_state = "rus_balaclava"
-	item_state = "rus_balaclava"
+	inhand_icon_state = "rus_balaclava"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL

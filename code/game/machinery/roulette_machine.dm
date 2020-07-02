@@ -289,7 +289,7 @@
 		if(ROULETTE_BET_1TO18)
 			return (rolled_number >= 1 && rolled_number <= 18) //between 1 to 18
 		if(ROULETTE_BET_19TO36)
-			return rolled_number > 18 //between 19 to 36, no need to check bounds because we wont go higher anyways
+			return rolled_number > 18 //between 19 to 36, no need to check bounds because we won't go higher anyways
 		if(ROULETTE_BET_BLACK)
 			return "black" == numbers["[rolled_number]"]//Check if our number is black in the numbers dict
 		if(ROULETTE_BET_RED)
@@ -409,7 +409,7 @@
 
 	new /obj/machinery/roulette(toLaunch)
 
-	new /obj/effect/DPtarget(drop_location(), toLaunch)
+	new /obj/effect/dp_target(drop_location(), toLaunch)
 	qdel(src)
 
 #undef ROULETTE_SINGLES_PAYOUT

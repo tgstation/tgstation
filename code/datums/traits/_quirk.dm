@@ -10,6 +10,8 @@
 	var/medical_record_text //This text will appear on medical records for the trait. Not yet implemented
 	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
 	var/mob_trait //if applicable, apply and remove this mob trait
+	///Amount of points this trait is worth towards the hardcore character mode; minus points implies a positive quirk, positive means its hard. This is used to pick the quirks assigned to a hardcore character. 0 means its not available to hardcore draws.
+	var/hardcore_value = 0
 	var/mob/living/quirk_holder
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
@@ -65,7 +67,14 @@
 		return
 	on_process()
 
-/mob/living/proc/get_trait_string(medical, category) //helper string. gets a string of all the traits the mob has
+/**
+  * get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria
+  *
+  * Arguments:
+  * * Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name
+  * * Category- Which types of quirks we want to print out. Defaults to everything
+  */
+/mob/living/proc/get_quirk_string(medical, category = CAT_QUIRK_ALL) //helper string. gets a string of all the quirks the mob has
 	var/list/dat = list()
 	switch(category)
 		if(CAT_QUIRK_ALL)

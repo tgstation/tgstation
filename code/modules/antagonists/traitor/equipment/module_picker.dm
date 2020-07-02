@@ -11,14 +11,14 @@
 /datum/module_picker/New()
 	possible_modules = get_malf_modules()
 
-/proc/cmp_malfmodules_priority(datum/AI_Module/A, datum/AI_Module/B)
+/proc/cmp_malfmodules_priority(datum/ai_module/A, datum/ai_module/B)
 	return B.cost - A.cost
 
 /proc/get_malf_modules()
 	var/list/filtered_modules = list()
 
 	for(var/path in GLOB.malf_modules)
-		var/datum/AI_Module/AM = new path
+		var/datum/ai_module/AM = new path
 		if((AM.power_type == /datum/action/innate/ai) && !AM.upgrade)
 			continue
 		if(!filtered_modules[AM.category])
@@ -52,7 +52,7 @@
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
 		for(var/module in possible_modules[category])
-			var/datum/AI_Module/AM = possible_modules[category][module]
+			var/datum/ai_module/AM = possible_modules[category][module]
 			cat["items"] += list(list(
 				"name" = AM.name,
 				"cost" = AM.cost,
@@ -74,7 +74,7 @@
 			for(var/category in possible_modules)
 				buyable_items += possible_modules[category]
 			for(var/key in buyable_items)
-				var/datum/AI_Module/AM = buyable_items[key]
+				var/datum/ai_module/AM = buyable_items[key]
 				if(AM.name == item_name)
 					purchase_module(usr, AM)
 					return TRUE
@@ -85,7 +85,7 @@
 			compact_mode = !compact_mode
 			return TRUE
 
-/datum/module_picker/proc/purchase_module(mob/living/silicon/ai/AI, datum/AI_Module/AM)
+/datum/module_picker/proc/purchase_module(mob/living/silicon/ai/AI, datum/ai_module/AM)
 	if(!istype(AM))
 		return
 	if(!AI || AI.stat == DEAD)

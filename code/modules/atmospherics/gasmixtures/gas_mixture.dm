@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return removed
 
-	///Removes a amount of a specific gas from the gas_mixture.
+	///Removes an amount of a specific gas from the gas_mixture.
 	///Returns: gas_mixture with the gas removed
 /datum/gas_mixture/proc/remove_specific(gas_id, amount)
 	var/list/cached_gases = gases
@@ -486,3 +486,46 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 10/20*5 = 2.5
 10 = 2.5/5*20
 **/
+
+/// Pumps gas from src to output_air. Amount depends on target_pressure
+/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure)
+	var/output_starting_pressure = output_air.return_pressure()
+
+	if((target_pressure - output_starting_pressure) < 0.01)
+		//No need to pump gas if target is already reached!
+		return FALSE
+
+	//Calculate necessary moles to transfer using PV=nRT
+	if((total_moles() > 0) && (temperature>0))
+		var/pressure_delta = target_pressure - output_starting_pressure
+		var/transfer_moles = pressure_delta*output_air.volume/(temperature * R_IDEAL_GAS_EQUATION)
+
+		//Actually transfer the gas
+		var/datum/gas_mixture/removed = remove(transfer_moles)
+		output_air.merge(removed)
+		return TRUE
+	return FALSE
+
+/// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
+/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure)
+	var/output_starting_pressure = output_air.return_pressure()
+	var/input_starting_pressure = return_pressure()
+
+	if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
+		//No need to pump gas if target is already reached or input pressure is too low
+		//Need at least 10 KPa difference to overcome friction in the mechanism
+		return FALSE
+
+	//Calculate necessary moles to transfer using PV = nRT
+	if((total_moles() > 0) && (temperature>0))
+		var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
+		//Can not have a pressure delta that would cause output_pressure > input_pressure
+
+		var/transfer_moles = pressure_delta*output_air.volume/(temperature * R_IDEAL_GAS_EQUATION)
+
+		//Actually transfer the gas
+		var/datum/gas_mixture/removed = remove(transfer_moles)
+		output_air.merge(removed)
+
+		return TRUE
+	return FALSE

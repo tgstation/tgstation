@@ -14,6 +14,11 @@
 	. = ..()
 	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
 
+/// Lets people walk into chasms.
+/turf/open/chasm/CanAllowThrough(atom/movable/AM, turf/target)
+	. = ..()
+	return TRUE
+
 /turf/open/chasm/proc/set_target(turf/target)
 	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
 	chasm_component.target_turf = target
@@ -85,6 +90,15 @@
 	light_power = 0.65 //less bright, too
 	light_color = LIGHT_COLOR_LAVA //let's just say you're falling into lava, that makes sense right
 
+// Chasms for Ice moon, with planetary atmos and glow
+/turf/open/chasm/icemoon
+	icon = 'icons/turf/floors/icechasms.dmi'
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/chasm/icemoon
+	light_range = 1.9
+	light_power = 0.65
+	light_color = LIGHT_COLOR_PURPLE
 
 // Chasms for the jungle, with planetary atmos and a different icon
 /turf/open/chasm/jungle

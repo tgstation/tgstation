@@ -9,6 +9,7 @@
 
 	maxHealth = 25
 	health = 25
+	hardcrit_threshold = HEALTH_THRESHOLD_CRIT
 
 	var/amount_grown = 0
 	var/max_grown = 100

@@ -178,6 +178,7 @@
 	if(!can_interact(user))
 		return
 	on = !on
+	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
@@ -217,6 +218,7 @@
 	if(!can_interact(user))
 		return
 	target_temperature = min_temperature
+	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
@@ -243,3 +245,4 @@
 	if(!can_interact(user))
 		return
 	target_temperature = max_temperature
+	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)

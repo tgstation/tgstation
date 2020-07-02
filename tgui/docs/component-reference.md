@@ -241,7 +241,7 @@ A ghetto checkbox, made entirely using existing Button API.
 
 ### `Button.Confirm`
 
-A button with a an extra confirmation step, using native button component.
+A button with an extra confirmation step, using native button component.
 
 **Props:**
 

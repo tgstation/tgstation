@@ -21,9 +21,9 @@ Class Variables:
    power_channel (num)
       What channel to draw from when drawing power for power mode
       Possible Values:
-         EQUIP:0 -- Equipment Channel
-         LIGHT:2 -- Lighting Channel
-         ENVIRON:3 -- Environment Channel
+         AREA_USAGE_EQUIP:0 -- Equipment Channel
+         AREA_USAGE_LIGHT:2 -- Lighting Channel
+         AREA_USAGE_ENVIRON:3 -- Environment Channel
 
    component_parts (list)
       A list of component parts of machine used by frame based machines.
@@ -53,11 +53,11 @@ Class Procs:
       Default definition uses 'use_power', 'power_channel', 'active_power_usage',
       'idle_power_usage', 'powered()', and 'use_power()' implement behavior.
 
-   powered(chan = EQUIP)         'modules/power/power.dm'
+   powered(chan = -1)         'modules/power/power.dm'
       Checks to see if area that contains the object has power available for power
-      channel given in 'chan'.
+      channel given in 'chan'. -1 defaults to power_channel
 
-   use_power(amount, chan=EQUIP)   'modules/power/power.dm'
+   use_power(amount, chan=-1)   'modules/power/power.dm'
       Deducts 'amount' from the power channel 'chan' of the area that contains the object.
 
    power_change()               'modules/power/power.dm'
@@ -105,8 +105,8 @@ Class Procs:
 		//2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
-	var/power_channel = EQUIP
-		//EQUIP,ENVIRON or LIGHT
+	var/power_channel = AREA_USAGE_EQUIP
+		//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	var/wire_compatible = FALSE
 
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
@@ -248,24 +248,36 @@ Class Procs:
 	return !(machine_stat & (NOPOWER|BROKEN|MAINT))
 
 /obj/machinery/can_interact(mob/user)
-	var/silicon = issiliconoradminghost(user)
-	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE))
+	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
-	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
+
+	var/silicon = issilicon(user)
+	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN)) // Check if we can interact with an open panel machine, if the panel is open
 		if(!silicon || !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
 
-	if(silicon)
+	if(silicon || IsAdminGhost(user)) // If we are an AI or adminghsot, make sure the machine allows silicons to interact
 		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 			return FALSE
-	else
-		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON)
+
+	else if(isliving(user)) // If we are a living human
+		var/mob/living/L = user
+
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) // First make sure the machine doesn't require silicon interaction
 			return FALSE
-		if(!Adjacent(user))
-			var/mob/living/carbon/H = user
+
+		if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
+			var/mob/living/carbon/H = L
 			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
 				return FALSE
-	return TRUE
+
+		if(L.incapacitated()) // Finally make sure we aren't incapacitated
+			return FALSE
+
+	else // If we aren't a silicon, living, or admin ghost, bad!
+		return FALSE
+
+	return TRUE // If we pass all these checks, woohoo! We can interact
 
 /obj/machinery/proc/check_nap_violations()
 	if(!SSeconomy.full_ancap)
@@ -416,7 +428,7 @@ Class Procs:
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	
+
 	if(mover.pass_flags & PASSMACHINE)
 		return TRUE
 
@@ -576,3 +588,6 @@ Class Procs:
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)
+
+/obj/machinery/rust_heretic_act()
+	take_damage(500, BRUTE, "melee", 1)

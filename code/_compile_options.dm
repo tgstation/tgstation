@@ -16,9 +16,11 @@
 
 //#define FIND_REF_NO_CHECK_TICK	//Sets world.loop_checks to false and prevents find references from sleeping
 
-
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #endif
+
+//#define REFERENCE_TRACKING		//Enables extools-powered reference tracking system, letting you see what is
+									//referencing objects that refuse to hard delete
 
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETER
 
@@ -33,11 +35,11 @@
 
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 513
-#define MIN_COMPILER_BUILD 1508
+#define MIN_COMPILER_BUILD 1514
 #if DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 513.1508 or higher
+#error You need version 513.1514 or higher
 #endif
 
 //Additional code for the above flags.
@@ -56,3 +58,7 @@
 #ifdef TRAVISTESTING
 #define TESTING
 #endif
+
+// A reasonable number of maximum overlays an object needs
+// If you think you need more, rethink it
+#define MAX_ATOM_OVERLAYS 100

@@ -99,7 +99,7 @@
 	icon = 'icons/obj/banner.dmi'
 	name_type = "planet"
 	icon_state = "banner"
-	item_state = "banner"
+	inhand_icon_state = "banner"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A cunning device used to claim ownership of planets."

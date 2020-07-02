@@ -26,6 +26,8 @@
     "webpack": "^4.40.2",
     "webpack-build-notifier": "^2.0.0",
     "webpack-bundle-analyzer": "^3.5.1",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.9",
+    "marked": "^1.1.0",
+    "dompurify": "^2.0.11"
   }
 }

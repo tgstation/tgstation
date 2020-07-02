@@ -34,11 +34,19 @@
 /datum/nanite_program/monitoring/enable_passive_effect()
 	. = ..()
 	SSnanites.nanite_monitored_mobs |= host_mob
+	if(ishuman(host_mob))
+		var/mob/living/carbon/human/H = host_mob
+		if(!(H in GLOB.nanite_sensors_list))
+			GLOB.nanite_sensors_list |= H
 	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/monitoring/disable_passive_effect()
 	. = ..()
 	SSnanites.nanite_monitored_mobs -= host_mob
+	if(ishuman(host_mob))
+		var/mob/living/carbon/human/H = host_mob
+		GLOB.nanite_sensors_list -= H
+
 	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/self_scan
@@ -51,7 +59,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/self_scan/register_extra_settings()
-	extra_settings[NES_SCAN_TYPE] = new /datum/nanite_extra_setting/type("Medical", list("Medical", "Chemical", "Nanite"))
+	extra_settings[NES_SCAN_TYPE] = new /datum/nanite_extra_setting/type("Medical", list("Medical", "Chemical", "Wound", "Nanite"))
 
 /datum/nanite_program/self_scan/on_trigger(comm_message)
 	if(host_mob.stat == DEAD)
@@ -62,6 +70,8 @@
 			healthscan(host_mob, host_mob)
 		if("Chemical")
 			chemscan(host_mob, host_mob)
+		if("Wound")
+			woundscan(host_mob, host_mob)
 		if("Nanite")
 			SEND_SIGNAL(host_mob, COMSIG_NANITE_SCAN, host_mob, TRUE)
 
