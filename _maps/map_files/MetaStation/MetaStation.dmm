@@ -63024,6 +63024,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "dbF" = (
@@ -65172,9 +65175,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/light{
 	dir = 4
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
@@ -70262,14 +70262,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"ivt" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/item/kirbyplants/potty,
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
 "ixg" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -113830,7 +113822,7 @@ iUy
 mlm
 rtU
 rOF
-ivt
+bwO
 bKf
 bLK
 loW
