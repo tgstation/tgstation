@@ -58,6 +58,11 @@
 	description = "The haunted ghost UFO tour has gone south and now it's up to our fine townies and scare seekers to kill the actual real alien changelings..."
 	mappath = "_maps/map_files/Mafia/mafia_ayylmao.dmm"
 
+/datum/map_template/mafia/necropolis
+	name = "Necropolis Showdown"
+	description = "The townies have shown up to try and suss out who truly ruined the art direction of SS13. No hurt feelings intended!"
+	suffix = "mafia_necropolis.dmm"
+
 /datum/map_template/mafia/spider_clan
 	name = "Spider Clan Kidnapping"
 	description = "New and improved spider clan kidnappings are a lot less boring and have a lot more lynching. Damn westaboos!"
@@ -68,21 +73,7 @@
 	description = "Based off of the icey moon map of the same name, the guy who reworked it pretty much did it for nothing since away missions are disabled but at least he'll get this...?"
 	mappath = "_maps/map_files/Mafia/mafia_snow.dmm"
 
-/datum/map_template/mafia/frog
+/datum/map_template/mafia/frog //FIX THIS?
 	name = "Tribunal at the Toad Temple"
 	description = "THE FROG DEEMS YOU UNWORTHY."
 	mappath = "_maps/map_files/Mafia/mafia_frog.dmm"
-
-//disabled maps due to bugs (hopefully this doesn't exist by the time it's merged)
-
-/*
-/datum/map_template/mafia/gothic
-	name = "The map with coffins but not vampires"
-	description = "Vampires not included. What, you expected a funny little story? I got nothing!"
-	suffix = "mafia_gothic.dmm"
-
-/datum/map_template/mafia/necropolis
-	name = "Necropolis Showdown"
-	description = "The townies have shown up to try and suss out who truly ruined the art direction of SS13. No hurt feelings intended!"
-	suffix = "mafia_necropolis.dmm"
-*/
