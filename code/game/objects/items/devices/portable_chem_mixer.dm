@@ -1,6 +1,6 @@
 /obj/item/storage/portable_chem_mixer
 	name = "Portable Chemical Mixer"
-	desc = "A portable device that dispenses and mixes chemicals. All necessary reagents need to be supplied with beakers. A label indicates that a screwdriver is required to open it for refills. This device can be worn on a belt. The letters 'S&T' are imprinted on the side."
+	desc = "A portable device that dispenses and mixes chemicals. Requires a vortex anomaly core. All necessary reagents need to be supplied with beakers. A label indicates that a screwdriver is required to open it for refills. This device can be worn on a belt. The letters 'S&T' are imprinted on the side."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
 	w_class = WEIGHT_CLASS_HUGE
@@ -13,6 +13,8 @@
 
 	var/obj/item/reagent_containers/beaker = null
 	var/amount = 30
+
+	var/anomaly_core_present = FALSE
 	
 	var/list/dispensable_reagents = list()
 
@@ -35,6 +37,14 @@
 		..()
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/raw_anomaly_core/vortex) && !anomaly_core_present)
+		anomaly_core_present = TRUE
+		QDEL_NULL(I)
+		to_chat(user, "<span class='notice'>You insert the vortex anomaly core. The device is now functional. A screwdriver is needed to open and close the device for refills.</span>")
+		return
+	if(!anomaly_core_present)
+		to_chat(user, "<span class='warning'>A vortex anomaly core has to be inserted to activate this device.</span>")
+		return
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if (I.tool_behaviour == TOOL_SCREWDRIVER)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, !locked)
@@ -101,7 +111,9 @@
 	return TRUE
 
 /obj/item/storage/portable_chem_mixer/attack_hand(mob/user)
-	if(loc == user)
+	if(!anomaly_core_present)
+		to_chat(user, "<span class='warning'>A vortex anomaly core has to be inserted to activate this device.</span>")
+	else if(loc == user)
 		var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 		if (locked)
 			ui_interact(user)
@@ -109,6 +121,9 @@
 	return ..()
 
 /obj/item/storage/portable_chem_mixer/attack_self(mob/user)
+	if(!anomaly_core_present)
+		to_chat(user, "<span class='warning'>A vortex anomaly core has to be inserted to activate this device.</span>")
+		return
 	if(loc == user)
 		var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 		if (locked)
