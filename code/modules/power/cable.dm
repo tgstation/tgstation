@@ -5,6 +5,47 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 #define UNDER_SMES -1
 #define UNDER_TERMINAL 1
 
+/*
+** This is a powernet edge.  Its a container that tells the powernet
+** if a cable has been disconnected and it needs to rebuild
+*/
+/datum/cable_edge
+	var/static/list/edges = list()
+	/obj/structure/cable/wire
+	var/list/verts = list()
+	var/obj/machinery/power/under = null
+	var/visited = FALSE   		// used in searching
+
+/datum/cable_edge/New(W)
+	wire = W
+	edges[W] = src
+
+/datum/cable_edge/Destroy()
+	// for speed since we are just nuling the list
+	for(var/i = 1; i <= verts.len; i++)
+		verts[i].verts -= src
+	verts = null
+	under = null
+	edges[wire] = null
+	wire = null
+
+/obj/structure/cable/proc/connect(obj/structure/cable/cable)
+	var/datum/cable_edge/CE = cable.edge
+	verts |= cable.edge
+	cable.edge.verts |= src	// should check if it exists for assert
+
+/obj/structure/cable/proc/disconnect(obj/structure/cable/cable)
+	var/datum/cable_edge/CE = cable.edge
+	verts -= cable.edge
+	cable.edge.verts -= src
+
+/obj/structure/cable/proc/disconnect_all()
+	for(var/i = 1; i <= verts.len; i++)
+		verts[i].verts -= src
+	verts = list()
+	under = null
+
+
 ///////////////////////////////
 //CABLE STRUCTURE
 ///////////////////////////////
@@ -25,6 +66,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/cable_layer = CABLE_LAYER_2			//bitflag
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
+	var/datum/cable_edge/edge
 
 /obj/structure/cable/layer1
 	color = "red"
@@ -46,14 +88,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	GLOB.cable_list += src //add it to the global cable list
 	Connect_cable()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
-
+	edge = new/datum/cable_edge(src)
 
 ///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
 	var/under_thing = NONE
 	if(clear_before_updating)
 		linked_dirs = 0
-	var/obj/machinery/power/search_parent
+	edge.disconnect_all()	// Clear the graph vertexes
+
+	var/obj/machinery/power/search_parent = null
 	for(var/obj/machinery/power/P in loc)
 		if(istype(P, /obj/machinery/power/terminal))
 			under_thing = UNDER_TERMINAL
@@ -63,6 +107,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			under_thing = UNDER_SMES
 			search_parent = P
 			break
+	edge.under = search_parent		// This dosn't mean its connected, it just means its there
 	for(var/check_dir in GLOB.cardinals)
 		var/TB = get_step(src, check_dir)
 		//don't link from smes to its terminal
@@ -85,6 +130,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		var/inverse = turn(check_dir, 180)
 		for(var/obj/structure/cable/C in TB)
 			if(C.cable_layer & cable_layer)
+				edge.connect(C)
 				linked_dirs |= check_dir
 				C.linked_dirs |= inverse
 				C.update_icon()
@@ -93,6 +139,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()
+	edge.disconnect_all()
 	for(var/check_dir in GLOB.cardinals)
 		var/inverse = turn(check_dir, 180)
 		if(linked_dirs & check_dir)
