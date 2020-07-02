@@ -75,8 +75,10 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donut))
+
+/obj/item/storage/fancy/donut_box/PopulateContents()
+	. = ..()
 	update_icon()
-	update_overlays()
 
 /obj/item/storage/fancy/donut_box/update_icon_state()
 	if(fancy_open)
@@ -86,8 +88,6 @@
 
 /obj/item/storage/fancy/donut_box/update_overlays()
 	. = ..()
-
-	cut_overlays()
 
 	if (!fancy_open)
 		return
@@ -99,10 +99,10 @@
 		if (!istype(donut))
 			continue
 
-		add_overlay(image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH))
+		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
 		donuts += 1
 
-	add_overlay(image(icon = initial(icon), icon_state = "donutbox_top"))
+	. += image(icon = initial(icon), icon_state = "donutbox_top")
 
 #undef DONUT_INBOX_SPRITE_WIDTH
 
