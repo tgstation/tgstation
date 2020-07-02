@@ -243,6 +243,15 @@
 	amount_per_transfer_from_this = 60
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
 
+/obj/item/reagent_containers/hypospray/medipen/stimpack/mining //REAL goliath kiting
+	name = "emergency stimpack medipen"
+	desc = "A rapid way to inject some stimulants to move faster while killing local fauna."
+	icon_state = "stimpen"
+	inhand_icon_state = "stimpen"
+	volume = 30
+	amount_per_transfer_from_this = 30
+	list_reagents = list(/datum/reagent/medicine/ephedrine = 8, /datum/reagent/consumable/coffee = 8, /datum/reagent/medicine/epinephrine = 8, /datum/reagent/medicine/morphine = 6)
+
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
 	desc = "A rapid way to save a person from a critical injury state!"
