@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - server: "Changed the configuration to enable moths by default, rather than being commented out."
