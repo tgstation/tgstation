@@ -334,7 +334,7 @@
 
 /datum/spellbook_entry/item/katana
 	name = "Katana"
-	desc = "An elegant and intricately crafted weapon, favored by the Fighter/Mage multi-classers of the Astral Plane." //not sure if we can mention the g*th directly, so let's just do it indirectly, just to be safe
+	desc = "An elegant and intricately crafted weapon, favored by the Fighter/Mage multi-classers of the Astral Plane. It deals an incredible amount of damage on each melee hit and can block (at a base 50% block rate) both incoming melee attacks and projectiles." //not sure if we can mention the g*th directly, so let's just do it indirectly, just to be safe
 	item_path = /obj/item/katana
 
 /datum/spellbook_entry/item/scryingorb
