@@ -758,12 +758,6 @@
 	desc = "A Multiple Utility Load Effector bot. It only seems to accept paranormal forces, and for this reason is fucking useless."
 	icon_state = "paranormalmulebot0"
 	base_icon = "paranormalmulebot"
-	var/mob/dead/observer/ghost_rider
-
-/mob/living/simple_animal/bot/mulebot/paranormal/handle_atom_del(atom/A)
-	if(A == ghost_rider)
-		ghostmoved(A)
-	return ..()
 
 
 /mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
@@ -791,7 +785,6 @@
 
 	if(observer_check)
 		visible_message("<span class='warning'>A ghostly figure appears on [src]!</span>")
-		ghost_rider = AM
 		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
 		AM.forceMove(src)
 
@@ -818,21 +811,16 @@
 
 /mob/living/simple_animal/bot/mulebot/paranormal/update_overlays()
 	. = ..()
-	if(!load || !isobserver(load) || !ghost_rider)
+	if(!isobserver(load))
 		return
-	var/mutable_appearance/ghost_overlay = mutable_appearance(ghost_rider.icon, ghost_rider.icon_state)
+	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
 	ghost_overlay.pixel_y = 9
 	. += ghost_overlay
 
-/mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved(mob/dead/observer/ghost)
+/mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
 	visible_message("<span class='notice'>The ghostly figure vanishes...</span>")
-	UnregisterSignal(ghost, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(load, COMSIG_MOVABLE_MOVED)
 	unload(0)
-
-/mob/living/simple_animal/bot/mulebot/paranormal/unload(dirn)
-	if(ghost_rider)
-		ghost_rider = null
-	return ..()
 
 #undef SIGH
 #undef ANNOYED
