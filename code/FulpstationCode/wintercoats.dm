@@ -180,3 +180,77 @@
 	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
 	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoathoods.dmi'
 	icon_state = "winterhood_gen"
+
+/obj/item/clothing/suit/hooded/wintercoat/sec/pris
+	name = "\improper Prisioner's winter coat"
+	desc = "Made just for the times when the prison runs out of working space heaters."
+	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats_icons.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	icon_state = "wintercoat_pris"
+	inhand_icon_state = "wintercoat_pris"
+	lefthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_lefthand.dmi'
+	righthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_righthand.dmi'
+	allowed = list(/obj/item/paper, /obj/item/soap, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/sec/pris
+
+/obj/item/clothing/head/hooded/winterhood/sec/pris
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoathoods.dmi'
+	icon_state = "winterhood_pris"
+
+/obj/item/clothing/suit/hooded/wintercoat/med/para
+	name = "\improper Paramedic's winter coat"
+	desc = "Comfy alternitive to the paramedic's vest."
+	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats_icons.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	icon_state = "wintercoat_para"
+	inhand_icon_state = "wintercoat_para"
+	lefthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_lefthand.dmi'
+	righthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_righthand.dmi'
+	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/soap, /obj/item/sensor_device, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 50, "acid" = 50)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/med/para
+
+/obj/item/clothing/head/hooded/winterhood/med/para
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoathoods.dmi'
+	icon_state = "winterhood_para"
+
+//Commented out because of the terrible mining coat sprite i have.
+//Will fix when i get a better sprite for it
+/*/obj/item/clothing/suit/hooded/explorer/wintercoat/cargo/mining
+	name = "\improper Mining winter coat"
+	desc = "Comfy alternitive to the explorer's suit. Comes with all the feature's that it does."
+	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	icon_state = "wintercoat_min"
+	item_state = "wintercoat_min"
+	lefthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_lefthand.dmi'
+	righthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_righthand.dmi'
+	hoodtype = /obj/item/clothing/head/hooded/explorer/wintercoat/cargo/mining
+
+/obj/item/clothing/head/hooded/explorer/wintercoat/cargo/mining
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoathoods.dmi'
+	icon_state = "winterhood_min"
+*/
+
+/obj/item/clothing/suit/hooded/wintercoat/service/chap
+	name = "\improper Chaplins's winter coat"
+	desc = "Warm, Stylish, approved by the church. Everything you need in a winter coat."
+	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats_icons.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	icon_state = "wintercoat_chap"
+	inhand_icon_state = "wintercoat_chap"
+	lefthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_lefthand.dmi'
+	righthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_righthand.dmi'
+	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/soap, /obj/item/sensor_device, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/service/chap
+
+/obj/item/clothing/head/hooded/winterhood/service/chap
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoathoods.dmi'
+	icon_state = "winterhood_chap"
+
