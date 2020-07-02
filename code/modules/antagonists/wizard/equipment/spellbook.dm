@@ -372,7 +372,7 @@
 	. = ..()
 	if(.)
 		new /obj/item/clothing/mask/nobreath(get_turf(user)) //air tanks are for MUGGLES
-		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.  //how the fuck did you manage to lose ALL of the available sandals on the wizard ship (which is the only place you can buy this item)?!
+		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit
 
 /datum/spellbook_entry/item/contract
