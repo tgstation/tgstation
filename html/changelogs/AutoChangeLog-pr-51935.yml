@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - spellcheck: "Updated defibrilator mount description to remove line about being immovable."
