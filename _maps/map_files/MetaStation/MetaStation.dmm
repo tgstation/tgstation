@@ -785,7 +785,13 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/photo_album/bar,
+/obj/item/reagent_containers/food/drinks/shaker{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/machinery/reagentgrinder{
+	pixel_x = -6
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abU" = (
@@ -28948,8 +28954,8 @@
 /turf/open/floor/plasteel,
 /area/storage/art)
 "boQ" = (
-/obj/machinery/reagentgrinder,
 /obj/structure/table/wood,
+/obj/item/storage/photo_album/bar,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "boS" = (
@@ -35548,7 +35554,12 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/barman_recipes{
-	pixel_y = 5
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/rag{
+	pixel_x = 10;
+	pixel_y = 1
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
@@ -36165,11 +36176,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/item/reagent_containers/glass/rag{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -36177,6 +36183,11 @@
 	department = "Detective's office";
 	pixel_x = -30
 	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bHb" = (
@@ -36184,7 +36195,9 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bHc" = (
@@ -37499,9 +37512,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/storage/bag/tray,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -38584,7 +38594,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bMR" = (
@@ -43331,7 +43340,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "bYo" = (
-/obj/structure/reagent_dispensers/beerkeg,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -43343,6 +43351,12 @@
 /obj/machinery/light_switch{
 	pixel_x = -26
 	},
+/obj/structure/table/wood,
+/obj/item/stack/package_wrap{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/stack/package_wrap,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bYp" = (
@@ -43351,9 +43365,11 @@
 	},
 /obj/structure/table/wood,
 /obj/item/gun/ballistic/shotgun/doublebarrel,
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
 /obj/structure/cable,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bYq" = (
@@ -69608,14 +69624,14 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe";
+	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
@@ -72878,16 +72894,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "mvj" = (
-/obj/machinery/chem_master/condimaster{
-	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
-	name = "HoochMaster Deluxe";
-	pixel_x = -4
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/structure/cable,
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "mvq" = (
@@ -76189,6 +76197,9 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "rPb" = (
@@ -78370,6 +78381,16 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"vDQ" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "vFd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -113539,7 +113560,7 @@ qKx
 bwO
 bBT
 pzW
-bwO
+vDQ
 abS
 bKe
 bLJ
