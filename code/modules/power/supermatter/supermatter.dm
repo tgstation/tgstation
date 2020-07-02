@@ -753,9 +753,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/turf/L = loc
 	if(!istype(L))
 		return FALSE
-	if(!istype(Proj.firer, /obj/machinery/power/emitter))
+	if(!istype(Proj.firer, /obj/machinery/power/emitter) && produces_gas)
 		investigate_log("has been hit by [Proj] fired by [key_name(Proj.firer)]", INVESTIGATE_SUPERMATTER)
-	if(Proj.flag != "bullet")
+	if(Proj.flag != "bullet" && produces_gas)
 		power += Proj.damage * bullet_energy
 		if(!has_been_powered)
 			investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
@@ -937,7 +937,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
 		user.dust(force = TRUE)
-		matter_power += 200
+		if(produces_gas)
+			matter_power += 200
 	else if(istype(AM, /obj/singularity))
 		return
 	else if(isobj(AM))
@@ -948,7 +949,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				message_admins("[src] has consumed [AM], [suspicion] [ADMIN_JMP(src)].")
 			investigate_log("has consumed [AM] - [suspicion].", INVESTIGATE_SUPERMATTER)
 		qdel(AM)
-	if(!iseffect(AM))
+	if(!iseffect(AM) && produces_gas)
 		matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
