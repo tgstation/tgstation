@@ -184,6 +184,8 @@
 		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
+	var/datum/supply_pack/science/raw_table_anomaly/crate = SSshuttle.supply_packs[/datum/supply_pack/science/raw_table_anomaly]
+	crate.special_enabled = TRUE
 
 /datum/holiday/spess
 	name = "Cosmonautics Day"

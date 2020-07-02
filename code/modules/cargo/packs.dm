@@ -1352,6 +1352,16 @@
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
+/datum/supply_pack/science/raw_table_anomaly
+	name = "Raw Table Anomaly"
+	desc = "The raw core of a table anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/table)
+	crate_name = "raw table anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+	special = TRUE
+
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
 	desc = "The tools you need to replace those finicky humans with a loyal robot army! Contains four proximity sensors, two empty first aid kits, two health analyzers, two red hardhats, two mechanical toolboxes, and two cleanbot assemblies! Requires Robotics access to open."

@@ -61,3 +61,9 @@
 	desc = "The neutralized core of a vortex anomaly. It won't sit still, as if some invisible force is acting on it. It'd probably be valuable for research."
 	icon_state = "vortex_core"
 	anomaly_type = /obj/effect/anomaly/bhole
+
+/obj/item/assembly/signaler/anomaly/table
+	name = "\improper table anomaly core"
+	desc = "The neutralized core of a table anomaly. It is flowing with power. It'd probably be valuable for research."
+	icon_state = "table_core"
+	anomaly_type = /obj/effect/anomaly/table

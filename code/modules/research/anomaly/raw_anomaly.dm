@@ -45,6 +45,12 @@
 	anomaly_type = /obj/item/assembly/signaler/anomaly/flux
 	icon_state = "rawcore_flux"
 
+/obj/item/raw_anomaly_core/table
+	name = "raw table core"
+	desc = "The raw core of a table anomaly, gently pulsating with robustness."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/table
+	icon_state = "rawcore_table"
+
 /obj/item/raw_anomaly_core/random
 	name = "random raw core"
 	desc = "You should not see this!"

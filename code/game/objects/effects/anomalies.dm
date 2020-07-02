@@ -359,3 +359,43 @@
 				SSexplosions.medturf += T
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += T
+
+/obj/effect/anomaly/table
+	name = "table anomaly"
+	icon_state = "table"
+	density = FALSE
+	aSignal = /obj/item/assembly/signaler/anomaly/table
+
+/obj/effect/anomaly/table/anomalyEffect()
+	..()
+	for(var/obj/O in orange(4, src))
+		if(!O.anchored)
+			step_towards(O,src)
+	for(var/mob/living/M in range(0, src))
+		table(M)
+	for(var/mob/living/M in orange(4, src))
+		if(!M.mob_negates_gravity())
+			step_towards(M,src)
+	for(var/obj/O in range(0,src))
+		if(!O.anchored)
+			var/mob/living/target = locate() in view(4,src)
+			if(target && !target.stat)
+				O.throw_at(target, 5, 10)
+
+/obj/effect/anomaly/table/Crossed(atom/movable/AM)
+	. = ..()
+	table(AM)
+
+/obj/effect/anomaly/table/Bump(atom/A)
+	table(A)
+
+/obj/effect/anomaly/table/Bumped(atom/movable/AM)
+	table(AM)
+
+/obj/effect/anomaly/table/proc/table(mob/living/A)
+	if(isliving(A))
+		var/table = new /obj/structure/table(get_turf(src))
+		A.forceMove(get_turf(table))
+		A.Knockdown(30)
+		A.apply_damage(10, BRUTE)
+		A.apply_damage(40, STAMINA)
