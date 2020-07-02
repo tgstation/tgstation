@@ -7,6 +7,7 @@
 #define SIGH 0
 #define ANNOYED 1
 #define DELIGHT 2
+#define CHIME 3
 
 /mob/living/simple_animal/bot/mulebot
 	name = "\improper MULEbot"
@@ -38,8 +39,8 @@
 	path_image_color = "#7F5200"
 
 	var/base_icon = "mulebot" /// icon_state to use in update_icon_state
-	var/atom/movable/load = null /// what we're transporting
-	var/mob/living/passenger = null /// who's riding us
+	var/atom/movable/load /// what we're transporting
+	var/mob/living/passenger /// who's riding us
 	var/turf/target				/// this is turf to navigate to (location of beacon)
 	var/loaddir = 0				/// this the direction to unload onto/load from
 	var/home_destination = "" 	/// tag of home delivery beacon
@@ -140,17 +141,18 @@
 	flick("[base_icon]-emagged", src)
 	playsound(src, "sparks", 100, FALSE)
 
-/mob/living/simple_animal/bot/mulebot/update_icon_state()
-	icon_state = "[base_icon][open ? "-hatch" : wires.is_cut(WIRE_AVOIDANCE)]"
+/mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
+	icon_state = "[base_icon][wires.is_cut(WIRE_AVOIDANCE)]"
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
 	. = ..()
-	if(!load || ismob(load)) //buckling handles the mob offsets
+	if(open)
+		. += "[base_icon]-hatch"
+	if(!load || ismob(load)) //buckling handles the mob overlays
 		return
-	load.pixel_y = initial(load.pixel_y) + 9
-	if(load.layer < layer)
-		load.layer = layer + 0.01
-	. += load
+	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
+	load_overlay.pixel_y = initial(load.pixel_y) + 9
+	. += load_overlay
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
 	unload(0)
@@ -357,6 +359,10 @@
 		if(DELIGHT)
 			audible_message("<span class='hear'>[src] makes a delighted ping!</span>")
 			playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+		if(CHIME)
+			audible_message("<span class='hear'>[src] makes a chiming sound!</span>")
+			playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
+	flick("[base_icon]1", src)
 
 
 // mousedrop a crate to load the bot
@@ -384,14 +390,14 @@
 	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	var/obj/structure/closet/crate/crate
-	if(istype(AM, /obj/structure/closet/crate))
-		crate = AM
-	else if(!wires.is_cut(WIRE_LOADCHECK))
-		buzz(SIGH)
-		return	// if not hacked, only allow crates to be loaded
+	var/obj/structure/closet/crate/crate = AM
+	if(!istype(crate))
+		if(!wires.is_cut(WIRE_LOADCHECK))
+			buzz(SIGH)
+			return	// if not hacked, only allow crates to be loaded
+		crate = null
 
-	if(isobj(AM))
+	if(crate || isobj(AM))
 		var/obj/O = AM
 		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
@@ -464,8 +470,10 @@
 		start()
 
 /mob/living/simple_animal/bot/mulebot/Moved(atom/OldLoc, Dir) //leave bloody tracks as we move if we've run over someone.
+	if(!bloodiness) //since running over mobs in handled in the parent, check to make sure we're bloody first, otherwise we will leave tracks before we even run them over.
+		return ..()
 	. = ..()
-	if(!bloodiness || isspaceturf(loc))
+	if(isspaceturf(loc))
 		return
 	var/obj/effect/decal/cleanable/blood/tracks/B = new(OldLoc)
 	B.add_blood_DNA(return_blood_DNA())
@@ -604,15 +612,14 @@
 /mob/living/simple_animal/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		radio_channel = RADIO_CHANNEL_SUPPLY //Supply channel
-		audible_message("<span class='hear'>[src] makes a chiming sound!</span>")
-		playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
+		buzz(CHIME)
 		reached_target = TRUE
 
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
 				to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!</span>")
-				playsound(calling_ai, 'sound/machines/chime.ogg',40, FALSE)
+				playsound_local(calling_ai, 'sound/machines/chime.ogg',40, FALSE)
 				calling_ai = null
 				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 
@@ -778,15 +785,14 @@
 	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	var/observer_check = isobserver(AM)
-	if(!observer_check && !wires.is_cut(WIRE_LOADCHECK))
-		buzz(SIGH)
-		return	// if not hacked, only allow ghosts to be loaded
-
-	if(observer_check)
+	if(isobserver(AM))
 		visible_message("<span class='warning'>A ghostly figure appears on [src]!</span>")
 		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
 		AM.forceMove(src)
+
+	else if(!wires.is_cut(WIRE_LOADCHECK))
+		buzz(SIGH)
+		return	// if not hacked, only allow ghosts to be loaded
 
 	else if(isobj(AM))
 		var/obj/O = AM
@@ -825,6 +831,7 @@
 #undef SIGH
 #undef ANNOYED
 #undef DELIGHT
+#undef CHIME
 
 /obj/machinery/bot_core/mulebot
 	req_access = list(ACCESS_CARGO)
