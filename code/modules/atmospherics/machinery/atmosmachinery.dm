@@ -328,7 +328,7 @@
 	return list()
 
 /obj/machinery/atmospherics/update_remote_sight(mob/user)
-	user.sight |= (SEE_TURFS|BLIND)
+	user.sight |= (SEE_TURFS) //fulp edit
 
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
