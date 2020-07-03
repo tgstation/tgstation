@@ -97,6 +97,10 @@
 		return
 	return ..()
 
+/// returns true if the bot is fully powered.
+/mob/living/simple_animal/bot/mulebot/proc/has_power()
+	return !open && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+
 /mob/living/simple_animal/bot/mulebot/update_mobility()
 	. = ..()
 	if(!on)
@@ -355,11 +359,6 @@
 		dat += "<div class='notice'>The maintenance hatch is closed.</div>"
 
 	return dat
-
-
-// returns true if the bot has power
-/mob/living/simple_animal/bot/mulebot/proc/has_power()
-	return !open && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
