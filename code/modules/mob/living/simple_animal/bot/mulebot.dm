@@ -70,6 +70,8 @@
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(0, 9), TEXT_WEST = list(0, 9)))
 
 /mob/living/simple_animal/bot/mulebot/ComponentInitialize()
 	. = ..()
