@@ -3,16 +3,7 @@ import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
-
-const byTitle = function (a, b) {
-  if (a.title > b.title) {
-    return 1;
-  }
-  if (a.title < b.title) {
-    return -1;
-  }
-  return 0;
-};
+import { sortBy } from 'common/collections';
 
 export const PortableChemMixer = (props, context) => {
   const { act, data } = useBackend(context);
@@ -27,7 +18,7 @@ export const PortableChemMixer = (props, context) => {
       }))
     || data.beakerContents
     || [];
-  data.chemicals.sort(byTitle);
+  const chemicals = sortBy(chem => chem.title)(data.chemicals);
   return (
     <Window resizable>
       <Window.Content scrollable>
@@ -46,7 +37,7 @@ export const PortableChemMixer = (props, context) => {
             ))
           )}>
           <Box mr={-1}>
-            {data.chemicals.map(chemical => (
+            {chemicals.map(chemical => (
               <Button
                 key={chemical.id}
                 icon="tint"
