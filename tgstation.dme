@@ -1373,6 +1373,7 @@
 #include "code\modules\antagonists\abductor\equipment\abduction_outfits.dm"
 #include "code\modules\antagonists\abductor\equipment\abduction_surgery.dm"
 #include "code\modules\antagonists\abductor\equipment\gland.dm"
+#include "code\modules\antagonists\abductor\equipment\orderable_gear.dm"
 #include "code\modules\antagonists\abductor\equipment\glands\access.dm"
 #include "code\modules\antagonists\abductor\equipment\glands\blood.dm"
 #include "code\modules\antagonists\abductor\equipment\glands\chem.dm"

@@ -1,6 +1,6 @@
 //Revenants: based off of wraiths from Goon
 //"Ghosts" that are invisible and move like ghosts, cannot take damage while invisible
-//Don't hear deadchat and are NOT normal ghosts
+//Can hear deadchat, but are NOT normal ghosts and do NOT have x-ray vision
 //Admin-spawn or random event
 
 #define INVISIBILITY_REVENANT 50
@@ -73,6 +73,7 @@
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
