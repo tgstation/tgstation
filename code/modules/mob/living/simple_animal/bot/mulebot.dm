@@ -124,18 +124,27 @@
 			turn_off()
 		else
 			update_icon() //this is also handled by turn_off(), so no need to call this twice.
-	else if(istype(I, /obj/item/stock_parts/cell) && open && !cell)
+	else if(istype(I, /obj/item/stock_parts/cell) && open)
+		if(cell)
+			to_chat(user, "<span class='warning'>[src] already has a power cell!</span>")
+			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		cell = I
-		visible_message("<span class='notice'>[user] inserts a cell into [src].</span>",
-						"<span class='notice'>You insert the new cell into [src].</span>")
-	else if(I.tool_behaviour == TOOL_CROWBAR && open && cell)
-		cell.add_fingerprint(usr)
-		cell.forceMove(loc)
+		visible_message("<span class='notice'>[user] inserts \a [cell] into [src].</span>",
+						"<span class='notice'>You insert [cell] into [src].</span>")
+	else if(I.tool_behaviour == TOOL_CROWBAR && open && user.a_intent != INTENT_HARM)
+		if(!cell)
+			to_chat(user, "<span class='warning'>[src] doesn't have a power cell!</span>")
+			return
+		cell.add_fingerprint(user)
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(cell)
+		else
+			cell.forceMove(drop_location())
+		visible_message("<span class='notice'>[user] crowbars [cell] out from [src].</span>",
+						"<span class='notice'>You pry [cell] out of [src].</span>")
 		cell = null
-		visible_message("<span class='notice'>[user] crowbars out the power cell from [src].</span>",
-						"<span class='notice'>You pry the power cell out of [src].</span>")
 	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
