@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscadd: "The search bar will now automatically focus when you open up the orbit menu, the uplink, the biogenerator, and the camera console."

@@ -135,7 +135,7 @@
 		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			continue
-		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location.loc)
+		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location)
 		smashes += RS
 	ReworkNetwork()
 
@@ -171,6 +171,42 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/effect/broken_illusion/attack_hand(mob/living/user)
+	if(!ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/human_user = user
+	if(IS_HERETIC(human_user))
+		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
+	else
+		var/obj/item/bodypart/arm = human_user.get_active_hand()
+		if(prob(25))
+			to_chat(human_user,"<span class='userdanger'>Otherwordly presence tears your arm aparts into atoms as you try to touch the hole in the very fabric of reality!</span>")
+			arm.dismember()
+			qdel(arm)
+		else
+			to_chat(human_user,"<span class='danger'>You pull your hand away from the hole as the eldritch energy flails trying to catch onto the existance itself!</span>")
+
+/obj/effect/broken_illusion/attack_tk(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if(IS_HERETIC(human_user))
+		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
+	else
+		//a very elaborate way to suicide
+		to_chat(human_user,"<span class='userdanger'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
+		human_user.ghostize()
+		var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
+		if(head)
+			head.dismember()
+			qdel(head)
+		else
+			human_user.gib()
+
+		var/datum/effect_system/reagents_explosion/explosion = new()
+		explosion.set_up(1, get_turf(human_user), 1, 0)
+		explosion.start()
 
 /obj/effect/broken_illusion/examine(mob/user)
 	if(!IS_HERETIC(user) && ishuman(user))
@@ -230,7 +266,7 @@
 
 ///Generates random name
 /obj/effect/reality_smash/proc/generate_name()
-	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful")
-	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze")
+	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful","Arrogant","Threatening","Peaceful","Aggressive")
+	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze","Grasp","Sight","Whisper","Flow","Touch","Veil","Thought","Imperfection","Blemish","Blush")
 
 	name = pick(prefix) + " " + pick(postfix)

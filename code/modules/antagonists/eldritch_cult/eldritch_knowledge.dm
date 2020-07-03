@@ -97,7 +97,7 @@
   * Gives addtional effects to mansus grasp spell
   */
 /datum/eldritch_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	return
+	return FALSE
 
 
 /**
@@ -281,4 +281,13 @@
 	cost = 0
 	required_atoms = list(/obj/item/organ/heart,/obj/effect/decal/cleanable/blood,/obj/item/reagent_containers/food/snacks/grown/poppy)
 	result_atoms = list(/obj/item/living_heart)
+	route = "Start"
+
+/datum/eldritch_knowledge/codex_cicatrix
+	name = "Codex Cicatrix"
+	desc = "Allows you to create a spare Codex Cicatrix if you have lost one, using a bible, human skin, a pen and a pair of eyes."
+	gain_text = "Their hand is at your throats, yet you see Them not."
+	cost = 0
+	required_atoms = list(/obj/item/organ/eyes,/obj/item/stack/sheet/animalhide/human,/obj/item/storage/book/bible,/obj/item/pen)
+	result_atoms = list(/obj/item/forbidden_book)
 	route = "Start"
