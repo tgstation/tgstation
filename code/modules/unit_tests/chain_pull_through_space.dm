@@ -27,7 +27,7 @@
 	charlie.name = "Charlie"
 
 /datum/unit_test/chain_pull_through_space/Destroy()
-	// TODO: Restore old tile
+	space_tile.copyTurf(claimed_tile)
 	qdel(alice)
 	qdel(bob)
 	qdel(charlie)
