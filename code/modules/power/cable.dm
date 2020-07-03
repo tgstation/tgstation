@@ -251,6 +251,9 @@
 /////////////////////////////////////////////////
 // Cable laying helpers
 ////////////////////////////////////////////////
+/obj/structure/cable/proc/rebuildAllPowernets()
+	// This will DELETE all
+
 
 // merge with the powernets of power objects in the given direction
 /obj/structure/cable/proc/mergeConnectedNetworks(direction)

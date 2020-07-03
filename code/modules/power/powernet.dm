@@ -3,7 +3,7 @@
 ** if a cable has been disconnected and it needs to rebuild
 */
 /datum/graph_edge
-	var/datum/value
+	var/datum/value // What this edge is representing
 	var/datum/graph_component/component = null
 	var/list/verts = list()
 	var/visited = FALSE   		// used in searching
@@ -102,7 +102,9 @@
 */
 /datum/powernet
 	var/number					// unique id
-	var/datum/graph_component/nodes
+	var/datum/graph_component/node	// The wire loop we are on
+	var/list/consumers = list()	// list of devices that need power
+	var/list/producers = list() // list of devices that create power
 
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
 	var/newavail = 0			// what available power was gathered last tick, then becomes...
@@ -114,14 +116,12 @@
 
 /datum/powernet/New()
 	SSmachines.powernets += src
+	node = new/datum/graph_component
 
 /datum/powernet/Destroy()
-	ASSERT(nodes == null)	// nodes should of been nulled by cables before this qdelets!
+	QDEL_NULL(node)
 	SSmachines.powernets -= src
 	return ..()
-
-/datum/powernet/proc/is_empty()
-	return !cables.len && !nodes.len
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
@@ -129,8 +129,8 @@
 	//see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
 	netexcess = avail - load
 
-	if(netexcess > 100 && nodes && nodes.len)		// if there was excess power last cycle
-		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
+	if(netexcess > 100 && consumers && consumers.len)		// if there was excess power last cycle
+		for(var/obj/machinery/power/smes/S in consumers)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
 
 	// update power consoles
