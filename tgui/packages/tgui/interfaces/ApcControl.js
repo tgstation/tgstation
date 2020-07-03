@@ -188,9 +188,9 @@ const ApcControlScene = (props, context) => {
         </Table.Cell>
       </Table.Row>
       {apcs.map((apc, i) => (
-        <tr header
+        <tr
           key={apc.id}
-          className="candystripe">
+          className="Table__row  candystripe">
           <td>
             <Button
               icon={apc.operating ? 'power-off' : 'times'}
