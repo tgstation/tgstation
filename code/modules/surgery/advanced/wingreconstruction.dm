@@ -31,7 +31,7 @@
 		"<span class='notice'>[user] completes the surgery on [target]'s wings.</span>")
 	if(H.dna.features["original_moth_wings"] != null)
 		H.dna.features["moth_wings"] = H.dna.features["original_moth_wings"]
-	if(H.dna.features["original_moth_wings"] == null)
+	else
 		H.dna.features["moth_wings"] = "Plain"
 	H.update_mutant_bodyparts()
 	return ..()

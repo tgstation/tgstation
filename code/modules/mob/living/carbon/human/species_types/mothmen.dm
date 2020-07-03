@@ -72,3 +72,12 @@
 		var/datum/gas_mixture/current = H.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
+
+
+/datum/species/moth/spec_fully_heal(mob/living/carbon/human/H)
+	. = ..()
+	if(H.dna.features["original_moth_wings"] != null)
+		H.dna.features["moth_wings"] = H.dna.features["original_moth_wings"]
+	if(H.dna.features["original_moth_wings"] == null && H.dna.features["moth_wings"] == "Burnt Off")
+		H.dna.features["moth_wings"] = "Plain"
+	handle_mutant_bodyparts(H)
