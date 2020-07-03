@@ -16,7 +16,7 @@ export const MafiaPanel = (props, context) => {
     judgement_phase,
     timeleft,
     all_roles,
-   } = data;
+  } = data;
   return (
     <Window
       theme={role_theme}
@@ -159,7 +159,6 @@ export const MafiaPanel = (props, context) => {
             </Section>
           </Flex.Item>
         </Flex>
-
       </Window.Content>
     </Window>
   );
