@@ -68,8 +68,3 @@
 	name = "Snowdin"
 	description = "Based off of the icey moon map of the same name, the guy who reworked it pretty much did it for nothing since away missions are disabled but at least he'll get this...?"
 	mappath = "_maps/map_files/Mafia/mafia_snow.dmm"
-
-/datum/map_template/mafia/frog //FIX THIS?
-	name = "Tribunal at the Toad Temple"
-	description = "THE FROG DEEMS YOU UNWORTHY."
-	mappath = "_maps/map_files/Mafia/mafia_frog.dmm"

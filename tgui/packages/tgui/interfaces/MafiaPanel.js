@@ -2,7 +2,6 @@ import { useBackend } from '../backend';
 import { Flex, Button, LabeledList, Section, Box, Table, TimeDisplay } from '../components';
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
-import { FlexItem } from '../components/Flex';
 
 export const MafiaPanel = (props, context) => {
   const { act, data } = useBackend(context);
