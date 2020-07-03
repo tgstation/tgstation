@@ -1,5 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscadd: "You can now place people you are fireman carrying onto morgue trays."
-  - rscadd: "You can now place people you are fireman carrying onto objects that buckle players."
