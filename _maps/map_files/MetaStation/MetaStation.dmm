@@ -42093,8 +42093,6 @@
 /obj/structure/closet/secure_closet/bar{
 	req_access_txt = "25"
 	},
-/obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
