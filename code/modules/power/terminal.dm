@@ -8,18 +8,23 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
+	power_flags = POWER_MACHINE_CONSUMER	// a terminal is ALWAYS a consumer
 	var/obj/machinery/power/master = null
 
-
-/obj/machinery/power/terminal/Initialize()
+/obj/machinery/power/Initialize(mapload, M)
 	. = ..()
-
+	ASSERT(M)		// master
+	master = M
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
-/obj/machinery/power/terminal/Destroy()
+/obj/machinery/power/connect_to_network()
 	if(master)
-		master.disconnect_terminal()
-		master = null
+		master.connect_to_network()
+
+/obj/machinery/power/terminal/Destroy()
+	ASSERT(master)		// master
+	master.disconnect_terminal()
+	master = null
 	return ..()
 
 /obj/machinery/power/terminal/should_have_node()
@@ -28,6 +33,7 @@
 /obj/machinery/power/proc/can_terminal_dismantle()
 	. = FALSE
 
+/// Humm shouldn't these be in the sepereate files?
 /obj/machinery/power/apc/can_terminal_dismantle()
 	. = FALSE
 	if(opened)

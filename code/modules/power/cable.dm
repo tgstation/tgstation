@@ -52,6 +52,17 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	Connect_cable()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
+// Main machiine connect function.  Once a machine is connected if we
+// do not have a powernet, we have one now.  Throw an error IF
+// the machine has a powernet.
+/obj/structure/cable/proc/connect_machine(obj/machinery/power/M)
+	ASSERT(!M.powernet)
+	if(!powernet)
+		powernet = new/datum/powernet
+	M.powernet = powernet
+	powernet.connect_machine(M)
+
+
 ///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
 	var/under_thing = NONE
@@ -251,8 +262,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /////////////////////////////////////////////////
 // Cable laying helpers
 ////////////////////////////////////////////////
-/obj/structure/cable/proc/rebuildAllPowernets()
-	// This will DELETE all
+/proc/forcedPowernetRebuild()
+	// This will DELETE all powernets, and rebuild them as graphed
+	// Any power used or not used goes to 0 and will have to wait
+	// a machine tick to turn back up
+
 
 
 // merge with the powernets of power objects in the given direction

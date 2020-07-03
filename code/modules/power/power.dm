@@ -2,6 +2,11 @@
 // POWER MACHINERY BASE CLASS
 //////////////////////////////
 
+/// Power Machine bit flags
+#define POWER_MACHINE_CONSUMER 1
+#define POWER_MACHINE_PRODUCER 2
+#define POWER_MACHINE_NEEDS_TERMINAL 4
+
 /////////////////////////////
 // Definitions
 /////////////////////////////
@@ -16,15 +21,16 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
+	var/power_flags = POWER_CONSUMER
+	var/obj/machinery/power/terminal/terminal = null // We need a POWER_MACHINE_NEEDS_TERMINAL to use
 	var/datum/graph_edge/edge
 
 
-/obj/machinery/power/Initialize()
+/obj/machinery/power/Initialize(mapload)
 	. = ..()
 	edge = new/datum/graph_edge/edge(src)
 
 /obj/machinery/power/Destroy()
-	edge.disconnect_all()
 	QDEL_NULL(edge)
 	disconnect_from_network()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/update_cable_icons_on_turf, get_turf(src)), 3)
@@ -41,7 +47,7 @@
 
 //override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
 /obj/machinery/power/proc/should_have_node()
-	return FALSE
+	return power_flags & POWER_MACHINE_CONSUMER
 
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
@@ -83,7 +89,26 @@
 		return 0
 
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
-	return
+	ASSERT(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
+	if(terminal)
+		terminal.master = null
+		terminal = null
+
+// create a terminal object pointing towards the device
+// wires will attach to this
+/obj/machinery/power/smes/proc/make_terminal(turf/T)
+	ASSERT(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
+	if(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
+		terminal = new/obj/machinery/power/terminal(T)
+		terminal.setDir(get_dir(T,src))
+		terminal.master = src
+
+
+/obj/machinery/power/smes/disconnect_terminal()
+	ASSERT(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
+	if(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
+		terminal.master = null
+		terminal = null
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
@@ -148,7 +173,14 @@
 		return FALSE
 
 	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
+	if(!C)
+		return FALSE  // no cable means no connection
+	C.connect_machine(src)
+
+
+
 	if(!C || !C.powernet)
+
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
 		if(!term || !term.powernet)
 			return FALSE

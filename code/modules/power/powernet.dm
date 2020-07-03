@@ -4,7 +4,7 @@
 */
 /datum/graph_edge
 	var/datum/value // What this edge is representing
-	var/datum/graph_component/component = null
+	var/datum/graph_component/graph_component = null
 	var/list/verts = list()
 	var/visited = FALSE   		// used in searching
 
@@ -14,7 +14,7 @@
 
 /datum/graph_edge/proc/visit()
 	visited = TRUE
-	var/datum/cable_edge/E
+	var/datum/graph_edge/E
 	for(var/i = 1; i <= verts.len; i++)
 		if(!E.visited)
 			E.visit()
@@ -22,28 +22,25 @@
 /datum/graph_edge/proc/collect(list/connected)
 	visited = TRUE
 	connected[value] = src
-	var/datum/cable_edge/E
+	var/datum/graph_edge/E
 	for(var/i = 1; i <= verts.len; i++)
 		if(!E.visited)
 			E.collect(connected)
 
 
 /datum/graph_edge/Destroy()
-	var/datum/cable_edge/E
-	for(var/i = 1; i <= verts.len; i++)
-		E = verts[i]
-		E.verts -= src
+	disconnect_all()
 	verts = null
 	value = null
-	component = null
+	graph_component = null
 	return ..()
 
 /datum/graph_edge/proc/disconnect_all()
-	var/datum/cable_edge/E
+	var/datum/graph_edge/E
 	for(var/i = 1; i <= verts.len; i++)
 		E = verts[i]
 		E.verts -= src
-	verts = list()
+	verts.Cut()
 
 /datum/graph_component
 	var/datum/graph
@@ -83,9 +80,9 @@
 		E = edges[key]
 		E.visited = FALSE
 
-/datum/graph/proc/refresh_components()
+/datum/graph/proc/refresh_connected_components()
 	clear_visited()
-	graph_components = list()
+	. = list()
 	var/datum/graph_component/N
 	var/datum/graph_edge/E
 	for(var/key in edges)
@@ -93,16 +90,19 @@
 		if(!E.visited)
 			N = new(G)
 			E.collect(N.edges)
-			graph_components += N
+			. += N
+
 
 /*
 ** POWERNET DATUM
 ** only handles moving power from one device to another
 ** cable.dm, handles all connection and graphs
+** powernets are ONLY qdel in cables.dm
 */
 /datum/powernet
 	var/number					// unique id
 	var/datum/graph_component/node	// The wire loop we are on
+
 	var/list/consumers = list()	// list of devices that need power
 	var/list/producers = list() // list of devices that create power
 
@@ -119,9 +119,52 @@
 	node = new/datum/graph_component
 
 /datum/powernet/Destroy()
-	QDEL_NULL(node)
+	clear()
 	SSmachines.powernets -= src
 	return ..()
+
+/datum/powernet/proc/disconnect_machine(obj/machinery/power/M)
+	ASSERT(M.powernet == src)
+	if(M.power_flags & POWER_MACHINE_CONSUMER)
+		powernet.consumers -= M
+	if(M.power_flags & POWER_MACHINE_PRODUCER)
+		powernet.producer -= M
+	if(M.power_flags & POWER_MACHINE_NEEDS_TERMINAL)
+		if(M.terminal)
+			powernet.consumers -= M.terminal
+	M.powernet = null
+
+/datum/powernet/proc/connect_machine(obj/machinery/power/M)
+	ASSERT(M.powernet == null || M.powernet == src)
+	M.powernet = src
+	if(M.power_flags & POWER_MACHINE_CONSUMER)
+		powernet.consumers |= M
+	if(M.power_flags & POWER_MACHINE_PRODUCER)
+		powernet.producer |= M
+	if(M.power_flags & POWER_MACHINE_NEEDS_TERMINAL)
+		if(M.terminal)
+			powernet.consumers |= M.terminal
+
+// Hard clear, 0 eveything out, removes itself from all machines
+/datum/powernet/proc/clear()
+	var/i
+	var/obj/machinery/power/M
+	for(i=1; i <= consumers.len; i++)
+		M = consumers[i]
+		M.powernet = null
+	for(i=1; i <= consumers.len; i++)
+		M = producer[i]
+		M.powernet = null
+	producers.Cut()
+	consumers.Cut()
+	load = 0
+	newavail = 0
+	avail = 0
+	viewavail = 0
+	viewload = 0
+	netexcess = 0
+	delayedload = 0
+
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
