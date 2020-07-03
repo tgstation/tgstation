@@ -98,8 +98,8 @@
 	return ..()
 
 /// returns true if the bot is fully powered.
-/mob/living/simple_animal/bot/mulebot/proc/has_power()
-	return !open && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+/mob/living/simple_animal/bot/mulebot/proc/has_power(bypass_open_check)
+	return (!open || bypass_open_check) && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
 /mob/living/simple_animal/bot/mulebot/update_mobility()
 	. = ..()

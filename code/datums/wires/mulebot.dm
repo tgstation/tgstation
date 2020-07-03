@@ -18,7 +18,7 @@
 
 /datum/wires/mulebot/on_pulse(wire)
 	var/mob/living/simple_animal/bot/mulebot/M = holder
-	if(!M.has_power())
+	if(!M.has_power(TRUE))
 		return //logically mulebots can't flash and beep if they don't have power.
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2)
