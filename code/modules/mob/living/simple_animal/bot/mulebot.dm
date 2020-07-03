@@ -89,6 +89,14 @@
 	QDEL_NULL(cell)
 	return ..()
 
+/mob/living/simple_animal/bot/mulebot/get_cell()
+	return cell
+
+/mob/living/simple_animal/bot/mulebot/turn_on()
+	if(!has_power())
+		return
+	return ..()
+
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
 	if(paicard)
@@ -497,12 +505,9 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()
-	if(num_steps <= 0)
-		STOP_PROCESSING(SSfastprocess, src)
-		return
+	if(!on || !cell || client || (num_steps <= 0))
+		return PROCESS_KILL
 	num_steps--
-	if(!on || client)
-		return
 
 	switch(mode)
 		if(BOT_IDLE) // idle
@@ -522,8 +527,10 @@
 				if(isturf(next))
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
-					if(cell)
-						cell.use(1)
+					cell.use(1)
+					if(cell.charge <= 0)
+						turn_off()
+						. = PROCESS_KILL //ran out of juice, this is our last move
 					if(moved && oldloc!=loc)	// successful move
 						blockcount = 0
 						path -= loc
