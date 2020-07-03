@@ -12,8 +12,8 @@
 	var/restoring = FALSE
 	var/list/logs
 	var/auth_id = "\[NULL\]:"
-	ui_x = 700
-	ui_y = 800
+	ui_x = 550
+	ui_y = 500
 
 /obj/machinery/computer/apc_control/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -178,10 +178,9 @@
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
-		obj_flags &= ~EMAGGED
-	else
-		obj_flags |= EMAGGED
-		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)]")
+		return
+	obj_flags |= EMAGGED
+	log_game("[key_name(user)] emagged [src] at [AREACOORD(src)]")
 	playsound(src, "sparks", 50, TRUE)
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
