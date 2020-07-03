@@ -80,7 +80,7 @@
 		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
 
-		listclearnulls()
+		listclearnulls(atoms_in_use)
 
 		for(var/to_disappear in atoms_in_use)
 			var/atom/atom_to_disappear = to_disappear
