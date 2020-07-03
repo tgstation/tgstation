@@ -13,9 +13,10 @@
 
 /obj/machinery/power/Initialize(mapload, M)
 	. = ..()
-	ASSERT(M)
-	master = M
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
+	if(!mapload) // power.dm handles connection on map loading
+		ASSERT(M)
+		master = M
 
 /obj/machinery/power/connect_to_network()
 	ASSERT(master)
@@ -24,7 +25,6 @@
 /obj/machinery/power/terminal/Destroy()
 	ASSERT(master)
 	master.disconnect_terminal()
-	master = null
 	return ..()
 
 /obj/machinery/power/terminal/should_have_node()

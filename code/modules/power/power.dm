@@ -23,12 +23,16 @@
 	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
 	var/power_flags = POWER_CONSUMER
 	var/obj/machinery/power/terminal/terminal = null // We need a POWER_MACHINE_NEEDS_TERMINAL to use
-	var/datum/graph_edge/edge
 
 
 /obj/machinery/power/Initialize(mapload)
 	. = ..()
-	edge = new/datum/graph_edge/edge(src)
+	if(mapload && (power_flags & POWER_MACHINE_NEEDS_TERMINAL))
+		return INITIALIZE_HINT_LATELOAD
+
+// called on map load to connect to the machine
+/obj/machinery/power/LateInitialize()
+
 
 /obj/machinery/power/Destroy()
 	QDEL_NULL(edge)
@@ -88,9 +92,27 @@
 	else
 		return 0
 
+// should not run this except in lateInit during mapload
+// crash if not found because the map maker forgot it?
+
+/obj/machinery/power/proc/find_terminal(clear_master = TRUE)
+	if(clear_master)
+		disconnect_terminal()
+	for(var/check_dir in GLOB.cardinals)
+		var/turf/TB = get_step(src, check_dir)
+		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
+		if(term)
+			terminal = term
+			ASSERT(!terminal.master) // should be null on map load
+			terminal.master = src
+			terminal.setDir(get_dir(TB,src)) // set the direction
+			break
+	ASSERT(terminal)	// should of found one
+
+
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	ASSERT(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
-	if(terminal)
+	if((power_flags & POWER_MACHINE_NEEDS_TERMINAL) && terminal)
 		terminal.master = null
 		terminal = null
 
@@ -102,13 +124,6 @@
 		terminal = new/obj/machinery/power/terminal(T)
 		terminal.setDir(get_dir(T,src))
 		terminal.master = src
-
-
-/obj/machinery/power/smes/disconnect_terminal()
-	ASSERT(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
-	if(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
-		terminal.master = null
-		terminal = null
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
@@ -290,30 +305,6 @@
 		if(!PM.connect_to_network()) //couldn't find a node on its turf...
 			PM.disconnect_from_network() //... so disconnect if already on a powernet
 
-
-//Merge two powernets, the bigger (in cable length term) absorbing the other
-/proc/merge_powernets(datum/powernet/net1, datum/powernet/net2)
-	if(!net1 || !net2) //if one of the powernet doesn't exist, return
-		return
-
-	if(net1 == net2) //don't merge same powernets
-		return
-
-	//We assume net1 is larger. If net2 is in fact larger we are just going to make them switch places to reduce on code.
-	if(net1.cables.len < net2.cables.len)	//net2 is larger than net1. Let's switch them around
-		var/temp = net1
-		net1 = net2
-		net2 = temp
-
-	//merge net2 into net1
-	for(var/obj/structure/cable/Cable in net2.cables) //merge cables
-		net1.add_cable(Cable)
-
-	for(var/obj/machinery/power/Node in net2.nodes) //merge power machines
-		if(!Node.connect_to_network())
-			Node.disconnect_from_network() //if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
-
-	return net1
 
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever

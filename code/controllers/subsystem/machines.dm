@@ -15,17 +15,22 @@ SUBSYSTEM_DEF(machines)
 #define POWERNET_REINDEX_HIGH_MARK 50
 // This is all for debugging to see whats going on in the nets
 
+/datum/controller/subsystem/machines/proc/rebuild_powernets()
+	// this is run when we have cable cuts on the powernet
+	while(powernet_rebuild_queue.len)
+		var/datum/powernet/P = powernet_rebuild_queue[powernet_rebuild_queue.len--]
+		split_powernet(P)
+
+
 /datum/controller/subsystem/machines/proc/reindex_powernets()
 	var/list/reindexed = list()
 	var/datum/powernet/N
 	var/i
-	for(i=1; i < recycled_powernets.len; i++)
-		N = recycled_powernets[i]
-		if(N)
-			reindexed += N
-			N.number = reindexed.len
-			recycled_powernets[i] = null // this needed?
-	recycled_powernets = reindexed
+	for(i=1; i < powernets.len; i++)
+		N = powernets[i]
+		reindexed += N
+		N.number = reindexed.len
+	powernets = reindexed
 
 /datum/controller/subsystem/machines/proc/aquire_powernet()
 	var/datum/powernet/N
@@ -78,8 +83,10 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/fire(resumed = 0)
 	if (!resumed)
+		rebuild_powernets()
 		for(var/datum/powernet/Powernet in powernets)
 			Powernet.reset() //reset the power state.
+
 		src.currentrun = processing.Copy()
 
 	//cache for sanic speed (lists are references anyways)

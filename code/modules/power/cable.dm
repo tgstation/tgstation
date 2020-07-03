@@ -17,7 +17,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 
 #define CABLE_DIR_TO_DIR(N) (1 << ((N)-1))
-
+// intresting property of this is that if the number is Odd,
+// we can invert the direction by making it even
+#define CABLE_DIR_INVERT(N) ((((N)) % 2) == 0) ? (N - 1) : (N + 1))
 ///////////////////////////////
 //CABLE STRUCTURE
 ///////////////////////////////
@@ -25,6 +27,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Definitions
 ////////////////////////////////
 /obj/structure/cable
+	var/static/list/cable_cardinals = list(CABLE_DIR_NORTH, CABLE_DIR_SOUTH, CABLE_DIR_EAST, CABLE_DIR_WEST, CABLE_DIR_UP, CABLE_DIR_DOWN)
+
 	name = "power cable"
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/layer_cable.dmi'
@@ -67,44 +71,65 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	// on mapload, we will do it somewhere else
 	if(!mapload)
-		graph_cable() // we should only need to do this once
+		graph_cable()
 
-// don't call this on mapload
+// don't call this on mapload and should only be called once in Init
 /obj/structure/cable/proc/graph_cable()
 	// main workhouse, we go though all the sides, see what is connected
 	// and connect, set the icon state, etc etc
-	var/under_thing = NONE
-	var/obj/machinery/power/search_parent = null
-	for(var/obj/machinery/power/P in loc)
-		linked[CABLE_DIR_UP] = P	// we are under this,
+	var/obj/machinery/power/under = null
+	var/obj/machinery/power/terminal/term
+	var/check_dir
+	var/datum/powernet/largest_powernet = null
+	var/list/power_nets = list()
 
-	for(var/check_dir in GLOB.cardinals)
-		var/TB = get_step(src, check_dir)
-		//don't link from smes to its terminal
-		if(under_thing)
-			switch(under_thing)
-				if(UNDER_SMES)
-					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
-					//Why null or equal to the search parent?
-					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
-					//but the cable underneath it is ready to link.
-					//I don't believe null is even a valid state for a smes terminal while the game is actually running
-					//So in the rare case that this happens, we also shouldn't connect
-					//This might break.
-					if(term && (!term.master || term.master == search_parent))
-						continue
-				if(UNDER_TERMINAL)
-					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
-					if(S && (!S.terminal || S.terminal == search_parent))
-						continue
+	// check if this cable was placed under a machine
+	for(var/obj/machinery/power/P in loc)
+		linked[CABLE_DIR_UP] = under = P	// we are under this,
+
+	// check each direction to see if we are connected to another cable
+	for(var/cable_dir in cable_cardinals)
+		check_dir = CABLE_DIR_TO_DIR(cable_dir)
+		var/turf/TB = get_step(src, check_dir)
+		// special case for terminal, no connection to the machine side from it
+		if(under)
+			term = under
+			if(term && term.master.loc == TB) // if we are the term, don't connect the wire to the machine
+				continue
+			else if(under.terminal && under.terminal.loc == TB)
+				continue // or if we are the machine, don't connect to the terminal
 		var/inverse = turn(check_dir, 180)
+		var/cable_inverse = CABLE_DIR_INVERT(cable_dir)
 		for(var/obj/structure/cable/C in TB)
 			if(C.cable_layer & cable_layer)
-				edge.connect(C)
-				linked_dirs |= check_dir
-				C.linked_dirs |= inverse
+				ASSERT(!linked[cable_dir]) // should be null on new
+				linked[cable_dir] = C
+				ASSERT(!C.linked[cable_inverse]) // should also be null as nothing is connected
+				C.linked[cable_inverse] = src
 				C.update_icon()
+				// lets collect the powernets
+				ASSERT(C.powernet) // should also have powernets
+				if(!largest_powernet)
+					largest_powernet = C.powernet
+				else if(largest_powernet == C.powernet || C.powernet in power_nets)
+					continue // we already collected it
+				else if(C.powernet.cables.len > largest_powernet.cables.len)
+					power_nets |= largest_powernet
+					largest_powernet = C.powernet
+				else
+					power_nets |= C.powernet
 
+	// Ok, the cable is in the graph, connected, lets merge the powernets
+	// Best case, we are just assigning the powernet on the side
+	// worst case, we have to merge 3 powernets.  Need to profile that
+	for(var/i = 1; i <= power_nets.len; i++)
+		largest_powernet.merge(power_net[i])
+
+	// and we are done, don't forget to add our self or any connected machine
+	C.powernet = largest_powernet
+	C.powernet.cables[src] = largest_powernet
+	if(under)
+		C.connect_machine(under)
 	update_icon()
 
 
@@ -129,9 +154,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	powernet.connect_machine(M)
 	linked[CABLE_DIR_UP] = M
 
-/// this will create the powernet for this graph
-/obj/structure/cable/proc/create_powernet()
-
 
 /obj/structure/cable/proc/disconnect_machine(obj/machinery/power/M)
 	ASSERT(M.powernet && linked[CABLE_DIR_UP] == M)
@@ -141,63 +163,20 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	powernet.disconnect_machine(M)
 	linked[CABLE_DIR_UP] = null
 
-///Set the linked indicator bitflags
-/obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
-	var/under_thing = NONE
-	if(clear_before_updating)
-		linked_dirs = 0
 
-	var/obj/machinery/power/search_parent = null
-	for(var/obj/machinery/power/P in loc)
-		if(istype(P, /obj/machinery/power/terminal))
-			under_thing = UNDER_TERMINAL
-			search_parent = P
-			break
-		if(istype(P, /obj/machinery/power/smes))
-			under_thing = UNDER_SMES
-			search_parent = P
-			break
-	edge.under = search_parent		// This dosn't mean its connected, it just means its there
-	for(var/check_dir in GLOB.cardinals)
-		var/TB = get_step(src, check_dir)
-		//don't link from smes to its terminal
-		if(under_thing)
-			switch(under_thing)
-				if(UNDER_SMES)
-					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
-					//Why null or equal to the search parent?
-					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
-					//but the cable underneath it is ready to link.
-					//I don't believe null is even a valid state for a smes terminal while the game is actually running
-					//So in the rare case that this happens, we also shouldn't connect
-					//This might break.
-					if(term && (!term.master || term.master == search_parent))
-						continue
-				if(UNDER_TERMINAL)
-					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
-					if(S && (!S.terminal || S.terminal == search_parent))
-						continue
-		var/inverse = turn(check_dir, 180)
-		for(var/obj/structure/cable/C in TB)
-			if(C.cable_layer & cable_layer)
-				edge.connect(C)
-				linked_dirs |= check_dir
-				C.linked_dirs |= inverse
-				C.update_icon()
-
-	update_icon()
-
-///Clear the linked indicator bitflags
-/obj/structure/cable/proc/Disconnect_cable()
-	edge.disconnect_all()
-	for(var/check_dir in GLOB.cardinals)
-		var/inverse = turn(check_dir, 180)
-		if(linked_dirs & check_dir)
-			var/TB = get_step(loc, check_dir)
-			for(var/obj/structure/cable/C in TB)
-				if(cable_layer & C.cable_layer)
-					C.linked_dirs &= ~inverse
-					C.update_icon()
+/// disconnect the cable from the net, q a powernet rebuild
+/obj/structure/cable/proc/disconnect()
+	var/obj/structure/cable/C
+	for(var/i =1 ;i <= CABLE_DIR_DOWN; i++)
+		if(istype(linked[i], obj/structure/cable))
+			C = linked[i]
+			C.linked[CABLE_DIR_INVERT(i)] = null
+			linked[i] = null
+			C.update_icon()
+		else if(istype(linked[i], obj/machinery/power))
+			powernet.disconnect_machine(linked[i])
+	SSmachines.powernets
+	powernet.
 
 /obj/structure/cable/Destroy()					// called when a cable is deleted
 	Disconnect_cable()
@@ -227,13 +206,13 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		// Just be carful, order must be the same as GLOB
 		// NORTH, SOUTH, EAST, WEST
 		dir_string += "l[cable_layer]"
-		if(linked_dir & NORTH)
+		if(linked[CABLE_DIR_NORTH])
 			dir_icon_list += "[NORTH]"
-		if(linked_dir & SOUTH)
+		if(linked[CABLE_DIR_SOUTH])
 			dir_icon_list += "[SOUTH]"
-		if(linked_dir & EAST)
+		if(linked[CABLE_DIR_EAST)
 			dir_icon_list += "[EAST]"
-		if(linked_dir & WEST)
+		if(linked[CABLE_DIR_WEST])
 			dir_icon_list += "[WEST]"
 		//var/dir_string = dir_icon_list.Join("-")
 
