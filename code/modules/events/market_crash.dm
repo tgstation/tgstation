@@ -7,25 +7,31 @@
 	var/market_dip = 0
 
 /datum/round_event/market_crash/setup()
-	startWhen = 2
-	endWhen = startWhen + 1
-	announceWhen = 1
+	startWhen = 1
+	endWhen = rand(25, 50)
+	announceWhen = 2
 
 /datum/round_event/market_crash/announce(fake)
-	var/list/poss_reasons = list("The Alignment of the Moon and the Sun", "some risky housing market outcomes", "The B.E.P.I.S. team's untimely downfall", "speculative Terragov grants")
+	var/list/poss_reasons = list("the alignment of the moon and the sun",\
+		"some risky housing market outcomes",\
+		"The B.E.P.I.S. team's untimely downfall",\
+		"speculative Terragov grants backfiring",\
+		"greatly exaggerated reports of Nanotrasen accountancy personnel committing mass suicide")
 	var/reason = pick(poss_reasons)
 	priority_announce("Based on [reason], prices for on-station vendors will be increased for a short period.", "Nanotrasen Accounting Division")
 
 /datum/round_event/market_crash/start()
+	. = ..()
 	var/num_accounts = 0
 	for(var/A in SSeconomy.bank_accounts)
 		num_accounts += 1
-	market_dip = rand(100,1000) * num_accounts
+	market_dip = rand(1000,10000) * num_accounts
 	SSeconomy.station_target -= market_dip
-	SSeconomy.station_target = min(SSeconomy.station_target, 0)
+	SSeconomy.station_target = max(SSeconomy.station_target, 1)
+	SSeconomy.price_update()
 
 /datum/round_event/market_crash/end()
 	. = ..()
 	SSeconomy.station_target += market_dip
+	SSeconomy.price_update()
 	priority_announce("Prices for on-station vendors have now stabilized.", "Nanotrasen Accounting Division")
-

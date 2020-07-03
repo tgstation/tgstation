@@ -120,8 +120,8 @@
 			if(pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES))
 				to_chat(usr, "<span class='warning'>You already have a civilian bounty, try again in [(pot_acc.bounty_timer + 5 MINUTES)-world.time]!</span>")
 				return FALSE
-			var/datum/bounty/crumbs = random_bounty() //It's a good scene from War Dogs (2016).
-			crumbs.reward = (crumbs.reward/ (rand(2,4)))
+			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types) //It's a good scene from War Dogs (2016).
+			crumbs.reward = (crumbs.reward/(SSeconomy.inflation_value()))
 			pot_acc.bounty_timer = world.time
 			pot_acc.civilian_bounty = crumbs
 		if("eject")

@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(economy)
 	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
 	var/list/dep_cards = list()
 	var/station_total = 0
-	var/station_target = 0
+	var/station_target = 1
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
@@ -62,12 +62,14 @@ SUBSYSTEM_DEF(economy)
 	secmedsrv_payout() // Payout based on crew safety, health, and mood.
 	civ_payout() // Payout based on ??? Profit
 	car_payout() // Cargo's natural gain in the cash moneys.
+	station_total = 0
 	for(var/A in bank_accounts)
 		var/datum/bank_account/B = A
 		B.payday(1)
 		if(!istype(B, /datum/bank_account/department))
 			station_total += B.account_balance
 			station_target += STATION_TARGET_INCREMENT
+	price_update()
 
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)
@@ -142,14 +144,35 @@ SUBSYSTEM_DEF(economy)
 	if(D)
 		D.adjust_money(min(civ_cash, MAX_GRANT_CIV))
 
+
+/**
+  *
+  *
+  **/
+/datum/controller/subsystem/economy/proc/price_update()
+	for(var/obj/machinery/vending/V in GLOB.machines)
+		if(istype(V, /obj/machinery/vending/custom))
+			continue
+		if(!is_station_level(V.z))
+			continue
+		for(var/i in V.product_records)
+			var/datum/data/vending_product/vend = i
+			var/atom/product = vend.product_path
+			product.custom_price = initial(product.custom_price) * SSeconomy.inflation_value()
+		for(var/i in V.coin_records)
+			var/datum/data/vending_product/vend = i
+			var/atom/product = vend.product_path
+			product.custom_price = initial(product.custom_price) * SSeconomy.inflation_value()
+		V.updateUsrDialog()
+
 /**
   * Proc that returns a value meant to undercut the value of civilian bounties, based on how much money exists on the station.
   *
-  * If crew are somehow aquiring far too much money, this value is fed to civilian bounties, to encourage spending more money.
+  * If crew are somehow aquiring far too much money, this value will dynamically cause vendables across the station to skyrocket in price until some money is spent.
   **/
 /datum/controller/subsystem/economy/proc/inflation_value()
-	var/holder = station_total - station_target
-	if(holder < 0)
-		return 1
-	holder = clamp(round((holder / station_target), 0.1), 1, 5)
-	return holder
+	if(station_total > station_target)
+		var/holder = station_total - station_target
+		holder = clamp(round((holder / max(station_target,1) + 1),0.1),1,5)
+		return holder
+	return 1
