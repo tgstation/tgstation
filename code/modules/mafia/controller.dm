@@ -18,8 +18,6 @@
 
 	var/list/current_setup_text //Redable list of roles in current game
 
-	var/game_id //Used to sync all parts - signup boards, spawns, night curtains, defaults to "mafia"
-
 	var/player_outfit = /datum/outfit/mafia //todo some fluffy outfit
 
 	var/list/landmarks = list() //spawn points for players, each one has a house
@@ -35,16 +33,15 @@
 
 	var/debug = FALSE
 
-/datum/mafia_controller/New(game_id = "mafia")
+/datum/mafia_controller/New()
 	. = ..()
-	src.game_id = game_id
-	GLOB.mafia_games[game_id] = src
+	GLOB.mafia_game = src
 	map_deleter = new
 
 /datum/mafia_controller/Destroy(force, ...)
 	. = ..()
+	GLOB.mafia_game = null
 	end_game()
-	GLOB.mafia_games[game_id] = null
 	qdel(map_deleter)
 
 /datum/mafia_controller/proc/prepare_game(setup_list,ready_players)
@@ -63,8 +60,6 @@
 
 	if(!landmarks.len)//we grab town center when we grab landmarks, if there is none (the first game signed up for let's grab them post load)
 		for(var/obj/effect/landmark/mafia/possible_spawn in GLOB.landmarks_list)
-			if(possible_spawn.game_id != game_id)
-				continue
 			if(istype(possible_spawn, /obj/effect/landmark/mafia/town_center))
 				town_center_landmark = possible_spawn
 			else
@@ -235,7 +230,7 @@
 
 /datum/mafia_controller/proc/toggle_night_curtains(close)
 	for(var/obj/machinery/door/poddoor/D in GLOB.machines) //I really dislike pathing of these
-		if(D.id != game_id)
+		if(D.id != "mafia") //so as to not trigger shutters on station, lol
 			continue
 		if(close)
 			INVOKE_ASYNC(D, /obj/machinery/door/poddoor.proc/close)
@@ -558,8 +553,8 @@
 /datum/action/innate/mafia_panel/Activate()
 	parent.ui_interact(owner)
 
-/proc/create_mafia_game(game_key)
-	if(GLOB.mafia_games[game_key])
-		QDEL_NULL(GLOB.mafia_games[game_key])
-	var/datum/mafia_controller/MF = new(game_key)
+/proc/create_mafia_game()
+	if(GLOB.mafia_game)
+		QDEL_NULL(GLOB.mafia_game)
+	var/datum/mafia_controller/MF = new()
 	return MF

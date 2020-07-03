@@ -30,6 +30,9 @@
 
 //list of ghosts who want to play mafia, every time someone enters the list it checks to see if enough are in
 GLOBAL_LIST_EMPTY(mafia_signup)
+//the current global mafia game running.
+GLOBAL_VAR(mafia_game)
+
 GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 
 /proc/generate_mafia_setups()

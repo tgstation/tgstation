@@ -142,11 +142,9 @@
 	key = "j"
 
 /datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
-	for(var/key in GLOB.mafia_games)
-		var/datum/mafia_controller/MF = GLOB.mafia_games[key]
-		var/datum/mafia_role/R = MF.player_role_lookup[user]
-		if(!R || R.team != MAFIA_TEAM_MAFIA)
-			continue
-		MF.send_message("<span class='changeling'><b>[R.body.real_name]:</b> [message]</span>",MAFIA_TEAM_MAFIA)
-		return FALSE
-	return TRUE
+	var/datum/mafia_controller/MF = GLOB.mafia_game
+	var/datum/mafia_role/R = MF.player_role_lookup[user]
+	if(!R || R.team != "mafia")
+		return TRUE
+	MF.send_message("<span class='changeling'><b>[R.body.real_name]:</b> [message]</span>","mafia")
+	return FALSE

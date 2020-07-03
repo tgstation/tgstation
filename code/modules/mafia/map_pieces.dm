@@ -18,9 +18,9 @@
 
 /obj/mafia_game_board/attack_ghost(mob/user)
 	. = ..()
-	var/datum/mafia_controller/MF = GLOB.mafia_games[game_id]
+	var/datum/mafia_controller/MF = GLOB.mafia_game
 	if(!MF)
-		MF = create_mafia_game(game_id)
+		MF = create_mafia_game()
 	MF.ui_interact(user)
 
 /area/mafia
@@ -33,10 +33,6 @@
 
 /datum/map_template/mafia
 	var/description = ""
-
-/datum/map_template/mafia/New()
-	mappath = "" + suffix
-	..(path = mappath)
 
 /datum/map_template/mafia/summerball
 	name = "Summerball 2020"
@@ -61,7 +57,7 @@
 /datum/map_template/mafia/necropolis
 	name = "Necropolis Showdown"
 	description = "The townies have shown up to try and suss out who truly ruined the art direction of SS13. No hurt feelings intended!"
-	suffix = "mafia_necropolis.dmm"
+	mappath = "_maps/map_files/Mafia/mafia_necropolis.dmm"
 
 /datum/map_template/mafia/spider_clan
 	name = "Spider Clan Kidnapping"
