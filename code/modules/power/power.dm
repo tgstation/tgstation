@@ -16,8 +16,16 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
+	var/datum/graph_edge/edge
+
+
+/obj/machinery/power/Initialize()
+	. = ..()
+	edge = new/datum/graph_edge/edge(src)
 
 /obj/machinery/power/Destroy()
+	edge.disconnect_all()
+	QDEL_NULL(edge)
 	disconnect_from_network()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/update_cable_icons_on_turf, get_turf(src)), 3)
 	return ..()

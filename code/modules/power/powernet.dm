@@ -1,13 +1,108 @@
+/*
+** This is a powernet edge.  Its a container that tells the powernet
+** if a cable has been disconnected and it needs to rebuild
+*/
+/datum/graph_edge
+	var/datum/value
+	var/datum/graph_component/component = null
+	var/list/verts = list()
+	var/visited = FALSE   		// used in searching
+
+/datum/graph_edge/New(W)
+	value = W
+	. = ..()
+
+/datum/graph_edge/proc/visit()
+	visited = TRUE
+	var/datum/cable_edge/E
+	for(var/i = 1; i <= verts.len; i++)
+		if(!E.visited)
+			E.visit()
+
+/datum/graph_edge/proc/collect(list/connected)
+	visited = TRUE
+	connected[value] = src
+	var/datum/cable_edge/E
+	for(var/i = 1; i <= verts.len; i++)
+		if(!E.visited)
+			E.collect(connected)
 
 
-////////////////////////////////////////////
-// POWERNET DATUM
-// each contiguous network of cables & nodes
-/////////////////////////////////////
+/datum/graph_edge/Destroy()
+	var/datum/cable_edge/E
+	for(var/i = 1; i <= verts.len; i++)
+		E = verts[i]
+		E.verts -= src
+	verts = null
+	value = null
+	component = null
+	return ..()
+
+/datum/graph_edge/proc/disconnect_all()
+	var/datum/cable_edge/E
+	for(var/i = 1; i <= verts.len; i++)
+		E = verts[i]
+		E.verts -= src
+	verts = list()
+
+/datum/graph_component
+	var/datum/graph
+	var/list/edges
+	var/count
+
+/datum/graph_component/New(G, E)
+	graph = G
+	edges = list()
+	count = 0
+
+/datum/graph_component/Destroy()
+	graph = null
+	edges = null
+	return ..()
+
+/datum/graph
+	var/list/edges = list()
+	var/list/graph_components = list()
+
+
+/datum/graph/proc/connect_edge(datum/graph_edge/A, datum/graph_edge/B)
+	edges[A.value] = A
+	edges[B.value] = B
+	A.verts |= B
+	B.verts |= A
+
+/datum/graph/proc/disconnect_edge(datum/graph_edge/A, datum/graph_edge/B)
+	edges[A.value] = null
+	edges[B.value] = null
+	A.verts -= B
+	B.verts -= A
+
+/datum/graph/proc/clear_visited()
+	var/datum/graph_edge/E
+	for(var/key in edges)
+		E = edges[key]
+		E.visited = FALSE
+
+/datum/graph/proc/refresh_components()
+	clear_visited()
+	graph_components = list()
+	var/datum/graph_component/N
+	var/datum/graph_edge/E
+	for(var/key in edges)
+		E = edges[key]
+		if(!E.visited)
+			N = new(G)
+			E.collect(N.edges)
+			graph_components += N
+
+/*
+** POWERNET DATUM
+** only handles moving power from one device to another
+** cable.dm, handles all connection and graphs
+*/
 /datum/powernet
 	var/number					// unique id
-	var/list/cables = list()	// all cables & junctions
-	var/list/nodes = list()		// all connected machines
+	var/datum/graph_component/nodes
 
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
 	var/newavail = 0			// what available power was gathered last tick, then becomes...
@@ -21,60 +116,12 @@
 	SSmachines.powernets += src
 
 /datum/powernet/Destroy()
-	//Go away references, you suck!
-	for(var/obj/structure/cable/C in cables)
-		cables -= C
-		C.powernet = null
-	for(var/obj/machinery/power/M in nodes)
-		nodes -= M
-		M.powernet = null
-
+	ASSERT(nodes == null)	// nodes should of been nulled by cables before this qdelets!
 	SSmachines.powernets -= src
 	return ..()
 
 /datum/powernet/proc/is_empty()
 	return !cables.len && !nodes.len
-
-//remove a cable from the current powernet
-//if the powernet is then empty, delete it
-//Warning : this proc DON'T check if the cable exists
-/datum/powernet/proc/remove_cable(obj/structure/cable/C)
-	cables -= C
-	C.powernet = null
-	if(is_empty())//the powernet is now empty...
-		qdel(src)///... delete it
-
-//add a cable to the current powernet
-//Warning : this proc DON'T check if the cable exists
-/datum/powernet/proc/add_cable(obj/structure/cable/C)
-	if(C.powernet)// if C already has a powernet...
-		if(C.powernet == src)
-			return
-		else
-			C.powernet.remove_cable(C) //..remove it
-	C.powernet = src
-	cables +=C
-
-//remove a power machine from the current powernet
-//if the powernet is then empty, delete it
-//Warning : this proc DON'T check if the machine exists
-/datum/powernet/proc/remove_machine(obj/machinery/power/M)
-	nodes -=M
-	M.powernet = null
-	if(is_empty())//the powernet is now empty...
-		qdel(src)///... delete it
-
-
-//add a power machine to the current powernet
-//Warning : this proc DON'T check if the machine exists
-/datum/powernet/proc/add_machine(obj/machinery/power/M)
-	if(M.powernet)// if M already has a powernet...
-		if(M.powernet == src)
-			return
-		else
-			M.disconnect_from_network()//..remove it
-	M.powernet = src
-	nodes[M] = M
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller

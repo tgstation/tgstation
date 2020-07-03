@@ -1,49 +1,11 @@
 //Use this only for things that aren't a subtype of obj/machinery/power
 //For things that are, override "should_have_node()" on them
-GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille)))
+▬GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille)))
 
 #define UNDER_SMES -1
 #define UNDER_TERMINAL 1
 
-/*
-** This is a powernet edge.  Its a container that tells the powernet
-** if a cable has been disconnected and it needs to rebuild
-*/
-/datum/cable_edge
-	var/static/list/edges = list()
-	/obj/structure/cable/wire
-	var/list/verts = list()
-	var/obj/machinery/power/under = null
-	var/visited = FALSE   		// used in searching
 
-/datum/cable_edge/New(W)
-	wire = W
-	edges[W] = src
-
-/datum/cable_edge/Destroy()
-	// for speed since we are just nuling the list
-	for(var/i = 1; i <= verts.len; i++)
-		verts[i].verts -= src
-	verts = null
-	under = null
-	edges[wire] = null
-	wire = null
-
-/obj/structure/cable/proc/connect(obj/structure/cable/cable)
-	var/datum/cable_edge/CE = cable.edge
-	verts |= cable.edge
-	cable.edge.verts |= src	// should check if it exists for assert
-
-/obj/structure/cable/proc/disconnect(obj/structure/cable/cable)
-	var/datum/cable_edge/CE = cable.edge
-	verts -= cable.edge
-	cable.edge.verts -= src
-
-/obj/structure/cable/proc/disconnect_all()
-	for(var/i = 1; i <= verts.len; i++)
-		verts[i].verts -= src
-	verts = list()
-	under = null
 
 
 ///////////////////////////////
@@ -53,6 +15,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Definitions
 ////////////////////////////////
 /obj/structure/cable
+	var/static/datum/graph = new	/// main graph for eveything power
 	name = "power cable"
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/layer_cable.dmi'
@@ -66,7 +29,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/cable_layer = CABLE_LAYER_2			//bitflag
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
-	var/datum/cable_edge/edge
+	var/datum/graph_edge/edge
 
 /obj/structure/cable/layer1
 	color = "red"
@@ -84,18 +47,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
-
 	GLOB.cable_list += src //add it to the global cable list
+	edge = new/datum/graph_edge(src)
 	Connect_cable()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
-	edge = new/datum/cable_edge(src)
 
 ///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
 	var/under_thing = NONE
 	if(clear_before_updating)
 		linked_dirs = 0
-	edge.disconnect_all()	// Clear the graph vertexes
 
 	var/obj/machinery/power/search_parent = null
 	for(var/obj/machinery/power/P in loc)
@@ -155,7 +116,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	GLOB.cable_list -= src							//remove it from global cable list
-
+	QDEL_NULL(edge)
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
@@ -172,22 +133,31 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		icon_state = "l[cable_layer]-noconnection"
 	else
 		var/list/dir_icon_list = list()
-		for(var/check_dir in GLOB.cardinals)
-			if(linked_dirs & check_dir)
-				dir_icon_list += "[check_dir]"
-		var/dir_string = dir_icon_list.Join("-")
-		if(dir_icon_list.len > 1)
-			for(var/obj/O in loc)
-				if(GLOB.wire_node_generating_types[O.type])
-					dir_string = "[dir_string]-node"
+		/// This is faster.  Why?  Because its not a loop that needs a var
+		/// and if you think for(in) is fast, then your an idiot
+		// Just be carful, order must be the same as GLOB
+		// NORTH, SOUTH, EAST, WEST
+		dir_string += "l[cable_layer]"
+		if(linked_dir & NORTH)
+			dir_icon_list += "[NORTH]"
+		if(linked_dir & SOUTH)
+			dir_icon_list += "[SOUTH]"
+		if(linked_dir & EAST)
+			dir_icon_list += "[EAST]"
+		if(linked_dir & WEST)
+			dir_icon_list += "[WEST]"
+		//var/dir_string = dir_icon_list.Join("-")
+
+		for(var/obj/O in loc)
+			if(GLOB.wire_node_generating_types[O.type])
+				dir_icon_list += "node"
+				break
+			else if(istype(O, /obj/machinery/power))
+				var/obj/machinery/power/P = O
+				if(P.should_have_node())
+					dir_icon_list += "node"
 					break
-				else if(istype(O, /obj/machinery/power))
-					var/obj/machinery/power/P = O
-					if(P.should_have_node())
-						dir_string = "[dir_string]-node"
-						break
-		dir_string = "l[cable_layer]-[dir_string]"
-		icon_state = dir_string
+		icon_state = dir_icon_list.Join("-")
 
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
@@ -300,6 +270,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			continue
 
 		if(C.linked_dirs & inverse_dir) //we've got a matching cable in the neighbor turf
+			graph.connect_edge(src,C)
 			if(!C.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
 				var/datum/powernet/newPN = new()
 				newPN.add_cable(C)
