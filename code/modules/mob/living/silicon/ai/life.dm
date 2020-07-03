@@ -30,9 +30,10 @@
 			// Lost power
 			if (!battery)
 				to_chat(src, "<span class='warning'>Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable.</span>")
-				adjustOxyLoss(200)
+				adjustOxyLoss(100)
 			else
 				battery --
+				adjustOxyLoss(1)
 		else
 			// Gain Power
 			if (battery < 200)
