@@ -188,8 +188,8 @@
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)
 	//delaying the returning makes the cleanup_atoms break on the rune base, so we are calling it here.
-	cleanup_atoms(atoms)
-	return FALSE
+	//cleanup_atoms(atoms)
+	return TRUE
 
 //Ascension knowledge
 /datum/eldritch_knowledge/final

@@ -5,6 +5,8 @@
 	icon_state = ""
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
+	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
+	var/list/atoms_in_use = list()
 
 /obj/effect/eldritch/attack_hand(mob/living/user)
 	. = ..()
@@ -15,7 +17,7 @@
 /obj/effect/eldritch/proc/try_activate(mob/living/user)
 	if(!IS_HERETIC(user))
 		return
-	activate(user)
+	INVOKE_ASYNC(src, .proc/activate , user)
 
 /obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -39,7 +41,7 @@
 			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
 				continue
 		atoms_in_range += atom_in_range
-
+	atoms_in_range -= atoms_in_use
 	for(var/X in knowledge)
 		var/datum/eldritch_knowledge/current_eldritch_knowledge = knowledge[X]
 
@@ -70,8 +72,22 @@
 
 		flick("[icon_state]_active",src)
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
+		atoms_in_use |= selected_atoms
+		for(var/to_disappear in atoms_in_use)
+			var/atom/atom_to_disappear = to_disappear
+			//temporary so we dont have to deal with the bs of someone picking those up when they may be deleted
+			atom_to_disappear.invisibility = INVISIBILITY_ABSTRACT
 		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
+
+		listclearnulls()
+
+		for(var/to_disappear in atoms_in_use)
+			var/atom/atom_to_disappear = to_disappear
+			//we need to reappear the item just in case the ritual didnt consume everything... or something.
+			atom_to_disappear.invisibility = initial(atom_to_disappear.invisibility)
+
+		atoms_in_use = list()
 		return
 	to_chat(user,"<span class='warning'>Your ritual failed! You used either wrong components or are missing something important!</span>")
 
