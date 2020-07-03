@@ -469,28 +469,32 @@
 		pathset = 1 //Indicates the AI's custom path is initialized.
 		start()
 
-/mob/living/simple_animal/bot/mulebot/Moved(atom/OldLoc, Dir) //leave bloody tracks as we move if we've run over someone.
-	if(!bloodiness) //since running over mobs in handled in the parent, check to make sure we're bloody first, otherwise we will leave tracks before we even run them over.
+/mob/living/simple_animal/bot/mulebot/Move(atom/newloc, direct) //handle leaving bloody tracks. can't be done via Moved() since that can end up putting the tracks somewhere BEFORE we get bloody.
+	if(!bloodiness) //important to check this first since Bump() is called in the Move() -> Entered() chain
 		return ..()
+	var/atom/oldLoc = loc
 	. = ..()
-	if(isspaceturf(loc))
+	if(!last_move || isspaceturf(oldLoc)) //if we didn't sucessfully move, or if our old location was a spaceturf.
 		return
-	var/obj/effect/decal/cleanable/blood/tracks/B = new(OldLoc)
+	var/obj/effect/decal/cleanable/blood/tracks/B = new(oldLoc)
 	B.add_blood_DNA(return_blood_DNA())
-	B.setDir(Dir)
+	B.setDir(direct)
 	bloodiness--
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
+	if(!on)
+		return
 	if(!has_power())
 		turn_off()
 		return
-	if(on)
-		var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
-		if(!speed)//Devide by zero man bad
-			return
-		num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
-		if(mode != BOT_IDLE)
-			START_PROCESSING(SSfastprocess, src)
+	if(mode == BOT_IDLE)
+		return
+
+	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
+	if(!speed)//Devide by zero man bad
+		return
+	num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
+	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()
 	if(num_steps <= 0)
@@ -619,7 +623,7 @@
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
 				to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!</span>")
-				playsound_local(calling_ai, 'sound/machines/chime.ogg',40, FALSE)
+				calling_ai.playsound_local(calling_ai, 'sound/machines/chime.ogg', 40, FALSE)
 				calling_ai = null
 				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 
@@ -652,18 +656,17 @@
 			bot_reset()	// otherwise go idle
 
 
-// called when bot bumps into anything
-/mob/living/simple_animal/bot/mulebot/Bump(atom/obs)
-	if(wires.is_cut(WIRE_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
-		if(isliving(obs))
-			var/mob/living/L = obs
-			if(iscyborg(L))
-				visible_message("<span class='danger'>[src] bumps into [L]!</span>")
-			else
-				if(!paicard)
-					log_combat(src, L, "knocked down")
-					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-					L.Knockdown(8 SECONDS)
+/mob/living/simple_animal/bot/mulebot/MobBump(mob/M) // called when the bot bumps into a mob
+	if(!isliving(M))
+		return ..()
+	var/mob/living/L = M
+	if(!paicard && wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over. if there's a PAIcard controlling the bot, they aren't allowed to harm folks.
+		if(iscyborg(L))
+			visible_message("<span class='danger'>[src] bumps into [L]!</span>")
+		else
+			log_combat(src, L, "knocked down")
+			visible_message("<span class='danger'>[src] knocks over [L]!</span>")
+			L.Knockdown(8 SECONDS)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
