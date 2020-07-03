@@ -436,16 +436,9 @@
 		can_buckle = FALSE
 		return TRUE
 
-
-/mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
-	M.pixel_y = initial(M.pixel_y) + 9
-	if(M.layer <= layer)
-		M.layer = layer + 0.01
-
 /mob/living/simple_animal/bot/mulebot/post_unbuckle_mob(mob/living/M)
 		load = null
-		M.layer = initial(M.layer)
-		M.pixel_y = initial(M.pixel_y)
+		return ..()
 
 // called to unload the bot
 // argument is optional direction to unload
@@ -509,7 +502,7 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()
-	if(!on || !cell || client || (num_steps <= 0))
+	if(!on || client || (num_steps <= 0) || !has_power())
 		return PROCESS_KILL
 	num_steps--
 
@@ -532,9 +525,6 @@
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
 					cell.use(1)
-					if(cell.charge <= 0)
-						turn_off()
-						. = PROCESS_KILL //ran out of juice, this is our last move
 					if(moved && oldloc!=loc)	// successful move
 						blockcount = 0
 						path -= loc
