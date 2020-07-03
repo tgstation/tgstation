@@ -1,12 +1,11 @@
 {
-    "map_name": "Donutstation",
-    "map_path": "map_files/Donutstation",
-    "map_file": ["Donutstation.dmm","Donutstation_LVL2.dmm"],
+    "map_name": "PubbyStation",
+    "map_path": "map_files/PubbyStation",
+    "map_file": "PubbyStation.dmm",
     "shuttles": {
-        "cargo": "cargo_box",
-        "ferry": "ferry_fancy",
-        "whiteship": "whiteship_donut",
-        "emergency": "emergency_donut"
-    },
-    "traits": [{"Up" : 1, "Linkage" : "Cross"}, {"Down" : -1, "Baseturf" : "/turf/open/openspace", "Linkage" : "Cross"}]
+	    "emergency": "emergency_pubby",
+	    "whiteship": "whiteship_pubby",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_box"
+    }
 }

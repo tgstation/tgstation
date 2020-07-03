@@ -58,3 +58,6 @@ config/title_music/sounds/Another Medium.ogg
 config/title_music/sounds/Skyline have my child.ogg
 config/title_music/sounds/23rd Century Life.ogg
 config/title_music/sounds/Neon Starlight.ogg
+config/title_music/sounds/Lil B Station.ogg
+config/title_music/sounds/Starfish Island.ogg
+config/title_music/sounds/Tomorrow without you.ogg
