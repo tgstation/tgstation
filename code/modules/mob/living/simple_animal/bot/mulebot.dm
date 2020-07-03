@@ -427,7 +427,7 @@
 
 /mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
 	M.pixel_y = initial(M.pixel_y) + 9
-	if(M.layer < layer)
+	if(M.layer <= layer)
 		M.layer = layer + 0.01
 
 /mob/living/simple_animal/bot/mulebot/post_unbuckle_mob(mob/living/M)
