@@ -45,14 +45,12 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/sent_second_announcement = FALSE
 	/// Whether the space cops have arrived. Set internally; used internally, and for updating the wanted HUD.
 	var/cops_arrived = FALSE
-	/// The current wanted level. Set internally; used internally, and for updating the wanted HUD.
+	/// The current wanted level.	 Set internally; used internally, and for updating the wanted HUD.
 	var/wanted_level
 	/// List of all /datum/team/gang. Used internally; added to externally by /datum/antagonist/gang when it generates a new /datum/team/gang.
 	var/list/gangs = list()
 	/// List of all family member minds. Used internally; added to internally, and externally by /obj/item/gang_induction_package when used to induct a new family member.
 	var/list/gangbangers = list()
-	/// List of all undercover cop minds. Used and set internally.
-	var/list/undercover_cops = list()
 	/// The number of families (and 1:1 corresponding undercover cops) that should be generated. Can be set externally; used internally.
 	var/gangs_to_generate = 3
 	/// The number of family members more that a family may have over other active families. Can be set externally; used internally.
@@ -120,21 +118,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		log_game("[key_name(gangbanger)] has been selected as a starting gangster!")
 		if(!midround_ruleset)
 			GLOB.pre_setup_antags += gangbanger
-	for(var/j = 0, j < gangs_to_generate, j++)
-		if(!antag_candidates.len)
-			break
-		var/taken = pick_n_take(antag_candidates)
-		var/datum/mind/undercover_cop
-		if(istype(taken, /mob))
-			var/mob/T = taken
-			undercover_cop = T.mind
-		else
-			undercover_cop = taken
-		undercover_cops += undercover_cop
-		undercover_cop.restricted_roles = restricted_jobs
-		log_game("[key_name(undercover_cop)] has been selected as a starting undercover cop!")
-		if(!midround_ruleset)
-			GLOB.pre_setup_antags += undercover_cop
 	deaths_during_shift_at_beginning = GLOB.deaths_during_shift // don't want to mix up pre-families and post-families deaths
 	start_time = world.time
 	end_time = start_time + ((60 MINUTES) / (midround_ruleset ? 2 : 1)) // midround families rounds end quicker
@@ -158,7 +141,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
   */
 /datum/gang_handler/proc/post_setup_analogue(return_if_no_gangs = FALSE)
 	var/replacement_gangsters = 0
-	var/replacement_cops = 0
 	for(var/datum/mind/gangbanger in gangbangers)
 		if(!ishuman(gangbanger.current))
 			if(!midround_ruleset)
@@ -180,36 +162,10 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				gangbanger = taken
 			gangbangers += gangbanger
 			log_game("[key_name(gangbanger)] has been selected as a replacement gangster!")
-	for(var/datum/mind/undercover_cop in undercover_cops)
-		if(!ishuman(undercover_cop.current))
-			undercover_cops.Remove(undercover_cop)
-			if(!midround_ruleset)
-				GLOB.pre_setup_antags -= undercover_cop
-			log_game("[undercover_cop] was not a human, and thus has lost their undercover cop role.")
-			replacement_cops++
-	if(replacement_cops)
-		for(var/j = 0, j < replacement_cops, j++)
-			if(!antag_candidates.len)
-				log_game("Unable to find more replacement undercover cops. Not all of the cops will spawn.")
-				break
-			var/taken = pick_n_take(antag_candidates)
-			var/datum/mind/undercover_cop
-			if(istype(taken, /mob))
-				var/mob/T = taken
-				undercover_cop = T.mind
-			else
-				undercover_cop = taken
-			undercover_cops += undercover_cop
-			log_game("[key_name(undercover_cop)] has been selected as a replacement undercover cop!")
 
 	if(!gangbangers.len)
 		if(return_if_no_gangs)
 			return FALSE // ending early is bad if we're not in dynamic
-
-	for(var/datum/mind/undercover_cop in undercover_cops)
-		var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
-		undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
-
 	var/list/gangs_to_use = subtypesof(/datum/antagonist/gang)
 	for(var/datum/mind/gangbanger in gangbangers)
 		var/gang_to_use = pick_n_take(gangs_to_use)
@@ -507,7 +463,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	for(var/T in GLOB.gang_tags)
 		var/obj/effect/decal/cleanable/crayon/gang/tag = T
 		if(tag.my_gang)
-			tag.my_gang.adjust_points(50)
+			tag.my_gang.adjust_points(5)
 		CHECK_TICK
 
 /// Internal. Assigns points to families according to clothing of all currently living humans.
@@ -519,7 +475,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		for(var/clothing in list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.back, H.gloves, H.shoes, H.belt, H.s_store, H.glasses, H.ears, H.wear_id))
 			if(is_gangster)
 				if(is_type_in_list(clothing, is_gangster.acceptable_clothes))
-					is_gangster.add_gang_points(10)
+					is_gangster.add_gang_points(1)
 			else
 				for(var/G in gangs)
 					var/datum/team/gang/gang_clothes = G
@@ -548,9 +504,9 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			for(var/datum/team/gang/gangsters in gang_members)
 				if(gang_members[gangsters] >= CREW_SIZE_MIN)
 					if(gang_members[gangsters] >= CREW_SIZE_MAX)
-						gangsters.adjust_points(5) // Discourage larger clumps, spread ur people out
+						gangsters.adjust_points(0.5) // Discourage larger clumps, spread ur people out
 					else
-						gangsters.adjust_points(10)
+						gangsters.adjust_points(1)
 
 
 /// Hijacks the space cops' roundend results to say if cops / a gang won the round. Included in the same file as the gang_handler as it's far more related to the gamemode than it is to the beat cop datum; it's kind of hacky.
