@@ -156,37 +156,6 @@
 	delayedload  += M.delayedload
 	SSmachines.release_powernet(M)
 
-// So you cut a cable, run this after you remove from
-// the powernet.  It will split the powernet on all
-// connected cables
-/proc/split_powernet(datum/powernet/PN)
-	var/obj/structure/cable/C
-	var/list/queue = list()
-	// got to null that visitor flag
-	for(var/obj/structure/cable/C in PN.cables)
-		C.visited = FALSE
-
-	for(var/obj/structure/cable/C in PN.cables)
-		if(!C || C.visited)
-			continue
-		current = SSmachines.aquire_powernet()
-		queue += C
-		PN.cables[C] = null
-		while(queue.len > 0)
-			QC = queue[queue.len--]  // first one is free
-			QC.powernet = current
-			QC.powernet.cables[QC] = current
-			QC.visited = TRUE
-			var/obj/machinery/power/M
-			var/obj/structure/cable/CDIR
-			for(var/i = 1; i < CABLE_DIR_DOWN; i++)
-				CDIR = QC.linked[i]
-				if(CDIR && !CDIR.visited)
-					queue += CDIR
-				M = QC.linked[i]
-				if(M && M.powernet != current)
-					M.powernet.disconnect_machine(M)
-					current.connect_machine(M)
 
 
 // disconnect_machine and connect may be slow
@@ -211,8 +180,6 @@
 	if(M.power_flags & POWER_MACHINE_NEEDS_TERMINAL)
 		if(M.terminal)
 			powernet.consumers |= M.terminal
-
-
 
 
 //handles the power changes in the powernet
@@ -240,3 +207,36 @@
 		return clamp(20 + round(avail/25000), 20, 195) + rand(-5,5)
 	else
 		return 0
+
+// So you cut a cable, run this after you remove from
+// the powernet.  It will split the powernet on all
+// connected cables
+/proc/split_powernet(datum/powernet/PN)
+	var/list/queue = list()
+	// got to null that visitor flag
+	for(var/obj/structure/cable/C in PN.cables)
+		C.visited = FALSE
+
+	for(var/obj/structure/cable/C in PN.cables)
+		if(!C || C.visited)
+			continue
+		current = SSmachines.aquire_powernet()
+		queue += C
+		PN.cables[C] = null
+		while(queue.len > 0)
+			QC = queue[queue.len--]  // first one is free
+			QC.powernet = current
+			QC.powernet.cables[QC] = current
+			QC.visited = TRUE
+			var/obj/machinery/power/M
+			var/obj/structure/cable/CDIR
+			for(var/i = 1; i < CABLE_DIR_DOWN; i++)
+				CDIR = QC.linked[i]
+				if(CDIR && !CDIR.visited)
+					queue += CDIR
+				M = QC.linked[i]
+				if(M && M.powernet != current)
+					M.powernet.disconnect_machine(M)
+					current.connect_machine(M)
+	// PN should be empty so release it
+	SSmachines.release_powernet(PN)
