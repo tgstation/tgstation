@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(economy)
 
 
 /**
-  *
+  * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs.
   *
   **/
 /datum/controller/subsystem/economy/proc/price_update()
@@ -155,14 +155,7 @@ SUBSYSTEM_DEF(economy)
 			continue
 		if(!is_station_level(V.z))
 			continue
-		for(var/i in V.product_records)
-			var/datum/data/vending_product/vend = i
-			var/atom/product = vend.product_path
-			product.custom_price = initial(product.custom_price) * SSeconomy.inflation_value()
-		for(var/i in V.coin_records)
-			var/datum/data/vending_product/vend = i
-			var/atom/product = vend.product_path
-			product.custom_price = initial(product.custom_price) * SSeconomy.inflation_value()
+		V.reset_prices(V.product_records, V.coin_records)
 		V.updateUsrDialog()
 
 /**

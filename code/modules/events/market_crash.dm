@@ -20,6 +20,7 @@
 	var/reason = pick(poss_reasons)
 	priority_announce("Based on [reason], prices for on-station vendors will be increased for a short period.", "Nanotrasen Accounting Division")
 
+///This does not work and I could use some help morking this one out further.
 /datum/round_event/market_crash/start()
 	. = ..()
 	var/num_accounts = 0
