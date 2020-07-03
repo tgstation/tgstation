@@ -5,8 +5,18 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 #define UNDER_SMES -1
 #define UNDER_TERMINAL 1
 
+// why 8?  both speed
+/datum/cable_edge
+
+#define CABLE_DIR_NORTH 1
+#define CABLE_DIR_SOUTH 2
+#define CABLE_DIR_EAST  3
+#define CABLE_DIR_WEST  4
+#define CABLE_DIR_UP	5
+#define CABLE_DIR_DOWN  6
 
 
+#define CABLE_DIR_TO_DIR(N) (1 << ((N)-1))
 
 ///////////////////////////////
 //CABLE STRUCTURE
@@ -15,7 +25,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Definitions
 ////////////////////////////////
 /obj/structure/cable
-	var/static/datum/graph = new	/// main graph for eveything power
 	name = "power cable"
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/layer_cable.dmi'
@@ -24,12 +33,17 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	var/linked_dirs = 0 //bitflag
+	/// This is a graph of all the cables this is connected to
+	/// I figure using an indexed list is faster to trasverse
+	/// than either an associated list or a O(n) set
+	/// Side note, UP is uesed for machine connections
+	var/list/linked[CABLE_DIR_DOWN]
+	var/visited = FALSE			/// used for trasversing
+	var/list/graph				/// the graph for these, can be shared
 	var/node = FALSE //used for sprites display
 	var/cable_layer = CABLE_LAYER_2			//bitflag
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
-	var/datum/graph_edge/edge
 
 /obj/structure/cable/layer1
 	color = "red"
@@ -48,20 +62,84 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
 	GLOB.cable_list += src //add it to the global cable list
-	edge = new/datum/graph_edge(src)
-	Connect_cable()
+	visited = FALSE
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+
+	// on mapload, we will do it somewhere else
+	if(!mapload)
+		graph_cable() // we should only need to do this once
+
+// don't call this on mapload
+/obj/structure/cable/proc/graph_cable()
+	// main workhouse, we go though all the sides, see what is connected
+	// and connect, set the icon state, etc etc
+	var/under_thing = NONE
+	var/obj/machinery/power/search_parent = null
+	for(var/obj/machinery/power/P in loc)
+		linked[CABLE_DIR_UP] = P	// we are under this,
+
+	for(var/check_dir in GLOB.cardinals)
+		var/TB = get_step(src, check_dir)
+		//don't link from smes to its terminal
+		if(under_thing)
+			switch(under_thing)
+				if(UNDER_SMES)
+					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
+					//Why null or equal to the search parent?
+					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
+					//but the cable underneath it is ready to link.
+					//I don't believe null is even a valid state for a smes terminal while the game is actually running
+					//So in the rare case that this happens, we also shouldn't connect
+					//This might break.
+					if(term && (!term.master || term.master == search_parent))
+						continue
+				if(UNDER_TERMINAL)
+					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
+					if(S && (!S.terminal || S.terminal == search_parent))
+						continue
+		var/inverse = turn(check_dir, 180)
+		for(var/obj/structure/cable/C in TB)
+			if(C.cable_layer & cable_layer)
+				edge.connect(C)
+				linked_dirs |= check_dir
+				C.linked_dirs |= inverse
+				C.update_icon()
+
+	update_icon()
+
+
+// these procs should NOT be called outside of cable.dm
+/obj/structure/cable/_clear_all_visited()
+	var/obj/structure/cable/C
+	var/list/cable_list = GLOB.cable_list
+	var/i
+	for(i=1; i < = cable_list; i++)
+		C = cable_list[i]
+		C.visited = FALSE
+
 
 // Main machiine connect function.  Once a machine is connected if we
 // do not have a powernet, we have one now.  Throw an error IF
 // the machine has a powernet.
 /obj/structure/cable/proc/connect_machine(obj/machinery/power/M)
-	ASSERT(!M.powernet)
+	ASSERT(linked[CABLE_DIR_UP] == null)
 	if(!powernet)
 		powernet = new/datum/powernet
 	M.powernet = powernet
 	powernet.connect_machine(M)
+	linked[CABLE_DIR_UP] = M
 
+/// this will create the powernet for this graph
+/obj/structure/cable/proc/create_powernet()
+
+
+/obj/structure/cable/proc/disconnect_machine(obj/machinery/power/M)
+	ASSERT(M.powernet && linked[CABLE_DIR_UP] == M)
+	if(!powernet)
+		powernet = new/datum/powernet
+	M.powernet = null
+	powernet.disconnect_machine(M)
+	linked[CABLE_DIR_UP] = null
 
 ///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
@@ -287,7 +365,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			continue
 
 		if(C.linked_dirs & inverse_dir) //we've got a matching cable in the neighbor turf
-			graph.connect_edge(src,C)
 			if(!C.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
 				var/datum/powernet/newPN = new()
 				newPN.add_cable(C)

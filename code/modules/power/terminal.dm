@@ -13,16 +13,16 @@
 
 /obj/machinery/power/Initialize(mapload, M)
 	. = ..()
-	ASSERT(M)		// master
+	ASSERT(M)
 	master = M
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
 /obj/machinery/power/connect_to_network()
-	if(master)
-		master.connect_to_network()
+	ASSERT(master)
+	master.connect_to_network()
 
 /obj/machinery/power/terminal/Destroy()
-	ASSERT(master)		// master
+	ASSERT(master)
 	master.disconnect_terminal()
 	master = null
 	return ..()
@@ -33,7 +33,7 @@
 /obj/machinery/power/proc/can_terminal_dismantle()
 	. = FALSE
 
-/// Humm shouldn't these be in the sepereate files?
+/// Humm shouldn't these be in apc and smes respectively?
 /obj/machinery/power/apc/can_terminal_dismantle()
 	. = FALSE
 	if(opened)

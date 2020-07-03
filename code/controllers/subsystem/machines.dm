@@ -5,6 +5,56 @@ SUBSYSTEM_DEF(machines)
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/powernets = list()
+	var/powernets_nulls = 0
+	var/list/recycled_powernets = list()
+	var/list/powernet_rebuild_queue = list()
+
+// at this we really need to reindex the powernets
+// we can also use this as an indicator of massive damage
+// to the cable network
+#define POWERNET_REINDEX_HIGH_MARK 50
+// This is all for debugging to see whats going on in the nets
+
+/datum/controller/subsystem/machines/proc/reindex_powernets()
+	var/list/reindexed = list()
+	var/datum/powernet/N
+	var/i
+	for(i=1; i < recycled_powernets.len; i++)
+		N = recycled_powernets[i]
+		if(N)
+			reindexed += N
+			N.number = reindexed.len
+			recycled_powernets[i] = null // this needed?
+	recycled_powernets = reindexed
+
+/datum/controller/subsystem/machines/proc/aquire_powernet()
+	var/datum/powernet/N
+	if(recycled_powernets.len > 0)
+		N = recycled_powernets[recycled_powernets.len--]
+	else
+		N = new/datum/powernet
+	powernets += N
+	N.number = powernets.len
+	return N
+
+/datum/controller/subsystem/machines/proc/release_powernet(datum/powernet/N)
+	ASSERT(N.consumers.len == 0)
+	ASSERT(N.producers.len == 0)
+	ASSERT(N.cables.len == 0)
+	powernets[N.number] = null  	/// We just null it
+	powernets_nulls++
+	N.number = 0
+	N.load = 0
+	N.newavail = 0
+	N.avail = 0
+	N.viewavail = 0
+	N.viewload = 0
+	N.netexcess = 0
+	N.delayedload = 0
+	recycled_powernets += N
+	if(powernets_nulls >= POWERNET_REINDEX_HIGH_MARK)
+		reindex_powernets()
+
 
 /datum/controller/subsystem/machines/Initialize()
 	makepowernets()

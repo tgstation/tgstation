@@ -101,10 +101,10 @@
 */
 /datum/powernet
 	var/number					// unique id
-	var/datum/graph_component/node	// The wire loop we are on
 
 	var/list/consumers = list()	// list of devices that need power
 	var/list/producers = list() // list of devices that create power
+	var/list/cables = list()
 
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
 	var/newavail = 0			// what available power was gathered last tick, then becomes...
@@ -114,15 +114,82 @@
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)///////
 	var/delayedload = 0			// load applied to powernet between power ticks.
 
-/datum/powernet/New()
-	SSmachines.powernets += src
-	node = new/datum/graph_component
-
 /datum/powernet/Destroy()
-	clear()
-	SSmachines.powernets -= src
+	if(consumers.len)
+		CRASH("We still have consumer machines in the powernet")
+	if(producers.len)
+		CRASH("We still have producers machines in the powernet")
+	if(cables.len)
+		CRASH("We still have cables in the powernet")
+	CRASH("you shouldn't delete powernets!")
 	return ..()
 
+
+/datum/powernet/proc/merge(datum/powernet/M)
+	ASSERT(M != src)
+	var/i
+	var/obj/machinery/power/P
+	for(i=1;i < M.consumers.len; i++)
+		P = M.consumers[i]
+		P.powernet = src
+	for(i=1;i < M.producers.len; i++)
+		P = M.producers[i]
+		P.powernet = src
+	// cables are associated lists
+	for(var/obj/structure/cable/C in M.cables)
+		M.cables[C] = src
+	// merge all lists
+	consumers += M.consumers
+	producers += M.producers
+	cables += M.cables
+	M.consumers.Cut()
+	M.producers.Cut()
+	M.cables.Cut()
+	// Didn't do this before, is this good or bad
+	// to combine all the loads
+	load += M.load
+	newavail += M.newavail
+	avail += M.avail
+	viewavail += M.viewavail
+	viewload += M.viewload
+	netexcess += M.netexcess
+	delayedload  += M.delayedload
+	SSmachines.release_powernet(M)
+
+// So you cut a cable, run this after you remove from
+// the powernet.  It will split the powernet on all
+// connected cables
+/proc/split_powernet(datum/powernet/PN)
+	var/obj/structure/cable/C
+	var/list/queue = list()
+	// got to null that visitor flag
+	for(var/obj/structure/cable/C in PN.cables)
+		C.visited = FALSE
+
+	for(var/obj/structure/cable/C in PN.cables)
+		if(!C || C.visited)
+			continue
+		current = SSmachines.aquire_powernet()
+		queue += C
+		PN.cables[C] = null
+		while(queue.len > 0)
+			QC = queue[queue.len--]  // first one is free
+			QC.powernet = current
+			QC.powernet.cables[QC] = current
+			QC.visited = TRUE
+			var/obj/machinery/power/M
+			var/obj/structure/cable/CDIR
+			for(var/i = 1; i < CABLE_DIR_DOWN; i++)
+				CDIR = QC.linked[i]
+				if(CDIR && !CDIR.visited)
+					queue += CDIR
+				M = QC.linked[i]
+				if(M && M.powernet != current)
+					M.powernet.disconnect_machine(M)
+					current.connect_machine(M)
+
+
+// disconnect_machine and connect may be slow
 /datum/powernet/proc/disconnect_machine(obj/machinery/power/M)
 	ASSERT(M.powernet == src)
 	if(M.power_flags & POWER_MACHINE_CONSUMER)
@@ -145,25 +212,7 @@
 		if(M.terminal)
 			powernet.consumers |= M.terminal
 
-// Hard clear, 0 eveything out, removes itself from all machines
-/datum/powernet/proc/clear()
-	var/i
-	var/obj/machinery/power/M
-	for(i=1; i <= consumers.len; i++)
-		M = consumers[i]
-		M.powernet = null
-	for(i=1; i <= consumers.len; i++)
-		M = producer[i]
-		M.powernet = null
-	producers.Cut()
-	consumers.Cut()
-	load = 0
-	newavail = 0
-	avail = 0
-	viewavail = 0
-	viewload = 0
-	netexcess = 0
-	delayedload = 0
+
 
 
 //handles the power changes in the powernet
