@@ -56,6 +56,7 @@
 	if(free)
 		adjust_money(money_to_transfer)
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
+		SSeconomy.station_target += money_to_transfer
 		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")
 	else
 		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
@@ -121,6 +122,10 @@
 	if(!civilian_bounty)
 		return FALSE
 	return civilian_bounty.reward
+
+/datum/bank_account/proc/reset_bounty()
+	civilian_bounty = null
+	bounty_timer = 0
 
 /datum/bank_account/department
 	account_holder = "Guild Credit Agency"

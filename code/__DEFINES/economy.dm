@@ -9,6 +9,8 @@
 #define PAYCHECK_HARD 200
 #define PAYCHECK_COMMAND 600
 
+#define STATION_TARGET_INCREMENT 400
+
 #define MAX_GRANT_CIV 2500
 #define MAX_GRANT_ENG 3000
 #define MAX_GRANT_SCI 5000
@@ -30,3 +32,17 @@
 #define ACCOUNT_SEC_NAME "Defense Budget"
 
 #define NO_FREEBIES "commies go home"
+
+//Defines that set what kind of civilian bounties should be applied mid-round.
+#define CIV_JOB_BASIC 1
+#define CIV_JOB_ROBO 2
+#define CIV_JOB_CHEF 3
+#define CIV_JOB_SEC 4
+#define CIV_JOB_DRINK 5
+#define CIV_JOB_CHEM 6
+#define CIV_JOB_VIRO 7
+#define CIV_JOB_SCI 8
+#define CIV_JOB_ENG 9
+#define CIV_JOB_MINE 10
+#define CIV_JOB_MED 11
+#define CIV_JOB_GROW 12

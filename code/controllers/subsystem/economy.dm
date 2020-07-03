@@ -47,6 +47,8 @@ SUBSYSTEM_DEF(economy)
 							"rainbow" = 1000)
 	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
 	var/list/dep_cards = list()
+	var/station_total = 0
+	var/station_target = 0
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
@@ -63,7 +65,9 @@ SUBSYSTEM_DEF(economy)
 	for(var/A in bank_accounts)
 		var/datum/bank_account/B = A
 		B.payday(1)
-
+		if(!istype(B, /datum/bank_account/department))
+			station_total += B.account_balance
+			station_target += STATION_TARGET_INCREMENT
 
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)
@@ -137,3 +141,15 @@ SUBSYSTEM_DEF(economy)
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
 	if(D)
 		D.adjust_money(min(civ_cash, MAX_GRANT_CIV))
+
+/**
+  * Proc that returns a value meant to undercut the value of civilian bounties, based on how much money exists on the station.
+  *
+  * If crew are somehow aquiring far too much money, this value is fed to civilian bounties, to encourage spending more money.
+  **/
+/datum/controller/subsystem/economy/proc/inflation_value()
+	var/holder = station_total - station_target
+	if(holder < 0)
+		return 1
+	holder = clamp(round((holder / station_target), 0.1), 1, 5)
+	return holder

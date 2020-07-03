@@ -23,7 +23,7 @@ export const CivCargoHoldTerminal = (props, context) => {
             <Fragment>
               <Button
                 icon={"sync"}
-                content={"Recalculate Value"}
+                content={"Check Contents"}
                 disabled={!pad}
                 onClick={() => act('recalc')} />
               <Button

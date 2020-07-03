@@ -53,9 +53,9 @@
 		if(AM == pad)
 			continue
 		if(inserted_scan_id.registered_account.civilian_bounty.applies_to(AM))
-			status_report += "Target Applicable"
+			status_report += "Target Applicable."
 			return
-	status_report += "Not Applicable"
+	status_report += "Not Applicable."
 
 /obj/machinery/computer/piratepad_control/civilian/send()
 	if(!sending)
@@ -64,21 +64,19 @@
 		return FALSE
 	if(!inserted_scan_id.registered_account.civilian_bounty)
 		return FALSE
-	var/duty_fulfilled = FALSE
 	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
 		if(curr_bounty.applies_to(AM))
-			status_report += "Bounty Target Found."
-			duty_fulfilled = TRUE
+			status_report += "Bounty Target Found. "
+			curr_bounty.ship(AM)
 			qdel(AM)
-			break
-	if(!duty_fulfilled)
-		return
-	//Pay for the bounty with the ID's department funds.
-	inserted_scan_id.registered_account.transfer_money(SSeconomy.get_dep_account(inserted_scan_id.registered_account.account_job.paycheck_department), curr_bounty.reward)
-
+	if(curr_bounty.can_claim())
+		//Pay for the bounty with the ID's department funds.
+		inserted_scan_id.registered_account.transfer_money(SSeconomy.get_dep_account(inserted_scan_id.registered_account.account_job.paycheck_department), curr_bounty.reward)
+		status_report += "Bounty Completed! [curr_bounty.reward] credits have been paid out. "
+		inserted_scan_id.registered_account.reset_bounty()
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
@@ -179,12 +177,10 @@
 	var/uses = 2
 
 /obj/item/civ_bounty_beacon/attack_self()
-	if(!uses)
-		return
 	loc.visible_message("<span class='warning'>\The [src] begins to beep loudly!</span>")
+	addtimer(CALLBACK(src, .proc/launch_payload), 40)
 	if(uses <= 0)
 		qdel()
-	addtimer(CALLBACK(src, .proc/launch_payload), 40)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
 	switch(uses)
