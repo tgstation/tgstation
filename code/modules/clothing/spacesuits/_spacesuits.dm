@@ -61,6 +61,7 @@
 	. = ..()
 	if(slot == ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
+		update_hud_icon(user)		// update the hud
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/user)
@@ -227,10 +228,10 @@
 	// if there is, whethere the cell's capacity indicates high, medium or low
 	// charge based on it.
 	if(cell.charge >= THERMAL_REGULATOR_COST)
-		if(cell_percent > 0.60)
+		if(cell_percent > 60)
 			human.update_spacesuit_hud_icon("high")
 			return
-		if(cell_percent > 0.20)
+		if(cell_percent > 20)
 			human.update_spacesuit_hud_icon("mid")
 			return
 		human.update_spacesuit_hud_icon("low")

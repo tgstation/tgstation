@@ -104,11 +104,40 @@ $font-size: 24px;
     color: $color-fg;
     $font-size: $font-size;
   }
+  .paper-text {
+    input:disabled {
+      position: relative;
+      display: inline-block;
 
+      border: none;
+      background: transparent;
+      border-bottom: 1px solid #000;
+      outline: none;
+      background-color:rgba(255, 255, 62, 0.8);
+      padding: 0 4px;
+      margin-right: 2px;
+      line-height: 17px;
+      overflow: visible;
+    }
+    input {
+      position: relative;
+      display: inline-block;
+
+      border: none;
+      background: transparent;
+      border-bottom: 1px solid #000;
+      outline: none;
+      background-color:rgba(255, 255, 62, 0.8);
+      padding: 0 4px;
+      margin-right: 2px;
+      line-height: 17px;
+      overflow: visible;
+    }
+  }
   .paper-field {
     position: relative;
     display: inline-block;
-    
+
     border: none;
     background: transparent;
     border-bottom: 1px solid #000;
@@ -118,6 +147,22 @@ $font-size: 24px;
     margin-right: 2px;
     line-height: 17px;
     overflow: visible;
+
+    input:disabled {
+      position: relative;
+      display: inline-block;
+
+      border: none;
+      background: transparent;
+      border-bottom: 1px solid #000;
+      outline: none;
+      background-color:rgba(255, 255, 62, 0.8);
+      padding: 0 4px;
+      margin-right: 2px;
+      line-height: 17px;
+      overflow: visible;
+    }
+
   }
 
 }
