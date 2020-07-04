@@ -6,12 +6,15 @@
 	idle_state = "lpad-idle-o"
 	warmup_state = "lpad-idle"
 	sending_state = "lpad-beam"
+	layer = TABLE_LAYER
 
 /obj/machinery/computer/piratepad_control/civilian
 	name = "civilian bounty control terminal"
 	ui_x = 600
 	ui_y = 230
 	status_report = "Ready for delivery."
+	icon_screen = "civ_bounty"
+	icon_keyboard = "id_key"
 	var/obj/item/card/id/inserted_scan_id
 
 /obj/machinery/computer/piratepad_control/civilian/Initialize()
@@ -118,7 +121,8 @@
 				return
 			var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
 			if(pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES))
-				to_chat(usr, "<span class='warning'>You already have a civilian bounty, try again in [(pot_acc.bounty_timer + 5 MINUTES)-world.time]!</span>")
+				var/curr_time = round(((pot_acc.bounty_timer + (5 MINUTES))-world.time)/ (1 MINUTES), 0.01)
+				to_chat(usr, "<span class='warning'>You already have an incomplete civilian bounty, try again in [curr_time] minutes to replace it!</span>")
 				return FALSE
 			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types) //It's a good scene from War Dogs (2016).
 			crumbs.reward = (crumbs.reward/(SSeconomy.inflation_value()))
@@ -179,8 +183,6 @@
 /obj/item/civ_bounty_beacon/attack_self()
 	loc.visible_message("<span class='warning'>\The [src] begins to beep loudly!</span>")
 	addtimer(CALLBACK(src, .proc/launch_payload), 40)
-	if(uses <= 0)
-		qdel()
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
 	switch(uses)
@@ -188,4 +190,5 @@
 			new /obj/machinery/piratepad/civilian(drop_location())
 		if(1)
 			new /obj/machinery/computer/piratepad_control/civilian(drop_location())
+			qdel(src)
 	uses = uses - 1

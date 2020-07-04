@@ -331,7 +331,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 	for(var/R in premiumlist)
 		var/datum/data/vending_product/record = R
 		var/atom/ahhhhh = record.product_path
-		record.custom_premium_price = initial(ahhhhh.custom_premium_price) * SSeconomy.inflation_value()
+		if(ahhhhh.custom_premium_price)
+			record.custom_premium_price = initial(ahhhhh.custom_premium_price) * SSeconomy.inflation_value()
+			continue
+		//For some ungodly reason, some premium only items only have a custom_price
+		record.custom_premium_price = extra_price + (initial(ahhhhh.custom_price) * (SSeconomy.inflation_value() - 1))
 
 /**
   * Refill a vending machine from a refill canister

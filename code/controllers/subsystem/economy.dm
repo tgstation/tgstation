@@ -47,8 +47,12 @@ SUBSYSTEM_DEF(economy)
 							"rainbow" = 1000)
 	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
 	var/list/dep_cards = list()
+	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
 	var/station_total = 0
+	/// A var that tracks how much money is expected to be on station at a given time. If less than station_total prices go up in vendors.
 	var/station_target = 1
+	/// A var that displays the result of inflation_value for easier debugging and tracking.
+	var/inflation_value = 1
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
@@ -167,5 +171,6 @@ SUBSYSTEM_DEF(economy)
 	if(station_total > station_target)
 		var/holder = station_total - station_target
 		holder = clamp(round((holder / max(station_target,1) + 1),0.1),1,5)
+		inflation_value = holder
 		return holder
 	return 1
