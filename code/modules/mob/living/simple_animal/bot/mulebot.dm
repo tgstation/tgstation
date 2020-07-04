@@ -362,7 +362,7 @@
 			dat += "<span class='bad'>[mode_name[BOT_NO_ROUTE]]</span>"
 	dat += "</div>"
 
-	dat += "<b>Current Load:</b> [load ? load.name : "<i>none</i>"]<BR>"
+	dat += "<b>Current Load:</b> [isobserver(load) ? "<i>Unknown</i>" : (load ? load.name : "<i>None</i>")]<BR>"
 	dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
 	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
