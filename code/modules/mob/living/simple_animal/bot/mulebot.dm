@@ -90,6 +90,18 @@
 		cell = null
 	return ..()
 
+/mob/living/simple_animal/bot/mulebot/examine(mob/user)
+	. = ..()
+	if(open)
+		if(cell)
+			. += "<span class='notice'>It has \a [cell] installed.</span>"
+			. += "<span class='info'>You can use a <b>crowbar</b> to remove it.</span>"
+		else
+			. += "<span class='notice'>It has an empty compartment where a <b>power cell</b> can be installed.</span>"
+	if(load) //observer check is so we don't show the name of the ghost that's sitting on it to prevent metagaming who's ded.
+		. += "<span class='notice'>\A [isobserver(load) ? "ghostly figure" : load] is on its load platform.</span>"
+
+
 /mob/living/simple_animal/bot/mulebot/Destroy()
 	unload(0)
 	QDEL_NULL(wires)
@@ -459,24 +471,27 @@
 // argument is optional direction to unload
 // if zero, unload at bot's location
 /mob/living/simple_animal/bot/mulebot/proc/unload(dirn)
-	if(!load)
+	if(QDELETED(load))
+		if(load) //if our thing was qdel'd, there's likely a leftover reference. just clear it and remove the overlay. we'll let the bot keep moving around to prevent it abruptly stopping somewhere.
+			load = null
+			update_icon()
 		return
 
 	mode = BOT_IDLE
 
+	var/atom/movable/cached_load = load //cache the load since unbuckling mobs clears the var.
+
 	unbuckle_all_mobs()
 
-	if(load)
+	if(load) //don't have to do any of this for mobs.
 		load.forceMove(loc)
 		load.pixel_y = initial(load.pixel_y)
 		load.layer = initial(load.layer)
 		load.plane = initial(load.plane)
-		if(dirn)
-			var/turf/T = loc
-			var/turf/newT = get_step(T,dirn)
-			if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
-				step(load, dirn)
 		load = null
+
+	if(dirn) //move the thing to the delivery point.
+		cached_load.Move(get_step(loc,dirn), dirn)
 
 	update_icon()
 
