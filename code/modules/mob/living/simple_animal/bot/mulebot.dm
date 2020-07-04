@@ -72,6 +72,11 @@
 	suffix = null
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(0, 9), TEXT_WEST = list(0, 9)))
+	D.ride_check_rider_incapacitated = TRUE //so mobs fall off when the vehicle is shot.
+	D.set_vehicle_dir_layer(SOUTH, layer) //vehicles default to ABOVE_MOB_LAYER while moving, let's make sure that doesn't happen while a mob is riding us.
+	D.set_vehicle_dir_layer(NORTH, layer)
+	D.set_vehicle_dir_layer(EAST, layer)
+	D.set_vehicle_dir_layer(WEST, layer)
 
 /mob/living/simple_animal/bot/mulebot/ComponentInitialize()
 	. = ..()
