@@ -32160,7 +32160,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/wood,
 /area/library)
 "bwh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -34292,8 +34292,8 @@
 /turf/open/floor/wood,
 /area/library)
 "bBv" = (
-/obj/structure/chair/comfy/black,
 /obj/effect/landmark/start/assistant,
+/obj/structure/chair/sofa/left,
 /turf/open/floor/wood,
 /area/library)
 "bBw" = (
@@ -35538,6 +35538,7 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bEx" = (
@@ -73154,6 +73155,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"mdx" = (
+/obj/structure/chair/sofa/right,
+/turf/open/floor/wood,
+/area/library)
 "mdG" = (
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
@@ -79443,7 +79448,7 @@
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/wood,
 /area/library)
 "xse" = (
 /obj/machinery/door/airlock/external{
@@ -100230,7 +100235,7 @@ bnV
 bql
 awL
 bue
-bwc
+bzE
 bzE
 bGv
 bHT
@@ -100747,7 +100752,7 @@ bue
 xrL
 uPM
 bue
-bzE
+mdx
 bwc
 bEA
 bGu
@@ -101516,9 +101521,9 @@ bqw
 ecO
 bue
 bwf
-bwc
-bwc
-bwc
+bzE
+bzE
+bzE
 dCX
 sBo
 bzE
