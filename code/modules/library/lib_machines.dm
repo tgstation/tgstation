@@ -26,6 +26,7 @@
 	var/category = "Any"
 	var/author
 	var/search_page = 0
+	var/topic_timeout
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	. = ..()
@@ -104,6 +105,9 @@
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
+	if(world.time < topic_timeout + 10)
+		return
+	topic_timeout = world.time
 	. = ..()
 	if(.)
 		usr << browse(null, "window=publiclibrary")
@@ -183,7 +187,8 @@
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 	var/page = 1	//current page of the external archives
-	var/cooldown = 0
+	var/printer_cooldown = 0
+	var/topic_timeout
 
 /obj/machinery/computer/bookmanagement/Initialize()
 	. = ..()
@@ -347,6 +352,9 @@
 		obj_flags |= EMAGGED
 
 /obj/machinery/computer/bookmanagement/Topic(href, href_list)
+	if(world.time < topic_timeout + 10)
+		return
+	topic_timeout = world.time
 	if(..())
 		usr << browse(null, "window=library")
 		onclose(usr, "library")
@@ -444,7 +452,7 @@
 		GLOB.news_network.SubmitArticle(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
 		alert("Upload complete. Your uploaded title is now available on station newscasters.")
 	if(href_list["orderbyid"])
-		if(cooldown > world.time)
+		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
 			var/orderid = input("Enter your order:") as num|null
@@ -456,10 +464,10 @@
 		var/id = href_list["targetid"]
 		if (!SSdbcore.Connect())
 			alert("Connection to Archive has been severed. Aborting.")
-		if(cooldown > world.time)
+		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			cooldown = world.time + PRINTER_COOLDOWN
+			printer_cooldown = world.time + PRINTER_COOLDOWN
 			var/datum/db_query/query_library_print = SSdbcore.NewQuery(
 				"SELECT * FROM [format_table_name("library")] WHERE id=:id AND isnull(deleted)",
 				list("id" = id)
@@ -483,20 +491,20 @@
 				break
 			qdel(query_library_print)
 	if(href_list["printbible"])
-		if(cooldown < world.time)
+		if(printer_cooldown < world.time)
 			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(src.loc)
 			if(GLOB.bible_icon_state && GLOB.bible_inhand_icon_state)
 				B.icon_state = GLOB.bible_icon_state
 				B.inhand_icon_state = GLOB.bible_inhand_icon_state
 				B.name = GLOB.bible_name
 				B.deity_name = GLOB.deity
-			cooldown = world.time + PRINTER_COOLDOWN
+			printer_cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
 	if(href_list["printposter"])
-		if(cooldown < world.time)
+		if(printer_cooldown < world.time)
 			new /obj/item/poster/random_official(src.loc)
-			cooldown = world.time + PRINTER_COOLDOWN
+			printer_cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
 	add_fingerprint(usr)
