@@ -24668,8 +24668,7 @@
 "bgP" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/yellow/end{
-	dir = 8;
-	icon_state = "trimline_end"
+	dir = 8
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/white,
@@ -24913,8 +24912,7 @@
 "bhn" = (
 /obj/structure/closet/secure_closet/chief_medical,
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9;
-	icon_state = "trimline_fill"
+	dir = 9
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/heads/cmo";
@@ -24930,14 +24928,11 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/cmo{
 	dir = 8;
-	icon_state = "telescreen";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/effect/landmark/start/chief_medical_officer,
 /obj/machinery/button/door{
@@ -26123,12 +26118,10 @@
 /area/medical/pharmacy)
 "bjT" = (
 /obj/effect/turf_decal/trimline/blue/corner{
-	dir = 1;
-	icon_state = "trimline_corner"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/corner{
-	dir = 1;
-	icon_state = "trimline_corner"
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -26136,25 +26129,21 @@
 /area/medical/medbay/lobby)
 "bjU" = (
 /obj/effect/turf_decal/trimline/blue/corner{
-	dir = 4;
-	icon_state = "trimline_corner"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/corner{
-	dir = 4;
-	icon_state = "trimline_corner"
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "bjV" = (
 /obj/effect/turf_decal/trimline/blue/end,
 /obj/effect/turf_decal/trimline/blue/line{
-	dir = 1;
-	icon_state = "trimline"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/end,
 /obj/effect/turf_decal/trimline/blue/line{
-	dir = 1;
-	icon_state = "trimline"
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
@@ -27412,12 +27401,10 @@
 /area/hallway/primary/central)
 "bmV" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -27429,8 +27416,7 @@
 "bmW" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28003,12 +27989,10 @@
 /area/medical/pharmacy)
 "boe" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -28017,8 +28001,7 @@
 /area/medical/medbay/central)
 "bog" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/noticeboard{
 	pixel_y = 27
@@ -28027,15 +28010,13 @@
 /area/medical/medbay)
 "boh" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "boi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
@@ -28043,8 +28024,7 @@
 "boj" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -28052,20 +28032,17 @@
 /obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bom" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = 32
@@ -28570,8 +28547,7 @@
 /area/medical/pharmacy)
 "bpu" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
@@ -28618,16 +28594,13 @@
 /area/hallway/primary/central)
 "bpD" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/machinery/firealarm{
 	pixel_x = -30;
@@ -28644,8 +28617,7 @@
 /area/science/genetics)
 "bpF" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -28662,8 +28634,7 @@
 /area/medical/surgery/room_b)
 "bpM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -28916,8 +28887,7 @@
 /area/quartermaster/office)
 "bqt" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/structure/extinguisher_cabinet{
@@ -29091,8 +29061,7 @@
 "bqO" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -29106,12 +29075,10 @@
 /area/medical/medbay)
 "bqP" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 8;
-	icon_state = "trimline_warn_fill"
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -29192,8 +29159,7 @@
 /area/medical/medbay)
 "bqV" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
-	dir = 4;
-	icon_state = "trimline_warn_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -29204,8 +29170,7 @@
 "bqW" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/structure/cable,
 /obj/structure/cable,
@@ -29217,8 +29182,7 @@
 /area/medical/medbay)
 "bqX" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6;
-	icon_state = "trimline_fill"
+	dir = 6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -29294,8 +29258,7 @@
 /area/maintenance/department/medical/morgue)
 "brl" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1;
-	icon_state = "trimline_warn_fill"
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
@@ -29604,12 +29567,10 @@
 /area/crew_quarters/heads/hop)
 "brT" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 4;
-	icon_state = "trimline_warn_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -29703,12 +29664,10 @@
 /area/quartermaster/miningdock)
 "bse" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 8;
-	icon_state = "trimline_warn_fill"
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 1
@@ -29851,12 +29810,10 @@
 /area/medical/medbay/central)
 "bsu" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1;
-	icon_state = "trimline_warn_fill"
+	dir = 1
 	},
 /obj/machinery/light{
 	dir = 4
@@ -29865,12 +29822,10 @@
 /area/medical/medbay/aft)
 "bsv" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -29902,8 +29857,7 @@
 "bsy" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 8;
-	icon_state = "trimline_warn_fill"
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -29929,8 +29883,7 @@
 /area/science/research)
 "bsB" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -29946,8 +29899,7 @@
 /area/medical/medbay/aft)
 "bsC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/machinery/requests_console{
 	department = "Medbay";
@@ -29967,8 +29919,7 @@
 /area/medical/medbay/aft)
 "bsD" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -29982,12 +29933,10 @@
 /area/medical/medbay/aft)
 "bsE" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30019,8 +29968,7 @@
 /area/science/genetics)
 "bsI" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6;
-	icon_state = "trimline_fill"
+	dir = 6
 	},
 /obj/item/kirbyplants/random,
 /obj/structure/extinguisher_cabinet{
@@ -30036,8 +29984,7 @@
 /area/medical/medbay/aft)
 "bsJ" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -30047,8 +29994,7 @@
 /area/medical/medbay/aft)
 "bsK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -30528,8 +30474,7 @@
 /area/science/research)
 "btR" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -30556,8 +30501,7 @@
 /area/science/research)
 "btT" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/machinery/light{
@@ -30578,8 +30522,7 @@
 /area/science/research)
 "btV" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9;
-	icon_state = "trimline_fill"
+	dir = 9
 	},
 /obj/machinery/iv_drip,
 /obj/structure/cable,
@@ -30622,19 +30565,16 @@
 /area/science/test_area)
 "btZ" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1;
-	icon_state = "trimline_warn_fill"
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bua" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1;
-	icon_state = "trimline_warn_fill"
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -30811,8 +30751,7 @@
 /area/engine/atmos)
 "bux" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/machinery/light{
@@ -31200,8 +31139,7 @@
 /area/icemoon/surface/outdoors)
 "bvo" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 4;
-	icon_state = "trimline_warn_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/structure/cable,
@@ -31716,8 +31654,7 @@
 /area/medical/chemistry)
 "bwD" = (
 /obj/effect/turf_decal/trimline/blue/line{
-	dir = 5;
-	icon_state = "trimline"
+	dir = 5
 	},
 /obj/machinery/shower{
 	dir = 4
@@ -31739,8 +31676,7 @@
 /area/medical/medbay/central)
 "bwG" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 8;
-	icon_state = "trimline_warn_fill"
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -31764,8 +31700,7 @@
 /area/medical/medbay/central)
 "bwI" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -32226,8 +32161,7 @@
 /area/medical/medbay/central)
 "bxT" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -32240,8 +32174,7 @@
 /area/medical/medbay/central)
 "bxV" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -32769,8 +32702,7 @@
 /area/maintenance/aft)
 "bzh" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -33021,8 +32953,7 @@
 "bzO" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/spray/cleaner{
-	pixel_x = 9;
-	pixel_y = 0
+	pixel_x = 9
 	},
 /obj/item/paper_bin{
 	pixel_x = -5;
@@ -33297,8 +33228,7 @@
 /area/medical/medbay/central)
 "bAr" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10;
-	icon_state = "trimline_fill"
+	dir = 10
 	},
 /obj/machinery/iv_drip,
 /obj/machinery/firealarm{
@@ -33323,8 +33253,7 @@
 /area/medical/medbay/central)
 "bAu" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6;
-	icon_state = "trimline_fill"
+	dir = 6
 	},
 /obj/machinery/iv_drip,
 /obj/machinery/newscaster{
@@ -33832,8 +33761,7 @@
 /area/quartermaster/miningdock)
 "bBK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/structure/closet/secure_closet/medical3,
 /obj/machinery/airalarm{
@@ -33910,8 +33838,7 @@
 	pixel_x = 30
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
@@ -34335,7 +34262,6 @@
 	pixel_y = 1
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 0;
 	pixel_y = 1
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
@@ -34418,8 +34344,7 @@
 "bCS" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/yellow/end{
-	dir = 8;
-	icon_state = "trimline_end"
+	dir = 8
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -34742,8 +34667,7 @@
 /area/medical/chemistry)
 "bDF" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1;
-	icon_state = "trimline_warn_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -34762,8 +34686,7 @@
 /area/janitor)
 "bDI" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -34801,8 +34724,7 @@
 /area/janitor)
 "bDN" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/medical/medbay/aft";
@@ -34846,8 +34768,7 @@
 /area/medical/chemistry)
 "bDS" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 5;
-	icon_state = "trimline_fill"
+	dir = 5
 	},
 /obj/item/kirbyplants/random,
 /obj/machinery/light{
@@ -34857,8 +34778,7 @@
 /area/medical/medbay/aft)
 "bDU" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/machinery/vending/medical{
 	pixel_x = -2
@@ -34970,8 +34890,7 @@
 /area/medical/storage)
 "bEj" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/machinery/disposal/bin,
 /obj/machinery/light,
@@ -35562,8 +35481,7 @@
 /area/medical/medbay/aft)
 "bFM" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -35574,8 +35492,7 @@
 "bFN" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -36500,8 +36417,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 9;
-	icon_state = "trimline_fill"
+	dir = 9
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -36746,8 +36662,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -37484,8 +37399,7 @@
 "bKO" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -37520,8 +37434,7 @@
 /area/medical/break_room)
 "bKR" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6;
-	icon_state = "trimline_fill"
+	dir = 6
 	},
 /obj/machinery/newscaster{
 	pixel_x = 30
@@ -38219,8 +38132,7 @@
 "bMJ" = (
 /obj/machinery/vending/medical,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 5;
-	icon_state = "trimline_fill"
+	dir = 5
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -38359,8 +38271,7 @@
 "bNj" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -38374,12 +38285,10 @@
 /area/medical/virology)
 "bNl" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -38924,8 +38833,7 @@
 /obj/item/reagent_containers/spray/cleaner,
 /obj/machinery/light,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 10;
-	icon_state = "trimline_fill"
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -39130,8 +39038,7 @@
 "bPr" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -39984,8 +39891,7 @@
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 9;
-	icon_state = "trimline_fill"
+	dir = 9
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -40364,12 +40270,10 @@
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -40405,15 +40309,13 @@
 /area/medical/virology)
 "bSW" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bSX" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/structure/cable,
 /obj/structure/cable,
@@ -41009,8 +40911,7 @@
 "bVa" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 9;
-	icon_state = "trimline_fill"
+	dir = 9
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -41366,8 +41267,7 @@
 	},
 /obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -41376,8 +41276,7 @@
 /obj/item/hand_labeler,
 /obj/item/radio/headset/headset_med,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -41687,8 +41586,7 @@
 	},
 /obj/item/storage/box/syringes,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -41700,8 +41598,7 @@
 	},
 /obj/item/pen/red,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -42069,8 +41966,7 @@
 /area/maintenance/aft)
 "bYa" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -42086,8 +41982,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6;
-	icon_state = "trimline_fill"
+	dir = 6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -42397,8 +42292,7 @@
 "bYX" = (
 /obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 10;
-	icon_state = "trimline_fill"
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -42406,8 +42300,7 @@
 /obj/structure/closet/secure_closet/medical1,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6;
-	icon_state = "trimline_fill"
+	dir = 6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -45524,8 +45417,7 @@
 	dir = 8
 	},
 /obj/structure/chair/sofa/left{
-	dir = 1;
-	icon_state = "sofaend_left"
+	dir = 1
 	},
 /obj/machinery/airalarm{
 	dir = 1;
@@ -51025,8 +50917,7 @@
 "cVc" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 8;
-	icon_state = "trimline_warn_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -51042,12 +50933,10 @@
 /area/maintenance/starboard/aft)
 "cWz" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -51069,8 +50958,7 @@
 /area/science/genetics)
 "dbw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/structure/table,
 /obj/item/book/manual/wiki/medicine,
@@ -51301,12 +51189,10 @@
 /area/medical/virology)
 "dFo" = (
 /obj/effect/turf_decal/trimline/blue/corner{
-	dir = 8;
-	icon_state = "trimline_corner"
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/corner{
-	dir = 8;
-	icon_state = "trimline_corner"
+	dir = 8
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -51332,8 +51218,7 @@
 "dHL" = (
 /obj/machinery/suit_storage_unit/cmo,
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10;
-	icon_state = "trimline_fill"
+	dir = 10
 	},
 /obj/machinery/light{
 	dir = 8
@@ -51426,8 +51311,7 @@
 "ecg" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/yellow/filled/end{
-	dir = 8;
-	icon_state = "trimline_end_fill"
+	dir = 8
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/white,
@@ -51486,8 +51370,7 @@
 /area/science/nanite)
 "eya" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -51536,8 +51419,7 @@
 /area/engine/engineering)
 "eIN" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -51549,12 +51431,10 @@
 /area/crew_quarters/dorms)
 "eIZ" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1;
-	icon_state = "trimline_warn_fill"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/structure/cable,
 /obj/structure/cable,
@@ -51567,12 +51447,10 @@
 /area/science/lab)
 "eRH" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -51758,8 +51636,7 @@
 "fxY" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -51767,8 +51644,7 @@
 /area/crew_quarters/heads/cmo)
 "fBh" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9;
-	icon_state = "trimline_fill"
+	dir = 9
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -51778,8 +51654,7 @@
 /area/medical/medbay/aft)
 "fBp" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -51837,8 +51712,7 @@
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/machinery/light{
 	dir = 1
@@ -51857,8 +51731,7 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -51883,15 +51756,13 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 10;
-	icon_state = "trimline_fill"
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "fUn" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay East";
@@ -51907,8 +51778,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -51942,8 +51812,7 @@
 	pixel_y = 25
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 5;
-	icon_state = "trimline_fill"
+	dir = 5
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -51964,11 +51833,9 @@
 /area/maintenance/department/medical/morgue)
 "gdg" = (
 /obj/structure/mirror{
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /obj/structure/sink{
-	pixel_x = 0;
 	pixel_y = 20
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -52011,8 +51878,7 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6;
-	icon_state = "trimline_fill"
+	dir = 6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -52115,8 +51981,7 @@
 /area/science/xenobiology)
 "gGW" = (
 /obj/effect/turf_decal/trimline/blue/line{
-	dir = 6;
-	icon_state = "trimline"
+	dir = 6
 	},
 /obj/machinery/shower{
 	dir = 4
@@ -52208,8 +52073,7 @@
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "gUV" = (
 /obj/machinery/computer/crew{
-	dir = 4;
-	icon_state = "computer"
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -52233,8 +52097,7 @@
 /area/construction)
 "gZK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/machinery/light{
 	dir = 4
@@ -52320,8 +52183,7 @@
 /area/science/xenobiology)
 "hAr" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
@@ -52539,8 +52401,7 @@
 /area/medical/psychology)
 "itm" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -52742,8 +52603,7 @@
 "jib" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -52833,8 +52693,7 @@
 /area/maintenance/starboard/aft)
 "jsH" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1;
-	icon_state = "trimline_warn_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -52966,8 +52825,7 @@
 /area/maintenance/department/medical/morgue)
 "jQp" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
@@ -53057,8 +52915,7 @@
 /area/medical/chemistry)
 "kcL" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9;
-	icon_state = "trimline_fill"
+	dir = 9
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -53113,8 +52970,7 @@
 /obj/machinery/light,
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -53178,8 +53034,7 @@
 /area/hallway/primary/central)
 "kqq" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
@@ -53203,8 +53058,7 @@
 /area/medical/surgery)
 "kvh" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -53242,12 +53096,10 @@
 /area/science/mixing)
 "kwT" = (
 /obj/vehicle/ridden/wheelchair{
-	dir = 4;
-	icon_state = "wheelchair"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/end{
-	dir = 1;
-	icon_state = "trimline_end_fill"
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -53261,8 +53113,7 @@
 /area/medical/medbay/aft)
 "kxj" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 5;
-	icon_state = "trimline_fill"
+	dir = 5
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -53306,7 +53157,6 @@
 /obj/structure/table/glass,
 /obj/machinery/door/window/northleft{
 	dir = 4;
-	icon_state = "left";
 	name = "First-Aid Supplies";
 	red_alert_access = 1;
 	req_access_txt = "5"
@@ -53366,8 +53216,7 @@
 	pixel_y = 6
 	},
 /obj/item/folder/white{
-	pixel_x = 2;
-	pixel_y = 0
+	pixel_x = 2
 	},
 /obj/item/storage/pill_bottle/mutadone{
 	pixel_x = 11;
@@ -53628,8 +53477,7 @@
 /area/science/misc_lab)
 "lvw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/structure/sign/warning/nosmoking/circle{
@@ -53656,8 +53504,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -53851,8 +53698,7 @@
 /area/storage/mining)
 "lTQ" = (
 /obj/vehicle/ridden/wheelchair{
-	dir = 4;
-	icon_state = "wheelchair"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/end,
 /obj/structure/window/reinforced,
@@ -53971,8 +53817,7 @@
 "mpJ" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -54045,12 +53890,10 @@
 /area/engine/engineering)
 "mCo" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 4;
-	icon_state = "trimline_warn_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -54180,8 +54023,7 @@
 /area/storage/mining)
 "mMH" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -54424,8 +54266,7 @@
 "nxD" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
@@ -54765,12 +54606,10 @@
 /area/science/nanite)
 "oND" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1;
-	icon_state = "trimline_warn_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/structure/cable,
@@ -54855,8 +54694,7 @@
 "oXU" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6;
-	icon_state = "trimline_fill"
+	dir = 6
 	},
 /obj/machinery/light_switch{
 	pixel_x = 28
@@ -54904,12 +54742,10 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/closet/l3closet,
 /obj/machinery/light,
@@ -54969,13 +54805,11 @@
 /area/security/detectives_office)
 "phz" = (
 /obj/effect/turf_decal/trimline/blue/end{
-	dir = 1;
-	icon_state = "trimline_end"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/turf_decal/trimline/blue/end{
-	dir = 1;
-	icon_state = "trimline_end"
+	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/plasteel/white,
@@ -55091,8 +54925,7 @@
 /area/medical/medbay)
 "pva" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6;
-	icon_state = "trimline_fill"
+	dir = 6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -55504,12 +55337,10 @@
 /area/science/genetics)
 "qtX" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
-	dir = 4;
-	icon_state = "trimline_warn_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -55530,8 +55361,7 @@
 /area/science/xenobiology)
 "qDH" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10;
-	icon_state = "trimline_fill"
+	dir = 10
 	},
 /obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
@@ -55681,12 +55511,10 @@
 /area/medical/morgue)
 "rzu" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 8;
-	icon_state = "trimline_warn_fill"
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -55756,8 +55584,7 @@
 /area/construction)
 "rLK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/structure/closet/secure_closet/medical3,
 /obj/item/clothing/neck/stethoscope,
@@ -55814,20 +55641,17 @@
 /area/maintenance/port)
 "rTE" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8;
-	icon_state = "trimline_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "rVn" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 4;
-	icon_state = "trimline_warn_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -55995,8 +55819,7 @@
 /area/hallway/secondary/service)
 "sxQ" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1;
-	icon_state = "trimline_warn_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/structure/cable,
@@ -56017,8 +55840,7 @@
 /area/science/xenobiology)
 "sGs" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /obj/item/radio/intercom{
 	pixel_x = 25
@@ -56135,8 +55957,7 @@
 "sVI" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
 /turf/open/floor/plasteel/white,
@@ -56194,8 +56015,7 @@
 	pixel_y = 7
 	},
 /obj/item/storage/box/monkeycubes{
-	pixel_x = -5;
-	pixel_y = 0
+	pixel_x = -5
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -56513,8 +56333,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 5;
-	icon_state = "trimline_fill"
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -56682,8 +56501,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4;
-	icon_state = "trimline_fill"
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -56693,8 +56511,7 @@
 /area/chapel/main)
 "uyp" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -56745,8 +56562,7 @@
 /area/science/mixing)
 "uGw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 5;
-	icon_state = "trimline_fill"
+	dir = 5
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
@@ -56790,8 +56606,7 @@
 /area/science/research)
 "uJY" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10;
-	icon_state = "trimline_fill"
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -56820,8 +56635,7 @@
 /area/medical/chemistry)
 "uSc" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/structure/cable,
 /obj/structure/cable,
@@ -56997,8 +56811,7 @@
 /area/science/mixing)
 "vof" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -57139,12 +56952,10 @@
 /area/hydroponics/garden)
 "vLr" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 8;
-	icon_state = "trimline_warn_fill"
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8;
-	icon_state = "trimline_corner_fill"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57239,8 +57050,7 @@
 /area/medical/cryo)
 "wed" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9;
-	icon_state = "trimline_fill"
+	dir = 9
 	},
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
@@ -57457,8 +57267,7 @@
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1;
-	icon_state = "trimline_fill"
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -57493,12 +57302,10 @@
 /area/medical/medbay/central)
 "wRF" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -57669,12 +57476,10 @@
 /area/science/genetics)
 "xgf" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 4;
-	icon_state = "trimline_corner_fill"
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 1;
-	icon_state = "trimline_corner_fill"
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -57852,7 +57657,6 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/white,
@@ -58033,8 +57837,7 @@
 /area/medical/surgery)
 "yce" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 10;
-	icon_state = "trimline_fill"
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
@@ -58120,8 +57923,7 @@
 	dir = 8
 	},
 /obj/structure/chair/sofa/right{
-	dir = 1;
-	icon_state = "sofaend_right"
+	dir = 1
 	},
 /obj/structure/sign/departments/restroom{
 	pixel_y = -32
