@@ -37,8 +37,8 @@
 /mob/living/simple_animal/hostile/eldritch/Initialize()
 	. = ..()
 	add_spells()
-	//by default
-	mind.add_antag_datum(/datum/antagonist/heretic_monster)
+	var/datum/action/innate/mansus_speech/MS = new (src)
+	MS.Grant(src)
 
 /**
   * Add_spells
@@ -61,11 +61,43 @@
 	maxHealth = 50
 	health = 50
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,/obj/effect/proc_holder/spell/targeted/telepathy/eldritch)
+	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,/obj/effect/proc_holder/spell/pointed/manse_link)
+
+	var/list/linked_mobs = list()
+	var/list/linked_actions = list()
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
 	. = ..()
-	client?.view_size.setTo(11)
+	client?.view_size.setTo(10)
+
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/link_mob(mob/living/M)
+	if(QDELETED(M) || M.stat == DEAD)
+		return FALSE
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD)) //mindshield implant, no dice
+		return FALSE
+	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		return FALSE
+	if(M in linked_mobs)
+		return FALSE
+	linked_mobs.Add(M)
+	to_chat(M, "<span class='notice'>You are now connected to Raw Prophet's Mansus Link.</span>")
+	var/datum/action/innate/mansus_speech/action = new(src)
+	linked_actions.Add(action)
+	action.Grant(M)
+	RegisterSignal(M, COMSIG_MOB_DEATH , .proc/unlink_mob)
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unlink_mob)
+	return TRUE
+
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/M)
+	var/link_id = linked_mobs.Find(M)
+	if(!(link_id))
+		return
+	UnregisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
+	var/datum/action/innate/mansus_speech/action = linked_actions[link_id]
+	action.Remove(M)
+	to_chat(M, "<span class='notice'>You are no longer connected to Raw Prophet's Mansus Link.</span>")
+	linked_mobs[link_id] = null
+	linked_actions[link_id] = null
 
 /mob/living/simple_animal/hostile/eldritch/armsy
 	name = "Terror of the night"

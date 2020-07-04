@@ -516,3 +516,73 @@
 		human_user.adjustStaminaLoss(-10, FALSE)
 		human_user.adjustToxLoss(-10, FALSE)
 		human_user.adjustOxyLoss(-10)
+
+/obj/effect/proc_holder/spell/pointed/manse_link
+	name = "Mansus Link"
+	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a mansus net, allowing them to communicate with eachother"
+	school = "transmutation"
+	charge_max = 600
+	clothes_req = FALSE
+	invocation = "PI'RC'"
+	invocation_type = "whisper"
+	range = 9
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "cleave"
+	action_background_icon_state = "bg_ecult"
+
+/obj/effect/proc_holder/spell/pointed/manse_link/can_target(atom/target, mob/user, silent)
+	if(!ishuman(target))
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/pointed/manse_link/cast(list/targets, mob/user)
+	var/mob/living/simple_animal/hostile/eldritch/raw_prophet/originator = user
+
+	var/mob/living/target = targets[1]
+
+	to_chat(originator, "<span class='notice'>You begin linking [target]'s mind to yours...</span>")
+	to_chat(target, "<span class='warning'>You feel your mind being pulled... connected... intertwined with the very fabric of reality...</span>")
+	if(do_after(originator, 60, target))
+		if(originator.link_mob(target))
+			to_chat(originator, "<span class='notice'>You connect [target]'s mind to your mansus link!</span>")
+		else
+			to_chat(originator, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
+			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
+
+
+/datum/action/innate/mansus_speech
+	name = "Mansus Link"
+	desc = "Send a psychic message to everyone connected to your mansus link."
+	button_icon_state = "link_speech"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_alien"
+	var/mob/living/simple_animal/hostile/eldritch/raw_prophet/originator
+
+/datum/action/innate/mansus_speech/New(_originator)
+	..()
+	originator = _originator
+
+/datum/action/innate/mansus_speech/Activate()
+	var/mob/living/carbon/human/H = owner
+	if(!originator || !(H in originator.linked_mobs))
+		to_chat(H, "<span class='warning'>The link seems to have been severed...</span>")
+		Remove(H)
+		return
+
+	var/message = sanitize(input("Message:", "Telepathy from the Manse") as text|null)
+
+	if(!originator || !(H in originator.linked_mobs))
+		to_chat(H, "<span class='warning'>The link seems to have been severed...</span>")
+		Remove(H)
+		return
+	if(message)
+		var/msg = "<i><font color=#568b00>\[Raw Prophet's MansusLink\] <b>[H]:</b> [message]</font></i>"
+		log_directed_talk(H, originator.real_name, msg, LOG_SAY, "Mansus Link")
+		for(var/X in originator.linked_mobs)
+			var/mob/living/M = X
+			to_chat(M, msg)
+
+		for(var/X in GLOB.dead_mob_list)
+			var/mob/M = X
+			var/link = FOLLOW_LINK(M, H)
+			to_chat(M, "[link] [msg]")
