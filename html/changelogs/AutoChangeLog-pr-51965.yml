@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - tweak: "Cold rooms are now cold, no longer arctic conditions."
