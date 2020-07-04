@@ -249,7 +249,7 @@
 
 
 	// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
-	if(owner && wounding_dmg >= 5 && wound_bonus != CANT_WOUND)
+	if(owner && wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
 		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
 	var/can_inflict = max_damage - get_damage()
@@ -424,7 +424,7 @@
 		injury_mod += W.threshold_penalty
 
 	var/part_mod = -wound_resistance
-	if(is_disabled())
+	if(get_damage(TRUE) >= max_damage)
 		part_mod += disabled_wound_penalty
 
 	injury_mod += part_mod
