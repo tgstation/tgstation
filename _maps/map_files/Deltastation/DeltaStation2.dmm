@@ -66825,10 +66825,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "cui" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_x = 32;
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -68168,7 +68164,6 @@
 /area/hallway/secondary/command)
 "cwQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -112384,6 +112379,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"gXj" = (
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "gXn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -112727,6 +112729,17 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
+"ivo" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
+"ivM" = (
+/obj/structure/sign/departments/cargo,
+/turf/closed/wall/r_wall,
+/area/hallway/secondary/command)
 "ixL" = (
 /obj/structure/sign/warning/vacuum{
 	pixel_x = 32
@@ -112791,6 +112804,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/department/science)
+"iKE" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "iLj" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
@@ -113607,6 +113625,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"lFH" = (
+/obj/machinery/piratepad/civilian,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "lKR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
@@ -156745,9 +156770,9 @@ aaa
 cqY
 csz
 cuj
-cqY
-cqZ
-cqZ
+ivM
+ivo
+iKE
 czZ
 cBp
 cDd
@@ -157003,8 +157028,8 @@ cqZ
 csB
 cuk
 cqZ
-aad
-aad
+lFH
+gXj
 czY
 cBw
 cDe

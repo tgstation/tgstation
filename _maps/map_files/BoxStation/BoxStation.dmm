@@ -13280,9 +13280,15 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L13"
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -14120,7 +14126,6 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -24818,23 +24823,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"buH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/research{
-	name = "Research Division Access";
-	req_access_txt = "47"
-	},
-/turf/open/floor/plasteel/white,
-/area/science/research)
 "buI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 1
@@ -26738,7 +26726,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bAi" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer3,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bAj" = (
@@ -29299,9 +29289,6 @@
 /area/science/mixing)
 "bHt" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bHu" = (
@@ -47975,6 +47962,15 @@
 /mob/living/carbon/monkey,
 /turf/open/floor/engine,
 /area/science/genetics)
+"kXh" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "kXs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel/dark,
@@ -50201,6 +50197,13 @@
 	},
 /turf/closed/wall,
 /area/vacant_room/commissary)
+"oPn" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "oRR" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -50230,12 +50233,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"oSA" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "oTh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
@@ -51713,6 +51710,13 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"rbm" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "rdP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -51954,6 +51958,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"rww" = (
+/obj/structure/sign/departments/cargo,
+/turf/closed/wall,
+/area/hallway/primary/central)
 "rwH" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -53443,6 +53451,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"uav" = (
+/obj/machinery/piratepad/civilian,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "ubo" = (
 /obj/structure/weightmachine/weightlifter,
 /obj/effect/decal/cleanable/dirt,
@@ -53878,6 +53896,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/break_room)
+"uPp" = (
+/obj/machinery/computer/piratepad_control/civilian,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "uPT" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
@@ -85938,9 +85964,9 @@ anF
 ahn
 aJn
 aJn
-aJq
-aJq
-aOE
+aLY
+aLY
+oPn
 aPS
 aRq
 aSC
@@ -86193,9 +86219,9 @@ tti
 arf
 anF
 ahn
-aaa
-aJn
-aJq
+uav
+kXh
+aJr
 aJq
 aOE
 aPS
@@ -86450,10 +86476,10 @@ rkf
 arf
 anF
 ahn
-aaa
-aJn
-aLY
-aLY
+uPp
+rbm
+aLX
+aJq
 aOG
 aPR
 aPR
@@ -86708,9 +86734,9 @@ arf
 anF
 ahn
 aJw
-aJw
+rww
 bAi
-oSA
+aJq
 aOE
 aJn
 aaa

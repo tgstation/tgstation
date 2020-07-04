@@ -49025,6 +49025,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"dmd" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "dmP" = (
 /obj/structure/chair{
 	dir = 8
@@ -50121,6 +50125,10 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"fLd" = (
+/obj/structure/sign/departments/drop,
+/turf/closed/wall,
+/area/hallway/primary/central)
 "fLG" = (
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/plating,
@@ -54927,6 +54935,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
+"pfo" = (
+/obj/machinery/piratepad/civilian,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "pfP" = (
 /obj/structure/table,
 /obj/item/storage/box/syringes,
@@ -57474,6 +57489,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
+"uKg" = (
+/obj/machinery/computer/piratepad_control/civilian,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "uLF" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -95608,7 +95628,7 @@ aAN
 aAN
 awd
 awd
-aAN
+fLd
 aIg
 aJf
 aKb
@@ -95863,9 +95883,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-awd
+aht
+dmd
+pfo
 jYe
 aBJ
 aJI
@@ -96120,9 +96140,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-awd
+aht
+dmd
+uKg
 jYe
 aBJ
 aJH

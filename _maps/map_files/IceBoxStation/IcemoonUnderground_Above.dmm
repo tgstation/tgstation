@@ -3331,10 +3331,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"IF" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "IK" = (
 /obj/structure/toilet{
 	dir = 8
@@ -24329,7 +24325,7 @@ cp
 bt
 aj
 bq
-IF
+bP
 du
 dL
 cH

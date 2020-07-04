@@ -43883,6 +43883,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"bZu" = (
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "bZv" = (
 /obj/machinery/light_switch{
 	pixel_x = 26
@@ -68441,6 +68445,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"fCP" = (
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "fCV" = (
 /obj/machinery/button/flasher{
 	id = "visitorflash";
@@ -69258,6 +69269,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"gCo" = (
+/obj/machinery/piratepad/civilian,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "gCM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -69894,6 +69912,10 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"hBZ" = (
+/obj/structure/sign/departments/cargo,
+/turf/closed/wall/r_wall,
+/area/hallway/secondary/command)
 "hDr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/light{
@@ -74343,6 +74365,12 @@
 	dir = 1
 	},
 /area/medical/break_room)
+"oUD" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "oVO" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -108519,7 +108547,7 @@ bDn
 bES
 bGL
 bIk
-bJP
+bIk
 bLv
 bNi
 bOD
@@ -108774,9 +108802,9 @@ bzZ
 bfv
 bDo
 bET
-bzR
-bBz
-bBz
+hBZ
+oUD
+bZu
 bLw
 bNj
 bOC
@@ -109032,8 +109060,8 @@ bfv
 bDp
 bES
 bBz
-aaf
-aaf
+gCo
+fCP
 bLv
 bNk
 bOF

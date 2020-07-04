@@ -17308,7 +17308,6 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -52394,6 +52393,15 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
+"hQR" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "hRA" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -54442,6 +54450,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"nEI" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "nEP" = (
 /obj/machinery/vending/wardrobe/science_wardrobe,
 /obj/machinery/light{
@@ -54711,6 +54726,10 @@
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
+"oDD" = (
+/obj/structure/sign/departments/cargo,
+/turf/closed/wall,
+/area/hallway/primary/central)
 "oDF" = (
 /obj/machinery/light,
 /turf/open/floor/plating,
@@ -56446,6 +56465,23 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
+"tPF" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"tPJ" = (
+/obj/machinery/piratepad/civilian,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "tPW" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio7";
@@ -56703,6 +56739,14 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
+"uDh" = (
+/obj/machinery/computer/piratepad_control/civilian,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "uES" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -88063,9 +88107,9 @@ anF
 ahn
 aJn
 aJn
-aJq
-aJq
-aOE
+aLY
+aLY
+tPF
 aPS
 aRq
 aSC
@@ -88318,9 +88362,9 @@ tti
 arf
 anF
 ahn
-boP
-aJn
-aJq
+tPJ
+hQR
+aJr
 aJq
 aOE
 aPS
@@ -88575,10 +88619,10 @@ rkf
 arf
 anF
 ahn
-boP
-aJn
-aLY
-aLY
+uDh
+nEI
+aLX
+aJq
 aOG
 aPR
 aPR
@@ -88833,7 +88877,7 @@ arf
 anF
 ahn
 aJw
-aJw
+oDD
 aMh
 aJq
 aOE

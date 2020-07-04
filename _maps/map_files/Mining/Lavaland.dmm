@@ -1002,10 +1002,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
-"da" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "db" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -21668,7 +21664,7 @@ cp
 bf
 cL
 bq
-da
+bP
 du
 dL
 cH
