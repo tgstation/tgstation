@@ -7,7 +7,7 @@
 	density = TRUE
 	req_access = list(ACCESS_BAR)
 	ui_x = 370
-	ui_y = 310
+	ui_y = 313
 	var/active = FALSE
 	var/list/rangers = list()
 	var/stop = 0

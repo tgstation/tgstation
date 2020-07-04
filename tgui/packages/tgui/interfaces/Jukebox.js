@@ -51,7 +51,7 @@ export const Jukebox = (props, context) => {
           </LabeledList>
         </Section>
         <Section title="Machine Settings">
-          <LabeledList>
+          <LabeledControls justify="center">
             <LabeledControls.Item label="Volume">
               <Box position="relative">
                 <Knob
@@ -99,7 +99,7 @@ export const Jukebox = (props, context) => {
                   })} />
               </Box>
             </LabeledControls.Item>
-          </LabeledList>
+          </LabeledControls>
         </Section>
       </Window.Content>
     </Window>
