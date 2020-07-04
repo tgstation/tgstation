@@ -237,7 +237,7 @@
 			data["modeStatus"] = "average"
 		if(BOT_NO_ROUTE)
 			data["modeStatus"] = "bad"
-	data["load"] = load ? load.name : null
+	data["load"] = load ? load.name : null //IF YOU CHANGE THE NAME OF THIS, UPDATE MULEBOT/PARANORMAL/UI_DATA.
 	data["destination"] = destination ? destination : null
 	data["home"] = home_destination
 	data["destinations"] = GLOB.deliverybeacontags
@@ -841,6 +841,12 @@
 	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
 	ghost_overlay.pixel_y = 12
 	. += ghost_overlay
+
+/mob/living/simple_animal/bot/mulebot/paranormal/ui_data(mob/user)
+	var/list/data = ..()
+	if(isobserver(load))
+		data["load"] = "Unknown"
+	return data
 
 /mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
 	visible_message("<span class='notice'>The ghostly figure vanishes...</span>")
