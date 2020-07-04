@@ -99,13 +99,21 @@
 #define CAT_ICE	"Frozen"
 #define CAT_DRINK "Drinks"
 
+// these aren't even used as bitflags so who even knows why they are treated like them
 #define RCD_FLOORWALL 1
 #define RCD_AIRLOCK 2
 #define RCD_DECONSTRUCT 3
 #define RCD_WINDOWGRILLE 4
 #define RCD_MACHINE 8
 #define RCD_COMPUTER 16
+#define RCD_FURNISHING 32
 
-#define RCD_UPGRADE_FRAMES	1
+#define RCD_UPGRADE_FRAMES 1
 #define RCD_UPGRADE_SIMPLE_CIRCUITS	2
-#define RCD_UPGRADE_SILO_LINK	4
+#define RCD_UPGRADE_SILO_LINK 4
+#define RCD_UPGRADE_FURNISHING 8
+
+#define RCD_WINDOW_FULLTILE "full tile"
+#define RCD_WINDOW_DIRECTIONAL "directional"
+#define RCD_WINDOW_NORMAL "glass"
+#define RCD_WINDOW_REINFORCED "reinforced glass"

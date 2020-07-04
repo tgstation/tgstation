@@ -251,6 +251,8 @@
 			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
 		if(RCD_COMPUTER)
 			return list("mode" = RCD_COMPUTER, "delay" = 20, "cost" = 25)
+		if(RCD_FURNISHING)
+			return list("mode" = RCD_FURNISHING, "delay" = the_rcd.furnish_delay, "cost" = the_rcd.furnish_cost)
 	return FALSE
 
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -305,6 +307,12 @@
 			C.anchored = TRUE
 			C.state = 1
 			C.setDir(the_rcd.computer_dir)
+			return TRUE
+		if(RCD_FURNISHING)
+			if(locate(the_rcd.furnish_type) in src)
+				return FALSE
+			var/atom/A = new the_rcd.furnish_type(src)
+			A.setDir(user.dir)
 			return TRUE
 
 	return FALSE

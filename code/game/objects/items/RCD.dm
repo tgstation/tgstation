@@ -203,6 +203,11 @@ RLD
 	var/airlock_type = /obj/machinery/door/airlock
 	var/airlock_glass = FALSE // So the floor's rcd_act knows how much ammo to use
 	var/window_type = /obj/structure/window/fulltile
+	var/window_glass = RCD_WINDOW_NORMAL
+	var/window_size = RCD_WINDOW_FULLTILE
+	var/furnish_type = /obj/structure/chair
+	var/furnish_cost = 8
+	var/furnish_delay = 10
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
 	var/delay_mod = 1
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
@@ -213,26 +218,53 @@ RLD
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
-/obj/item/construction/rcd/verb/toggle_window_type_verb()
-	set name = "RCD : Toggle Window Type"
+/obj/item/construction/rcd/verb/toggle_window_glass_verb()
+	set name = "RCD : Toggle Window Glass"
 	set category = "Object"
 	set src in view(1)
 
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 
-	toggle_window_type(usr)
+	toggle_window_glass(usr)
 
-/obj/item/construction/rcd/proc/toggle_window_type(mob/user)
-	var/window_type_name
-	if (window_type == /obj/structure/window/fulltile)
-		window_type = /obj/structure/window/reinforced/fulltile
-		window_type_name = "reinforced glass"
+/obj/item/construction/rcd/verb/toggle_window_size_verb()
+	set name = "RCD : Toggle Window Size"
+	set category = "Object"
+	set src in view(1)
+
+	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
+
+	toggle_window_size(usr)
+
+/obj/item/construction/rcd/proc/toggle_window_glass(mob/user)
+	if (window_glass != RCD_WINDOW_REINFORCED)
+		set_window_type(user, RCD_WINDOW_REINFORCED, window_size)
+		return
+	set_window_type(user, RCD_WINDOW_NORMAL, window_size)
+
+/obj/item/construction/rcd/proc/toggle_window_size(mob/user)
+	if (window_size != RCD_WINDOW_DIRECTIONAL)
+		set_window_type(user, window_glass, RCD_WINDOW_DIRECTIONAL)
+		return
+	set_window_type(user, window_glass, RCD_WINDOW_FULLTILE)
+
+/obj/item/construction/rcd/proc/set_window_type(mob/user, glass, size)
+	window_glass = glass
+	window_size = size
+	if(window_glass == RCD_WINDOW_REINFORCED)
+		if(window_size == RCD_WINDOW_DIRECTIONAL)
+			window_type = /obj/structure/window/reinforced
+		else
+			window_type = /obj/structure/window/reinforced/fulltile
 	else
-		window_type = /obj/structure/window/fulltile
-		window_type_name = "glass"
+		if(window_size == RCD_WINDOW_DIRECTIONAL)
+			window_type = /obj/structure/window
+		else
+			window_type = /obj/structure/window/fulltile
 
-	to_chat(user, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
+	to_chat(user, "<span class='notice'>You change \the [src]'s window mode to [window_size] [window_glass] window.</span>")
 
 /obj/item/construction/rcd/proc/toggle_silo_link(mob/user)
 	if(silo_mats)
@@ -406,6 +438,36 @@ RLD
 			airlock_type = /obj/machinery/door/airlock
 			airlock_glass = FALSE
 
+/obj/item/construction/rcd/proc/change_furnishing_type(mob/user)
+	if(!user)
+		return
+	var/list/choices = list(
+		"Chair" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair"),
+		"Stool" = image(icon = 'icons/mob/radial.dmi', icon_state = "stool"),
+		"Table" = image(icon = 'icons/mob/radial.dmi', icon_state = "table"),
+		"Glass Table" = image(icon = 'icons/mob/radial.dmi', icon_state = "glass_table")
+		)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(choice)
+		if("Chair")
+			furnish_type = /obj/structure/chair
+			furnish_cost = 8
+			furnish_delay = 10
+		if("Stool")
+			furnish_type = /obj/structure/chair/stool
+			furnish_cost = 8
+			furnish_delay = 10
+		if("Table")
+			furnish_type = /obj/structure/table
+			furnish_cost = 16
+			furnish_delay = 20
+		if("Glass Table")
+			furnish_type = /obj/structure/table/glass
+			furnish_cost = 16
+			furnish_delay = 20
+
 /obj/item/construction/rcd/proc/rcd_create(atom/A, mob/user)
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
@@ -452,6 +514,10 @@ RLD
 		choices += list(
 		"Silo Link" = image(icon = 'icons/obj/mining.dmi', icon_state = "silo"),
 		)
+	if(upgrade & RCD_UPGRADE_FURNISHING)
+		choices += list(
+		"Furnishing" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair")
+		)
 	if(mode == RCD_AIRLOCK)
 		choices += list(
 		"Change Access" = image(icon = 'icons/mob/radial.dmi', icon_state = "access"),
@@ -459,7 +525,12 @@ RLD
 		)
 	else if(mode == RCD_WINDOWGRILLE)
 		choices += list(
-			"Change Window Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowtype")
+		"Change Window Glass" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowtype"),
+		"Change Window Size" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowsize")
+		)
+	else if(mode == RCD_FURNISHING)
+		choices += list(
+		"Change Furnishing Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair")
 		)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -475,6 +546,8 @@ RLD
 			mode = RCD_WINDOWGRILLE
 		if("Machine Frames")
 			mode = RCD_MACHINE
+		if("Furnishing")
+			mode = RCD_FURNISHING
 		if("Computer Frames")
 			mode = RCD_COMPUTER
 			change_computer_dir(user)
@@ -485,8 +558,14 @@ RLD
 		if("Change Airlock Type")
 			change_airlock_setting(user)
 			return
-		if("Change Window Type")
-			toggle_window_type(user)
+		if("Change Window Glass")
+			toggle_window_glass(user)
+			return
+		if("Change Window Size")
+			toggle_window_size(user)
+			return
+		if("Change Furnishing Type")
+			change_furnishing_type(user)
 			return
 		if("Silo Link")
 			toggle_silo_link(user)
@@ -599,7 +678,7 @@ RLD
 	name = "admin RCD"
 	max_matter = INFINITY
 	matter = INFINITY
-	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
 
 // Ranged RCD
@@ -890,6 +969,10 @@ RLD
 /obj/item/rcd_upgrade/silo_link
 	desc = "It contains direct silo connection RCD upgrade."
 	upgrade = RCD_UPGRADE_SILO_LINK
+
+/obj/item/rcd_upgrade/furnishing
+	desc = "It contains the design for chairs, stools, tables, and glass tables."
+	upgrade = RCD_UPGRADE_FURNISHING
 
 #undef GLOW_MODE
 #undef LIGHT_MODE
