@@ -11398,13 +11398,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
-"aze" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/wood,
-/area/library)
 "azg" = (
 /obj/item/stack/cable_coil,
 /turf/open/floor/plating/airless,
@@ -11949,18 +11942,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
-"aAz" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 30
-	},
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plasteel/cult,
-/area/library)
 "aAA" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -13902,14 +13883,16 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aFE" = (
-/obj/structure/table/wood,
-/obj/machinery/newscaster{
-	pixel_y = 32
+/obj/structure/table/wood/fancy/royalblue,
+/obj/machinery/door/window{
+	dir = 8;
+	name = "Secure Art Exhibition";
+	req_access_txt = "37"
 	},
-/obj/item/folder,
-/obj/item/folder,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plasteel/cult,
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 32
+	},
+/turf/open/floor/carpet/royalblue,
 /area/library)
 "aFF" = (
 /obj/machinery/computer/shuttle/mining{
@@ -27015,6 +26998,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/disposalpipe/segment,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bkz" = (
@@ -28664,6 +28650,9 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -30547,9 +30536,6 @@
 /area/hallway/primary/port)
 "bsI" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -31868,31 +31854,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet,
 /area/library)
-"bwe" = (
-/obj/structure/chair/comfy/black{
-	dir = 8
+"bwf" = (
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/wood,
-/area/library)
-"bwf" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel/cult,
-/area/library)
-"bwg" = (
-/obj/structure/table/wood,
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
-/obj/item/folder,
-/obj/item/folder,
-/turf/open/floor/plasteel/cult,
 /area/library)
 "bwh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -32568,14 +32534,18 @@
 /obj/effect/landmark/start/librarian,
 /turf/open/floor/wood,
 /area/library)
-"bxW" = (
-/turf/open/floor/plasteel/cult,
-/area/library)
 "bxX" = (
-/obj/structure/chair/comfy/brown{
-	dir = 1
+/obj/structure/table/wood/fancy/royalblue,
+/obj/structure/window/reinforced,
+/obj/machinery/door/window{
+	dir = 8;
+	name = "Secure Art Exhibition";
+	req_access_txt = "37"
 	},
-/turf/open/floor/plasteel/cult,
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 32
+	},
+/turf/open/floor/carpet/royalblue,
 /area/library)
 "bxY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -33214,18 +33184,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet,
-/area/library)
-"bzG" = (
-/obj/machinery/door/morgue{
-	name = "Study #1"
-	},
-/turf/open/floor/plasteel/cult,
-/area/library)
-"bzH" = (
-/obj/machinery/door/morgue{
-	name = "Study #2"
-	},
-/turf/open/floor/plasteel/cult,
 /area/library)
 "bzI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -33918,24 +33876,15 @@
 /area/engine/atmos)
 "bBu" = (
 /obj/machinery/vending/coffee,
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
 /turf/open/floor/wood,
 /area/library)
 "bBv" = (
-/obj/structure/chair/comfy/black,
 /obj/effect/landmark/start/assistant,
+/obj/structure/chair/comfy/black,
 /turf/open/floor/wood,
 /area/library)
 "bBw" = (
 /obj/machinery/bookbinder,
-/turf/open/floor/wood,
-/area/library)
-"bBx" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
 /turf/open/floor/wood,
 /area/library)
 "bBy" = (
@@ -39762,12 +39711,12 @@
 /area/maintenance/port)
 "bPO" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/pen,
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/storage/crayons,
+/obj/item/toy/crayon/spraycan,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -4
+	},
 /turf/open/floor/wood,
 /area/library)
 "bPP" = (
@@ -40231,14 +40180,18 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bRg" = (
-/obj/machinery/holopad,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/structure/easel,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/wood,
 /area/library)
 "bRh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/library)
 "bRi" = (
@@ -41175,6 +41128,11 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/library)
 "bTz" = (
@@ -62237,9 +62195,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/status_display/evac{
-	pixel_y = 30
-	},
 /obj/machinery/photocopier{
 	pixel_y = 3
 	},
@@ -62677,6 +62632,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
+"cZS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/wood,
+/area/library)
 "dap" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/chair{
@@ -66871,7 +66834,10 @@
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
-/obj/effect/landmark/event_spawn,
+/obj/structure/easel,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/wood,
 /area/library)
 "dDl" = (
@@ -77890,6 +77856,12 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
+"uPM" = (
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/library)
 "uRM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -78050,6 +78022,10 @@
 /obj/structure/table/wood,
 /obj/item/radio/intercom{
 	pixel_y = -29
+	},
+/obj/structure/sign/painting/library_private{
+	pixel_x = -32;
+	pixel_y = -32
 	},
 /turf/open/floor/engine/cult,
 /area/library)
@@ -79614,6 +79590,12 @@
 "xrj" = (
 /turf/closed/wall,
 /area/medical/paramedic)
+"xrL" = (
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/library)
 "xse" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -100430,8 +100412,8 @@ bnV
 bql
 awL
 bue
-aze
-bwe
+bzE
+bzE
 bGv
 bHT
 bwc
@@ -100443,7 +100425,7 @@ bLk
 bzE
 bue
 bPS
-bPR
+cZS
 bBs
 bBs
 bue
@@ -100687,8 +100669,8 @@ bod
 hxH
 bsG
 bue
-bue
-bue
+xrL
+uPM
 bue
 bBu
 bwc
@@ -100944,9 +100926,9 @@ boe
 plu
 bsH
 bue
-aAz
-bxW
-bzG
+xrL
+uPM
+bue
 bzE
 bwc
 bEA
@@ -101201,8 +101183,8 @@ bof
 bql
 lCP
 bue
-bwg
-bxX
+xrL
+uPM
 bue
 bBv
 bwc
@@ -101458,8 +101440,8 @@ bog
 bqv
 bsI
 bue
-bue
-bue
+xrL
+uPM
 bue
 cUT
 bwc
@@ -101716,8 +101698,8 @@ bqw
 ecO
 bue
 bwf
-bxW
-bzH
+bzE
+bzE
 bzE
 dCX
 sBo
@@ -101974,11 +101956,11 @@ ecO
 bue
 aFE
 bxX
-bue
-bBw
+bzE
+bzE
 bwc
 sBo
-bBx
+bBw
 bue
 bue
 bue
@@ -102486,7 +102468,7 @@ boj
 aZd
 bsK
 buj
-bwh
+buj
 bxY
 bzI
 buj
