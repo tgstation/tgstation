@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "Plants with over 100% reagent genes now split up their reagents between all available chemicals."
+  - bugfix: "Plants now correctly apply percentages of reagents to a plant's overall reagent capacity."
+  - balance: "Densified Chemicals now causes plants to produce half the yield, while still produces double capacity plants."
