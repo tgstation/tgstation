@@ -27,6 +27,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/visited = FALSE			/// used for trasversing
 	var/datum/powernet/powernet = null
 
+	var/linked_state = -1	// Mask used for updating icons, -1 means we need to do a full update
 	var/node = FALSE //used for sprites display
 	var/cable_layer = CABLE_LAYER_2			//bitflag
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
@@ -178,23 +179,71 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
-
 /obj/structure/cable/update_icon_state()
-	if(!linked_dirs)
+	// linked_state MUST be valid, we don't check anything else
+	// Use this to do quick icon updates
+	if(icon_state == -1)
+		refresh_icon_state()
+	if(!icon_state)
 		icon_state = "l[cable_layer]-noconnection"
 	else
 		var/list/dir_icon_list = list()
-		var/obj/structure/cable/C
+		dir_string += "l[cable_layer]"
+		if(icon_state & NORTH)
+			dir_string += "[NORTH]"
+		if(icon_state & SOUTH)
+			dir_string += "[SOUTH]"
+		if(icon_state & EAST)
+			dir_string += "[EAST]"
+		if(icon_state & WEST)
+			dir_string += "[WEST]"
+		if(node)
+			dir_icon_list += "node"
+		icon_state = dir_icon_list.Join("-")
+
+// this is a hard check on the surounding
+/obj/structure/cable/refresh_icon_state()
+	if(!linked_dirs)
+		icon_state = "l[cable_layer]-noconnection"
+	else
+
 		var/turf/T
 		/// This is faster.  Why?  Because its not a loop that needs a var
 		/// and if you think for(in) is fast, then your an idiot
 		// Just be carful, order must be the same as GLOB
 		// NORTH, SOUTH, EAST, WEST
-		dir_string += "l[cable_layer]"
+
 
 		for(var/k in 1 to GLOB.cardinals.len)
 			T = get_step(src,GLOB.cardinals[k])
+			for(var/obj/structure/cable/C in T)
+				if(!(cable_layer & C.cable_layer))
+					continue
 
+		if(!C)
+			continue
+
+	var/turf/TB  = get_step(src, direction)
+
+	for(var/obj/structure/cable/C in TB)
+		if(!C)
+			continue
+
+		if(src == C)
+			continue
+
+		if(!(cable_layer & C.cable_layer))
+			continue
+
+		if(C.linked_dirs & inverse_dir) //we've got a matching cable in the neighbor turf
+			if(!C.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
+				var/datum/powernet/newPN = new()
+				newPN.add_cable(C)
+
+			if(powernet) //if we already have a powernet, then merge the two powernets
+				merge_powernets(powernet, C.powernet)
+			else
+				C.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
 			T = get_step(loc,dir) //resolve where the thing is.
 			C = locate(get_step())
 			if(C && C.cable_layer == cable_layer)
