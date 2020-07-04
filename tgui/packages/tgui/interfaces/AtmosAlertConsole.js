@@ -25,7 +25,7 @@ export const AtmosAlertConsole = (props, context) => {
                   onClick={() => act('clear', { zone: alert })} />
               </li>
             ))}
-            {minorAlerts.length > 0 && (
+            {minorAlerts.length === 0 && (
               <li className="color-good">
                 No Minor Alerts
               </li>
