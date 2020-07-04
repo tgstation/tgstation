@@ -860,7 +860,7 @@
 /mob/living/simple_animal/bot/mulebot/paranormal/ui_data(mob/user)
 	var/list/data = ..()
 	if(isobserver(load))
-		data["load"] = "Unknown"
+		data["load"] = "Unknown" //don't reveal the name of the ghost to prevent metagaming.
 	return data
 
 /mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
