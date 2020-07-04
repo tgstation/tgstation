@@ -37091,19 +37091,6 @@
 "bJd" = (
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
-"bJe" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
-"bJf" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "bJg" = (
 /obj/machinery/telecomms/message_server/preset,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -37726,12 +37713,6 @@
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
-"bKK" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "bKL" = (
 /obj/machinery/telecomms/processor/preset_two,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -124220,9 +124201,9 @@ ckI
 bAR
 aaf
 aaa
-bJf
+bzj
 aaf
-bKK
+bzj
 aaf
 aaa
 aaa
@@ -125763,7 +125744,7 @@ ckM
 cmf
 cmf
 aaa
-bKK
+bzj
 aaa
 aaa
 aaa
@@ -126020,7 +126001,7 @@ bCC
 bCC
 ckM
 aaf
-bKK
+bzj
 aaa
 aaa
 aaa
@@ -126277,7 +126258,7 @@ cme
 bCC
 cjo
 aaa
-bKK
+bzj
 aaf
 aaa
 aaa
@@ -127280,19 +127261,19 @@ bzj
 bzj
 bzj
 bzj
-bJe
+bzi
 bzj
 bzj
 aai
 bzj
 bzj
 bzj
-bKK
 bzj
 bzj
 bzj
 bzj
-bJe
+bzj
+bzi
 bzj
 aai
 bzj
@@ -127794,19 +127775,19 @@ bzi
 bzi
 bzi
 bzi
-bJf
+bzj
 bzi
 bzi
 bzi
 bzi
 bzi
 bzi
-bJf
+bzj
 bzi
 bzi
 bzi
 bzi
-bJf
+bzj
 aaf
 aaf
 aaf
@@ -128309,7 +128290,7 @@ bzj
 siF
 bzj
 bzj
-bKK
+bzj
 bzj
 bzj
 bzj
@@ -128320,7 +128301,7 @@ bzj
 bzj
 bzj
 bzj
-bKK
+bzj
 bzj
 bzj
 anS
