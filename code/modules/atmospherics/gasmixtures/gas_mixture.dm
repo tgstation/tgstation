@@ -136,9 +136,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
+#ifndef HALT_ATMOS
 	if(!giver)
 		return 0
-
 	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/giver_id in giver_gases)
 		ASSERT_GAS(giver_id, src)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
-
+#endif
 	return 1
 
 	///Proportionally removes amount of gas from the gas_mixture.
@@ -172,9 +172,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
+#ifndef HALT_ATMOS //This behaves like a proportional copy() if we don't want atmos to change shit
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
-
+#endif
 	return removed
 
 	///Proportionally removes amount of gas from the gas_mixture.
@@ -192,13 +193,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
+#ifndef HALT_ATMOS //This behaves like a proportional copy() if we don't want atmos to change shit
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
-
 	garbage_collect()
-
+#endif
 	return removed
 
-	///Removes an amount of a specific gas from the gas_mixture.
+	///Removes a amount of a specific gas from the gas_mixture.
 	///Returns: gas_mixture with the gas removed
 /datum/gas_mixture/proc/remove_specific(gas_id, amount)
 	var/list/cached_gases = gases
@@ -210,14 +211,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed.temperature = temperature
 	ADD_GAS(gas_id, removed.gases)
 	removed_gases[gas_id][MOLES] = amount
+#ifndef HALT_ATMOS //This behaves like a single target copy() if we don't want atmos to change shit
 	cached_gases[gas_id][MOLES] -= amount
-
 	garbage_collect(list(gas_id))
+#endif
 	return removed
 
 	///Distributes the contents of two mixes equally between themselves
 	//Returns: bool indicating whether gases moved between the two mixes
 /datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
+#ifndef HALT_ATMOS
 	. = FALSE
 	if(abs(return_temperature() - other.return_temperature()) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 		. = TRUE
@@ -239,7 +242,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
 			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
-
+#endif
 
 	///Creates new, identical gas mixture
 	///Returns: duplicate gas mixture
@@ -477,6 +480,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///inverse
 /datum/gas_mixture/proc/get_true_breath_pressure(partial_pressure)
 	return (partial_pressure * BREATH_VOLUME) / (R_IDEAL_GAS_EQUATION * temperature)
+
 
 ///Mathematical proofs:
 /**

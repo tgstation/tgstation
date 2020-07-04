@@ -5,6 +5,9 @@ SUBSYSTEM_DEF(adjacent_air)
 	wait = 10
 	priority = FIRE_PRIORITY_ATMOS_ADJACENCY
 	var/list/queue = list()
+#ifdef HALT_ATMOS
+	can_fire = FALSE
+#endif
 
 /datum/controller/subsystem/adjacent_air/stat_entry()
 #ifdef TESTING
@@ -13,10 +16,12 @@ SUBSYSTEM_DEF(adjacent_air)
 	..("P:[length(queue)]")
 #endif
 
+#ifndef HALT_ATMOS
 /datum/controller/subsystem/adjacent_air/Initialize()
 	while(length(queue))
 		fire(mc_check = FALSE)
 	return ..()
+#endif
 
 /datum/controller/subsystem/adjacent_air/fire(resumed = FALSE, mc_check = TRUE)
 

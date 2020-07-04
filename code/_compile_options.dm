@@ -3,6 +3,15 @@
 
 //#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
 
+/*
+	Comment this to enable atmos
+	This stops the atmos system from initing and running
+	It also prevents gasmixtures from being added to/removed from
+	If a removal is attempted, it instead copys as expected
+	It also immediatly qdels hotspots, so no fire allowrd
+*/
+#define HALT_ATMOS
+
 // Comment this out if you are debugging problems that might be obscured by custom error handling in world/Error
 #ifdef DEBUG
 #define USE_CUSTOM_ERROR_HANDLER
