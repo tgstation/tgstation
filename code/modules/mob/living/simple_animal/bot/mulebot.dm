@@ -71,7 +71,7 @@
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(0, 9), TEXT_WEST = list(0, 9)))
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 12), TEXT_SOUTH = list(0, 12), TEXT_EAST = list(0, 12), TEXT_WEST = list(0, 12)))
 	D.ride_check_rider_incapacitated = TRUE //so mobs fall off when the vehicle is shot.
 	D.set_vehicle_dir_layer(SOUTH, layer) //vehicles default to ABOVE_MOB_LAYER while moving, let's make sure that doesn't happen while a mob is riding us.
 	D.set_vehicle_dir_layer(NORTH, layer)
@@ -840,7 +840,7 @@
 	if(!isobserver(load))
 		return
 	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
-	ghost_overlay.pixel_y = 9
+	ghost_overlay.pixel_y = 12
 	. += ghost_overlay
 
 /mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
