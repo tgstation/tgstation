@@ -2,24 +2,7 @@
 //For things that are, override "should_have_node()" on them
 GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille)))
 
-#define UNDER_SMES -1
-#define UNDER_TERMINAL 1
 
-// why 8?  both speed
-/datum/cable_edge
-
-#define CABLE_DIR_NORTH 1
-#define CABLE_DIR_SOUTH 2
-#define CABLE_DIR_EAST  3
-#define CABLE_DIR_WEST  4
-#define CABLE_DIR_UP	5
-#define CABLE_DIR_DOWN  6
-
-
-#define CABLE_DIR_TO_DIR(N) (1 << ((N)-1))
-// intresting property of this is that if the number is Odd,
-// we can invert the direction by making it even
-#define CABLE_DIR_INVERT(N) ((((N)) % 2) == 0) ? (N - 1) : (N + 1))
 ///////////////////////////////
 //CABLE STRUCTURE
 ///////////////////////////////
@@ -27,8 +10,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Definitions
 ////////////////////////////////
 /obj/structure/cable
-	var/static/list/cable_cardinals = list(CABLE_DIR_NORTH, CABLE_DIR_SOUTH, CABLE_DIR_EAST, CABLE_DIR_WEST, CABLE_DIR_UP, CABLE_DIR_DOWN)
-
 	name = "power cable"
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/layer_cable.dmi'
@@ -41,13 +22,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	/// I figure using an indexed list is faster to trasverse
 	/// than either an associated list or a O(n) set
 	/// Side note, UP is uesed for machine connections
-	var/list/linked[CABLE_DIR_DOWN]
+	var/list/linked = list()	   			// List of all cables AND power machines linked
+	var/obj/machinery/power/over = null   	// If there is a machine over us, here it is
 	var/visited = FALSE			/// used for trasversing
-	var/list/graph				/// the graph for these, can be shared
+	var/datum/powernet/powernet = null
+
 	var/node = FALSE //used for sprites display
 	var/cable_layer = CABLE_LAYER_2			//bitflag
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
-	var/datum/powernet/powernet
+
 
 /obj/structure/cable/layer1
 	color = "red"
@@ -201,20 +184,25 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		icon_state = "l[cable_layer]-noconnection"
 	else
 		var/list/dir_icon_list = list()
+		var/obj/structure/cable/C
+		var/turf/T
 		/// This is faster.  Why?  Because its not a loop that needs a var
 		/// and if you think for(in) is fast, then your an idiot
 		// Just be carful, order must be the same as GLOB
 		// NORTH, SOUTH, EAST, WEST
 		dir_string += "l[cable_layer]"
-		if(linked[CABLE_DIR_NORTH])
-			dir_icon_list += "[NORTH]"
-		if(linked[CABLE_DIR_SOUTH])
-			dir_icon_list += "[SOUTH]"
-		if(linked[CABLE_DIR_EAST)
-			dir_icon_list += "[EAST]"
-		if(linked[CABLE_DIR_WEST])
-			dir_icon_list += "[WEST]"
-		//var/dir_string = dir_icon_list.Join("-")
+
+		for(var/k in 1 to GLOB.cardinals.len)
+			T = get_step(src,GLOB.cardinals[k])
+
+			T = get_step(loc,dir) //resolve where the thing is.
+			C = locate(get_step())
+			if(C && C.cable_layer == cable_layer)
+				if(over && over.terminal && ov)
+				dir_icon_list += "[dir]"
+				//first let's add turf cables to our powernet
+	//then we'll connect machines on turf where a cable is present
+	for(var/atom/movable/AM in loc)
 
 		for(var/obj/O in loc)
 			if(GLOB.wire_node_generating_types[O.type])

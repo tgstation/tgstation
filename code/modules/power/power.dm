@@ -22,7 +22,10 @@
 	active_power_usage = 0
 	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
 	var/power_flags = POWER_CONSUMER
-	var/obj/machinery/power/terminal/terminal = null // We need a POWER_MACHINE_NEEDS_TERMINAL to use
+	// We need a POWER_MACHINE_NEEDS_TERMINAL to use
+	// this is also not a /power/terminal because we resue it
+	// in terminal
+	var/obj/machinery/power/terminal = null
 
 
 /obj/machinery/power/Initialize(mapload)
@@ -104,7 +107,7 @@
 		if(term)
 			terminal = term
 			ASSERT(!terminal.master) // should be null on map load
-			terminal.master = src
+			terminal.terminal = src
 			terminal.setDir(get_dir(TB,src)) // set the direction
 			break
 	ASSERT(terminal)	// should of found one
@@ -113,7 +116,7 @@
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	ASSERT(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
 	if((power_flags & POWER_MACHINE_NEEDS_TERMINAL) && terminal)
-		terminal.master = null
+		terminal.terminal = null
 		terminal = null
 
 // create a terminal object pointing towards the device
@@ -123,7 +126,7 @@
 	if(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
 		terminal = new/obj/machinery/power/terminal(T)
 		terminal.setDir(get_dir(T,src))
-		terminal.master = src
+		terminal.terminal = src
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel

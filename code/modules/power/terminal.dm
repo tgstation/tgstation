@@ -9,14 +9,13 @@
 	desc = "It's an underfloor wiring terminal for power equipment."
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
 	power_flags = POWER_MACHINE_CONSUMER	// a terminal is ALWAYS a consumer
-	var/obj/machinery/power/master = null
 
 /obj/machinery/power/Initialize(mapload, M)
 	. = ..()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 	if(!mapload) // power.dm handles connection on map loading
 		ASSERT(M)
-		master = M
+		terminal = M
 
 /obj/machinery/power/connect_to_network()
 	ASSERT(master)
