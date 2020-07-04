@@ -73,10 +73,14 @@
 		var/reag_txt = ""
 		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
 			msg += "<br><span class='info'>*Plant Reagents:*</span>"
+			var/chem_cap = 0
 			for(var/reagent_id in seed.reagents_add)
 				var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
 				var/amt = reagents.get_reagent_amount(reagent_id)
+				chem_cap += seed.reagents_add[reagent_id]
 				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
+			if(chem_cap > 1)
+				msg += "<br><span class='warning'>- Reagent Traits Over 100% Production</span></br>"
 
 		if(reag_txt)
 			msg += "<br><span class='info'>*---------*</span>"
