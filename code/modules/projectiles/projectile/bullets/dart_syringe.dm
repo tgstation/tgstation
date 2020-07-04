@@ -14,8 +14,7 @@
 		if(blocked != 100) // not completely blocked
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
-				reagents.expose(M, INJECT)
-				reagents.trans_to(M, reagents.total_volume)
+				reagents.trans_to(M, reagents.total_volume, method = INJECT)
 				return BULLET_ACT_HIT
 			else
 				blocked = 100
