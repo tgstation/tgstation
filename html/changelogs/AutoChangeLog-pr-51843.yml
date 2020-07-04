@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "The richest crew account on station is now showcased on the round-end window! Flex on your coworkers!"
-  - code_imp: "Economy Logging now totals how much money the crew had at round-end."
