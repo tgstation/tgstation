@@ -173,14 +173,10 @@
 #define NICKNAME_CAP	(MAX_NAME_LEN/2)
 /obj/item/virgin_mary/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	var/ignition_msg = W.ignition_effect(src, user)
-	if(!ignition_msg)
-		return
 	if(resistance_flags & ON_FIRE)
 		return
-	user.dropItemToGround(src)
-	user.visible_message("<span class='danger'>[user] lights [src] ablaze with [W]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-	fire_act()
+	if(!burn_paper_product_attackby_check(W, user, TRUE))
+		return
 	if(used_up)
 		return
 	if(!isliving(user) || !user.mind) //A sentient mob needs to be burning it, ya cheezit.
@@ -205,7 +201,7 @@
 	joe.real_name = new_name
 	used_up = TRUE
 	mob_mobs += joe
-	joe.say("My soul will burn like this saint if I betray my familiy. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
+	joe.say("My soul will burn like this saint if I betray my family. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
 	to_chat(joe, "<span class='userdanger'>Being inducted into the mafia does not grant antagonist status.</span>")
 
 #undef NICKNAME_CAP

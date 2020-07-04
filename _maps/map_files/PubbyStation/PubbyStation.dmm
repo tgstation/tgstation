@@ -31290,6 +31290,11 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 9
+	},
+/obj/item/raw_anomaly_core/random,
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bBN" = (
@@ -53849,6 +53854,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/machinery/research/explosive_compressor,
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},

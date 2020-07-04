@@ -100738,6 +100738,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/research/explosive_compressor,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "dJO" = (
@@ -113323,6 +113324,14 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 9
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 9
+	},
+/obj/item/raw_anomaly_core/random,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "kNS" = (

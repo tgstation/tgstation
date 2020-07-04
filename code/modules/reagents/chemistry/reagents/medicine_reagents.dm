@@ -717,6 +717,14 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
+	. = TRUE
+	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
+		holder.remove_reagent(/datum/reagent/toxin/lexorin, 2)
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1)
+		if(prob(20))
+			holder.add_reagent(/datum/reagent/toxin/histamine, 4)
+		..()
+		return
 	if(M.health <= M.crit_threshold)
 		M.adjustToxLoss(-0.5*REM, 0)
 		M.adjustBruteLoss(-0.5*REM, 0)
@@ -727,7 +735,6 @@
 	if(M.losebreath < 0)
 		M.losebreath = 0
 	M.adjustStaminaLoss(-0.5*REM, 0)
-	. = 1
 	if(prob(20))
 		M.AdjustAllImmobility(-20, FALSE)
 	..()
@@ -1015,25 +1022,6 @@
 	if(prob(20))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
-	..()
-	return TRUE
-
-/datum/reagent/medicine/lavaland_extract
-	name = "Lavaland Extract"
-	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
-	color = "#6B372E" //dark and red like lavaland
-	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
-	can_synth = FALSE
-
-/datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
-	M.heal_bodypart_damage(5,5)
-	..()
-	return TRUE
-
-/datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
-	M.adjustBruteLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
-	M.adjustFireLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
-	M.adjustToxLoss(3*REM, 0)
 	..()
 	return TRUE
 

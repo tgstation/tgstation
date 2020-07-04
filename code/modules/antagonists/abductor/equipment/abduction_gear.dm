@@ -402,6 +402,7 @@
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
+	show_written_words = FALSE
 	info = {"<b>Dissection for Dummies</b><br>
 
 <br>
@@ -420,10 +421,6 @@
  13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
 <br>
 Congratulations! You are now trained for invasive xenobiology research!"}
-
-/obj/item/paper/guides/antag/abductor/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/paper/guides/antag/abductor/AltClick()
 	return //otherwise it would fold into a paperplane.

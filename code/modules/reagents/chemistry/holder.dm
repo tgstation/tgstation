@@ -664,12 +664,13 @@
 	if(isnull(A))
 		return null
 
-	if(!istype(R))
+	if(ispath(R))
 		R = get_reagent(R)
-		if(isnull(R))
-			return null
+	if(isnull(R))
+		return null
 
-	return A.expose_reagents(list(R = R.volume * volume_modifier), src, method, volume_modifier, show_message)
+	// Yes, we need the parentheses.
+	return A.expose_reagents(list((R) = R.volume * volume_modifier), src, method, volume_modifier, show_message)
 
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()

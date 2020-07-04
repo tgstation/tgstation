@@ -371,8 +371,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(0 to 2)
 			LAZYADD(last_three_move, player_stance)
 		if(3)
-			LAZYREMOVE(last_three_move, last_three_move[1])
-			LAZYADD(last_three_move, player_stance)
+			for(var/i in 1 to 2)
+				last_three_move[i] = last_three_move[i + 1]
+			last_three_move[3] = player_stance
+
 		if(4 to INFINITY)
 			last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
 
@@ -570,6 +572,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(obj_flags & EMAGGED)
 			user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
+
+	if(gameover)
 		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 
 
@@ -618,15 +622,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 
 // *** THE ORION TRAIL ** //
-
-/obj/item/gamer_pamphlet
-	name = "pamphlet - \'Violent Video Games and You\'"
-	desc = "A pamphlet encouraging the reader to maintain a balanced lifestyle and take care of their mental health, while still enjoying video games in a healthy way. You probably don't need this..."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "pamphlet"
-	inhand_icon_state = "paper"
-	w_class = WEIGHT_CLASS_TINY
-
 
 #define ORION_TRAIL_WINTURN		9
 
@@ -752,7 +747,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if(gamers[gamer] == -1)
 		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
-		new /obj/item/gamer_pamphlet(get_turf(src))
+		new /obj/item/paper/pamphlet/violent_video_games(drop_location())
 		gamers[gamer]--
 		return
 
