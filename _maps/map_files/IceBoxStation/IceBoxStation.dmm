@@ -51467,9 +51467,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
-"evh" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "eya" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4;
@@ -76085,7 +76082,7 @@ aaa
 aaa
 aaa
 aaa
-evh
+aaa
 aaa
 aaa
 aaa
