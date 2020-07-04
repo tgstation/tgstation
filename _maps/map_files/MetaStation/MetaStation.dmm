@@ -34293,7 +34293,7 @@
 /area/library)
 "bBv" = (
 /obj/effect/landmark/start/assistant,
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/comfy/black,
 /turf/open/floor/wood,
 /area/library)
 "bBw" = (
@@ -73155,10 +73155,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
-"mdx" = (
-/obj/structure/chair/sofa/right,
-/turf/open/floor/wood,
-/area/library)
 "mdG" = (
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
@@ -100752,7 +100748,7 @@ bue
 xrL
 uPM
 bue
-mdx
+bzE
 bwc
 bEA
 bGu
