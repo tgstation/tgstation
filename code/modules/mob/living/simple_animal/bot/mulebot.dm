@@ -694,10 +694,9 @@
 	if(!paicard && wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over. if there's a PAIcard controlling the bot, they aren't allowed to harm folks.
 		if(iscyborg(L))
 			visible_message("<span class='danger'>[src] bumps into [L]!</span>")
-		else
+		else if(L.Knockdown(8 SECONDS))
 			log_combat(src, L, "knocked down")
 			visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-			L.Knockdown(8 SECONDS)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
