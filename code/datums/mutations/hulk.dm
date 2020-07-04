@@ -42,11 +42,11 @@
 		var/obj/item/bodypart/arm = source.hand_bodyparts[source.active_hand_index]
 		switch(arm.brute_dam)
 			if(45 to 50)
-				arm.force_wound_upwards(/datum/wound/brute/bone/critical)
+				arm.force_wound_upwards(/datum/wound/blunt/critical)
 			if(41 to 45)
-				arm.force_wound_upwards(/datum/wound/brute/bone/severe)
+				arm.force_wound_upwards(/datum/wound/blunt/severe)
 			if(35 to 41)
-				arm.force_wound_upwards(/datum/wound/brute/bone/moderate)
+				arm.force_wound_upwards(/datum/wound/blunt/moderate)
 
 		return COMPONENT_NO_ATTACK_HAND
 
