@@ -31,7 +31,7 @@
 /datum/supply_pack/goody/combatknives_single
 	name = "Combat Knife Single-Pack"
 	desc = "Contains one sharpened combat knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
-	cost = 1200
+	cost = 1250
 	contains = list(/obj/item/kitchen/knife/combat)
 
 /datum/supply_pack/goody/ballistic_single
@@ -55,13 +55,13 @@
 /datum/supply_pack/goody/wt550_single
 	name = "WT-550 Auto Rifle Single-Pack"
 	desc = "Contains one high-powered, semiautomatic rifles chambered in 4.6x30mm." // "high-powered" lol yea right
-	cost = 1600
+	cost = 2000
 	contains = list(/obj/item/gun/ballistic/automatic/wt550)
 
 /datum/supply_pack/goody/wt550ammo_single
 	name = "WT-550 Auto Rifle Ammo Single-Pack"
 	desc = "Contains a 20-round magazine for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads."
-	cost = 800
+	cost = 900
 	contains = list(/obj/item/ammo_box/magazine/wt550m9)
 
 /datum/supply_pack/goody/sologamermitts
