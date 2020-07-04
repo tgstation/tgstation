@@ -505,7 +505,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		if(coinflip == "heads")
 			SSeconomy.fire()
 		else
-			qdel(src)
+			to_chat(user,"<span class='bounty'>[SSeconomy.inflation_value()]</span>")
 	return TRUE//did the coin flip? useful for suicide_act
 
 #undef ORESTACK_OVERLAYS_MAX
