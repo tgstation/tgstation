@@ -37,8 +37,6 @@
 /mob/living/simple_animal/hostile/eldritch/Initialize()
 	. = ..()
 	add_spells()
-	var/datum/action/innate/mansus_speech/MS = new (src)
-	MS.Grant(src)
 
 /**
   * Add_spells
@@ -65,6 +63,11 @@
 
 	var/list/linked_mobs = list()
 	var/list/linked_actions = list()
+
+
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize()
+	. = ..()
+	link_mob(src)
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
 	. = ..()

@@ -523,11 +523,11 @@
 	school = "transmutation"
 	charge_max = 600
 	clothes_req = FALSE
-	invocation = "PI'RC'"
+	invocation = "PI'RC' TH' M'ND"
 	invocation_type = "whisper"
-	range = 9
+	range = 11
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "cleave"
+	action_icon_state = "mansus_link"
 	action_background_icon_state = "bg_ecult"
 
 /obj/effect/proc_holder/spell/pointed/manse_link/can_target(atom/target, mob/user, silent)
@@ -555,7 +555,7 @@
 	desc = "Send a psychic message to everyone connected to your mansus link."
 	button_icon_state = "link_speech"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
-	background_icon_state = "bg_alien"
+	background_icon_state = "bg_ecult"
 	var/mob/living/simple_animal/hostile/eldritch/raw_prophet/originator
 
 /datum/action/innate/mansus_speech/New(_originator)
@@ -563,26 +563,26 @@
 	originator = _originator
 
 /datum/action/innate/mansus_speech/Activate()
-	var/mob/living/carbon/human/H = owner
-	if(!originator || !(H in originator.linked_mobs))
-		to_chat(H, "<span class='warning'>The link seems to have been severed...</span>")
-		Remove(H)
+	var/mob/living/living_owner = owner
+	if(!originator || !(living_owner in originator.linked_mobs))
+		to_chat(living_owner, "<span class='warning'>The link seems to have been severed...</span>")
+		Remove(living_owner)
 		return
 
 	var/message = sanitize(input("Message:", "Telepathy from the Manse") as text|null)
 
-	if(!originator || !(H in originator.linked_mobs))
-		to_chat(H, "<span class='warning'>The link seems to have been severed...</span>")
-		Remove(H)
+	if(!originator || !(living_owner in originator.linked_mobs))
+		to_chat(living_owner, "<span class='warning'>The link seems to have been severed...</span>")
+		Remove(living_owner)
 		return
 	if(message)
-		var/msg = "<i><font color=#568b00>\[Raw Prophet's MansusLink\] <b>[H]:</b> [message]</font></i>"
-		log_directed_talk(H, originator.real_name, msg, LOG_SAY, "Mansus Link")
+		var/msg = "<i><font color=#568b00>\[Mansus Link\] <b>[living_owner]:</b> [message]</font></i>"
+		log_directed_talk(living_owner, originator, msg, LOG_SAY, "Mansus Link")
 		for(var/X in originator.linked_mobs)
 			var/mob/living/M = X
 			to_chat(M, msg)
 
 		for(var/X in GLOB.dead_mob_list)
 			var/mob/M = X
-			var/link = FOLLOW_LINK(M, H)
+			var/link = FOLLOW_LINK(M, living_owner)
 			to_chat(M, "[link] [msg]")
