@@ -77,7 +77,7 @@
 	qdel(src)
 	new /obj/effect/decal/cleanable/ash(drop_location())
 
-// Holymelon
+/// Barrelmelon Seeds
 /obj/item/seeds/watermelon/barrel
 	name = "pack of barrelmelon seeds"
 	desc = "These seeds grow into barrelmelon plants."
@@ -91,6 +91,7 @@
 	rarity = 10
 	graft_gene = /datum/plant_gene/trait/brewing
 
+/// Barrelmelon Fruit
 /obj/item/reagent_containers/food/snacks/grown/barrelmelon
 	seed = /obj/item/seeds/watermelon/barrel
 	name = "barrelmelon"

@@ -103,7 +103,7 @@
 	icon_state = "geranium"
 	filling_color = "#008B8B"
 
-//fraxinella
+///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
 	name = "pack of fraxinella seeds"
 	desc = "These seeds grow into fraxinella."
@@ -115,6 +115,7 @@
 	rarity = 15
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel/oil = 0.05)
 
+///Fraxinella Flowers.
 /obj/item/reagent_containers/food/snacks/grown/poppy/geranium/fraxinella
 	seed = /obj/item/seeds/poppy/geranium/fraxinella
 	name = "fraxinella"
