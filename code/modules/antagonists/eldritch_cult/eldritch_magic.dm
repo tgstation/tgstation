@@ -521,17 +521,17 @@
 	name = "Mansus Link"
 	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a mansus net, allowing them to communicate with eachother"
 	school = "transmutation"
-	charge_max = 600
+	charge_max = 300
 	clothes_req = FALSE
 	invocation = "PI'RC' TH' M'ND"
 	invocation_type = "whisper"
-	range = 11
+	range = 10
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mansus_link"
 	action_background_icon_state = "bg_ecult"
 
 /obj/effect/proc_holder/spell/pointed/manse_link/can_target(atom/target, mob/user, silent)
-	if(!ishuman(target))
+	if(!isliving(target))
 		return FALSE
 	return TRUE
 
@@ -586,3 +586,8 @@
 			var/mob/M = X
 			var/link = FOLLOW_LINK(M, living_owner)
 			to_chat(M, "[link] [msg]")
+
+/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch
+	range = 10
+	invocation = "E'E'S"
+	action_background_icon_state = "bg_ecult"
