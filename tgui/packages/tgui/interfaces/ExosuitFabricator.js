@@ -1,9 +1,9 @@
 import { useBackend, useSharedState } from '../backend';
-import { Flex, Section, Tabs, Box, Button } from '../components';
+import { Flex, Section, Tabs, Box, Button, Fragment } from '../components';
 import { Window } from '../layouts';
 
 export const ExosuitFabricator = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act } = useBackend(context);
   // Extract `health` and `color` variables from the `data` object.
 
   return (
@@ -64,7 +64,7 @@ export const ExosuitFabricator = (props, context) => {
 const Materials = (props, context) => {
   const { data } = useBackend(context);
 
-  const { materials } = data;
+  const materials = data.materials || [];
 
   return (
     <Flex
@@ -83,10 +83,8 @@ const Materials = (props, context) => {
 const PartSets = (props, context) => {
   const { data } = useBackend(context);
 
-  const {
-    part_sets = [],
-    buildable_parts = {},
-  } = data;
+  const part_sets = data.part_sets || [];
+  const buildable_parts = data.buildable_parts || {};
 
   const [
     selectedPartTab,
@@ -111,14 +109,11 @@ const PartSets = (props, context) => {
 const PartLists = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const {
-    part_sets = [],
-    buildable_parts = {},
-  } = data;
+  const part_sets = data.part_sets || [];
+  const buildable_parts = data.buildable_parts || {};
 
   const [
     selectedPartTab,
-    setSelectedPartTab,
   ] = useSharedState(context, "part_tab", part_sets.length ? part_sets[0] : "");
 
   return (
@@ -139,9 +134,15 @@ const PartLists = (props, context) => {
 const Queue = (props, context) => {
   const { data } = useBackend(context);
 
-  const {
-    queue = [],
-  } = data;
+  const queue = data.queue || [];
+
+  if (!queue.length) {
+    return (
+      <Fragment>
+        No parts in queue.
+      </Fragment>
+    );
+  }
 
   return (
     queue.map(part => (
