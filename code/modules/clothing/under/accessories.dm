@@ -390,7 +390,7 @@
 	minimize_when_attached = TRUE
 	attachment_slot = CHEST
 	///Display message
-	var/display = ""
+	var/display
 
 /obj/item/clothing/accessory/allergy_dogtag/examine(mob/user)
 	. = ..()
@@ -407,4 +407,3 @@
 ///What happens when we examine the uniform
 /obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)
 	examine_list += "The dogtag has a listing of allergies : [display]"
-
