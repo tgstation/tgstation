@@ -235,24 +235,6 @@
 /obj/item/seeds/proc/prepare_result(var/obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
-<<<<<<< HEAD
-	for(var/rid in reagents_add)
-		var/amount = max(1, round(potency * reagents_add[rid], 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
-		var/list/data = null
-		// Hack to make blood in plants always O-
-		if(rid == /datum/reagent/blood)
-			data = list("blood_type" = "O-")
-		if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
-			//Handles plant taste, apples tastes of apple.
-			if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
-				var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
-				data = grown_edible.tastes
-				//Handles the distillary trait, swaps nutriment and vitamins for that species brewable if it exists.
-				if(get_gene(/datum/plant_gene/trait/brewing) && grown_edible.distill_reagent)
-					T.reagents.add_reagent(grown_edible.distill_reagent, amount/2)
-					continue
-		T.reagents.add_reagent(rid, amount, data)
-=======
 	var/reagent_max = 0
 	for(var/rid in reagents_add)
 		reagent_max += reagents_add[rid]
@@ -269,8 +251,11 @@
 				data = list("blood_type" = "O-")
 			if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
 				data = grown_edible.tastes // apple tastes of apple.
+				//Handles the distillary trait, swaps nutriment and vitamins for that species brewable if it exists.
+				if(get_gene(/datum/plant_gene/trait/brewing) && grown_edible.distill_reagent)
+					T.reagents.add_reagent(grown_edible.distill_reagent, amount/2)
+					continue
 			T.reagents.add_reagent(rid, amount, data)
->>>>>>> upstream/master
 
 
 /// Setters procs ///
