@@ -461,7 +461,7 @@
 				flick("laserbox_vend", src)
 				showpiece = null
 				update_icon()
-				update_all_ui()
+				SStgui.update_uis(src)
 				return TRUE
 		if("Open")
 			if(!payments_acc)
@@ -483,7 +483,7 @@
 				return
 			payments_acc = potential_acc.registered_account
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-			update_all_ui()
+			SStgui.update_uis(src)
 		if("Adjust")
 			if(!check_access(potential_acc) || potential_acc.registered_account != payments_acc)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
@@ -499,9 +499,8 @@
 			new_price_input = clamp(round(new_price_input, 1), 10, 1000)
 			sale_price = new_price_input
 			to_chat(usr, "<span class='notice'>The cost is now set to [sale_price].</span>")
-			update_all_ui()
+			SStgui.update_uis(src)
 			return TRUE
-
 	. = TRUE
 /obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
 	if(isidcard(I))
@@ -516,7 +515,7 @@
 			return
 	if(istype(I, /obj/item/pda))
 		return TRUE
-	update_all_ui()
+	SStgui.update_uis(src)
 	. = ..()
 
 
@@ -569,24 +568,6 @@
 		playsound(src, "shatter", 70, TRUE)
 		update_icon()
 		trigger_alarm() //In case it's given an alarm anyway.
-
-/obj/structure/displaycase/forsale/proc/update_all_ui()
-	for(var/datum/tgui/ui in viewing_ui)
-		ui.update()
-
-/obj/structure/displaycase/forsale/proc/close_all_ui()
-	for(var/datum/tgui/ui in viewing_ui)
-		ui.close()
-	viewing_ui = list()
-
-/obj/structure/displaycase/forsale/ui_close(mob/user)
-	/// close the editing window and change the mode
-	viewing_ui[user] = null
-	. = ..()
-
-/obj/structure/displaycase/forsale/Destroy()
-	close_all_ui()
-	. = ..()
 
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
