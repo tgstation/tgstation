@@ -284,4 +284,4 @@
 	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 	targets_hit -= target
 	bodies -= target
-	purple_hearts -= target
+	LAZYREMOVE(purple_hearts, target)
