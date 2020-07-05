@@ -801,6 +801,15 @@
 	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
 	..()
 
+//Having mannitol in you will pause the brain damage from brain tumor (so it heals an even 2 brain damage instead of 1.8)
+/datum/reagent/medicine/mannitol/on_mob_metabolize(mob/living/carbon/C)
+	. = ..()
+	ADD_TRAIT(C, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
+
+/datum/reagent/medicine/mannitol/on_mob_end_metabolize(mob/living/carbon/C)
+	REMOVE_TRAIT(C, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
+	. = ..()
+
 /datum/reagent/medicine/neurine
 	name = "Neurine"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
