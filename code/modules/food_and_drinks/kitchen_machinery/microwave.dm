@@ -146,10 +146,13 @@
 			to_chat(user, "<span class='warning'>You need more space cleaner!</span>")
 		return TRUE
 
-	if(istype(O, /obj/item/soap))
-		var/obj/item/soap/P = O
+	if(istype(O, /obj/item/soap) || istype(O, /obj/item/reagent_containers/glass/rag))
+		var/cleanspeed = 50
+		if(istype(O, /obj/item/soap))
+			var/obj/item/soap/used_soap = O
+			cleanspeed = used_soap.cleanspeed
 		user.visible_message("<span class='notice'>[user] starts to clean \the [src].</span>", "<span class='notice'>You start to clean \the [src]...</span>")
-		if(do_after(user, P.cleanspeed, target = src))
+		if(do_after(user, cleanspeed, target = src))
 			user.visible_message("<span class='notice'>[user] cleans \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
 			update_icon()

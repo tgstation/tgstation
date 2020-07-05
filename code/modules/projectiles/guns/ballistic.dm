@@ -471,6 +471,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		desc = sawn_desc
 		w_class = WEIGHT_CLASS_NORMAL
 		inhand_icon_state = "gun"
+		worn_icon_state = "gun"
 		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
 		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		recoil = SAWN_OFF_RECOIL
