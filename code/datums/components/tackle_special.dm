@@ -12,6 +12,11 @@
 */
 /datum/component/tackler/guardian
 
+/datum/component/tackler/guardian/checkTackle(mob/living/carbon/user, atom/A, params)
+	if(user.mind && user.mind.has_martialart(MARTIALART_SLEEPINGCARP))
+		return
+	return ..()
+
 /datum/component/tackler/guardian/sack(mob/living/carbon/user, atom/hit)
 	if(!tackling || !tackle)
 		return

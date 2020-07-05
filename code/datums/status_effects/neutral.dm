@@ -152,7 +152,7 @@
 	///All incoming brute/burn/stamina damage on the protector is multiplied by this, whether it was directed at the protectee or not
 	var/defensive_buff_factor = 0.75
 	///Paralyze the protectee for this long so they don't accidentally slip away prematurely
-	var/paralyze_duration = 1.5 SECONDS
+	var/paralyze_duration = 1 SECONDS
 
 /obj/screen/alert/status_effect/protected
 	name = "Protected"
@@ -183,17 +183,15 @@
 	linked_alert_protector = protector.throw_alert(id, alert_type_protector)
 	linked_alert_protector.attached_effect = src
 	RegisterSignal(new_owner, COMSIG_CARBON_ATTACKED_BY, .proc/interrupt_hit)
-	RegisterSignal(new_owner, COMSIG_MOVABLE_MOVED, .proc/check_protectee_dist)
 	RegisterSignal(new_owner, list(COMSIG_PROJECTILE_PREHIT, COMSIG_PROJECTILE_POINT_BLANK), .proc/interrupt_bullet)
 	RegisterSignal(protector, COMSIG_MOVABLE_MOVED, .proc/take_me_with_you)
-	RegisterSignal(protector, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), .proc/cancel_protection)
 	..()
 
 /datum/status_effect/aegis/on_apply()
 	owner.visible_message("<span class='notice'><b>[protector] covers [owner] with [protector.p_their()] body, guarding against attacks!</b></span>", "<span class='notice'><b>[protector] covers you with [protector.p_their()] body, guarding against attacks!</b></span>")
 	examine_text = "<span class='notice'><b>[owner.p_they(TRUE)] [owner.p_are()] being guarded closely by [protector].</b></span>"
 	original_alpha = owner.alpha
-	owner.alpha = 100
+	owner.alpha = min(owner.alpha, 100)
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	protector.forceMove(owner.loc)
 	owner.SetKnockdown(duration)
@@ -207,14 +205,26 @@
 
 	if(owner)
 		owner.alpha = original_alpha
-		UnregisterSignal(owner, list(COMSIG_CARBON_ATTACKED_BY, COMSIG_MOVABLE_MOVED, COMSIG_PROJECTILE_PREHIT, COMSIG_PROJECTILE_POINT_BLANK))
+		UnregisterSignal(owner, list(COMSIG_CARBON_ATTACKED_BY, COMSIG_PROJECTILE_PREHIT, COMSIG_PROJECTILE_POINT_BLANK))
 		owner.SetKnockdown(0)
 		owner.SetImmobilized(0)
 
 	if(protector)
 		protector.clear_alert(id)
 		remove_defensive_buff()
-		UnregisterSignal(protector, list(COMSIG_MOVABLE_MOVED, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED)))
+		UnregisterSignal(protector, COMSIG_MOVABLE_MOVED)
+
+/datum/status_effect/aegis/process()
+	. = ..()
+	if(!owner || !protector)
+		qdel(src)
+		return
+	if(get_dist(owner.loc, protector.loc) > 1)
+		qdel(src)
+		return
+	if(!(protector.mobility_flags & MOBILITY_MOVE))
+		qdel(src)
+		return
 
 /datum/status_effect/aegis/proc/apply_defensive_buff()
 	protector.SetKnockdown(0)
@@ -248,13 +258,6 @@
 	owner.visible_message("<span class='danger'>[protector] throws [protector.p_them()]self in front of an attack meant for [owner]!</span>", "<span class='danger'><b>[protector] throws [protector.p_them()]self in front of an attack meant for you!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=protector)
 	to_chat(protector, "<span class='danger'><b>You throw yourself in front of an attack meant for [owner]!</b></span>")
 	signal_args[2] = protector
-
-/datum/status_effect/aegis/proc/check_protectee_dist()
-	if(get_dist(owner.loc, protector.loc) > 1)
-		cancel_protection()
-
-/datum/status_effect/aegis/proc/cancel_protection()
-	qdel(src)
 
 /datum/status_effect/aegis/proc/take_me_with_you()
 	owner.forceMove(protector.loc)

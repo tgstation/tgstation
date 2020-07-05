@@ -363,4 +363,3 @@
 /datum/status_effect/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
-
