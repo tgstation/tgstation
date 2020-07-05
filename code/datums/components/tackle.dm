@@ -355,7 +355,7 @@
 
 	var/oopsie = rand(danger_zone, 100)
 	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
-		to_chat(user, "<span class='usernotice'>You're really glad you're wearing protection!</span>")
+		to_chat(user, "<span class='notice'>You're really glad you're wearing protection!</span>")
 	oopsie += oopsie_mod
 
 	switch(oopsie)

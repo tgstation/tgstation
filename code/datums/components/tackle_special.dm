@@ -67,7 +67,7 @@
 	tackling = FALSE
 	tackle.gentle = TRUE
 
-	target.apply_status_effect(/datum/status_effect/protected, user)
+	target.apply_status_effect(/datum/status_effect/aegis, user)
 
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 

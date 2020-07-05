@@ -428,7 +428,8 @@
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 	if(direct_target)
-		if(prehit(direct_target))
+		SEND_SIGNAL(direct_target, COMSIG_PROJECTILE_POINT_BLANK, args)
+		if(direct_target && prehit(direct_target))
 			direct_target.bullet_act(src, def_zone)
 			qdel(src)
 			return
