@@ -329,7 +329,7 @@
 
 /datum/spellbook_entry/item/spellblade
 	name = "Spellblade"
-	desc = "A sword capable of firing blasts of energy that can dismember the limbs they hit with ease. Also serves as a decent melee weapon that ignores most armor."
+	desc = "A sword capable of firing blasts of energy that can dismember the limbs they hit with ease. Also serves as a decent melee weapon that ignores most armor. Holding it gives you a 50% base block chance against melee attacks."
 	item_path = /obj/item/gun/magic/staff/spellblade
 
 /datum/spellbook_entry/item/katana
