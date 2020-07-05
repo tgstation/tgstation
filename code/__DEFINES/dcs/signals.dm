@@ -450,6 +450,9 @@
 #define COMSIG_ITEM_PICKUP "item_pickup"
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
+///from base of mob/living/carbon/attacked_by(): (obj/item/I, mob/living/user, hit_zone)
+#define COMSIG_CARBON_ATTACKED_BY "carbon_attacked"
+	#define COMSIG_ATTACK_INTERRUPT (1<<0)
 ///return a truthy value to prevent ensouling, checked in /obj/effect/proc_holder/spell/targeted/lichdom/cast(): (mob/user)
 #define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul"
 ///called before marking an object for retrieval, checked in /obj/effect/proc_holder/spell/targeted/summonitem/cast() : (mob/user)

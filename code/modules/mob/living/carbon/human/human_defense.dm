@@ -176,6 +176,10 @@
 		affecting = get_bodypart(ran_zone(user.zone_selected))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
 
+	var/attack_signal = SEND_SIGNAL(src, COMSIG_CARBON_ATTACKED_BY, I, user, affecting)
+	if(attack_signal && (attack_signal & COMSIG_ATTACK_INTERRUPT))
+		return
+
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 
 	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[I.force]", "[I.type]"))

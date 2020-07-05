@@ -363,3 +363,82 @@
 /datum/status_effect/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
+
+/datum/status_effect/protected
+	id = "protected"
+	duration = 7.5 SECONDS
+	examine_text = "<span class='notice'>They are being guarded closely.</span>"
+	var/mob/living/protector
+	var/original_alpha = 255
+	var/defensive_buff_factor = 0.75
+
+/datum/status_effect/protected/on_creation(mob/living/new_owner, mob/living/protector)
+	src.protector = protector
+	..()
+
+/datum/status_effect/protected/on_apply()
+	//owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
+	examine_text = "<span class='notice'><b>[owner.p_they(TRUE)] are being guarded closely by [protector].</b></span>"
+	original_alpha = owner.alpha
+	owner.alpha = 100
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	protector.SetKnockdown(0)
+	protector.forceMove(owner.loc)
+	apply_defensive_buff()
+	owner.SetKnockdown(duration)
+	owner.SetImmobilized(duration)
+	RegisterSignal(owner, COMSIG_CARBON_ATTACKED_BY, .proc/interrupt_hit)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_protectee_dist)
+	RegisterSignal(owner, COMSIG_PROJECTILE_PREHIT, .proc/interrupt_bullet)
+	RegisterSignal(protector, COMSIG_MOVABLE_MOVED, .proc/take_me_with_you)
+	return ..()
+
+/datum/status_effect/protected/on_remove()
+	owner.alpha = original_alpha
+	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACKED_BY, COMSIG_MOVABLE_MOVED, COMSIG_PROJECTILE_PREHIT))
+	if(protector)
+		remove_defensive_buff()
+		UnregisterSignal(protector, COMSIG_MOVABLE_MOVED)
+
+/datum/status_effect/protected/proc/apply_defensive_buff()
+	protector.add_movespeed_modifier(/datum/movespeed_modifier/mob_protector)
+	protector.start_pulling(owner, GRAB_PASSIVE, supress_message=TRUE)
+	if(ishuman(protector))
+		var/mob/living/carbon/human/H = protector
+		H.physiology.brute_mod *= defensive_buff_factor
+		H.physiology.burn_mod *= defensive_buff_factor
+		H.physiology.stamina_mod *= defensive_buff_factor
+
+/datum/status_effect/protected/proc/remove_defensive_buff()
+	protector.remove_movespeed_modifier(/datum/movespeed_modifier/mob_protector)
+	if(ishuman(protector))
+		var/mob/living/carbon/human/H = protector
+		H.physiology.brute_mod /= defensive_buff_factor
+		H.physiology.burn_mod /= defensive_buff_factor
+		H.physiology.stamina_mod /= defensive_buff_factor
+
+/datum/status_effect/protected/proc/interrupt_hit(mob/living/carbon/C, obj/item/I, mob/living/user, obj/item/bodypart/affecting)
+	if(!I.force || user == C)
+		return
+
+	C.visible_message("<span class='danger'>[protector] throws [protector.p_them()]self in front of an attack meant for [owner]!</span>", "<span class='danger'><b>[protector] throws [protector.p_them()]self in front of an attack meant for you!</span>", vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=protector)
+	to_chat(protector, "<span class='danger'><b>You throw yourself in front of an attack meant for [owner]!</b></span>")
+	protector.attacked_by(I, user)
+	return COMSIG_ATTACK_INTERRUPT
+
+/datum/status_effect/protected/proc/interrupt_bullet(obj/projectile/source, list/signal_args)
+	protector.visible_message("<span class='danger'>[protector] throws [protector.p_them()]self in front of an attack meant for [owner]!</span>", "<span class='danger'><b>[protector] throws [protector.p_them()]self in front of an attack meant for you!</span>", vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=protector)
+	to_chat(protector, "<span class='danger'><b>You throw yourself in front of an attack meant for [owner]!</b></span>")
+	signal_args[2] = protector
+
+/datum/status_effect/protected/proc/check_protectee_dist()
+	if(get_dist(owner.loc, protector.loc) > 1)
+		qdel(src)
+
+/datum/status_effect/protected/proc/take_me_with_you()
+	owner.forceMove(protector.loc)
+
+
+	//REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	//owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
+

@@ -111,3 +111,7 @@
 /datum/movespeed_modifier/mob_config_speedmod
 	variable = TRUE
 	flags = IGNORE_NOSLOW
+
+/datum/movespeed_modifier/mob_protector
+	multiplicative_slowdown = PROTECTOR_ADD_SLOWDOWN
+	flags = IGNORE_NOSLOW

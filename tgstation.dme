@@ -448,6 +448,7 @@
 #include "code\datums\components\summoning.dm"
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\tackle.dm"
+#include "code\datums\components\tackle_special.dm"
 #include "code\datums\components\tactical.dm"
 #include "code\datums\components\tether.dm"
 #include "code\datums\components\thermite.dm"
