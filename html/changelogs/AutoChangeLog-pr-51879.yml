@@ -1,0 +1,6 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscadd: "Contaminated objects will now glow bright green until cleaned, remember to quarantine rouge free golems."
+  - tweak: "Buffed rad goggles in general, the text lasts longer, is brighter, and will show more then twice as far away"
+  - bugfix: "Fixed the text from radiation goggles not showing above mobs"
