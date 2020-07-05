@@ -123,9 +123,31 @@
 		var/datum/material/M = c
 		cost[M.name] = get_resource_cost_w_coeff(D, M)
 
+	var/obj/built_item = D.build_path
+
+	// Handle some special cases to build up sub-categories for the fab interface.
+	// Start with checking if this design builds a cyborg module.
+	/*if(built_item in typesof(/obj/item/borg/upgrade))
+		say("[initial(built_item.name)] is a borg upgrade!")
+		var/obj/item/borg/upgrade/U = built_item
+		var/list/module_types = initial(U.module_flags)
+		if(module_types)
+			if(module_types & BORG_MODULE_SECURITY)
+				say("Compatible with SECURITY")
+			if(module_types & BORG_MODULE_MINER)
+				say("Compatible with MINER")
+			if(module_types & BORG_MODULE_JANITOR)
+				say("Compatible with JANITOR")
+			if(module_types & BORG_MODULE_MEDICAL)
+				say("Compatible with JANITOR")
+			if(module_types & BORG_MODULE_ENGINEERING)
+				say("Compatible with ENGINEERING")
+		else
+			say("Compatible with ALL MODULES")*/
+
 	var/list/part = list(
-		"name" = initial(D.name), // Deja vu, I've just been in this place before
-		"desc" = initial(D.desc), // Higher on the street
+		"name" = D.name,
+		"desc" = initial(build_path.desc),
 		"print_time" = get_construction_time_w_coeff(D)/10,
 		"cost" = cost,
 		"id" = D.id
@@ -227,7 +249,7 @@
 
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(D)
-	desc = "It's building \a [initial(D.name)]."
+	desc = "It's building \a [D.name]."
 	materials.use_materials(build_materials)
 	rmat.silo_log(src, "built", -1, "[D.name]", build_materials)
 
@@ -279,7 +301,7 @@
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		say("Error! Part outlet is obstructed.")
-		desc = "It's trying to dispense \a [initial(D.name)], but the part outlet is obstructed."
+		desc = "It's trying to dispense \a [D.name], but the part outlet is obstructed."
 		stored_part = I
 		return FALSE
 
@@ -354,7 +376,7 @@
 
 	if(being_built)
 		var/list/part = list()
-		part["name"] = initial(being_built.name)
+		part["name"] = being_built.name
 		part["duration"] = world.time - build_finish
 		data["building_part"] = part
 	else

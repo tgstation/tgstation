@@ -1,0 +1,5 @@
+#define BORG_MODULE_SECURITY 		(1<<0)
+#define BORG_MODULE_MINER			(1<<1)
+#define BORG_MODULE_JANITOR			(1<<2)
+#define BORG_MODULE_MEDICAL			(1<<3)
+#define BORG_MODULE_ENGINEERING		(1<<4)
