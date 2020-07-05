@@ -1,0 +1,4 @@
+author: "Disco"
+delete-after: True
+changes: 
+  - rscdel: "[Icebox] SM exterior cooling pipes have had unnecessary thermal shielding removed"
