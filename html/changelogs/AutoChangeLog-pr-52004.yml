@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Bubblegum and Legion can no longer cause wounds, as intended"
