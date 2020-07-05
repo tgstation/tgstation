@@ -16,6 +16,7 @@
 	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "esniper"
 	inhand_icon_state = "esniper"
+	worn_icon_state = null
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	force = 15
