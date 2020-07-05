@@ -52,14 +52,6 @@
 /obj/mafia_game_board,
 /turf/open/floor/plating,
 /area/mafia)
-"l" = (
-/obj/structure/closet/cabinet{
-	anchored = 1
-	},
-/obj/item/reagent_containers/food/snacks/sashimi,
-/obj/item/reagent_containers/food/drinks/bottle/sake,
-/turf/open/floor/wood,
-/area/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/wood,
@@ -352,7 +344,7 @@ S
 c
 d
 S
-l
+o
 p
 S
 p
