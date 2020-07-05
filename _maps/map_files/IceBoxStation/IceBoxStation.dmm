@@ -8711,16 +8711,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/port/fore)
-"auf" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Detective Maintenance";
-	req_access_txt = "4"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/fore)
 "aug" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -9176,6 +9166,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	name = "Detective Maintenance";
+	req_access_txt = "4"
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avi" = (
@@ -18002,6 +17996,7 @@
 /area/chapel/main)
 "aQw" = (
 /obj/structure/table/wood,
+/obj/item/storage/book/bible,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "aQx" = (
@@ -26175,6 +26170,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bjY" = (
@@ -30261,6 +30257,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bts" = (
@@ -31914,9 +31913,6 @@
 /turf/closed/wall,
 /area/maintenance/disposal/incinerator)
 "bxi" = (
-/obj/machinery/computer/aifixer{
-	dir = 8
-	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Research Director's Desk";
@@ -31928,6 +31924,9 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/machinery/computer/rdconsole/core{
+	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
@@ -38621,6 +38620,7 @@
 	name = "Station Intercom (Telecomms)";
 	pixel_y = 26
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOq" = (
@@ -38709,6 +38709,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOE" = (
@@ -39233,6 +39234,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bPS" = (
@@ -39530,6 +39532,7 @@
 	req_access_txt = "19; 61"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bQL" = (
@@ -40501,6 +40504,7 @@
 "bTI" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bTJ" = (
@@ -40730,6 +40734,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bUz" = (
@@ -41332,6 +41337,7 @@
 /area/science/research)
 "bWs" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWt" = (
@@ -41352,12 +41358,14 @@
 	dir = 4
 	},
 /obj/machinery/navbeacon/wayfinding,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWw" = (
@@ -41428,6 +41436,13 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/tcommsat/computer";
+	dir = 1;
+	name = "Telecomms Monitoring APC";
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bWI" = (
@@ -41453,6 +41468,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bWL" = (
@@ -42160,6 +42176,7 @@
 /area/hallway/primary/aft)
 "bYF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bYG" = (
@@ -51924,6 +51941,13 @@
 	},
 /turf/closed/wall,
 /area/maintenance/starboard)
+"gyr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/tcommsat/computer)
 "gCA" = (
 /obj/machinery/button/door{
 	id = "xenobio8";
@@ -52448,6 +52472,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
+"iIX" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/vending/wardrobe/det_wardrobe,
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "iNn" = (
 /obj/machinery/camera{
 	c_tag = "Kitchen Cold Room"
@@ -53487,8 +53516,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/apc{
 	areastring = "/area/science/nanite";
+	dir = 8;
 	name = "Nanite Lab APC";
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -54447,14 +54477,13 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	areastring = "/area/medical/medbay/lobby";
-	dir = 1;
+	dir = 4;
 	name = "Medbay Lobby APC";
-	pixel_x = 25;
-	pixel_y = 23
+	pixel_x = 25
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "olh" = (
@@ -56476,6 +56505,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"uxf" = (
+/obj/structure/altar_of_gods,
+/turf/open/floor/plasteel/dark,
+/area/chapel/main)
 "uyp" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
@@ -56809,8 +56842,8 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/fore)
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "vwX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -84766,7 +84799,7 @@ qHT
 fBs
 dyN
 wUs
-qHT
+iIX
 vsa
 avh
 awh
@@ -85023,8 +85056,8 @@ apd
 yay
 mSf
 arW
-apd
-auf
+bLE
+pgP
 apd
 awe
 axy
@@ -85345,7 +85378,7 @@ bNI
 bUB
 bVJ
 bOl
-bOC
+gyr
 bPQ
 bQK
 bYF
@@ -95077,10 +95110,10 @@ aYV
 aYV
 bev
 bfK
+bfK
 bhi
 bhi
-bhi
-bhi
+bfK
 bfK
 fMP
 bpw
@@ -104829,7 +104862,7 @@ aFz
 aTe
 aML
 aFz
-aFz
+uxf
 aQw
 aRS
 aRS
