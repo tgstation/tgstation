@@ -138,14 +138,20 @@
 
 /datum/status_effect/aegis
 	id = "protected"
-	duration = 15 SECONDS
+	duration = 10 SECONDS
 	examine_text = "<span class='notice'>They are being guarded closely.</span>"
 	alert_type = /obj/screen/alert/status_effect/protected
+	///We need both the protector and protectee for this status effect, so let's just handle the protector's alert here too
 	var/alert_type_protector = /obj/screen/alert/status_effect/protector
+	///As above
 	var/obj/screen/alert/status_effect/linked_alert_protector
+	///The person tanking the damage
 	var/mob/living/protector
+	///We make the protectee partially transparent, so we need to remember if they were already partially transparent
 	var/original_alpha = 255
+	///All incoming brute/burn/stamina damage on the protector is multiplied by this, whether it was directed at the protectee or not
 	var/defensive_buff_factor = 0.75
+	///Paralyze the protectee for this long so they don't accidentally slip away prematurely
 	var/paralyze_duration = 1.5 SECONDS
 
 /obj/screen/alert/status_effect/protected
@@ -213,8 +219,6 @@
 /datum/status_effect/aegis/proc/apply_defensive_buff()
 	protector.SetKnockdown(0)
 	protector.add_movespeed_modifier(/datum/movespeed_modifier/mob_protector)
-	var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
-	protector.throw_alert()
 	if(ishuman(protector))
 		var/mob/living/carbon/human/H = protector
 		H.physiology.brute_mod *= defensive_buff_factor

@@ -22,7 +22,9 @@
 	var/tackle_speed = 1
 	/// See: [/datum/component/tackler/var/skill_mod]
 	var/skill_mod = 0
-
+	/// What we yell out, if anything, when tackling
+	var/quip
+	/// What kind of tackle component we assign
 	var/tackle_type = /datum/component/tackler
 
 /obj/item/clothing/gloves/tackler/equipped(mob/user, slot)
@@ -31,7 +33,7 @@
 		return
 	if(slot == ITEM_SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
-		tackler = H.AddComponent(tackle_type, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance)
+		tackler = H.AddComponent(tackle_type, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance, source=src)
 
 /obj/item/clothing/gloves/tackler/dropped(mob/user)
 	. = ..()
@@ -40,6 +42,14 @@
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
 		qdel(tackler)
+
+/obj/item/clothing/gloves/tackler/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE))
+		..()
+		if(istype(user) && loc == user)
+			var/input = stripped_input(user,"What do you want to yell when you launch a tackle?.", ,"", 50)
+			if(input)
+				src.quip = input
 
 /obj/item/clothing/gloves/tackler/dolphin
 	name = "dolphin gloves"
@@ -103,12 +113,11 @@
 
 /obj/item/clothing/gloves/tackler/guardian
 	name = "guardian gloves"
-	desc = "Fancy looking gloves passed down between generations of bodyguards. Landing a tackle on someone will temporarily grant you a defensive buff and bind your protectee to you, along with redirecting all attacks against them towards you."
+	desc = "Fancy looking gloves passed down between generations of bodyguards. Landing a tackle on someone will temporarily grant you a defensive buff and bind your protectee to you, redirecting all attacks against them towards you."
 	icon_state = "tackledolphin"
 	inhand_icon_state = "tackledolphin"
 
-	tackle_stam_cost = 30
-	base_knockdown = 1.75 SECONDS
-	min_distance = 2
-	skill_mod = -1
+	tackle_range = 6
+	tackle_speed = 2
+	quip = "LOOK OUT, SIR!!"
 	tackle_type = /datum/component/tackler/guardian
