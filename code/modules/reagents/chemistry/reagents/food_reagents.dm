@@ -20,8 +20,9 @@
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
 			H.adjust_nutrition(nutriment_factor)
-	if(length(reagent_removal_skip_list) == 0)
-		holder.remove_reagent(type, metabolization_rate)
+	if(!length(reagent_removal_skip_list))
+		return
+	holder.remove_reagent(type, metabolization_rate)
 
 /datum/reagent/consumable/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == INGEST)

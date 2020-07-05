@@ -403,6 +403,7 @@
 	. = ..()
 	UnregisterSignal(U,COMSIG_PARENT_EXAMINE)
 
+///What happens when we examine the uniform
 /obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)
 	examine_list += "The dogtag has a listing of allergies : [display]"
 
