@@ -101,9 +101,9 @@
 		else
 			T = get_turf(src)
 		T.visible_message("<span class='danger'>[src] bursts!</span>","<span class='hear'>You hear a pop and a splash.</span>")
-		reagents.reaction(T)
+		reagents.expose(T)
 		for(var/atom/A in T)
-			reagents.reaction(A)
+			reagents.expose(A)
 		icon_state = "burst"
 		qdel(src)
 
@@ -234,6 +234,7 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
+	worn_icon_state = "gun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	flags_1 =  CONDUCT_1
@@ -1483,7 +1484,7 @@
 	name = "Security Officer action figure"
 	icon_state = "secofficer"
 	toysay = "I am the law!"
-	toysound = 'sound/voice/complionator/dredd.ogg'
+	toysound = 'sound/runtime/complionator/dredd.ogg'
 
 /obj/item/toy/figure/virologist
 	name = "Virologist action figure"

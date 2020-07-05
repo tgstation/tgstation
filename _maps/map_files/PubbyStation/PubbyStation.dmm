@@ -31290,6 +31290,11 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 9
+	},
+/obj/item/raw_anomaly_core/random,
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bBN" = (
@@ -38489,7 +38494,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRC" = (
-/obj/structure/lattice,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -48081,11 +48085,6 @@
 	},
 /turf/closed/wall,
 /area/library/lounge)
-"cyL" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/closed/mineral,
-/area/chapel/asteroid/monastery)
 "cyM" = (
 /obj/structure/lattice,
 /turf/closed/mineral,
@@ -53849,6 +53848,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/machinery/research/explosive_compressor,
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},
@@ -54972,12 +54972,6 @@
 /obj/structure/piano,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
-"pmj" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space,
-/area/space/nearstation)
 "pnU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4;
@@ -55237,12 +55231,6 @@
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/department/engine)
-"pWb" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "pWm" = (
 /obj/machinery/door/window/southleft{
 	dir = 4;
@@ -57390,11 +57378,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
-"uwj" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "uwX" = (
 /obj/machinery/field/generator,
 /turf/open/floor/plating,
@@ -80029,7 +80012,7 @@ cfN
 aaa
 aaa
 aaa
-cyL
+cyM
 cfN
 cfN
 cfN
@@ -88491,7 +88474,7 @@ ePB
 imB
 cdm
 aht
-uwj
+aht
 aht
 aht
 aht
@@ -91840,7 +91823,7 @@ bXk
 abI
 aaa
 aaa
-pmj
+aby
 aaa
 aaa
 aaa
@@ -95678,7 +95661,7 @@ bJP
 aaa
 aby
 aht
-pWb
+fon
 aaa
 aht
 aaa

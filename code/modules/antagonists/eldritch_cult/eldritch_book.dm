@@ -52,7 +52,7 @@
 			to_chat(target, "<span class='warning'>The terrain doesn't support runes!</span>")
 			return
 	var/A = get_turf(target)
-	to_chat(target, "<span class='danger'>You start drawing a rune...</span>")
+	to_chat(user, "<span class='danger'>You start drawing a rune...</span>")
 
 	if(do_after(user,30 SECONDS,A))
 
@@ -61,9 +61,10 @@
 ///Removes runes from the selected turf
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
 
-	to_chat(target, "<span class='danger'>You start removing a rune...</span>")
+	to_chat(user, "<span class='danger'>You start removing a rune...</span>")
 	if(do_after(user,2 SECONDS,user))
 		qdel(target)
+
 
 /obj/item/forbidden_book/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	if(!IS_HERETIC(user))
@@ -71,6 +72,8 @@
 	last_user = user
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+		icon_state = "book_open"
+		flick("book_opening",src)
 		ui = new(user, src, ui_key, "ForbiddenLore", name, 500, 900, master_ui, state)
 		ui.open()
 
@@ -132,6 +135,11 @@
 					return TRUE
 
 	update_icon() // Not applicable to all objects.
+
+/obj/item/forbidden_book/ui_close(mob/user)
+	flick("book_closing",src)
+	icon_state = initial(icon_state)
+	return ..()
 
 /obj/item/forbidden_book/debug
 	charge = 100

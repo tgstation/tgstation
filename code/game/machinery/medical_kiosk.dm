@@ -215,8 +215,11 @@
 			blood_warning = " Patient has DANGEROUSLY low blood levels. Seek a blood transfusion, iron supplements, or saline glucose immedietly. Ignoring treatment may lead to death!"
 		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
 
-	var/rad_value = altPatient.radiation
-	var/rad_status = "Target within normal-low radiation levels."
+	var/rad_sickness_value = altPatient.radiation
+	var/rad_sickness_status = "Target within normal-low radiation levels."
+	var/rad_contamination_value = get_rad_contamination(altPatient)
+	var/rad_contamination_status = "Target clothes and person not radioactive"
+
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/clone_loss = altPatient.getCloneLoss()
 	var/brain_loss = altPatient.getOrganLoss(ORGAN_SLOT_BRAIN)
@@ -273,12 +276,20 @@
 	else if((brain_loss) >= 1)
 		brain_status = "Mild brain damage detected."  //You may have a miiiild case of severe brain damage.
 
-	if(altPatient.radiation >=1000)  //
-		rad_status = "Patient is suffering from extreme radiation poisoning. Suggested treatment: Isolation of patient, followed by repeated dosages of Pentetic Acid."
-	else if(altPatient.radiation >= 500)
-		rad_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Heavy use of showers and decontamination of clothing. Take Pentetic Acid or Potassium Iodine."
-	else if(altPatient.radiation >= 100)
-		rad_status = "Patient has moderate radioactive signatures. Keep under showers until symptoms subside."
+	if(rad_sickness_value >= 1000)  //
+		rad_sickness_status = "Patient is suffering from extreme radiation poisoning, high toxen damage expected. Suggested treatment: Repeated dosages of Pentetic Acid or high amounts of Cold Seiver and anti-toxen"
+	else if(rad_sickness_value >= 300)
+		rad_sickness_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Take Cold Seiver or Potassium Iodine, watch the toxen levels."
+	else if(rad_sickness_value >= 100)
+		rad_sickness_status = "Patient has moderate radioactive signatures. Symptoms will subside in a few minutes"
+
+	if(rad_contamination_value >= 400)  //
+		rad_contamination_status = "Patient is wearing extremely radioactive clothing.  Suggested treatment: Isolation of patient and shower, remove all clothing and objects immediatly and place in a washing machine"
+	else if(rad_contamination_value >= 150)
+		rad_contamination_status = "Patient is wearing alarming radioactive clothing. Suggested treatment: Scan for contaminated objects and wash them with soap and water"
+	else if(rad_contamination_value >= 50)
+		rad_contamination_status = "Patient has moderate radioactive clothing.  Maintain a social distance for a few minutes"
+
 
 	if(pandemonium == TRUE)
 		chaos_modifier = 1
@@ -296,8 +307,10 @@
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss+(chaos_modifier * (rand(1,30)))
 	data["patient_status"] = patient_status
-	data["rad_value"] = rad_value+(chaos_modifier * (rand(1,500)))
-	data["rad_status"] = rad_status
+	data["rad_sickness_value"] = rad_sickness_value+(chaos_modifier * (rand(1,500)))
+	data["rad_sickness_status"] = rad_sickness_status
+	data["rad_contamination_value"] = rad_contamination_value+(chaos_modifier * (rand(1,500)))
+	data["rad_contamination_status"] = rad_contamination_status
 	data["trauma_status"] = trauma_status
 	data["patient_illness"] = sickness
 	data["illness_info"] = sickness_data
