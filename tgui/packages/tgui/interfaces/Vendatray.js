@@ -18,16 +18,18 @@ export const Vendatray = (props, context) => {
     <Window>
       <Window.Content>
         <Flex
+          grow
           mb={1}>
-          <Flex.Item>
+          <Flex.Item
+          mr={1}>
             {!!product_name && (
               <VendingImage />
             )}
           </Flex.Item>
           <Flex.Item
-            mr={1}>
+            mr={1}
+            grow={1}>
             <Section
-              maxWidth="150px"
               fontSize="18px"
               align="center">
               <b>{product_name ? product_name : "Empty"}</b>
@@ -82,17 +84,16 @@ const VendingImage = (props, context) => {
     product_icon,
   } = data;
   return (
-    <Section m={1}>
-      <img
+  <Section height="100%">
+      <Box as="img"
+        m={1}
         src={`data:image/jpeg;base64,${product_icon}`}
-        height="96"
-        width="96"
-        align="center"
+        height="96px"
+        width="96px"
         style={{
           '-ms-interpolation-mode': 'nearest-neighbor',
           'vertical-align': 'middle',
-          'horizontal-align': 'middle',
         }} />
-    </Section>
+      </Section>
   );
 };
