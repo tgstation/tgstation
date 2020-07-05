@@ -11,7 +11,7 @@
 	icon_state = "mecha_drill"
 	equip_cooldown = 15
 	energy_drain = 10
-	force = 10
+	force = 5 //double this to find the damage dealt by this drill when used by a mech
 	harmful = TRUE
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
@@ -54,7 +54,7 @@
 					playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else if(isobj(target))
 				var/obj/O = target
-				O.take_damage(force, BRUTE, 0, FALSE, get_dir(chassis, target))
+				O.take_damage(force * 2, BRUTE, 0, FALSE, get_dir(chassis, target)) //the force has to be doubled here so that humans don't run around smacking each other with 20 force mech diamond drills
 				if(!silent)
 					playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else
@@ -128,7 +128,7 @@
 	else
 		//drill makes a hole
 		var/obj/item/bodypart/target_part = target.get_bodypart(ran_zone(BODY_ZONE_CHEST))
-		target.apply_damage(force, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, "melee"), wound_bonus = 30) //the high wound_bonus helps give off that "holy shit a mech just drilled into that dude's chest" effect in PvP without affecting PvE balance
+		target.apply_damage(force * 2, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, "melee"), wound_bonus = 30) //the force has to be doubled here so that humans don't run around smacking each other with 20 force mech diamond drills //the high wound_bonus helps give off that "holy shit a mech just drilled into that dude's chest" effect in PvP without affecting PvE balance
 		//blood splatters
 		var/splatter_dir = get_dir(chassis, target)
 		if(isalien(target))
@@ -147,7 +147,7 @@
 	equip_cooldown = 10
 	drill_delay = 4
 	drill_level = DRILL_HARDENED
-	force = 20
+	force = 10
 	toolspeed = 0.7
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/mime
