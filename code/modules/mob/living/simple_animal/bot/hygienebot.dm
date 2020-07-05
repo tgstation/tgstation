@@ -232,8 +232,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 
 /mob/living/simple_animal/bot/hygienebot/proc/do_wash(atom/A)
 	if(emagged)
-		A.fire_act()
-		return //lol pranked no cleaning besides that
+		A.fire_act()  //lol pranked no cleaning besides that
 	else
 		A.washed(src)
 

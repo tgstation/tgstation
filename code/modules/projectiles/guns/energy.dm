@@ -144,12 +144,17 @@
 		return
 	var/ratio = get_charge_ratio()
 	var/new_inhand_icon_state = ""
+	var/new_worn_icon_state = ""
 	new_inhand_icon_state = initial(icon_state)
+	new_worn_icon_state = initial(icon_state)
 	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		new_inhand_icon_state += "[shot.select_name]"
+		new_worn_icon_state += "[shot.select_name]"
 	new_inhand_icon_state += "[ratio]"
+	new_worn_icon_state += "[ratio*25]"
 	inhand_icon_state = new_inhand_icon_state
+	worn_icon_state = new_worn_icon_state
 
 /obj/item/gun/energy/update_overlays()
 	. = ..()

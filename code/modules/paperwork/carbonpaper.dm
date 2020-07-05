@@ -2,6 +2,7 @@
 	name = "sheet of carbon"
 	icon_state = "paper_stack"
 	inhand_icon_state = "paper"
+	show_written_words = FALSE
 	var/copied = FALSE
 	var/iscopy = FALSE
 

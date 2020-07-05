@@ -803,6 +803,15 @@
 	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
 	..()
 
+//Having mannitol in you will pause the brain damage from brain tumor (so it heals an even 2 brain damage instead of 1.8)
+/datum/reagent/medicine/mannitol/on_mob_metabolize(mob/living/carbon/C)
+	. = ..()
+	ADD_TRAIT(C, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
+
+/datum/reagent/medicine/mannitol/on_mob_end_metabolize(mob/living/carbon/C)
+	REMOVE_TRAIT(C, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
+	. = ..()
+
 /datum/reagent/medicine/neurine
 	name = "Neurine"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
@@ -1024,25 +1033,6 @@
 	if(prob(20))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
-	..()
-	return TRUE
-
-/datum/reagent/medicine/lavaland_extract
-	name = "Lavaland Extract"
-	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
-	color = "#6B372E" //dark and red like lavaland
-	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
-	can_synth = FALSE
-
-/datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
-	M.heal_bodypart_damage(5,5)
-	..()
-	return TRUE
-
-/datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
-	M.adjustBruteLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
-	M.adjustFireLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
-	M.adjustToxLoss(3*REM, 0)
 	..()
 	return TRUE
 

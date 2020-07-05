@@ -1,0 +1,5 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - rscadd: "New alien larva spawn tips!"
+  - tweak: "Alien Queens are now easier to distinguish over hivemind communication similar to a Blob Overmind."

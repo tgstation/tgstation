@@ -835,9 +835,7 @@
 "cg" = (
 /obj/item/shard,
 /obj/item/stack/cable_coil{
-	amount = 2;
-	icon_state = "coil_red2";
-	inhand_icon_state = "coil_red"
+	amount = 2
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1864,17 +1862,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"em" = (
-/turf/closed/wall,
-/area/ruin/unpowered/no_grav)
-"en" = (
-/obj/structure/alien/resin/wall{
-	color = "#8EC127";
-	desc = "Thick material shaped into a wall. Eugh.";
-	name = "gelatinous wall"
-	},
-/turf/open/floor/plating/asteroid,
-/area/ruin/unpowered/no_grav)
 "eo" = (
 /obj/structure/closet/crate/internals,
 /obj/item/storage/toolbox/emergency,
@@ -2881,13 +2868,13 @@ aZ
 aZ
 dN
 aZ
-em
-em
-em
-em
-em
-em
-em
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
 ad
 ad
 aa
@@ -3025,9 +3012,9 @@ aZ
 aZ
 dO
 aZ
-en
-en
-en
+cm
+cm
+cm
 ad
 ad
 aa

@@ -268,10 +268,14 @@
 			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
 			return
 		M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-						"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
+		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
+		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
 	else
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+					null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
+		to_chat(M, "<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+		to_chat(src, "<span class='notice'>[M] hugs you to make you feel better!</span>")
 
 		// Warm them up with hugs
 		share_bodytemperature(M)
