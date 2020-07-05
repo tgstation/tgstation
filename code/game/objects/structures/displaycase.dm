@@ -402,7 +402,7 @@
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "Vendatray", name, 300, 300, master_ui, state)
+		ui = new(user, src, ui_key, "Vendatray", name, 300, 280, master_ui, state)
 		ui.set_autoupdate(FALSE)
 		viewing_ui[user] = ui
 		ui.open()
@@ -472,6 +472,7 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 				return
 			toggle_lock()
+			SStgui.update_uis(src)
 		if("Register")
 			if(payments_acc)
 				return
@@ -482,7 +483,6 @@
 				return
 			payments_acc = potential_acc.registered_account
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-			SStgui.update_uis(src)
 		if("Adjust")
 			if(!check_access(potential_acc) || potential_acc.registered_account != payments_acc)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)

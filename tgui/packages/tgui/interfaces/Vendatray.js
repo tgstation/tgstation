@@ -19,34 +19,25 @@ export const Vendatray = (props, context) => {
       <Window.Content>
         <Flex
           mb={1}>
-          <Flex.Item
-            mr={1}>
-            <Section
-              maxWidth="150px"
-              fontSize="20px">
-              <b>{product_name ? product_name : "Empty"}</b>
-            </Section>
-            <Section
-              minWidth="100px"
-              minHeight="45px"
-              align="center">
-              <Box fontSize="20px">
-                Price:
-              </Box>
-              <i>{product_name ? product_cost : "N/A"} Cr</i>
-            </Section>
-          </Flex.Item>
           <Flex.Item>
             {!!product_name && (
               <VendingImage />
             )}
           </Flex.Item>
-        </Flex>
-        {registered?(
-          <Section italics>
-            <Box m={0.5}>
-              Pays to the account of {owner_name}.
-            </Box>
+          <Flex.Item
+            mr={1}>
+            <Section
+              maxWidth="150px"
+              fontSize="18px"
+              align="center">
+              <b>{product_name ? product_name : "Empty"}</b>
+              <Box fontSize="16px">
+                <i>{product_name ? product_cost : "N/A"} cr </i>
+                <Button
+                  icon="pen"
+                  onClick={() => act('Adjust')} />
+              </Box>
+            </Section>
             <Fragment>
               <Button
                 fluid
@@ -60,12 +51,12 @@ export const Vendatray = (props, context) => {
                 content="Purchase Item"
                 disabled={!product_name}
                 onClick={() => act('Buy')} />
-              <Button
-                fluid
-                icon="pen"
-                content="Change Cost"
-                onClick={() => act('Adjust')} />
             </Fragment>
+          </Flex.Item>
+        </Flex>
+        {registered?(
+          <Section italics>
+            Pays to the account of {owner_name}.
           </Section>
         ):(
           <Fragment>
