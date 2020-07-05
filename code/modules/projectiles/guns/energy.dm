@@ -152,10 +152,11 @@
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		temp_icon_to_use += "[shot.select_name]"
 
+	temp_icon_to_use += "[ratio]"
 	if(!skip_inhand)
-		inhand_icon_state = "[temp_icon_to_use][ratio]"
+		inhand_icon_state = temp_icon_to_use
 	if(!skip_worn_icon)
-		worn_icon_state = "[temp_icon_to_use][ratio*25]"
+		worn_icon_state = temp_icon_to_use
 
 
 /obj/item/gun/energy/update_overlays()
