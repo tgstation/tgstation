@@ -53,6 +53,8 @@ SUBSYSTEM_DEF(economy)
 	var/station_target = 1
 	/// A var that displays the result of inflation_value for easier debugging and tracking.
 	var/inflation_value = 1
+	/// Contains the message to send to newscasters about price inflation and earnings, updated on price_update()
+	var/earning_report
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
@@ -161,6 +163,8 @@ SUBSYSTEM_DEF(economy)
 			continue
 		V.reset_prices(V.product_records, V.coin_records)
 		V.updateUsrDialog()
+	earning_report = "Sector Economic Report<br /> Sector price inflation is current at [SSeconomy.inflation_value()*100]%.<br /> Station Budget is currently <b>[station_total] Credits</b>, and Station Targeted Allowance is at <b>[station_target] Credits</b>.<br /> That's all from the <i>Nanotrasen Economist Division</i>."
+	GLOB.news_network.SubmitArticle(earning_report, "Station Earnings Report", "Station Announcements", null)
 
 /**
   * Proc that returns a value meant to undercut the value of civilian bounties, based on how much money exists on the station.
