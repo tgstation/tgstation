@@ -1118,7 +1118,7 @@
 	for(var/obj/item/I in held_items)
 		I.washed(washer)
 
-	if(back)
+	if(back && back.washed(washer))
 		update_inv_back(0)
 
 	var/list/obscured = check_obscured_slots()
