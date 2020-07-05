@@ -13,7 +13,7 @@
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	add_req_access = 0
 	internal_damage_threshold = 25
-	max_equip = 2
+	max_equip = 3
 	step_energy_drain = 3
 	color = "#87878715"
 	stepsound = null
@@ -23,6 +23,8 @@
 /obj/mecha/combat/reticence/loaded/Initialize()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/mime //for silently disposing of your foes
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/rcd //HAHA IT MAKES WALLS GET IT
 	ME.attach(src)

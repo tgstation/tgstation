@@ -11,12 +11,14 @@
 	icon_state = "mecha_drill"
 	equip_cooldown = 15
 	energy_drain = 10
-	force = 15
+	force = 10
 	harmful = TRUE
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
+	/// if TRUE, the drill won't make a distinctive noise when it tries to drill something
+	var/silent = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/drill/Initialize()
 	. = ..()
@@ -41,16 +43,20 @@
 		if(isturf(target))
 			var/turf/T = target
 			T.drill_act(src)
+			if(!silent)
+				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			set_ready_state(TRUE)
 			return
 		while(do_after_mecha(target, drill_delay))
 			if(isliving(target))
 				drill_mob(target, chassis.occupant)
-				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
+				if(!silent)
+					playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else if(isobj(target))
 				var/obj/O = target
-				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
+				O.take_damage(force, BRUTE, 0, FALSE, get_dir(chassis, target))
+				if(!silent)
+					playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else
 				set_ready_state(TRUE)
 				return
@@ -122,8 +128,7 @@
 	else
 		//drill makes a hole
 		var/obj/item/bodypart/target_part = target.get_bodypart(ran_zone(BODY_ZONE_CHEST))
-		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, "melee"))
-
+		target.apply_damage(force, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, "melee"), wound_bonus = 30) //the high wound_bonus helps give off that "holy shit a mech just drilled into that dude's chest" effect in PvP without affecting PvE balance
 		//blood splatters
 		var/splatter_dir = get_dir(chassis, target)
 		if(isalien(target))
@@ -132,7 +137,7 @@
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir)
 
 		//organs go everywhere
-		if(target_part && prob(10 * drill_level))
+		if(target.stat && target_part && prob(20 * drill_level)) //can't pop out the organs of someone who's still conscious
 			target_part.dismember(BRUTE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
@@ -142,8 +147,13 @@
 	equip_cooldown = 10
 	drill_delay = 4
 	drill_level = DRILL_HARDENED
-	force = 15
+	force = 20
 	toolspeed = 0.7
+
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/mime
+	name = "silenced, diamond-tipped exosuit drill"
+	desc = "This combat-designed drill comes with sound-dampening technology that makes it eerily quiet. Excellent for body disposal."
+	silent = TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
