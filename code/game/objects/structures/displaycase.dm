@@ -378,6 +378,8 @@
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
+	///We're using the same trick as paper does in order to cache the image, and only load the UI when messed with.
+	var/list/viewing_ui = list()
 
 /obj/structure/displaycase/forsale/update_icon()	//remind me to fix my shitcode later
 	var/icon/I
@@ -401,6 +403,8 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "Vendatray", name, 300, 300, master_ui, state)
+		ui.set_autoupdate(FALSE)
+		viewing_ui[user] = ui
 		ui.open()
 
 /obj/structure/displaycase/forsale/ui_data(mob/user)
@@ -457,6 +461,7 @@
 				flick("laserbox_vend", src)
 				showpiece = null
 				update_icon()
+				update_all_ui()
 				return TRUE
 		if("Open")
 			if(!payments_acc)
@@ -478,6 +483,7 @@
 				return
 			payments_acc = potential_acc.registered_account
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+			update_all_ui()
 		if("Adjust")
 			if(!check_access(potential_acc) || potential_acc.registered_account != payments_acc)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
@@ -493,6 +499,7 @@
 			new_price_input = clamp(round(new_price_input, 1), 10, 1000)
 			sale_price = new_price_input
 			to_chat(usr, "<span class='notice'>The cost is now set to [sale_price].</span>")
+			update_all_ui()
 			return TRUE
 
 	. = TRUE
@@ -509,6 +516,7 @@
 			return
 	if(istype(I, /obj/item/pda))
 		return TRUE
+	update_all_ui()
 	. = ..()
 
 
@@ -561,6 +569,24 @@
 		playsound(src, "shatter", 70, TRUE)
 		update_icon()
 		trigger_alarm() //In case it's given an alarm anyway.
+
+/obj/structure/displaycase/forsale/proc/update_all_ui()
+	for(var/datum/tgui/ui in viewing_ui)
+		ui.update()
+
+/obj/structure/displaycase/forsale/proc/close_all_ui()
+	for(var/datum/tgui/ui in viewing_ui)
+		ui.close()
+	viewing_ui = list()
+
+/obj/structure/displaycase/forsale/ui_close(mob/user)
+	/// close the editing window and change the mode
+	viewing_ui[user] = null
+	. = ..()
+
+/obj/structure/displaycase/forsale/Destroy()
+	close_all_ui()
+	. = ..()
 
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
