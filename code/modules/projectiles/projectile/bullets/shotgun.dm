@@ -6,12 +6,12 @@
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
-	sharpness = TRUE
+	sharpness = SHARP_EDGED
 	wound_bonus = 0
 
 /obj/projectile/bullet/shotgun_slug/pulverizer
 	name = "pulverizer slug" // admin only, can crush bones
-	sharpness = FALSE
+	sharpness = SHARP_NONE
 	wound_bonus = 0
 
 /obj/projectile/bullet/shotgun_beanbag
@@ -20,6 +20,7 @@
 	stamina = 55
 	wound_bonus = 20
 	sharpness = SHARP_NONE
+	embedding = null
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
