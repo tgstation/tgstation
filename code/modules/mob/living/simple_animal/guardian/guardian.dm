@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	hud_type = /datum/hud/guardian
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	var/mutable_appearance/cooloverlay
-	var/guardiancolor = "#ffffff"
+	var/guardiancolor
 	var/recolorentiresprite
 	var/theme
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
@@ -54,11 +54,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/mob/living/summoner
 	var/range = 10 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
-	var/playstyle_string = "<span class='holoparasite bold'>You are a standard Guardian. You shouldn't exist!</span>"
+	var/playstyle_string = "<span class='holoparasite bold'>You are a Guardian without any type. You shouldn't exist!</span>"
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
-	var/hive_fluff_string = "<span class='holoparasite'>The mass seems to be an anomaly, it shouldn't exist... Submit a bug report!</span>"
+	var/miner_fluff_string = "<span class='holoparasite'>You encounter... Mythril, it shouldn't exist... Submit a bug report!</span>"
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
 	GLOB.parasites += src
@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme
 	if(!theme)
-		theme = pick("magic", "tech", "carp", "hive")
+		theme = pick("magic", "tech", "carp", "miner")
 	switch(theme)//should make it easier to create new stand designs in the future if anyone likes that
 		if("magic")
 			name = "Guardian Spirit"
@@ -103,6 +103,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_state = "techbase"
 			icon_living = "techbase"
 			icon_dead = "techbase"
+		if("miner")
+			name = "Power Miner"
+			real_name = "Power Miner"
+			bubble_icon = "guardian"
+			icon_state = "minerbase"
+			icon_living = "minerbase"
+			icon_dead = "minerbase"
 		if("carp")
 			name = "Holocarp"
 			real_name = "Holocarp"
@@ -116,18 +123,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			attack_verb_simple = "bite"
 			attack_sound = 'sound/weapons/bite.ogg'
 			recolorentiresprite = TRUE
-		if("hive")
-			name = "Hivelord"
-			real_name = "Hivelord"
-			bubble_icon = "guardian"
-			icon_state = "hivebase"
-			icon_living = "hivebase"
-			icon_dead = "hivebase"
-			speak_emote = list("telepathically cries")
-			desc = "A truly alien creature, it is a mass of unknown organic material, standing by its' owner's side."
-			attack_verb_continuous = "lashes out at"
-			attack_verb_simple = "lash out at"
-			attack_sound = 'sound/weapons/pierce.ogg'
 	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isnt gone for some reason
 		cooloverlay = mutable_appearance(icon, theme)
 		add_overlay(cooloverlay)
@@ -143,11 +138,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	to_chat(src, "<span class='holoparasite'>You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with [summoner.p_them()] privately there.</span>")
 	to_chat(src, "<span class='holoparasite'>While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to [summoner.p_them()] as you feed upon [summoner.p_them()] to sustain yourself.</span>")
 	to_chat(src, playstyle_string)
-	guardiancustomize()
-
-/mob/living/simple_animal/hostile/guardian/proc/guardiancustomize()
-	guardianrecolor()
-	guardianrename()
+	if(!guardiancolor)
+		guardianrename()
+		guardianrecolor()
 
 /mob/living/simple_animal/hostile/guardian/proc/guardianrecolor()
 	guardiancolor = input(src,"What would you like your color to be?","Choose Your Color","#ffffff") as color|null
@@ -465,7 +458,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[G.guardiancolor]\">[G.real_name]</font> has been successfully reset.</span>")
 				message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(G)])")
 				G.ghostize(0)
-				G.guardiancustomize() //give it a new color, to show it's a new person
+				G.guardianrecolor()
+				G.guardianrename() //give it a new color and name, to show it's a new person
 				G.key = C.key
 				G.reset = 1
 				switch(G.theme)
@@ -475,8 +469,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been summoned!</span>")
 					if("carp")
 						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been caught!</span>")
-					if("hive")
-						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been created from the core!</span>")
+					if("miner")
+						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has appeared!</span>")
 				guardians -= G
 				if(!guardians.len)
 					verbs -= /mob/living/proc/guardian_reset
@@ -613,9 +607,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("carp")
 			to_chat(user, "[G.carp_fluff_string]")
 			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has been caught!</span>")
-		if("hive")
-			to_chat(user, "[G.hive_fluff_string]")
-			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has been created from the core!</span>")
+		if("miner")
+			to_chat(user, "[G.miner_fluff_string]")
+			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has appeared!</span>")
 	user.verbs += /mob/living/proc/guardian_comm
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
@@ -727,23 +721,23 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	use_message = "<span class='holoparasite'>You put the fishsticks in your mouth...</span>"
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
 	failure_message = "<span class='holoparasite bold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
-	ling_failure = "<span class='holoparasite bold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
+	ling_failure = "<span class='holoparasite bold'>Carp'sie seems to not have taken you as the chosen one. Maybe it's because of your horrifying origin.</span>"
 	allowmultiple = TRUE
 
 /obj/item/guardiancreator/carp/choose
 	random = FALSE
 
-/obj/item/guardiancreator/hive
-	name = "mysterious core"
-	desc = "All that remains of a hivelord. It has a mysterious aura around it..."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "roro core 2"
-	theme = "hive"
-	mob_name = "Hivelord"
-	use_message = "<span class='holoparasite'>You place the core near your heart...</span>"
-	used_message = "<span class='holoparasite'>This core seems to have decayed and doesn't work anymore...</span>"
-	failure_message = "<span class='holoparasite bold'>You couldn't gather any mass with the core, maybe try again later.</span>"
-	ling_failure = "<span class='holoparasite bold'>Even the dark energies seem to not want to be near your horrific body.</span>"
+/obj/item/guardiancreator/miner
+	name = "dusty shard"
+	desc = "Seems to be a very old rock, may have originated from a strange meteor."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "dustyshard"
+	theme = "miner"
+	mob_name = "Power Miner"
+	use_message = "<span class='holoparasite'>You pierce your skin with the shard...</span>"
+	used_message = "<span class='holoparasite'>This shard seems to have lost all its' power...</span>"
+	failure_message = "<span class='holoparasite bold'>The shard hasn't reacted at all. Maybe try again later...</span>"
+	ling_failure = "<span class='holoparasite bold'>The power of the shard seems to not react with your horrifying, mutated body.</span>"
 
-/obj/item/guardiancreator/hive/choose
+/obj/item/guardiancreator/miner/choose
 	random = FALSE

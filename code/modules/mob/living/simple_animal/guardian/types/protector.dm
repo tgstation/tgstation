@@ -8,7 +8,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Guardian, a stalwart protector that never leaves the side of its charge.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Protector modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! Wait, no... it caught you! The fisher has become the fishy.</span>"
-	hive_fluff_string = "<span class='holoparasite'>The mass seems to be extremely resistant to damage and have a special connection with the owner.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Uranium, a very resistant guardian.</span>"
 	toggle_button_type = /obj/screen/guardian/ToggleMode
 	var/toggle = FALSE
 

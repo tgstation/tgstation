@@ -107,6 +107,7 @@
 				O.throw_at(target, 5, 10)
 
 /obj/effect/anomaly/grav/Crossed(atom/movable/AM)
+	. = ..()
 	gravShock(AM)
 
 /obj/effect/anomaly/grav/Bump(atom/A)
@@ -154,6 +155,7 @@
 		mobShock(M)
 
 /obj/effect/anomaly/flux/Crossed(atom/movable/AM)
+	. = ..()
 	mobShock(AM)
 
 /obj/effect/anomaly/flux/Bump(atom/A)

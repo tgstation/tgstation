@@ -1,5 +1,5 @@
 /obj/projectile/magic
-	name = "bolt of nothing"
+	name = "bolt"
 	icon_state = "energy"
 	damage = 0
 	damage_type = OXY

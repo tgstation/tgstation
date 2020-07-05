@@ -3,7 +3,6 @@
 	desc = "Attack the weak point for massive damage."
 	health = 1000
 	maxHealth = 1000
-	spacewalk = TRUE
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
@@ -49,6 +48,7 @@
 		AddComponent(/datum/component/gps, gps_name)
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
 		attack_action.Grant(src)
@@ -148,7 +148,7 @@
 			continue
 		L.client.give_award(/datum/award/achievement/boss/boss_killer, L)
 		L.client.give_award(achievement_type, L)
-		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
+		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/kinetic_crusher))
 			L.client.give_award(crusher_achievement_type, L)
 		L.client.give_award(/datum/award/score/boss_score, L) //Score progression for bosses killed in general
 		L.client.give_award(score_achievement_type, L) //Score progression for specific boss killed

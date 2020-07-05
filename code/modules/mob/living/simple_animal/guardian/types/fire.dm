@@ -12,7 +12,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Wizard, bringer of endless chaos!</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
-	hive_fluff_string = "<span class='holoparasite'>The mass seems to generate lots of energy, causing everything except its' owner to burn to ash.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Plasma, the bringer of fire.</span>"
 
 /mob/living/simple_animal/hostile/guardian/fire/Life()
 	. = ..()

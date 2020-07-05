@@ -84,4 +84,4 @@
 	if(!D)
 		return ..()
 	icon = 'icons/mob/drone.dmi'
-	icon_state = "[D.visualAppearence]_hat"
+	icon_state = "[D.visualAppearance]_hat"

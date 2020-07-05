@@ -6,7 +6,6 @@
 	name = "AI Design (AI Core)"
 	desc = "Allows for the construction of circuit boards used to build new AI cores."
 	id = "aicore"
-	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 500)
 	build_path = /obj/item/circuitboard/aicore
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

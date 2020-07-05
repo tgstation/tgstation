@@ -573,21 +573,12 @@
 		ram()
 
 /obj/item/toy/plush/goatplushie/angry/proc/ram()
-	if(prob((obj_flags & EMAGGED) ? 98:90) && isturf(loc) && considered_alive(target.mind) && !faction_check(list("goat"), target.faction, FALSE))
+	if(prob(90) && isturf(loc) && considered_alive(target.mind) && !faction_check(list("goat"), target.faction, FALSE))
 		throw_at(target, 10, 10)
 		visible_message("<span class='danger'>[src] rams [target]!</span>")
 		cooldown = world.time + cooldown_modifier
 	target = null
 	visible_message("<span class='notice'>[src] looks disinterested.</span>")
-
-/obj/item/toy/plush/goatplushie/angry/emag_act(mob/user)
-	if (obj_flags&EMAGGED)
-		visible_message("<span class='notice'>[src] already looks angry enough, you shouldn't anger it more.</span>")
-		return
-	cooldown_modifier = 5
-	throwforce = 20
-	obj_flags |= EMAGGED
-	visible_message("<span class='danger'>[src] stares at [user] angrily before going docile.</span>")
 
 /obj/item/toy/plush/goatplushie/angry/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -668,3 +659,11 @@
 	desc = "A plushie depicting one of the royal King Goat's guards, tasked to protecting the king at all costs and training new goat guards."
 	icon_state = "royalguardgoat"
 	throwforce = 15
+
+/obj/item/toy/plush/moth
+	name = "moth plushie"
+	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
+	icon_state = "moffplush"
+	item_state = "moffplush"
+	attack_verb = list("fluttered", "flapped")
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)

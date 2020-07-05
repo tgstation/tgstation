@@ -1,6 +1,7 @@
 import { Achievements } from './interfaces/Achievements';
 import { AiAirlock } from './interfaces/AiAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
+import { AiRestorer } from './interfaces/AiRestorer';
 import { AirlockElectronics } from './interfaces/AirlockElectronics';
 import { Apc } from './interfaces/Apc';
 import { AtmosAlertConsole } from './interfaces/AtmosAlertConsole';
@@ -17,6 +18,7 @@ import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
 import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
+import { CargoHoldTerminal } from './interfaces/CargoHoldTerminal';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemAcclimator } from './interfaces/ChemAcclimator';
@@ -41,6 +43,7 @@ import { EightBallVote } from './interfaces/EightBallVote';
 import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
+import { ExosuitControlConsole } from './interfaces/ExosuitControlConsole';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
@@ -67,7 +70,6 @@ import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
-import { NtosAiRestorer } from './interfaces/NtosAiRestorer';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
@@ -96,6 +98,7 @@ import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
 import { RemoteRobotControl } from './interfaces/RemoteRobotControl';
+import { RoboticsControlConsole } from './interfaces/RoboticsControlConsole';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
@@ -112,6 +115,7 @@ import { SpaceHeater } from './interfaces/SpaceHeater';
 import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
+import { SyndContractor } from './interfaces/SyndContractor';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
@@ -123,7 +127,6 @@ import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
-import { SyndContractor } from './interfaces/SyndContractor';
 
 const ROUTES = {
   achievements: {
@@ -136,6 +139,10 @@ const ROUTES = {
   },
   airalarm: {
     component: () => AirAlarm,
+    scrollable: true,
+  },
+  ai_restorer: {
+    component: () => AiRestorer,
     scrollable: true,
   },
   airlock_electronics: {
@@ -205,6 +212,10 @@ const ROUTES = {
   },
   cargo_express: {
     component: () => CargoExpress,
+    scrollable: true,
+  },
+  cargo_hold_terminal: {
+    component: () => CargoHoldTerminal,
     scrollable: true,
   },
   cellular_emporium: {
@@ -302,6 +313,10 @@ const ROUTES = {
   engraved_message: {
     component: () => EngravedMessage,
     scrollable: false,
+  },
+  exosuit_control_console: {
+    component: () => ExosuitControlConsole,
+    scrollable: true,
   },
   gps: {
     component: () => Gps,
@@ -414,7 +429,7 @@ const ROUTES = {
     scrollable: false,
   },
   ntos_ai_restorer: {
-    component: () => NtosAiRestorer,
+    component: () => AiRestorer,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -565,9 +580,14 @@ const ROUTES = {
   radioactive_microlaser: {
     component: () => RadioactiveMicrolaser,
     scrollable: false,
+    theme: 'syndicate',
   },
   remote_robot_control: {
     component: () => RemoteRobotControl,
+    scrollable: true,
+  },
+  robotics_control_console: {
+    component: () => RoboticsControlConsole,
     scrollable: true,
   },
   roulette: {

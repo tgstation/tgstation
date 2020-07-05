@@ -259,6 +259,8 @@
 /datum/symptom/heal/coma/End(datum/disease/advance/A)
 	if(!..())
 		return
+	if(active_coma)
+		uncoma()
 	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)

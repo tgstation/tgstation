@@ -76,6 +76,7 @@
 	resistance_flags = FLAMMABLE
 
 /obj/item/cultivator/rake/Crossed(atom/movable/AM)
+	. = ..()
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM

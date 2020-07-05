@@ -27,10 +27,17 @@
 	user.visible_message("<span class='notice'>[user] begins wrapping [I] with [src].</span>", "<span class='notice'>You begin wrapping [I] with [src].</span>")
 
 	if(do_after(user, 30, target=I))
+		use(1)
+		if(istype(I, /obj/item/clothing/gloves/fingerless))
+			var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
+			to_chat(user, "<span class='notice'>You turn [I] into [O] with [src].</span>")
+			QDEL_NULL(I)
+			user.put_in_hands(O)
+			return
+
 		I.embedding = conferred_embed
 		I.AddElement(/datum/element/embed, I.embedding)
 		to_chat(user, "<span class='notice'>You finish wrapping [I] with [src].</span>")
-		use(1)
 		I.name = "[prefix] [I.name]"
 
 		if(istype(I, /obj/item/grenade))

@@ -5,6 +5,7 @@
 	stat_attack = UNCONSCIOUS
 	status_flags = 0
 	a_intent = INTENT_HARM
+	sentience_type = SENTIENCE_BOSS
 	gender = NEUTER
 	var/list/boss_abilities = list() //list of /datum/action/boss
 	var/datum/boss_active_timed_battle/atb

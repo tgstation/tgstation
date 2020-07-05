@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - tweak: "Malfuntion tab is gone, all its remaining verbs were either converted to action buttons or removed completely."
-  - bugfix: "Removing traitor status from AI now correctly removes all of its malfunction abilities."

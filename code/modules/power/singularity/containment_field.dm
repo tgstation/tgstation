@@ -65,6 +65,7 @@
 		return ..()
 
 /obj/machinery/field/containment/Crossed(atom/movable/AM)
+	. = ..()
 	if(isliving(AM))
 		shock(AM)
 

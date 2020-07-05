@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - tweak: "liquid gibs are now meat material with metalgen"
+  - bugfix: "radium isnt uranium with metalgen anymore"

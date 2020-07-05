@@ -9,6 +9,17 @@
 /obj/item/paper/fluff/shuttles/daniel
 	info = "i love daniel<br>daniel is my best friend<br><br>you are tearing me apart elise"
 
+/obj/item/paper/fluff/jobs/prisoner/letter
+	name = "letter from home"
+	info = {"Dearest sweetheart,
+	<br>It is truly saddening you must spend your time locked up in an awful prison on that dangerous station. I have spoken to your lawyer who will attempt to appeal to the judge so your sentence may hopefully be reduced.
+	<br>Regardless, I just want you to understand that all of us out here still love you, and want to see you released safely some day! I know that prison can be a very vicious place, so please promise us you'll avoid getting into any fights or trouble, okay?
+	<br>We all care for your safety deeply, and could not live with ourselves if you ended up getting hurt. We've scheduled a visit to see you, and with any luck, hopefully our request will be granted soon.
+	<br>Anyways, please do your best to make it by in that place, and never forget we'll be always here for you, no matter if we're separated.
+	<br>
+	<br>Please stay safe,
+	<br>-Love, <i>Your Dearest</i>"}
+
 
 ////////////	Job guides n' fluff
 

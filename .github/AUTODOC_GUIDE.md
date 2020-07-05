@@ -32,7 +32,7 @@ All class level defined variables *must* be documented
 Internal functions *should* be documented, but may not be
 
 A public function is any function that a developer might reasonably call while using
-or interating with your object. Internal functions are helper functions that your
+or interacting with your object. Internal functions are helper functions that your
 public functions rely on to implement logic
 
 

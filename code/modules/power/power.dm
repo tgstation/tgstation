@@ -354,12 +354,12 @@
 ///////////////////////////////////////////////
 
 // return a cable if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node()
+/turf/proc/get_cable_node(check_layer = CABLE_LAYER_2)
 	if(!can_have_cabling())
 		return null
 	var/obj/structure/cable_bridge/B = locate() in src
 	for(var/obj/structure/cable/C in src)
-		if(C.cable_layer == CABLE_LAYER_2 || B)
+		if(C.cable_layer & check_layer || B)
 			C.update_icon()
 			return C
 	return null

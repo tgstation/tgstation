@@ -18,7 +18,6 @@ Buildable meters
 	icon_state = "simple"
 	item_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
-	level = 2
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/RPD_type
 

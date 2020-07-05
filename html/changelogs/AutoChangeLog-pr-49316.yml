@@ -1,8 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - spellcheck: "Ash Walker flavor text now allows invasions again, though prohibiting mass destruction."
-  - balance: "Ash Walkers can no longer pilot mechs."
-  - balance: "Ash Walkers now get only one life per player. However, each sacrifice has a 40% chance to give a bonus spawn (limit of one at a time)."
-  - balance: "Dead/incapacitated Ash Walkers that are moved to the nest will be given a new body after a few seconds. This does not require an extra spawn, but also does not count as a sacrifice. Ash Walker bodies without a ghost (should the player have moved on to a new spawner) will be sacrificed as normal."
-  - bugfix: "Borgs being gibbed by the Ash Walker tendril will no longer count as a sacrifice, as they do not actually have blood."

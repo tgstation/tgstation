@@ -14,7 +14,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Scientist, master of explosive death.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Explosive modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.</span>"
-	hive_fluff_string = "<span class='holoparasite'>The mass seems to generate explosive energy, destroying everything in its' path.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Gibtonite, an explosive fighter.</span>"
 	var/bomb_cooldown = 0
 	var/static/list/boom_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
 

@@ -235,6 +235,9 @@
 			REMOVE_TRAIT(helmet, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 			helmet.suit = null
 			helmet = null
+		user.reset_perspective()
+		user.set_machine()
+		user.remote_control = null
 		if(camera)
 			QDEL_NULL(camera)
 

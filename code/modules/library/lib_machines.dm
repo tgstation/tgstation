@@ -70,7 +70,7 @@
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
 	. = ..()
-	if(..())
+	if(.)
 		usr << browse(null, "window=publiclibrary")
 		onclose(usr, "publiclibrary")
 		return
@@ -162,14 +162,21 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 // TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
 // It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
 // It's December 25th, 2014, and this is STILL here, and it's STILL relevant. Kill me
-/obj/machinery/computer/libraryconsole/bookmanagement
+/obj/machinery/computer/bookmanagement
 	name = "book inventory management console"
 	desc = "Librarian's command station."
-	screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	pass_flags = PASSTABLE
+
+	icon_state = "oldcomp"
+	icon_screen = "library"
+	icon_keyboard = null
+	circuit = /obj/item/circuitboard/computer/libraryconsole
+
+	var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
+
 	var/arcanecheckout = 0
 	var/buffer_book
 	var/buffer_mob
@@ -182,7 +189,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	var/page = 1	//current page of the external archives
 	var/cooldown = 0
 
-/obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
+/obj/machinery/computer/bookmanagement/proc/build_library_menu()
 	if(libcomp_menu)
 		return
 	load_library_db_to_cache()
@@ -198,13 +205,13 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			libcomp_menu[page] = ""
 		libcomp_menu[page] += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=[REF(src)];targetid=[C.id]'>\[Order\]</A></td></tr>\n"
 
-/obj/machinery/computer/libraryconsole/bookmanagement/Initialize()
+/obj/machinery/computer/bookmanagement/Initialize()
 	. = ..()
 	if(circuit)
 		circuit.name = "Book Inventory Management Console (Machine Board)"
-		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+		circuit.build_path = /obj/machinery/computer/bookmanagement
 
-/obj/machinery/computer/libraryconsole/bookmanagement/ui_interact(mob/user)
+/obj/machinery/computer/bookmanagement/ui_interact(mob/user)
 	. = ..()
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
@@ -316,17 +323,17 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/machinery/computer/libraryconsole/bookmanagement/proc/findscanner(viewrange)
+/obj/machinery/computer/bookmanagement/proc/findscanner(viewrange)
 	for(var/obj/machinery/libraryscanner/S in range(viewrange, get_turf(src)))
 		return S
 	return null
 
-/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
+/obj/machinery/computer/bookmanagement/proc/print_forbidden_lore(mob/user)
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from...</span>")
 	user.visible_message("<span class='warning'>[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.</span>", 2)
 
-/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/W, mob/user, params)
+/obj/machinery/computer/bookmanagement/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = W
 		scanner.computer = src
@@ -335,11 +342,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	else
 		return ..()
 
-/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
+/obj/machinery/computer/bookmanagement/emag_act(mob/user)
 	if(density && !(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
 
-/obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
+/obj/machinery/computer/bookmanagement/Topic(href, href_list)
 	if(..())
 		usr << browse(null, "window=library")
 		onclose(usr, "library")

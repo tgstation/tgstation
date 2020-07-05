@@ -50,11 +50,11 @@ RLD
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
-	. += "\A [src]. It currently holds [matter]/[max_matter] matter-units."
+	. += "It currently holds [matter]/[max_matter] matter-units."
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
-		. += "\A [src]. Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
-		if(silo_link && !silo_mats.on_hold())
-			. += "\A [src]. Remote connection have iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] rcd units." // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
+		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
+		if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
+			. += "Remote connection has iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 metal
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -137,17 +137,20 @@ RLD
 			if(user)
 				to_chat(user, "<span class='alert'>Mineral access is on hold, please contact the quartermaster.</span>")
 			return FALSE
+		if(!silo_mats.mat_container)
+			to_chat(user, "<span class='alert'>No silo link detected. Connect to silo via multitool.</span>")
+			return FALSE
 		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
 			if(user)
 				to_chat(user, no_ammo_message)
 			return FALSE
 
 		silo_mats.mat_container.use_materials(list(/datum/material/iron = 500), amount)
-		silo_mats.silo_log(src, "consume", -amount, "build", list(/datum/material/iron = 500))
+		silo_mats.silo_log(src, "consume", -amount, "build", list(GLOB.materials_list["iron"] = 500))
 		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
-	if(!silo_mats || !silo_link)
+	if(!silo_link || !silo_mats || !silo_mats.mat_container)
 		. = matter >= amount
 	else
 		if(silo_mats.on_hold())
@@ -231,6 +234,9 @@ RLD
 
 /obj/item/construction/rcd/proc/toggle_silo_link(mob/user)
 	if(silo_mats)
+		if(!silo_mats.mat_container)
+			to_chat(user, "<span class='alert'>No silo link detected. Connect to silo via multitool.</span>")
+			return FALSE
 		silo_link = !silo_link
 		to_chat(user, "<span class='notice'>You change \the [src]'s storage link state: [silo_link ? "ON" : "OFF"].</span>")
 	else

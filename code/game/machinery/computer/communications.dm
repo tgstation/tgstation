@@ -183,7 +183,7 @@
 
 		if("callshuttle")
 			state = STATE_DEFAULT
-			if(authenticated)
+			if(authenticated && SSshuttle.canEvac(usr))
 				state = STATE_CALLSHUTTLE
 		if("callshuttle2")
 			if(authenticated)
@@ -336,7 +336,9 @@
 			aicurrmsg = null
 			aistate = STATE_DEFAULT
 		if("ai-callshuttle")
-			aistate = STATE_CALLSHUTTLE
+			aistate = STATE_DEFAULT
+			if(SSshuttle.canEvac(usr))
+				aistate = STATE_CALLSHUTTLE
 		if("ai-callshuttle2")
 			SSshuttle.requestEvac(usr, href_list["call"])
 			aistate = STATE_DEFAULT

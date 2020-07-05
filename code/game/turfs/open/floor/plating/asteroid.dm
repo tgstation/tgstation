@@ -327,6 +327,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	environment_type = "snow"
 	flags_1 = NONE
 	planetary_atmos = TRUE
+	broken_states = list("snow_dug")
 	burnt_states = list("snow_dug")
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null

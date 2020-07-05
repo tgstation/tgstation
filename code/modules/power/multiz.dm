@@ -28,31 +28,29 @@
 	if(default_unfasten_wrench(user, I))
 		if(!anchored && broken_status == RELAY_OK)
 			break_connections()
-			return
 		return FALSE
-		. = ..()
-	if(istype(I, /obj/item/stack/cable_coil) && broken_status == RELAY_ADD_CABLE)
+
+	else if(istype(I, /obj/item/stack/cable_coil) && broken_status == RELAY_ADD_CABLE)
 		var/obj/item/stack/C = I
 		if(C.use(15))
 			to_chat(user, "<span class='notice'>You fix the frayed wires inside [src].</span>")
 			icon_state = "cablerelay-broken-cable"
 			broken_status = RELAY_ADD_METAL
-			return
 		else
 			to_chat(user, "You need 15 cables to rewire [src].")
-			return
-	if(istype(I, /obj/item/stack/sheet/metal) && broken_status == RELAY_ADD_METAL)
+
+	else if(istype(I, /obj/item/stack/sheet/metal) && broken_status == RELAY_ADD_METAL)
 		var/obj/item/stack/S = I
 		if(S.use(10))
 			to_chat(user, "<span class='notice'>You reseal the insulation for [src].</span>")
 			icon_state = "cablerelay"
 			broken_status = RELAY_OK
 			obj_integrity = max_integrity
-			return
 		else
 			to_chat(user, "You need 10 metal to mend [src].")
-			return
-	. = ..()
+
+	else
+		return ..()
 
 /obj/machinery/power/deck_relay/obj_break()
 	..()

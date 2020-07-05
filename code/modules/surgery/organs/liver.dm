@@ -58,6 +58,9 @@
 #undef HAS_NO_TOXIN
 #undef HAS_PAINFUL_TOXIN
 
+/obj/item/organ/liver/get_availability(datum/species/S)
+	return !(TRAIT_NOMETABOLISM in S.species_traits)
+
 /obj/item/organ/liver/fly
 	name = "insectoid liver"
 	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.

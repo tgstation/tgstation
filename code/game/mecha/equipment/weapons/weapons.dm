@@ -342,6 +342,9 @@
 	harmful = TRUE
 	ammo_type = "missiles_he"
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/spacecops
+	projectiles = 420
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
 	name = "\improper BRM-6 missile rack"
 	desc = "A weapon for combat exosuits. Launches low-explosive breaching missiles designed to explode only when striking a sturdy target."

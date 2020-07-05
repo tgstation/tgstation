@@ -166,7 +166,7 @@
 	health = 120
 	melee_damage_lower = 10
 	melee_damage_upper = 20
-	poison_per_bite = 5
+	poison_per_bite = 10
 	move_to_delay = 5
 	gold_core_spawnable = NO_SPAWN
 

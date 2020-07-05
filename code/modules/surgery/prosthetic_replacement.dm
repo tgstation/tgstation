@@ -17,7 +17,7 @@
 
 /datum/surgery_step/add_prosthetic
 	name = "add prosthetic"
-	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/twohanded/required/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
+	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
 	time = 32
 	experience_given = MEDICAL_SKILL_ORGAN_FIX //won't get full XP if rejected
 	var/organ_rejection_dam = 0
@@ -72,7 +72,11 @@
 		tool = tool.contents[1]
 	if(istype(tool, /obj/item/bodypart) && user.temporarilyRemoveItemFromInventory(tool))
 		var/obj/item/bodypart/L = tool
-		L.attach_limb(target)
+		if(!L.attach_limb(target))
+			display_results(user, target, "<span class='warning'>You fail in replacing [target]'s [parse_zone(target_zone)]! Their body has rejected [L]!</span>",
+				"<span class='warning'>[user] fails to replace [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='warning'>[user] fails to replaces [target]'s [parse_zone(target_zone)]!</span>")
+			return
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
 			experience_given -= (round(organ_rejection_dam/10))
@@ -83,13 +87,18 @@
 	else
 		var/obj/item/bodypart/L = target.newBodyPart(target_zone, FALSE, FALSE)
 		L.is_pseudopart = TRUE
-		L.attach_limb(target)
+		if(!L.attach_limb(target))
+			display_results(user, target, "<span class='warning'>You fail in attaching [target]'s [parse_zone(target_zone)]! Their body has rejected [L]!</span>",
+				"<span class='warning'>[user] fails to attach [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='warning'>[user] fails to attach [target]'s [parse_zone(target_zone)]!</span>")
+			L.forceMove(target.loc)
+			return
 		user.visible_message("<span class='notice'>[user] finishes attaching [tool]!</span>", "<span class='notice'>You attach [tool].</span>")
 		display_results(user, target, "<span class='notice'>You attach [tool].</span>",
 			"<span class='notice'>[user] finishes attaching [tool]!</span>",
 			"<span class='notice'>[user] finishes the attachment procedure!</span>")
 		qdel(tool)
-		if(istype(tool, /obj/item/twohanded/required/chainsaw))
+		if(istype(tool, /obj/item/chainsaw))
 			var/obj/item/mounted_chainsaw/new_arm = new(target)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return

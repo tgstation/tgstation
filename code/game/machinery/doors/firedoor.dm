@@ -466,7 +466,7 @@
 			constructionStep = CONSTRUCTION_GUTTED
 			update_icon()
 			return TRUE
-		else if(RCD_DECONSTRUCT)
+		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 			qdel(src)
 			return TRUE

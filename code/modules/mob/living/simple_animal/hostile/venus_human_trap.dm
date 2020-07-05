@@ -38,6 +38,7 @@
 
 
 /obj/effect/ebeam/vine/Crossed(atom/movable/AM)
+	. = ..()
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!("vines" in L.faction))

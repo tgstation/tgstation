@@ -43,7 +43,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "j" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
+/obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -95,7 +95,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "s" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
+/obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "t" = (
@@ -139,7 +139,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
+/obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "z" = (
@@ -242,7 +242,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "Q" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
+/obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)

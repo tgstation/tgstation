@@ -21,12 +21,12 @@
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	. = ..()
-	if(H.mind)
-		H.mind.isholy = TRUE
 
 	var/obj/item/storage/book/bible/booze/B = new
 
 	if(GLOB.religion)
+		if(H.mind)
+			H.mind.holy_role = HOLY_ROLE_PRIEST
 		B.deity_name = GLOB.deity
 		B.name = GLOB.bible_name
 		B.icon_state = GLOB.bible_icon_state
@@ -36,7 +36,11 @@
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
 		H.put_in_hands(N)
+		if(GLOB.religious_sect)
+			GLOB.religious_sect.on_conversion(H)
 		return
+	if(H.mind)
+		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
 	var/new_religion = DEFAULT_RELIGION
 	if(M.client && M.client.prefs.custom_names["religion"])

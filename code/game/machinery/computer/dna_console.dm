@@ -86,13 +86,18 @@
 		if(A.used)
 			to_chat(user,"<span class='notice'>Recycled [I].</span>")
 			if(A.research)
-				var/c_typepath = generate_chromosome()
-				var/obj/item/chromosome/CM = new c_typepath (drop_location())
-				to_chat(user,"<span class='notice'>Recycled [I].</span>")
-				if((LAZYLEN(stored_chromosomes) < max_chromosomes) && prob(60))
-					CM.forceMove(src)
-					stored_chromosomes += CM
-					to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
+				if(prob(60))
+					var/c_typepath = generate_chromosome()
+					var/obj/item/chromosome/CM = new c_typepath (drop_location())
+					if(LAZYLEN(stored_chromosomes) < max_chromosomes)
+						CM.forceMove(src)
+						stored_chromosomes += CM
+						to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
+					else
+						to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
+						to_chat(user, "<span class='notice'>[capitalize(CM.name)] added on top of the console.</span>")
+				else
+					to_chat(user, "<span class='notice'>There was not enough genetic data to extract a viable chromosome.</span>")
 			qdel(I)
 			return
 
@@ -514,6 +519,8 @@
 			if(HM.chromosome_name)
 				chromosome_name = HM.chromosome_name
 			temp_html += "<div class='statusLine'>Chromosome status: [chromosome_name]<br></div>"
+		temp_html += "<div class='statusLine'>Compatible chromosomes: [jointext(HM.valid_chrom_list, ", ")]<br></div>"
+
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	if(!scrambled)
 		for(var/block in 1 to A.blocks)
@@ -523,7 +530,10 @@
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = 1+(i-1)*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				if(sequence[num] == "X")
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a class='incompleteBlock' href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				else
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
 			temp_html += "</tr><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				temp_html += "<td><div class='statusLine'>|</div></td>"
@@ -531,7 +541,11 @@
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = i*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+
+				if(sequence[num] == "X")
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a class='incompleteBlock' href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				else
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
 			temp_html += "</tr></table></div>"
 		temp_html += "<br><br><br><br><br>"
 	else
@@ -870,13 +884,13 @@
 				else
 					to_chat(usr, "<span class='warning'>Not enough space to store potential mutation.</span>")
 		if("ejectchromosome")
-			if(LAZYLEN(stored_chromosomes) <= num)
+			if(LAZYLEN(stored_chromosomes) >= num)
 				var/obj/item/chromosome/CM = stored_chromosomes[num]
 				CM.forceMove(drop_location())
 				adjust_item_drop_location(CM)
 				stored_chromosomes -= CM
 		if("applychromosome")
-			if(viable_occupant && (LAZYLEN(viable_occupant.dna.mutations) <= num))
+			if(viable_occupant && (LAZYLEN(viable_occupant.dna.mutations) >= num))
 				var/datum/mutation/human/HM = viable_occupant.dna.mutations[num]
 				var/list/chromosomes = list()
 				for(var/obj/item/chromosome/CM in stored_chromosomes)
@@ -913,7 +927,7 @@
 					var/datum/mutation/human/HM = B
 					if(HM.type == mutation)
 						true_selection -= HM
-					break
+						break
 
 		if("remove_advinjector")
 			var/selection = href_list["injector"]

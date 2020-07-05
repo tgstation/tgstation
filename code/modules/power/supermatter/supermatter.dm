@@ -84,6 +84,8 @@
 #define SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN 2 SECONDS
 
 #define DEFAULT_ZAP_ICON_STATE "sm_arc"
+#define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
+#define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
@@ -481,7 +483,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
 		if(prob(50))
-			//1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))
+			//1 + ((tritRad + pluoxDampen + bzDampen + o2Rad + plasmaRad) / (10 - bzrads))
 			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(bzcomp * BZ_RADIOACTIVITY_MODIFIER))))))// RadModBZ(500%)
 		if(bzcomp >= 0.4 && prob(30 * bzcomp))
 			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
@@ -540,13 +542,22 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/flags = ZAP_SUPERMATTER_FLAGS
 		var/zap_count = 0
 		//Deal with power zaps
-		if(power > POWER_PENALTY_THRESHOLD)
-			zap_icon = DEFAULT_ZAP_ICON_STATE
-			zap_count += 2
-			if(power > SEVERE_POWER_PENALTY_THRESHOLD)
-				zap_count += 1
-				if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
-					zap_count += 1
+		switch(power)
+			if(POWER_PENALTY_THRESHOLD to SEVERE_POWER_PENALTY_THRESHOLD)
+				zap_icon = DEFAULT_ZAP_ICON_STATE
+				zap_count = 2
+			if(SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
+				zap_icon = SLIGHTLY_CHARGED_ZAP_ICON_STATE
+				//Uncaps the zap damage, it's maxed by the input power
+				//Objects take damage now
+				flags |= (ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
+				zap_count = 3
+			if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
+				zap_icon = OVER_9000_ZAP_ICON_STATE
+				//It'll stun more now, and damage will hit harder, gloves are no garentee.
+				//Machines go boom
+				flags |= (ZAP_MOB_STUN | ZAP_MACHINE_EXPLOSIVE | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
+				zap_count = 4
 		//Now we deal with damage shit
 		if (damage > damage_penalty_point && prob(20))
 			zap_count += 1
@@ -972,12 +983,21 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zapdir)
 			. = zapdir
 
+		//Going boom should be rareish
+		if(prob(80))
+			zap_flags &= ~ZAP_MACHINE_EXPLOSIVE
 		if(istype(target, /obj/machinery/power/tesla_coil))
 			var/obj/machinery/power/tesla_coil/coil = target
-			//In the best situation we can expect this to grow up to 540kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
-			//The formula for power gen is zap_str * 15 / 2 * capacitor rating, between 1 and 4
-			coil.zap_act(zap_str * 15, ZAP_SUPERMATTER_FLAGS, list()) //Coils should take a lot out of the power of the zap
-			zap_str /= 3
+			//In the best situation we can expect this to grow up to 2120kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
+			//The formula for power gen is zap_str * zap_mod / 2 * capacitor rating, between 1 and 4
+			var/multi = 10
+			switch(power)//Between 7k and 9k it's 20, above that it's 40
+				if(SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
+					multi = 20
+				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
+					multi = 40
+			coil.zap_act(zap_str * multi, zap_flags, list())
+			zap_str /= 3 //Coils should take a lot out of the power of the zap
 
 		else if(istype(target, /obj/machinery/power/grounding_rod))
 			var/obj/machinery/power/grounding_rod/rod = target
@@ -990,6 +1010,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/mob/living/mob = target
 			mob.set_shocked()
 			addtimer(CALLBACK(mob, /mob/living/proc/reset_shocked), 10)
+			//3 shots a human with no resistance. 2 to crit, one to death. This is at at least 10000 power.
+			//There's no increase after that because the input power is effectivly capped at 10k
+			//Does 1.5 damage at the least
 			var/shock_damage = ((zap_flags & ZAP_MOB_DAMAGE) ? (power / 200) - 10 : rand(5,10))
 			mob.electrocute_act(shock_damage, "Supermatter Discharge Bolt", 1,  ((zap_flags & ZAP_MOB_STUN) ? SHOCK_TESLA : SHOCK_NOSTUN))
 			zap_str /= 1.5 //Meatsacks are conductive, makes working in pairs more destructive
@@ -1007,7 +1030,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/new_range = clamp(zap_str / pressure * 10, 2, 7)
 		var/zap_count = 1
 		if(prob(5))
-			zap_str = zap_str - (zap_str/10)
+			zap_str -= (zap_str/10)
 			zap_count += 1
 		for(var/j in 1 to zap_count)
 			supermatter_zap(target, new_range, zap_str, targets_hit, zap_flags)

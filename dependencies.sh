@@ -24,3 +24,6 @@ export PHP_VERSION=5.6
 
 # SpacemanDMM git tag
 export SPACEMAN_DMM_VERSION=suite-1.3
+
+# SpacemanDMM commit hash
+export SPACEMAN_DMM_COMMIT_HASH=3cd3c402af04e6deedc9149caf5c5b0dfd44ad3b

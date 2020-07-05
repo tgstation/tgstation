@@ -215,7 +215,7 @@
 							</tr>"}
 						dat += "</table>"
 
-						dat += "<br><br>Minor Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_add'>Add New</A>"
+						dat += "<br><br>Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=crim_add'>Add New</A>"
 
 
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
@@ -226,32 +226,15 @@
 						<th>Time Added</th>
 						<th>Del</th>
 						</tr>"}
-						for(var/datum/data/crime/c in active2.fields["mi_crim"])
+						for(var/datum/data/crime/c in active2.fields["crim"])
 							dat += "<tr><td>[c.crimeName]</td>"
-							dat += "<td>[c.crimeDetails]</td>"
+							if(!c.crimeDetails)
+								dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=add_details;cdataid=[c.dataId]'>\[+\]</A></td>"
+							else
+								dat += "<td>[c.crimeDetails]</td>"
 							dat += "<td>[c.author]</td>"
 							dat += "<td>[c.time]</td>"
-							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
-							dat += "</tr>"
-						dat += "</table>"
-
-
-						dat += "<br>Major Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=ma_crim_add'>Add New</A>"
-
-						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-						<tr>
-						<th>Crime</th>
-						<th>Details</th>
-						<th>Author</th>
-						<th>Time Added</th>
-						<th>Del</th>
-						</tr>"}
-						for(var/datum/data/crime/c in active2.fields["ma_crim"])
-							dat += "<tr><td>[c.crimeName]</td>"
-							dat += "<td>[c.crimeDetails]</td>"
-							dat += "<td>[c.author]</td>"
-							dat += "<td>[c.time]</td>"
-							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=ma_crim_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
+							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=crim_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
 							dat += "</tr>"
 						dat += "</table>"
 
@@ -401,7 +384,7 @@ What a mess.*/
 					if((istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2)))
 						P.info += text("<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: []", active2.fields["criminal"])
 
-						P.info += "<BR>\n<BR>\nMinor Crimes:<BR>\n"
+						P.info += "<BR>\n<BR>\nCrimes:<BR>\n"
 						P.info +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 <tr>
 <th>Crime</th>
@@ -409,30 +392,13 @@ What a mess.*/
 <th>Author</th>
 <th>Time Added</th>
 </tr>"}
-						for(var/datum/data/crime/c in active2.fields["mi_crim"])
+						for(var/datum/data/crime/c in active2.fields["crim"])
 							P.info += "<tr><td>[c.crimeName]</td>"
 							P.info += "<td>[c.crimeDetails]</td>"
 							P.info += "<td>[c.author]</td>"
 							P.info += "<td>[c.time]</td>"
 							P.info += "</tr>"
 						P.info += "</table>"
-
-						P.info += "<BR>\nMajor Crimes: <BR>\n"
-						P.info +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Crime</th>
-<th>Details</th>
-<th>Author</th>
-<th>Time Added</th>
-</tr>"}
-						for(var/datum/data/crime/c in active2.fields["ma_crim"])
-							P.info += "<tr><td>[c.crimeName]</td>"
-							P.info += "<td>[c.crimeDetails]</td>"
-							P.info += "<td>[c.author]</td>"
-							P.info += "<td>[c.time]</td>"
-							P.info += "</tr>"
-						P.info += "</table>"
-
 
 						P.info += text("<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", active2.fields["notes"])
 						var/counter = 1
@@ -451,18 +417,10 @@ What a mess.*/
 					var/wanted_name = stripped_input(usr, "Please enter an alias for the criminal:", "Print Wanted Poster", active1.fields["name"])
 					if(wanted_name)
 						var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."
-						var/list/major_crimes = active2.fields["ma_crim"]
-						var/list/minor_crimes = active2.fields["mi_crim"]
-						if(major_crimes.len + minor_crimes.len)
+						var/list/crimes = active2.fields["crim"]
+						if(crimes.len)
 							default_description += "\n[wanted_name] is wanted for the following crimes:\n"
-						if(minor_crimes.len)
-							default_description += "\nMinor Crimes:"
-							for(var/datum/data/crime/c in active2.fields["mi_crim"])
-								default_description += "\n[c.crimeName]\n"
-								default_description += "[c.crimeDetails]\n"
-						if(major_crimes.len)
-							default_description += "\nMajor Crimes:"
-							for(var/datum/data/crime/c in active2.fields["ma_crim"])
+							for(var/datum/data/crime/c in active2.fields["crim"])
 								default_description += "\n[c.crimeName]\n"
 								default_description += "[c.crimeDetails]\n"
 
@@ -544,8 +502,7 @@ What a mess.*/
 					R.fields["id"] = active1.fields["id"]
 					R.name = text("Security Record #[]", R.fields["id"])
 					R.fields["criminal"] = "None"
-					R.fields["mi_crim"] = list()
-					R.fields["ma_crim"] = list()
+					R.fields["crim"] = list()
 					R.fields["notes"] = "No notes."
 					GLOB.data_core.security += R
 					active2 = R
@@ -574,8 +531,7 @@ What a mess.*/
 				R.fields["id"] = active1.fields["id"]
 				R.name = text("Security Record #[]", R.fields["id"])
 				R.fields["criminal"] = "None"
-				R.fields["mi_crim"] = list()
-				R.fields["ma_crim"] = list()
+				R.fields["crim"] = list()
 				R.fields["notes"] = "No notes."
 				GLOB.data_core.security += R
 				active2 = R
@@ -697,36 +653,29 @@ What a mess.*/
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_side"]
 								print_photo(P.picture.picture_image, active1.fields["name"])
-					if("mi_crim_add")
+					if("crim_add")
 						if(istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
-							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
+							var/t1 = stripped_input(usr, "Please input crime names:", "Secure. records", "", null)
+							var/t2 = stripped_input(usr, "Please input crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
-							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
-							investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-					if("mi_crim_delete")
+							GLOB.data_core.addCrime(active1.fields["id"], crime)
+							investigate_log("New Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+					if("crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
-								GLOB.data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"])
-					if("ma_crim_add")
-						if(istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
-							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
-							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
-								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
-							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
-							investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
-					if("ma_crim_delete")
+								GLOB.data_core.removeCrime(active1.fields["id"],href_list["cdataid"])
+					if("add_details")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
-								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
+								var/t1 = stripped_input(usr, "Please input crime details:", "Secure. records", "", null)
+								if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 									return
-								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
+								GLOB.data_core.addCrimeDetails(active1.fields["id"], href_list["cdataid"], t1)
+								investigate_log("New Crime details: [t1] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("citation_add")
 						if(istype(active1, /datum/data/record))
 							var/maxFine = CONFIG_GET(number/maxfine)

@@ -12,6 +12,8 @@
 
 	radio = /obj/item/radio/borg
 
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+
 	var/custom_name = ""
 	var/braintype = "Cyborg"
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
@@ -49,6 +51,7 @@
 	var/emag_cooldown = 0
 	var/wiresexposed = 0
 
+	/// Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
 	var/locked = TRUE
 	var/list/req_access = list(ACCESS_ROBOTICS)
@@ -731,7 +734,7 @@
 
 	if(sight_mode & BORGMESON)
 		sight |= SEE_TURFS
-		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGMATERIAL)
@@ -854,18 +857,37 @@
 	new_hat.forceMove(src)
 	update_icons()
 
-/mob/living/silicon/robot/proc/make_shell(var/obj/item/borg/upgrade/ai/board)
+/**
+	*Checking Exited() to detect if a hat gets up and walks off.
+	*Drones and pAIs might do this, after all.
+*/
+/mob/living/silicon/robot/Exited(atom/A)
+	if(hat && hat == A)
+		hat = null
+	update_icons()
+	. = ..()
+
+/**
+  * make_shell: Makes an AI shell out of a cyborg unit
+  *
+  * Arguments:
+  * * board - B.O.R.I.S. module board used for transforming the cyborg into AI shell
+  */
+/mob/living/silicon/robot/proc/make_shell(obj/item/borg/upgrade/ai/board)
 	if(!board)
 		upgrades |= new /obj/item/borg/upgrade/ai(src)
 	shell = TRUE
 	braintype = "AI Shell"
-	name = "[designation] AI Shell [rand(100,999)]"
+	name = "Empty AI Shell-[ident]"
 	real_name = name
 	GLOB.available_ai_shells |= src
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
 
+/**
+  * revert_shell: Reverts AI shell back into a normal cyborg unit
+  */
 /mob/living/silicon/robot/proc/revert_shell()
 	if(!shell)
 		return
@@ -875,14 +897,20 @@
 		qdel(boris)
 	shell = FALSE
 	GLOB.available_ai_shells -= src
-	name = "Unformatted Cyborg [rand(100,999)]"
+	name = "Unformatted Cyborg-[ident]"
 	real_name = name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 	diag_hud_set_aishell()
 
-/mob/living/silicon/robot/proc/deploy_init(var/mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] shell [rand(100, 999)] - [designation]"	//Randomizing the name so it shows up separately in the shells list
+/**
+  * deploy_init: Deploys AI unit into AI shell
+  *
+  * Arguments:
+  * * AI - AI unit that initiated the deployment into the AI shell
+  */
+/mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
+	real_name = "[AI.real_name] Shell-[ident]"
 	name = real_name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name	//update the camera name too

@@ -172,6 +172,15 @@
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
+/obj/item/clothing/suit/armor/vest/infiltrator
+	name = "infiltrator vest"
+	desc = "This vest appears to be made of of highly flexible materials that absorb impacts with ease."
+	icon_state = "infiltrator"
+	item_state = "infiltrator"
+	armor = list("melee" = 30, "bullet" = 40, "laser" = 20, "energy" = 30, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	strip_delay = 80
+
 //All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/centcom

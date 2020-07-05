@@ -48,7 +48,7 @@
 
 	//Extra settings
 	///Don't ever override this or I will come to your house and stand menacingly behind a bush
-	var/list/extra_settings = list()
+	VAR_FINAL/list/extra_settings = list()
 
 	//Rules
 	//Rules that automatically manage if the program's active without requiring separate sensor programs

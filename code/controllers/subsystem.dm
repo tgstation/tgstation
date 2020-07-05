@@ -1,39 +1,88 @@
-
+/**
+	* # Subsystem base class
+	* 
+	* Defines a subsystem to be managed by the [Master Controller][/datum/controller/master]
+	*
+	* Simply define a child of this subsystem, using the [SUBSYSTEM_DEF] macro, and the MC will handle registration. 
+	* Changing the name is required
+**/
+ 
 /datum/controller/subsystem
 	// Metadata; you should define these.
-	name = "fire coderbus" //name of the subsystem
-	var/init_order = INIT_ORDER_DEFAULT		//order of initialization. Higher numbers are initialized first, lower numbers later. Use defines in __DEFINES/subsystems.dm for easy understanding of order.
-	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
-	var/priority = FIRE_PRIORITY_DEFAULT	//When mutiple subsystems need to run in the same tick, higher priority subsystems will run first and be given a higher share of the tick before MC_TICK_CHECK triggers a sleep
+	
+	/// Name of the subsystem - you must change this
+	name = "fire coderbus" 
+	
+	/// Order of initialization. Higher numbers are initialized first, lower numbers later. Use or create defines such as [INIT_ORDER_DEFAULT] so we can see the order in one file.
+	var/init_order = INIT_ORDER_DEFAULT		
+	
+	/// Time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
+	var/wait = 20			
+	
+	/// Priority Weight: When mutiple subsystems need to run in the same tick, higher priority subsystems will be given a higher share of the tick before MC_TICK_CHECK triggers a sleep, higher priority subsystems also run before lower priority subsystems
+	var/priority = FIRE_PRIORITY_DEFAULT	
+	
+	/// [Subsystem Flags][SS_NO_INIT] to control binary behavior. Flags must be set at compile time or before preinit finishes to take full effect. (You can also restart the mc to force them to process again)
+	var/flags = 0			
+	
+	/// This var is set to TRUE after the subsystem has been initialized.
+	var/initialized = FALSE
 
-	var/flags = 0			//see MC.dm in __DEFINES Most flags must be set on world start to take full effect. (You can also restart the mc to force them to process again)
-
-	var/initialized = FALSE	//set to TRUE after it has been initialized, will obviously never be set if the subsystem doesn't initialize
-
-	//set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
-	//	use the SS_NO_FIRE flag instead for systems that never fire to keep it from even being added to the list
+	/// Set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
+	///		use the [SS_NO_FIRE] flag instead for systems that never fire to keep it from even being added to list that is checked every tick
 	var/can_fire = TRUE
-
-	// Bookkeeping variables; probably shouldn't mess with these.
-	var/last_fire = 0		//last world.time we called fire()
-	var/next_fire = 0		//scheduled world.time for next fire()
-	var/cost = 0			//average time to execute
-	var/tick_usage = 0		//average tick usage
-	var/tick_overrun = 0	//average tick overrun
-	var/state = SS_IDLE		//tracks the current state of the ss, running, paused, etc.
-	var/paused_ticks = 0	//ticks this ss is taking to run right now.
-	var/paused_tick_usage	//total tick_usage of all of our runs while pausing this run
-	var/ticks = 1			//how many ticks does this ss take to run on avg.
-	var/times_fired = 0		//number of times we have called fire()
-	var/queued_time = 0		//time we entered the queue, (for timing and priority reasons)
-	var/queued_priority 	//we keep a running total to make the math easier, if priority changes mid-fire that would break our running total, so we store it here
-	//linked list stuff for the queue
-	var/datum/controller/subsystem/queue_next
-	var/datum/controller/subsystem/queue_prev
-
+	
+	///Bitmap of what game states can this subsystem fire at. See [RUNLEVELS_DEFAULT] for more details.
 	var/runlevels = RUNLEVELS_DEFAULT	//points of the game at which the SS can fire
 
-	var/static/list/failure_strikes //How many times we suspect a subsystem type has crashed the MC, 3 strikes and you're out!
+	/*
+	 * The following variables are managed by the MC and should not be modified directly.
+	 */
+	
+	/// Last world.time the subsystem completed a run (as in wasn't paused by [MC_TICK_CHECK])
+	var/last_fire = 0
+	
+	/// Scheduled world.time for next fire()
+	var/next_fire = 0
+	
+	/// Running average of the amount of milliseconds it takes the subsystem to complete a run (including all resumes but not the time spent paused)
+	var/cost = 0			
+	
+	/// Running average of the amount of tick usage in percents of a tick it takes the subsystem to complete a run
+	var/tick_usage = 0		
+	
+	/// Running average of the amount of tick usage (in percents of a game tick) the subsystem has spent past its allocated time without pausing
+	var/tick_overrun = 0
+	
+	/// Tracks the current execution state of the subsystem. Used to handle subsystems that sleep in fire so the mc doesn't run them again while they are sleeping
+	var/state = SS_IDLE
+	
+	/// Tracks how many fires the subsystem has consecutively paused on in the current run
+	var/paused_ticks = 0
+	
+	/// Tracks how much of a tick the subsystem has consumed in the current run
+	var/paused_tick_usage
+	
+	/// Tracks how many fires the subsystem takes to complete a run on average.
+	var/ticks = 1
+	
+	/// Tracks the amount of completed runs for the subsystem
+	var/times_fired = 0
+	
+	/// Time the subsystem entered the queue, (for timing and priority reasons)
+	var/queued_time = 0		
+	
+	/// Priority at the time the subsystem entered the queue. Needed to avoid changes in priority (by admins and the like) from breaking things.
+	var/queued_priority 	
+	
+	/// How many times we suspect a subsystem type has crashed the MC, 3 strikes and you're out!
+	var/static/list/failure_strikes 
+	
+	/// Next subsystem in the queue of subsystems to run this tick
+	var/datum/controller/subsystem/queue_next
+	/// Previous subsystem in the queue of subsystems to run this tick
+	var/datum/controller/subsystem/queue_prev
+
 
 //Do not override
 ///datum/controller/subsystem/New()
@@ -46,6 +95,7 @@
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
 /datum/controller/subsystem/proc/ignite(resumed = 0)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	set waitfor = 0
 	. = SS_SLEEPING
 	fire(resumed)
@@ -87,7 +137,7 @@
 		queue_node_flags = queue_node.flags
 
 		if (queue_node_flags & SS_TICKER)
-			if (!(SS_flags & SS_TICKER))
+			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
 				continue
 			if (queue_node_priority < SS_priority)
 				break
@@ -215,4 +265,3 @@
 		if ("queued_priority") //editing this breaks things.
 			return 0
 	. = ..()
-

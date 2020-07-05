@@ -23,8 +23,7 @@
 	maxHealth = 60
 	health = 60
 	speed = 0
-	spacewalk = TRUE
-	
+
 	obj_damage = 60
 	melee_damage_lower = 20
 	melee_damage_upper = 30
@@ -38,14 +37,18 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	
+
 	faction = list("russian")
-	
+
 	footstep_type = FOOTSTEP_MOB_CLAW
-	
+
 	var/armored = FALSE
 	var/rideable = FALSE
-	
+
+/mob/living/simple_animal/hostile/bear/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+
 /mob/living/simple_animal/hostile/bear/Life()
 	. = ..()
 	if(!rideable && mind)
@@ -58,12 +61,12 @@
 		D.set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
 		D.set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
 		rideable = TRUE
-	
+
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()
 	if(armored)
 		add_overlay("armor_bear")
-		
+
 
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!

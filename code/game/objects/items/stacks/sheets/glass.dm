@@ -310,10 +310,21 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 			M.apply_damage(force*0.5, BRUTE, hit_hand)
 
-
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/lightreplacer))
-		I.attackby(src, user)
+		var/obj/item/lightreplacer/L = I
+		L.attackby(src, user)
+	else if(istype(I, /obj/item/stack/sheet/cloth))
+		var/obj/item/stack/sheet/cloth/C = I
+		to_chat(user, "<span class='notice'>You begin to wrap the [C] around the [src]...</span>")
+		if(do_after(user, 35, target = src))
+			var/obj/item/kitchen/knife/shiv/S = new /obj/item/kitchen/knife/shiv
+			C.use(1)
+			to_chat(user, "<span class='notice'>You wrap the [C] around the [src] forming a makeshift weapon.</span>")
+			remove_item_from_storage(src)
+			qdel(src)
+			user.put_in_hands(S)
+
 	else
 		return ..()
 

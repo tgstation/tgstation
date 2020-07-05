@@ -16,12 +16,3 @@ GLOBAL_LIST_EMPTY(powernets)
 GLOBAL_VAR_INIT(bsa_unlock, FALSE)	//BSA unlocked by head ID swipes
 
 GLOBAL_LIST_EMPTY(player_details)	// ckey -> /datum/player_details
-
-// All religion stuff
-GLOBAL_VAR(religion)
-GLOBAL_VAR(deity)
-GLOBAL_VAR(bible_name)
-GLOBAL_VAR(bible_icon_state)
-GLOBAL_VAR(bible_item_state)
-GLOBAL_VAR(holy_weapon_type)
-GLOBAL_VAR(holy_armor_type)

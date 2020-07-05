@@ -176,6 +176,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = "#caccd9"
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	value_per_unit = 0.0125
 	beauty_modifier = -0.01
 	armor_modifiers = list("melee" = 1.5, "bullet" = 1.1, "laser" = 0.3, "energy" = 0.5, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1.1, "acid" = 1)
@@ -195,6 +196,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Flexible, durable, but flamable. Hard to come across in space."
 	color = "#bb8e53"
 	strength_modifier = 0.5
+	sheet_type = /obj/item/stack/sheet/mineral/wood
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	value_per_unit = 0.06
 	beauty_modifier = 0.1

@@ -276,12 +276,15 @@
 	else
 		return 0
 
-
-/proc/try_move_adjacent(atom/movable/AM)
+/proc/try_move_adjacent(atom/movable/AM, trydir)
 	var/turf/T = get_turf(AM)
-	for(var/direction in GLOB.cardinals)
+	if(trydir)
+		if(AM.Move(get_step(T, trydir)))
+			return TRUE
+	for(var/direction in (GLOB.cardinals-trydir))
 		if(AM.Move(get_step(T, direction)))
-			break
+			return TRUE
+	return FALSE
 
 /proc/get_mob_by_key(key)
 	var/ckey = ckey(key)

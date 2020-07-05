@@ -811,9 +811,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Prison Wing"
 	icon_state = "sec_prison"
 
-/area/security/prison/toilet
+/area/security/prison/toilet //radproof
 	name = "Prison Toilet"
-	icon_state = "sec_prison"
+	icon_state = "sec_prison_safe"
+
+/area/security/prison/safe //radproof
+	name = "Prison Wing Cells"
+	icon_state = "sec_prison_safe"
 
 /area/security/prison/upper
 	name = "Upper Prison Wing"

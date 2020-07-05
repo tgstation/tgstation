@@ -141,10 +141,6 @@
 	for(var/obj/O in range(0,src))
 		if(O.type == src.type)
 			continue
-		if(isturf(O.loc))
-			var/turf/T = O.loc
-			if(T.intact && O.level == 1) //hidden under the floor
-				continue
 		if(lifetime % reagent_divisor)
 			reagents.reaction(O, VAPOR, fraction)
 	var/hit = 0

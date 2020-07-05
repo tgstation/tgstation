@@ -261,6 +261,14 @@
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	update_icon()
 
+/obj/item/clothing/head/wig/afterattack(mob/living/carbon/human/target, mob/user)
+	. = ..()
+	if (istype(target) && (HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
+		to_chat(user, "<span class='notice'>You adjust the [src] to look just like [target.name]'s [target.hairstyle].</span>")
+		add_atom_colour("#[target.hair_color]", FIXED_COLOUR_PRIORITY)
+		hairstyle = target.hairstyle
+		update_icon()
+
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hairstyle = pick(GLOB.hairstyles_list - "Bald") //Don't want invisible wig
 	add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)

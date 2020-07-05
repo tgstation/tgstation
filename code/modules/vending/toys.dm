@@ -21,7 +21,7 @@
 		/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted = 10,
 		/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted = 10,
 		/obj/item/toy/katana = 10,
-		/obj/item/twohanded/dualsaber/toy = 5)
+		/obj/item/dualsaber/toy = 5)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft

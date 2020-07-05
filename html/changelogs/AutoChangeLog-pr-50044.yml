@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Fixes batons targeting limbs when they should be applying the stamina damage to the chest."
