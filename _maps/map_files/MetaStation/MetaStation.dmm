@@ -45243,7 +45243,8 @@
 /obj/machinery/door/window/eastleft{
 	dir = 1;
 	name = "Service Deliveries";
-	req_access_txt = "29"
+	req_access_txt = "0";
+	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
