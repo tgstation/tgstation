@@ -152,8 +152,9 @@ SUBSYSTEM_DEF(economy)
 
 
 /**
-  * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs.
+  * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
   *
+  * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
   **/
 /datum/controller/subsystem/economy/proc/price_update()
 	for(var/obj/machinery/vending/V in GLOB.machines)

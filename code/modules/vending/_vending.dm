@@ -323,6 +323,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 		R.age_restricted = initial(temp.age_restricted)
 		recordlist += R
 
+/**
+  * Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy
+  *
+  * This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
+  * Arguments:
+  * * recordlist - the list of standard product datums in the vendor to refresh their prices.
+  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
+  */
 /obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
 	for(var/R in recordlist)
 		var/datum/data/vending_product/record = R

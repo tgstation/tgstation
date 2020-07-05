@@ -1,15 +1,13 @@
-//Pad & Pad Terminal
+///Pad for the Civilian Bounty Control.
 /obj/machinery/piratepad/civilian
 	name = "civilian bounty pad"
-	icon = 'icons/obj/telescience.dmi'
-	icon_state = "lpad-idle-o"
-	idle_state = "lpad-idle-o"
-	warmup_state = "lpad-idle"
-	sending_state = "lpad-beam"
+	desc = "A machine designed to send civilian bounty targets to centcom."
 	layer = TABLE_LAYER
 
+///Computer for assigning new civilian bounties, and sending bounties for collection.
 /obj/machinery/computer/piratepad_control/civilian
 	name = "civilian bounty control terminal"
+	desc = "A console for assigning civilian bounties to inserted ID cards, and for controlling the bounty pad for export."
 	ui_x = 600
 	ui_y = 230
 	status_report = "Ready for delivery."
@@ -133,7 +131,7 @@
 			id_eject(usr, inserted_scan_id)
 	. = TRUE
 
-
+///Self explanitory, holds the ID card inthe console for bounty payout and manipulation.
 /obj/machinery/computer/piratepad_control/civilian/proc/id_insert(mob/user, obj/item/inserting_item, obj/item/target)
 	var/obj/item/card/id/card_to_insert = inserting_item
 	var/holder_item = FALSE
@@ -157,6 +155,7 @@
 	updateUsrDialog()
 	return TRUE
 
+///Removes A stored ID card.
 /obj/machinery/computer/piratepad_control/civilian/proc/id_eject(mob/user, obj/target)
 	if(!target)
 		to_chat(user, "<span class='warning'>That slot is empty!</span>")
