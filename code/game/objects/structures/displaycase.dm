@@ -437,8 +437,7 @@
 			if(!payments_acc)
 				to_chat(usr, "<span class='notice'>[src] hasn't been registered yet.</span>")
 				return TRUE
-			var/confirm = alert(usr, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
-			if(confirm == "Cancel" || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return TRUE
 			if(!potential_acc)
 				to_chat(usr, "<span class='notice'>No ID card detected.</span>")

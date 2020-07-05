@@ -54,7 +54,7 @@ export const Vendatray = (props, context) => {
                 content={tray_open ? 'Open' : 'Closed'}
                 selected={tray_open}
                 onClick={() => act('Open')} />
-              <Button
+              <Button.Confirm
                 fluid
                 icon="money-bill-wave"
                 content="Purchase Item"
