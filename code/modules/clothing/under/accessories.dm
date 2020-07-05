@@ -389,6 +389,7 @@
 	above_suit = FALSE
 	minimize_when_attached = TRUE
 	attachment_slot = CHEST
+	///Display message
 	var/display = ""
 
 /obj/item/clothing/accessory/allergy_dogtag/examine(mob/user)
