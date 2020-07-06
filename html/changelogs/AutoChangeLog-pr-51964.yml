@@ -1,0 +1,6 @@
+author: "Jay Smith & Michael Trauf"
+delete-after: True
+changes: 
+  - rscadd: "Portable Chemical Mixer (Requires a vortex anomaly core to activate)"
+  - imageadd: "Unique sprites for the Portable Chemical Mixer"
+  - code_imp: "Added Portable Chemical Mixer to the Medical Techfab"
