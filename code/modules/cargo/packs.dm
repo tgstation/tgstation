@@ -723,19 +723,18 @@
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
-/datum/supply_pack/engineering/luxary_rcd_kit
-	name = "Luxary RCD Kit"
-	desc = "Need to build an entire room in a quick second and furnish it? This kit is for you. Contains a fully loaded RCD, four upgrade disks, and three compressed matter cartridges."
-	cost = 7000
+/datum/supply_pack/engineering/luxury_rcd_kit
+	name = "Luxury RCD Kit"
+	desc = "Need to build an entire room in a quick second and furnish it? This kit is for you. Contains a fully loaded RCD, three upgrade disks, and three compressed matter cartridges."
+	cost = 5000
 	contains = list(/obj/item/construction/rcd/loaded,
 					/obj/item/rcd_upgrade/frames,
 					/obj/item/rcd_upgrade/simple_circuits,
-					/obj/item/rcd_upgrade/silo_link,
 					/obj/item/rcd_upgrade/furnishing,
 					/obj/item/rcd_ammo/large,
 					/obj/item/rcd_ammo/large,
 					/obj/item/rcd_ammo/large)
-	crate_name = "luxary RCD kit crate"
+	crate_name = "luxury RCD kit crate"
 
 /datum/supply_pack/engineering/pacman
 	name = "P.A.C.M.A.N Generator Crate"

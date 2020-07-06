@@ -36,7 +36,8 @@ RLD
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
 	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
 	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
-	var/upgrade = FALSE
+	var/upgrade = 0 // bitflags
+	var/banned_upgrades = 0 // bitflags
 	var/datum/component/remote_materials/silo_mats //remote connection to the silo
 	var/silo_link = FALSE //switch to use internal or remote storage
 
@@ -61,47 +62,67 @@ RLD
 	silo_mats = null
 	return ..()
 
-/obj/item/construction/attackby(obj/item/W, mob/user, params)
-	if(iscyborg(user))
+/obj/item/construction/melee_attack_chain(mob/user, atom/target, params)
+	if(istype(target, /obj/item/rcd_upgrade))
+		install_upgrade(target, user)
 		return
-	var/loaded = 0
-	if(istype(W, /obj/item/rcd_ammo))
-		var/obj/item/rcd_ammo/R = W
+	if(insert_matter(target, user))
+		return
+	return ..()
+
+/obj/item/construction/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rcd_upgrade))
+		install_upgrade(W, user)
+		return
+	if(insert_matter(W, user))
+		return
+	return ..()
+
+/obj/item/construction/proc/install_upgrade(obj/item/rcd_upgrade/rcd_up, mob/user)
+	if(rcd_up.upgrade & upgrade)
+		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
+		return
+	if(rcd_up.upgrade & banned_upgrades)
+		to_chat(user, "<span class='warning'>[src] can't install this upgrade!</span>")
+		return
+	upgrade |= rcd_up.upgrade
+	if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
+		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	qdel(rcd_up)
+
+/obj/item/construction/proc/insert_matter(obj/O, mob/user)
+	if(iscyborg(user))
+		return FALSE
+	var/loaded = FALSE
+	if(istype(O, /obj/item/rcd_ammo))
+		var/obj/item/rcd_ammo/R = O
 		var/load = min(R.ammoamt, max_matter - matter)
 		if(load <= 0)
 			to_chat(user, "<span class='warning'>[src] can't hold any more matter-units!</span>")
-			return
+			return FALSE
 		R.ammoamt -= load
 		if(R.ammoamt <= 0)
 			qdel(R)
 		matter += load
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		loaded = 1
-	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
-		loaded = loadwithsheets(W, sheetmultiplier, user)
-	else if(istype(W, /obj/item/stack/sheet/plasteel))
-		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //12 matter for 1 plasteel sheet
-	else if(istype(W, /obj/item/stack/sheet/plasmarglass))
-		loaded = loadwithsheets(W, plasmarglassmultiplier*sheetmultiplier, user) //8 matter for one plasma rglass sheet
-	else if(istype(W, /obj/item/stack/sheet/rglass))
-		loaded = loadwithsheets(W, rglassmultiplier*sheetmultiplier, user) //6 matter for one rglass sheet
-	else if(istype(W, /obj/item/stack/rods))
-		loaded = loadwithsheets(W, sheetmultiplier * 0.5, user) // 2 matter for 1 rod, as 2 rods are produced from 1 metal
-	else if(istype(W, /obj/item/stack/tile/plasteel))
-		loaded = loadwithsheets(W, sheetmultiplier * 0.25, user) // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
+		loaded = TRUE
+	else if(istype(O, /obj/item/stack/sheet/metal) || istype(O, /obj/item/stack/sheet/glass))
+		loaded = loadwithsheets(O, sheetmultiplier, user)
+	else if(istype(O, /obj/item/stack/sheet/plasteel))
+		loaded = loadwithsheets(O, plasteelmultiplier*sheetmultiplier, user) //12 matter for 1 plasteel sheet
+	else if(istype(O, /obj/item/stack/sheet/plasmarglass))
+		loaded = loadwithsheets(O, plasmarglassmultiplier*sheetmultiplier, user) //8 matter for one plasma rglass sheet
+	else if(istype(O, /obj/item/stack/sheet/rglass))
+		loaded = loadwithsheets(O, rglassmultiplier*sheetmultiplier, user) //6 matter for one rglass sheet
+	else if(istype(O, /obj/item/stack/rods))
+		loaded = loadwithsheets(O, sheetmultiplier * 0.5, user) // 2 matter for 1 rod, as 2 rods are produced from 1 metal
+	else if(istype(O, /obj/item/stack/tile/plasteel))
+		loaded = loadwithsheets(O, sheetmultiplier * 0.25, user) // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-	else if(istype(W, /obj/item/rcd_upgrade))
-		var/obj/item/rcd_upgrade/rcd_up = W
-		if(!(upgrade & rcd_up.upgrade))
-			upgrade |= rcd_up.upgrade
-			if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
-				silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
-			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-			qdel(W)
-	else
-		return ..()
-	update_icon()	//ensures that ammo counters (if present) get updated
+		update_icon()	//ensures that ammo counters (if present) get updated
+	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
 	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
@@ -274,7 +295,7 @@ RLD
 		silo_link = !silo_link
 		to_chat(user, "<span class='notice'>You change \the [src]'s storage link state: [silo_link ? "ON" : "OFF"].</span>")
 	else
-		to_chat(user, "<span class='warning'>\the [src] dont have remote storage connection.</span>")
+		to_chat(user, "<span class='warning'>\the [src] doesn't have remote storage connection.</span>")
 
 /obj/item/construction/rcd/proc/get_airlock_image(airlock_type)
 	var/obj/machinery/door/airlock/proto = airlock_type
@@ -612,6 +633,7 @@ RLD
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = TRUE
+	banned_upgrades = RCD_UPGRADE_SILO_LINK
 	var/energyfactor = 72
 
 
