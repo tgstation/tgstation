@@ -532,7 +532,7 @@
 	color = "#ffffff"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
-	addiction_threshold = 5
+	addiction_threshold = 6
 	can_synth = TRUE
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/M)
