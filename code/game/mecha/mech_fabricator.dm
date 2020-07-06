@@ -19,6 +19,8 @@
 	var/list/build_materials
 	var/obj/item/stored_part
 
+	var/datum/design/force_build_next
+
 	var/time_coeff = 1
 	var/component_coeff = 1
 
@@ -40,8 +42,13 @@
 								"Exosuit Equipment",
 								"Exosuit Ammunition",
 								"Cyborg Upgrade Modules",
+								"Cybernetics",
+								"Implants",
+								"Control Interfaces",
 								"Misc"
 								)
+	ui_x = 1100
+	ui_y = 640
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = new
@@ -69,6 +76,8 @@
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
+	update_static_data(usr)
+
 /obj/machinery/mecha_part_fabricator/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
@@ -88,36 +97,13 @@
 	say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
 
 /**
-  * Generates a list of parts available to print within a specific set of parts.
-  *
-  * Returns null if there are no parts available in this set.
-  * * set_name = String name of the set to get the printable parts list for.
-  */
-/obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
-	var/list/parts_list = list()
-
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(D.build_type & MECHFAB)
-			if(!(set_name in D.category))
-				continue
-
-			var/list/part = output_part_info(D)
-
-			parts_list += list(part)
-
-	if(length(parts_list))
-		return parts_list
-
-	return null
-
-/**
   * Generates an info list for a given part.
   *
   * Returns a list of part information.
   * * D - Design datum to get information on.
+  * * categories - Boolean, whether or not to parse snowflake categories into the part information list.
   */
-/obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D)
+/obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D, var/categories = FALSE)
 	var/cost = list()
 	for(var/c in D.materials)
 		var/datum/material/M = c
@@ -125,32 +111,60 @@
 
 	var/obj/built_item = D.build_path
 
-	// Handle some special cases to build up sub-categories for the fab interface.
-	// Start with checking if this design builds a cyborg module.
-	/*if(built_item in typesof(/obj/item/borg/upgrade))
-		say("[initial(built_item.name)] is a borg upgrade!")
-		var/obj/item/borg/upgrade/U = built_item
-		var/list/module_types = initial(U.module_flags)
-		if(module_types)
-			if(module_types & BORG_MODULE_SECURITY)
-				say("Compatible with SECURITY")
-			if(module_types & BORG_MODULE_MINER)
-				say("Compatible with MINER")
-			if(module_types & BORG_MODULE_JANITOR)
-				say("Compatible with JANITOR")
-			if(module_types & BORG_MODULE_MEDICAL)
-				say("Compatible with JANITOR")
-			if(module_types & BORG_MODULE_ENGINEERING)
-				say("Compatible with ENGINEERING")
-		else
-			say("Compatible with ALL MODULES")*/
+	var/list/category_override = null
+	var/list/sub_category = null
+
+	if(categories)
+		// Handle some special cases to build up sub-categories for the fab interface.
+		// Start with checking if this design builds a cyborg module.
+		if(built_item in typesof(/obj/item/borg/upgrade))
+			var/obj/item/borg/upgrade/U = built_item
+			var/module_types = initial(U.module_flags)
+			sub_category = list()
+			if(module_types)
+				if(module_types & BORG_MODULE_SECURITY)
+					sub_category += "Security"
+				if(module_types & BORG_MODULE_MINER)
+					sub_category += "Mining"
+				if(module_types & BORG_MODULE_JANITOR)
+					sub_category += "Janitor"
+				if(module_types & BORG_MODULE_MEDICAL)
+					sub_category += "Medical"
+				if(module_types & BORG_MODULE_ENGINEERING)
+					sub_category += "Engineering"
+			else
+				sub_category += "All Cyborgs"
+		// Else check if this design builds a piece of exosuit equipment.
+		else if(built_item in typesof(/obj/item/mecha_parts/mecha_equipment))
+			var/obj/item/mecha_parts/mecha_equipment/E = built_item
+			var/mech_types = initial(E.mech_flags)
+			sub_category = "Equipment"
+			if(mech_types)
+				category_override = list()
+				if(mech_types & EXOSUIT_MODULE_RIPLEY)
+					category_override += "Ripley"
+				if(mech_types & EXOSUIT_MODULE_ODYSSEUS)
+					category_override += "Odysseus"
+				if(mech_types & EXOSUIT_MODULE_CLARKE)
+					category_override += "Clarke"
+				if(mech_types & EXOSUIT_MODULE_GYGAX)
+					category_override += "Gygax"
+				if(mech_types & EXOSUIT_MODULE_DURAND)
+					category_override += "Durand"
+				if(mech_types & EXOSUIT_MODULE_HONK)
+					category_override += "H.O.N.K"
+				if(mech_types & EXOSUIT_MODULE_PHAZON)
+					category_override += "Phazon"
+
 
 	var/list/part = list(
 		"name" = D.name,
-		"desc" = initial(build_path.desc),
+		"desc" = initial(built_item.desc),
 		"print_time" = get_construction_time_w_coeff(D)/10,
 		"cost" = cost,
-		"id" = D.id
+		"id" = D.id,
+		"sub_category" = sub_category,
+		"category_override" = category_override
 	)
 
 	return part
@@ -206,7 +220,7 @@
 	return resources
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
-	if(D.reagents_list.len) // No reagents storage - no reagent designs.
+	if(length(D.reagents_list)) // No reagents storage - no reagent designs.
 		return FALSE
 	var/datum/component/material_container/materials = rmat.mat_container
 	if(materials.has_materials(get_resources_w_coeff(D)))
@@ -268,8 +282,8 @@
 
 	// If there's nothing being built, try to build something
 	if(!being_built)
-		// If this fails, end processing.
-		if(!build_next_in_queue())
+		// If we're not processing the queue anymore or there's nothing to build, end processing.
+		if(!process_queue || !build_next_in_queue())
 			on_finish_printing()
 			end_processing()
 			return TRUE
@@ -277,12 +291,11 @@
 
 	// If there's an item being built, check if it is complete.
 	if(being_built && (build_finish < world.time))
-		// Then attempt to dispense it.
+		// Then attempt to dispense it and if appropriate build the next item.
 		dispense_built_part(being_built)
+		if(process_queue)
+			build_next_in_queue()
 		return TRUE
-
-
-
 
 /**
   * Dispenses a part to the tile infront of the Exosuit Fab.
@@ -306,15 +319,14 @@
 		return FALSE
 
 	say("\The [I] is complete.")
-	stored_part.forceMove(exit)
+	I.forceMove(exit)
 	return TRUE
 
-/obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
-	if(set_name in part_sets)
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = SSresearch.techweb_design_by_id(v)
-			if((D.build_type & MECHFAB) && (set_name in D.category))
-				add_to_queue(D)
+/obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(list/part_list)
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
+		if((D.build_type & MECHFAB) && (D.id in part_list))
+			add_to_queue(D)
 
 /obj/machinery/mecha_part_fabricator/proc/add_to_queue(D)
 	if(!istype(queue))
@@ -324,7 +336,7 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-	if(!isnum(index) || !ISINTEGER(index) || !istype(queue) || (index<1 || index>queue.len))
+	if(!isnum(index) || !ISINTEGER(index) || !istype(queue) || (index<1 || index>length(queue)))
 		return FALSE
 	queue.Cut(index,++index)
 	return TRUE
@@ -342,6 +354,7 @@
 /obj/machinery/mecha_part_fabricator/proc/sync()
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		RDC.stored_research.copy_research_to(stored_research)
+		update_static_data(usr)
 		say("Successfully synchronized with R&D server.")
 		return
 
@@ -354,30 +367,65 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff, roundto)
 
+/obj/machinery/mecha_part_fabricator/ui_base_html(html)
+	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	. = ..()
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "ExosuitFabricator", name, 800, 800, master_ui, state)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+		assets.send(user)
+		ui = new(user, src, ui_key, "ExosuitFabricator", name, ui_x, ui_y, master_ui, state)
 		ui.open()
+
+/obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/list/final_sets = list()
+	var/list/buildable_parts = list()
+
+	for(var/part_set in part_sets)
+		final_sets += part_set
+
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
+		if(D.build_type & MECHFAB)
+			// This is for us.
+			var/list/part = output_part_info(D, TRUE)
+
+			if(part["category_override"])
+				for(var/cat in part["category_override"])
+					buildable_parts[cat] += list(part)
+					if(!(cat in part_sets))
+						final_sets += cat
+				continue
+
+			for(var/cat in part_sets)
+				// Find all matching categories.
+				if(!(cat in D.category))
+					continue
+
+				buildable_parts[cat] += list(part)
+
+	data["part_sets"] = final_sets
+	data["buildable_parts"] = buildable_parts
+
+	return data
 
 /obj/machinery/mecha_part_fabricator/ui_data(mob/user)
 	var/list/data = list()
 
 	data["materials"] = output_available_resources()
 
-	var/list/buildable_parts = list()
-	for(var/part_set in part_sets)
-		buildable_parts[part_set] = output_parts_list(part_set)
-
-	data["part_sets"] = part_sets
-	data["buildable_parts"] = buildable_parts
-
 	if(being_built)
-		var/list/part = list()
-		part["name"] = being_built.name
-		part["duration"] = world.time - build_finish
+		var/list/part = list(
+			"name" = being_built.name,
+			"duration" = build_finish - world.time,
+			"print_time" = get_construction_time_w_coeff(being_built)
+		)
 		data["building_part"] = part
 	else
 		data["building_part"] = null
@@ -388,6 +436,8 @@
 		data["stored_part"] = stored_part.name
 	else
 		data["stored_part"] = null
+
+	data["is_processing_queue"] = process_queue
 
 	return data
 
@@ -407,8 +457,9 @@
 			return
 		if("add_queue_set")
 			// Add all parts of a set to queue
-			var/part_set = params["set"]
-			add_part_set_to_queue(part_set)
+			var/part_list_str = params["part_list"]
+			var/list/part_list = splittext(part_list_str, ",")
+			add_part_set_to_queue(part_list)
 			return
 		if("add_queue_part")
 			// Add a specific part to queue
@@ -433,14 +484,36 @@
 			if(process_queue)
 				return
 			process_queue = TRUE
-			begin_processing()
+
+			if(!being_built)
+				begin_processing()
+			return
+		if("stop_queue")
+			// Pause queue building. Also known as stop.
+			process_queue = FALSE
+			return
+		if("build_part")
+			// Build a single part
+			if(being_built || process_queue)
+				return
+
+			var/id = params["id"]
+			var/datum/design/D = SSresearch.techweb_design_by_id(id)
+
+			if(!(D.build_type & MECHFAB) || !(D.id == id))
+				return
+
+			if(build_part(D))
+				on_start_printing()
+				begin_processing()
+
 			return
 		if("move_queue_part")
 			// Moves a part up or down in the queue.
 			var/index = text2num(params["index"])
 			var/new_index = index + text2num(params["newindex"])
 			if(isnum(index) && isnum(new_index) && ISINTEGER(index) && ISINTEGER(new_index))
-				if(ISINRANGE(new_index,1,queue.len))
+				if(ISINRANGE(new_index,1,length(queue)))
 					queue.Swap(index,new_index)
 			return
 		if("remove_mat")

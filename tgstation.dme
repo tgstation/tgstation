@@ -44,6 +44,7 @@
 #include "code\__DEFINES\dye_keys.dm"
 #include "code\__DEFINES\economy.dm"
 #include "code\__DEFINES\events.dm"
+#include "code\__DEFINES\exosuit_fab.dm"
 #include "code\__DEFINES\exports.dm"
 #include "code\__DEFINES\fantasy_affixes.dm"
 #include "code\__DEFINES\flags.dm"
