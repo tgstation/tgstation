@@ -292,7 +292,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
-<<<<<<< HEAD
 "aaJ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -325,8 +324,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
-=======
->>>>>>> upstream/master
 "aaM" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
