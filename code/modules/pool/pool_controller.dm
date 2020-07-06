@@ -141,13 +141,13 @@
 					var/datum/reagent/R = Q
 					if(R.reagent_state == SOLID)
 						R.reagent_state = LIQUID
-				W.reagents.reaction(swimee, VAPOR, 0.03) //3 percent
+				W.reagents.expose(swimee, VAPOR, 0.03) //3 percent
 				for(var/Q in W.reagents.reagent_list)
 					var/datum/reagent/R = Q
 					swimee.reagents.add_reagent(R.type, 0.5) //osmosis
 		for(var/obj/objects in W)
 			if(beaker && cur_reagent && W.reagents)
-				W.reagents.reaction(objects, VAPOR, 1)
+				W.reagents.expose(objects, VAPOR, 1)
 			reagenttimer = 4
 	changecolor()
 
@@ -293,7 +293,7 @@
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "pool_controller", "[name]", 300, 450, master_ui, state)
+		ui = new(user, src, ui_key, "PoolController", "[name]", 300, 450, master_ui, state)
 		ui.set_autoupdate(TRUE)
 		ui.open()
 

@@ -800,11 +800,11 @@
 	name = "Old Military Jacket"
 	desc = "A very stylish jacket, there's a small tag on the inside of the sleeve that reads 'FOR THE ODA CLAN!' it looks handwritten."
 	icon_state = "old_military_jacket"
-	item_state = "old_military_jacket"
+	inhand_icon_state = "old_military_jacket"
 
 /obj/item/clothing/suit/comfy_jacket
 	name = "Comfy Jacket"
 	desc = "A brown leather jacket, it appears to be lined with fur on the inside. Could warm you up easily in cold environments!"
 	icon_state = "comfy_jacket"
-	item_state = "comfy_jacket"
+	inhand_icon_state = "comfy_jacket"
 	cold_protection = CHEST|ARMS

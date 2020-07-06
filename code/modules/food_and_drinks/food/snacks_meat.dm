@@ -64,7 +64,7 @@
 	name = "Carpcakes"
 	desc = "A flaky and crunchy fishcake. You can almost make out how crisp the cake is by tapping it with a fork."
 	icon_state = "carpcakes_1"
-	item_state = "carpcakes"
+	inhand_icon_state = "carpcakes"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#D2691E"
@@ -135,7 +135,7 @@
 	..()
 
 /obj/item/reagent_containers/food/snacks/carpcakes/update_snack_overlays(obj/item/reagent_containers/food/snacks/P)
-	var/mutable_appearance/carpcake = mutable_appearance(icon, "[P.item_state]_[rand(1,3)]")
+	var/mutable_appearance/carpcake = mutable_appearance(icon, "[P.inhand_icon_state]_[rand(1,3)]")
 	carpcake.pixel_x = rand(-1,1)
 	carpcake.pixel_y = 3 * contents.len - 1
 	add_overlay(carpcake)

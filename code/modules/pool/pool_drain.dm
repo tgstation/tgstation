@@ -47,6 +47,7 @@
 				for(var/turf/open/pool/undrained in range(5,src))
 					undrained.filled = TRUE
 					undrained.update_icon()
+					undrained.update_pool()
 				for(var/obj/effect/effect/waterspout/undrained3 in range(1,src))
 					qdel(undrained3)
 				poolcontrol.drained = FALSE
@@ -91,6 +92,7 @@
 				for(var/turf/open/pool/drained in range(5,src))
 					drained.filled = FALSE
 					drained.update_icon()
+					drained.update_pool()
 				for(var/obj/effect/whirlpool/drained3 in range(1,src))
 					qdel(drained3)
 				for(var/obj/machinery/poolcontroller/drained4 in range(5,src))

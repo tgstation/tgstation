@@ -25,7 +25,7 @@
 	name = "Engineering Suit"
 	desc = "Don't let Mothia see this."
 	icon_state = "engineeringsuit"
-	item_state = "engineeringsuit"
+	inhand_icon_state = "engineeringsuit"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 80, "fire" = 60, "acid" = 20)
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE

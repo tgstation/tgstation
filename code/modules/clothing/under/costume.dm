@@ -65,7 +65,7 @@
 	name = "french maid uniform"
 	desc = "A flashier and more revealing maid outfit."
 	icon_state = "frenchmaid"
-	item_state = "frenchmaid"
+	inhand_icon_state = "frenchmaid"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/soviet

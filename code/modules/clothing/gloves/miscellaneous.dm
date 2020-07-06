@@ -16,7 +16,7 @@
 	name = "Clockwork Gloves"
 	desc = "Large brass gloves. They kind of make you want to hold your arms in an awkward position."
 	icon_state = "ratvargloves"
-	item_state = "ratvargloves"
+	inhand_icon_state = "ratvargloves"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
 	undyeable = TRUE
 
@@ -25,7 +25,7 @@
 	name = "maid gloves"
 	desc = "Elbow length gloves. Perfect for dusting."
 	icon_state = "frenchmaid"
-	item_state = "frenchmaid"
+	inhand_icon_state = "frenchmaid"
 	undyeable = TRUE
 
 /obj/item/clothing/gloves/botanic_leather

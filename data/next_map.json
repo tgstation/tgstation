@@ -1,12 +1,11 @@
 {
-    "map_name": "Kilo Station",
-    "map_path": "map_files/KiloStation",
-    "map_file": "KiloStation.dmm",
-    "space_ruin_levels": 4,
+    "map_name": "Box Station",
+    "map_path": "map_files/BoxStation",
+    "map_file": "BoxStation.dmm",
     "shuttles": {
-	    "emergency": "emergency_kilo",
-	    "ferry": "ferry_kilo",
-	    "cargo": "cargo_kilo",
-	    "whiteship": "whiteship_kilo"
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
     }
 }

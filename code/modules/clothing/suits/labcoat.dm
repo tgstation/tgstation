@@ -26,7 +26,7 @@
 	name = "black labcoat"
 	desc = "Seems more for style than an actual occupational purpose"
 	icon_state = "labcoat_black"
-	item_state = "labcoat_black"
+	inhand_icon_state = "labcoat_black"
 
 /obj/item/clothing/suit/toggle/labcoat/mad
 	name = "\proper The Mad's labcoat"

@@ -1,10 +1,11 @@
 /datum/language/original
 	name = "Original"
 	desc = "The oldest recorded language in the universe. All first speakers of it have since passed on."
-	speech_verb = "recites"
-	ask_verb = "queries"
-	exclaim_verb = "enunciates"
-	sing_verb = "screeches"
+//	speech_verb = "recites"
+//	ask_verb = "queries"
+//	exclaim_verb = "enunciates"
+//	sing_verb = "screeches"
+//     It would appear that these features are now exclusively determined by the type of entity speaking, rather than the language.
 	key = "2"
 	flags = TONGUELESS_SPEECH
 	space_chance = 40
