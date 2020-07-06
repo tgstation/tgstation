@@ -227,12 +227,12 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/mecha_part_fabricator/proc/build_next_in_queue()
+/obj/machinery/mecha_part_fabricator/proc/build_next_in_queue(verbose = TRUE)
 	if(!length(queue))
 		return FALSE
 
 	var/datum/design/D = queue[1]
-	if(build_part(D))
+	if(build_part(D, verbose))
 		remove_from_queue(1)
 		return TRUE
 
@@ -244,19 +244,22 @@
   * Returns FALSE if the procedure fails. Returns TRUE when being_built is set.
   * * D - Design datum to attempt to print.
   */
-/obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D)
+/obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE)
 	if(!D)
 		return FALSE
 
 	var/datum/component/material_container/materials = rmat.mat_container
 	if (!materials)
-		say("No access to material storage, please contact the quartermaster.")
+		if(verbose)
+			say("No access to material storage, please contact the quartermaster.")
 		return FALSE
 	if (rmat.on_hold())
-		say("Mineral access is on hold, please contact the quartermaster.")
+		if(verbose)
+			say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	if(!check_resources(D))
-		say("Not enough resources. Processing stopped.")
+		if(verbose)
+			say("Not enough resources. Processing stopped.")
 		return FALSE
 
 	build_materials = get_resources_w_coeff(D)
@@ -294,7 +297,7 @@
 		// Then attempt to dispense it and if appropriate build the next item.
 		dispense_built_part(being_built)
 		if(process_queue)
-			build_next_in_queue()
+			build_next_in_queue(FALSE)
 		return TRUE
 
 /**
