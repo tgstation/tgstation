@@ -20,7 +20,7 @@
 
 /obj/item/storage/portable_chem_mixer/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)	///The individual components that are contained in the portable chemical mixer
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)	///The storage component that is contained in the portable chemical mixer
 	STR.max_combined_w_class = 200
 	STR.max_items = 50
 	STR.insert_preposition = "in"
