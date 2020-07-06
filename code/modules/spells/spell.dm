@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return FALSE
 
 	var/mob/living/L = user
-	if(istype(L) && (invocation_type == "whisper" || invocation_type == "shout") && !L.can_speak_vocal())
+	if(istype(L) && (invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !L.can_speak_vocal())
 		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
 		return FALSE
 
@@ -248,17 +248,17 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 	switch(invocation_type)
-		if("shout")
+		if(INVOCATION_SHOUT)
 			if(prob(50))//Auto-mute? Fuck that noise
 				user.say(invocation, forced = "spell")
 			else
 				user.say(replacetext(invocation," ","`"), forced = "spell")
-		if("whisper")
+		if(INVOCATION_WHISPER)
 			if(prob(50))
 				user.whisper(invocation)
 			else
 				user.whisper(replacetext(invocation," ","`"))
-		if("emote")
+		if(INVOCATION_EMOTE)
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
 
 /obj/effect/proc_holder/spell/proc/playMagSound()
@@ -558,7 +558,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	charge_max = 100
 	cooldown_min = 50
 	invocation = "Victus sano!"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	school = "restoration"
 	sound = 'sound/magic/staff_healing.ogg'
 

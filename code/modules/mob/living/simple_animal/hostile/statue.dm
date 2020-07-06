@@ -109,7 +109,7 @@
 		..()
 
 /mob/living/simple_animals/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
-	return
+	return FALSE
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
 	if(!cannot_be_seen)
