@@ -6,7 +6,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
-	var/list/atoms_in_use = list()
+	var/is_in_use = FALSE
 
 /obj/effect/eldritch/attack_hand(mob/living/user)
 	. = ..()
@@ -17,7 +17,8 @@
 /obj/effect/eldritch/proc/try_activate(mob/living/user)
 	if(!IS_HERETIC(user))
 		return
-	INVOKE_ASYNC(src, .proc/activate , user)
+	if(!is_in_use)
+		INVOKE_ASYNC(src, .proc/activate , user)
 
 /obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -25,6 +26,7 @@
 		qdel(src)
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
+	is_in_use = TRUE
 	// Have fun trying to read this proc.
 	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/list/knowledge = cultie.get_all_knowledge()
@@ -72,23 +74,23 @@
 
 		flick("[icon_state]_active",src)
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
-		atoms_in_use |= selected_atoms
-		for(var/to_disappear in atoms_in_use)
+		for(var/to_disappear in selected_atoms)
 			var/atom/atom_to_disappear = to_disappear
 			//temporary so we dont have to deal with the bs of someone picking those up when they may be deleted
 			atom_to_disappear.invisibility = INVISIBILITY_ABSTRACT
 		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
+			is_in_use = FALSE
 
-		listclearnulls(atoms_in_use)
+		listclearnulls(selected_atoms)
 
-		for(var/to_disappear in atoms_in_use)
+		for(var/to_disappear in selected_atoms)
 			var/atom/atom_to_disappear = to_disappear
 			//we need to reappear the item just in case the ritual didnt consume everything... or something.
 			atom_to_disappear.invisibility = initial(atom_to_disappear.invisibility)
 
-		atoms_in_use = list()
 		return
+	is_in_use = FALSE
 	to_chat(user,"<span class='warning'>Your ritual failed! You used either wrong components or are missing something important!</span>")
 
 /obj/effect/eldritch/big
