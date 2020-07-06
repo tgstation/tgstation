@@ -229,7 +229,8 @@ SUBSYSTEM_DEF(vote)
 			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
-			SEND_SOUND(C, sound('sound/machines/nuke/angry_beep.ogg'))
+			if(C.prefs.toggles & SOUND_ANNOUNCEMENTS)
+				SEND_SOUND(C, sound('sound/machines/nuke/angry_beep.ogg'))
 		return TRUE
 	return FALSE
 
