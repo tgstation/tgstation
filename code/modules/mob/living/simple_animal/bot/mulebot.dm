@@ -688,10 +688,10 @@
 
 
 /mob/living/simple_animal/bot/mulebot/MobBump(mob/M) // called when the bot bumps into a mob
-	if(!isliving(M))
+	if(paicard || !isliving(M)) //if there's a PAIcard controlling the bot, they aren't allowed to harm folks.
 		return ..()
 	var/mob/living/L = M
-	if(!paicard && wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over. if there's a PAIcard controlling the bot, they aren't allowed to harm folks.
+	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
 		if(iscyborg(L))
 			visible_message("<span class='danger'>[src] bumps into [L]!</span>")
 		else if(L.Knockdown(8 SECONDS))
