@@ -1,26 +1,25 @@
 GLOBAL_LIST_EMPTY(allbountyboards)
 GLOBAL_LIST_EMPTY(request_list)
-#define MAX_DESC_LENGTH = 140
 /**
   * A machine that acts basically like a quest board.
   * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
   */
 /obj/machinery/bounty_board
-	name = "request kiosk"
+	name = "bounty board"
 	desc = "Alows you to place requests for goods and services across the station, as well as pay those who actually did it."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "request_kiosk"
 	ui_x = 550
 	ui_y = 600
 	light_color = LIGHT_COLOR_GREEN
-	///Static, global list for containing request datums across all request kiosks.
-	var/static/list/request_list
 	///Static, global value so that each request has a universal value for what request number it is.
 	var/static/request_number
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
+	///The time since a last bounty slip was printed.
+	var/bounty_timer = 0
 
 /obj/machinery/bounty_board/Initialize(mapload, ndir, building)
 	. = ..()
@@ -99,9 +98,6 @@ GLOBAL_LIST_EMPTY(request_list)
 		data["AccountName"] = current_user.account_holder
 	data["Requests"] = formatted_requests
 	data["Applicants"] = formatted_applicants
-
-	data["text"] = info
-	data["max_length"] = MAX_DESC_LENGTH
 	return data
 
 /obj/machinery/bounty_board/ui_act(action, list/params)
@@ -110,10 +106,11 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
-	for(var/datum/station_request/i in GLOB.request_list)
-		if("[i.req_number]" == "[current_ref_num]")
-			active_request = i
-			break
+	if(GLOB.request_list.len)
+		for(var/datum/station_request/i in GLOB.request_list)
+			if("[i.req_number]" == "[current_ref_num]")
+				active_request = i
+				break
 	if(active_request)
 		for(var/datum/bank_account/j in active_request.applicants)
 			if("[j.account_id]" == "[current_app_num]")
@@ -121,6 +118,11 @@ GLOBAL_LIST_EMPTY(request_list)
 				break
 	switch(action)
 		if("CreateBounty")
+			if(bounty_timer > world.time)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+				say("Printers resetting.")
+				return TRUE
+			bounty_timer = world.time + (4 SECONDS)
 			say("Dispensing Card.")
 			new /obj/item/bounty_card(loc)
 			return TRUE
@@ -168,7 +170,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	if(new_request)
 		to_chat(user, "<span class='warning'>[src] is already filled out.</span>")
 		return
-	var/description = input(user, "Please enter your request description.", "Request description") as message|null
+	var/description = stripped_input(user, "Please enter your request description.", "Request description") as message|null
 	if(!description || !(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)))
 		return
 	description = sanitize(copytext_char(description, 1, MAX_MESSAGE_LEN))
