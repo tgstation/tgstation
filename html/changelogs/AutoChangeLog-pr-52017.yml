@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscdel: "BoxStation has been removed in favor of IceBox."
