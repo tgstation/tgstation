@@ -1,0 +1,4 @@
+author: "Timberpoes & Kathy Ryals"
+delete-after: True
+changes: 
+  - tweak: "The Bluespace Locator now uses TGUI."
