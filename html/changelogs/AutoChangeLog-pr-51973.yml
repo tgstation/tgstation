@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - tweak: "The APC control console is now tgui rather then html. It should be a lot more usable. I've made other changes, you won't notice."

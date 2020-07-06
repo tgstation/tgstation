@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - tweak: "Brain Tumor damage is now paused when in stasis."
-  - tweak: "Brain Tumor damage is now paused when having Mannitol metabolizing in you."
-  - rscadd: "Brain Tumor quirk users will now spawn with a pill bottle containing 4 x 5u Mannitol pills."
