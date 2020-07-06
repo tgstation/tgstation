@@ -601,6 +601,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/stealthy_weapons/championbelt
+	name = "Syndicate Championship Belt"
+	desc = "Syndicate were able to steal this precious belt from a known wrestler. It was enhanced with implant like technology \
+	allowing you to access wrestling moves of the famous wrestlers. The moves were also enhanced to be extra lethal."
+	item = /obj/item/storage/belt/champion/wrestling
+	cost = 13
+	surplus = 0
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/stealthy_weapons/crossbow
 	name = "Miniature Energy Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. \

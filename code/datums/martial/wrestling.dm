@@ -214,6 +214,7 @@
 			if (!D.stat)
 				D.emote("scream")
 			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/Paralyze, 20))
+			D.adjustBruteLoss(rand(15,30))
 	log_combat(A, D, "has thrown with wrestling")
 	return 0
 
@@ -355,7 +356,7 @@
 		D.visible_message("<span class='danger'>[A] headbutts [D]!</span>", \
 						"<span class='userdanger'>You're headbutted by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='danger'>You headbutt [D]!</span>")
-		D.adjustBruteLoss(rand(10,20))
+		D.adjustBruteLoss(rand(15,30))
 		playsound(A.loc, "swing_hit", 50, TRUE)
 		D.Unconscious(20)
 	log_combat(A, D, "headbutted")
@@ -371,7 +372,7 @@
 					"<span class='userdanger'>You're roundhouse-kicked by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, "<span class='danger'>You roundhouse-kick [D]!</span>")
 	playsound(A.loc, "swing_hit", 50, TRUE)
-	D.adjustBruteLoss(rand(10,20))
+	D.adjustBruteLoss(rand(15,30))
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
