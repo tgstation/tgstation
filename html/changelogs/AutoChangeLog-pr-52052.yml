@@ -1,0 +1,4 @@
+author: "Kathy Ryals"
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen finally realized they forgot to ship the mandatory anomaly compressor and two anomaly cores to Icebox."
