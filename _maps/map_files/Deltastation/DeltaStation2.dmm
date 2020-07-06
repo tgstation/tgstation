@@ -64832,7 +64832,6 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
 "cqo" = (
@@ -92637,7 +92636,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "drG" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light,
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/turf_decal/tile/purple,
@@ -100972,16 +100970,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
-"dKl" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
 "dKm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -113291,7 +113279,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/displaycase/forsale,
+/obj/structure/displaycase/forsale/kitchen,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "kEN" = (
@@ -114767,7 +114755,7 @@
 	name = "Kitchen Counter Shutters"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/displaycase/forsale,
+/obj/structure/displaycase/forsale/kitchen,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "qkG" = (
@@ -156018,7 +156006,7 @@ dEQ
 dGf
 cXE
 cXE
-dKl
+cXE
 dKT
 dMs
 dNR

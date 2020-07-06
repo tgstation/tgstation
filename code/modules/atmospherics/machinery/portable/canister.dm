@@ -280,7 +280,7 @@
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
-	update_overlays()
+	update_icon()
 
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()

@@ -66,7 +66,7 @@
 	var/list/data = list()
 	if(AI)
 		data["name"] = AI.name
-		data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
+		data["laws"] = AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 		data["health"] = (AI.health + 100) / 2
 		data["wireless"] = !AI.control_disabled //todo disabled->enabled
 		data["radio"] = AI.radio_enabled
