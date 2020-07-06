@@ -44,6 +44,9 @@
 	var/list/explosionSize = list(0,0,2,3)
 	var/stay_after_drop = FALSE
 	var/specialised = TRUE // It's not a general use pod for cargo/admin use
+	var/effectShrapnel = FALSE
+	var/shrapnel_type = /obj/projectile/bullet/shrapnel
+	var/shrapnel_magnitude = 3
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
@@ -350,6 +353,9 @@
 /obj/effect/dp_target/proc/endLaunch()
 	pod.update_icon()
 	pod.forceMove(drop_location()) //The fallingPod animation is over, now's a good time to forceMove the actual pod into position
+	pod.AddComponent(/datum/component/pellet_cloud, projectile_type=pod.shrapnel_type, magnitude=pod.shrapnel_magnitude)
+	if(pod.effectShrapnel)	
+		SEND_SIGNAL(pod, COMSIG_SUPPLYPOD_LANDED)
 	QDEL_NULL(fallingPod) //Delete the falling pod effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
 	for (var/mob/living/M in src) //Remember earlier (initialization) when we moved mobs into the DPTarget so they wouldnt get lost in nullspace? Time to get them out
 		M.forceMove(pod)
