@@ -70,14 +70,13 @@
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
 /datum/nanite_program/brain_heal/check_conditions()
-	var/problems = FALSE
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+		return ..()	
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		if(length(C.get_traumas()))
-			problems = TRUE
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
-		problems = TRUE
-	return problems ? ..() : FALSE
+		if ( C.has_trauma_type( resilience = TRAUMA_RESILIENCE_BASIC) )
+			return ..()
+	return FALSE
 
 /datum/nanite_program/brain_heal/active_effect()
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1)
@@ -192,14 +191,13 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/brain_heal_advanced/check_conditions()
-	var/problems = FALSE
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+		return ..()	
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		if(length(C.get_traumas()))
-			problems = TRUE
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
-		problems = TRUE
-	return problems ? ..() : FALSE
+		if ( C.has_trauma_type( resilience = TRAUMA_RESILIENCE_LOBOTOMY) )
+			return ..()
+	return FALSE
 
 /datum/nanite_program/brain_heal_advanced/active_effect()
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2)

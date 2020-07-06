@@ -139,17 +139,22 @@
 	update_icon()
 	return
 
-/obj/item/gun/energy/update_icon_state()
+/obj/item/gun/energy/update_icon_state() //fuck
 	if(initial(inhand_icon_state))
 		return
 	var/ratio = get_charge_ratio()
 	var/new_inhand_icon_state = ""
+	var/new_worn_icon_state = ""
 	new_inhand_icon_state = initial(icon_state)
+	new_worn_icon_state = initial(icon_state)
 	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		new_inhand_icon_state += "[shot.select_name]"
+		new_worn_icon_state += "[shot.select_name]"
 	new_inhand_icon_state += "[ratio]"
+	new_worn_icon_state += "[ratio*25]"
 	inhand_icon_state = new_inhand_icon_state
+	worn_icon_state = new_worn_icon_state
 
 /obj/item/gun/energy/update_overlays()
 	. = ..()
@@ -218,13 +223,13 @@
 		if(!BB)
 			. = ""
 		else if(BB.nodamage || !BB.damage || BB.damage_type == STAMINA)
-			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but it doesn't do anything. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but it doesn't do anything. Dumbass.</span>")
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
 			. = ""
 		else if(BB.damage_type != BURN)
-			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
@@ -234,4 +239,4 @@
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
-			. = "<span class='danger'>[user] casually lights their [A.name] with [src]. Damn.</span>"
+			. = "<span class='danger'>[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.</span>"

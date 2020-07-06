@@ -38543,7 +38543,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRC" = (
-/obj/structure/lattice,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -42606,6 +42605,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cce" = (
@@ -42615,14 +42617,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ccf" = (
-/obj/machinery/camera{
-	c_tag = "Engineering Center";
-	network = list("ss13","engine");
-	pixel_x = 23
-	},
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -42636,6 +42630,9 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cch" = (
@@ -43062,6 +43059,11 @@
 	light_color = "#e8eaff"
 	},
 /obj/structure/cable,
+/obj/machinery/camera{
+	c_tag = "Engineering Center";
+	network = list("ss13","engine");
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cdX" = (
@@ -48128,11 +48130,6 @@
 	},
 /turf/closed/wall,
 /area/library/lounge)
-"cyL" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/closed/mineral,
-/area/chapel/asteroid/monastery)
 "cyM" = (
 /obj/structure/lattice,
 /turf/closed/mineral,
@@ -55020,12 +55017,6 @@
 /obj/structure/piano,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
-"pmj" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space,
-/area/space/nearstation)
 "pnU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4;
@@ -55285,12 +55276,6 @@
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/department/engine)
-"pWb" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "pWm" = (
 /obj/machinery/door/window/southleft{
 	dir = 4;
@@ -57438,11 +57423,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
-"uwj" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "uwX" = (
 /obj/machinery/field/generator,
 /turf/open/floor/plating,
@@ -80077,7 +80057,7 @@ cfN
 aaa
 aaa
 aaa
-cyL
+cyM
 cfN
 cfN
 cfN
@@ -88539,7 +88519,7 @@ ePB
 imB
 cdm
 aht
-uwj
+aht
 aht
 aht
 aht
@@ -91888,7 +91868,7 @@ bXk
 abI
 aaa
 aaa
-pmj
+aby
 aaa
 aaa
 aaa
@@ -95726,7 +95706,7 @@ bJP
 aaa
 aby
 aht
-pWb
+fon
 aaa
 aht
 aaa
