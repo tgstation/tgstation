@@ -606,7 +606,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Syndicate were able to steal this precious belt from a known wrestler. It was enhanced with implant like technology \
 	allowing you to access wrestling moves of the famous wrestlers. The moves were also enhanced to be extra lethal."
 	item = /obj/item/storage/belt/champion/wrestling
-	cost = 13
+	cost = 16
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
