@@ -230,7 +230,7 @@
 	. += "<span class='notice'>Its maintenance panel is [open ? "open" : "closed"].</span>"
 	. += "<span class='info'>You can use a <b>screwdriver</b> to [open ? "close" : "open"] it.</span>"
 	if(open)
-		. += . += "<span class='notice'>Its control panel is [locked ? "locked" : "unlocked"].</span>"
+		. += "<span class='notice'>Its control panel is [locked ? "locked" : "unlocked"].</span>"
 		var/is_sillycone = issilicon(user)
 		if(!emagged && (is_sillycone || user.Adjacent(src)))
 			. += "<span class='info'>Alt-click [is_sillycone ? "" : "or use your ID on "]it to [locked ? "un" : ""]lock its control panel.</span>"
