@@ -36,6 +36,8 @@
 				wave_type = GLOB.meteorsSPOOKY
 			else
 				wave_type = GLOB.meteors_catastrophic
+		if("oreo")
+			wave_type = GLOB.meteors_oreo
 		if("meaty")
 			wave_type = GLOB.meteorsB
 		if("space dust")
@@ -74,3 +76,14 @@
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
+
+/datum/round_event_control/meteor_wave/oreo
+	name = "Meteor Wave: Oreo"
+	typepath = /datum/round_event/meteor_wave/oreo
+	weight = 7
+	min_players = 30
+	max_occurrences = 1
+	earliest_start = 900 MINUTES
+
+/datum/round_event/meteor_wave/oreo
+	wave_name = "oreo"

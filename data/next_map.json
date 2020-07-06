@@ -1,11 +1,11 @@
 {
-    "map_name": "Box Station",
-    "map_path": "map_files/BoxStation",
-    "map_file": "BoxStation.dmm",
+    "map_name": "PubbyStation",
+    "map_path": "map_files/PubbyStation",
+    "map_file": "PubbyStation.dmm",
     "shuttles": {
-	    "cargo": "cargo_box",
+	    "emergency": "emergency_pubby",
+	    "whiteship": "whiteship_pubby",
 	    "ferry": "ferry_fancy",
-	    "whiteship": "whiteship_box",
-	    "emergency": "emergency_box"
+	    "cargo": "cargo_box"
     }
 }

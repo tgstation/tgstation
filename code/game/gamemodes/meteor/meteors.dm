@@ -12,6 +12,9 @@ GLOBAL_LIST_INIT(meteors_threatening, list(/obj/effect/meteor/medium=4, /obj/eff
 GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/effect/meteor/big=75, \
 						  /obj/effect/meteor/flaming=10, /obj/effect/meteor/irradiated=10, /obj/effect/meteor/tunguska = 1)) //for catastrophic meteor event
 
+GLOBAL_LIST_INIT(meteors_oreo, list(/obj/effect/meteor/oreo_medium=100, /obj/effect/meteor/oreo_big=100, \
+						  /obj/effect/meteor/oreo_flaming=100, /obj/effect/meteor/oreo_irradiated=100, /obj/effect/meteor/oreo_tunguska = 100)) //for when someone eats all your oreos
+
 GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
 
 GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
@@ -356,6 +359,89 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	..()
 	if(prob(20))
 		explosion(src.loc,2,4,6,8)
+
+//Can I have some oreos?
+
+
+//We have vanilla wafers?
+/obj/effect/meteor/oreo_medium
+	name = "meteoreo"
+	dropamt = 3
+	meteorsound = 'sound/effects/oreo.ogg'
+	threat = 5
+
+/obj/effect/meteor/oreo_medium/meteor_effect()
+	..()
+	explosion(src.loc, 0, 1, 2, 3, 0)
+
+//But I have a CRAVING for OREOS!!
+/obj/effect/meteor/oreo_big
+	name = "big meteoreo"
+	icon_state = "large"
+	hits = 6
+	heavy = 1
+	dropamt = 4
+	meteorsound = 'sound/effects/oreo.ogg'
+	threat = 10
+
+/obj/effect/meteor/oreo_big/meteor_effect()
+	..()
+	explosion(src.loc, 1, 2, 3, 4, 0)
+
+//Those oreos were SO GOOD
+/obj/effect/meteor/oreo_flaming
+	name = "flaming meteoreo"
+	icon_state = "flaming"
+	hits = 5
+	heavy = 1
+	meteorsound = 'sound/effects/oreo.ogg'
+	meteordrop = list(/obj/item/stack/ore/plasma)
+	threat = 20
+
+/obj/effect/meteor/oreo_flaming/meteor_effect()
+	..()
+	explosion(src.loc, 1, 2, 3, 4, 0, 0, 5)
+
+//YOU ATE ALL MY OREOS
+/obj/effect/meteor/oreo_tunguska
+	name = "tunguska meteoreo"
+	icon_state = "flaming"
+	desc = "YOU ATE ALL MY OREOS"
+	hits = 30
+	hitpwr = 1
+	heavy = 1
+	meteorsound = 'sound/effects/oreo.ogg'
+	meteordrop = list(/obj/item/stack/ore/plasma)
+	threat = 50
+
+/obj/effect/meteor/oreo_tunguska/Move()
+	. = ..()
+	if(.)
+		new /obj/effect/temp_visual/revenant(get_turf(src))
+
+/obj/effect/meteor/oreo_tunguska/meteor_effect()
+	..()
+	explosion(src.loc, 5, 10, 15, 20, 0)
+
+/obj/effect/meteor/oreo_tunguska/Bump()
+	..()
+	if(prob(20))
+		explosion(src.loc,2,4,6,8)
+
+/obj/effect/meteor/oreo_irradiated
+	name = "glowing meteoreo"
+	icon_state = "glowing"
+	heavy = 1
+	meteorsound = 'sound/effects/oreo.ogg'
+	meteordrop = list(/obj/item/stack/ore/uranium)
+	threat = 15
+
+
+/obj/effect/meteor/oreo_irradiated/meteor_effect()
+	..()
+	explosion(src.loc, 0, 0, 4, 3, 0)
+	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
+	radiation_pulse(src, 500)
 
 //////////////////////////
 //Spookoween meteors
