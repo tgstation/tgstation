@@ -181,13 +181,14 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(user, "<span class='warning'>[name] cannot be cast unless you are completely manifested in the material plane!</span>")
 		return FALSE
 
+	var/mob/living/L = user
+	if(istype(L) && (invocation_type == "whisper" || invocation_type == "shout") && !L.can_speak_vocal())
+		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
+		return FALSE
+
 	if(ishuman(user))
 
 		var/mob/living/carbon/human/H = user
-
-		if((invocation_type == "whisper" || invocation_type == "shout") && !H.can_speak_vocal())
-			to_chat(user, "<span class='warning'>You can't get the words out!</span>")
-			return FALSE
 
 		var/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/suit/space/hardsuit/wizard,
