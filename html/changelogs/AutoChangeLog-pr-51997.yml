@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bug where when teleporting naturally (such as going through a z-level in space), if you were pulling someone that was then pulling another person, only you and the person you were pulling would make it through."
