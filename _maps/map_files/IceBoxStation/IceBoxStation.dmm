@@ -36136,14 +36136,14 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bHu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /obj/item/radio/intercom{
 	pixel_y = 25
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /obj/machinery/research/explosive_compressor,
 /turf/open/floor/plasteel,
@@ -37135,6 +37135,21 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	pixel_y = 23
+	},
+/obj/item/assembly/prox_sensor{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/assembly/prox_sensor{
+	pixel_y = 2
+	},
+/obj/item/assembly/prox_sensor{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/assembly/prox_sensor{
+	pixel_x = 9;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -49001,6 +49016,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cBB" = (
@@ -51232,6 +51250,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"dJC" = (
+/obj/structure/table/reinforced,
+/obj/item/raw_anomaly_core/random{
+	pixel_y = -2
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 11
+	},
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "dMb" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -51531,24 +51559,25 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "flc" = (
-/obj/item/assembly/prox_sensor{
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_x = 8;
-	pixel_y = 9
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_x = 9;
-	pixel_y = -2
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_y = 2
-	},
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom{
 	pixel_x = 29
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 2;
+	pixel_y = -9
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -53075,26 +53104,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"kwK" = (
-/obj/structure/table/reinforced,
-/obj/item/assembly/igniter{
-	pixel_x = 2;
-	pixel_y = -9
-	},
-/obj/item/assembly/igniter{
-	pixel_x = -9;
-	pixel_y = -2
-	},
-/obj/item/assembly/igniter{
-	pixel_x = -2;
-	pixel_y = 9
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 9;
-	pixel_y = 2
-	},
-/turf/open/floor/plasteel/white,
-/area/science/mixing)
 "kwT" = (
 /obj/vehicle/ridden/wheelchair{
 	dir = 4
@@ -53965,13 +53974,6 @@
 "mJd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
-	},
-/obj/structure/table,
-/obj/item/raw_anomaly_core/random{
-	pixel_y = -2
-	},
-/obj/item/raw_anomaly_core/random{
-	pixel_y = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -107741,8 +107743,8 @@ bEC
 bJZ
 flc
 vPE
-kwK
 bVt
+dJC
 bQZ
 bTl
 bTl
