@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "Vend-A-Trays are now operated through a UI."
