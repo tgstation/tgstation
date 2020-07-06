@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - tweak: "The description of eldritch essence has been modified to make what it actually does more clear."
+  - tweak: "Eldritch essence and unholy water both now actually use the metabolization_rate variable."
