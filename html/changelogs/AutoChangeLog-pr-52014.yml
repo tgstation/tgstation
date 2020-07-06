@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Jukebox now uses tgui."
+  - tweak: "You can now set a volume of a jukebox songs."

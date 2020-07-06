@@ -1,4 +1,3 @@
-
 #define SOURCE_PORTAL 1
 #define DESTINATION_PORTAL 2
 
@@ -25,91 +24,75 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=400)
+	var/tracking_range = 20
 
-/obj/item/locator/attack_self(mob/user)
-	user.set_machine(src)
-	var/dat
-	if (temp)
-		dat = "[temp]<BR><BR><A href='byond://?src=[REF(src)];temp=1'>Clear</A>"
-	else
-		dat = {"
-<B>Persistent Signal Locator</B><HR>
-<A href='?src=[REF(src)];refresh=1'>Refresh</A>"}
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
-	return
+/obj/item/locator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "BluespaceLocator", name, 300, 300, master_ui, state)
+		ui.open()
 
-/obj/item/locator/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
-		return
-	var/turf/current_location = get_turf(usr)//What turf is the user on?
-	if(!current_location || is_centcom_level(current_location.z))//If turf was not found or they're on CentCom
-		to_chat(usr, "[src] is malfunctioning.")
-		return
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
-		usr.set_machine(src)
-		if (href_list["refresh"])
-			temp = "<B>Persistent Signal Locator</B><HR>"
-			var/turf/sr = get_turf(src)
+/obj/item/locator/ui_data(mob/user)
+	var/list/data = list()
 
-			if (sr)
-				temp += "<B>Beacon Signals:</B><BR>"
-				for(var/obj/item/beacon/W in GLOB.teleportbeacons)
-					if (!W.renamed)
-						continue
-					var/turf/tr = get_turf(W)
-					if (tr.z == sr.z && tr)
-						var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-						if (direct < 5)
-							direct = "very strong"
-						else
-							if (direct < 10)
-								direct = "strong"
-							else
-								if (direct < 20)
-									direct = "weak"
-								else
-									direct = "very weak"
-						temp += "[W.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+	data["trackingrange"] = tracking_range;
 
-				temp += "<B>Implant Signals:</B><BR>"
-				for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
-					if (!W.imp_in || !isliving(W.loc))
-						continue
-					else
-						var/mob/living/M = W.loc
-						if (M.stat == DEAD)
-							if (M.timeofdeath + W.lifespan_postmortem < world.time)
-								continue
+	// Get our current turf location.
+	var/turf/sr = get_turf(src)
 
-					var/turf/tr = get_turf(W)
-					if (tr.z == sr.z && tr)
-						var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-						if (direct < 20)
-							if (direct < 5)
-								direct = "very strong"
-							else
-								if (direct < 10)
-									direct = "strong"
-								else
-									direct = "weak"
-							temp += "[W.imp_in.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+	if (sr)
+		// Check every teleport beacon.
+		var/list/tele_beacons = list()
+		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
 
-				temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=[REF(src)];refresh=1'>Refresh</A><BR>"
+			// Get the tracking beacon's turf location.
+			var/turf/tr = get_turf(W)
+
+			// Make sure it's on a turf and that its Z-level matches the tracker's Z-level
+			if (tr && tr.z == sr.z)
+				// Get the distance between the beacon's turf and our turf
+				var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
+
+				// If the target is too far away, skip over this beacon.
+				if(distance > tracking_range)
+					continue
+
+				var/beacon_name
+
+				if(W.renamed)
+					beacon_name = W.name
+				else
+					var/area/A = get_area(W)
+					beacon_name = A.name
+
+				var/D =  dir2text(get_dir(sr, tr))
+				tele_beacons += list(list(name = beacon_name, direction = D, distance = distance))
+
+		data["telebeacons"] = tele_beacons
+
+		var/list/track_implants = list()
+
+		for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
+			if (!W.imp_in || !isliving(W.loc))
+				continue
 			else
-				temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
-		else
-			if (href_list["temp"])
-				temp = null
-		if (ismob(src.loc))
-			attack_self(src.loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client)
-					src.attack_self(M)
-	return
+				var/mob/living/M = W.loc
+				if (M.stat == DEAD)
+					if (M.timeofdeath + W.lifespan_postmortem < world.time)
+						continue
+			var/turf/tr = get_turf(W)
+			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
 
+			if(distance > tracking_range)
+				continue
+
+			var/D =  dir2text(get_dir(sr, tr))
+			track_implants += list(list(name = W.imp_in.name, direction = D, distance = distance))
+		data["trackimplants"] = track_implants
+	return data
+
+/obj/machinery/my_machine/ui_act(action, params)
+  	if(..()) return
 
 /*
  * Hand-tele
