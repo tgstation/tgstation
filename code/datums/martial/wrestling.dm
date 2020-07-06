@@ -17,18 +17,6 @@
 	var/datum/action/strike/strike = new/datum/action/strike()
 	var/datum/action/drop/drop = new/datum/action/drop()
 
-/datum/martial_art/wrestling/teach(mob/living/carbon/human/H, make_temporary)
-	. = ..()
-	ADD_TRAIT(H,TRAIT_STUNRESISTANCE,type)
-	ADD_TRAIT(H,TRAIT_PUSHIMMUNE,type)
-	ADD_TRAIT(H,TRAIT_IGNOREDAMAGESLOWDOWN,type)
-
-/datum/martial_art/wrestling/on_remove(mob/living/carbon/human/H)
-	. = ..()
-	REMOVE_TRAIT(H,TRAIT_STUNRESISTANCE,type)
-	REMOVE_TRAIT(H,TRAIT_PUSHIMMUNE,type)
-	REMOVE_TRAIT(H,TRAIT_IGNOREDAMAGESLOWDOWN,type)
-
 /datum/martial_art/wrestling/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	switch(streak)
 		if("drop")
