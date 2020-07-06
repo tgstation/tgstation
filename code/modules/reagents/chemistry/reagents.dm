@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /// Called from [/datum/reagents/proc/metabolize]
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
 	current_cycle++
-	if(!length(reagent_removal_skip_list))
+	if(length(reagent_removal_skip_list))
 		return
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 
