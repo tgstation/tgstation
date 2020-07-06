@@ -36145,6 +36145,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/research/explosive_compressor,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bHv" = (
@@ -53964,6 +53965,13 @@
 "mJd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/structure/table,
+/obj/item/raw_anomaly_core/random{
+	pixel_y = -2
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
