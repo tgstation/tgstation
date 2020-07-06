@@ -56,6 +56,7 @@
 /datum/action/slam
 	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
 	button_icon_state = "wrassle_slam"
+	icon_icon = 'icons/mob/actions/actions_wrestling.dmi'
 
 /datum/action/slam/Trigger()
 	if(owner.incapacitated())
@@ -68,6 +69,7 @@
 /datum/action/throw_wrassle
 	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
 	button_icon_state = "wrassle_throw"
+	icon_icon = 'icons/mob/actions/actions_wrestling.dmi'
 
 /datum/action/throw_wrassle/Trigger()
 	if(owner.incapacitated())
@@ -80,6 +82,7 @@
 /datum/action/kick
 	name = "Kick - A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
 	button_icon_state = "wrassle_kick"
+	icon_icon = 'icons/mob/actions/actions_wrestling.dmi'
 
 /datum/action/kick/Trigger()
 	if(owner.incapacitated())
@@ -92,6 +95,7 @@
 /datum/action/strike
 	name = "Strike - Hit a neaby opponent with a quick attack."
 	button_icon_state = "wrassle_strike"
+	icon_icon = 'icons/mob/actions/actions_wrestling.dmi'
 
 /datum/action/strike/Trigger()
 	if(owner.incapacitated())
@@ -104,6 +108,7 @@
 /datum/action/drop
 	name = "Drop - Smash down onto an opponent."
 	button_icon_state = "wrassle_drop"
+	icon_icon = 'icons/mob/actions/actions_wrestling.dmi'
 
 /datum/action/drop/Trigger()
 	if(owner.incapacitated())
