@@ -89,8 +89,10 @@
 	return TRUE
 
 /atom/proc/transfer_fingerprints_to(atom/A) //Use of | and |= being different here is INTENTIONAL.
-	var/datum/component/forensics/AD = A.LoadComponent(/datum/component/forensics)
 	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	if(!D) // no point transferring fingerprints etc. if we don't even have the fuckin tracker
+		return
+	var/datum/component/forensics/AD = A.LoadComponent(/datum/component/forensics)
 	AD.fingerprints = AD.fingerprints | D.fingerprints
 	AD.hiddenprints = AD.hiddenprints | D.hiddenprints
 	A.fingerprintslast = fingerprintslast

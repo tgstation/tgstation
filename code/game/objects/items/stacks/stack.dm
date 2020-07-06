@@ -386,7 +386,7 @@
 		transfer = min(transfer, S.max_amount - S.amount)
 	if(pulledby)
 		pulledby.start_pulling(S)
-	S.copy_evidences(src)
+	S.copy_evidences_from(src)
 	use(transfer, TRUE)
 	S.add(transfer)
 	return transfer
@@ -437,7 +437,7 @@
 		return FALSE
 	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE)
 	. = F
-	F.copy_evidences(src)
+	F.copy_evidences_from(src)
 	if(user)
 		if(!user.put_in_hands(F, merge_stacks = FALSE))
 			F.forceMove(user.drop_location())
@@ -453,9 +453,9 @@
 	else
 		. = ..()
 
-/obj/item/stack/proc/copy_evidences(obj/item/stack/from)
+/obj/item/stack/proc/copy_evidences_from(obj/item/stack/from)
 	add_blood_DNA(from.return_blood_DNA())
-	transfer_fingerprints_to(from)
+	from.transfer_fingerprints_to(src)
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
 	if(istype(M) && M.dirty < 100)
