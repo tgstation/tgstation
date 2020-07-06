@@ -1117,6 +1117,13 @@
 	icon_state = "service"
 	build_path = /obj/machinery/rnd/production/techfab/department/service
 
+/obj/item/circuitboard/machine/vendatray
+	name = "Vend-A-Tray (Machine Board)"
+	icon_state = "service"
+	build_path = /obj/structure/displaycase/forsale
+	req_components = list(
+		/obj/item/stock_parts/card_reader = 1)
+
 //Supply
 
 /obj/item/circuitboard/machine/mining_equipment_vendor
