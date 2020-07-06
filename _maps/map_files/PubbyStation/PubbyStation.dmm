@@ -23235,12 +23235,24 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aZm" = (
-/obj/effect/turf_decal/plaque{
-	name = "security borg memorial plaque"
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#c1caff"
 	},
 /obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Monastery Dining Room";
+	dir = 8;
+	network = list("ss13","monastery")
+	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central)
+/area/quartermaster/storage)
 "aZn" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
@@ -29961,20 +29973,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
-"bsj" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/light{
-	dir = 4;
-	light_color = "#c1caff"
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "bsl" = (
 /obj/structure/sign/warning/vacuum/external,
 /obj/effect/spawner/structure/window/reinforced,
@@ -98481,7 +98479,7 @@ aUy
 aJI
 aVK
 aWs
-aZm
+aOS
 aZn
 aZo
 aWs
@@ -98743,7 +98741,7 @@ aLf
 aLf
 aLf
 aLf
-bwm
+aLf
 aLp
 beI
 bfv
@@ -99000,7 +98998,7 @@ aVJ
 aWz
 aGW
 btJ
-bwm
+aLf
 aLp
 beI
 bfw
@@ -99257,7 +99255,7 @@ bcO
 aPY
 aPY
 aIw
-bwm
+aLf
 aLp
 beI
 bfx
@@ -102337,7 +102335,7 @@ bmE
 aPp
 aSk
 blO
-bsj
+aZm
 btm
 btG
 aIB
