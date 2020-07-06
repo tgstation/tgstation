@@ -1,7 +1,7 @@
 /datum/mafia_role
 	var/name = "Assistant"
 	var/desc = "You are a crewmember without any special abilities."
-	var/win_condition = "all Mafia and Solo killing roles are dead."
+	var/win_condition = "kill all mafia and solo killing roles."
 	var/team = MAFIA_TEAM_TOWN
 
 	var/player_key
@@ -98,12 +98,12 @@
 			the = FALSE
 	result += "<span class='notice'>The <span class='bold'>[name]</span> is aligned with [the ? "the " : ""]<span class='[team_span]'>[team_desc]</span></span>"
 	result += "<span class='bold notice'>\"[desc]\"</span>"
-	result += "<span class='notice'>[name] wins when [win_condition]</span>"
+	result += "<span class='notice'>[name] wins when they [win_condition]</span>"
 	to_chat(clueless, result.Join("</br>"))
 
 /datum/mafia_role/detective
 	name = "Detective"
-	desc = "You can investigate a single person each night to reveal their team."
+	desc = "You can investigate a single person each night to learn their team."
 	revealed_outfit = /datum/outfit/mafia/detective
 
 	targeted_actions = list("Investigate")
@@ -180,6 +180,7 @@
 
 /datum/mafia_role/md/proc/prevent_kill(datum/source)
 	to_chat(body,"<span class='warning'>The person you protected tonight was attacked!</span>")
+	to_chat(current_protected.body,"<span class='userdanger'>You were attacked last night, but someone nursed you back to life!</span>")
 	return MAFIA_PREVENT_KILL
 
 /datum/mafia_role/md/proc/end_protection(datum/mafia_controller/game)
@@ -263,7 +264,7 @@
 /datum/mafia_role/lawyer/proc/release(datum/mafia_controller/game)
 	. = ..()
 	if(current_target)
-		UnregisterSignal(current_target)
+		UnregisterSignal(current_target, COMSIG_MAFIA_CAN_PERFORM_ACTION)
 		current_target = null
 
 /datum/mafia_role/lawyer/proc/prevent_action(datum/source)
@@ -281,7 +282,6 @@
 
 /datum/mafia_role/psychologist/New(datum/mafia_controller/game)
 	. = ..()
-	RegisterSignal(game,COMSIG_MAFIA_NIGHT_START,.proc/try_to_visit)
 	RegisterSignal(game,COMSIG_MAFIA_NIGHT_END,.proc/therapy_reveal)
 
 /datum/mafia_role/psychologist/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
@@ -294,14 +294,11 @@
 	to_chat(body,"<span class='warning'>You will reveal [target.body.real_name] tonight.</span>")
 	current_target = target
 
-/datum/mafia_role/psychologist/proc/try_to_visit(datum/mafia_controller/game)
+/datum/mafia_role/psychologist/proc/therapy_reveal(datum/mafia_controller/game)
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"reveal",current_target) & MAFIA_PREVENT_ACTION || game_status != MAFIA_ALIVE) //Got lynched or roleblocked by a lawyer.
 		current_target = null
 	if(current_target)
 		add_note("N[game.turn] - [current_target.body.real_name] - Revealed true identity")
-
-/datum/mafia_role/psychologist/proc/therapy_reveal(datum/mafia_controller/game)
-	if(current_target)
 		to_chat(body,"<span class='warning'>You have revealed the true nature of the [current_target]!</span>")
 		current_target.reveal_role(game, verbose = TRUE)
 		current_target = null
@@ -315,8 +312,7 @@
 	team = MAFIA_TEAM_MAFIA
 	revealed_outfit = /datum/outfit/mafia/changeling
 	special_theme = "syndicate"
-	win_condition = "they become majority, dooming the town."
-	//var/team_killer = FALSE
+	win_condition = "become majority over the town and no solo killing role can stop them."
 
 /datum/mafia_role/mafia/New(datum/mafia_controller/game)
 	. = ..()
@@ -325,12 +321,12 @@
 /datum/mafia_role/mafia/proc/mafia_text(datum/mafia_controller/source)
 	to_chat(body,"<b>Vote for who to kill tonight. The killer will be chosen randomly from voters.</b>")
 
-///SOLO ROLES/// they range from anomalous factors not good or evil to deranged killers that try to win alone.
+///SOLO ROLES/// they range from anomalous factors to deranged killers that try to win alone.
 
 /datum/mafia_role/traitor
 	name = "Traitor"
 	desc = "You're a solo traitor. You are immune to night kills, can kill every night and you win by outnumbering everyone else."
-	win_condition = "killing everyone."
+	win_condition = "kill everyone."
 	team = MAFIA_TEAM_SOLO
 	targeted_actions = list("Night Kill")
 	revealed_outfit = /datum/outfit/mafia/traitor
@@ -351,6 +347,7 @@
 
 /datum/mafia_role/traitor/proc/nightkill_immunity(datum/source,datum/mafia_controller/game,lynch)
 	if(game.phase == MAFIA_PHASE_NIGHT && !lynch)
+		to_chat(body,"<span class='userdanger'>You were attacked, but they'll have to try harder than that to put you down.</span>")
 		return MAFIA_PREVENT_KILL
 
 /datum/mafia_role/traitor/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
@@ -378,7 +375,7 @@
 /datum/mafia_role/fugitive
 	name = "Fugitive"
 	desc = "You're on the run. You can become immune to night kills exactly twice, and you win by surviving to the end of the game with anyone."
-	win_condition = "surviving to the end of the game, with anyone"
+	win_condition = "survive to the end of the game, with anyone"
 	team = MAFIA_TEAM_SOLO
 	actions = list("Self Preservation")
 	var/charges = 2
@@ -432,7 +429,7 @@
 /datum/mafia_role/obsessed
 	name = "Obsessed"
 	desc = "You're completely lost in your own mind. You win by lynching your obsession before you get killed in this mess. Obsession assigned on the first night!"
-	win_condition = "lynching their obsession."
+	win_condition = "lynch their obsession."
 	team = MAFIA_TEAM_SOLO
 	revealed_outfit = /datum/outfit/mafia/obsessed // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
 

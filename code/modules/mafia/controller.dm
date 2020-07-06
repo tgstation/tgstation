@@ -1,7 +1,6 @@
 /datum/mafia_controller
 	var/list/all_roles = list()
 	var/list/player_role_lookup = list() //This only exists to speed up role retrieval
-	var/list/setup_role_lookup = list() //for the help button ([whichever of the buttons pressed] = mafia_role)
 	var/phase = MAFIA_PHASE_SETUP
 	var/turn = 0
 
@@ -54,7 +53,8 @@
 
 	if(!spawn_area)
 		CRASH("No spawn area detected for Mafia!")
-	if(!current_map.load(spawn_area))
+	var/list/bounds = current_map.load(spawn_area)
+	if(!bounds)
 		CRASH("Loading mafia map failed!")
 	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23,spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
 
@@ -69,8 +69,6 @@
 	for(var/rtype in setup_list)
 		for(var/i in 1 to setup_list[rtype])
 			all_roles += new rtype(src)
-			if(i == 1)
-				setup_role_lookup += rtype //add one mafia role to the lookup per type
 		var/datum/mafia_role/rp = rtype
 		current_setup_text += "[initial(rp.name)] x[setup_list[rtype]]"
 	var/list/spawnpoints = landmarks.Copy()
@@ -185,12 +183,9 @@
 	for(var/datum/mafia_role/solo in solos_to_ask)
 		if(solo.check_total_victory(alive_town, alive_mafia))
 			total_victors += solo
-		else if(solo.block_team_victory(alive_town, alive_mafia))
+		if(solo.block_team_victory(alive_town, alive_mafia))
 			blocked_victory = TRUE
 
-	///PHASE THREE: IF SOLOS WON, SEND A SIGNAL THAT GAME IS ENDING (literally just for fugitives to say they won sorry not sorry)
-	if(length(total_victors))
-		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
 	//solo victories!
 	var/solo_end = FALSE
 	for(var/datum/mafia_role/winner in total_victors)
@@ -198,16 +193,17 @@
 		solo_end = TRUE
 	if(solo_end)
 		start_the_end()
-	if(alive_mafia == 0 && !blocked_victory)
-		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
+	if(blocked_victory)//a solo antag is stopping game from ending
+		return FALSE
+	if(alive_mafia == 0)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
-	else if(alive_mafia >= alive_town && !blocked_victory) //guess could change if town nightkill is added
-		SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
+	else if(alive_mafia >= alive_town) //guess could change if town nightkill is added
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		return TRUE
 
 /datum/mafia_controller/proc/start_the_end(message)
+	SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
 	if(message)
 		send_message(message)
 	for(var/datum/mafia_role/R in all_roles)
@@ -396,6 +392,12 @@
 			if("new_game")
 				end_game()
 				basic_setup()
+			if("nuke")
+				end_game()
+				for(var/i in landmarks)
+					qdel(i)
+				qdel(town_center_landmark)
+				qdel(src)
 			if("next_phase")
 				var/datum/timedevent/timer = SStimer.timer_id_dict[next_phase_timer]
 				if(!timer.spent)
@@ -411,17 +413,16 @@
 						continue
 					player.body.forceMove(get_turf(player.assigned_landmark))
 				if(failed.len)
-					to_chat(usr, "howdy armhulen :) here's the list of players that had null bodies on the pull:")
+					to_chat(usr, "List of players who no longer had a body (if you see this, the game is runtiming anyway so just hit \"New Game\" to end it")
 					for(var/i in failed)
 						var/datum/mafia_role/fail = i
 						to_chat(usr, fail.player_key)
 	switch(action)
-		if("mf_lookup") //atype == Psychologist x1
-			var/raw_role = params["atype"]
-			var/role_name = copytext(raw_role, 1, length(raw_role) - 2) //cut the "x1" off the end
+		if("mf_lookup")
+			var/role_lookup = params["atype"]
 			var/datum/mafia_role/helper
 			for(var/datum/mafia_role/role in all_roles)
-				if(role_name == role.name)
+				if(role_lookup == role.name)
 					helper = role
 					break
 			helper.show_help(usr)

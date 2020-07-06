@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Flex, Button, LabeledList, Section, Box, Table, TimeDisplay } from '../components';
+import { Flex, Button, LabeledList, Section, Box, TimeDisplay } from '../components';
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 
@@ -23,23 +23,17 @@ export const MafiaPanel = (props, context) => {
       <Window.Content>
         <Section title={phase}>
           {!!roleinfo && (
-            <Table>
-              <Table.Row>
-                <Table.Cell>
-                  <TimeDisplay auto="down" value={timeleft} />
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell bold>
-                  You are a {roleinfo.role}
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row bold>
-                <Table.Cell>
-                  {roleinfo.desc}
-                </Table.Cell>
-              </Table.Row>
-            </Table>
+            <Fragment>
+              <Box>
+                <TimeDisplay auto="down" value={timeleft} />
+              </Box>
+              <Box>
+                <b>You are a {roleinfo.role}</b>
+              </Box>
+              <Box>
+                <b>{roleinfo.desc}</b>
+              </Box>
+            </Fragment>
           )}
         </Section>
         <Flex>
@@ -57,7 +51,7 @@ export const MafiaPanel = (props, context) => {
             title="ADMIN CONTROLS"
             backgroundColor="red">
             THESE ARE DEBUG, THEY WILL BREAK THE GAME, DO NOT TOUCH <br />
-            Also because an admin did it: do not gib
+            Also because an admin did it: do not gib/delete/etc
             anyone! It will runtime the game to death! <br />
             <Button
               icon="arrow-right"
@@ -74,11 +68,18 @@ export const MafiaPanel = (props, context) => {
               onClick={() => act("new_game")}>
               New Game
             </Button>
+            <br />
+            <Button
+              icon="skull"
+              onClick={() => act("nuke")}
+              color="black">
+              Nuke (delete datum + landmarks, hope it fixes everything!)
+            </Button>
           </Section>
         )}
         <Section title="Players">
           <LabeledList>
-            {!!players && players.map(player => { return (
+            {!!players && players.map(player => (
               <LabeledList.Item
                 className="candystripe"
                 key={player.ref}
@@ -98,8 +99,8 @@ export const MafiaPanel = (props, context) => {
                         {action}
                       </Button>); })
                 }
-              </LabeledList.Item>);
-            })}
+              </LabeledList.Item>)
+            )}
           </LabeledList>
         </Section>
         {!!judgement_phase && (
@@ -124,37 +125,33 @@ export const MafiaPanel = (props, context) => {
         <Flex mt={1} spacing={1}>
           <Flex.Item grow={1} basis={0}>
             <Section
-              title="Roles">
-              <Table>
-                {!!all_roles && all_roles.map(r => (
-                  <Table.Row key={r}>
-                    <Table.Cell bold>
-                      <Flex justify="space-between">
-                        {r}
-                        <Button
-                          content="?"
-                          onClick={() => act("mf_lookup", { atype: r })}
-                        />
-                      </Flex>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table>
+              title="Roles"
+              minHeight={10}>
+              {!!all_roles && all_roles.map(r => (
+                <Box key={r}>
+                  <Flex justify="space-between">
+                    {r}
+                    <Button
+                      content="?"
+                      onClick={() => act("mf_lookup", {
+                        atype: r.slice(0, -3),
+                      })}
+                    />
+                  </Flex>
+                </Box>
+              ))}
             </Section>
           </Flex.Item>
           <Flex.Item grow={2} basis={0}>
             <Section
-              title="Notes">
-              <Table>
-                {roleinfo !== undefined && !!roleinfo.action_log
-                && roleinfo.action_log.map(log_line => (
-                  <Table.Row key={log_line}>
-                    <Table.Cell>
-                      {log_line}
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table>
+              title="Notes"
+              minHeight={10}>
+              {roleinfo !== undefined && !!roleinfo.action_log
+              && roleinfo.action_log.map(log_line => (
+                <Box key={log_line}>
+                  {log_line}
+                </Box>
+              ))}
             </Section>
           </Flex.Item>
         </Flex>
