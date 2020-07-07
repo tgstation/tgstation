@@ -79,7 +79,9 @@ const queueCondFormat = (materials, queue) => {
       material_tally[mat] = material_tally[mat] || 0;
       missing_mat_tally[mat] = missing_mat_tally[mat] || 0;
 
-      mat_format[mat] = partBuildColor(part.cost[mat], material_tally[mat], materials[mat]);
+      mat_format[mat] = partBuildColor(
+        part.cost[mat], material_tally[mat], materials[mat]
+      );
 
       if (mat_format[mat].color !== COLOR_NONE) {
         if (text_colors[i] < mat_format[mat].color) {
@@ -120,13 +122,20 @@ export const ExosuitFabricator = (props, context) => {
           fillPositionedParent
           direction="column">
           <Flex>
-            <Flex.Item ml={1} mr={1} mt={1} basis="content" grow={1}>
+            <Flex.Item
+              ml={1}
+              mr={1}
+              mt={1}
+              basis="content"
+              grow={1}>
               <Section
                 title="Materials">
                 <Materials />
               </Section>
             </Flex.Item>
-            <Flex.Item mt={1} mr={1}>
+            <Flex.Item
+              mt={1}
+              mr={1}>
               <Section
                 title="Settings"
                 height="100%">
@@ -138,7 +147,9 @@ export const ExosuitFabricator = (props, context) => {
               </Section>
             </Flex.Item>
           </Flex>
-          <Flex.Item grow={1} m={1}>
+          <Flex.Item
+            grow={1}
+            m={1}>
             <Flex
               spacing={1}
               height="100%"
@@ -149,7 +160,9 @@ export const ExosuitFabricator = (props, context) => {
                   overflowY="auto"
                   title="Categories"
                   buttons={(
-                    <Button content="R&D Sync" onClick={() => act('sync_rnd')} />
+                    <Button
+                      content="R&D Sync"
+                      onClick={() => act("sync_rnd")} />
                   )}>
                   <PartSets />
                 </Section>
@@ -165,7 +178,9 @@ export const ExosuitFabricator = (props, context) => {
                     materials={material_obj} />
                 </Box>
               </Flex.Item>
-              <Flex.Item width="420px" position="relative">
+              <Flex.Item
+                width="420px"
+                position="relative">
                 <Queue
                   queueMaterials={material_tally}
                   missingMaterials={missing_mat_tally}
@@ -213,7 +228,8 @@ const EjectMaterial = (props, context) => {
       <Button
         icon="eject"
         disabled={!removable}
-        onClick={() => act("remove_mat", { ref: ref, amount: removeMaterials })} />
+        onClick={() =>
+          act("remove_mat", { ref: ref, amount: removeMaterials })} />
     </Fragment>
   );
 };
@@ -293,7 +309,8 @@ const PartSets = (props, context) => {
   ] = useSharedState(context, "part_tab", part_sets.length ? part_sets[0] : "");
 
   return (
-    <Tabs vertical>
+    <Tabs
+      vertical>
       {part_sets.map(set => (
         <Tabs.Tab
           key={set}
@@ -358,15 +375,20 @@ const PartLists = (props, context) => {
               color="good"
               content="Queue All"
               icon="plus-circle"
-              onClick={() => { act("add_queue_set", { part_list: parts_list[category].map(part => part.id) }); }} />
+              onClick={() =>
+                act(
+                  "add_queue_set",
+                  { part_list: parts_list[category].map(part => part.id) })} />
           }>
           {parts_list[category].map(part => (
             <Fragment
               key={part.name}>
-              <Flex align="center">
+              <Flex
+                align="center">
                 <Flex.Item>
                   <Button
-                    disabled={building_part || (part.format.text_color === COLOR_BAD)}
+                    disabled={building_part
+                      || (part.format.text_color === COLOR_BAD)}
                     color="good"
                     height="20px"
                     mr={1}
@@ -379,7 +401,8 @@ const PartLists = (props, context) => {
                     height="20px"
                     mr={1}
                     icon="plus-circle"
-                    onClick={() => { act("add_queue_part", { id: part.id }); }} />
+                    onClick={() => {
+                      act("add_queue_part", { id: part.id }); }} />
                 </Flex.Item>
                 <Flex.Item>
                   <Box
@@ -388,7 +411,8 @@ const PartLists = (props, context) => {
                     {part.name}
                   </Box>
                 </Flex.Item>
-                <Flex.Item grow={1} />
+                <Flex.Item
+                  grow={1} />
                 <Flex.Item>
                   <Button
                     icon="question-circle"
@@ -443,8 +467,13 @@ const Queue = (props, context) => {
   } = props;
 
   return (
-    <Flex height="100%" width="100%" direction="column">
-      <Flex.Item height={0} grow={1}>
+    <Flex
+      height="100%"
+      width="100%"
+      direction="column">
+      <Flex.Item
+        height={0}
+        grow={1}>
         <Section
           height="100%"
           title="Queue"
@@ -555,7 +584,8 @@ const QueueList = (props, context) => {
           justify="center"
           wrap="wrap"
           height="20px" inline>
-          <Flex.Item basis="content">
+          <Flex.Item
+            basis="content">
             <Button
               height="20px"
               mr={1}
@@ -600,7 +630,8 @@ const BeingBuilt = (props, context) => {
             <Flex.Item>
               {name}
             </Flex.Item>
-            <Flex.Item grow={1} />
+            <Flex.Item
+              grow={1} />
             <Flex.Item>
               {"Fabricator outlet obstructed..."}
             </Flex.Item>
@@ -629,7 +660,8 @@ const BeingBuilt = (props, context) => {
             <Flex.Item>
               {name}
             </Flex.Item>
-            <Flex.Item grow={1} />
+            <Flex.Item
+              grow={1} />
             <Flex.Item>
               {((time_left >= 0) && (time_left + "s")) || ("Dispensing...")}
             </Flex.Item>
