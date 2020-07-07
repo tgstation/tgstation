@@ -40,8 +40,8 @@
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
-	/// If we only work on organics (everything right now)
-	var/organic_only = TRUE
+	/// What species traits we need in order to be applicable (HAS_FLESH and HAS_BONE) ((monkeys and carbons are assumed to have both))
+	var/biology_required = list(HAS_FLESH, HAS_BONE)
 	/// The bodypart we're parented to
 	var/obj/item/bodypart/limb = null
 
@@ -117,9 +117,10 @@
 
 	if(ishuman(L.owner))
 		var/mob/living/carbon/human/H = L.owner
-		if(organic_only && ((NOBLOOD in H.dna.species.species_traits) || !L.is_organic_limb()))
-			qdel(src)
-			return
+		for(var/organic_flag in biology_required)
+			if(!(organic_flag in H.dna.species.species_traits) || !L.is_organic_limb())
+				qdel(src)
+				return
 
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds

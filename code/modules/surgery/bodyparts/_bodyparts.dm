@@ -217,41 +217,63 @@
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
 
+	/*
+	// START WOUND HANDLING
+	*/
 
 	// what kind of wounds we're gonna roll for, take the greater between brute and burn, then if it's brute, we subdivide based on sharpness
 	var/wounding_type = (brute > burn ? WOUND_BLUNT : WOUND_BURN)
 	var/wounding_dmg = max(brute, burn)
 
 	var/mangled_state = get_mangled_state()
+	var/organic_state = owner.get_organic_state()
+	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
-	// this following block is for brute damage, to see if we're dealing with blunt, slash, or pierce, and how we're interacting with bones and skin if necessary
-	if(wounding_type == WOUND_BLUNT)
-		// first we check the sharpness var to see if we're slashing or piercing rather than plain blunt
-		if(sharpness == SHARP_EDGED)
-			wounding_type = WOUND_SLASH
-		else if(sharpness == SHARP_POINTY)
-			wounding_type = WOUND_PIERCE
-
-		// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
-		// So a big sharp weapon is still all you need to destroy a limb
-		if(mangled_state == BODYPART_MANGLED_SKIN && sharpness)
-			playsound(src, "sound/effects/crackandbleed.ogg", 100)
-			wounding_type = WOUND_BLUNT
-			if(sharpness == SHARP_EDGED)
-				wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
-			if(sharpness == SHARP_POINTY)
-				wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
-
-		// if both the skin and the bone are destroyed, and we're doing more than 10 damage, we're ripe to try dismembering
-		else if(mangled_state == BODYPART_MANGLED_BOTH && wounding_dmg >= DISMEMBER_MINIMUM_DAMAGE)
-			if(try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+	//Handling for bone only/flesh only(none right now)/flesh and bone targets
+	switch(organic_state)
+		// if we're bone only, all cutting attacks go straight to the bone
+		if(BIO_JUST_BONE)
+			if(wounding_type == WOUND_SLASH)
+				wounding_type = WOUND_BLUNT
+				if(easy_dismember)
+					wounding_dmg *= 0.5
+			else if(wounding_type == WOUND_PIERCE)
+				wounding_type = WOUND_BLUNT
+				if(easy_dismember)
+					wounding_dmg *= 0.75
+			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 
+		// no species with just flesh, but slimepeople may end up here eventually
+		if(BIO_JUST_FLESH)
+
+		// standard humanoids
+		if(BIO_FLESH_BONE)
+			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
+			// So a big sharp weapon is still all you need to destroy a limb
+			if(mangled_state == BODYPART_MANGLED_SKIN && sharpness)
+				playsound(src, "sound/effects/crackandbleed.ogg", 100)
+				if(wounding_type == SHARP_EDGED && !easy_dismember)
+					wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
+				if(wounding_type == SHARP_POINTY && !easy_dismember)
+					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
+				wounding_type = WOUND_BLUNT
+			else if(mangled_state == BODYPART_MANGLED_BOTH && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+				return
 
 	// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 	if(owner && wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
 		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
+	for(var/i in wounds)
+		var/datum/wound/W = i
+		W.receive_damage(wounding_type, wounding_dmg, wound_bonus)
+
+	/*
+	// END WOUND HANDLING
+	*/
+
+	//back to our regularly scheduled program, we now actually apply damage if there's room below limb damage cap
 	var/can_inflict = max_damage - get_damage()
 	var/total_damage = brute + burn
 	if(total_damage > can_inflict && total_damage > 0) // TODO: the second part of this check should be removed once disabling is all done
@@ -263,10 +285,6 @@
 
 	brute_dam += brute
 	burn_dam += burn
-
-	for(var/i in wounds)
-		var/datum/wound/W = i
-		W.receive_damage(sharpness, wounding_dmg, wound_bonus)
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
@@ -281,7 +299,7 @@
 	update_disabled()
 	return update_bodypart_damage_state() || .
 
-/// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds (note this doesn't let sharp go to bone)
+/// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds (note this doesn't let sharp go to bone) TODO: look at new wounding stuff
 /obj/item/bodypart/proc/painless_wound_roll(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus)
 	if(!owner || phantom_wounding_dmg <= 5 || wound_bonus == CANT_WOUND)
 		return
@@ -324,6 +342,9 @@
 		damage *= 1.5
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
+
+	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
+		damage *= 1.25
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
@@ -395,7 +416,7 @@
   * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
   *
   * Arguments:
-  * * It's the same ones on [receive_damage()]
+  * * It's the same ones on [receive_damage]
   */
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0

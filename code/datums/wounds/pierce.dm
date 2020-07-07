@@ -11,6 +11,7 @@
 	treatable_tool = TOOL_CAUTERY
 	base_treat_time = 3 SECONDS
 	accepts_gauze = TRUE
+	biology_required = list(HAS_FLESH)
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow

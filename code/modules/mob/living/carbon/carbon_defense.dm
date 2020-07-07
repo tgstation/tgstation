@@ -102,11 +102,12 @@
 	var/extra_wound_details = ""
 	if(I.damtype == BRUTE && hit_BP.can_dismember())
 		var/mangled_state = hit_BP.get_mangled_state()
+		var/organic_state = get_organic_state()
 		if(mangled_state == BODYPART_MANGLED_BOTH)
 			extra_wound_details = ", threatening to sever it entirely"
-		else if(mangled_state == BODYPART_MANGLED_SKIN && I.get_sharpness())
+		else if((mangled_state == BODYPART_MANGLED_SKIN && I.get_sharpness()) || (mangled_state & BODYPART_MANGLED_BONE && organic_state == BIO_JUST_BONE))
 			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the bone"
-		else if(mangled_state == BODYPART_MANGLED_BONE && I.get_sharpness())
+		else if((mangled_state == BODYPART_MANGLED_BONE && I.get_sharpness()) || (mangled_state & BODYPART_MANGLED_SKIN && organic_state == BIO_JUST_FLESH))
 			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining tissue"
 
 	var/message_verb = "attacked"

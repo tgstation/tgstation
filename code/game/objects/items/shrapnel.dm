@@ -23,24 +23,25 @@
 
 /obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"
-	damage = 8
-	range = 10
+	damage = 14
+	range = 20
 	armour_penetration = -30
 	dismemberment = 5
 	ricochets_max = 2
-	ricochet_chance = 40
+	ricochet_chance = 70
 	shrapnel_type = /obj/item/shrapnel
 	ricochet_incidence_leeway = 60
 	hit_stunned_targets = TRUE
 	sharpness = SHARP_EDGED
-	wound_bonus = 30
+	wound_bonus = 40
 
 /obj/projectile/bullet/shrapnel/mega
 	name = "flying shrapnel hunk"
-	range = 25
-	dismemberment = 10
-	ricochets_max = 4
-	ricochet_chance = 90
+	range = 45
+	dismemberment = 15
+	ricochets_max = 6
+	ricochet_chance = 130
+	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0.9
 
 /obj/projectile/bullet/pellet/stingball

@@ -10,6 +10,7 @@
 /datum/wound/blunt
 	sound_effect = 'sound/effects/crack1.ogg'
 	wound_type = WOUND_LIST_BLUNT
+	biology_required = list(HAS_BONE)
 
 	/// Have we been taped?
 	var/taped
@@ -104,6 +105,10 @@
 /datum/wound/blunt/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(!victim)
 		return
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		if(NOBLOOD in H.dna?.species.species_traits)
+			return
 
 	if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume && prob(internal_bleeding_chance + wounding_dmg))
 		var/blood_bled = rand(1, wounding_dmg * (severity == WOUND_SEVERITY_CRITICAL ? 2 : 1.5)) // 12 brute toolbox can cause up to 18/24 bleeding with a severe/critical chest wound

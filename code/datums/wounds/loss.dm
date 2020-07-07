@@ -8,17 +8,12 @@
 	threshold_minimum = 180
 	status_effect_type = null
 	scarring_descriptions = list("is several skintone shades paler than the rest of the body", "is a gruesome patchwork of artificial flesh", "has a large series of attachment scars at the articulation points")
+	biology_required = null // not that it really matters, we don't check anyway for dismembering
 
 /datum/wound/loss/proc/apply_dismember(obj/item/bodypart/L, wounding_type=WOUND_SLASH)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner) || !L.can_dismember())
 		qdel(src)
 		return
-
-	if(ishuman(L.owner))
-		var/mob/living/carbon/human/H = L.owner
-		if(organic_only && ((NOBLOOD in H.dna.species.species_traits) || !L.is_organic_limb()))
-			qdel(src)
-			return
 
 	already_scarred = TRUE // so we don't scar a limb we don't have. If I add different levels of amputation desc, do it here
 

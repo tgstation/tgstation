@@ -3,7 +3,7 @@
 	id = "moth"
 	say_mod = "flutters"
 	default_color = "00FF00"
-	species_traits = list(LIPS, NOEYESPRITES, CAN_SCAR)
+	species_traits = list(LIPS, NOEYESPRITES, HAS_FLESH, HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("moth_wings", "moth_markings")
 	default_features = list("moth_wings" = "Plain", "moth_markings" = "None")

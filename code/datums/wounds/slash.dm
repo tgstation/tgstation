@@ -11,6 +11,7 @@
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY
 	base_treat_time = 3 SECONDS
+	biology_required = list(HAS_FLESH)
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow

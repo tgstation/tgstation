@@ -4,7 +4,7 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD,NOTRANSSTING)
+	species_traits = list(NOBLOOD,NOTRANSSTING, HAS_BONE)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER,TRAIT_ALWAYS_CLEAN)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutantlungs = /obj/item/organ/lungs/plasmaman
@@ -162,6 +162,15 @@
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		H.heal_bodypart_damage(1.5,0, 0)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		for(var/i in C.all_wounds)
+			var/datum/wound/W = i
+			W.on_xadone(2)
+		return TRUE
+	if(chem.type == /datum/reagent/toxin/plasma)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		for(var/i in C.all_wounds)
+			var/datum/wound/W = i
+			W.on_xadone(4) // plasmamen use plasma to reform their bones or whatever
 		return TRUE
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
 		H.adjustStaminaLoss(7.5, 0)

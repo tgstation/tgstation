@@ -55,11 +55,17 @@
 // saved scars with a version lower than this will be discarded
 #define SCAR_CURRENT_VERSION				1
 
-// With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable:
+// With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable: TODO: this isn't accurate anymore, update
 // 	1. Skin is mangled: A critical slash or pierce wound on that limb
 // 	2. Bone is mangled: At least a severe bone wound on that limb
-// see [/obj/item/bodypart/proc/get_mangled_state()] for more information
+// see [/obj/item/bodypart/proc/get_mangled_state] for more information
 #define BODYPART_MANGLED_NONE	0
 #define BODYPART_MANGLED_BONE	1
 #define BODYPART_MANGLED_SKIN	2
 #define BODYPART_MANGLED_BOTH	3
+
+// What kind of biology we have, and what wounds we can suffer, mostly relies on the HAS_FLESH and HAS_BONE species traits on human species
+#define BIO_INORGANIC	0 // golems and androids, cannot suffer any wounds
+#define BIO_JUST_BONE	1 // skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember
+#define BIO_JUST_FLESH	2 // nothing right now, maybe slimepeople in the future, can only suffer slashing, piercing, and burn wounds
+#define BIO_FLESH_BONE	3 // standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember

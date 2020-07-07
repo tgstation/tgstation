@@ -166,11 +166,15 @@
   */
 /obj/item/bodypart/proc/get_mangled_state()
 	var/mangled_state = BODYPART_MANGLED_NONE
+	var/required_bone_severity = WOUND_SEVERITY_SEVERE
+
+	if(owner && owner.get_organic_state() == BIO_JUST_BONE)
+		required_bone_severity = WOUND_SEVERITY_CRITICAL
 
 	// we can (generally) only have one wound per type, but remember there's multiple types
 	for(var/i in wounds)
 		var/datum/wound/W = i
-		if(istype(W, /datum/wound/blunt) && W.severity >= WOUND_SEVERITY_SEVERE)
+		if(istype(W, /datum/wound/blunt) && W.severity >= required_bone_severity)
 			mangled_state |= BODYPART_MANGLED_BONE
 		else if((istype(W, /datum/wound/slash) || istype(W, /datum/wound/pierce)) && W.severity >= WOUND_SEVERITY_CRITICAL)
 			mangled_state |= BODYPART_MANGLED_SKIN
@@ -191,6 +195,9 @@
   * * bare_wound_bonus: ditto above
   */
 /obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+	if(wounding_dmg < DISMEMBER_MINIMUM_DAMAGE)
+		return
+
 	var/base_chance = wounding_dmg + (get_damage() / max_damage * 50) // how much damage we dealt with this blow, + 50% of the damage percentage we already had on this bodypart
 	for(var/i in wounds)
 		var/datum/wound/W = i
