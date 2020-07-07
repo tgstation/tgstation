@@ -102,7 +102,7 @@
 /obj/structure/closet/supplypod/proc/SetReverseIcon()
 	fin_mask = "bottomfin"
 	if (POD_STYLES[style][POD_SHAPE] == POD_SHAPE_NORML)
-		icon_state = initial(icon_state) + "_reverse"
+		icon_state = POD_STYLES[style][POD_BASE] + "_reverse"
 	pixel_x = initial(pixel_x) 
 	transform = matrix()
 	update_icon()
