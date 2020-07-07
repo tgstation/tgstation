@@ -16,8 +16,6 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
-	///The time since a last bounty slip was printed.
-	var/bounty_timer = 0
 	///Value of the currently bounty input
 	var/bounty_value = 1
 	///Text of the currently written bounty
@@ -44,22 +42,6 @@ GLOBAL_LIST_EMPTY(request_list)
 			return TRUE
 		to_chat(user, "There's no account assigned with this ID.")
 		return TRUE
-	if(istype(I, /obj/item/bounty_card))
-		if(!current_user)
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-			return TRUE
-		var/obj/item/bounty_card/curr_bounty = I
-		var/datum/station_request/curr_request = curr_bounty.new_request
-		if(!curr_request)
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-			return TRUE
-		curr_request.req_number = current_user.account_id
-		curr_request.owner_account = current_user
-		GLOB.request_list += list(curr_request)
-		for(var/obj/i in GLOB.allbountyboards)
-			i.say("New bounty has been added!")
-			playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
-		qdel(I)
 	if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 		I.play_tool_sound(src)
@@ -109,7 +91,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
-	if(GLOB.request_list.len)
+	if(!current_ref_num)
 		for(var/datum/station_request/i in GLOB.request_list)
 			if("[i.req_number]" == "[current_ref_num]")
 				active_request = i
@@ -121,7 +103,7 @@ GLOBAL_LIST_EMPTY(request_list)
 				break
 	switch(action)
 		if("CreateBounty")
-			if(!current_user)
+			if(!current_user || !bounty_text)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			for(var/datum/station_request/i in GLOB.request_list)
@@ -169,37 +151,6 @@ GLOBAL_LIST_EMPTY(request_list)
 		if("bountytext")
 			bounty_text = (params["bountytext"])
 	. = TRUE
-
-/obj/item/bounty_card
-	name = "bounty card"
-	desc = "Can be filled out, then inserted into a request kiosk to create a bounty."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "bountycard"
-	w_class = WEIGHT_CLASS_TINY
-	///When filled out, the bounty card holds a bounty datum inside itself which is finished by the bounty board.
-	var/datum/station_request/new_request
-
-/obj/item/bounty_card/attack_self(mob/user)
-	if(new_request)
-		to_chat(user, "<span class='warning'>[src] is already filled out.</span>")
-		return
-	var/description = stripped_input(user, "Please enter your request description.", "Request description") as message|null
-	if(!description || !(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)))
-		return
-	description = sanitize(copytext_char(description, 1, MAX_MESSAGE_LEN))
-	var/new_cost = input(user, "Set the cost for this request.","Bounty cost") as num|null
-	if(!new_cost || !(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)))
-		return
-	new_cost = round(clamp(new_cost, 0, 1000), 1)
-	new_request = new /datum/station_request(user.name, new_cost, description)
-	icon_state = "bountycardfull"
-
-/obj/item/bounty_card/examine(mob/user)
-	. = ..()
-	if(!new_request)
-		return
-	. += ("[new_request.description]")
-	. += ("The Price on this bounty is set for [new_request.value] credits.")
 
 /obj/item/wallframe/bounty_board
 	name = "disassembled bounty board"

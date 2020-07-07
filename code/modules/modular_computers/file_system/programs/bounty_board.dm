@@ -13,6 +13,10 @@
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
+	///Value of the currently bounty input
+	var/bounty_value = 1
+	///Text of the currently written bounty
+	var/bounty_text = ""
 	///Has the app been added to the network yet?
 	var/networked = FALSE
 
@@ -21,15 +25,11 @@
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
-	var/printer_text = "No Printer Detected."
 	if(!networked)
 		GLOB.allbountyboards += computer
 		networked = TRUE
 	if(card_slot && card_slot.stored_card && card_slot.stored_card.registered_account)
 		current_user = card_slot.stored_card.registered_account
-	if(printer)
-		printer_text = "[printer.stored_paper]/[printer.max_paper]"
 	for(var/i in GLOB.request_list)
 		if(!i)
 			continue
@@ -42,7 +42,6 @@
 		data["AccountName"] = current_user.account_holder
 	data["Requests"] = formatted_requests
 	data["Applicants"] = formatted_applicants
-	data["PrinterPaper"] = printer_text
 	return data
 
 /datum/computer_file/program/bounty_board/ui_act(action, list/params)
@@ -51,11 +50,11 @@
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
-	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
-	for(var/datum/station_request/i in GLOB.request_list)
-		if("[i.req_number]" == "[current_ref_num]")
-			active_request = i
-			break
+	if(!current_ref_num)
+		for(var/datum/station_request/i in GLOB.request_list)
+			if("[i.req_number]" == "[current_ref_num]")
+				active_request = i
+				break
 	if(active_request)
 		for(var/datum/bank_account/j in active_request.applicants)
 			if("[j.account_id]" == "[current_app_num]")
@@ -63,12 +62,18 @@
 				break
 	switch(action)
 		if("CreateBounty")
-			if(printer.stored_paper < 1)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+			if(!current_user || !bounty_text)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
-			computer.say("Dispensing Card.")
-			new /obj/item/bounty_card(get_turf(computer))
-			printer.stored_paper -= 1
+			for(var/datum/station_request/i in GLOB.request_list)
+				if("[i.req_number]" == "[current_user.account_id]")
+					say("Account already has active bounty.")
+					return
+			var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
+			GLOB.request_list += list(curr_request)
+			for(var/obj/i in GLOB.allbountyboards)
+				i.say("New bounty has been added!")
+				playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
 			return TRUE
 		if("Apply")
 			if(!current_user)
