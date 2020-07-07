@@ -4,18 +4,6 @@ import { formatSiUnit, formatMoney } from '../format';
 import { Flex, Section, Tabs, Box, Button, Fragment, ProgressBar, NumberInput, Tooltip } from '../components';
 import { Window } from '../layouts';
 
-/*
-          <Flex.Item basis="content">
-            <Button
-              disabled={building_part || (text_colors[index] === "red")}
-              color="good"
-              height="20px"
-              mr={1}
-              icon="play"
-              onClick={() => { act("build_part", { index: index+1 }); }} />
-          </Flex.Item>
-*/
-
 const MATERIAL_KEYS = {
   "iron": "sheet-metal_3",
   "glass": "sheet-glass_3",
@@ -43,8 +31,8 @@ const COLOR_KEYS = {
 const materialArrayToObj = materials => {
   let material_obj = {};
 
-  materials.forEach((m, i) => {
-    material_obj[m.name] = materials[i].amount; });
+  materials.forEach(m => {
+    material_obj[m.name] = m.amount; });
 
   return material_obj;
 };
@@ -591,36 +579,63 @@ const QueueList = (props, context) => {
 const BeingBuilt = (props, context) => {
   const { data } = useBackend(context);
 
-  const { building_part } = data;
+  const {
+    building_part,
+    stored_part,
+  } = data;
 
-  if (!building_part) {
-    return false;
+  if (stored_part) {
+    const {
+      name,
+    } = stored_part;
+
+    return (
+      <Box>
+        <ProgressBar
+          minValue={0}
+          maxValue={1}
+          value={1}
+          color="average">
+          <Flex>
+            <Flex.Item>
+              {name}
+            </Flex.Item>
+            <Flex.Item grow={1} />
+            <Flex.Item>
+              {"Fabricator outlet obstructed..."}
+            </Flex.Item>
+          </Flex>
+        </ProgressBar>
+      </Box>
+    );
   }
 
-  const {
-    name,
-    duration,
-    print_time,
-  } = building_part;
+  if (building_part) {
+    const {
+      name,
+      duration,
+      print_time,
+    } = building_part;
 
-  const time_left = Math.ceil(duration/10);
+    const time_left = Math.ceil(duration/10);
 
-  return (
-    <Box>
-      <ProgressBar
-        minValue={0}
-        maxValue={print_time}
-        value={duration}>
-        <Flex>
-          <Flex.Item>
-            {name}
-          </Flex.Item>
-          <Flex.Item grow={1} />
-          <Flex.Item>
-            {((time_left >= 0) && (time_left + "s")) || ("Dispensing...")}
-          </Flex.Item>
-        </Flex>
-      </ProgressBar>
-    </Box>
-  );
+    return (
+      <Box>
+        <ProgressBar
+          minValue={0}
+          maxValue={print_time}
+          value={duration}>
+          <Flex>
+            <Flex.Item>
+              {name}
+            </Flex.Item>
+            <Flex.Item grow={1} />
+            <Flex.Item>
+              {((time_left >= 0) && (time_left + "s")) || ("Dispensing...")}
+            </Flex.Item>
+          </Flex>
+        </ProgressBar>
+      </Box>
+    );
+  }
 };
