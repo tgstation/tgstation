@@ -11,25 +11,35 @@
 	circuit = /obj/item/circuitboard/machine/mechfab
 	processing_flags = START_PROCESSING_MANUALLY
 
+	/// Current items in the build queue.
 	var/list/queue = list()
+	/// Whether or not the machine is building the entire queue automagically.
 	var/process_queue = FALSE
 
+	/// The current design datum that the machine is building.
 	var/datum/design/being_built
+	/// World time when the build will finish.
 	var/build_finish = 0
+	/// Reference to all materials used in the creation of the item being_built.
 	var/list/build_materials
+	/// Part currently stored in the Exofab.
 	var/obj/item/stored_part
 
-	var/datum/design/force_build_next
-
+	/// Coefficient for the speed of item building. Based on the installed parts.
 	var/time_coeff = 1
+	/// Coefficient for the efficiency of material usage in item building. Based on the installed parts.
 	var/component_coeff = 1
 
+	/// Copy of the currently synced techweb.
 	var/datum/techweb/specialized/autounlocking/exofab/stored_research
 
+	/// Whether the Exofab links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.
 	var/link_on_init = TRUE
 
+	/// Reference to a remote material inventory, such as an ore silo.
 	var/datum/component/remote_materials/rmat
 
+	/// A list of categories that valid MECHFAB design datums will broadly categorise themselves under.
 	var/list/part_sets = list(
 								"Cyborg",
 								"Ripley",
@@ -47,6 +57,8 @@
 								"Control Interfaces",
 								"Misc"
 								)
+
+	// tgui interface dimensions. These are suggested as a minimum.
 	ui_x = 1100
 	ui_y = 640
 
@@ -83,6 +95,8 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.</span>"
 
+
+// TODO - Delete me, I no longer work.
 /obj/machinery/mecha_part_fabricator/emag_act()
 	if(obj_flags & EMAGGED)
 		return
@@ -200,18 +214,32 @@
 
 	return null
 
-// TODO - DMDOC
+/**
+  * Intended to be called when an item starts printing.
+  *
+  * Adds the overlay to show the fab working and sets active power usage settings.
+  */
 /obj/machinery/mecha_part_fabricator/proc/on_start_printing()
 	add_overlay("fab-active")
 	use_power = ACTIVE_POWER_USE
 
-// TODO - DMDOC
+/**
+  * Intended to be called when the exofab has stopped working and is no longer printing items.
+  *
+  * Removes the overlay to show the fab working and sets idle power usage settings. Additionally resets the description and turns off queue processing.
+  */
 /obj/machinery/mecha_part_fabricator/proc/on_finish_printing()
 	cut_overlay("fab-active")
 	use_power = IDLE_POWER_USE
 	desc = initial(desc)
 	process_queue = FALSE
 
+/**
+  * Calculates resource/material costs for printing an item based on the machine's resource coefficient.
+  *
+  * Returns a list of k,v resources with their amounts.
+  * * D - Design datum to calculate the modified resource cost of.
+  */
 /obj/machinery/mecha_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
 	var/list/resources = list()
 	for(var/R in D.materials)
@@ -219,6 +247,13 @@
 		resources[M] = get_resource_cost_w_coeff(D, M)
 	return resources
 
+/**
+  * Checks if the Exofab has enough resources to print a given item.
+  *
+  * Returns FALSE if the design has no reagents used in its construction (?) or if there are insufficient resources.
+  * Returns TRUE if there are sufficient resources to print the item.
+  * * D - Design datum to calculate the modified resource cost of.
+  */
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	if(length(D.reagents_list)) // No reagents storage - no reagent designs.
 		return FALSE
@@ -227,6 +262,13 @@
 		return TRUE
 	return FALSE
 
+/**
+  * Attempts to build the next item in the build queue.
+  *
+  * Returns FALSE if either there are no more parts to build or the next part is not buildable.
+  * Returns TRUE if the next part has started building.
+  * * verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.
+  */
 /obj/machinery/mecha_part_fabricator/proc/build_next_in_queue(verbose = TRUE)
 	if(!length(queue))
 		return FALSE
@@ -242,7 +284,9 @@
   * Starts the build process for a given design datum.
   *
   * Returns FALSE if the procedure fails. Returns TRUE when being_built is set.
+  * Uses materials.
   * * D - Design datum to attempt to print.
+  * * verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.
   */
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE)
 	if(!D)
@@ -264,10 +308,17 @@
 
 	build_materials = get_resources_w_coeff(D)
 
+	// Do a final sanity check and make sure the materials were successfully removed before proceeding.
+	if(!materials.use_materials(build_materials))
+		if(verbose)
+			say("Not enough resources. Processing stopped.")
+		build_materials = null
+		return FALSE
+
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(D)
 	desc = "It's building \a [D.name]."
-	materials.use_materials(build_materials)
+
 	rmat.silo_log(src, "built", -1, "[D.name]", build_materials)
 
 	return TRUE
@@ -325,25 +376,50 @@
 	I.forceMove(exit)
 	return TRUE
 
+/**
+  * Adds a list of datum designs to the build queue.
+  *
+  * Will only add designs that are in this machine's stored techweb.
+  * Does final checks for datum IDs and makes sure this machine can build the designs.
+  * * part_list - List of datum design ids for designs to add to the queue.
+  */
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(list/part_list)
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if((D.build_type & MECHFAB) && (D.id in part_list))
 			add_to_queue(D)
 
-/obj/machinery/mecha_part_fabricator/proc/add_to_queue(D)
+/**
+  * Adds a datum design to the build queue.
+  *
+  * Returns TRUE if successful and FALSE if the design was not added to the queue.
+  * * D - Datum design to add to the queue.
+  */
+/obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D)
 	if(!istype(queue))
 		queue = list()
 	if(D)
 		queue[++queue.len] = D
-	return queue.len
+		return TRUE
+	return FALSE
 
+/**
+  * Removes datum design from the build queue based on index.
+  *
+  * Returns TRUE if successful and FALSE if a design was not removed from the queue.
+  * * index - Index in the build queue of the element to remove.
+  */
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
 	if(!isnum(index) || !ISINTEGER(index) || !istype(queue) || (index<1 || index>length(queue)))
 		return FALSE
 	queue.Cut(index,++index)
 	return TRUE
 
+/**
+  * Generates a list of parts formatted for tgui based on the current build queue.
+  *
+  * Returns a formatted list of lists containing formatted part information for every part in the build queue.
+  */
 /obj/machinery/mecha_part_fabricator/proc/list_queue()
 	if(!istype(queue) || !length(queue))
 		return null
@@ -354,6 +430,11 @@
 		queued_parts += list(part)
 	return queued_parts
 
+/**
+  * Syncs machine with R&D servers.
+  *
+  * Requires an R&D Console visible within 7 tiles. Copies techweb research. Updates tgui's state data.
+  */
 /obj/machinery/mecha_part_fabricator/proc/sync()
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		RDC.stored_research.copy_research_to(stored_research)
@@ -364,9 +445,24 @@
 	say("Unable to connect to local R&D server.")
 	return
 
+/**
+  * Calculates the coefficient-modified resource cost of a single material component of a design's recipe.
+  *
+  * Returns coefficient-modified resource cost for the given material component.
+  * * D - Design datum to pull the resource cost from.
+  * * resource - Material datum reference to the resource to calculate the cost of.
+  * * roundto - Rounding value for round() proc
+  */
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, var/datum/material/resource, roundto = 1)
 	return round(D.materials[resource]*component_coeff, roundto)
 
+/**
+  * Calculates the coefficient-modified build time of a design.
+  *
+  * Returns coefficient-modified build time of a given design.
+  * * D - Design datum to calculate the modified build time of.
+  * * roundto - Rounding value for round() proc
+  */
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff, roundto)
 
@@ -529,6 +625,13 @@
 
 	return FALSE
 
+/**
+  * Eject material sheets.
+  *
+  * Returns the number of sheets successfully ejected.
+  * eject_sheet - Byond REF of the material to eject.
+  *	eject_amt - Number of sheets to attempt to eject.
+  */
 /obj/machinery/mecha_part_fabricator/proc/eject_sheets(eject_sheet, eject_amt)
 	var/datum/component/material_container/mat_container = rmat.mat_container
 	if (!mat_container)
