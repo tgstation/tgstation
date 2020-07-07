@@ -288,9 +288,10 @@
 
 /datum/mafia_controller/proc/get_vote_count(role,vt)
 	. = 0
-	for(var/votee in votes[vt])
+	for(var/v in votes[vt])
+		var/datum/mafia_role/votee = v
 		if(votes[vt][votee] == role)
-			. += 1
+			. += votee.vote_power
 
 /datum/mafia_controller/proc/get_vote_winner(vt)
 	var/list/tally = list()

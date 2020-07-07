@@ -38,6 +38,9 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 /proc/generate_mafia_setups()
 	. = list()
 	for(var/T in subtypesof(/datum/mafia_setup))
+		if(assoc_value_sum(T) > 12)
+			var/datum/mafia_setup/S = T
+			message_admins("MAFIA: [S.name] has bad player count! The maps cannot support more than 12 players!")
 		var/datum/mafia_setup/N = new T
 		. += list(N.roles)
 
@@ -64,9 +67,10 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 	)
 
 /datum/mafia_setup/twelve_md
-	name = "12 Player Setup MD"
+	name = "12 Player Setup Mosty MD"
 	roles = list(
-		/datum/mafia_role=6,
+		/datum/mafia_role=5,
+		/datum/mafia_role/chaplain=1,
 		/datum/mafia_role/md=3,
 		/datum/mafia_role/mafia=4
 	)
@@ -74,7 +78,6 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 /datum/mafia_setup/twelve_all
 	name = "12 Player Setup All"
 	roles = list(
-		/datum/mafia_role=1,
 		/datum/mafia_role/psychologist=1,
 		/datum/mafia_role/md=1,
 		/datum/mafia_role/detective=1,
@@ -82,6 +85,7 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/chaplain=1,
 		/datum/mafia_role/lawyer=1,
 		/datum/mafia_role/traitor=1,
+		/datum/mafia_role/nightmare=1,
 		/datum/mafia_role/mafia=3,
 		/datum/mafia_role/fugitive=1,
 		/datum/mafia_role/obsessed=1
@@ -93,7 +97,8 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role=5,
 		/datum/mafia_role/detective=2,
 		/datum/mafia_role/clown=2,
-		/datum/mafia_role/mafia=3
+		/datum/mafia_role/mafia=2,
+		/datum/mafia_role/mafia/thoughtfeeder=1
 	)
 
 /datum/mafia_setup/twelve_lockdown
@@ -103,7 +108,8 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/md=1,
 		/datum/mafia_role/detective=1,
 		/datum/mafia_role/lawyer=2,
-		/datum/mafia_role/mafia=3
+		/datum/mafia_role/mafia=2,
+		/datum/mafia_role/mafia/thoughtfeeder=1
 	)
 
 /datum/mafia_setup/twelve_rip
@@ -134,22 +140,45 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role/fugitive=2
 	)
 
+//very op town to balance out three traitors
 /datum/mafia_setup/twelve_traitor_mafia
 	name = "12 Player Traitor Mafia"
 	roles = list(
-		/datum/mafia_role=3,
+		/datum/mafia_role=1,
+		/datum/mafia_role/chaplain=1,
+		/datum/mafia_role/lawyer=1,
 		/datum/mafia_role/psychologist=2,
 		/datum/mafia_role/md=2,
 		/datum/mafia_role/detective=2,
 		/datum/mafia_role/traitor=3
 	)
 
-/*
-/datum/mafia_setup/three_test
-	name = "3 Player Test"
+//very weak town to balance out one changeling (albeit a thoughtfeeder)
+/datum/mafia_setup/twelve_mafia_traitor
+	name = "12 Player Mafia Traitor"
 	roles = list(
-		/datum/mafia_role/chaplain=1,
+		/datum/mafia_role=6,
+		/datum/mafia_role/chaplain=2,
 		/datum/mafia_role/psychologist=1,
-		/datum/mafia_role/mafia=1
+		/datum/mafia_role/md=2,
+		/datum/mafia_role/mafia/thoughtfeeder=1
 	)
-*/
+
+/datum/mafia_setup/twelve_hopline
+	name = "12 Player Hopline"
+	roles = list(
+		/datum/mafia_role=3,
+		/datum/mafia_role/hop=1,
+		/datum/mafia_role/chaplain=2,
+		/datum/mafia_role/mafia=3
+	)
+
+/datum/mafia_setup/twelve_nightmare
+	name = "12 Player Nightmare"
+	roles = list(
+		/datum/mafia_role=10,
+		/datum/mafia_role/hop=1,
+		/datum/mafia_role/chaplain=2,
+		/datum/mafia_role/traitor=1,
+		/datum/mafia_role/nightmare=1
+	)
