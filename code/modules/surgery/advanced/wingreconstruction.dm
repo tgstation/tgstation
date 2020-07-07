@@ -9,7 +9,7 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 
 /datum/surgery/advanced/wing_reconstruction/can_start(mob/user, mob/living/carbon/target)
-	return ..() && target.dna.features["moth_wings"] == "Burnt Off"
+	return ..() && target.dna.features["moth_wings"] == "Burnt Off" && ismoth(target)
 
 /datum/surgery_step/wing_reconstruction
 	name = "start wing reconstruction"
@@ -25,13 +25,14 @@
 		"<span class='notice'>[user] begins to perform surgery on [target]'s charred wing membranes.</span>")
 
 /datum/surgery_step/wing_reconstruction/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/mob/living/carbon/human/H = target
-	display_results(user, target, "<span class='notice'>You succeed in reconstructing [target]'s wings.</span>",
-		"<span class='notice'>[user] successfully reconstructs [target]'s wings!</span>",
-		"<span class='notice'>[user] completes the surgery on [target]'s wings.</span>")
-	if(H.dna.features["original_moth_wings"] != null)
-		H.dna.features["moth_wings"] = H.dna.features["original_moth_wings"]
-	else
-		H.dna.features["moth_wings"] = "Plain"
-	H.update_mutant_bodyparts()
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		display_results(user, target, "<span class='notice'>You succeed in reconstructing [target]'s wings.</span>",
+			"<span class='notice'>[user] successfully reconstructs [target]'s wings!</span>",
+			"<span class='notice'>[user] completes the surgery on [target]'s wings.</span>")
+		if(H.dna.features["original_moth_wings"] != null)
+			H.dna.features["moth_wings"] = H.dna.features["original_moth_wings"]
+		else
+			H.dna.features["moth_wings"] = "Plain"
+		H.update_mutant_bodyparts()
 	return ..()
