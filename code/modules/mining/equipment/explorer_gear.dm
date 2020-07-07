@@ -7,6 +7,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/hooded/explorer
 	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
@@ -20,6 +22,8 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50, "wound" = 10)
 	resistance_flags = FIRE_PROOF
 
