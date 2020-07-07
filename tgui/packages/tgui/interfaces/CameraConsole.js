@@ -100,6 +100,7 @@ export const CameraConsoleContent = (props, context) => {
   return (
     <Fragment>
       <Input
+        autoFocus
         fluid
         mb={1}
         placeholder="Search for a camera"

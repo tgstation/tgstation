@@ -6,10 +6,9 @@ import { Component, Fragment } from 'inferno';
 import { Box, Button, Chart, ColorBox, Flex, Icon, LabeledList, ProgressBar, Section, Table } from '../components';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
-
 const PEAK_DRAW = 500000;
 
-const powerRank = str => {
+export const powerRank = str => {
   const unit = String(str.split(' ')[1]).toLowerCase();
   return ['w', 'kw', 'mw', 'gw'].indexOf(unit);
 };
@@ -172,7 +171,7 @@ export const PowerMonitorContent = (props, context) => {
   );
 };
 
-const AreaCharge = props => {
+export const AreaCharge = props => {
   const { charging, charge } = props;
   return (
     <Fragment>

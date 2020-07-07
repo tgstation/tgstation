@@ -864,6 +864,38 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(usr, "<span class='warning'>Can't become a pAI candidate while not dead!</span>")
 
+/mob/dead/observer/verb/mafia_game_signup()
+	set category = "Ghost"
+	set name = "Signup for Mafia"
+	set desc = "Sign up for a game of Mafia to pass the time while dead."
+
+	mafia_signup()
+
+/mob/dead/observer/proc/mafia_signup()
+	if(!client)
+		return
+	if(!SSticker.HasRoundStarted())
+		to_chat(usr, "<span class='warning'>Wait for the game to start!</span>")
+		return
+	if(!isobserver(src))
+		to_chat(usr, "<span class='warning'>You must be a ghost to join mafia!</span>")
+		return
+	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
+	if(!game)
+		game = create_mafia_game("mafia")
+	if(GLOB.mafia_signup[client.ckey])
+		GLOB.mafia_signup -= ckey
+		to_chat(usr, "<span class='notice'>You unregister from Mafia.</span>")
+		return //don't need warnings, and decreasing signed_up size isn't going to get a game going
+	else
+		GLOB.mafia_signup[ckey] = client
+		to_chat(usr, "<span class='notice'>You sign up for Mafia.</span>")
+	to_chat(usr, "<span class='bold notice'>The game currently has [GLOB.mafia_signup.len]/12 players signed up.</span>")
+	if(game.phase != MAFIA_PHASE_SETUP)
+		to_chat(usr, "<span class='notice'>Mafia is currently in progress, you will be signed up for next round.</span>")
+	else
+		game.try_autostart()
+
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering

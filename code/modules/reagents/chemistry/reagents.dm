@@ -70,6 +70,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/harmful = FALSE
 	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
 	var/datum/material/material
+	///A list of causes why this chem should skip being removed, if the length is 0 it will be removed from holder naturally, if this is >0 it will not be removed from the holder.
+	var/list/reagent_removal_skip_list = list()
 
 /datum/reagent/New()
 	. = ..()
@@ -81,8 +83,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	. = ..()
 	holder = null
 
+/// Applies this reagent to an [/atom]
+/datum/reagent/proc/expose_atom(atom/A, volume)
+	return
+
 /// Applies this reagent to a [/mob/living]
-/datum/reagent/proc/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+/datum/reagent/proc/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
 		return 0
 	if(method == VAPOR) //smoke, foam, spray
@@ -94,18 +100,19 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return 1
 
 /// Applies this reagent to an [/obj]
-/datum/reagent/proc/reaction_obj(obj/O, volume)
+/datum/reagent/proc/expose_obj(obj/O, volume)
 	return
 
 /// Applies this reagent to a [/turf]
-/datum/reagent/proc/reaction_turf(turf/T, volume)
+/datum/reagent/proc/expose_turf(turf/T, volume)
 	return
 
 /// Called from [/datum/reagents/proc/metabolize]
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
 	current_cycle++
+	if(length(reagent_removal_skip_list))
+		return
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
-	return
 
 ///Called after a reagent is transfered
 /datum/reagent/proc/on_transfer(atom/A, method=TOUCH, trans_volume)

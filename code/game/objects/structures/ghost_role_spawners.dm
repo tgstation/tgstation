@@ -305,6 +305,22 @@
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
 
+//Icebox version of hermit
+/obj/effect/mob_spawn/human/hermit/icemoon
+	name = "Cryostasis bed"
+	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
+	mob_name = "a grumpy old man"
+	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon_state = "cryostasis_sleeper"
+	outfit = /datum/outfit/hermit
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	mob_species = /datum/species/human
+	short_desc = "You've been hunting polar bears for 40 years now! What do these 'NaniteTrans' newcomers want?"
+	flavour_text = "You were fine hunting polar bears and taming wolves out here on your own, but now that there are corporate stooges around, you need to watch your step."
+	assignedrole = "Hermit"
+
 /datum/outfit/hermit
 	name = "Lavaland hermit"
 	uniform = /obj/item/clothing/under/color/grey/glorf

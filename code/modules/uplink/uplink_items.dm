@@ -510,11 +510,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/dangerous/bolt_action
-	name = "Surplus Rifle"
-	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
-	item = /obj/item/gun/ballistic/rifle/boltaction
-	cost = 1
+/datum/uplink_item/dangerous/surplus_smg
+	name = "Surplus SMG"
+	desc = "A horribly outdated automatic weapon. Why would you want to use this?"
+	item = /obj/item/gun/ballistic/automatic/plastikov
+	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/revolver
@@ -899,10 +899,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 6
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/ammo/bolt_action
-	name = "Surplus Rifle Clip"
-	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
-	item = 	/obj/item/ammo_box/a762
+/datum/uplink_item/ammo/surplus_smg
+	name = "Surplus SMG Magazine"
+	desc = "A cylindrical magazine designed for the PP-95 SMG."
+	item = /obj/item/ammo_box/magazine/plastikov9mm
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 	illegal_tech = FALSE
@@ -1922,7 +1922,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	cost = 10
 	item = /obj/item/autosurgeon/syndicate/laser_arm
-	restricted_roles = list("Roboticist")
+	restricted_roles = list("Roboticist", "Research Director")
+
+/datum/uplink_item/role_restricted/ocd_device
+	name = "Organic Resources Disturbance Inducer"
+	desc = "A device that raises hell in organic resources indirectly. Single use."
+	cost = 2
+	limited_stock = 1
+	item = /obj/item/devices/ocd_device
+	restricted_roles = list("Head of Personnel", "Quartermaster")
 
 // Pointless
 /datum/uplink_item/badass
@@ -2004,3 +2012,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	limited_stock = 1
 	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/role_restricted/meathook
+	name = "Butcher's Meat Hook"
+	desc = "A brutal cleaver on a long chain, it allows you to pull people to your location."
+	item = /obj/item/gun/magic/hook
+	cost = 11
+	restricted_roles = list("Cook")
