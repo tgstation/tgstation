@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { uniqBy } from 'common/collections'
+import { uniqBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
 import { formatSiUnit, formatMoney } from '../format';
 import { Flex, Section, Tabs, Box, Button, Fragment, ProgressBar, NumberInput, Icon, Input } from '../components';
