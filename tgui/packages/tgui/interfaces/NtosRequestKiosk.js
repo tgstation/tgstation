@@ -10,40 +10,34 @@ import { refocusLayout, NtosWindow } from '../layouts';
 export const NtosRequestKiosk = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    AccountName,
-    Requests =[],
-    Applicants =[],
-    BountyValue,
-    BountyText,
+    accountName,
+    requests =[],
+    applicants =[],
+    bountyValue,
+    bountyText,
   } = data;
   const color = 'rgba(13, 13, 213, 0.7)';
-  const BackColor = 'rgba(0, 0, 69, 0.5)';
-  const BackTextColor = 'rgba(255, 255, 255, 0.3)';
+  const backColor = 'rgba(0, 0, 69, 0.5)';
   return (
     <NtosWindow resizable>
       <NtosWindow.Content scrollable>
-        <Section
-          buttons={(
-            <Flex>
-              <Flex.Item mt={2}>
+        <Section>
+          <LabeledList>
+            <LabeledList.Item
+              label="Current Account"
+              buttons={(
                 <Button
                   icon="power-off"
                   content="Log out"
-                  onClick={() => act('Clear')} />
-              </Flex.Item>
-            </Flex>
-          )}>
-          <LabeledList
-            title="Create Requests">
-            <LabeledList.Item
-              label="Current Account">
-              {AccountName ? AccountName: 'N/A'}
+                  onClick={() => act('clear')} />
+              )}>
+              {accountName || 'N/A'}
             </LabeledList.Item>
           </LabeledList>
         </Section>
         <Flex mb={1}>
           <Flex.Item grow={1} basis={0}>
-            {Requests?.map(request => (
+            {requests?.map(request => (
               <Collapsible
                 key={request.name}
                 title={request.owner}
@@ -63,7 +57,7 @@ export const NtosRequestKiosk = (props, context) => {
                         fluid
                         icon="pen-fancy"
                         content="Apply"
-                        onClick={() => act('Apply', {
+                        onClick={() => act('apply', {
                           request: request.acc_number,
                         })} />
                       <Button
@@ -71,7 +65,7 @@ export const NtosRequestKiosk = (props, context) => {
                         icon="trash-alt"
                         content="Delete"
                         color="red"
-                        onClick={() => act('DeleteRequest', {
+                        onClick={() => act('deleteRequest', {
                           request: request.acc_number,
                         })} />
                     </Flex.Item>
@@ -81,13 +75,13 @@ export const NtosRequestKiosk = (props, context) => {
                   </Section>
                   <Section
                     title="Request Applicants">
-                    {Applicants?.map(applicant => (
+                    {applicants?.map(applicant => (
                       applicant.request_id === request.acc_number && (
                         <Flex>
                           <Flex.Item
                             grow={1}
                             p={0.5}
-                            backgroundColor={BackColor}
+                            backgroundColor={backColor}
                             width="510px"
                             style={{
                               border: `2px solid ${color}`,
@@ -99,7 +93,7 @@ export const NtosRequestKiosk = (props, context) => {
                             <Button
                               fluid
                               icon="cash-register"
-                              onClick={() => act('PayApplicant', {
+                              onClick={() => act('payApplicant', {
                                 applicant: applicant.requestee_id,
                                 request: request.acc_number,
                               })} />
@@ -120,12 +114,12 @@ export const NtosRequestKiosk = (props, context) => {
               <Section>
                 <TextArea
                   fluid
-                  value={BountyText}
+                  value={bountyText}
                   height="250px"
                   width="200px"
-                  backgroundColor={BackTextColor}
+                  backgroundColor="black"
                   textColor="white"
-                  onInput={(e, value) => act('bountytext', {
+                  onInput={(e, value) => act('bountyText', {
                     bountytext: value,
                   })} />
                 <Box>
@@ -134,16 +128,16 @@ export const NtosRequestKiosk = (props, context) => {
                     unit="cr"
                     minValue={1}
                     maxValue={1000}
-                    value={BountyValue}
+                    value={bountyValue}
                     width="80px"
-                    onChange={(e, value) => act('bountyval', {
+                    onChange={(e, value) => act('bountyVal', {
                       bountyval: value,
                     })} />
                 </Box>
                 <Button
                   icon="print"
                   content="Submit bounty"
-                  onClick={() => act('CreateBounty')} />
+                  onClick={() => act('createBounty')} />
               </Section>
             </Collapsible>
           </Flex.Item>

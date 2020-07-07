@@ -78,11 +78,11 @@ GLOBAL_LIST_EMPTY(request_list)
 	if(id_card?.registered_account)
 		current_user = id_card.registered_account
 	if(current_user)
-		data["AccountName"] = current_user.account_holder
-	data["Requests"] = formatted_requests
-	data["Applicants"] = formatted_applicants
-	data["BountyValue"] = bounty_value
-	data["BountyText"] = bounty_text
+		data["accountName"] = current_user.account_holder
+	data["requests"] = formatted_requests
+	data["applicants"] = formatted_applicants
+	data["bountyValue"] = bounty_value
+	data["bountyText"] = bounty_text
 	return data
 
 /obj/machinery/bounty_board/ui_act(action, list/params)
@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
-	if(!current_ref_num)
+	if(current_ref_num)
 		for(var/datum/station_request/i in GLOB.request_list)
 			if("[i.req_number]" == "[current_ref_num]")
 				active_request = i
@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(request_list)
 				request_target = j
 				break
 	switch(action)
-		if("CreateBounty")
+		if("createBounty")
 			if(!current_user || !bounty_text)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(request_list)
 			for(var/obj/i in GLOB.allbountyboards)
 				i.say("New bounty has been added!")
 				playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
-		if("Apply")
+		if("apply")
 			if(!current_user)
 				say("Please swipe a valid ID first.")
 				return TRUE
@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(request_list)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			active_request.applicants += list(current_user)
-		if("PayApplicant")
+		if("payApplicant")
 			if(!current_user)
 				return
 			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
@@ -132,23 +132,26 @@ GLOBAL_LIST_EMPTY(request_list)
 			request_target.transfer_money(current_user, active_request.value)
 			say("Paid out [active_request.value] credits.")
 			return TRUE
-		if("Clear")
+		if("clear")
 			if(current_user)
 				current_user = null
 				say("Account Reset.")
 				return TRUE
-		if("DeleteRequest")
-			if(active_request.owner != current_user.account_holder)
+		if("deleteRequest")
+			if(!active_request || !current_user)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+				return FALSE
+			if(active_request?.owner != current_user?.account_holder)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			say("Deleted current request.")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
-		if("bountyval")
+		if("bountyVal")
 			bounty_value = text2num(params["bountyval"])
 			if(!bounty_value)
 				bounty_value = 1
-		if("bountytext")
+		if("bountyText")
 			bounty_text = (params["bountytext"])
 	. = TRUE
 

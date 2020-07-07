@@ -39,9 +39,11 @@
 			for(var/datum/bank_account/j in request.applicants)
 				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
 	if(current_user)
-		data["AccountName"] = current_user.account_holder
-	data["Requests"] = formatted_requests
-	data["Applicants"] = formatted_applicants
+		data["accountName"] = current_user.account_holder
+	data["requests"] = formatted_requests
+	data["applicants"] = formatted_applicants
+	data["bountyValue"] = bounty_value
+	data["bountyText"] = bounty_text
 	return data
 
 /datum/computer_file/program/bounty_board/ui_act(action, list/params)
@@ -50,7 +52,7 @@
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
-	if(!current_ref_num)
+	if(current_ref_num)
 		for(var/datum/station_request/i in GLOB.request_list)
 			if("[i.req_number]" == "[current_ref_num]")
 				active_request = i
@@ -61,7 +63,7 @@
 				request_target = j
 				break
 	switch(action)
-		if("CreateBounty")
+		if("createBounty")
 			if(!current_user || !bounty_text)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
@@ -75,7 +77,7 @@
 				i.say("New bounty has been added!")
 				playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
 			return TRUE
-		if("Apply")
+		if("apply")
 			if(!current_user)
 				computer.say("Please swipe a valid ID first.")
 				return TRUE
@@ -83,7 +85,7 @@
 				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			active_request.applicants += list(current_user)
-		if("PayApplicant")
+		if("payApplicant")
 			if(!current_user)
 				return
 			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
@@ -92,12 +94,12 @@
 			request_target.transfer_money(current_user, active_request.value)
 			computer.say("Paid out [active_request.value] credits.")
 			return TRUE
-		if("Clear")
+		if("clear")
 			if(current_user)
 				current_user = null
 				computer.say("Account Reset.")
 				return TRUE
-		if("DeleteRequest")
+		if("deleteRequest")
 			if(!current_user)
 				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
@@ -107,11 +109,11 @@
 			computer.say("Deleted current request.")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
-		if("bountyval")
+		if("bountyVal")
 			bounty_value = text2num(params["bountyval"])
 			if(!bounty_value)
 				bounty_value = 1
-		if("bountytext")
+		if("bountyText")
 			bounty_text = (params["bountytext"])
 	. = TRUE
 
