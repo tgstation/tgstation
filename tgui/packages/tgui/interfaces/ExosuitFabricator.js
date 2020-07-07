@@ -254,8 +254,10 @@ const EjectMaterial = (props, context) => {
       <Button
         icon="eject"
         disabled={!removable}
-        onClick={() =>
-          act("remove_mat", { ref: ref, amount: removeMaterials })} />
+        onClick={() => act("remove_mat", {
+          ref: ref,
+          amount: removeMaterials,
+        })} />
     </Fragment>
   );
 };
@@ -459,10 +461,9 @@ const PartCategory = (props, context) => {
             color="good"
             content="Queue All"
             icon="plus-circle"
-            onClick={() =>
-              act(
-                "add_queue_set",
-                { part_list: parts.map(part => part.id) })} />
+            onClick={() => act("add_queue_set", {
+              part_list: parts.map(part => part.id),
+            })} />
         }>
         {(!parts.length) && (placeholder)}
         {parts.map(part => (
@@ -478,7 +479,7 @@ const PartCategory = (props, context) => {
                   height="20px"
                   mr={1}
                   icon="play"
-                  onClick={() => { act("build_part", { id: part.id }); }} />
+                  onClick={() => act("build_part", { id: part.id })} />
               </Flex.Item>
               <Flex.Item>
                 <Button
@@ -486,8 +487,7 @@ const PartCategory = (props, context) => {
                   height="20px"
                   mr={1}
                   icon="plus-circle"
-                  onClick={() => {
-                    act("add_queue_part", { id: part.id }); }} />
+                  onClick={() => act("add_queue_part", { id: part.id })} />
               </Flex.Item>
               <Flex.Item>
                 <Box
@@ -569,19 +569,19 @@ const Queue = (props, context) => {
                 color="bad"
                 icon="minus-circle"
                 content="Clear Queue"
-                onClick={() => { act("clear_queue"); }} />
+                onClick={() => act("clear_queue")} />
               {(!!is_processing_queue && (
                 <Button
                   disabled={!queue.length}
                   content="Stop"
                   icon="stop"
-                  onClick={() => { act("stop_queue"); }} />
+                  onClick={() => act("stop_queue")} />
               )) || (
                 <Button
                   disabled={!queue.length}
                   content="Build Queue"
                   icon="play"
-                  onClick={() => { act("build_queue"); }} />
+                  onClick={() => act("build_queue")} />
               )}
             </Fragment>
           }>
@@ -675,7 +675,7 @@ const QueueList = (props, context) => {
               mr={1}
               icon="minus-circle"
               color="bad"
-              onClick={() => { act("del_queue_part", { index: index+1 }); }} />
+              onClick={() => act("del_queue_part", { index: index+1 })} />
           </Flex.Item>
           <Flex.Item>
             <Box
