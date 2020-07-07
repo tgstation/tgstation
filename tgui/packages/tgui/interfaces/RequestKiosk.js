@@ -21,8 +21,8 @@ export const RequestKioskContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     accountName,
-    requests =[],
-    applicants =[],
+    requests = [],
+    applicants = [],
     bountyValue,
     bountyText,
   } = data;
