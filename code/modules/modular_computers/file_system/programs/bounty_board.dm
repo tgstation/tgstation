@@ -107,6 +107,12 @@
 			computer.say("Deleted current request.")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
+		if("bountyval")
+			bounty_value = text2num(params["bountyval"])
+			if(!bounty_value)
+				bounty_value = 1
+		if("bountytext")
+			bounty_text = (params["bountytext"])
 	. = TRUE
 
 /datum/computer_file/program/bounty_board/Destroy()

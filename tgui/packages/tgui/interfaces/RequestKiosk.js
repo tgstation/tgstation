@@ -6,7 +6,6 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, TextArea } from '../components';
 import { formatMoney } from '../format';
 import { refocusLayout, Window } from '../layouts';
-import DOMPurify from 'dompurify';
 
 export const RequestKiosk = (props, context) => {
   const { act, data } = useBackend(context);
@@ -20,7 +19,6 @@ export const RequestKiosk = (props, context) => {
   const color = 'rgba(13, 13, 213, 0.7)';
   const BackColor = 'rgba(0, 0, 69, 0.5)';
   const BackTextColor = 'rgba(255, 255, 255, 0.3)';
-  const sanitized_text = sanatize_text(BountyText);
   return (
     <Window resizable>
       <Window.Content scrollable>
@@ -122,7 +120,7 @@ export const RequestKiosk = (props, context) => {
               <Section>
                 <TextArea
                   fluid
-                  value={sanitized_text}
+                  value={BountyText}
                   height="250px"
                   width="200px"
                   backgroundColor={BackTextColor}
@@ -153,16 +151,4 @@ export const RequestKiosk = (props, context) => {
       </Window.Content>
     </Window>
   );
-};
-
-const sanatize_text = value => {
-  // This is VERY important to think first if you NEED
-  // the tag you put in here.  We are pushing all this
-  // though dangerouslySetInnerHTML and even though
-  // the default DOMPurify kills javascript, it dosn't
-  // kill href links or such
-  return DOMPurify.sanitize(value, {
-    FORBID_ATTR: ['class', 'style'],
-    ALLOWED_TAGS: [],
-  });
 };
