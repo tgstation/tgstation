@@ -45333,7 +45333,8 @@
 /obj/machinery/door/window/eastleft{
 	dir = 1;
 	name = "Service Deliveries";
-	req_access_txt = "29"
+	req_access_txt = "0";
+	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -69675,7 +69676,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "hog" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -71653,7 +71654,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "kyI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -74656,7 +74657,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/displaycase/forsale,
+/obj/structure/displaycase/forsale/kitchen,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "pAv" = (
@@ -78072,7 +78073,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "veU" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -78302,10 +78303,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"vuY" = (
-/obj/effect/landmark/start/cook,
-/turf/open/floor/plasteel/cafeteria,
-/area/space)
 "vvb" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -114881,7 +114878,7 @@ urx
 bwO
 veM
 wzm
-vuY
+pVb
 bRS
 bQF
 bLK
