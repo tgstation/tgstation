@@ -269,6 +269,7 @@
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists)
+		deleteRubble()
 		if (!effectQuiet && style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
 		qdel(src) //Delete ourselves and the holder
@@ -355,8 +356,7 @@
 	update_icon()
 
 /obj/structure/closet/supplypod/Moved()
-	if (rubble)
-		deleteRubble()
+	deleteRubble()
 	return ..()
 
 /obj/structure/closet/supplypod/proc/deleteRubble()
@@ -379,9 +379,8 @@
 	glow_effect.fadeAway(openingDelay)
 
 /obj/structure/closet/supplypod/Destroy()
+	deleteRubble()
 	open_pod(src, broken = TRUE) //Lets dump our contents by opening up
-	if (rubble)
-		deleteRubble()
 	return ..()
 
 //------------------------------------TEMPORARY_VISUAL-------------------------------------//
