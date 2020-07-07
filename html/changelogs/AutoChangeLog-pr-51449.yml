@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "The bounty board has been added to all standard NT stations, for making and paying out bounties for credits made by crew members across the station. Available as a standalone machine, as well as a modular app."
