@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed gas canisters having a misplaced flashing icon when they are close to empty."
