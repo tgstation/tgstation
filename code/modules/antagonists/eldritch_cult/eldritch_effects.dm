@@ -43,7 +43,6 @@
 			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
 				continue
 		atoms_in_range += atom_in_range
-	atoms_in_range -= atoms_in_use
 	for(var/X in knowledge)
 		var/datum/eldritch_knowledge/current_eldritch_knowledge = knowledge[X]
 
