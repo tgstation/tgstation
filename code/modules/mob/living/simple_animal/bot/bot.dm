@@ -227,6 +227,17 @@
 			. += "[src]'s parts look very loose!"
 	else
 		. += "[src] is in pristine condition."
+	. += "<span class='notice'>Its maintenance panel is [open ? "open" : "closed"].</span>"
+	. += "<span class='info'>You can use a <b>screwdriver</b> to [open ? "close" : "open"] it.</span>"
+	if(open)
+		. += "<span class='notice'>Its control panel is [locked ? "locked" : "unlocked"].</span>"
+		var/is_sillycone = issilicon(user)
+		if(!emagged && (is_sillycone || user.Adjacent(src)))
+			. += "<span class='info'>Alt-click [is_sillycone ? "" : "or use your ID on "]it to [locked ? "un" : ""]lock its control panel.</span>"
+	if(paicard)
+		. += "<span class='notice'>It has a pAI device installed.</span>"
+		if(!open)
+			. += "<span class='info'>You can use a <b>hemostat</b> to remove it.</span>"
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount>0 && prob(10))
