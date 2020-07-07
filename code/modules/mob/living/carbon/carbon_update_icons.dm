@@ -80,7 +80,12 @@
 
 /mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
 	remove_overlay(FIRE_LAYER)
-	if(on_fire || islava(loc))
+	var/lavaburn = FALSE
+	if(islava(loc))
+		var/turf/open/lava/T = loc
+		if(!(T.is_safe()))
+			lavaburn = TRUE
+	if(on_fire || lavaburn)
 		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 		new_fire_overlay.appearance_flags = RESET_COLOR
 		overlays_standing[FIRE_LAYER] = new_fire_overlay
