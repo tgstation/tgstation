@@ -101,7 +101,8 @@
 
 /obj/structure/closet/supplypod/proc/SetReverseIcon()
 	fin_mask = "bottomfin"
-	icon_state = initial(icon_state) + "_reverse"
+	if (POD_STYLES[style][POD_SHAPE] == POD_SHAPE_NORML)
+		icon_state = initial(icon_state) + "_reverse"
 	pixel_x = initial(pixel_x) 
 	transform = matrix()
 	update_icon()
@@ -186,6 +187,9 @@
 	density = TRUE //Density is originally false so the pod doesn't block anything while it's still falling through the air
 	if (landingSound)
 		playsound(get_turf(src), landingSound, soundVolume, FALSE, FALSE)
+	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+	if(effectShrapnel)	
+		SEND_SIGNAL(src, COMSIG_SUPPLYPOD_LANDED)
 	for (var/mob/living/M in T)
 		if (effectLimb && iscarbon(M)) //If effectLimb is true (which means we pop limbs off when we hit people):
 			var/mob/living/carbon/CM = M
@@ -274,7 +278,6 @@
 /obj/structure/closet/supplypod/close(atom/movable/holder) //Closes the supplypod and sends it back to centcom. Should only ever be called if the "reversing" variable is true
 	if (!holder)
 		return
-	message_admins(holder)
 	take_contents(holder)
 	playsound(holder, close_sound, close_sound_volume, TRUE, -3)
 	holder.setClosed()
@@ -374,7 +377,6 @@
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
 	glow_effect.fadeAway(openingDelay)
-	message_admins("HUU!")
 
 /obj/structure/closet/supplypod/Destroy()
 	open_pod(src, broken = TRUE) //Lets dump our contents by opening up
@@ -404,7 +406,6 @@
 /obj/effect/engineglow/proc/fadeAway(leaveTime)
 	var/duration = min(leaveTime, 25)
 	animate(src, alpha=0, time = duration)
-	message_admins("HYUU!")
 	QDEL_IN(src, duration + 5)
 
 /obj/effect/supplypod_smoke/proc/drawSelf(amount)
@@ -555,9 +556,6 @@
 	pod.layer = initial(pod.layer)
 	pod.endGlow()
 	QDEL_NULL(helper)
-	pod.AddComponent(/datum/component/pellet_cloud, projectile_type=pod.shrapnel_type, magnitude=pod.shrapnel_magnitude)
-	if(pod.effectShrapnel)	
-		SEND_SIGNAL(pod, COMSIG_SUPPLYPOD_LANDED)
 	pod.preOpen() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place
 	drawSmoke()
 	qdel(src) //The target's purpose is complete. It can rest easy now
