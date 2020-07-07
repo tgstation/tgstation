@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Added a new mutation of geraniums, called Fraxinella, AKA Burning Bush."
-  - rscadd: "Added a new mutation of watermelon, called Barrel Melon, which has the new trait Auto-Distilling Composition. (Sprite provided by Kryson)"
-  - rscadd: "Walking Mushrooms now have a new graftable gene, Occulary Mimicry."

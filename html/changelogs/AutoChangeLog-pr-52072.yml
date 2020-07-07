@@ -1,4 +1,0 @@
-author: "Jay Smith"
-delete-after: True
-changes: 
-  - bugfix: "The Portable Chemical Mixer now uses proper vortex anomaly cores instead of raw ones."
