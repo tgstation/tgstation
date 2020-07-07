@@ -8,9 +8,6 @@ DAMAGE_MULTIPLIER 1
 ## whether pod plants work or not
 REVIVAL_POD_PLANTS
 
-## whether cloning tubes work or not
-REVIVAL_CLONING
-
 ## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
@@ -36,7 +33,7 @@ EMOJIS
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-RUN_DELAY 1
+RUN_DELAY 1.5
 WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
@@ -441,7 +438,7 @@ ROUNDSTART_RACES human
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
-#ROUNDSTART_RACES moth
+ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 
@@ -551,9 +548,6 @@ MICE_ROUNDSTART 10
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
 
-## Determines if players are allowed to print integrated circuits, uncomment to allow.
-#IC_PRINTING
-
 ## Uncomment to allow roundstart quirk selection in the character setup menu.
 ## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!
 ROUNDSTART_TRAITS
@@ -578,6 +572,3 @@ RATCAP 64
 
 ## Maximum fine for a citation
 MAXFINE 2000
-
-## Enable the capitalist agenda on your server.
-ECONOMY

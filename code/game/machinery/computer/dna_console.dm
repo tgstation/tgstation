@@ -149,11 +149,13 @@
 	// Insert data disk if console disk slot is empty
 	// Swap data disk if there is one already a disk in the console
 	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
+		// Insert disk into DNA Console
 		if (!user.transferItemToLoc(I,src))
 			return
+		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(diskette)
-			diskette.forceMove(drop_location())
-			diskette = null
+			eject_disk(user)
+		// Set the new diskette.
 		diskette = I
 		to_chat(user, "<span class='notice'>You insert [I].</span>")
 		return
@@ -1978,6 +1980,9 @@
 		return
 
 	to_chat(user, "<span class='notice'>You eject [diskette] from [src].</span>")
+
+	// Reset the state to console storage.
+	tgui_view_state["storageMode"] = "console"
 
 	// If the disk shouldn't pop into the user's hand for any reason, drop it on the console instead.
 	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(diskette))

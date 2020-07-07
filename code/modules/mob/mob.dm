@@ -19,8 +19,6 @@
   * Ghostizes the client attached to this mob
   *
   * Parent call
-  *
-  * Returns QDEL_HINT_HARDDEL (don't change this)
   */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	remove_from_mob_list()
@@ -39,8 +37,8 @@
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
 	ghostize()
-	..()
-	return QDEL_HINT_HARDDEL
+	return ..()
+
 
 /**
   * Intialize a mob
@@ -462,11 +460,13 @@
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 
-	var/tile = get_turf(A)
+	var/turf/tile = get_turf(A)
 	if (!tile)
 		return FALSE
 
-	new /obj/effect/temp_visual/point(A,invisibility)
+	var/turf/our_tile = get_turf(src)
+	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
+	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
 
@@ -955,7 +955,7 @@
 /mob/post_buckle_mob(mob/living/M)
 	var/height = M.get_mob_buckling_height(src)
 	M.pixel_y = initial(M.pixel_y) + height
-	if(M.layer < layer)
+	if(M.layer <= layer) //make sure they stay above our current layer
 		M.layer = layer + 0.1
 ///Call back post unbuckle from a mob, (reset your visual height here)
 /mob/post_unbuckle_mob(mob/living/M)

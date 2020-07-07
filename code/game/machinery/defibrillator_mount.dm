@@ -179,7 +179,7 @@
 //wallframe, for attaching the mounts easily
 /obj/item/wallframe/defib_mount
 	name = "unhooked defibrillator mount"
-	desc = "A frame for a defibrillator mount. It can't be removed once it's placed."
+	desc = "A frame for a defibrillator mount. Once placed, it can be removed with a wrench."
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)

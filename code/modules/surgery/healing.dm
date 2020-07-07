@@ -1,5 +1,3 @@
-#define PER_ITERATION_XP_CAP	MEDICAL_SKILL_MEDIUM //TW XP gain scales with repeated iterations so we cap it.
-
 /datum/surgery/healing
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
@@ -71,7 +69,7 @@
 		urhealedamt_burn *= 0.55
 		umsg += " as best as you can while they have clothing on"
 		tmsg += " as best as they can while [target] has clothing on"
-	experience_given = CEILING((target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)/5),1)
+	target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",
 		"[tmsg].")
@@ -216,5 +214,3 @@
 		"<span class='warning'>[user] screws up!</span>",
 		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>", TRUE)
 	target.take_bodypart_damage(5,5)
-
-#undef PER_ITERATION_XP_CAP
