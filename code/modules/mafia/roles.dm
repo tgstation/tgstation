@@ -354,7 +354,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(game.phase != MAFIA_PHASE_NIGHT || target.game_status != MAFIA_ALIVE)
+	if(game.phase != MAFIA_PHASE_NIGHT || target.game_status != MAFIA_ALIVE || target == src)
 		return FALSE
 
 /datum/mafia_role/traitor/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
