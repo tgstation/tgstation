@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscdel: "Removed the healing skill, and by effect dissection surgery and the legendary healer's cloak."
