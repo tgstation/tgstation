@@ -1,8 +1,10 @@
 import { classes } from 'common/react';
+import { uniqBy } from 'common/collections'
 import { useBackend, useSharedState } from '../backend';
 import { formatSiUnit, formatMoney } from '../format';
-import { Flex, Section, Tabs, Box, Button, Fragment, ProgressBar, NumberInput, Tooltip } from '../components';
+import { Flex, Section, Tabs, Box, Button, Fragment, ProgressBar, NumberInput, Icon, Input } from '../components';
 import { Window } from '../layouts';
+import { createSearch } from 'common/string';
 
 const MATERIAL_KEYS = {
   "iron": "sheet-metal_3",
@@ -96,6 +98,30 @@ const queueCondFormat = (materials, queue) => {
     });
   });
   return { material_tally, missing_mat_tally, text_colors, mat_format };
+};
+
+const searchFilter = (search, allparts) => {
+  let searchResults = [];
+
+  if (!search.length) {
+    return;
+  }
+
+  const resultFilter = createSearch(search, part => (
+    (part.name || "")
+    + (part.desc || "")
+    + (part.search_meta || "")
+  ));
+
+  Object.keys(allparts).forEach(category => {
+    allparts[category]
+      .filter(resultFilter)
+      .forEach(e => { searchResults.push(e); });
+  });
+
+  searchResults = uniqBy(part => part.name)(searchResults);
+
+  return searchResults;
 };
 
 export const ExosuitFabricator = (props, context) => {
@@ -331,10 +357,6 @@ const PartLists = (props, context) => {
   const buildable_parts = data.buildable_parts || {};
 
   const {
-    building_part,
-  } = data;
-
-  const {
     queueMaterials,
     materials,
   } = props;
@@ -344,111 +366,173 @@ const PartLists = (props, context) => {
   ] = useSharedState(context, "part_tab", part_sets.length ? part_sets[0] : "");
 
   const [
-    displayMatCost,
-  ] = useSharedState(context, "display_mats", false);
+    searchText,
+    setSearchText,
+  ] = useSharedState(context, "search_text", "");
 
-  // Build list of sub-categories.
-  let parts_list = { "Parts": [] };
+  let parts_list;
 
-  buildable_parts[selectedPartTab].forEach(part => {
-    part["format"] = partCondFormat(materials, queueMaterials, part);
-    if (!part.sub_category) {
-      parts_list["Parts"].push(part);
-      return;
-    }
-    if (!(part.sub_category in parts_list)) {
-      parts_list[part.sub_category] = [];
-    }
-    parts_list[part.sub_category].push(part);
-  });
-
+  // Build list of sub-categories if not using a search filter.
+  if (!searchText) {
+    parts_list = { "Parts": [] };
+    buildable_parts[selectedPartTab].forEach(part => {
+      part["format"] = partCondFormat(materials, queueMaterials, part);
+      if (!part.sub_category) {
+        parts_list["Parts"].push(part);
+        return;
+      }
+      if (!(part.sub_category in parts_list)) {
+        parts_list[part.sub_category] = [];
+      }
+      parts_list[part.sub_category].push(part);
+    });
+  }
+  else {
+    parts_list = [];
+    searchFilter(searchText, buildable_parts).forEach(part => {
+      part["format"] = partCondFormat(materials, queueMaterials, part);
+      parts_list.push(part);
+    });
+  }
 
 
   return (
-    Object.keys(parts_list).map(category => (
-      (!!parts_list[category].length && (
-        <Section
-          key={category}
-          title={category}
-          buttons={
-            <Button
-              color="good"
-              content="Queue All"
-              icon="plus-circle"
-              onClick={() =>
-                act(
-                  "add_queue_set",
-                  { part_list: parts_list[category].map(part => part.id) })} />
-          }>
-          {parts_list[category].map(part => (
-            <Fragment
-              key={part.name}>
-              <Flex
-                align="center">
-                <Flex.Item>
-                  <Button
-                    disabled={building_part
-                      || (part.format.text_color === COLOR_BAD)}
-                    color="good"
-                    height="20px"
-                    mr={1}
-                    icon="play"
-                    onClick={() => { act("build_part", { id: part.id }); }} />
-                </Flex.Item>
-                <Flex.Item>
-                  <Button
-                    color="average"
-                    height="20px"
-                    mr={1}
-                    icon="plus-circle"
-                    onClick={() => {
-                      act("add_queue_part", { id: part.id }); }} />
-                </Flex.Item>
-                <Flex.Item>
-                  <Box
-                    inline
-                    textColor={COLOR_KEYS[part.format.text_color]}>
-                    {part.name}
-                  </Box>
-                </Flex.Item>
-                <Flex.Item
-                  grow={1} />
-                <Flex.Item>
-                  <Button
-                    icon="question-circle"
-                    transparent
-                    height="20px"
-                    tooltip={
-                      "Build Time: "
-                      + part.print_time + "s. "
-                      + (part.desc || "")
-                    }
-                    tooltipPosition="left" />
-                </Flex.Item>
-              </Flex>
-              {(displayMatCost && (
-                <Flex mb={2}>
-                  {Object.keys(part.cost).map(material => (
-                    <Flex.Item
-                      width={"50px"}
-                      key={material}
-                      color={COLOR_KEYS[part.format[material].color]}>
-                      <MaterialAmount
-                        formatmoney
-                        style={{
-                          transform: 'scale(0.75) translate(0%, 10%)',
-                        }}
-                        name={material}
-                        amount={part.cost[material]} />
-                    </Flex.Item>
-                  ))}
-                </Flex>
-              ))}
+    <Fragment>
+      <Section>
+        <Flex>
+          <Flex.Item mr={1}>
+            <Icon
+              name="search" />
+          </Flex.Item>
+          <Flex.Item
+            grow={1}>
+            <Input
+              fluid
+              placeholder="Search for..."
+              onInput={(e, v) => setSearchText(v)} />
+          </Flex.Item>
+        </Flex>
+      </Section>
+      {(!!searchText && (
+        <PartCategory
+          name={"Search Results"}
+          parts={parts_list}
+          forceShow
+          placeholder="No matching results..." />
+      )) || (
+        Object.keys(parts_list).map(category => (
+          <PartCategory
+            key={category}
+            name={category}
+            parts={parts_list[category]} />
+        ))
+      )}
+    </Fragment>
+  );
+};
 
-            </Fragment>
-          ))}
-        </Section>
-      ))
+const PartCategory = (props, context) => {
+  const { act, data } = useBackend(context);
+
+  const {
+    building_part,
+  } = data;
+
+  const {
+    parts,
+    name,
+    forceShow,
+    placeholder,
+  } = props;
+
+  const [
+    displayMatCost,
+  ] = useSharedState(context, "display_mats", false);
+
+  return (
+    ((!!parts.length || forceShow) && (
+      <Section
+        title={name}
+        buttons={
+          <Button
+            disabled={!parts.length}
+            color="good"
+            content="Queue All"
+            icon="plus-circle"
+            onClick={() =>
+              act(
+                "add_queue_set",
+                { part_list: parts.map(part => part.id) })} />
+        }>
+        {(!parts.length) && (placeholder)}
+        {parts.map(part => (
+          <Fragment
+            key={part.name}>
+            <Flex
+              align="center">
+              <Flex.Item>
+                <Button
+                  disabled={building_part
+                  || (part.format.text_color === COLOR_BAD)}
+                  color="good"
+                  height="20px"
+                  mr={1}
+                  icon="play"
+                  onClick={() => { act("build_part", { id: part.id }); }} />
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  color="average"
+                  height="20px"
+                  mr={1}
+                  icon="plus-circle"
+                  onClick={() => {
+                    act("add_queue_part", { id: part.id }); }} />
+              </Flex.Item>
+              <Flex.Item>
+                <Box
+                  inline
+                  textColor={COLOR_KEYS[part.format.text_color]}>
+                  {part.name}
+                </Box>
+              </Flex.Item>
+              <Flex.Item
+                grow={1} />
+              <Flex.Item>
+                <Button
+                  icon="question-circle"
+                  transparent
+                  height="20px"
+                  tooltip={
+                    "Build Time: "
+                  + part.print_time + "s. "
+                  + (part.desc || "")
+                  }
+                  tooltipPosition="left" />
+              </Flex.Item>
+            </Flex>
+            {(displayMatCost && (
+              <Flex mb={2}>
+                {Object.keys(part.cost).map(material => (
+                  <Flex.Item
+                    width={"50px"}
+                    key={material}
+                    color={COLOR_KEYS[part.format[material].color]}>
+                    <MaterialAmount
+                      formatmoney
+                      style={{
+                        transform: 'scale(0.75) translate(0%, 10%)',
+                      }}
+                      name={material}
+                      amount={part.cost[material]} />
+                  </Flex.Item>
+                ))}
+              </Flex>
+            ))}
+
+          </Fragment>
+        ))}
+      </Section>
     ))
   );
 };

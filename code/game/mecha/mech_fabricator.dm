@@ -178,7 +178,8 @@
 		"cost" = cost,
 		"id" = D.id,
 		"sub_category" = sub_category,
-		"category_override" = category_override
+		"category_override" = category_override,
+		"search_meta" = D.search_metadata
 	)
 
 	return part
@@ -308,13 +309,7 @@
 
 	build_materials = get_resources_w_coeff(D)
 
-	// Do a final sanity check and make sure the materials were successfully removed before proceeding.
-	if(!materials.use_materials(build_materials))
-		if(verbose)
-			say("Not enough resources. Processing stopped.")
-		build_materials = null
-		return FALSE
-
+	materials.use_materials(build_materials)
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(D)
 	desc = "It's building \a [D.name]."
