@@ -9,8 +9,6 @@
 	tgui_id = "NtosRequestKiosk"
 	ui_x = 550
 	ui_y = 600
-	///Static, global value so that each request has a universal value for what request number it is.
-	var/static/request_number
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.

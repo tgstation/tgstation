@@ -12,14 +12,16 @@ GLOBAL_LIST_EMPTY(request_list)
 	ui_x = 550
 	ui_y = 600
 	light_color = LIGHT_COLOR_GREEN
-	///Static, global value so that each request has a universal value for what request number it is.
-	var/static/request_number
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
 	///The time since a last bounty slip was printed.
 	var/bounty_timer = 0
+	///Value of the currently bounty input
+	var/bounty_value = 1
+	///Text of the currently written bounty
+	var/bounty_text = ""
 
 /obj/machinery/bounty_board/Initialize(mapload, ndir, building)
 	. = ..()
@@ -54,7 +56,6 @@ GLOBAL_LIST_EMPTY(request_list)
 		curr_request.req_number = current_user.account_id
 		curr_request.owner_account = current_user
 		GLOB.request_list += list(curr_request)
-		request_number++
 		for(var/obj/i in GLOB.allbountyboards)
 			i.say("New bounty has been added!")
 			playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
@@ -98,6 +99,8 @@ GLOBAL_LIST_EMPTY(request_list)
 		data["AccountName"] = current_user.account_holder
 	data["Requests"] = formatted_requests
 	data["Applicants"] = formatted_applicants
+	data["BountyValue"] = bounty_value
+	data["BountyText"] = bounty_text
 	return data
 
 /obj/machinery/bounty_board/ui_act(action, list/params)
@@ -118,14 +121,18 @@ GLOBAL_LIST_EMPTY(request_list)
 				break
 	switch(action)
 		if("CreateBounty")
-			if(bounty_timer > world.time)
+			if(!current_user)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-				say("Printers resetting.")
 				return TRUE
-			bounty_timer = world.time + (4 SECONDS)
-			say("Dispensing Card.")
-			new /obj/item/bounty_card(loc)
-			return TRUE
+			for(var/datum/station_request/i in GLOB.request_list)
+				if("[i.req_number]" == "[current_user.account_id]")
+					say("Account already has active bounty.")
+					return
+			var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
+			GLOB.request_list += list(curr_request)
+			for(var/obj/i in GLOB.allbountyboards)
+				i.say("New bounty has been added!")
+				playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
 		if("Apply")
 			if(!current_user)
 				say("Please swipe a valid ID first.")
@@ -155,6 +162,12 @@ GLOBAL_LIST_EMPTY(request_list)
 			say("Deleted current request.")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
+		if("bountyval")
+			bounty_value = text2num(params["bountyval"])
+			if(!bounty_value)
+				bounty_value = 1
+		if("bountytext")
+			bounty_text = (params["bountytext"])
 	. = TRUE
 
 /obj/item/bounty_card
