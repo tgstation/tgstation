@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Energy based guns are no longer missing textures when worn.... Again."
-  - imageadd: "Touched up and added a few worn / inhand icons for some energy based guns."
