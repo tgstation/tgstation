@@ -14,6 +14,7 @@
 
 /obj/item/megaphone/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is using \the [src] to amplify a very special message! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	spamcheck = 0 //screw it, you're committing suicide anyway, you can get your special megaphone noise despite it being on cooldown
 	user.say(";ONE DAY WHILE ANDY WAS-", forced="megaphone suicide") //WAIT NO DON'T
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 20) //we'll give you 2 seconds to contemplate your mistake
 	return MANUAL_SUICIDE
