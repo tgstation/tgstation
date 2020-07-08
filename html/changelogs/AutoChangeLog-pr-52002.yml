@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a scenario where mobs would accidentally be kicked off a vehicle if they were handcuffed."
-  - code_imp: "Added support to kick a mob off a vehicle if the vehicle is restrained."

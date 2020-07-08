@@ -37,7 +37,7 @@
 		..()
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/raw_anomaly_core/vortex) && !anomaly_core_present)
+	if(istype(I, /obj/item/assembly/signaler/anomaly/vortex) && !anomaly_core_present)
 		anomaly_core_present = TRUE
 		QDEL_NULL(I)
 		to_chat(user, "<span class='notice'>You insert the vortex anomaly core. The device is now functional. A screwdriver is needed to open and close the device for refills.</span>")
