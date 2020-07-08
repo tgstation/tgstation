@@ -230,7 +230,7 @@ SUBSYSTEM_DEF(vote)
 			V.Grant(C.mob)
 			generated_actions += V
 			if(C.prefs.toggles & SOUND_ANNOUNCEMENTS)
-				SEND_SOUND(C, sound('sound/machines/nuke/angry_beep.ogg'))
+				SEND_SOUND(C, sound('sound/misc/bloop.ogg'))
 		return TRUE
 	return FALSE
 
