@@ -60,7 +60,6 @@
 	var/datum/surgery_step/heal/brute/basic/basic_brute_heal = new
 	basic_brute_heal.success(user, patient, BODY_ZONE_CHEST)
 	TEST_ASSERT(patient.getBruteLoss() < 100, "Tending brute wounds didn't lower brute damage ([patient.getBruteLoss()])")
-	TEST_ASSERT(patient.getFireLoss() < 100, "Tending brute wounds lowered burn damage ([patient.getFireLoss()])")
 
 	var/datum/surgery_step/heal/burn/basic/basic_burn_heal = new
 	basic_burn_heal.success(user, patient, BODY_ZONE_CHEST)
