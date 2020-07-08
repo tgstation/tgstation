@@ -75,7 +75,7 @@
 
 /obj/structure/sink/oil_well/attack_hand(mob/M)
 	flick("puddle-oil-splash",src)
-	reagents.reaction(M, TOUCH, 20) //Covers target in 20u of oil.
+	reagents.expose(M, TOUCH, 20) //Covers target in 20u of oil.
 	to_chat(M, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/user, params)

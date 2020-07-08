@@ -173,12 +173,12 @@
 		if(. && beegent && isliving(target))
 			var/mob/living/L = target
 			if(L.reagents)
-				beegent.reaction_mob(L, INJECT)
+				beegent.expose_mob(L, INJECT)
 				L.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/simple_animal/hostile/poison/bees/inject_poison(mob/living/L)
 	if(beegent && istype(L) && L.reagents)
-		beegent.reaction_mob(L, INJECT)
+		beegent.expose_mob(L, INJECT)
 		L.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
@@ -262,7 +262,7 @@
 	. = ..()
 	if(. && beegent && isliving(target))
 		var/mob/living/L = target
-		beegent.reaction_mob(L, TOUCH)
+		beegent.expose_mob(L, TOUCH)
 		L.reagents.add_reagent(beegent.type, rand(1,5))
 
 

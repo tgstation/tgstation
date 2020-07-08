@@ -93,7 +93,7 @@
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
 			Paralyze(20)
-			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed)
+			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
@@ -924,7 +924,6 @@
 		var/obj/item/I = X
 		I.acid_level = 0 //washes off the acid on our clothes
 		I.extinguish() //extinguishes our clothes
-		I.cut_overlay(GLOB.fire_overlay, TRUE)
 	..()
 
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
@@ -1119,7 +1118,7 @@
 	for(var/obj/item/I in held_items)
 		I.washed(washer)
 
-	if(back)
+	if(back && back.washed(washer))
 		update_inv_back(0)
 
 	var/list/obscured = check_obscured_slots()

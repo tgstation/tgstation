@@ -187,11 +187,9 @@
 	for(var/mob/living/player in living_players)
 		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
 			living_players -= player
-			continue
-		if(is_centcom_level(player.z))
+		else if(is_centcom_level(player.z))
 			living_players -= player // We don't autotator people in CentCom
-			continue
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			living_players -= player // We don't autotator people with roles already
 
 /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE)
@@ -236,11 +234,11 @@
 	for(var/mob/living/player in candidates)
 		if(issilicon(player))
 			candidates -= player
-			continue
-		if(is_centcom_level(player.z))
+		else if(is_centcom_level(player.z))
 			candidates -= player
-			continue
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+			candidates -= player
+		else if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/families/acceptable(population = 0, threat_level = 0)
@@ -303,11 +301,9 @@
 	for(var/mob/living/player in candidates)
 		if(!isAI(player))
 			candidates -= player
-			continue
-		if(is_centcom_level(player.z))
+		else if(is_centcom_level(player.z))
 			candidates -= player
-			continue
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/malf/execute()

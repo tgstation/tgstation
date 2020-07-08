@@ -391,7 +391,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("gun")
 			var/hits = 0
 			for(var/i in 1 to rand(3, 6))
-				target.playsound_local(source, "sound/weapons/gunshot.ogg", 25, TRUE)
+				target.playsound_local(source, 'sound/weapons/gun/shotgun/shot.ogg', 25, TRUE)
 				if(prob(60))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, 'sound/weapons/pierce.ogg', 25, 1), rand(5,10))
 					hits++
@@ -853,7 +853,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			sleep(25)
 			target.playsound_local(source, 'sound/weapons/ring.ogg', 15)
 		if("hyperspace")
-			target.playsound_local(null, 'sound/effects/hyperspace_begin.ogg', 50)
+			target.playsound_local(null, 'sound/runtime/hyperspace/hyperspace_begin.ogg', 50)
 		if("hallelujah")
 			target.playsound_local(source, 'sound/effects/pray_chaplain.ogg', 50)
 		if("highlander")

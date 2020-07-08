@@ -4,6 +4,11 @@
 #define SWOOP_DAMAGEABLE 1
 #define SWOOP_INVULNERABLE 2
 
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_TEMP 500
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_EXPOSURE 50
+
 /*
 
 ASH DRAKE
@@ -271,7 +276,7 @@ Difficulty: Medium
 		if(istype(T, /turf/closed))
 			break
 		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
 		for(var/mob/living/L in T.contents)
 			if(L in hit_list || istype(L, source.type))
 				continue
@@ -553,7 +558,7 @@ obj/effect/temp_visual/fireball
 		M.gets_drilled()
 	playsound(T, "explosion", 80, TRUE)
 	new /obj/effect/hotspot(T)
-	T.hotspot_expose(700, 50, 1)
+	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue

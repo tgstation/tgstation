@@ -281,6 +281,16 @@
 	build_path = /obj/item/reagent_containers/blood
 	category = list("Medical Designs")
 
+/datum/design/portable_chem_mixer
+	name = "Portable Chemical Mixer"
+	desc = "A portable device that dispenses and mixes chemicals. Reagents have to be supplied with beakers."
+	id = "portable_chem_mixer"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/plastic = 5000, /datum/material/iron = 10000, /datum/material/glass = 3000)
+	build_path = /obj/item/storage/portable_chem_mixer
+	category = list("Equipment")
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
@@ -628,23 +638,6 @@
 	research_icon = 'icons/obj/surgery.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery
-
-/datum/design/surgery/experimental_dissection
-	name = "Advanced Dissection"
-	desc = "A surgical procedure which analyzes the biology of a corpse, and automatically adds new findings to the research database."
-	id = "surgery_adv_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection/adv
-	research_icon_state = "surgery_chest"
-
-/datum/design/surgery/experimental_dissection/exp
-	name = "Experimental Dissection"
-	id = "surgery_exp_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection/exp
-
-/datum/design/surgery/experimental_dissection/ext
-	name = "Extraterrestrial Dissection"
-	id = "surgery_ext_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection/alien
 
 /datum/design/surgery/lobotomy
 	name = "Lobotomy"
