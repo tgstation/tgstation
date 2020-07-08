@@ -23,8 +23,9 @@
 	cost = _cost
 	transaction_style = _style
 	RegisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE_PRINTER, COMSIG_OBJ_ATTEMPT_CHARGE), .proc/attempt_charge)
+	RegisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE), .proc/change_cost)
 
-/datum/component/payment/proc/attempt_charge(datum/source, atom/movable/AM)
+/datum/component/payment/proc/attempt_charge(datum/source, atom/movable/AM, var/extra_fees = 0)
 	var/mob/user = AM
 	if(!istype(user))
 		return FALSE
@@ -47,7 +48,7 @@
 			if("Clinical")
 				to_chat(user, "<span class='warning'>ID Card lacks a bank account. Aborting.</span>")
 		return FALSE
-	if(!(card.registered_account.has_money(cost)))
+	if(!(card.registered_account.has_money(cost + extra_fees)))
 		switch(transaction_style)
 			if("Friendly")
 				to_chat(user, "<span class='warning'>I'm so sorry... You don't seem to have enough money.</span>")
@@ -59,4 +60,10 @@
 	target.transfer_money(card.registered_account, cost)
 	card.registered_account.bank_card_talk("[cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+	return TRUE
+
+/datum/component/payment/proc/change_cost(datum/source, var/new_cost)
+	if(!isnum(new_cost))
+		return FALSE
+	cost = new_cost
 	return TRUE

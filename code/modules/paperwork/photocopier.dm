@@ -58,10 +58,10 @@
 /obj/machinery/photocopier/Topic(href, href_list)
 	if(..())
 		return
+	if(!SEND_SIGNAL(src, COMSIG_OBJ_ATTEMPT_CHARGE_PRINTER, usr))
+		return
 	if(href_list["copy"])
 		if(copy)
-			if(!SEND_SIGNAL(src, COMSIG_OBJ_ATTEMPT_CHARGE_PRINTER, usr))
-				break
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
 					var/copy_as_paper = 1

@@ -1403,3 +1403,6 @@
   */
 /atom/proc/rust_heretic_act()
 	return
+
+/atom/proc/attempt_charge(var/atom/sender, var/atom/target, var/extra_fees = 0)
+	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)
