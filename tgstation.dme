@@ -1011,6 +1011,7 @@
 #include "code\game\objects\items\teleprod.dm"
 #include "code\game\objects\items\theft_tools.dm"
 #include "code\game\objects\items\toys.dm"
+#include "code\game\objects\items\toy_mechs.dm"
 #include "code\game\objects\items\trash.dm"
 #include "code\game\objects\items\vending_items.dm"
 #include "code\game\objects\items\wayfinding.dm"
