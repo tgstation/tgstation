@@ -263,7 +263,7 @@
 	threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
 	status_effect_type = /datum/status_effect/wound/burn/moderate
 	flesh_damage = 5
-	scarring_descriptions = list("small amoeba-shaped skinmarks", "a faded streak of depressed skin")
+	scar_keyword = "burnmoderate"
 
 /datum/wound/burn/severe
 	name = "Third Degree Burns"
@@ -279,7 +279,7 @@
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
 	infestation_rate = 0.05 // appx 13 minutes to reach sepsis without any treatment
 	flesh_damage = 12.5
-	scarring_descriptions = list("a large, jagged patch of faded skin", "random spots of shiny, smooth skin", "spots of taut, leathery skin")
+	scar_keyword = "burnsevere"
 
 /datum/wound/burn/critical
 	name = "Catastrophic Burns"
@@ -296,4 +296,4 @@
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
 	infestation_rate = 0.15 // appx 4.33 minutes to reach sepsis without any treatment
 	flesh_damage = 20
-	scarring_descriptions = list("massive, disfiguring keloid scars", "several long streaks of badly discolored and malformed skin", "unmistakeable splotches of dead tissue from serious burns")
+	scar_keyword = "burncritical"

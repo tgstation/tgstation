@@ -53,8 +53,12 @@
 		if(victim)
 			LAZYADD(victim.all_scars, src)
 
-	description = pick(W.scarring_descriptions)
-	precise_location = pick(limb.specific_locations)
+	if(victim && victim.get_biological_state() == BIO_JUST_BONE)
+		description = pick(strings(BONE_SCAR_FILE, W.scar_keyword)) || "general disfigurement"
+	else
+		description = pick(strings(FLESH_SCAR_FILE, W.scar_keyword)) || "general disfigurement"
+
+	precise_location = pick(strings(SCAR_LOC_FILE, limb.body_zone))
 	switch(W.severity)
 		if(WOUND_SEVERITY_MODERATE)
 			visibility = 2

@@ -168,7 +168,7 @@
 	var/mangled_state = BODYPART_MANGLED_NONE
 	var/required_bone_severity = WOUND_SEVERITY_SEVERE
 
-	if(owner && owner.get_organic_state() == BIO_JUST_BONE)
+	if(owner && owner.get_biological_state() == BIO_JUST_BONE && !HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
 		required_bone_severity = WOUND_SEVERITY_CRITICAL
 
 	// we can (generally) only have one wound per type, but remember there's multiple types

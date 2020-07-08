@@ -7,7 +7,7 @@
 	severity = WOUND_SEVERITY_LOSS
 	threshold_minimum = 180
 	status_effect_type = null
-	scarring_descriptions = list("is several skintone shades paler than the rest of the body", "is a gruesome patchwork of artificial flesh", "has a large series of attachment scars at the articulation points")
+	scar_keyword = "dismember"
 	biology_required = null // not that it really matters, we don't check anyway for dismembering
 
 /datum/wound/loss/proc/apply_dismember(obj/item/bodypart/L, wounding_type=WOUND_SLASH)

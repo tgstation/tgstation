@@ -1176,9 +1176,9 @@
 		QDEL_NULL(W)
 
 /**
-  * get_organic_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums
+  * get_biological_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums
   *
-  * go look at the species def for more info [/datum/species/proc/get_organic_state]
+  * go look at the species def for more info [/datum/species/proc/get_biological_state]
   */
-/mob/living/carbon/proc/get_organic_state()
+/mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE

@@ -81,8 +81,6 @@
 
 	/// A hat won't cover your face, but a shirt covering your chest will cover your... you know, chest
 	var/scars_covered_by_clothes = TRUE
-	/// Descriptions for the locations on the limb for scars to be assigned, just cosmetic
-	var/list/specific_locations = list("general area")
 	/// So we know if we need to scream if this limb hits max damage
 	var/last_maxed
 	/// How much generic bleedstacks we have on this bodypart
@@ -226,20 +224,26 @@
 	var/wounding_dmg = max(brute, burn)
 
 	var/mangled_state = get_mangled_state()
-	var/organic_state = owner.get_organic_state()
+	var/bio_state = owner.get_biological_state()
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
+	if(wounding_type == WOUND_BLUNT)
+		if(sharpness == SHARP_EDGED)
+			wounding_type = WOUND_SLASH
+		else if(sharpness == SHARP_POINTY)
+			wounding_type = WOUND_PIERCE
+
 	//Handling for bone only/flesh only(none right now)/flesh and bone targets
-	switch(organic_state)
+	switch(bio_state)
 		// if we're bone only, all cutting attacks go straight to the bone
 		if(BIO_JUST_BONE)
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
-				if(easy_dismember)
+				if(!easy_dismember)
 					wounding_dmg *= 0.5
 			else if(wounding_type == WOUND_PIERCE)
 				wounding_type = WOUND_BLUNT
-				if(easy_dismember)
+				if(!easy_dismember)
 					wounding_dmg *= 0.75
 			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return

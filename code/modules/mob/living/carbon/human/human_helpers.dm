@@ -202,5 +202,5 @@
 	var/datum/scar/S = new
 	return S.load(BP, scar_data[SCAR_SAVE_VERS], scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]))
 
-/mob/living/carbon/human/get_organic_state()
-	return dna.species.get_organic_state()
+/mob/living/carbon/human/get_biological_state()
+	return dna.species.get_biological_state()

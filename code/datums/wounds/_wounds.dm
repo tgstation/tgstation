@@ -85,7 +85,7 @@
 	var/cryo_progress
 
 	/// What kind of scars this wound will create description wise once healed
-	var/list/scarring_descriptions = list("general disfigurement")
+	var/scar_keyword = "generic"
 	/// If we've already tried scarring while removing (since remove_wound calls qdel, and qdel calls remove wound, .....) TODO: make this cleaner
 	var/already_scarred = FALSE
 	/// If we forced this wound through badmin smite, we won't count it towards the round totals
