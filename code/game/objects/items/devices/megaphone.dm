@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/misc/megaphone_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	siemens_coefficient = 1
-	/// when can we next play megaphone.ogg? note that this DOESN'T affect the text embiggening, just the special megaphone noise that plays
+	/// when can we next play 'megaphone.ogg'? note that this DOESN'T affect the text embiggening, just the special megaphone noise that plays
 	var/spamcheck = 0
 	var/list/voicespan = list(SPAN_COMMAND)
 
