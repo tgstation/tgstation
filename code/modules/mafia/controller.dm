@@ -134,18 +134,27 @@
 	SStgui.update_uis(src)
 
 /datum/mafia_controller/proc/lynch()
+
+	var/override = null
+
 	for(var/i in judgement_innocent_votes)
 		var/datum/mafia_role/role = i
-		send_message("<span class='green'>[role.body.real_name] voted innocent.</span>")
+		var/hop = FALSE
+		if(istype(role, /datum/mafia_role/hop))
+			hop = TRUE
+			override = TRUE
+		send_message("<span class='green[hop ? " bold" : ""]'>[role.body.real_name] voted innocent.</span>")
 	for(var/ii in judgement_guilty_votes)
 		var/datum/mafia_role/role = ii
-		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
-	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
-		send_message("<span class='red'><b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b></span>")
+		if(istype(role, /datum/mafia_role/hop))
+			override = FALSE
+		send_message("<span class='red[hop ? " bold" : ""]'>[role.body.real_name] voted guilty.</span>")
+	if(judgement_guilty_votes.len > judgement_innocent_votes.len || (!isnull(override) && !override)) //strictly need majority guilty to lynch, unless hop overrides to guilty
+		send_message("<span class='red'><b>[isnull(override) ? "Guilty wins majority" : "Guilty overridden by HoP"], [on_trial.body.real_name] has been lynched.</b></span>")
 		on_trial.kill(src, lynch = TRUE)
 		addtimer(CALLBACK(src, .proc/send_home, on_trial),judgement_lynch_period)
 	else
-		send_message("<span class='green'><b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b></span>")
+		send_message("<span class='green'><b>[isnull(override) ? "Innocent wins majority" : "Innocent overridden by HoP"], [on_trial.body.real_name] has been spared.</b></span>")
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
 	//by now clowns should have killed someone in guilty list, clear this out
 	judgement_innocent_votes = list()

@@ -169,10 +169,8 @@
 	. = ..()
 	if(!.)
 		return
-	if(istype(target, /datum/mafia_role/hop))
-		var/datum/mafia_role/hop/H = target
-		if(!H.protectable)
-			return FALSE
+	if(target.name == "Head of Personnel" && target.revealed)
+		return FALSE
 	return game.phase == MAFIA_PHASE_NIGHT && target.game_status == MAFIA_ALIVE && target != src
 
 /datum/mafia_role/md/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
@@ -377,7 +375,7 @@
 /datum/mafia_role/mafia/thoughtfeeder/proc/investigate(datum/mafia_controller/game)
 	var/datum/mafia_role/R = current_investigation
 	if(R)
-		to_chat(body,"<span class='warning'>Your \"investigations\" reveal that [R.body.real_name] is a [R.name]</span>")
+		to_chat(body,"<span class='warning'>Your \"investigations\" reveal that [R.body.real_name] is a [R.name].</span>")
 		add_note("N[game.turn] - [R.body.real_name] - [R.name]")
 	current_investigation = null
 
@@ -456,7 +454,7 @@
 	if(!. || game.phase != MAFIA_PHASE_NIGHT || target.game_status != MAFIA_ALIVE)
 		return FALSE
 	if(action == "Flicker")
-		return target != src
+		return target != src && !(target in flickering)
 	return target == src
 
 /datum/mafia_role/nightmare/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
@@ -467,7 +465,8 @@
 	flicker_target = target
 	if(action == "Flicker")
 		to_chat(body,"<span class='warning'>You will attempt to flicker [target.body.real_name]'s room tonight.</span>")
-	to_chat(body,"<span class='danger'>You will hunt everyone in a flickering room down tonight.</span>")
+	else
+		to_chat(body,"<span class='danger'>You will hunt everyone in a flickering room down tonight.</span>")
 
 /datum/mafia_role/nightmare/proc/flicker_or_hunt(datum/mafia_controller/source)
 	if(game_status != MAFIA_ALIVE || !flicker_target)
