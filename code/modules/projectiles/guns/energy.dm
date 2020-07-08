@@ -6,7 +6,7 @@
 
 	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
 	var/cell_type = /obj/item/stock_parts/cell
-	var/modifystate = 0
+	var/modifystate = FALSE ///if the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 	var/can_charge = TRUE //Can it be charged in a recharger?
@@ -140,21 +140,24 @@
 	return
 
 /obj/item/gun/energy/update_icon_state()
-	if(initial(inhand_icon_state))
+	var/skip_inhand = initial(inhand_icon_state) //only build if we aren't using a preset inhand icon
+	var/skip_worn_icon = initial(worn_icon_state) //only build if we aren't using a preset worn icon
+
+	if(skip_inhand && skip_worn_icon) //if we don't have either, don't do the math.
 		return
+
 	var/ratio = get_charge_ratio()
-	var/new_inhand_icon_state = ""
-	var/new_worn_icon_state = ""
-	new_inhand_icon_state = initial(icon_state)
-	new_worn_icon_state = initial(icon_state)
+	var/temp_icon_to_use = initial(icon_state)
 	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-		new_inhand_icon_state += "[shot.select_name]"
-		new_worn_icon_state += "[shot.select_name]"
-	new_inhand_icon_state += "[ratio]"
-	new_worn_icon_state += "[ratio*25]"
-	inhand_icon_state = new_inhand_icon_state
-	worn_icon_state = new_worn_icon_state
+		temp_icon_to_use += "[shot.select_name]"
+
+	temp_icon_to_use += "[ratio]"
+	if(!skip_inhand)
+		inhand_icon_state = temp_icon_to_use
+	if(!skip_worn_icon)
+		worn_icon_state = temp_icon_to_use
+
 
 /obj/item/gun/energy/update_overlays()
 	. = ..()
@@ -223,13 +226,13 @@
 		if(!BB)
 			. = ""
 		else if(BB.nodamage || !BB.damage || BB.damage_type == STAMINA)
-			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but it doesn't do anything. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but it doesn't do anything. Dumbass.</span>")
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
 			. = ""
 		else if(BB.damage_type != BURN)
-			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
@@ -239,4 +242,4 @@
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
-			. = "<span class='danger'>[user] casually lights their [A.name] with [src]. Damn.</span>"
+			. = "<span class='danger'>[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.</span>"

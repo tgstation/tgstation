@@ -382,3 +382,28 @@
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
 	attachment_slot = GROIN
 
+/obj/item/clothing/accessory/allergy_dogtag
+	name = "Allergy dogtag"
+	desc = "Dogtag with a list of your allergies"
+	icon_state = "allergy"
+	above_suit = FALSE
+	minimize_when_attached = TRUE
+	attachment_slot = CHEST
+	///Display message
+	var/display
+
+/obj/item/clothing/accessory/allergy_dogtag/examine(mob/user)
+	. = ..()
+	. += "The dogtag has a listing of allergies : [display]"
+
+/obj/item/clothing/accessory/allergy_dogtag/on_uniform_equip(obj/item/clothing/under/U, user)
+	. = ..()
+	RegisterSignal(U,COMSIG_PARENT_EXAMINE,.proc/on_examine)
+
+/obj/item/clothing/accessory/allergy_dogtag/on_uniform_dropped(obj/item/clothing/under/U, user)
+	. = ..()
+	UnregisterSignal(U,COMSIG_PARENT_EXAMINE)
+
+///What happens when we examine the uniform
+/obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)
+	examine_list += "The dogtag has a listing of allergies : [display]"

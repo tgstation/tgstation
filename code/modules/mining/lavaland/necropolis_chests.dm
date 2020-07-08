@@ -13,7 +13,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,22)
+	var/loot = rand(1,21)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -57,17 +57,15 @@
 		if(16)
 			new /obj/item/immortality_talisman(src)
 		if(17)
-			new /obj/item/gun/magic/hook(src)
-		if(18)
 			new /obj/item/voodoo(src)
-		if(19)
+		if(18)
 			new /obj/item/book/granter/spell/summonitem(src)
-		if(20)
+		if(19)
 			new /obj/item/book_of_babel(src)
-		if(21)
+		if(20)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(22)
+		if(21)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 
 //KA modkit design discs

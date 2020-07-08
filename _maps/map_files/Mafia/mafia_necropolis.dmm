@@ -1,0 +1,802 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/riveted,
+/area/mafia)
+"b" = (
+/turf/closed/indestructible/riveted/boss,
+/area/mafia)
+"c" = (
+/turf/closed/wall/mineral/cult,
+/area/mafia)
+"d" = (
+/turf/open/indestructible/necropolis/air,
+/area/mafia)
+"e" = (
+/obj/structure/grille/indestructable,
+/turf/open/indestructible/necropolis/air,
+/area/mafia)
+"f" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi';
+	name = "Maintenance";
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	},
+/turf/open/indestructible/necropolis/air,
+/area/mafia)
+"g" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/closet/crate/necropolis{
+	anchored = 1
+	},
+/turf/open/lava/smooth,
+/area/mafia)
+"h" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/obj/effect/landmark/mafia,
+/turf/open/lava/smooth,
+/area/mafia)
+"i" = (
+/turf/open/floor/plating/asteroid/basalt,
+/area/mafia)
+"j" = (
+/obj/structure/closet/crate/necropolis{
+	anchored = 1
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/mafia)
+"k" = (
+/obj/machinery/door/poddoor/preopen{
+	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
+	id = "mafia";
+	max_integrity = 99999;
+	name = "Station Night Shutters"
+	},
+/turf/closed/indestructible/riveted/boss/see_through{
+	color = "#add8e6"
+	},
+/area/mafia)
+"l" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/burnt{
+	dir = 1
+	},
+/turf/open/lava/smooth,
+/area/mafia)
+"m" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/lava/smooth,
+/area/mafia)
+"n" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/turf/open/lava/smooth,
+/area/mafia)
+"o" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/lava/smooth,
+/area/mafia)
+"p" = (
+/obj/effect/landmark/mafia,
+/turf/open/floor/plating/asteroid/basalt,
+/area/mafia)
+"q" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/lava/smooth,
+/area/mafia)
+"r" = (
+/obj/structure/stone_tile/surrounding,
+/turf/open/lava/smooth,
+/area/mafia)
+"s" = (
+/obj/machinery/door/poddoor/preopen{
+	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
+	id = "mafia";
+	max_integrity = 99999;
+	name = "Station Night Shutters"
+	},
+/turf/closed/indestructible/riveted/hierophant{
+	opacity = 0
+	},
+/area/mafia)
+"t" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/center/cracked,
+/obj/effect/landmark/mafia,
+/turf/open/lava/smooth,
+/area/mafia)
+"u" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 4
+	},
+/turf/open/lava/smooth,
+/area/mafia)
+"v" = (
+/obj/structure/stone_tile/block/burnt,
+/obj/structure/stone_tile/burnt{
+	dir = 4
+	},
+/turf/open/lava/smooth,
+/area/mafia)
+"w" = (
+/turf/open/indestructible/hierophant,
+/area/mafia)
+"x" = (
+/obj/mafia_game_board,
+/turf/open/indestructible/necropolis/air,
+/area/mafia)
+"y" = (
+/obj/structure/stone_tile/block/burnt,
+/turf/open/lava/smooth,
+/area/mafia)
+"z" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/lava/smooth,
+/area/mafia)
+"A" = (
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/effect/landmark/mafia,
+/turf/open/lava/smooth,
+/area/mafia)
+"B" = (
+/obj/effect/mapping_helpers/airlock/locked{
+	max_integrity = 99999
+	},
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi';
+	name = "Maintenance";
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	},
+/turf/open/indestructible/necropolis/air,
+/area/mafia)
+"C" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 6
+	},
+/turf/open/lava/smooth,
+/area/mafia)
+"D" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block,
+/turf/open/lava/smooth,
+/area/mafia)
+"E" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/lava/smooth,
+/area/mafia)
+"F" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 4
+	},
+/turf/open/lava/smooth,
+/area/mafia)
+"G" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/turf/open/lava/smooth,
+/area/mafia)
+"H" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
+/obj/effect/landmark/mafia,
+/turf/open/lava/smooth,
+/area/mafia)
+"I" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/effect/landmark/mafia,
+/turf/open/lava/smooth,
+/area/mafia)
+"J" = (
+/obj/structure/stone_tile/block/burnt,
+/obj/effect/landmark/mafia,
+/turf/open/lava/smooth,
+/area/mafia)
+"K" = (
+/obj/effect/baseturf_helper/asteroid,
+/obj/effect/hierophant,
+/obj/effect/landmark/mafia/town_center,
+/turf/open/indestructible/hierophant/two,
+/area/mafia)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(3,1,1) = {"
+a
+b
+b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+b
+b
+a
+"}
+(4,1,1) = {"
+a
+b
+b
+c
+x
+e
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+e
+x
+c
+b
+b
+a
+"}
+(5,1,1) = {"
+a
+b
+b
+c
+e
+d
+d
+d
+b
+b
+f
+b
+f
+b
+b
+d
+d
+d
+e
+c
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+c
+d
+b
+b
+f
+b
+g
+A
+b
+p
+j
+b
+f
+b
+b
+d
+c
+b
+b
+a
+"}
+(7,1,1) = {"
+a
+b
+c
+c
+d
+b
+j
+p
+k
+r
+u
+k
+i
+i
+k
+D
+g
+b
+d
+c
+c
+b
+a
+"}
+(8,1,1) = {"
+a
+b
+c
+d
+d
+b
+i
+i
+b
+b
+v
+b
+i
+b
+b
+E
+I
+b
+d
+d
+c
+b
+a
+"}
+(9,1,1) = {"
+a
+b
+c
+d
+b
+b
+k
+i
+i
+k
+q
+k
+i
+k
+q
+F
+k
+b
+b
+d
+c
+b
+a
+"}
+(10,1,1) = {"
+a
+b
+c
+d
+b
+g
+k
+b
+k
+s
+s
+s
+s
+s
+k
+b
+k
+j
+b
+d
+c
+b
+a
+"}
+(11,1,1) = {"
+a
+b
+c
+d
+f
+h
+l
+m
+q
+s
+w
+w
+w
+s
+i
+i
+i
+p
+f
+d
+c
+b
+a
+"}
+(12,1,1) = {"
+a
+b
+c
+d
+b
+b
+k
+b
+k
+s
+w
+K
+w
+s
+k
+b
+k
+b
+b
+d
+c
+b
+a
+"}
+(13,1,1) = {"
+a
+b
+c
+d
+f
+p
+i
+i
+i
+s
+w
+w
+w
+s
+q
+G
+C
+J
+f
+d
+c
+b
+a
+"}
+(14,1,1) = {"
+a
+b
+c
+d
+b
+j
+k
+b
+k
+s
+s
+s
+s
+s
+k
+b
+k
+g
+b
+d
+c
+b
+a
+"}
+(15,1,1) = {"
+a
+b
+c
+d
+b
+b
+k
+n
+q
+k
+i
+k
+q
+k
+i
+i
+k
+b
+b
+d
+c
+b
+a
+"}
+(16,1,1) = {"
+a
+b
+c
+d
+d
+b
+m
+o
+b
+b
+i
+b
+y
+b
+b
+i
+p
+b
+d
+d
+c
+b
+a
+"}
+(17,1,1) = {"
+a
+b
+c
+c
+d
+b
+g
+t
+k
+i
+i
+k
+z
+C
+k
+i
+j
+b
+d
+c
+c
+b
+a
+"}
+(18,1,1) = {"
+a
+b
+b
+c
+d
+b
+b
+f
+b
+j
+p
+b
+H
+g
+b
+f
+b
+b
+d
+c
+b
+b
+a
+"}
+(19,1,1) = {"
+a
+b
+b
+c
+e
+d
+d
+d
+b
+b
+f
+b
+B
+b
+b
+d
+d
+d
+e
+c
+b
+b
+a
+"}
+(20,1,1) = {"
+a
+b
+b
+c
+x
+e
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+e
+x
+c
+b
+b
+a
+"}
+(21,1,1) = {"
+a
+b
+b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+b
+b
+a
+"}
+(22,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

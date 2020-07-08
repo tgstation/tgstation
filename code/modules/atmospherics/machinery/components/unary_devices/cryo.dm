@@ -205,7 +205,7 @@
 		return
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
-	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
+	if(mob_occupant.get_organic_health() >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 		if(iscarbon(mob_occupant))
 			var/mob/living/carbon/C = mob_occupant
 			if(C.all_wounds)
