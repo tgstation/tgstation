@@ -82,7 +82,7 @@
         if(ishuman(M))
             var/mob/living/carbon/human/H = M
             if(H.mind?.holy_role && !HAS_TRAIT(H, TRAIT_AGEUSIA))
-                to_chat(H,"<span class='notice'>Truly a piece of heaven</span>")
+                to_chat(H,"<span class='notice'>Truly, a piece of heaven!</span>")
                 H.adjust_disgust(-5 + -2.5 * fraction)
                 SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "Divine_chew", /datum/mood_event/holy_consumption)
                 last_check_time = world.time
