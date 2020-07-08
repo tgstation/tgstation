@@ -1,4 +1,0 @@
-author: "oranges"
-delete-after: True
-changes: 
-  - tweak: "Where some names might previously have been accepted, they will now be rejected, this should not affect any regular names in use"
