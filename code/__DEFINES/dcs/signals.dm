@@ -481,6 +481,8 @@
 #define COMSIG_OBJ_ATTEMPT_CHARGE "obj_attempt_simple_charge"
 ///called when a printer tries to charge an account.
 #define COMSIG_OBJ_ATTEMPT_CHARGE_PRINTER "obj_attempt_simple_charge_printer"
+///Called when a payment component changes value
+#define COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE "obj_attempt_simple_charge_change"
 
 // /obj/item signals for economy
 ///called when an item is sold by the exports subsystem
