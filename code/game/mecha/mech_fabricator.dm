@@ -431,7 +431,7 @@
   * Requires an R&D Console visible within 7 tiles. Copies techweb research. Updates tgui's state data.
   */
 /obj/machinery/mecha_part_fabricator/proc/sync()
-	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
+	for(var/obj/machinery/computer/rdconsole/RDC in orange(7,src))
 		RDC.stored_research.copy_research_to(stored_research)
 		update_static_data(usr)
 		say("Successfully synchronized with R&D server.")
