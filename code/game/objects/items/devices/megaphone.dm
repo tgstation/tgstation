@@ -8,14 +8,20 @@
 	righthand_file = 'icons/mob/inhands/misc/megaphone_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	siemens_coefficient = 1
+	/// when can we next play megaphone.ogg? note that this DOESN'T affect the text embiggening, just the special megaphone noise that plays
 	var/spamcheck = 0
 	var/list/voicespan = list(SPAN_COMMAND)
 
 /obj/item/megaphone/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is uttering [user.p_their()] last words into \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	spamcheck = 0//so they dont have to worry about recharging
-	user.say("AAAAAAAAAAAARGHHHHH", forced="megaphone suicide")//he must have died while coding this
-	return OXYLOSS
+	user.visible_message("<span class='suicide'>[user] is using \the [src] to amplify a very special message! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.say(";ONE DAY WHILE ANDY WAS-", forced="megaphone suicide") //WAIT NO DON'T
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 20) //we'll give you 2 seconds to contemplate your mistake
+	return MANUAL_SUICIDE
+
+/obj/item/megaphone/proc/manual_suicide(mob/living/user) //modeled after/copied from the code for the timer suicide
+	playsound(loc, 'sound/effects/adminhelp.ogg', 100, TRUE) //B A N B O T S
+	user.adjustOxyLoss(200)
+	user.death(0)
 
 /obj/item/megaphone/equipped(mob/M, slot)
 	. = ..()
@@ -35,7 +41,7 @@
 		else
 			playsound(loc, 'sound/items/megaphone.ogg', 100, FALSE, TRUE)
 			spamcheck = world.time + 50
-			speech_args[SPEECH_SPANS] |= voicespan
+		speech_args[SPEECH_SPANS] |= voicespan
 
 /obj/item/megaphone/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
