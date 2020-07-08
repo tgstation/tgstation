@@ -2,3 +2,4 @@ wallem role=admin
 doshmobile role=admin
 mostpowerfuldad role=admin
 boltcat role=admin
+rellyrelly role=admin
