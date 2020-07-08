@@ -37,11 +37,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 // Auto conveyour is always on unless unpowered
 
+/obj/machinery/conveyor/auto
+	processing_flags = START_PROCESSING_ON_INIT
+
 /obj/machinery/conveyor/auto/Initialize(mapload, newdir)
-	. = ..()
 	operating = TRUE
-	update_move_direction()
-	begin_processing()
+	return ..()
 
 /obj/machinery/conveyor/auto/update()
 	. = ..()
