@@ -74,6 +74,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_RADIMMUNE, INNATE_TRAIT)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
@@ -84,6 +85,12 @@
 
 /mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	return FALSE
+
+/mob/living/simple_animal/revenant/apply_effect(effect, effecttype, blocked)
+	if(effecttype == EFFECT_IRRADIATE)
+		return FALSE
+	return ..()
+
 
 /mob/living/simple_animal/revenant/proc/random_revenant_name()
 	var/built_name = ""
