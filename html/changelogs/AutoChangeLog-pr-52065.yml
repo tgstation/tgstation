@@ -1,8 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscdel: "Removes the 9 assistants 3 changeling setup, yech."
-  - bugfix: "Lotta bugfixes for mafia!"
-  - soundadd: "Mafia now alerts you when starting a game!"
-  - spellcheck: "grammar + better text for some roles at better times of the game"
-  - code_imp: "LET THERE BE MAFIA DOCUMENTATION!"
