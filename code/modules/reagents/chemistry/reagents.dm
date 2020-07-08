@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/overrides_metab = 0
 	/// above this overdoses happen
 	var/overdose_threshold = 0
-	///Overrides what addiction this chemicals feeds into, allowing you to have multiple chems that treat a single addiction.
+	///allows you to feed an addiction with a class of reagents as opposed to strictly the addicted reagent
 	var/datum/reagent/addiction_type
 	/// above this amount addictions start
 	var/addiction_threshold = 0
