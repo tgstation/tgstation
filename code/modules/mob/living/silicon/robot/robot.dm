@@ -41,6 +41,8 @@
 	var/obj/item/module_active = null
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 
+	var/disabled_modules = BORG_MODULE_NONE_DISABLED
+
 	var/mutable_appearance/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
@@ -705,22 +707,23 @@
 
 /mob/living/silicon/robot/updatehealth()
 	..()
-	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
-		if(uneq_module(held_items[3]))
-			playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
-			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 3 OFFLINE.\"</span>")
-			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 3 OFFLINE.</span>")
-		if(health < 0)
-			if(uneq_module(held_items[2]))
-				audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 2 OFFLINE.\"</span>")
-				to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 2 OFFLINE.</span>")
-				playsound(loc, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
-			if(health < -maxHealth*0.5)
-				if(uneq_module(held_items[1]))
-					audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: All modules OFFLINE.\"</span>")
-					to_chat(src, "<span class='userdanger'>CRITICAL ERROR: All modules OFFLINE.</span>")
-					playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+	switch(health)
+		if(50 to 100)
+			disabled_modules = BORG_MODULE_NONE_DISABLED	
+			repair_all_cyborg_slots()
 
+		if(0 to 50)
+			break_cyborg_slot(3)
+			disabled_modules = BORG_MODULE_THREE_DISABLED
+
+		if(-50 to 0)
+			break_cyborg_slot(2)
+			disabled_modules = BORG_MODULE_TWO_DISABLED
+
+		if(-100 to -50)
+			break_cyborg_slot(1)
+			disabled_modules = BORG_MODULE_ALL_DISABLED
+		
 /mob/living/silicon/robot/update_sight()
 	if(!client)
 		return
@@ -1053,3 +1056,12 @@
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs - 1)
+
+/obj/item/borg/broken_slot_item
+	desc = "SLOT DISABLED!"
+	icon = 'icons/mob/landmarks.dmi'
+	icon_state = "x"
+
+/obj/item/borg/broken_slot_item/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
