@@ -80,6 +80,9 @@
   * * Grabs landmarks if it is the first time it's loading
   * * Sets up the role list
   * * Puts players in each role randomly
+  * Arguments:
+  * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
+  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
   */
 /datum/mafia_controller/proc/prepare_game(setup_list,ready_players)
 
