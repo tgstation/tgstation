@@ -1,0 +1,4 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - rscadd: "Blob mobs from an overmind now see critical mass progress as a status."
