@@ -353,10 +353,19 @@ const PartSets = (props, context) => {
 };
 
 const PartLists = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
+
+  const getFirstValidPartSet = (sets => {
+    for (let set of sets) {
+      if (buildable_parts[set]) {
+        return set;
+      }
+    }
+    return null;
+  });
 
   const part_sets = data.part_sets || [];
-  const buildable_parts = data.buildable_parts || {};
+  const buildable_parts = data.buildable_parts || [];
 
   const {
     queueMaterials,
@@ -365,15 +374,29 @@ const PartLists = (props, context) => {
 
   const [
     selectedPartTab,
-  ] = useSharedState(context, "part_tab", part_sets.length ? part_sets[0] : "");
+    setSelectedPartTab,
+  ] = useSharedState(
+    context,
+    "part_tab",
+    getFirstValidPartSet(part_sets)
+  );
 
   const [
     searchText,
     setSearchText,
   ] = useSharedState(context, "search_text", "");
 
-  let parts_list;
+  if (!selectedPartTab || !buildable_parts[selectedPartTab]) {
+    const valid_set = getFirstValidPartSet(part_sets);
+    if (valid_set) {
+      setSelectedPartTab(valid_set);
+    }
+    else {
+      return;
+    }
+  }
 
+  let parts_list;
   // Build list of sub-categories if not using a search filter.
   if (!searchText) {
     parts_list = { "Parts": [] };
