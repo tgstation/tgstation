@@ -26,7 +26,7 @@
 	var/category = "Any"
 	var/author
 	var/search_page = 0
-	var/topic_timeout
+	COOLDOWN_DECLARE(library_visitor_topic_cooldown)
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	. = ..()
@@ -105,9 +105,9 @@
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
-	if(world.time < topic_timeout + 10)
+	if(!COOLDOWN_FINISHED(src, library_visitor_topic_cooldown))
 		return
-	topic_timeout = world.time
+	COOLDOWN_START(src, library_visitor_topic_cooldown, 1 SECONDS)
 	. = ..()
 	if(.)
 		usr << browse(null, "window=publiclibrary")
@@ -188,7 +188,7 @@
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 	var/page = 1	//current page of the external archives
 	var/printer_cooldown = 0
-	var/topic_timeout
+	COOLDOWN_DECLARE(library_console_topic_cooldown)
 
 /obj/machinery/computer/bookmanagement/Initialize()
 	. = ..()
@@ -352,9 +352,9 @@
 		obj_flags |= EMAGGED
 
 /obj/machinery/computer/bookmanagement/Topic(href, href_list)
-	if(world.time < topic_timeout + 10)
+	if(!COOLDOWN_FINISHED(src, library_console_topic_cooldown))
 		return
-	topic_timeout = world.time
+	COOLDOWN_START(src, library_console_topic_cooldown, 1 SECONDS)
 	if(..())
 		usr << browse(null, "window=library")
 		onclose(usr, "library")
