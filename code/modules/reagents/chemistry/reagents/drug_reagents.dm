@@ -538,25 +538,19 @@
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN,0.1)
-	if(!M.mind)
-		return
-	var/datum/mind/living_mind = M.mind
 	// 5x if you want to OD, you can potentially go higher, but good luck managing the brain damage.
-	living_mind.experience_modifier = max(1,round(volume/3,0.1))
+	var/amt = max(1,round(volume/3,0.1))
+	M?.mind?.experience_multiplier_reasons |= type
+	M?.mind?.experience_multiplier_reasons[type] = amt
 
 /datum/reagent/drug/maint/powder/on_mob_end_metabolize(mob/living/M)
 	. = ..()
-	if(!M.mind)
-		return
-	var/datum/mind/living_mind = M.mind
-	living_mind.experience_modifier = initial(living_mind.experience_modifier)
+	M?.mind?.experience_multiplier_reasons[type] = null
+	M?.mind?.experience_multiplier_reasons -= type
 
 /datum/reagent/drug/maint/powder/overdose_process(mob/living/M)
 	. = ..()
-	if(!iscarbon(M))
-		return
-	var/mob/living/carbon/human/carbie = M
-	carbie.adjustOrganLoss(ORGAN_SLOT_BRAIN,3)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN,3)
 
 /datum/reagent/drug/maint/sludge
 	name = "Maintenance Sludge"
@@ -609,16 +603,10 @@
 	M.AdjustUnconscious(-10, FALSE)
 	M.AdjustParalyzed(-10, FALSE)
 	M.AdjustImmobilized(-10, FALSE)
-	if(!ishuman(M))
-		return
-	var/mob/living/carbon/human/humie = M
-	humie.adjustOrganLoss(ORGAN_SLOT_LIVER,1.5)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER,1.5)
 
 /datum/reagent/drug/maint/tar/overdose_process(mob/living/M)
 	. = ..()
 
 	M.adjustToxLoss(5)
-	if(!iscarbon(M))
-		return
-	var/mob/living/carbon/human/carbie = M
-	carbie.adjustOrganLoss(ORGAN_SLOT_LIVER,3)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER,3)

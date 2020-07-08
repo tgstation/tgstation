@@ -73,8 +73,10 @@
 	var/list/known_skills = list()
 	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
 	var/mob/original_character
-	///Skill modifier, adjusts how much xp you get/loose from adjust_xp
-	var/experience_modifier = 1
+	///Skill multiplier, adjusts how much xp you get/loose from adjust_xp. Dont override it directly, add your reason to experience_multiplier_reasons and use that as a key to put your value in there.
+	var/experience_multiplier = 1
+	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
+	var/list/experience_multiplier_reasons = list()
 
 /datum/mind/New(key)
 	src.key = key
@@ -146,7 +148,10 @@
 /datum/mind/proc/adjust_experience(skill, amt, silent = FALSE, force_old_level = 0)
 	var/datum/skill/S = GetSkillRef(skill)
 	var/old_level = force_old_level ? force_old_level : known_skills[skill][SKILL_LVL] //Get current level of the S skill
-	known_skills[skill][SKILL_EXP] = max(0, known_skills[skill][SKILL_EXP] + amt*experience_modifier) //Update exp. Prevent going below 0
+	experience_multiplier = initial(experience_multiplier)
+	for(var/key in experience_multiplier_reasons)
+		experience_multiplier += experience_multiplier_reasons[key]
+	known_skills[skill][SKILL_EXP] = max(0, known_skills[skill][SKILL_EXP] + amt*experience_multiplier) //Update exp. Prevent going below 0
 	known_skills[skill][SKILL_LVL] = update_skill_level(skill)//Check what the current skill level is based on that skill's exp
 	if(silent)
 		return
