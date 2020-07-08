@@ -43,7 +43,7 @@
 	///spawn points for players, each one has a house
 	var/list/landmarks = list()
 	///town center for when people get put on trial
-	var/town_center_landmark = null
+	var/town_center_landmark
 
 	///group voting on one person, like putting people to trial or choosing who to kill as mafia
 	var/list/votes = list()
@@ -51,7 +51,7 @@
 	var/list/judgement_innocent_votes = list()
 	var/list/judgement_guilty_votes = list()
 	///current role on trial for the judgement phase, will die if guilty is greater than innocent
-	var/datum/mafia_role/on_trial = null
+	var/datum/mafia_role/on_trial
 
 	///current timer for phase
 	var/next_phase_timer
