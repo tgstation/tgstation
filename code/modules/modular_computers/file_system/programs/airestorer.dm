@@ -113,7 +113,7 @@
 				data["restoring"] = restoring
 				data["health"] = (AI.health + 100) / 2
 				data["isDead"] = AI.stat == DEAD
-				data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
+				data["laws"] = AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 
 	return data
 

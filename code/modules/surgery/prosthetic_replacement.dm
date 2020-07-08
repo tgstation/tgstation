@@ -19,7 +19,6 @@
 	name = "add prosthetic"
 	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
 	time = 32
-	experience_given = MEDICAL_SKILL_ORGAN_FIX //won't get full XP if rejected
 	var/organ_rejection_dam = 0
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -79,7 +78,6 @@
 			return
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
-			experience_given -= (round(organ_rejection_dam/10))
 		display_results(user, target, "<span class='notice'>You succeed in replacing [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] successfully replaces [target]'s [parse_zone(target_zone)] with [tool]!</span>",
 			"<span class='notice'>[user] successfully replaces [target]'s [parse_zone(target_zone)]!</span>")

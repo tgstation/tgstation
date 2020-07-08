@@ -872,7 +872,7 @@
 	name = "Nitric acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
-	toxpwr = 2
+	toxpwr = 3
 	acidpwr = 5.0
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)

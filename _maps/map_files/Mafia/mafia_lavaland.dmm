@@ -1,0 +1,976 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/riveted,
+/area/mafia)
+"c" = (
+/turf/closed/wall/rust,
+/area/mafia)
+"d" = (
+/turf/open/floor/plating,
+/area/mafia)
+"e" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
+"f" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
+"g" = (
+/obj/mafia_game_board,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
+"h" = (
+/obj/structure/grille/indestructable,
+/turf/open/floor/plating,
+/area/mafia)
+"i" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/mafia)
+"j" = (
+/obj/machinery/door/airlock/external{
+	max_integrity = 99999;
+	name = "Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/mafia)
+"k" = (
+/obj/mafia_game_board,
+/turf/open/floor/plating,
+/area/mafia)
+"l" = (
+/obj/structure/closet{
+	desc = "It's a storage unit. For mining stuff. Y'know.";
+	icon_state = "mining";
+	name = "miner equipment locker"
+	},
+/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/turf/open/floor/grass/fakebasalt,
+/area/mafia)
+"m" = (
+/obj/effect/landmark/mafia,
+/turf/open/floor/grass/fakebasalt,
+/area/mafia)
+"n" = (
+/obj/effect/landmark/mafia,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/turf/open/floor/plasteel,
+/area/mafia)
+"o" = (
+/obj/effect/turf_decal/trimline/brown/filled/end{
+	icon_state = "trimline_end_fill";
+	dir = 4
+	},
+/obj/structure/closet{
+	desc = "It's a storage unit. For mining stuff. Y'know.";
+	icon_state = "mining";
+	name = "miner equipment locker"
+	},
+/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/turf/open/floor/plasteel,
+/area/mafia)
+"p" = (
+/obj/machinery/door/poddoor/preopen{
+	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
+	id = "mafia";
+	max_integrity = 99999;
+	name = "Station Night Shutters"
+	},
+/turf/closed/indestructible/fakeglass,
+/area/mafia)
+"q" = (
+/turf/open/floor/grass/fakebasalt,
+/area/mafia)
+"r" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 9
+	},
+/obj/structure/closet{
+	desc = "It's a storage unit. For mining stuff. Y'know.";
+	icon_state = "mining";
+	name = "miner equipment locker"
+	},
+/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/turf/open/floor/plasteel,
+/area/mafia)
+"s" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"t" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"u" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"v" = (
+/obj/mafia_game_board,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
+"w" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/turf/open/floor/plasteel,
+/area/mafia)
+"x" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/plasteel,
+/area/mafia)
+"y" = (
+/obj/effect/turf_decal/trimline/brown/filled/end{
+	icon_state = "trimline_end_fill";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"z" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 5
+	},
+/obj/structure/closet{
+	desc = "It's a storage unit. For mining stuff. Y'know.";
+	icon_state = "mining";
+	name = "miner equipment locker"
+	},
+/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/turf/open/floor/plasteel,
+/area/mafia)
+"A" = (
+/obj/effect/landmark/mafia,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"B" = (
+/obj/effect/turf_decal/trimline/brown/filled/end{
+	icon_state = "trimline_end_fill";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"C" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"D" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	icon_state = "trimline_corner_fill";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"E" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	icon_state = "trimline_corner_fill";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"F" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"G" = (
+/obj/effect/landmark/mafia,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"H" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 10
+	},
+/obj/structure/closet{
+	desc = "It's a storage unit. For mining stuff. Y'know.";
+	icon_state = "mining";
+	name = "miner equipment locker"
+	},
+/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/turf/open/floor/plasteel,
+/area/mafia)
+"I" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 6
+	},
+/obj/structure/closet{
+	desc = "It's a storage unit. For mining stuff. Y'know.";
+	icon_state = "mining";
+	name = "miner equipment locker"
+	},
+/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/turf/open/floor/plasteel,
+/area/mafia)
+"J" = (
+/obj/effect/landmark/mafia,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	icon_state = "trimline_corner_fill";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"K" = (
+/obj/effect/turf_decal/trimline/brown/filled/end{
+	icon_state = "trimline_end_fill";
+	dir = 8
+	},
+/obj/structure/closet{
+	desc = "It's a storage unit. For mining stuff. Y'know.";
+	icon_state = "mining";
+	name = "miner equipment locker"
+	},
+/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/turf/open/floor/plasteel,
+/area/mafia)
+"L" = (
+/obj/effect/landmark/mafia,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"M" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"N" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	icon_state = "trimline_corner_fill";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"O" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	icon_state = "trimline_corner_fill";
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"P" = (
+/obj/effect/turf_decal/trimline/brown/filled/end,
+/turf/open/floor/plasteel,
+/area/mafia)
+"Q" = (
+/obj/effect/landmark/mafia,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"R" = (
+/obj/effect/baseturf_helper/asteroid,
+/obj/effect/landmark/mafia/town_center,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"S" = (
+/obj/effect/turf_decal/trimline/brown/filled/end{
+	icon_state = "trimline_end_fill";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"T" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"U" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	icon_state = "trimline_corner_fill";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"V" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	icon_state = "trimline_fill";
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"W" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"X" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"Y" = (
+/turf/closed/indestructible{
+	icon = 'icons/turf/walls/reinforced_wall.dmi';
+	icon_state = "r_wall";
+	name = "reinforced wall"
+	},
+/area/mafia)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+a
+"}
+(3,1,1) = {"
+a
+Y
+Y
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+Y
+Y
+a
+"}
+(4,1,1) = {"
+a
+Y
+Y
+c
+g
+h
+d
+d
+d
+d
+d
+e
+d
+d
+d
+d
+d
+h
+k
+c
+Y
+Y
+a
+"}
+(5,1,1) = {"
+a
+Y
+Y
+c
+h
+d
+d
+e
+Y
+Y
+j
+Y
+j
+Y
+Y
+d
+d
+i
+h
+c
+Y
+Y
+a
+"}
+(6,1,1) = {"
+a
+Y
+Y
+c
+i
+Y
+Y
+j
+Y
+l
+q
+Y
+s
+H
+Y
+j
+Y
+Y
+d
+c
+Y
+Y
+a
+"}
+(7,1,1) = {"
+a
+Y
+c
+c
+d
+Y
+r
+M
+p
+m
+q
+p
+w
+A
+p
+q
+l
+Y
+d
+c
+c
+Y
+a
+"}
+(8,1,1) = {"
+a
+Y
+c
+d
+d
+Y
+L
+N
+Y
+Y
+q
+Y
+x
+Y
+Y
+q
+m
+Y
+d
+d
+c
+Y
+a
+"}
+(9,1,1) = {"
+a
+Y
+c
+d
+Y
+Y
+p
+O
+P
+p
+q
+p
+y
+p
+q
+q
+p
+Y
+Y
+d
+c
+Y
+a
+"}
+(10,1,1) = {"
+a
+Y
+c
+d
+Y
+l
+p
+Y
+p
+p
+p
+p
+p
+p
+p
+Y
+p
+K
+Y
+d
+c
+Y
+a
+"}
+(11,1,1) = {"
+a
+Y
+c
+d
+j
+m
+q
+q
+q
+p
+q
+u
+q
+p
+B
+C
+C
+J
+j
+e
+c
+Y
+a
+"}
+(12,1,1) = {"
+a
+Y
+c
+e
+Y
+Y
+p
+Y
+p
+p
+t
+R
+X
+p
+p
+Y
+p
+Y
+Y
+d
+c
+Y
+a
+"}
+(13,1,1) = {"
+a
+Y
+c
+d
+j
+n
+C
+C
+P
+p
+q
+W
+q
+p
+q
+q
+q
+m
+j
+d
+c
+Y
+a
+"}
+(14,1,1) = {"
+a
+Y
+c
+d
+Y
+o
+p
+Y
+p
+p
+p
+p
+p
+p
+p
+Y
+p
+l
+Y
+i
+c
+Y
+a
+"}
+(15,1,1) = {"
+a
+Y
+c
+d
+Y
+Y
+p
+q
+q
+p
+S
+p
+q
+p
+B
+D
+p
+Y
+Y
+d
+c
+Y
+a
+"}
+(16,1,1) = {"
+a
+Y
+c
+f
+d
+Y
+m
+q
+Y
+Y
+T
+Y
+q
+Y
+Y
+E
+G
+Y
+d
+d
+c
+Y
+a
+"}
+(17,1,1) = {"
+a
+Y
+c
+c
+d
+Y
+l
+q
+p
+Q
+U
+p
+q
+m
+p
+F
+I
+Y
+d
+c
+c
+Y
+a
+"}
+(18,1,1) = {"
+a
+Y
+Y
+c
+d
+Y
+Y
+j
+Y
+z
+V
+Y
+q
+l
+Y
+j
+Y
+Y
+d
+c
+Y
+Y
+a
+"}
+(19,1,1) = {"
+a
+Y
+Y
+c
+h
+i
+d
+d
+Y
+Y
+j
+Y
+j
+Y
+Y
+d
+e
+d
+h
+c
+Y
+Y
+a
+"}
+(20,1,1) = {"
+a
+Y
+Y
+c
+k
+h
+d
+d
+e
+d
+d
+d
+d
+d
+d
+d
+d
+h
+v
+c
+Y
+Y
+a
+"}
+(21,1,1) = {"
+a
+Y
+Y
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+Y
+Y
+a
+"}
+(22,1,1) = {"
+a
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
