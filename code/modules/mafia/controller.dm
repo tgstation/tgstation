@@ -183,6 +183,8 @@
   * * Vote innocent or guilty, if they are not on trial.
   * * Defend themselves and wait for judgement, if they are.
   * * Leads to the lynch phase.
+  * Arguments:
+  * * verbose: boolean, announces whether there were votes or not. after judgement it goes back here with no voting period to end the day.
   */
 /datum/mafia_controller/proc/check_trial(verbose = TRUE)
 	var/datum/mafia_role/loser = get_vote_winner("Day")//, majority_of_town = TRUE)
@@ -231,6 +233,8 @@
 /**
   * Teenie helper proc to move players back to their home.
   * Used in the above, but also used in the debug button "send all players home"
+  * Arguments:
+  * * role: mafia role that is getting sent back to the game.
   */
 /datum/mafia_controller/proc/send_home(datum/mafia_role/role)
 	role.body.forceMove(get_turf(role.assigned_landmark))
@@ -299,6 +303,8 @@
   * What players do in this phase:
   * * See everyone's role postgame
   * * See who won the game
+  * Arguments:
+  * * message: string, if non-null it sends it to all players. used to announce team victories while solos are handled in check victory
   */
 /datum/mafia_controller/proc/start_the_end(message)
 	SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
@@ -330,6 +336,8 @@
 
 /**
   * Shuts poddoors attached to mafia.
+  * Arguments:
+  * * close: boolean, the state you want the curtains in.
   */
 /datum/mafia_controller/proc/toggle_night_curtains(close)
 	for(var/obj/machinery/door/poddoor/D in GLOB.machines) //I really dislike pathing of these
@@ -388,6 +396,11 @@
   * Proc that goes off when players vote for something with their mafia panel.
   *
   * If teams, it hides the tally overlay and only sends the vote messages to the team that is voting
+  * Arguments:
+  * * voter: the mafia role that is trying to vote for...
+  * * target: the mafia role that is getting voted for
+  * * vt: type of vote submitted (is this the day vote? is this the mafia night vote?)
+  * * teams: see mafia team defines for what to put in, makes the messages only send to a specific team (so mafia night votes only sending messages to mafia at night)
   */
 /datum/mafia_controller/proc/vote_for(datum/mafia_role/voter,datum/mafia_role/target,vt, teams)
 	if(!votes[vt])
@@ -421,6 +434,9 @@
 
 /**
   * Returns how many people voted for the role, in whatever vote (day vote, night kill vote)
+  * Arguments:
+  * * role: the mafia role the proc tries to get the amount of votes for
+  * * vt: the vote type (getting how many day votes were for the role, or mafia night votes for the role)
   */
 /datum/mafia_controller/proc/get_vote_count(role,vt)
 	. = 0
@@ -431,6 +447,8 @@
 /**
   * Returns whichever role got the most votes, in whatever vote (day vote, night kill vote)
   * returns null if no votes
+  * Arguments:
+  * * vt: the vote type (getting the role that got the most day votes, or the role that got the most mafia votes)
   */
 /datum/mafia_controller/proc/get_vote_winner(vt)
 	var/list/tally = list()
@@ -444,11 +462,19 @@
 
 /**
   * Returns a random person who voted for whatever vote (day vote, night kill vote)
+  * Arguments:
+  * * vt: vote type (getting a random day voter, or mafia night voter)
   */
 /datum/mafia_controller/proc/get_random_voter(vt)
 	if(length(votes[vt]))
 		return pick(votes[vt])
 
+/**
+  * Adds mutable appearances to people who get publicly voted on (so not night votes) showing how many people are picking them
+  * Arguments:
+  * * source: the body of the role getting the overlays
+  * * overlay_list: signal var passing the overlay list of the mob
+  */
 /datum/mafia_controller/proc/display_votes(atom/source, list/overlay_list)
 	if(phase != MAFIA_PHASE_VOTING)
 		return
@@ -456,6 +482,15 @@
 	var/mutable_appearance/MA = mutable_appearance('icons/obj/mafia.dmi',"vote_[v]")
 	overlay_list += MA
 
+/**
+  * Called when the game is setting up, AFTER map is loaded but BEFORE the phase timers start. Creates and places each role's body and gives the correct player key
+  *
+  * Notably:
+  * * Toggles godmode so the mafia players cannot kill themselves
+  * * Adds signals for voting overlays, see display_votes proc
+  * * gives mafia panel
+  * * sends the greeting text (goals, role name, etc)
+  */
 /datum/mafia_controller/proc/create_bodies()
 	for(var/datum/mafia_role/role in all_roles)
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
@@ -629,6 +664,8 @@
 
 /**
   * Returns all setups that the amount of players signed up could support (so fill each role)
+  * Arguments:
+  * * ready_count: the amount of players signed up (not sane, so some players may have disconnected or rejoined ss13).
   */
 /datum/mafia_controller/proc/find_best_setup(ready_count)
 	var/list/all_setups = GLOB.mafia_setups
