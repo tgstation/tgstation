@@ -24,6 +24,8 @@
 	var/mob/living/silicon/ai/mainframe = null
 	var/datum/action/innate/undeployment/undeployment_action = new
 
+	/// the last health before updating - to check net change in health
+	var/previous_health
 //Hud stuff
 
 	var/obj/screen/inv1 = null
@@ -41,7 +43,8 @@
 	var/obj/item/module_active = null
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 
-	var/disabled_modules = BORG_MODULE_NONE_DISABLED
+	/// For checking which modules are disabled or not.
+	var/disabled_modules
 
 	var/mutable_appearance/eye_lights
 
@@ -111,6 +114,8 @@
 	robot_modules_background.plane = HUD_PLANE
 
 	ident = rand(1, 999)
+
+	previous_health = health
 
 	if(ispath(cell))
 		cell = new cell(src)
@@ -221,7 +226,6 @@
 		return
 
 	module.transform_to(modulelist[input_module])
-
 
 /mob/living/silicon/robot/proc/updatename(client/C)
 	if(shell)
@@ -707,23 +711,31 @@
 
 /mob/living/silicon/robot/updatehealth()
 	..()
-	switch(health)
-		if(50 to 100)
-			disabled_modules = BORG_MODULE_NONE_DISABLED	
-			repair_all_cyborg_slots()
 
-		if(0 to 50)
+	/// the current percent health of the robot (-1 to 1)
+	var/percent_hp = health/maxHealth
+	if(health <= previous_health) //if change in health is negative (we're losing hp)
+		if(percent_hp <= 0.5)
 			break_cyborg_slot(3)
-			disabled_modules = BORG_MODULE_THREE_DISABLED
 
-		if(-50 to 0)
+		if(percent_hp <= 0)
 			break_cyborg_slot(2)
-			disabled_modules = BORG_MODULE_TWO_DISABLED
 
-		if(-100 to -50)
+		if(percent_hp <= -0.5)
 			break_cyborg_slot(1)
-			disabled_modules = BORG_MODULE_ALL_DISABLED
-		
+
+	else //if change in health is positive (we're gaining hp)
+		if(percent_hp >= 0.5)
+			repair_cyborg_slot(3)
+
+		if(percent_hp >= 0)
+			repair_cyborg_slot(2)
+
+		if(percent_hp >= -0.5)
+			repair_cyborg_slot(1)
+
+	previous_health = health
+
 /mob/living/silicon/robot/update_sight()
 	if(!client)
 		return
@@ -1057,12 +1069,3 @@
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs - 1)
-
-/obj/item/borg/broken_slot_item
-	desc = "SLOT DISABLED!"
-	icon = 'icons/mob/landmarks.dmi'
-	icon_state = "x"
-
-/obj/item/borg/broken_slot_item/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)

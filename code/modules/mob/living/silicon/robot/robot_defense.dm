@@ -18,7 +18,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				return
 
 		adjustBruteLoss(-30)
-		updatehealth()
 		add_fingerprint(user)
 		visible_message("<span class='notice'>[user] fixes some of the dents on [src].</span>")
 		return
@@ -33,8 +32,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 					return
 			if (coil.use(1))
 				adjustFireLoss(-30)
-				//adjustToxLoss(-30)
-				updatehealth()
 				user.visible_message("<span class='notice'>[user] fixes some of the burnt wires on [src].</span>", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
@@ -268,7 +265,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		damage = rand(5, 35)
 	damage = round(damage / 2) // borgs receive half damage
 	adjustBruteLoss(damage)
-	updatehealth()
 
 	return
 

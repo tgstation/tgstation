@@ -56,7 +56,7 @@
 
 #define BORG_LAMP_CD_RESET -1 //special value to reset cyborg's lamp_cooldown
 
-#define BORG_MODULE_NONE_DISABLED 3
-#define BORG_MODULE_THREE_DISABLED 2
-#define BORG_MODULE_TWO_DISABLED 1
-#define BORG_MODULE_ALL_DISABLED 0
+/// Defines for whether or not module slots are broken.
+#define BORG_MODULE_ALL_DISABLED (1<<0)
+#define BORG_MODULE_TWO_DISABLED (1<<1)
+#define BORG_MODULE_THREE_DISABLED (1<<2)
