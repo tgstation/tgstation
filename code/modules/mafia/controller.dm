@@ -128,10 +128,9 @@
 	var/team_suffix = team ? "([uppertext(team)] CHAT)" : ""
 	for(var/M in GLOB.dead_mob_list)
 		var/mob/spectator = M
-		if(!(spectator in GLOB.mafia_signup) || player_role_lookup[spectator.ckey] == null)
-			continue
-		var/link = FOLLOW_LINK(M, town_center_landmark)
-		to_chat(M, "[link] MAFIA: [msg] [team_suffix]")
+		if(spectator.ckey in GLOB.mafia_signup || player_role_lookup[spectator.mind.current] != null) //was in current game, or is signed up
+			var/link = FOLLOW_LINK(M, town_center_landmark)
+			to_chat(M, "[link] MAFIA: [msg] [team_suffix]")
 
 /**
   * The game by this point is now all set up, and so we can put people in their bodies and start the first phase.
@@ -158,7 +157,6 @@
 		if(turn == 1)
 			send_message("<span class='notice'><b>The selected map is [current_map.name]!</b></br>[current_map.description]</span>")
 			send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
-			playsound(get_turf(town_center_landmark), 'sound/ambience/ambifailure.ogg',150,FALSE, pressure_affected = FALSE)
 			next_phase_timer = addtimer(CALLBACK(src,.proc/check_trial, FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
 		else
 			send_message("<b>Day [turn] started! Voting will start in 1 minute.</b>")

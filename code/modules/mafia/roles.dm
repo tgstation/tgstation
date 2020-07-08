@@ -41,6 +41,7 @@
 	. = ..()
 
 /datum/mafia_role/proc/greet()
+	SEND_SOUND(body, 'sound/ambience/ambifailure.ogg')
 	to_chat(body,"<span class='danger'>You are the [name].</span>")
 	to_chat(body,"<span class='danger'>[desc]</span>")
 	switch(team)
