@@ -12,7 +12,7 @@
 	var/require_module = 0
 	var/list/module_type = null
 	///	Bitflags listing module compatibility. Used in the exosuit fabricator for creating sub-categories.
-	var/list/module_flags = 0
+	var/list/module_flags = NONE
 	// if true, is not stored in the robot to be ejected
 	// if module is reset
 	var/one_use = FALSE
