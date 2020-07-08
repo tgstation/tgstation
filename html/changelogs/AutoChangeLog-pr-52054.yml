@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed player controlled statues being able to speak."
-  - bugfix: "Fixed nonhuman that aren't able to speak being able to cast spoken spells"
