@@ -208,7 +208,7 @@
 		factory.spores -= src
 		factory = null
 	if(oldguy)
-		oldguy.forceMove(get_turf(src))
+		oldguy.forceMove(loc)
 		oldguy = null
 	return ..()
 
