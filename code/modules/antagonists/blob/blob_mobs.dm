@@ -40,6 +40,11 @@
 		overmind.blob_mobs -= src
 	return ..()
 
+/mob/living/simple_animal/hostile/blob/Stat()
+	..()
+	if(overmind && statpanel("Status"))
+		stat(null, "Blobs to Win: [overmind.blobs_legit.len]/[overmind.blobwincount]")
+
 /mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
