@@ -200,6 +200,6 @@
 	mood_change = 2
 
 /datum/mood_event/holy_consumption
-    description = "<span class='nicegreen'>Truly that was the food of the Divine!.</span>\n"
+    description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
     mood_change = 5
     timeout = 3 MINUTES
