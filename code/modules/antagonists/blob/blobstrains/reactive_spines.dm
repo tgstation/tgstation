@@ -2,7 +2,7 @@
 /datum/blobstrain/reagent/reactive_spines
 	name = "Reactive Spines"
 	description = "will do medium brute damage through armor and bio resistance."
-	effectdesc = "will also react when attacked with close up burn or brute damage, attacking all near the attacked blob."
+	effectdesc = "will also react when attacked with burn or brute damage, attacking everything in melee range."
 	analyzerdescdamage = "Does medium brute damage, ignoring armor and bio resistance."
 	analyzerdesceffect = "When attacked with burn or brute damage it violently lashes out, attacking everything nearby."
 	color = "#9ACD32"
