@@ -17,7 +17,7 @@
 
 	if (action == "orbit")
 		var/ref = params["ref"]
-		var/atom/movable/poi = locate(ref)
+		var/atom/movable/poi = (locate(ref) in GLOB.mob_list) || (locate(ref) in GLOB.poi_list)
 		if (poi != null)
 			owner.ManualFollow(poi)
 
