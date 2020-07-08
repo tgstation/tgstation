@@ -71,7 +71,7 @@
 	//List of datums orbiting this atom
 	var/datum/component/orbiter/orbiters
 
-	/// Will move to flags_1 when i can be arsed to (2019, has not done so)
+	/// Will move to flags_1 when i can be arsed to (2019, has not done so) (2020, see previous comment)
 	var/rad_flags = NONE
 	/// Radiation insulation types
 	var/rad_insulation = RAD_NO_INSULATION
