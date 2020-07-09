@@ -45,6 +45,12 @@
 	icon_state = "marisa"
 	dog_fashion = null
 
+/obj/item/clothing/head/wizard/marisapurple
+	name = "witch hat"
+	desc = "A cute purple version of the witch hat."
+	icon_state = "marisapurple"	
+	dog_fashion = null
+
 /obj/item/clothing/head/wizard/magus
 	name = "\improper Magus helm"
 	desc = "A mysterious helmet that hums with an unearthly power."
@@ -131,6 +137,15 @@
 	name = "witch hat"
 	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
 	icon_state = "marisa"
+	gas_transfer_coefficient = 1
+	permeability_coefficient = 1
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/head/wizard/marisapurple/fake
+	name = "witch hat"
+	desc = "A cute purple version of the witch hat."
+	icon_state = "marisapurple"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)

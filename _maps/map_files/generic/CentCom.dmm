@@ -11454,6 +11454,7 @@
 /obj/item/clothing/shoes/sandal/marisa,
 /obj/item/clothing/suit/wizrobe/marisa,
 /obj/item/clothing/head/wizard/marisa,
+/obj/item/clothing/head/wizard/marisapurple,
 /obj/item/staff/broom,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
