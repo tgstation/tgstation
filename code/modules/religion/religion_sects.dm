@@ -197,10 +197,9 @@
 	convert_opener = "If you always donate your money and dont violate the NAP, you too might one day achieve the top 0.0000001%!<br>(Only Holochips accepted, for more questions reach out to our legal team!)"
 	alignment = ALIGNMENT_EVIL
 	desired_items = list(/obj/item/holochip)
-	max_favor = 10000
+	max_favor = 100000
 	rites_list = list(/datum/religion_rites/toppercent,
 					  /datum/religion_rites/looks)
-
 
 /datum/religion_sect/capitalists/on_sacrifice(obj/item/I, mob/living/L)
 	var/obj/item/holochip/money = I

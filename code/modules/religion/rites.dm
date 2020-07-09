@@ -113,7 +113,7 @@
 						"%... Must be funny...",
 						"%... In the rich man's world...")
 	invoke_msg = "... Wait, it worked?"
-	favor_cost = 10000
+	favor_cost = 100000
 
 /datum/religion_rites/looks
 	name = "Gonna look like it"
