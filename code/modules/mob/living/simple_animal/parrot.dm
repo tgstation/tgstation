@@ -991,6 +991,6 @@
 	var/datum/disease/parrot_possession/P = new
 	P.parrot = src
 	forceMove(H)
-	H.ForceContractDisease(P)
+	H.ForceContractDisease(P, FALSE)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
