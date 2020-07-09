@@ -92,13 +92,13 @@
 		to_chat(src, "<span class='warning'>Unable to use this blob, find a normal one.</span>")
 		return
 	if(needsNode)
-		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(3, T)) && !(locate(/obj/structure/blob/core) in orange(4, T)))
-			to_chat(src, "<span class='warning'>You need to place this blob closer to a node or core!</span>")
-			return //handholdotron 2000
 		var/area/A = get_area(src)
 		if(!A.blob_allowed) //factory and resource blobs must be legit
 			to_chat(src, "<span class='warning'>This type of blob must be placed on the station!</span>")
 			return
+		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(3, T)) && !(locate(/obj/structure/blob/core) in orange(4, T)))
+			to_chat(src, "<span class='warning'>You need to place this blob closer to a node or core!</span>")
+			return //handholdotron 2000
 	if(minSeparation)
 		for(var/obj/structure/blob/L in orange(minSeparation, T))
 			if(L.type == blobstrain)
