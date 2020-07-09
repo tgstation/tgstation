@@ -83,8 +83,6 @@
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
 			is_in_use = FALSE
 
-		listclearnulls(atoms_to_disappear)
-
 		for(var/to_appear in atoms_to_disappear)
 			var/atom/atom_to_appear = to_appear
 			//we need to reappear the item just in case the ritual didnt consume everything... or something.
