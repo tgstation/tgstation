@@ -46,11 +46,6 @@
 	update_icon()
 	PopulateContents()
 
-	RegisterSignal(src, COMSIG_ATOM_CANREACH, .proc/canreach_react)
-
-/obj/structure/closet/proc/canreach_react(datum/source, list/next)
-	return COMPONENT_BLOCK_REACH //closed block, open have nothing inside.
-
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
 	return
