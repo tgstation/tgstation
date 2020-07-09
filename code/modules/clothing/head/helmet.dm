@@ -384,6 +384,9 @@
 	magnification.key = picked.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	to_chat(magnification, "<span class='notice'>You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!</span>")
+	var/policy = get_policy(ROLE_MONKEY_HELMET)
+	if(policy)
+		to_chat(magnification, policy)
 	icon_state = "[icon_state]up"
 
 /obj/item/clothing/head/helmet/monkey_sentience/Destroy()
