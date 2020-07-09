@@ -2451,9 +2451,9 @@
 /turf/open/floor/plasteel,
 /area/ctf)
 "gt" = (
-/obj/structure/fluff/drake_statue,
-/turf/open/floor/plasteel/dark,
-/area/ctf)
+/obj/effect/landmark/mafia_game_area,
+/turf/open/space/basic,
+/area/space)
 "gu" = (
 /turf/closed/indestructible/splashscreen,
 /area/start)
@@ -11017,10 +11017,6 @@
 /obj/item/seeds/cherry/bomb,
 /turf/open/floor/wood,
 /area/centcom/holding)
-"yP" = (
-/obj/structure/fluff/drake_statue,
-/turf/open/floor/circuit/red,
-/area/ctf)
 "yU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -16191,10 +16187,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"Km" = (
-/obj/structure/table/reinforced/ctf,
-/turf/open/floor/plasteel/dark,
-/area/ctf)
 "Kn" = (
 /obj/structure/bookcase/random,
 /obj/effect/turf_decal/tile/neutral{
@@ -17592,6 +17584,10 @@
 /obj/machinery/door/window/westleft,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+"Rz" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/floor/circuit/red,
+/area/ctf)
 "RA" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -18210,6 +18206,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Yd" = (
+/obj/structure/table/reinforced/ctf,
+/turf/open/floor/plasteel/dark,
+/area/ctf)
 "Yf" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/chawanmushi,
@@ -18332,6 +18332,10 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Zu" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/floor/plasteel/dark,
+/area/ctf)
 "Zx" = (
 /mob/living/simple_animal/bot/medbot{
 	desc = "A little medical robot. You can make out the word \"sincerity\" on its chassis.";
@@ -49350,7 +49354,7 @@ aa
 aa
 aa
 aa
-ad
+aa
 aa
 aa
 aa
@@ -49882,7 +49886,7 @@ aa
 aa
 aa
 aa
-aa
+gt
 aa
 aa
 aa
@@ -57299,7 +57303,7 @@ gl
 gh
 gh
 hj
-gt
+Zu
 hj
 gh
 gh
@@ -57329,7 +57333,7 @@ gl
 gh
 gh
 hj
-gt
+Zu
 hj
 gh
 gh
@@ -62985,9 +62989,9 @@ fZ
 fZ
 fZ
 fZ
-Km
-Km
-Km
+Yd
+Yd
+Yd
 fZ
 fZ
 aa
@@ -82485,7 +82489,7 @@ gq
 gh
 gh
 hB
-yP
+Rz
 hB
 gh
 gh
@@ -82515,7 +82519,7 @@ gq
 gh
 gh
 hB
-yP
+Rz
 hB
 gh
 gh
