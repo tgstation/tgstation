@@ -1924,6 +1924,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/autosurgeon/syndicate/laser_arm
 	restricted_roles = list("Roboticist", "Research Director")
 
+/datum/uplink_item/role_restricted/ocd_device
+	name = "Organic Resources Disturbance Inducer"
+	desc = "A device that raises hell in organic resources indirectly. Single use."
+	cost = 2
+	limited_stock = 1
+	item = /obj/item/devices/ocd_device
+	restricted_roles = list("Head of Personnel", "Quartermaster")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
@@ -2004,3 +2012,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	limited_stock = 1
 	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/role_restricted/meathook
+	name = "Butcher's Meat Hook"
+	desc = "A brutal cleaver on a long chain, it allows you to pull people to your location."
+	item = /obj/item/gun/magic/hook
+	cost = 11
+	restricted_roles = list("Cook")

@@ -148,6 +148,14 @@ export const CentcomPodLauncherContent = (props, context) => {
           </LabeledList.Item>
           <LabeledList.Item label="Effects">
             <Button
+              content="Projectile Cloud"
+              selected={data.effectShrapnel}
+              tooltip={multiline`
+                This will create a cloud of shrapnel on landing, 
+                of any projectile you'd like!
+              `}
+              onClick={() => act('effectShrapnel')} />
+            <Button
               content="Stun"
               selected={data.effectStun}
               tooltip={multiline`

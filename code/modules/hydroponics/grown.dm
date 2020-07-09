@@ -21,6 +21,7 @@
 	var/distill_reagent //If NULL and this object can be distilled, it uses a generic fruit_wine reagent and adjusts its variables.
 	var/wine_flavor //If NULL, this is automatically set to the fruit's flavor. Determines the flavor of the wine if distill_reagent is NULL.
 	var/wine_power = 10 //Determines the boozepwr of the wine if distill_reagent is NULL.
+	volume = 100
 
 /obj/item/reagent_containers/food/snacks/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
@@ -85,7 +86,7 @@
 		if(reag_txt)
 			msg += "<br><span class='info'>*---------*</span>"
 			msg += reag_txt
-			msg += "<br><span class='info'>*---------*</span>"
+		msg += "<br><span class='info'>*---------*</span>"
 		to_chat(user, msg)
 	else
 		if(seed)

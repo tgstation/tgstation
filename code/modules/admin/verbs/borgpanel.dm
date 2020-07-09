@@ -59,7 +59,7 @@
 		if (locate(upgradetype) in borg)
 			installed = TRUE
 		.["upgrades"] += list(list("name" = initial(upgrade.name), "installed" = installed, "type" = upgradetype))
-	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE) : list()
+	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE) : list()
 	.["channels"] = list()
 	for (var/k in GLOB.radiochannels)
 		if (k == RADIO_CHANNEL_COMMON)

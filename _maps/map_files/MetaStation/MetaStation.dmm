@@ -178,6 +178,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
+"aaD" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "aaE" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -281,6 +292,38 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
+"aaJ" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/bounty_board{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
+"aaK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/bounty_board{
+	dir = 4;
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"aaL" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "aaM" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -390,6 +433,20 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
+"aaR" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/bounty_board{
+	dir = 1;
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "aaS" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -528,6 +585,46 @@
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"abg" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/white,
+/area/science/research)
+"abh" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/engineering_hacking{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/book/manual/wiki/engineering_guide{
+	pixel_x = -2
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/camera{
+	c_tag = "Engineering - Desk";
+	dir = 1
+	},
+/obj/item/trash/can{
+	pixel_x = -14
+	},
+/obj/machinery/bounty_board{
+	dir = 1;
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/engine/break_room)
 "abn" = (
 /obj/item/radio/intercom{
 	pixel_x = -28
@@ -5682,13 +5779,6 @@
 /obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
-"ama" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "amb" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/tile/red,
@@ -21778,7 +21868,7 @@
 "aYY" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=3-Central-Port";
-	location = "2.2-Leaving-Storage"
+	location = "2.1-Leaving-Storage"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -21840,7 +21930,7 @@
 "aZi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=2.1-Storage";
+	codes_txt = "patrol;next_patrol=2.1-Leaving-Storage";
 	location = "1.5-Fore-Central"
 	},
 /obj/effect/turf_decal/plaque{
@@ -45247,7 +45337,8 @@
 /obj/machinery/door/window/eastleft{
 	dir = 1;
 	name = "Service Deliveries";
-	req_access_txt = "29"
+	req_access_txt = "0";
+	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -54281,7 +54372,9 @@
 	req_one_access_txt = "29"
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "czi" = (
@@ -69601,7 +69694,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "hog" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -71583,7 +71676,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "kyI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -74512,8 +74605,8 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	acted_explosions = 2;
 	areastring = "/area/medical/chemistry";
+	dir = 8;
 	name = "Chemistry APC";
 	pixel_x = -26
 	},
@@ -74592,7 +74685,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/displaycase/forsale,
+/obj/structure/displaycase/forsale/kitchen,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "pAv" = (
@@ -76496,31 +76589,6 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"sfR" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/engineering_hacking{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/book/manual/wiki/engineering_guide{
-	pixel_x = -2
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/machinery/camera{
-	c_tag = "Engineering - Desk";
-	dir = 1
-	},
-/obj/item/trash/can{
-	pixel_x = -14
-	},
-/turf/open/floor/plasteel,
-/area/engine/break_room)
 "sht" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -76691,7 +76759,7 @@
 	dir = 1
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/medical/virology)
 "svg" = (
 /obj/structure/lattice,
 /obj/structure/girder/reinforced,
@@ -78033,7 +78101,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
-/area/crew_quarters/kitchen)
+/area/crew_quarters/bar)
 "veU" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -78263,10 +78331,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"vuY" = (
-/obj/effect/landmark/start/cook,
-/turf/open/floor/plasteel/cafeteria,
-/area/space)
 "vvb" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -100179,7 +100243,7 @@ bgR
 niJ
 bkq
 bmk
-boc
+aaJ
 bqt
 bsy
 buh
@@ -103304,7 +103368,7 @@ crx
 csv
 ctw
 cuq
-cvs
+aaK
 cvs
 cxk
 cxX
@@ -106348,7 +106412,7 @@ biZ
 bkE
 bmy
 bmA
-bot
+aaR
 bsU
 bux
 bsU
@@ -107676,8 +107740,8 @@ car
 car
 car
 cxA
-sVa
 car
+sVa
 cAi
 ctF
 car
@@ -108371,7 +108435,7 @@ dCf
 alV
 asu
 atS
-ama
+aaD
 awi
 axj
 uNe
@@ -110756,7 +110820,7 @@ caw
 crK
 csV
 ctN
-cGg
+abg
 cvM
 cwM
 gjC
@@ -114842,7 +114906,7 @@ urx
 bwO
 veM
 wzm
-vuY
+pVb
 bRS
 bQF
 bLK
@@ -120743,7 +120807,7 @@ jUn
 lci
 pmZ
 qdT
-sfR
+abh
 bxd
 bAD
 bCj
