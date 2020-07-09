@@ -198,7 +198,8 @@
 	alignment = ALIGNMENT_EVIL
 	desired_items = list(/obj/item/holochip)
 	max_favor = 10000
-	rites_list = list(/datum/religion_rites/toppercent)
+	rites_list = list(/datum/religion_rites/toppercent,
+					  /datum/religion_rites/looks)
 
 
 /datum/religion_sect/capitalists/on_sacrifice(obj/item/I, mob/living/L)

@@ -115,6 +115,13 @@
 	invoke_msg = "... Wait, it worked?"
 	favor_cost = 10000
 
+/datum/religion_rites/looks
+	name = "Gonna look like it"
+	desc = "From rags to riches? Better get rid of the rags then!"
+	ritual_length = 0.5 MINUTES
+	invoke_msg = "Please, all i want are some nice clothes..."
+	favor_cost = 100
+
 /datum/religion_rites/toppercent/perform_rite(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
 		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
@@ -146,4 +153,11 @@
 		return FALSE
 	mantomoney.set_species(/datum/species/golem/capitalist)
 	mantomoney.visible_message("<span class='notice'>[mantomoney] has ascended to the top of society!</span>")
+	return TRUE
+
+/datum/religion_rites/looks/invoke_effect(atom/religious_tool, mob/user)
+	var/location = get_turf(user)
+	new /obj/item/clothing/head/that(location)
+	new /obj/item/clothing/glasses/monocle(location)
+	new /obj/item/clothing/under/suit/black_really(location)
 	return TRUE
