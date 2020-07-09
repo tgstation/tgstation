@@ -190,3 +190,22 @@
 	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
 	qdel(I)
 	return TRUE
+
+/datum/religion_sect/capitalists
+	name = "The Cult of St. Credit"
+	desc = "A cult oriented around money."
+	convert_opener = "If you always donate your money and dont violate the NAP, you too might one day achieve the top 0.0000001%!<br>(Only Holochips accepted, for more questions reach out to our legal team!)"
+	alignment = ALIGNMENT_NEUT
+	desired_items = list(/obj/item/holochip)
+	max_favor = 10000
+	rites_list = list(/datum/religion_rites/toppercent)
+
+
+/datum/religion_sect/capitalists/on_sacrifice(obj/item/I, mob/living/L)
+	var/obj/item/holochip/money = I
+	if(!istype(money))
+		return
+	adjust_favor(round(money.credits), L)
+	to_chat(L, "<span class='notice'>You offer [money]'s contents to [GLOB.deity], pleasing them and enriching you spiritually.</span>")
+	qdel(I)
+	return TRUE
