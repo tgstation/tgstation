@@ -1217,6 +1217,7 @@
 					/obj/item/storage/firstaid/toxin,
 					/obj/item/storage/firstaid/brute,
 					/obj/item/storage/firstaid/fire,
+					/obj/item/storage/firstaid/emergency,
 					/obj/item/defibrillator/loaded,
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/storage/pill_bottle/mining,

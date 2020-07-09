@@ -94,6 +94,12 @@
 	cost = 250
 	contains = list(/obj/item/storage/firstaid/regular)
 
+/datum/supply_pack/goody/firstaid_single
+	name = "Emergency First Aid Kit Single-Pack"
+	desc = "A single emergency first-aid kit, fit for healing most types of wounds."
+	cost = 250
+	contains = list(/obj/item/storage/firstaid/emergency)
+
 /datum/supply_pack/goody/firstaidoxygen_single
 	name = "Oxygen Deprivation Kit Single-Pack"
 	desc = "A single oxygen deprivation first-aid kit, marketed heavily to those with crippling fears of asphyxiation."
