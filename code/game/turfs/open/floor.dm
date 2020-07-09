@@ -262,8 +262,18 @@
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
 		if(RCD_AIRLOCK)
-			if(locate(/obj/machinery/door/airlock) in src)
+			if(locate(/obj/machinery/door) in src)
 				return FALSE
+			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
+				to_chat(user, "<span class='notice'>You build a windoor.</span>")
+				var/obj/machinery/door/window/W = new the_rcd.airlock_type(src, user.dir)
+				if(the_rcd.airlock_electronics)
+					W.req_access = the_rcd.airlock_electronics.accesses.Copy()
+					W.req_one_access = the_rcd.airlock_electronics.one_access
+					W.unres_sides = the_rcd.airlock_electronics.unres_sides
+				W.autoclose = TRUE
+				W.update_icon()
+				return TRUE
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/A = new the_rcd.airlock_type(src)
 			A.electronics = new /obj/item/electronics/airlock(A)

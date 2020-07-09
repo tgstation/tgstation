@@ -36,8 +36,10 @@ RLD
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
 	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
 	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
-	var/upgrade = 0 // bitflags
-	var/banned_upgrades = 0 // bitflags
+	/// Bitflags for upgrades
+	var/upgrade = 0
+	/// Bitflags for banned upgrades
+	var/banned_upgrades = 0
 	var/datum/component/remote_materials/silo_mats //remote connection to the silo
 	var/silo_link = FALSE //switch to use internal or remote storage
 
@@ -78,6 +80,7 @@ RLD
 		return
 	return ..()
 
+/// Installs an upgrade into the RCD checking if it is already installed, or if it is a banned upgrade
 /obj/item/construction/proc/install_upgrade(obj/item/rcd_upgrade/rcd_up, mob/user)
 	if(rcd_up.upgrade & upgrade)
 		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
@@ -91,6 +94,7 @@ RLD
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rcd_up)
 
+/// Inserts matter into the RCD allowing it to build
 /obj/item/construction/proc/insert_matter(obj/O, mob/user)
 	if(iscyborg(user))
 		return FALSE
@@ -259,18 +263,21 @@ RLD
 
 	toggle_window_size(usr)
 
+/// Toggles the usage of reinforced or normal glass
 /obj/item/construction/rcd/proc/toggle_window_glass(mob/user)
 	if (window_glass != RCD_WINDOW_REINFORCED)
 		set_window_type(user, RCD_WINDOW_REINFORCED, window_size)
 		return
 	set_window_type(user, RCD_WINDOW_NORMAL, window_size)
 
+/// Toggles the usage of directional or full tile windows
 /obj/item/construction/rcd/proc/toggle_window_size(mob/user)
 	if (window_size != RCD_WINDOW_DIRECTIONAL)
 		set_window_type(user, window_glass, RCD_WINDOW_DIRECTIONAL)
 		return
 	set_window_type(user, window_glass, RCD_WINDOW_FULLTILE)
 
+/// Sets the window type to be created based on parameters
 /obj/item/construction/rcd/proc/set_window_type(mob/user, glass, size)
 	window_glass = glass
 	window_size = size
@@ -334,7 +341,9 @@ RLD
 
 	var/list/solid_or_glass_choices = list(
 		"Solid" = get_airlock_image(/obj/machinery/door/airlock),
-		"Glass" = get_airlock_image(/obj/machinery/door/airlock/glass)
+		"Glass" = get_airlock_image(/obj/machinery/door/airlock/glass),
+		"Windoor" = image(icon = 'icons/mob/radial.dmi', icon_state = "windoor"),
+		"Secure Windoor" = image(icon = 'icons/mob/radial.dmi', icon_state = "secure_windoor")
 	)
 
 	var/list/solid_choices = list(
@@ -455,10 +464,17 @@ RLD
 			else
 				airlock_type = /obj/machinery/door/airlock/glass
 				airlock_glass = TRUE
+		if("Windoor")
+			airlock_type = /obj/machinery/door/window
+			airlock_glass = TRUE
+		if("Secure Windoor")
+			airlock_type = /obj/machinery/door/window/brigdoor
+			airlock_glass = TRUE
 		else
 			airlock_type = /obj/machinery/door/airlock
 			airlock_glass = FALSE
 
+/// Radial menu for choosing the object you want to be created with the furnishing mode
 /obj/item/construction/rcd/proc/change_furnishing_type(mob/user)
 	if(!user)
 		return
