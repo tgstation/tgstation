@@ -43,8 +43,9 @@
 	. = ..()
 
 /datum/mafia_role/proc/greet()
+	SEND_SOUND(body, 'sound/ambience/ambifailure.ogg')
 	to_chat(body,"<span class='danger'>You are the [name].</span>")
-	to_chat(body,"<span class='danger'>[desc].</span>")
+	to_chat(body,"<span class='danger'>[desc]</span>")
 	switch(team)
 		if(MAFIA_TEAM_MAFIA)
 			to_chat(body,"<span class='danger'>You and your co-conspirators win if you outnumber crewmembers.</span>")
@@ -280,7 +281,7 @@
 
 /datum/mafia_role/psychologist
 	name = "Psychologist"
-	desc = "You can visit a single member of the town to reveal their true role in the morning!"
+	desc = "You can visit someone ONCE PER GAME to reveal their true role in the morning!"
 	revealed_outfit = /datum/outfit/mafia/psychologist
 
 	targeted_actions = list("Reveal")
@@ -412,7 +413,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(game.phase != MAFIA_PHASE_NIGHT || target.game_status != MAFIA_ALIVE)
+	if(game.phase != MAFIA_PHASE_NIGHT || target.game_status != MAFIA_ALIVE || target == src)
 		return FALSE
 
 /datum/mafia_role/traitor/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
@@ -499,7 +500,7 @@
 
 /datum/mafia_role/fugitive/New(datum/mafia_controller/game)
 	. = ..()
-	RegisterSignal(game,COMSIG_MAFIA_NIGHT_START,.proc/night_start)
+	RegisterSignal(game,COMSIG_MAFIA_SUNDOWN,.proc/night_start)
 	RegisterSignal(game,COMSIG_MAFIA_NIGHT_END,.proc/night_end)
 	RegisterSignal(game,COMSIG_MAFIA_GAME_END,.proc/survived)
 

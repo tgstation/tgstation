@@ -49,12 +49,6 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 	var/list/roles
 
 // 12 Player
-/datum/mafia_setup/twelve_vanilla
-	name = "12 Player Setup Vanilla"
-	roles = list(
-		/datum/mafia_role=9,
-		/datum/mafia_role/mafia=3
-	)
 
 /datum/mafia_setup/twelve_basic
 	name = "12 Player Setup Basic"
@@ -72,7 +66,7 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 		/datum/mafia_role=5,
 		/datum/mafia_role/chaplain=1,
 		/datum/mafia_role/md=3,
-		/datum/mafia_role/mafia=4
+		/datum/mafia_role/mafia=3
 	)
 
 /datum/mafia_setup/twelve_all

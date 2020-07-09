@@ -34,11 +34,16 @@
 		verbs -= /mob/living/verb/pulled
 	else
 		pass_flags &= ~PASSBLOB
-		
+
 /mob/living/simple_animal/hostile/blob/Destroy()
 	if(overmind)
 		overmind.blob_mobs -= src
 	return ..()
+
+/mob/living/simple_animal/hostile/blob/Stat()
+	..()
+	if(overmind && statpanel("Status"))
+		stat(null, "Blobs to Win: [overmind.blobs_legit.len]/[overmind.blobwincount]")
 
 /mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
@@ -112,12 +117,12 @@
 	var/is_zombie = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/factory/linked_node)
+	. = ..()
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
-	. = ..()
-	if(linked_node.overmind && istype(linked_node.overmind.blobstrain, /datum/blobstrain/reagent/distributed_neurons) && !istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak))
-		notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
+		if(linked_node.overmind && istype(linked_node.overmind.blobstrain, /datum/blobstrain/reagent/distributed_neurons) && !istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak))
+			notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
@@ -127,8 +132,8 @@
 				break
 	if(factory && z != factory.z)
 		death()
-	..()
-	
+	return ..()
+
 /mob/living/simple_animal/hostile/blob/blobspore/attack_ghost(mob/user)
 	. = ..()
 	if(.)
@@ -201,9 +206,9 @@
 /mob/living/simple_animal/hostile/blob/blobspore/Destroy()
 	if(factory)
 		factory.spores -= src
-	factory = null
+		factory = null
 	if(oldguy)
-		oldguy.forceMove(get_turf(src))
+		oldguy.forceMove(loc)
 		oldguy = null
 	return ..()
 

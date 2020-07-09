@@ -17,7 +17,6 @@
 	implements = list(TOOL_HEMOSTAT = 85, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15) //don't worry, pouring some alcohol on their open brain will get that chance to 100
 	repeatable = TRUE
 	time = 100 //long and complicated
-	experience_given = 0 // per_trauma
 
 /datum/surgery/brain_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
@@ -37,8 +36,7 @@
 	if(target.mind?.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	target.setOrganLoss(ORGAN_SLOT_BRAIN, target.getOrganLoss(ORGAN_SLOT_BRAIN) - 50)	//we set damage in this case in order to clear the "failing" flag
-	var/cured_num = target.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
-	experience_given = (MEDICAL_SKILL_EASY*2*cured_num)
+	target.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	if(target.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
 		to_chat(user, "[target]'s brain looks like it could be fixed further.")
 	return ..()

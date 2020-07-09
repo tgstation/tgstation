@@ -86,7 +86,7 @@
 		if(reag_txt)
 			msg += "<br><span class='info'>*---------*</span>"
 			msg += reag_txt
-			msg += "<br><span class='info'>*---------*</span>"
+		msg += "<br><span class='info'>*---------*</span>"
 		to_chat(user, msg)
 	else
 		if(seed)

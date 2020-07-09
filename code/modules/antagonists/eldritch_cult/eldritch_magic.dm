@@ -3,7 +3,7 @@
 	desc = "Low range spell allowing you to pass through a few walls."
 	school = "transmutation"
 	invocation = "ASH'N P'SSG'"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	charge_max = 150
 	range = -1
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -83,7 +83,7 @@
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "A'GRSV SPR'D"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = 3
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "corrode"
@@ -111,7 +111,7 @@
 	charge_max = 150
 	clothes_req = FALSE
 	invocation = "FL'MS O'ET'RN'ITY"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "blood_siphon"
 	action_background_icon_state = "bg_ecult"
@@ -164,7 +164,7 @@
 	action_icon_state = "rust_wave"
 	action_background_icon_state = "bg_ecult"
 	invocation = "SPR'D TH' WO'D"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 
 /obj/projectile/magic/spell/rust_wave
 	name = "Patron's Reach"
@@ -211,7 +211,7 @@
 	charge_max = 350
 	clothes_req = FALSE
 	invocation = "CL'VE"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = 9
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "cleave"
@@ -299,7 +299,7 @@
 	desc = "Powerful spell that releases 5 streams of fire away from you."
 	school = "transmutation"
 	invocation = "F'RE"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	charge_max = 300
 	range = 15
 	clothes_req = FALSE
@@ -362,7 +362,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/eldritch
 	invocation = "SH'PE"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	possible_shapes = list(/mob/living/simple_animal/mouse,\
@@ -375,7 +375,7 @@
 /obj/effect/proc_holder/spell/targeted/emplosion/eldritch
 	name = "Energetic Pulse"
 	invocation = "E'P"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -391,7 +391,7 @@
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "C'SC'DE"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = 4
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "fire_ring"
@@ -415,7 +415,7 @@
 
 /obj/effect/proc_holder/spell/targeted/telepathy/eldritch
 	invocation = ""
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 
@@ -423,7 +423,7 @@
 	name = "Oath of Fire"
 	desc = "For a minute you will passively create a ring of fire around you."
 	invocation = "FL'MS"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -489,7 +489,7 @@
 	name = "Nightwatcher's Rebirth"
 	desc = "Drains nearby alive people that are engulfed in flames. It heals 10 of each damage type per person. If a person is in critical condition it finishes them off."
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
