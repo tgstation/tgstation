@@ -71,6 +71,9 @@
 		current_backseat = owner_backseat
 		free_backseat = stranger_backseat
 
+	if(!free_backseat.client) //Make sure we never switch to a logged off mob. //code written by/stolen from kriskog
+		return
+	
 	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])")
 	to_chat(owner, "<span class='userdanger'>You feel your control being taken away... your other personality is in charge now!</span>")
 	to_chat(current_backseat, "<span class='userdanger'>You manage to take control of your body!</span>")
