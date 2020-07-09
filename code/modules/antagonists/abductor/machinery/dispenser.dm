@@ -4,6 +4,8 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "dispenser"
 	density = TRUE
+	ui_x = 300
+	ui_y = 338
 	var/list/gland_types
 	var/list/gland_colors
 	var/list/amounts
@@ -22,41 +24,42 @@
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
+/obj/machinery/abductor/gland_dispenser/ui_status(mob/user)
+	if(!isabductor(user) && !isobserver(user))
+		return UI_CLOSE
+	return ..()
+
+/obj/machinery/abductor/gland_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "GlandDispenser", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/obj/machinery/abductor/gland_dispenser/ui_data(mob/user)
+	var/list/data = list()
+	data["glands"] = list()
+	for(var/gland_number=1,gland_number<=gland_colors.len,gland_number++)
+		var/list/gland_information = list(
+			"color" = gland_colors[gland_number],
+			"amount" = amounts[gland_number],
+			"id" = gland_number,
+		)
+		data["glands"] += list(gland_information)
+	return data
+
+/obj/machinery/abductor/gland_dispenser/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
-	if(!isabductor(user))
-		return
-	user.set_machine(src)
-	var/box_css = {"
-	<style>
-	a.box.gland {
-		float: left;
-		width: 20px;
-		height: 20px;
-		margin: 5px;
-		border-width: 1px;
-		border-style: solid;
-		border-color: rgba(0,0,0,.2);
-		text-align: center;
-		}
-	</style>"}
-	var/dat = ""
-	var/item_count = 0
-	for(var/i=1,i<=gland_colors.len,i++)
-		item_count++
-		var/g_color = gland_colors[i]
-		var/amount = amounts[i]
-		dat += "<a class='box gland' style='background-color:[g_color]' href='?src=[REF(src)];dispense=[i]'>[amount]</a>"
-		if(item_count == 4) // Four boxes per line
-			dat +="</br></br>"
-			item_count = 0
-	var/datum/browser/popup = new(user, "glands", "Gland Dispenser", 200, 200)
-	popup.add_head_content(box_css)
-	popup.set_content(dat)
-	popup.open()
-	return
+
+	switch(action)
+		if("dispense")
+			var/gland_id = text2num(params["gland_id"])
+			if(!gland_id)
+				return
+			Dispense(gland_id)
+			return TRUE
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/organ/heart/gland))
@@ -67,15 +70,6 @@
 				amounts[i]++
 	else
 		return ..()
-
-/obj/machinery/abductor/gland_dispenser/Topic(href, href_list)
-	if(..())
-		return
-	usr.set_machine(src)
-
-	if(href_list["dispense"])
-		Dispense(text2num(href_list["dispense"]))
-	updateUsrDialog()
 
 /obj/machinery/abductor/gland_dispenser/proc/Dispense(count)
 	if(amounts[count]>0)

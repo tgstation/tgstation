@@ -205,7 +205,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize()
 	. = ..()
-	target_temperature = T0C-80
+	target_temperature = T0C-14
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()

@@ -30,7 +30,6 @@
 	implements = list(/obj/item/shockpaddles = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
 	repeatable = TRUE
 	time = 120
-	experience_given = MEDICAL_SKILL_ADVANCED
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
 	. = TRUE

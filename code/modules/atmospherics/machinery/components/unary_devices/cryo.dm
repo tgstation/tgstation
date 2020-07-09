@@ -205,7 +205,7 @@
 		return
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
-	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
+	if(mob_occupant.get_organic_health() >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 		if(iscarbon(mob_occupant))
 			var/mob/living/carbon/C = mob_occupant
 			if(C.all_wounds)
@@ -237,7 +237,7 @@
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
-				beaker.reagents.reaction(occupant, VAPOR)
+				beaker.reagents.expose(occupant, VAPOR)
 				air1.gases[/datum/gas/oxygen][MOLES] -= max(0,air1.gases[/datum/gas/oxygen][MOLES] - 2 / efficiency) //Let's use gas for this
 				air1.garbage_collect()
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
