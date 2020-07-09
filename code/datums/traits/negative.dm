@@ -536,7 +536,7 @@
 			msg += "causing you to freeze up!"
 
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='userdanger'>[msg]</span>"), 2) // so the examine signal has time to fire and this will print after
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='userdanger'>[msg]</span>"), 3) // so the examine signal has time to fire and this will print after
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/mood_event/anxiety_eyecontact
