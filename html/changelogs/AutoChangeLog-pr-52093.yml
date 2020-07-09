@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - code_imp: "Added surgery related unit tests and adds TEST_ASSERT, TEST_ASSERT_EQUAL, and allocate to unit tests."
