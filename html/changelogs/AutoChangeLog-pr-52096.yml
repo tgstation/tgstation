@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Fixes an infinite loop / infinite camera shake in the Bubblegum hallucination"
