@@ -112,6 +112,7 @@
 	return list()
 
 /mob/living/carbon/get_missing_limbs()
+	RETURN_TYPE(/list)
 	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	for(var/zone in full)
 		if(get_bodypart(zone))
