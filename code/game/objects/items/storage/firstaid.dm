@@ -50,7 +50,8 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture/emergency = 1,
 		/obj/item/stack/medical/ointment = 1,
-		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
+		/obj/item/reagent_containers/hypospray/medipen/ekit = 1,
+		/obj/item/reagent_containers/syringe/convermol = 1,
 		/obj/item/storage/pill_bottle/iron = 1)
 	generate_items_inside(items_inside,src)
 
