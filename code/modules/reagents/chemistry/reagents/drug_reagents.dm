@@ -493,7 +493,7 @@
 	..()
 
 /datum/reagent/drug/maint
-	name = "Maintanance Drugs"
+	name = "Maintenance Drugs"
 	addiction_type = /datum/reagent/drug/maint
 	can_synth = FALSE
 
