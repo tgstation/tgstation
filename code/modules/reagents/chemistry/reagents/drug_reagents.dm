@@ -579,7 +579,7 @@
 	. = ..()
 	if(!iscarbon(M))
 		return
-	var/mob/living/carbon/human/carbie = M
+	var/mob/living/carbon/carbie = M
 	//You will be vomiting so the damage is really for a few ticks before you flush it out of your system
 	carbie.adjustToxLoss(1)
 	if(prob(10))
