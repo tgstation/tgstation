@@ -146,10 +146,12 @@
 		send_message("<span class='green[hop ? " bold" : ""]'>[role.body.real_name] voted innocent.</span>")
 	for(var/ii in judgement_guilty_votes)
 		var/datum/mafia_role/role = ii
+		var/hop = FALSE
 		if(istype(role, /datum/mafia_role/hop))
 			override = FALSE
+			hop = TRUE
 		send_message("<span class='red[hop ? " bold" : ""]'>[role.body.real_name] voted guilty.</span>")
-	if(judgement_guilty_votes.len > judgement_innocent_votes.len || (!isnull(override) && !override)) //strictly need majority guilty to lynch, unless hop overrides to guilty
+	if(judgement_guilty_votes.len > judgement_innocent_votes.len || (!isnull(override) && override)) //strictly need majority guilty to lynch, unless hop overrides to guilty
 		send_message("<span class='red'><b>[isnull(override) ? "Guilty wins majority" : "Guilty overridden by HoP"], [on_trial.body.real_name] has been lynched.</b></span>")
 		on_trial.kill(src, lynch = TRUE)
 		addtimer(CALLBACK(src, .proc/send_home, on_trial),judgement_lynch_period)
@@ -179,12 +181,12 @@
 		if(R.game_status == MAFIA_ALIVE)
 			switch(R.team)
 				if(MAFIA_TEAM_MAFIA)
-					alive_mafia++
+					alive_mafia += R.vote_power
 				if(MAFIA_TEAM_TOWN)
-					alive_town++
+					alive_town += R.vote_power
 				if(MAFIA_TEAM_SOLO)
 					if(R.solo_counts_as_town)
-						alive_town++
+						alive_town += R.vote_power
 					solos_to_ask += R
 
 	///PHASE TWO: SEND STATS TO SOLO ANTAGS, SEE IF THEY WON OR TEAMS CANNOT WIN
