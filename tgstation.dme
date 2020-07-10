@@ -915,6 +915,7 @@
 #include "code\game\objects\items\blueprints.dm"
 #include "code\game\objects\items\body_egg.dm"
 #include "code\game\objects\items\bodybag.dm"
+#include "code\game\objects\items\britnotes.dm"
 #include "code\game\objects\items\broom.dm"
 #include "code\game\objects\items\candle.dm"
 #include "code\game\objects\items\cardboard_cutouts.dm"

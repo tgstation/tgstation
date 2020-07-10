@@ -13,7 +13,7 @@
 	var/comp_light_luminosity = 2.3				//The brightness of that light
 	var/enabled = 0
 	attack_verb = list("tapped", "slapped", "hit")
-	var/password = "Gaming" //this is obviously a placeholder
+	var/password = "rose"
 
 //wallem made this
 
@@ -48,12 +48,12 @@
 		return TRUE
 	return FALSE
 
-/obj/item/britnotes/proc/open()
+/obj/item/britnotes/proc/open(mob/user)
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
 		if(alert("If this doesn't open a new page, DM Wallem the word 'carcerem' in discord.",,"Ok","No")!="Ok")
 			return
-		src << link(rulesurl)
+		usr << link(rulesurl)
 	else
 		to_chat(src, "<span class='danger'>The notes URL is not set in the server configuration.</span>")
 	return

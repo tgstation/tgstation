@@ -191,7 +191,7 @@ window "infowindow"
 		is-transparent = true
 		saved-params = "is-checked"
 		text = ""
-		image = 'when_you_win_the_case.gif'
+		image = 'blush.png'
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
