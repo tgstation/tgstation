@@ -34,10 +34,7 @@
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
-	var/atmos_sealed = TRUE
-	if(CanIgniteMob(H))
-		if(!(isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) || !(isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE))
-			atmos_sealed = FALSE
+	var/atmos_sealed = CanIgniteMob(H) && (isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) && (isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE)
 	if(!atmos_sealed && (!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves)))
 		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment)
