@@ -51,15 +51,32 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	return TRUE
 
 /turf/open/transparent/openspace/zPassIn(atom/movable/A, direction, turf/source)
-	return TRUE
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_UP)
+				return FALSE
+		return TRUE
+	return FALSE
 
 /turf/open/transparent/openspace/zPassOut(atom/movable/A, direction, turf/destination)
 	if(A.anchored)
 		return FALSE
-	for(var/obj/O in contents)
-		if(O.obj_flags & BLOCK_Z_FALL)
-			return FALSE
-	return TRUE
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_UP)
+				return FALSE
+		return TRUE
+	return FALSE
 
 /turf/open/transparent/openspace/proc/CanCoverUp()
 	return can_cover_up
