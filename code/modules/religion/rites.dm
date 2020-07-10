@@ -113,7 +113,7 @@
 						"%... Must be funny...",
 						"%... In the rich man's world...")
 	invoke_msg = "... Wait, it worked?"
-	favor_cost = 100000
+	favor_cost = 10000
 
 /datum/religion_rites/looks
 	name = "Gonna look like it"
@@ -151,7 +151,7 @@
 			break
 	if(!mantomoney)
 		return FALSE
-	mantomoney.set_species(/datum/species/golem/capitalist)
+	mantomoney.set_species(/datum/species/golem/church_capitalist)
 	mantomoney.visible_message("<span class='notice'>[mantomoney] has ascended to the top of society!</span>")
 	return TRUE
 
