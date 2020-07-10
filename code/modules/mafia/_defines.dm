@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(mafia_setups,generate_mafia_setups())
 	)
 
 /datum/mafia_setup/twelve_md
-	name = "12 Player Setup Mosty MD"
+	name = "12 Player Setup Mostly MD"
 	roles = list(
 		/datum/mafia_role=5,
 		/datum/mafia_role/chaplain=1,
