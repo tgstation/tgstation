@@ -1218,12 +1218,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return 0
 
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
+	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
+		H.radiation = 0
+		return TRUE
+
 	. = FALSE
 	var/radiation = H.radiation
-
-	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
-		radiation = 0
-		return TRUE
 
 	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 		if(!H.IsParalyzed())

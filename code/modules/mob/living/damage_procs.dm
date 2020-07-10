@@ -92,7 +92,7 @@
 /mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
-		return 0
+		return FLASE
 	switch(effecttype)
 		if(EFFECT_STUN)
 			Stun(effect * hit_percent)
@@ -105,7 +105,10 @@
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
 		if(EFFECT_IRRADIATE)
-			radiation += max(effect * hit_percent, 0)
+			if(!HAS_TRIAT(src, TRAIT_RADIMMUNE))
+				radiation += max(effect * hit_percent, 0)
+			else
+				radiation = 0
 		if(EFFECT_SLUR)
 			slurring = max(slurring,(effect * hit_percent))
 		if(EFFECT_STUTTER)
@@ -118,10 +121,10 @@
 		if(EFFECT_JITTER)
 			if((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 				jitteriness = max(jitteriness,(effect * hit_percent))
-	return 1
+	return TRUE
 
 /// applies multiple effects at once via [/mob/living/proc/apply_effect]
-/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0, paralyze = 0, immobilize = 0)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0, paralyze = 0, immobilize = 0)
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
 	if(stun)
