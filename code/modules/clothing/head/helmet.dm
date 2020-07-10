@@ -363,7 +363,8 @@
 	. += "<span class='boldnotice'>Ask your CMO if mind magnification is right for you.</span>"
 
 /obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
-	icon_state = "[initial(icon_state)][light_colors]"
+	var/lightson = magnification ? "up" : ""
+	icon_state = "[initial(icon_state)][light_colors][lightson]"
 
 /obj/item/clothing/head/helmet/monkey_sentience/equipped(mob/user, slot)
 	. = ..()
