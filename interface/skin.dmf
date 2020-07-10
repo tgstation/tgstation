@@ -46,10 +46,11 @@ menu "menu"
 		category = "&Help"
 		saved-params = "is-checked"
 
+
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
-		pos = 0,0
+		pos = 293,0
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
@@ -150,18 +151,22 @@ window "mapwindow"
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = 0,0
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
+		outer-size = 656x538
+		inner-size = 640x499
 	elem "info"
 		type = CHILD
 		pos = 0,30
 		size = 640x445
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = none
 		saved-params = "splitter"
 		left = "statwindow"
 		right = "outputwindow"
@@ -172,17 +177,21 @@ window "infowindow"
 		size = 104x20
 		anchor1 = 3,0
 		anchor2 = 19,0
+		background-color = none
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
 	elem "rules"
 		type = BUTTON
 		pos = 120,5
-		size = 100x20
+		size = 96x19
 		anchor1 = 19,0
 		anchor2 = 34,0
+		background-color = none
+		is-transparent = true
 		saved-params = "is-checked"
-		text = "Rules"
+		text = ""
+		image = 'when_you_win_the_case.gif'
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
@@ -190,17 +199,20 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 34,0
 		anchor2 = 50,0
+		background-color = none
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
-	elem "forum"
+	elem "registry"
 		type = BUTTON
 		pos = 320,5
 		size = 100x20
 		anchor1 = 50,0
 		anchor2 = 66,0
+		background-color = #ec8aae
+		border = line
 		saved-params = "is-checked"
-		text = "Forum"
+		text = "Registry"
 		command = "forum"
 	elem "github"
 		type = BUTTON
@@ -208,6 +220,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 66,0
 		anchor2 = 81,0
+		background-color = #ec8aae
 		saved-params = "is-checked"
 		text = "Github"
 		command = "github"
@@ -217,6 +230,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 81,0
 		anchor2 = 97,0
+		background-color = none
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
@@ -257,7 +271,6 @@ window "popupwindow"
 		size = 120x120
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
