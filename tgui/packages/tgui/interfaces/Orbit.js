@@ -61,7 +61,7 @@ const OrbitedButton = (props, context) => {
     <Button
       color={color}
       onClick={() => act("orbit", {
-        name: thing.ref,
+        ref: thing.ref,
       })}>
       {thing.name}
       {thing.orbiters && (
@@ -113,7 +113,7 @@ export const Orbit = (props, context) => {
         .filter(searchFor(searchText))
         .sort(compareNumberedText)[0];
       if (member !== undefined) {
-        act("orbit", { name: member.ref });
+        act("orbit", { ref: member.ref });
         break;
       }
     }
