@@ -437,6 +437,7 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
