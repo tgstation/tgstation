@@ -314,7 +314,7 @@
 
 /datum/mafia_role/hop
 	name = "Head of Personnel"
-	desc = "You can reveal yourself once per game, preventing yourself from being protected but also doubling your vote and giving you final say on executions!"
+	desc = "You can reveal yourself once per game, tripling your vote power but exposing your status to all the evils of the game!"
 	revealed_outfit = /datum/outfit/mafia/hop
 
 	targeted_actions = list("Reveal")
@@ -448,7 +448,11 @@
 	return TRUE //while alive, town AND mafia cannot win (though since mafia know who is who it's pretty easy to win from that point)
 
 /datum/mafia_role/nightmare/special_reveal_equip()
+	body.underwear = "Nude"
+	body.undershirt = "Nude"
+	body.socks = "Nude"
 	body.set_species(/datum/species/shadow)
+	body.update_body
 
 /datum/mafia_role/nightmare/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
