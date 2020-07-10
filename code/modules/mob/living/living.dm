@@ -1514,7 +1514,7 @@
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+	return !(incapacitated(ignore_restraints = TRUE))
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob
@@ -1526,25 +1526,74 @@
 
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
 		stop_look_up()
-		return
 	if(!can_look_up())
 		return
 	var/turf/ceiling = get_step_multiz(src, UP)
 	if(!ceiling) //We are at the highest z-level.
 		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
 		return
-	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
-		to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
-		return
+	else if(!istransparentturf(ceiling)) //There is no turf we can look through below us
+		var/list/checkturfs = block(locate(x-1,y-1,ceiling.z),locate(x+1,y+1,ceiling.z))-ceiling //Try find hole near of us
+		for(var/turf/checkhole in checkturfs)
+			if(istransparentturf(checkhole))
+				ceiling = get_step_multiz(checkhole, UP)
+				break
+		if(!istransparentturf(ceiling))
+			to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
+			return
 
 	changeNext_move(CLICK_CD_LOOK_UP)
 	reset_perspective(ceiling)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/look_up) //We start looking again after we move.
 
 /mob/living/proc/stop_look_up()
 	reset_perspective()
-	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
 
+/mob/living/proc/end_look_up()
+	stop_look_up()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+
+/**
+ * look_down Changes the perspective of the mob to any openspace turf below the mob
+ *
+ * This also checks if an openspace turf is below the mob before looking down or resets the perspective if already looking up
+ *
+ */
+/mob/living/proc/look_down()
+
+	if(client.perspective != MOB_PERSPECTIVE) //We are already looking down.
+		stop_look_down()
+	if(!can_look_up()) //if we cant look up, we cant look down.
+		return
+	var/turf/lower_level = get_step_multiz(src, DOWN)
+	var/turf/floor = get_turf(src)
+	if(!lower_level) //We are at the lowest z-level.
+		to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
+		return
+	else if(!istransparentturf(floor)) //There is no turf we can look through below us
+		var/list/checkturfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))-floor //Try find hole near of us
+		for(var/turf/checkhole in checkturfs)
+			if(istransparentturf(checkhole))
+				lower_level = get_step_multiz(checkhole, DOWN)
+				break
+		if(!istransparentturf(floor))
+			to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
+			return
+
+	changeNext_move(CLICK_CD_LOOK_UP)
+	reset_perspective(lower_level)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/look_down) //We start looking again after we move.
+
+/mob/living/proc/stop_look_down()
+	reset_perspective()
+
+/mob/living/proc/end_look_down()
+	stop_look_up()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 /mob/living/set_stat(new_stat)
 	. = ..()
