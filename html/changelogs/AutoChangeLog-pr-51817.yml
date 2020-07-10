@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Mech vs Mech combat system for toy mechs! Hit a toy mech with another toy mech, or attack a player holding a toy mech with a toy mech, and you can initiate battle between toys!"
-  - rscadd: "Each toy mech now has its own health stat and special attack move for use in mech vs mech combat. Discover them all!"
-  - rscadd: "Suicide act for mech toys. If you wanted to take part in the toy mech battles yourself."

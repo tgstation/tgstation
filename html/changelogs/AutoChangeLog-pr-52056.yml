@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the field generators in Delta's Singulo area being anchored but not secured."
+  - bugfix: "Fixed field generators continuing to function after being uprooted by a mob."
