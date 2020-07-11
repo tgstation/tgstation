@@ -1,0 +1,4 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - bugfix: "now posting in shuttle propertly fails"
