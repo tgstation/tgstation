@@ -119,7 +119,7 @@
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
-	item_state = "sec-case"
+	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	desc = "A large briefcase with a digital locking system."
@@ -184,5 +184,5 @@
 		return
 	return attack_self(user)
 
-/obj/item/storage/secure/safe/HoS
+/obj/item/storage/secure/safe/hos
 	name = "head of security's safe"

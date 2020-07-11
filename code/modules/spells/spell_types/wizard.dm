@@ -194,23 +194,19 @@
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
 	cast_sound = 'sound/magic/summon_karp.ogg'
 
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
 	desc = "This spell conjures a construct which may be controlled by Shades."
-
 	school = "conjuration"
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-
 	summon_type = list(/obj/structure/constructshell)
-
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "artificer"
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
-
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
@@ -361,7 +357,7 @@
 				M.electrocute_act(80, src, flags = SHOCK_ILLUSION)
 		qdel(src)
 
-/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY)
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY, quickstart = TRUE)
 	. = ..()
 	if(ishuman(thrower))
 		var/mob/living/carbon/human/H = thrower

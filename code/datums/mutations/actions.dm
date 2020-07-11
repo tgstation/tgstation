@@ -287,6 +287,8 @@
 	sharpness = IS_SHARP
 	custom_materials = list(/datum/material/biomass = 500)
 	var/mob/living/carbon/human/fired_by
+	/// if we missed our target
+	var/missed = TRUE
 
 /obj/item/hardened_spike/Initialize(mapload, firedby)
 	. = ..()
@@ -294,13 +296,12 @@
 	addtimer(CALLBACK(src, .proc/checkembedded), 5 SECONDS)
 
 /obj/item/hardened_spike/proc/checkembedded()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/embedtest = loc
-		for(var/l in embedtest.bodyparts)
-			var/obj/item/bodypart/limb = l
-			if(src in limb.embedded_objects)
-				return limb
-	unembedded()
+	if(missed)
+		unembedded()
+
+/obj/item/hardened_spike/embedded(atom/target)
+	if(isbodypart(target))
+		missed = FALSE
 
 /obj/item/hardened_spike/unembedded()
 	var/turf/T = get_turf(src)

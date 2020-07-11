@@ -134,7 +134,7 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
 	category = "Defensive"
 
-/datum/spellbook_entry/lightningPacket
+/datum/spellbook_entry/lightning_packet
 	name = "Thrown Lightning"
 	spell_type = /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	category = "Defensive"

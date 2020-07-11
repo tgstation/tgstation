@@ -61,6 +61,7 @@ Difficulty: Medium
 	attack_action_types = list(/datum/action/innate/megafauna_attack/dash,
 							   /datum/action/innate/megafauna_attack/kinetic_accelerator,
 							   /datum/action/innate/megafauna_attack/transform_weapon)
+	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize()
 	. = ..()
@@ -285,5 +286,13 @@ Difficulty: Medium
 	. = ..()
 	if(. && prob(12))
 		INVOKE_ASYNC(src, .proc/dash)
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
+	name = "hostile-environment miner"
+	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
+	speed = 8
+	move_to_delay = 8
+	ranged_cooldown_time = 8
+	dash_cooldown = 8
 
 #undef MINER_DASH_RANGE

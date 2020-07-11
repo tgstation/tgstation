@@ -60,6 +60,7 @@
 /datum/status_effect/slimerecall
 	id = "slime_recall"
 	duration = -1 //Will be removed by the extract.
+	tick_interval = -1
 	alert_type = null
 	var/interrupted = FALSE
 	var/mob/target
@@ -598,7 +599,7 @@ datum/status_effect/stabilized/blue/on_remove()
 			to_chat(owner, "<span class='notice'>[linked_extract] coats you in a watery goo, extinguishing the flames.</span>")
 	var/obj/O = owner.get_active_held_item()
 	if(O)
-		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
+		O.extinguish() //All shamelessly copied from water's expose_obj, since I didn't seem to be able to get it here for some reason.
 		O.acid_level = 0
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
@@ -886,8 +887,8 @@ datum/status_effect/stabilized/blue/on_remove()
 			healing_types += TOX
 		if(owner.getCloneLoss() > 0)
 			healing_types += CLONE
-
-		owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
+		if(length(healing_types))
+			owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
 		owner.adjust_nutrition(3)
 		M.adjustCloneLoss(heal_amount * 1.2) //This way, two people can't just convert each other's damage away.
 	else

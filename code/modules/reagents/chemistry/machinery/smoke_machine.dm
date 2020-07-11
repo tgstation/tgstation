@@ -55,7 +55,7 @@
 		create_reagents(new_volume)
 	reagents.maximum_volume = new_volume
 	if(new_volume < reagents.total_volume)
-		reagents.reaction(loc, TOUCH) // if someone manages to downgrade it without deconstructing
+		reagents.expose(loc, TOUCH) // if someone manages to downgrade it without deconstructing
 		reagents.clear_reagents()
 	efficiency = 9
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -99,7 +99,7 @@
 	return ..()
 
 /obj/machinery/smoke_machine/deconstruct()
-	reagents.reaction(loc, TOUCH)
+	reagents.expose(loc, TOUCH)
 	reagents.clear_reagents()
 	return ..()
 
@@ -107,7 +107,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "smoke_machine", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "SmokeMachine", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/smoke_machine/ui_data(mob/user)

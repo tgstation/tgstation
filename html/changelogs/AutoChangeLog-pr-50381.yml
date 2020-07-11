@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Plant grafts, instability, plant crosspollination all work correctly again."
-  - tweak: "EZ nutrient and Robust Harvest have had their stat adjustments tweaked closer to their original intention."

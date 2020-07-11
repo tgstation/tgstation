@@ -32,11 +32,16 @@
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
 	suit = /obj/item/clothing/suit/toggle/suspenders
-	backpack_contents = list(/obj/item/book/mimery=1, /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
+	backpack_contents = list(
+		/obj/item/stamp/mime = 1,
+		/obj/item/book/mimery = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1
+		)
 
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime
 
+	chameleon_extras = /obj/item/stamp/mime
 
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -47,6 +52,9 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = TRUE
+
+	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
+	fan.add_hud_to(H)
 
 /obj/item/book/mimery
 	name = "Guide to Dank Mimery"

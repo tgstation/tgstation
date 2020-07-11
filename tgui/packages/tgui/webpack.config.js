@@ -1,7 +1,26 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 const webpack = require('webpack');
 const path = require('path');
 const BuildNotifierPlugin = require('webpack-build-notifier');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+
+const createStats = verbose => ({
+  assets: verbose,
+  builtAt: verbose,
+  cached: false,
+  children: false,
+  chunks: false,
+  colors: true,
+  hash: false,
+  timings: verbose,
+  version: verbose,
+  modules: false,
+});
 
 module.exports = (env = {}, argv) => {
   const config = {
@@ -9,13 +28,6 @@ module.exports = (env = {}, argv) => {
     context: __dirname,
     entry: {
       tgui: [
-        path.resolve(__dirname, './styles/main.scss'),
-        path.resolve(__dirname, './styles/themes/cardtable.scss'),
-        path.resolve(__dirname, './styles/themes/malfunction.scss'),
-        path.resolve(__dirname, './styles/themes/ntos.scss'),
-        path.resolve(__dirname, './styles/themes/hackerman.scss'),
-        path.resolve(__dirname, './styles/themes/retro.scss'),
-        path.resolve(__dirname, './styles/themes/syndicate.scss'),
         path.resolve(__dirname, './index.js'),
       ],
     },
@@ -97,6 +109,7 @@ module.exports = (env = {}, argv) => {
       hints: false,
     },
     devtool: false,
+    stats: createStats(true),
     plugins: [
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.NODE_ENV || argv.mode || 'development',
@@ -129,11 +142,9 @@ module.exports = (env = {}, argv) => {
         extractComments: false,
         terserOptions: {
           ie8: true,
-          // mangle: false,
           output: {
             ascii_only: true,
-            // beautify: true,
-            // indent_level: 2,
+            comments: false,
           },
         },
       }),
@@ -168,24 +179,11 @@ module.exports = (env = {}, argv) => {
     }
     config.devtool = 'cheap-module-source-map';
     config.devServer = {
-      // Informational flags
       progress: false,
       quiet: false,
       noInfo: false,
-      // Fine-grained logging control
       clientLogLevel: 'silent',
-      stats: {
-        assets: false,
-        builtAt: false,
-        cached: false,
-        children: false,
-        chunks: false,
-        colors: true,
-        hash: false,
-        timings: false,
-        version: false,
-        modules: false,
-      },
+      stats: createStats(false),
     };
   }
 

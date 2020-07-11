@@ -3,7 +3,7 @@
 	desc = "This staff is boring to watch because even though it came first you've seen everything it can do in other staves for years."
 	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "staffofnothing"
-	item_state = "staff"
+	inhand_icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	fire_sound = 'sound/weapons/emitter.ogg'

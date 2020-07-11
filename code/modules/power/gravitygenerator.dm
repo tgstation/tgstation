@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	icon_state = "on_8"
 	idle_power_usage = 0
 	active_power_usage = 3000
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
@@ -226,7 +226,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "gravity_generator", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "GravityGenerator", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/gravity_generator/main/ui_data(mob/user)

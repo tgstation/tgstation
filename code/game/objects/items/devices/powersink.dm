@@ -1,3 +1,7 @@
+#define DISCONNECTED 0
+#define CLAMPED_OFF 1
+#define OPERATING 2
+
 // Powersink - used to drain station power
 
 /obj/item/powersink
@@ -5,7 +9,7 @@
 	desc = "A nulling power sink which drains energy from electrical systems."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "powersink0"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -19,10 +23,6 @@
 	var/max_power = 6e8		// maximum power that can be drained before exploding
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
 	var/admins_warned = FALSE // stop spam, only warn the admins once that we are about to boom
-
-	var/const/DISCONNECTED = 0
-	var/const/CLAMPED_OFF = 1
-	var/const/OPERATING = 2
 
 	var/obj/structure/cable/attached		// the attached cable
 
@@ -158,3 +158,7 @@
 		STOP_PROCESSING(SSobj, src)
 		explosion(src.loc, 4,8,16,32)
 		qdel(src)
+
+#undef DISCONNECTED
+#undef CLAMPED_OFF
+#undef OPERATING

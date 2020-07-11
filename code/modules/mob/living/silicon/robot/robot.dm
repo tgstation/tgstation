@@ -229,9 +229,11 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	if(changed_name == "" && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
-		if(apply_pref_name("cyborg", C))
-			return //built in camera handled in proc
+	if(SSticker.anonymousnames) //only robotic renames will allow for anything other than the anonymous one
+		changed_name = anonymous_ai_name(is_ai = FALSE)
+	if(!changed_name && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
+		apply_pref_name("cyborg", C)
+		return //built in camera handled in proc
 	if(!changed_name)
 		changed_name = get_standard_name()
 
@@ -420,7 +422,7 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -769,18 +771,12 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(IsUnconscious() || IsStun() || IsKnockdown() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
-			if(stat == CONSCIOUS)
-				set_stat(UNCONSCIOUS)
-				become_blind(UNCONSCIOUS_BLIND)
-				update_mobility()
-				update_headlamp()
+		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
+			set_stat(UNCONSCIOUS)
 		else
-			if(stat == UNCONSCIOUS)
-				set_stat(CONSCIOUS)
-				cure_blind(UNCONSCIOUS_BLIND)
-				update_mobility()
-				update_headlamp()
+			set_stat(CONSCIOUS)
+	update_mobility()
+	update_headlamp()
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()
@@ -870,7 +866,8 @@
 /mob/living/silicon/robot/Exited(atom/A)
 	if(hat && hat == A)
 		hat = null
-	update_icons()
+		if(!QDELETED(src)) //Don't update icons if we are deleted.
+			update_icons()
 	. = ..()
 
 /**
@@ -1033,7 +1030,7 @@
 
 
 /mob/living/silicon/robot/proc/TryConnectToAI()
-	connected_ai = select_active_ai_with_fewest_borgs()
+	connected_ai = select_active_ai_with_fewest_borgs(z)
 	if(connected_ai)
 		connected_ai.connected_robots += src
 		lawsync()

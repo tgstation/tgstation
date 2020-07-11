@@ -28,7 +28,7 @@
 	var/obj/machinery/atmospherics/oldN = nodes[i]
 	..()
 	if(oldN)
-		oldN.build_network()
+		SSair.add_to_rebuild_queue(oldN)
 
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)

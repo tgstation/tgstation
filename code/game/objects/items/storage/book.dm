@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	desc = "Apply to head repeatedly."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "bible"
-	item_state = "bible"
+	inhand_icon_state = "bible"
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	var/mob/affecting = null
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
 		icon_state = GLOB.biblestates[iconi]
-		item_state = GLOB.bibleitemstates[iconi]
+		inhand_icon_state = GLOB.bibleitemstates[iconi]
 
 		if(icon_state == "honk1" || icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			insuls.siemens_coefficient = 0.99999
 			H.equip_to_slot(insuls, ITEM_SLOT_GLOVES)
 		GLOB.bible_icon_state = icon_state
-		GLOB.bible_item_state = item_state
+		GLOB.bible_inhand_icon_state = inhand_icon_state
 
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			var/obj/item/storage/book/bible/B = A
 			B.name = name
 			B.icon_state = icon_state
-			B.item_state = item_state
+			B.inhand_icon_state = inhand_icon_state
 	if(istype(A, /obj/item/cult_bastard) && !iscultist(user))
 		var/obj/item/cult_bastard/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")

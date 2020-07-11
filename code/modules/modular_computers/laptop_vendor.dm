@@ -102,7 +102,7 @@
 		if(dev_apc_recharger)
 			total_price += 399
 			if(fabricate)
-				fabricated_laptop.install_component(new /obj/item/computer_hardware/recharger/APC)
+				fabricated_laptop.install_component(new /obj/item/computer_hardware/recharger/apc_recharger)
 		if(dev_printer)
 			total_price += 99
 			if(fabricate)
@@ -232,7 +232,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "computer_fabricator", "Personal Computer Vendor", ui_x, ui_y, state = state)
+		ui = new(user, src, ui_key, "ComputerFabricator", "Personal Computer Vendor", ui_x, ui_y, state = state)
 		ui.open()
 
 /obj/machinery/lapvend/attackby(obj/item/I, mob/user)
@@ -260,7 +260,7 @@
 			say("Insufficient credits on card to purchase!")
 			return
 		credits += target_credits
-		say("[target_credits] cr has been desposited from your account.")
+		say("[target_credits] cr has been deposited from your account.")
 		return
 	return ..()
 

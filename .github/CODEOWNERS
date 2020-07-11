@@ -4,6 +4,9 @@
 # In the event that multiple org members are to be informed of changes
 # to the same file or dir, add them to the end under Multiple Owners
 
+# bobbahbrown
+/code/datums/chatmessage.dm @bobbahbrown
+
 # ChangelingRain
 
 /code/__DEFINES/clockcult.dm @ChangelingRain

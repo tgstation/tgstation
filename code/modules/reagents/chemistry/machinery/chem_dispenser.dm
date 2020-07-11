@@ -157,7 +157,13 @@
 /obj/machinery/chem_dispenser/contents_explosion(severity, target)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += beaker
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += beaker
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += beaker
 
 /obj/machinery/chem_dispenser/handle_atom_del(atom/A)
 	..()
@@ -169,7 +175,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_dispenser", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "ChemDispenser", name, ui_x, ui_y, master_ui, state)
 		if(user.hallucinating())
 			ui.set_autoupdate(FALSE) //to not ruin the immersion by constantly changing the fake chemicals
 		ui.open()

@@ -33,8 +33,9 @@
 	var/ioncheck[1]
 	var/hackedcheck[1]
 	var/devillawcheck[5]
-
-	var/sensors_on = 0
+	
+	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
+	var/sensors_on = TRUE
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
@@ -57,6 +58,7 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
+	add_sensors()
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -90,69 +92,72 @@
 		alarms_to_clear += message
 		alarm_types_clear[type] += 1
 
-	if(!in_cooldown)
-		spawn(3 * 10) // 3 seconds
+	if(in_cooldown)
+		return
 
-			if(alarms_to_show.len < 5)
-				for(var/msg in alarms_to_show)
-					to_chat(src, msg)
-			else if(alarms_to_show.len)
+	addtimer(CALLBACK(src, .proc/show_alarms), 3 SECONDS)
 
-				var/msg = "--- "
+/mob/living/silicon/proc/show_alarms()
+	if(alarms_to_show.len < 5)
+		for(var/msg in alarms_to_show)
+			to_chat(src, msg)
+	else if(alarms_to_show.len)
 
-				if(alarm_types_show["Burglar"])
-					msg += "BURGLAR: [alarm_types_show["Burglar"]] alarms detected. - "
+		var/msg = "--- "
 
-				if(alarm_types_show["Motion"])
-					msg += "MOTION: [alarm_types_show["Motion"]] alarms detected. - "
+		if(alarm_types_show["Burglar"])
+			msg += "BURGLAR: [alarm_types_show["Burglar"]] alarms detected. - "
 
-				if(alarm_types_show["Fire"])
-					msg += "FIRE: [alarm_types_show["Fire"]] alarms detected. - "
+		if(alarm_types_show["Motion"])
+			msg += "MOTION: [alarm_types_show["Motion"]] alarms detected. - "
 
-				if(alarm_types_show["Atmosphere"])
-					msg += "ATMOSPHERE: [alarm_types_show["Atmosphere"]] alarms detected. - "
+		if(alarm_types_show["Fire"])
+			msg += "FIRE: [alarm_types_show["Fire"]] alarms detected. - "
 
-				if(alarm_types_show["Power"])
-					msg += "POWER: [alarm_types_show["Power"]] alarms detected. - "
+		if(alarm_types_show["Atmosphere"])
+			msg += "ATMOSPHERE: [alarm_types_show["Atmosphere"]] alarms detected. - "
 
-				if(alarm_types_show["Camera"])
-					msg += "CAMERA: [alarm_types_show["Camera"]] alarms detected. - "
+		if(alarm_types_show["Power"])
+			msg += "POWER: [alarm_types_show["Power"]] alarms detected. - "
 
-				msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
-				to_chat(src, msg)
+		if(alarm_types_show["Camera"])
+			msg += "CAMERA: [alarm_types_show["Camera"]] alarms detected. - "
 
-			if(alarms_to_clear.len < 3)
-				for(var/msg in alarms_to_clear)
-					to_chat(src, msg)
+		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
+		to_chat(src, msg)
 
-			else if(alarms_to_clear.len)
-				var/msg = "--- "
+	if(alarms_to_clear.len < 3)
+		for(var/msg in alarms_to_clear)
+			to_chat(src, msg)
 
-				if(alarm_types_clear["Motion"])
-					msg += "MOTION: [alarm_types_clear["Motion"]] alarms cleared. - "
+	else if(alarms_to_clear.len)
+		var/msg = "--- "
 
-				if(alarm_types_clear["Fire"])
-					msg += "FIRE: [alarm_types_clear["Fire"]] alarms cleared. - "
+		if(alarm_types_clear["Motion"])
+			msg += "MOTION: [alarm_types_clear["Motion"]] alarms cleared. - "
 
-				if(alarm_types_clear["Atmosphere"])
-					msg += "ATMOSPHERE: [alarm_types_clear["Atmosphere"]] alarms cleared. - "
+		if(alarm_types_clear["Fire"])
+			msg += "FIRE: [alarm_types_clear["Fire"]] alarms cleared. - "
 
-				if(alarm_types_clear["Power"])
-					msg += "POWER: [alarm_types_clear["Power"]] alarms cleared. - "
+		if(alarm_types_clear["Atmosphere"])
+			msg += "ATMOSPHERE: [alarm_types_clear["Atmosphere"]] alarms cleared. - "
 
-				if(alarm_types_show["Camera"])
-					msg += "CAMERA: [alarm_types_clear["Camera"]] alarms cleared. - "
+		if(alarm_types_clear["Power"])
+			msg += "POWER: [alarm_types_clear["Power"]] alarms cleared. - "
 
-				msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
-				to_chat(src, msg)
+		if(alarm_types_show["Camera"])
+			msg += "CAMERA: [alarm_types_clear["Camera"]] alarms cleared. - "
+
+		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
+		to_chat(src, msg)
 
 
-			alarms_to_show = list()
-			alarms_to_clear = list()
-			for(var/key in alarm_types_show)
-				alarm_types_show[key] = 0
-			for(var/key in alarm_types_clear)
-				alarm_types_clear[key] = 0
+	alarms_to_show.Cut()
+	alarms_to_clear.Cut()
+	for(var/key in alarm_types_show)
+		alarm_types_show[key] = 0
+	for(var/key in alarm_types_clear)
+		alarm_types_clear[key] = 0
 
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
@@ -330,6 +335,12 @@
 	usr << browse(list, "window=laws")
 
 /mob/living/silicon/proc/ai_roster()
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
+
 	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 387, 420)
 	popup.set_content(GLOB.data_core.get_manifest_html())
 	popup.open()
@@ -420,3 +431,6 @@
 
 /mob/living/silicon/handle_high_gravity(gravity)
 	return
+
+/mob/living/silicon/rust_heretic_act()
+	adjustBruteLoss(500)

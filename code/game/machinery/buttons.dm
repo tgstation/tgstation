@@ -4,7 +4,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl"
 	var/skin = "doorctrl"
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	var/obj/item/assembly/device
 	var/obj/item/electronics/airlock/board
 	var/device_type = null
@@ -205,7 +205,7 @@
 /obj/machinery/button/door/incinerator_vent_toxmix
 	name = "combustion chamber vent control"
 	id = INCINERATOR_TOXMIX_VENT
-	req_access = list(ACCESS_TOX)
+	req_access = list(ACCESS_TOXINS)
 
 /obj/machinery/button/door/incinerator_vent_atmos_main
 	name = "turbine vent control"

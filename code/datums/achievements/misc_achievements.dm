@@ -106,3 +106,8 @@
 	name = "Look Out, Sir!"
 	desc = "Either awarded for making the ultimate sacrifice for your comrades, or a really dumb attempt at grenade jumping."
 	database_id = MEDAL_LOOKOUTSIR
+
+/datum/award/achievement/misc/gottem
+	name = "HA, GOTTEM"
+	desc = "Made you look!"
+	database_id = MEDAL_GOTTEM

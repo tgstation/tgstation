@@ -7,10 +7,10 @@
 	unique = TRUE   // FALSE - Normal book, TRUE - Should not be treated as normal book, unable to be copied, unable to be modified
 
 /obj/item/book/manual/hydroponics_pod_people
-	name = "The Human Harvest - From seed to market"
+	name = "The Human Harvest: From Seed to Market"
 	icon_state ="bookHydroponicsPodPeople"
 	author = "Farmer John" // Whoever wrote the paper or book, can be changed by pen or PC. It is not automatically assigned.
-	title = "The Human Harvest - From seed to market"
+	title = "The Human Harvest: From Seed to Market"
 	//book contents below
 	dat = {"<html>
 				<head>
@@ -26,15 +26,17 @@
 				<body>
 				<h3>Growing Humans</h3>
 
-				Why would you want to grow humans? Well I'm expecting most readers to be in the slave trade, but a few might actually
-				want to revive fallen comrades. Growing pod people is easy, but prone to disaster.
+				Why would you want to grow humans? Well, I'm expecting most readers to be in the slave trade, but a few might actually
+				want to revive fallen comrades. Growing pod people is actually quite simple:
 				<p>
 				<ol>
-				<li>Find a dead person who is in need of cloning. </li>
-				<li>Take a blood sample with a syringe. </li>
-				<li>Inject a seed pack with the blood sample. </li>
+				<li>Find a dead person who is in need of revival. </li>
+				<li>Take a blood sample with a syringe (samples of their blood taken BEFORE they died will also work). </li>
+				<li>Inject a packet of replica pod seeds (which can be acquired by either mutating cabbages into replica pods (and then harvesting said replica pods) or by purchasing them from certain corporate entities) with the blood sample. </li>
+				<li>It is imperative to understand that injecting the replica pod plant with blood AFTER it has been planted WILL NOT WORK; you have to inject the SEED PACKET, NOT the TRAY. </li>
 				<li>Plant the seeds. </li>
-				<li>Tend to the plants water and nutrition levels until it is time to harvest the cloned human.</li>
+				<li>Tend to the replica pod's water and nutrition levels until it is time to harvest the podcloned humanoid. </li>
+				<li>Note that if the corpse's mind (or spirit, or soul, or whatever the hell your local chaplain calls it) is already in a new body or has left this plane of existence entirely, you will just receive seed packets upon harvesting the replica pod plant, not a podperson. </li>
 				</ol>
 				<p>
 				It really is that easy! Good luck!
@@ -80,8 +82,8 @@
 					<li>High-speed Drill</li>
 					</ul>
 				</li>
-				<li><b>Propulsion Device:</b> Powercell-powered electro-hydraulic system.</li>
-				<li><b>Powercell capacity:</b> Varies.</li>
+				<li><b>Propulsion Device:</b> Power cell powered electro-hydraulic system.</li>
+				<li><b>Power cell capacity:</b> Varies.</li>
 				</ul>
 
 				<h2>Construction:</h2>
@@ -164,7 +166,7 @@
 				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
-				Use it to process certain ingredients (meat into faggot, doughslice into spaghetti, potato into fries,etc...)
+				Use it to process certain ingredients (meat into meatballs, doughslice into spaghetti, potato into fries,etc...)
 
 				<h2>Gibber:</h2>
 				Stuff an animal in it to grind it into meat.
@@ -430,7 +432,9 @@
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
 		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		H.bleed_rate = 5
+		for(var/i in H.bodyparts)
+			var/obj/item/bodypart/BP = i
+			BP.generic_bleedstacks += 5
 		H.gib_animation()
 		sleep(3)
 		H.adjustBruteLoss(1000) //to make the body super-bloody

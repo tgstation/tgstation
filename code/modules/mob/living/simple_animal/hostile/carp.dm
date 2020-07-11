@@ -103,14 +103,14 @@
 	add_overlay(base_dead_overlay)
 
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
-	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in oview(src, 9)
-	if(tasty_plastic)
-		snack_distance = get_dist(src.loc,tasty_plastic.loc)
-		if(snack_distance <= 1)
-			src.visible_message("<span class='notice'>[src] gets its head stuck in [tasty_plastic], and gets cut breaking free from it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... Ow! It cuts the inside of your mouth!</span>")
-			new /obj/effect/decal/cleanable/plastic(src.loc)
-			adjustBruteLoss(5)
-			qdel(tasty_plastic)
+	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
+	if(tasty_plastic && Adjacent(tasty_plastic))
+		visible_message("<span class='notice'>[src] gets its head stuck in [tasty_plastic], and gets cut breaking free from it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... Ow! It cuts the inside of your mouth!</span>")
+
+		new /obj/effect/decal/cleanable/plastic(loc)
+
+		adjustBruteLoss(5)
+		qdel(tasty_plastic)
 
 /mob/living/simple_animal/hostile/carp/Life()
 	. = ..()

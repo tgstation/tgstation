@@ -6,7 +6,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	desc = "A polaroid camera."
 	icon_state = "camera"
-	item_state = "camera"
+	inhand_icon_state = "camera"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	light_color = LIGHT_COLOR_WHITE
@@ -182,7 +182,7 @@
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
 	for(var/turf/placeholder in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
 		var/turf/T = placeholder
-		while(istype(T, /turf/open/openspace)) //Multi-z photography
+		while(istype(T, /turf/open/transparent/openspace)) //Multi-z photography
 			T = SSmapping.get_turf_below(T)
 			if(!T)
 				break

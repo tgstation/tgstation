@@ -8,7 +8,7 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
 		/obj/item/reagent_containers/food/snacks/grown/potato = 1
 	)
@@ -20,7 +20,7 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 2,
+		/obj/item/reagent_containers/food/snacks/meatball = 2,
 		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/matzoballsoup

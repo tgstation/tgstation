@@ -181,6 +181,14 @@
 	floor_tile = /obj/item/stack/tile/eighties
 	broken_states = list("damaged")
 
+/turf/open/floor/plating/rust
+	name = "rusted plating"
+	desc = "Corrupted steel."
+	icon_state = "plating_rust"
+
+/turf/open/floor/plating/rust/rust_heretic_act()
+	return
+
 /turf/open/floor/brass
 	name = "brass stairs"
 	icon = 'icons/obj/stairs.dmi'

@@ -8,7 +8,7 @@
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
 	icon_state = "his_grace"
-	item_state = "artistic_toolbox"
+	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -115,7 +115,7 @@
 			L.visible_message("<span class='warning'>[src] lunges at [L]!</span>", "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
 			playsound(L, 'sound/weapons/smash.ogg', 50, TRUE)
-			playsound(L, 'sound/misc/desceration-01.ogg', 50, TRUE)
+			playsound(L, 'sound/misc/desecration-01.ogg', 50, TRUE)
 			L.adjustBruteLoss(force)
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
 		else
@@ -177,7 +177,7 @@
 	var/victims = 0
 	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
-	playsound(meal, 'sound/misc/desceration-02.ogg', 75, TRUE)
+	playsound(meal, 'sound/misc/desecration-02.ogg', 75, TRUE)
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	meal.forceMove(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS
@@ -246,7 +246,7 @@
 	force_bonus += ascend_bonus
 	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
 	icon_state = "his_grace_ascended"
-	item_state = "toolbox_gold"
+	inhand_icon_state = "toolbox_gold"
 	ascended = TRUE
 	playsound(src, 'sound/effects/his_grace_ascend.ogg', 100)
 	if(istype(master))

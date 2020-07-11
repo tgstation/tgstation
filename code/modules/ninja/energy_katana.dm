@@ -2,7 +2,8 @@
 	name = "energy katana"
 	desc = "A katana infused with strong energy."
 	icon_state = "energy_katana"
-	item_state = "energy_katana"
+	inhand_icon_state = "energy_katana"
+	worn_icon_state = "energy_katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 40
@@ -11,7 +12,7 @@
 	armour_penetration = 50
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	sharpness = IS_SHARP
 	max_integrity = 200

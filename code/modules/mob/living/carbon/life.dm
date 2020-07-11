@@ -228,6 +228,12 @@
 			if(prob(20))
 				emote(pick("giggle","laugh"))
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+		if(SA_partialpressure > safe_tox_max*3)
+			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_tox_max)
+			adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+			throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+		else
+			clear_alert("too_much_tox")
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
@@ -355,6 +361,12 @@
 
 		if(stat != DEAD || D.process_dead)
 			D.stage_act()
+
+/mob/living/carbon/handle_wounds()
+	for(var/thing in all_wounds)
+		var/datum/wound/W = thing
+		if(W.processes) // meh
+			W.handle_process()
 
 //todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
@@ -500,8 +512,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
+			throw_alert("drunk", /obj/screen/alert/drunk)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
+			clear_alert("drunk")
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2

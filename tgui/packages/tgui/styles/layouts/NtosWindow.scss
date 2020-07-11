@@ -1,0 +1,24 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+.NtosWindow__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  line-height: 27px;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: Consolas, monospace;
+  font-size: 14px;
+  user-select: none;
+  -ms-user-select: none;
+}
+
+.NtosWindow__content .Layout__content {
+  margin-top: 28px;
+  font-family: Consolas, monospace;
+  font-size: 14px;
+}

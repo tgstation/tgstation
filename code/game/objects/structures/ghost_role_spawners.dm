@@ -479,9 +479,9 @@
 	short_desc = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to follow your captain's orders, maintain the ship, and keep the engine running. If you are not familiar with how the supermatter engine functions: do not attempt to start it."
 	important_info = "The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives."
-	outfit = /datum/outfit/syndicate_empty/SBC
+	outfit = /datum/outfit/syndicate_empty/battlecruiser
 
-/datum/outfit/syndicate_empty/SBC
+/datum/outfit/syndicate_empty/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/kitchen/knife/combat/survival
@@ -492,9 +492,9 @@
 	short_desc = "You are an assault operative aboard the syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to follow your captain's orders, keep intruders out of the ship, and assault Space Station 13. There is an armory, multiple assault ships, and beam cannons to attack the station with."
 	important_info = "Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!"
-	outfit = /datum/outfit/syndicate_empty/SBC/assault
+	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault
 
-/datum/outfit/syndicate_empty/SBC/assault
+/datum/outfit/syndicate_empty/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
 	uniform = /obj/item/clothing/under/syndicate/combat
 	l_pocket = /obj/item/ammo_box/magazine/m10mm
@@ -510,17 +510,17 @@
 	short_desc = "You are the captain aboard the syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to oversee your crew, defend the ship, and destroy Space Station 13. The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal."
 	important_info = "As the captain, this whole operation falls on your shoulders. You do not need to nuke the station, causing sufficient damage and preventing your ship from being destroyed will be enough."
-	outfit = /datum/outfit/syndicate_empty/SBC/assault/captain
+	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	id_access_list = list(150,151)
 
-/datum/outfit/syndicate_empty/SBC/assault/captain
+/datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Syndicate Battlecruiser Captain"
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber/red
 	r_pocket = /obj/item/melee/classic_baton/telescopic
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/gun/ballistic/revolver/mateba
 	back = /obj/item/storage/backpack/satchel/leather
-	head = /obj/item/clothing/head/HoS/syndicate
+	head = /obj/item/clothing/head/hos/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 
@@ -647,35 +647,31 @@
 	name = "Syndicate Ship Crew Member"
 	roundstart = FALSE
 	death = FALSE
+	show_flavour = FALSE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	short_desc = "You are a syndicate operative on old ship, stuck in hostile space."
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Fix the ship, find a way to power it and follow your captain's orders."
 	important_info = "Obey orders given by your captain. DO NOT let the ship fall into enemy hands."
 	outfit = /datum/outfit/syndicatespace/syndicrew
+	assignedrole = ROLE_SYNDICATE_CYBERSUN
 
 /datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
-
-/obj/effect/mob_spawn/human/syndicatespace/Destroy()
-	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
-	return ..()
-
+	var/policy = get_policy(assignedrole)
+	if(policy)
+		to_chat(new_spawn, "<span class='bold'>[policy]</span>")
 
 /obj/effect/mob_spawn/human/syndicatespace/captain
 	name = "Syndicate Ship Captain"
-	roundstart = FALSE
-	death = FALSE
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper_s"
 	short_desc = "You are the captain of an old ship, stuck in hostile space."
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Command your crew and turn your ship into the most protected fortress."
-	important_info = "Protect the ship and secret documents in your backpack with your own life. DO NOT let the ship fall into enemy hands."
-	mob_gender = "male"
+	important_info = "Protect the ship and secret documents in your backpack with your own life."
 	outfit = /datum/outfit/syndicatespace/syndicaptain
+	assignedrole = ROLE_SYNDICATE_CYBERSUN_CAPTAIN
 
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -701,18 +697,13 @@
 
 /datum/outfit/syndicatespace/syndicaptain
 	name = "Syndicate Ship Captain"
-	uniform = /obj/item/clothing/under/syndicate/combat
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	glasses = /obj/item/clothing/glasses/night
-	mask = /obj/item/clothing/mask/gas/syndicate
-	head = /obj/item/clothing/head/HoS/beret/syndicate
-	ears = /obj/item/radio/headset/syndicate/alt
+	head = /obj/item/clothing/head/hos/beret/syndicate
+	ears = /obj/item/radio/headset/syndicate/alt/leader
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack
-	l_pocket = /obj/item/gun/ballistic/automatic/pistol/APS
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/syndicate_command/captain_id
-	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password)
-	implants = list(/obj/item/implant/weapons_auth)
+	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password, /obj/item/gun/ballistic/automatic/pistol/aps)

@@ -221,8 +221,11 @@
 	target.icon_state = initial(picked_item.icon_state)
 	if(isitem(target))
 		var/obj/item/clothing/I = target
-		I.item_state = initial(picked_item.item_state)
-		I.mob_overlay_icon = initial(picked_item.mob_overlay_icon)
+		I.lefthand_file = initial(picked_item.lefthand_file)
+		I.righthand_file = initial(picked_item.righthand_file)
+		I.inhand_icon_state = initial(picked_item.inhand_icon_state)
+		I.worn_icon = initial(picked_item.worn_icon)
+		I.worn_icon_state = initial(picked_item.worn_icon_state)
 		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
 			var/obj/item/clothing/CL = I
 			var/obj/item/clothing/PCL = picked_item
@@ -293,8 +296,8 @@
 	name = "black jumpsuit"
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "black"
-	item_state = "bl_suit"
-	mob_overlay_icon = 'icons/mob/clothing/under/color.dmi'
+	inhand_icon_state = "bl_suit"
+	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
@@ -326,7 +329,7 @@
 	name = "armor"
 	desc = "A slim armored vest that protects against most types of damage."
 	icon_state = "armor"
-	item_state = "armor"
+	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	resistance_flags = NONE
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
@@ -355,7 +358,7 @@
 	name = "Optical Meson Scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
-	item_state = "meson"
+	inhand_icon_state = "meson"
 	resistance_flags = NONE
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
@@ -383,7 +386,7 @@
 	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
-	item_state = "ygloves"
+	inhand_icon_state = "ygloves"
 
 	resistance_flags = NONE
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
@@ -455,7 +458,7 @@
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
-	item_state = "gas_alt"
+	inhand_icon_state = "gas_alt"
 	resistance_flags = NONE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
@@ -665,6 +668,7 @@
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/neck
+	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/neck/cloak/skill_reward)
 	chameleon_action.chameleon_name = "Neck Accessory"
 	chameleon_action.initialize_disguises()
 

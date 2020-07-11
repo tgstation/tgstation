@@ -113,6 +113,12 @@
 		if(examine_status)
 			. += examine_status
 
+/obj/structure/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+
+	if(mover.pass_flags & PASSSTRUCTURE)
+		return TRUE
+
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	var/healthpercent = (obj_integrity/max_integrity) * 100
 	switch(healthpercent)
@@ -123,3 +129,6 @@
 		if(0 to 25)
 			if(!broken)
 				return  "<span class='warning'>It's falling apart!</span>"
+
+/obj/structure/rust_heretic_act()
+	take_damage(500, BRUTE, "melee", 1)

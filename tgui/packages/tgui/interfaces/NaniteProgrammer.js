@@ -1,9 +1,11 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, Dropdown, Grid, Input, LabeledList, NoticeBox, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 
-export const NaniteCodes = props => {
-  const { act, data } = useBackend(props);
+export const NaniteCodes = (props, context) => {
+  const { act, data } = useBackend(context);
+
   return (
     <Section
       title="Codes"
@@ -61,8 +63,8 @@ export const NaniteCodes = props => {
   );
 };
 
-export const NaniteDelays = props => {
-  const { act, data } = useBackend(props);
+export const NaniteDelays = (props, context) => {
+  const { act, data } = useBackend(context);
 
   return (
     <Section
@@ -123,17 +125,17 @@ export const NaniteDelays = props => {
   );
 };
 
-export const NaniteExtraEntry = props => {
-  const { act, extra_setting } = props;
+export const NaniteExtraEntry = (props, context) => {
+  const { extra_setting } = props;
   const {
     name,
     type,
   } = extra_setting;
   const typeComponentMap = {
-    number: <NaniteExtraNumber act={act} extra_setting={extra_setting} />,
-    text: <NaniteExtraText act={act} extra_setting={extra_setting} />,
-    type: <NaniteExtraType act={act} extra_setting={extra_setting} />,
-    boolean: <NaniteExtraBoolean act={act} extra_setting={extra_setting} />,
+    number: <NaniteExtraNumber extra_setting={extra_setting} />,
+    text: <NaniteExtraText extra_setting={extra_setting} />,
+    type: <NaniteExtraType extra_setting={extra_setting} />,
+    boolean: <NaniteExtraBoolean extra_setting={extra_setting} />,
   };
   return (
     <LabeledList.Item label={name}>
@@ -142,8 +144,9 @@ export const NaniteExtraEntry = props => {
   );
 };
 
-export const NaniteExtraNumber = props => {
-  const { act, extra_setting } = props;
+export const NaniteExtraNumber = (props, context) => {
+  const { extra_setting } = props;
+  const { act } = useBackend(context);
   const {
     name,
     value,
@@ -165,8 +168,9 @@ export const NaniteExtraNumber = props => {
   );
 };
 
-export const NaniteExtraText = props => {
-  const { act, extra_setting } = props;
+export const NaniteExtraText = (props, context) => {
+  const { extra_setting } = props;
+  const { act } = useBackend(context);
   const {
     name,
     value,
@@ -182,8 +186,9 @@ export const NaniteExtraText = props => {
   );
 };
 
-export const NaniteExtraType = props => {
-  const { act, extra_setting } = props;
+export const NaniteExtraType = (props, context) => {
+  const { extra_setting } = props;
+  const { act } = useBackend(context);
   const {
     name,
     value,
@@ -202,8 +207,9 @@ export const NaniteExtraType = props => {
   );
 };
 
-export const NaniteExtraBoolean = props => {
-  const { act, extra_setting } = props;
+export const NaniteExtraBoolean = (props, context) => {
+  const { extra_setting } = props;
+  const { act } = useBackend(context);
   const {
     name,
     value,
@@ -220,8 +226,18 @@ export const NaniteExtraBoolean = props => {
   );
 };
 
-export const NaniteProgrammer = props => {
-  const { act, data } = useBackend(props);
+export const NaniteProgrammer = (props, context) => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <NaniteProgrammerContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const NaniteProgrammerContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     has_disk,
     has_program,
@@ -306,10 +322,10 @@ export const NaniteProgrammer = props => {
         )}>
         <Grid>
           <Grid.Column>
-            <NaniteCodes state={props.state} />
+            <NaniteCodes />
           </Grid.Column>
           <Grid.Column>
-            <NaniteDelays state={props.state} />
+            <NaniteDelays />
           </Grid.Column>
         </Grid>
         {!!has_extra_settings && (
@@ -320,7 +336,6 @@ export const NaniteProgrammer = props => {
               {extra_settings.map(setting => (
                 <NaniteExtraEntry
                   key={setting.name}
-                  act={act}
                   extra_setting={setting} />
               ))}
             </LabeledList>

@@ -32,7 +32,7 @@
 	var/function = "storage"
 	var/data = "null"
 	var/special = null
-	item_state = "card-id"
+	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	var/detail_color = COLOR_ASSEMBLY_ORANGE
@@ -60,50 +60,12 @@
 /*
  * ID CARDS
  */
-/obj/item/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry."
-	name = "cryptographic sequencer"
-	icon_state = "emag"
-	item_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
-	var/prox_check = TRUE //If the emag requires you to be in range
-
-/obj/item/card/emag/bluespace
-	name = "bluespace cryptographic sequencer"
-	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
-	color = rgb(40, 130, 255)
-	prox_check = FALSE
-
-/obj/item/card/emag/attack()
-	return
-
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	var/atom/A = target
-	if(!proximity && prox_check)
-		return
-	log_combat(user, A, "attempted to emag")
-	A.emag_act(user)
-
-/obj/item/card/emagfake
-	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
-	name = "cryptographic sequencer"
-	icon_state = "emag"
-	item_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-
-/obj/item/card/emagfake/afterattack()
-	. = ..()
-	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
-	item_state = "card-id"
+	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
@@ -182,6 +144,8 @@
 		return
 
 	registered_account.adjust_money(cash_money)
+	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
+	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
 	if(physical_currency)
 		to_chat(user, "<span class='notice'>You stuff [I] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account.</span>")
 	else
@@ -202,7 +166,8 @@
 		total += cash_money
 
 		registered_account.adjust_money(cash_money)
-
+	SSblackbox.record_feedback("amount", "credits_inserted", total)
+	log_econ("[total] credits were inserted into [src] owned by [src.registered_name]")
 	QDEL_LIST(money)
 
 	return total
@@ -257,8 +222,8 @@
 		set_new_account(user)
 		return
 
-	if (world.time < registered_account.withdrawDelay)
-		registered_account.bank_card_talk("<span class='warning'>ERROR: UNABLE TO LOGIN DUE TO SCHEDULED MAINTENANCE. MAINTENANCE IS SCHEDULED TO COMPLETE IN [(registered_account.withdrawDelay - world.time)/10] SECONDS.</span>", TRUE)
+	if (registered_account.being_dumped)
+		registered_account.bank_card_talk("<span class='warning'>内部服务器错误</span>", TRUE)
 		return
 
 	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)
@@ -271,6 +236,8 @@
 		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 		user.put_in_hands(holochip)
 		to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
+		SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
+		log_econ("[amount_to_remove] credits were removed from [src] owned by [src.registered_name]")
 		return
 	else
 		var/difference = amount_to_remove - registered_account.account_balance
@@ -278,22 +245,31 @@
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
-	if(registered_age)
-		. += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b><span class='danger'>'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'</span></b> along the bottom of the card." : ""]"
-	if(mining_points)
-		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+	. += "<span class='notice'><i>There's more information below, you can look again to take a closer look...</i></span>"
+
+/obj/item/card/id/examine_more(mob/user)
+	var/list/msg = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
+
+	if(registered_age)
+		msg += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b><span class='danger'>'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'</span></b> along the bottom of the card." : ""]"
+	if(mining_points)
+		msg += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+	if(registered_account)
+		msg += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
-		. += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
-		. += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
+				msg += "The [D.account_holder] reports a balance of [D.account_balance] cr."
+		msg += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
+		msg += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
 		if(registered_account.account_holder == user.real_name)
-			. += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
+			msg += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
 	else
-		. += "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>"
+		msg += "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>"
+
+	return msg
 
 /obj/item/card/id/GetAccess()
 	return access
@@ -349,7 +325,7 @@ update_label()
 	id_type_name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
-	item_state = "silver_id"
+	inhand_icon_state = "silver_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
@@ -364,7 +340,7 @@ update_label()
 	id_type_name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
-	item_state = "gold_id"
+	inhand_icon_state = "gold_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
@@ -480,7 +456,7 @@ update_label()
 	registered_name = "Syndicate"
 	assignment = "Syndicate Operative"
 	icon_state = "syndie"
-	access = list(ACCESS_SYNDICATE)
+	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	uses_overlays = FALSE
 
 /obj/item/card/id/syndicate_command/captain_id
@@ -490,7 +466,7 @@ update_label()
 	registered_name = "Syndicate"
 	assignment = "Syndicate Ship Captain"
 	icon_state = "syndie"
-	access = list(ACCESS_SYNDICATE)
+	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	uses_overlays = FALSE
 
 /obj/item/card/id/captains_spare
@@ -498,7 +474,7 @@ update_label()
 	id_type_name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
-	item_state = "gold_id"
+	inhand_icon_state = "gold_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	registered_name = "Captain"
@@ -626,7 +602,7 @@ update_label()
 	id_type_name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
 	icon_state = "orange"
-	item_state = "orange-id"
+	inhand_icon_state = "orange-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	assignment = "Prisoner"
@@ -679,7 +655,7 @@ update_label()
 	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MECH_MINING, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 
 /obj/item/card/id/away
-	name = "a perfectly generic identification card"
+	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
 	access = list(ACCESS_AWAY_GENERAL)
 	icon_state = "retro"
@@ -696,7 +672,7 @@ update_label()
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/old
-	name = "a perfectly generic identification card"
+	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
 
 /obj/item/card/id/away/old/sec
@@ -756,3 +732,6 @@ update_label()
 	department_ID = ACCOUNT_CAR
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
+
+/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
+	registered_account.bank_card_talk("<span class='warning'>Withdrawing is not compatible with this card design.</span>", TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates

@@ -408,7 +408,7 @@
 	taste_description = "carbonated oil"
 	glass_icon_state = "grey_bull_glass"
 	glass_name = "glass of Grey Bull"
-	glass_desc = "Surprisingly it isnt grey."
+	glass_desc = "Surprisingly it isn't grey."
 
 /datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/L)
 	..()
@@ -495,7 +495,7 @@
 	glass_name = "glass of Pwr Game"
 	glass_desc = "Goes well with a Vlad's salad."
 
-/datum/reagent/consumable/pwr_game/reaction_mob(mob/living/C, method=TOUCH, reac_volume)
+/datum/reagent/consumable/pwr_game/expose_mob(mob/living/C, method=TOUCH, reac_volume)
 	..()
 	if(C?.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && method==INGEST && !HAS_TRAIT(C, TRAIT_GAMERGOD))
 		ADD_TRAIT(C, TRAIT_GAMERGOD, "pwr_game")
@@ -936,7 +936,7 @@
 	description = "The drank that makes you go wheezy."
 	color = "#DE55ED"
 	quality = DRINK_NICE
-	taste_description = "purple and a hint of opiod."
+	taste_description = "purple and a hint of opioid."
 	glass_icon_state = "lean"
 	glass_name = "Lean"
 	glass_desc = "A drink that makes your life less miserable."

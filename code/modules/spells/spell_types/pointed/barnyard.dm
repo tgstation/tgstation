@@ -22,10 +22,15 @@
 	if(!targets.len)
 		to_chat(user, "<span class='warning'>No target found in range!</span>")
 		return FALSE
-	if(!curse_check(user, targets[1]))
+	if(!can_target(targets[1], user))
 		return FALSE
 
 	var/mob/living/carbon/target = targets[1]
+	if(target.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell had no effect!</span>")
+		target.visible_message("<span class='danger'>[target]'s face bursts into flames, which instantly burst outward, leaving [target] unharmed!</span>", \
+						"<span class='danger'>Your face starts burning up, but the flames are repulsed by your anti-magic protection!</span>")
+		return FALSE
 
 	var/list/masks = list(/obj/item/clothing/mask/pig/cursed, /obj/item/clothing/mask/cowmask/cursed, /obj/item/clothing/mask/horsehead/cursed)
 	var/choice = pick(masks)
@@ -38,33 +43,12 @@
 	target.equip_to_slot_if_possible(magichead, ITEM_SLOT_MASK, 1, 1)
 	target.flash_act()
 
-/**
-  * curse_check: Checks if we are allowed and able to curse the target
-  *
-  * Arguments:
-  * * user - caster of the spell
-  * * target - target of the spell
-  * * silent - if set to TRUE, the spell will not produce any feedback messages
-  */
-/obj/effect/proc_holder/spell/pointed/barnyardcurse/proc/curse_check(mob/user, atom/target, silent = FALSE)
-	if(!is_type_in_typecache(target, compatible_mobs_typecache))
-		if(!silent)
-			to_chat(user, "<span class='warning'>You are unable to curse [target]!</span>")
-		return FALSE
-
-	var/mob/living/carbon/victim = target
-	if(victim.anti_magic_check())
-		if(!silent)
-			to_chat(user, "<span class='warning'>The spell had no effect!</span>")
-			victim.visible_message("<span class='danger'>[victim]'s face bursts into flames, which instantly burst outward, leaving [victim] unharmed!</span>", \
-							"<span class='danger'>Your face starts burning up, but the flames are repulsed by your anti-magic protection!</span>")
-		return FALSE
-	return TRUE
-
 /obj/effect/proc_holder/spell/pointed/barnyardcurse/can_target(atom/target, mob/user, silent)
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!curse_check(user, target, silent))
+	if(!is_type_in_typecache(target, compatible_mobs_typecache))
+		if(!silent)
+			to_chat(user, "<span class='warning'>You are unable to curse [target]!</span>")
 		return FALSE
 	return TRUE

@@ -74,6 +74,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/heatmod = 1
 	///multiplier for stun durations
 	var/stunmod = 1
+	///multiplier for money paid at payday
+	var/payday_modifier = 1
 	///Type of damage attack does. Ethereals attack with burn damage for example.
 	var/attack_type = BRUTE
 	///Lowest possible punch damage this species can give. If this is set to 0, punches will always miss.
@@ -286,7 +288,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			oldorgan.Remove(C,TRUE)
 			QDEL_NULL(oldorgan)
 
-		if(!oldorgan && should_have && !(initial(neworgan.zone) in excluded_zones))
+		if(oldorgan)
+			oldorgan.setOrganDamage(0)
+		else if(should_have && !(initial(neworgan.zone) in excluded_zones))
 			used_neworgan = TRUE
 			neworgan.Insert(C, TRUE, FALSE)
 
@@ -407,7 +411,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		//keep it at the right spot, so we can't have people taking shortcuts
 		var/location = C.dna.mutation_index.Find(inert_mutation)
 		C.dna.mutation_index[location] = new_species.inert_mutation
+		C.dna.default_mutation_genes[location] = C.dna.mutation_index[location]
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
+		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
 
 	if(inherent_factions)
 		for(var/i in inherent_factions)
@@ -760,7 +766,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!bodyparts_to_add)
 		return
 
-	var/g = (H.gender == FEMALE) ? "f" : "m"
+	var/g = (H.body_type == FEMALE) ? "f" : "m"
 
 	for(var/layer in relevent_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)
@@ -894,7 +900,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, swap = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
@@ -908,7 +914,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_MASK)
-			if(H.wear_mask)
+			if(H.wear_mask && !swap)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_MASK))
 				return FALSE
@@ -916,25 +922,25 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_NECK)
-			if(H.wear_neck)
+			if(H.wear_neck && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_NECK) )
 				return FALSE
 			return TRUE
 		if(ITEM_SLOT_BACK)
-			if(H.back)
+			if(H.back && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_BACK) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_OCLOTHING)
-			if(H.wear_suit)
+			if(H.wear_suit && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_OCLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_GLOVES)
-			if(H.gloves)
+			if(H.gloves && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_GLOVES) )
 				return FALSE
@@ -942,7 +948,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_FEET)
-			if(H.shoes)
+			if(H.shoes && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_FEET) )
 				return FALSE
@@ -954,7 +960,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_BELT)
-			if(H.belt)
+			if(H.belt && !swap)
 				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
@@ -967,7 +973,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_EYES)
-			if(H.glasses)
+			if(H.glasses && !swap)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_EYES))
 				return FALSE
@@ -978,7 +984,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_HEAD)
-			if(H.head)
+			if(H.head && !swap)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_HEAD))
 				return FALSE
@@ -986,7 +992,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_EARS)
-			if(H.ears)
+			if(H.ears && !swap)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_EARS))
 				return FALSE
@@ -994,13 +1000,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ICLOTHING)
-			if(H.w_uniform)
+			if(H.w_uniform && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_ICLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
-			if(H.wear_id)
+			if(H.wear_id && !swap)
 				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
@@ -1043,7 +1049,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(ITEM_SLOT_SUITSTORE)
 			if(HAS_TRAIT(I, TRAIT_NODROP))
 				return FALSE
-			if(H.s_store)
+			if(H.s_store && !swap)
 				return FALSE
 			if(!H.wear_suit)
 				if(!disable_warning)
@@ -1551,9 +1557,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
+	var/Iwound_bonus = I.wound_bonus
+
+	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are laying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
+	if((I.item_flags & SURGICAL_TOOL) && user.a_intent == INTENT_HELP && (H.mobility_flags & ~MOBILITY_STAND) && (LAZYLEN(H.surgeries) > 0))
+		Iwound_bonus = CANT_WOUND
 
 	var/weakness = H.check_weakness(I, user)
-	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
+	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 	H.send_item_attack_message(I, user, hit_area)
 
@@ -1629,8 +1640,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE)
-	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = FALSE)
+	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone, wound_bonus, bare_wound_bonus, sharpness) // make sure putting wound_bonus here doesn't screw up other signals or uses for this signal
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || (!forced && hit_percent <= 0))
@@ -1652,7 +1663,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
 			if(BP)
-				if(BP.receive_damage(damage_amount, 0))
+				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)
@@ -1660,7 +1671,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
 			if(BP)
-				if(BP.receive_damage(0, damage_amount))
+				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage_amount)
@@ -1692,6 +1703,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 		if(/obj/projectile/energy/florayield)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
+		if(/obj/projectile/energy/florarevolution)
+			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 
 /datum/species/proc/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	// called before a projectile hit
@@ -1710,7 +1723,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////////////
 
 /**
- * Enviroment handler for species
+ * environment handler for species
  *
  * vars:
  * * environment The environment gas mix

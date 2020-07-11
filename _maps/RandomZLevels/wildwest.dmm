@@ -538,7 +538,7 @@
 /area/awaymission/wildwest/mines)
 "cm" = (
 /obj/structure/bookcase/random{
-	book_count = 5
+	books_to_load = 5
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
@@ -654,7 +654,7 @@
 /area/awaymission/wildwest/gov)
 "cI" = (
 /obj/structure/bookcase/random{
-	book_count = 5
+	books_to_load = 5
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)

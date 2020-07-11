@@ -3,7 +3,7 @@
 	id = "moth"
 	say_mod = "flutters"
 	default_color = "00FF00"
-	species_traits = list(LIPS, NOEYESPRITES)
+	species_traits = list(LIPS, NOEYESPRITES, CAN_SCAR)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("moth_wings", "moth_markings")
 	default_features = list("moth_wings" = "Plain", "moth_markings" = "None")
@@ -19,6 +19,7 @@
 	species_language_holder = /datum/language_holder/moth
 	wings_icon = "Megamoth"
 	has_innate_wings = TRUE
+	payday_modifier = 0.75
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
 	. = ..()

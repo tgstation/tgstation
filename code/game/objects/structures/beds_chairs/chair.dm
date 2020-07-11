@@ -202,6 +202,7 @@
 	name = "shuttle seat"
 	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
 	icon_state = "shuttle_chair"
+	buildstacktype = /obj/item/stack/sheet/mineral/titanium
 
 /obj/structure/chair/comfy/shuttle/GetArmrest()
 	return mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
@@ -259,7 +260,7 @@
 	desc = "Bar brawl essential."
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
-	item_state = "chair"
+	inhand_icon_state = "chair"
 	lefthand_file = 'icons/mob/inhands/misc/chairs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/chairs_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
@@ -346,14 +347,14 @@
 /obj/item/chair/stool
 	name = "stool"
 	icon_state = "stool_toppled"
-	item_state = "stool"
+	inhand_icon_state = "stool"
 	origin_type = /obj/structure/chair/stool
 	break_chance = 0 //It's too sturdy.
 
 /obj/item/chair/stool/bar
 	name = "bar stool"
 	icon_state = "bar_toppled"
-	item_state = "stool_bar"
+	inhand_icon_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
 
 /obj/item/chair/stool/narsie_act()
@@ -362,7 +363,7 @@
 /obj/item/chair/wood
 	name = "wooden chair"
 	icon_state = "wooden_chair_toppled"
-	item_state = "woodenchair"
+	inhand_icon_state = "woodenchair"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
@@ -472,7 +473,7 @@
 	desc = "Somehow, you can always find one under the wrestling ring."
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "folded_chair"
-	item_state = "folded_chair"
+	inhand_icon_state = "folded_chair"
 	lefthand_file = 'icons/mob/inhands/misc/chairs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/chairs_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL

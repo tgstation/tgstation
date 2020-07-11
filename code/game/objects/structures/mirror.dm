@@ -138,7 +138,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = sanitize_name(reject_bad_text(stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN)))
+			var/newname = sanitize_name(stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
 			if(!newname)
 				return
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -195,7 +195,8 @@
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
-					H.gender = "female"
+					H.gender = FEMALE
+					H.body_type = FEMALE
 					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
@@ -204,7 +205,8 @@
 				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
-					H.gender = "male"
+					H.gender = MALE
+					H.body_type = MALE
 					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
 					return

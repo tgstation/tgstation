@@ -11,7 +11,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state	= "camera_bug"
 	w_class		= WEIGHT_CLASS_TINY
-	item_state	= "camera_bug"
+	inhand_icon_state	= "camera_bug"
 	throw_speed	= 4
 	throw_range	= 20
 	item_flags = NOBLUDGEON

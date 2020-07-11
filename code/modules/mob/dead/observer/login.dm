@@ -1,5 +1,7 @@
 /mob/dead/observer/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 
 	ghost_accs = client.prefs.ghost_accs
 	ghost_others = client.prefs.ghost_others

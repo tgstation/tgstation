@@ -1,9 +1,7 @@
-import { Fragment } from 'inferno';
+import { Component, createRef } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button } from '../components';
-import { Component, createRef } from 'inferno';
-import { pureComponentHooks } from 'common/react';
-
+import { Window } from '../layouts';
 
 class PaintCanvas extends Component {
   constructor(props) {
@@ -45,8 +43,7 @@ class PaintCanvas extends Component {
 
   clickwrapper(event) {
     const x_size = this.props.value.length;
-    if (!x_size)
-    {
+    if (!x_size) {
       return;
     }
     const y_size = this.props.value[0].length;
@@ -78,19 +75,26 @@ class PaintCanvas extends Component {
     );
   }
 }
-export const Canvas = props => {
-  const { act, data } = useBackend(props);
+
+export const Canvas = (props, context) => {
+  const { act, data } = useBackend(context);
   return (
-    <Box textAlign="center">
-      <PaintCanvas
-        value={data.grid}
-        onCanvasClick={(x, y) => act("paint", { x, y })} />
-      <Box>
-        {!data.finalized
-        && <Button.Confirm
-          onClick={() => act("finalize")}
-          content="Finalize" />}
-        {data.name}
-      </Box>
-    </Box>);
+    <Window resizable>
+      <Window.Content scrollable>
+        <Box textAlign="center">
+          <PaintCanvas
+            value={data.grid}
+            onCanvasClick={(x, y) => act("paint", { x, y })} />
+          <Box>
+            {!data.finalized && (
+              <Button.Confirm
+                onClick={() => act("finalize")}
+                content="Finalize" />
+            )}
+            {data.name}
+          </Box>
+        </Box>
+      </Window.Content>
+    </Window>
+  );
 };

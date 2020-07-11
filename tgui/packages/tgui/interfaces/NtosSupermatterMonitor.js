@@ -2,14 +2,24 @@ import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, ProgressBar, Section, Table } from '../components';
+import { Button, Flex, LabeledList, ProgressBar, Section, Table } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
+import { NtosWindow } from '../layouts';
 
 const logScale = value => Math.log2(16 + Math.max(0, value)) - 4;
 
-export const NtosSupermatterMonitor = props => {
-  const { state } = props;
-  const { act, data } = useBackend(props);
+export const NtosSupermatterMonitor = (props, context) => {
+  return (
+    <NtosWindow resizable>
+      <NtosWindow.Content scrollable>
+        <NtosSupermatterMonitorContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+export const NtosSupermatterMonitorContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     active,
     SM_integrity,
@@ -19,7 +29,7 @@ export const NtosSupermatterMonitor = props => {
   } = data;
   if (!active) {
     return (
-      <SupermatterList state={state} />
+      <SupermatterList />
     );
   }
   const gases = flow([
@@ -84,7 +94,7 @@ export const NtosSupermatterMonitor = props => {
           </LabeledList>
         </Section>
       </Flex.Item>
-      <Flex.Item grow={1}>
+      <Flex.Item grow={1} basis={0}>
         <Section
           title="Gases"
           buttons={(
@@ -93,31 +103,29 @@ export const NtosSupermatterMonitor = props => {
               content="Back"
               onClick={() => act('PRG_clear')} />
           )}>
-          <Box.Forced height={gases.length * 24 + 'px'}>
-            <LabeledList>
-              {gases.map(gas => (
-                <LabeledList.Item
-                  key={gas.name}
-                  label={getGasLabel(gas.name)}>
-                  <ProgressBar
-                    color={getGasColor(gas.name)}
-                    value={gas.amount}
-                    minValue={0}
-                    maxValue={gasMaxAmount}>
-                    {toFixed(gas.amount, 2) + '%'}
-                  </ProgressBar>
-                </LabeledList.Item>
-              ))}
-            </LabeledList>
-          </Box.Forced>
+          <LabeledList>
+            {gases.map(gas => (
+              <LabeledList.Item
+                key={gas.name}
+                label={getGasLabel(gas.name)}>
+                <ProgressBar
+                  color={getGasColor(gas.name)}
+                  value={gas.amount}
+                  minValue={0}
+                  maxValue={gasMaxAmount}>
+                  {toFixed(gas.amount, 2) + '%'}
+                </ProgressBar>
+              </LabeledList.Item>
+            ))}
+          </LabeledList>
         </Section>
       </Flex.Item>
     </Flex>
   );
 };
 
-const SupermatterList = props => {
-  const { act, data } = useBackend(props);
+const SupermatterList = (props, context) => {
+  const { act, data } = useBackend(context);
   const { supermatters = [] } = data;
   return (
     <Section

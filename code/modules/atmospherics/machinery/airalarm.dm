@@ -65,7 +65,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 8
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 0.33
@@ -102,7 +102,8 @@
 		/datum/gas/stimulum			= new/datum/tlv/dangerous,
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
-		/datum/gas/freon			= new/datum/tlv/dangerous
+		/datum/gas/freon			= new/datum/tlv/dangerous,
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -122,7 +123,8 @@
 		/datum/gas/stimulum			= new/datum/tlv/no_checks,
 		/datum/gas/nitryl			= new/datum/tlv/no_checks,
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks,
-		/datum/gas/freon			= new/datum/tlv/no_checks
+		/datum/gas/freon			= new/datum/tlv/no_checks,
+		/datum/gas/hydrogen			= new/datum/tlv/no_checks
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -80°C or 193.15°K.
@@ -142,7 +144,8 @@
 		/datum/gas/stimulum			= new/datum/tlv/dangerous,
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
-		/datum/gas/freon			= new/datum/tlv/dangerous
+		/datum/gas/freon			= new/datum/tlv/dangerous,
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -158,7 +161,7 @@
 	name = "chamber air alarm"
 	locked = FALSE
 	req_access = null
-	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_TOX, ACCESS_TOX_STORAGE)
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_TOXINS)
 
 /obj/machinery/airalarm/all_access
 	name = "all-access air alarm"
@@ -244,7 +247,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "airalarm", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "AirAlarm", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/airalarm/ui_data(mob/user)
@@ -381,7 +384,7 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "toggle_filter", "widenet", "scrubbing")
+		if("power", "toggle_filter", "widenet", "scrubbing", "direction")
 			send_signal(device_id, list("[action]" = params["val"]), usr)
 			. = TRUE
 		if("excheck")
@@ -531,7 +534,8 @@
 						/datum/gas/bz,
 						/datum/gas/stimulum,
 						/datum/gas/pluoxium,
-						/datum/gas/freon
+						/datum/gas/freon,
+						/datum/gas/hydrogen
 					),
 					"scrubbing" = 1,
 					"widenet" = 1

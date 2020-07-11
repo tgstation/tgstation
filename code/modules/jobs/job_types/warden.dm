@@ -52,5 +52,3 @@
 
 	implants = list(/obj/item/implant/mindshield)
 
-	chameleon_extras = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
-

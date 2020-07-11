@@ -2,7 +2,7 @@
 	set category = "Server"
 	set name = "Reestablish DB Connection"
 	if (!CONFIG_GET(flag/sql_enabled))
-		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>")
+		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>", confidential = TRUE)
 		return
 
 	if (SSdbcore.IsConnected())

@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	cable_layer = CABLE_LAYER_3
 	machinery_layer = null
 	layer = WIRE_LAYER + 0.01
-	icon_state = "l3-1-2-4-8-node"
+	icon_state = "l4-1-2-4-8-node"
 
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
@@ -387,14 +387,14 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
-	item_state = "coil"
+	inhand_icon_state = "coil"
+	novariants = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_amount = MAXCOIL
 	amount = MAXCOIL
 	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
 	color = "yellow"
-	var/cable_color = "yellow"
 	desc = "A coil of insulated power cable."
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -408,6 +408,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	var/cable_color = "yellow"
 	var/obj/structure/cable/target_type = /obj/structure/cable
 	var/target_layer = CABLE_LAYER_2
 
@@ -422,6 +423,14 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	. = ..()
 	. += "<b>Ctrl+Click</b> to change the layer you are placing on."
 
+/obj/item/stack/cable_coil/update_icon_state()
+	if(novariants)
+		return
+	icon_state = "[initial(icon_state)][amount < 3 ? amount : ""]"
+	var/how_many_things = amount < 3 ? "piece" : "coil"
+	name = "cable [how_many_things]"
+	desc = "A [how_many_things] of insulated power cable."
+
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message("<span class='suicide'>[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -431,6 +440,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
 	if(!istype(user))
+		return FALSE
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
@@ -449,42 +461,43 @@ GLOBAL_LIST(cable_radial_layer_list)
 		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
 		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
 		"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge"),
-		"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable")		
+		"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable")
 		)
 	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(layer_result)
 		if("Layer 1")
-			name = "cable coil"
-			icon_state = "coil"
 			color = "red"
 			target_type = /obj/structure/cable/layer1
 			target_layer = CABLE_LAYER_1
+			novariants = FALSE
 		if("Layer 2")
-			name = "cable coil"
-			icon_state = "coil"
 			color = "yellow"
 			target_type = /obj/structure/cable
 			target_layer = CABLE_LAYER_2
+			novariants = FALSE
 		if("Layer 3")
-			name = "cable coil"
-			icon_state = "coil"
 			color = "blue"
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
+			novariants = FALSE
 		if("Multilayer cable hub")
 			name = "multilayer cable hub"
+			desc = "A multilayer cable hub."
 			icon_state = "cable_bridge"
 			color = "white"
 			target_type = /obj/structure/cable/multilayer
 			target_layer = CABLE_LAYER_2
+			novariants = TRUE
 		if("Multi Z layer cable hub")
 			name = "multi z layer cable hub"
+			desc = "A multi-z layer cable hub."
 			icon_state = "cablerelay-broken-cable"
 			color = "white"
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
+			novariants = TRUE
 	update_icon()
 
 
@@ -625,18 +638,9 @@ GLOBAL_LIST(cable_radial_layer_list)
 	return
 
 /obj/structure/cable/multilayer/update_icon()
-	var/R = 50
-	var/G = 50
-	var/B = 50
-
-	R += cable_layer & CABLE_LAYER_1 ? 150 : 0
-	G += cable_layer & CABLE_LAYER_2 ? 150 : 0
-	B += cable_layer & CABLE_LAYER_3 ? 150 : 0
-
-	color = rgb(R, G, B)
 
 	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
-	
+
 	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
 
 	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
@@ -654,7 +658,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 			C.deconstruct()						// remove adversary cable
 	if(!mapload)
 		auto_propagate_cut_cable(src)
-	
+
 	machinery_node = new /obj/effect/node()
 	vis_contents += machinery_node
 	cable_node_1 = new /obj/effect/node/layer1()
@@ -669,7 +673,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 	QDEL_NULL(machinery_node)
 	QDEL_NULL(cable_node_1)
 	QDEL_NULL(cable_node_2)
-	QDEL_NULL(cable_node_3) 
+	QDEL_NULL(cable_node_3)
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/multilayer/examine(mob/user)
@@ -680,6 +684,9 @@ GLOBAL_LIST(cable_radial_layer_list)
 	. += "<span class='notice'>M:[machinery_layer & MACHINERY_LAYER_1 ? "Connect" : "Disconnect"].</span>"
 
 GLOBAL_LIST(hub_radial_layer_list)
+
+/obj/structure/cable/multilayer/attack_robot(mob/user)
+	attack_hand(user)
 
 /obj/structure/cable/multilayer/attack_hand(mob/living/user)
 	if(!user)
@@ -722,6 +729,9 @@ GLOBAL_LIST(hub_radial_layer_list)
 
 /obj/structure/cable/multilayer/proc/check_menu(mob/living/user)
 	if(!istype(user))
+		return FALSE
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE

@@ -69,7 +69,7 @@
 
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	// Run base mob body temperature proc before taking damage
-	// this balances body temp to the enviroment and natural stabilization
+	// this balances body temp to the environment and natural stabilization
 	. = ..()
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))

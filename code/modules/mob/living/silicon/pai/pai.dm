@@ -89,6 +89,9 @@
 /mob/living/silicon/pai/can_buckle()
 	return FALSE
 
+/mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
+	return
+
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(internal_instrument)
 	if(cable)
@@ -156,14 +159,15 @@
 	return TRUE
 
 /mob/living/silicon/pai/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
-	if(client)
-		client.perspective = EYE_PERSPECTIVE
-		if(holoform)
-			client.eye = src
-		else
-			client.eye = card
+	client.perspective = EYE_PERSPECTIVE
+	if(holoform)
+		client.eye = src
+	else
+		client.eye = card
 
 /mob/living/silicon/pai/Stat()
 	..()
@@ -280,7 +284,7 @@
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	health = maxHealth - getBruteLoss() - getFireLoss()
+	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
 
 /mob/living/silicon/pai/process()

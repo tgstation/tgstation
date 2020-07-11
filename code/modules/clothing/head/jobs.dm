@@ -7,7 +7,7 @@
 //Chef
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
-	item_state = "chef"
+	inhand_icon_state = "chef"
 	icon_state = "chef"
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
@@ -29,7 +29,7 @@
 	name = "captain's hat"
 	desc = "It's good being the king."
 	icon_state = "captain"
-	item_state = "that"
+	inhand_icon_state = "that"
 	flags_inv = 0
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
@@ -137,7 +137,7 @@
 
 //Security
 
-/obj/item/clothing/head/HoS
+/obj/item/clothing/head/hos
 	name = "head of security cap"
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
@@ -145,16 +145,16 @@
 	strip_delay = 80
 	dynamic_hair_suffix = ""
 
-/obj/item/clothing/head/HoS/syndicate
+/obj/item/clothing/head/hos/syndicate
 	name = "syndicate cap"
 	desc = "A black cap fit for a high ranking syndicate officer."
 
-/obj/item/clothing/head/HoS/beret
+/obj/item/clothing/head/hos/beret
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
 
-/obj/item/clothing/head/HoS/beret/syndicate
+/obj/item/clothing/head/hos/beret/syndicate
 	name = "syndicate beret"
 	desc = "A black beret with thick armor padding inside. Stylish and robust."
 
@@ -170,7 +170,7 @@
 	name = "warden's campaign hat"
 	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
 	icon_state = "wardendrill"
-	item_state = "wardendrill"
+	inhand_icon_state = "wardendrill"
 	dog_fashion = null
 	var/mode = DRILL_DEFAULT
 

@@ -196,7 +196,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "eightball", name, 400, 600, master_ui, state)
+		ui = new(user, src, ui_key, "EightBallVote", name, 400, 600, master_ui, state)
 		ui.open()
 
 /obj/item/toy/eightball/haunted/ui_data(mob/user)

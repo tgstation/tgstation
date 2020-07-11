@@ -35,7 +35,7 @@
 				//handle liver toxin filtration
 				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
 					var/thisamount = C.reagents.get_reagent_amount(T.type)
-					if (thisamount && thisamount <= toxTolerance)
+					if (thisamount && thisamount <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
 						C.reagents.remove_reagent(T.type, 1)
 					else
 						damage += (thisamount*toxLethality)
@@ -117,4 +117,4 @@
 		owner.adjustToxLoss(10)
 		severe_cooldown = world.time + 10 SECONDS
 	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
-		organ_flags = ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

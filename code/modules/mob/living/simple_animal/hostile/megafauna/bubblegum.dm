@@ -461,7 +461,10 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
-			A.ex_act(EXPLODE_HEAVY)
+			if(isobj(A))
+				SSexplosions.medobj += A
+			else
+				SSexplosions.medturf += A
 		DestroySurroundings()
 		if(isliving(A))
 			var/mob/living/L = A

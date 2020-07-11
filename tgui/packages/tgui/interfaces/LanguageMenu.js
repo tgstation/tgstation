@@ -1,9 +1,10 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
-export const LanguageMenu = props => {
-  const { act, data } = useBackend(props);
+export const LanguageMenu = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     admin_mode,
     is_living,
@@ -12,88 +13,95 @@ export const LanguageMenu = props => {
     unknown_languages = [],
   } = data;
   return (
-    <Fragment>
-      <Section title="Known Languages">
-        <LabeledList>
-          {languages.map(language => (
-            <LabeledList.Item
-              key={language.name}
-              label={language.name}
-              buttons={(
-                <Fragment>
-                  {!!is_living && (
-                    <Button
-                      content={language.is_default
-                        ? 'Default Language'
-                        : 'Select as Default'}
-                      disabled={!language.can_speak}
-                      selected={language.is_default}
-                      onClick={() => act('select_default', {
-                        language_name: language.name,
-                      })} />
-                  )}
-                  {!!admin_mode && (
-                    <Fragment>
-                      <Button
-                        content="Grant"
-                        onClick={() => act('grant_language', {
-                          language_name: language.name,
-                        })} />
-                      <Button
-                        content="Remove"
-                        onClick={() => act('remove_language', {
-                          language_name: language.name,
-                        })} />
-                    </Fragment>
-                  )}
-                </Fragment>
-              )}>
-              {language.desc}
-              {' '}
-              Key: ,{language.key}
-              {' '}
-              {language.can_understand
-                ? 'Can understand.'
-                : 'Cannot understand.'}
-              {' '}
-              {language.can_speak ? 'Can speak.' : 'Cannot speak.'}
-            </LabeledList.Item>
-          ))}
-        </LabeledList>
-      </Section>
-      {!!admin_mode && (
-        <Section
-          title="Unknown Languages"
-          buttons={(
-            <Button
-              content={'Omnitongue ' + (omnitongue ? 'Enabled' : 'Disabled')}
-              selected={omnitongue}
-              onClick={() => act('toggle_omnitongue')} />
-          )}>
+    <Window resizable>
+      <Window.Content scrollable>
+        <Section title="Known Languages">
           <LabeledList>
-            {unknown_languages.map(language => (
+            {languages.map(language => (
               <LabeledList.Item
                 key={language.name}
                 label={language.name}
                 buttons={(
-                  <Button
-                    content="Grant"
-                    onClick={() => act('grant_language', {
-                      language_name: language.name,
-                    })} />
+                  <Fragment>
+                    {!!is_living && (
+                      <Button
+                        content={language.is_default
+                          ? 'Default Language'
+                          : 'Select as Default'}
+                        disabled={!language.can_speak}
+                        selected={language.is_default}
+                        onClick={() => act('select_default', {
+                          language_name: language.name,
+                        })} />
+                    )}
+                    {!!admin_mode && (
+                      <Fragment>
+                        <Button
+                          content="Grant"
+                          onClick={() => act('grant_language', {
+                            language_name: language.name,
+                          })} />
+                        <Button
+                          content="Remove"
+                          onClick={() => act('remove_language', {
+                            language_name: language.name,
+                          })} />
+                      </Fragment>
+                    )}
+                  </Fragment>
                 )}>
                 {language.desc}
                 {' '}
                 Key: ,{language.key}
                 {' '}
-                {!!language.shadow && '(gained from mob)'}
+                {language.can_understand
+                  ? 'Can understand.'
+                  : 'Cannot understand.'}
                 {' '}
-                {language.can_speak ? 'Can speak.' : 'Cannot speak.' }
+                {language.can_speak
+                  ? 'Can speak.'
+                  : 'Cannot speak.'}
               </LabeledList.Item>
             ))}
           </LabeledList>
         </Section>
-      )}
-    </Fragment>
+        {!!admin_mode && (
+          <Section
+            title="Unknown Languages"
+            buttons={(
+              <Button
+                content={'Omnitongue '
+                  + (omnitongue ? 'Enabled' : 'Disabled')}
+                selected={omnitongue}
+                onClick={() => act('toggle_omnitongue')} />
+            )}>
+            <LabeledList>
+              {unknown_languages.map(language => (
+                <LabeledList.Item
+                  key={language.name}
+                  label={language.name}
+                  buttons={(
+                    <Button
+                      content="Grant"
+                      onClick={() => act('grant_language', {
+                        language_name: language.name,
+                      })} />
+                  )}>
+                  {language.desc}
+                  {' '}
+                  Key: ,{language.key}
+                  {' '}
+                  {!!language.shadow && '(gained from mob)'}
+                  {' '}
+                  {language.can_speak
+                    ? 'Can speak.'
+                    : 'Cannot speak.' }
+                </LabeledList.Item>
+              ))}
+            </LabeledList>
+          </Section>
+        )}
+      </Window.Content>
+    </Window>
   );
 };

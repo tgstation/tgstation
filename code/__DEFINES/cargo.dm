@@ -24,8 +24,8 @@
     list("syndiepod", "blood-red supply pod", "A dark, intimidating supply pod, covered in the blood-red markings of the Syndicate. It's probably best to stand back from this."),\
     list("squadpod", "\improper MK. II supply pod", "A Nanotrasen supply pod. This one has been marked the markings of some sort of elite strike team."),\
     list("cultpod", "bloody supply pod", "A Nanotrasen supply pod covered in scratch-marks, blood, and strange runes."),\
-    list("missilepod", "cruise missile", "A big ass missile that didn't seem to fully detonate. It was likely launched from some far-off deep space missile silo. There appears to be an auxillery payload hatch on the side, though manually opening it is likely impossible."),\
-    list("smissilepod", "\improper Syndicate cruise missile", "A big ass, blood-red missile that didn't seem to fully detonate. It was likely launched from some deep space Syndicate missile silo. There appears to be an auxillery payload hatch on the side, though manually opening it is likely impossible."),\
+    list("missilepod", "cruise missile", "A big ass missile that didn't seem to fully detonate. It was likely launched from some far-off deep space missile silo. There appears to be an auxiliary payload hatch on the side, though manually opening it is likely impossible."),\
+    list("smissilepod", "\improper Syndicate cruise missile", "A big ass, blood-red missile that didn't seem to fully detonate. It was likely launched from some deep space Syndicate missile silo. There appears to be an auxiliary payload hatch on the side, though manually opening it is likely impossible."),\
     list("boxpod", "\improper Aussec supply crate", "An incredibly sturdy supply crate, designed to withstand orbital re-entry. Has 'Aussec Armory - 2532' engraved on the side."),\
     list("honkpod", "\improper HONK pod", "A brightly-colored supply pod. It likely originated from the Clown Federation."),\
     list("fruitpod", "\improper Orange", "An angry orange."),\

@@ -102,7 +102,7 @@
 	var/list/clicklimiter
 
 	///goonchat chatoutput of the client
-	var/datum/chatOutput/chatOutput
+	var/datum/chat_output/chatOutput
 
  	///lazy list of all credit object bound to this client
 	var/list/credits
@@ -138,3 +138,42 @@
 	var/middragtime = 0
 	//Middle-mouse-button clicked object control for aimbot exploit detection.
 	var/atom/middragatom
+
+	/// Messages currently seen by this client
+	var/list/seen_messages
+	var/datum/view_data/view_size
+	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
+	var/list/recent_examines
+
+	var/list/parallax_layers
+	var/list/parallax_layers_cached
+	var/atom/movable/movingmob
+	var/turf/previous_turf
+	///world.time of when we can state animate()ing parallax again
+	var/dont_animate_parallax
+	///world.time of last parallax update
+	var/last_parallax_shift
+	///ds between parallax updates
+	var/parallax_throttle = 0
+	var/parallax_movedir = 0
+	var/parallax_layers_max = 4
+	var/parallax_animate_timer
+
+	/**
+	 * Assoc list with all the active maps - when a screen obj is added to
+	 * a map, it's put in here as well.
+	 *
+	 * Format: list(<mapname> = list(/obj/screen))
+	 */
+	var/list/screen_maps = list()
+
+	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
+	var/list/sent_assets = list()
+	/// List of all completed blocking send jobs awaiting acknowledgement by send_asset
+	var/list/completed_asset_jobs = list()
+	/// Last asset send job id.
+	var/last_asset_job = 0
+	var/last_completed_asset_job = 0
+
+	/// rate limiting for the crew manifest
+	var/crew_manifest_delay

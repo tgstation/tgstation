@@ -50,7 +50,7 @@
 	include_subtypes = FALSE
 
 
-/datum/export/modular_part/battery
+/datum/export/modular_part/battery/upgraded
 	cost = 100
 	unit_name = "upgraded computer power cell"
 	export_types = list(/obj/item/stock_parts/cell/computer/micro)

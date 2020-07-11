@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you tase them. Do not tamper with the device."
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
-	item_state = "sechailer"
+	inhand_icon_state = "sechailer"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACIALHAIR | HIDEFACE
 	w_class = WEIGHT_CLASS_SMALL
@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
 	actions_types = list(/datum/action/item_action/halt)
 	icon_state = "swat"
-	item_state = "swat"
+	inhand_icon_state = "swat"
 	aggressiveness = AGGR_SHIT_COP
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDEEYES | HIDEEARS | HIDEHAIR
 	visor_flags_inv = 0
@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	name = "spacepol mask"
 	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
 	icon_state = "spacepol"
-	item_state = "spacepol"
+	inhand_icon_state = "spacepol"
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"
@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	. = FALSE
 	if (!cooldown)
 		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[initial(phrase.phrase_text)]</b></font>")
-		playsound(src.loc, "sound/voice/complionator/[initial(phrase.phrase_sound)].ogg", 100, FALSE, 4)
+		playsound(src, "sound/runtime/complionator/[initial(phrase.phrase_sound)].ogg", 100, FALSE, 4)
 		cooldown = TRUE
 		addtimer(CALLBACK(src, /obj/item/clothing/mask/gas/sechailer/proc/reset_cooldown), PHRASE_COOLDOWN)
 		. = TRUE
@@ -180,7 +180,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	name = "police whistle"
 	desc = "A police whistle for when you need to make sure the criminals hear you."
 	icon_state = "whistle"
-	item_state = "whistle"
+	inhand_icon_state = "whistle"
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
 	custom_price = 150
 	actions_types = list(/datum/action/item_action/halt)
@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
 	if(cooldown < world.time - 100)
 		usr.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-		playsound(src.loc, "sound/misc/whistle.ogg", 100, FALSE, 4)
+		playsound(src, 'sound/misc/whistle.ogg', 100, FALSE, 4)
 		cooldown = world.time
 
 #undef PHRASE_COOLDOWN

@@ -11,7 +11,6 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/empty
 	category = list("Misc","Power Designs","Machinery","initial")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"

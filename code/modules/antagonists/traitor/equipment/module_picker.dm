@@ -11,14 +11,14 @@
 /datum/module_picker/New()
 	possible_modules = get_malf_modules()
 
-/proc/cmp_malfmodules_priority(datum/AI_Module/A, datum/AI_Module/B)
+/proc/cmp_malfmodules_priority(datum/ai_module/A, datum/ai_module/B)
 	return B.cost - A.cost
 
 /proc/get_malf_modules()
 	var/list/filtered_modules = list()
 
 	for(var/path in GLOB.malf_modules)
-		var/datum/AI_Module/AM = new path
+		var/datum/ai_module/AM = new path
 		if((AM.power_type == /datum/action/innate/ai) && !AM.upgrade)
 			continue
 		if(!filtered_modules[AM.category])
@@ -34,13 +34,13 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "malfunction_module_picker", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "MalfunctionModulePicker", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /datum/module_picker/ui_data(mob/user)
 	var/list/data = list()
-	data["processing_time"] = processing_time
-	data["compact_mode"] = compact_mode
+	data["processingTime"] = processing_time
+	data["compactMode"] = compact_mode
 	return data
 
 /datum/module_picker/ui_static_data(mob/user)
@@ -52,12 +52,11 @@
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
 		for(var/module in possible_modules[category])
-			var/datum/AI_Module/AM = possible_modules[category][module]
+			var/datum/ai_module/AM = possible_modules[category][module]
 			cat["items"] += list(list(
 				"name" = AM.name,
 				"cost" = AM.cost,
 				"desc" = AM.description,
-				"ref" = REF(AM),
 			))
 		data["categories"] += list(cat)
 
@@ -68,26 +67,25 @@
 		return
 	if(!isAI(usr))
 		return
-
 	switch(action)
 		if("buy")
-			var/list/buyable_modules = list()
+			var/item_name = params["name"]
+			var/list/buyable_items = list()
 			for(var/category in possible_modules)
-				buyable_modules += possible_modules[category]
-			var/module = locate(params["ref"]) in buyable_modules
-			if(!module || !(module in buyable_modules))
-				return
-			var/datum/AI_Module/AM = module
-			purchase_module(usr, AM)
-			. = TRUE
+				buyable_items += possible_modules[category]
+			for(var/key in buyable_items)
+				var/datum/ai_module/AM = buyable_items[key]
+				if(AM.name == item_name)
+					purchase_module(usr, AM)
+					return TRUE
 		if("select")
 			selected_cat = params["category"]
-			. = TRUE
+			return TRUE
 		if("compact_toggle")
 			compact_mode = !compact_mode
-			. = TRUE
+			return TRUE
 
-/datum/module_picker/proc/purchase_module(mob/living/silicon/ai/AI, datum/AI_Module/AM)
+/datum/module_picker/proc/purchase_module(mob/living/silicon/ai/AI, datum/ai_module/AM)
 	if(!istype(AM))
 		return
 	if(!AI || AI.stat == DEAD)

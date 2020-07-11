@@ -67,7 +67,7 @@
 	. =	{"[report_internal_damage()]
 		[integrity<30?"<span class='userdanger'>DAMAGE LEVEL CRITICAL</span><br>":null]
 		<b>Integrity: </b> [integrity]%<br>
-		<b>Powercell charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
+		<b>Power cell charge: </b>[isnull(cell_charge)?"No power cell installed":"[cell.percent()]%"]<br>
 		<b>Air source: </b>[internal_tank?"[use_internal_tank?"Internal Airtank":"Environment"]":"Environment"]<br>
 		<b>Airtank pressure: </b>[internal_tank?"[tank_pressure]kPa":"N/A"]<br>
 		<b>Airtank temperature: </b>[internal_tank?"[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C":"N/A"]<br>

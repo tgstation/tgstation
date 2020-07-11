@@ -24,9 +24,12 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered/seedvault)
 "ag" = (
-/obj/item/storage/toolbox/syndicate,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/trimline/green/filled/line,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered/seedvault)
 "ah" = (
@@ -43,9 +46,15 @@
 /area/ruin/powered/seedvault)
 "aj" = (
 /obj/structure/table/wood,
-/obj/item/gun/energy/floragun,
-/obj/item/gun/energy/floragun,
-/obj/item/gun/energy/floragun,
+/obj/item/gun/energy/floragun{
+	pixel_y = 6
+	},
+/obj/item/gun/energy/floragun{
+	pixel_y = 4
+	},
+/obj/item/gun/energy/floragun{
+	pixel_y = 2
+	},
 /obj/item/gun/energy/floragun,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/trimline/green/filled/line,
@@ -262,7 +271,14 @@
 /area/ruin/powered/seedvault)
 "aL" = (
 /obj/structure/table/wood,
-/obj/item/secateurs,
+/obj/item/geneshears{
+	pixel_x = 6
+	},
+/obj/item/geneshears,
+/obj/item/geneshears{
+	pixel_x = -6
+	},
+/obj/item/geneshears,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aM" = (
@@ -298,10 +314,18 @@
 /area/ruin/powered/seedvault)
 "aS" = (
 /obj/structure/table/wood,
-/obj/item/storage/bag/plants,
-/obj/item/storage/bag/plants,
-/obj/item/storage/bag/plants,
-/obj/item/storage/bag/plants,
+/obj/item/storage/bag/plants{
+	pixel_x = -5
+	},
+/obj/item/storage/bag/plants{
+	pixel_y = -5
+	},
+/obj/item/storage/bag/plants{
+	pixel_y = 5
+	},
+/obj/item/storage/bag/plants{
+	pixel_x = 5
+	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
@@ -665,6 +689,20 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
+"GN" = (
+/obj/structure/table/wood,
+/obj/item/secateurs{
+	pixel_x = -6
+	},
+/obj/item/secateurs{
+	pixel_x = 6
+	},
+/obj/item/secateurs,
+/obj/item/secateurs{
+	pixel_x = -6
+	},
+/turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "KF" = (
 /obj/machinery/door/airlock/titanium,
@@ -1052,7 +1090,7 @@ aX
 aE
 aA
 aA
-aL
+GN
 ac
 bm
 br

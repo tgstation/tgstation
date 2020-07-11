@@ -1,18 +1,18 @@
 //Areas
 
-/area/awaymission/caves/BMP_asteroid
+/area/awaymission/caves/bmp_asteroid
 	name = "\improper BMP Asteroid Level 1"
 	icon_state = "awaycontent1"
 
-/area/awaymission/caves/BMP_asteroid/level_two
+/area/awaymission/caves/bmp_asteroid/level_two
 	name = "\improper BMP Asteroid Level 2"
 	icon_state = "awaycontent2"
 
-/area/awaymission/caves/BMP_asteroid/level_three
+/area/awaymission/caves/bmp_asteroid/level_three
 	name = "\improper BMP Asteroid Level 3"
 	icon_state = "awaycontent3"
 
-/area/awaymission/caves/BMP_asteroid/level_four
+/area/awaymission/caves/bmp_asteroid/level_four
 	name = "\improper BMP Asteroid Level 4"
 	icon_state = "awaycontent4"
 
