@@ -1,0 +1,4 @@
+author: "Alterist"
+delete-after: True
+changes: 
+  - bugfix: "Upgraded Cybernetic Lungs (Tier3) now have improved oxygen absorption, same as Cybernetic Lungs (Tier2)"
