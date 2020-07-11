@@ -1184,3 +1184,6 @@
 		S.generate(BP, W)
 		S.fake = TRUE
 		QDEL_NULL(W)
+
+/mob/living/carbon/is_face_visible()
+	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)

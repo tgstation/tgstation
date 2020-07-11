@@ -1,0 +1,4 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - bugfix: "Voiceless dead are now longe INVISIBILITY_ABSTRACT, god i hate bugs"
