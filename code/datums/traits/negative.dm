@@ -676,3 +676,12 @@
 #undef LOCATION_RPOCKET
 #undef LOCATION_BACKPACK
 #undef LOCATION_HANDS
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "You've always been a very good listener."
+	value = -2
+	mob_trait = TRAIT_MUTE
+	gain_text = "<span class='danger>You feel unable to express yourself!</span>'"
+	lose_text = "<span class='notice'You feel able to express yourself freely again!</span>"
+	medical_record_text = "Patient demonstrates a complete inability to speak"
