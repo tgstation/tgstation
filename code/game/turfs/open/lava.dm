@@ -44,8 +44,9 @@
 	. = ..()
 	if(isliving(Obj))
 		var/mob/living/L = Obj
-		if(!islava(newloc) && !L.on_fire)
+		if(!islava(newloc))
 			REMOVE_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+		if(!L.on_fire)
 			L.update_fire()
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
