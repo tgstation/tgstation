@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - admin: "As an admin ghost, examining another ghost twice quickly will pull up clickable links to their info in chat"

@@ -324,7 +324,6 @@
 	},
 /obj/item/reagent_containers/dropper,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
-	icon_state = "trimline_corner_fill";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -62708,18 +62707,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/field/generator{
-	anchored = 1
-	},
+/obj/machinery/field/generator/anchored,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "clT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/field/generator{
-	anchored = 1
-	},
+/obj/machinery/field/generator/anchored,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "clU" = (
@@ -68666,18 +68661,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/field/generator{
-	anchored = 1
-	},
+/obj/machinery/field/generator/anchored,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cxB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/field/generator{
-	anchored = 1
-	},
+/obj/machinery/field/generator/anchored,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cxD" = (
@@ -92735,8 +92726,7 @@
 	pixel_y = 9
 	},
 /obj/item/storage/box/monkeycubes{
-	pixel_x = 4;
-	pixel_y = 0
+	pixel_x = 4
 	},
 /obj/item/storage/pill_bottle/mutadone{
 	pixel_x = -8;
@@ -96447,7 +96437,6 @@
 /area/medical/chemistry)
 "dAV" = (
 /obj/machinery/newscaster{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/structure/disposalpipe/segment{
@@ -99022,7 +99011,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
-	icon_state = "trimline_corner_fill";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -112732,7 +112720,6 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
-	icon_state = "trimline_warn_fill";
 	dir = 8
 	},
 /obj/structure/cable,
@@ -114830,8 +114817,7 @@
 	icon_state = "plant-21"
 	},
 /obj/structure/sign/warning/bodysposal{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
@@ -115447,9 +115433,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/power/apc{
-	dir = 2;
 	name = "Chemistry APC";
-	pixel_x = 0;
 	pixel_y = -23
 	},
 /obj/structure/cable,
