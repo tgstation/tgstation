@@ -1346,16 +1346,26 @@
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
+	/// How much base clotting we do per bleeding wound, multiplied by the below number for each bleeding wound
 	var/clot_rate = 0.25
+	/// If we have multiple bleeding wounds, we count the number of bleeding wounds, then multiply the clot rate by this^(n) before applying it to each cut, so more cuts = less clotting per cut (though still more total clotting)
+	var/clot_coeff_per_wound = 0.9
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(!M.blood_volume || !M.all_wounds)
 		return
 
+	var/effective_clot_rate = clot_rate
+
 	for(var/i in M.all_wounds)
 		var/datum/wound/W = i
-		W.blood_flow = max(0, W.blood_flow - clot_rate)
+		if(W.blood_flow)
+			effective_clot_rate *= clot_coeff_per_wound
+
+	for(var/i in M.all_wounds)
+		var/datum/wound/W = i
+		W.blood_flow = max(0, W.blood_flow - effective_clot_rate)
 
 /datum/reagent/medicine/coagulant/overdose_process(mob/living/M)
 	. = ..()
@@ -1380,5 +1390,5 @@
 // can be synthesized on station rather than bought. made by grinding a banana peel, heating it up, then mixing the banana peel powder with salglu
 /datum/reagent/medicine/coagulant/weak
 	name = "Synthi-Sanguirite"
-	description = "A synthetic coagulant used to help bleeding wounds clot faster. Not quite as effective as name brand Sanguirite."
-	clot_rate = 0.15
+	description = "A synthetic coagulant used to help bleeding wounds clot faster. Not quite as effective as name brand Sanguirite, especially on patients with lots of cuts."
+	clot_coeff_per_wound = 0.8

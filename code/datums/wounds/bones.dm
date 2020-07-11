@@ -103,7 +103,7 @@
 			return COMPONENT_NO_ATTACK_HAND
 
 /datum/wound/blunt/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(!victim)
+	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)
 		return
 	if(ishuman(victim))
 		var/mob/living/carbon/human/H = victim

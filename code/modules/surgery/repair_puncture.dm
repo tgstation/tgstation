@@ -101,11 +101,5 @@
 		to_chat(user, "<span class='warning'>[target] has no puncture there!</span>")
 	return ..()
 
-/datum/surgery_step/seal_veins/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
-	..()
-	if(istype(tool, /obj/item/stack))
-		var/obj/item/stack/used_stack = tool
-		used_stack.use(1)
-
 #undef REALIGN_INNARDS
 #undef WELD_VEINS

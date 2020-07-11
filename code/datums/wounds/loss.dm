@@ -24,6 +24,8 @@
 			occur_text = "is slashed through the last tissue holding it together, severing it completely!"
 		if(WOUND_PIERCE)
 			occur_text = "is pierced through the last tissue holding it together, severing it completely!"
+		if(WOUND_BURN)
+			occur_text = "is completely incinerated, falling to dust!"
 
 	victim = L.owner
 
@@ -36,5 +38,6 @@
 		return
 	severity = WOUND_SEVERITY_LOSS
 	second_wind()
-	L.dismember()
+	log_wound(victim, src)
+	L.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE)
 	qdel(src)

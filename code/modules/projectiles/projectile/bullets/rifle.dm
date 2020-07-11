@@ -4,6 +4,7 @@
 	name = "5.56mm bullet"
 	damage = 35
 	armour_penetration = 30
+	wound_bonus = -60
 
 /obj/projectile/bullet/a556/phasic
 	name = "5.56mm phasic bullet"

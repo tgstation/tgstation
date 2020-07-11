@@ -1290,7 +1290,9 @@
   * * dealt_bare_wound_bonus- The bare_wound_bonus, if one was specified *and applied*, of the wounding attack. Not shown if armor was present
   * * base_roll- Base wounding ability of an attack is a random number from 1 to (dealt_damage ** WOUND_DAMAGE_EXPONENT). This is the number that was rolled in there, before mods
   */
-/proc/log_wound(atom/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
+/proc/log_wound(mob/living/carbon/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
+	if(!victim || !suffered_wound)
+		return
 	var/message = "has suffered: [suffered_wound]"// maybe indicate if it's a promote/demote?
 	if(suffered_wound.limb)
 		message += " to [suffered_wound.limb.name]"
