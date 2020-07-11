@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fix being unable to orbit player characters and antags from the observer orbit menu."
