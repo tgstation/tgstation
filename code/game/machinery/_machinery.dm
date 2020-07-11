@@ -407,7 +407,7 @@ Class Procs:
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 			component_parts.Cut()
-	qdel(src)
+	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
 	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
