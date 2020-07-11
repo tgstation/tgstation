@@ -1,35 +1,62 @@
+
+
+/**
+  * The mafia controller handles the mafia minigame in progress.
+  * It is first created when the first ghost signs up to play.
+  */
 /datum/mafia_controller
+	///all roles in the game, dead or alive. check their game status if you only want living or dead.
 	var/list/all_roles = list()
-	var/list/player_role_lookup = list() //This only exists to speed up role retrieval
+	///exists to speed up role retrieval, it's a dict. player_role_lookup[player ckey] will give you the role they play
+	var/list/player_role_lookup = list()
+	///what part of the game you're playing in. day phases, night phases, judgement phases, etc.
 	var/phase = MAFIA_PHASE_SETUP
+	///how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.
 	var/turn = 0
 
-	var/first_day_phase_period = 20 SECONDS //say hi to everyone, no voting so no discussion
-	var/day_phase_period = 1 MINUTES //talk with others about the night
-	var/voting_phase_period = 30 SECONDS //vote someone to get put on trial
-	var/judgement_phase_period = 30 SECONDS //defend yourself! don't get lynched! sometimes skipped
-	var/judgement_lynch_period = 5 SECONDS //just watch a guy die (or live but lol)
-	var/night_phase_period = 45 SECONDS //mafia talk and pick someone to kill
-	var/victory_lap_period = 20 SECONDS //just waiting around sayin' woop woop
+	///first day has no voting, and thus is shorter
+	var/first_day_phase_period = 20 SECONDS
+	///talk with others about the last night
+	var/day_phase_period = 1 MINUTES
+	///vote someone to get put on trial
+	var/voting_phase_period = 30 SECONDS
+	///defend yourself! don't get lynched! sometimes skipped if nobody votes.
+	var/judgement_phase_period = 30 SECONDS
+	///guilty or innocent, we want a bit of time for players to process the outcome of the vote
+	var/judgement_lynch_period = 5 SECONDS
+	///mafia talk at night and pick someone to kill, some town roles use their actions, etc etc.
+	var/night_phase_period = 45 SECONDS
+	///like the lynch period, players need to see what the other players in the game's roles were
+	var/victory_lap_period = 20 SECONDS
 
+	///template picked when the game starts. used for the name and desc reading
 	var/datum/map_template/mafia/current_map
+	///map generation tool that deletes the current map after the game finishes
 	var/datum/map_generator/massdelete/map_deleter
 
-	var/list/current_setup_text //Redable list of roles in current game
+	///Readable list of roles in current game, sent to the tgui panel for roles list > list("Psychologist x1", "Clown x2")
+	var/list/current_setup_text
 
-	var/player_outfit = /datum/outfit/mafia //todo some fluffy outfit
+	///starting outfit for all mafia players. it's just a grey jumpsuit.
+	var/player_outfit = /datum/outfit/mafia
 
-	var/list/landmarks = list() //spawn points for players, each one has a house
-	var/town_center_landmark = null //town center for when people get put on trial
+	///spawn points for players, each one has a house
+	var/list/landmarks = list()
+	///town center for when people get put on trial
+	var/town_center_landmark
 
-	var/list/votes = list() //group voting on one person, like putting people to trial or choosing who to kill as mafia
-	//and these are the judgement phase votes, aka people sorting themselves into guilty and innocent lists. whichever has more wins!
+	///group voting on one person, like putting people to trial or choosing who to kill as mafia
+	var/list/votes = list()
+	///and these (judgement_innocent_votes and judgement_guilty_votes) are the judgement phase votes, aka people sorting themselves into guilty and innocent lists. whichever has more wins!
 	var/list/judgement_innocent_votes = list()
 	var/list/judgement_guilty_votes = list()
-	var/datum/mafia_role/on_trial = null
+	///current role on trial for the judgement phase, will die if guilty is greater than innocent
+	var/datum/mafia_role/on_trial
 
+	///current timer for phase
 	var/next_phase_timer
 
+	///used for debugging in testing (doesn't put people out of the game, some other shit i forgot, who knows just don't set this in live) honestly kinda deprecated
 	var/debug = FALSE
 
 /datum/mafia_controller/New()
@@ -43,6 +70,20 @@
 	end_game()
 	qdel(map_deleter)
 
+/**
+  * Triggers at beginning of the game when there is a confirmed list of valid, ready players.
+  * Creates a 100% ready game that has NOT started (no players in bodies)
+  * Followed by start game
+  *
+  * Does the following:
+  * * Picks map, and loads it
+  * * Grabs landmarks if it is the first time it's loading
+  * * Sets up the role list
+  * * Puts players in each role randomly
+  * Arguments:
+  * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
+  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
+  */
 /datum/mafia_controller/proc/prepare_game(setup_list,ready_players)
 
 	var/list/possible_maps = subtypesof(/datum/map_template/mafia)
@@ -87,15 +128,28 @@
 	var/team_suffix = team ? "([uppertext(team)] CHAT)" : ""
 	for(var/M in GLOB.dead_mob_list)
 		var/mob/spectator = M
-		if(!(spectator in GLOB.mafia_signup) || player_role_lookup[spectator.ckey] == null)
-			continue
-		var/link = FOLLOW_LINK(M, town_center_landmark)
-		to_chat(M, "[link] MAFIA: [msg] [team_suffix]")
+		if(spectator.ckey in GLOB.mafia_signup || player_role_lookup[spectator.mind.current] != null) //was in current game, or is signed up
+			var/link = FOLLOW_LINK(M, town_center_landmark)
+			to_chat(M, "[link] MAFIA: [msg] [team_suffix]")
 
+/**
+  * The game by this point is now all set up, and so we can put people in their bodies and start the first phase.
+  *
+  * Does the following:
+  * * Creates bodies for all of the roles with the first proc
+  * * Starts the first day manually (so no timer) with the second proc
+  */
 /datum/mafia_controller/proc/start_game()
 	create_bodies()
 	start_day()
 
+/**
+  * How every day starts.
+  *
+  * What players do in this phase:
+  * * If day one, just a small starting period to see who is in the game and check role, leading to the night phase.
+  * * Otherwise, it's a longer period used to discuss events that happened during the night, leading to the voting phase.
+  */
 /datum/mafia_controller/proc/start_day()
 	turn += 1
 	phase = MAFIA_PHASE_DAY
@@ -110,13 +164,29 @@
 
 	SStgui.update_uis(src)
 
-
+/**
+  * Players have finished the discussion period, and now must put up someone to the chopping block.
+  *
+  * What players do in this phase:
+  * * Vote on which player to put up for lynching, leading to the judgement phase.
+  * * If no votes are case, the judgement phase is skipped, leading to the night phase.
+  */
 /datum/mafia_controller/proc/start_voting_phase()
 	phase = MAFIA_PHASE_VOTING
 	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, TRUE),voting_phase_period,TIMER_STOPPABLE) //be verbose!
 	send_message("<b>Voting started! Vote for who you want to see on trial today.</b>")
 	SStgui.update_uis(src)
 
+/**
+  * Players have voted someone up, and now the person must defend themselves while the town votes innocent or guilty.
+  *
+  * What players do in this phase:
+  * * Vote innocent or guilty, if they are not on trial.
+  * * Defend themselves and wait for judgement, if they are.
+  * * Leads to the lynch phase.
+  * Arguments:
+  * * verbose: boolean, announces whether there were votes or not. after judgement it goes back here with no voting period to end the day.
+  */
 /datum/mafia_controller/proc/check_trial(verbose = TRUE)
 	var/datum/mafia_role/loser = get_vote_winner("Day")//, majority_of_town = TRUE)
 	if(loser)
@@ -133,6 +203,13 @@
 			lockdown()
 	SStgui.update_uis(src)
 
+/**
+  * Players have voted innocent or guilty on the person on trial, and that person is now killed or returned home.
+  *
+  * What players do in this phase:
+  * * r/watchpeopledie
+  * * If the accused is killed, their true role is revealed to the rest of the players.
+  */
 /datum/mafia_controller/proc/lynch()
 	for(var/i in judgement_innocent_votes)
 		var/datum/mafia_role/role = i
@@ -154,15 +231,32 @@
 	//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
 	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, FALSE),judgement_lynch_period,TIMER_STOPPABLE)// small pause to see the guy dead, no verbosity since we already did this
 
+/**
+  * Teenie helper proc to move players back to their home.
+  * Used in the above, but also used in the debug button "send all players home"
+  * Arguments:
+  * * role: mafia role that is getting sent back to the game.
+  */
 /datum/mafia_controller/proc/send_home(datum/mafia_role/role)
 	role.body.forceMove(get_turf(role.assigned_landmark))
 
+/**
+  * Checks to see if a faction (or solo antagonist) has won.
+  *
+  * Calculates in this order:
+  * * counts up town, mafia, and solo
+  * * solos can count as town members for the purposes of mafia winning
+  * * sends the amount of living people to the solo antagonists, and see if they won OR block the victory of the teams
+  * * checks if solos won from above, then if town, then if mafia
+  * * starts the end of the game if a faction won
+  * * returns TRUE if someone won the game, halting other procs from continuing in the case of a victory
+  */
 /datum/mafia_controller/proc/check_victory()
 	var/alive_town = 0
 	var/alive_mafia = 0
 	var/list/solos_to_ask = list() //need to ask after because first round is counting team sizes
-	var/list/total_victors = null //if this has someone, they won alone. list because side antags can with with people
-	var/blocked_victory = FALSE
+	var/list/total_victors = list() //if this list gets filled with anyone, they win. list because side antags can with with people
+	var/blocked_victory = FALSE //if a solo antagonist is stopping the town or mafia from finishing the game.
 
 	///PHASE ONE: TALLY UP ALL NUMBERS OF PEOPLE STILL ALIVE
 
@@ -189,11 +283,12 @@
 	//solo victories!
 	var/solo_end = FALSE
 	for(var/datum/mafia_role/winner in total_victors)
-		send_message("<span class='big red'>!! [uppertext(winner.name)] VICTORY !!</span>")
+		send_message("<span class='big comradio'>!! [uppertext(winner.name)] VICTORY !!</span>")
 		solo_end = TRUE
 	if(solo_end)
 		start_the_end()
-	if(blocked_victory)//a solo antag is stopping game from ending
+		return TRUE
+	if(blocked_victory)
 		return FALSE
 	if(alive_mafia == 0)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
@@ -202,6 +297,16 @@
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		return TRUE
 
+/**
+  * The end of the game is in two procs, because we want a bit of time for players to see eachothers roles.
+  * Because of how check_victory works, the game is halted in other places by this point.
+  *
+  * What players do in this phase:
+  * * See everyone's role postgame
+  * * See who won the game
+  * Arguments:
+  * * message: string, if non-null it sends it to all players. used to announce team victories while solos are handled in check victory
+  */
 /datum/mafia_controller/proc/start_the_end(message)
 	SEND_SIGNAL(src,COMSIG_MAFIA_GAME_END)
 	if(message)
@@ -211,6 +316,9 @@
 	phase = MAFIA_PHASE_VICTORY_LAP
 	next_phase_timer = addtimer(CALLBACK(src,.proc/end_game),victory_lap_period,TIMER_STOPPABLE)
 
+/**
+  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
+  */
 /datum/mafia_controller/proc/end_game()
 
 	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
@@ -220,10 +328,18 @@
 	votes = list()
 	phase = MAFIA_PHASE_SETUP
 
+/**
+  * After the voting and judgement phases, the game goes to night shutting the windows and beginning night with a proc.
+  */
 /datum/mafia_controller/proc/lockdown()
 	toggle_night_curtains(close=TRUE)
 	start_night()
 
+/**
+  * Shuts poddoors attached to mafia.
+  * Arguments:
+  * * close: boolean, the state you want the curtains in.
+  */
 /datum/mafia_controller/proc/toggle_night_curtains(close)
 	for(var/obj/machinery/door/poddoor/D in GLOB.machines) //I really dislike pathing of these
 		if(D.id != "mafia") //so as to not trigger shutters on station, lol
@@ -233,6 +349,13 @@
 		else
 			INVOKE_ASYNC(D, /obj/machinery/door/poddoor.proc/open)
 
+/**
+  * The actual start of night for players. Mostly info is given at the start of the night as the end of the night is when votes and actions are submitted and tried.
+  *
+  * What players do in this phase:
+  * * Mafia are told to begin voting on who to kill
+  * * Powers that are picked during the day announce themselves right now
+  */
 /datum/mafia_controller/proc/start_night()
 	phase = MAFIA_PHASE_NIGHT
 	send_message("<b>Night [turn] started! Lockdown will end in 45 seconds.</b>")
@@ -240,6 +363,17 @@
 	next_phase_timer = addtimer(CALLBACK(src, .proc/resolve_night),night_phase_period,TIMER_STOPPABLE)
 	SStgui.update_uis(src)
 
+/**
+  * The end of the night, and a series of signals for the order of events on a night.
+  *
+  * Order of events, and what they mean:
+  * * Start of resolve (NIGHT_START) is for activating night abilities that MUST go first
+  * * Action phase (NIGHT_ACTION_PHASE) is for non-lethal day abilities
+  * * Mafia then tallies votes and kills the highest voted person (note: one random voter visits that person for the purposes of roleblocking)
+  * * Killing phase (NIGHT_KILL_PHASE) is for lethal night abilities
+  * * End of resolve (NIGHT_END) is for cleaning up abilities that went off and i guess doing some that must go last
+  * * Finally opens the curtains and calls the start of day phase, completing the cycle until check victory returns TRUE
+  */
 /datum/mafia_controller/proc/resolve_night()
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_START)
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_ACTION_PHASE)
@@ -259,6 +393,16 @@
 	start_day()
 	SStgui.update_uis(src)
 
+/**
+  * Proc that goes off when players vote for something with their mafia panel.
+  *
+  * If teams, it hides the tally overlay and only sends the vote messages to the team that is voting
+  * Arguments:
+  * * voter: the mafia role that is trying to vote for...
+  * * target: the mafia role that is getting voted for
+  * * vt: type of vote submitted (is this the day vote? is this the mafia night vote?)
+  * * teams: see mafia team defines for what to put in, makes the messages only send to a specific team (so mafia night votes only sending messages to mafia at night)
+  */
 /datum/mafia_controller/proc/vote_for(datum/mafia_role/voter,datum/mafia_role/target,vt, teams)
 	if(!votes[vt])
 		votes[vt] = list()
@@ -277,6 +421,9 @@
 		if(old)
 			old.body.update_icon()
 
+/**
+  * Clears out the votes of a certain type (day votes, mafia kill votes) while leaving others untouched
+  */
 /datum/mafia_controller/proc/reset_votes(vt)
 	var/list/bodies_to_update = list()
 	for(var/vote in votes[vt])
@@ -286,12 +433,24 @@
 	for(var/mob/M in bodies_to_update)
 		M.update_icon()
 
+/**
+  * Returns how many people voted for the role, in whatever vote (day vote, night kill vote)
+  * Arguments:
+  * * role: the mafia role the proc tries to get the amount of votes for
+  * * vt: the vote type (getting how many day votes were for the role, or mafia night votes for the role)
+  */
 /datum/mafia_controller/proc/get_vote_count(role,vt)
 	. = 0
 	for(var/votee in votes[vt])
 		if(votes[vt][votee] == role)
 			. += 1
 
+/**
+  * Returns whichever role got the most votes, in whatever vote (day vote, night kill vote)
+  * returns null if no votes
+  * Arguments:
+  * * vt: the vote type (getting the role that got the most day votes, or the role that got the most mafia votes)
+  */
 /datum/mafia_controller/proc/get_vote_winner(vt)
 	var/list/tally = list()
 	for(var/votee in votes[vt])
@@ -302,10 +461,21 @@
 	sortTim(tally,/proc/cmp_numeric_dsc,associative=TRUE)
 	return length(tally) ? tally[1] : null
 
+/**
+  * Returns a random person who voted for whatever vote (day vote, night kill vote)
+  * Arguments:
+  * * vt: vote type (getting a random day voter, or mafia night voter)
+  */
 /datum/mafia_controller/proc/get_random_voter(vt)
 	if(length(votes[vt]))
 		return pick(votes[vt])
 
+/**
+  * Adds mutable appearances to people who get publicly voted on (so not night votes) showing how many people are picking them
+  * Arguments:
+  * * source: the body of the role getting the overlays
+  * * overlay_list: signal var passing the overlay list of the mob
+  */
 /datum/mafia_controller/proc/display_votes(atom/source, list/overlay_list)
 	if(phase != MAFIA_PHASE_VOTING)
 		return
@@ -313,6 +483,15 @@
 	var/mutable_appearance/MA = mutable_appearance('icons/obj/mafia.dmi',"vote_[v]")
 	overlay_list += MA
 
+/**
+  * Called when the game is setting up, AFTER map is loaded but BEFORE the phase timers start. Creates and places each role's body and gives the correct player key
+  *
+  * Notably:
+  * * Toggles godmode so the mafia players cannot kill themselves
+  * * Adds signals for voting overlays, see display_votes proc
+  * * gives mafia panel
+  * * sends the greeting text (goals, role name, etc)
+  */
 /datum/mafia_controller/proc/create_bodies()
 	for(var/datum/mafia_role/role in all_roles)
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
@@ -484,6 +663,11 @@
 	for(var/key in L)
 		. += L[key]
 
+/**
+  * Returns all setups that the amount of players signed up could support (so fill each role)
+  * Arguments:
+  * * ready_count: the amount of players signed up (not sane, so some players may have disconnected or rejoined ss13).
+  */
 /datum/mafia_controller/proc/find_best_setup(ready_count)
 	var/list/all_setups = GLOB.mafia_setups
 	var/valid_setups = list()
@@ -493,6 +677,12 @@
 			valid_setups += list(S)
 	return length(valid_setups) > 0 ? pick(valid_setups) : null
 
+/**
+  * Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.
+  *
+  * Checks if everyone signed up is an observer, and is still connected. If people aren't, they're removed from the list.
+  * If there aren't enough players post sanity, it aborts. otherwise, it selects enough people for the game and starts preparing the game for real.
+  */
 /datum/mafia_controller/proc/basic_setup()
 	var/ready_count = length(GLOB.mafia_signup)
 	var/list/setup = find_best_setup(ready_count)
@@ -531,6 +721,11 @@
 	prepare_game(setup,filtered_keys)
 	start_game()
 
+/**
+  * Called when someone signs up, and sees if there are enough people in the signup list to begin.
+  *
+  * Only checks if everyone is actually valid to start (still connected and an observer) if there are enough players (basic_setup)
+  */
 /datum/mafia_controller/proc/try_autostart()
 	if(phase != MAFIA_PHASE_SETUP)
 		return
@@ -554,6 +749,9 @@
 /datum/action/innate/mafia_panel/Activate()
 	parent.ui_interact(owner)
 
+/**
+  * Creates the global datum for playing mafia games, destroys the last if that's required and returns the new.
+  */
 /proc/create_mafia_game()
 	if(GLOB.mafia_game)
 		QDEL_NULL(GLOB.mafia_game)
