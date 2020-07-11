@@ -15,8 +15,6 @@
 	var/eject_range = 2
 	/// how fast we're spitting fir- atoms
 	var/eject_speed = EJECT_SPEED_MED
-	/// if we've been emagged or not, duh
-	var/emagged = FALSE
 
 /obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -106,7 +104,7 @@
 		if(EJECT_SPEED_MED)
 			eject_speed = EJECT_SPEED_FAST
 		if(EJECT_SPEED_FAST)
-			if(emagged)
+			if(obj_flags & EMAGGED)
 				eject_speed = EJECT_SPEED_YEET
 			else
 				eject_speed = EJECT_SPEED_SLOW
@@ -116,7 +114,7 @@
 
 /obj/structure/disposaloutlet/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='notice'>You silently disable the sanity checking on \the [src]'s ejection force.</span>")
-	emagged = TRUE
+	obj_flags |= EMAGGED
