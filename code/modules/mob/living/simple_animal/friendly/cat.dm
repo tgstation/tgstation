@@ -67,6 +67,20 @@
 	maxbodytemp = T0C + 40
 	held_state = "spacecat"
 
+/mob/living/simple_animal/pet/cat/bolty
+	name = "Bolty"
+	desc = "You have an unbelievable urge to punt it."
+	icon_state = "bolt"
+	icon_living = "bolt"
+	icon_dead = "bolt_dead"
+	unsuitable_atmos_damage = 0
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 40
+	held_state = "cat2"
+	speak = list("EDF!", "I might be stupid.", "Bigger.", "BIGGER.")
+	response_harm_continuous = "punts"
+	response_harm_simple = "punt"
+
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
