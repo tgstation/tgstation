@@ -235,10 +235,16 @@ CHECK_RANDOMIZER
 # WIKIURL http://www.tgstation13.org/wiki
 
 ## Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+# RULESURL https://docs.google.com/document/d/1F6Jm6Gt8p1BvBIaByPZY6iF4OgA76OK8IHj9f-bnPVI/edit?usp=sharing
 
 ## Github address
-# GITHUBURL https://www.github.com/tgstation/tgstation
+# GITHUBURL https://www.github.com/jwapobie/artstation
+
+## Notes address
+# BRITNOTEURL https://docs.google.com/document/d/1F6Jm6Gt8p1BvBIaByPZY6iF4OgA76OK8IHj9f-bnPVI/edit?usp=sharing
+
+## Registry address
+# REGISTRYURL https://docs.google.com/document/d/1LAwmv4AzD_yQuWM0rkXUSGAyWDO9aQ31yhCBNVTaZGw/edit?usp=sharing
 
 ## Round specific stats address
 ## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
@@ -250,6 +256,11 @@ CHECK_RANDOMIZER
 ## Incase you don't have a fancy parsing system, but still want players to be able to find where you keep your server's logs.
 ## Example: https://tgstation13.org/parsed-logs/basil/data/logs/
 # GAMELOGURL
+
+## Github repo id
+##This can be found by going to https://api.github.com/users/<user name here>/repos
+##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization
+# GITHUBREPOID 264109498
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com

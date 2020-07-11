@@ -16,29 +16,29 @@
 
 /client/verb/forum()
 	set name = "forum"
-	set desc = "Visit the forum."
+	set desc = "Visit the registry."
 	set hidden = 1
-	var/forumurl = CONFIG_GET(string/forumurl)
-	if(forumurl)
-		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")!="Yes")
+	var/registryurl = CONFIG_GET(string/registryurl)
+	if(registryurl)
+		if(alert("This will open the registry in your browser. Are you sure?",,"Yes","No")!="Yes")
 			return
-		src << link(forumurl)
+		src << link(registryurl)
 	else
-		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
+		to_chat(src, "<span class='danger'>The registry URL is not set in the server configuration.</span>")
 	return
 
-/client/verb/rules()
-	set name = "rules"
-	set desc = "Show Server Rules."
-	set hidden = 1
-	var/rulesurl = CONFIG_GET(string/rulesurl)
-	if(rulesurl)
-		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")!="Yes")
-			return
-		src << link(rulesurl)
-	else
-		to_chat(src, "<span class='danger'>The rules URL is not set in the server configuration.</span>")
-	return
+// /client/verb/rules()
+//	set name = "rules"
+//	set desc = "Show Server Rules."
+//	set hidden = 1
+//	var/rulesurl = CONFIG_GET(string/rulesurl)
+//	if(rulesurl)
+//		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")!="Yes")
+//			return
+//		src << link(rulesurl)
+//	else
+//		to_chat(src, "<span class='danger'>The rules URL is not set in the server configuration.</span>")
+//	return
 
 /client/verb/github()
 	set name = "github"
