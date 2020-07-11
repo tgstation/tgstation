@@ -351,7 +351,7 @@
 /obj/item/clothing/head/helmet/monkey_sentience/Initialize()
 	. = ..()
 	light_colors = rand(1,3)
-	icon_state = "[icon_state][light_colors]"
+	update_icon_state()
 
 /obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
 	. = ..()
@@ -363,8 +363,7 @@
 	. += "<span class='boldnotice'>Ask your CMO if mind magnification is right for you.</span>"
 
 /obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
-	var/lightson = magnification ? "up" : ""
-	icon_state = "[initial(icon_state)][light_colors][lightson]"
+	icon_state = "[initial(icon_state)][light_colors][magnification ? "up" : ""]"
 
 /obj/item/clothing/head/helmet/monkey_sentience/equipped(mob/user, slot)
 	. = ..()
