@@ -256,3 +256,13 @@
 /datum/quirk/longtimer/on_spawn()
 	var/mob/living/carbon/C = quirk_holder
 	C.generate_fake_scars(rand(min_scars, max_scars))
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "You've always been a very good listener."
+	value = 0
+	mob_trait = TRAIT_MUTE
+	gain_text = "<span class='danger>You feel unable to express yourself!</span>'"
+	lose_text = "<span class='notice'You feel able to express yourself freely again!</span>"
+	medical_record_text = "Patient demonstrates a complete inability to speak"
+
