@@ -231,3 +231,35 @@ Slimecrossing Items
 /obj/item/capturedevice/proc/release()
 	for(var/atom/movable/M in contents)
 		M.forceMove(get_turf(loc))
+
+/obj/item/slimeball
+	name = "Slimeball"
+	desc = "Allows you to hold a single slime inside of it, just throw it into a slime, and throw again to release him!"
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "slimeball"
+	var/mob/living/simple_animal/slime/held_slime
+
+/obj/item/slimeball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(!isslime(hit_atom))
+		if(!held_slime)
+			return
+
+		held_slime.forceMove(get_turf(src))
+		playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
+		held_slime = null
+		return
+	playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+	held_slime = hit_atom
+	held_slime.forceMove(src)
+
+/obj/item/spear/slime
+	name = "Slimespear"
+	desc = "Gelatinous spear, hardens on touch, glossy like glass with zaps of electricity going around it."
+	color = "#00ff15"
+
+/obj/item/spear/slime/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(isliving(hit_atom))
+		playsound(hit_atom, 'sound/effects/glassbr3.ogg', 100)
+		qdel(src)

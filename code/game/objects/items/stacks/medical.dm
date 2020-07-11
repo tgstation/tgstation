@@ -54,12 +54,12 @@
 /obj/item/stack/medical/proc/heal(mob/living/M, mob/user)
 	return
 
-/obj/item/stack/medical/proc/heal_carbon(mob/living/carbon/C, mob/user, brute, burn)
+/obj/item/stack/medical/proc/heal_carbon(mob/living/carbon/C, mob/user, brute, burn , only_organic = TRUE)
 	var/obj/item/bodypart/affecting = C.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting) //Missing limb?
 		to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
 		return
-	if(affecting.status != BODYPART_ORGANIC) //Limb must be organic to be healed - RR
+	if(only_organic && affecting.status != BODYPART_ORGANIC) //Limb must be organic to be healed - RR
 		to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
 		return
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
@@ -417,3 +417,41 @@
 	custom_materials = null
 	is_cyborg = 1
 	cost = 250
+
+/obj/item/stack/medical/slime_patch
+	name = "slime patch"
+	singular_name = "slime patch"
+	desc = "Potent patch containing smart chemicals, able to detect and fill out even inorganic damage."
+	singular_name = "regenerative mesh"
+	icon_state = "gauze"
+	color = "#00ff15"
+	self_delay = 30
+	other_delay = 10
+	amount = 30
+	heal_burn = 15
+	heal_brute = 15
+	max_amount = 30
+	repeating = TRUE
+	sanitization = 3
+	flesh_regeneration = 3
+
+/obj/item/stack/medical/slime_patch/heal(mob/living/M, mob/user)
+	. = ..()
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return
+	if(iscarbon(M))
+		return heal_carbon(M, user, heal_brute, heal_burn , FALSE)
+	if(isanimal(M))
+		var/mob/living/simple_animal/critter = M
+		if (!(critter.healable))
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
+			return FALSE
+		else if (critter.health == critter.maxHealth)
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
+			return FALSE
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		M.heal_bodypart_damage(heal_brute,heal_burn)
+		return TRUE
+
+	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
