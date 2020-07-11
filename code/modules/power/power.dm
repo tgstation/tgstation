@@ -20,21 +20,18 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
-	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
+	var/machinery_layer = MACHINERY_LAYER_2 //cable layer to which the machine is connected
 	var/power_flags = POWER_CONSUMER
 	// We need a POWER_MACHINE_NEEDS_TERMINAL to use
-	// this is also not a /power/terminal because we resue it
-	// in terminal
+	// Making this a more general case to combine code
+	// and to make it easyer to add a terminal
 	var/obj/machinery/power/terminal = null
 
 
 /obj/machinery/power/Initialize(mapload)
 	. = ..()
 	if(mapload && (power_flags & POWER_MACHINE_NEEDS_TERMINAL))
-		return INITIALIZE_HINT_LATELOAD
-
-// called on map load to connect to the machine
-/obj/machinery/power/LateInitialize()
+		find_terminal(TRUE)
 
 
 /obj/machinery/power/Destroy()
@@ -106,7 +103,7 @@
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
 		if(term)
 			terminal = term
-			ASSERT(!terminal.master) // should be null on map load
+			ASSERT(!terminal.terminal) // should be null on map load
 			terminal.terminal = src
 			terminal.setDir(get_dir(TB,src)) // set the direction
 			break
@@ -121,7 +118,7 @@
 
 // create a terminal object pointing towards the device
 // wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(turf/T)
+/obj/machinery/power/proc/make_terminal(turf/T)
 	ASSERT(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
 	if(power_flags & POWER_MACHINE_NEEDS_TERMINAL)
 		terminal = new/obj/machinery/power/terminal(T)
@@ -194,19 +191,6 @@
 	if(!C)
 		return FALSE  // no cable means no connection
 	C.connect_machine(src)
-
-
-
-	if(!C || !C.powernet)
-
-		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
-		if(!term || !term.powernet)
-			return FALSE
-		else
-			term.powernet.add_machine(src)
-			return TRUE
-
-	C.powernet.add_machine(src)
 	return TRUE
 
 // remove and disconnect the machine from its current powernet
@@ -280,6 +264,9 @@
 // GLOBAL PROCS for powernets handling
 //////////////////////////////////////////
 
+
+
+#if 0
 ///remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, skip_assigned_powernets = FALSE)
 	var/list/found_machines = list()
@@ -309,6 +296,8 @@
 			PM.disconnect_from_network() //... so disconnect if already on a powernet
 
 
+
+#endif
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever
 //power_source is a source of electricity, can be power cell, area, apc, cable, powernet or null
@@ -388,8 +377,9 @@
 // Misc.
 ///////////////////////////////////////////////
 
+
 // return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
+/turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_2)
 	if(!can_have_cabling())
 		return null
 	for(var/obj/structure/cable/C in src)

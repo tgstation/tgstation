@@ -43,11 +43,11 @@ SUBSYSTEM_DEF(machines)
 	return N
 
 /datum/controller/subsystem/machines/proc/release_powernet(datum/powernet/N)
-	ASSERT(N.consumers.len == 0)
-	ASSERT(N.producers.len == 0)
-	ASSERT(N.cables.len == 0)
 	powernets[N.number] = null  	/// We just null it
 	powernets_nulls++
+	N.consumers.len = 0
+	N.producers.len = 0
+	N.cables.len = 0
 	N.number = 0
 	N.load = 0
 	N.newavail = 0

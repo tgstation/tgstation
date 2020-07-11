@@ -218,12 +218,7 @@
 		update_icon()
 		updateUsrDialog()
 
-/obj/machinery/power/apc/proc/make_terminal()
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(loc)
-	terminal.setDir(tdir)
-	terminal.master = src
+
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
@@ -251,7 +246,7 @@
 
 	update_icon()
 
-	make_terminal()
+	make_terminal(loc)
 
 	addtimer(CALLBACK(src, .proc/update), 5)
 
@@ -592,7 +587,7 @@
 					return
 				C.use(10)
 				to_chat(user, "<span class='notice'>You add cables to the APC frame.</span>")
-				make_terminal()
+				make_terminal(loc)
 				terminal.connect_to_network()
 	else if (istype(W, /obj/item/electronics/apc) && opened)
 		if (has_electronics)

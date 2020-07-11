@@ -36,14 +36,21 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/layer1
 	color = "red"
 	cable_layer = CABLE_LAYER_1
-	machinery_layer = null
+	machinery_layer = MACHINERY_LAYER_1
 	layer = WIRE_LAYER - 0.01
 	icon_state = "l1-1-2-4-8-node"
+
+/obj/structure/cable/layer2
+	color = "yellow"
+	cable_layer = CABLE_LAYER_1
+	machinery_layer = MACHINERY_LAYER_2
+	layer = WIRE_LAYER
+	icon_state = "l2-1-2-4-8-node"
 
 /obj/structure/cable/layer3
 	color = "blue"
 	cable_layer = CABLE_LAYER_3
-	machinery_layer = null
+	machinery_layer = MACHINERY_LAYER_3
 	layer = WIRE_LAYER + 0.01
 	icon_state = "l4-1-2-4-8-node"
 
@@ -62,34 +69,34 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	// main workhouse, we go though all the sides, see what is connected
 	// and connect, set the icon state, etc etc
 	var/obj/machinery/power/under = null
-	var/obj/machinery/power/terminal/term
-	var/check_dir
+	var/obj/machinery/power/terminal/term = null
 	var/datum/powernet/largest_powernet = null
 	var/list/power_nets = list()
-
+	ASSERT(linked_state == -1) // linked state should be -1 at startup too
 	// check if this cable was placed under a machine
 	for(var/obj/machinery/power/P in loc)
-		linked[CABLE_DIR_UP] = under = P	// we are under this,
+		under = P	// we are under this,
+		// under is linked latter
 
 	// check each direction to see if we are connected to another cable
-	for(var/cable_dir in cable_cardinals)
-		check_dir = CABLE_DIR_TO_DIR(cable_dir)
+	for(var/check_dir in GLOB.cardinals)
 		var/turf/TB = get_step(src, check_dir)
 		// special case for terminal, no connection to the machine side from it
 		if(under)
 			term = under
-			if(term && term.master.loc == TB) // if we are the term, don't connect the wire to the machine
+			if(term && term.terminal.loc == TB) // if we are the term, don't connect the wire to the machine
 				continue
 			else if(under.terminal && under.terminal.loc == TB)
 				continue // or if we are the machine, don't connect to the terminal
 		var/inverse = turn(check_dir, 180)
-		var/cable_inverse = CABLE_DIR_INVERT(cable_dir)
 		for(var/obj/structure/cable/C in TB)
-			if(C.cable_layer & cable_layer)
-				ASSERT(!linked[cable_dir]) // should be null on new
-				linked[cable_dir] = C
-				ASSERT(!C.linked[cable_inverse]) // should also be null as nothing is connected
-				C.linked[cable_inverse] = src
+			// we should change evey /obj/structure/cable to var/obj/structure/cable/layer2
+			// .... but not now
+			if(istype(C) || (C.cable_layer & cable_layer))
+				linked += C
+				linked_state |= check_dir
+				C.linked += src
+				C.linked_state |= inverse
 				C.update_icon()
 				// lets collect the powernets
 				ASSERT(C.powernet) // should also have powernets
@@ -102,18 +109,20 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					largest_powernet = C.powernet
 				else
 					power_nets |= C.powernet
+				break // early exit since
 
 	// Ok, the cable is in the graph, connected, lets merge the powernets
 	// Best case, we are just assigning the powernet on the side
 	// worst case, we have to merge 3 powernets.  Need to profile that
 	for(var/i = 1; i <= power_nets.len; i++)
-		largest_powernet.merge(power_net[i])
+		largest_powernet.merge(power_nets[i])
 
 	// and we are done, don't forget to add our self or any connected machine
-	C.powernet = largest_powernet
-	C.powernet.cables[src] = largest_powernet
+	powernet = largest_powernet
+	powernet.cables[src] = powernet
 	if(under)
-		C.connect_machine(under)
+		node = TRUE
+		connect_machine(under)
 	update_icon()
 
 
@@ -121,31 +130,22 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/_clear_all_visited()
 	var/obj/structure/cable/C
 	var/list/cable_list = GLOB.cable_list
-	var/i
-	for(i=1; i < = cable_list; i++)
+	for(var/i in 1 to cable_list.len)
 		C = cable_list[i]
 		C.visited = FALSE
 
 
-// Main machiine connect function.  Once a machine is connected if we
-// do not have a powernet, we have one now.  Throw an error IF
-// the machine has a powernet.
+// Main machiine connect function.
 /obj/structure/cable/proc/connect_machine(obj/machinery/power/M)
-	ASSERT(linked[CABLE_DIR_UP] == null)
-	if(!powernet)
-		powernet = new/datum/powernet
-	M.powernet = powernet
+	ASSERT(powernet)	// we should already have a powernet
 	powernet.connect_machine(M)
-	linked[CABLE_DIR_UP] = M
+	linked += M
 
 
 /obj/structure/cable/proc/disconnect_machine(obj/machinery/power/M)
-	ASSERT(M.powernet && linked[CABLE_DIR_UP] == M)
-	if(!powernet)
-		powernet = new/datum/powernet
-	M.powernet = null
+	ASSERT(powernet == M.powernet)
 	powernet.disconnect_machine(M)
-	linked[CABLE_DIR_UP] = null
+	linked -= M
 
 
 /// disconnect the cable from the net, q a powernet rebuild
@@ -189,16 +189,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	else
 		var/list/dir_icon_list = list()
 		dir_string += "l[cable_layer]"
-		if(icon_state & NORTH)
+		if(linked_state & NORTH)
 			dir_string += "[NORTH]"
-		if(icon_state & SOUTH)
+		if(linked_state & SOUTH)
 			dir_string += "[SOUTH]"
-		if(icon_state & EAST)
+		if(linked_state & EAST)
 			dir_string += "[EAST]"
-		if(icon_state & WEST)
+		if(linked_state & WEST)
 			dir_string += "[WEST]"
 		if(node)
-			dir_icon_list += "node"
+			dir_string += "node"
 		icon_state = dir_icon_list.Join("-")
 
 // this is a hard check on the surounding
@@ -455,18 +455,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			if(P.anchored)
 				. += P
 
-/obj/structure/cable/proc/auto_propagate_cut_cable(obj/O)
-	if(O && !QDELETED(O))
-		var/datum/powernet/newPN = new()// creates a new powernet...
-		propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
-//Makes a new network for the cable and propgates it.
-//If it finds another network in the process, aborts and uses that one and propagates off of it instead
-/obj/structure/cable/proc/propagate_if_no_network()
-	if(powernet)
-		return
-	var/datum/powernet/newPN = new()
-	propagate_network(src, newPN, TRUE)
 
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet(remove = TRUE)
@@ -477,27 +466,28 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!T1)
 		return
 
-	//clear the powernet of any machines on tile first
-	for(var/obj/machinery/power/P in T1)
-		P.disconnect_from_network()
-
-	var/list/P_list = list()
-	for(var/dir_check in GLOB.cardinals)
-		if(linked_dirs & dir_check)
-			T1 = get_step(loc, dir_check)
-			P_list += locate(/obj/structure/cable) in T1
+	if(linked.len > 0)
+		for(var/i in 1 to linked.len)
+			if(istype(linked[i], /obj/machinery/power))
+				var/obj/machinery/power/M = linked[i]
+					M.powernet.disconnect_machine(M)
+			else if(istype(linked[i], /obj/structure/cable))
+				var/obj/structure/cable/C = linked[i]
+				var/dir = get_dir(loc,C.loc)
+				var/inverse = turn(dir,180)
+				linked_state &= ~dir
+				C.linked_state &= ~inverse
+				C.linked  -= src
+				linked -= C
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
 		moveToNullspace()
-	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-	var/first = TRUE
-	for(var/obj/O in P_list)
-		if(first)
-			first = FALSE
-			continue
-		addtimer(CALLBACK(O, .proc/auto_propagate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
+	powernet.cables[src] = null  //remove the cut cable from its powernet
+	var/current_powernet = powernet
+	powernet = null
+	addtimer(CALLBACK(O, .proc/split_powernet(current_powernet), O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable

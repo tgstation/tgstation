@@ -87,8 +87,8 @@
 
 	data["areas"] = list()
 	if(connected_powernet)
-		for(var/obj/machinery/power/terminal/term in connected_powernet.nodes)
-			var/obj/machinery/power/apc/A = term.master
+		for(var/obj/machinery/power/terminal/term in connected_powernet.consumers)
+			var/obj/machinery/power/apc/A = term.terminal
 			if(istype(A))
 				data["areas"] += list(list(
 					"name" = A.area.name,

@@ -1,99 +1,4 @@
 /*
-** This is a powernet edge.  Its a container that tells the powernet
-** if a cable has been disconnected and it needs to rebuild
-*/
-/datum/graph_edge
-	var/datum/value // What this edge is representing
-	var/datum/graph_component/graph_component = null
-	var/list/verts = list()
-	var/visited = FALSE   		// used in searching
-
-/datum/graph_edge/New(W)
-	value = W
-	. = ..()
-
-/datum/graph_edge/proc/visit()
-	visited = TRUE
-	var/datum/graph_edge/E
-	for(var/i = 1; i <= verts.len; i++)
-		if(!E.visited)
-			E.visit()
-
-/datum/graph_edge/proc/collect(list/connected)
-	visited = TRUE
-	connected[value] = src
-	var/datum/graph_edge/E
-	for(var/i = 1; i <= verts.len; i++)
-		if(!E.visited)
-			E.collect(connected)
-
-
-/datum/graph_edge/Destroy()
-	disconnect_all()
-	verts = null
-	value = null
-	graph_component = null
-	return ..()
-
-/datum/graph_edge/proc/disconnect_all()
-	var/datum/graph_edge/E
-	for(var/i = 1; i <= verts.len; i++)
-		E = verts[i]
-		E.verts -= src
-	verts.Cut()
-
-/datum/graph_component
-	var/datum/graph
-	var/list/edges
-	var/count
-
-/datum/graph_component/New(G, E)
-	graph = G
-	edges = list()
-	count = 0
-
-/datum/graph_component/Destroy()
-	graph = null
-	edges = null
-	return ..()
-
-/datum/graph
-	var/list/edges = list()
-	var/list/graph_components = list()
-
-
-/datum/graph/proc/connect_edge(datum/graph_edge/A, datum/graph_edge/B)
-	edges[A.value] = A
-	edges[B.value] = B
-	A.verts |= B
-	B.verts |= A
-
-/datum/graph/proc/disconnect_edge(datum/graph_edge/A, datum/graph_edge/B)
-	edges[A.value] = null
-	edges[B.value] = null
-	A.verts -= B
-	B.verts -= A
-
-/datum/graph/proc/clear_visited()
-	var/datum/graph_edge/E
-	for(var/key in edges)
-		E = edges[key]
-		E.visited = FALSE
-
-/datum/graph/proc/refresh_connected_components()
-	clear_visited()
-	. = list()
-	var/datum/graph_component/N
-	var/datum/graph_edge/E
-	for(var/key in edges)
-		E = edges[key]
-		if(!E.visited)
-			N = new(G)
-			E.collect(N.edges)
-			. += N
-
-
-/*
 ** POWERNET DATUM
 ** only handles moving power from one device to another
 ** cable.dm, handles all connection and graphs
@@ -162,24 +67,24 @@
 /datum/powernet/proc/disconnect_machine(obj/machinery/power/M)
 	ASSERT(M.powernet == src)
 	if(M.power_flags & POWER_MACHINE_CONSUMER)
-		powernet.consumers -= M
+		consumers -= M
 	if(M.power_flags & POWER_MACHINE_PRODUCER)
-		powernet.producer -= M
+		producers -= M
 	if(M.power_flags & POWER_MACHINE_NEEDS_TERMINAL)
 		if(M.terminal)
-			powernet.consumers -= M.terminal
+			consumers -= M.terminal
 	M.powernet = null
 
 /datum/powernet/proc/connect_machine(obj/machinery/power/M)
 	ASSERT(M.powernet == null || M.powernet == src)
 	M.powernet = src
 	if(M.power_flags & POWER_MACHINE_CONSUMER)
-		powernet.consumers |= M
+		consumers |= M
 	if(M.power_flags & POWER_MACHINE_PRODUCER)
-		powernet.producer |= M
+		producers |= M
 	if(M.power_flags & POWER_MACHINE_NEEDS_TERMINAL)
 		if(M.terminal)
-			powernet.consumers |= M.terminal
+			consumers |= M.terminal
 
 
 //handles the power changes in the powernet
@@ -209,34 +114,41 @@
 		return 0
 
 // So you cut a cable, run this after you remove from
-// the powernet.  It will split the powernet on all
-// connected cables
+// the powernet.
 /proc/split_powernet(datum/powernet/PN)
 	var/list/queue = list()
 	// got to null that visitor flag
-	for(var/obj/structure/cable/C in PN.cables)
-		C.visited = FALSE
+	var/obj/structure/cable/C = null
+	var/obj/structure/cable/CI = null
+	var/datum/powernet/current = null
+	for(var/k in PN.cables)
+		PN.cables[k].visited = FALSE
+				PN.cables[k].visited = FALSE
 
-	for(var/obj/structure/cable/C in PN.cables)
-		if(!C || C.visited)
-			continue
-		current = SSmachines.aquire_powernet()
-		queue += C
-		PN.cables[C] = null
-		while(queue.len > 0)
-			QC = queue[queue.len--]  // first one is free
-			QC.powernet = current
-			QC.powernet.cables[QC] = current
-			QC.visited = TRUE
-			var/obj/machinery/power/M
-			var/obj/structure/cable/CDIR
-			for(var/i = 1; i < CABLE_DIR_DOWN; i++)
-				CDIR = QC.linked[i]
-				if(CDIR && !CDIR.visited)
-					queue += CDIR
-				M = QC.linked[i]
-				if(M && M.powernet != current)
-					M.powernet.disconnect_machine(M)
-					current.connect_machine(M)
+	for(var/k in PN.cables)
+		C = PN.cables[k]
+		if(C && !C.visited)
+			current = SSmachines.aquire_powernet()
+			queue += C
+			while(queue.len > 0)
+				C = queue[queue.len--]
+				PN.cables[C] = null // first one is free
+				C.powernet = current
+				C.powernet.cables[C] = current
+				C.visited = TRUE
+				if(C.cables.len > 0)
+					for(var/i in 1 to C.cables.len)
+						if(istype(C.cables[i], /obj/machinery/power))
+							var/obj/machinery/power/M = C.cables[i]
+							if(M.powernet != current)
+								M.powernet.disconnect_machine(M)
+								current.connect_machine(M)
+						else if(istype(C.cables[i], /obj/structure/cable))
+							CI = C.cables[i]
+							if(!CI.visited)
+								queue += CI
+	ASSERT(PN.cables.len == 0)
 	// PN should be empty so release it
 	SSmachines.release_powernet(PN)
+
+
