@@ -4,13 +4,6 @@
 # In the event that multiple org members are to be informed of changes
 # to the same file or dir, add them to the end under Multiple Owners
 
-# bobbahbrown
-/code/datums/chatmessage.dm @bobbahbrown
-
-# ChangelingRain
-
-/code/game/objects/effects/temporary_visuals/ @ChangelingRain
-
 # Cobby
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
 /code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
@@ -31,11 +24,6 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
-
-# duncathan
-
-/code/__DEFINES/atmospherics.dm @duncathan
-/code/modules/atmospherics/ @duncathan
 
 # Jordie0608
 
@@ -72,14 +60,9 @@
 
 /tgui @stylemistake
 
-# Qustinnus
-/code/datums/components/mood.dm @Qustinnus
-/code/datums/mood_events/ @Qustinnus
-/code/__DEFINES/mobs.dm @Qustinnus
-
 # Multiple Owners
 
-/code/controllers/subsystem/air.dm @duncathan @MrStonedOne
+/code/controllers/subsystem/air.dm @MrStonedOne
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact
