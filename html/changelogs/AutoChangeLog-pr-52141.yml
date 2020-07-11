@@ -1,0 +1,6 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - code_imp: "Separate BLOCK_Z_FALL flag to BLOCK_Z_OUT_DOWN, BLOCK_Z_OUT_UP, BLOCK_Z_IN_DOWN, BLOCK_Z_IN_UP"
+  - rscadd: "Now lattice can support spaceman"
+  - bugfix: "Catwalk block uplifting from below"
