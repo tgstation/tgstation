@@ -167,7 +167,7 @@
 	if(!T)
 		return FALSE
 	for(var/atom/movable/AM in T)
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density && AM.layer > layer)
+		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density && (AM.layer > layer || (T.intact && HAS_TRAIT(AM, TRAIT_T_RAY_VISIBLE))))
 			return TRUE
 	return FALSE
 
