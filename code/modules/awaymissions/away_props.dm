@@ -87,7 +87,7 @@
 	var/talpha
 	if(open)
 		talpha = 0
-		obj_flags &= ~BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+		obj_flags &= ~(BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP)
 	else
 		talpha = 255
 		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
