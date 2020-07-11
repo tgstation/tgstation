@@ -180,7 +180,7 @@
 	var/mob/living/carbon/C = A
 	C.dust()
 
-/proc/tesla_zap(atom/source, zap_range = 3, power, zap_flags = ZAP_DEFAULT_FLAGS, list/shocked_targets)
+/proc/tesla_zap(atom/source, zap_range = 3, power, zap_flags = ZAP_DEFAULT_FLAGS, list/shocked_targets = list())
 	if(QDELETED(source))
 		return
 	. = source.dir
@@ -330,8 +330,8 @@
 	else
 		power = closest_atom.zap_act(power, zap_flags, shocked_targets)
 	if(prob(20))//I know I know
-		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
-		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
+		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets.Copy())//No pass by ref, it's a bad play
+		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets.Copy())
 	else
 		tesla_zap(closest_atom, next_range, power, zap_flags, shocked_targets)
 
