@@ -166,6 +166,8 @@
 
 				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
 					return
+				else
+					C.update_fire(force = TRUE)//you will always be burning on top of lava if you're not protected
 
 			if("lava" in L.weather_immunities)
 				continue
