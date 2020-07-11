@@ -27,6 +27,11 @@
 	desc = "A white folder."
 	icon_state = "folder_white"
 
+/obj/item/folder/miku
+	name = "Miku Binder"
+	desc = "A binder for holding paper. Opening it plays a little jingle!"
+	icon_state = "folder_miku"
+
 
 /obj/item/folder/update_overlays()
 	. = ..()
