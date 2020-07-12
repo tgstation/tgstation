@@ -43,25 +43,41 @@ DATU: Datums for map templates
 	name = "Prototype Captain's quarter"
 	icon_state = "blue"
 
-/area/ruin/has_grav/prototype/nhallway
-	name = "Prototype North Hall"
+/area/ruin/has_grav/prototype/arrivals
+	name = "Prototype Arrivals"
 	icon_state = "hallP"
 
-/area/ruin/has_grav/prototype/shallway
-	name = "Prototype South Hall"
+/area/ruin/has_grav/prototype/hallway
+	name = "Prototype Main Hallway"
 	icon_state = "hallS"
 
-/area/ruin/has_grav/prototype/chemistry
-	name = "Prototype Chemistry"
+/area/ruin/has_grav/prototype/medsci
+	name = "Prototype Med-Sci"
 	icon_state = "green"
 
-/area/ruin/has_grav/prototype/garden
-	name = "Prototype Garden"
+/area/ruin/has_grav/prototype/botany
+	name = "Prototype Botany"
 	icon_state = "garden"
 
 /area/ruin/has_grav/prototype/engineering
 	name = "Prototype Engineering"
 	icon_state = "engi_storage"
+
+/area/ruin/has_grav/prototype/solars
+	name = "Prototype Solars"
+	icon_state = "engi_storage"
+
+/area/ruin/has_grav/prototype/kitchen
+	name = "Prototype Kitchen"
+	icon_state = "kitchen"
+
+/area/ruin/has_grav/prototype/brig
+	name = "Prototype Brig"
+	icon_state = "maint_brig"
+
+/area/ruin/has_grav/prototype/dorms
+	name = "Prototype Dormitories"
+	icon_state = "dorms"
 
 /obj/item/book/story/ProtoStory
 	icon = 'icons/obj/library.dmi'
@@ -107,7 +123,7 @@ At night the captain woke me up to have a drink in his cabin. He told me a bit a
 <strong><li>6</li></strong>
 I'm going to die. I'm going to try to be strong and write this with a steady hand. <br><br>
 It was early morning and I was just about to get some coffee when the captain nearly jumped on top of me. He ordered me to duck, and boy I wish I had. I heard the explosion comming from the bridge, splintering the windows open. The explosion threw me off balance and I heard the door being forced open. A man in a red and black hardsuit pointed a gun at me and yelled for me to get down. The captain, however, was not in a cooperative mood. I watched as the bravest man I'd ever known leaped from the ground and grabbed his trusty laser pistol; he managed to fire off an expertly placed shot that nailed the intruder right between the eyes, killing him instantly. To my horror, the downed invader began to shudder violently before exploding violently. These people are truly monsters. After the shock of seeing this wore off I looked over towards the Captain, expecting to see him. Instead of seeing him alive and well I saw the last signs of life fading from him as another red and black clad man slit his throat with a wicked looking knife.  <br><br>
-I cried out for mercy but all I got was a bullet to the shoulder and a knee in my chest. The bastard that murdered my Captain and friend was sitting on me now, knife and all. I regained my focus just to hear some shots in botany as well as Shirley screaming. I felt terrified, but at least I knew death would come for me in a moment. The man sitting on top of me raised his knife to impale my heart but got stopped by a third man; this one was dressed in pure black. He told the other to finish the job properly. The man on top of me finally raised me off the ground. He punched me square in the jaw and then threw me into the minibrig. He then pressed the button to close the door. I heard tools being fumbled with and before I knew it I saw the bolts locking me inside of that small room.<br><br>
+I cried out for mercy but all I got was a bullet to the shoulder and a knee in my chest. The bastard that murdered my Captain and friend was sitting on me now, knife and all. I regained my focus just to hear some shots in botany as well as Shirley screaming. I felt terrified, but at least I knew death would come for me in a moment. The man sitting on top of me raised his knife to impale my heart but got stopped by a third man; this one was dressed in pure black. He told the other to finish the job properly. The man on top of me finally raised me off the ground. He punched me square in the jaw and then threw me into the cell. He then pressed the button to close the door. I heard tools being fumbled with and before I knew it I saw the bolts locking me inside of that small room.<br><br>
 I sat there for some hours, slowly bleeding out. Maybe it was luck or just god prolonging my suffering, but I did not die. After what seemed like a century of waiting and suffering the door bolts lifted and I saw the same man who nearly killed me walk in. He explained how his commander wanted me to tell Nanostrasen what happened so that they may be feared. He pricked me with a small autoinjector and told me that I would be stable for another few hours, and that I had best get to writing.<br><br>
 The glass won't break. The pen is too small for suicide. I will die a lonely death. The Syndicate truly are the monsters they want people to believe they are. I would write longer, but the lights are giving up. I don't even have hope of a rescue team finding me. Maybe they'll come, but they won't find our corpses for weeks.<br><br>
 There is no point for a testament, but maybe a confession is appropriate. I've never really loved anyone but myself. I've always worked myself to the bone to try and get a good position and stabbed as many backs as I could to do it. In this bitter end I find myself wishing I'd spent more time with my friends and family. Maybe by the time they find my body my brain will be in a shape that's capable of being cloned, I can only find solace in this. If that isn't the case then I say this now to whomever may happen upon this journal. Beware the Syndicate and their cruelty. And show the bastards no mercy if you have enough men to fight them off.
@@ -130,7 +146,6 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 	important_info = "Leaving the station is forbidden."
 	outfit = /datum/outfit/syndicate_engineer
 	assignedrole = "Syndicate Engineer"
-
 
 /datum/outfit/syndicate_engineer
 	name = "Syndicate Engineer"
@@ -157,6 +172,18 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 /obj/effect/mob_spawn/human/syndicate_engineer/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	return ..()
+
+/obj/structure/closet/crate/solarpanel_medium
+	name = "solar panel crate"
+	icon_state = "engi_e_crate"
+
+/obj/structure/closet/crate/solarpanel_medium/PopulateContents()
+	..()
+	for(var/i in 1 to 33)
+		new /obj/item/solar_assembly(src)
+	new /obj/item/electronics/tracker(src)
+	new /obj/item/stack/cable_coil(src)
+	new /obj/item/circuitboard/computer/solar_control(src)
 
 /obj/effect/mob_spawn/human/Dndplayer
     name = "DnD player"
@@ -232,9 +259,8 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 /datum/map_template/ruin/space/prototype
 	id = "prototype"
 	suffix = "prototype.dmm"
-	name = "Prototype SS13"
-	placement_weight = 3 //Fun spawners in space are rare. Might be toned down in the future.
-	description = "Apparently, the first station built by NanoStrasen, but the Syndicates may want to reclaim it."
+	name = "Prototype Station"
+	description = "Apparently, one of the first stations built by Nanotrasen, but the Syndicate may want to reclaim it."
 
 /datum/map_template/ruin/space/dndmansion
 	id = "dndmansion"
