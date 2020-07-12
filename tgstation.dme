@@ -634,6 +634,7 @@
 #include "code\datums\wires\airlock.dm"
 #include "code\datums\wires\apc.dm"
 #include "code\datums\wires\autolathe.dm"
+#include "code\datums\wires\conveyor.dm"
 #include "code\datums\wires\emitter.dm"
 #include "code\datums\wires\explosive.dm"
 #include "code\datums\wires\microwave.dm"
