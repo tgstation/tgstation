@@ -330,7 +330,7 @@
 
 /datum/mafia_role/hop/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
-	if(!. || game.phase == MAFIA_PHASE_NIGHT || target.game_status != MAFIA_ALIVE || target != src || revealed )
+	if(!. || game.phase == MAFIA_PHASE_NIGHT || game.turn == 1 || target.game_status != MAFIA_ALIVE || target != src || revealed)
 		return FALSE
 
 /datum/mafia_role/hop/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
