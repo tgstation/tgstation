@@ -141,6 +141,10 @@
 	for(var/obj/O in range(0,src))
 		if(O.type == src.type)
 			continue
+		if(isturf(O.loc))
+			var/turf/T = O.loc
+			if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+				continue
 		if(lifetime % reagent_divisor)
 			reagents.expose(O, VAPOR, fraction)
 	var/hit = 0

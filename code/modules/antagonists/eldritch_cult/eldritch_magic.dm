@@ -240,10 +240,9 @@
 
 		target.visible_message("<span class='danger'>[target]'s veins are shredded from within as an unholy blaze erupts from their blood!</span>", \
 							"<span class='danger'>Your veins burst from within and unholy flame erupts from your blood!</span>")
-		for(var/repetition in 0 to 2)
-			var/obj/item/bodypart/bodypart = pick(target.bodyparts)
-			var/datum/wound/brute/cut/critical/crit_wound = new
-			crit_wound.apply_wound(bodypart)
+		var/obj/item/bodypart/bodypart = pick(target.bodyparts)
+		var/datum/wound/brute/cut/critical/crit_wound = new
+		crit_wound.apply_wound(bodypart)
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/cleave(target.drop_location())
 
