@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Player controlled medbots are no longer permanently crippled when tipped over"
