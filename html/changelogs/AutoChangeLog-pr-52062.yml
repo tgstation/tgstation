@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - admin: "Stacks will now update properly when you varedit their amount. It's clamped to max_amount, so make sure to change that too if you want to increase the amount beyond it."
