@@ -346,10 +346,12 @@
 	strip_delay = 100
 	var/mob/living/carbon/monkey/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
 	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)
+	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
 
 /obj/item/clothing/head/helmet/monkey_sentience/Initialize()
 	. = ..()
-	icon_state = "[icon_state][rand(1,3)]"
+	light_colors = rand(1,3)
+	update_icon_state()
 
 /obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
 	. = ..()
@@ -359,6 +361,9 @@
 	. += "<span class='warning'>PRIMAL GENE ACTIVATION</span>"
 	. += "<span class='warning'>GENETIC MAKEUP MASS SUSCEPTIBILITY</span>"
 	. += "<span class='boldnotice'>Ask your CMO if mind magnification is right for you.</span>"
+
+/obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
+	icon_state = "[initial(icon_state)][light_colors][magnification ? "up" : ""]"
 
 /obj/item/clothing/head/helmet/monkey_sentience/equipped(mob/user, slot)
 	. = ..()
@@ -390,8 +395,8 @@
 	icon_state = "[icon_state]up"
 
 /obj/item/clothing/head/helmet/monkey_sentience/Destroy()
-	. = ..()
 	disconnect()
+	return ..()
 
 /obj/item/clothing/head/helmet/monkey_sentience/proc/disconnect()
 	if(!magnification) //not put on a viable head

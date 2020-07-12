@@ -27,6 +27,12 @@
 		QDEL_NULL(defib)
 	. = ..()
 
+/obj/machinery/defibrillator_mount/handle_atom_del(atom/A)
+	if(A == defib)
+		defib = null
+		end_processing()
+	return ..()
+
 /obj/machinery/defibrillator_mount/examine(mob/user)
 	. = ..()
 	if(defib)
@@ -171,6 +177,8 @@
 
 /obj/machinery/defibrillator_mount/charging/process()
 	var/obj/item/stock_parts/cell/C = get_cell()
+	if(!C)
+		return PROCESS_KILL
 	if(C.charge < C.maxcharge && is_operational())
 		use_power(100)
 		C.give(80)

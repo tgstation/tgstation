@@ -1,0 +1,7 @@
+author: "Jay Smith & MrDoomBringer"
+delete-after: True
+changes: 
+  - bugfix: "Replaced faulty sprites for various bags and the Portable Chemical Mixer in the belt slot"
+  - bugfix: "Replaced the DNA probe's old sprite (Hypospray) with a unique sprite"
+  - imageadd: "New icon and sprites for the DNA probe"
+  - imageadd: "Belt sprites for the Portable Chemical Mixer and various bags"

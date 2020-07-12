@@ -1,0 +1,4 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - tweak: "You can now leave Metastation's medbay after being treated without bugging a doctor to let you out."

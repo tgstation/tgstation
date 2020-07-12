@@ -1,0 +1,5 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - rscadd: "Added reconstructive surgery for moth wings, requiring synthflesh"
+  - bugfix: "Magical healing and aheals now restore moth wings"

@@ -1,0 +1,4 @@
+author: "Alterist"
+delete-after: True
+changes: 
+  - rscadd: "Added 3 tier of Cybernetic Stomachs, researchable by R&D and buildable in the Medical Lathe."

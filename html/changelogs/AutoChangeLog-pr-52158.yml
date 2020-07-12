@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Wires will no longer burn if they're under a tile that's on fire"
+  - code_imp: "Reinserted some old checks for if something is over/under a tile"

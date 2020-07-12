@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - rscadd: "conveyor switches now have a wire that can be pulsed with signalers/other assemblies to active it"

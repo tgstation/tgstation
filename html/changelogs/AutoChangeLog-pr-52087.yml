@@ -1,0 +1,4 @@
+author: "Kathy Ryals and ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "Plant mutation chances at 80+ instability is now a sliding scale."
