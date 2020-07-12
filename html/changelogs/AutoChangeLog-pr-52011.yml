@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "To sacrifice someone on a sacrificial altar (such as the ones found in the healing fountain ruin), you must now alt-click the altar, not normal-click it. The default descriptions of sacrificial altars have been updated accordingly."
