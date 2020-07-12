@@ -61,3 +61,11 @@ config/title_music/sounds/Neon Starlight.ogg
 config/title_music/sounds/Lil B Station.ogg
 config/title_music/sounds/Starfish Island.ogg
 config/title_music/sounds/Tomorrow without you.ogg
+config/title_music/sounds/Time to do Something.ogg
+config/title_music/sounds/CrazyBus.ogg
+config/title_music/sounds/It Was At That Point I Realised.ogg
+config/title_music/sounds/Whatever it means.ogg
+config/title_music/sounds/Title3.ogg
+config/title_music/sounds/Lil B Station.ogg
+config/title_music/sounds/3D Galax.ogg
+config/title_music/sounds/Skyline have my child.ogg
