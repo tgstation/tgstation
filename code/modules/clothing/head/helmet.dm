@@ -390,8 +390,8 @@
 	icon_state = "[icon_state]up"
 
 /obj/item/clothing/head/helmet/monkey_sentience/Destroy()
-	. = ..()
 	disconnect()
+	return ..()
 
 /obj/item/clothing/head/helmet/monkey_sentience/proc/disconnect()
 	if(!magnification) //not put on a viable head
