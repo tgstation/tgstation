@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Bounty boards are properly responsive, and are mapped on icebox dorms as intended."
