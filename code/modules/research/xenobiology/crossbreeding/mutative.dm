@@ -1,5 +1,6 @@
 //All mutative extracts result in items so let's just put them in a single file for the ease of readability.
 /obj/item/slimecross/mutative
+	icon_state = "mutative"
 	name = "mutated"
 	effect = "mutative"
 

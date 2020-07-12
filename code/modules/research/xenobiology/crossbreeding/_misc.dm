@@ -295,3 +295,48 @@ Slimecrossing Items
 		return
 	toner += round(SJ.volume/10)
 	reggies.remove_reagent(/datum/reagent/toxin/slimejelly,SJ.volume)
+
+
+/obj/item/slime_iv
+	name = "Slime IV"
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "slimeiv"
+	var/mob/living/carbon/attached
+
+/obj/item/slime_iv/Initialize()
+	. = ..()
+	create_reagents(100, OPENCONTAINER)
+
+/obj/item/slime_iv/MouseDrop(mob/living/target)
+	. = ..()
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE) || !isliving(target))
+		return
+
+	if(attached == target)
+		visible_message("<span class='warning'>[attached] is detached from [src].</span>")
+		attached = null
+		return
+
+	if(!target.has_dna())
+		to_chat(usr, "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>")
+		return
+
+	if(Adjacent(target) && usr.Adjacent(target))
+		usr.visible_message("<span class='warning'>[usr] attaches [src] to [target].</span>", "<span class='notice'>You attach [src] to [target].</span>")
+		add_fingerprint(usr)
+		attached = target
+		START_PROCESSING(SSprocessing, src)
+
+/obj/item/slime_iv/process()
+	if(!attached)
+		return PROCESS_KILL
+
+	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
+		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
+		attached.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
+		attached = null
+		return PROCESS_KILL
+
+	if(reagents.total_volume)
+		reagents.trans_to(attached, 5, method = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+		return
