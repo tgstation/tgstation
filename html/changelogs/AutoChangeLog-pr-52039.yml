@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Plasmamen who have acquired the fireproofing trait will no longer get spammed with messages saying they caught on fire."
