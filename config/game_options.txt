@@ -321,7 +321,7 @@ ASSISTANTS_HAVE_MAINT_ACCESS
 #EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this out this to make security officers spawn in departmental security posts
-SEC_START_BRIG
+#SEC_START_BRIG
 
 
 ## GHOST INTERACTION ###
@@ -445,7 +445,7 @@ ROUNDSTART_RACES snail
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal
-#ROUNDSTART_RACES jelly
+ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES golem
 #ROUNDSTART_RACES adamantine
 #ROUNDSTART_RACES plasma
@@ -537,7 +537,7 @@ LAVALAND_BUDGET 60
 ICEMOON_BUDGET 90
 
 ## Space Ruin Budget
-Space_Budget 16
+Space_Budget 18
 
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
 ## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
@@ -554,7 +554,7 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 MICE_ROUNDSTART 10
 
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
-#EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
+EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.1
 
 ## Uncomment to allow roundstart quirk selection in the character setup menu.
 ## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!
@@ -564,7 +564,7 @@ ROUNDSTART_TRAITS
 #DISABLE_HUMAN_MOOD
 
 ## Enable night shifts ##
-#ENABLE_NIGHT_SHIFTS
+ENABLE_NIGHT_SHIFTS
 
 ## Enable randomized shift start times##
 #RANDOMIZE_SHIFT_TIME

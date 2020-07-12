@@ -1,11 +1,11 @@
 {
-    "map_name": "PubbyStation",
-    "map_path": "map_files/PubbyStation",
-    "map_file": "PubbyStation.dmm",
+    "map_name": "Delta Station",
+    "map_path": "map_files/Deltastation",
+    "map_file": "DeltaStation2.dmm",
     "shuttles": {
-	    "emergency": "emergency_pubby",
-	    "whiteship": "whiteship_pubby",
+	    "emergency": "emergency_delta",
 	    "ferry": "ferry_fancy",
-	    "cargo": "cargo_box"
+	    "cargo": "cargo_delta",
+	    "whiteship": "whiteship_delta"
     }
 }
