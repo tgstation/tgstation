@@ -1045,6 +1045,14 @@
 		return
 	..()
 
+/datum/reagent/fuel/expose_turf(turf/T, reac_volume) //Creates an umbra-blocking salt pile
+	if(!istype(T))
+		return
+	if(reac_volume < 1)
+		return
+	var/obj/effect/decal/cleanable/fuel/new_fuel_pile = new/obj/effect/decal/cleanable/fuel(T)
+	new_fuel_pile.fuel_volume = reac_volume
+
 /datum/reagent/fuel/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(1, 0)
 	..()

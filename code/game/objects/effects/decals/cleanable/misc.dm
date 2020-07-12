@@ -237,3 +237,78 @@
 	desc = "Torn pieces of cardboard and paper, left over from a package."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paper_shreds"
+
+/obj/effect/decal/cleanable/fuel
+	name = "fuel puddle"
+	desc = "That can't be safe."
+	var/fuel_volume = 10
+	var/fuel_per_hotspot = 5
+	var/is_fuel_burning = FALSE
+	var/list/adjacent_turfs = list()
+	icon_state = "flour"
+	icon = 'icons/effects/tomatodecal.dmi'
+	color = "#474646"
+
+/obj/effect/decal/cleanable/fuel/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	for(var/turf/turf in range(1, src))//calculate this once and save it to a list so we dont recalculate it every time we make a hotspot later
+		adjacent_turfs |= turf
+
+/obj/effect/decal/cleanable/fuel/temperature_expose(datum/gas_mixture/air, temperature, volume)
+	if(temperature > T0C+100 && !is_fuel_burning)
+		ignite_fuel_puddle()
+
+/obj/effect/decal/cleanable/fuel/fire_act(exposed_temperature, exposed_volume)
+	if(!is_fuel_burning)
+		ignite_fuel_puddle()
+	..()
+
+/obj/effect/decal/cleanable/fuel/attackby(obj/item/W, mob/user, params)
+	if(W.get_temperature() && !is_fuel_burning)
+		log_bomber(user, "ignited a", src, "via deliberately heating it")
+		ignite_fuel_puddle()
+
+/// Initial "boom" of a gasoline explosion
+/obj/effect/decal/cleanable/fuel/proc/ignite_fuel_puddle()
+	if(is_fuel_burning)
+		return
+	if(fuel_volume <= 1 && !QDELETED(src))//tiny amounts of fuel don't burn
+		qdel(src)
+		return
+	if(fuel_volume >= 30)
+		explosion(loc, -1, -1, 2, flame_range = 4)
+		fuel_volume = 30
+	is_fuel_burning = TRUE
+	new /obj/effect/hotspot(loc)
+	fuel_volume -= fuel_per_hotspot
+	addtimer(CALLBACK(src, /obj/effect/decal/cleanable/fuel.proc/slow_burn_fuel), 9)//9 is about the lifespan of a hotspot
+
+/// The steady flames that come after
+/obj/effect/decal/cleanable/fuel/proc/slow_burn_fuel()
+
+	//ignite nearby fuel before self deleting so you trails still work with low amounts of fuel
+	var/obj/effect/decal/cleanable/fuel/nearby_fuel
+	for(var/turf/turf in adjacent_turfs)
+		nearby_fuel = locate(/obj/effect/decal/cleanable/fuel, turf)
+		if(nearby_fuel && !nearby_fuel.is_fuel_burning)
+			nearby_fuel.ignite_fuel_puddle()
+
+	//delete the puddle once the fuel has all burned up up
+	if(fuel_volume <= 0 && !QDELETED(src))
+		qdel(src)
+		return
+
+	//continue to burn in place
+	new /obj/effect/hotspot(loc)
+	fuel_volume -= fuel_per_hotspot
+	addtimer(CALLBACK(src, /obj/effect/decal/cleanable/fuel.proc/slow_burn_fuel), 8)
+
+/obj/effect/decal/cleanable/fuel/attackby(atom/washer)
+	if(!is_fuel_burning)//dont try to scoop up burning fuel
+		..()
+
+/obj/effect/decal/cleanable/fuel/washed(atom/washer)
+	if(!is_fuel_burning)
+		..()
+		return
+	fuel_volume = 0//don't delete right away if burning to prevent addtimer + qdel jank
