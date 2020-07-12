@@ -172,6 +172,11 @@
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return
 
+obj/item/tank/internals/emergency_oxygen/slime
+	name = "slime oxygen tank"
+	volume = 6
+	color = "#00ff15"
+
 // *
 // * GENERIC
 // *

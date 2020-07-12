@@ -13,6 +13,7 @@
 	throw_speed = 3
 	throw_range = 5
 	slot_flags = ITEM_SLOT_BELT
+	var/unpleasant = TRUE
 
 /obj/item/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
@@ -46,6 +47,7 @@
 		return
 	var/chosen_beacon = pick(L)
 	var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), 100, null, FALSE, get_turf(chosen_beacon))
+	J.unpleasant = unpleasant
 	if(adjacent)
 		try_move_adjacent(J)
 	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
@@ -86,6 +88,7 @@
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
 	innate_accuracy_penalty = 6
+	var/unpleasant = TRUE
 
 /obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
 	. = ..()
@@ -97,4 +100,12 @@
 			L.Paralyze(60)
 			if(ishuman(L))
 				shake_camera(L, 20, 1)
+				if(!unpleasant)
+					return
 				addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
+
+/obj/item/wormhole_jaunter/slime
+	name = "slime jaunter"
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms. This one is made out of glossy green slime, with a small note saying that it no longer causes vomiting."
+	unpleasant = FALSE
+	color = "#00ff15"

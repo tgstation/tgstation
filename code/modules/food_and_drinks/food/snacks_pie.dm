@@ -301,3 +301,4 @@
 	tastes = list("nuts" = 1, "pie" = 1)
 	foodtype = GRAIN
 	value = FOOD_JUNK
+

@@ -744,3 +744,14 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	amount = 20
 /obj/item/stack/sheet/sandblock/five
 	amount = 5
+
+/obj/item/stack/sheet/slime
+	name = "slime sheet"
+	desc = "Ever growing, ever changing, when created wall with it fills adjacent girders and transforms them into walls."
+	singular_name = "slime sheet"
+	icon_state = "sheet-metal"
+	color = "#00ff15"
+	inhand_icon_state = "sheet-metal"
+	custom_materials = list(/datum/material/slime = MINERAL_MATERIAL_AMOUNT)
+	material_type = /datum/material/slime
+	material_modifier = 1

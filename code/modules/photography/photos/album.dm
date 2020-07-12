@@ -103,3 +103,4 @@ obj/item/storage/photo_album/chapel
 obj/item/storage/photo_album/prison
 	name = "photo album (Prison)"
 	persistence_id = "prison"
+

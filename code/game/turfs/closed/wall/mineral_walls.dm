@@ -311,3 +311,11 @@
 /turf/closed/wall/mineral/plastitanium/copyTurf(turf/T)
 	. = ..()
 	T.transform = transform
+
+/turf/closed/wall/mineral/slime
+	name = "slime growth wall"
+	desc = "Slime made out of glossy slime growth, It is impossible to retrieve the sheets now."
+	color = "#00ff15"
+	explosion_block = 4
+	sheet_type = null
+	canSmoothWith = list(/turf/closed/wall/mineral/slime)

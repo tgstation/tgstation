@@ -263,3 +263,35 @@ Slimecrossing Items
 	if(isliving(hit_atom))
 		playsound(hit_atom, 'sound/effects/glassbr3.ogg', 100)
 		qdel(src)
+
+/obj/item/storage/photo_album/slime
+	name = "slimey photo album"
+	color = "#00ff15"
+
+/obj/item/reagent_containers/food/snacks/pie/plain/slime
+	name = "slime pie"
+	desc = "A slime pie, still delicious."
+	color = "#00ff15"
+
+/obj/item/reagent_containers/food/snacks/pie/plain/slime/On_Consume(mob/living/eater)
+	. = ..()
+	if(isslimeperson(eater))
+		var/mob/living/carbon/human/human_eater = eater
+		human_eater.blood_volume += 50
+
+/obj/machinery/photocopier/slime
+	name = "Slime photocopier"
+	desc = "Used to copy important documents and anatomy studies, it can run on slime jelly!"
+	anchored = FALSE
+	color = "#00ff15"
+
+/obj/machinery/photocopier/slime/attackby(obj/item/O, mob/user, params)
+	. = ..()
+	var/datum/reagents/reggies = O.reagents
+	if(!reggies)
+		return
+	var/datum/reagent/toxin/slimejelly/SJ =  reggies.has_reagent(/datum/reagent/toxin/slimejelly)
+	if(!SJ)
+		return
+	toner += round(SJ.volume/10)
+	reggies.remove_reagent(/datum/reagent/toxin/slimejelly,SJ.volume)

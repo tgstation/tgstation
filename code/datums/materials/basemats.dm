@@ -395,3 +395,19 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.2
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
+
+/datum/material/slime
+	name = "Turf growth medium"
+	desc = "Doesn't do anything on it's own, useful at repairs"
+	color = "#00ff15"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/slime
+	value_per_unit = 0.0025
+	armor_modifiers = list("melee" = 0.5, "bullet" = 0.5, "laser" = 0.5, "energy" = 0.5, "bomb" = 0.5, "bio" = 0.51, "rad" = 1.5, "fire" = 0.5, "acid" = 1.5)
+	beauty_modifier = 0.2
+
+/datum/material/slime/on_applied_turf(turf/T, amount, material_flags)
+	. = ..()
+	for(var/obj/structure/girder/girder in orange(1,T))
+		var/turf/g_turf = get_turf(girder)
+		g_turf.PlaceOnTop(/turf/closed/wall/mineral/slime)

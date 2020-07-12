@@ -175,6 +175,12 @@
 	explosion(src.loc, 2, 5, 2, -1)
 
 /obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
+
+	if(istype(O,/obj/item/slimecross/mutative/darkpurple))
+		qdel(O)
+		sheets = max_sheets
+		return
+
 	if(istype(O, sheet_path))
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
