@@ -201,11 +201,52 @@
 	rites_list = list(/datum/religion_rites/toppercent,
 					  /datum/religion_rites/looks)
 
+/datum/religion_sect/capitalists/sect_bless(mob/living/L, mob/living/user)
+	if(!ishuman(L))
+		return
+	var/mob/living/carbon/human/H = L
+	var/obj/item/card/id/id_card = H.get_idcard()
+	var/obj/item/card/id/id_cardu = user.get_idcard()
+	var/money_check = 500
+
+	if(!id_card.registered_account.account_balance > money_check)
+		user.visible_message("<span class='notice'>[H] is too poor to recieve [GLOB.deity]'s blessing!</span>")
+	else
+		var/heal_amt = 10
+		var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
+
+		if(hurt_limbs.len)
+			for(var/X in hurt_limbs)
+				var/obj/item/bodypart/affecting = X
+				if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
+					H.update_damage_overlays()
+		id_card.registered_account.adjust_money(-10)
+		id_cardu.registered_account.adjust_money(10)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		playsound(user, 'sound/misc/capitialism.ogg', 25, TRUE, -1)
+		H.visible_message("<span class='notice'>[user] blesses [H] with the power of capitalism!</span>")
+		to_chat(H, "<span class='boldnotice'>You spiritually enriched, and donate to the casue of [GLOB.deity]!</span>")
+		H.visible_message("<span class='notice'>[H] donated 10 credits!</span>")
+
+	var/heal_amt = 10
+	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
+
+	if(hurt_limbs.len)
+		for(var/X in hurt_limbs)
+			var/obj/item/bodypart/affecting = X
+			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
+				H.update_damage_overlays()
+		H.visible_message("<span class='notice'>[user] heals [H] with the power of [GLOB.deity]!</span>")
+		to_chat(H, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed!</span>")
+		playsound(user, "punch", 25, TRUE, -1)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+	return TRUE
+
 /datum/religion_sect/capitalists/on_sacrifice(obj/item/I, mob/living/L)
 	var/obj/item/holochip/money = I
 	if(!istype(money))
 		return
 	adjust_favor(round(money.credits), L)
-	to_chat(L, "<span class='notice'>As you insert the chip into the small slit in the altar,you feel [GLOB.deity], looking at you with gratitude. Seems being a God isnt that easy on your wallet.</span>")
+	to_chat(L, "<span class='notice'>As you insert the chip into the small slit in the altar, you feel [GLOB.deity] looking at you with gratitude. Seems being a God isnt that easy on your wallet.</span>")
 	qdel(I)
 	return TRUE
