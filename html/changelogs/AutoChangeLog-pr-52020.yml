@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Throwing people really hard into vending machines is not advised if you don't want to clean them up afterwards. Things are considered thrown really hard if: You're throwing them as a hulk, the person you're throwing is a dwarf, and/or if you're throwing someone from a neckgrab"
+  - rscadd: "You can now adjust the speed disposal outlets eject contents at with a multitool, and emag the disposal outlet to amp the speed up even further!"
