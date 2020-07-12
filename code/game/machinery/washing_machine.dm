@@ -225,7 +225,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			name = initial(target_type.name)
 			desc = "[initial(target_type.desc)] The colors look a little dodgy."
 			return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
-	add_atom_colour(dye_color, FIXED_COLOUR_PRIORITY)
 	return FALSE
 
 //what happens to this object when washed inside a washing machine
