@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Map placed headpikes will now have heads... and pikes!"
+  - bugfix: "Fixed headpikes having the wrong mob name."
