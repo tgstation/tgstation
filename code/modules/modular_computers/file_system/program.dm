@@ -103,7 +103,7 @@
 	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
 		return TRUE
 
-	if(IsAdminGhost(user))
+	if(isAdminGhostAI(user))
 		return TRUE
 
 	if(issilicon(user))

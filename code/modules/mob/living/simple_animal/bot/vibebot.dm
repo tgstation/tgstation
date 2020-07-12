@@ -36,7 +36,7 @@
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 
 	return dat.Join("")

@@ -97,7 +97,7 @@
 	screen_loc = ui_building
 
 /obj/screen/area_creator/Click()
-	if(usr.incapacitated() || (isobserver(usr) && !IsAdminGhost(usr)))
+	if(usr.incapacitated() || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return TRUE
 	var/area/A = get_area(usr)
 	if(!A.outdoors)

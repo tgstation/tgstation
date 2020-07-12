@@ -38,7 +38,7 @@
 
 //Return a non FALSE value to cancel whatever called this from propagating, if it respects it.
 /atom/proc/_try_interact(mob/user)
-	if(IsAdminGhost(user))		//admin abuse
+	if(isAdminGhostAI(user))		//admin abuse
 		return interact(user)
 	if(can_interact(user))
 		return interact(user)
