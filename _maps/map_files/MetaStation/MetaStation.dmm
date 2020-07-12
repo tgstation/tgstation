@@ -316,14 +316,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"aaL" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
 "aaM" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -659,8 +651,8 @@
 /area/maintenance/central)
 "abq" = (
 /obj/machinery/light_switch{
-	pixel_y = -25;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -25
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -15959,8 +15951,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_y = 6;
-	pixel_x = 0
+	pixel_x = 0;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
@@ -17076,8 +17068,8 @@
 /obj/structure/cable,
 /obj/machinery/computer/security/telescreen/interrogation{
 	name = "isolation room monitor";
-	pixel_y = 31;
-	network = list("isolation")
+	network = list("isolation");
+	pixel_y = 31
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -18148,8 +18140,8 @@
 	pixel_y = 15
 	},
 /obj/item/stack/cable_coil{
-	pixel_y = 18;
-	pixel_x = 0
+	pixel_x = 0;
+	pixel_y = 18
 	},
 /obj/machinery/requests_console{
 	department = "Tool Storage";
@@ -19754,8 +19746,8 @@
 	pixel_x = -8
 	},
 /obj/item/assembly/prox_sensor{
-	pixel_y = 12;
-	pixel_x = 0
+	pixel_x = 0;
+	pixel_y = 12
 	},
 /obj/machinery/light{
 	dir = 4
@@ -25350,8 +25342,8 @@
 	pixel_y = 9
 	},
 /obj/item/cartridge/quartermaster{
-	pixel_y = 0;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 0
 	},
 /obj/item/cartridge/quartermaster{
 	pixel_x = 5;
@@ -26318,8 +26310,8 @@
 /area/quartermaster/sorting)
 "biI" = (
 /obj/machinery/firealarm{
-	pixel_y = 0;
-	pixel_x = 30
+	pixel_x = 30;
+	pixel_y = 0
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -27038,8 +27030,8 @@
 "bku" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/firealarm{
-	pixel_y = 0;
-	pixel_x = -31
+	pixel_x = -31;
+	pixel_y = 0
 	},
 /obj/machinery/light{
 	dir = 8
@@ -47107,6 +47099,9 @@
 	name = "Cryogenics";
 	req_access_txt = "5"
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "cgV" = (
@@ -47126,6 +47121,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "cgX" = (
@@ -49923,6 +49921,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cnA" = (
@@ -50592,6 +50593,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "coN" = (
@@ -70125,9 +70129,9 @@
 	dir = 8
 	},
 /obj/structure/sink{
-	pixel_y = 29;
 	dir = 2;
-	pixel_x = 0
+	pixel_x = 0;
+	pixel_y = 29
 	},
 /mob/living/simple_animal/mouse/brown/tom,
 /turf/open/floor/plating,
@@ -71494,9 +71498,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/button/flasher{
-	pixel_y = 8;
 	id = "IsolationFlash";
-	pixel_x = -23
+	pixel_x = -23;
+	pixel_y = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -74725,10 +74729,10 @@
 	dir = 4
 	},
 /obj/machinery/button/door{
-	name = "Panic Button";
-	pixel_y = -24;
 	id = "PermaLockdown";
+	name = "Panic Button";
 	pixel_x = -1;
+	pixel_y = -24;
 	req_access_txt = "2"
 	},
 /obj/structure/cable,
