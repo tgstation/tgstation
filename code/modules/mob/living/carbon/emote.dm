@@ -34,6 +34,23 @@
 							'sound/misc/clap3.ogg',
 							'sound/misc/clap4.ogg')
 
+/datum/emote/living/carbon/clap/aclap
+	key = "aclap"
+	key_third_person = "aclaps"
+	message = "claps their cheeks."
+
+/datum/emote/living/carbon/clap/aclap/get_sound(mob/living/user)
+	if(ishuman(user))
+		return pick('sound/misc/clap1.ogg',
+					'sound/misc/clap2.ogg',
+					'sound/misc/clap3.ogg',
+					'sound/misc/clap4.ogg')
+
+/datum/emote/living/carbon/clap/aclap/aaclap
+	key = "aaclap"
+	key_third_person = "aaclaps"
+	message = "claps their cheeks ANGRILY!"
+
 /datum/emote/living/carbon/crack
 	key = "crack"
 	key_third_person = "cracks"
