@@ -19,7 +19,6 @@
 
 /obj/item/britnotes/Initialize()
 	. = ..()
-	..()
 	ask_for_pass()
 	update_icon()
 	update_icon_state()
