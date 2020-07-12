@@ -3,6 +3,8 @@
 	var/desc = "You are a crewmember without any special abilities."
 	var/win_condition = "kill all mafia and solo killing roles."
 	var/team = MAFIA_TEAM_TOWN
+	///how the random setup chooses which roles get put in
+	var/role_type = TOWN_OVERFLOW
 
 	var/player_key
 	var/mob/living/carbon/human/body
@@ -111,6 +113,7 @@
 	name = "Detective"
 	desc = "You can investigate a single person each night to learn their team."
 	revealed_outfit = /datum/outfit/mafia/detective
+	role_type = TOWN_INVEST
 
 	targeted_actions = list("Investigate")
 
@@ -152,10 +155,75 @@
 		add_note("N[game.turn] - [R.body.real_name] - [team_text]")
 	current_investigation = null
 
+/datum/mafia_role/psychologist
+	name = "Psychologist"
+	desc = "You can visit someone ONCE PER GAME to reveal their true role in the morning!"
+	revealed_outfit = /datum/outfit/mafia/psychologist
+	role_type = TOWN_INVEST
+
+	targeted_actions = list("Reveal")
+	var/datum/mafia_role/current_target
+	var/can_use = TRUE
+
+/datum/mafia_role/psychologist/New(datum/mafia_controller/game)
+	. = ..()
+	RegisterSignal(game,COMSIG_MAFIA_NIGHT_END,.proc/therapy_reveal)
+
+/datum/mafia_role/psychologist/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
+	. = ..()
+	if(!. || !can_use || game.phase == MAFIA_PHASE_NIGHT || target.game_status != MAFIA_ALIVE || target.revealed || target == src)
+		return FALSE
+
+/datum/mafia_role/psychologist/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
+	. = ..()
+	to_chat(body,"<span class='warning'>You will reveal [target.body.real_name] tonight.</span>")
+	current_target = target
+
+/datum/mafia_role/psychologist/proc/therapy_reveal(datum/mafia_controller/game)
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"reveal",current_target) & MAFIA_PREVENT_ACTION || game_status != MAFIA_ALIVE) //Got lynched or roleblocked by a lawyer.
+		current_target = null
+	if(current_target)
+		add_note("N[game.turn] - [current_target.body.real_name] - Revealed true identity")
+		to_chat(body,"<span class='warning'>You have revealed the true nature of the [current_target]!</span>")
+		current_target.reveal_role(game, verbose = TRUE)
+		current_target = null
+		can_use = FALSE
+
+/datum/mafia_role/chaplain
+	name = "Chaplain"
+	desc = "You can communicate with spirits of the dead each night to discover dead crewmember roles."
+	revealed_outfit = /datum/outfit/mafia/chaplain
+	role_type = TOWN_INVEST
+
+	targeted_actions = list("Pray")
+	var/current_target
+
+/datum/mafia_role/chaplain/New(datum/mafia_controller/game)
+	. = ..()
+	RegisterSignal(game,COMSIG_MAFIA_NIGHT_ACTION_PHASE,.proc/commune)
+
+/datum/mafia_role/chaplain/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
+	. = ..()
+	if(!.)
+		return
+	return game.phase == MAFIA_PHASE_NIGHT && target.game_status == MAFIA_DEAD && target != src && !target.revealed
+
+/datum/mafia_role/chaplain/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
+	to_chat(body,"<span class='warning'>You will commune with the spirit of [target.body.real_name] tonight.</span>")
+	current_target = target
+
+/datum/mafia_role/chaplain/proc/commune(datum/mafia_controller/game)
+	var/datum/mafia_role/R = current_target
+	if(R)
+		to_chat(body,"<span class='warning'>You invoke spirit of [R.body.real_name] and learn their role was <b>[R.name]<b>.</span>")
+		add_note("N[game.turn] - [R.body.real_name] - [R.name]")
+		current_target = null
+
 /datum/mafia_role/md
 	name = "Medical Doctor"
 	desc = "You can protect a single person each night from killing."
 	revealed_outfit = /datum/outfit/mafia/md // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
+	role_type = TOWN_PROTECT
 
 	targeted_actions = list("Protect")
 
@@ -196,40 +264,12 @@
 		UnregisterSignal(current_protected,COMSIG_MAFIA_ON_KILL)
 		current_protected = null
 
-/datum/mafia_role/chaplain
-	name = "Chaplain"
-	desc = "You can communicate with spirits of the dead each night to discover dead crewmember roles."
-	revealed_outfit = /datum/outfit/mafia/chaplain
-
-	targeted_actions = list("Pray")
-	var/current_target
-
-/datum/mafia_role/chaplain/New(datum/mafia_controller/game)
-	. = ..()
-	RegisterSignal(game,COMSIG_MAFIA_NIGHT_ACTION_PHASE,.proc/commune)
-
-/datum/mafia_role/chaplain/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
-	. = ..()
-	if(!.)
-		return
-	return game.phase == MAFIA_PHASE_NIGHT && target.game_status == MAFIA_DEAD && target != src && !target.revealed
-
-/datum/mafia_role/chaplain/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
-	to_chat(body,"<span class='warning'>You will commune with the spirit of [target.body.real_name] tonight.</span>")
-	current_target = target
-
-/datum/mafia_role/chaplain/proc/commune(datum/mafia_controller/game)
-	var/datum/mafia_role/R = current_target
-	if(R)
-		to_chat(body,"<span class='warning'>You invoke spirit of [R.body.real_name] and learn their role was <b>[R.name]<b>.</span>")
-		add_note("N[game.turn] - [R.body.real_name] - [R.name]")
-		current_target = null
-
 /datum/mafia_role/lawyer
 	name = "Lawyer"
 	desc = "You can choose a person during the day to provide extensive legal advice to during the night, preventing night actions."
-
 	revealed_outfit = /datum/outfit/mafia/lawyer
+	role_type = TOWN_PROTECT
+
 	targeted_actions = list("Advise")
 
 	var/datum/mafia_role/current_target
@@ -279,43 +319,11 @@
 	if(game_status == MAFIA_ALIVE) //in case we got killed while imprisoning sk - bad luck edge
 		return MAFIA_PREVENT_ACTION
 
-/datum/mafia_role/psychologist
-	name = "Psychologist"
-	desc = "You can visit someone ONCE PER GAME to reveal their true role in the morning!"
-	revealed_outfit = /datum/outfit/mafia/psychologist
-
-	targeted_actions = list("Reveal")
-	var/datum/mafia_role/current_target
-	var/can_use = TRUE
-
-/datum/mafia_role/psychologist/New(datum/mafia_controller/game)
-	. = ..()
-	RegisterSignal(game,COMSIG_MAFIA_NIGHT_END,.proc/therapy_reveal)
-
-/datum/mafia_role/psychologist/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
-	. = ..()
-	if(!. || !can_use || game.phase == MAFIA_PHASE_NIGHT || target.game_status != MAFIA_ALIVE || target.revealed || target == src)
-		return FALSE
-
-/datum/mafia_role/psychologist/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
-	. = ..()
-	to_chat(body,"<span class='warning'>You will reveal [target.body.real_name] tonight.</span>")
-	current_target = target
-
-/datum/mafia_role/psychologist/proc/therapy_reveal(datum/mafia_controller/game)
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"reveal",current_target) & MAFIA_PREVENT_ACTION || game_status != MAFIA_ALIVE) //Got lynched or roleblocked by a lawyer.
-		current_target = null
-	if(current_target)
-		add_note("N[game.turn] - [current_target.body.real_name] - Revealed true identity")
-		to_chat(body,"<span class='warning'>You have revealed the true nature of the [current_target]!</span>")
-		current_target.reveal_role(game, verbose = TRUE)
-		current_target = null
-		can_use = FALSE
-
 /datum/mafia_role/hop
 	name = "Head of Personnel"
 	desc = "You can reveal yourself once per game, tripling your vote power but exposing your status to all the evils of the game!"
 	revealed_outfit = /datum/outfit/mafia/hop
+	role_type = TOWN_MISC
 
 	targeted_actions = list("Reveal")
 	var/protectable = TRUE
@@ -337,6 +345,7 @@
 	name = "Changeling"
 	desc = "You're a member of the changeling hive. Use ':j' talk prefix to talk to your fellow lings."
 	team = MAFIA_TEAM_MAFIA
+	role_type = MAFIA_REGULAR
 	revealed_outfit = /datum/outfit/mafia/changeling
 	special_theme = "syndicate"
 	win_condition = "become majority over the town and no solo killing role can stop them."
@@ -352,6 +361,7 @@
 /datum/mafia_role/mafia/thoughtfeeder
 	name = "Thoughtfeeder"
 	desc = "You're a changeling variant that feeds on the memories of others. Use ':j' talk prefix to talk to your fellow lings, and visit people at night to learn their role."
+	role_type = MAFIA_SPECIAL
 	targeted_actions = list("Learn Role")
 
 	var/datum/mafia_role/current_investigation
@@ -387,6 +397,7 @@
 	desc = "You're a solo traitor. You are immune to night kills, can kill every night and you win by outnumbering everyone else."
 	win_condition = "kill everyone."
 	team = MAFIA_TEAM_SOLO
+	role_type = NEUTRAL_KILL
 	targeted_actions = list("Night Kill")
 	revealed_outfit = /datum/outfit/mafia/traitor
 	special_theme = "syndicate"
@@ -433,6 +444,7 @@
 	win_condition = "kill everyone."
 	revealed_outfit = /datum/outfit/mafia/nightmare
 	team = MAFIA_TEAM_SOLO
+	role_type = NEUTRAL_KILL
 	targeted_actions = list("Flicker", "Hunt")
 	var/list/flickering = list()
 	var/datum/mafia_role/flicker_target
@@ -452,7 +464,7 @@
 	body.undershirt = "Nude"
 	body.socks = "Nude"
 	body.set_species(/datum/species/shadow)
-	body.update_body
+	body.update_body()
 
 /datum/mafia_role/nightmare/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
@@ -478,12 +490,13 @@
 		return
 
 	if(flicker_target != src) //flicker
-		to_chat(flicker_target.body, "<span class='danger'>The lights begin to flicker and dim. You're in danger.</span>")
+		to_chat(flicker_target.body, "<span class='userdanger'>The lights begin to flicker and dim. You're in danger.</span>")
 		flickering += flicker_target
 	else //hunt
 		for(var/r in flickering)
 			var/datum/mafia_role/role = r
 			if(role && role.game_status == MAFIA_ALIVE)
+				to_chat(flicker_target.body, "<span class='userdanger'>A shadowy monster appears out of the darkness!</span>")
 				role.kill(source)
 			flickering -= role
 
@@ -496,6 +509,7 @@
 	desc = "You're on the run. You can become immune to night kills exactly twice, and you win by surviving to the end of the game with anyone."
 	win_condition = "survive to the end of the game, with anyone"
 	team = MAFIA_TEAM_SOLO
+	role_type = NEUTRAL_DISRUPT
 	actions = list("Self Preservation")
 	var/charges = 2
 	var/protection_status = FUGITIVE_NOT_PRESERVING
@@ -550,6 +564,7 @@
 	desc = "You're completely lost in your own mind. You win by lynching your obsession before you get killed in this mess. Obsession assigned on the first night!"
 	win_condition = "lynch their obsession."
 	team = MAFIA_TEAM_SOLO
+	role_type = NEUTRAL_DISRUPT
 	revealed_outfit = /datum/outfit/mafia/obsessed // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
 
 	solo_counts_as_town = TRUE //after winning or whatever, can side with whoever. they've already done their objective!
@@ -589,6 +604,7 @@
 	win_condition = "get themselves lynched!"
 	revealed_outfit = /datum/outfit/mafia/clown
 	team = MAFIA_TEAM_SOLO
+	role_type = NEUTRAL_DISRUPT
 
 /datum/mafia_role/clown/New(datum/mafia_controller/game)
 	. = ..()

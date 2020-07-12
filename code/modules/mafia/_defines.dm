@@ -2,6 +2,17 @@
 #define MAFIA_TEAM_MAFIA "mafia"
 #define MAFIA_TEAM_SOLO "solo"
 
+//types of town roles for random setup gen
+#define TOWN_OVERFLOW "overflow" //assistants it's just assistants filling up the rest of the roles
+#define TOWN_INVEST "invest" //roles that learn info about others in the game (chaplain, detective, psych)
+#define TOWN_PROTECT "protect" //roles that keep other roles safe (doctor, and weirdly enough lawyer counts)
+#define TOWN_MISC "misc" //roles that don't fit into anything else (hop)
+//other types (mafia team, neutrals)
+#define MAFIA_REGULAR "regular" //normal vote kill changelings
+#define MAFIA_SPECIAL "special" //every other changeling role that has extra abilities
+#define NEUTRAL_KILL "kill" //role that wins solo that nobody likes
+#define NEUTRAL_DISRUPT "disrupt" //role that upsets the game aka obsessed, usually worse for town than mafia but they can vote against mafia
+
 #define MAFIA_PHASE_SETUP 1
 #define MAFIA_PHASE_DAY 2
 #define MAFIA_PHASE_VOTING 3

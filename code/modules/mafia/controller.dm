@@ -212,8 +212,6 @@
   */
 /datum/mafia_controller/proc/lynch()
 
-	var/override = null
-
 	for(var/i in judgement_innocent_votes)
 		var/datum/mafia_role/role = i
 		send_message("<span class='green'>[role.body.real_name] voted innocent.</span>")
@@ -682,17 +680,81 @@
 	return length(valid_setups) > 0 ? pick(valid_setups) : null
 
 /**
+  * Returns a semirandom setup, with...
+  * Two invest roles, one protect role, sometimes a misc role, and the rest assistants for town.
+  * Mafia, 2 normal mafia and one special.
+  * Neutral, two disruption roles, sometimes one is a killing.
+  *
+  * See _defines.dm in the mafia folder for a rundown on what these groups of roles include.
+  */
+/datum/mafia_controller/proc/generate_random_setup()
+	var/invests_left = 2
+	var/protects_left = 1
+	var/miscs_left = prob(35) ? 1 : 0
+	var/mafiareg_left = 2
+	var/mafiaspe_left = 1
+	var/killing_role = prob(50) ? 1 : 0
+	var/disruptors = killing_role ? 1 : 2
+
+	var/list/random_setup = list()
+	for(var/i in 1 to 12)
+		if(invests_left)
+			add_setup_role(random_setup, TOWN_INVEST)
+			invests_left--
+		else if(protects_left)
+			add_setup_role(random_setup, TOWN_PROTECT)
+			protects_left--
+		else if(miscs_left)
+			add_setup_role(random_setup, TOWN_MISC)
+			miscs_left--
+		//assistants handled at the end as overflow roles
+		else if(mafiareg_left)
+			add_setup_role(random_setup, MAFIA_REGULAR)
+			mafiareg_left--
+		else if(mafiaspe_left)
+			add_setup_role(random_setup, MAFIA_SPECIAL)
+			mafiaspe_left--
+		else if(killing_role)
+			add_setup_role(random_setup, NEUTRAL_KILL)
+			killing_role--
+		else if(disruptors)
+			add_setup_role(random_setup, NEUTRAL_DISRUPT)
+			disruptors--
+		else
+			add_setup_role(random_setup, TOWN_OVERFLOW)
+	return random_setup
+
+/**
+  * Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one
+  */
+/datum/mafia_controller/proc/add_setup_role(setup_list, wanted_role_type)
+	var/list/role_type_paths = list()
+	//var/list/role_type_lookup = list()
+	for(var/datum/mafia_role/l in typesof(/datum/mafia_role))
+		if(initial(l.role_type) == wanted_role_type)
+			role_type_paths += l
+
+	var/mafia_path = pick(role_type_paths)
+	var/found_role = locate(mafia_path) in setup_list
+	if(found_role)
+		setup_list[found_role] += 1
+		return
+	setup_list += mafia_path
+
+/**
   * Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.
   *
+  * Picks a setup using find_best_setup()
   * Checks if everyone signed up is an observer, and is still connected. If people aren't, they're removed from the list.
   * If there aren't enough players post sanity, it aborts. otherwise, it selects enough people for the game and starts preparing the game for real.
   */
 /datum/mafia_controller/proc/basic_setup()
 	var/ready_count = length(GLOB.mafia_signup)
+
 	var/list/setup = find_best_setup(ready_count)
 	if(!setup)
 		return
-	var/req_players = assoc_value_sum(setup) //12
+	var/req_players = assoc_value_sum(setup) //12, lowered by admins lowering the setup list pop count
 
 	//final list for all the players who will be in this game
 	var/list/filtered_keys = list()
@@ -721,6 +783,9 @@
 		var/client/unpicked_client = GLOB.directory[unpicked]
 		to_chat(unpicked_client, "<span class='danger'>Sorry, the starting mafia game has too many players and you were not picked.</span>")
 		to_chat(unpicked_client, "<span class='warning'>You're still signed up, and have another chance to join when the one starting now finishes.</span>")
+
+	if(prob(80) && filtered_keys.len == 12)
+		setup = generate_random_setup()
 
 	prepare_game(setup,filtered_keys)
 	start_game()
