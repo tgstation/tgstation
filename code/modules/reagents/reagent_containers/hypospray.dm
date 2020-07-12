@@ -123,7 +123,7 @@
 		update_icon()
 
 /obj/item/reagent_containers/hypospray/medipen/attack_self(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, TRUE))
 		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon_state()
