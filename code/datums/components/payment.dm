@@ -22,7 +22,7 @@
 	target = _target
 	cost = _cost
 	transaction_style = _style
-	RegisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE_PRINTER, COMSIG_OBJ_ATTEMPT_CHARGE), .proc/attempt_charge)
+	RegisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE), .proc/attempt_charge)
 	RegisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE), .proc/change_cost)
 
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/AM, var/extra_fees = 0)
