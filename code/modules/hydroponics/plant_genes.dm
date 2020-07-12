@@ -220,6 +220,11 @@
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 
+/datum/plant_gene/trait/squash/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/sticky))
+		return FALSE
+	. = ..()
+
 /datum/plant_gene/trait/squash/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	// Squash the plant on slip.
 	G.squash(C)
