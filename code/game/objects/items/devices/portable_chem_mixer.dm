@@ -3,6 +3,7 @@
 	desc = "A portable device that dispenses and mixes chemicals. Requires a vortex anomaly core. All necessary reagents need to be supplied with beakers. A label indicates that a screwdriver is required to open it for refills. This device can be worn on a belt. The letters 'S&T' are imprinted on the side."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
+	worn_icon_state = "portable_chem_mixer"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BELT
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
@@ -37,7 +38,7 @@
 		..()
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/raw_anomaly_core/vortex) && !anomaly_core_present)
+	if(istype(I, /obj/item/assembly/signaler/anomaly/vortex) && !anomaly_core_present)
 		anomaly_core_present = TRUE
 		QDEL_NULL(I)
 		to_chat(user, "<span class='notice'>You insert the vortex anomaly core. The device is now functional. A screwdriver is needed to open and close the device for refills.</span>")

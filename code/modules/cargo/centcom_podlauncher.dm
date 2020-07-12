@@ -19,7 +19,7 @@
 //Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc
 //Some effect groups are choices, while other are booleans. This is because some effects can stack, while others dont (ex: you can stack explosion and quiet, but you cant stack ordered launch and random launch)
 /datum/centcom_podlauncher
-	var/static/list/ignored_atoms = typecacheof(list(null, /mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object, /obj/effect/particle_effect/sparks, /obj/effect/dp_target, /obj/effect/supplypod_selector ))
+	var/static/list/ignored_atoms = typecacheof(list(null, /mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object, /obj/effect/particle_effect/sparks, /obj/effect/pod_landingzone, /obj/effect/supplypod_selector ))
 	var/turf/oldTurf //Keeps track of where the user was at if they use the "teleport to centcom" button, so they can go back
 	var/client/holder //client of whoever is using this datum
 	var/area/bay //What bay we're using to launch shit from.
@@ -135,8 +135,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 				return //Only teleport if the list isn't empty
 			var/turf/T = pick(turfs)
 			M.forceMove(T) //Perform the actual teleport
-			log_admin("[key_name(usr)] jumped to [AREACOORD(A)]")
-			message_admins("[key_name_admin(usr)] jumped to [AREACOORD(A)]")
+			log_admin("[key_name(usr)] jumped to [AREACOORD(T)]")
+			message_admins("[key_name_admin(usr)] jumped to [AREACOORD(T)]")
 			. = TRUE
 		if("teleportBack") //After teleporting to centcom, this button allows the user to teleport to the last spot they were at.
 			var/mob/M = holder.mob
@@ -587,7 +587,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		else
 			for (var/atom/movable/O in launchList) //If we aren't cloning the objects, just go through the launchList
 				O.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
-	new /obj/effect/dp_target(A, toLaunch) //Then, create the DPTarget effect, which will eventually forceMove the temp_pod to it's location
+	new /obj/effect/pod_landingzone(A, toLaunch) //Then, create the DPTarget effect, which will eventually forceMove the temp_pod to it's location
 	if (launchClone)
 		launchCounter++ //We only need to increment launchCounter if we are cloning objects.
 		//If we aren't cloning objects, taking and removing the first item each time from the acceptableTurfs list will inherently iterate through the list in order

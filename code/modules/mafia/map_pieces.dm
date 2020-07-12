@@ -30,6 +30,7 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
+	block_suicide = TRUE
 
 /datum/map_template/mafia
 	var/description = ""
@@ -53,11 +54,6 @@
 	name = "Alien Mothership"
 	description = "The haunted ghost UFO tour has gone south and now it's up to our fine townies and scare seekers to kill the actual real alien changelings..."
 	mappath = "_maps/map_files/Mafia/mafia_ayylmao.dmm"
-
-/datum/map_template/mafia/necropolis
-	name = "Necropolis Showdown"
-	description = "The townies have shown up to try and suss out who truly ruined the art direction of SS13. No hurt feelings intended!"
-	mappath = "_maps/map_files/Mafia/mafia_necropolis.dmm"
 
 /datum/map_template/mafia/spider_clan
 	name = "Spider Clan Kidnapping"

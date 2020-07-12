@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - tweak: "monkey caps drop on the floor if no ghosts got polled"

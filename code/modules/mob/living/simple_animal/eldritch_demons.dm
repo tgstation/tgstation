@@ -16,7 +16,7 @@
 	speed = 0
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
-	AIStatus = AI_ON
+	AIStatus = AI_OFF
 	attack_sound = 'sound/weapons/punch1.ogg'
 	see_in_dark = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -37,8 +37,6 @@
 /mob/living/simple_animal/hostile/eldritch/Initialize()
 	. = ..()
 	add_spells()
-	//by default
-	mind.add_antag_datum(/datum/antagonist/heretic_monster)
 
 /**
   * Add_spells
