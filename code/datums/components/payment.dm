@@ -27,6 +27,8 @@
 
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/AM, var/extra_fees = 0)
 	var/mob/user = AM
+	if(!cost) //In case a free variant of anything is made it'll skip charging anyone.
+		return TRUE
 	if(!istype(user))
 		return FALSE
 	var/obj/item/card/id/card = user.get_idcard(TRUE)
