@@ -732,11 +732,10 @@
 	if(istype(target, /obj/structure/window))
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-			if(istype(target, /obj/structure/window))
-				if(color_hex2num(paint_color) < 255)
-					target.set_opacity(255)
-				else
-					target.set_opacity(initial(target.opacity))
+			if(color_hex2num(paint_color) < 255)
+				target.set_opacity(255)
+			else
+				target.set_opacity(initial(target.opacity))
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(target, TOUCH, fraction * volume_multiplier)
