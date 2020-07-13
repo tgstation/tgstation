@@ -10,7 +10,10 @@
 #define UNIQUE_RENAME			(1<<6) // can you customize the description/name of the thing?
 #define USES_TGUI				(1<<7)	//put on things that use tgui on ui_interact instead of custom/old UI.
 #define FROZEN					(1<<8)
-#define BLOCK_Z_FALL			(1<<9) // Should this object block z falling?
+#define BLOCK_Z_OUT_DOWN		(1<<9)  // Should this object block z falling from loc?
+#define BLOCK_Z_OUT_UP			(1<<10) // Should this object block z uprise from loc?
+#define BLOCK_Z_IN_DOWN			(1<<11) // Should this object block z falling from above?
+#define BLOCK_Z_IN_UP			(1<<12) // Should this object block z uprise from below?
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

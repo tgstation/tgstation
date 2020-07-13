@@ -246,6 +246,11 @@
 							PP.visible_message("<span class='warning'>[L] bursts into a brilliant purple flame as [L.p_their()] entire body is that of a skeleton!</span>", \
 											  "<span class='userdanger'>Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!</span>")
 
+//mafia specific tame happy plasma (normal atmos, no slowdown)
+/turf/open/lava/plasma/mafia
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	baseturfs = /turf/open/lava/plasma/mafia
+	slowdown = 0
 
 /obj/vehicle/ridden/lavaboat/plasma
 	name = "plasma boat"

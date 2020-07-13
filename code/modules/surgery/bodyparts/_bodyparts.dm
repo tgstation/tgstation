@@ -252,6 +252,8 @@
 	// actually roll wounds if applicable
 	if(HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE))
 		damage *= 1.5
+	if(HAS_TRAIT(owner,TRAIT_HARDLIMBDISABLE))
+		damage *= 0.5
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll

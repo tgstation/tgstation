@@ -597,14 +597,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return ..() //well boys we did it, lists are no more
 
 /obj/machinery/computer/arcade/battle/examine_more(mob/user)
-	to_chat(user, "<span class='notice'>Scribbled on the side of the Arcade Machine you notice some writing...\
-	\nmagical -> >=50 power\
-	\nsmart -> defend, defend, light attack\
-	\nshotgun -> defend, defend, power attack\
-	\nshort temper -> counter, counter, counter\
-	\npoisonous -> light attack, light attack, light attack\
-	\nchonker -> power attack, power attack, power attack</span>")
-	return ..()
+	var/list/msg = list("<span class='notice'><i>You notice some writing scribbled on the side of [src]...</i></span>")
+	msg += "\t<span class='info'>smart -> defend, defend, light attack</span>"
+	msg += "\t<span class='info'>shotgun -> defend, defend, power attack</span>"
+	msg += "\t<span class='info'>short temper -> counter, counter, counter</span>"
+	msg += "\t<span class='info'>poisonous -> light attack, light attack, light attack</span>"
+	msg += "\t<span class='info'>chonker -> power attack, power attack, power attack</span>"
+	return msg
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
