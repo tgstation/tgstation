@@ -25,7 +25,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
 
-
 /obj/machinery/conveyor/inverted //Directions inverted so you can use different corner peices.
 	icon_state = "conveyor_map_inverted"
 	verted = -1
@@ -37,10 +36,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 // Auto conveyour is always on unless unpowered
 
+/obj/machinery/conveyor/auto
+	processing_flags = START_PROCESSING_ON_INIT
+
 /obj/machinery/conveyor/auto/Initialize(mapload, newdir)
-	. = ..()
 	operating = TRUE
-	update_move_direction()
+	return ..()
 
 /obj/machinery/conveyor/auto/update()
 	. = ..()
@@ -250,9 +251,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		id = newid
 	update_icon()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
+	wires = new /datum/wires/conveyor(src)
 
 /obj/machinery/conveyor_switch/Destroy()
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
+	QDEL_NULL(wires)
 	. = ..()
 
 /obj/machinery/conveyor_switch/vv_edit_var(var_name, var_value)
@@ -332,6 +335,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		transfer_fingerprints_to(C)
 		to_chat(user, "<span class='notice'>You detach the conveyor switch.</span>")
 		qdel(src)
+	if(is_wire_tool(I))
+		wires.interact(user)
+		return TRUE
 
 /obj/machinery/conveyor_switch/oneway
 	icon_state = "conveyor_switch_oneway"

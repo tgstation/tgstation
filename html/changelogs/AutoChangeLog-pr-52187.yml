@@ -1,0 +1,4 @@
+author: "Jay Smith"
+delete-after: True
+changes: 
+  - bugfix: "Mirrored sprites for various bags (when equipped into the suit storage slot) have been added."

@@ -341,6 +341,18 @@ Class Procs:
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		take_damage(4, BRUTE, "melee", 1)
 
+/obj/machinery/attack_hulk(mob/living/carbon/user)
+	. = ..()
+	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
+	if(!arm)
+		return
+	if(arm.disabled)
+		return
+	var/damage = damage_deflection / 10
+	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)
+
+
+
 /obj/machinery/attack_robot(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !IsAdminGhost(user))
 		return FALSE
@@ -395,7 +407,7 @@ Class Procs:
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 			component_parts.Cut()
-	qdel(src)
+	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
 	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
@@ -425,6 +437,7 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()

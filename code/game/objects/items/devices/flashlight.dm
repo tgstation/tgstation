@@ -166,6 +166,7 @@
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
 	icon_state = "penlight"
 	inhand_icon_state = ""
+	worn_icon_state = "pen"
 	flags_1 = CONDUCT_1
 	brightness_on = 2
 	var/holo_cooldown = 0
@@ -188,7 +189,7 @@
 	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."
 	icon_state = "penlight_surgical"
 	/// Our current UV cooldown
-	var/uv_cooldown = 0
+	COOLDOWN_DECLARE(uv_cooldown)
 	/// How long between UV fryings
 	var/uv_cooldown_length = 1 MINUTES
 	/// How much sanitization to apply to the burn wound

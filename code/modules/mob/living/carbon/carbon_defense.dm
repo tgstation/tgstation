@@ -55,18 +55,15 @@
 	return TRUE
 
 /mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(!skipcatch)	//ugly, but easy
-		if(can_catch_item())
-			if(istype(AM, /obj/item))
-				var/obj/item/I = AM
-				if(isturf(I.loc))
-					I.attack_hand(src)
-					if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-						visible_message("<span class='warning'>[src] catches [I]!</span>", \
-										"<span class='userdanger'>You catch [I] in mid-air!</span>")
-						throw_mode_off()
-						return 1
-	..()
+	if(!skipcatch && can_catch_item() && istype(AM, /obj/item) && isturf(AM.loc))
+		var/obj/item/I = AM
+		I.attack_hand(src)
+		if(get_active_held_item() == I) //if our attack_hand() picks up the item...
+			visible_message("<span class='warning'>[src] catches [I]!</span>", \
+							"<span class='userdanger'>You catch [I] in mid-air!</span>")
+			throw_mode_off()
+			return TRUE
+	return ..()
 
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
@@ -271,10 +268,14 @@
 			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
 			return
 		M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-						"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
+		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
+		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
 	else
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+					null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
+		to_chat(M, "<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+		to_chat(src, "<span class='notice'>[M] hugs you to make you feel better!</span>")
 
 		// Warm them up with hugs
 		share_bodytemperature(M)
@@ -462,3 +463,10 @@
 			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	else if(getOxyLoss() <= 50)
 		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+
+/mob/living/carbon/get_organic_health()
+	. = health
+	for (var/_limb in bodyparts)
+		var/obj/item/bodypart/limb = _limb
+		if (limb.status != BODYPART_ORGANIC)
+			. += (limb.brute_dam * limb.body_damage_coeff) + (limb.burn_dam * limb.body_damage_coeff)

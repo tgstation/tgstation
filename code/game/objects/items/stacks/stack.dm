@@ -275,6 +275,17 @@
 				qdel(I)
 		//BubbleWrap END
 
+/obj/item/stack/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, amount))
+		add(clamp(vval, 1-amount, max_amount - amount)) //there must always be one.
+		return TRUE
+	else if(vname == NAMEOF(src, max_amount))
+		max_amount = max(vval, 1)
+		add((max_amount < amount) ? (max_amount - amount) : 0) //update icon, weight, ect
+		return TRUE
+	return ..()
+
+
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (get_amount() < R.req_amount*multiplier)
 		if (R.req_amount*multiplier>1)

@@ -9,6 +9,7 @@
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
+	var/ascended = FALSE
 
 /datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
@@ -32,6 +33,7 @@
 		forge_primary_objectives()
 		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
 		gain_knowledge(/datum/eldritch_knowledge/living_heart)
+		gain_knowledge(/datum/eldritch_knowledge/codex_cicatrix)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing,src)
@@ -132,7 +134,7 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	remove_antag_hud(antag_hud_type, antag_hud_name, current)
+	remove_antag_hud(antag_hud_type, current)
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "heretics"
 
@@ -158,11 +160,13 @@
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 				cultiewin = FALSE
 			count++
-
-	if(cultiewin)
-		parts += "<span class='greentext'>The heretic was successful!</span>"
+	if(ascended)
+		parts += "<span class='greentext big'>HERETIC HAS ASCENDED!</span>"
 	else
-		parts += "<span class='redtext'>The heretic has failed.</span>"
+		if(cultiewin)
+			parts += "<span class='greentext'>The heretic was successful!</span>"
+		else
+			parts += "<span class='redtext'>The heretic has failed.</span>"
 
 	parts += "<b>Knowledge Researched:</b> "
 
