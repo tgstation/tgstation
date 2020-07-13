@@ -36,4 +36,5 @@
 	effectOrgans = TRUE
 	effectQuiet = TRUE
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'
+	close_sound = null
 	firstSounds = FALSE

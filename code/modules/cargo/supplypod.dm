@@ -269,7 +269,7 @@
 		playsound(get_turf(holder), openingSound, soundVolume, FALSE, FALSE) //Special admin sound to play
 	for (var/atom/movable/O in holder.contents) //Go through the contents of the holder
 		O.forceMove(T) //move everything from the contents of the holder to the turf of the holder
-	if (!openingSound && style != STYLE_SEETHROUGH) //If we aren't being quiet, play the default pod open sound
+	if (!openingSound && style != STYLE_SEETHROUGH) //If we aren't being stealthy, play the default pod open sound
 		playsound(get_turf(holder), open_sound, 15, TRUE, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return

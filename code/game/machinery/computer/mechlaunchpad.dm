@@ -4,7 +4,7 @@
 	icon_screen = "mechpad"
 	icon_keyboard = "teleport_key"
 	ui_x = 475
-	ui_y = 260
+	ui_y = 130
 
 	var/selected_id
 	var/obj/machinery/mechpad/connected_mechpad
@@ -46,7 +46,8 @@
 				if(M.buffer == connected_mechpad)
 					to_chat(user, "<span class='warning'>[src] cannot connect to its own mechpad!</span>")
 				else if(!connected_mechpad && M.buffer == connect_to_pad())
-					connected_mechpad = connect_to_pad()
+					connected_mechpad = M.buffer
+					connected_mechpad.connected_console = src
 					M.buffer = null
 					to_chat(user, "<span class='notice'>You connect the console to the pad with data from the [W.name]'s buffer.</span>")
 				else
@@ -99,7 +100,7 @@
 			mechpads -= get_pad(i)
 	data["mechpads"] = pad_list
 	data["selected_id"] = selected_id
-	data["connected_mechpad"] = connected_mechpad
+	data["connected_mechpad"] = !!connected_mechpad
 	if(selected_id)
 		var/obj/machinery/mechpad/current_pad = mechpads[selected_id]
 		data["pad_name"] = current_pad.display_name
