@@ -1,7 +1,7 @@
 /obj/machinery/computer/mechpad
 	name = "mecha orbital pad console"
 	desc = "Sends mechs through space to space. Why would you do that?"
-	icon_screen = "teleport"
+	icon_screen = "mechpad"
 	icon_keyboard = "teleport_key"
 	ui_x = 475
 	ui_y = 260
@@ -58,7 +58,7 @@
 	else
 		return ..()
 
-/obj/machinery/computer/mechpad/proc/try_launch(var/obj/machinery/mechpad/where)
+/obj/machinery/computer/mechpad/proc/try_launch(var/mob/user, var/obj/machinery/mechpad/where)
 	if(!connected_mechpad)
 		to_chat(user, "<span class='warning'>[src] has no connected pad!</span>")
 		return
@@ -130,6 +130,6 @@
 				selected_id = null
 			. = TRUE
 		if("launch")
-			try_launch(current_pad)
+			try_launch(usr, current_pad)
 			. = TRUE
 	. = TRUE
