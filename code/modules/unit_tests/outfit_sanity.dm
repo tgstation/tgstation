@@ -33,15 +33,15 @@
 
 		if (outfit.backpack_contents || outfit.box)
 			var/list/backpack_contents = outfit.backpack_contents?.Copy()
-			if(outfit.box)
-				if(!backpack_contents)
+			if (outfit.box)
+				if (!backpack_contents)
 					backpack_contents = list()
 				backpack_contents.Insert(1, outfit.box)
 				backpack_contents[outfit.box] = 1
 
-			for(var/path in backpack_contents)
+			for (var/path in backpack_contents)
 				var/number = backpack_contents[path] || 1
-				for(var/i in 1 to number)
+				for (var/i in 1 to number)
 					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BACKPACK, TRUE))
 						Fail("[outfit.name]'s backpack_contents are invalid! Couldn't add [path] to backpack.")
 
