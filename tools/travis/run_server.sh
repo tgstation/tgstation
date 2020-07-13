@@ -6,6 +6,7 @@ rm travis_test/*.dll
 mkdir travis_test/config
 
 #test config
+cp -r config/* travis_test/config/
 mv travis_test/config/config.txt travis_test/config/original_config.txt
 cp tools/travis/travis_config.txt travis_test/config/config.txt
 
