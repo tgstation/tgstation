@@ -77,7 +77,7 @@
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 	held_state = "cat2"
-	speak = list("EDF!", "I might be stupid.", "Bigger.", "BIGGER.")
+	speak = list("EDF!", "I might be stupid.", "Bigger.", "BIGGER.", "Fuck you.", "I am NOTHING like you fuckers.", "Where is my buff tomboy GF?", ":catbuff:")
 	response_harm_continuous = "punts"
 	response_harm_simple = "punt"
 

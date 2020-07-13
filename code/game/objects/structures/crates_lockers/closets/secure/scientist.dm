@@ -27,3 +27,5 @@
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
 	new /obj/item/storage/photo_album/rd(src)
 	new /obj/item/britnotes(src)
+	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
+	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
