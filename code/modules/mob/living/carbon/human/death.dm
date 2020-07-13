@@ -37,8 +37,13 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 		if(M.occupant == src)
 			M.go_out()
 
+
+
 	if(!QDELETED(dna)) //The gibbed param is bit redundant here since dna won't exist at this point if they got deleted.
 		dna.species.spec_death(gibbed, src)
+
+	if(HAS_TRAIT(src,TRAIT_GIB_DEATH))
+		gib()
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)

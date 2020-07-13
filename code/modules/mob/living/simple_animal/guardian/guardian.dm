@@ -588,6 +588,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("Gravitokinetic")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/gravitokinetic
 
+		if("Slime")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/slime
+
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
 		to_chat(user, "<span class='holoparasite'>You already have a [mob_name]!</span>" )
@@ -738,3 +741,18 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/guardiancreator/miner/choose
 	random = FALSE
+
+/obj/item/guardiancreator/slime
+	name = "slime shard"
+	desc = "Seems to be a very old rock of slimy nature."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "dustyshard"
+	color = "#00ff15"
+	theme = "magic"
+	mob_name = "Power Farmer"
+	use_message = "<span class='holoparasite'>You pierce your skin with the shard...</span>"
+	used_message = "<span class='holoparasite'>This shard seems to have lost all its' power...</span>"
+	failure_message = "<span class='holoparasite bold'>The shard hasn't reacted at all. Maybe try again later...</span>"
+	ling_failure = "<span class='holoparasite bold'>The power of the shard seems to not react with your horrifying, mutated body.</span>"
+	possible_guardians = list("Slime")
+

@@ -468,6 +468,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/runite
 	custom_materials = list(/datum/material/runite = 400)
 
+/obj/item/coin/slime
+	custom_materials = list(/datum/material/slime = 400)
+
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")

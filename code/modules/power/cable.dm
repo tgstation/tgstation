@@ -748,11 +748,3 @@ GLOBAL_LIST(hub_radial_layer_list)
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
 	to_chat(user, "<span class='warning'>You pust reset button.</span>")
 	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
-
-
-/obj/item/stack/cable_coil/slime
-	name = "slime compressed cable"
-	desc = "A flexible, super-compressible, superconducting insulated cable for heavy-duty power transfer. Slime goo compresses the wire inside of it maximizing it's volume."
-	max_amount = 300
-	amount = 300
-	color = "#00ff15"

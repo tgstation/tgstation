@@ -104,8 +104,4 @@
 					return
 				addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
 
-/obj/item/wormhole_jaunter/slime
-	name = "slime jaunter"
-	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms. This one is made out of glossy green slime, with a small note saying that it no longer causes vomiting."
-	unpleasant = FALSE
-	color = "#00ff15"
+

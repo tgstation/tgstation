@@ -326,6 +326,7 @@
 	#define SPEECH_IGNORE_SPAM 6
 	#define SPEECH_FORCED 7 */
 
+
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT (1<<0)
@@ -400,6 +401,10 @@
 #define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
 ///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
 #define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
+///called when you use help intent on us
+#define COMSIG_CARBON_ON_BEING_HELPED "on_being_helped"
+///called when you use help intent on someone
+#define COMSIG_CARBON_ON_HELPING "on_helping"
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"

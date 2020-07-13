@@ -340,3 +340,91 @@ Slimecrossing Items
 	if(reagents.total_volume)
 		reagents.trans_to(attached, 5, method = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 		return
+
+/obj/item/slime_letter
+	name = "Slime letter"
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "slime_letter"
+
+/obj/item/slime_letter/Initialize()
+	. = ..()
+	START_PROCESSING(SSprocessing,src)
+
+/obj/item/slime_letter/process()
+	var/humanfound = null
+	if(ishuman(loc))
+		humanfound = loc
+	if(!humanfound)
+		return
+	var/mob/living/carbon/human/human = humanfound
+	human.apply_status_effect(/datum/status_effect/lovers_hug)
+
+/obj/item/slime_veil
+	name = "Slime veil"
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "slime_veil"
+	///who holds us
+	var/mob/wielder
+
+/obj/item/slime_veil/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/slime_veil/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+
+/obj/item/slime_veil/process()
+	if(!wielder)
+		return PROCESS_KILL
+	///you will always be barely visible
+	wielder.alpha = max(10, wielder.alpha - 25)
+
+
+/obj/item/slime_veil/proc/on_wield(datum/source,mob/user)
+	START_PROCESSING(SSprocessing,src)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED ,.proc/moved)
+	wielder = user
+
+/obj/item/slime_veil/proc/moved(datum/source)
+	var/atom/movable/moved = source
+	moved.alpha = 255
+
+/obj/item/slime_veil/proc/on_unwield(datum/source,mob/user)
+	STOP_PROCESSING(SSprocessing,src)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	wielder = null
+
+/obj/item/kitchen/knife/slime
+	name = "slime knife"
+	color = "#00ff15"
+	force = 0
+
+/obj/item/claymore/slime
+	name = "slime claymore"
+	force = 18
+	color = "#00ff15"
+	block_chance = 10
+
+obj/item/tank/internals/emergency_oxygen/slime
+	name = "slime oxygen tank"
+	volume = 6
+	color = "#00ff15"
+
+/obj/item/stack/cable_coil/slime
+	name = "slime compressed cable"
+	desc = "A flexible, super-compressible, superconducting insulated cable for heavy-duty power transfer. Slime goo compresses the wire inside of it maximizing it's volume."
+	max_amount = 300
+	amount = 300
+	color = "#00ff15"
+
+/obj/item/wormhole_jaunter/slime
+	name = "slime jaunter"
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms. This one is made out of glossy green slime, with a small note saying that it no longer causes vomiting."
+	unpleasant = FALSE
+	color = "#00ff15"
+
+/obj/item/clothing/under/suit/blacktwopiece/slime
+	name = "slime suit"
+	color = "#00ff15"

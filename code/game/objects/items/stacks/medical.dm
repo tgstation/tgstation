@@ -455,3 +455,4 @@
 		return TRUE
 
 	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
+

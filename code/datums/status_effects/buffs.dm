@@ -363,3 +363,50 @@
 /datum/status_effect/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
+
+/datum/status_effect/lovers_hug
+	id = "Loner's Hug"
+	alert_type = null
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	///The person that we are currently helping.
+	var/mob/living/carbon/human/protected
+
+/datum/status_effect/lovers_hug/on_apply()
+	RegisterSignal(owner,COMSIG_CARBON_ON_HELPING, .proc/apply_hug)
+	return ..()
+
+/datum/status_effect/lovers_hug/on_remove()
+	UnregisterSignal(owner,COMSIG_CARBON_ON_HELPING)
+	return ..()
+
+/datum/status_effect/lovers_hug/proc/apply_hug(datum/source,mob/living/carbon/human/hugged)
+	if(protected)
+		protected.remove_status_effect(/datum/status_effect/lovers_protection)
+		protected = null
+	var/datum/status_effect/lovers_protection/prot = hugged.apply_status_effect(/datum/status_effect/lovers_protection)
+	prot.protector = owner
+	protected = hugged
+
+/datum/status_effect/lovers_protection
+	id = "Loner's protection"
+	alert_type = null
+	var/mob/protector
+
+/datum/status_effect/lovers_protection/on_apply()
+	RegisterSignal(owner,COMSIG_MOB_DEATH, .proc/tele_to_protect)
+	return ..()
+
+/datum/status_effect/lovers_protection/on_remove()
+	UnregisterSignal(owner,COMSIG_MOB_DEATH)
+	return ..()
+
+/datum/status_effect/lovers_protection/proc/tele_to_protect()
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(1, get_turf(owner))
+	smoke.start()
+	owner.forceMove(get_turf(protector))
+	smoke = new
+	smoke.set_up(1, get_turf(protector))
+	smoke.start()
+

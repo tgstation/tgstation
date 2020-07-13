@@ -304,6 +304,8 @@
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 		for(var/datum/brain_trauma/trauma in M.get_traumas())
 			trauma.on_hug(M, src)
+	SEND_SIGNAL(M,COMSIG_CARBON_ON_HELPING,src)
+	SEND_SIGNAL(src,COMSIG_CARBON_ON_BEING_HELPED,M)
 	AdjustStun(-60)
 	AdjustKnockdown(-60)
 	AdjustUnconscious(-60)

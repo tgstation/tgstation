@@ -198,3 +198,7 @@
 /datum/mood_event/confident_mane
 	description = "<span class='nicegreen'>I'm feeling confident with a head full of hair.</span>\n"
 	mood_change = 2
+
+/datum/mood_event/oil_buff
+	description = "<span class='nicegreen'>This... feels... AMAZING!</span>\n"
+	mood_change = 10
