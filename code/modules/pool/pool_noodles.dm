@@ -22,15 +22,12 @@
 		user.emote("spin")
 
 /obj/item/toy/poolnoodle/red
-	icon_state = "noodlered"
 	inhand_icon_state = "noodlered"
 
 /obj/item/toy/poolnoodle/blue
-	icon_state = "noodleblue"
 	inhand_icon_state = "noodleblue"
 
 /obj/item/toy/poolnoodle/yellow
-	icon_state = "noodleyellow"
 	inhand_icon_state = "noodleyellow"
 
 /obj/item/toy/poolnoodle/red/Initialize()
