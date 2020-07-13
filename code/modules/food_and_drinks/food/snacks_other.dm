@@ -95,6 +95,22 @@
 	. = ..()
 	eatverb = pick("bite","nibble","gnaw","gobble","chomp")
 
+/obj/item/reagent_containers/food/snacks/pissyshitties
+	name = "pissy shitties"
+	desc = "A traditional movie theater snack from Space America."
+	icon_state = "pissyshitties"
+	trash = /obj/item/trash/pissyshitties
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 3)
+	bitesize = 0.1
+	filling_color = "#bd9e55"
+	tastes = list("popcorn" = 2, "salt" = 1, "sugary syrup" = 1)
+	foodtype = JUNKFOOD
+	value = FOOD_JUNK
+
+/obj/item/reagent_containers/food/snacks/pissyshitties/Initialize()
+	. = ..()
+	eatverb = pick("shlorp", "gobble", "gulp", "nibble")
+
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
 	name = "loaded baked potato"
 	desc = "Totally baked."
