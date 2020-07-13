@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Plant reagents are now properly displayed if they've reacted within a plant using a plant analyzer."
