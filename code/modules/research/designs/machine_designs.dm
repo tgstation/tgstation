@@ -616,17 +616,16 @@
 	build_path = /obj/item/circuitboard/machine/sheetifier
 	category = list ("Misc. Machinery")
 
-<<<<<<< HEAD
-/datum/design/board/bountypad
-	name = "Machine Design (Civilian Bounty Pad)"
-	desc = "The circuit board for a Civilian Bounty Pad."
-	id = "bounty_pad"
-	build_path = /obj/item/circuitboard/machine/bountypad
-=======
 /datum/design/board/vendatray
 	name = "Vend-a-Tray"
 	desc = "The circuit board for a Vend-a-Tray."
 	id = "vendatray"
 	build_path = /obj/item/circuitboard/machine/vendatray
->>>>>>> upstream/master
+	category = list ("Misc. Machinery")
+
+/datum/design/board/bountypad
+	name = "Machine Design (Civilian Bounty Pad)"
+	desc = "The circuit board for a Civilian Bounty Pad."
+	id = "bounty_pad"
+	build_path = /obj/item/circuitboard/machine/bountypad
 	category = list ("Misc. Machinery")
