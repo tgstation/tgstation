@@ -733,8 +733,6 @@
 		if(initial(instance.role_type) == wanted_role_type)
 			role_type_paths += instance
 
-	to_chat(world, role_type_paths)
-
 	var/mafia_path = pick(role_type_paths)
 	var/found_role = locate(mafia_path) in setup_list
 	if(found_role)
