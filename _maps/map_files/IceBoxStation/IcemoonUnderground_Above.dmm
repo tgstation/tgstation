@@ -14,7 +14,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "ac" = (
@@ -22,7 +22,7 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "ad" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "ae" = (
@@ -40,7 +40,7 @@
 	pixel_x = 1;
 	pixel_y = -23
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "ah" = (
@@ -53,7 +53,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/mine/production)
@@ -87,7 +87,7 @@
 /area/mine/eva)
 "an" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "ao" = (
@@ -207,7 +207,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/item/clothing/head/beanie/stripedred,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
@@ -406,7 +406,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "by" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Labor Camp APC";
@@ -506,7 +506,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "bR" = (
@@ -520,7 +520,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "bS" = (
@@ -534,7 +534,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "bT" = (
@@ -550,7 +550,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "bU" = (
@@ -623,7 +623,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "ch" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "ck" = (
@@ -644,7 +644,7 @@
 "cm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cn" = (
@@ -655,7 +655,7 @@
 /area/mine/production)
 "cp" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/eva)
 "cq" = (
@@ -691,7 +691,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cF" = (
@@ -765,7 +765,7 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cT" = (
@@ -776,12 +776,12 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cV" = (
@@ -807,7 +807,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cZ" = (
@@ -823,7 +823,7 @@
 /area/mine/production)
 "df" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dg" = (
@@ -837,7 +837,7 @@
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "di" = (
@@ -912,7 +912,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
@@ -923,7 +923,7 @@
 	dir = 6
 	},
 /obj/machinery/meter,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dq" = (
@@ -944,19 +944,19 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "du" = (
 /obj/effect/turf_decal/loading_area,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dv" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dw" = (
@@ -970,7 +970,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/circuit,
 /area/mine/maintenance)
 "dy" = (
@@ -980,7 +980,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/bluespace_beacon,
 /turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
@@ -1058,12 +1058,12 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dH" = (
 /obj/machinery/atmospherics/components/binary/pump/on,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dI" = (
@@ -1147,7 +1147,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/maintenance)
 "dQ" = (
@@ -1168,7 +1168,7 @@
 	req_access_txt = "48"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dT" = (
@@ -1227,7 +1227,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ec" = (
@@ -1260,7 +1260,7 @@
 	pixel_x = 1;
 	pixel_y = 23
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eh" = (
@@ -1278,7 +1278,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ej" = (
@@ -1322,7 +1322,7 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "eq" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel,
@@ -1334,13 +1334,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "es" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "et" = (
@@ -1350,7 +1350,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eu" = (
@@ -1358,7 +1358,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ew" = (
@@ -1372,7 +1372,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ex" = (
@@ -1382,7 +1382,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/door/airlock/glass{
 	name = "Mining Station Bridge"
 	},
@@ -1401,7 +1401,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ez" = (
@@ -1411,7 +1411,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eA" = (
@@ -1421,7 +1421,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/door/airlock/glass{
 	name = "Mining Station Bridge"
 	},
@@ -1440,13 +1440,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eC" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eD" = (
@@ -2031,7 +2031,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "gp" = (
@@ -2090,7 +2090,7 @@
 /area/mine/laborcamp)
 "ia" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/production)
 "ie" = (
@@ -2124,7 +2124,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "iM" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
 	},
@@ -2155,7 +2155,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "jo" = (
@@ -2239,7 +2239,7 @@
 "kI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Processing Area";
 	req_access_txt = "48"
@@ -2341,7 +2341,7 @@
 /area/mine/laborcamp)
 "nI" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "nN" = (
@@ -2400,7 +2400,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2411,7 +2411,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -2457,7 +2457,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "pV" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/door/airlock{
 	name = "Restroom"
 	},
@@ -2497,7 +2497,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "rj" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "rz" = (
@@ -2516,7 +2516,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "sa" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
@@ -2603,7 +2603,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "sM" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
@@ -2656,7 +2656,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "vb" = (
@@ -2698,11 +2698,11 @@
 	name = "Labor Camp Security APC";
 	pixel_y = 23
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "vW" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -2783,7 +2783,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "yr" = (
@@ -2914,7 +2914,7 @@
 "Be" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -2982,7 +2982,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -3092,7 +3092,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "EL" = (
@@ -3119,7 +3119,7 @@
 /turf/closed/wall,
 /area/storage/mining)
 "Fd" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -3157,7 +3157,7 @@
 /area/mine/laborcamp)
 "FF" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "FQ" = (
@@ -3310,7 +3310,7 @@
 /turf/closed/mineral/random/snow,
 /area/mine/living_quarters)
 "Iq" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/door/airlock/security/glass{
@@ -3382,7 +3382,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "KE" = (
@@ -3457,7 +3457,7 @@
 /area/mine/laborcamp)
 "MG" = (
 /obj/machinery/computer/secure_data,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -3654,7 +3654,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "QW" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
@@ -3685,7 +3685,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/storage/mining)
 "Rx" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "RE" = (
@@ -3701,7 +3701,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "RO" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -3729,7 +3729,7 @@
 /area/mine/living_quarters)
 "SV" = (
 /obj/machinery/computer/security/labor,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -3785,7 +3785,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "TC" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
@@ -3812,7 +3812,7 @@
 "Uh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "Ur" = (
@@ -3833,7 +3833,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "UH" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -3887,7 +3887,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "US" = (
@@ -4053,7 +4053,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "YA" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},

@@ -1184,7 +1184,7 @@
 "cM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5;
-	
+
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -1933,7 +1933,7 @@
 	name = "Gateway Chamber";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2534,7 +2534,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2547,7 +2547,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2558,7 +2558,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2568,7 +2568,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2579,7 +2579,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2592,7 +2592,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2699,7 +2699,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -2712,7 +2712,7 @@
 	name = "Hydroponics Maintenance";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2721,7 +2721,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2732,7 +2732,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -2868,7 +2868,7 @@
 "fP" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
@@ -2979,7 +2979,7 @@
 "gb" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3040,7 +3040,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3083,7 +3083,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -3094,7 +3094,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3207,7 +3207,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3270,7 +3270,7 @@
 "gQ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -3551,7 +3551,7 @@
 /obj/machinery/gateway/away{
 	calibrated = 0
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -3798,7 +3798,7 @@
 "hU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4;
-	
+
 	},
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes,
@@ -3811,7 +3811,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4;
-	
+
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -3822,7 +3822,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3845,7 +3845,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -4023,7 +4023,7 @@
 	name = "Gateway Chamber";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -4225,7 +4225,7 @@
 "iM" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -4253,7 +4253,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "iP" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -4458,7 +4458,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -4668,7 +4668,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
@@ -4825,7 +4825,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -4842,7 +4842,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -4859,7 +4859,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -4872,7 +4872,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4884,7 +4884,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4897,7 +4897,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4909,7 +4909,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -4923,7 +4923,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -5020,7 +5020,7 @@
 	name = "Gateway EVA";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5123,7 +5123,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5628,7 +5628,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5660,7 +5660,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5676,7 +5676,7 @@
 	c_tag = "Gateway Ready Room";
 	network = list("uo45","uo45r")
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5686,7 +5686,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5714,7 +5714,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "lv" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5723,7 +5723,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5737,7 +5737,7 @@
 	name = "Research Division Access";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5747,7 +5747,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5755,7 +5755,7 @@
 "lz" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5774,7 +5774,7 @@
 	network = list("uo45","uo45r")
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5787,7 +5787,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5798,7 +5798,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5813,7 +5813,7 @@
 	req_access_txt = "201"
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5824,7 +5824,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5838,7 +5838,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5854,7 +5854,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5873,7 +5873,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -6042,7 +6042,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Diner"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6144,7 +6144,7 @@
 "mg" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6340,7 +6340,7 @@
 "my" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6407,7 +6407,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -6466,13 +6466,13 @@
 	name = "Research Maintenance";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mL" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6733,7 +6733,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6833,7 +6833,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6845,7 +6845,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -6858,7 +6858,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6871,7 +6871,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6892,7 +6892,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6910,7 +6910,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7011,21 +7011,21 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nJ" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "nK" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7034,7 +7034,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7046,7 +7046,7 @@
 "nN" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -7217,7 +7217,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7236,7 +7236,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7254,7 +7254,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7273,7 +7273,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7290,7 +7290,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7303,7 +7303,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7322,7 +7322,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7344,7 +7344,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7357,7 +7357,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7373,7 +7373,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7394,7 +7394,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7409,7 +7409,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7423,7 +7423,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7435,7 +7435,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7451,7 +7451,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7467,7 +7467,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Dormitories"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7479,7 +7479,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7490,7 +7490,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7499,7 +7499,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7511,7 +7511,7 @@
 	inputting = 0;
 	output_level = 7000
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -7523,7 +7523,7 @@
 	inputting = 0;
 	output_level = 7000
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -7532,7 +7532,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7540,7 +7540,7 @@
 "ow" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
@@ -7809,7 +7809,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7822,7 +7822,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7857,7 +7857,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7877,7 +7877,7 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -7888,7 +7888,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -7981,7 +7981,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
@@ -8131,7 +8131,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -8143,7 +8143,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -8155,7 +8155,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -8164,7 +8164,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -8173,7 +8173,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -8199,7 +8199,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -8399,7 +8399,7 @@
 	name = "SMES Room";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -8429,7 +8429,7 @@
 "qf" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -8662,7 +8662,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -8675,7 +8675,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -8684,7 +8684,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 5
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -8694,7 +8694,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -8799,7 +8799,7 @@
 "qO" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -8895,7 +8895,7 @@
 "qX" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -8973,7 +8973,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9116,7 +9116,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9218,7 +9218,7 @@
 "ry" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
@@ -9287,7 +9287,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4;
-	
+
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Maintenance";
@@ -9338,7 +9338,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -9380,7 +9380,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9393,7 +9393,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9408,7 +9408,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9423,7 +9423,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9439,7 +9439,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9457,7 +9457,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9473,7 +9473,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9492,7 +9492,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9511,7 +9511,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9528,7 +9528,7 @@
 	name = "Engineering Reception"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9540,7 +9540,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9550,7 +9550,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9562,7 +9562,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9697,7 +9697,7 @@
 /obj/item/storage/backpack/satchel/eng,
 /obj/item/clothing/gloves/fingerless,
 /obj/effect/turf_decal/tile/brown,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9886,7 +9886,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10004,7 +10004,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10114,7 +10114,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10219,7 +10219,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10231,7 +10231,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10243,7 +10243,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
@@ -10257,7 +10257,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10316,7 +10316,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10345,7 +10345,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10384,7 +10384,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10467,7 +10467,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10570,7 +10570,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10582,7 +10582,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10595,7 +10595,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
@@ -10607,7 +10607,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10619,7 +10619,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
@@ -10633,7 +10633,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -10647,7 +10647,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10660,7 +10660,7 @@
 	dir = 1
 	},
 /obj/item/stack/rods,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10703,7 +10703,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10737,7 +10737,7 @@
 	name = "Engineering Foyer";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10781,7 +10781,7 @@
 	dir = 1;
 	name = "External to Filter"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10996,7 +10996,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11030,7 +11030,7 @@
 	name = "Engineering";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11182,7 +11182,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11251,7 +11251,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11409,7 +11409,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11432,7 +11432,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11444,7 +11444,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11456,7 +11456,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11465,7 +11465,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11475,7 +11475,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11485,7 +11485,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11495,7 +11495,7 @@
 	name = "Engineering";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11582,7 +11582,7 @@
 	name = "Mining Foyer";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11639,7 +11639,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11807,7 +11807,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11826,14 +11826,14 @@
 "wk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wl" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -11855,7 +11855,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11925,7 +11925,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "wv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12016,7 +12016,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12042,14 +12042,14 @@
 /area/awaymission/undergroundoutpost45/mining)
 "wD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12057,7 +12057,7 @@
 "wF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12122,7 +12122,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12185,7 +12185,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12269,7 +12269,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12321,7 +12321,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12378,7 +12378,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12401,7 +12401,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12441,7 +12441,7 @@
 	req_access_txt = "201"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12514,7 +12514,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12565,7 +12565,7 @@
 	pixel_x = 23
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12653,7 +12653,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12730,7 +12730,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12743,7 +12743,7 @@
 	name = "Mining EVA";
 	req_access_txt = "201"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12753,7 +12753,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12807,20 +12807,20 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xR" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/awaymission/undergroundoutpost45/mining)
 "xS" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/mining)
 "xT" = (

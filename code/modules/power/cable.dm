@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	/// I figure using an indexed list is faster to trasverse
 	/// than either an associated list or a O(n) set
 	/// Side note, UP is uesed for machine connections
-	var/list/linked = list()	   			// List of all cables AND power machines linked
+	var/list/linked = list()	   			// List of all cables
 	var/obj/machinery/power/over = null   	// If there is a machine over us, here it is
 	var/visited = FALSE			/// used for trasversing
 	var/datum/powernet/powernet = null
@@ -59,10 +59,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	GLOB.cable_list += src //add it to the global cable list
 	visited = FALSE
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
-
+	refresh_links()
 	// on mapload, we will do it somewhere else
-	if(!mapload)
-		graph_cable()
 
 // don't call this on mapload and should only be called once in Init
 /obj/structure/cable/proc/graph_cable()
@@ -72,10 +70,13 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/obj/machinery/power/terminal/term = null
 	var/datum/powernet/largest_powernet = null
 	var/list/power_nets = list()
+	over = null
 	ASSERT(linked_state == -1) // linked state should be -1 at startup too
 	// check if this cable was placed under a machine
 	for(var/obj/machinery/power/P in loc)
-		under = P	// we are under this,
+		ASSERT(over == null)	// I am not sure how two power machines can over lap, but why not
+		over = P	// we are under this,
+
 		// under is linked latter
 
 	// check each direction to see if we are connected to another cable
@@ -125,50 +126,59 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		connect_machine(under)
 	update_icon()
 
-
-// these procs should NOT be called outside of cable.dm
-/obj/structure/cable/_clear_all_visited()
+// just hardupdates the icon in case of shuttle rotation
+/obj/structure/cable/proc/updated_linked_state()
+	linked_state = 0
 	var/obj/structure/cable/C
-	var/list/cable_list = GLOB.cable_list
-	for(var/i in 1 to cable_list.len)
-		C = cable_list[i]
-		C.visited = FALSE
+	var/turf/T
+	var/list/powernets = list()
+	for(var/dir_check in GLOB.cardinals)
+		T = get_step(src,GLOB.cardinals[k])
+		C = locate(cable_layer) in T
+		if(C)
+			linked_state |= dir_check
+			if(C.powernet)
+				powernets |= C.powernet
 
-
-// Main machiine connect function.
-/obj/structure/cable/proc/connect_machine(obj/machinery/power/M)
-	ASSERT(powernet)	// we should already have a powernet
-	powernet.connect_machine(M)
-	linked += M
-
-
-/obj/structure/cable/proc/disconnect_machine(obj/machinery/power/M)
-	ASSERT(powernet == M.powernet)
-	powernet.disconnect_machine(M)
-	linked -= M
-
-
-/// disconnect the cable from the net, q a powernet rebuild
-/obj/structure/cable/proc/disconnect()
+/obj/structure/cable/proc/refresh_links()
+	linked.Cut()
+	linked_state = 0
 	var/obj/structure/cable/C
-	for(var/i =1 ;i <= CABLE_DIR_DOWN; i++)
-		if(istype(linked[i], obj/structure/cable))
-			C = linked[i]
-			C.linked[CABLE_DIR_INVERT(i)] = null
-			linked[i] = null
-			C.update_icon()
-		else if(istype(linked[i], obj/machinery/power))
-			powernet.disconnect_machine(linked[i])
-	SSmachines.powernets
-	powernet.
+	var/mask_skip = (NORTH | SOUTH | EAST | WEST)
+	var/turf/T
+	var/obj/machinery/power/P = locate(obj/machinery/power) in loc
+	if(P)
+		over = P
+	if(P.terminal)
+		mask_skip &= ~get_dir(src,P.terminal)
+	for(var/dir_check in GLOB.cardinals)
+		if(dir_check & mask_skip)
+			T = get_step(src,GLOB.cardinals[k])
+			C = locate(cable_layer) in T
+			if(C)
+				linked += C
+				linked_state |= dir_check
+	SSmachines.cable_queue += src
+	visited = FALSE
+	update_icon()
+
 
 /obj/structure/cable/Destroy()					// called when a cable is deleted
-	Disconnect_cable()
-
-	if(powernet)
-		cut_cable_from_powernet()				// update the powernets
+	moveToNullspace()	// move it off
+	if(over)
+		powernet.discounnect_machine(over)
+		over = null
+	for(var/obj/structure/cable/C in linked)
+		C.linked_state &= ~(get_dir(C,src))
+		C.linked -= src
+		C.update_icon_state()
+		visited = FALSE
+		SSmachines.cable_queue += C
+	linked.Cut()
+	powernet.cables -= src
+	qdel(src)
+	powernet = null
 	GLOB.cable_list -= src							//remove it from global cable list
-	QDEL_NULL(edge)
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
@@ -183,7 +193,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	// linked_state MUST be valid, we don't check anything else
 	// Use this to do quick icon updates
 	if(icon_state == -1)
-		refresh_icon_state()
+		refresh_links()
 	if(!icon_state)
 		icon_state = "l[cable_layer]-noconnection"
 	else
@@ -197,73 +207,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			dir_string += "[EAST]"
 		if(linked_state & WEST)
 			dir_string += "[WEST]"
-		if(node)
+		if(over)
 			dir_string += "node"
 		icon_state = dir_icon_list.Join("-")
-
-// this is a hard check on the surounding
-/obj/structure/cable/refresh_icon_state()
-	if(!linked_dirs)
-		icon_state = "l[cable_layer]-noconnection"
-	else
-
-		var/turf/T
-		/// This is faster.  Why?  Because its not a loop that needs a var
-		/// and if you think for(in) is fast, then your an idiot
-		// Just be carful, order must be the same as GLOB
-		// NORTH, SOUTH, EAST, WEST
-
-
-		for(var/k in 1 to GLOB.cardinals.len)
-			T = get_step(src,GLOB.cardinals[k])
-			for(var/obj/structure/cable/C in T)
-				if(!(cable_layer & C.cable_layer))
-					continue
-
-		if(!C)
-			continue
-
-	var/turf/TB  = get_step(src, direction)
-
-	for(var/obj/structure/cable/C in TB)
-		if(!C)
-			continue
-
-		if(src == C)
-			continue
-
-		if(!(cable_layer & C.cable_layer))
-			continue
-
-		if(C.linked_dirs & inverse_dir) //we've got a matching cable in the neighbor turf
-			if(!C.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
-				var/datum/powernet/newPN = new()
-				newPN.add_cable(C)
-
-			if(powernet) //if we already have a powernet, then merge the two powernets
-				merge_powernets(powernet, C.powernet)
-			else
-				C.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
-			T = get_step(loc,dir) //resolve where the thing is.
-			C = locate(get_step())
-			if(C && C.cable_layer == cable_layer)
-				if(over && over.terminal && ov)
-				dir_icon_list += "[dir]"
-				//first let's add turf cables to our powernet
-	//then we'll connect machines on turf where a cable is present
-	for(var/atom/movable/AM in loc)
-
-		for(var/obj/O in loc)
-			if(GLOB.wire_node_generating_types[O.type])
-				dir_icon_list += "node"
-				break
-			else if(istype(O, /obj/machinery/power))
-				var/obj/machinery/power/P = O
-				if(P.should_have_node())
-					dir_icon_list += "node"
-					break
-		icon_state = dir_icon_list.Join("-")
-
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)

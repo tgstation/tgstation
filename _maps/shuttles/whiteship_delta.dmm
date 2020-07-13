@@ -186,7 +186,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "au" = (
@@ -353,7 +353,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aK" = (
@@ -389,7 +389,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aQ" = (
@@ -400,7 +400,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aS" = (
@@ -411,7 +411,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aT" = (
@@ -431,7 +431,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aU" = (
@@ -447,7 +447,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aV" = (
@@ -457,7 +457,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aW" = (
@@ -472,7 +472,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "aX" = (
@@ -486,7 +486,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark{
 	dir = 8
 	},
@@ -499,7 +499,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/crew)
 "aZ" = (
@@ -513,7 +513,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/crew)
 "ba" = (
@@ -525,7 +525,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bb" = (
@@ -653,7 +653,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bl" = (
@@ -684,7 +684,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bo" = (
@@ -717,7 +717,7 @@
 	name = "Crew Quarters"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "br" = (
@@ -799,7 +799,7 @@
 "bz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bA" = (
@@ -832,7 +832,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "bD" = (
@@ -856,7 +856,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bH" = (
@@ -969,7 +969,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bR" = (
@@ -982,7 +982,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "bS" = (
@@ -1025,7 +1025,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bV" = (
@@ -1070,7 +1070,7 @@
 "bX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "bY" = (
@@ -1115,7 +1115,7 @@
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cc" = (
@@ -1128,7 +1128,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ce" = (
@@ -1153,7 +1153,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cf" = (
@@ -1162,7 +1162,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula{
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes, and looks abnormally thin and frail.";
 	environment_smash = 0;
@@ -1204,7 +1204,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "ck" = (
@@ -1218,7 +1218,7 @@
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cl" = (
@@ -1229,7 +1229,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cm" = (
@@ -1271,7 +1271,7 @@
 	pixel_y = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "co" = (
@@ -1313,7 +1313,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cs" = (
@@ -1345,7 +1345,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cu" = (
@@ -1382,7 +1382,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cw" = (
@@ -1419,7 +1419,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cD" = (
@@ -1572,7 +1572,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cO" = (
@@ -1594,7 +1594,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "cQ" = (
@@ -1629,7 +1629,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "cU" = (
@@ -1751,7 +1751,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "dd" = (
@@ -1759,7 +1759,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "de" = (
@@ -1770,20 +1770,20 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "df" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dg" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dh" = (
@@ -1794,7 +1794,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "di" = (
@@ -1817,7 +1817,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -1827,7 +1827,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -1835,7 +1835,7 @@
 "dl" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -1848,7 +1848,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white/side{
 	dir = 5
 	},
@@ -1862,7 +1862,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "do" = (
@@ -1871,7 +1871,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "dp" = (
@@ -1882,7 +1882,7 @@
 /obj/machinery/light/small,
 /obj/structure/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "dq" = (
@@ -1897,7 +1897,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dr" = (
@@ -1911,7 +1911,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "ds" = (
@@ -1927,7 +1927,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "du" = (
@@ -2071,7 +2071,7 @@
 /area/shuttle/abandoned/medbay)
 "dG" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter{
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail.";
 	environment_smash = 0;
@@ -2107,7 +2107,7 @@
 	name = "Frigate Cargo APC";
 	pixel_x = -25
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "dK" = (
@@ -2198,7 +2198,7 @@
 	pixel_y = -23
 	},
 /obj/structure/spider/stickyweb,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/shuttle/abandoned/medbay)
 "dR" = (
@@ -2354,7 +2354,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "vm" = (

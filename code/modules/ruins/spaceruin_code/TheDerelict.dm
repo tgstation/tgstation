@@ -31,7 +31,7 @@
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	var/obj/structure/cable/attached_cable
+	var/obj/structure/cable/layer2/attached_cable
 	var/obj/machinery/door/airlock/vault/derelict/door1
 	var/obj/machinery/door/airlock/vault/derelict/door2
 	var/locked = TRUE
@@ -59,7 +59,7 @@
 ///Looks for a cable connection beneath the machine.
 /obj/machinery/computer/vaultcontroller/proc/update_cable()
 	var/turf/T = get_turf(src)
-	attached_cable = locate(/obj/structure/cable) in T
+	attached_cable = locate(/obj/structure/cable/layer2) in T
 
 
 ///Initializes airlock links.

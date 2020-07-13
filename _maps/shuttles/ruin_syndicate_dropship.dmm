@@ -38,7 +38,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "cB" = (
@@ -89,7 +89,7 @@
 	},
 /obj/item/wrench,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "hF" = (
@@ -103,7 +103,7 @@
 	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
 "ka" = (
@@ -481,7 +481,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 20
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "PL" = (
@@ -533,7 +533,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
 "Vf" = (

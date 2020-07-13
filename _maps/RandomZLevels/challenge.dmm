@@ -899,7 +899,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "db" = (
@@ -907,7 +907,7 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dc" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dd" = (
@@ -973,7 +973,7 @@
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "dm" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /mob/living/simple_animal/hostile/syndicate{
 	name = "Syndicate Technician"
 	},
@@ -989,7 +989,7 @@
 /area/awaymission/challenge/end)
 "dq" = (
 /obj/machinery/power/smes/magical,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dr" = (

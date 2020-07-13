@@ -6,7 +6,7 @@
 */
 /datum/powernet
 	var/number					// unique id
-
+	var/cable_layer = obj/structure/cable/layer2
 	var/list/consumers = list()	// list of devices that need power
 	var/list/producers = list() // list of devices that create power
 	var/list/cables = list()

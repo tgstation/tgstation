@@ -20,7 +20,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
-	var/machinery_layer = MACHINERY_LAYER_2 //cable layer to which the machine is connected
+	var/cable_layer = obj/structure/cable/layer2 //cable layer to which the machine is connected
 	var/power_flags = POWER_CONSUMER
 	// We need a POWER_MACHINE_NEEDS_TERMINAL to use
 	// Making this a more general case to combine code
@@ -35,7 +35,7 @@
 
 
 /obj/machinery/power/Destroy()
-	QDEL_NULL(edge)
+	QDEL_NULL(terminal)
 	disconnect_from_network()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/update_cable_icons_on_turf, get_turf(src)), 3)
 	return ..()
@@ -187,7 +187,7 @@
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
+	var/obj/structure/cable/C = cable_layer in loc //check if we have a node cable on the machine turf, the first found is picked
 	if(!C)
 		return FALSE  // no cable means no connection
 	C.connect_machine(src)
@@ -215,50 +215,6 @@
 		return ..()
 
 
-///////////////////////////////////////////
-// Powernet handling helpers
-//////////////////////////////////////////
-
-//returns all the cables WITHOUT a powernet in neighbors turfs,
-//pointing towards the turf the machine is located at
-/obj/machinery/power/proc/get_connections()
-	. = list()
-	var/turf/T
-
-	for(var/card in GLOB.cardinals)
-		T = get_step(loc,card)
-
-		for(var/obj/structure/cable/C in T)
-			if(C.powernet)
-				continue
-			. += C
-	return .
-
-//returns all the cables in neighbors turfs,
-//pointing towards the turf the machine is located at
-/obj/machinery/power/proc/get_marked_connections()
-	. = list()
-	var/turf/T
-
-	for(var/card in GLOB.cardinals)
-		T = get_step(loc,card)
-
-		for(var/obj/structure/cable/C in T)
-			. += C
-	return .
-
-//returns all the NODES (O-X) cables WITHOUT a powernet in the turf the machine is located at
-/obj/machinery/power/proc/get_indirect_connections()
-	. = list()
-	for(var/obj/structure/cable/C in loc)
-		if(C.powernet)
-			continue
-		. += C
-	return .
-
-/proc/update_cable_icons_on_turf(var/turf/T)
-	for(var/obj/structure/cable/C in T.contents)
-		C.update_icon()
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling

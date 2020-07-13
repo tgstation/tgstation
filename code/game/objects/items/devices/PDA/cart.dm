@@ -287,9 +287,9 @@ Code:
 			else
 				var/list/L = list()
 				var/datum/powernet/connected_powernet = powmonitor.get_powernet()
-				for(var/obj/machinery/power/terminal/term in connected_powernet.nodes)
-					if(istype(term.master, /obj/machinery/power/apc))
-						var/obj/machinery/power/apc/A = term.master
+				for(var/obj/machinery/power/terminal/term in connected_powernet.consumers)
+					if(istype(term.terminal, /obj/machinery/power/apc))
+						var/obj/machinery/power/apc/A = term.terminal
 						L += A
 
 				menu += "<PRE>Location: [get_area_name(powmonitor, TRUE)]<BR>Total power: [DisplayPower(connected_powernet.viewavail)]<BR>Total load:  [DisplayPower(connected_powernet.viewload)]<BR>"

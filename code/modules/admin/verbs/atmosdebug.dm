@@ -29,7 +29,7 @@
 		return
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Power") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	var/list/results = list()
-
+#if 0
 	for (var/datum/powernet/PN in GLOB.powernets)
 		if (!PN.nodes || !PN.nodes.len)
 			if(PN.cables && (PN.cables.len > 1))
@@ -54,3 +54,4 @@
 			if(!C)
 				results += "Unwired terminal at [ADMIN_VERBOSEJMP(term)]"
 	to_chat(usr, "[results.Join("\n")]", confidential = TRUE)
+#endif

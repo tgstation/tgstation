@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(machines)
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/powernets = list()
+	var/list/cable_queue = list()
 	var/powernets_nulls = 0
 	var/list/recycled_powernets = list()
 	var/list/powernet_rebuild_queue = list()
@@ -113,6 +114,7 @@ SUBSYSTEM_DEF(machines)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
+
 
 /datum/controller/subsystem/machines/Recover()
 	if (istype(SSmachines.processing))

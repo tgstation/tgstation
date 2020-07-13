@@ -58,11 +58,11 @@
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
 	name = "power storage unit"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ao" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
@@ -70,7 +70,7 @@
 	name = "Worn-out APC";
 	pixel_y = -23
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "aq" = (
@@ -78,7 +78,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "as" = (

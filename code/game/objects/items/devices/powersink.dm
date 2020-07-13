@@ -137,9 +137,9 @@
 		// if tried to drain more than available on powernet
 		// now look for APCs and drain their cells
 		if(drained < drain_rate)
-			for(var/obj/machinery/power/terminal/T in PN.nodes)
+			for(var/obj/machinery/power/terminal/T in PN.consumers)
 				if(istype(T.master, /obj/machinery/power/apc))
-					var/obj/machinery/power/apc/A = T.master
+					var/obj/machinery/power/apc/A = T.terminal
 					if(A.operating && A.cell)
 						A.cell.charge = max(0, A.cell.charge - 50)
 						power_drained += 50

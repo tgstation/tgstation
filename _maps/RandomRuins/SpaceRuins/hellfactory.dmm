@@ -226,7 +226,7 @@
 "aJ" = (
 /obj/structure/table/reinforced,
 /obj/item/trash/candle,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "aK" = (
@@ -322,7 +322,7 @@
 	pixel_y = -4
 	},
 /obj/item/ammo_casing/spent,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "aY" = (
@@ -438,7 +438,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "br" = (
 /obj/machinery/door/keycard/stockroom,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hellfactory)
 "bs" = (
@@ -756,7 +756,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cm" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/power/apc/highcap/ten_k{
 	dir = 1
 	},
@@ -780,7 +780,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cq" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cr" = (
@@ -910,7 +910,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "cK" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cL" = (
@@ -959,7 +959,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "fj" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/closed/indestructible{
 	icon = 'icons/turf/walls/reinforced_wall.dmi';
 	icon_state = "r_wall"
@@ -1022,7 +1022,7 @@
 /obj/machinery/power/apc/highcap/ten_k{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "xK" = (
@@ -1037,7 +1037,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hellfactory)
 "EP" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/hellfactory)
 "Fs" = (
@@ -1047,7 +1047,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "Gs" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/closed/wall/r_wall/rust,
 /area/ruin/space/has_grav/hellfactory)
 "GE" = (
@@ -1084,7 +1084,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "UN" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "Wh" = (

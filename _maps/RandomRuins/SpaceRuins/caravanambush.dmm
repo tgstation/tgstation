@@ -107,7 +107,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
 "aw" = (
@@ -248,7 +248,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "aZ" = (
@@ -476,7 +476,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "gT" = (
@@ -600,7 +600,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "hv" = (
@@ -734,7 +734,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "ia" = (
@@ -823,7 +823,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "is" = (
@@ -937,7 +937,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "iU" = (
@@ -1024,7 +1024,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "jq" = (

@@ -100,7 +100,7 @@
 		to_chat(user, "<span class='warning'>You cannot place [src] in this area!</span>")
 		return //can't place apcs in areas with no power requirement
 	for(var/obj/machinery/power/terminal/E in T)
-		if(E.master)
+		if(E.terminal)
 			to_chat(user, "<span class='warning'>There is another network terminal here!</span>")
 			return
 		else

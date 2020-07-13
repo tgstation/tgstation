@@ -1369,7 +1369,7 @@
 
 /obj/machinery/power/apc/disconnect_terminal()
 	if(terminal)
-		terminal.master = null
+		terminal.terminal = null
 		terminal = null
 
 /obj/machinery/power/apc/proc/set_broken()

@@ -400,7 +400,7 @@
 	pixel_x = 24;
 	pixel_y = 2
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "bn" = (
@@ -566,7 +566,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bD" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bE" = (
@@ -718,7 +718,7 @@
 /obj/machinery/gateway/away{
 	calibrated = 0
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bU" = (
@@ -778,7 +778,7 @@
 "bZ" = (
 /obj/effect/landmark/awaystart,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "ca" = (
@@ -793,7 +793,7 @@
 	name = "Gateway APC";
 	pixel_x = 24
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cf" = (
@@ -836,7 +836,7 @@
 	dir = 2
 	},
 /obj/effect/landmark/awaystart,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cl" = (
@@ -844,12 +844,12 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cn" = (
 /obj/machinery/light/small,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cp" = (
@@ -914,7 +914,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cz" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -1044,7 +1044,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/genetics)
 "cL" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -1096,7 +1096,7 @@
 	name = "Gateway Access";
 	req_access_txt = "205"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/gateway)
 "cS" = (
@@ -1105,7 +1105,7 @@
 	name = "Genetics APC";
 	pixel_x = 24
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/genetics)
 "cT" = (
@@ -1182,7 +1182,7 @@
 /area/awaymission/research/interior/genetics)
 "cY" = (
 /obj/item/ammo_casing/c9mm,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cZ" = (
@@ -1249,7 +1249,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dg" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "dh" = (
@@ -1299,7 +1299,7 @@
 /area/awaymission/research/interior/genetics)
 "dk" = (
 /obj/effect/decal/cleanable/blood/drip,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dl" = (
@@ -1445,7 +1445,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dz" = (
@@ -1688,7 +1688,7 @@
 /area/awaymission/research/interior/genetics)
 "dR" = (
 /obj/item/ammo_casing/c45,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dT" = (
@@ -1767,7 +1767,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ea" = (
@@ -1803,7 +1803,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eh" = (
@@ -1928,7 +1928,7 @@
 	req_access_txt = "12"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eu" = (
@@ -2061,7 +2061,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eI" = (
@@ -2069,7 +2069,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "eJ" = (
@@ -2222,7 +2222,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "fb" = (
@@ -2350,7 +2350,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ft" = (
@@ -2361,7 +2361,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fu" = (
@@ -2388,14 +2388,14 @@
 	capacity = 9e+006;
 	charge = 10000
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fx" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fy" = (
@@ -2404,7 +2404,7 @@
 	name = "Vault APC";
 	pixel_x = 24
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fz" = (
@@ -2447,7 +2447,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fD" = (
@@ -2562,7 +2562,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fO" = (
@@ -2670,7 +2670,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fY" = (
@@ -2701,7 +2701,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ga" = (
@@ -2755,7 +2755,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gf" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gg" = (
@@ -2764,17 +2764,17 @@
 	name = "Power Storage";
 	req_access_txt = "205"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gj" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gk" = (
 /obj/structure/barricade/security,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gl" = (
@@ -2785,7 +2785,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gn" = (
@@ -2796,12 +2796,12 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/secure)
 "gp" = (
 /obj/machinery/light/small,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "gq" = (
@@ -2812,7 +2812,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "gt" = (
@@ -2963,7 +2963,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "gD" = (
@@ -3057,7 +3057,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gN" = (
@@ -3074,7 +3074,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gO" = (
@@ -3091,7 +3091,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gP" = (
@@ -3101,7 +3101,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gQ" = (
@@ -3370,7 +3370,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hq" = (
@@ -3393,7 +3393,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hs" = (
@@ -3441,7 +3441,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "hz" = (
@@ -3483,7 +3483,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "hE" = (
@@ -3499,7 +3499,7 @@
 /area/awaymission/research/interior/security)
 "hF" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
 "hG" = (
@@ -3518,7 +3518,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hI" = (
@@ -3618,7 +3618,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hS" = (
@@ -3811,7 +3811,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "il" = (
@@ -3885,7 +3885,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "is" = (
@@ -3899,7 +3899,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "it" = (
@@ -3909,7 +3909,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "iv" = (
@@ -3917,7 +3917,7 @@
 	name = "Security Maintenance";
 	req_access_txt = "63"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ix" = (
@@ -4003,7 +4003,7 @@
 	name = "Security APC";
 	pixel_y = 23
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
 "iG" = (
@@ -4117,7 +4117,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/maint)
 "iU" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/maint)
 "iW" = (
@@ -4757,7 +4757,7 @@
 	name = "Dorms APC";
 	pixel_x = 24
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/dorm)
 "kq" = (
@@ -5410,7 +5410,7 @@
 	name = "Medbay APC";
 	pixel_y = 23
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "lX" = (
@@ -5430,7 +5430,7 @@
 	name = "Escape APC";
 	pixel_y = 23
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "ma" = (
@@ -5877,7 +5877,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "qS" = (
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "su" = (
@@ -5896,7 +5896,7 @@
 "sM" = (
 /obj/structure/window/reinforced,
 /obj/effect/landmark/awaystart,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "tE" = (
@@ -5957,7 +5957,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "Bx" = (

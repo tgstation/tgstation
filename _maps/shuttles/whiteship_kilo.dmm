@@ -166,7 +166,7 @@
 	name = "Salvage Ship Cargo APC";
 	pixel_x = -25
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned/cargo)
@@ -307,7 +307,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned/cargo)
@@ -374,7 +374,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "aG" = (
@@ -384,7 +384,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -396,7 +396,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "aI" = (
@@ -407,7 +407,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "aJ" = (
@@ -447,7 +447,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -461,7 +461,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -470,12 +470,12 @@
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
@@ -547,7 +547,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned/cargo)
 "aV" = (
@@ -555,7 +555,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/mineral/titanium/yellow,
@@ -563,7 +563,7 @@
 "aW" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/netherworld/migo{
 	environment_smash = 0
@@ -575,7 +575,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned/cargo)
@@ -587,7 +587,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/greenglow,
@@ -601,7 +601,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -611,7 +611,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "bb" = (
@@ -641,7 +641,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "be" = (
@@ -652,7 +652,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "bf" = (
@@ -663,7 +663,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/engine)
 "bg" = (
@@ -672,7 +672,7 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -683,7 +683,7 @@
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bi" = (
@@ -835,7 +835,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/status_display/supply{
 	pixel_x = 32;
 	pixel_y = -32
@@ -847,7 +847,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -916,7 +916,7 @@
 	name = "Salvage Ship Engineering APC";
 	pixel_y = -24
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bA" = (
@@ -992,7 +992,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "bJ" = (
@@ -1003,7 +1003,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/light_switch{
 	pixel_y = -24
 	},
@@ -1078,7 +1078,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned/bridge)
 "bT" = (
@@ -1099,7 +1099,7 @@
 "bW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/door/airlock/shuttle{
 	name = "Ship Saloon"
 	},
@@ -1216,7 +1216,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /mob/living/simple_animal/hostile/netherworld/blankbody{
 	environment_smash = 0
@@ -1281,7 +1281,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cn" = (
@@ -1391,7 +1391,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -1402,7 +1402,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1414,7 +1414,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -1464,7 +1464,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plasteel/showroomfloor,
 /area/shuttle/abandoned/bar)
@@ -1481,7 +1481,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cE" = (
@@ -1489,7 +1489,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/door/airlock/shuttle{
 	name = "Ship Lockers"
 	},
@@ -1500,7 +1500,7 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plasteel/showroomfloor,
 /area/shuttle/abandoned/crew)
@@ -1519,7 +1519,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/blood/old,
 /mob/living/simple_animal/hostile/netherworld/migo{
 	environment_smash = 0
@@ -1607,7 +1607,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -1618,7 +1618,7 @@
 /obj/machinery/door/airlock/command{
 	name = "Ship Control"
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1634,7 +1634,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plasteel/showroomfloor,
 /area/shuttle/abandoned/bar)
@@ -1647,7 +1647,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/plasteel/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cT" = (
@@ -1663,7 +1663,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /mob/living/simple_animal/hostile/netherworld{
 	environment_smash = 0
 	},
@@ -1788,7 +1788,7 @@
 	name = "NTMS-037 Saloon APC";
 	pixel_x = -25
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bar)
 "dc" = (

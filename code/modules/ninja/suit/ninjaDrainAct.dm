@@ -171,7 +171,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			drained = min(drain, delayed_surplus())
 			add_delayedload(drained)
 			if(drained < drain)//if no power on net, drain apcs
-				for(var/obj/machinery/power/terminal/T in PN.nodes)
+				for(var/obj/machinery/power/terminal/T in PN.consumers)
 					if(istype(T.master, /obj/machinery/power/apc))
 						var/obj/machinery/power/apc/AP = T.master
 						if(AP.operating && AP.cell && AP.cell.charge > 0)

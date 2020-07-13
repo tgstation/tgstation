@@ -29,7 +29,7 @@
 /area/shuttle/labor)
 "f" = (
 /obj/structure/grille,
-/obj/structure/cable,
+/obj/structure/cable/layer2,
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
