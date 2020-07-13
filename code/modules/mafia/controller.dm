@@ -13,9 +13,6 @@
 	var/phase = MAFIA_PHASE_SETUP
 	///how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.
 	var/turn = 0
-
-	///if not null, will use this as the setup instead of picking/generating one
-	//var/list/forced_setup
 	///first day has no voting, and thus is shorter
 	var/first_day_phase_period = 20 SECONDS
 	///talk with others about the last night

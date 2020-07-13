@@ -12,6 +12,7 @@
 
 	///how many votes submitted when you vote.
 	var/vote_power = 1
+	var/detect_immune = FALSE
 	var/revealed = FALSE
 	var/datum/outfit/revealed_outfit = /datum/outfit/mafia/assistant //the assistants need a special path to call out they were in fact assistant, everything else can just use job equipment
 	//action = uses
@@ -139,20 +140,24 @@
 /datum/mafia_role/detective/proc/investigate(datum/mafia_controller/game)
 	var/datum/mafia_role/R = current_investigation
 	if(R)
-		var/team_text
-		var/fluff
-		switch(R.team)
-			if(MAFIA_TEAM_TOWN)
-				team_text = "Town"
-				fluff = "a true member of the station."
-			if(MAFIA_TEAM_MAFIA)
-				team_text = "Mafia"
-				fluff = "an unfeeling, hideous changeling!"
-			if(MAFIA_TEAM_SOLO)
-				team_text = "Solo"
-				fluff = "a rogue, with their own objectives..."
-		to_chat(body,"<span class='warning'>Your investigations reveal that [R.body.real_name] is [fluff]</span>")
-		add_note("N[game.turn] - [R.body.real_name] - [team_text]")
+		if(R.detect_immune)
+			to_chat(body,"<span class='warning'>Your investigations reveal that [R.body.real_name] is a true member of the station.</span>")
+			add_note("N[game.turn] - [R.body.real_name] - Town")
+		else
+			var/team_text
+			var/fluff
+			switch(R.team)
+				if(MAFIA_TEAM_TOWN)
+					team_text = "Town"
+					fluff = "a true member of the station."
+				if(MAFIA_TEAM_MAFIA)
+					team_text = "Mafia"
+					fluff = "an unfeeling, hideous changeling!"
+				if(MAFIA_TEAM_SOLO)
+					team_text = "Solo"
+					fluff = "a rogue, with their own objectives..."
+			to_chat(body,"<span class='warning'>Your investigations reveal that [R.body.real_name] is [fluff]</span>")
+			add_note("N[game.turn] - [R.body.real_name] - [team_text]")
 	current_investigation = null
 
 /datum/mafia_role/psychologist
@@ -380,15 +385,30 @@
 	if(!target || target.game_status != MAFIA_ALIVE)
 		to_chat(body,"<span class='warning'>You can only investigate alive people.</span>")
 		return
-	to_chat(body,"<span class='warning'>You will investigate [target.body.real_name] tonight.</span>")
+	to_chat(body,"<span class='warning'>You will feast on the memories of [target.body.real_name] tonight.</span>")
 	current_investigation = target
 
 /datum/mafia_role/mafia/thoughtfeeder/proc/investigate(datum/mafia_controller/game)
 	var/datum/mafia_role/R = current_investigation
 	if(R)
-		to_chat(body,"<span class='warning'>Your \"investigations\" reveal that [R.body.real_name] is a [R.name].</span>")
-		add_note("N[game.turn] - [R.body.real_name] - [R.name]")
+		if(R.detect_immune)
+			to_chat(body,"<span class='warning'>[R.body.real_name]'s memories reveal that they are the Assistant.</span>")
+			add_note("N[game.turn] - [R.body.real_name] - Assistant")
+		else
+			to_chat(body,"<span class='warning'>[R.body.real_name]'s memories reveal that they are the [R.name].</span>")
+			add_note("N[game.turn] - [R.body.real_name] - [R.name]")
 	current_investigation = null
+
+/*
+//makes roles undetectable, appearing as assistants
+/datum/mafia_role/mafia/mimic
+	name = "Personality Mimic"
+	desc = "You're a changeling variant that helps the hive stay hidden. Use ':j' talk prefix to talk to your fellow lings, and visit your team at night to disguise their role."
+	role_type = MAFIA_SPECIAL
+	targeted_actions = list("Hide Role")
+
+	var/datum/mafia_role/current_hide
+*/
 
 ///SOLO ROLES/// they range from anomalous factors to deranged killers that try to win alone.
 
@@ -440,9 +460,10 @@
 
 /datum/mafia_role/nightmare
 	name = "Nightmare"
-	desc = "You're a solo monster. You can flicker lights of another room each night. You can instead decide to hunt, killing everyone in a flickering room. Kill everyone to win."
+	desc = "You're a solo monster that cannot be detected by detective roles. You can flicker lights of another room each night. You can instead decide to hunt, killing everyone in a flickering room. Kill everyone to win."
 	win_condition = "kill everyone."
 	revealed_outfit = /datum/outfit/mafia/nightmare
+	detect_immune = TRUE
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_KILL
 	targeted_actions = list("Flicker", "Hunt")
