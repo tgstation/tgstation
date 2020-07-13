@@ -254,7 +254,7 @@
 	tipper_name = user.name
 
 /mob/living/simple_animal/bot/medbot/proc/set_right(mob/user)
-	mobility_flags &= MOBILITY_MOVE
+	mobility_flags |= MOBILITY_MOVE
 	var/list/messagevoice
 
 	if(user)

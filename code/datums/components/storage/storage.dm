@@ -173,7 +173,7 @@
 	var/datum/component/storage/concrete/master = master()
 	if(!master)
 		return
-	. = COMPONENT_BLOCK_REACH
+	. = COMPONENT_ALLOW_REACH
 	next += master.parent
 	for(var/i in master.slaves)
 		var/datum/component/storage/slave = i

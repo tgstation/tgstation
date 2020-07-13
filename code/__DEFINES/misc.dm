@@ -120,6 +120,12 @@
 #define SHOES_TIED 1
 #define SHOES_KNOTTED 2
 
+//how fast a disposal machinery thing is ejecting things
+#define EJECT_SPEED_SLOW 	1
+#define EJECT_SPEED_MED		2
+#define EJECT_SPEED_FAST	4
+#define EJECT_SPEED_YEET	6
+
 //Cache of bloody footprint images
 //Key:
 //"entered-[blood_state]-[dir_of_image]"

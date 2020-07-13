@@ -3,6 +3,7 @@
 	desc = "A portable device that dispenses and mixes chemicals. Requires a vortex anomaly core. All necessary reagents need to be supplied with beakers. A label indicates that a screwdriver is required to open it for refills. This device can be worn on a belt. The letters 'S&T' are imprinted on the side."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
+	worn_icon_state = "portable_chem_mixer"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BELT
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'

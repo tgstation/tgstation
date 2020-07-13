@@ -156,6 +156,10 @@
 		var/power_throw = 0
 		if(HAS_TRAIT(src, TRAIT_HULK))
 			power_throw++
+		if(HAS_TRAIT(src, TRAIT_DWARF))
+			power_throw--
+		if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
+			power_throw++
 		if(pulling && grab_state >= GRAB_NECK)
 			power_throw++
 		visible_message("<span class='danger'>[src] throws [thrown_thing][power_throw ? " really hard!" : "."]</span>", \
@@ -1174,6 +1178,9 @@
 		S.generate(BP, W)
 		S.fake = TRUE
 		QDEL_NULL(W)
+
+/mob/living/carbon/is_face_visible()
+	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
 
 /**
   * get_biological_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums

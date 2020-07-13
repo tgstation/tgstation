@@ -164,7 +164,7 @@
 			return
 
 	to_chat(user, "<span class='notice'>The poster falls down!</span>")
-	D.roll_and_drop(temp_loc)
+	D.roll_and_drop(get_turf(user))
 
 // Various possible posters follow
 
