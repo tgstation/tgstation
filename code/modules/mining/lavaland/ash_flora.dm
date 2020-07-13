@@ -228,8 +228,8 @@
 
 ///Star Cactus seeds, mutation of lavaland cactus.
 /obj/item/seeds/star_cactus
-	name = "pack of star cactus seeds"
-	desc = "These seeds grow into star cactus."
+	name = "pack of star cacti seeds"
+	desc = "These seeds grow into star cacti."
 	icon_state = "seed-starcactus"
 	species = "starcactus"
 	plantname = "Star Cactus Cluster"
@@ -248,8 +248,8 @@
 ///Star Cactus Plants.
 /obj/item/reagent_containers/food/snacks/grown/star_cactus
 	seed = /obj/item/seeds/star_cactus
-	name = "star cactus"
-	desc = "A spikey, round cluster of prickly cactus. And no, these aren't called star cactus because they're in space."
+	name = "star cacti"
+	desc = "A spikey, round cluster of prickly star cacti. And no, it's not called a star cactus because it's in space."
 	icon_state = "starcactus"
 	filling_color = "#1c801c"
 	bitesize_mod = 3
