@@ -107,8 +107,6 @@
 		if(EFFECT_IRRADIATE)
 			if(!HAS_TRAIT(src, TRAIT_RADIMMUNE))
 				radiation += max(effect * hit_percent, 0)
-			else
-				radiation = 0
 		if(EFFECT_SLUR)
 			slurring = max(slurring,(effect * hit_percent))
 		if(EFFECT_STUTTER)

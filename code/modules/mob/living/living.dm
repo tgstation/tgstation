@@ -1556,3 +1556,7 @@
 	switch(stat) //Current stat.
 		if(UNCONSCIOUS)
 			become_blind(UNCONSCIOUS_BLIND)
+
+/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
+/mob/living/proc/is_face_visible()
+	return TRUE

@@ -46,11 +46,6 @@
 	update_icon()
 	PopulateContents()
 
-	RegisterSignal(src, COMSIG_ATOM_CANREACH, .proc/canreach_react)
-
-/obj/structure/closet/proc/canreach_react(datum/source, list/next)
-	return COMPONENT_BLOCK_REACH //closed block, open have nothing inside.
-
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
 	return
@@ -61,6 +56,8 @@
 
 /obj/structure/closet/update_icon()
 	. = ..()
+	if (istype(src, /obj/structure/closet/supplypod))
+		return
 	if(!opened)
 		layer = OBJ_LAYER
 	else
@@ -337,8 +334,11 @@
 			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Paralyze(40)
-			O.forceMove(T)
-			close()
+			if(istype(src, /obj/structure/closet/supplypod/extractionpod))
+				O.forceMove(src)
+			else
+				O.forceMove(T)
+				close()
 	else
 		O.forceMove(T)
 	return 1

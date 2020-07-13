@@ -712,9 +712,9 @@ world
 /// appearance system (overlays/underlays, etc.) is not available.
 ///
 /// Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
+/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = TRUE)
 	//Define... defines.
-	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
+	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
 
 	#define BLANK icon(flat_template)
 	#define SET_SELF(SETVAR) do { \
