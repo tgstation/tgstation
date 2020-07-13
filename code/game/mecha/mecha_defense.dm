@@ -44,8 +44,8 @@
 
 	if(attack_dir)
 		var/facing_modifier = get_armour_facing(abs(dir2angle(src) - dir2angle(attack_dir)))
-		booster_damage_modifier *= facing_modifier
-		booster_deflection_modifier /= facing_modifier
+		booster_damage_modifier /= facing_modifier
+		booster_deflection_modifier *= facing_modifier
 	if(prob(deflect_chance * booster_deflection_modifier))
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
 		log_message("Armor saved.", LOG_MECHA)
