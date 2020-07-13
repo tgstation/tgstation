@@ -241,7 +241,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(GLOB.rpg_loot_items)
 		AddComponent(/datum/component/fantasy)
 
-	if(sharpness) //give sharp objects butchering functionality, for consistency
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item

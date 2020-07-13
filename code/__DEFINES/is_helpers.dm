@@ -180,14 +180,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define iscash(A) (istype(A, /obj/item/coin) || istype(A, /obj/item/stack/spacecash) || istype(A, /obj/item/holochip))
 
-GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
-	/obj/item/pen,
-	/obj/item/screwdriver,
-	/obj/item/reagent_containers/syringe,
-	/obj/item/kitchen/fork)))
-
-#define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
-
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 
 #define isprojectile(A) (istype(A, /obj/projectile))
