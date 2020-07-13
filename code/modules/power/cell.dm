@@ -16,6 +16,7 @@
 	custom_materials = list(/datum/material/iron=700, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	var/rigged = FALSE	// true if rigged to explode
+	var/corrupted = FALSE //also triggers an explosion.
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
@@ -103,8 +104,8 @@
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = !isnull(reagents.has_reagent(/datum/reagent/toxin/plasma, 5)) //has_reagent returns the reagent datum
-	..()
+	rigged = (corrupted || reagents.has_reagent(/datum/reagent/toxin/plasma, 5)) //has_reagent returns the reagent datum
+	return ..()
 
 
 /obj/item/stock_parts/cell/proc/explode()
@@ -128,6 +129,7 @@
 	maxcharge = max(maxcharge/2, chargerate)
 	if (prob(10))
 		rigged = TRUE //broken batterys are dangerous
+		corrupted = TRUE
 
 /obj/item/stock_parts/cell/emp_act(severity)
 	. = ..()
