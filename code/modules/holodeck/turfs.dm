@@ -117,7 +117,7 @@
 /turf/open/floor/holofloor/carpet/update_icon()
 	. = ..()
 	if(intact)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 
 /turf/open/floor/holofloor/wood
 	icon_state = "wood"

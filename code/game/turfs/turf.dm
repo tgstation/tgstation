@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	levelupdate()
 	if(smooth)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
