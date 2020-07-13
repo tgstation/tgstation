@@ -237,7 +237,7 @@
 	var/explosion_sum = B[1] + B[2] + B[3] + B[4]
 	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
 		explosion(get_turf(src), B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod)) //less advanced equipment than bluespace pod, so larger explosion when landing
-	else if (!effectQuiet || !firstSounds) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
+	else if (!effectQuiet || firstSounds) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, "explosion", landingSound ? 15 : 80, TRUE)
 	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking shit up w explosions, we should delete
 		opened = TRUE //We set opened to TRUE to avoid spending time trying to open (due to being deleted) during the Destroy() proc
@@ -518,7 +518,7 @@
 	var/soundStartTime = pod.landingDelay - pod.fallingSoundLength + pod.fallDuration
 	if (soundStartTime < 0)
 		soundStartTime = 1
-	if (!pod.effectQuiet || !pod.firstSounds)
+	if (!pod.effectQuiet || pod.firstSounds)
 		addtimer(CALLBACK(src, .proc/playFallingSound), soundStartTime)
 	addtimer(CALLBACK(src, .proc/beginLaunch, pod.effectCircle), pod.landingDelay)
 

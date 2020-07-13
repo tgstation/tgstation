@@ -3,6 +3,12 @@
 	desc = "A pad to drop mechs on. From space."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bounty_trap_on"
+	var/display_name = "Orbital Pad"
+	var/obj/machinery/computer/mechpad/connected_console
+
+/obj/machinery/mechpad/Destroy()
+	connected_console.connected_mechpad = null
+	return ..()
 
 /obj/machinery/mechpad/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MULTITOOL)
@@ -27,7 +33,7 @@
 	landingDelay = 0
 	openingDelay = 0
 	departureDelay = 0
-	effectGib = TRUE
+	effectOrgans = TRUE
 	effectQuiet = TRUE
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'
 	firstSounds = FALSE
