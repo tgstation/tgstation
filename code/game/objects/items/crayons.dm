@@ -471,7 +471,7 @@
 		if(occupying_gang.my_gang == user_gang.my_gang)
 			to_chat(user, "<span class='danger'>[A] has already been tagged by our gang!</span>")
 		else
-			to_chat(user, "<span class='danger'>[A] has already been tagged by a gang! You must find and spray over the old tag first!</span>")
+			to_chat(user, "<span class='danger'>[A] has already been tagged by a gang! You must find and spray over the old tag instead!</span>")
 		return FALSE
 
 	// stolen from oldgang lmao
