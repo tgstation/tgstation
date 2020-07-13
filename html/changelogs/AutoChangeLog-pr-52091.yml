@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Fixes revenant contamination, what idiot let this through, pth, I spit on him."
+  - refactor: "Cleaned up some of the radiation traits and bitflags"
