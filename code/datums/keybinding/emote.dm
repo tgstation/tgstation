@@ -9,7 +9,10 @@
 	name = initial(faketype.key)
 	full_name = capitalize(initial(faketype.key))
 	description = "Do the emote '*[emote_key]'"
+	keybind_signal = COMSIG_KB_EMOTE
 
 /datum/keybinding/emote/down(client/user)
 	. = ..()
+	if(.)
+		return
 	return user.mob.emote(emote_key, intentional=TRUE)
