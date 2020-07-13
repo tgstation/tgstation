@@ -35,7 +35,6 @@
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
-
 	if(isitem(target))
 		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbed)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)

@@ -238,12 +238,10 @@
 	. = ..()
 	if(flesh_healing > 0)
 		flesh_damage = max(0, flesh_damage - 0.2)
-
 	if((flesh_damage <= 0) && (infestation <= 1))
 		to_chat(victim, "<span class='green'>The burns on your [limb.name] have cleared up!</span>")
 		qdel(src)
 		return
-
 	if(sanitization > 0)
 		infestation = max(0, infestation - WOUND_BURN_SANITIZATION_RATE * 0.2)
 
