@@ -356,7 +356,8 @@
 		message_admins("[src] deconstructed by [ADMIN_LOOKUPFLW(user)]")
 		log_game("[src] deconstructed by [key_name(user)]")
 	to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
-	if(I.use_tool(src, user, 30, volume=50))
+	if(I.use_tool(src, user, 3 SECONDS, volume=50))
+		to_chat(user, "<span class='notice'>You cut \the [src] apart.</span>")
 		deconstruct(TRUE)
 
 	return TRUE
