@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Split personalities will no longer roll for catatonic mobs, nor swap to a logged off player."

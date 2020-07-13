@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Vend-a-trays can now be made in the service lathe."
-  - bugfix: "Roundstart Vend-a-trays can now be registered to either chefs or bartenders, respectively."

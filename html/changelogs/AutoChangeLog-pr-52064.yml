@@ -1,6 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - admin: "Admins can use the \"Reverse Dropoff\" with supplypods to easily move/teleport things from one place to another! Fun!"
-  - bugfix: "Fixed some input messages in the supplypod menu not showing properly"
-  - bugfix: "Gondolapods work again!"
