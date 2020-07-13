@@ -3605,6 +3605,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"nA" = (
+/obj/machinery/computer/mechpad,
+/turf/open/floor/plasteel,
+/area/mine/production)
 "nF" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
@@ -4018,6 +4022,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"wk" = (
+/obj/machinery/mechpad,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "wE" = (
@@ -21173,7 +21181,7 @@ dK
 ia
 bP
 eE
-bP
+nA
 dU
 br
 wj
@@ -21430,7 +21438,7 @@ bq
 ia
 bP
 eE
-bP
+wk
 sj
 sH
 lO

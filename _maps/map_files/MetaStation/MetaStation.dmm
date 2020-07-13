@@ -68304,6 +68304,10 @@
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"frY" = (
+/obj/machinery/computer/mechpad,
+/turf/open/floor/plasteel,
+/area/science/robotics/lab)
 "ftu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -76973,6 +76977,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"tau" = (
+/obj/machinery/mechpad,
+/turf/open/floor/plasteel,
+/area/science/robotics/lab)
 "tay" = (
 /turf/closed/wall,
 /area/medical/medbay/central)
@@ -109266,7 +109274,7 @@ cCn
 cDd
 cEm
 cFf
-cFg
+frY
 cFh
 cHR
 cIL
@@ -109523,7 +109531,7 @@ cCq
 cDe
 cEm
 cFg
-cFg
+tau
 dDE
 cHR
 cIM

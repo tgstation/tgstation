@@ -17,7 +17,7 @@
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE 
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	density = FALSE
 
 	//*****NOTE*****: Many of these comments are similarly described in centcom_podlauncher.dm. If you change them here, please consider doing so in the centcom podlauncher code as well!
@@ -57,6 +57,8 @@
 	var/effectShrapnel = FALSE
 	var/shrapnel_type = /obj/projectile/bullet/shrapnel
 	var/shrapnel_magnitude = 3
+	var/list/whitelist = list()
+	var/firstSounds = TRUE
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
@@ -107,7 +109,7 @@
 	fin_mask = "bottomfin"
 	if (POD_STYLES[style][POD_SHAPE] == POD_SHAPE_NORML)
 		icon_state = POD_STYLES[style][POD_BASE] + "_reverse"
-	pixel_x = initial(pixel_x) 
+	pixel_x = initial(pixel_x)
 	transform = matrix()
 	update_icon()
 
@@ -115,7 +117,7 @@
 	fin_mask = initial(fin_mask)
 	if (POD_STYLES[style][POD_SHAPE] == POD_SHAPE_NORML)
 		icon_state = POD_STYLES[style][POD_BASE]
-	pixel_x = initial(pixel_x) 
+	pixel_x = initial(pixel_x)
 	transform = matrix()
 	update_icon()
 
@@ -151,7 +153,7 @@
 		else
 			var/icon/masked_door = new(icon, door) //The door we want to apply
 			var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
-			fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1) 
+			fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
 			fin_masker.SwapColor("#ffffffff", null)
 			fin_masker.Blend("#000000", ICON_SUBTRACT)
 			masked_door.Blend(fin_masker, ICON_ADD)
@@ -180,7 +182,8 @@
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
 	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open_pod() )
 	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
-	audible_message("<span class='notice'>The pod hisses, closing and launching itself away from the station.</span>", "<span class='notice'>The ground vibrates, and you hear the sound of engines firing.</span>")
+	if (!effectQuiet && style != STYLE_SEETHROUGH)
+		audible_message("<span class='notice'>The pod hisses, closing and launching itself away from the station.</span>", "<span class='notice'>The ground vibrates, and you hear the sound of engines firing.</span>")
 	stay_after_drop = FALSE
 	holder.pixel_z = initial(holder.pixel_z)
 	holder.alpha = initial(holder.alpha)
@@ -201,7 +204,7 @@
 	if (landingSound)
 		playsound(get_turf(src), landingSound, soundVolume, FALSE, FALSE)
 	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
-	if(effectShrapnel)	
+	if(effectShrapnel)
 		SEND_SIGNAL(src, COMSIG_SUPPLYPOD_LANDED)
 	for (var/mob/living/M in T)
 		if (effectLimb && iscarbon(M)) //If effectLimb is true (which means we pop limbs off when we hit people):
@@ -234,7 +237,7 @@
 	var/explosion_sum = B[1] + B[2] + B[3] + B[4]
 	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
 		explosion(get_turf(src), B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod)) //less advanced equipment than bluespace pod, so larger explosion when landing
-	else if (!effectQuiet) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
+	else if (!effectQuiet || !firstSounds) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, "explosion", landingSound ? 15 : 80, TRUE)
 	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking shit up w explosions, we should delete
 		opened = TRUE //We set opened to TRUE to avoid spending time trying to open (due to being deleted) during the Destroy() proc
@@ -266,7 +269,7 @@
 		playsound(get_turf(holder), openingSound, soundVolume, FALSE, FALSE) //Special admin sound to play
 	for (var/atom/movable/O in holder.contents) //Go through the contents of the holder
 		O.forceMove(T) //move everything from the contents of the holder to the turf of the holder
-	if (!effectQuiet && !openingSound && style != STYLE_SEETHROUGH) //If we aren't being quiet, play the default pod open sound
+	if (!openingSound && style != STYLE_SEETHROUGH) //If we aren't being quiet, play the default pod open sound
 		playsound(get_turf(holder), open_sound, 15, TRUE, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return
@@ -311,6 +314,8 @@
 		return FALSE
 
 /obj/structure/closet/supplypod/insertion_allowed(atom/movable/AM)
+	if(whitelist.len && !is_type_in_typecache(AM, whitelist))
+		return FALSE
 	if(ismob(AM))
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return FALSE
@@ -335,9 +340,9 @@
 	if (leavingSound)
 		playsound(get_turf(holder), leavingSound, soundVolume, FALSE, FALSE)
 	deleteRubble()
-	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) 
+	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(holder, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising pod
-	
+	firstSounds = TRUE
 	addtimer(CALLBACK(src, .proc/handleReturnAfterDeparting, holder), 15) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
@@ -437,7 +442,7 @@
 /obj/effect/supplypod_rubble/proc/getForeground(obj/structure/closet/supplypod/pod)
 	var/mutable_appearance/rubble_overlay = mutable_appearance('icons/obj/supplypods.dmi', foreground)
 	rubble_overlay.appearance_flags = KEEP_APART|RESET_TRANSFORM
-	rubble_overlay.transform = matrix().Translate(SUPPLYPOD_X_OFFSET - pod.pixel_x, verticle_offset)  
+	rubble_overlay.transform = matrix().Translate(SUPPLYPOD_X_OFFSET - pod.pixel_x, verticle_offset)
 	return rubble_overlay
 
 /obj/effect/supplypod_rubble/proc/fadeAway()
@@ -513,7 +518,7 @@
 	var/soundStartTime = pod.landingDelay - pod.fallingSoundLength + pod.fallDuration
 	if (soundStartTime < 0)
 		soundStartTime = 1
-	if (!pod.effectQuiet)
+	if (!pod.effectQuiet || !pod.firstSounds)
 		addtimer(CALLBACK(src, .proc/playFallingSound), soundStartTime)
 	addtimer(CALLBACK(src, .proc/beginLaunch, pod.effectCircle), pod.landingDelay)
 
