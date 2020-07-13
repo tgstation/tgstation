@@ -34,7 +34,8 @@
 			for(var/disabled_entry in parsed_entries[entry])
 				TryRemoveEntry(entry, filename_to_test)
 		else if(entry == CONFIGURATION_INCLUDE_TOKEN)
-			TestGraph(parsed_entries[entry], stack)
+			for(var/sub_config in parsed_entries[entry])
+				TestGraph(sub_config, stack)
 		else
 			TryRemoveEntry(entry, filename_to_test)
 

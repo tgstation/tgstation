@@ -132,7 +132,10 @@
 		if(!entry)
 			continue
 
-		results[entry] = value
+		if(entry == CONFIGURATION_INCLUDE_TOKEN)
+			LAZYADD(results[entry], value)
+		else
+			results[entry] = value
 	return results
 
 /datum/controller/configuration/proc/LoadEntries(filename, list/stack = list())
