@@ -97,7 +97,7 @@
 
 /obj/item/reagent_containers/food/snacks/pissyshitties
 	name = "pissy shitties"
-	desc = "A traditional movie theater snack from Space America."
+	desc = "A traditional movie theater snack from Space America. The cola soaks into the popcorn with a satisfying sizzle."
 	icon_state = "pissyshitties"
 	trash = /obj/item/trash/pissyshitties
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 3)

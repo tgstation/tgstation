@@ -3,6 +3,15 @@
 
 // MISC
 
+/datum/crafting_recipe/food/pissyshitties
+	name = "Pissy shitties"
+	reqs = list(
+		/datum/reagent/consumable/space_cola = 30,
+		/obj/item/reagent_containers/food/snacks/popcorn = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/pissyshitties
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/candiedapple
 	name = "Candied apple"
 	reqs = list(

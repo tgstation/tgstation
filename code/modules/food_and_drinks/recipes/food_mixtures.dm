@@ -136,14 +136,3 @@
 /datum/chemical_reaction/bbqsauce
 	results = list(/datum/reagent/consumable/bbqsauce = 5)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/medicine/salglu_solution = 3, /datum/reagent/consumable/blackpepper = 1)
-
-/datum/chemical_reaction/pissyshitties
-	required_reagents = list(/datum/reagent/consumable/space_cola = 30)
-	required_container = /obj/item/reagent_containers/food/snacks/popcorn
-	mix_message = "The cola soaks into your popcorn with a satisfying sizzle."
-
-/datum/chemical_reaction/pissyshitties/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <=created_volume, i++)
-		new /obj/item/reagent_containers/food/snacks/pissyshitties(location)
-	return
