@@ -55,7 +55,7 @@
 // saved scars with a version lower than this will be discarded
 #define SCAR_CURRENT_VERSION				1
 
-// With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable: TODO: this isn't accurate anymore, update
+// With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable (bone only creatures just need the second):
 // 	1. Skin is mangled: A critical slash or pierce wound on that limb
 // 	2. Bone is mangled: At least a severe bone wound on that limb
 // see [/obj/item/bodypart/proc/get_mangled_state] for more information
