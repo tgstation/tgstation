@@ -79,6 +79,9 @@
 	keybind_signal = COMSIG_KB_CARBON_SELECTHARMINTENT_DOWN
 
 /datum/keybinding/carbon/select_harm_intent/down(client/user)
+	. = ..()
+	if(.)
+		return
 	user.mob?.a_intent_change(INTENT_HARM)
 	return TRUE
 
