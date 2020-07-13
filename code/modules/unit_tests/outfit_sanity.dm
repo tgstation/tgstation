@@ -41,7 +41,7 @@
 
 			for (var/path in backpack_contents)
 				var/number = backpack_contents[path] || 1
-				for (var/i in 1 to number)
+				for (var/_ in 1 to number)
 					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BACKPACK, TRUE))
 						Fail("[outfit.name]'s backpack_contents are invalid! Couldn't add [path] to backpack.")
 
