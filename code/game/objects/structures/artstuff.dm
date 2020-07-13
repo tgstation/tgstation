@@ -186,7 +186,7 @@
 		painting_name = new_name
 		SStgui.update_uis(src)
 
-/obj/item/canvas/nineteenXnineteen
+/obj/item/canvas/nineteen_nineteen
 	icon_state = "19x19"
 	width = 19
 	height = 19
@@ -197,7 +197,7 @@
 	framed_offset_x = 8
 	framed_offset_y = 9
 
-/obj/item/canvas/twentythreeXnineteen
+/obj/item/canvas/twentythree_nineteen
 	icon_state = "23x19"
 	width = 23
 	height = 19
@@ -208,7 +208,7 @@
 	framed_offset_x = 6
 	framed_offset_y = 8
 
-/obj/item/canvas/twentythreeXtwentythree
+/obj/item/canvas/twentythree_twentythree
 	icon_state = "23x23"
 	width = 23
 	height = 23
@@ -223,7 +223,7 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = 0
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
@@ -233,6 +233,7 @@
 	desc = "Art or \"Art\"? You decide."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
+	custom_materials = list(/datum/material/wood = 2000)
 	buildable_sign = FALSE
 	var/obj/item/canvas/C
 	var/persistence_id
@@ -288,7 +289,7 @@
 /obj/structure/sign/painting/update_icon_state()
 	. = ..()
 	if(C && C.generated_icon)
-		icon_state = null
+		icon_state = "frame-overlay"
 	else
 		icon_state = "frame-empty"
 
@@ -342,7 +343,7 @@
 		stack_trace("Invalid persistence_id - [persistence_id]")
 		return
 	var/data = C.get_data_string()
-	var/md5 = md5(data)
+	var/md5 = md5(lowertext(data))
 	var/list/current = SSpersistence.paintings[persistence_id]
 	if(!current)
 		current = list()
@@ -386,7 +387,7 @@
 		if(!persistence_id || !C)
 			to_chat(user,"<span class='warning'>This is not a persistent painting.</span>")
 			return
-		var/md5 = md5(C.get_data_string())
+		var/md5 = md5(lowertext(C.get_data_string()))
 		var/author = C.author_ckey
 		var/list/current = SSpersistence.paintings[persistence_id]
 		if(current)

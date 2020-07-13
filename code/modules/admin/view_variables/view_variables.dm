@@ -59,6 +59,7 @@
 			"Set len" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SET_LENGTH),
 			"Shuffle" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SHUFFLE),
 			"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
+			"View References" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_VIEW_REFERENCES),
 			"---"
 			)
 		for(var/i in 1 to length(dropdownoptions))
@@ -94,16 +95,7 @@
 	<head>
 		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 		<title>[title]</title>
-		<style>
-			body {
-				font-family: Verdana, sans-serif;
-				font-size: 9pt;
-			}
-			.value {
-				font-family: "Courier New", monospace;
-				font-size: 8pt;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="view_variables.css">
 	</head>
 	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
 		<script type="text/javascript">

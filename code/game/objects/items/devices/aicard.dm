@@ -3,7 +3,8 @@
 	desc = "A storage device for AIs. Patent pending."
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -65,7 +66,7 @@
 	var/list/data = list()
 	if(AI)
 		data["name"] = AI.name
-		data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
+		data["laws"] = AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 		data["health"] = (AI.health + 100) / 2
 		data["wireless"] = !AI.control_disabled //todo disabled->enabled
 		data["radio"] = AI.radio_enabled

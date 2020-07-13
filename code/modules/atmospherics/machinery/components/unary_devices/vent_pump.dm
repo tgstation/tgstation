@@ -150,7 +150,7 @@
 		"device" = "VP",
 		"timestamp" = world.time,
 		"power" = on,
-		"direction" = pump_direction ? "release" : "siphon",
+		"direction" = pump_direction,
 		"checks" = pressure_checks,
 		"internal" = internal_pressure_bound,
 		"external" = external_pressure_bound,
@@ -295,7 +295,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
-	power_channel = EQUIP
+	power_channel = AREA_USAGE_EQUIP
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()

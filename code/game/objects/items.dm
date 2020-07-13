@@ -11,18 +11,38 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	///icon state name for inhand overlays
-	var/item_state = null
+
+	/*	!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
+
+		IF YOU ADD MORE ICON CRAP TO THIS
+		ENSURE YOU ALSO ADD THE NEW VARS TO CHAMELEON ITEM_ACTION'S update_item() PROC (/datum/action/item_action/chameleon/change/proc/update_item())
+		WASHING MASHINE'S dye_item() PROC (/obj/item/proc/dye_item())
+		AND ALSO TO THE CHANGELING PROFILE DISGUISE SYSTEMS (/datum/changelingprofile / /datum/antagonist/changeling/proc/create_profile() / /proc/changeling_transform())
+
+		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!	*/
+
+	///icon state for inhand overlays, if null the normal icon_state will be used.
+	var/inhand_icon_state = null
 	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 	///Icon file for mob worn overlays.
-	///no var for state because it should *always* be the same as icon_state
-	var/icon/mob_overlay_icon
+	var/icon/worn_icon
+	///icon state for mob worn overlays, if null the normal icon_state will be used.
+	var/worn_icon_state
 	///Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer
+
+	/*	!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
+
+		IF YOU ADD MORE ICON CRAP TO THIS
+		ENSURE YOU ALSO ADD THE NEW VARS TO CHAMELEON ITEM_ACTION'S update_item() PROC (/datum/action/item_action/chameleon/change/proc/update_item())
+		WASHING MASHINE'S dye_item() PROC (/obj/item/proc/dye_item())
+		AND ALSO TO THE CHANGELING PROFILE DISGUISE SYSTEMS (/datum/changelingprofile / /datum/antagonist/changeling/proc/create_profile() / /proc/changeling_transform())
+
+		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!	*/
 
 	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
 	var/worn_x_dimension = 32
@@ -543,7 +563,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	if(M.is_eyes_covered())
 		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "<span class='warning'>You're going to need to remove [M.p_their()] eye protection first!</span>")
+		to_chat(user, "<span class='warning'>You failed to stab [M.p_their()] eyes, you need to remove [M.p_their()] eye protection first!</span>")
 		return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
@@ -580,8 +600,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	log_combat(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return
+	if(!eyes)
+		return TRUE
 	M.adjust_blurriness(3)
 	eyes.applyOrganDamage(rand(2,4))
 	if(eyes.damage >= 10)
@@ -598,9 +618,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Paralyze(40)
-		if (prob(eyes.damage - 10 + 1))
+		if(prob(eyes.damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
+	return TRUE
 
 /obj/item/singularity_pull(S, current_size)
 	..()
@@ -634,10 +655,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+	if(HAS_TRAIT(src, TRAIT_NODROP))
+		return
 	thrownby = thrower
 	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle)
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
 
 
 /obj/item/proc/after_throw(datum/callback/callback)
@@ -706,7 +729,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(damtype == BURN)
 		. = 'sound/weapons/sear.ogg'
 	else
-		. = "desceration"
+		. = "desecration"
 
 /obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
@@ -910,12 +933,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			dropped(M, FALSE)
 	return ..()
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, gentle = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NODROP))
-		return
-	return ..()
-
-/obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
+/obj/item/proc/embedded(atom/embedded_target)
 	return
 
 /obj/item/proc/unembedded()
@@ -957,11 +975,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
   *
   * Arguments:
-  * * target- Either a body part, a carbon, or a closed turf. What are we hitting?
+  * * target- Either a body part or a carbon. What are we hitting?
   * * forced- Do we want this to go through 100%?
   */
 /obj/item/proc/tryEmbed(atom/target, forced=FALSE, silent=FALSE)
-	if(!isbodypart(target) && !iscarbon(target) && !isclosedturf(target))
+	if(!isbodypart(target) && !iscarbon(target))
 		return
 	if(!forced && !LAZYLEN(embedding))
 		return
@@ -991,6 +1009,5 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		impact_pain_mult = (!isnull(embedding["impact_pain_mult"]) ? embedding["impact_pain_mult"] : EMBEDDED_IMPACT_PAIN_MULTIPLIER),\
 		jostle_chance = (!isnull(embedding["jostle_chance"]) ? embedding["jostle_chance"] : EMBEDDED_JOSTLE_CHANCE),\
 		jostle_pain_mult = (!isnull(embedding["jostle_pain_mult"]) ? embedding["jostle_pain_mult"] : EMBEDDED_JOSTLE_PAIN_MULTIPLIER),\
-		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
-		embed_chance_turf_mod = (!isnull(embedding["embed_chance_turf_mod"]) ? embedding["embed_chance_turf_mod"] : EMBED_CHANCE_TURF_MOD))
+		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT))
 	return TRUE

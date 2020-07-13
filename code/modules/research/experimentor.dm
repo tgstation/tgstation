@@ -72,8 +72,8 @@
 /obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
 
-	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
-	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
+	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list
+	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/runtime) in GLOB.mob_living_list
 	SetTypeReactions()
 
 	critical_items_typecache = typecacheof(list(

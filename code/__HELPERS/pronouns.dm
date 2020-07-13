@@ -262,3 +262,72 @@
 	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
 		temp_gender = PLURAL
 	return ..()
+
+
+//clothing need special handling due to pairs of items, ie gloves vs a singular glove, shoes, ect.
+/obj/item/clothing/p_they(capitalized, temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "it"
+	if(temp_gender == PLURAL)
+		. = "they"
+	if(capitalized)
+		. = capitalize(.)
+
+/obj/item/clothing/p_their(capitalized, temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "its"
+	if(temp_gender == PLURAL)
+		. = "their"
+	if(capitalized)
+		. = capitalize(.)
+
+/obj/item/clothing/p_them(capitalized, temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "it"
+	if(temp_gender == PLURAL)
+		. = "them"
+	if(capitalized)
+		. = capitalize(.)
+
+/obj/item/clothing/p_have(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "has"
+	if(temp_gender == PLURAL)
+		. = "have"
+
+/obj/item/clothing/p_are(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "is"
+	if(temp_gender == PLURAL)
+		. = "are"
+
+/obj/item/clothing/p_were(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "was"
+	if(temp_gender == PLURAL)
+		. = "were"
+
+/obj/item/clothing/p_do(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "does"
+	if(temp_gender == PLURAL)
+		. = "do"
+
+/obj/item/clothing/p_s(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender != PLURAL)
+		. = "s"
+
+/obj/item/clothing/p_es(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender != PLURAL)
+		. = "es"

@@ -83,6 +83,7 @@
 					body += "<a href='?_src_=holder;[HrefToken()];adminplayeropts="+ref+"'>PP</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];showmessageckey="+ckey+"'>N</a> - "
 					body += "<a href='?_src_=vars;[HrefToken()];Vars="+ref+"'>VV</a> - "
+					body += "<a href='?_src_=vars;[HrefToken()];skill="+ref+"'>SP</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];traitor="+ref+"'>TP</a> - "
 					if (job == "Cyborg")
 						body += "<a href='?_src_=holder;[HrefToken()];borgpanel="+ref+"'>BP</a> - "

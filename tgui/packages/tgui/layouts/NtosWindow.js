@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { useBackend } from '../backend';
 import { Box, Button } from '../components';
 import { refocusLayout } from './Layout';
@@ -11,6 +17,7 @@ export const NtosWindow = (props, context) => {
   } = props;
   const { act, data } = useBackend(context);
   const {
+    PC_device_theme,
     PC_batteryicon,
     PC_showbatteryicon,
     PC_batterypercent,
@@ -35,7 +42,8 @@ export const NtosWindow = (props, context) => {
               {PC_stationtime}
             </Box>
             <Box inline italic mr={2} opacity={0.33}>
-              NtOS
+              {PC_device_theme === 'ntos' && 'NtOS'}
+              {PC_device_theme === 'syndicate' && 'Syndix'}
             </Box>
           </div>
           <div className="NtosHeader__right">

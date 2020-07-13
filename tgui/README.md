@@ -180,8 +180,11 @@ See: [Component Reference](docs/component-reference.md).
 
 ## License
 
-All code is licensed with the parent license of *tgstation*, **AGPL-3.0**.
+Source code is covered by /tg/station's parent license - **AGPL-3.0**
+(see the main [README](../README.md)), unless otherwise indicated.
 
-See the main [README](../README.md) for more details.
+Some files are annotated with a copyright header, which explicitly states
+the copyright holder and license of the file. Most of the core tgui
+source code is available under the **MIT** license.
 
 The Authors retain all copyright to their respective work here submitted.

@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { Table } from './Table';
 import { pureComponentHooks } from 'common/react';
 

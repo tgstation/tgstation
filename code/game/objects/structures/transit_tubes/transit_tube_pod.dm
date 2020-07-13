@@ -59,7 +59,13 @@
 
 /obj/structure/transit_tube_pod/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
-		AM.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += AM
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += AM
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += AM
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
 	..()

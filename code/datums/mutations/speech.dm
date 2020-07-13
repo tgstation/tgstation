@@ -173,7 +173,7 @@
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
 		message = " [message] "
-		message = replacetext(message," i'm not "," I aint ")
+		message = replacetext(message," i'm not "," I ain't ")
 		message = replacetext(message," girl ",pick(" honey "," baby "," baby doll "))
 		message = replacetext(message," man ",pick(" son "," buddy "," brother"," pal "," friendo "))
 		message = replacetext(message," out of "," outta ")

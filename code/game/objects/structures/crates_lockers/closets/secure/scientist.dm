@@ -1,9 +1,9 @@
-/obj/structure/closet/secure_closet/RD
+/obj/structure/closet/secure_closet/research_director
 	name = "\proper research director's locker"
 	req_access = list(ACCESS_RD)
 	icon_state = "rd"
 
-/obj/structure/closet/secure_closet/RD/PopulateContents()
+/obj/structure/closet/secure_closet/research_director/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/rd(src)
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
@@ -25,4 +25,4 @@
 	new /obj/item/laser_pointer(src)
 	new /obj/item/door_remote/research_director(src)
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
-	new /obj/item/storage/photo_album/RD(src)
+	new /obj/item/storage/photo_album/rd(src)

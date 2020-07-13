@@ -2,12 +2,15 @@
  * tgui subsystem
  *
  * Contains all tgui state and subsystem code.
+ *
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
  */
 
 /**
  * public
  *
- * Get a open UI given a user, src_object, and ui_key and try to update it with data.
+ * Get an open UI given a user, src_object, and ui_key and try to update it with data.
  *
  * required user mob The mob who opened/is using the UI.
  * required src_object datum The object/datum which owns the UI.
@@ -34,7 +37,7 @@
 /**
  * private
  *
- * Get a open UI given a user, src_object, and ui_key.
+ * Get an open UI given a user, src_object, and ui_key.
  *
  * required user mob The mob who opened/is using the UI.
  * required src_object datum The object/datum which owns the UI.

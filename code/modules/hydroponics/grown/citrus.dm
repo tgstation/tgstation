@@ -135,7 +135,7 @@
 /obj/item/reagent_containers/food/snacks/grown/firelemon/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion
 
-/obj/item/reagent_containers/food/snacks/grown/firelemon/proc/prime()
+/obj/item/reagent_containers/food/snacks/grown/firelemon/proc/prime(mob/living/lanced_by)
 	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
 		if(0 to 30)
 			update_mob()
@@ -184,8 +184,8 @@
 	icon_state = "orang"
 	filling_color = "#FFA500"
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
-	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
-	tastes = list("polygons" = 1, "oranges" = 1)
+	distill_reagent = /datum/reagent/toxin/mindbreaker
+	tastes = list("polygons" = 1, "bluespace" = 1, "the true nature of reality" = 1)
 
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange_3d/pickup(mob/user)
 	. = ..()

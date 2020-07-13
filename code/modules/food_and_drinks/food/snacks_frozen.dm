@@ -12,6 +12,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ice = 2)
 	tastes = list("ice cream" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/strawberryicecreamsandwich
 	name = "strawberry ice cream sandwich"
@@ -34,6 +35,7 @@
 	filling_color = "#87CEFA"
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
 	foodtype = FRUIT | DAIRY | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/sundae
 	name = "sundae"
@@ -45,6 +47,7 @@
 	filling_color = "#FFFACD"
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtype = FRUIT | DAIRY | SUGAR
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/honkdae
 	name = "honkdae"
@@ -56,6 +59,7 @@
 	filling_color = "#FFFACD"
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtype = FRUIT | DAIRY | SUGAR
+	value = FOOD_EXOTIC
 
 /////////////
 //SNOWCONES//
@@ -72,6 +76,7 @@
 	filling_color = "#FFFFFF" //Ice is white
 	tastes = list("ice" = 1, "water" = 1)
 	foodtype = SUGAR //We use SUGAR as a base line to act in as junkfood, other wise we use fruit
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/snowcones/lime
 	name = "lime snowcone"

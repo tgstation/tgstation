@@ -497,13 +497,13 @@
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/reagent_containers/food/snacks/gumball/cyborg
+	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
 	nodamage = TRUE
 
 /obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
+		var/obj/item/reagent_containers/food/snacks/chewable/gumball/S = new ammo_type(T)
 		S.color = color
 		dropped = TRUE
 
@@ -932,5 +932,5 @@
 
 /obj/item/borg/apparatus/circuit/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	if(istype(A, /obj/item/aiModule) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
+	if(istype(A, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, "<span class='warning'>This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up.</span>")

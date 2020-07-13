@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(chat)
 			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
 
 			if(!C)
-				return
+				continue
 
 			//Send it to the old style output window.
 			SEND_TEXT(C, original_message)

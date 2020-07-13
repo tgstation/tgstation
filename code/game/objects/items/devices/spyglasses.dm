@@ -14,7 +14,8 @@
 		return
 	user.client.setup_popup("spypopup", 3, 3, 2)
 	user.client.register_map_obj(linked_bug.cam_screen)
-	user.client.register_map_obj(linked_bug.cam_plane_master)
+	for(var/plane in linked_bug.cam_plane_masters)
+		user.client.register_map_obj(plane)
 	linked_bug.update_view()
 
 /obj/item/clothing/glasses/regular/spy/equipped(mob/user, slot)
@@ -47,7 +48,7 @@
 
 	var/obj/item/clothing/glasses/regular/spy/linked_glasses
 	var/obj/screen/map_view/cam_screen
-	var/obj/screen/plane_master/lighting/cam_plane_master
+	var/list/cam_plane_masters
 	// Ranges higher than one can be used to see through walls.
 	var/cam_range = 1
 	var/datum/movement_detector/tracker
@@ -62,23 +63,23 @@
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.set_position(1, 1)
 
-	// We need to add a lighting planesmaster to the popup, otherwise
+	// We need to add planesmasters to the popup, otherwise
 	// blending fucks up massively. Any planesmaster on the main screen does
 	// NOT apply to map popups. If there's ever a way to make planesmasters
 	// omnipresent, then this wouldn't be needed.
-	cam_plane_master = new
-	// Not stored on the client, but instead on the bug, therefore, there's
-	// no need to delete this object.
-	cam_plane_master.del_on_map_removal = FALSE
-	cam_plane_master.assigned_map = "spypopup_map"
-	// We are using set_screen_loc due to it being a non-standard placement.
-	cam_plane_master.screen_loc = "spypopup_map:CENTER"
+	cam_plane_masters = list()
+	for(var/plane in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/instance = new plane()
+		instance.assigned_map = "spypopup_map"
+		instance.del_on_map_removal = FALSE
+		instance.screen_loc = "spypopup_map:CENTER"
+		cam_plane_masters += instance
 
 /obj/item/spy_bug/Destroy()
 	if(linked_glasses)
 		linked_glasses.linked_bug = null
 	qdel(cam_screen)
-	qdel(cam_plane_master)
+	QDEL_LIST(cam_plane_masters)
 	qdel(tracker)
 	. = ..()
 

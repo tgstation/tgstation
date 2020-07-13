@@ -66,7 +66,7 @@ Behavior that's still missing from this component that original food items had t
 				owner.reagents.add_reagent(rid, amount)
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
-	if(!food_flags & FOOD_IN_CONTAINER)
+	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch (bitecount)
 			if (0)
 				return

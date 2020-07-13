@@ -9,7 +9,7 @@
 	desc = "Extremely radioactive. Wear goggles."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "plutonium_core"
-	item_state = "plutoniumcore"
+	inhand_icon_state = "plutoniumcore"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/pulse = 0
 	var/cooldown = 0
@@ -45,7 +45,7 @@
 	desc = "Solid container for radioactive objects."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "core_container_empty"
-	item_state = "tile"
+	inhand_icon_state = "tile"
 	lefthand_file = 'icons/mob/inhands/misc/tiles_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/tiles_righthand.dmi'
 	var/obj/item/nuke_core/core
@@ -88,7 +88,7 @@
 	desc = "A screwdriver with an ultra thin tip that's carefully designed to boost screwing speed."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
-	item_state = "screwdriver_nuke"
+	inhand_icon_state = "screwdriver_nuke"
 	toolspeed = 0.5
 	random_color = FALSE
 
@@ -121,7 +121,7 @@
 	name = "supermatter sliver"
 	desc = "A tiny, highly volatile sliver of a supermatter crystal. Do not handle without protection!"
 	icon_state = "supermatter_sliver"
-	item_state = "supermattersliver"
+	inhand_icon_state = "supermattersliver"
 	pulseicon = "supermatter_sliver_pulse"
 
 /obj/item/nuke_core/supermatter_sliver/attack_tk() // no TK dusting memes

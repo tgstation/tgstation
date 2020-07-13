@@ -78,7 +78,7 @@
 	w_class_on = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 	armour_penetration = 100
-	attack_verb_off = list("attacked", "chopped", "cleaved", "torn", "cut")
+	attack_verb_off = list("attacked", "chopped", "cleaved", "tore", "lacerated", "cut")
 	attack_verb_on = list()
 	light_color = "#40ceff"
 
@@ -235,4 +235,4 @@
 	name = "hardlight blade"
 	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
 	icon_state = "lightblade"
-	item_state = "lightblade"
+	inhand_icon_state = "lightblade"

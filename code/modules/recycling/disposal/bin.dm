@@ -10,7 +10,7 @@
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT | USES_TGUI
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	ui_x = 300
 	ui_y = 180
 
@@ -197,7 +197,7 @@
 	flush = FALSE
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
-	for(var/obj/item/smallDelivery/O in src)
+	for(var/obj/item/small_delivery/O in src)
 		H.tomail = TRUE
 		return
 
@@ -436,25 +436,25 @@
 
 //Delivery Chute
 
-/obj/machinery/disposal/deliveryChute
+/obj/machinery/disposal/delivery_chute
 	name = "delivery chute"
 	desc = "A chute for big and small packages alike!"
 	density = TRUE
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
 
-/obj/machinery/disposal/deliveryChute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+/obj/machinery/disposal/delivery_chute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 	trunk = locate() in loc
 	if(trunk)
 		trunk.linked = src	// link the pipe trunk to self
 
-/obj/machinery/disposal/deliveryChute/place_item_in_disposal(obj/item/I, mob/user)
+/obj/machinery/disposal/delivery_chute/place_item_in_disposal(obj/item/I, mob/user)
 	if(I.CanEnterDisposals())
 		..()
 		flush()
 
-/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/delivery_chute/Bumped(atom/movable/AM) //Go straight into the chute
 	if(QDELETED(AM) || !AM.CanEnterDisposals())
 		return
 	switch(dir)
@@ -497,5 +497,5 @@
 /obj/machinery/disposal/bin/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1
 
-/obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)
+/obj/machinery/disposal/delivery_chute/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1

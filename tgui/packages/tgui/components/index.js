@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 export { AnimatedNumber } from './AnimatedNumber';
 export { BlockQuote } from './BlockQuote';
 export { Box } from './Box';
@@ -23,5 +29,7 @@ export { ProgressBar } from './ProgressBar';
 export { Section } from './Section';
 export { Slider } from './Slider';
 export { Table } from './Table';
+export { TextArea } from './TextArea';
 export { Tabs } from './Tabs';
 export { Tooltip } from './Tooltip';
+export { TimeDisplay } from './TimeDisplay';

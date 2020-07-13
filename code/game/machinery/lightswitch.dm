@@ -4,7 +4,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	desc = "Make dark."
-	power_channel = LIGHT
+	power_channel = AREA_USAGE_LIGHT
 	/// Set this to a string, path, or area instance to control that area
 	/// instead of the switch's location.
 	var/area/area = null

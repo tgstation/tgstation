@@ -3,7 +3,7 @@
 	opacity = 1
 	density = TRUE
 	blocks_air = TRUE
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 /turf/closed/AfterChange()
@@ -22,6 +22,9 @@
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
+
+/turf/closed/indestructible/rust_heretic_act()
+	return
 
 /turf/closed/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
@@ -149,6 +152,15 @@
 	desc = "Extremely densely-packed sheets of ice and rock, forged over the years of the harsh cold."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "icerock"
+
+/turf/closed/indestructible/rock/snow/ice/ore
+	icon = 'icons/turf/walls/icerock_wall.dmi'
+	icon_state = "icerock"
+	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	canSmoothWith = list (/turf/closed)
+	pixel_x = -4
+	pixel_y = -4
+
 
 /turf/closed/indestructible/paper
 	name = "thick paper wall"

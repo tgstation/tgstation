@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { classes } from 'common/react';
 import { IS_IE8 } from '../byond';
 

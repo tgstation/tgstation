@@ -25,7 +25,7 @@
 	name = "box"
 	desc = "It's just an ordinary box."
 	icon_state = "box"
-	item_state = "syringe_kit"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FLAMMABLE
@@ -44,7 +44,7 @@
 		user.visible_message("<span class='suicide'>[user] puts [user.p_their()] head into \the [src], and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		myhead.dismember()
 		myhead.forceMove(src)//force your enemies to kill themselves with your head collection box!
-		playsound(user, "desceration-01.ogg", 50, TRUE, -1)
+		playsound(user, "desecration-01.ogg", 50, TRUE, -1)
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
@@ -71,7 +71,7 @@
 	user.put_in_hands(I)
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/packageWrap))
+	if(istype(W, /obj/item/stack/package_wrap))
 		return 0
 	return ..()
 
@@ -82,7 +82,7 @@
 	desc = "Unfortunately not large enough to trap the mime."
 	foldable = null
 	icon_state = "box"
-	item_state = null
+	inhand_icon_state = null
 	alpha = 0
 
 /obj/item/storage/box/mime/attack_hand(mob/user)
@@ -527,12 +527,12 @@
 		new /obj/item/card/id(src)
 
 //Some spare PDAs in a box
-/obj/item/storage/box/PDAs
+/obj/item/storage/box/pdas
 	name = "spare PDAs"
 	desc = "A box of spare PDA microcomputers."
 	illustration = "pda"
 
-/obj/item/storage/box/PDAs/PopulateContents()
+/obj/item/storage/box/pdas/PopulateContents()
 	for(var/i in 1 to 4)
 		new /obj/item/pda(src)
 	new /obj/item/cartridge/head(src)
@@ -687,7 +687,7 @@
 	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
-	item_state = "zippo"
+	inhand_icon_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
@@ -712,7 +712,7 @@
 	icon = 'icons/obj/storage.dmi'
 	illustration = "light"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
-	item_state = "syringe_kit"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
@@ -874,7 +874,7 @@
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."
 	icon_state = "paperbag_None"
-	item_state = "paperbag_None"
+	inhand_icon_state = "paperbag_None"
 	illustration = null
 	resistance_flags = FLAMMABLE
 	foldable = null
@@ -893,9 +893,9 @@
 
 /obj/item/storage/box/papersack/update_icon_state()
 	if(contents.len == 0)
-		icon_state = "[item_state]"
+		icon_state = "[inhand_icon_state]"
 	else
-		icon_state = "[item_state]_closed"
+		icon_state = "[inhand_icon_state]_closed"
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
@@ -919,16 +919,16 @@
 				return FALSE
 		to_chat(user, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
 		icon_state = "paperbag_[choice]"
-		item_state = "paperbag_[choice]"
+		inhand_icon_state = "paperbag_[choice]"
 		return FALSE
 	else if(W.get_sharpness())
 		if(!contents.len)
-			if(item_state == "paperbag_None")
+			if(inhand_icon_state == "paperbag_None")
 				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack(user.loc)
 				qdel(src)
 				return FALSE
-			else if(item_state == "paperbag_SmileyFace")
+			else if(inhand_icon_state == "paperbag_SmileyFace")
 				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack/smiley(user.loc)
 				qdel(src)
@@ -972,7 +972,7 @@
 	if(theme_name)
 		name = "[name] ([theme_name])"
 		desc = "A box containing supplementary ingredients for the aspiring chef. The box's theme is '[theme_name]'."
-		item_state = "syringe_kit"
+		inhand_icon_state = "syringe_kit"
 
 /obj/item/storage/box/ingredients/wildcard
 	theme_name = "wildcard"
@@ -1353,10 +1353,10 @@
 
 /obj/item/storage/box/shipping/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/destTagger=1,\
+		/obj/item/dest_tagger=1,\
 		/obj/item/sales_tagger=1,\
 		/obj/item/export_scanner=1,\
-		/obj/item/stack/packageWrap/small=2,\
+		/obj/item/stack/package_wrap/small=2,\
 		/obj/item/stack/wrapping_paper/small=1
 		)
 	generate_items_inside(items_inside,src)

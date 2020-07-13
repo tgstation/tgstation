@@ -2,6 +2,9 @@
  * tgui external
  *
  * Contains all external tgui declarations.
+ *
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
  */
 
 /**
@@ -63,7 +66,7 @@
 	// If there was no ui to update, there's no static data to update either.
 	if(!ui)
 		return
-	ui.push_data(null, ui_static_data(), TRUE)
+	ui.push_data(null, ui_static_data(user), TRUE)
 
 /**
  * public

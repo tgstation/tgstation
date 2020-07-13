@@ -23,8 +23,8 @@
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
 	item_type = /obj/item/instrument/violin/golden
 	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
-	invocation_type = "whisper"
-	invocation = "I aint have this much fun since Georgia."
+	invocation_type = INVOCATION_WHISPER
+	invocation = "I ain't had this much fun since Georgia."
 	action_icon_state = "golden_violin"
 	name = "Summon golden violin"
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -33,7 +33,7 @@
 /obj/effect/proc_holder/spell/targeted/summon_contract
 	name = "Summon infernal contract"
 	desc = "Skip making a contract by hand, just do it by magic."
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	invocation = "Just sign on the dotted line."
 	include_user = FALSE
 	range = 5
@@ -81,7 +81,7 @@
 	charge_max = 80
 	clothes_req = FALSE
 	invocation = "Your very soul will catch fire!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 2
 
 	projectile_type = /obj/projectile/magic/aoe/fireball/infernal
@@ -181,7 +181,7 @@
 	random_target_priority = TARGET_RANDOM
 	max_targets = 3
 	invocation = "TASTE SIN AND INDULGE!!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 
 /obj/effect/proc_holder/spell/targeted/sintouch/ascended
 	name = "Greater sin touch"

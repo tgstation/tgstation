@@ -25,7 +25,7 @@
 /turf/open/floor/engine/burn_tile()
 	return //unburnable
 
-/turf/open/floor/engine/make_plating(force = 0)
+/turf/open/floor/engine/make_plating(force = FALSE)
 	if(force)
 		..()
 	return //unplateable
@@ -81,7 +81,7 @@
 		if(floor_tile)
 			if(prob(30))
 				new floor_tile(src)
-				make_plating()
+				make_plating(TRUE)
 		else if(prob(30))
 			ReplaceWithLattice()
 

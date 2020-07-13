@@ -422,7 +422,7 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -757,6 +757,7 @@
 
 	if(sight_mode & BORGTHERM)
 		sight |= SEE_MOBS
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_invisible = min(see_invisible, SEE_INVISIBLE_LIVING)
 		see_in_dark = 8
 
@@ -771,18 +772,12 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(IsUnconscious() || IsStun() || IsKnockdown() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
-			if(stat == CONSCIOUS)
-				set_stat(UNCONSCIOUS)
-				become_blind(UNCONSCIOUS_BLIND)
-				update_mobility()
-				update_headlamp()
+		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
+			set_stat(UNCONSCIOUS)
 		else
-			if(stat == UNCONSCIOUS)
-				set_stat(CONSCIOUS)
-				cure_blind(UNCONSCIOUS_BLIND)
-				update_mobility()
-				update_headlamp()
+			set_stat(CONSCIOUS)
+	update_mobility()
+	update_headlamp()
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()
@@ -872,7 +867,8 @@
 /mob/living/silicon/robot/Exited(atom/A)
 	if(hat && hat == A)
 		hat = null
-	update_icons()
+		if(!QDELETED(src)) //Don't update icons if we are deleted.
+			update_icons()
 	. = ..()
 
 /**

@@ -79,6 +79,10 @@
 /turf/open/space/Assimilate_Air()
 	return
 
+//IT SHOULD RETURN NULL YOU MONKEY, WHY IN TARNATION WHAT THE FUCKING FUCK
+/turf/open/space/remove_air(amount)
+	return null
+
 /turf/open/space/proc/update_starlight()
 	if(CONFIG_GET(flag/starlight))
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
@@ -111,6 +115,7 @@
 			return
 		if(L)
 			if(R.use(1))
+				qdel(L)
 				to_chat(user, "<span class='notice'>You construct a catwalk.</span>")
 				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 				new/obj/structure/lattice/catwalk(src)
@@ -162,14 +167,21 @@
 				ty--
 			DT = locate(tx, ty, destination_z)
 
-		var/atom/movable/AM = A.pulling
+		var/atom/movable/pulling = A.pulling
+		var/atom/movable/puller = A
 		A.forceMove(DT)
-		if(AM)
-			var/turf/T = get_step(A.loc,turn(A.dir, 180))
-			AM.can_be_z_moved = FALSE
-			AM.forceMove(T)
-			A.start_pulling(AM)
-			AM.can_be_z_moved = TRUE
+
+		while (pulling != null)
+			var/next_pulling = pulling.pulling
+
+			var/turf/T = get_step(puller.loc, turn(puller.dir, 180))
+			pulling.can_be_z_moved = FALSE
+			pulling.forceMove(T)
+			puller.start_pulling(pulling)
+			pulling.can_be_z_moved = TRUE
+
+			puller = pulling
+			pulling = next_pulling
 
 		//now we're on the new z_level, proceed the space drifting
 		stoplag()//Let a diagonal move finish, if necessary

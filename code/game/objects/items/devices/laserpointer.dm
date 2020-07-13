@@ -3,7 +3,8 @@
 	desc = "Don't shine it in your eyes!"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pointer"
-	item_state = "pen"
+	inhand_icon_state = "pen"
+	worn_icon_state = "pen"
 	var/pointer_icon_state
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
@@ -14,7 +15,7 @@
 	var/energy = 10
 	var/max_energy = 10
 	var/effectchance = 30
-	var/recharging = 0
+	var/recharging = FALSE
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
@@ -177,7 +178,7 @@
 	energy -= 1
 	if(energy <= max_energy)
 		if(!recharging)
-			recharging = 1
+			recharging = TRUE
 			START_PROCESSING(SSobj, src)
 		if(energy <= 0)
 			to_chat(user, "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>")
@@ -187,10 +188,13 @@
 	icon_state = "pointer"
 
 /obj/item/laser_pointer/process()
+	if(!diode)
+		recharging = FALSE
+		return PROCESS_KILL
 	if(prob(20 + diode.rating*20 - recharge_locked*2)) //t1 is 20, 2 40
 		energy += 1
 		if(energy >= max_energy)
 			energy = max_energy
-			recharging = 0
+			recharging = FALSE
 			recharge_locked = FALSE
-			..()
+			return ..()

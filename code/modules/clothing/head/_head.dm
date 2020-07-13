@@ -2,7 +2,7 @@
 	name = BODY_ZONE_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "top_hat"
-	item_state = "that"
+	inhand_icon_state = "that"
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
@@ -69,7 +69,7 @@
 		if(HAS_BLOOD_DNA(src))
 			. += mutable_appearance('icons/effects/blood.dmi', "helmetblood")
 
-/obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)
+/obj/item/clothing/head/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc

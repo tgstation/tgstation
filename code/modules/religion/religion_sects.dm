@@ -34,8 +34,11 @@
 	var/altar_icon
 /// Changes the Altar of Gods icon_state
 	var/altar_icon_state
+/// Currently Active (non-deleted) rites
+	var/list/active_rites
 
 /datum/religion_sect/New()
+	. = ..()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
 	if(rites_list)
@@ -65,13 +68,13 @@
 /datum/religion_sect/proc/on_conversion(mob/living/L)
 	to_chat(L, "<span class='notice'>[convert_opener]</span")
 
-/// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering.
+/// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/L)
 	. = TRUE
 	if(!is_type_in_typecache(I,desired_items_typecache))
 		return FALSE
 
-/// Activates when the sect sacrifices an item. Can provide additional benefits to the sacrificer, which can also be dependent on their holy role! If the item is suppose to be eaten, here is where to do it. NOTE INHER WILL NOT DELETE ITEM FOR YOU!!!!
+/// Activates when the sect sacrifices an item. This proc has NO bearing on the attackby sequence of other objects when used in conjunction with the religious_tool component.
 /datum/religion_sect/proc/on_sacrifice(obj/item/I, mob/living/L)
 	return adjust_favor(default_item_favor,L)
 
@@ -90,7 +93,7 @@
 	return favor
 
 /// Activates when an individual uses a rite. Can provide different/additional benefits depending on the user.
-/datum/religion_sect/proc/on_riteuse(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_sect/proc/on_riteuse(mob/living/user, atom/religious_tool)
 
 /// Replaces the bible's bless mechanic. Return TRUE if you want to not do the brain hit.
 /datum/religion_sect/proc/sect_bless(mob/living/L, mob/living/user)
@@ -176,20 +179,14 @@
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
-/datum/religion_sect/technophile/can_sacrifice(obj/item/I, mob/living/L)
-	if(!..())
-		return FALSE
-	var/obj/item/stock_parts/cell/the_cell = I
-	if(the_cell.charge < 3000)
-		to_chat("<span class='notice'>[GLOB.deity] does not accept pity amounts of power.</span>")
-		return FALSE
-	return TRUE
-
-
 /datum/religion_sect/technophile/on_sacrifice(obj/item/I, mob/living/L)
-	if(!is_type_in_typecache(I, desired_items_typecache))
-		return
 	var/obj/item/stock_parts/cell/the_cell = I
+	if(!istype(the_cell)) //how...
+		return
+	if(the_cell.charge < 3000)
+		to_chat(L,"<span class='notice'>[GLOB.deity] does not accept pity amounts of power.</span>")
+		return
 	adjust_favor(round(the_cell.charge/3000), L)
 	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
 	qdel(I)
+	return TRUE

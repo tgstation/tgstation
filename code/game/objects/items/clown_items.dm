@@ -163,7 +163,7 @@
 	desc = "A horn off of a bicycle."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bike_horn"
-	item_state = "bike_horn"
+	inhand_icon_state = "bike_horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
 	throwforce = 0
@@ -205,7 +205,7 @@
 	name = "golden bike horn"
 	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
-	item_state = "gold_horn"
+	inhand_icon_state = "gold_horn"
 	var/flip_cooldown = 0
 
 /obj/item/bikehorn/golden/attack()
@@ -221,11 +221,8 @@
 /obj/item/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
 	var/turf/T = get_turf(src)
 	for(M in ohearers(7, T))
-		if(ishuman(M) && M.can_hear())
-			var/mob/living/carbon/human/H = M
-			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-				continue
-		M.emote("flip")
+		if(M.can_hear())
+			M.emote("flip")
 	flip_cooldown = world.time + 7
 
 //canned laughter

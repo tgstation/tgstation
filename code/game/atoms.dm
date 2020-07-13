@@ -42,8 +42,6 @@
 	var/list/atom_colours
 
 
-	///overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
-	var/list/priority_overlays
 	/// a very temporary list of overlays to remove
 	var/list/remove_overlays
 	/// a very temporary list of overlays to add
@@ -73,12 +71,11 @@
 	//List of datums orbiting this atom
 	var/datum/component/orbiter/orbiters
 
-	/// Will move to flags_1 when i can be arsed to (2019, has not done so)
-	var/rad_flags = NONE
 	/// Radiation insulation types
 	var/rad_insulation = RAD_NO_INSULATION
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
 	var/list/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
@@ -162,7 +159,7 @@
   * * [/turf/open/space/Initialize]
   */
 /atom/proc/Initialize(mapload, ...)
-	SHOULD_NOT_SLEEP(TRUE)
+	//SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -185,12 +182,8 @@
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	var/temp_list = list()
-	for(var/i in custom_materials)
-		temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
-
-	custom_materials = null //Null the list to prepare for applying the materials properly
-	set_custom_materials(temp_list)
+	// apply materials properly from the default custom_materials value
+	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 
@@ -236,7 +229,6 @@
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(priority_overlays)
 
 	for(var/i in targeted_by)
 		var/mob/M = i
@@ -276,7 +268,7 @@
 /// Returns true or false to allow the mover to move through src
 /atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
 	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_BE_PURE(TRUE)
+	//SHOULD_BE_PURE(TRUE)
 	return !density
 
 /**
@@ -375,19 +367,21 @@
   * Otherwise it simply forceMoves the atom into this atom
   */
 /atom/proc/CheckParts(list/parts_list)
-	for(var/A in parts_list)
-		if(istype(A, /datum/reagent))
-			if(!reagents)
-				reagents = new()
-			reagents.reagent_list.Add(A)
-			reagents.conditional_update()
-		else if(ismovable(A))
-			var/atom/movable/M = A
-			if(isliving(M.loc))
-				var/mob/living/L = M.loc
-				L.transferItemToLoc(M, src)
-			else
-				M.forceMove(src)
+	if(parts_list)
+		for(var/A in parts_list)
+			if(istype(A, /datum/reagent))
+				if(!reagents)
+					reagents = new()
+				reagents.reagent_list.Add(A)
+				reagents.conditional_update()
+			else if(ismovable(A))
+				var/atom/movable/M = A
+				if(isliving(M.loc))
+					var/mob/living/L = M.loc
+					L.transferItemToLoc(M, src)
+				else
+					M.forceMove(src)
+		parts_list.Cut()
 
 ///Hook for multiz???
 /atom/proc/update_multiz(prune_on_fail = FALSE)
@@ -440,6 +434,26 @@
 /// Is this atom drainable of reagents
 /atom/proc/is_drainable()
 	return reagents && (reagents.flags & DRAINABLE)
+
+/** Handles exposing this atom to a list of reagents.
+  *
+  * Sends COMSIG_ATOM_EXPOSE_REAGENTS
+  * Calls expose_atom() for every reagent in the reagent list.
+  *
+  * Arguments:
+  * - [reagents][/list]: The list of reagents the atom is being exposed to.
+  * - [source][/datum/reagents]: The reagent holder the reagents are being sourced from.
+  * - method: How the atom is being exposed to the reagents.
+  * - volume_modifier: Volume multiplier.
+  * - show_message: Whether to display anything to mobs when they are exposed.
+  */
+/atom/proc/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
+	if((. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, method, volume_modifier, show_message)) & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	for(var/reagent in reagents)
+		var/datum/reagent/R = reagent
+		. |= R.expose_atom(src, reagents[R])
 
 /// Are you allowed to drop this atom
 /atom/proc/AllowDrop()
@@ -546,6 +560,19 @@
 				. += "<span class='danger'>It's empty.</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+/**
+  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_TIME (default 1.5 seconds)
+  *
+  * This is where you can put extra information on something that may be superfluous or not important in critical gameplay
+  * moments, while allowing people to manually double-examine to take a closer look
+  *
+  * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
+  */
+/atom/proc/examine_more(mob/user)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
+	if(!LAZYLEN(.)) // lol ..length
+		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
 
 /// Updates the icon of the atom
 /atom/proc/update_icon()
@@ -757,7 +784,7 @@
 	return FALSE
 
 /**
-  * Respond to a electric bolt action on our item
+  * Respond to an electric bolt action on our item
   *
   * Default behaviour is to return, we define here to allow for cleaner code later on
   */
@@ -917,19 +944,19 @@
 
 
 ///Proc for being washed by a shower
-/atom/proc/washed(var/atom/washer)
-	. = SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+/atom/proc/washed(var/atom/washer, wash_strength = CLEAN_WEAK)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, wash_strength)
 	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 
 	var/datum/component/radioactive/healthy_green_glow = GetComponent(/datum/component/radioactive)
-	if(!healthy_green_glow || QDELETED(healthy_green_glow))
-		return
-	var/strength = healthy_green_glow.strength
-	if(strength <= RAD_BACKGROUND_RADIATION)
-		qdel(healthy_green_glow)
-		return
-	healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)) * 0.2)
+	if(!QDELETED(healthy_green_glow))
+		healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)))
+		if(healthy_green_glow.strength <= RAD_BACKGROUND_RADIATION)
+			qdel(healthy_green_glow)
 
+	/// we got to return true because of mob code
+	/// and not all code that uses COMSIG_COMPONENT_CLEAN_ACT returns true half the time
+	return TRUE
 
 /**
   * call back when a var is edited on this atom
@@ -1247,6 +1274,37 @@
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
+/**
+  * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
+  *
+  * Note that this has no info on the attack that dealt the wound: information about where damage came from isn't passed to the bodypart's damaged proc. When in doubt, check the attack log for attacks at that same time
+  * TODO later: Add logging for healed wounds, though that will require some rewriting of healing code to prevent admin heals from spamming the logs. Not high priority
+  *
+  * Arguments:
+  * * victim- The guy who got wounded
+  * * suffered_wound- The wound, already applied, that we're logging. It has to already be attached so we can get the limb from it
+  * * dealt_damage- How much damage is associated with the attack that dealt with this wound.
+  * * dealt_wound_bonus- The wound_bonus, if one was specified, of the wounding attack
+  * * dealt_bare_wound_bonus- The bare_wound_bonus, if one was specified *and applied*, of the wounding attack. Not shown if armor was present
+  * * base_roll- Base wounding ability of an attack is a random number from 1 to (dealt_damage ** WOUND_DAMAGE_EXPONENT). This is the number that was rolled in there, before mods
+  */
+/proc/log_wound(atom/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
+	var/message = "has suffered: [suffered_wound] to [suffered_wound.limb.name]" // maybe indicate if it's a promote/demote?
+
+	if(dealt_damage)
+		message += " | Damage: [dealt_damage]"
+		// The base roll is useful since it can show how lucky someone got with the given attack. For example, dealing a cut
+		if(base_roll)
+			message += "(rolled [base_roll]/[dealt_damage ** WOUND_DAMAGE_EXPONENT])"
+
+	if(dealt_wound_bonus)
+		message += " | WB: [dealt_wound_bonus]"
+
+	if(dealt_bare_wound_bonus)
+		message += " | BWB: [dealt_bare_wound_bonus]"
+
+	victim.log_message(message, LOG_ATTACK, color="blue")
+
 /atom/movable/proc/add_filter(name,priority,list/params)
 	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
@@ -1267,31 +1325,31 @@
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
+/atom/movable/proc/remove_filter(name)
+	if(filter_data && filter_data[name])
+		filter_data -= name
+		update_filters()
+
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
-
-	if(!materials)
-		materials = custom_materials
-
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
 	if(!length(materials))
+		custom_materials = null
 		return
 
-	custom_materials = list() //Reset the list
+	if(!(material_flags & MATERIAL_NO_EFFECTS))
+		for(var/x in materials)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
+			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
-	for(var/x in materials)
-		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
-
-		if(!(material_flags & MATERIAL_NO_EFFECTS))
-			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
-		custom_materials[custom_material] += materials[x] * multiplier
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
 /**
   * Returns true if this atom has gravity for the passed in turf
@@ -1326,7 +1384,7 @@
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return FALSE
-	if(istype(T, /turf/open/openspace)) //openspace in a space area doesn't get gravity
+	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
 			return FALSE
 
@@ -1341,3 +1399,27 @@
 				max_grav = max(G.setting,max_grav)
 			return max_grav
 	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
+
+/**
+  * Causes effects when the atom gets hit by a rust effect from heretics
+  *
+  * Override this if you want custom behaviour in whatever gets hit by the rust
+  */
+/atom/proc/rust_heretic_act()
+	return
+
+/**
+  * Used to set something as 'open' if it's being used as a supplypod
+  *
+  * Override this if you want an atom to be usable as a supplypod. 
+  */
+/atom/proc/setOpened()
+	return
+
+/**
+  * Used to set something as 'closed' if it's being used as a supplypod
+  *
+  * Override this if you want an atom to be usable as a supplypod. 
+  */
+/atom/proc/setClosed()
+	return

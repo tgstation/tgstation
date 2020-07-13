@@ -34,12 +34,14 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
 	if(can_interact(user))
 		transfer_rate = MAX_TRANSFER_RATE
+		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_icon()
 	return ..()
 

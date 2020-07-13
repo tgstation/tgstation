@@ -319,7 +319,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /datum/hallucination/oh_yeah/proc/bubble_attack(turf/landing)
 	var/charged = FALSE //only get hit once
-	while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
+	while(get_turf(bubblegum) != landing && target?.stat != DEAD)
+		if(!landing)
+			break
+		if((get_turf(bubblegum)).loc.z != landing.loc.z)
+			break
 		bubblegum.forceMove(get_step_towards(bubblegum, landing))
 		bubblegum.setDir(get_dir(bubblegum, landing))
 		target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
@@ -391,7 +395,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("gun")
 			var/hits = 0
 			for(var/i in 1 to rand(3, 6))
-				target.playsound_local(source, "sound/weapons/gunshot.ogg", 25, TRUE)
+				target.playsound_local(source, 'sound/weapons/gun/shotgun/shot.ogg', 25, TRUE)
 				if(prob(60))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, 'sound/weapons/pierce.ogg', 25, 1), rand(5,10))
 					hits++
@@ -853,7 +857,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			sleep(25)
 			target.playsound_local(source, 'sound/weapons/ring.ogg', 15)
 		if("hyperspace")
-			target.playsound_local(null, 'sound/effects/hyperspace_begin.ogg', 50)
+			target.playsound_local(null, 'sound/runtime/hyperspace/hyperspace_begin.ogg', 50)
 		if("hallelujah")
 			target.playsound_local(source, 'sound/effects/pray_chaplain.ogg', 50)
 		if("highlander")

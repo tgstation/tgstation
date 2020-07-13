@@ -203,7 +203,7 @@
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud
 
-	var/datum/hSB/sandbox = null
+	var/datum/h_sandbox/sandbox = null
 
 	var/bloody_hands = 0
 

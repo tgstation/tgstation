@@ -16,7 +16,7 @@
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
-	reagents_add = list(/datum/reagent/medicine/C2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
+	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/poppy
 	seed = /obj/item/seeds/poppy
@@ -94,7 +94,7 @@
 	species = "geranium"
 	plantname = "Geranium Plants"
 	product = /obj/item/reagent_containers/food/snacks/grown/poppy/geranium
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/poppy/geranium/fraxinella)
 
 /obj/item/reagent_containers/food/snacks/grown/poppy/geranium
 	seed = /obj/item/seeds/poppy/geranium
@@ -102,6 +102,27 @@
 	desc = "A beautiful blue flower."
 	icon_state = "geranium"
 	filling_color = "#008B8B"
+
+///Fraxinella seeds.
+/obj/item/seeds/poppy/geranium/fraxinella
+	name = "pack of fraxinella seeds"
+	desc = "These seeds grow into fraxinella."
+	icon_state = "seed-fraxinella"
+	species = "fraxinella"
+	plantname = "Fraxinella Plants"
+	product = /obj/item/reagent_containers/food/snacks/grown/poppy/geranium/fraxinella
+	mutatelist = list()
+	rarity = 15
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel/oil = 0.05)
+
+///Fraxinella Flowers.
+/obj/item/reagent_containers/food/snacks/grown/poppy/geranium/fraxinella
+	seed = /obj/item/seeds/poppy/geranium/fraxinella
+	name = "fraxinella"
+	desc = "A beautiful light pink flower."
+	icon_state = "fraxinella"
+	filling_color = "#008B8B"
+	distill_reagent = /datum/reagent/ash
 
 // Harebell
 /obj/item/seeds/harebell

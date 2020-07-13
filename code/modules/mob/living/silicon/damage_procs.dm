@@ -1,5 +1,5 @@
 
-/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
+/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if((!damage || (!forced && hit_percent <= 0)))
 		return 0
@@ -16,7 +16,7 @@
 
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE)
-	return FALSE //The only effect that can hit them atm is flashes and they still directly edit so this works for now
+	return FALSE //The only effect that can hit them atm is flashes and they still directly edit so this works for now. (This was written in at least 2016. Help)
 
 /mob/living/silicon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE) //immune to tox damage
 	return FALSE

@@ -5,7 +5,7 @@
 	icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "clamps"
+	inhand_icon_state = "clamps"
 	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -25,7 +25,7 @@
 	icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "clamps"
+	inhand_icon_state = "clamps"
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -46,7 +46,7 @@
 	icon_state = "cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "cautery"
+	inhand_icon_state = "cautery"
 	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -99,7 +99,7 @@
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "scalpel"
+	inhand_icon_state = "scalpel"
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL | EYE_STAB
 	force = 10
@@ -108,11 +108,12 @@
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
+	bare_wound_bonus = 20
 
 /obj/item/scalpel/Initialize()
 	. = ..()
@@ -143,11 +144,13 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
+	custom_materials = list(/datum/material/iron=1000)
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
+	wound_bonus = 10
+	bare_wound_bonus = 15
 
 /obj/item/circular_saw/Initialize()
 	. = ..()
@@ -167,7 +170,7 @@
 	icon_state = "surgical_drapes"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	item_state = "drapes"
+	inhand_icon_state = "drapes"
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("slapped")
 
@@ -400,3 +403,17 @@
 			limb_snip_candidate.dismember()
 		user.visible_message("<span class='danger'>[src] violently slams shut, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
 
+/obj/item/bonesetter
+	name = "bonesetter"
+	desc = "For setting things right."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bone setter"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
+	flags_1 = CONDUCT_1
+	item_flags = SURGICAL_TOOL
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("corrected", "properly set")
+	tool_behaviour = TOOL_BONESET
+	toolspeed = 1

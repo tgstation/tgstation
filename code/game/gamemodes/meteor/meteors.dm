@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 //////////////////////
 
 /obj/effect/meteor
-	name = "the concept of meteor"
+	name = "\proper the concept of meteor"
 	desc = "You should probably run instead of gawking at this."
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "small"
@@ -144,11 +144,23 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		if(A != src)
 			if(isliving(A))
 				A.visible_message("<span class='warning'>[src] slams into [A].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
-			A.ex_act(hitpwr)
+			switch(hitpwr)
+				if(EXPLODE_DEVASTATE)
+					SSexplosions.highobj += A
+				if(EXPLODE_HEAVY)
+					SSexplosions.medobj += A
+				if(EXPLODE_LIGHT)
+					SSexplosions.lowobj += A
 
 	//then, ram the turf if it still exists
 	if(T)
-		T.ex_act(hitpwr)
+		switch(hitpwr)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highturf += T
+			if(EXPLODE_HEAVY)
+				SSexplosions.medturf += T
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowturf += T
 
 
 

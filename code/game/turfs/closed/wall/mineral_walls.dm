@@ -34,6 +34,9 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
+/turf/closed/wall/mineral/diamond/hulk_recoil(obj/item/bodypart/arm)
+	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
+
 /turf/closed/wall/mineral/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
@@ -83,6 +86,9 @@
 /turf/closed/wall/mineral/uranium/Bumped(atom/movable/AM)
 	radiate()
 	..()
+
+/turf/closed/wall/mineral/uranium/hulk_recoil(obj/item/bodypart/arm)
+	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
 
 /turf/closed/wall/mineral/plasma
 	name = "plasma wall"
@@ -142,6 +148,9 @@
 			return
 	return ..()
 
+/turf/closed/wall/mineral/wood/hulk_recoil(obj/item/bodypart/arm)
+	return //No recoil damage, wood is weak
+
 /turf/closed/wall/mineral/wood/nonmetal
 	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
 	girder_type = /obj/structure/barricade/wooden
@@ -169,6 +178,9 @@
 	girder_type = null
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
+
+/turf/closed/wall/mineral/snow/hulk_recoil(obj/item/bodypart/arm)
+	return //No recoil damage, snow is weak
 
 /turf/closed/wall/mineral/abductor
 	name = "alien wall"
@@ -271,15 +283,12 @@
 	fixed_underlay = list("space"=1)
 
 /turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
-	var/datum/explosion/acted_explosion = null
-	for(var/datum/explosion/E in GLOB.explosions)
-		if(E.explosion_id == explosion_id)
-			acted_explosion = E
-			break
-	if(acted_explosion && istype(acted_explosion.explosion_source, /obj/item/bombcore))
-		var/obj/item/bombcore/large/bombcore = new(get_turf(src))
-		bombcore.detonate()
+	var/obj/item/bombcore/large/bombcore = new(get_turf(src))
+	bombcore.detonate()
 	..()
+
+/turf/closed/wall/mineral/plastitanium/hulk_recoil(obj/item/bodypart/arm)
+	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
 
 //have to copypaste this code
 /turf/closed/wall/mineral/plastitanium/interior/copyTurf(turf/T)

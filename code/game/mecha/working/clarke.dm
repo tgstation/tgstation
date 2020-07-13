@@ -48,24 +48,6 @@
 		var/mob/living/brain/B = M.brainmob
 		hud.add_hud_to(B)
 
-/obj/mecha/working/clarke/domove(direction)
-	. = ..()
-	if (.)
-		if(prob(30))
-			crush_floor()
-
-/obj/mecha/working/clarke/mechturn(direction)
-	if(prob(80))
-		crush_floor()
-	return ..()
-
-///Damages floor tiles and plating as the Clarke moves over them with its tracks. Damage is superficial, will not create hull breaches.
-/obj/mecha/working/clarke/proc/crush_floor()
-	var/turf/open/floor/tile = get_turf(src)
-	if(!istype(tile, /turf/open/floor))
-		return
-	tile.crush()
-
 //Ore Box Controls
 
 ///Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.

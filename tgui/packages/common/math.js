@@ -1,4 +1,10 @@
 /**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+/**
  * Limits a number to the range between 'min' and 'max'.
  */
 export const clamp = (value, min, max) => {

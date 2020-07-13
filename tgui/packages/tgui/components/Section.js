@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { classes, isFalsy, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 

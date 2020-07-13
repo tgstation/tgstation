@@ -538,7 +538,7 @@
 /area/awaymission/wildwest/mines)
 "cm" = (
 /obj/structure/bookcase/random{
-	book_count = 5
+	books_to_load = 5
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
@@ -579,11 +579,6 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 8
 	},
-/turf/open/space,
-/area/space/nearstation)
-"cu" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
 "cv" = (
@@ -654,7 +649,7 @@
 /area/awaymission/wildwest/gov)
 "cI" = (
 /obj/structure/bookcase/random{
-	book_count = 5
+	books_to_load = 5
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
@@ -17103,7 +17098,7 @@ br
 br
 br
 br
-cu
+br
 br
 aa
 aa
@@ -26366,7 +26361,7 @@ br
 br
 br
 br
-cu
+br
 br
 aa
 aa
@@ -26609,7 +26604,7 @@ aa
 aa
 aa
 br
-cu
+br
 br
 br
 br
@@ -27652,7 +27647,7 @@ aG
 aG
 aG
 br
-cu
+br
 br
 aa
 aa
@@ -28148,7 +28143,7 @@ aa
 aa
 aa
 aa
-cu
+br
 br
 aa
 aa

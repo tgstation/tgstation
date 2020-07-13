@@ -65,7 +65,7 @@
 	desc = "Perfect for taming all kinds of supernatural beasts! (Warning: only perfect for taming one kind of supernatural beast.)"
 	force = 12
 	icon_state = "lasso"
-	item_state = "chain"
+	inhand_icon_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")

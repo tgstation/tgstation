@@ -25,7 +25,7 @@ effective or pretty fucking useless.
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
@@ -184,8 +184,9 @@ effective or pretty fucking useless.
 	name = "cloaker belt"
 	desc = "Makes you invisible for short periods of time. Recharges in darkness."
 	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "utilitybelt"
-	item_state = "utility"
+	icon_state = "utility"
+	inhand_icon_state = "utility"
+	worn_icon_state = "utility"
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 

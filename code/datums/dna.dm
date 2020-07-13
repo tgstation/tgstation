@@ -370,7 +370,7 @@
 		for(var/M in mutations)
 			var/datum/mutation/human/HM = M
 			if(HM.allow_transfer || force_transfer_mutations)
-				dna.force_give(new HM.type(HM.class, copymut=HM)) //using force_give since it may include exotic mutations that otherwise wont be handled properly
+				dna.force_give(new HM.type(HM.class, copymut=HM)) //using force_give since it may include exotic mutations that otherwise won't be handled properly
 
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
@@ -620,7 +620,7 @@
 				if(elligible_organs.len)
 					var/obj/item/organ/O = pick(elligible_organs)
 					O.Remove(src)
-					visible_message("<span class='danger'>[src] vomits up their [O.name]!</span>", "<span class='danger'>You vomit up your [O.name]</span>") //no "vomit up your the heart"
+					visible_message("<span class='danger'>[src] vomits up their [O.name]!</span>", "<span class='danger'>You vomit up your [O.name]</span>") //no "vomit up your heart"
 					O.forceMove(drop_location())
 					if(prob(20))
 						O.animate_atom_living()

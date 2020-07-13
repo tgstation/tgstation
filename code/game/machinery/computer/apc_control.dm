@@ -3,19 +3,21 @@
 	desc = "Used to remotely control the flow of power to different parts of the station."
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
-	req_access = list(ACCESS_ENGINE)
+	req_access = list(ACCESS_CE)
 	circuit = /obj/item/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_YELLOW
 	var/mob/living/operator //Who's operating the computer right now
 	var/obj/machinery/power/apc/active_apc //The APC we're using right now
-	var/list/result_filters //For sorting the results
-	var/checking_logs = 0
+	var/should_log = TRUE
+	var/restoring = FALSE
 	var/list/logs
-	var/auth_id = "\[NULL\]"
+	var/auth_id = "\[NULL\]:"
+	ui_x = 550
+	ui_y = 500
 
-/obj/machinery/computer/apc_control/Initialize()
+/obj/machinery/computer/apc_control/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	result_filters = list("Name" = null, "Charge Above" = null, "Charge Below" = null, "Responsive" = null)
+	logs = list()
 
 /obj/machinery/computer/apc_control/process()
 	if(operator && (!operator.Adjacent(src) || machine_stat))
@@ -34,170 +36,164 @@
 	if(!IsAdminGhost(user))
 		to_chat(user,"<span class='warning'>[src] does not support AI control.</span>") //You already have APC access, cheater!
 		return
-	..(user)
+	..()
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
 	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
 
-/obj/machinery/computer/apc_control/ui_interact(mob/living/user)
-	. = ..()
-	var/dat
-	if(authenticated)
-		if(!checking_logs)
-			dat += "Logged in as [auth_id].<br><br>"
-			dat += "<i>Filters</i><br>"
-			dat += "<b>Name:</b> <a href='?src=[REF(src)];name_filter=1'>[result_filters["Name"] ? result_filters["Name"] : "None set"]</a><br>"
-			dat += "<b>Charge:</b> <a href='?src=[REF(src)];above_filter=1'>\>[result_filters["Charge Above"] ? result_filters["Charge Above"] : "NaN"]%</a> and <a href='?src=[REF(src)];below_filter=1'>\<[result_filters["Charge Below"] ? result_filters["Charge Below"] : "NaN"]%</a><br>"
-			dat += "<b>Accessible:</b> <a href='?src=[REF(src)];access_filter=1'>[result_filters["Responsive"] ? "Non-Responsive Only" : "All"]</a><br><br>"
-			for(var/A in GLOB.apcs_list)
-				if(check_apc(A))
-					var/obj/machinery/power/apc/APC = A
-					if(result_filters["Name"] && !findtext(APC.name, result_filters["Name"]) && !findtext(APC.area.name, result_filters["Name"]))
-						continue
-					if(result_filters["Charge Above"] && (!APC.cell || (APC.cell && (APC.cell.charge / APC.cell.maxcharge) < result_filters["Charge Above"] / 100)))
-						continue
-					if(result_filters["Charge Below"] && APC.cell && (APC.cell.charge / APC.cell.maxcharge) > result_filters["Charge Below"] / 100)
-						continue
-					if(result_filters["Responsive"] && !APC.aidisabled)
-						continue
-					dat += "<a href='?src=[REF(src)];access_apc=[REF(APC)]'>[A]</a><br>\
-					<b>Charge:</b> [APC.cell ? "[DisplayEnergy(APC.cell.charge)] / [DisplayEnergy(APC.cell.maxcharge)] ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)" : "No Powercell Installed"]<br>\
-					<b>Area:</b> [APC.area]<br>\
-					[APC.aidisabled || APC.panel_open ? "<font color='#FF0000'>APC does not respond to interface query.</font>" : "<font color='#00FF00'>APC responds to interface query.</font>"]<br><br>"
-			dat += "<a href='?src=[REF(src)];check_logs=1'>Check Logs</a><br>"
-			dat += "<a href='?src=[REF(src)];log_out=1'>Log Out</a><br>"
-			if(obj_flags & EMAGGED)
-				dat += "<font color='#FF0000'>WARNING: Logging functionality partially disabled from outside source.</font><br>"
-				dat += "<a href='?src=[REF(src)];restore_logging=1'>Restore logging functionality?</a><br>"
-		else
-			if(logs.len)
-				for(var/entry in logs)
-					dat += "[entry]<br>"
-			else
-				dat += "<i>No activity has been recorded at this time.</i><br>"
-			if(obj_flags & EMAGGED)
-				dat += "<a href='?src=[REF(src)];clear_logs=1'><font color='#FF0000'>@#%! CLEAR LOGS</a>"
-			dat += "<a href='?src=[REF(src)];check_apcs=1'>Return</a>"
-		operator = user
-	else
-		dat = "<a href='?src=[REF(src)];authenticate=1'>Please swipe a valid ID to log in...</a>"
-	var/datum/browser/popup = new(user, "apc_control", name, 600, 400)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
-	popup.open()
+/obj/machinery/computer/apc_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+	operator = user
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "ApcControl", "APC Controller", ui_x, ui_y, master_ui, state)
+		ui.open()
 
-/obj/machinery/computer/apc_control/Topic(href, href_list)
+
+/obj/machinery/computer/apc_control/ui_data(mob/user)
+	var/list/data = list()
+	data["auth_id"] = auth_id
+	data["authenticated"] = authenticated
+	data["emagged"] = obj_flags & EMAGGED
+	data["logging"] = should_log
+	data["restoring"] = restoring
+	data["logs"] = list()
+	data["apcs"] = list()
+
+	for(var/entry in logs)
+		data["logs"] += list(list("entry" = entry))
+
+	for(var/apc in GLOB.apcs_list)
+		if(check_apc(apc))
+			var/obj/machinery/power/apc/A = apc
+			var/has_cell = (A.cell) ? TRUE : FALSE
+			data["apcs"] += list(list(
+					"name" = A.area.name,
+					"operating" = A.operating,
+					"charge" = (has_cell) ? A.cell.percent() : "NOCELL",
+					"load" = DisplayPower(A.lastused_total),
+					"charging" = A.charging,
+					"chargeMode" = A.chargemode,
+					"eqp" = A.equipment,
+					"lgt" = A.lighting,
+					"env" = A.environ,
+					"responds" = A.aidisabled || A.panel_open,
+					"ref" = REF(A)
+				)
+			)
+	return data
+
+/obj/machinery/computer/apc_control/ui_act(action, params)
 	if(..())
 		return
-	if(!usr || !usr.canUseTopic(src, !issilicon(usr)) || machine_stat || QDELETED(src))
-		return
-	if(href_list["authenticate"])
-		var/obj/item/card/id/ID = usr.get_idcard(TRUE)
-		if(ID && istype(ID))
-			if(check_access(ID))
+	switch(action)
+		if("log-in")
+			if(obj_flags & EMAGGED)
 				authenticated = TRUE
-				auth_id = "[ID.registered_name] ([ID.assignment])"
-				log_activity("logged in")
-				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
-	if(href_list["log_out"])
-		log_activity("logged out")
-		playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
-		authenticated = FALSE
-		auth_id = "\[NULL\]"
-	if(href_list["restore_logging"])
-		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Logging functionality restored from backup data.</span>")
-		obj_flags &= ~EMAGGED
-		LAZYADD(logs, "<b>-=- Logging restored to full functionality at this point -=-</b>")
-	if(href_list["access_apc"])
-		playsound(src, "terminal_type", 50, FALSE)
-		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in GLOB.apcs_list
-		if(!APC || APC.aidisabled || APC.panel_open || QDELETED(APC))
-			to_chat(usr, "<span class='robot danger'>[icon2html(src, usr)] APC does not return interface request. Remote access may be disabled.</span>")
-			return
-		if(active_apc)
-			to_chat(usr, "<span class='robot danger'>[icon2html(src, usr)] Disconnected from [active_apc].</span>")
-			active_apc.say("Remote access canceled. Interface locked.")
-			playsound(active_apc, 'sound/machines/boltsdown.ogg', 25, FALSE)
-			playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, FALSE)
-			active_apc.locked = TRUE
-			active_apc.update_icon()
-			active_apc.remote_control = null
-			active_apc = null
-		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Connected to APC in [get_area_name(APC.area, TRUE)]. Interface request sent.</span>")
-		log_activity("remotely accessed APC in [get_area_name(APC.area, TRUE)]")
-		APC.remote_control = src
-		APC.ui_interact(usr)
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
-		log_game("[key_name(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
-		if(APC.locked)
-			APC.say("Remote access detected. Interface unlocked.")
-			playsound(APC, 'sound/machines/boltsup.ogg', 25, FALSE)
-			playsound(APC, 'sound/machines/terminal_alert.ogg', 50, FALSE)
-		APC.locked = FALSE
-		APC.update_icon()
-		active_apc = APC
-	if(href_list["name_filter"])
-		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
-		var/new_filter = stripped_input(usr, "What name are you looking for?", name)
-		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || machine_stat || QDELETED(src))
-			return
-		log_activity("changed name filter to \"[new_filter]\"")
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-		result_filters["Name"] = new_filter
-	if(href_list["above_filter"])
-		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
-		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (greater than).", name) as null|num
-		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || machine_stat || QDELETED(src))
-			return
-		log_activity("changed greater than charge filter to \"[new_filter]\"")
-		if(new_filter)
-			new_filter = clamp(new_filter, 0, 100)
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-		result_filters["Charge Above"] = new_filter
-	if(href_list["below_filter"])
-		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
-		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (lesser than).", name) as null|num
-		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || machine_stat || QDELETED(src))
-			return
-		log_activity("changed lesser than charge filter to \"[new_filter]\"")
-		if(new_filter)
-			new_filter = clamp(new_filter, 0, 100)
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-		result_filters["Charge Below"] = new_filter
-	if(href_list["access_filter"])
-		if(isnull(result_filters["Responsive"]))
-			result_filters["Responsive"] = 1
-			log_activity("sorted by non-responsive APCs only")
-		else
-			result_filters["Responsive"] = !result_filters["Responsive"]
-			log_activity("sorted by all APCs")
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-	if(href_list["check_logs"])
-		checking_logs = TRUE
-		log_activity("checked logs")
-	if(href_list["check_apcs"])
-		checking_logs = FALSE
-		log_activity("checked APCs")
-	if(href_list["clear_logs"])
-		logs = list()
-	ui_interact(usr) //Refresh the UI after a filter changes
+				auth_id = "Unknown (Unknown):"
+				log_activity("[auth_id] logged in to the terminal")
+				return
+			var/obj/item/card/id/ID = operator.get_idcard(TRUE)
+			if(ID && istype(ID))
+				if(check_access(ID))
+					authenticated = TRUE
+					auth_id = "[ID.registered_name] ([ID.assignment]):"
+					log_activity("[auth_id] logged in to the terminal")
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+				else
+					auth_id = "[ID.registered_name] ([ID.assignment]):"
+					log_activity("[auth_id] attempted to log into the terminal")
+				return
+			auth_id = "Unknown (Unknown):"
+			log_activity("[auth_id] attempted to log into the terminal")
+		if("log-out")
+			log_activity("[auth_id] logged out of the terminal")
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
+			authenticated = FALSE
+			auth_id = "\[NULL\]"
+		if("toggle-logs")
+			should_log = !should_log
+			log_game("[key_name(operator)] set the logs of [src] in [AREACOORD(src)] [should_log ? "On" : "Off"]")
+		if("restore-console")
+			restoring = TRUE
+			addtimer(CALLBACK(src, .proc/restore_comp), rand(3,5) * 9)
+		if("access-apc")
+			var/ref = params["ref"]
+			playsound(src, "terminal_type", 50, FALSE)
+			var/obj/machinery/power/apc/APC = locate(ref) in GLOB.apcs_list
+			if(!APC)
+				return
+			if(active_apc)
+				to_chat(operator, "<span class='robot danger'>[icon2html(src, auth_id)] Disconnected from [active_apc].</span>")
+				active_apc.say("Remote access canceled. Interface locked.")
+				playsound(active_apc, 'sound/machines/boltsdown.ogg', 25, FALSE)
+				playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+				active_apc.locked = TRUE
+				active_apc.update_icon()
+				active_apc.remote_control = null
+				active_apc = null
+			APC.remote_control = src
+			APC.ui_interact(operator)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			log_game("[key_name(operator)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
+			log_activity("[auth_id] remotely accessed APC in [get_area_name(APC.area, TRUE)]")
+			if(APC.locked)
+				APC.say("Remote access detected. Interface unlocked.")
+				playsound(APC, 'sound/machines/boltsup.ogg', 25, FALSE)
+				playsound(APC, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+			APC.locked = FALSE
+			APC.update_icon()
+			active_apc = APC
+		if("check-logs")
+			log_activity("Checked Logs")
+		if("check-apcs")
+			log_activity("Checked APCs")
+		if("toggle-minor")
+			var/ref = params["ref"]
+			var/type = params["type"]
+			var/value = params["value"]
+			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
+			if(!target)
+				return
+			target.vars[type] = target.setsubsystem(text2num(value))
+			target.update_icon()
+			target.update()
+			var/setTo = ""
+			switch(target.vars[type])
+				if(0)
+					setTo = "Off"
+				if(1)
+					setTo = "Auto Off"
+				if(2)
+					setTo = "On"
+				if(3)
+					setTo = "Auto On"
+			log_activity("Set APC [target.area.name] [type] to [setTo]")
+			log_game("[key_name(operator)] Set APC [target.area.name] [type] to [setTo]]")
+		if("breaker")
+			var/ref = params["ref"]
+			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
+			target.toggle_breaker()
+			var/setTo = target.operating ? "On" : "Off"
+			log_activity("Turned APC [target.area.name]'s breaker [setTo]")
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
-	if(!authenticated)
-		to_chat(user, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
-		authenticated = TRUE
-		log_activity("logged in")
-	else if(!(obj_flags & EMAGGED))
-		if(user)
-			user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
-		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], disabling operator tracking.")
-		obj_flags |= EMAGGED
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	log_game("[key_name(user)] emagged [src] at [AREACOORD(src)]")
 	playsound(src, "sparks", 50, TRUE)
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
-	var/op_string = operator && !(obj_flags & EMAGGED) ? operator : "\[NULL OPERATOR\]"
-	LAZYADD(logs, "<b>([station_time_timestamp()])</b> [op_string] [log_text]")
+	if(!should_log)
+		return
+	LAZYADD(logs, "([station_time_timestamp()]): [auth_id] [log_text]")
+
+/obj/machinery/computer/apc_control/proc/restore_comp()
+	obj_flags &= ~EMAGGED
+	should_log = TRUE
+	log_game("[key_name(operator)] restored the logs of [src] in [AREACOORD(src)]")
+	log_activity("-=- Logging restored to full functionality at this point -=-")
+	restoring = FALSE
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))

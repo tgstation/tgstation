@@ -1,6 +1,7 @@
 /**
- * Copyright (c) 2014 Alexander Farkas
- * SPDX-License-Identifier: MIT
+ * @file
+ * @copyright 2014 Alexander Farkas
+ * @license MIT
  */
 
 /* eslint-disable */

@@ -29,6 +29,11 @@
 	description = "Station 49 is looking to kickstart their research program. Ship them a tank full of Tritium."
 	gas_type = /datum/gas/tritium
 
+/datum/bounty/item/engineering/gas/hydrogen_tank
+	name = "Full Tank of Hydrogen"
+	description = "Our R&D department is working on the development of more efficient electrical batteries using hydrogen as a catalyst. Ship us a tank full of it."
+	gas_type = /datum/gas/hydrogen
+
 /datum/bounty/item/engineering/energy_ball
 	name = "Contained Tesla Ball"
 	description = "Station 24 is being overrun by hordes of angry Mothpeople. They are requesting the ultimate bug zapper."

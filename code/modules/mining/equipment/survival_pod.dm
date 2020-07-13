@@ -284,6 +284,7 @@
 	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "ntpod"
+	buildable_sign = FALSE
 
 /obj/structure/sign/mining/survival
 	name = "shelter sign"
@@ -331,4 +332,4 @@
 	icon = initial(I.icon)
 	desc = initial(I.desc)
 	icon_state = initial(I.icon_state)
-	item_state = initial(I.item_state)
+	inhand_icon_state = initial(I.inhand_icon_state)

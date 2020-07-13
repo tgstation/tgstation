@@ -50,6 +50,7 @@
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
 	anchored = TRUE
+	buildable_sign = FALSE //Cannot be unwrenched from a wall.
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
@@ -163,7 +164,7 @@
 			return
 
 	to_chat(user, "<span class='notice'>The poster falls down!</span>")
-	D.roll_and_drop(temp_loc)
+	D.roll_and_drop(get_turf(user))
 
 // Various possible posters follow
 
@@ -608,5 +609,10 @@
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
+
+/obj/structure/sign/poster/official/dick_gum
+	name = "Dick Gumshue"
+	desc = "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
+	icon_state = "poster36_legit"
 
 #undef PLACE_SPEED

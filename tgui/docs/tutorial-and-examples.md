@@ -142,7 +142,7 @@ export const SampleInterface = (props, context) => {
             <LabeledList.Item label="Button">
               <Button
                 content="Dispatch a 'test' action"
-                onClick={() => act('test')}>
+                onClick={() => act('test')} />
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -345,7 +345,7 @@ export const SampleInterface = (props, context) => {
             <LabeledList.Item label="Button">
               <Button
                 content="Dispatch a 'test' action"
-                onClick={() => act('test')}>
+                onClick={() => act('test')} />
             </LabeledList.Item>
           </LabeledList>
         </Section>

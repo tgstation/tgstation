@@ -18,11 +18,13 @@
 	armour_penetration = 35
 	var/saber_color = "green"
 	light_color = "#00ff00"//green
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	block_chance = 75
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
+	wound_bonus = -110
+	bare_wound_bonus = 20
 	var/two_hand_force = 34
 	var/hacked = FALSE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
@@ -157,7 +159,7 @@
 		var/mob/living/carbon/C = user
 		if(C.wear_mask)
 			in_mouth = ", barely missing [user.p_their()] nose"
-	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.</span>"
+	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [A.loc == user ? "[user.p_their()] [A.name]" : A] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room

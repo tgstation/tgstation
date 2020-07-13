@@ -47,6 +47,9 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
 
+/turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm)
+	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
+
 /turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user, turf/T)
 	//DECONSTRUCTION
 	switch(d_state)
@@ -220,6 +223,11 @@
 	if(the_rcd.canRturf)
 		return ..()
 
+/turf/closed/wall/r_wall/rust_heretic_act()
+	if(prob(50))
+		return
+	ChangeTurf(/turf/closed/wall/r_wall/rust)
+
 /turf/closed/wall/r_wall/syndicate
 	name = "hull"
 	desc = "The armored hull of an ominous looking ship."
@@ -245,3 +253,5 @@
 /turf/closed/wall/r_wall/syndicate/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
+
+
