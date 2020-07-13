@@ -45,6 +45,7 @@
   * filename - The containing filename
   */
 /datum/unit_test/configuration_documentation/proc/TryRemoveEntry(entry, filename)
+	entry = lowertext(entry)
 	var/start_len = undocumented_entries.len
 	undocumented_entries -= entry
 	if(undocumented_entries.len == start_len)
