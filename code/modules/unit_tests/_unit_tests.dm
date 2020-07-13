@@ -18,6 +18,7 @@
 #include "plantgrowth_tests.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
+#include "siunit.dm"
 #include "spawn_humans.dm"
 #include "species_whitelists.dm"
 #include "subsystem_init.dm"
