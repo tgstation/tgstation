@@ -1,6 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Ghost orbit menu can now orbit things with weird metadata in their names like medibots and MULEBOTs."
-  - tweak: "Ghost orbit menu search bar looks prettier."
-  - tweak: "Ghost orbit menu no longer auto-closes when you select something to orbit. Indirectly buffs voyeurs."

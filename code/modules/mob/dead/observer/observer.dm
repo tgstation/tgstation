@@ -905,6 +905,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!invisibility)
 		. += "It seems extremely obvious."
 
+/mob/dead/observer/examine_more(mob/user)
+	if(!IsAdminGhost(user, TRUE))
+		return ..()
+	. = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
+	. += list("\t><span class='admin'>[ADMIN_FULLMONTY(src)]</span>")
+
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value
 	if(!value)
@@ -948,8 +954,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/t_ray_images = list()
 	var/static/list/stored_t_ray_images = list()
 	for(var/obj/O in orange(client.view, src) )
-
-		if(O.invisibility == INVISIBILITY_MAXIMUM)
+		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128

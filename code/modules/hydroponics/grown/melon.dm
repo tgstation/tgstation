@@ -95,7 +95,7 @@
 /obj/item/reagent_containers/food/snacks/grown/barrelmelon
 	seed = /obj/item/seeds/watermelon/barrel
 	name = "barrelmelon"
-	desc = "The water within this melon has been compressed and fermented into rich alcohol."
+	desc = "The nutriments within this melon have been compressed and fermented into rich alcohol."
 	icon_state = "barrelmelon"
 	filling_color = "#b47b31"
 	distill_reagent = /datum/reagent/medicine/antihol //You can call it a integer overflow.
