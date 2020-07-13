@@ -45,6 +45,10 @@
 	name = "popcorn"
 	icon_state = "popcorn"
 
+/obj/item/trash/pissyshitties
+	name = "pissy shitties"
+	icon_state = "pissyshitties"
+
 /obj/item/trash/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
