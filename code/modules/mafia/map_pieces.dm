@@ -15,10 +15,12 @@
 	icon = 'icons/obj/mafia.dmi'
 	icon_state = "board"
 	var/game_id = "mafia"
+	var/datum/mafia_controller/MF
 
 /obj/mafia_game_board/attack_ghost(mob/user)
 	. = ..()
-	var/datum/mafia_controller/MF = GLOB.mafia_game
+	if(!MF)
+		MF = GLOB.mafia_game
 	if(!MF)
 		MF = create_mafia_game()
 	MF.ui_interact(user)

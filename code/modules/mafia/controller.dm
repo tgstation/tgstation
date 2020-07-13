@@ -14,6 +14,8 @@
 	///how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.
 	var/turn = 0
 
+	///if not null, will use this as the setup instead of picking/generating one
+	//var/list/forced_setup
 	///first day has no voting, and thus is shorter
 	var/first_day_phase_period = 20 SECONDS
 	///talk with others about the last night
@@ -681,10 +683,11 @@
 
 /**
   * Returns a semirandom setup, with...
-  * Two invest roles, one protect role, sometimes a misc role, and the rest assistants for town.
+  * Town, Two invest roles, one protect role, sometimes a misc role, and the rest assistants for town.
   * Mafia, 2 normal mafia and one special.
   * Neutral, two disruption roles, sometimes one is a killing.
   *
+  * Assistants must be filled in their own list before merging the two because of how byond dicts work
   * See _defines.dm in the mafia folder for a rundown on what these groups of roles include.
   */
 /datum/mafia_controller/proc/generate_random_setup()
@@ -694,10 +697,12 @@
 	var/mafiareg_left = 2
 	var/mafiaspe_left = 1
 	var/killing_role = prob(50) ? 1 : 0
-	var/disruptors = killing_role ? 1 : 2
+	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
 
+	var/overflow = 12 - (invests_left + protects_left + miscs_left + mafiareg_left + mafiaspe_left + killing_role + disruptors)
+	var/list/assistants = list(/datum/mafia_role = overflow) //amount of people who are not any of the special roles
 	var/list/random_setup = list()
-	for(var/i in 1 to 12)
+	for(var/i in 1 to (12 - overflow)) //should match the number of roles to add
 		if(invests_left)
 			add_setup_role(random_setup, TOWN_INVEST)
 			invests_left--
@@ -707,7 +712,6 @@
 		else if(miscs_left)
 			add_setup_role(random_setup, TOWN_MISC)
 			miscs_left--
-		//assistants handled at the end as overflow roles
 		else if(mafiareg_left)
 			add_setup_role(random_setup, MAFIA_REGULAR)
 			mafiareg_left--
@@ -717,29 +721,29 @@
 		else if(killing_role)
 			add_setup_role(random_setup, NEUTRAL_KILL)
 			killing_role--
-		else if(disruptors)
-			add_setup_role(random_setup, NEUTRAL_DISRUPT)
-			disruptors--
 		else
-			add_setup_role(random_setup, TOWN_OVERFLOW)
-	return random_setup
+			add_setup_role(random_setup, NEUTRAL_DISRUPT)
+	return assistants + random_setup
 
 /**
   * Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one
+  * Don't put overflow roles through here, for the moment. byond will not treat it kindly.
   */
 /datum/mafia_controller/proc/add_setup_role(setup_list, wanted_role_type)
 	var/list/role_type_paths = list()
-	//var/list/role_type_lookup = list()
-	for(var/datum/mafia_role/l in typesof(/datum/mafia_role))
-		if(initial(l.role_type) == wanted_role_type)
-			role_type_paths += l
+	for(var/path in typesof(/datum/mafia_role))
+		var/datum/mafia_role/instance = path
+		if(initial(instance.role_type) == wanted_role_type)
+			role_type_paths += instance
+
+	to_chat(world, role_type_paths)
 
 	var/mafia_path = pick(role_type_paths)
 	var/found_role = locate(mafia_path) in setup_list
 	if(found_role)
 		setup_list[found_role] += 1
 		return
-	setup_list += mafia_path
+	setup_list[mafia_path] = 1
 
 /**
   * Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.
@@ -784,7 +788,7 @@
 		to_chat(unpicked_client, "<span class='danger'>Sorry, the starting mafia game has too many players and you were not picked.</span>")
 		to_chat(unpicked_client, "<span class='warning'>You're still signed up, and have another chance to join when the one starting now finishes.</span>")
 
-	if(prob(80) && filtered_keys.len == 12)
+	if(filtered_keys.len == 12)
 		setup = generate_random_setup()
 
 	prepare_game(setup,filtered_keys)
