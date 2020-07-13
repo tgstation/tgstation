@@ -8112,6 +8112,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"asx" = (
+/obj/machinery/rnd/bepis,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "asy" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Firefighting Equipment";
@@ -8721,6 +8726,20 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/port/fore)
+"auf" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1;
+	sortType = 2
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/bounty_board{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "aug" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -10888,6 +10907,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hydroponics/garden)
+"azr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "azs" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -11102,6 +11128,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"azV" = (
+/obj/machinery/airalarm{
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "azW" = (
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
@@ -11291,6 +11324,19 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"aAq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"aAr" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aAs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -11775,6 +11821,20 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plastic,
 /area/hallway/secondary/service)
+"aBD" = (
+/obj/structure/table,
+/obj/item/hand_labeler,
+/obj/item/hand_labeler,
+/obj/machinery/requests_console{
+	department = "Cargo Bay";
+	departmentType = 2;
+	pixel_y = 30
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aBE" = (
 /obj/item/clothing/under/misc/mailman,
 /obj/item/clothing/head/mailman,
@@ -12123,6 +12183,18 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
+"aCx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"aCy" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aCz" = (
 /obj/structure/cable,
 /obj/structure/railing,
@@ -25846,17 +25918,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bjm" = (
-/obj/structure/table,
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
-/obj/machinery/requests_console{
-	department = "Cargo Bay";
-	departmentType = 2;
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "bjn" = (
 /obj/machinery/computer/gateway_control,
 /turf/open/floor/plasteel,
@@ -26236,14 +26297,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
-"bkj" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "bkk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -26996,13 +27049,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"blY" = (
-/obj/structure/closet/emcloset,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "blZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -32079,23 +32125,6 @@
 /obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
-"bxH" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 2
-	},
-/obj/structure/noticeboard{
-	pixel_y = 32
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/bounty_board{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "bxI" = (
 /obj/machinery/status_display/ai,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -55418,10 +55447,6 @@
 	dir = 10
 	},
 /area/science/research)
-"qbW" = (
-/obj/machinery/rnd/bepis,
-/turf/open/floor/engine,
-/area/science/misc_lab)
 "qcV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -76136,8 +76161,8 @@ bgt
 bhS
 bjk
 aPz
-boP
-boP
+blW
+blW
 blW
 bqj
 brK
@@ -76393,8 +76418,8 @@ bgt
 bhR
 bjk
 aZE
-blW
-blW
+azr
+aAq
 blW
 bqi
 cyD
@@ -76650,8 +76675,8 @@ aSg
 bhT
 bjk
 aZE
-blY
-bnw
+bot
+aAr
 boJ
 bql
 brL
@@ -76907,7 +76932,7 @@ bel
 bfI
 bgq
 bhY
-bkj
+azV
 bqm
 bqm
 bps
@@ -77676,8 +77701,8 @@ bcw
 bfd
 bgw
 aZE
-bot
-bjr
+asx
+aCx
 bkt
 bmh
 boK
@@ -77933,8 +77958,8 @@ bcu
 bfe
 bdt
 aZE
-bjm
-bjr
+aBD
+aCy
 xGy
 bmh
 boK
@@ -80504,7 +80529,7 @@ pVb
 bgB
 bhX
 bgv
-bxH
+auf
 bkw
 bnE
 bny
@@ -107778,7 +107803,7 @@ bGz
 bQZ
 oHU
 bZc
-qbW
+bTl
 kLM
 bTl
 bTl
