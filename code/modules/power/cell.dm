@@ -15,8 +15,8 @@
 	var/maxcharge = 1000
 	custom_materials = list(/datum/material/iron=700, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
-	var/rigged = FALSE	// true if rigged to explode
-	var/corrupted = FALSE //also triggers an explosion.
+	var/rigged = FALSE	/// If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
+	var/corrupted = FALSE /// If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
