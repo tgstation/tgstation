@@ -249,13 +249,11 @@
 	release_pressure = ONE_ATMOSPHERE*2
 
 /obj/machinery/portable_atmospherics/canister/tier_1
-	name = "Tier 1 canister"
 	heat_limit = 5000
 	pressure_limit = 50000
 	mode = CANISTER_TIER_1
 
 /obj/machinery/portable_atmospherics/canister/tier_2
-	name = "Tier 2 canister"
 	heat_limit = 500000
 	pressure_limit = 5e6
 	volume = 3000
@@ -265,7 +263,6 @@
 	mode = CANISTER_TIER_2
 
 /obj/machinery/portable_atmospherics/canister/tier_3
-	name = "Tier 3 canister"
 	heat_limit = 1e12
 	pressure_limit = 1e14
 	volume = 5000
@@ -355,10 +352,10 @@
 		return TRUE
 	var/pressure = air_contents.return_pressure()
 	if(pressure > 300)
-		to_chat(user, "<span class='alert'>The [src] meter shows high pressure inside!</span>")
+		to_chat(user, "<span class='alert'>The pressure gauge on \the [src] indicates a high pressure inside... maybe you want to reconsider?</span>")
 		message_admins("[src] deconstructed by [ADMIN_LOOKUPFLW(user)]")
 		log_game("[src] deconstructed by [key_name(user)]")
-	to_chat(user, "<span class='notice'>You begin cutting the[src] apart...</span>")
+	to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
 	if(I.use_tool(src, user, 30, volume=50))
 		deconstruct(TRUE)
 
