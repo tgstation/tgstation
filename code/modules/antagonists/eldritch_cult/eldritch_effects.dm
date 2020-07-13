@@ -5,6 +5,8 @@
 	icon_state = ""
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
+	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
+	var/is_in_use = FALSE
 
 /obj/effect/eldritch/attack_hand(mob/living/user)
 	. = ..()
@@ -15,7 +17,8 @@
 /obj/effect/eldritch/proc/try_activate(mob/living/user)
 	if(!IS_HERETIC(user))
 		return
-	activate(user)
+	if(!is_in_use)
+		INVOKE_ASYNC(src, .proc/activate , user)
 
 /obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -23,6 +26,7 @@
 		qdel(src)
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
+	is_in_use = TRUE
 	// Have fun trying to read this proc.
 	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/list/knowledge = cultie.get_all_knowledge()
@@ -39,7 +43,6 @@
 			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
 				continue
 		atoms_in_range += atom_in_range
-
 	for(var/X in knowledge)
 		var/datum/eldritch_knowledge/current_eldritch_knowledge = knowledge[X]
 
@@ -70,9 +73,23 @@
 
 		flick("[icon_state]_active",src)
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
+		//we are doing this since some on_finished_recipe subtract the atoms from selected_atoms making them invisible permanently.
+		var/list/atoms_to_disappear = selected_atoms.Copy()
+		for(var/to_disappear in atoms_to_disappear)
+			var/atom/atom_to_disappear = to_disappear
+			//temporary so we dont have to deal with the bs of someone picking those up when they may be deleted
+			atom_to_disappear.invisibility = INVISIBILITY_ABSTRACT
 		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
+			is_in_use = FALSE
+
+		for(var/to_appear in atoms_to_disappear)
+			var/atom/atom_to_appear = to_appear
+			//we need to reappear the item just in case the ritual didnt consume everything... or something.
+			atom_to_appear.invisibility = initial(atom_to_appear.invisibility)
+
 		return
+	is_in_use = FALSE
 	to_chat(user,"<span class='warning'>Your ritual failed! You used either wrong components or are missing something important!</span>")
 
 /obj/effect/eldritch/big

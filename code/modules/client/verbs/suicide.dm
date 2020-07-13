@@ -241,6 +241,10 @@
 	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
 
 /mob/living/proc/canSuicide()
+	var/area/A = get_area(src)
+	if(A.block_suicide)
+		to_chat(src, "<span class='warning'>You can't commit suicide here! You can ghost if you'd like.</span>")
+		return
 	switch(stat)
 		if(CONSCIOUS)
 			return TRUE
