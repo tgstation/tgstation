@@ -14,14 +14,11 @@
 	display_name = "Orbital Pad - [get_area_name(src)]"
 
 /obj/machinery/mechpad/Destroy()
-	connected_console.connected_mechpad = null
+	if(connected_console)
+		connected_console.connected_mechpad = null
 	return ..()
 
 /obj/machinery/mechpad/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, I))
-		return
-	if(default_deconstruction_crowbar(I))
-		return
 	if(panel_open)
 		if(I.tool_behaviour == TOOL_MULTITOOL)
 			if(!multitool_check_buffer(user, I))

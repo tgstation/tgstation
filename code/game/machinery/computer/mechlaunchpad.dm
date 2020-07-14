@@ -28,7 +28,8 @@
 				break
 
 /obj/machinery/computer/mechpad/Destroy()
-	connected_mechpad.connected_console = null
+	if(connected_mechpad)
+		connected_mechpad.connected_console = null
 	return ..()
 
 ///Tries to locate a pad in the cardinal directions, if it finds one it returns it
