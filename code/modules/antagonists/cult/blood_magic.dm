@@ -294,8 +294,9 @@
 		for(var/obj/structure/destructible/cult/S in range(5,owner))
 			S.conceal()
 		for(var/turf/open/floor/engine/cult/T  in range(5,owner))
-			if(T.realappearance)
-				T.realappearance.alpha = 0
+			if(!T.realappearance)
+				continue
+			T.realappearance.alpha = 0
 		for(var/obj/machinery/door/airlock/cult/AL in range(5, owner))
 			AL.conceal()
 		revealing = TRUE
@@ -312,8 +313,9 @@
 		for(var/obj/structure/destructible/cult/S in range(6,owner))
 			S.reveal()
 		for(var/turf/open/floor/engine/cult/T  in range(6,owner))
-			if(T.realappearance)
-				T.realappearance.alpha = initial(T.realappearance.alpha)
+			if(!T.realappearance)
+				continue
+			T.realappearance.alpha = initial(T.realappearance.alpha)
 		for(var/obj/machinery/door/airlock/cult/AL in range(6, owner))
 			AL.reveal()
 		revealing = FALSE
