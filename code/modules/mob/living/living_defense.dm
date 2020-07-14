@@ -143,7 +143,7 @@
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return FALSE
 
-	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(user.grab_state >= GRAB_NECK && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to risk hurting [src]!</span>")
 		return FALSE
 	grippedby(user)
@@ -180,24 +180,29 @@
 		user.setGrabState(user.grab_state + 1)
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
-				var/add_log = ""
 				if(HAS_TRAIT(user, TRAIT_PACIFISM))
 					visible_message("<span class='danger'>[user] firmly grips [src]!</span>",
 									"<span class='danger'>[user] firmly grips you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 					to_chat(user, "<span class='danger'>You firmly grip [src]!</span>")
-					add_log = " (pacifist)"
+					log_combat(user, src, "grabbed", addition="aggressive grab (pacifist)")
 				else
 					visible_message("<span class='danger'>[user] grabs [src] aggressively!</span>", \
 									"<span class='userdanger'>[user] grabs you aggressively!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 					to_chat(user, "<span class='danger'>You grab [src] aggressively!</span>")
+					log_combat(user, src, "grabbed", addition="aggressive grab")
 				drop_all_held_items()
 				stop_pulling()
-				log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 			if(GRAB_NECK)
-				log_combat(user, src, "grabbed", addition="neck grab")
-				visible_message("<span class='danger'>[user] grabs [src] by the neck!</span>",\
-								"<span class='userdanger'>[user] grabs you by the neck!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
-				to_chat(user, "<span class='danger'>You grab [src] by the neck!</span>")
+				if(HAS_TRAIT(user, TRAIT_PACIFISM))
+					visible_message("<span class='danger'>[user] firmly grips [src] by the neck!</span>",\
+									"<span class='userdanger'>[user] firmly grips you by the neck!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
+					to_chat(user, "<span class='danger'>You firmly grip [src] by the neck!</span>")
+					log_combat(user, src, "grabbed", addition="neck grab (pacifist)")
+				else
+					visible_message("<span class='danger'>[user] grabs [src] by the neck!</span>",\
+					"<span class='userdanger'>[user] grabs you by the neck!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
+					to_chat(user, "<span class='danger'>You grab [src] by the neck!</span>")
+					log_combat(user, src, "grabbed", addition="neck grab")
 				update_mobility() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
