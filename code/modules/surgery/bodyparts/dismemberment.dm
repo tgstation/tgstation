@@ -471,8 +471,8 @@
 		if(!L.attach_limb(src, 1))
 			qdel(L)
 			return FALSE
-		var/datum/scar/S = new
+		var/datum/scar/scaries = new
 		var/datum/wound/loss/phantom_loss = new // stolen valor, really
-		S.generate(L, phantom_loss)
+		scaries.generate(L, phantom_loss)
 		QDEL_NULL(phantom_loss)
 		return TRUE

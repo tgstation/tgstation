@@ -40,8 +40,6 @@
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
-	/// What species traits we need in order to be applicable (HAS_FLESH and HAS_BONE) ((monkeys and carbons are assumed to have both))
-	var/biology_required = list(HAS_FLESH, HAS_BONE)
 	/// The bodypart we're parented to
 	var/obj/item/bodypart/limb = null
 
@@ -91,6 +89,9 @@
 	/// If we forced this wound through badmin smite, we won't count it towards the round totals
 	var/from_smite
 
+	/// What flags apply to this wound
+	var/wound_flags = (FLESH_WOUND | BONE_WOUND | ACCEPTS_GAUZE)
+
 /datum/wound/Destroy()
 	if(attached_surgery)
 		QDEL_NULL(attached_surgery)
@@ -117,10 +118,9 @@
 
 	if(ishuman(L.owner))
 		var/mob/living/carbon/human/H = L.owner
-		for(var/organic_flag in biology_required)
-			if(!(organic_flag in H.dna.species.species_traits) || !L.is_organic_limb())
-				qdel(src)
-				return
+		if(((wound_flags & BONE_WOUND) && !(HAS_BONE in H.dna.species.species_traits)) || ((wound_flags & FLESH_WOUND) && !(HAS_FLESH in H.dna.species.species_traits)))
+			qdel(src)
+			return
 
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
@@ -298,7 +298,8 @@
 /datum/wound/proc/crush()
 	return
 
-/datum/wound/proc/drag_bleed_amt()
+/// Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood
+/datum/wound/proc/drag_bleed_amount()
 	return
 
 /**

@@ -195,8 +195,8 @@
 	hits++
 	var/obj/item/bodypart/hit_part
 	if(iscarbon(target) && hit_zone)
-		var/mob/living/carbon/C = target
-		hit_part = C.get_bodypart(hit_zone)
+		var/mob/living/carbon/hit_carbon = target
+		hit_part = hit_carbon.get_bodypart(hit_zone)
 		if(hit_part)
 			target = hit_part
 	targets_hit[target]++

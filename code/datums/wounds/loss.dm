@@ -8,10 +8,10 @@
 	threshold_minimum = 180
 	status_effect_type = null
 	scar_keyword = "dismember"
-	biology_required = null // not that it really matters, we don't check anyway for dismembering
+	wound_flags = null
 
-/datum/wound/loss/proc/apply_dismember(obj/item/bodypart/L, wounding_type=WOUND_SLASH)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner) || !L.can_dismember())
+/datum/wound/loss/proc/apply_dismember(obj/item/bodypart/dismembered_part, wounding_type=WOUND_SLASH)
+	if(!istype(dismembered_part) || !dismembered_part.owner || !(dismembered_part.body_zone in viable_zones) || isalien(dismembered_part.owner) || !dismembered_part.can_dismember())
 		qdel(src)
 		return
 
@@ -27,17 +27,17 @@
 		if(WOUND_BURN)
 			occur_text = "is completely incinerated, falling to dust!"
 
-	victim = L.owner
+	victim = dismembered_part.owner
 
-	var/msg = "<b><span class='danger'>[victim]'s [L.name] [occur_text]!</span></b>"
+	var/msg = "<b><span class='danger'>[victim]'s [dismembered_part.name] [occur_text]!</span></b>"
 
-	victim.visible_message(msg, "<span class='userdanger'>Your [L.name] [occur_text]!</span>")
+	victim.visible_message(msg, "<span class='userdanger'>Your [dismembered_part.name] [occur_text]!</span>")
 
-	limb = L
+	limb = dismembered_part
 	if(!limb || !victim)
 		return
 	severity = WOUND_SEVERITY_LOSS
 	second_wind()
 	log_wound(victim, src)
-	L.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE)
+	dismembered_part.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE)
 	qdel(src)

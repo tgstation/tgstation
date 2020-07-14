@@ -1199,21 +1199,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					repetitions = 4
 					damage = 10
 
-			var/mob/living/carbon/C = target
+			var/mob/living/carbon/dude = target
 			var/list/open_adj_turfs = get_adjacent_open_turfs(C)
 			var/list/wound_bonuses = list(15, 70, 110, 250)
 
 			var/delay_per_shot = 1
 			var/delay_counter = 1
 
-			testing("Repetitions [repetitions]")
-			C.Immobilize(5 SECONDS)
+			dude.Immobilize(5 SECONDS)
 			for(var/wound_bonus_rep in 1 to repetitions)
-				for(var/obj/item/bodypart/slice_part in C.bodyparts)
+				for(var/obj/item/bodypart/slice_part in dude.bodyparts)
 					var/shots_this_limb = 0
 					for(var/t in shuffle(open_adj_turfs))
 						var/turf/open/OT = t
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/firing_squad, C, OT, slice_part.body_zone, wound_bonuses[wound_bonus_rep], damage), delay_counter)
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/firing_squad, dude, OT, slice_part.body_zone, wound_bonuses[wound_bonus_rep], damage), delay_counter)
 						delay_counter += delay_per_shot
 						shots_this_limb++
 						if(shots_this_limb > shots_per_limb_per_rep)
@@ -1223,30 +1222,30 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(!iscarbon(target))
 				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
 				return
-			var/mob/living/carbon/C = target
-			C.generate_fake_scars(rand(1, 4))
-			to_chat(C, "<span class='warning'>You feel your body grow jaded and torn...</span>")
+			var/mob/living/carbon/dude = target
+			dude.generate_fake_scars(rand(1, 4))
+			to_chat(dude, "<span class='warning'>You feel your body grow jaded and torn...</span>")
 		if(ADMIN_PUNISHMENT_SHOES)
 			if(!iscarbon(target))
 				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
 				return
-			var/mob/living/carbon/C = target
-			var/obj/item/clothing/shoes/sick_kicks = C.shoes
+			var/mob/living/carbon/dude = target
+			var/obj/item/clothing/shoes/sick_kicks = dude.shoes
 			if(!sick_kicks?.can_be_tied)
-				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>", confidential = TRUE)
+				to_chat(usr,"<span class='warning'>[dude] does not have knottable shoes!</span>", confidential = TRUE)
 				return
 			sick_kicks.adjust_laces(SHOES_KNOTTED)
 
 	punish_log(target, punishment)
 
-/proc/firing_squad(mob/living/carbon/C, turf/open/OT, body_zone, wound_bonus, damage)
+/proc/firing_squad(mob/living/carbon/target, turf/open/OT, body_zone, wound_bonus, damage)
 	if(!C.get_bodypart(body_zone))
 		return
 	playsound(C, 'sound/weapons/gun/revolver/shot.ogg', 100)
 	var/obj/projectile/bullet/smite/divine_wrath = new(OT)
 	divine_wrath.damage = damage
 	divine_wrath.wound_bonus = wound_bonus
-	divine_wrath.original = C
+	divine_wrath.original = target
 	divine_wrath.def_zone = body_zone
 	divine_wrath.spread = 0
 	divine_wrath.preparePixelProjectile(C, OT)

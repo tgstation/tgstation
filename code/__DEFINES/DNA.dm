@@ -126,9 +126,12 @@
 #define AGENDER			16
 /// Do not draw eyes or eyeless overlay
 #define NOEYESPRITES	17
+
 /// Used for determining which wounds are applicable to this species.
-#define HAS_FLESH	18 // if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
-#define HAS_BONE	19 // if we have bones (can suffer bone wounds)
+/// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
+#define HAS_FLESH	18
+/// if we have bones (can suffer bone wounds)
+#define HAS_BONE	19
 
 
 //organ slots

@@ -98,10 +98,10 @@
 
 		return TRUE //successful attack
 
-/mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_BP)
+/mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
 	var/extra_wound_details = ""
-	if(I.damtype == BRUTE && hit_BP.can_dismember())
-		var/mangled_state = hit_BP.get_mangled_state()
+	if(I.damtype == BRUTE && hit_bodypart.can_dismember())
+		var/mangled_state = hit_bodypart.get_mangled_state()
 		var/bio_state = get_biological_state()
 		if(mangled_state == BODYPART_MANGLED_BOTH)
 			extra_wound_details = ", threatening to sever it entirely"
@@ -127,7 +127,7 @@
 		attack_message_local = "You [message_verb] yourself[message_hit_area] with [I][extra_wound_details]"
 	visible_message("<span class='danger'>[attack_message]</span>",\
 		"<span class='userdanger'>[attack_message_local]</span>", null, COMBAT_MESSAGE_RANGE)
-	return 1
+	return TRUE
 
 
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
@@ -150,13 +150,13 @@
 		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
 			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 				if(S.next_step(user, user.a_intent))
-					return 1
+					return TRUE
 
 	for(var/datum/wound/W in all_wounds)
 		if(W.try_handling(user))
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
@@ -174,13 +174,13 @@
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
-		return 0
+		return FALSE
 
 	if(..()) //successful monkey bite.
 		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
-		return 1
+		return TRUE
 
 
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)

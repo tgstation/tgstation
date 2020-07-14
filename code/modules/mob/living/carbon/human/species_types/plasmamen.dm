@@ -156,13 +156,13 @@
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		H.heal_bodypart_damage(1.5,0, 0)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
-		for(var/i in H.all_wounds)
+		for(var/datum/wound/iter_wound in H.all_wounds)
 			var/datum/wound/W = i
 			W.on_xadone(2)
 		return TRUE
 	if(chem.type == /datum/reagent/toxin/plasma)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
-		for(var/i in H.all_wounds)
+		for(var/datum/wound/iter_wound in H.all_wounds)
 			var/datum/wound/W = i
 			W.on_xadone(4) // plasmamen use plasma to reform their bones or whatever
 		return TRUE

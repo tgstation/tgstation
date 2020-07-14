@@ -116,8 +116,7 @@
 
 /datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
 	. = ..()
-	var/datum/wound/W = incoming_wound
-	linked_wound = W
+	linked_wound = incoming_wound
 	linked_limb = linked_wound.limb
 
 /datum/status_effect/wound/on_remove()

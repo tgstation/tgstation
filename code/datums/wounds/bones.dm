@@ -10,7 +10,7 @@
 /datum/wound/blunt
 	sound_effect = 'sound/effects/crack1.ogg'
 	wound_type = WOUND_LIST_BLUNT
-	biology_required = list(HAS_BONE)
+	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE)
 
 	/// Have we been taped?
 	var/taped
@@ -199,7 +199,7 @@
 	threshold_minimum = 35
 	threshold_penalty = 15
 	treatable_tool = TOOL_BONESET
-	accepts_gauze = FALSE
+	wound_flags = (BONE_WOUND)
 	status_effect_type = /datum/status_effect/wound/blunt/moderate
 	scar_keyword = "bluntmoderate"
 
@@ -354,9 +354,9 @@
 		var/painkiller_bonus = 0
 		if(victim.drunkenness)
 			painkiller_bonus += 5
-		if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/morphine))
+		if(victim.reagents?.has_reagent(/datum/reagent/medicine/morphine))
 			painkiller_bonus += 10
-		if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/determination))
+		if(victim.reagents?.has_reagent(/datum/reagent/determination))
 			painkiller_bonus += 5
 
 		if(prob(25 + (20 * severity - 2) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by painkillers

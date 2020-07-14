@@ -133,8 +133,8 @@
 
 	var/gauzeable_wound = FALSE
 	for(var/i in limb.wounds)
-		var/datum/wound/W = i
-		if(W.accepts_gauze)
+		var/datum/wound/woundies = i
+		if(woundies.wound_flags & ACCEPTS_GAUZE)
 			gauzeable_wound = TRUE
 			break
 	if(!gauzeable_wound)

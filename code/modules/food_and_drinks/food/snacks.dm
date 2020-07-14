@@ -231,7 +231,7 @@ All foods are distributed among various categories. Use common sense.
 	user.visible_message("[user] slices [src].", "<span class='notice'>You slice [src].</span>")
 
 	var/reagents_per_slice = reagents.total_volume/slices_num
-	for(var/i=1 to (slices_num))
+	for(var/i in 1 to slices_num)
 		var/obj/item/reagent_containers/food/snacks/slice = new slice_path (loc)
 		initialize_slice(slice, reagents_per_slice)
 	qdel(src)

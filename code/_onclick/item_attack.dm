@@ -171,7 +171,7 @@
 		else
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_BP)
+/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
 	var/message_verb = "attacked"
 	if(I.attack_verb && I.attack_verb.len)
 		message_verb = "[pick(I.attack_verb)]"

@@ -693,7 +693,7 @@
 					var/mob/living/carbon/C = src
 					for(var/i in C.all_wounds)
 						var/datum/wound/W = i
-						bleed_amt += W.drag_bleed_amt()
+						bleed_amt += W.drag_bleed_amount()
 				else
 					bleed_amt = max(1, brute_ratio * 2)
 				blood_volume = max(blood_volume - bleed_amt, 0) 					//that depends on our brute damage.

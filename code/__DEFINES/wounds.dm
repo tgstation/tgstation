@@ -74,10 +74,13 @@
 #define SCAR_SAVE_PRECISE_LOCATION	4
 /// The severity the scar had
 #define SCAR_SAVE_SEVERITY			5
+///how many fields there are above (NOT INCLUDING THIS OBVIOUSLY)
+#define SCAR_SAVE_LENGTH			5
 
 // increment this number when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)
-// saved scars with a version lower than this will be discarded
+/// saved scars with a version lower than this will be discarded
 #define SCAR_CURRENT_VERSION				1
+
 
 // With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable (bone only creatures just need the second):
 // 	1. Skin is mangled: A critical slash or pierce wound on that limb
@@ -97,3 +100,9 @@
 #define BIO_JUST_FLESH	2
 /// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember
 #define BIO_FLESH_BONE	3
+
+
+#define FLESH_WOUND		(1<<0)
+#define BONE_WOUND		(1<<1)
+#define ACCEPTS_GAUZE	(1<<2)
+

@@ -260,11 +260,11 @@
 
 		var/num_bleeds = LAZYLEN(bleeding_limbs)
 
-		var/bleed_text
+		var/list/bleed_text
 		if(appears_dead)
-			bleed_text = "<span class='deadsay'><B>Blood is visible in [t_his] open"
+			bleed_text = list("<span class='deadsay'><B>Blood is visible in [t_his] open")
 		else
-			bleed_text = "<B>[t_He] [t_is] bleeding from [t_his]"
+			bleed_text = list("<B>[t_He] [t_is] bleeding from [t_his]")
 
 		switch(num_bleeds)
 			if(1 to 2)
@@ -282,7 +282,7 @@
 				bleed_text += " incredibly quickly"
 
 			bleed_text += "!</B>\n"
-		msg += bleed_text
+		msg += bleed_text.Join()
 
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"

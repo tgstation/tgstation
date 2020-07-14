@@ -32,7 +32,7 @@
 /obj/item/reagent_containers/food/snacks/grown/banana/generate_trash(atom/location)
 	. = ..()
 	var/obj/item/grown/bananapeel/peel = .
-	if(peel && istype(peel))
+	if(istype(peel))
 		peel.grind_results = list(/datum/reagent/consumable/banana_peel = seed.potency * 0.2)
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)

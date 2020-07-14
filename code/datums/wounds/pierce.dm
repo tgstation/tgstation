@@ -10,18 +10,13 @@
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tool = TOOL_CAUTERY
 	base_treat_time = 3 SECONDS
-	accepts_gauze = TRUE
-	biology_required = list(HAS_FLESH)
+	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE)
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
 	/// If gauzed, what percent of the internal bleeding actually clots of the total absorption rate
 	var/gauzed_clot_rate
 
-	/// How much flow we've already cauterized
-	var/cauterized
-	/// How much flow we've already sutured
-	var/sutured
 	/// When hit on this bodypart, we have this chance of losing some blood + the incoming damage
 	var/internal_bleeding_chance
 	/// If we let off blood when hit, the max blood lost is this * the incoming damage
@@ -61,7 +56,7 @@
 		if(prob(5))
 			to_chat(victim, "<span class='notice'>You feel the [lowertext(name)] in your [limb.name] firming up from the cold!</span>")
 
-	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
+	if(victim.reagents?.has_reagent(/datum/reagent/toxin/heparin))
 		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)

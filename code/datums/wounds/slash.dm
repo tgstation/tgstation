@@ -11,7 +11,7 @@
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY
 	base_treat_time = 3 SECONDS
-	biology_required = list(HAS_FLESH)
+	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE)
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
@@ -27,10 +27,6 @@
 	var/max_per_type
 	/// The maximum flow we've had so far
 	var/highest_flow
-	/// How much flow we've already cauterized
-	var/cauterized
-	/// How much flow we've already sutured
-	var/sutured
 
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
@@ -74,7 +70,7 @@
 	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
 		blood_flow += 0.05 * wounding_dmg
 
-/datum/wound/slash/drag_bleed_amt()
+/datum/wound/slash/drag_bleed_amount()
 	// say we have 3 severe cuts with 3 blood flow each, pretty reasonable
 	// compare with being at 100 brute damage before, where you bled (brute/100 * 2), = 2 blood per tile
 	var/bleed_amt = min(blood_flow * 0.1, 1) // 3 * 3 * 0.1 = 0.9 blood total, less than before! the share here is .3 blood of course.
@@ -91,13 +87,13 @@
 		if(blood_flow < minimum_flow)
 			if(demotes_to)
 				replace_wound(demotes_to)
-			else
-				qdel(src)
+				return
+			qdel(src)
 			return
 
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
-	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
+	if(victim.reagents?.has_reagent(/datum/reagent/toxin/heparin))
 		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
@@ -123,8 +119,8 @@
 	if(blood_flow < minimum_flow)
 		if(demotes_to)
 			replace_wound(demotes_to)
-		else
-			qdel(src)
+			return
+		qdel(src)
 		return
 
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
