@@ -150,4 +150,4 @@
 
 /obj/effect/temp_visual/swarmer/integrate
 	icon_state = "integrate"
-	duration = 5
+	duration = 0.5 SECONDS
