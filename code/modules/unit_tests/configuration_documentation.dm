@@ -28,6 +28,7 @@
 	stack = stack + filename_to_test
 
 	var/list/parsed_entries = global.config.ParseConfigFile(filename_to_test)
+	log_world(json_encode(parsed_entries))
 	for(var/entry in parsed_entries)
 		if(!entry)
 			// Commented out entries
