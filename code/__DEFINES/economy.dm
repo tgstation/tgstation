@@ -1,6 +1,6 @@
-#define STARTING_PAYCHECKS 6
+#define STARTING_PAYCHECKS 7
 
-//Experimental change: Paycheck amounts are static for determining initial funds, halved for regular paycheks.
+//Experimental change: These are subject to tweaking based on the /tg/ economy overhaul.
 #define PAYCHECK_PRISONER 25
 #define PAYCHECK_ASSISTANT 50
 #define PAYCHECK_MINIMAL 55

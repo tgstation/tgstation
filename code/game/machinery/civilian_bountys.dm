@@ -124,6 +124,8 @@
 		return
 	if(!pad)
 		return
+	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
 	switch(action)
 		if("recalc")
 			recalc()
