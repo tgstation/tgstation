@@ -1321,6 +1321,12 @@
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
 
+/obj/item/update_filters()
+	. = ..()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
@@ -1411,7 +1417,7 @@
 /**
   * Used to set something as 'open' if it's being used as a supplypod
   *
-  * Override this if you want an atom to be usable as a supplypod. 
+  * Override this if you want an atom to be usable as a supplypod.
   */
 /atom/proc/setOpened()
 	return
@@ -1419,7 +1425,7 @@
 /**
   * Used to set something as 'closed' if it's being used as a supplypod
   *
-  * Override this if you want an atom to be usable as a supplypod. 
+  * Override this if you want an atom to be usable as a supplypod.
   */
 /atom/proc/setClosed()
 	return
