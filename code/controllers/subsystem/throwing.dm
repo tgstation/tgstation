@@ -161,9 +161,13 @@ SUBSYSTEM_DEF(throwing)
 			if (A == target)
 				hit = TRUE
 				thrownthing.throw_impact(A, src)
+				if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+					return //deletion should already be handled by on_thrownthing_qdel()
 				break
 		if (!hit)
 			thrownthing.throw_impact(get_turf(thrownthing), src)  // we haven't hit something yet and we still must, let's hit the ground.
+			if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+				return //deletion should already be handled by on_thrownthing_qdel()
 			thrownthing.newtonian_move(init_dir)
 	else
 		thrownthing.newtonian_move(init_dir)
@@ -171,8 +175,7 @@ SUBSYSTEM_DEF(throwing)
 	if(target)
 		thrownthing.throw_impact(target, src)
 		if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
-			qdel(src)
-			return
+			return //deletion should already be handled by on_thrownthing_qdel()
 
 	if (callback)
 		callback.Invoke()
