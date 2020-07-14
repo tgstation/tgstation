@@ -170,6 +170,9 @@ SUBSYSTEM_DEF(throwing)
 
 	if(target)
 		thrownthing.throw_impact(target, src)
+		if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+			qdel(src)
+			return
 
 	if (callback)
 		callback.Invoke()
