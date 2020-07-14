@@ -2,11 +2,9 @@
 	switch(relative_dir)
 		if(180) // BACKSTAB!
 			return facing_modifiers[MECHA_BACK_ARMOUR]
-		if(90, 270)
-			return facing_modifiers[MECHA_SIDE_ARMOUR]
-		if(0)
+		if(0, 45) // direct or 45 degrees off
 			return facing_modifiers[MECHA_FRONT_ARMOUR]
-	return 1 //always return non-0
+	return facing_modifiers[MECHA_SIDE_ARMOUR] //if its not a front hit or back hit then assume its from the side
 
 /obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
