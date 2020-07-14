@@ -472,5 +472,4 @@
 		var/datum/scar/scaries = new
 		var/datum/wound/loss/phantom_loss = new // stolen valor, really
 		scaries.generate(L, phantom_loss)
-		QDEL_NULL(phantom_loss)
 		return TRUE

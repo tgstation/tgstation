@@ -763,7 +763,7 @@
 
 ///Like [/obj/item/proc/updateEmbedding] but for projectiles instead, call this when you want to add embedding or update the stats on the embedding element
 /obj/projectile/proc/updateEmbedding()
-	if(!shrapnel_type || !islist(embedding) || !LAZYLEN(embedding))
+	if(!shrapnel_type || !LAZYLEN(embedding))
 		return
 
 	AddElement(/datum/element/embed,\
