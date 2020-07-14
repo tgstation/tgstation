@@ -29990,7 +29990,7 @@
 "bro" = (
 /obj/structure/cable,
 /obj/machinery/firealarm{
-	pixel_z = -28
+	pixel_y = -28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
