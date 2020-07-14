@@ -524,13 +524,10 @@
 
 /datum/plant_gene/trait/sticky/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
 	. = ..()
-	switch(G.seed.potency)
-		if(90 to 100)
-			G.embedding = EMBED_POINTY_SUPERIOR
-		if(60 to 89)
-			G.embedding = EMBED_POINTY
-		if(20 to 59)
-			G.embedding = EMBED_HARMLESS
+	if(G.seed.get_gene(/datum/plant_gene/trait/stinging))
+		G.embedding = EMBED_POINTY
+	else
+		G.embedding = EMBED_HARMLESS
 	G.updateEmbedding()
 	G.throwforce = (G.seed.potency/20)
 
