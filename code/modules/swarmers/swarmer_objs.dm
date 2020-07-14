@@ -138,7 +138,7 @@
 
 /obj/effect/temp_visual/swarmer/disintegration
 	icon_state = "disintegrate"
-	duration = 10
+	duration = 1 SECONDS
 
 /obj/effect/temp_visual/swarmer/disintegration/Initialize()
 	. = ..()
