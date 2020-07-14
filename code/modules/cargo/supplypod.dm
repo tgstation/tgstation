@@ -57,7 +57,9 @@
 	var/effectShrapnel = FALSE
 	var/shrapnel_type = /obj/projectile/bullet/shrapnel
 	var/shrapnel_magnitude = 3
+	///Whitelist of things that can be put in, used for reverse mode
 	var/list/whitelist = list()
+	///If it shouldn't play sounds the first time it lands, used for reverse mode
 	var/firstSounds = TRUE
 
 /obj/structure/closet/supplypod/bluespacepod

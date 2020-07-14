@@ -3,23 +3,40 @@
 	desc = "A pad to drop mechs on. From space."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bounty_trap_on"
+	circuit = /obj/item/circuitboard/machine/mechpad
+	///Name of the mechpad in a mechpad console
 	var/display_name = "Orbital Pad"
+	///The console the pad is linked to
 	var/obj/machinery/computer/mechpad/connected_console
+
+/obj/machinery/mechpad/Initialize()
+	. = ..()
+	display_name = "Orbital Pad - [get_area_name(src)]"
 
 /obj/machinery/mechpad/Destroy()
 	connected_console.connected_mechpad = null
 	return ..()
 
 /obj/machinery/mechpad/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, I))
-			return
-		var/obj/item/multitool/M = I
-		M.buffer = src
-		to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
-		return TRUE
+	if(default_deconstruction_screwdriver(user, I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	if(panel_open)
+		if(I.tool_behaviour == TOOL_MULTITOOL)
+			if(!multitool_check_buffer(user, I))
+				return
+			var/obj/item/multitool/M = I
+			M.buffer = src
+			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
+			return TRUE
 	return ..()
 
+/**
+  * Spawns a special supply pod whitelisted to only accept mechs and have its drop off location be another mechpad
+  * Arguments:
+  * * where - where the supply pod will land after grabbing the mech
+  */
 /obj/machinery/mechpad/proc/launch(obj/machinery/mechpad/where)
 	var/obj/structure/closet/supplypod/mechpod/pod = new()
 	pod.reverse_dropoff_turf = get_turf(where)

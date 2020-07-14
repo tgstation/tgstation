@@ -3,12 +3,16 @@
 	desc = "Sends mechs through space to space. Why would you do that?"
 	icon_screen = "mechpad"
 	icon_keyboard = "teleport_key"
+	circuit = /obj/item/circuitboard/computer/mechpad
 	ui_x = 475
 	ui_y = 130
-
+	///Selected mechpad in the console
 	var/selected_id
+	///Mechpads that it can send mechs through to other mechpads
 	var/obj/machinery/mechpad/connected_mechpad
+	///List of mechpads connected
 	var/list/obj/machinery/mechpad/mechpads = list()
+	///Maximum amount of pads connected at once
 	var/maximum_pads = 3
 
 /obj/machinery/computer/mechpad/Initialize(mapload)
@@ -27,6 +31,7 @@
 	connected_mechpad.connected_console = null
 	return ..()
 
+///Tries to locate a pad in the cardinal directions, if it finds one it returns it
 /obj/machinery/computer/mechpad/proc/connect_to_pad()
 	if(connected_mechpad)
 		return
@@ -59,6 +64,12 @@
 	else
 		return ..()
 
+/**
+  * Tries to call the launch proc on the connected mechpad, returns if there is no connected mechpad or there is no mecha on the pad
+  * Arguments:
+  * * user - The user of the proc
+  * * where - The mechpad that the connected mechpad will try to send a supply pod to
+  */
 /obj/machinery/computer/mechpad/proc/try_launch(var/mob/user, var/obj/machinery/mechpad/where)
 	if(!connected_mechpad)
 		to_chat(user, "<span class='warning'>[src] has no connected pad!</span>")
@@ -68,12 +79,14 @@
 	else
 		to_chat(user, "<span class='warning'>[src] detects no mecha on the pad!</span>")
 
+///Checks if the pad of a certain number has been QDELETED, if yes returns FALSE, otherwise returns TRUE
 /obj/machinery/computer/mechpad/proc/pad_exists(number)
 	var/obj/machinery/mechpad/pad = mechpads[number]
 	if(QDELETED(pad))
 		return FALSE
 	return TRUE
 
+///Returns the pad of the value specified
 /obj/machinery/computer/mechpad/proc/get_pad(number)
 	var/obj/machinery/mechpad/pad = mechpads[number]
 	return pad
