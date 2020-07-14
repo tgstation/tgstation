@@ -43,7 +43,7 @@
 				break
 
 	if(attack_dir)
-		var/facing_modifier = get_armour_facing(abs(dir2angle(src) - dir2angle(attack_dir)))
+		var/facing_modifier = get_armour_facing(abs(dir2angle(dir) - dir2angle(attack_dir)))
 		booster_damage_modifier /= facing_modifier
 		booster_deflection_modifier *= facing_modifier
 	if(prob(deflect_chance * booster_deflection_modifier))
