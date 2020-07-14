@@ -45,3 +45,15 @@
 		return FALSE
 	var/obj/singularity/energy_ball/T = O
 	return !T.miniball
+
+/datum/bounty/item/engineering/emitter
+	name = "Emitter"
+	description = "We think there may be a defect in your station's emitter designs, based on the sheer number of delaminations your sector seems to see. Ship us one of yours."
+	reward = 2500
+	wanted_types = list(/obj/machinery/power/emitter)
+
+/datum/bounty/item/engineering/hydro_tray
+	name = "Hydroponics Tray"
+	description = "The lab technicians are trying to figure out how to lower the power drain of hydroponics trays, but we fried our last one. Mind building one for us?"
+	reward = 2000
+	wanted_types = list(/obj/machinery/hydroponics/constructable)

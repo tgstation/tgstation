@@ -31712,18 +31712,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"bjO" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
 "bjP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -32676,33 +32664,6 @@
 "blE" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/hallway/primary/fore)
-"blF" = (
-/obj/structure/table,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/item/clipboard,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
-"blG" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "blH" = (
 /obj/effect/turf_decal/tile/brown,
@@ -66872,6 +66833,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "cui" = (
+/obj/structure/sign/warning/electricshock{
+	pixel_x = 32;
+	pixel_y = -32
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -68211,6 +68176,7 @@
 /area/hallway/secondary/command)
 "cwQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -112399,13 +112365,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
-"gXj" = (
-/obj/machinery/computer/piratepad_control/civilian{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/command)
 "gXn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -112748,17 +112707,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"ivo" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/command)
-"ivM" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall,
-/area/hallway/secondary/command)
 "ixL" = (
 /obj/structure/sign/warning/vacuum{
 	pixel_x = 32
@@ -112823,11 +112771,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/department/science)
-"iKE" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/command)
 "iLj" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
@@ -113644,13 +113587,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
-"lFH" = (
-/obj/machinery/piratepad/civilian,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/command)
 "lKR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
@@ -116620,6 +116556,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
+"xzu" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/piratepad/civilian,
+/obj/effect/turf_decal/trimline/yellow,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "xzY" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
@@ -116809,6 +116757,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
+"yjg" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 
 (1,1,1) = {"
 aaa
@@ -156492,8 +156453,8 @@ bdO
 bfl
 bgy
 bhX
-bjO
-blF
+yjg
+xzu
 bfk
 boO
 bqS
@@ -156750,7 +156711,7 @@ bfm
 bgz
 bhY
 bfo
-blG
+blH
 bfk
 boO
 bqT
@@ -156786,9 +156747,9 @@ aaa
 cqY
 csz
 cuj
-ivM
-ivo
-iKE
+cqY
+cqZ
+cqZ
 czZ
 cBp
 cDd
@@ -157044,8 +157005,8 @@ cqZ
 csB
 cuk
 cqZ
-lFH
-gXj
+aad
+aad
 czY
 cBw
 cDe

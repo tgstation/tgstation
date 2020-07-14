@@ -61,7 +61,7 @@
 	else
 		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
 		if(D)
-			if(!transfer_money(D, round(money_to_transfer/2)))
+			if(!transfer_money(D, money_to_transfer))
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
@@ -107,21 +107,30 @@
 					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
 
 /**
-  * Produces a string based off the account's civilian bounty in order to send to the bounty pad.
-  *
-  * Breaks down the specifics of most bounty types by showcasing their appropriate variables/qualities.
+  * Returns a string with the civilian bounty's description on it.
   */
 /datum/bank_account/proc/bounty_text()
 	if(!civilian_bounty)
 		return FALSE
-	var/bounty_string
 	if(istype(civilian_bounty, /datum/bounty/item))
 		var/datum/bounty/item/item = civilian_bounty
-		bounty_string = "[item.description] Quantity = [item.required_count]. Reward: = [item.reward]."
+		return item.description
 	if(istype(civilian_bounty, /datum/bounty/reagent))
 		var/datum/bounty/reagent/chemical = civilian_bounty
-		bounty_string = "[chemical.description] Quantity = [chemical.required_volume]. Reward: = [chemical.reward]."
-	return bounty_string
+		return chemical.description
+
+/**
+  * Returns the required item count, or required chemical units required to submit a bounty.
+  */
+/datum/bank_account/proc/bounty_num()
+	if(!civilian_bounty)
+		return FALSE
+	if(istype(civilian_bounty, /datum/bounty/item))
+		var/datum/bounty/item/item = civilian_bounty
+		return item.required_count
+	if(istype(civilian_bounty, /datum/bounty/reagent))
+		var/datum/bounty/reagent/chemical = civilian_bounty
+		return chemical.required_volume
 
 /**
   * Produces the value of the account's civilian bounty reward, if able.

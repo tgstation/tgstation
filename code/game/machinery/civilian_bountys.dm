@@ -8,12 +8,12 @@
 /obj/machinery/computer/piratepad_control/civilian
 	name = "civilian bounty control terminal"
 	desc = "A console for assigning civilian bounties to inserted ID cards, and for controlling the bounty pad for export."
-	ui_x = 600
-	ui_y = 230
+	ui_x = 500
+	ui_y = 375
 	status_report = "Ready for delivery."
 	icon_screen = "civ_bounty"
 	icon_keyboard = "id_key"
-	warmup_time = 30
+	warmup_time = 3 SECONDS
 	var/obj/item/card/id/inserted_scan_id
 
 /obj/machinery/computer/piratepad_control/civilian/Initialize()
@@ -25,6 +25,7 @@
 	if(isidcard(I))
 		if(id_insert(user, I, inserted_scan_id))
 			inserted_scan_id = I
+			return TRUE
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))
@@ -45,10 +46,13 @@
 /obj/machinery/computer/piratepad_control/civilian/recalc()
 	if(sending)
 		return FALSE
-
 	if(!inserted_scan_id)
+		status_report = "Please insert your ID first."
+		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	if(!inserted_scan_id.registered_account.civilian_bounty)
+		status_report = "Please accept a new civilian bounty first."
+		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	status_report = "Civilian Bounty: "
 	for(var/atom/movable/AM in get_turf(pad))
@@ -56,10 +60,13 @@
 			continue
 		if(inserted_scan_id.registered_account.civilian_bounty.applies_to(AM))
 			status_report += "Target Applicable."
+			playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 			return
 	status_report += "Not Applicable."
+	playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 
 /obj/machinery/computer/piratepad_control/civilian/send()
+	playsound(loc, 'sound/machines/wewewew.ogg', 30, TRUE)
 	if(!sending)
 		return
 	if(!inserted_scan_id)
@@ -67,13 +74,16 @@
 	if(!inserted_scan_id.registered_account.civilian_bounty)
 		return FALSE
 	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
+	var/active_stack = 0
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
 		if(curr_bounty.applies_to(AM))
-			status_report += "Bounty Target Found. "
+			active_stack ++
 			curr_bounty.ship(AM)
 			qdel(AM)
+	if(active_stack >= 1)
+		status_report += "Bounty Target Found x[active_stack]. "
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
 		inserted_scan_id.registered_account.transfer_money(SSeconomy.get_dep_account(inserted_scan_id.registered_account.account_job.paycheck_department), curr_bounty.reward)
@@ -82,7 +92,12 @@
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
+	playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
+
+/obj/machinery/computer/piratepad_control/civilian/AltClick(mob/user)
+	. = ..()
+	id_eject(user, inserted_scan_id)
 
 /obj/machinery/computer/piratepad_control/civilian/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -100,6 +115,7 @@
 	data["id_inserted"] = inserted_scan_id
 	if(inserted_scan_id && inserted_scan_id.registered_account)
 		data["id_bounty_info"] = inserted_scan_id.registered_account.bounty_text()
+		data["id_bounty_num"] = inserted_scan_id.registered_account.bounty_num()
 		data["id_bounty_value"] = inserted_scan_id.registered_account.bounty_value()
 	return data
 
@@ -124,7 +140,14 @@
 				to_chat(usr, "<span class='warning'>You already have an incomplete civilian bounty, try again in [curr_time] minutes to replace it!</span>")
 				return FALSE
 			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types) //It's a good scene from War Dogs (2016).
-			crumbs.reward = (crumbs.reward/(SSeconomy.inflation_value()))
+			if(SSeconomy.inflation_value() > 1)
+				if(istype(crumbs, /datum/bounty/item))
+					var/datum/bounty/item/items = crumbs
+					items.required_count = max(round(items.required_count)/(SSeconomy.inflation_value()*2), 1)
+				if(istype(crumbs, /datum/bounty/reagent))
+					var/datum/bounty/reagent/chems = crumbs
+					chems.required_volume = max(round(chems.required_volume)/SSeconomy.inflation_value(), 1)
+				crumbs.reward = round(crumbs.reward/(SSeconomy.inflation_value()*2))
 			pot_acc.bounty_timer = world.time
 			pot_acc.civilian_bounty = crumbs
 		if("eject")

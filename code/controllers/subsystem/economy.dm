@@ -74,7 +74,7 @@ SUBSYSTEM_DEF(economy)
 		B.payday(1)
 		if(!istype(B, /datum/bank_account/department))
 			station_total += B.account_balance
-			station_target += STATION_TARGET_INCREMENT
+			station_target += (STATION_TARGET_INCREMENT - generated_accounts.len) //More generous the less crew there are.
 	price_update()
 
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(economy)
 			continue
 		V.reset_prices(V.product_records, V.coin_records)
 		V.updateUsrDialog()
-	earning_report = "Sector Economic Report<br /> Sector price inflation is current at [SSeconomy.inflation_value()*100]%.<br /> Station Budget is currently <b>[station_total] Credits</b>, and Station Targeted Allowance is at <b>[station_target] Credits</b>.<br /> That's all from the <i>Nanotrasen Economist Division</i>."
+	earning_report = "Sector Economic Report<br /> Sector price inflation is currently at [SSeconomy.inflation_value()*100]%.<br /> The station budget is currently <b>[station_total] Credits</b>, and the station's targeted allowance is at <b>[station_target] Credits</b>.<br /> That's all from the <i>Nanotrasen Economist Division</i>."
 	GLOB.news_network.SubmitArticle(earning_report, "Station Earnings Report", "Station Announcements", null)
 
 /**

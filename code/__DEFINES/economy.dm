@@ -1,15 +1,15 @@
-#define STARTING_PAYCHECKS 8
+#define STARTING_PAYCHECKS 6
 
 //Experimental change: Paycheck amounts are static for determining initial funds, halved for regular paycheks.
-#define PAYCHECK_PRISONER 50
-#define PAYCHECK_ASSISTANT 100
-#define PAYCHECK_MINIMAL 110
-#define PAYCHECK_EASY 120
-#define PAYCHECK_MEDIUM 150
-#define PAYCHECK_HARD 200
-#define PAYCHECK_COMMAND 600
+#define PAYCHECK_PRISONER 25
+#define PAYCHECK_ASSISTANT 50
+#define PAYCHECK_MINIMAL 55
+#define PAYCHECK_EASY 60
+#define PAYCHECK_MEDIUM 75
+#define PAYCHECK_HARD 100
+#define PAYCHECK_COMMAND 200
 
-#define STATION_TARGET_INCREMENT 400
+#define STATION_TARGET_INCREMENT 200
 
 #define MAX_GRANT_CIV 2500
 #define MAX_GRANT_ENG 3000
