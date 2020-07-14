@@ -11,8 +11,8 @@
 	faction = list("gondola")
 	turns_per_move = 10
 	icon = 'icons/obj/supplypods.dmi'
-	icon_state = "pod_gondola"
-	icon_living = "pod_gondola"
+	icon_state = "gondola"
+	icon_living = "gondola"
 	pixel_x = -16//2x2 sprite
 	pixel_y = -5
 	layer = TABLE_LAYER//so that deliveries dont appear underneath it

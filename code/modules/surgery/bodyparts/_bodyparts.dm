@@ -340,6 +340,8 @@
 		damage *= 1.5
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
+	if(HAS_TRAIT(owner,TRAIT_HARDLIMBDISABLE))
+		damage *= 0.5
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
 		damage *= 1.25
