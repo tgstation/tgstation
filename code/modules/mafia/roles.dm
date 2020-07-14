@@ -399,17 +399,6 @@
 			add_note("N[game.turn] - [R.body.real_name] - [R.name]")
 	current_investigation = null
 
-/*
-//makes roles undetectable, appearing as assistants
-/datum/mafia_role/mafia/mimic
-	name = "Personality Mimic"
-	desc = "You're a changeling variant that helps the hive stay hidden. Use ':j' talk prefix to talk to your fellow lings, and visit your team at night to disguise their role."
-	role_type = MAFIA_SPECIAL
-	targeted_actions = list("Hide Role")
-
-	var/datum/mafia_role/current_hide
-*/
-
 ///SOLO ROLES/// they range from anomalous factors to deranged killers that try to win alone.
 
 /datum/mafia_role/traitor
