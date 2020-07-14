@@ -1,6 +1,7 @@
 /datum/keybinding/emote
 	category = CATEGORY_EMOTE
 	weight = WEIGHT_EMOTE
+	keybind_signal = COMSIG_KB_EMOTE
 	var/emote_key
 
 /datum/keybinding/emote/proc/link_to_emote(datum/emote/faketype)
@@ -9,7 +10,6 @@
 	name = initial(faketype.key)
 	full_name = capitalize(initial(faketype.key))
 	description = "Do the emote '*[emote_key]'"
-	keybind_signal = COMSIG_KB_EMOTE
 
 /datum/keybinding/emote/down(client/user)
 	. = ..()
