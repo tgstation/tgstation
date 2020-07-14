@@ -84715,10 +84715,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "dbh" = (
-/obj/structure/closet/wardrobe/chemistry_white,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/plasteel,
 /area/medical/pharmacy)
 "dbi" = (
@@ -95521,6 +95521,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "dyJ" = (

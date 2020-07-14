@@ -49011,10 +49011,6 @@
 /obj/item/folder/white{
 	pixel_y = 2
 	},
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
 /obj/item/screwdriver{
 	pixel_x = -2;
 	pixel_y = 6
@@ -49037,6 +49033,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/hand_labeler,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "clx" = (
@@ -49399,6 +49398,7 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/gun/syringe,
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "cml" = (
@@ -49508,14 +49508,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cmC" = (
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/yellow,
+/obj/structure/closet/secure_closet/chemical,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
@@ -50038,10 +50032,6 @@
 	pixel_y = 4
 	},
 /obj/item/book/manual/wiki/grenades,
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -50669,6 +50659,16 @@
 	dir = 5
 	},
 /obj/structure/table/glass,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/screwdriver{
+	pixel_x = -2;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "coU" = (
@@ -51340,6 +51340,8 @@
 	},
 /obj/structure/cable,
 /obj/structure/table/glass,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "cqs" = (
@@ -53848,6 +53850,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -7;
+	pixel_y = 11
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -70757,6 +70763,10 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -9;
+	pixel_y = 9
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "jni" = (
@@ -77877,6 +77887,7 @@
 	pixel_x = -25
 	},
 /obj/structure/cable,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/medical/coldroom)
 "uLY" = (

@@ -29095,6 +29095,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/reagent_containers/chem_pack,
+/obj/item/reagent_containers/chem_pack{
+	pixel_x = 6;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bwG" = (
