@@ -1200,7 +1200,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					damage = 10
 
 			var/mob/living/carbon/dude = target
-			var/list/open_adj_turfs = get_adjacent_open_turfs(C)
+			var/list/open_adj_turfs = get_adjacent_open_turfs(dude)
 			var/list/wound_bonuses = list(15, 70, 110, 250)
 
 			var/delay_per_shot = 1
@@ -1239,16 +1239,16 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	punish_log(target, punishment)
 
 /proc/firing_squad(mob/living/carbon/target, turf/open/OT, body_zone, wound_bonus, damage)
-	if(!C.get_bodypart(body_zone))
+	if(!target.get_bodypart(body_zone))
 		return
-	playsound(C, 'sound/weapons/gun/revolver/shot.ogg', 100)
+	playsound(target, 'sound/weapons/gun/revolver/shot.ogg', 100)
 	var/obj/projectile/bullet/smite/divine_wrath = new(OT)
 	divine_wrath.damage = damage
 	divine_wrath.wound_bonus = wound_bonus
 	divine_wrath.original = target
 	divine_wrath.def_zone = body_zone
 	divine_wrath.spread = 0
-	divine_wrath.preparePixelProjectile(C, OT)
+	divine_wrath.preparePixelProjectile(target, OT)
 	divine_wrath.fire()
 
 /client/proc/punish_log(whom, punishment)

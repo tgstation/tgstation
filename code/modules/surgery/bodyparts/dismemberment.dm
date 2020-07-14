@@ -172,11 +172,10 @@
 		required_bone_severity = WOUND_SEVERITY_CRITICAL
 
 	// we can (generally) only have one wound per type, but remember there's multiple types
-	for(var/i in wounds)
-		var/datum/wound/W = i
-		if(istype(W, /datum/wound/blunt) && W.severity >= required_bone_severity)
+	for(var/datum/wound/iter_wound in wounds)
+		if(istype(iter_wound, /datum/wound/blunt) && iter_wound.severity >= required_bone_severity)
 			mangled_state |= BODYPART_MANGLED_BONE
-		else if((istype(W, /datum/wound/slash) || istype(W, /datum/wound/pierce)) && W.severity >= WOUND_SEVERITY_CRITICAL)
+		else if((istype(iter_wound, /datum/wound/slash) || istype(iter_wound, /datum/wound/pierce)) && iter_wound.severity >= WOUND_SEVERITY_CRITICAL)
 			mangled_state |= BODYPART_MANGLED_SKIN
 
 	return mangled_state
@@ -199,9 +198,8 @@
 		return
 
 	var/base_chance = wounding_dmg + (get_damage() / max_damage * 50) // how much damage we dealt with this blow, + 50% of the damage percentage we already had on this bodypart
-	for(var/i in wounds)
-		var/datum/wound/W = i
-		if(istype(W, /datum/wound/blunt/critical)) // we only require a severe bone break, but if there's a critical bone break, we'll add 10% more
+	for(var/datum/wound/iter_wound in wounds)
+		if(istype(iter_wound, /datum/wound/blunt/critical)) // we only require a severe bone break, but if there's a critical bone break, we'll add 10% more
 			base_chance += 10
 			break
 

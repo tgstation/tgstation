@@ -1163,7 +1163,7 @@
 /mob/living/carbon/proc/generate_fake_scars(num_scars, forced_type)
 	for(var/i in 1 to num_scars)
 		var/datum/scar/scaries = new
-		var/obj/item/bodypart/parties = pick(bodyparts)
+		var/obj/item/bodypart/scar_part = pick(bodyparts)
 
 		var/wound_type
 		if(forced_type)
@@ -1174,10 +1174,10 @@
 		else
 			wound_type = pick(WOUND_LIST_BLUNT + WOUND_LIST_SLASH + WOUND_LIST_BURN + WOUND_LIST_PIERCE)
 
-		var/datum/wound/woundies = new wound_type
-		scaries.generate(parties, woundies)
+		var/datum/wound/phantom_wound = new wound_type
+		scaries.generate(scar_part, phantom_wound)
 		scaries.fake = TRUE
-		QDEL_NULL(W)
+		QDEL_NULL(phantom_wound)
 
 /mob/living/carbon/is_face_visible()
 	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)

@@ -150,9 +150,8 @@
 		M.adjustFireLoss(-power, 0)
 		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
-		for(var/i in M.all_wounds)
-			var/datum/wound/W = i
-			W.on_xadone(power)
+		for(var/datum/wound/iter_wound in M.all_wounds)
+			iter_wound.on_xadone(power)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
@@ -203,9 +202,8 @@
 		M.adjustFireLoss(-1.5 * power, 0)
 		M.adjustToxLoss(-power, 0, TRUE)
 		M.adjustCloneLoss(-power, 0)
-		for(var/i in M.all_wounds)
-			var/datum/wound/W = i
-			W.on_xadone(power)
+		for(var/datum/wound/iter_wound in M.all_wounds)
+			iter_wound.on_xadone(power)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	..()
@@ -1358,14 +1356,12 @@
 
 	var/effective_clot_rate = clot_rate
 
-	for(var/i in M.all_wounds)
-		var/datum/wound/W = i
-		if(W.blood_flow)
+	for(var/datum/wound/iter_wound in M.all_wounds)
+		if(iter_wound.blood_flow)
 			effective_clot_rate *= clot_coeff_per_wound
 
-	for(var/i in M.all_wounds)
-		var/datum/wound/W = i
-		W.blood_flow = max(0, W.blood_flow - effective_clot_rate)
+	for(var/datum/wound/iter_wound in M.all_wounds)
+		iter_wound.blood_flow = max(0, iter_wound.blood_flow - effective_clot_rate)
 
 /datum/reagent/medicine/coagulant/overdose_process(mob/living/M)
 	. = ..()

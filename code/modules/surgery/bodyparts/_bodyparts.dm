@@ -151,22 +151,20 @@
 		playsound(T, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	if(current_gauze)
 		QDEL_NULL(current_gauze)
-	for(var/X in get_organs())
-		var/obj/item/organ/O = X
-		O.transfer_to_limb(src, owner)
+	for(var/obj/item/organ/drop_organ in get_organs())
+		drop_organ.transfer_to_limb(src, owner)
 	for(var/obj/item/I in src)
 		I.forceMove(T)
 
+///since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have
 /obj/item/bodypart/proc/get_organs()
 	if(!owner)
 		return
-
 	var/list/our_organs
-	for(var/X in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
-		var/obj/item/organ/O = X
-		var/org_zone = check_zone(O.zone)
+	for(var/obj/item/organ/organ_check in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
+		var/org_zone = check_zone(organ_check.zone)
 		if(org_zone == body_zone)
-			LAZYADD(our_organs, O)
+			LAZYADD(our_organs, organ_check)
 
 	return our_organs
 
@@ -247,10 +245,7 @@
 					wounding_dmg *= 0.75
 			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
-
-		// no species with just flesh, but slimepeople may end up here eventually
-		if(BIO_JUST_FLESH)
-
+		// note that there's no handling for BIO_JUST_FLESH since we don't have any that are that right now (slimepeople maybe someday)
 		// standard humanoids
 		if(BIO_FLESH_BONE)
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
@@ -269,9 +264,8 @@
 	if(owner && wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
 		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
-	for(var/i in wounds)
-		var/datum/wound/W = i
-		W.receive_damage(wounding_type, wounding_dmg, wound_bonus)
+	for(var/datum/wound/iter_wound in wounds)
+		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus)
 
 	/*
 	// END WOUND HANDLING
@@ -769,13 +763,13 @@
 	return bleed_rate
 
 
-/obj/item/bodypart/proc/apply_gauze(obj/item/stack/I)
-	if(!istype(I) || !I.absorption_capacity)
+/obj/item/bodypart/proc/apply_gauze(obj/item/stack/gauze)
+	if(!istype(gauze) || !gauze.absorption_capacity)
 		return
 	QDEL_NULL(current_gauze)
-	current_gauze = new I.type(src)
+	current_gauze = new gauze.type(src)
 	current_gauze.amount = 1
-	I.use(1)
+	gauze.use(1)
 
 /**
   * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.

@@ -41,8 +41,7 @@
 
 		dna.species.spec_life(src) // for mutantraces
 	else
-		for(var/i in all_wounds)
-			var/datum/wound/woundies = i
+		for(var/datum/wound/woundies in all_wounds)
 			woundies.on_stasis()
 
 	//Update our name based on whether our face is obscured/disfigured

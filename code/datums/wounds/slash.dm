@@ -188,7 +188,6 @@
 		return
 	victim.emote("scream")
 	blood_flow -= damage / (5 * self_penalty_mult) // 20 / 5 = 4 bloodflow removed, p good
-	cauterized += damage / (5 * self_penalty_mult)
 	victim.visible_message("<span class='warning'>The cuts on [victim]'s [limb.name] scar over!</span>")
 
 /// If someone is using either a cautery tool or something with heat to cauterize this cut
@@ -204,7 +203,6 @@
 		victim.emote("scream")
 	var/blood_cauterized = (0.6 / self_penalty_mult)
 	blood_flow -= blood_cauterized
-	cauterized += blood_cauterized
 
 	if(blood_flow > minimum_flow)
 		try_treating(I, user)
@@ -221,7 +219,6 @@
 	user.visible_message("<span class='green'>[user] stitches up some of the bleeding on [victim].</span>", "<span class='green'>You stitch up some of the bleeding on [user == victim ? "yourself" : "[victim]"].</span>")
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	blood_flow -= blood_sutured
-	sutured += blood_sutured
 	limb.heal_damage(I.heal_brute, I.heal_burn)
 
 	if(blood_flow > minimum_flow)
