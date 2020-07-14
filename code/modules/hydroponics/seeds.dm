@@ -192,12 +192,21 @@
 
 
 /obj/item/seeds/proc/harvest(mob/user)
+	///Reference to the tray/soil the seeds are planted in.
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	///Count used for creating the correct amount of results to the harvest.
 	var/t_amount = 0
+	///List of plants all harvested from the same batch.
 	var/list/result = list()
+	///Tile of the harvester to deposit the growables.
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	///Name of the grown products.
 	var/product_name
-	while(t_amount < getYield())
+	///The Number of products produced by the plant, typically the yield. Modified by Densified Chemicals.
+	var/product_count = getYield()
+	if(get_gene(/datum/plant_gene/trait/maxchem))
+		product_count = clamp(round(product_count/2),0,5)
+	while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = lowertext(parent.myseed.plantname)
@@ -217,24 +226,36 @@
 
 	return result
 
-
+/**
+  * This is where plant chemical products are handled.
+  *
+  * Individually, the formula for individual amounts of chemicals is Potency * the chemical production %, rounded to the fullest 1.
+  * Specific chem handling is also handled here, like bloodtype, food taste within nutriment, and the auto-distilling trait.
+  */
 /obj/item/seeds/proc/prepare_result(var/obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
-
+	var/reagent_max = 0
 	for(var/rid in reagents_add)
-		var/amount = max(1, round(potency * reagents_add[rid], 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
-
-		var/list/data = null
-		if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
-			data = list("blood_type" = "O-")
-		if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
-			// apple tastes of apple.
-			if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
-				var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
-				data = grown_edible.tastes
-
-		T.reagents.add_reagent(rid, amount, data)
+		reagent_max += reagents_add[rid]
+	if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
+		var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
+		for(var/rid in reagents_add)
+			var/reagent_overflow_mod = reagents_add[rid]
+			if(reagent_max > 1)
+				reagent_overflow_mod = (reagents_add[rid]/ reagent_max)
+			var/edible_vol = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
+			var/amount = max(1, round((edible_vol)*(potency/100) * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
+			var/list/data
+			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
+				data = list("blood_type" = "O-")
+			if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
+				data = grown_edible.tastes // apple tastes of apple.
+				//Handles the distillary trait, swaps nutriment and vitamins for that species brewable if it exists.
+				if(get_gene(/datum/plant_gene/trait/brewing) && grown_edible.distill_reagent)
+					T.reagents.add_reagent(grown_edible.distill_reagent, amount/2)
+					continue
+			T.reagents.add_reagent(rid, amount, data)
 
 
 /// Setters procs ///

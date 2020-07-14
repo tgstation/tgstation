@@ -1,7 +1,9 @@
 import { createSearch } from 'common/string';
-import { Box, Button, Input, Section } from '../components';
+import { Box, Button, Input, Icon, Section, Flex } from '../components';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
+
+import { createLogger } from '../logging';
 
 const PATTERN_DESCRIPTOR = / \[(?:ghost|dead)\]$/;
 const PATTERN_NUMBER = / \(([0-9]+)\)$/;
@@ -44,7 +46,7 @@ const BasicSection = (props, context) => {
           key={thing.name}
           content={thing.name.replace(PATTERN_DESCRIPTOR, "")}
           onClick={() => act("orbit", {
-            name: thing.name,
+            ref: thing.ref,
           })} />
       ))}
     </Section>
@@ -59,7 +61,7 @@ const OrbitedButton = (props, context) => {
     <Button
       color={color}
       onClick={() => act("orbit", {
-        name: thing.name,
+        ref: thing.ref,
       })}>
       {thing.name}
       {thing.orbiters && (
@@ -111,7 +113,7 @@ export const Orbit = (props, context) => {
         .filter(searchFor(searchText))
         .sort(compareNumberedText)[0];
       if (member !== undefined) {
-        act("orbit", { name: member.name });
+        act("orbit", { ref: member.ref });
         break;
       }
     }
@@ -121,14 +123,23 @@ export const Orbit = (props, context) => {
     <Window>
       <Window.Content scrollable>
         <Section>
-          <Input
-            autoFocus
-            fluid
-            value={searchText}
-            onInput={(_, value) => setSearchText(value)}
-            onEnter={(_, value) => orbitMostRelevant(value)} />
+          <Flex>
+            <Flex.Item>
+              <Icon
+                name="search"
+                mr={1} />
+            </Flex.Item>
+            <Flex.Item grow={1}>
+              <Input
+                placeholder="Search..."
+                autoFocus
+                fluid
+                value={searchText}
+                onInput={(_, value) => setSearchText(value)}
+                onEnter={(_, value) => orbitMostRelevant(value)} />
+            </Flex.Item>
+          </Flex>
         </Section>
-
         {antagonists.length > 0 && (
           <Section title="Ghost-Visible Antagonists">
             {sortedAntagonists.map(([name, antags]) => (

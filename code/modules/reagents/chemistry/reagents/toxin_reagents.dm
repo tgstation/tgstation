@@ -41,7 +41,7 @@
 /datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
 		return
-	if(!M.has_dna() || (HAS_TRAIT(M, TRAIT_RADIMMUNE) || HAS_TRAIT(M, TRAIT_BADDNA)))
+	if(!M.has_dna() || HAS_TRAIT(M, TRAIT_GENELESS) || HAS_TRAIT(M, TRAIT_BADDNA))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
@@ -872,7 +872,7 @@
 	name = "Nitric acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
-	toxpwr = 2
+	toxpwr = 3
 	acidpwr = 5.0
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)

@@ -16,6 +16,23 @@
 /obj/structure/closet/radiation,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
+"aad" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/bounty_board{
+	dir = 4;
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "aae" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -384,6 +401,72 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"aaZ" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "bridgespace";
+	name = "bridge external shutters"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
+"aba" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/kirbyplants/photosynthetic{
+	pixel_y = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/machinery/bounty_board{
+	dir = 1;
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/explab)
+"abb" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/bounty_board{
+	dir = 1;
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"abc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
+"abd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/bounty_board{
+	dir = 4;
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -6998,19 +7081,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
-"asF" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -30031,20 +30101,6 @@
 	},
 /turf/closed/wall,
 /area/science/explab)
-"byT" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/item/kirbyplants/photosynthetic{
-	pixel_y = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/science/explab)
 "byU" = (
 /obj/structure/chair/comfy{
 	dir = 4
@@ -33339,13 +33395,6 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
-"bFT" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -38494,7 +38543,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRC" = (
-/obj/structure/lattice,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -42076,13 +42124,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cat" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cau" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas{
@@ -42564,6 +42605,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cce" = (
@@ -42573,14 +42617,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ccf" = (
-/obj/machinery/camera{
-	c_tag = "Engineering Center";
-	network = list("ss13","engine");
-	pixel_x = 23
-	},
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -42594,6 +42630,9 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cch" = (
@@ -43020,6 +43059,11 @@
 	light_color = "#e8eaff"
 	},
 /obj/structure/cable,
+/obj/machinery/camera{
+	c_tag = "Engineering Center";
+	network = list("ss13","engine");
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cdX" = (
@@ -48086,11 +48130,6 @@
 	},
 /turf/closed/wall,
 /area/library/lounge)
-"cyL" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/closed/mineral,
-/area/chapel/asteroid/monastery)
 "cyM" = (
 /obj/structure/lattice,
 /turf/closed/mineral,
@@ -54978,12 +55017,6 @@
 /obj/structure/piano,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
-"pmj" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space,
-/area/space/nearstation)
 "pnU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4;
@@ -55232,7 +55265,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/structure/displaycase/forsale,
+/obj/structure/displaycase/forsale/kitchen,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "pVD" = (
@@ -55243,12 +55276,6 @@
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/department/engine)
-"pWb" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "pWm" = (
 /obj/machinery/door/window/southleft{
 	dir = 4;
@@ -56187,7 +56214,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/displaycase/forsale,
+/obj/structure/displaycase/forsale/kitchen,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
 "sbY" = (
@@ -57396,11 +57423,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
-"uwj" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "uwX" = (
 /obj/machinery/field/generator,
 /turf/open/floor/plating,
@@ -80035,7 +80057,7 @@ cfN
 aaa
 aaa
 aaa
-cyL
+cyM
 cfN
 cfN
 cfN
@@ -84543,7 +84565,7 @@ ape
 agP
 aqA
 art
-asF
+aad
 ajM
 auG
 avF
@@ -87115,7 +87137,7 @@ aqG
 arB
 asM
 atL
-auK
+aaZ
 avN
 awU
 axT
@@ -87944,7 +87966,7 @@ bpP
 bCp
 bpP
 bEC
-bFT
+abd
 bHa
 bIi
 bJp
@@ -88497,7 +88519,7 @@ ePB
 imB
 cdm
 aht
-uwj
+aht
 aht
 aht
 aht
@@ -91051,7 +91073,7 @@ bVN
 bYf
 bYW
 bZF
-cat
+abb
 bXk
 ccg
 cey
@@ -91846,7 +91868,7 @@ bXk
 abI
 aaa
 aaa
-pmj
+aby
 aaa
 aaa
 aaa
@@ -95684,7 +95706,7 @@ bJP
 aaa
 aby
 aht
-pWb
+fon
 aaa
 aht
 aaa
@@ -97422,7 +97444,7 @@ aTf
 aUp
 hKm
 aVt
-aVt
+abc
 aVt
 aZm
 aPY
@@ -97447,7 +97469,7 @@ bkt
 bkt
 bvL
 bxu
-byT
+aba
 bAB
 bBD
 bBD

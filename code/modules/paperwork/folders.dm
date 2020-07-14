@@ -35,6 +35,8 @@
 
 
 /obj/item/folder/attackby(obj/item/W, mob/user, params)
+	if(burn_paper_product_attackby_check(W, user))
+		return
 	if(istype(W, /obj/item/paper) || istype(W, /obj/item/photo) || istype(W, /obj/item/documents))
 		if(!user.transferItemToLoc(W, src))
 			return

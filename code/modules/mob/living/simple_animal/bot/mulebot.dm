@@ -7,6 +7,7 @@
 #define SIGH 0
 #define ANNOYED 1
 #define DELIGHT 2
+#define CHIME 3
 
 /mob/living/simple_animal/bot/mulebot
 	name = "\improper MULEbot"
@@ -30,36 +31,35 @@
 	model = "MULE"
 	bot_core_type = /obj/machinery/bot_core/mulebot
 
-	var/ui_x = 350
-	var/ui_y = 425
+	var/ui_x = 350 ///tgui window width
+	var/ui_y = 425 ///tgui window height
 
-	var/id
+	var/id /// unique identifier in case there are multiple mulebots.
 
 	path_image_color = "#7F5200"
 
-	var/base_icon = "mulebot"
-	var/atom/movable/load = null
-	var/mob/living/passenger = null
-	var/turf/target				// this is turf to navigate to (location of beacon)
-	var/loaddir = 0				// this the direction to unload onto/load from
-	var/home_destination = "" 	// tag of home beacon
+	var/base_icon = "mulebot" /// icon_state to use in update_icon_state
+	var/atom/movable/load /// what we're transporting
+	var/mob/living/passenger /// who's riding us
+	var/turf/target				/// this is turf to navigate to (location of beacon)
+	var/loaddir = 0				/// this the direction to unload onto/load from
+	var/home_destination = "" 	/// tag of home delivery beacon
 
-	var/reached_target = 1 	//true if already reached the target
+	var/reached_target = TRUE 	///true if already reached the target
 
-	var/auto_return = 1		// true if auto return to home beacon after unload
-	var/auto_pickup = 1 	// true if auto-pickup at beacon
-	var/report_delivery = 1 // true if bot will announce an arrival to a location.
+	var/auto_return = TRUE		/// true if auto return to home beacon after unload
+	var/auto_pickup = TRUE 	/// true if auto-pickup at beacon
+	var/report_delivery = TRUE /// true if bot will announce an arrival to a location.
 
-	var/obj/item/stock_parts/cell/cell
-	var/bloodiness = 0
-	///The amount of steps we should take until we rest for a time.
-	var/num_steps = 0
+	var/obj/item/stock_parts/cell/cell /// Internal Powercell
+	var/bloodiness = 0 ///If we've run over a mob, how many tiles will we leave tracks on while moving
+	var/num_steps = 0 ///The amount of steps we should take until we rest for a time.
 
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
 	if(prob(0.666) && mapload)
-		new /mob/living/simple_animal/bot/mulebot/paranormal(get_turf(src))
-		qdel(src)
+		new /mob/living/simple_animal/bot/mulebot/paranormal(loc)
+		return INITIALIZE_HINT_QDEL
 	wires = new /datum/wires/mulebot(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	access_card.access = J.get_access()
@@ -70,16 +70,60 @@
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 12), TEXT_SOUTH = list(0, 12), TEXT_EAST = list(0, 12), TEXT_WEST = list(0, 12)))
+	D.ride_check_rider_incapacitated = TRUE //so mobs fall off when the vehicle is shot.
+	D.set_vehicle_dir_layer(SOUTH, layer) //vehicles default to ABOVE_MOB_LAYER while moving, let's make sure that doesn't happen while a mob is riding us.
+	D.set_vehicle_dir_layer(NORTH, layer)
+	D.set_vehicle_dir_layer(EAST, layer)
+	D.set_vehicle_dir_layer(WEST, layer)
 
 /mob/living/simple_animal/bot/mulebot/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/ntnet_interface)
 
+/mob/living/simple_animal/bot/mulebot/handle_atom_del(atom/A)
+	if(A == load)
+		unload(0)
+	if(A == cell)
+		turn_off()
+		cell = null
+	return ..()
+
+/mob/living/simple_animal/bot/mulebot/examine(mob/user)
+	. = ..()
+	if(open)
+		if(cell)
+			. += "<span class='notice'>It has \a [cell] installed.</span>"
+			. += "<span class='info'>You can use a <b>crowbar</b> to remove it.</span>"
+		else
+			. += "<span class='notice'>It has an empty compartment where a <b>power cell</b> can be installed.</span>"
+	if(load) //observer check is so we don't show the name of the ghost that's sitting on it to prevent metagaming who's ded.
+		. += "<span class='notice'>\A [isobserver(load) ? "ghostly figure" : load] is on its load platform.</span>"
+
+
 /mob/living/simple_animal/bot/mulebot/Destroy()
 	unload(0)
-	qdel(wires)
-	wires = null
+	QDEL_NULL(wires)
+	QDEL_NULL(cell)
 	return ..()
+
+/mob/living/simple_animal/bot/mulebot/get_cell()
+	return cell
+
+/mob/living/simple_animal/bot/mulebot/turn_on()
+	if(!has_power())
+		return
+	return ..()
+
+/// returns true if the bot is fully powered.
+/mob/living/simple_animal/bot/mulebot/proc/has_power(bypass_open_check)
+	return (!open || bypass_open_check) && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+
+/mob/living/simple_animal/bot/mulebot/update_mobility()
+	. = ..()
+	if(!on)
+		mobility_flags |= MOBILITY_STAND //base bots removes all mobility flags when turned off, resulting in the bot becoming passable. we don't want this since it's a large device that should block things.
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
@@ -90,25 +134,36 @@
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
-	reached_target = 0
+	reached_target = FALSE
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		..()
+		. = ..()
 		if(open)
-			on = FALSE
-	else if(istype(I, /obj/item/stock_parts/cell) && open && !cell)
+			turn_off()
+		else
+			update_icon() //this is also handled by turn_off(), so no need to call this twice.
+	else if(istype(I, /obj/item/stock_parts/cell) && open)
+		if(cell)
+			to_chat(user, "<span class='warning'>[src] already has a power cell!</span>")
+			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		cell = I
-		visible_message("<span class='notice'>[user] inserts a cell into [src].</span>",
-						"<span class='notice'>You insert the new cell into [src].</span>")
-	else if(I.tool_behaviour == TOOL_CROWBAR && open && cell)
-		cell.add_fingerprint(usr)
-		cell.forceMove(loc)
+		visible_message("<span class='notice'>[user] inserts \a [cell] into [src].</span>",
+						"<span class='notice'>You insert [cell] into [src].</span>")
+	else if(I.tool_behaviour == TOOL_CROWBAR && open && user.a_intent != INTENT_HARM)
+		if(!cell)
+			to_chat(user, "<span class='warning'>[src] doesn't have a power cell!</span>")
+			return
+		cell.add_fingerprint(user)
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(cell)
+		else
+			cell.forceMove(drop_location())
+		visible_message("<span class='notice'>[user] crowbars [cell] out from [src].</span>",
+						"<span class='notice'>You pry [cell] out of [src].</span>")
 		cell = null
-		visible_message("<span class='notice'>[user] crowbars out the power cell from [src].</span>",
-						"<span class='notice'>You pry the power cell out of [src].</span>")
 	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
@@ -118,33 +173,31 @@
 									"<span class='danger'>You knock [load] off [src] with \the [I]!</span>")
 		else
 			to_chat(user, "<span class='warning'>You hit [src] with \the [I] but to no effect!</span>")
-			..()
+			return ..()
 	else
-		..()
-	update_icon()
-	return
+		return ..()
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
-	if(emagged < 1)
+	if(!emagged)
 		emagged = TRUE
 	if(!open)
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
-	flick("mulebot-emagged", src)
+	flick("[base_icon]-emagged", src)
 	playsound(src, "sparks", 100, FALSE)
 
-/mob/living/simple_animal/bot/mulebot/update_icon()
+/mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
+	icon_state = "[base_icon][on ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
+
+/mob/living/simple_animal/bot/mulebot/update_overlays()
+	. = ..()
 	if(open)
-		icon_state="[base_icon]-hatch"
-	else
-		icon_state = "[base_icon][wires.is_cut(WIRE_AVOIDANCE)]"
-	cut_overlays()
-	if(load && !ismob(load))//buckling handles the mob offsets
-		load.pixel_y = initial(load.pixel_y) + 9
-		if(load.layer < layer)
-			load.layer = layer + 0.01
-		add_overlay(load)
-	return
+		. += "[base_icon]-hatch"
+	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
+		return
+	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
+	load_overlay.pixel_y = initial(load.pixel_y) + 9
+	. += load_overlay
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
 	unload(0)
@@ -156,7 +209,7 @@
 				wires.cut_random()
 		if(3)
 			wires.cut_random()
-	return
+
 
 /mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
 	. = ..()
@@ -196,8 +249,7 @@
 			data["modeStatus"] = "average"
 		if(BOT_NO_ROUTE)
 			data["modeStatus"] = "bad"
-		else
-	data["load"] = load ? load.name : null
+	data["load"] = load ? load.name : null //IF YOU CHANGE THE NAME OF THIS, UPDATE MULEBOT/PARANORMAL/UI_DATA.
 	data["destination"] = destination ? destination : null
 	data["home"] = home_destination
 	data["destinations"] = GLOB.deliverybeacontags
@@ -221,7 +273,10 @@
 		if("power")
 			if(on)
 				turn_off()
-			else if(cell && !open)
+			else if(open)
+				to_chat(usr, "<span class='warning'>[name]'s maintenance panel is open!</span>")
+				return
+			else if(cell)
 				if(!turn_on())
 					to_chat(usr, "<span class='warning'>You can't switch on [src]!</span>")
 					return
@@ -307,7 +362,7 @@
 			dat += "<span class='bad'>[mode_name[BOT_NO_ROUTE]]</span>"
 	dat += "</div>"
 
-	dat += "<b>Current Load:</b> [load ? load.name : "<i>none</i>"]<BR>"
+	dat += "<b>Current Load:</b> [isobserver(load) ? "<i>Unknown</i>" : (load ? load.name : "<i>None</i>")]<BR>"
 	dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
 	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
@@ -332,22 +387,21 @@
 
 	return dat
 
-
-// returns true if the bot has power
-/mob/living/simple_animal/bot/mulebot/proc/has_power()
-	return !open && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
-
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
 		if(SIGH)
 			audible_message("<span class='hear'>[src] makes a sighing buzz.</span>")
-			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		if(ANNOYED)
 			audible_message("<span class='hear'>[src] makes an annoyed buzzing sound.</span>")
-			playsound(loc, 'sound/machines/buzz-two.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
 		if(DELIGHT)
 			audible_message("<span class='hear'>[src] makes a delighted ping!</span>")
-			playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+		if(CHIME)
+			audible_message("<span class='hear'>[src] makes a chiming sound!</span>")
+			playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
+	flick("[base_icon]1", src)
 
 
 // mousedrop a crate to load the bot
@@ -366,36 +420,36 @@
 
 	load(AM)
 
+
 // called to load a crate
 /mob/living/simple_animal/bot/mulebot/proc/load(atom/movable/AM)
-	if(load ||  AM.anchored)
+	if(load || AM.anchored)
 		return
 
 	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	var/obj/structure/closet/crate/CRATE
-	if(istype(AM, /obj/structure/closet/crate))
-		CRATE = AM
-	else
+	var/obj/structure/closet/crate/crate = AM
+	if(!istype(crate))
 		if(!wires.is_cut(WIRE_LOADCHECK))
 			buzz(SIGH)
 			return	// if not hacked, only allow crates to be loaded
+		crate = null
 
-	if(CRATE) // if it's a crate, close before loading
-		CRATE.close()
-
-	if(isobj(AM))
+	if(crate || isobj(AM))
 		var/obj/O = AM
 		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
-	if(isliving(AM))
-		if(!load_mob(AM))
+		if(crate)
+			crate.close()  //make sure the crate is closed
+
+		O.forceMove(src)
+
+	else if(isliving(AM))
+		if(!load_mob(AM)) //forceMove() is handled in buckling
 			return
-	else
-		AM.forceMove(src)
 
 	load = AM
 	mode = BOT_IDLE
@@ -408,43 +462,38 @@
 		load = M
 		can_buckle = FALSE
 		return TRUE
-	return FALSE
-
-/mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
-	M.pixel_y = initial(M.pixel_y) + 9
-	if(M.layer < layer)
-		M.layer = layer + 0.01
 
 /mob/living/simple_animal/bot/mulebot/post_unbuckle_mob(mob/living/M)
 		load = null
-		M.layer = initial(M.layer)
-		M.pixel_y = initial(M.pixel_y)
+		return ..()
 
 // called to unload the bot
 // argument is optional direction to unload
 // if zero, unload at bot's location
 /mob/living/simple_animal/bot/mulebot/proc/unload(dirn)
-	if(!load)
+	if(QDELETED(load))
+		if(load) //if our thing was qdel'd, there's likely a leftover reference. just clear it and remove the overlay. we'll let the bot keep moving around to prevent it abruptly stopping somewhere.
+			load = null
+			update_icon()
 		return
 
 	mode = BOT_IDLE
 
-	cut_overlays()
+	var/atom/movable/cached_load = load //cache the load since unbuckling mobs clears the var.
 
 	unbuckle_all_mobs()
 
-	if(load)
+	if(load) //don't have to do any of this for mobs.
 		load.forceMove(loc)
 		load.pixel_y = initial(load.pixel_y)
 		load.layer = initial(load.layer)
 		load.plane = initial(load.plane)
-		if(dirn)
-			var/turf/T = loc
-			var/turf/newT = get_step(T,dirn)
-			if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
-				step(load, dirn)
 		load = null
 
+	if(dirn) //move the thing to the delivery point.
+		cached_load.Move(get_step(loc,dirn), dirn)
+
+	update_icon()
 
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
@@ -455,26 +504,37 @@
 		pathset = 1 //Indicates the AI's custom path is initialized.
 		start()
 
-/mob/living/simple_animal/bot/mulebot/handle_automated_action()
-	if(!has_power())
-		on = FALSE
+/mob/living/simple_animal/bot/mulebot/Move(atom/newloc, direct) //handle leaving bloody tracks. can't be done via Moved() since that can end up putting the tracks somewhere BEFORE we get bloody.
+	if(!bloodiness) //important to check this first since Bump() is called in the Move() -> Entered() chain
+		return ..()
+	var/atom/oldLoc = loc
+	. = ..()
+	if(!last_move || isspaceturf(oldLoc)) //if we didn't sucessfully move, or if our old location was a spaceturf.
 		return
-	if(on)
-		var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
-		if(!speed)//Devide by zero man bad
-			return
-		num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
-		if(mode != BOT_IDLE)
-			START_PROCESSING(SSfastprocess, src)
+	var/obj/effect/decal/cleanable/blood/tracks/B = new(oldLoc)
+	B.add_blood_DNA(return_blood_DNA())
+	B.setDir(direct)
+	bloodiness--
+
+/mob/living/simple_animal/bot/mulebot/handle_automated_action()
+	if(!on)
+		return
+	if(!has_power())
+		turn_off()
+		return
+	if(mode == BOT_IDLE)
+		return
+
+	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
+	if(!speed)//Devide by zero man bad
+		return
+	num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
+	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()
-	if(num_steps <= 0)
-		STOP_PROCESSING(SSfastprocess, src)
-		return
+	if(!on || client || (num_steps <= 0) || !has_power())
+		return PROCESS_KILL
 	num_steps--
-	if(!on || client)
-		return
-	update_icon()
 
 	switch(mode)
 		if(BOT_IDLE) // idle
@@ -487,31 +547,14 @@
 
 			else if(path.len > 0 && target) // valid path
 				var/turf/next = path[1]
-				reached_target = 0
+				reached_target = FALSE
 				if(next == loc)
 					path -= next
 					return
 				if(isturf(next))
-					if(bloodiness)
-						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						B.add_blood_DNA(return_blood_DNA())
-						var/newdir = get_dir(next, loc)
-						if(newdir == dir)
-							B.setDir(newdir)
-						else
-							newdir = newdir | dir
-							if(newdir == 3)
-								newdir = 1
-							else if(newdir == 12)
-								newdir = 4
-							B.setDir(newdir)
-						bloodiness--
-
-
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
-					if(cell)
-						cell.use(1)
+					cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
 						blockcount = 0
 						path -= loc
@@ -587,7 +630,6 @@
 		mode = BOT_GO_HOME
 	else
 		mode = BOT_DELIVER
-	update_icon()
 	get_nav()
 
 // starts bot moving to home
@@ -596,7 +638,6 @@
 	if(!on)
 		return
 	INVOKE_ASYNC(src, .proc/do_start_home)
-	update_icon()
 
 /mob/living/simple_animal/bot/mulebot/proc/do_start_home()
 	set_destination(home_destination)
@@ -606,15 +647,14 @@
 /mob/living/simple_animal/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		radio_channel = RADIO_CHANNEL_SUPPLY //Supply channel
-		audible_message("<span class='hear'>[src] makes a chiming sound!</span>")
-		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE)
-		reached_target = 1
+		buzz(CHIME)
+		reached_target = TRUE
 
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
 				to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!</span>")
-				playsound(calling_ai, 'sound/machines/chime.ogg',40, FALSE)
+				calling_ai.playsound_local(calling_ai, 'sound/machines/chime.ogg', 40, FALSE)
 				calling_ai = null
 				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 
@@ -646,20 +686,17 @@
 		else
 			bot_reset()	// otherwise go idle
 
-	return
 
-// called when bot bumps into anything
-/mob/living/simple_animal/bot/mulebot/Bump(atom/obs)
-	if(wires.is_cut(WIRE_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
-		if(isliving(obs))
-			var/mob/living/L = obs
-			if(iscyborg(L))
-				visible_message("<span class='danger'>[src] bumps into [L]!</span>")
-			else
-				if(!paicard)
-					log_combat(src, L, "knocked down")
-					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-					L.Knockdown(8 SECONDS)
+/mob/living/simple_animal/bot/mulebot/MobBump(mob/M) // called when the bot bumps into a mob
+	if(paicard || !isliving(M)) //if there's a PAIcard controlling the bot, they aren't allowed to harm folks.
+		return ..()
+	var/mob/living/L = M
+	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
+		if(iscyborg(L))
+			visible_message("<span class='danger'>[src] bumps into [L]!</span>")
+		else if(L.Knockdown(8 SECONDS))
+			log_combat(src, L, "knocked down")
+			visible_message("<span class='danger'>[src] knocks over [L]!</span>")
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
@@ -668,7 +705,7 @@
 	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!</span>")
-	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
 	var/damage = rand(5,15)
 	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, "melee"))
@@ -708,7 +745,6 @@
 				loaddir = text2num(direction)
 			else
 				loaddir = 0
-			update_icon()
 			if(destination) // No need to calculate a path if you do not have a destination set!
 				calc_path()
 
@@ -739,10 +775,7 @@
 	..()
 
 /mob/living/simple_animal/bot/mulebot/remove_air(amount) //To prevent riders suffocating
-	if(loc)
-		return loc.remove_air(amount)
-	else
-		return null
+	return loc ? loc.remove_air(amount) : null
 
 /mob/living/simple_animal/bot/mulebot/resist()
 	..()
@@ -753,19 +786,19 @@
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
 		unload(get_dir(loc, A))
 	else
-		..()
+		return ..()
 
 /mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/paicard/card)
-	if(..())
-		visible_message("<span class='notice'>[src] safeties are locked on.</span>")
+	. = ..()
+	if(.)
+		visible_message("<span class='notice'>[src]'s safeties are locked on.</span>")
 
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
-	name = "paranormal MULEbot"
-	desc = "A Multiple Utility Load Effector bot. It only seems to accept paranormal forces, and for this reason is fucking useless."
+	name = "\improper GHOULbot"
+	desc = "A rather ghastly looking... Multiple Utility Load Effector bot? It only seems to accept paranormal forces, and for this reason is fucking useless."
 	icon_state = "paranormalmulebot0"
 	base_icon = "paranormalmulebot"
-	var/static/mutable_appearance/ghost_overlay
-	var/ghost_rider = FALSE
+
 
 /mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
 	var/mob/living/L = user
@@ -779,74 +812,65 @@
 	load(AM)
 
 /mob/living/simple_animal/bot/mulebot/paranormal/load(atom/movable/AM)
-	if(load ||  AM.anchored)
+	if(load || AM.anchored)
 		return
 
 	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	if(!istype(AM, /mob/dead/observer) && !wires.is_cut(WIRE_LOADCHECK))
+	if(isobserver(AM))
+		visible_message("<span class='warning'>A ghostly figure appears on [src]!</span>")
+		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
+		AM.forceMove(src)
+
+	else if(!wires.is_cut(WIRE_LOADCHECK))
 		buzz(SIGH)
 		return	// if not hacked, only allow ghosts to be loaded
 
-	var/obj/structure/closet/crate/CRATE
-	if(istype(AM, /obj/structure/closet/crate))
-		CRATE = AM
-	if(CRATE) // if it's a crate, close before loading
-		CRATE.close()
-
-	if(isobj(AM))
+	else if(isobj(AM))
 		var/obj/O = AM
 		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
-	if(isliving(AM))
-		if(!load_mob(AM))
+		if(istype(O, /obj/structure/closet/crate))
+			var/obj/structure/closet/crate/crate = O
+			crate.close() //make sure it's closed
+
+		O.forceMove(src)
+
+	else if(isliving(AM))
+		if(!load_mob(AM)) //buckling is handled in forceMove()
 			return
-	else
-		AM.forceMove(src)
 
 	load = AM
 	mode = BOT_IDLE
 	update_icon()
-	if(istype(AM, /mob/dead/observer))
-		ghost_rider = TRUE
-		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
 
-/mob/living/simple_animal/bot/mulebot/paranormal/update_icon()
-	if(load && isobserver(load) && isnull(ghost_overlay))//there are issues with adding a ghost as an overlay, and this prevents metagaming to see who is dead
-		ghost_rider = TRUE
-		visible_message("<span class='warning'>A ghostly figure appears on [src]!</span>")
-		ghost_overlay = ghost_overlay || mutable_appearance('icons/mob/mob.dmi')
-		ghost_overlay.icon_state = "ghost"
-		ghost_overlay.pixel_y = 9
-		add_overlay(ghost_overlay)
-	if(open)
-		icon_state="[base_icon]-hatch"
-	else
-		icon_state = "[base_icon][wires.is_cut(WIRE_AVOIDANCE)]"
-	if(!ghost_rider)
-		cut_overlays()
-	if(load && !ismob(load))//buckling handles the mob offsets
-		load.pixel_y = initial(load.pixel_y) + 9
-		if(load.layer < layer)
-			load.layer = layer + 0.01
-		add_overlay(load)
-	return
 
-/mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved(atom/movable/AM, OldLoc, Dir, Forced)
+/mob/living/simple_animal/bot/mulebot/paranormal/update_overlays()
+	. = ..()
+	if(!isobserver(load))
+		return
+	var/mutable_appearance/ghost_overlay = mutable_appearance('icons/mob/mob.dmi', "ghost", layer + 0.01) //use a generic ghost icon, otherwise you can metagame who's dead if they have a custom ghost set
+	ghost_overlay.pixel_y = 12
+	. += ghost_overlay
+
+/mob/living/simple_animal/bot/mulebot/paranormal/ui_data(mob/user)
+	var/list/data = ..()
+	if(isobserver(load))
+		data["load"] = "Unknown" //don't reveal the name of the ghost to prevent metagaming.
+	return data
+
+/mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
 	visible_message("<span class='notice'>The ghostly figure vanishes...</span>")
-	UnregisterSignal(AM, COMSIG_MOVABLE_MOVED)
-	ghost_rider = FALSE
-	cut_overlays()
-	QDEL_NULL(ghost_overlay)
+	UnregisterSignal(load, COMSIG_MOVABLE_MOVED)
 	unload(0)
-	update_icon()
 
 #undef SIGH
 #undef ANNOYED
 #undef DELIGHT
+#undef CHIME
 
 /obj/machinery/bot_core/mulebot
 	req_access = list(ACCESS_CARGO)
