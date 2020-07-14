@@ -368,7 +368,7 @@
 		for(var/datum/export/E in ex.total_amount)
 			total_report.total_amount[E] += ex.total_amount[E]
 			total_report.total_value[E] += ex.total_value[E]
-		playsound(loc, 'sound/machines/wewewew.ogg', 30, TRUE)
+		playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 
 	points += value
 

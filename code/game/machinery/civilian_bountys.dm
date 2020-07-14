@@ -65,13 +65,18 @@
 	status_report += "Not Applicable."
 	playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 
+/**
+  * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
+  */
 /obj/machinery/computer/piratepad_control/civilian/send()
-	playsound(loc, 'sound/machines/wewewew.ogg', 30, TRUE)
+	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
 		return
 	if(!inserted_scan_id)
+		stop_sending()
 		return FALSE
 	if(!inserted_scan_id.registered_account.civilian_bounty)
+		stop_sending()
 		return FALSE
 	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	var/active_stack = 0
@@ -84,6 +89,9 @@
 			qdel(AM)
 	if(active_stack >= 1)
 		status_report += "Bounty Target Found x[active_stack]. "
+	else
+		status_report = "No applicable targets found. Aborting."
+		stop_sending()
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
 		inserted_scan_id.registered_account.transfer_money(SSeconomy.get_dep_account(inserted_scan_id.registered_account.account_job.paycheck_department), curr_bounty.reward)
@@ -145,10 +153,10 @@
 			if(SSeconomy.inflation_value() > 1)
 				if(istype(crumbs, /datum/bounty/item))
 					var/datum/bounty/item/items = crumbs
-					items.required_count = max(round(items.required_count)/(SSeconomy.inflation_value()*2), 1)
+					items.required_count = max(round((items.required_count)/(SSeconomy.inflation_value()*2)), 1)
 				if(istype(crumbs, /datum/bounty/reagent))
 					var/datum/bounty/reagent/chems = crumbs
-					chems.required_volume = max(round(chems.required_volume)/SSeconomy.inflation_value(), 1)
+					chems.required_volume = max(round((chems.required_volume)/SSeconomy.inflation_value()*2), 1)
 				crumbs.reward = round(crumbs.reward/(SSeconomy.inflation_value()*2))
 			pot_acc.bounty_timer = world.time
 			pot_acc.civilian_bounty = crumbs
@@ -207,9 +215,10 @@
 
 /obj/item/civ_bounty_beacon/attack_self()
 	loc.visible_message("<span class='warning'>\The [src] begins to beep loudly!</span>")
-	addtimer(CALLBACK(src, .proc/launch_payload), 40)
+	addtimer(CALLBACK(src, .proc/launch_payload), 4 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
+	playsound(src, "sparks", 80, TRUE)
 	switch(uses)
 		if(2)
 			new /obj/machinery/piratepad/civilian(drop_location())

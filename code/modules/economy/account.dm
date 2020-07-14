@@ -127,10 +127,10 @@
 		return FALSE
 	if(istype(civilian_bounty, /datum/bounty/item))
 		var/datum/bounty/item/item = civilian_bounty
-		return item.required_count
+		return "[item.shipped_count]/[item.required_count]"
 	if(istype(civilian_bounty, /datum/bounty/reagent))
 		var/datum/bounty/reagent/chemical = civilian_bounty
-		return chemical.required_volume
+		return "[chemical.shipped_volume]/[chemical.required_volume] u"
 
 /**
   * Produces the value of the account's civilian bounty reward, if able.

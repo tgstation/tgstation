@@ -58,7 +58,7 @@ export const CivCargoHoldTerminal = (props, context) => {
                 fluid
                 icon={id_bounty_info ? 'recycle' : 'pen'}
                 color={id_bounty_info ? 'green' : 'default'}
-                content={"New Bounty"}
+                content={id_bounty_info ? "Replace Bounty" : "New Bounty"}
                 disabled={!id_inserted}
                 onClick={() => act('bounty')} />
               <Button
