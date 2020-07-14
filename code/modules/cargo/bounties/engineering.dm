@@ -16,22 +16,22 @@
 
 /datum/bounty/item/engineering/gas/nitryl_tank
 	name = "Full Tank of Nitryl"
-	description = "The non-human staff of Station 88 has been volunteered to test performance enhancing drugs. Ship them a tank full of Nitryl so they can get started."
+	description = "The non-human staff of Station 88 has been volunteered to test performance enhancing drugs. Ship them a tank full of Nitryl so they can get started. (20 Moles)"
 	gas_type = /datum/gas/nitryl
 
 /datum/bounty/item/engineering/gas/freon_tank
 	name = "Full Tank of Freon"
-	description = "The Supermatter of station 33 has started the delamination process. Deliver a tank of Freon gas to help them stop it!"
+	description = "The Supermatter of station 33 has started the delamination process. Deliver a tank of Freon gas to help them stop it! (20 Moles)"
 	gas_type = /datum/gas/freon
 
 /datum/bounty/item/engineering/gas/tritium_tank
 	name = "Full Tank of Tritium"
-	description = "Station 49 is looking to kickstart their research program. Ship them a tank full of Tritium."
+	description = "Station 49 is looking to kickstart their research program. Ship them a tank full of Tritium. (20 Moles)"
 	gas_type = /datum/gas/tritium
 
 /datum/bounty/item/engineering/gas/hydrogen_tank
 	name = "Full Tank of Hydrogen"
-	description = "Our R&D department is working on the development of more efficient electrical batteries using hydrogen as a catalyst. Ship us a tank full of it."
+	description = "Our R&D department is working on the development of more efficient electrical batteries using hydrogen as a catalyst. Ship us a tank full of it. (20 Moles)"
 	gas_type = /datum/gas/hydrogen
 
 /datum/bounty/item/engineering/energy_ball
