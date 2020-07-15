@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(traumas)
 					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
 					   /mob/living/simple_animal/pet/penguin)),
 					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
-					   "insects" = typecacheof(list(/mob/living/simple_animal/hostile/cockroach))
+					   "insects" = typecacheof(list(/mob/living/simple_animal/hostile/cockroach, /mob/living/simple_animal/hostile/poison/bees))
 					   )
 
 	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius, /obj/item/toy/plush/snakeplushie)),
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(traumas)
 					   /obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/vibro_weapon,
 					   /obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)),
 
-						"insects" = typecacheof(list(/obj/item/toy/plush/moth))
+						"insects" = typecacheof(list(/obj/item/toy/plush/moth, /obj/item/toy/plush/beeplushie, /obj/item/clothing/mask/rat/bee, /obj/item/clothing/suit/hooded/bee_costume, /obj/structure/beebox))
 						)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
