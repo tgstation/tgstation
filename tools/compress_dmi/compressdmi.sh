@@ -1,3 +1,3 @@
-for f in $(find ../../ -name "*.dmi" -o "*.png") ; do
+for f in $(find ../../ -name "*.dmi" -o -name "*.png") ; do
 	optipng $f;
 done;
