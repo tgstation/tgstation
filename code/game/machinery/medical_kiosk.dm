@@ -44,7 +44,7 @@
 	var/bonus_fee = 0
 	if(pandemonium)
 		bonus_fee = rand(10,30)
-	if(!attempt_charge(src, H, bonus_fee) )
+	if(attempt_charge(src, H, bonus_fee) & COMSIG_ITEM_CANCEL_CHARGE )
 		return
 	use_power(20)
 	paying_customer = TRUE

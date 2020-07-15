@@ -32,9 +32,9 @@
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/AM, var/extra_fees = 0)
 	var/mob/user = AM
 	if(!cost) //In case a free variant of anything is made it'll skip charging anyone.
-		return TRUE
+		return
 	if(!istype(user))
-		return FALSE
+		return
 	var/obj/item/card/id/card = user.get_idcard(TRUE)
 	if(!card)
 		switch(transaction_style)
@@ -44,7 +44,7 @@
 				to_chat(user, "<span class='warning'>WHERE IS YOUR GOD DAMN CARD! GOD DAMNIT!</span>")
 			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID card not present. Aborting.</span>")
-		return FALSE
+		return COMSIG_ITEM_CANCEL_CHARGE
 	if(!card.registered_account)
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
@@ -53,7 +53,7 @@
 				to_chat(user, "<span class='warning'>ARE YOU JOKING. YOU DON'T HAVE A BANK ACCOUNT ON YOUR ID YOU IDIOT.</span>")
 			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID Card lacks a bank account. Aborting.</span>")
-		return FALSE
+		return COMSIG_ITEM_CANCEL_CHARGE
 	if(!(card.registered_account.has_money(cost + extra_fees)))
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
@@ -62,14 +62,14 @@
 				to_chat(user, "<span class='warning'>YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR.</span>")
 			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID Card lacks funds. Aborting.</span>")
-		return FALSE
+		return COMSIG_ITEM_CANCEL_CHARGE
 	target.transfer_money(card.registered_account, cost)
 	card.registered_account.bank_card_talk("[cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
-	return TRUE
+	return
 
 /datum/component/payment/proc/change_cost(datum/source, var/new_cost)
 	if(!isnum(new_cost))
-		return FALSE
+		return
 	cost = new_cost
-	return TRUE
+	return

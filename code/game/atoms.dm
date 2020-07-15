@@ -1410,10 +1410,6 @@
 /atom/proc/rust_heretic_act()
 	return
 
-<<<<<<< HEAD
-/atom/proc/attempt_charge(var/atom/sender, var/atom/target, var/extra_fees = 0)
-	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)
-=======
 /**
   * Used to set something as 'open' if it's being used as a supplypod
   *
@@ -1429,4 +1425,11 @@
   */
 /atom/proc/setClosed()
 	return
->>>>>>> upstream/master
+
+/**
+  * Used to attempt to charge an object with a payment component.
+  *
+  * Use this if an atom needs to attempt to charge another atom.
+  */
+/atom/proc/attempt_charge(var/atom/sender, var/atom/target, var/extra_fees = 0)
+	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)
