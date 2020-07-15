@@ -104,14 +104,14 @@
 /obj/item/organ/ears/cybernetic
 	name = "cybernetic ears"
 	icon_state = "ears-c"
-	desc = "A basic cybernetic ear, designed to mimic the operation of organic ears."
+	desc = "Basic cybernetic ears, designed to mimic the operation of organic ears."
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/ears/cybernetic/upgraded
 	name = "upgraded cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "An advanced cybernetic ear, surpassing the performance of organic ears. Contains compensators that reduce the impact of sudden, large noises."
+	desc = "Advanced cybernetic ears, surpassing the performance of organic ears. They contain sound compensators that reduce the impact of loud, sudden noises."
 	damage_multiplier = 0.5
 	bang_protect = 1 //We can rebuild him. We have the technology. We can make him better than he was. Better... stronger... GONGer.
 
