@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a scenario where ice demons wouldn't fire at you if they were unsuccessful in finding a spot to teleport to."

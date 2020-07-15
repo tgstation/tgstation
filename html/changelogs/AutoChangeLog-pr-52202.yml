@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed another minor pellet cloud runtime when no mobs were hit and a non-mob target was deleted."

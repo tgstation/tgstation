@@ -3,7 +3,7 @@
 	opacity = 1
 	density = TRUE
 	blocks_air = TRUE
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 /turf/closed/AfterChange()

@@ -277,9 +277,13 @@ Works together with spawning an observer, noted above.
 			ghost.key = key
 			if(!can_reenter_corpse)	// Disassociates observer mind from the body mind
 				ghost.mind = null
-			else
-				ghost.mind.current?.med_hud_set_status()
 			return ghost
+
+/mob/living/ghostize(can_reenter_corpse = TRUE)
+	. = ..()
+	if(. && can_reenter_corpse)
+		var/mob/dead/observer/ghost = .
+		ghost.mind.current?.med_hud_set_status()
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
@@ -955,8 +959,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/t_ray_images = list()
 	var/static/list/stored_t_ray_images = list()
 	for(var/obj/O in orange(client.view, src) )
-
-		if(O.invisibility == INVISIBILITY_MAXIMUM)
+		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128
