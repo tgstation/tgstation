@@ -48,7 +48,7 @@
 	. = ..()
 	if(istype(I,/obj/item/clothing/head/mob_holder))
 		var/obj/item/clothing/head/mob_holder/mausholder = I
-		for(var/mob/living/simple_animal/mouse/maus in mausholder.contents)
+		if(locate(/mob/living/simple_animal/mouse) in mausholder.contents)
 			return TRUE
 		return FALSE
 
