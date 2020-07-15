@@ -1523,11 +1523,16 @@
  *
  */
 /mob/living/proc/look_up()
-
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
 		stop_look_up()
 	if(!can_look_up())
 		return
+	changeNext_move(CLICK_CD_LOOK_UP)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_up) //We start looking again after we move.
+	start_look_up()
+
+/mob/living/proc/start_look_up()
 	var/turf/ceiling = get_step_multiz(src, UP)
 	if(!ceiling) //We are at the highest z-level.
 		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
@@ -1546,10 +1551,7 @@
 			to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
 			return
 
-	changeNext_move(CLICK_CD_LOOK_UP)
 	reset_perspective(ceiling)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/look_up) //We start looking again after we move.
 
 /mob/living/proc/stop_look_up()
 	reset_perspective()
@@ -1566,11 +1568,16 @@
  *
  */
 /mob/living/proc/look_down()
-
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking down.
 		stop_look_down()
 	if(!can_look_up()) //if we cant look up, we cant look down.
 		return
+	changeNext_move(CLICK_CD_LOOK_UP)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_down) //We start looking again after we move.
+	start_look_down()
+
+/mob/living/proc/start_look_down()
 	var/turf/floor = get_turf(src)
 	var/turf/lower_level = get_step_multiz(floor, DOWN)
 	if(!lower_level) //We are at the lowest z-level.
@@ -1592,18 +1599,16 @@
 			to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
 			return
 
-	changeNext_move(CLICK_CD_LOOK_UP)
 	reset_perspective(lower_level)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/look_down) //We start looking again after we move.
 
 /mob/living/proc/stop_look_down()
 	reset_perspective()
 
 /mob/living/proc/end_look_down()
-	stop_look_up()
+	stop_look_down()
 	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+
 
 /mob/living/set_stat(new_stat)
 	. = ..()
