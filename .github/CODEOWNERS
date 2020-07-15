@@ -56,16 +56,13 @@
 /icons/ @ShizCalev
 /sound/ @ShizCalev
 
-# Twaticus
-
-/icons/ @Twaticus
-
 # stylemistake
 
 /tgui @stylemistake
 
 # Multiple Owners
 
+/icons/ @Twaticus
 /code/controllers/subsystem/air.dm @MrStonedOne
 
 #SIC SEMPER TYRANNIS
