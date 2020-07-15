@@ -49,11 +49,10 @@
 
 /turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman)
 	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
-	var/datum/dna/deoxyribonucleicacid = hulkman.dna
-	for(var/datum/mutation/human/hulk/smasher in deoxyribonucleicacid.mutations)
-		if(istype(smasher))
-			smasher.break_an_arm(arm)
-			break
+	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
+	if(!smasher)
+		return
+	smasher.break_an_arm(arm)
 
 /turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user, turf/T)
 	//DECONSTRUCTION

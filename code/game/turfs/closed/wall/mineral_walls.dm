@@ -36,11 +36,10 @@
 
 /turf/closed/wall/mineral/diamond/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman)
 	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
-	var/datum/dna/deoxyribonucleicacid = hulkman.dna
-	for(var/datum/mutation/human/hulk/smasher in deoxyribonucleicacid.mutations)
-		if(istype(smasher))
-			smasher.break_an_arm(arm)
-			break
+	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
+	if(!smasher)
+		return
+	smasher.break_an_arm(arm)
 
 /turf/closed/wall/mineral/bananium
 	name = "bananium wall"
@@ -94,11 +93,10 @@
 
 /turf/closed/wall/mineral/uranium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman)
 	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
-	var/datum/dna/deoxyribonucleicacid = hulkman.dna
-	for(var/datum/mutation/human/hulk/smasher in deoxyribonucleicacid.mutations)
-		if(istype(smasher))
-			smasher.break_an_arm(arm)
-			break
+	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
+	if(!smasher)
+		return
+	smasher.break_an_arm(arm)
 
 /turf/closed/wall/mineral/plasma
 	name = "plasma wall"
@@ -299,11 +297,10 @@
 
 /turf/closed/wall/mineral/plastitanium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman)
 	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
-	var/datum/dna/deoxyribonucleicacid = hulkman.dna
-	for(var/datum/mutation/human/hulk/smasher in deoxyribonucleicacid.mutations)
-		if(istype(smasher))
-			smasher.break_an_arm(arm)
-			break
+	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
+	if(!smasher)
+		return
+	smasher.break_an_arm(arm)
 
 //have to copypaste this code
 /turf/closed/wall/mineral/plastitanium/interior/copyTurf(turf/T)
