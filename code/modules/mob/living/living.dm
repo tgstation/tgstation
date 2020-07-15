@@ -1579,6 +1579,7 @@
 	else if(!istransparentturf(floor)) //There is no turf we can look through below us
 		var/turf/front_hole = get_step(floor, dir)
 		if(istransparentturf(front_hole))
+			floor = front_hole
 			lower_level = front_hole
 		else
 			var/list/checkturfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))-floor //Try find hole near of us
