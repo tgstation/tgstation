@@ -1534,7 +1534,7 @@
 		return
 	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
 		var/turf/front_hole = get_step(ceiling, dir)
-		if(istransparentturf(front_hole) //First check turf in front of us
+		if(istransparentturf(front_hole))
 			ceiling = front_hole
 		else
 			var/list/checkturfs = block(locate(x-1,y-1,ceiling.z),locate(x+1,y+1,ceiling.z))-ceiling-front_hole //Try find hole near of us
@@ -1578,12 +1578,13 @@
 		return
 	else if(!istransparentturf(floor)) //There is no turf we can look through below us
 		var/turf/front_hole = get_step(floor, dir)
-		if(istransparentturf(front_hole) //First check turf in front of us
-			ceiling = front_hole
+		if(istransparentturf(front_hole))
+			lower_level = front_hole
 		else
 			var/list/checkturfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))-floor //Try find hole near of us
 			for(var/turf/checkhole in checkturfs)
 				if(istransparentturf(checkhole))
+					floor = checkhole
 					lower_level = get_step_multiz(checkhole, DOWN)
 					break
 		if(!istransparentturf(floor))
