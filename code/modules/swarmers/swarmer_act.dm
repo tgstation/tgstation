@@ -106,60 +106,60 @@
 	actor.dis_integrate(src)
 	return TRUE
 
-/obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.dis_integrate(src)
+/obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	actor.dis_integrate(src)
 	return TRUE
 
-/obj/machinery/gravity_generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.dis_integrate(src)
+/obj/machinery/gravity_generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	actor.dis_integrate(src)
 	return TRUE
 
-/obj/machinery/vending/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)//It's more visually interesting than dismantling the machine
-	S.dis_integrate(src)
+/obj/machinery/vending/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)//It's more visually interesting than dismantling the machine
+	actor.dis_integrate(src)
 	return TRUE
 
-/obj/machinery/turretid/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.dis_integrate(src)
+/obj/machinery/turretid/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	actor.dis_integrate(src)
 	return TRUE
 
-/obj/machinery/chem_dispenser/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>The volatile chemicals in this machine would destroy us. Aborting.</span>")
+/obj/machinery/chem_dispenser/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>The volatile chemicals in this machine would destroy us. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/nuclearbomb/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This device's destruction would result in the extermination of everything in the area. Aborting.</span>")
+/obj/machinery/nuclearbomb/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This device's destruction would result in the extermination of everything in the area. Aborting.</span>")
 	return FALSE
 
-/obj/effect/rune/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
+/obj/effect/rune/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
 	return FALSE
 
-/obj/structure/reagent_dispensers/fueltank/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Destroying this object could cause a chain reaction. Aborting.</span>")
+/obj/structure/reagent_dispensers/fueltank/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>Destroying this object could cause a chain reaction. Aborting.</span>")
 	return FALSE
 
-/obj/structure/cable/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
+/obj/structure/cable/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/portable_atmospherics/canister/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>An inhospitable area may be created as a result of destroying this object. Aborting.</span>")
+/obj/machinery/portable_atmospherics/canister/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>An inhospitable area may be created as a result of destroying this object. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/telecomms/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>")
+/obj/machinery/telecomms/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/deepfryer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This kitchen appliance should be preserved, it will make delicious unhealthy snacks for our masters in the future. Aborting.</span>")
+/obj/machinery/deepfryer/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This kitchen appliance should be preserved, it will make delicious unhealthy snacks for our masters in the future. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/power/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
+/obj/machinery/power/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/gateway/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This bluespace source will be important to us later. Aborting.</span>")
+/obj/machinery/gateway/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This bluespace source will be important to us later. Aborting.</span>")
 	return FALSE
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
