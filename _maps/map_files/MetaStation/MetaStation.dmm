@@ -78261,9 +78261,6 @@
 	name = "Kitchen Cold Room";
 	req_access_txt = "28"
 	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen/coldroom)
 "vsp" = (
