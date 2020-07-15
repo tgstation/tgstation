@@ -35645,6 +35645,7 @@
 	req_access_txt = "46"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "bFC" = (
@@ -36244,6 +36245,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "bHg" = (
@@ -78258,6 +78260,9 @@
 /obj/machinery/door/airlock{
 	name = "Kitchen Cold Room";
 	req_access_txt = "28"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen/coldroom)
