@@ -31,7 +31,7 @@
 
 /obj/machinery/photocopier/Initialize()
 	. = ..()
-	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), "Clinical")
+	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 
 /obj/machinery/photocopier/ui_interact(mob/user)
 	. = ..()

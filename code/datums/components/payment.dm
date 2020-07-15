@@ -1,3 +1,7 @@
+#define PAYMENT_CLINICAL "clinical"
+#define PAYMENT_FRIENDLY "friendly"
+#define PAYMENT_ANGRY "angry"
+
 /**
   * Handles simple payment operations where the cost of the object in question doesn't change.
   *
@@ -34,29 +38,29 @@
 	var/obj/item/card/id/card = user.get_idcard(TRUE)
 	if(!card)
 		switch(transaction_style)
-			if("Friendly")
+			if(PAYMENT_FRIENDLY)
 				to_chat(user, "<span class='warning'>ID Card not detected, sorry [user]!</span>")
-			if("Angry")
+			if(PAYMENT_ANGRY)
 				to_chat(user, "<span class='warning'>WHERE IS YOUR GOD DAMN CARD! GOD DAMNIT!</span>")
-			if("Clinical")
+			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID card not present. Aborting.</span>")
 		return FALSE
 	if(!card.registered_account)
 		switch(transaction_style)
-			if("Friendly")
+			if(PAYMENT_FRIENDLY)
 				to_chat(user, "<span class='warning'>There's no account detected on your ID card, how mysterious!</span>")
-			if("Angry")
+			if(PAYMENT_ANGRY)
 				to_chat(user, "<span class='warning'>ARE YOU JOKING. YOU DON'T HAVE A BANK ACCOUNT ON YOUR ID YOU IDIOT.</span>")
-			if("Clinical")
+			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID Card lacks a bank account. Aborting.</span>")
 		return FALSE
 	if(!(card.registered_account.has_money(cost + extra_fees)))
 		switch(transaction_style)
-			if("Friendly")
+			if(PAYMENT_FRIENDLY)
 				to_chat(user, "<span class='warning'>I'm so sorry... You don't seem to have enough money.</span>")
-			if("Angry")
+			if(PAYMENT_ANGRY)
 				to_chat(user, "<span class='warning'>YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR.</span>")
-			if("Clinical")
+			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID Card lacks funds. Aborting.</span>")
 		return FALSE
 	target.transfer_money(card.registered_account, cost)
