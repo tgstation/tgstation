@@ -2443,6 +2443,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\hivelord.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\ice demon.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\ice whelp.dm"
+#include "code\modules\mob\living\simple_animal\hostile\mining_mobs\lobstrosity.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\mining_mobs.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\polarbear.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\wolf.dm"

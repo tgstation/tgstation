@@ -47,9 +47,11 @@
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
-
 	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
+	var/charger = FALSE //When a target is found, will the mob attempt to charge at it's target?
+	var/charger_speed = 2 //In a charge, what will the move_to_delay be set to?
+	var/knockdown_time = 4 SECONDS //If the mob is charging, how long will it stun it's target on success, and itself on failure?
 
 /mob/living/simple_animal/hostile/Initialize()
 	. = ..()
@@ -274,6 +276,9 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
+		if(charger && target_distance > minimum_distance)//Attempt to close the distance with a charge.
+			enter_charge(target)
+			return TRUE
 		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
 			return 1
@@ -577,3 +582,39 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 		friends = fren
 		faction = fren.faction.Copy()
 	return ..()
+
+/**
+  * Proc that handles a charge attack for a mob.
+  */
+/mob/living/simple_animal/hostile/proc/enter_charge(var/atom/target)
+	if(!isliving(target))
+		return
+	var/mob/living/live_target = target
+	if(!charger || !target)
+		return FALSE
+	Jitter(1 SECONDS)
+	sleep(1 SECONDS)
+	move_to_delay = charger_speed
+	say("charge start.")
+	Goto(live_target.loc, move_to_delay)
+	addtimer(CALLBACK(src, .proc/reset_charge), 1 SECONDS, TIMER_STOPPABLE)
+
+/**
+  * Proc that handles a charge attack for a mob.
+  */
+/mob/living/simple_animal/hostile/proc/reset_charge(var/mob/living/live_target)
+	for(var/turf/closed/wall/brickwall in oview(src, 1))
+		if(Adjacent(brickwall) && !Adjacent(live_target))
+			say("i'm stunned!")
+			src.Stun(knockdown_time * 10)
+			move_to_delay = initial(move_to_delay)
+			return FALSE
+		else if(Adjacent(live_target) && !(mobility_flags))
+			visible_message("<span class='warning'>[src] lands a charge on [live_target].</span>")
+			AttackingTarget()
+			live_target.Knockdown(knockdown_time, TRUE, TRUE)
+			move_to_delay = initial(move_to_delay)
+			say("Attack Charge landed")
+			return TRUE
+		say("missed.")
+		move_to_delay = initial(move_to_delay)
