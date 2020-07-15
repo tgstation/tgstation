@@ -104,18 +104,20 @@
 /obj/item/organ/ears/cybernetic
 	name = "cybernetic ears"
 	icon_state = "ears-c"
-	desc = "a basic cybernetic designed to mimic the operation of ears."
+	desc = "A basic cybernetic ear, designed to mimic the operation of organic ears."
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/ears/cybernetic/upgraded
 	name = "upgraded cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "an advanced cybernetic ear, surpassing the performance of organic ears"
+	desc = "An advanced cybernetic ear, surpassing the performance of organic ears. Contains compensators that reduce the impact of sudden, large noises."
 	damage_multiplier = 0.5
+	bang_protect = 1 //We can rebuild him. We have the technology. We can make him better than he was. Better... stronger... GONGer.
 
 /obj/item/organ/ears/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	damage += 40/severity
+	deaf = max(deaf, 30/severity) //1 minute of deafness if it's a strong EMP effect, 30 seconds of deafness if it's a weak EMP effect
