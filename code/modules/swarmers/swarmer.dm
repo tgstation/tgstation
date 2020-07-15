@@ -417,7 +417,14 @@
 	// TODO get swarmers their own colour rather than just boldtext
 	if(message)
 		swarmer_chat(message)
-		
+
+
+///Adds a drone to the swarmer list and keeps track of it in case it's deleted and requires cleanup.
+/mob/living/simple_animal/hostile/swarmer/proc/add_drone(mob/drone)
+	LAZYADD(dronelist, newswarmer)
+	RegisterSignal(newswarmer, COMSIG_PARENT_QDELETING, .proc/remove_drone, newswarmer)
+
+
 /**
   * Removes a drone from the swarmer's list.
   *
@@ -426,7 +433,8 @@
   * Arguments:
   * * mob/drone - The drone to be removed from the list.
   */
-mob/living/simple_animal/hostile/swarmer/proc/remove_drone(mob/drone, force)
+/mob/living/simple_animal/hostile/swarmer/proc/remove_drone(mob/drone, force)
+	UnregisterSignal(drone, COMSIG_PARENT_QDELETING)
 	dronelist -= drone
 
 /**
