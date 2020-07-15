@@ -1,6 +1,6 @@
 #define CONSTRUCTION_PANEL_OPEN 1 //Maintenance panel is open, still functioning
 #define CONSTRUCTION_NO_CIRCUIT 2 //Circuit board removed, can safely weld apart
-#define DEFAULT_STEP_TIME 20
+#define DEFAULT_STEP_TIME 20 /// default time for each step
 
 /obj/machinery/door/firedoor
 	name = "firelock"
