@@ -90,6 +90,8 @@ field_generator power level display
 
 /obj/machinery/field/generator/setAnchored(anchorvalue)
 	. = ..()
+	if(!.)
+		return
 	if(active)
 		turn_off()
 	state = anchorvalue ? FG_SECURED : FG_UNSECURED
