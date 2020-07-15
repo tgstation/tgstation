@@ -158,7 +158,7 @@
 	return TRUE
 
 /**
-  *Deals damage back to the hulk.
+  *Deals damage back to the hulk's arm.
   *
   *When a hulk manages to break a wall using their hulk smash, this deals back damage to the arm used.
   *This is in its own proc just to be easily overridden by other wall types. Default allows for three
