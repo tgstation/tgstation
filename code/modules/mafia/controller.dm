@@ -13,6 +13,8 @@
 	var/phase = MAFIA_PHASE_SETUP
 	///how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.
 	var/turn = 0
+	///for debugging and testing a 12 player game, or adminbuse. If this is not null, it will use this as a setup. clears when game is over
+	var/list/custom_setup = list()
 	///first day has no voting, and thus is shorter
 	var/first_day_phase_period = 20 SECONDS
 	///talk with others about the last night
@@ -324,6 +326,8 @@
 	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
 
 	QDEL_LIST(all_roles)
+	current_setup_text = null
+	custom_setup = list()
 	turn = 0
 	votes = list()
 	phase = MAFIA_PHASE_SETUP
@@ -593,10 +597,35 @@
 						continue
 					player.body.forceMove(get_turf(player.assigned_landmark))
 				if(failed.len)
-					to_chat(usr, "List of players who no longer had a body (if you see this, the game is runtiming anyway so just hit \"New Game\" to end it")
+					to_chat(usr, "List of players who no longer had a body (if you see this, the game is runtiming anyway so just hit \"New Game\" to end it)")
 					for(var/i in failed)
 						var/datum/mafia_role/fail = i
 						to_chat(usr, fail.player_key)
+			if("debug_setup")
+				var/list/debug_setup = list()
+				var/list/rolelist_dict = list()
+				var/done = FALSE
+				var/cancelled = FALSE
+				for(var/p in subtypesof(/datum/mafia_role))
+					var/datum/mafia_role/path = p
+					rolelist_dict[initial(path.name) + " ([uppertext(initial(path.team))])"] = path
+				rolelist_dict = list("CANCEL", "FINISH") + list("Assistant (TOWN)" = /datum/mafia_role) + rolelist_dict
+				while(!done)
+					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
+					var/chosen_role_name = input(usr,"Select a role!","Custom Setup Creation",rolelist_dict[1]) as null|anything in rolelist_dict
+					if(chosen_role_name == "CANCEL")
+						cancelled = TRUE
+						break
+					if(chosen_role_name == "FINISH")
+						break
+					var/found_path = rolelist_dict[chosen_role_name]
+					var/role_count = input(usr,"How many? Zero to cancel.","Custom Setup Creation",0) as null|num
+					if(role_count > 0)
+						debug_setup[found_path] = role_count
+				if(!cancelled)
+					custom_setup = debug_setup
+			if("cancel_setup")
+				custom_setup = list()
 	switch(action)
 		if("mf_lookup")
 			var/role_lookup = params["atype"]
@@ -665,20 +694,6 @@
 		. += L[key]
 
 /**
-  * Returns all setups that the amount of players signed up could support (so fill each role)
-  * Arguments:
-  * * ready_count: the amount of players signed up (not sane, so some players may have disconnected or rejoined ss13).
-  */
-/datum/mafia_controller/proc/find_best_setup(ready_count)
-	var/list/all_setups = GLOB.mafia_setups
-	var/valid_setups = list()
-	for(var/S in all_setups)
-		var/req_players = assoc_value_sum(S)
-		if(req_players <= ready_count)
-			valid_setups += list(S)
-	return length(valid_setups) > 0 ? pick(valid_setups) : null
-
-/**
   * Returns a semirandom setup, with...
   * Town, Two invest roles, one protect role, sometimes a misc role, and the rest assistants for town.
   * Mafia, 2 normal mafia and one special.
@@ -743,17 +758,17 @@
 /**
   * Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.
   *
-  * Picks a setup using find_best_setup()
+  * Checks for a custom setup, if so gets the required players from that and if not it sets the player requirement to 12 and generates one IF basic setup starts a game.
   * Checks if everyone signed up is an observer, and is still connected. If people aren't, they're removed from the list.
   * If there aren't enough players post sanity, it aborts. otherwise, it selects enough people for the game and starts preparing the game for real.
   */
 /datum/mafia_controller/proc/basic_setup()
-	var/ready_count = length(GLOB.mafia_signup)
-
-	var/list/setup = find_best_setup(ready_count)
-	if(!setup)
-		return
-	var/req_players = assoc_value_sum(setup) //12, lowered by admins lowering the setup list pop count
+	var/req_players
+	var/list/setup = custom_setup
+	if(!setup.len)
+		req_players = 12
+	else
+		req_players = assoc_value_sum(setup)
 
 	//final list for all the players who will be in this game
 	var/list/filtered_keys = list()
@@ -781,11 +796,10 @@
 	for(var/unpicked in possible_keys)
 		var/client/unpicked_client = GLOB.directory[unpicked]
 		to_chat(unpicked_client, "<span class='danger'>Sorry, the starting mafia game has too many players and you were not picked.</span>")
-		to_chat(unpicked_client, "<span class='warning'>You're still signed up, and have another chance to join when the one starting now finishes.</span>")
+		to_chat(unpicked_client, "<span class='warning'>You're still signed up, getting messages from the current round, and have another chance to join when the one starting now finishes.</span>")
 
-	if(filtered_keys.len == 12)
+	if(!setup.len) //don't actually have one yet, so generate a 12 player one. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
 		setup = generate_random_setup()
-
 	prepare_game(setup,filtered_keys)
 	start_game()
 
@@ -797,10 +811,7 @@
 /datum/mafia_controller/proc/try_autostart()
 	if(phase != MAFIA_PHASE_SETUP)
 		return
-	var/min_players = INFINITY // fairly sure mmo mafia is not a thing and i'm lazy
-	for(var/setup in GLOB.mafia_setups)
-		min_players = min(min_players,assoc_value_sum(setup))
-	if(GLOB.mafia_signup.len >= min_players)//enough people to try and make something
+	if(GLOB.mafia_signup.len >= 12 || custom_setup.len)//enough people to try and make something (or debug mode)
 		basic_setup()
 
 /datum/action/innate/mafia_panel

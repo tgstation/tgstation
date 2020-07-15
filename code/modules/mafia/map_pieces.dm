@@ -14,6 +14,7 @@
 	name = "Mafia Game Board"
 	icon = 'icons/obj/mafia.dmi'
 	icon_state = "board"
+	anchored = TRUE
 	var/game_id = "mafia"
 	var/datum/mafia_controller/MF
 
