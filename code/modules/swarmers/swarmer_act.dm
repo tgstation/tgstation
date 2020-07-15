@@ -77,8 +77,8 @@
 	actor.dismantle_machine(src)
 	return TRUE
 
-/obj/machinery/light/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.dis_integrate(src)
+/obj/machinery/light/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	actor.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
