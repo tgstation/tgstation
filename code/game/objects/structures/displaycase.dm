@@ -570,4 +570,4 @@
 
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
-	req_access = list(ACCESS_KITCHEN)
+	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
