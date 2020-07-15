@@ -27,26 +27,26 @@
 /mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)//immune to stamina damage.
+/mob/living/silicon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE) //immune to stamina damage.
 	return FALSE
 
 /mob/living/silicon/setStaminaLoss(amount, updating_health = TRUE)
 	return FALSE
 
-/mob/living/silicon/adjustOrganLoss(slot, amount, maximum = 500) //immune to organ damage
+/mob/living/silicon/adjustOrganLoss(slot, amount, maximum = 500) //immune to organ damage (no organs, duh)
 	return FALSE
 
 /mob/living/silicon/setOrganLoss(slot, amount)
 	return FALSE
 
-/mob/living/silicon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE) //immune to oxy damage
+/mob/living/silicon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE) //immune to oxygen damage
 	if(istype(src, /mob/living/silicon/ai)) //ais are snowflakes and use oxyloss for being in AI cards and having no battery
-		..()
+		. = ..()
 	
 	return FALSE
 
 /mob/living/silicon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(istype(src, /mob/living/silicon/ai)) //ditto
-		..()
+		. = ..()
 	
 	return FALSE
