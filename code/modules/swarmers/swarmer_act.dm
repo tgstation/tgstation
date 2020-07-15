@@ -81,7 +81,7 @@
 	actor.dis_integrate(src)
 	return TRUE
 
-/obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/T in range(1, src))
 		var/area/A = get_area(T)
