@@ -400,12 +400,12 @@
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
 	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg)]"
 	for(var/i in GLOB.mob_list)
-		var/mob/M = i
-		if(isswarmer(M))
-			to_chat(M, rendered)
-		else if(isobserver(M))
-			var/link = FOLLOW_LINK(M, src)
-			to_chat(M, "[link] [rendered]")
+		var/mob/listener = i
+		if(isswarmer(listener))
+			to_chat(listener, rendered)
+		else if(isobserver(listener))
+			var/link = FOLLOW_LINK(listener, src)
+			to_chat(listener, "[link] [rendered]")
 
 /**
   * Proc which is used for inputting a swarmer message
