@@ -102,8 +102,8 @@
 		toggle_cam(actor, FALSE)
 	return TRUE
 
-/obj/machinery/particle_accelerator/control_box/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.dis_integrate(src)
+/obj/machinery/particle_accelerator/control_box/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	actor.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
