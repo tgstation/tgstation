@@ -326,12 +326,11 @@
 
 /datum/mafia_role/hop
 	name = "Head of Personnel"
-	desc = "You can reveal yourself once per game, tripling your vote power but exposing your status to all the evils of the game!"
+	desc = "You can reveal yourself once per game, tripling your vote power but becoming unable to be protected!"
 	revealed_outfit = /datum/outfit/mafia/hop
 	role_type = TOWN_MISC
 
 	targeted_actions = list("Reveal")
-	var/protectable = TRUE
 
 /datum/mafia_role/hop/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
@@ -342,7 +341,6 @@
 	. = ..()
 	reveal_role(game, TRUE)
 	vote_power = 2
-	protectable = FALSE
 
 ///MAFIA ROLES/// only one until i rework this to allow more, they're the "anti-town" working to kill off townies to win
 
