@@ -73,6 +73,60 @@
 	can_flashlight = TRUE
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/alt/desert
+	name = "desert camouflage helmet"
+	desc = "A bulletproof desert fox camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "desertalt"
+	inhand_icon_state = "desertalt"
+
+/obj/item/clothing/head/helmet/alt/jungle
+	name = "jungle camouflage helmet"
+	desc = "A bulletproof jungle camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "junglealt"
+	inhand_icon_state = "junglealt"
+
+/obj/item/clothing/head/helmet/alt/artic
+	name = "artic camouflage helmet"
+	desc = "A bulletproof artic camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "articalt"
+	inhand_icon_state = "articalt"
+
+/obj/item/clothing/head/helmet/alt/woodland
+	name = "woodland camouflage helmet"
+	desc = "A bulletproof woodland camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "woodlandalt"
+	inhand_icon_state = "woodlandalt"
+
+/obj/item/clothing/head/helmet/alt/animal
+	name = "animal camouflage helmet"
+	desc = "A bulletproof animal camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "animalalt"
+	inhand_icon_state = "animalalt"
+
+/obj/item/clothing/head/helmet/alt/ash
+	name = "ash camouflage helmet"
+	desc = "A bulletproof ash camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "ashalt"
+	inhand_icon_state = "ashalt"
+
+/obj/item/clothing/head/helmet/alt/grey
+	name = "floortile camouflage helmet"
+	desc = "A bulletproof floortile camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "greyalt"
+	inhand_icon_state = "greyalt"
+
+/obj/item/clothing/head/helmet/alt/dark
+	name = "dark camouflage helmet"
+	desc = "A bulletproof dark camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "darkalt"
+	inhand_icon_state = "darkalt"
+
+/obj/item/clothing/head/helmet/alt/bloodred
+	name = "bloodred camouflage helmet"
+	desc = "A bulletproof bloodred camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "bloodredalt"
+	inhand_icon_state = "bloodredalt"
+
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."

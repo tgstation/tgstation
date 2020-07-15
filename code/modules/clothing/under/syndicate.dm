@@ -68,6 +68,69 @@
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/syndicate/desertcamo
+	name = "desert camouflage fatigues"
+	desc = "A desert-camouflaged military camouflage uniform for desert regions"
+	icon_state = "camodesert"
+	inhand_icon_state = "ds_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/articcamo
+	name = "artic camouflage fatigues"
+	desc = "A artic-camouflaged military uniform for artic regions."
+	icon_state = "camoartic"
+	inhand_icon_state = "at_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/junglecamo
+	name = "jungle camouflage fatigues"
+	desc = "A jungle-camouflaged military uniform for jungly regions"
+	icon_state = "camojungle"
+	inhand_icon_state = "jg_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/forestcamo
+	name = "woodland camouflage fatigues"
+	desc = "A woodland-camouflaged military uniform for forest regions"
+	icon_state = "camoforest"
+	inhand_icon_state = "ft_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/leopardcamo
+	name = "animal camouflage fatigues"
+	desc = "A animal-camouflaged military camouflage uniform. For fashion."
+	icon_state = "camoanimal"
+	inhand_icon_state = "lp_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/bloodredcamo
+	name = "blood-red camouflage fatigues"
+	desc = "A bloodred-camouflaged military camouflage uniform. This blood-red color is similar to what a syndicate hardsuit would be like."
+	icon_state = "camobloodred"
+	inhand_icon_state = "br_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/darkcamo
+	name = "dark camouflage fatigues"
+	desc = "A dark-camouflaged military camouflage uniform, typically for wandering in the dark."
+	icon_state = "camodark"
+	inhand_icon_state = "dr_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/ashcamo
+	name = "ash camouflage fatigues"
+	desc = "A ash-camouflaged military camouflage uniform,for volcanic regions like lavaland."
+	icon_state = "camoash"
+	inhand_icon_state = "ash_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/syndicate/greycamo
+	name = "floortile camouflage fatigues"
+	desc = "A floortile-camouflaged military camouflage uniform, this can come in handy to camouflage between grey floortiles."
+	icon_state = "camogrey"
+	inhand_icon_state = "gr_suit"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"
 	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."

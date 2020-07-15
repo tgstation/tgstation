@@ -123,6 +123,69 @@
 	strip_delay = 60
 	dog_fashion = null
 
+/obj/item/clothing/head/soft/sec/forestcamo
+	name = "woodland camouflage cap"
+	desc = "It's a robust baseball hat in a tasteless woodland camouflage."
+	icon_state = "woodlandsoft"
+	soft_type = "woodland"
+	dog_fashion = FALSE
+
+/obj/item/clothing/head/soft/sec/desertcamo
+	name = "desert camouflage cap"
+	desc = "It's a robust baseball hat in a tasteless desert camouflage."
+	icon_state = "desertsoft"
+	soft_type = "desert"
+	dog_fashion = FALSE
+
+/obj/item/clothing/head/soft/sec/articcamo
+	name = "artic camouflage cap"
+	desc = "It's a robust baseball hat in a tasteless artic camouflage."
+	icon_state = "articsoft"
+	soft_type = "artic"
+	dog_fashion = FALSE
+
+/obj/item/clothing/head/soft/sec/junglecamo
+	name = "jungle camouflage cap"
+	desc = "It's a robust baseball hat in a tasteless jungle camouflage."
+	icon_state = "junglesoft"
+	soft_type = "jungle"
+	dog_fashion = FALSE
+
+/obj/item/clothing/head/soft/sec/bloodredcamo
+	name = "blood-red camouflage cap"
+	desc = "It's a robust baseball hat in a tasteless jungle camouflage."
+	icon_state = "bloodredsoft"
+	soft_type = "bloodred"
+	dog_fashion = FALSE
+
+/obj/item/clothing/head/soft/sec/darkcamo
+	name = "dark camouflage cap"
+	desc = "It's a robust baseball hat in a tasteless jungle camouflage."
+	icon_state = "darksoft"
+	soft_type = "dark"
+	dog_fashion = FALSE
+
+/obj/item/clothing/head/soft/sec/bloodredcamo
+	name = "animal camouflage cap"
+	desc = "It's a robust baseball hat in a tasteless animal camouflage."
+	icon_state = "animalsoft"
+	soft_type = "animal"
+	dog_fashion = FALSE
+
+/obj/item/clothing/head/soft/sec/ashcamo
+	name = "ash camouflage cap"
+	desc = "It's a robust baseball hat in a tasteless ash camouflage."
+	icon_state = "ashsoft"
+	soft_type = "ash"
+	dog_fashion = FALSE
+
+/obj/item/clothing/head/soft/sec/greycamo
+	name = "grey camouflage cap"
+	desc = "It's a robust baseball hat in a tasteless grey-floortile camouflage."
+	icon_state = "greysoft"
+	soft_type = "grey"
+	dog_fashion = FALSE
+
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
