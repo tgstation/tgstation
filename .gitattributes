@@ -4,3 +4,6 @@
 
 # force changelog merging to use union
 html/changelog.html merge=union
+
+# force lf line endings on text files
+text eol=lf
