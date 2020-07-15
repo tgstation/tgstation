@@ -4,7 +4,7 @@
 
 /obj/item/door_remote
 	icon_state = "gangtool-white"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	icon = 'icons/obj/device.dmi'
@@ -28,12 +28,12 @@
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
-	to_chat(user, "Now in mode: [mode].")
+	to_chat(user, "<span class='notice'>Now in mode: [mode].</span>")
 
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
 	. = ..()
-	GET_COMPONENT_FROM(target_interface, /datum/component/ntnet_interface, A)
+	var/datum/component/ntnet_interface/target_interface = A.GetComponent(/datum/component/ntnet_interface)
 
 	if(!target_interface)
 		return
@@ -84,6 +84,7 @@
 
 /obj/item/door_remote/quartermaster
 	name = "supply door remote"
+	desc = "Remotely controls airlocks. This remote has additional Vault access."
 	icon_state = "gangtool-green"
 	region_access = 6
 
@@ -92,8 +93,8 @@
 	icon_state = "gangtool-blue"
 	region_access = 3
 
-/obj/item/door_remote/civillian
-	name = "civillian door remote"
+/obj/item/door_remote/civilian
+	name = "civilian door remote"
 	icon_state = "gangtool-white"
 	region_access = 1
 

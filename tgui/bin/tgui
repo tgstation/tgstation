@@ -1,0 +1,173 @@
+#!/bin/bash
+set -e
+shopt -s globstar
+shopt -s expand_aliases
+
+## Initial set-up
+## --------------------------------------------------------
+
+## Returns an absolute path to file
+alias tgui-realpath="readlink -f"
+
+## Fallbacks for GNU readlink
+## Detecting GNU coreutils http://stackoverflow.com/a/8748344/319952
+if ! readlink --version >/dev/null 2>&1; then
+  if hash greadlink 2>/dev/null; then
+    alias tgui-realpath="greadlink -f"
+  else
+    alias tgui-realpath="perl -MCwd -le 'print Cwd::abs_path(shift)'"
+  fi
+fi
+
+## Find a canonical path to project root
+base_dir="$(dirname "$(tgui-realpath "${0}")")/.."
+base_dir="$(tgui-realpath "${base_dir}")"
+
+## Add locally installed node programs to path
+PATH="${PATH}:node_modules/.bin"
+
+
+## Functions
+## --------------------------------------------------------
+
+## Installs node modules
+task-install() {
+  cd "${base_dir}"
+  yarn install
+}
+
+## Runs webpack
+task-webpack() {
+  cd "${base_dir}/packages/tgui"
+  webpack "${@}"
+}
+
+## Runs a development server
+task-dev-server() {
+  cd "${base_dir}/packages/tgui-dev-server"
+  exec node --experimental-modules index.js "${@}"
+}
+
+## Run a linter through all packages
+task-eslint() {
+  cd "${base_dir}"
+  eslint ./packages "${@}"
+}
+
+## Mr. Proper
+task-clean() {
+  cd "${base_dir}"
+  rm -rf packages/tgui/public/.tmp
+  rm -rf **/node_modules
+  rm -f **/package-lock.json
+}
+
+## Validates current build against the build stored in git
+task-validate-build() {
+  cd "${base_dir}"
+  local diff
+  diff="$(git diff packages/tgui/public/tgui.bundle.*)"
+  if [[ -n ${diff} ]]; then
+    echo "Error: our build differs from the build committed into git."
+    echo "Please rebuild tgui."
+    exit 1
+  fi
+  echo "tgui: build is ok"
+}
+
+## Installs merge drivers and git hooks
+task-install-git-hooks() {
+  cd "${base_dir}"
+  local git_root
+  local git_base_dir
+  git_root="$(git rev-parse --show-toplevel)"
+  git_base_dir="${base_dir/${git_root}/.}"
+  git config --replace-all merge.tgui-merge-bundle.driver \
+    "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L"
+  echo "tgui: Merge drivers have been successfully installed!"
+}
+
+## Bundle merge driver
+task-merge-bundle() {
+  local file_ancestor="${1}"
+  local file_current="${2}"
+  local file_other="${3}"
+  local conflict_marker_size="${4}"
+  echo "tgui: Discarding a local tgui build"
+  ## Do nothing (file_current will be merged and is what we want to keep).
+  exit 0
+}
+
+
+## Main
+## --------------------------------------------------------
+
+if [[ ${1} == "--merge"* ]]; then
+  if [[ ${1} == "--merge=bundle" ]]; then
+    shift 1
+    task-merge-bundle "${@}"
+  fi
+  echo "Unknown merge strategy: ${1}"
+  exit 1
+fi
+
+if [[ ${1} == "--install-git-hooks" ]]; then
+  shift 1
+  task-install-git-hooks
+  exit 0
+fi
+
+## Continuous integration scenario
+if [[ ${1} == "--ci" ]]; then
+  task-clean
+  task-install
+  task-eslint
+  task-webpack --mode=production
+  task-validate-build
+  exit 0
+fi
+
+if [[ ${1} == "--clean" ]]; then
+  task-clean
+  exit 0
+fi
+
+if [[ ${1} == "--dev" ]]; then
+  shift
+  task-install
+  task-dev-server "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--lint' ]]; then
+  shift 1
+  task-install
+  task-eslint "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--lint-harder' ]]; then
+  shift 1
+  task-install
+  task-eslint -c .eslintrc-harder.yml "${@}"
+  exit 0
+fi
+
+## Analyze the bundle
+if [[ ${1} == '--analyze' ]]; then
+  task-install
+  task-webpack --mode=production --analyze
+  exit 0
+fi
+
+## Make a production webpack build
+if [[ -z ${1} ]]; then
+  task-install
+  task-eslint
+  task-webpack --mode=production
+  exit 0
+fi
+
+## Run webpack with custom flags
+task-install
+task-webpack "${@}"

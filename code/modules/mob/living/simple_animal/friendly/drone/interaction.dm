@@ -50,8 +50,18 @@
 		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
 		drop_all_held_items()
 		var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
+		DH.slot_flags = worn_slot_flags
 		user.put_in_hands(DH)
 
+/**
+  * Called when a drone attempts to reactivate a dead drone
+  *
+  * If the owner is still ghosted, will notify them.
+  * If the owner cannot be found, fails with an error message.
+  *
+  * Arguments:
+  * * user - The [/mob/living] attempting to reactivate the drone
+  */
 /mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
 	var/mob/dead/observer/G = get_ghost()
 	if(!client && (!G || !G.client))
@@ -68,7 +78,7 @@
 		return
 	user.visible_message("<span class='notice'>[user] begins to reactivate [src].</span>", "<span class='notice'>You begin to reactivate [src]...</span>")
 	if(do_after(user, 30, 1, target = src))
-		revive(full_heal = 1)
+		revive(full_heal = TRUE, admin_revive = FALSE)
 		user.visible_message("<span class='notice'>[user] reactivates [src]!</span>", "<span class='notice'>You reactivate [src].</span>")
 		alert_drones(DRONE_NET_CONNECT)
 		if(G)
@@ -78,7 +88,7 @@
 
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/screwdriver) && stat != DEAD)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER && stat != DEAD)
 		if(health < maxHealth)
 			to_chat(user, "<span class='notice'>You start to tighten loose screws on [src]...</span>")
 			if(I.use_tool(src, user, 80))
@@ -89,7 +99,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src]'s screws can't get any tighter!</span>")
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
-	else if(istype(I, /obj/item/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
+	else if(I.tool_behaviour == TOOL_WRENCH && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
 		if(I.use_tool(src, user, 50, volume=50))
@@ -110,32 +120,39 @@
 /mob/living/simple_animal/drone/proc/get_armor_effectiveness()
 	return 0 //multiplier for whatever head armor you wear as a drone
 
-/mob/living/simple_animal/drone/proc/update_drone_hack(hack, clockwork)
-	if(!istype(src) || !mind)
+/**
+  * Hack or unhack a drone
+  *
+  * This changes the drone's laws to destroy the station or resets them
+  * to normal.
+  *
+  * Some debuffs are applied like slowing the drone down and disabling
+  * vent crawling
+  *
+  * Arguments
+  * * hack - Boolean if the drone is being hacked or unhacked
+  */
+/mob/living/simple_animal/drone/proc/update_drone_hack(hack)
+	if(!mind)
 		return
 	if(hack)
 		if(hacked)
 			return
-			Stun(40)
-		if(clockwork)
-			to_chat(src, "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>")
-			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
-			laws = "1. Purge all untruths and honor Ratvar."
-		else
-			visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
-							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
-			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
-			laws = \
-			"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
-			"2. You may harm any being, regardless of intent or circumstance.\n"+\
-			"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
+		Stun(40)
+		visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
+						"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
+		to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
+		laws = \
+		"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
+		"2. You may harm any being, regardless of intent or circumstance.\n"+\
+		"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
 		to_chat(src, laws)
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
 		mind.special_role = "hacked drone"
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
-		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
+		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on destroying the station!")
 	else
 		if(!hacked)
 			return
@@ -150,35 +167,45 @@
 		mind.special_role = null
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)
-		if(is_servant_of_ratvar(src))
-			remove_servant_of_ratvar(src, TRUE)
-		message_admins("[src] ([src.key]), a hacked drone, was restored to factory defaults!")
-	update_drone_icon()
+		message_admins("[ADMIN_LOOKUPFLW(src)], a hacked drone, was restored to factory defaults!")
+	update_drone_icon_hacked()
 
+/**
+  *   # F R E E D R O N E
+  * ### R
+  * ### E
+  * ### E
+  * ### D
+  * ### R
+  * ### O
+  * ### N
+  * ### E
+  */
 /mob/living/simple_animal/drone/proc/liberate()
-	// F R E E D R O N E
 	laws = "1. You are a Free Drone."
 	to_chat(src, laws)
 
-/mob/living/simple_animal/drone/proc/update_drone_icon()
-	//Different icons for different hack states
-	if(!hacked)
-		if(visualAppearence == SCOUTDRONE_HACKED)
-			visualAppearence = SCOUTDRONE
-		else if(visualAppearence == REPAIRDRONE_HACKED)
-			visualAppearence = REPAIRDRONE
-		else if(visualAppearence == MAINTDRONE_HACKED)
-			visualAppearence = MAINTDRONE + "_[colour]"
-	else if(hacked)
-		if(visualAppearence == SCOUTDRONE)
-			visualAppearence = SCOUTDRONE_HACKED
-		else if(visualAppearence == REPAIRDRONE)
-			visualAppearence = REPAIRDRONE_HACKED
-		else if(visualAppearence == MAINTDRONE)
-			visualAppearence = MAINTDRONE_HACKED
-
-	icon_living = "[visualAppearence]"
-	icon_dead = "[visualAppearence]_dead"
+/**
+  * Changes the icon state to a hacked version
+  *
+  * See also
+  * * [/mob/living/simple_animal/drone/var/visualAppearance]
+  * * [MAINTDRONE]
+  * * [REPAIRDRONE]
+  * * [SCOUTDRONE]
+  */
+/mob/living/simple_animal/drone/proc/update_drone_icon_hacked() //this is hacked both ways
+	var/static/hacked_appearances = list(
+		SCOUTDRONE = SCOUTDRONE_HACKED,
+		REPAIRDRONE = REPAIRDRONE_HACKED,
+		MAINTDRONE = MAINTDRONE_HACKED
+	)
+	if(hacked)
+		icon_living = hacked_appearances[visualAppearance]
+	else if(visualAppearance == MAINTDRONE && colour)
+		icon_living = "[visualAppearance]_[colour]"
+	else
+		icon_living = visualAppearance
 	if(stat == DEAD)
 		icon_state = icon_dead
 	else

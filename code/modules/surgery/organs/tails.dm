@@ -10,9 +10,8 @@
 
 /obj/item/organ/tail/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
-	if(istype(H))
-		H.endTailWag()
-
+	if(H && H.dna && H.dna.species)
+		H.dna.species.stop_wagging_tail(H)
 
 /obj/item/organ/tail/cat
 	name = "cat tail"
@@ -41,6 +40,10 @@
 	color = "#116611"
 	tail_type = "Smooth"
 	var/spines = "None"
+
+/obj/item/organ/tail/lizard/Initialize()
+	..()
+	color = "#"+ random_color()
 
 /obj/item/organ/tail/lizard/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()

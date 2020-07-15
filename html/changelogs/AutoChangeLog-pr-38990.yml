@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - rscadd: "Added a new ghost verb that lets you change your ignore settings, allowing previously ignored popups to be un-ignored and notifications without an ignore button to be ignored"

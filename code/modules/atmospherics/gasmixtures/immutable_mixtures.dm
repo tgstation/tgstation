@@ -3,6 +3,7 @@
 
 /datum/gas_mixture/immutable
 	var/initial_temperature
+	gc_share = TRUE
 
 /datum/gas_mixture/immutable/New()
 	..()
@@ -21,9 +22,6 @@
 
 /datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
-	garbage_collect()
-
-/datum/gas_mixture/immutable/after_share()
 	garbage_collect()
 
 /datum/gas_mixture/immutable/react()
@@ -45,7 +43,6 @@
 	. = ..()
 	temperature = initial_temperature
 
-
 //used by space tiles
 /datum/gas_mixture/immutable/space
 	initial_temperature = TCMB
@@ -58,16 +55,3 @@
 
 /datum/gas_mixture/immutable/space/remove_ratio()
 	return copy() //we're always empty, so we can just return a copy.
-
-
-//used by cloners
-/datum/gas_mixture/immutable/cloner
-	initial_temperature = T20C
-
-/datum/gas_mixture/immutable/cloner/garbage_collect()
-	..()
-	ADD_GAS(/datum/gas/nitrogen, gases)
-	gases[/datum/gas/nitrogen][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
-
-/datum/gas_mixture/immutable/cloner/heat_capacity()
-	return (MOLES_O2STANDARD + MOLES_N2STANDARD)*20 //specific heat of nitrogen is 20

@@ -38,7 +38,7 @@ mapGenerator:
 
 	initialiseModules()
 		Example: initialiseModules()
-		Desc: Replaces all typepaths in the modules list with actual /datum/mapGenerator/Module types
+		Desc: Replaces all typepaths in the modules list with actual /datum/map_generator/Module types
 		Existing Calls: mapGenerator/New()
 
 	syncModules()
@@ -51,7 +51,7 @@ mapGeneratorModule
 	Desc: a mapGeneratorModule has spawnableAtoms and spawnableTurfs lists
 	which it will generate on turfs in it's mother's map based on cluster variables
 
-	sync(var/datum/mapGenerator/mum)
+	sync(var/datum/map_generator/mum)
 		Example: sync(a_mapGenerator_as_a_variable)
 		Desc: Sets the Mother variable to the mum argument
 		Existing Calls: mapGenerator/syncModules()

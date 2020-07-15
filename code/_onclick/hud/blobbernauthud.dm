@@ -3,11 +3,9 @@
 	..()
 
 	blobpwrdisplay = new /obj/screen/healths/blob/naut/core()
+	blobpwrdisplay.hud = src
 	infodisplay += blobpwrdisplay
 
 	healths = new /obj/screen/healths/blob/naut()
+	healths.hud = src
 	infodisplay += healths
-
-/mob/living/simple_animal/hostile/blob/blobbernaut/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/blobbernaut(src)

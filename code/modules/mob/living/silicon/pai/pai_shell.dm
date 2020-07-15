@@ -18,7 +18,7 @@
 
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
-	canmove = TRUE
+	mobility_flags = MOBILITY_FLAGS_DEFAULT
 	density = TRUE
 	if(istype(card.loc, /obj/item/pda))
 		var/obj/item/pda/P = card.loc
@@ -36,6 +36,7 @@
 		client.eye = src
 	set_light(0)
 	icon_state = "[chassis]"
+	held_state = "[chassis]"
 	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
 	holoform = TRUE
 
@@ -54,45 +55,44 @@
 		return
 	visible_message("<span class='notice'>[src] deactivates its holochassis emitter and folds back into a compact card!</span>")
 	stop_pulling()
+	if(istype(loc, /obj/item/clothing/head/mob_holder))
+		var/obj/item/clothing/head/mob_holder/MH = loc
+		MH.release()
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
 	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
-	canmove = FALSE
+	mobility_flags = NONE
 	density = FALSE
 	set_light(0)
 	holoform = FALSE
-	if(resting)
-		lay_down()
+	set_resting(resting)
 
 /mob/living/silicon/pai/proc/choose_chassis()
 	if(!isturf(loc) && loc != card)
 		to_chat(src, "<span class='boldwarning'>You can not change your holochassis composite while not on the ground or in your card!</span>")
 		return FALSE
-	var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in possible_chassis
+	var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in sortList(possible_chassis)
 	if(!choice)
 		return FALSE
 	chassis = choice
 	icon_state = "[chassis]"
+	held_state = "[chassis]"
+	update_resting()
+	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis].</span>")
+
+/mob/living/silicon/pai/update_resting()
+	. = ..()
 	if(resting)
-		icon_state = "[chassis]_rest"
-	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
-
-/mob/living/silicon/pai/lay_down()
-	..()
-	update_resting_icon(resting)
-
-/mob/living/silicon/pai/proc/update_resting_icon(rest)
-	if(rest)
 		icon_state = "[chassis]_rest"
 	else
 		icon_state = "[chassis]"
 	if(loc != card)
-		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
+		visible_message("<span class='notice'>[src] [resting? "lays down for a moment..." : "perks up from the ground"]</span>")
 
-/mob/living/silicon/pai/start_pulling(atom/movable/AM)
+/mob/living/silicon/pai/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return FALSE
 
 /mob/living/silicon/pai/proc/toggle_integrated_light()
@@ -102,17 +102,6 @@
 	else
 		set_light(0)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
-
-/mob/living/silicon/pai/movement_delay()
-	. = ..()
-	. += 1 //A bit slower than humans, so they're easier to smash
-
-/mob/living/silicon/pai/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, chassis, item_head_icon, item_lh_icon, item_rh_icon)
-	if(!L.put_in_hands(holder))
-		qdel(holder)
-	else
-		L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
 
 /mob/living/silicon/pai/mob_try_pickup(mob/living/user)
 	if(!possible_chassis[chassis])

@@ -76,9 +76,9 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
-		to_chat(user, "There's already a weed node here.")
+		to_chat(user, "<span class='warning'>There's already a weed node here!</span>")
 		return 0
-	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
+	user.visible_message("<span class='alertalien'>[user] plants some alien weeds!</span>")
 	new/obj/structure/alien/weeds/node(user.loc)
 	return 1
 
@@ -92,12 +92,18 @@ Doesn't work on other aliens/AI.*/
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(user))
 		options += Ms
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
+	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in sortNames(options)
 	if(!M)
 		return 0
+	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		to_chat(user, "<span class='noticealien'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+		return FALSE
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
-		log_talk(user,"AlienWhisper: [key_name(user)]->[key_name(M)] : [msg]",LOGSAY)
+		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+			to_chat(user, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+			return
+		log_directed_talk(user, M, msg, LOG_SAY, tag="alien whisper")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
 		for(var/ded in GLOB.dead_mob_list)
@@ -121,17 +127,17 @@ Doesn't work on other aliens/AI.*/
 	for(var/mob/living/carbon/A  in oview(user))
 		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
 			aliens_around.Add(A)
-	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
+	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in sortNames(aliens_around)
 	if(!M)
 		return 0
-	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
+	var/amount = input("Amount:", "Transfer Plasma to [M]") as num|null
 	if (amount)
 		amount = min(abs(round(amount)), user.getPlasma())
 		if (get_dist(user,M) <= 1)
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
 			to_chat(M, "<span class='noticealien'>[user] has transferred [amount] plasma to you.</span>")
-			to_chat(user, "<span class='noticealien'>You transfer [amount] plasma to [M]</span>")
+			to_chat(user, "<span class='noticealien'>You transfer [amount] plasma to [M].</span>")
 		else
 			to_chat(user, "<span class='noticealien'>You need to be closer!</span>")
 	return
@@ -205,7 +211,7 @@ Doesn't work on other aliens/AI.*/
 	if(..())
 		return
 	var/p_cost = 50
-	if(!iscarbon(ranged_ability_user) || ranged_ability_user.lying || ranged_ability_user.stat)
+	if(!iscarbon(ranged_ability_user) || ranged_ability_user.stat)
 		remove_ranged_ability()
 		return
 
@@ -221,8 +227,8 @@ Doesn't work on other aliens/AI.*/
 	if(!isturf(U) || !isturf(T))
 		return FALSE
 
-	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
-	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
+	user.visible_message("<span class='danger'>[user] spits neurotoxin!</span>", "<span class='alertalien'>You spit neurotoxin.</span>")
+	var/obj/projectile/bullet/neurotoxin/A = new /obj/projectile/bullet/neurotoxin(user.loc)
 	A.preparePixelProjectile(target, user, params)
 	A.fire()
 	user.newtonian_move(get_dir(U, T))
@@ -233,19 +239,19 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
 	remove_ranged_ability()
 
-/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user, msg)
+/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user,msg,forced)
 	..()
 	if(isalienadult(user))
 		var/mob/living/carbon/alien/humanoid/A = user
 		A.drooling = 1
 		A.update_icons()
 
-/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(mob/living/user, msg)
-	..()
-	if(isalienadult(user))
-		var/mob/living/carbon/alien/humanoid/A = user
+/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(msg)
+	if(isalienadult(ranged_ability_user))
+		var/mob/living/carbon/alien/humanoid/A = ranged_ability_user
 		A.drooling = 0
 		A.update_icons()
+	..()
 
 /obj/effect/proc_holder/alien/resin
 	name = "Secrete Resin"
@@ -261,7 +267,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/resin) in user.loc)
-		to_chat(user, "<span class='danger'>There is already a resin structure there.</span>")
+		to_chat(user, "<span class='warning'>There is already a resin structure there!</span>")
 		return FALSE
 
 	if(!check_vent_block(user))
@@ -278,23 +284,6 @@ Doesn't work on other aliens/AI.*/
 	choice = structures[choice]
 	new choice(user.loc)
 	return TRUE
-
-/obj/effect/proc_holder/alien/regurgitate
-	name = "Regurgitate"
-	desc = "Empties the contents of your stomach."
-	plasma_cost = 0
-	action_icon_state = "alien_barf"
-
-/obj/effect/proc_holder/alien/regurgitate/fire(mob/living/carbon/user)
-	if(user.stomach_contents.len)
-		for(var/atom/movable/A in user.stomach_contents)
-			user.stomach_contents.Remove(A)
-			A.forceMove(user.drop_location())
-			if(isliving(A))
-				var/mob/M = A
-				M.reset_perspective()
-		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
-	return
 
 /obj/effect/proc_holder/alien/sneak
 	name = "Sneak"

@@ -5,8 +5,12 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
-
 	if(!has_active_hand()) //can't attack without a hand.
+		var/obj/item/bodypart/check_arm = get_active_hand()
+		if(check_arm && check_arm.is_disabled() == BODYPART_DISABLED_WOUND)
+			to_chat(src, "<span class='warning'>The damage in your [check_arm.name] is preventing you from using it! Get it fixed, or at least splinted!</span>")
+			return
+
 		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
 		return
 
@@ -16,19 +20,13 @@
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
-
-	var/override = 0
-
-	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A, proximity)
-
-	if(override)
+	//This signal is needed to prevent gloves of the north star + hulk.
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity) & COMPONENT_NO_ATTACK_HAND)
 		return
-
-	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
 	A.attack_hand(src)
 
-//Return TRUE to cancel other attack hand effects that respect it.
+/// Return TRUE to cancel other attack hand effects that respect it.
 /atom/proc/attack_hand(mob/user)
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
@@ -56,6 +54,11 @@
 		return FALSE
 	return TRUE
 
+/atom/ui_status(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		. = min(., UI_UPDATE)
+
 /atom/movable/can_interact(mob/user)
 	. = ..()
 	if(!.)
@@ -73,7 +76,7 @@
 	return FALSE
 
 /*
-/mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this
+/mob/living/carbon/human/RestrainedClickOn(atom/A) ---carbons will handle this
 	return
 */
 
@@ -81,16 +84,15 @@
 	return 0
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
+	. = ..()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
 			return
 
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_ranged_attack(src, A, mouseparams)
-
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
+		return
 
 /*
 	Animals & All Unspecified
@@ -99,7 +101,7 @@
 	A.attack_animal(src)
 
 /atom/proc/attack_animal(mob/user)
-	return
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
 
 /mob/living/RestrainedClickOn(atom/A)
 	return
@@ -140,14 +142,17 @@
 		if(prob(75))
 			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
 			ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
-							"<span class='userdanger'>[name] bites [ML]!</span>")
+							"<span class='userdanger'>[name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, name)
+			to_chat(name, "<span class='danger'>You bite [ML]!</span>")
 			if(armor >= 2)
 				return
 			for(var/thing in diseases)
 				var/datum/disease/D = thing
 				ML.ForceContractDisease(D)
 		else
-			ML.visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
+			ML.visible_message("<span class='danger'>[src]'s bite misses [ML]!</span>", \
+							"<span class='danger'>You avoid [src]'s bite!</span>", "<span class='hear'>You hear jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>Your bite misses [ML]!</span>")
 
 /*
 	Aliens
@@ -175,9 +180,13 @@
 	Nothing happening here
 */
 /mob/living/simple_animal/slime/UnarmedAttack(atom/A)
+	if(isturf(A))
+		return ..()
 	A.attack_slime(src)
+
 /atom/proc/attack_slime(mob/user)
 	return
+
 /mob/living/simple_animal/slime/RestrainedClickOn(atom/A)
 	return
 

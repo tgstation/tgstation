@@ -4,14 +4,6 @@
 	caliber = "357"
 	max_ammo = 7
 
-/obj/item/ammo_box/magazine/internal/cylinder/ammo_count(countempties = 1)
-	var/boolets = 0
-	for(var/obj/item/ammo_casing/bullet in stored_ammo)
-		if(bullet && (bullet.BB || countempties))
-			boolets++
-
-	return boolets
-
 /obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = 0)
 	rotate()
 
@@ -29,6 +21,16 @@
 /obj/item/ammo_box/magazine/internal/cylinder/proc/spin()
 	for(var/i in 1 to rand(0, max_ammo*2))
 		rotate()
+
+/obj/item/ammo_box/magazine/internal/cylinder/ammo_list(drop_list = FALSE)
+	var/list/L = list()
+	for(var/i=1 to stored_ammo.len)
+		var/obj/item/ammo_casing/bullet = stored_ammo[i]
+		if(bullet)
+			L.Add(bullet)
+			if(drop_list)//We have to maintain the list size, to emulate a cylinder
+				stored_ammo[i] = null
+	return L
 
 /obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))

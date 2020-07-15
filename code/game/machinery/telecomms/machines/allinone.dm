@@ -17,7 +17,7 @@
 	flags_1 = NODECONSTRUCT_1
 
 /obj/machinery/telecomms/allinone/Initialize()
-	..()
+	. = ..()
 	if (intercept)
 		freq_listening = list(FREQ_SYNDICATE)
 
@@ -40,5 +40,5 @@
 	signal.broadcast()
 
 /obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/multitool))
+	if(P.tool_behaviour == TOOL_MULTITOOL)
 		return attack_hand(user)

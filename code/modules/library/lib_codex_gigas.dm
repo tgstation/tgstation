@@ -21,12 +21,8 @@
 	var/currentSection = PRE_TITLE
 
 /obj/item/book/codex_gigas/attack_self(mob/user)
-	if(is_blind(user))
-		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid.</span>")
-		return
-	if(!user.is_literate())
-		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
-		return
+	if(!user.can_read(src))
+		return FALSE
 	if(inUse)
 		to_chat(user, "<span class='notice'>Someone else is reading it.</span>")
 	if(ishuman(user))
@@ -34,13 +30,13 @@
 		if(U.check_acedia())
 			to_chat(user, "<span class='notice'>None of this matters, why are you reading this? You put [title] down.</span>")
 			return
-	user.visible_message("[user] opens [title] and begins reading intently.")
+	user.visible_message("<span class='notice'>[user] opens [title] and begins reading intently.</span>")
 	ask_name(user)
 
 
 /obj/item/book/codex_gigas/proc/perform_research(mob/user, devilName)
 	if(!devilName)
-		user.visible_message("[user] closes [title] without looking anything up.")
+		user.visible_message("<span class='notice'>[user] closes [title] without looking anything up.</span>")
 		return
 	inUse = TRUE
 	var/speed = 300
@@ -50,8 +46,8 @@
 		if(U.job in list("Curator")) // the curator is both faster, and more accurate than normal crew members at research
 			speed = 100
 			correctness = 100
-		correctness -= U.getBrainLoss() *0.5 //Brain damage makes researching hard.
-		speed += U.getBrainLoss() * 3
+		correctness -= U.getOrganLoss(ORGAN_SLOT_BRAIN) * 0.5 //Brain damage makes researching hard.
+		speed += U.getOrganLoss(ORGAN_SLOT_BRAIN) * 3
 	if(do_after(user, speed, 0, user))
 		var/usedName = devilName
 		if(!prob(correctness))
@@ -99,7 +95,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "codex_gigas", name, 450, 450, master_ui, state)
+		ui = new(user, src, ui_key, "CodexGigas", name, 450, 450, master_ui, state)
 		ui.open()
 
 /obj/item/book/codex_gigas/ui_data(mob/user)

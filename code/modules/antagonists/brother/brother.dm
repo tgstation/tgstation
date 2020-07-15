@@ -3,8 +3,11 @@
 	antagpanel_category = "Brother"
 	job_rank = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
+	antag_hud_type = ANTAG_HUD_BROTHER
+	antag_hud_name = "brother"
 	var/datum/team/brother_team/team
 	antag_moodlet = /datum/mood_event/focused
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
@@ -19,7 +22,6 @@
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
 	objectives += team.objectives
-	owner.objectives += objectives
 	owner.special_role = special_role
 	finalize_brother()
 	return ..()
@@ -31,15 +33,20 @@
 	owner.special_role = null
 	return ..()
 
-/datum/antagonist/brother/proc/give_meeting_area()
-	if(!owner.current || !team || !team.meeting_area)
-		return
-	to_chat(owner.current, "<B>Your designated meeting area:</B> [team.meeting_area]")
-	antag_memory += "<b>Meeting Area</b>: [team.meeting_area]<br>"
+/datum/antagonist/brother/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
-/datum/antagonist/brother/greet()
-	var/brother_text = ""
+/datum/antagonist/brother/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
+
+/datum/antagonist/brother/antag_panel_data()
+	return "Conspirators : [get_brother_names()]]"
+
+/datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner
+	var/brother_text = ""
 	for(var/i = 1 to brothers.len)
 		var/datum/mind/M = brothers[i]
 		brother_text += M.name
@@ -47,13 +54,23 @@
 			brother_text += " and "
 		else if(i != brothers.len)
 			brother_text += ", "
-	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role] of [brother_text].</font></B>")
+	return brother_text
+
+/datum/antagonist/brother/proc/give_meeting_area()
+	if(!owner.current || !team || !team.meeting_area)
+		return
+	to_chat(owner.current, "<B>Your designated meeting area:</B> [team.meeting_area]")
+	antag_memory += "<b>Meeting Area</b>: [team.meeting_area]<br>"
+
+/datum/antagonist/brother/greet()
+	var/brother_text = get_brother_names()
+	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role] of [brother_text].</span>")
 	to_chat(owner.current, "The Syndicate only accepts those that have proven themselves. Prove yourself and prove your [team.member_name]s by completing your objectives together!")
 	owner.announce_objectives()
 	give_meeting_area()
 
 /datum/antagonist/brother/proc/finalize_brother()
-	SSticker.mode.update_brother_icons_added(owner)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
 	//show list of possible brothers
@@ -63,7 +80,7 @@
 			continue
 		candidates[L.mind.name] = L.mind
 
-	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in candidates
+	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in sortNames(candidates)
 	if(!choice)
 		return
 	var/datum/mind/bro = candidates[choice]
@@ -75,8 +92,8 @@
 	new_owner.add_antag_datum(/datum/antagonist/brother,T)
 	bro.add_antag_datum(/datum/antagonist/brother, T)
 	T.update_name()
-	message_admins("[key_name_admin(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
-	log_admin("[key_name(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] and [key_name_admin(bro)] into blood brothers.")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] and [key_name(bro)] into blood brothers.")
 
 /datum/team/brother_team
 	name = "brotherhood"
@@ -109,7 +126,7 @@
 	var/objective_count = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
-			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
 			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 			win = FALSE
@@ -124,7 +141,7 @@
 /datum/team/brother_team/proc/add_objective(datum/objective/O, needs_target = FALSE)
 	O.team = src
 	if(needs_target)
-		O.find_target()
+		O.find_target(dupe_search_range = list(src))
 	O.update_explanation_text()
 	objectives += O
 

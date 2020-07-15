@@ -37,14 +37,22 @@
 	if (!ui)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
-
-		ui = new(user, src, ui_key, "ntos_main", "NTOS Main menu", 400, 500, master_ui, state)
+		assets = get_asset_datum(/datum/asset/simple/arcade)
+		assets.send(user)
+		var/headername
+		switch(device_theme)
+			if("ntos")
+				headername = "NtOS Main Menu"
+			if("syndicate")
+				headername = "Syndix Main Menu"
+		ui = new(user, src, ui_key, "NtosMain", headername, 400, 500, master_ui, state)
 		ui.open()
 		ui.set_autoupdate(state = 1)
 
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
+	data["device_theme"] = device_theme
 	data["programs"] = list()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
@@ -68,10 +76,10 @@
 	switch(action)
 		if("PC_exit")
 			kill_program()
-			return 1
+			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
-			return 1
+			return TRUE
 		if("PC_minimize")
 			var/mob/user = usr
 			if(!active_program || !all_components[MC_CPU])
@@ -142,6 +150,7 @@
 				set_light(comp_light_luminosity, 1, comp_light_color)
 			else
 				set_light(0)
+			return TRUE
 
 		if("PC_light_color")
 			var/mob/user = usr
@@ -156,6 +165,7 @@
 			comp_light_color = new_color
 			light_color = new_color
 			update_light()
+			return TRUE
 		else
 			return
 

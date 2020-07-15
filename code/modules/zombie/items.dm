@@ -4,7 +4,7 @@
 		humans, butchering all other living things to \
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
-	item_flags = NODROP | ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
@@ -12,9 +12,14 @@
 	var/icon_right = "bloodhand_right"
 	hitsound = 'sound/hallucinations/growl1.ogg'
 	force = 21 // Just enough to break airlocks with melee attacks
+	sharpness = IS_SHARP
+	wound_bonus = -30
+	bare_wound_bonus = 15
 	damtype = "brute"
 
-	var/removing_airlock = FALSE
+/obj/item/zombie_hand/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/zombie_hand/equipped(mob/user, slot)
 	. = ..()
@@ -31,11 +36,11 @@
 		return
 	else if(isliving(target))
 		if(ishuman(target))
-			check_infection(target, user)
+			try_to_zombie_infect(target)
 		else
 			check_feast(target, user)
 
-/obj/item/zombie_hand/proc/check_infection(mob/living/carbon/human/target, mob/user)
+/proc/try_to_zombie_infect(mob/living/carbon/human/target)
 	CHECK_DNA_AND_SPECIES(target)
 
 	if(NOZOMBIE in target.dna.species.species_traits)
@@ -48,6 +53,7 @@
 	if(!infection)
 		infection = new()
 		infection.Insert(target)
+
 
 
 /obj/item/zombie_hand/suicide_act(mob/user)
@@ -69,5 +75,5 @@
 		user.adjustFireLoss(-hp_gained, 0)
 		user.adjustCloneLoss(-hp_gained, 0)
 		user.updatehealth()
-		user.adjustBrainLoss(-hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
-		user.nutrition = min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL)
+		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
+		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))

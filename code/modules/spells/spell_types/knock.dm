@@ -1,12 +1,12 @@
 /obj/effect/proc_holder/spell/aoe_turf/knock
 	name = "Knock"
-	desc = "This spell opens nearby doors and does not require wizard garb."
+	desc = "This spell opens nearby doors and closets."
 
 	school = "transmutation"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "AULIE OXIN FIERA"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = 3
 	cooldown_min = 20 //20 deciseconds reduction per rank
 

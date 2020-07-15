@@ -5,8 +5,8 @@
 "ab" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "singular";
-	dir = 1
+	dir = 1;
+	icon_state = "singular"
 	},
 /turf/template_noop,
 /area/space/nearstation)
@@ -27,8 +27,8 @@
 /area/space/nearstation)
 "af" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 8
+	dir = 8;
+	icon_state = "pile"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -45,8 +45,8 @@
 /area/ruin/unpowered)
 "aj" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 4
+	dir = 4;
+	icon_state = "pile"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -58,8 +58,8 @@
 /area/ruin/unpowered)
 "al" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "singular";
-	dir = 4
+	dir = 4;
+	icon_state = "singular"
 	},
 /obj/structure/lattice,
 /turf/template_noop,
@@ -69,10 +69,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "an" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
@@ -133,17 +131,17 @@
 /area/ruin/unpowered)
 "az" = (
 /obj/structure/fluff/broken_flooring{
-	name = "broken plating";
+	dir = 8;
 	icon_state = "plating";
-	dir = 8
+	name = "broken plating"
 	},
 /obj/structure/lattice,
 /turf/template_noop,
 /area/ruin/unpowered)
 "aA" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 1
+	dir = 1;
+	icon_state = "pile"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -154,17 +152,15 @@
 	},
 /area/ruin/unpowered)
 "aC" = (
-/obj/machinery/light{
-	icon_state = "tube-broken";
-	status = 2
-	},
+/obj/machinery/light/broken,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aD" = (
-/turf/open/floor/plasteel/bar{
-	initial_gas_mix = "TEMP=2.7"
-	},
 /obj/item/stack/sheet/metal,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -177,13 +173,21 @@
 /area/ruin/unpowered)
 "aF" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel/airless/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aG" = (
 /obj/structure/door_assembly/door_assembly_public{
 	name = "broken airlock"
 	},
-/turf/open/floor/plasteel/airless/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aH" = (
 /turf/open/floor/plating/airless,
@@ -199,11 +203,9 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aK" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube-broken";
-	status = 2
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/machinery/light/broken{
+	dir = 1
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
@@ -212,21 +214,31 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aM" = (
-/turf/open/floor/plasteel/airless/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aN" = (
 /obj/item/trash/plate,
-/turf/open/floor/plasteel/airless/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aO" = (
 /obj/item/chair,
-/turf/open/floor/plasteel/airless/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aP" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 1
 	},
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
@@ -245,7 +257,11 @@
 /area/ruin/unpowered)
 "aT" = (
 /obj/item/kitchen/fork,
-/turf/open/floor/plasteel/airless/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aU" = (
 /obj/structure/table/wood,
@@ -267,7 +283,11 @@
 /area/ruin/unpowered)
 "aX" = (
 /obj/item/chair/stool/bar,
-/turf/open/floor/plasteel/airless/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aY" = (
 /obj/structure/lattice,
@@ -294,7 +314,11 @@
 /area/ruin/unpowered)
 "bd" = (
 /obj/structure/chair/stool/bar,
-/turf/open/floor/plasteel/airless/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "be" = (
 /turf/open/floor/plating/airless{
@@ -308,10 +332,8 @@
 	},
 /area/ruin/unpowered)
 "bh" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 8
 	},
 /obj/structure/table_frame,
 /turf/open/floor/plasteel/airless/cafeteria,
@@ -372,8 +394,8 @@
 /area/ruin/unpowered)
 "bt" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "side";
-	dir = 1
+	dir = 1;
+	icon_state = "side"
 	},
 /obj/structure/lattice,
 /turf/template_noop,
@@ -391,34 +413,34 @@
 "bw" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	name = "broken plating";
+	dir = 1;
 	icon_state = "plating";
-	dir = 1
+	name = "broken plating"
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
 "bx" = (
 /obj/structure/fluff/broken_flooring{
-	name = "broken plating";
+	dir = 4;
 	icon_state = "plating";
-	dir = 4
+	name = "broken plating"
 	},
 /obj/structure/lattice,
 /turf/template_noop,
 /area/ruin/unpowered)
 "by" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 4
+	dir = 4;
+	icon_state = "pile"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "bz" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	name = "broken plating";
+	dir = 4;
 	icon_state = "plating";
-	dir = 4
+	name = "broken plating"
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
@@ -431,22 +453,20 @@
 "bC" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "corner";
 	dir = 1
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
 "bD" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "singular";
-	dir = 4
+	dir = 4;
+	icon_state = "singular"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "bE" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "corner";
 	dir = 8
 	},
 /turf/template_noop,
@@ -454,15 +474,15 @@
 "bF" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "side";
-	dir = 4
+	dir = 4;
+	icon_state = "side"
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
 "bG" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "singular";
-	dir = 4
+	dir = 4;
+	icon_state = "singular"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -477,9 +497,9 @@
 "bI" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	name = "broken plating";
+	dir = 8;
 	icon_state = "plating";
-	dir = 8
+	name = "broken plating"
 	},
 /turf/template_noop,
 /area/ruin/unpowered)

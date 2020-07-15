@@ -8,7 +8,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "forensicnew"
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -18,12 +19,13 @@
 	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
-	actions_types = list(/datum/action/item_action/displayDetectiveScanResults)
+	var/forensicPrintCount = 0
+	actions_types = list(/datum/action/item_action/display_detective_scan_results)
 
-/datum/action/item_action/displayDetectiveScanResults
+/datum/action/item_action/display_detective_scan_results
 	name = "Display Forensic Scanner Results"
 
-/datum/action/item_action/displayDetectiveScanResults/Trigger()
+/datum/action/item_action/display_detective_scan_results/Trigger()
 	var/obj/item/detective_scanner/scanner = target
 	if(istype(scanner))
 		scanner.displayDetectiveScanResults(usr)
@@ -42,12 +44,15 @@
 /obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper
 	var/obj/item/paper/P = new(get_turf(src))
-	P.name = "paper- 'Scanner Report'"
-	P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
+
+	//This could be a global count like sec and med record printouts. See GLOB.data_core.medicalPrintCount AKA datacore.dm
+	var frNum = ++forensicPrintCount
+
+	P.name = text("FR-[] 'Forensic Record'", frNum)
+	P.info = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
 	P.info += jointext(log, "<BR>")
 	P.info += "<HR><B>Notes:</B><BR>"
-	P.info_links = P.info
-	P.updateinfolinks()
+	P.update_icon()
 
 	if(ismob(loc))
 		var/mob/M = loc
@@ -72,7 +77,7 @@
 
 		scanning = 1
 
-		user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.")
+		user.visible_message("<span class='notice'>\The [user] points the [src.name] at \the [A] and performs a forensic scan.</span>")
 		to_chat(user, "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
 
 
@@ -132,7 +137,7 @@
 			add_log("<span class='info'><B>Blood:</B></span>")
 			found_something = 1
 			for(var/B in blood)
-				add_log("Type: <font color='red'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
+				add_log("Type: <font color='red'>[blood[B]]</font> DNA (UE): <font color='red'>[B]</font>")
 
 		//Fibers
 		if(length(fibers))
@@ -191,6 +196,11 @@
 		return
 	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
 	log = list()
+
+/obj/item/detective_scanner/examine(mob/user)
+	. = ..()
+	if(LAZYLEN(log) && !scanning)
+		. += "<span class='notice'>Alt-click to clear scanner logs.</span>"
 
 /obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks

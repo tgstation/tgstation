@@ -16,7 +16,7 @@
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
-		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+		if(ishuman(M) && (M.mind.holy_role))
 			return FALSE
 		if(specific_cult && specific_cult.is_sacrifice_target(M.mind))
 			return FALSE
@@ -26,25 +26,26 @@
 			return FALSE
 	else
 		return FALSE
-	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
-		return FALSE //can't convert machines, shielded, braindead, or ratvar's dogs
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || !M.client)
+		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
 
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
+	report_type = "cult"
 	antag_flag = ROLE_CULTIST
 	false_report_weight = 10
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_jobs = list("Prisoner","Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 24
+	required_players = 29
 	required_enemies = 4
 	recommended_enemies = 4
 	enemy_minimum_age = 14
 
 	announce_span = "cult"
-	announce_text = "Some crew members are trying to start a cult to Nar-Sie!\n\
-	<span class='cult'>Cultists</span>: Carry out Nar-Sie's will.\n\
+	announce_text = "Some crew members are trying to start a cult to Nar'Sie!\n\
+	<span class='cult'>Cultists</span>: Carry out Nar'Sie's will.\n\
 	<span class='notice'>Crew</span>: Prevent the cult from expanding and drive it out."
 
 	var/finished = 0
@@ -82,6 +83,8 @@
 		log_game("[key_name(cultist)] has been selected as a cultist")
 
 	if(cultists_to_cult.len>=required_enemies)
+		for(var/antag in cultists_to_cult)
+			GLOB.pre_setup_antags += antag
 		return TRUE
 	else
 		setup_error = "Not enough cultist candidates"
@@ -89,22 +92,24 @@
 
 
 /datum/game_mode/cult/post_setup()
-	for(var/datum/mind/cult_mind in cultists_to_cult)
-		add_cultist(cult_mind, 0, equip=TRUE)
-		if(!main_cult)
-			var/datum/antagonist/cult/C = cult_mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(C && C.cult_team)
-				main_cult = C.cult_team
-	..()
+	main_cult = new
 
-/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE) //BASE
+	for(var/datum/mind/cult_mind in cultists_to_cult)
+		add_cultist(cult_mind, 0, equip=TRUE, cult_team = main_cult)
+		GLOB.pre_setup_antags -= cult_mind
+
+	main_cult.setup_objectives() //Wait until all cultists are assigned to make sure none will be chosen as sacrifice.
+
+	. = ..()
+
+/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE, datum/team/cult/cult_team = null)
 	if (!istype(cult_mind))
 		return FALSE
 
 	var/datum/antagonist/cult/new_cultist = new()
 	new_cultist.give_equipment = equip
 
-	if(cult_mind.add_antag_datum(new_cultist))
+	if(cult_mind.add_antag_datum(new_cultist,cult_team))
 		if(stun)
 			cult_mind.current.Unconscious(100)
 		return TRUE
@@ -115,20 +120,10 @@
 		if(!cult_datum)
 			return FALSE
 		cult_datum.silent = silent
-		cult_datum.on_removal()
+		cult_mind.remove_antag_datum(cult_datum)
 		if(stun)
 			cult_mind.current.Unconscious(100)
 		return TRUE
-
-/datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	var/datum/atom_hud/antag/culthud = GLOB.huds[ANTAG_HUD_CULT]
-	culthud.join_hud(cult_mind.current)
-	set_antag_hud(cult_mind.current, "cult")
-
-/datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	var/datum/atom_hud/antag/culthud = GLOB.huds[ANTAG_HUD_CULT]
-	culthud.leave_hud(cult_mind.current)
-	set_antag_hud(cult_mind.current, null)
 
 /datum/game_mode/cult/proc/check_cult_victory()
 	return main_cult.check_cult_victory()
@@ -158,7 +153,7 @@
 /datum/game_mode/cult/generate_report()
 	return "Some stations in your sector have reported evidence of blood sacrifice and strange magic. Ties to the Wizards' Federation have been proven not to exist, and many employees \
 			have disappeared; even Central Command employees light-years away have felt strange presences and at times hysterical compulsions. Interrogations point towards this being the work of \
-			the cult of Nar-Sie. If evidence of this cult is discovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and all resources should be \
+			the cult of Nar'Sie. If evidence of this cult is discovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and all resources should be \
 			devoted to stopping this cult. Note that holy water seems to weaken and eventually return the minds of cultists that ingest it, and mindshield implants will prevent conversion \
 			altogether."
 

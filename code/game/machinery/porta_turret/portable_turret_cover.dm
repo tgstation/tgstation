@@ -24,23 +24,19 @@
 //I'm not fixing it because i'm fucking bored of this code already, but someone should just reroute these to the parent turret's procs.
 
 /obj/machinery/porta_turret_cover/attack_ai(mob/user)
-	. = ..()
-	if(.)
-		return
+	return ..() || parent_turret.attack_ai(user)
 
-	return parent_turret.attack_ai(user)
-
+/obj/machinery/porta_turret_cover/attack_robot(mob/user)
+	return ..() || parent_turret.attack_robot(user)
 
 /obj/machinery/porta_turret_cover/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+	return ..() || parent_turret.attack_hand(user)
 
-	return parent_turret.attack_hand(user)
-
+/obj/machinery/porta_turret_cover/attack_ghost(mob/user)
+	return ..() || parent_turret.attack_ghost(user)
 
 /obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench) && !parent_turret.on)
+	if(I.tool_behaviour == TOOL_WRENCH && !parent_turret.on)
 		if(parent_turret.raised)
 			return
 
@@ -60,10 +56,11 @@
 		if(parent_turret.allowed(user))
 			parent_turret.locked = !parent_turret.locked
 			to_chat(user, "<span class='notice'>Controls are now [parent_turret.locked ? "locked" : "unlocked"].</span>")
-			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I, /obj/item/multitool) && !parent_turret.locked)
+	else if(I.tool_behaviour == TOOL_MULTITOOL && !parent_turret.locked)
+		if(!multitool_check_buffer(user, I))
+			return
 		var/obj/item/multitool/M = I
 		M.buffer = parent_turret
 		to_chat(user, "<span class='notice'>You add [parent_turret] to multitool buffer.</span>")
@@ -79,7 +76,7 @@
 /obj/machinery/porta_turret_cover/attack_animal(mob/living/simple_animal/user)
 	parent_turret.attack_animal(user)
 
-/obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user)
 	return parent_turret.attack_hulk(user)
 
 /obj/machinery/porta_turret_cover/can_be_overridden()
@@ -88,8 +85,7 @@
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
 	if(!(parent_turret.obj_flags & EMAGGED))
 		to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
-		visible_message("[parent_turret] hums oddly...")
+		visible_message("<span class='hear'>[parent_turret] hums oddly...</span>")
 		parent_turret.obj_flags |= EMAGGED
-		parent_turret.on = 0
-		spawn(40)
-			parent_turret.on = 1
+		parent_turret.on = FALSE
+		addtimer(VARSET_CALLBACK(parent_turret, on, TRUE), 4 SECONDS)

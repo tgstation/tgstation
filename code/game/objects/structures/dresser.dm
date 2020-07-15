@@ -7,7 +7,7 @@
 	anchored = TRUE
 
 /obj/structure/dresser/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		if(I.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
@@ -32,7 +32,7 @@
 			to_chat(user, "<span class='warning'>You are not capable of wearing underwear.</span>")
 			return
 
-		var/choice = input(user, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in list("Underwear","Undershirt","Socks")
+		var/choice = input(user, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in list("Underwear","Underwear Color","Undershirt","Socks")
 
 		if(!Adjacent(user))
 			return
@@ -41,7 +41,10 @@
 				var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in GLOB.underwear_list
 				if(new_undies)
 					H.underwear = new_undies
-
+			if("Underwear Color")
+				var/new_underwear_color = input(H, "Choose your underwear color", "Underwear Color","#"+H.underwear_color) as color|null
+				if(new_underwear_color)
+					H.underwear_color = sanitize_hexcolor(new_underwear_color)
 			if("Undershirt")
 				var/new_undershirt = input(user, "Select your undershirt", "Changing") as null|anything in GLOB.undershirt_list
 				if(new_undershirt)

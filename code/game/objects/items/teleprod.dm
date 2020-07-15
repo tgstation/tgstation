@@ -2,28 +2,31 @@
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
 	w_class = WEIGHT_CLASS_NORMAL
-	icon_state = "teleprod_nocell"
-	item_state = "teleprod"
+	icon_state = "teleprod"
+	inhand_icon_state = "teleprod"
 	slot_flags = null
 
 /obj/item/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
-	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		if(do_teleport(user, get_turf(user), 50))//honk honk
-			user.Knockdown(stunforce*3)
-			deductcharge(hitcost)
+		if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))//honk honk
+			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
+			user.Paralyze(stun_time*3)
+			deductcharge(cell_hit_cost)
 		else
-			user.Knockdown(stunforce*3)
-			deductcharge(hitcost/4)
+			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
+			user.Paralyze(stun_time*3)
+			deductcharge(cell_hit_cost/4)
 		return
 	else
-		if(status)
+		if(turned_on)
 			if(!istype(M) && M.anchored)
 				return .
 			else
-				do_teleport(M, get_turf(M), 15)
+				SEND_SIGNAL(M, COMSIG_LIVING_MINOR_SHOCK)
+				do_teleport(M, get_turf(M), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/item/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
 	if(istype(I, /obj/item/stack/ore/bluespace_crystal))

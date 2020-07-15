@@ -13,12 +13,14 @@
 	energy_drain = 10
 	force = 15
 	harmful = TRUE
+	tool_behaviour = TOOL_DRILL
+	toolspeed = 0.9
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
 
 /obj/item/mecha_parts/mecha_equipment/drill/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 50, 100)
+	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target))
@@ -31,11 +33,11 @@
 			return
 	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
-					 "<span class='italics'>You hear drilling.</span>")
+					 "<span class='hear'>You hear drilling.</span>")
 
 	if(do_after_cooldown(target))
 		set_ready_state(FALSE)
-		log_message("Started drilling [target]")
+		log_message("Started drilling [target]", LOG_MECHA)
 		if(isturf(target))
 			var/turf/T = target
 			T.drill_act(src)
@@ -44,11 +46,11 @@
 		while(do_after_mecha(target, drill_delay))
 			if(isliving(target))
 				drill_mob(target, chassis.occupant)
-				playsound(src,'sound/weapons/drill.ogg',40,1)
+				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else if(isobj(target))
 				var/obj/O = target
 				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-				playsound(src,'sound/weapons/drill.ogg',40,1)
+				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else
 				set_ready_state(TRUE)
 				return
@@ -59,13 +61,13 @@
 
 /turf/closed/wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	if(drill.do_after_mecha(src, 60 / drill.drill_level))
-		drill.log_message("Drilled through [src]")
+		drill.log_message("Drilled through [src]", LOG_MECHA)
 		dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	if(drill.drill_level >= DRILL_HARDENED)
 		if(drill.do_after_mecha(src, 120 / drill.drill_level))
-			drill.log_message("Drilled through [src]")
+			drill.log_message("Drilled through [src]", LOG_MECHA)
 			dismantle_wall(TRUE, FALSE)
 	else
 		drill.occupant_message("<span class='danger'>[src] is too durable to drill through.</span>")
@@ -74,16 +76,14 @@
 	for(var/turf/closed/mineral/M in range(drill.chassis,1))
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
 			M.gets_drilled()
-	drill.log_message("Drilled through [src]")
+	drill.log_message("Drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
 /turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
-		if(get_dir(drill.chassis,M)&drill.chassis.dir)
-			for(var/I in GetComponents(/datum/component/archaeology))
-				var/datum/component/archaeology/archy = I
-				archy.gets_dug()
-	drill.log_message("Drilled through [src]")
+		if((get_dir(drill.chassis,M)&drill.chassis.dir) && !M.dug)
+			M.getDug()
+	drill.log_message("Drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
 
@@ -100,22 +100,22 @@
 
 /obj/item/mecha_parts/mecha_equipment/drill/attach(obj/mecha/M)
 	..()
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/drill/detach(atom/moveto)
 	..()
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/user)
 	target.visible_message("<span class='danger'>[chassis] is drilling [target] with [src]!</span>", \
 						"<span class='userdanger'>[chassis] is drilling you with [src]!</span>")
-	add_logs(user, target, "drilled", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+	log_combat(user, target, "drilled", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD && target.getBruteLoss() >= 200)
-		add_logs(user, target, "gibbed", name)
+		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
-			GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+			var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 			butchering.Butcher(chassis, target)
 		else
 			target.gib()
@@ -143,6 +143,7 @@
 	drill_delay = 4
 	drill_level = DRILL_HARDENED
 	force = 15
+	toolspeed = 0.7
 
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner

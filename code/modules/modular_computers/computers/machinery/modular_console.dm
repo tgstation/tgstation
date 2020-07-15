@@ -15,7 +15,7 @@
 	steel_sheet_cost = 10
 	light_strength = 2
 	max_integrity = 300
-	integrity_failure = 150
+	integrity_failure = 0.5
 	var/console_department = "" // Used in New() to set network tag according to our area.
 
 /obj/machinery/modular_computer/console/buildable/Initialize()
@@ -37,7 +37,7 @@
 	var/obj/item/computer_hardware/network_card/wired/network_card = new()
 
 	cpu.install_component(network_card)
-	cpu.install_component(new /obj/item/computer_hardware/recharger/APC)
+	cpu.install_component(new /obj/item/computer_hardware/recharger/apc_recharger)
 	cpu.install_component(new /obj/item/computer_hardware/hard_drive/super) // Consoles generally have better HDDs due to lower space limitations
 
 	var/area/A = get_area(src)

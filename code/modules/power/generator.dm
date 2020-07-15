@@ -30,19 +30,15 @@
 	SSair.atmos_machinery -= src
 	return ..()
 
-/obj/machinery/power/generator/update_icon()
-
-	if(stat & (NOPOWER|BROKEN))
-		cut_overlays()
-	else
-		cut_overlays()
-
+/obj/machinery/power/generator/update_overlays()
+	. = ..()
+	if(!(machine_stat & (NOPOWER|BROKEN)))
 		var/L = min(round(lastgenlev/100000),11)
 		if(L != 0)
-			add_overlay(image('icons/obj/power.dmi', "teg-op[L]"))
+			. += mutable_appearance('icons/obj/power.dmi', "teg-op[L]")
 
 		if(hot_circ && cold_circ)
-			add_overlay("teg-oc[lastcirc]")
+			. += "teg-oc[lastcirc]"
 
 
 #define GENRATE 800		// generator output coefficient from Q
@@ -156,9 +152,6 @@
 	return TRUE
 
 
-/obj/machinery/power/generator/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/power/generator/proc/find_circs()
 	kill_circs()
@@ -193,6 +186,7 @@
 				C.generator = src
 
 /obj/machinery/power/generator/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!panel_open)
 		return
 	anchored = !anchored
@@ -204,6 +198,7 @@
 	return TRUE
 
 /obj/machinery/power/generator/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!anchored)
 		return
 	find_circs()
@@ -211,6 +206,8 @@
 	return TRUE
 
 /obj/machinery/power/generator/screwdriver_act(mob/user, obj/item/I)
+	if(..())
+		return TRUE
 	panel_open = !panel_open
 	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")

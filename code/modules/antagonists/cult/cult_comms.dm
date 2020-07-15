@@ -20,7 +20,9 @@
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input || !IsAvailable())
 		return
-
+	if(CHAT_FILTER_CHECK(input))
+		to_chat(usr, "<span class='warning'>You cannot send a message that contains a word prohibited in IC chat!</span>")
+		return
 	cultist_commune(usr, input)
 
 /datum/action/innate/cult/comm/proc/cultist_commune(mob/living/user, message)
@@ -45,7 +47,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
 
-	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
+	user.log_talk(message, LOG_SAY, tag="cult")
 
 /datum/action/innate/cult/comm/spirit
 	name = "Spiritual Communion"
@@ -79,7 +81,7 @@
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
-	var/choice = alert(owner, "The mantle of leadership is a heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
+	var/choice = alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
 	if(choice == "Yes" && IsAvailable())
 		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 		pollCultists(owner,C.cult_team)
@@ -151,6 +153,11 @@
 	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!antag)
 		return
+	var/place = get_area(owner)
+	var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
+	if(place in summon_objective.summon_spots)//cant do final reckoning in the summon area to prevent abuse, you'll need to get everyone to stand on the circle!
+		to_chat(owner, "<span class='cultlarge'>The veil is too weak here! Move to an area where it is strong enough to support this magic.</span>")
+		return
 	for(var/i in 1 to 4)
 		chant(i)
 		var/list/destinations = list()
@@ -167,15 +174,15 @@
 					switch(i)
 						if(1)
 							new /obj/effect/temp_visual/cult/sparks(mobloc, B.current.dir)
-							playsound(mobloc, "sparks", 50, 1)
+							playsound(mobloc, "sparks", 50, TRUE)
 						if(2)
 							new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, B.current.dir)
-							playsound(mobloc, "sparks", 75, 1)
+							playsound(mobloc, "sparks", 75, TRUE)
 						if(3)
 							new /obj/effect/temp_visual/dir_setting/cult/phase(mobloc, B.current.dir)
-							playsound(mobloc, "sparks", 100, 1)
+							playsound(mobloc, "sparks", 100, TRUE)
 						if(4)
-							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, 1)
+							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, TRUE)
 							if(B.current != owner)
 								var/turf/final = pick(destinations)
 								if(istype(B.current.loc, /obj/item/soulstone))
@@ -196,16 +203,16 @@
 /datum/action/innate/cult/master/finalreck/proc/chant(chant_number)
 	switch(chant_number)
 		if(1)
-			owner.say("C'arta forbici!", language = /datum/language/common)
+			owner.say("C'arta forbici!", language = /datum/language/common, forced = "cult invocation")
 		if(2)
-			owner.say("Pleggh e'ntrath!", language = /datum/language/common)
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 50, 1)
+			owner.say("Pleggh e'ntrath!", language = /datum/language/common, forced = "cult invocation")
+			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE)
 		if(3)
-			owner.say("Barhah hra zar'garis!", language = /datum/language/common)
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 75, 1)
+			owner.say("Barhah hra zar'garis!", language = /datum/language/common, forced = "cult invocation")
+			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 75, TRUE)
 		if(4)
-			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common)
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 100, 1)
+			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common, forced = "cult invocation")
+			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 100, TRUE)
 
 /datum/action/innate/cult/master/cultmark
 	name = "Mark Target"
@@ -237,7 +244,7 @@
 
 /obj/effect/proc_holder/cultmark
 	active = FALSE
-	ranged_mousepointer = 'icons/effects/cult_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	var/datum/action/innate/cult/master/cultmark/attached_action
 
 /obj/effect/proc_holder/cultmark/Destroy()
@@ -270,7 +277,7 @@
 		var/area/A = get_area(target)
 		attached_action.cooldown = world.time + attached_action.base_cooldown
 		addtimer(CALLBACK(attached_action.owner, /mob.proc/update_action_buttons_icon), attached_action.base_cooldown)
-		C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+		C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
 		C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
 		C.cult_team.blood_target_image.pixel_x = -target.pixel_x
 		C.cult_team.blood_target_image.pixel_y = -target.pixel_y
@@ -334,7 +341,7 @@
 		if(cooldown>world.time)
 			reset_blood_target(C.cult_team)
 			to_chat(owner, "<span class='cultbold'>You have cleared the cult's blood target!</span>")
-			qdel(C.cult_team.blood_target_reset_timer)
+			deltimer(C.cult_team.blood_target_reset_timer)
 			return
 		else
 			to_chat(owner, "<span class='cultbold'>The cult has already designated a target!</span>")
@@ -342,17 +349,14 @@
 	if(cooldown>world.time)
 		to_chat(owner, "<span class='cultbold'>You aren't ready to place another blood mark yet!</span>")
 		return
-	if(owner.orbiting && owner.orbiting.orbiting)
-		target = owner.orbiting.orbiting
-	else
-		target = get_turf(owner)
+	target = owner.orbiting?.parent || get_turf(owner)
 	if(!target)
 		return
 	C.cult_team.blood_target = target
 	var/area/A = get_area(target)
 	cooldown = world.time + base_cooldown
 	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
-	C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+	C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
 	C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
 	C.cult_team.blood_target_image.pixel_x = -target.pixel_x
 	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
@@ -413,7 +417,7 @@
 
 /obj/effect/proc_holder/pulse
 	active = FALSE
-	ranged_mousepointer = 'icons/effects/throw_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 	var/datum/action/innate/cult/master/pulse/attached_action
 
 /obj/effect/proc_holder/pulse/Destroy()

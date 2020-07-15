@@ -4,11 +4,11 @@
 	var/mob/living/silicon/ai/ai
 	var/mutable_appearance/highlighted_background
 	var/highlighted = FALSE
-	var/mob/camera/aiEye/pic_in_pic/aiEye
+	var/mob/camera/ai_eye/pic_in_pic/aiEye
 
 /obj/screen/movable/pic_in_pic/ai/Initialize()
 	. = ..()
-	aiEye = new /mob/camera/aiEye/pic_in_pic()
+	aiEye = new /mob/camera/ai_eye/pic_in_pic()
 	aiEye.screen = src
 
 /obj/screen/movable/pic_in_pic/ai/Destroy()
@@ -98,6 +98,7 @@
 	noteleport = TRUE
 	hidden = TRUE
 	safe = TRUE
+	flags_1 = NONE
 
 GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 
@@ -118,19 +119,22 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 
 //Dummy camera eyes
 
-/mob/camera/aiEye/pic_in_pic
+/mob/camera/ai_eye/pic_in_pic
 	name = "Secondary AI Eye"
+	invisibility = INVISIBILITY_OBSERVER
+	mouse_opacity = MOUSE_OPACITY_ICON
+	icon_state = "ai_pip_camera"
 	var/obj/screen/movable/pic_in_pic/ai/screen
 	var/list/cameras_telegraphed = list()
 	var/telegraph_cameras = TRUE
 	var/telegraph_range = 7
 	ai_detector_color = COLOR_ORANGE
 
-/mob/camera/aiEye/pic_in_pic/GetViewerClient()
+/mob/camera/ai_eye/pic_in_pic/GetViewerClient()
 	if(screen && screen.ai)
 		return screen.ai.client
 
-/mob/camera/aiEye/pic_in_pic/setLoc(turf/T)
+/mob/camera/ai_eye/pic_in_pic/setLoc(turf/T)
 	if (T)
 		forceMove(T)
 	else
@@ -142,10 +146,10 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	update_camera_telegraphing()
 	update_ai_detect_hud()
 
-/mob/camera/aiEye/pic_in_pic/get_visible_turfs()
+/mob/camera/ai_eye/pic_in_pic/get_visible_turfs()
 	return screen ? screen.get_visible_turfs() : list()
 
-/mob/camera/aiEye/pic_in_pic/proc/update_camera_telegraphing()
+/mob/camera/ai_eye/pic_in_pic/proc/update_camera_telegraphing()
 	if(!telegraph_cameras)
 		return
 	var/list/obj/machinery/camera/add = list()
@@ -177,7 +181,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		C.in_use_lights++
 		C.update_icon()
 
-/mob/camera/aiEye/pic_in_pic/proc/disable_camera_telegraphing()
+/mob/camera/ai_eye/pic_in_pic/proc/disable_camera_telegraphing()
 	telegraph_cameras = FALSE
 	for (var/V in cameras_telegraphed)
 		var/obj/machinery/camera/C = V
@@ -187,14 +191,14 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		C.update_icon()
 	cameras_telegraphed.Cut()
 
-/mob/camera/aiEye/pic_in_pic/Destroy()
+/mob/camera/ai_eye/pic_in_pic/Destroy()
 	disable_camera_telegraphing()
 	return ..()
 
 //AI procs
 
 /mob/living/silicon/ai/proc/drop_new_multicam(silent = FALSE)
-	if(!multicam_allowed)
+	if(!CONFIG_GET(flag/allow_ai_multicam))
 		if(!silent)
 			to_chat(src, "<span class='warning'>This action is currently disabled. Contact an administrator to enable this feature.</span>")
 		return
@@ -213,7 +217,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	return C
 
 /mob/living/silicon/ai/proc/toggle_multicam()
-	if(!multicam_allowed)
+	if(!CONFIG_GET(flag/allow_ai_multicam))
 		to_chat(src, "<span class='warning'>This action is currently disabled. Contact an administrator to enable this feature.</span>")
 		return
 	if(multicam_on)

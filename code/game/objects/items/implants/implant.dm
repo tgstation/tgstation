@@ -5,7 +5,7 @@
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/activated = TRUE //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
 	var/mob/living/imp_in = null
-	item_color = "b"
+	var/implant_color = "b"
 	var/allow_multiple = FALSE
 	var/uses = -1
 	item_flags = DROPDEL
@@ -40,11 +40,11 @@
 //What does the implant do upon injection?
 //return 1 if the implant injects
 //return 0 if there is no room for implant / it fails
-/obj/item/implant/proc/implant(mob/living/target, mob/user, silent = FALSE)
+/obj/item/implant/proc/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTING, args) & COMPONENT_STOP_IMPLANTING)
 		return
 	LAZYINITLIST(target.implants)
-	if(!target.can_be_implanted() || !can_be_implanted_in(target))
+	if(!force && (!target.can_be_implanted() || !can_be_implanted_in(target)))
 		return FALSE
 	for(var/X in target.implants)
 		var/obj/item/implant/imp_e = X
@@ -59,7 +59,7 @@
 		if(flags & COMPONENT_STOP_IMPLANTING)
 			UNSETEMPTY(target.implants)
 			return FALSE
-		
+
 		if(istype(imp_e, type))
 			if(!allow_multiple)
 				if(imp_e.uses < initial(imp_e.uses)*2)
@@ -84,7 +84,7 @@
 		H.sec_hud_set_implants()
 
 	if(user)
-		add_logs(user, target, "implanted", "\a [name]")
+		log_combat(user, target, "implanted", "\a [name]")
 
 	return TRUE
 

@@ -33,7 +33,7 @@ Deep Blue
 Quick
 Slow
 Beloved
-Agressive
+Aggressive
 Angry
 Bewildered
 Clumsy

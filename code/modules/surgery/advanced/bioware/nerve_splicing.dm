@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/nerve_splicing
-	name = "Nerve Splicing Surgery Disk"
-	desc = "The disk provides instructions on how to splice the circulatory system to counter stuns and paralysis."
-	surgeries = list(/datum/surgery/advanced/bioware/nerve_splicing)
-
 /datum/surgery/advanced/bioware/nerve_splicing
-	name = "nerve splicing"
+	name = "Nerve Splicing"
+	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,
@@ -21,12 +17,16 @@
 	time = 155
 
 /datum/surgery_step/splice_nerves/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] starts splicing together [target]'s nerves.", "<span class='notice'>You start splicing together [target]'s nerves.</span>")
+	display_results(user, target, "<span class='notice'>You start splicing together [target]'s nerves.</span>",
+		"<span class='notice'>[user] starts splicing together [target]'s nerves.</span>",
+		"<span class='notice'>[user] starts manipulating [target]'s nervous system.</span>")
 
-/datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] successfully splices [target]'s nervous system!", "<span class='notice'>You successfully splice [target]'s nervous system!</span>")
+/datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	display_results(user, target, "<span class='notice'>You successfully splice [target]'s nervous system!</span>",
+		"<span class='notice'>[user] successfully splices [target]'s nervous system!</span>",
+		"<span class='notice'>[user] finishes manipulating [target]'s nervous system.</span>")
 	new /datum/bioware/spliced_nerves(target)
-	return TRUE
+	return ..()
 
 /datum/bioware/spliced_nerves
 	name = "Spliced Nerves"

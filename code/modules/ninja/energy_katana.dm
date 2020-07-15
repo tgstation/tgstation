@@ -2,7 +2,8 @@
 	name = "energy katana"
 	desc = "A katana infused with strong energy."
 	icon_state = "energy_katana"
-	item_state = "energy_katana"
+	inhand_icon_state = "energy_katana"
+	worn_icon_state = "energy_katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 40
@@ -11,9 +12,8 @@
 	armour_penetration = 50
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 50
-	slot_flags = ITEM_SLOT_BELT
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	sharpness = IS_SHARP
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -38,15 +38,15 @@
 		jaunt.Teleport(user, target)
 	if(proximity_flag && (isobj(target) || issilicon(target)))
 		spark_system.start()
-		playsound(user, "sparks", 50, 1)
-		playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
+		playsound(user, "sparks", 50, TRUE)
+		playsound(user, 'sound/weapons/blade1.ogg', 50, TRUE)
 		target.emag_act(user)
 
 /obj/item/energy_katana/pickup(mob/living/user)
 	. = ..()
 	jaunt.Grant(user, src)
 	user.update_icons()
-	playsound(src, 'sound/items/unsheath.ogg', 25, 1)
+	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
 
 /obj/item/energy_katana/dropped(mob/user)
 	. = ..()
@@ -56,7 +56,7 @@
 //If we hit the Ninja who owns this Katana, they catch it.
 //Works for if the Ninja throws it or it throws itself or someone tries
 //To throw it at the ninja
-/obj/item/energy_katana/throw_impact(atom/hit_atom)
+/obj/item/energy_katana/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/H = hit_atom
 		if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
@@ -74,13 +74,13 @@
 
 	if(doSpark)
 		spark_system.start()
-		playsound(get_turf(src), "sparks", 50, 1)
+		playsound(get_turf(src), "sparks", 50, TRUE)
 
 	var/msg = ""
 
 	if(user.put_in_hands(src))
 		msg = "Your Energy Katana teleports into your hand!"
-	else if(user.equip_to_slot_if_possible(src, SLOT_BELT, 0, 1, 1))
+	else if(user.equip_to_slot_if_possible(src, ITEM_SLOT_BELT, 0, 1, 1))
 		msg = "Your Energy Katana teleports back to you, sheathing itself as it does so!</span>"
 	else
 		msg = "Your Energy Katana teleports to your location!"
@@ -102,5 +102,5 @@
 /datum/action/innate/dash/ninja
 	current_charges = 3
 	max_charges = 3
-	charge_rate = 30
+	charge_rate = 150
 	recharge_sound = null

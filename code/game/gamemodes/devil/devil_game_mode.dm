@@ -1,9 +1,10 @@
 /datum/game_mode/devil
 	name = "devil"
 	config_tag = "devil"
+	report_type = "devil"
 	antag_flag = ROLE_DEVIL
 	false_report_weight = 1
-	protected_jobs = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
+	protected_jobs = list("Prisoner", "Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -46,15 +47,17 @@
 
 	if(devils.len < required_enemies)
 		setup_error = "Not enough devil candidates"
-		return 0
-	return 1
+		return FALSE
+	for(var/antag in devils)
+		GLOB.pre_setup_antags += antag
+	return TRUE
 
 
 /datum/game_mode/devil/post_setup()
 	for(var/datum/mind/devil in devils)
 		post_setup_finalize(devil)
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/devil/generate_report()
 	return "Infernal creatures have been seen nearby offering great boons in exchange for souls.  This is considered theft against Nanotrasen, as all employment contracts contain a lien on the \
@@ -62,6 +65,7 @@
 
 /datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
 	add_devil(devil.current, ascendable = TRUE) //Devil gamemode devils are ascendable.
+	GLOB.pre_setup_antags -= devil
 	add_devil_objectives(devil,2)
 
 /proc/is_devil(mob/living/M)

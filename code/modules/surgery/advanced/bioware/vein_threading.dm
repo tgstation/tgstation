@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/vein_threading
-	name = "Vein Threading Surgery Disk"
-	desc = "The disk provides instructions on how to modify the circulatory system to greatly slow down bleeding."
-	surgeries = list(/datum/surgery/advanced/bioware/vein_threading)
-
 /datum/surgery/advanced/bioware/vein_threading
-	name = "vein threading"
+	name = "Vein Threading"
+	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,
@@ -21,12 +17,16 @@
 	time = 125
 
 /datum/surgery_step/thread_veins/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] starts weaving [target]'s circulatory system.", "<span class='notice'>You start weaving [target]'s circulatory system.</span>")
+	display_results(user, target, "<span class='notice'>You start weaving [target]'s circulatory system.</span>",
+		"<span class='notice'>[user] starts weaving [target]'s circulatory system.</span>",
+		"<span class='notice'>[user] starts manipulating [target]'s circulatory system.</span>")
 
-/datum/surgery_step/thread_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] weaves [target]'s circulatory system into a resistant mesh!", "<span class='notice'>You weave [target]'s circulatory system into a resistant mesh!</span>")
+/datum/surgery_step/thread_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	display_results(user, target, "<span class='notice'>You weave [target]'s circulatory system into a resistant mesh!</span>",
+		"<span class='notice'>[user] weaves [target]'s circulatory system into a resistant mesh!</span>",
+		"<span class='notice'>[user] finishes manipulating [target]'s circulatory system.</span>")
 	new /datum/bioware/threaded_veins(target)
-	return TRUE
+	return ..()
 
 /datum/bioware/threaded_veins
 	name = "Threaded Veins"

@@ -3,7 +3,7 @@
 	desc = "Contains all the paper you'll never need."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
-	item_state = "sheet-metal"
+	inhand_icon_state = "sheet-metal"
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	throwforce = 0
@@ -60,8 +60,10 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/paper_bin/attack_hand(mob/user)
-	if(user.lying)
-		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
@@ -85,7 +87,6 @@
 				if(prob(30))
 					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 					P.rigged = 1
-					P.updateinfolinks()
 
 		P.add_fingerprint(user)
 		P.forceMove(user.loc)
@@ -116,21 +117,23 @@
 		return ..()
 
 /obj/item/paper_bin/examine(mob/user)
-	..()
+	. = ..()
 	if(total_paper)
-		to_chat(user, "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+".")
+		. += "It contains [total_paper > 1 ? "[total_paper] papers" : " one paper"]."
 	else
-		to_chat(user, "It doesn't contain anything.")
+		. += "It doesn't contain anything."
 
 
-/obj/item/paper_bin/update_icon()
+/obj/item/paper_bin/update_icon_state()
 	if(total_paper < 1)
 		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
-	cut_overlays()
+
+/obj/item/paper_bin/update_overlays()
+	. = ..()
 	if(bin_pen)
-		add_overlay(mutable_appearance(bin_pen.icon, bin_pen.icon_state))
+		. += mutable_appearance(bin_pen.icon, bin_pen.icon_state)
 
 /obj/item/paper_bin/construction
 	name = "construction paper bin"
@@ -154,7 +157,7 @@
 	qdel(src)
 
 /obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
 		var/turf/T = get_turf(src.loc)
 		while(total_paper > 0)
@@ -170,3 +173,9 @@
 		qdel(src)
 	else
 		..()
+
+/obj/item/paper_bin/carbon
+	name = "carbon paper bin"
+	desc = "Contains all the paper you'll ever need, in duplicate!"
+	icon_state = "paper_bin_carbon"
+	papertype = /obj/item/paper/carbon

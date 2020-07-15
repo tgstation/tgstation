@@ -2,6 +2,7 @@
 	name = "Sentient Disease"
 	roundend_category = "diseases"
 	antagpanel_category = "Disease"
+	show_to_ghosts = TRUE
 	var/disease_name = ""
 
 /datum/antagonist/disease/on_gain()
@@ -10,12 +11,10 @@
 	var/datum/objective/O = new /datum/objective/disease_infect()
 	O.owner = owner
 	objectives += O
-	owner.objectives += O
 
 	O = new /datum/objective/disease_infect_centcom()
 	O.owner = owner
 	objectives += O
-	owner.objectives += O
 
 	. = ..()
 

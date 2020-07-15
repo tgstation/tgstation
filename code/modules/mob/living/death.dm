@@ -1,7 +1,7 @@
 /mob/living/gib(no_brain, no_organs, no_bodyparts)
-	var/prev_lying = lying
+	var/prev_lying = lying_angle
 	if(stat != DEAD)
-		death(1)
+		death(TRUE)
 
 	if(!prev_lying)
 		gib_animation()
@@ -18,7 +18,7 @@
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(drop_location(), null, get_static_viruses())
+	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
@@ -26,14 +26,14 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust(just_ash = FALSE, drop_items = FALSE)
+/mob/living/dust(just_ash, drop_items, force)
 	death(TRUE)
 
 	if(drop_items)
 		unequip_everything()
 
 	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+		buckled.unbuckle_mob(src, force = TRUE)
 
 	dust_animation()
 	spawn_dust(just_ash)
@@ -47,7 +47,8 @@
 
 
 /mob/living/death(gibbed)
-	stat = DEAD
+	var/was_dead_before = stat == DEAD
+	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
 	tod = station_time_timestamp()
@@ -55,27 +56,26 @@
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
 	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf))
-		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
-		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
+		deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	GLOB.alive_mob_list -= src
-	if(!gibbed)
-		GLOB.dead_mob_list += src
+	remove_from_alive_mob_list()
+	if(!gibbed && !was_dead_before)
+		add_to_dead_mob_list()
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)
-	blind_eyes(1)
 	reset_perspective(null)
 	reload_fullscreen()
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
-	update_canmove()
+	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
-	addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()
+
+	. = ..()
 
 	if (client)
 		client.move_delay = initial(client.move_delay)

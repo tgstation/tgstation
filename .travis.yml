@@ -1,67 +1,98 @@
 language: generic
-sudo: false
+os: linux
+dist: bionic
+
 branches:
   except:
   - ___TGS3TempBranch
-env:
-    global:
-    - BYOND_MAJOR="512"
-    - BYOND_MINOR="1427"
-    - NODE_VERSION="4"
-    - RUST_G_VERSION="0.3.0"
-matrix:
+  - ___TGSTempBranch
+
+jobs:
   include:
-    - env:
-      - BUILD_TOOLS=true
+    - name: "Run Linters"
       addons:
         apt:
           packages:
             - python3
             - python3-pip
+            - python3-setuptools
+            - pcregrep
+            - rustc
+            - cargo
       cache:
         directories:
-          - tgui/node_modules
-    - env:
-      - BUILD_TESTING=true
-      - BUILD_TOOLS=false
+          - $HOME/SpacemanDMM
+      install:
+        - tools/travis/install_build_tools.sh
+        - tools/travis/install_spaceman_dmm.sh dreamchecker
+      script:
+        - tools/travis/check_filedirs.sh tgstation.dme
+        - tools/travis/check_changelogs.sh
+        - find . -name "*.php" -print0 | xargs -0 -n1 php -l
+        - find . -name "*.json" -not -path "*/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
+        - tools/travis/build_tgui.sh
+        - tools/travis/check_grep.sh
+        - ~/dreamchecker
+
+    - name: "Compile All Maps"
       addons:
         apt:
           packages:
             - libstdc++6:i386
       cache:
         directories:
-          - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-    - env:
-      - BUILD_TESTING=false
-      - BUILD_TOOLS=false
+          - $HOME/BYOND
+      install:
+        - tools/travis/install_byond.sh
+        - source $HOME/BYOND/byond/bin/byondsetup
+      before_script:
+        - tools/travis/template_dm_generator.py
+      script:
+        - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
+
+    - name: "Compile and Run Tests"
       addons:
         mariadb: '10.2'
         apt:
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
             - libstdc++6:i386
-            - libssl-dev:i386
             - gcc-multilib
+            - g++-7
+            - g++-7-multilib
+            - libssl1.1:i386
+            - zlib1g:i386
       cache:
         directories:
-          - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-          - $HOME/libmariadb
-          - $HOME/.rustup
-          - $HOME/.cargo
+          - $HOME/BYOND
+      install:
+        - tools/travis/install_byond.sh
+        - source $HOME/BYOND/byond/bin/byondsetup
+        - tools/travis/install_rust_g.sh
+      before_script:
+        - mysql -u root -e 'CREATE DATABASE tg_travis;'
+        - mysql -u root tg_travis < SQL/tgstation_schema.sql
+        - mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'
+        - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
+      script:
+        - tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme || travis_terminate 1
+        - tools/travis/run_server.sh
 
-install:
-  - tools/travis/install_build_tools.sh
-  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis;'; fi
-  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis < SQL/tgstation_schema.sql; fi
-  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'; fi
-  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql; fi
-
-before_script:
-  - tools/travis/before_build_tools.sh
-  - tools/travis/before_build_byond.sh
-
-script:
-  - tools/travis/check_filedirs.sh tgstation.dme
-  - tools/travis/build_tools.sh || travis_terminate 1
-  - tools/travis/build_dependencies.sh || travis_terminate 1
-  - tools/travis/build_byond.sh
-
+    - name: "Generate Documentation"
+      # Only run for non-PR commits to the real master branch.
+      if: branch = master AND head_branch IS blank
+      install:
+        - tools/travis/install_spaceman_dmm.sh dmdoc
+      before_script:
+        # Travis checks out a hash, try to get back on a branch.
+        - git checkout $TRAVIS_BRANCH || true
+      script:
+        - ~/dmdoc
+        - touch dmdoc/.nojekyll
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        local_dir: dmdoc
+        token: $DMDOC_GITHUB_TOKEN
+        fqdn: codedocs.tgstation13.org

@@ -21,13 +21,14 @@
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
-	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
+	initial_gas_mix = BURNMIX_ATMOS
 
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
 	name = "lush grass"
 	icon_state = "grass"
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/beach
 	gender = PLURAL
@@ -35,6 +36,7 @@
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "sand"
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/beach/coast_t
 	gender = NEUTER
@@ -52,8 +54,10 @@
 	bullet_sizzle = TRUE
 
 /turf/open/floor/holofloor/asteroid
-	name = "asteroid"
-	icon_state = "asteroid0"
+	gender = PLURAL
+	name = "asteroid sand"
+	icon_state = "asteroid"
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/asteroid/Initialize()
 	icon_state = "asteroid[rand(0, 12)]"
@@ -63,6 +67,7 @@
 	gender = PLURAL
 	name = "basalt"
 	icon_state = "basalt0"
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/basalt/Initialize()
 	. = ..()
@@ -84,6 +89,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "speedspace_ns_1"
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/hyperspace/Initialize()
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
@@ -102,16 +108,20 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/carpet/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/update_icon), 1)
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()
-	if(!..())
-		return 0
+	. = ..()
 	if(intact)
 		queue_smooth(src)
+
+/turf/open/floor/holofloor/wood
+	icon_state = "wood"
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/snow
 	gender = PLURAL
@@ -122,12 +132,7 @@
 	slowdown = 2
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/snow/cold
 	initial_gas_mix = "nob=7500;TEMP=2.7"
-
-/turf/open/floor/holofloor/asteroid
-	gender = PLURAL
-	name = "asteroid sand"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "asteroid"

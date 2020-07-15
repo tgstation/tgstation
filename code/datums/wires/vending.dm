@@ -24,6 +24,7 @@
 	status += "The red light is [V.shoot_inventory ? "off" : "blinking"]."
 	status += "The green light is [V.extended_inventory ? "on" : "off"]."
 	status += "A [V.scan_id ? "purple" : "yellow"] light is on."
+	status += "A white light is [V.age_restrictions ? "on" : "off"]."
 	status += "The speaker light is [V.shut_up ? "off" : "on"]."
 	return status
 
@@ -35,11 +36,13 @@
 		if(WIRE_CONTRABAND)
 			V.extended_inventory = !V.extended_inventory
 		if(WIRE_SHOCK)
-			V.seconds_electrified = 30
+			V.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
 		if(WIRE_IDSCAN)
 			V.scan_id = !V.scan_id
 		if(WIRE_SPEAKER)
 			V.shut_up = !V.shut_up
+		if(WIRE_AGELIMIT)
+			V.age_restrictions = !V.age_restrictions
 
 /datum/wires/vending/on_cut(wire, mend)
 	var/obj/machinery/vending/V = holder
@@ -50,9 +53,9 @@
 			V.extended_inventory = FALSE
 		if(WIRE_SHOCK)
 			if(mend)
-				V.seconds_electrified = FALSE
+				V.seconds_electrified = MACHINE_NOT_ELECTRIFIED
 			else
-				V.seconds_electrified = -1
+				V.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
 		if(WIRE_IDSCAN)
 			V.scan_id = mend
 		if(WIRE_SPEAKER)

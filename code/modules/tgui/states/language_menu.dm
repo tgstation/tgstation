@@ -1,6 +1,6 @@
- /**
-  * tgui state: language_menu_state
-  */
+/**
+ * tgui state: language_menu_state
+ */
 
 GLOBAL_DATUM_INIT(language_menu_state, /datum/ui_state/language_menu, new)
 

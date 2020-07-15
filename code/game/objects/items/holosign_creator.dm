@@ -3,7 +3,7 @@
 	desc = "A handy-dandy holographic projector that displays a janitorial sign."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	force = 0
@@ -34,7 +34,7 @@
 					to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
 					return
 				if(signs.len < max_signs)
-					playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 20, TRUE)
 					if(creation_time)
 						holocreator_busy = TRUE
 						if(!do_after(user, creation_time, target = target))
@@ -59,6 +59,12 @@
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
 
+/obj/item/holosign_creator/janibarrier
+	name = "custodial holobarrier projector"
+	desc = "A holographic projector that creates hard light wet floor barriers."
+	holosign_type = /obj/structure/holosign/barrier/wetsign
+	creation_time = 20
+	max_signs = 12
 
 /obj/item/holosign_creator/security
 	name = "security holobarrier projector"
@@ -79,9 +85,17 @@
 /obj/item/holosign_creator/atmos
 	name = "ATMOS holofan projector"
 	desc = "A holographic projector that creates holographic barriers that prevent changes in atmosphere conditions."
-	icon_state = "signmaker_engi"
+	icon_state = "signmaker_atmos"
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 0
+	max_signs = 3
+
+/obj/item/holosign_creator/medical
+	name = "\improper PENLITE barrier projector"
+	desc = "A holographic projector that creates PENLITE holobarriers. Useful during quarantines since they halt those with malicious diseases."
+	icon_state = "signmaker_med"
+	holosign_type = /obj/structure/holosign/barrier/medical
+	creation_time = 30
 	max_signs = 3
 
 /obj/item/holosign_creator/cyborg

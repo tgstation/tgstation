@@ -17,7 +17,7 @@
 	..()
 	agent = "Virus class [pick("A","B","C","D","E","F")][pick("A","B","C","D","E","F")]-[rand(50,300)]"
 	if(prob(40))
-		cures = list("mutadone")
+		cures = list(/datum/reagent/medicine/mutadone)
 	else
 		restcure = 1
 
@@ -31,26 +31,26 @@
 	switch(stage)
 		if(1)
 			if(restcure)
-				if(affected_mob.lying && prob(30))
+				if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(30))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 			if (prob(8))
 				to_chat(affected_mob, "<span class='danger'>Your head hurts.</span>")
 			if (prob(9))
-				to_chat(affected_mob, "You feel a tingling sensation in your chest.")
+				to_chat(affected_mob, "<span class='danger'>You feel a tingling sensation in your chest.</span>")
 			if (prob(9))
 				to_chat(affected_mob, "<span class='danger'>You feel angry.</span>")
 		if(2)
 			if(restcure)
-				if(affected_mob.lying && prob(20))
+				if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(20))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
 			if (prob(8))
 				to_chat(affected_mob, "<span class='danger'>Your skin feels loose.</span>")
 			if (prob(10))
-				to_chat(affected_mob, "You feel very strange.")
+				to_chat(affected_mob, "<span class='danger'>You feel very strange.</span>")
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head!</span>")
 				affected_mob.Unconscious(40)
@@ -58,7 +58,7 @@
 				to_chat(affected_mob, "<span class='danger'>Your stomach churns.</span>")
 		if(3)
 			if(restcure)
-				if(affected_mob.lying && prob(20))
+				if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(20))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
@@ -73,7 +73,7 @@
 
 		if(4)
 			if(restcure)
-				if(affected_mob.lying && prob(5))
+				if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(5))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return

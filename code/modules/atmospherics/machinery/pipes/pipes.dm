@@ -1,8 +1,7 @@
 /obj/machinery/atmospherics/pipe
+	damage_deflection = 12
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0
-
-	level = 1
 
 	use_power = NO_POWER_USE
 	can_unwrench = 1
@@ -18,11 +17,18 @@
 	volume = 35 * device_type
 	..()
 
+///I have no idea why there's a new and at this point I'm too afraid to ask
+/obj/machinery/atmospherics/pipe/Initialize(mapload)
+	. = ..()
+
+	if(hide)
+		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+
 /obj/machinery/atmospherics/pipe/nullifyNode(i)
 	var/obj/machinery/atmospherics/oldN = nodes[i]
 	..()
 	if(oldN)
-		oldN.build_network()
+		SSair.add_to_rebuild_queue(oldN)
 
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)
@@ -32,24 +38,6 @@
 		parent = new
 		parent.build_pipeline(src)
 
-/obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
-	if(nodes[1] && nodes[2])
-		icon_state = "intact[invisibility ? "-f" : "" ]"
-	else
-		var/have_node1 = nodes[1] ? TRUE : FALSE
-		var/have_node2 = nodes[2] ? TRUE : FALSE
-		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
-
-/obj/machinery/atmospherics/pipe/atmosinit()
-	var/turf/T = loc			// hide if turf is not intact
-	hide(T.intact)
-	..()
-
-/obj/machinery/atmospherics/pipe/hide(i)
-	if(level == 1 && isturf(loc))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
-	update_icon()
-
 /obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
 	if(air_temporary)
 		var/turf/T = loc
@@ -57,6 +45,9 @@
 		air_update_turf()
 
 /obj/machinery/atmospherics/pipe/return_air()
+	return parent.air
+
+/obj/machinery/atmospherics/pipe/return_analyzable_air()
 	return parent.air
 
 /obj/machinery/atmospherics/pipe/remove_air(amount)
@@ -69,9 +60,6 @@
 		meter.setAttachLayer(piping_layer)
 	else
 		return ..()
-
-/obj/machinery/atmospherics/pipe/analyzer_act(mob/living/user, obj/item/I)
-	atmosanalyzer_scan(parent.air, user, src)
 
 /obj/machinery/atmospherics/pipe/returnPipenet()
 	return parent
@@ -101,11 +89,6 @@
 
 /obj/machinery/atmospherics/pipe/returnPipenets()
 	. = list(parent)
-
-/obj/machinery/atmospherics/pipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 12)
-		return 0
-	. = ..()
 
 /obj/machinery/atmospherics/pipe/proc/paint(paint_color)
 	add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)

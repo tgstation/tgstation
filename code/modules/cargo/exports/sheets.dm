@@ -16,7 +16,7 @@
 
 /datum/export/stack/skin/human
 	cost = 100
-	contraband = TRUE
+	export_category = EXPORT_CONTRABAND
 	unit_name = "piece"
 	message = "of human skin"
 	export_types = list(/obj/item/stack/sheet/animalhide/human)
@@ -28,13 +28,13 @@
 
 /datum/export/stack/skin/cat
 	cost = 150
-	contraband = TRUE
+	export_category = EXPORT_CONTRABAND
 	unit_name = "cat hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/cat)
 
 /datum/export/stack/skin/corgi
 	cost = 200
-	contraband = TRUE
+	export_category = EXPORT_CONTRABAND
 	unit_name = "corgi hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/corgi)
 
@@ -44,7 +44,7 @@
 	export_types = list(/obj/item/stack/sheet/animalhide/lizard)
 
 /datum/export/stack/skin/gondola
-	cost = 500
+	cost = 5000
 	unit_name = "gondola hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/gondola)
 
@@ -52,6 +52,12 @@
 	cost = 500
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
+
+/datum/export/stack/licenseplate
+	cost = 25
+	unit_name = "license plate"
+	export_types = list(/obj/item/stack/license_plates/filled)
+
 
 // Common materials.
 // For base materials, see materials.dm
@@ -67,10 +73,10 @@
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
-/datum/export/stack/bscrystal
-	cost = 300
-	message = "of bluespace crystals"
-	export_types = list(/obj/item/stack/sheet/bluespace_crystal)
+/datum/export/stack/plastitanium
+	cost = 325 // plasma + titanium costs
+	message = "of plastitanium"
+	export_types = list(/obj/item/stack/sheet/mineral/plastitanium)
 
 /datum/export/stack/wood
 	cost = 30
@@ -93,16 +99,14 @@
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
 
+/datum/export/stack/ammonia_crystals
+	cost = 25
+	unit_name = "of ammonia crystal"
+	export_types = list(/obj/item/stack/ammonia_crystals)
+
 // Weird Stuff
 
 /datum/export/stack/abductor
 	cost = 1000
 	message = "of alien alloy"
 	export_types = list(/obj/item/stack/sheet/mineral/abductor)
-
-/datum/export/stack/adamantine
-	unit_name = "bar"
-	cost = 500
-	message = "of adamantine"
-	export_types = list(/obj/item/stack/sheet/mineral/adamantine)
-

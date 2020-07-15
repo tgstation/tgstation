@@ -34,7 +34,8 @@
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
 		return 1
-	if(!anchored|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	var/mob/living/L = usr
+	if(!anchored || (istype(L) && !(L.mobility_flags & MOBILITY_UI)) || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
 		return 1
 	usr.set_machine(src)
@@ -54,9 +55,9 @@
 			new /obj/item/pipe_meter(loc)
 			wait = world.time + 15
 	if(href_list["layer_up"])
-		piping_layer = CLAMP(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = clamp(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if(href_list["layer_down"])
-		piping_layer = CLAMP(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = clamp(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
@@ -78,6 +79,7 @@
 	return FALSE
 
 /obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(default_unfasten_wrench(user, I, 40))
 		user << browse(null, "window=pipedispenser")
 
@@ -94,7 +96,7 @@
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/usr)
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(!usr.incapacitated())
 		return
 
 	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))

@@ -54,20 +54,20 @@
 		H.set_machine(src)
 		if(href_list["school"])
 			if(used)
-				to_chat(H, "You already used this contract!")
+				to_chat(H, "<span class='warning'>You already used this contract!</span>")
 				return
 			var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150, src)
 			if(LAZYLEN(candidates))
 				if(QDELETED(src))
 					return
 				if(used)
-					to_chat(H, "You already used this contract!")
+					to_chat(H, "<span class='warning'>You already used this contract!</span>")
 					return
 				used = TRUE
 				var/mob/dead/observer/C = pick(candidates)
 				spawn_antag(C.client, get_turf(src), href_list["school"],H.mind)
 			else
-				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
+				to_chat(H, "<span class='warning'>Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.</span>")
 
 /obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind ,datum/mind/user)
 	new /obj/effect/particle_effect/smoke(T)
@@ -109,9 +109,6 @@
 		return FALSE
 	if(!user.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
-		return FALSE
-	if(!user.onSyndieBase())
-		to_chat(user, "<span class='warning'>[src] is out of range! It can only be used at your base!</span>")
 		return FALSE
 	return TRUE
 
@@ -170,7 +167,7 @@
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg teleporter"
-	desc = "A single-use teleporter designed to quickly reinforce operatives in the field.."
+	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 
@@ -182,6 +179,10 @@
 	name = "syndicate medical teleporter"
 	borg_to_spawn = "Medical"
 
+/obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
+	name = "syndicate saboteur teleporter"
+	borg_to_spawn = "Saboteur"
+
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/R
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -191,6 +192,8 @@
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
+		if("Saboteur")
+			R = new /mob/living/silicon/robot/modules/syndicate/saboteur(T)
 		else
 			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
 
@@ -202,7 +205,7 @@
 		brainopslastname = creator_op.nuke_team.syndicate_name
 	var/brainopsname = "[brainfirstname] [brainopslastname]"
 
-	R.mmi.name = "Man-Machine Interface: [brainopsname]"
+	R.mmi.name = "[initial(R.mmi.name)]: [brainopsname]"
 	R.mmi.brain.name = "[brainopsname]'s brain"
 	R.mmi.brainmob.real_name = brainopsname
 	R.mmi.brainmob.name = brainopsname
@@ -231,7 +234,7 @@
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
 	if(!is_station_level(user.z))
-		to_chat(user, "<span class='notice'>You should probably wait until you reach the station.</span>")
+		to_chat(user, "<span class='warning'>You should probably wait until you reach the station.</span>")
 		return
 	if(used)
 		return
@@ -244,14 +247,14 @@
 		spawn_antag(C.client, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
-		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
+		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
 		qdel(src)
 	else
-		to_chat(user, "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>")
+		to_chat(user, "<span class='warning'>You can't seem to work up the nerve to shatter the bottle! Perhaps you should try again later.</span>")
 
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
+	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
 	S.holder = holder
 	S.key = C.key

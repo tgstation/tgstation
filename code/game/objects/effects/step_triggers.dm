@@ -52,7 +52,7 @@
 	var/list/affecting = list()
 
 /obj/effect/step_trigger/thrower/Trigger(atom/A)
-	if(!A || !ismovableatom(A))
+	if(!A || !ismovable(A))
 		return
 	var/atom/movable/AM = A
 	var/curtiles = 0
@@ -61,10 +61,10 @@
 		if(AM in T.affecting)
 			return
 
-	if(ismob(AM))
-		var/mob/M = AM
+	if(isliving(AM))
+		var/mob/living/M = AM
 		if(immobilize)
-			M.canmove = 0
+			M.mobility_flags &= ~MOBILITY_MOVE
 
 	affecting.Add(AM)
 	while(AM && !stopthrow)
@@ -98,10 +98,11 @@
 
 	affecting.Remove(AM)
 
-	if(ismob(AM))
-		var/mob/M = AM
+	if(isliving(AM))
+		var/mob/living/M = AM
 		if(immobilize)
-			M.canmove = 1
+			M.mobility_flags |= MOBILITY_MOVE
+		M.update_mobility()
 
 /* Stops things thrown by a thrower, doesn't do anything */
 

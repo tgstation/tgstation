@@ -26,23 +26,23 @@ Actual Adjacent procs :
 #define PF_TIEBREAKER 0.005
 //tiebreker weight.To help to choose between equal paths
 //////////////////////
-//datum/PathNode object
+//datum/pathnode object
 //////////////////////
 #define MASK_ODD 85
 #define MASK_EVEN 170
 
 
 //A* nodes variables
-/datum/PathNode
+/datum/pathnode
 	var/turf/source //turf associated with the PathNode
-	var/datum/PathNode/prevNode //link to the parent PathNode
+	var/datum/pathnode/prevNode //link to the parent PathNode
 	var/f		//A* Node weight (f = g + h)
 	var/g		//A* movement cost variable
 	var/h		//A* heuristic variable
 	var/nt		//count the number of Nodes traversed
 	var/bf		//bitflag for dir to expand.Some sufficiently advanced motherfuckery
 
-/datum/PathNode/New(s,p,pg,ph,pnt,_bf)
+/datum/pathnode/New(s,p,pg,ph,pnt,_bf)
 	source = s
 	prevNode = p
 	g = pg
@@ -51,14 +51,14 @@ Actual Adjacent procs :
 	nt = pnt
 	bf = _bf
 
-/datum/PathNode/proc/setp(p,pg,ph,pnt)
+/datum/pathnode/proc/setp(p,pg,ph,pnt)
 	prevNode = p
 	g = pg
 	h = ph
 	f = g + h*(1+ PF_TIEBREAKER)
 	nt = pnt
 
-/datum/PathNode/proc/calc_f()
+/datum/pathnode/proc/calc_f()
 	f = g + h
 
 //////////////////////
@@ -66,15 +66,15 @@ Actual Adjacent procs :
 //////////////////////
 
 //the weighting function, used in the A* algorithm
-/proc/PathWeightCompare(datum/PathNode/a, datum/PathNode/b)
+/proc/PathWeightCompare(datum/pathnode/a, datum/pathnode/b)
 	return a.f - b.f
 
 //reversed so that the Heap is a MinHeap rather than a MaxHeap
-/proc/HeapPathWeightCompare(datum/PathNode/a, datum/PathNode/b)
+/proc/HeapPathWeightCompare(datum/pathnode/a, datum/pathnode/b)
 	return b.f - a.f
 
 //wrapper that returns an empty list if A* failed to find a path
-/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = 1)
+/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
 	var/l = SSpathfinder.mobs.getfree(caller)
 	while(!l)
 		stoplag(3)
@@ -86,7 +86,7 @@ Actual Adjacent procs :
 		path = list()
 	return path
 
-/proc/cir_get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = 1)
+/proc/cir_get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
 	var/l = SSpathfinder.circuits.getfree(caller)
 	while(!l)
 		stoplag(3)
@@ -97,22 +97,25 @@ Actual Adjacent procs :
 		path = list()
 	return path
 
-/proc/AStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = 1)
+/proc/AStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
 	//sanitation
 	var/turf/end = get_turf(_end)
 	var/turf/start = get_turf(caller)
-	if((!start)||(start.z != end.z)||(start == end)) //no pathfinding between z levels
-		return 0
+	if(!start || !end)
+		stack_trace("Invalid A* start or destination")
+		return FALSE
+	if( start.z != end.z || start == end ) //no pathfinding between z levels
+		return FALSE
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
 		if(call(start, dist)(end) > maxnodes)
-			return 0
+			return FALSE
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
-	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
+	var/datum/heap/open = new /datum/heap(/proc/HeapPathWeightCompare) //the open list
 	var/list/openc = new() //open list for node check
 	var/list/path = null //the returned path, if any
 	//initialization
-	var/datum/PathNode/cur = new /datum/PathNode(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
+	var/datum/pathnode/cur = new /datum/pathnode(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
 	open.Insert(cur)
 	openc[start] = cur
 	//then run the main loop
@@ -140,7 +143,7 @@ Actual Adjacent procs :
 				if(cur.bf & f)
 					var/T = get_step(cur.source,f)
 					if(T != exclude)
-						var/datum/PathNode/CN = openc[T]  //current checking turf
+						var/datum/pathnode/CN = openc[T]  //current checking turf
 						var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
 						var/newg = cur.g + call(cur.source,dist)(T)
 						if(CN)
@@ -182,7 +185,7 @@ Actual Adjacent procs :
 			L.Add(T)
 	return L
 
-/turf/proc/reachableTurftest(caller, var/turf/T, ID, simulated_only)
+/turf/proc/reachableTurftest(caller, turf/T, ID, simulated_only)
 	if(T && !T.density && !(simulated_only && SSpathfinder.space_type_cache[T.type]) && !LinkBlockedWithAccess(T,caller, ID))
 		return TRUE
 
@@ -195,12 +198,12 @@ Actual Adjacent procs :
 	var/rdir = ((adir & MASK_ODD)<<1)|((adir & MASK_EVEN)>>1)
 	for(var/obj/structure/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
-			return 1
+			return TRUE
 	for(var/obj/machinery/door/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
-			return 1
+			return TRUE
 	for(var/obj/O in T)
 		if(!O.CanAStarPass(ID, rdir, caller))
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE

@@ -24,26 +24,19 @@
 	ASSERT(!istype(A, /area/holodeck))
 	return A.powered(chan)
 
-/area/holodeck/usage(var/chan)
-	if(!linked)
-		return 0
-	var/area/A = get_area(linked)
-	ASSERT(!istype(A, /area/holodeck))
-	return A.usage(chan)
-
 /area/holodeck/addStaticPower(value, powerchannel)
 	if(!linked)
 		return
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
-	return A.addStaticPower(value,powerchannel)
+	return ..()
 
-/area/holodeck/use_power(var/amount, var/chan)
+/area/holodeck/use_power(amount, chan)
 	if(!linked)
 		return 0
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
-	return A.use_power(amount,chan)
+	return ..()
 
 
 /*
@@ -75,9 +68,6 @@
 /area/holodeck/rec_center/lounge
 	name = "Holodeck - Lounge"
 
-/area/holodeck/rec_center/medical
-	name = "Holodeck - Emergency Medical"
-
 /area/holodeck/rec_center/pet_lounge
 	name = "Holodeck - Pet Park"
 
@@ -99,7 +89,18 @@
 /area/holodeck/rec_center/winterwonderland
 	name = "Holodeck - Winter Wonderland"
 
+/area/holodeck/rec_center/photobooth
+	name = "Holodeck - Photobooth"
+
 // Bad programs
+
+/area/holodeck/rec_center/medical
+	name = "Holodeck - Emergency Medical"
+	restricted = 1
+
+/area/holodeck/rec_center/thunderdome1218
+	name = "Holodeck - 1218 AD"
+	restricted = 1
 
 /area/holodeck/rec_center/burn
 	name = "Holodeck - Atmospheric Burn Test"
@@ -119,8 +120,4 @@
 
 /area/holodeck/rec_center/refuel
 	name = "Holodeck - Refueling Station"
-	restricted = 1
-
-/area/holodeck/rec_center/thunderdome1218
-	name = "Holodeck - 1218 AD"
 	restricted = 1

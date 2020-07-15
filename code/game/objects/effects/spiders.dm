@@ -11,7 +11,7 @@
 
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
-		playsound(loc, 'sound/items/welder.ogg', 100, 1)
+		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
 
 /obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -28,6 +28,7 @@
 		take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	var/genetic = FALSE
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/Initialize()
@@ -35,16 +36,41 @@
 		icon_state = "stickyweb2"
 	. = ..()
 
-/obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
+/obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(genetic)
+		return
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
-		return 1
+		return TRUE
 	else if(isliving(mover))
+		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/poison/giant_spider))
+			return TRUE
 		if(prob(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
-			return 0
-	else if(istype(mover, /obj/item/projectile))
+			return FALSE
+	else if(istype(mover, /obj/projectile))
 		return prob(30)
-	return 1
+
+/obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
+	genetic = TRUE
+	var/mob/living/allowed_mob
+
+/obj/structure/spider/stickyweb/genetic/Initialize(mapload, allowedmob)
+	allowed_mob = allowedmob
+	. = ..()
+
+/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..() //this is the normal spider web return aka a spider would make this TRUE
+	if(mover == allowed_mob)
+		return TRUE
+	else if(isliving(mover)) //we change the spider to not be able to go through here
+		if(mover.pulledby == allowed_mob)
+			return TRUE
+		if(prob(50))
+			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
+			return FALSE
+	else if(istype(mover, /obj/projectile))
+		return prob(30)
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
@@ -53,7 +79,7 @@
 	var/amount_grown = 0
 	var/player_spiders = 0
 	var/directive = "" //Message from the mother
-	var/poison_type = "toxin"
+	var/poison_type = /datum/reagent/toxin
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
@@ -69,8 +95,6 @@
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
-			S.poison_type = poison_type
-			S.poison_per_bite = poison_per_bite
 			S.faction = faction.Copy()
 			S.directive = directive
 			if(player_spiders)
@@ -90,8 +114,6 @@
 	var/travelling_in_vent = 0
 	var/player_spiders = 0
 	var/directive = "" //Message from the mother
-	var/poison_type = "toxin"
-	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
 /obj/structure/spider/spiderling/Destroy()
@@ -126,6 +148,36 @@
 	else
 		..()
 
+/obj/structure/spider/spiderling/proc/cancel_vent_move()
+	forceMove(entry_vent)
+	entry_vent = null
+
+/obj/structure/spider/spiderling/proc/vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
+	if(QDELETED(exit_vent) || exit_vent.welded)
+		cancel_vent_move()
+		return
+
+	forceMove(exit_vent)
+	var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
+	addtimer(CALLBACK(src, .proc/do_vent_move, exit_vent, travel_time), travel_time)
+
+/obj/structure/spider/spiderling/proc/do_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent, travel_time)
+	if(QDELETED(exit_vent) || exit_vent.welded)
+		cancel_vent_move()
+		return
+
+	if(prob(50))
+		audible_message("<span class='hear'>You hear something scampering through the ventilation ducts.</span>")
+
+	addtimer(CALLBACK(src, .proc/finish_vent_move, exit_vent), travel_time)
+
+/obj/structure/spider/spiderling/proc/finish_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
+	if(QDELETED(exit_vent) || exit_vent.welded)
+		cancel_vent_move()
+		return
+	forceMove(exit_vent.loc)
+	entry_vent = null
+
 /obj/structure/spider/spiderling/process()
 	if(travelling_in_vent)
 		if(isturf(loc))
@@ -143,31 +195,10 @@
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
 			if(prob(50))
 				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
-								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
+								"<span class='hear'>You hear something scampering through the ventilation ducts.</span>")
 
-			spawn(rand(20,60))
-				forceMove(exit_vent)
-				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-				spawn(travel_time)
+			addtimer(CALLBACK(src, .proc/vent_move, exit_vent), rand(20,60))
 
-					if(!exit_vent || exit_vent.welded)
-						forceMove(entry_vent)
-						entry_vent = null
-						return
-
-					if(prob(50))
-						audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
-					sleep(travel_time)
-
-					if(!exit_vent || exit_vent.welded)
-						forceMove(entry_vent)
-						entry_vent = null
-						return
-					forceMove(exit_vent.loc)
-					entry_vent = null
-					var/area/new_area = get_area(loc)
-					if(new_area)
-						new_area.Entered(src)
 	//=================
 
 	else if(prob(33))
@@ -193,8 +224,6 @@
 				else
 					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
-			S.poison_per_bite = poison_per_bite
-			S.poison_type = poison_type
 			S.faction = faction.Copy()
 			S.directive = directive
 			if(player_spiders)
@@ -219,7 +248,7 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
-	visible_message("You see something struggling and writhing in \the [src]!")
+	visible_message("<span class='notice'>You see something struggling and writhing in \the [src]!</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return

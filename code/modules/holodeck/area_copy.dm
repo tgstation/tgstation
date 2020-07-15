@@ -4,7 +4,8 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup"
 	))
 
-/proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc = FALSE, atom/newloc = null, nerf = FALSE, holoitem=FALSE)
+/proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc, atom/newloc = null, nerf, holoitem)
+	RETURN_TYPE(original.type)
 	if(!original)
 		return
 	var/atom/O
@@ -37,13 +38,24 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 		if(ismachinery(O))
 			var/obj/machinery/M = O
 			M.power_change()
+			if(istype(O, /obj/machinery/button))
+				var/obj/machinery/button/B = O
+				B.setup_device()
 
 	if(holoitem)
 		O.flags_1 |= HOLOGRAM_1
+		for(var/atom/thing in O)
+			thing.flags_1 |= HOLOGRAM_1
+		if(ismachinery(O))
+			var/obj/machinery/M = O
+			for(var/atom/contained_atom in M.component_parts)
+				contained_atom.flags_1 |= HOLOGRAM_1
+			if(M.circuit)
+				M.circuit.flags_1 |= HOLOGRAM_1
 	return O
 
 
-/area/proc/copy_contents_to(var/area/A , var/platingRequired = 0, var/nerf_weapons = 0 )
+/area/proc/copy_contents_to(area/A , platingRequired = 0, nerf_weapons = 0 )
 	//Takes: Area. Optional: If it should copy to areas that don't have plating
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
@@ -122,7 +134,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)
-			T1.CalculateAdjacentTurfs()
+			CALCULATE_ADJACENT_TURFS(T1)
 			SSair.add_to_active(T1,1)
 
 

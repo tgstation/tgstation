@@ -1,23 +1,22 @@
-/*
-Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
-
-node1, air1, network1 correspond to input
-node2, air2, network2 correspond to output
-
-Thus, the two variables affect pump operation are set in New():
-	air1.volume
-		This is the volume of gas available to the pump that may be transfered to the output
-	air2.volume
-		Higher quantities of this cause more air to be perfected later
-			but overall network volume is also increased as this increases...
-*/
+// Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
+//
+// node1, air1, network1 correspond to input
+// node2, air2, network2 correspond to output
+//
+// Thus, the two variables affect pump operation are set in New():
+//   air1.volume
+//     This is the volume of gas available to the pump that may be transfered to the output
+//   air2.volume
+//     Higher quantities of this cause more air to be perfected later
+//     but overall network volume is also increased as this increases...
 
 /obj/machinery/atmospherics/components/binary/pump
-	icon_state = "pump_map"
+	icon_state = "pump_map-2"
 	name = "gas pump"
 	desc = "A pump that moves gas by pressure."
 
 	can_unwrench = TRUE
+	shift_underlay_only = FALSE
 
 	var/target_pressure = ONE_ATMOSPHERE
 
@@ -28,29 +27,22 @@ Thus, the two variables affect pump operation are set in New():
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
 
-/obj/machinery/atmospherics/components/binary/pump/layer1
-	piping_layer = PIPING_LAYER_MIN
-	pixel_x = -PIPING_LAYER_P_X
-	pixel_y = -PIPING_LAYER_P_Y
+	ui_x = 335
+	ui_y = 115
 
-/obj/machinery/atmospherics/components/binary/pump/layer3
-	piping_layer = PIPING_LAYER_MAX
-	pixel_x = PIPING_LAYER_P_X
-	pixel_y = PIPING_LAYER_P_Y
+/obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
+	if(can_interact(user))
+		on = !on
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		update_icon()
+	return ..()
 
-/obj/machinery/atmospherics/components/binary/pump/on
-	on = TRUE
-	icon_state = "pump_on_map"
-
-/obj/machinery/atmospherics/components/binary/pump/on/layer1
-	piping_layer = PIPING_LAYER_MIN
-	pixel_x = -PIPING_LAYER_P_X
-	pixel_y = -PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/binary/pump/on/layer3
-	piping_layer = PIPING_LAYER_MAX
-	pixel_x = PIPING_LAYER_P_X
-	pixel_y = PIPING_LAYER_P_Y
+/obj/machinery/atmospherics/components/binary/pump/AltClick(mob/user)
+	if(can_interact(user))
+		target_pressure = MAX_OUTPUT_PRESSURE
+		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+		update_icon()
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -59,11 +51,7 @@ Thus, the two variables affect pump operation are set in New():
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
-	if(!is_operational())
-		icon_state = "pump_off"
-		return
-
-	icon_state = "pump_[on?"on":"off"]"
+	icon_state = (on && is_operational()) ? "pump_on" : "pump_off"
 
 /obj/machinery/atmospherics/components/binary/pump/process_atmos()
 //	..()
@@ -73,21 +61,7 @@ Thus, the two variables affect pump operation are set in New():
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 
-	var/output_starting_pressure = air2.return_pressure()
-
-	if((target_pressure - output_starting_pressure) < 0.01)
-		//No need to pump gas if target is already reached!
-		return
-
-	//Calculate necessary moles to transfer using PV=nRT
-	if((air1.total_moles() > 0) && (air1.temperature>0))
-		var/pressure_delta = target_pressure - output_starting_pressure
-		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
-
-		//Actually transfer the gas
-		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
-		air2.merge(removed)
-
+	if(air1.pump_gas_to(air2, target_pressure))
 		update_parents()
 
 //Radio remote control
@@ -114,7 +88,7 @@ Thus, the two variables affect pump operation are set in New():
 																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_pump", name, 335, 115, master_ui, state)
+		ui = new(user, src, ui_key, "AtmosPump", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/binary/pump/ui_data()
@@ -137,15 +111,11 @@ Thus, the two variables affect pump operation are set in New():
 			if(pressure == "max")
 				pressure = MAX_OUTPUT_PRESSURE
 				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
-				if(!isnull(pressure) && !..())
-					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
@@ -167,7 +137,7 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = CLAMP(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		target_pressure = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
@@ -179,12 +149,29 @@ Thus, the two variables affect pump operation are set in New():
 	broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/pump/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
+
+
+/obj/machinery/atmospherics/components/binary/pump/layer1
+	piping_layer = 1
+	icon_state= "pump_map-1"
+
+/obj/machinery/atmospherics/components/binary/pump/layer3
+	piping_layer = 3
+	icon_state= "pump_map-3"
+
+/obj/machinery/atmospherics/components/binary/pump/on
+	on = TRUE
+	icon_state = "pump_on_map-2"
+
+/obj/machinery/atmospherics/components/binary/pump/on/layer1
+	piping_layer = 1
+	icon_state= "pump_on_map-1"
+
+/obj/machinery/atmospherics/components/binary/pump/on/layer3
+	piping_layer = 3
+	icon_state= "pump_on_map-3"

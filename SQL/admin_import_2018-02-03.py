@@ -93,7 +93,7 @@ with open("..\\config\\admins.txt") as admins_file:
             matches = re.match("(.+)\\b\\s+=\\s+(.+)", line)
             ckey = "".join((c for c in matches.group(1) if c not in ckeyformat)).lower()
             rank = "".join((c for c in matches.group(2) if c not in ckeyExformat))
-        cursor.execute("INSERT INTO {0} (ckey, rank) VALUES ('{1}', '{2}')".format(admin_table, ckey, rank))
+            cursor.execute("INSERT INTO {0} (ckey, rank) VALUES ('{1}', '{2}')".format(admin_table, ckey, rank))
 db.commit()
 cursor.close()
 print("Import complete.")

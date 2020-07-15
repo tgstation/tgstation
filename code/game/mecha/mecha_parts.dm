@@ -9,6 +9,16 @@
 	w_class = WEIGHT_CLASS_GIGANTIC
 	flags_1 = CONDUCT_1
 
+/obj/item/mecha_parts/proc/try_attach_part(mob/user, obj/mecha/M) //For attaching parts to a finished mech
+	if(!user.transferItemToLoc(src, M))
+		to_chat(user, "<span class='warning'>\The [src] is stuck to your hand, you cannot put it in \the [M]!</span>")
+		return FALSE
+	user.visible_message("<span class='notice'>[user] attaches [src] to [M].</span>", "<span class='notice'>You attach [src] to [M].</span>")
+	return TRUE
+
+/obj/item/mecha_parts/part/try_attach_part(mob/user, obj/mecha/M)
+	return
+
 /obj/item/mecha_parts/chassis
 	name = "Mecha Chassis"
 	icon_state = "backbone"
@@ -172,12 +182,31 @@
 	desc = "A set of armor plates for the Durand. Built heavy to resist an incredible amount of brute force."
 	icon_state = "durand_armor"
 
-////////// Firefighter
+////////// Clarke
 
-/obj/item/mecha_parts/chassis/firefighter
-	name = "\improper Firefighter chassis"
-	construct_type = /datum/component/construction/unordered/mecha_chassis/firefighter
+/obj/item/mecha_parts/chassis/clarke
+	name = "\improper Clarke chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/clarke
 
+/obj/item/mecha_parts/part/clarke_torso
+	name = "\improper Clarke torso"
+	desc = "A torso part of Clarke. Contains power unit, processing core and life support systems."
+	icon_state = "clarke_harness"
+
+/obj/item/mecha_parts/part/clarke_head
+	name = "\improper Clarke head"
+	desc = "A Clarke head. Contains an integrated diagnostic HUD scanner."
+	icon_state = "clarke_head"
+
+/obj/item/mecha_parts/part/clarke_left_arm
+	name = "\improper Clarke left arm"
+	desc = "A Clarke left arm. Data and power sockets are compatible with most exosuit tools."
+	icon_state = "clarke_l_arm"
+
+/obj/item/mecha_parts/part/clarke_right_arm
+	name = "\improper Clarke right arm"
+	desc = "A Clarke right arm. Data and power sockets are compatible with most exosuit tools."
+	icon_state = "clarke_r_arm"
 
 ////////// HONK
 
@@ -222,6 +251,11 @@
 	name = "\improper Phazon chassis"
 	construct_type = /datum/component/construction/unordered/mecha_chassis/phazon
 
+/obj/item/mecha_parts/chassis/phazon/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(istype(I, /obj/item/assembly/signaler/anomaly) && !istype(I, /obj/item/assembly/signaler/anomaly/bluespace))
+		to_chat(user, "The anomaly core socket only accepts bluespace anomaly cores!")
+
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"
 	desc="A Phazon torso part. The socket for the bluespace core that powers the exosuit's unique phase drives is located in the middle."
@@ -264,7 +298,7 @@
 	name = "exosuit circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -337,3 +371,11 @@
 
 /obj/item/circuitboard/mecha/phazon/main
 	name = "Phazon Central Control module (Exosuit Board)"
+
+/obj/item/circuitboard/mecha/clarke/peripherals
+	name = "Clarke Peripherals Control module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/clarke/main
+	name = "Clarke Central Control module (Exosuit Board)"
+	icon_state = "mainboard"

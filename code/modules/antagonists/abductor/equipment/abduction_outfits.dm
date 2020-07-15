@@ -1,6 +1,6 @@
 /datum/outfit/abductor
 	name = "Abductor Basic"
-	uniform = /obj/item/clothing/under/color/grey //they're greys gettit
+	uniform = /obj/item/clothing/under/abductor
 	shoes = /obj/item/clothing/shoes/combat
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset/abductor
@@ -17,7 +17,7 @@
 		var/obj/item/clothing/suit/armor/abductor/vest/V = locate() in H
 		if(V)
 			console.AddVest(V)
-			V.item_flags |= NODROP
+			ADD_TRAIT(V, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
 
 		var/obj/item/storage/backpack/B = locate() in H
 		if(B)
@@ -34,7 +34,7 @@
 	name = "Abductor Agent"
 	head = /obj/item/clothing/head/helmet/abductor
 	suit = /obj/item/clothing/suit/armor/abductor/vest
-	suit_store = /obj/item/abductor_baton
+	suit_store = /obj/item/melee/baton/abductor
 	belt = /obj/item/storage/belt/military/abductor/full
 
 	backpack_contents = list(
@@ -54,3 +54,16 @@
 	if(!visualsOnly)
 		var/obj/item/implant/abductor/beamplant = new /obj/item/implant/abductor(H)
 		beamplant.implant(H)
+
+/datum/outfit/abductor/scientist/onemanteam
+	name = "Abductor Scientist (w/ agent gear)"
+	head = /obj/item/clothing/head/helmet/abductor
+	suit = /obj/item/clothing/suit/armor/abductor/vest
+	suit_store = /obj/item/melee/baton/abductor
+	belt = /obj/item/storage/belt/military/abductor/full
+
+	backpack_contents = list(
+	/obj/item/abductor/gizmo = 1,
+	/obj/item/gun/energy/alien = 1,
+	/obj/item/abductor/silencer = 1
+	)

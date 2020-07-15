@@ -1,11 +1,11 @@
-/datum/emote/sound/gorilla
+/datum/emote/gorilla
 	mob_type_allowed_typecache = /mob/living/simple_animal/hostile/gorilla
 	mob_type_blacklist_typecache = list()
 
-/datum/emote/sound/gorilla/ooga
+/datum/emote/gorilla/ooga
 	key = "ooga"
 	key_third_person = "oogas"
 	message = "oogas."
 	message_param = "oogas at %t."
-	sound = "sound/creatures/gorilla.ogg"
+	sound = 'sound/creatures/gorilla.ogg'
 

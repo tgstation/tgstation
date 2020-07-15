@@ -5,7 +5,7 @@
 	icon_state = "scroll"
 	var/uses = 4
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	throw_speed = 3
 	throw_range = 7
 	resistance_flags = FLAMMABLE
@@ -66,7 +66,8 @@
 		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 		return
 
-	user.forceMove(pick(L))
-
-	smoke.start()
-	uses--
+	if(do_teleport(user, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+		smoke.start()
+		uses--
+	else
+		to_chat(user, "The spell matrix was disrupted by something near the destination.")

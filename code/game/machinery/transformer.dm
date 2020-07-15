@@ -28,19 +28,14 @@
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
 	if(cooldown && (issilicon(user) || isobserver(user)))
-		to_chat(user, "It will be ready in [DisplayTimeText(cooldown_timer - world.time)].")
+		. += "It will be ready in [DisplayTimeText(cooldown_timer - world.time)]."
 
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)
 	. = ..()
 
-/obj/machinery/transformer/power_change()
-	..()
-	update_icon()
-
-/obj/machinery/transformer/update_icon()
-	..()
-	if(stat & (BROKEN|NOPOWER) || cooldown == 1)
+/obj/machinery/transformer/update_icon_state()
+	if(machine_stat & (BROKEN|NOPOWER) || cooldown == 1)
 		icon_state = "separator-AO0"
 	else
 		icon_state = initial(icon_state)
@@ -54,18 +49,18 @@
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)
 		var/mob/living/carbon/human/H = AM
-		if((transform_standing || H.lying) && move_dir == EAST)// || move_dir == WEST)
+		if((transform_standing || !(H.mobility_flags & MOBILITY_STAND)) && move_dir == EAST)// || move_dir == WEST)
 			AM.forceMove(drop_location())
 			do_transform(AM)
 
-/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/transformer/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	// Allows items to go through,
 	// to stop them from blocking the conveyor belt.
 	if(!ishuman(mover))
-		var/dir = get_dir(src, mover)
-		if(dir == EAST)
-			return ..()
-	return 0
+		if(get_dir(src, mover) == EAST)
+			return
+	return FALSE
 
 /obj/machinery/transformer/process()
 	if(cooldown && (cooldown_timer <= world.time))
@@ -73,13 +68,13 @@
 		update_icon()
 
 /obj/machinery/transformer/proc/do_transform(mob/living/carbon/human/H)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(cooldown == 1)
 		return
 
 	if(!transform_dead && H.stat == DEAD)
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	// Activate the cooldown
@@ -87,7 +82,7 @@
 	cooldown_timer = world.time + cooldown_duration
 	update_icon()
 
-	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/welder.ogg', 50, TRUE)
 	H.emote("scream") // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
 
@@ -107,7 +102,7 @@
 	addtimer(CALLBACK(src, .proc/unlock_new_robot, R), 50)
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/R)
-	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
 	sleep(30)
 	if(R)
 		R.SetLockdown(0)

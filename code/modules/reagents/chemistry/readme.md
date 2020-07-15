@@ -40,7 +40,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 
 		metabolize(var/mob/living/carbon/C)
 			This proc is called by the mobs life proc. It simply calls on_mob_life for
-			all contained reagents. You shouldnt have to use this one directly.
+			all contained reagents. You shouldn't have to use this one directly.
 
 		handle_reactions()
 			This proc check all recipes and, on a match, uses them.
@@ -66,7 +66,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 
 		reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0)
 			This proc calls the appropriate reaction procs of the reagents.
-			I.e. if A is an object, it will call the reagents reaction_obj
+			I.e. if A is an object, it will call the reagents expose_obj
 			proc. The method var is used for reaction on mobs. It simply tells
 			us if the mob TOUCHed the reagent, if it INGESTed the reagent, if the reagent
 			was VAPORIZEd on them, if the reagent was INJECTed,	or transfered via a PATCH to them.
@@ -80,7 +80,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 
 		add_reagent(var/reagent, var/amount, var/data)
 			Attempts to add X of the matching reagent to the holder.
-			You wont use this much. Mostly in new procs for pre-filled
+			You won't use this much. Mostly in new procs for pre-filled
 			objects.
 
 		remove_reagent(var/reagent, var/amount)
@@ -116,20 +116,20 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 # About Reagents:
 Reagents are all the things you can mix and fille in bottles etc. This can be anything from rejuvs over water to ... iron. Each reagent also has a few procs - i'll explain those below.
 ```
-		reaction_mob(var/mob/living/L, var/method=TOUCH)
+		expose_mob(var/mob/living/L, var/method=TOUCH)
 			This is called by the holder's reation proc.
 			This version is only called when the reagent
 			reacts with a mob. The method var can be either
 			TOUCH or INGEST. You'll want to put stuff like
 			acid-facemelting in here.
 
-		reaction_obj(var/obj/O)
+		expose_obj(var/obj/O)
 			This is called by the holder's reation proc.
 			This version is called when the reagents reacts
 			with an object. You'll want to put stuff like
 			object melting in here ... or something. i dunno.
 
-		reaction_turf(var/turf/T)
+		expose_turf(var/turf/T)
 			This is called by the holder's reation proc.
 			This version is called when the reagents reacts
 			with a turf. You'll want to put stuff like extra
@@ -230,19 +230,19 @@ By default, all atom have a reagents var - but its empty. if you want to use an 
 			'pouring' our reagents into something else.
 
 		atom/proc/is_open_container()
-			Checks obj/var/container_type & OPENCONTAINER.
+			Checks atom/var/reagents.flags & OPENCONTAINER.
 			If this returns 1 , you can use syringes, beakers etc
 			to manipulate the contents of this object.
 			If it's 0, you'll need to write your own custom reagent
 			transfer code since you will not be able to use the standard
 			tools to manipulate it.
 
-		atom/proc/is_injectable()
+		atom/proc/is_injectable(mob/user, allowmobs = TRUE)
 			Checks if something can be injected to.
 			If this returns 1, you can use syringes and droppers
 			to draw from and add to the contents of this object.
 
-		atom/proc/is_drawable()
+		atom/proc/is_drawable(mob/user)
 			Checks if something can be drawn from.
 			If this returns 1, you can use syringes and droppers
 			to draw from the contents of this object.

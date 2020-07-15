@@ -39,7 +39,7 @@
 	density = FALSE
 
 	frequency = FREQ_ATMOS_CONTROL
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 
 	// Setup parameters only
 	var/airpump_tag
@@ -54,7 +54,7 @@
 	new_prog.master = src
 	program = new_prog
 
-/obj/machinery/embedded_controller/radio/simple_vent_controller/update_icon()
+/obj/machinery/embedded_controller/radio/simple_vent_controller/update_icon_state()
 	if(on && program)
 		icon_state = "airlock_control_standby"
 	else

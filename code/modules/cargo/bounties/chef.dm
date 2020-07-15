@@ -32,11 +32,18 @@
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/icecreamsandwich)
 
+/datum/bounty/item/chef/strawberryicecreamsandwich
+	name = " Strawberry Ice Cream Sandwiches"
+	description = "Upper management has been screaming non-stop for more flavourful ice cream. Please send some."
+	reward = 5000
+	required_count = 3
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/strawberryicecreamsandwich)
+
 /datum/bounty/item/chef/bread
 	name = "Bread"
 	description = "Problems with central planning have led to bread prices skyrocketing. Ship some bread to ease tensions."
 	reward = 1000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/bread, /obj/item/reagent_containers/food/snacks/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase) 
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/bread, /obj/item/reagent_containers/food/snacks/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase)
 
 /datum/bounty/item/chef/pie
 	name = "Pie"
@@ -82,13 +89,6 @@
 	reward = 8000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/hotdog)
 
-/datum/bounty/item/chef/lemon
-	name = "Lemons"
-	description = "A commander claims he can turn lemons into money. Ship him a few and he'll deposit the money into the station's account."
-	reward = 4444
-	required_count = 10
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/citrus/lemon)
-
 /datum/bounty/item/chef/eggplantparm
 	name = "Eggplant Parmigianas"
 	description = "A famous singer will be arriving at CentCom, and their contract demands that they only be served Eggplant Parmigiana. Ship some, please!"
@@ -127,7 +127,7 @@
 	description = "Here at Nanotrasen we consider employees to be family. And you know what families love? Pancakes. Ship a baker's dozen."
 	reward = 5000
 	required_count = 13
-	wanted_types = list(/datum/crafting_recipe/food/pancakes)
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/pancakes)
 
 /datum/bounty/item/chef/nuggies
 	name = "Chicken Nuggets"

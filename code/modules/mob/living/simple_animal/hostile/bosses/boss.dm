@@ -1,10 +1,11 @@
 /mob/living/simple_animal/hostile/boss
-	name = "A Perfectly Generic Boss Placeholder"
+	name = "\improper A Perfectly Generic Boss Placeholder"
 	desc = ""
 	robust_searching = 1
 	stat_attack = UNCONSCIOUS
 	status_flags = 0
 	a_intent = INTENT_HARM
+	sentience_type = SENTIENCE_BOSS
 	gender = NEUTER
 	var/list/boss_abilities = list() //list of /datum/action/boss
 	var/datum/boss_active_timed_battle/atb
@@ -65,7 +66,7 @@
 				return 0
 		if(boss)
 			if(say_when_triggered)
-				boss.say(say_when_triggered)
+				boss.say(say_when_triggered, forced = "boss action")
 			if(!boss.atb.spend(boss_cost))
 				return 0
 

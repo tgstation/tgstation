@@ -49,7 +49,6 @@
 /area/ruin/powered/shuttle/medium_4)
 "l" = (
 /obj/structure/chair/old{
-	icon_state = "chairold";
 	dir = 1
 	},
 /turf/open/floor/oldshuttle,

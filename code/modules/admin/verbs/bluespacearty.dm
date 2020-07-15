@@ -5,7 +5,7 @@
 	var/mob/living/target = M
 
 	if(!isliving(target))
-		to_chat(usr, "This can only be used on instances of type /mob/living")
+		to_chat(usr, "This can only be used on instances of type /mob/living", confidential = TRUE)
 		return
 
 	explosion(target.loc, 0, 0, 0, 0)
@@ -21,6 +21,6 @@
 		target.gib(1, 1)
 	else
 		target.adjustBruteLoss(min(99,(target.health - 1)))
-		target.Knockdown(400)
+		target.Paralyze(400)
 		target.stuttering = 20
 

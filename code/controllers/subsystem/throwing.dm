@@ -43,6 +43,7 @@ SUBSYSTEM_DEF(throwing)
 	var/atom/movable/thrownthing
 	var/atom/target
 	var/turf/target_turf
+	var/target_zone
 	var/init_dir
 	var/maxrange
 	var/speed
@@ -54,6 +55,8 @@ SUBSYSTEM_DEF(throwing)
 	var/dist_y
 	var/dx
 	var/dy
+	var/force = MOVE_FORCE_DEFAULT
+	var/gentle = FALSE
 	var/pure_diagonal
 	var/diagonal_error
 	var/datum/callback/callback
@@ -116,7 +119,7 @@ SUBSYSTEM_DEF(throwing)
 			return
 
 		dist_travelled++
-		
+
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
 			return
@@ -126,6 +129,7 @@ SUBSYSTEM_DEF(throwing)
 	//done throwing, either because it hit something or it finished moving
 	if(!thrownthing)
 		return
+	thrownthing.throwing = null
 	if (!hit)
 		for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
 			var/atom/A = thing
@@ -145,6 +149,11 @@ SUBSYSTEM_DEF(throwing)
 	if (callback)
 		callback.Invoke()
 
+	if(!thrownthing.zfalling) // I don't think you can zfall while thrown but hey, just in case.
+		var/turf/T = get_turf(thrownthing)
+		if(T && thrownthing.has_gravity(T))
+			T.zFall(thrownthing)
+
 	qdel(src)
 
 /datum/thrownthing/proc/hit_atom(atom/A)
@@ -153,7 +162,7 @@ SUBSYSTEM_DEF(throwing)
 /datum/thrownthing/proc/hitcheck()
 	for (var/thing in get_turf(thrownthing))
 		var/atom/movable/AM = thing
-		if (AM == thrownthing)
+		if (AM == thrownthing || (AM == thrower && !ismob(thrownthing)))
 			continue
 		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
 			finalize(hit=TRUE, target=AM)

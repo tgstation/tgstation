@@ -8,7 +8,6 @@
 	height = 6;
 	id = "snowdin_excavation";
 	name = "excavation elevator";
-	timid = 1;
 	width = 6
 	},
 /turf/open/floor/plating,
@@ -32,7 +31,6 @@
 /area/shuttle/snowdin/elevator1)
 "f" = (
 /obj/machinery/computer/shuttle/snowdin/mining{
-	dir = 2;
 	name = "Excavation Elevator Console";
 	possible_destinations = "snowdin_excavation_top;snowdin_excavation_down";
 	shuttleId = "snowdin_excavation"

@@ -2,15 +2,17 @@
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
-	item_state = "mousetrap"
-	materials = list(MAT_METAL=100)
+	inhand_icon_state = "mousetrap"
+	custom_materials = list(/datum/material/iron=100)
 	attachable = TRUE
 	var/armed = FALSE
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 
 /obj/item/assembly/mousetrap/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The pressure plate is [armed?"primed":"safe"].</span>")
+	. = ..()
+	. += "<span class='notice'>The pressure plate is [armed?"primed":"safe"].</span>"
 
 /obj/item/assembly/mousetrap/activate()
 	if(..())
@@ -18,7 +20,7 @@
 		if(!armed)
 			if(ishuman(usr))
 				var/mob/living/carbon/human/user = usr
-				if((user.has_trait(TRAIT_DUMB) || user.has_trait(TRAIT_CLUMSY)) && prob(50))
+				if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 					to_chat(user, "<span class='warning'>Your hand slips, setting off the trigger!</span>")
 					pulse(FALSE)
 		update_icon()
@@ -38,7 +40,7 @@
 	var/obj/item/bodypart/affecting = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(H.has_trait(TRAIT_PIERCEIMMUNE))
+		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
 			playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 			armed = FALSE
 			update_icon()
@@ -48,7 +50,7 @@
 			if("feet")
 				if(!H.shoes)
 					affecting = H.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-					H.Knockdown(60)
+					H.Paralyze(60)
 			if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 				if(!H.gloves)
 					affecting = H.get_bodypart(type)
@@ -70,7 +72,7 @@
 	if(!armed)
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
-		if((user.has_trait(TRAIT_DUMB) || user.has_trait(TRAIT_CLUMSY)) && prob(50))
+		if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 			var/which_hand = BODY_ZONE_PRECISE_L_HAND
 			if(!(user.active_hand_index % 2))
 				which_hand = BODY_ZONE_PRECISE_R_HAND
@@ -87,7 +89,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/assembly/mousetrap/attack_hand(mob/living/carbon/human/user)
 	if(armed)
-		if((user.has_trait(TRAIT_DUMB) || user.has_trait(TRAIT_CLUMSY)) && prob(50))
+		if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 			var/which_hand = BODY_ZONE_PRECISE_L_HAND
 			if(!(user.active_hand_index % 2))
 				which_hand = BODY_ZONE_PRECISE_R_HAND
@@ -130,10 +132,10 @@
 	return FALSE
 
 
-/obj/item/assembly/mousetrap/hitby(A as mob|obj)
+/obj/item/assembly/mousetrap/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(!armed)
 		return ..()
-	visible_message("<span class='warning'>[src] is triggered by [A].</span>")
+	visible_message("<span class='warning'>[src] is triggered by [AM].</span>")
 	triggered(null)
 
 

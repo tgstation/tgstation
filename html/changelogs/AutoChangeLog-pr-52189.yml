@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Readded the button to toggle the plasmaman helmet's welding visor."

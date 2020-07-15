@@ -2,7 +2,7 @@
 	name = "Assembly"
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "holder"
-	item_state = "assembly"
+	inhand_icon_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -13,6 +13,11 @@
 
 	var/obj/item/assembly/a_left = null
 	var/obj/item/assembly/a_right = null
+
+/obj/item/assembly_holder/ComponentInitialize()
+	. = ..()
+	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS
+	AddComponent(/datum/component/simple_rotation, rotation_flags)
 
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE
@@ -62,6 +67,7 @@
 		master.update_icon()
 
 /obj/item/assembly_holder/Crossed(atom/movable/AM as mob|obj)
+	. = ..()
 	if(a_left)
 		a_left.Crossed(AM)
 	if(a_right)
@@ -73,7 +79,7 @@
 	if(a_right)
 		a_right.on_found(finder)
 
-/obj/item/assembly_holder/Move()
+/obj/item/assembly_holder/setDir()
 	. = ..()
 	if(a_left)
 		a_left.holder_movement()
@@ -97,6 +103,8 @@
 		a_right.attack_hand()
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
+	if(..())
+		return TRUE
 	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
 	if(a_left)
 		a_left.on_detach()

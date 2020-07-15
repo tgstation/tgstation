@@ -1,0 +1,6 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - bugfix: "Fixed SWAT and Armored beat cops spawning without a weapon."
+  - bugfix: "Fixed the Syndicate Ship Captain outfit not having a jumpsuit, ID, or belt."
+  - bugfix: "Armored fugitive bounty hunters now correctly start with an extra tank of plasma in their hand."

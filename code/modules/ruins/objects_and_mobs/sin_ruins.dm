@@ -23,14 +23,14 @@
 		user.visible_message("<span class='warning'>[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
 		know it'll be worth it.</span>")
 	icon_state = "slots2"
-	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, 0)
+	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, FALSE)
 	addtimer(CALLBACK(src, .proc/determine_victor, user), 50)
 
 /obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
 	icon_state = "slots1"
 	obj_flags &= ~IN_USE
 	if(prob(win_prob))
-		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, 0)
+		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
 		new/obj/structure/cursed_money(get_turf(src))
 		if(user)
 			to_chat(user, "<span class='boldwarning'>You've hit jackpot. Laughter echoes around you as your reward appears in the machine's place.</span>")
@@ -80,7 +80,8 @@
 	icon = 'icons/mob/blob.dmi'
 	color = rgb(145, 150, 0)
 
-/obj/effect/gluttony/CanPass(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
+/obj/effect/gluttony/CanAllowThrough(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
+	. = ..()
 	if(ishuman(mover))
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
@@ -90,13 +91,18 @@
 			to_chat(H, "<span class='warning'>You're repulsed by even looking at [src]. Only a pig could force themselves to go through it.</span>")
 	if(istype(mover, /mob/living/simple_animal/hostile/morph))
 		return TRUE
-	else
-		return FALSE
 
 /obj/structure/mirror/magic/pride //Pride's mirror: Used in the Pride ruin.
 	name = "pride's mirror"
 	desc = "Pride cometh before the..."
 	icon_state = "magic_mirror"
+
+/obj/structure/mirror/magic/pride/New()
+	for(var/speciestype in subtypesof(/datum/species))
+		var/datum/species/S = speciestype
+		if(initial(S.changesource_flags) & MIRROR_PRIDE)
+			choosable_races += initial(S.id)
+	..()
 
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
@@ -108,7 +114,7 @@
 	if (levels.len)
 		dest = locate(T.x, T.y, pick(levels))
 
-	T.ChangeTurf(/turf/open/chasm)
+	T.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
 	var/turf/open/chasm/C = T
 	C.set_target(dest)
 	C.drop(user)
@@ -120,7 +126,7 @@
 	desc = "Their success will be yours."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	item_state = "knife"
+	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 18

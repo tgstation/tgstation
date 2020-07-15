@@ -11,7 +11,7 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	circuit = /obj/item/circuitboard/machine/teleporter_hub
-	var/accurate = FALSE
+	var/accuracy = 0
 	var/obj/machinery/teleport/station/power_station
 	var/calibrated //Calibration prevents mutation
 
@@ -29,7 +29,12 @@
 	var/A = 0
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		A += M.rating
-	accurate = A
+	accuracy = A
+
+/obj/machinery/teleport/hub/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.</span>"
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
@@ -42,7 +47,7 @@
 
 /obj/machinery/teleport/hub/Bumped(atom/movable/AM)
 	if(is_centcom_level(z))
-		to_chat(AM, "You can't use this here.")
+		to_chat(AM, "<span class='warning'>You can't use this here!</span>")
 		return
 	if(is_ready())
 		teleport(AM)
@@ -65,22 +70,22 @@
 		com.target = null
 		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if (ismovableatom(M))
-		if(do_teleport(M, com.target))
+	if (ismovable(M))
+		if(do_teleport(M, com.target, channel = TELEPORT_CHANNEL_BLUESPACE))
 			use_power(5000)
-			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
-				log_game("[M] ([key_name(M)]) was turned into a fly person")
+			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
-						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
+						to_chat(M, "<span class='hear'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
+						log_game("[human] ([key_name(human)]) was turned into a fly person")
 
-					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
+					human.apply_effect((rand(120 - accuracy * 40, 180 - accuracy * 60)), EFFECT_IRRADIATE, 0)
 			calibrated = 0
 	return
 
-/obj/machinery/teleport/hub/update_icon()
+/obj/machinery/teleport/hub/update_icon_state()
 	if(panel_open)
 		icon_state = "tele-o"
 	else if(is_ready())
@@ -88,12 +93,8 @@
 	else
 		icon_state = "tele0"
 
-/obj/machinery/teleport/hub/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/teleport/hub/proc/is_ready()
-	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
+	. = !panel_open && !(machine_stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.machine_stat & (BROKEN|NOPOWER))
 
 /obj/machinery/teleport/hub/syndicate/Initialize()
 	. = ..()
@@ -102,7 +103,7 @@
 
 
 /obj/machinery/teleport/station
-	name = "station"
+	name = "teleporter station"
 	desc = "The power control station for a bluespace teleporter. Used for toggling power, and can activate a test-fire to prevent malfunctions."
 	icon_state = "controller"
 	use_power = IDLE_POWER_USE
@@ -124,6 +125,15 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		E += C.rating
 	efficiency = E - 1
+
+/obj/machinery/teleport/station/examine(mob/user)
+	. = ..()
+	if(!panel_open)
+		. += "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device and wiring panel.</span>"
+	else
+		. += "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned</i> with a multitool.<br>The <i>wiring</i> can be <i>connected<i> to a nearby console and hub with a pair of wirecutters.</span>"
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: This station can be linked to <b>[efficiency]</b> other station(s).</span>"
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
 	for(var/direction in GLOB.cardinals)
@@ -150,17 +160,19 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, W))
+			return
 		var/obj/item/multitool/M = W
 		if(panel_open)
 			M.buffer = src
-			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
+			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
 		else
 			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 				if(linked_stations.len < efficiency)
 					linked_stations.Add(M.buffer)
 					M.buffer = null
-					to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
+					to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
 				else
 					to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
 		return
@@ -171,10 +183,10 @@
 	else if(default_deconstruction_crowbar(W))
 		return
 
-	else if(istype(W, /obj/item/wirecutters))
+	else if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(panel_open)
 			link_console_and_hub()
-			to_chat(user, "<span class='caution'>You reconnect the station to nearby machinery.</span>")
+			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return
 	else
 		return ..()
@@ -183,10 +195,10 @@
 	toggle(user)
 
 /obj/machinery/teleport/station/proc/toggle(mob/user)
-	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
+	if(machine_stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
 	if (teleporter_console.target)
-		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
+		if(teleporter_hub.panel_open || teleporter_hub.machine_stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='alert'>The teleporter hub isn't responding.</span>")
 		else
 			engaged = !engaged
@@ -199,15 +211,16 @@
 	add_fingerprint(user)
 
 /obj/machinery/teleport/station/power_change()
-	..()
-	update_icon()
+	. = ..()
 	if(teleporter_hub)
 		teleporter_hub.update_icon()
 
-/obj/machinery/teleport/station/update_icon()
+/obj/machinery/teleport/station/update_icon_state()
 	if(panel_open)
 		icon_state = "controller-o"
-	else if(stat & (BROKEN|NOPOWER))
+	else if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "controller-p"
+	else if(teleporter_console && teleporter_console.calibrating)
+		icon_state = "controller-c"
 	else
 		icon_state = "controller"

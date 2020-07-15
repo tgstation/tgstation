@@ -29,13 +29,13 @@
 	update_cut_status()
 
 /obj/structure/fence/examine(mob/user)
-	.=..()
+	. = ..()
 
 	switch(hole_size)
 		if(MEDIUM_HOLE)
-			user.show_message("There is a large hole in \the [src].")
+			. += "There is a large hole in \the [src]."
 		if(LARGE_HOLE)
-			user.show_message("\The [src] has been completely cut through.")
+			. += "\The [src] has been completely cut through."
 
 /obj/structure/fence/end
 	icon_state = "end"
@@ -58,16 +58,16 @@
 	hole_size = LARGE_HOLE
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/wirecutters))
+	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(!cuttable)
-			to_chat(user, "<span class='notice'>This section of the fence can't be cut.</span>")
+			to_chat(user, "<span class='warning'>This section of the fence can't be cut!</span>")
 			return
 		if(invulnerable)
-			to_chat(user, "<span class='notice'>This fence is too strong to cut through.</span>")
+			to_chat(user, "<span class='warning'>This fence is too strong to cut through!</span>")
 			return
 		var/current_stage = hole_size
 		if(current_stage >= MAX_HOLE_SIZE)
-			to_chat(user, "<span class='notice'>This fence has too much cut out of it already.</span>")
+			to_chat(user, "<span class='warning'>This fence has too much cut out of it already!</span>")
 			return
 
 		user.visible_message("<span class='danger'>\The [user] starts cutting through \the [src] with \the [W].</span>",\
@@ -128,25 +128,14 @@
 	return TRUE
 
 /obj/structure/fence/door/proc/toggle(mob/user)
-	switch(open)
-		if(FALSE)
-			visible_message("<span class='notice'>\The [user] opens \the [src].</span>")
-			open = TRUE
-		if(TRUE)
-			visible_message("<span class='notice'>\The [user] closes \the [src].</span>")
-			open = FALSE
-
+	open = !open
+	visible_message("<span class='notice'>\The [user] [open ? "opens" : "closes"] \the [src].</span>")
 	update_door_status()
-	playsound(src, 'sound/machines/click.ogg', 100, 1)
+	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 
 /obj/structure/fence/door/proc/update_door_status()
-	switch(open)
-		if(FALSE)
-			density = TRUE
-			icon_state = "door_closed"
-		if(TRUE)
-			density = FALSE
-			icon_state = "door_opened"
+	density = !density
+	icon_state = density ? "door_closed" : "door_opened"
 
 /obj/structure/fence/door/proc/can_open(mob/user)
 	return TRUE

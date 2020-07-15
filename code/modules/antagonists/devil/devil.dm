@@ -89,8 +89,9 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	roundend_category = "devils"
 	antagpanel_category = "Devil"
 	job_rank = ROLE_DEVIL
-	//Don't delete upon mind destruction, otherwise soul re-selling will break.
-	delete_on_mind_deletion = FALSE
+	antag_hud_type = ANTAG_HUD_DEVIL
+	antag_hud_name = "devil"
+	show_to_ghosts = TRUE
 	var/obligation
 	var/ban
 	var/bane
@@ -123,8 +124,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/proc/admin_toggle_ascendable(mob/admin)
 	ascendable = !ascendable
-	message_admins("[key_name_admin(admin)] set [owner.current] devil ascendable to [ascendable]")
-	log_admin("[key_name_admin(admin)] set [owner.current] devil ascendable to [ascendable])")
+	message_admins("[key_name_admin(admin)] set [key_name_admin(owner)] devil ascendable to [ascendable]")
+	log_admin("[key_name_admin(admin)] set [key_name(owner)] devil ascendable to [ascendable])")
 
 /datum/antagonist/devil/admin_add(datum/mind/new_owner,mob/admin)
 	switch(alert(admin,"Should the devil be able to ascend",,"Yes","No","Cancel"))
@@ -135,8 +136,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		else
 			return
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
-	log_admin("[key_name(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
+	message_admins("[key_name_admin(admin)] has devil'ed [key_name_admin(new_owner)]. [ascendable ? "(Ascendable)":""]")
+	log_admin("[key_name(admin)] has devil'ed [key_name(new_owner)]. [ascendable ? "(Ascendable)":""]")
 
 /datum/antagonist/devil/antag_listing_name()
 	return ..() + "([truename])"
@@ -145,7 +146,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	if(GLOB.allDevils[lowertext(name)])
 		return GLOB.allDevils[lowertext(name)]
 	else
-		var/datum/fakeDevil/devil = new /datum/fakeDevil(name)
+		var/datum/fake_devil/devil = new /datum/fake_devil(name)
 		GLOB.allDevils[lowertext(name)] = devil
 		return devil
 
@@ -180,7 +181,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
-	owner.current.nutrition = NUTRITION_LEVEL_FULL
+	owner.current.set_nutrition(NUTRITION_LEVEL_FULL)
 	to_chat(owner.current, "<span class='warning'>You feel satiated as you received a new soul.</span>")
 	update_hud()
 	switch(SOULVALUE)
@@ -219,7 +220,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		H.set_species(/datum/species/human, 1)
 		H.regenerate_icons()
 	give_appropriate_spells()
-	if(istype(owner.current.loc, /obj/effect/dummy/slaughter/))
+	if(istype(owner.current.loc, /obj/effect/dummy/phased_mob/slaughter/))
 		owner.current.forceMove(get_turf(owner.current))//Fixes dying while jaunted leaving you permajaunted.
 	form = BASIC_DEVIL
 
@@ -235,7 +236,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 
 /datum/antagonist/devil/proc/increase_blood_lizard()
-	to_chat(owner.current, "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard.</span>")
+	to_chat(owner.current, "<span class='warning'>You feel as though your humanoid form is about to shed. You will soon turn into a blood lizard.</span>")
 	sleep(50)
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
@@ -253,14 +254,14 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 
 /datum/antagonist/devil/proc/increase_true_devil()
-	to_chat(owner.current, "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil.</span>")
+	to_chat(owner.current, "<span class='warning'>You feel as though your current form is about to shed. You will soon turn into a true devil.</span>")
 	sleep(50)
 	var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(owner.current.loc)
 	A.faction |= "hell"
 	owner.current.forceMove(A)
 	A.oldform = owner.current
 	owner.transfer_to(A)
-	A.set_name()
+	A.set_devil_name()
 	give_appropriate_spells()
 	form = TRUE_DEVIL
 	update_hud()
@@ -304,7 +305,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	sound_to_playing_players('sound/hallucinations/veryfar_noise.ogg')
 	give_appropriate_spells()
 	D.convert_to_archdevil()
-	if(istype(D.loc, /obj/effect/dummy/slaughter/))
+	if(istype(D.loc, /obj/effect/dummy/phased_mob/slaughter/))
 		D.forceMove(get_turf(D))//Fixes dying while jaunted leaving you permajaunted.
 	var/area/A = get_area(owner.current)
 	if(A)
@@ -361,7 +362,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/proc/beginResurrectionCheck(mob/living/body)
 	if(SOULVALUE>0)
-		to_chat(owner.current, "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>")
+		to_chat(owner.current, "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it. At the cost of some of your power, you will return to life soon. Remain in your body.</span>")
 		sleep(DEVILRESURRECTTIME)
 		if (!body ||  body.stat == DEAD)
 			if(SOULVALUE>0)
@@ -372,10 +373,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 					to_chat(owner.current, "<span class='userdanger'>WE LIVE AGAIN!</span>")
 					return hellish_resurrection(body)
 			else
-				to_chat(owner.current, "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>")
+				to_chat(owner.current, "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished. You no longer have enough power to resurrect.</span>")
 				return -1
 		else
-			to_chat(owner.current, "<span class='danger'> You seem to have resurrected without your hellish powers.</span>")
+			to_chat(owner.current, "<span class='danger'>You seem to have resurrected without your hellish powers.</span>")
 	else
 		to_chat(owner.current, "<span class='userdanger'>Your hellish powers are too weak to resurrect yourself.</span>")
 
@@ -384,14 +385,14 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(BANISH_WATER)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
-				return H.reagents.has_reagent("holy water")
+				return H.reagents.has_reagent(/datum/reagent/water/holywater)
 			return 0
 		if(BANISH_COFFIN)
 			return (body && istype(body.loc, /obj/structure/closet/crate/coffin))
 		if(BANISH_FORMALDYHIDE)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
-				return H.reagents.has_reagent("formaldehyde")
+				return H.reagents.has_reagent(/datum/reagent/toxin/formaldehyde)
 			return 0
 		if(BANISH_RUNES)
 			if(body)
@@ -414,28 +415,28 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(BANISH_FUNERAL_GARB)
 			if(ishuman(body))
 				var/mob/living/carbon/human/H = body
-				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/burial))
+				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/misc/burial))
 					return 1
 				return 0
 			else
-				for(var/obj/item/clothing/under/burial/B in range(0,body))
+				for(var/obj/item/clothing/under/misc/burial/B in range(0,body))
 					if(B.loc == get_turf(B)) //Make sure it's not in someone's inventory or something.
 						return 1
 				return 0
 
 /datum/antagonist/devil/proc/hellish_resurrection(mob/living/body)
-	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
+	message_admins("[key_name_admin(owner)] (true name is: [truename]) is resurrecting using hellish energy.</a>")
 	if(SOULVALUE < ARCH_THRESHOLD || !ascendable) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber += LOSS_PER_DEATH
 		update_hud()
 	if(body)
-		body.revive(TRUE, TRUE) //Adminrevive also recovers organs, preventing someone from resurrecting without a heart.
-		if(istype(body.loc, /obj/effect/dummy/slaughter/))
+		body.revive(full_heal = TRUE, admin_revive = TRUE) //Adminrevive also recovers organs, preventing someone from resurrecting without a heart.
+		if(istype(body.loc, /obj/effect/dummy/phased_mob/slaughter/))
 			body.forceMove(get_turf(body))//Fixes dying while jaunted leaving you permajaunted.
 		if(istype(body, /mob/living/carbon/true_devil))
 			var/mob/living/carbon/true_devil/D = body
 			if(D.oldform)
-				D.oldform.revive(1,0) // Heal the old body too, so the devil doesn't resurrect, then immediately regress into a dead body.
+				D.oldform.revive(full_heal = TRUE, admin_revive = FALSE) // Heal the old body too, so the devil doesn't resurrect, then immediately regress into a dead body.
 		if(body.stat == DEAD)
 			create_new_body()
 	else
@@ -449,17 +450,17 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(!currentMob)
 			currentMob = owner.get_ghost()
 			if(!currentMob)
-				message_admins("[owner.name]'s devil resurrection failed due to client logoff.  Aborting.")
+				message_admins("[key_name_admin(owner)]'s devil resurrection failed due to client logoff.  Aborting.")
 				return -1
 		if(currentMob.mind != owner)
-			message_admins("[owner.name]'s devil resurrection failed due to becoming a new mob.  Aborting.")
+			message_admins("[key_name_admin(owner)]'s devil resurrection failed due to becoming a new mob.  Aborting.")
 			return -1
 		currentMob.change_mob_type( /mob/living/carbon/human, targetturf, null, 1)
 		var/mob/living/carbon/human/H = owner.current
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), SLOT_W_UNIFORM)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), SLOT_SHOES)
-		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), SLOT_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/pen(H), SLOT_L_STORE)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/civilian/lawyer/black(H), ITEM_SLOT_ICLOTHING)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), ITEM_SLOT_FEET)
+		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), ITEM_SLOT_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/pen(H), ITEM_SLOT_LPOCKET)
 		if(SOULVALUE >= BLOOD_THRESHOLD)
 			H.set_species(/datum/species/lizard, 1)
 			H.underwear = "Nude"
@@ -473,11 +474,11 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				H.forceMove(A)
 				A.oldform = H
 				owner.transfer_to(A, TRUE)
-				A.set_name()
+				A.set_devil_name()
 				if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
 					A.convert_to_archdevil()
 	else
-		throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
+		CRASH("Unable to find a blobstart landmark for hellish resurrection")
 
 
 /datum/antagonist/devil/proc/update_hud()
@@ -487,7 +488,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			C.hud_used.devilsouldisplay.update_counter(SOULVALUE)
 
 /datum/antagonist/devil/greet()
-	to_chat(owner.current, "<span class='warning'><b>You remember your link to the infernal.  You are [truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
+	to_chat(owner.current, "<span class='warning'><b>You remember your link to the infernal. You are [truename], an agent of hell, a devil. And you were sent to the plane of creation for a reason. A greater purpose. Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
 	to_chat(owner.current, "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>")
 	to_chat(owner.current, "You may not use violence to coerce someone into selling their soul.")
 	to_chat(owner.current, "You may not directly and knowingly physically harm a devil, other than yourself.")
@@ -512,10 +513,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		var/laws = list("You may not use violence to coerce someone into selling their soul.", "You may not directly and knowingly physically harm a devil, other than yourself.", GLOB.lawlorify[LAW][ban], GLOB.lawlorify[LAW][obligation], "Accomplish your objectives at all costs.")
 		robot_devil.set_law_sixsixsix(laws)
 	sleep(10)
-	if(owner.assigned_role == "Clown" && ishuman(owner.current))
-		var/mob/living/carbon/human/S = owner.current
-		to_chat(S, "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>")
-		S.dna.remove_mutation(CLOWNMUT)
 	.=..()
 
 /datum/antagonist/devil/on_removal()
@@ -524,7 +521,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/apply_innate_effects(mob/living/mob_override)
 	give_appropriate_spells()
-	owner.current.grant_all_languages(TRUE)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	handle_clown_mutation(M, mob_override ? null : "Your infernal nature has allowed you to overcome your clownishness.")
+	owner.current.grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_DEVIL)
 	update_hud()
 	.=..()
 
@@ -533,27 +533,31 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		var/obj/effect/proc_holder/spell/S = X
 		if(is_type_in_typecache(S, devil_spells))
 			owner.RemoveSpell(S)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
+	handle_clown_mutation(M, removing = FALSE)
+	owner.current.remove_all_languages(LANGUAGE_DEVIL)
 	.=..()
 
 /datum/antagonist/devil/proc/printdevilinfo()
 	var/list/parts = list()
 	parts += "The devil's true name is: [truename]"
 	parts += "The devil's bans were:"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][ban]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][bane]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][obligation]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][banish]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][ban]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][bane]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][obligation]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][banish]]"
 	return parts.Join("<br>")
 
 /datum/antagonist/devil/roundend_report()
 	var/list/parts = list()
 	parts += printplayer(owner)
 	parts += printdevilinfo()
-	parts += printobjectives(owner)
+	parts += printobjectives(objectives)
 	return parts.Join("<br>")
 
 //A simple super light weight datum for the codex gigas.
-/datum/fakeDevil
+/datum/fake_devil
 	var/truename
 	var/bane
 	var/obligation
@@ -561,7 +565,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/banish
 	var/ascendable
 
-/datum/fakeDevil/New(name = randomDevilName())
+/datum/fake_devil/New(name = randomDevilName())
 	truename = name
 	bane = randomdevilbane()
 	obligation = randomdevilobligation()

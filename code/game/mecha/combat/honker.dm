@@ -10,10 +10,11 @@
 	max_temperature = 25000
 	infra_luminosity = 5
 	operation_req_access = list(ACCESS_THEATRE)
+	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	wreckage = /obj/structure/mecha_wreckage/honker
 	add_req_access = 0
 	max_equip = 3
-	var/squeak = 0
+	var/squeak = TRUE
 
 /obj/mecha/combat/honker/get_stats_part()
 	var/integrity = obj_integrity/max_integrity*100
@@ -28,7 +29,7 @@
 						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK HONK</b></font><br>":null]
 						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>HONK-A-DOODLE</b></font> - <a href='?src=[REF(src)];repair_int_control_lost=1'>Recalibrate</a><br>":null]
 						<b>IntegriHONK: </b> [integrity]%<br>
-						<b>PowerHONK charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
+						<b>PowerHONK charge: </b>[isnull(cell_charge)?"No power cell installed":"[cell.percent()]%"]<br>
 						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
 						<b>AirHONK pressure: </b>[tank_pressure]kPa<br>
 						<b>AirHONK temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
@@ -41,7 +42,9 @@
 
 /obj/mecha/combat/honker/get_stats_html()
 	var/output = {"<html>
-						<head><title>[src.name] data</title>
+						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+						<title>[src.name] data</title>
 						<style>
 						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}
@@ -99,6 +102,18 @@
 						<div class='header'>Sounds of HONK:</div>
 						<div class='links'>
 						<a href='?src=[REF(src)];play_sound=sadtrombone'>Sad Trombone</a>
+						<a href='?src=[REF(src)];play_sound=bikehorn'>Bike Horn</a>
+						<a href='?src=[REF(src)];play_sound=airhorn2'>Air Horn</a>
+						<a href='?src=[REF(src)];play_sound=carhorn'>Car Horn</a>
+						<a href='?src=[REF(src)];play_sound=party_horn'>Party Horn</a>
+						<a href='?src=[REF(src)];play_sound=reee'>Reee</a>
+						<a href='?src=[REF(src)];play_sound=weeoo1'>Siren</a>
+						<a href='?src=[REF(src)];play_sound=hiss1'>Hissing Creature</a>
+						<a href='?src=[REF(src)];play_sound=armbomb'>Armed Grenade</a>
+						<a href='?src=[REF(src)];play_sound=saberon'>Energy Sword</a>
+						<a href='?src=[REF(src)];play_sound=airlock_alien_prying'>Airlock Prying</a>
+						<a href='?src=[REF(src)];play_sound=lightningbolt'>Lightning Bolt</a>
+						<a href='?src=[REF(src)];play_sound=explosionfar'>Distant Explosion</a>
 						</div>
 						</div>
 						"}
@@ -115,17 +130,10 @@
 	output += "</div>"
 	return output
 
-
-
-/obj/mecha/combat/honker/mechstep(direction)
-	var/result = step(src,direction)
-	if(result)
-		if(!squeak)
-			playsound(src, "clownstep", 70, 1)
-			squeak = 1
-		else
-			squeak = 0
-	return result
+/obj/mecha/combat/honker/play_stepsound()
+	if(squeak)
+		playsound(src, "clownstep", 70, 1)
+	squeak = !squeak
 
 /obj/mecha/combat/honker/Topic(href, href_list)
 	..()
@@ -133,13 +141,28 @@
 		switch(href_list["play_sound"])
 			if("sadtrombone")
 				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
+			if("bikehorn")
+				playsound(src, 'sound/items/bikehorn.ogg', 50)
+			if("airhorn2")
+				playsound(src, 'sound/items/airhorn2.ogg', 40) //soundfile has higher than average volume
+			if("carhorn")
+				playsound(src, 'sound/items/carhorn.ogg', 80) //soundfile has lower than average volume
+			if("party_horn")
+				playsound(src, 'sound/items/party_horn.ogg', 50)
+			if("reee")
+				playsound(src, 'sound/effects/reee.ogg', 50)
+			if("weeoo1")
+				playsound(src, 'sound/items/weeoo1.ogg', 50)
+			if("hiss1")
+				playsound(src, 'sound/voice/hiss1.ogg', 50)
+			if("armbomb")
+				playsound(src, 'sound/weapons/armbomb.ogg', 50)
+			if("saberon")
+				playsound(src, 'sound/weapons/saberon.ogg', 50)
+			if("airlock_alien_prying")
+				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50)
+			if("lightningbolt")
+				playsound(src, 'sound/magic/lightningbolt.ogg', 50)
+			if("explosionfar")
+				playsound(src, 'sound/effects/explosionfar.ogg', 50)
 	return
-
-/proc/rand_hex_color()
-	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
-	var/color=""
-	for (var/i=0;i<6;i++)
-		color = color+pick(colors)
-	return color
-
-

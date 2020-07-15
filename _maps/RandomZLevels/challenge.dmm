@@ -36,8 +36,7 @@
 /area/awaymission/challenge/start)
 "ai" = (
 /obj/item/flashlight{
-	icon_state = "flashlight-on";
-	on = 1
+	icon_state = "flashlight-on"
 	},
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/start)
@@ -159,9 +158,7 @@
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/main)
 "aI" = (
-/obj/machinery/power/emitter/ctf{
-	dir = 2
-	},
+/obj/machinery/power/emitter/ctf,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aJ" = (
@@ -190,9 +187,7 @@
 /area/awaymission/challenge/main)
 "aO" = (
 /obj/structure/window/reinforced,
-/obj/machinery/power/emitter/ctf{
-	dir = 2
-	},
+/obj/machinery/power/emitter/ctf,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aP" = (
@@ -241,8 +236,8 @@
 "aX" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	set_obj_flags = "EMAGGED";
-	installation = /obj/item/gun/energy/lasercannon
+	installation = /obj/item/gun/energy/lasercannon;
+	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
@@ -363,9 +358,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/challenge/main)
 "bo" = (
-/obj/machinery/power/emitter/ctf{
-	dir = 2
-	},
+/obj/machinery/power/emitter/ctf,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -383,8 +376,8 @@
 "bq" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	set_obj_flags = "EMAGGED";
-	installation = /obj/item/gun/energy/lasercannon
+	installation = /obj/item/gun/energy/lasercannon;
+	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/plating,
 /area/awaymission/challenge/main)
@@ -420,9 +413,7 @@
 /area/awaymission/challenge/main)
 "bv" = (
 /obj/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/challenge/main)
 "bw" = (
@@ -492,14 +483,10 @@
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/main)
 "bF" = (
-/turf/open/floor/plasteel/white/corner{
-	dir = 2
-	},
+/turf/open/floor/plasteel/white/corner,
 /area/awaymission/challenge/main)
 "bG" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 2
-	},
+/turf/open/floor/plasteel/white/side,
 /area/awaymission/challenge/main)
 "bH" = (
 /turf/open/floor/plasteel/white/corner{
@@ -570,9 +557,7 @@
 /area/awaymission/challenge/end)
 "bQ" = (
 /obj/item/gun/ballistic/revolver/russian,
-/turf/open/floor/plasteel/white/side{
-	dir = 2
-	},
+/turf/open/floor/plasteel/white/side,
 /area/awaymission/challenge/main)
 "bR" = (
 /obj/structure/table/reinforced,
@@ -602,9 +587,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bU" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/awaymission/challenge/main)
 "bV" = (
@@ -664,15 +647,12 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "ce" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
-	name = "Syndicate Officer"
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cf" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Airlock";
-	opacity = 1;
 	req_access_txt = "109"
 	},
 /turf/open/floor/plating,
@@ -707,7 +687,7 @@
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "cl" = (
-/mob/living/simple_animal/hostile/syndicate/melee,
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cm" = (
@@ -720,9 +700,17 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "co" = (
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cp" = (
 /obj/structure/window/reinforced{
@@ -756,7 +744,7 @@
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "cu" = (
-/mob/living/simple_animal/hostile/syndicate/melee,
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/challenge/end)
 "cv" = (
@@ -773,7 +761,6 @@
 "cx" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Security";
-	opacity = 1;
 	req_access_txt = "109"
 	},
 /turf/open/floor/plasteel/dark,
@@ -801,7 +788,6 @@
 "cB" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrator";
-	opacity = 1;
 	req_access_txt = "109"
 	},
 /turf/open/floor/plasteel/dark,
@@ -823,7 +809,7 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cF" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cG" = (
@@ -896,85 +882,32 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
-"cR" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 1
-	},
-/area/awaymission/challenge/end)
-"cS" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/awaymission/challenge/end)
-"cT" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 4
-	},
-/area/awaymission/challenge/end)
-"cV" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/awaymission/challenge/end)
 "cW" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
-"cX" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/awaymission/challenge/end)
-"cY" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 4
-	},
-/area/awaymission/challenge/end)
 "cZ" = (
-/obj/machinery/gateway,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/awaymission/challenge/end)
-"da" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "db" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dc" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dd" = (
@@ -1029,7 +962,6 @@
 "dk" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Gateway Access";
-	opacity = 1;
 	req_access_txt = "109"
 	},
 /turf/open/floor/plasteel/dark,
@@ -1041,20 +973,9 @@
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "dm" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /mob/living/simple_animal/hostile/syndicate{
 	name = "Syndicate Technician"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/challenge/end)
-"dn" = (
-/obj/structure/cable{
-	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
@@ -1067,15 +988,14 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dq" = (
-/obj/structure/cable,
 /obj/machinery/power/smes/magical,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dr" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "ds" = (
@@ -29002,9 +28922,9 @@ cd
 cn
 cH
 cN
-cR
-cV
-cY
+co
+co
+co
 db
 dg
 cd
@@ -29259,7 +29179,7 @@ cd
 cn
 cH
 cN
-cS
+co
 cW
 cZ
 dc
@@ -29516,13 +29436,13 @@ cd
 cn
 cH
 cN
-cT
-cX
-da
+co
+co
+co
 db
 dh
 cd
-dn
+cd
 dr
 bP
 aa

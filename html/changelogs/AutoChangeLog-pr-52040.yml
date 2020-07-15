@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - rscadd: "A new hotkey for quickdrawing/quicksheathing items into/from your suit storage slot has been added! It defaults to Shift+Q."
+  - tweak: "Corrects some minor capitalization oddities."

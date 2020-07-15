@@ -7,6 +7,7 @@
 	var/minimum_required = 1
 	var/role_name = "debug rat with cancer" // Q U A L I T Y  M E M E S
 	var/list/spawned_mobs = list()
+	var/status
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/start()
@@ -17,7 +18,7 @@
 	// to prevent us from getting gc'd halfway through
 	processing = FALSE
 
-	var/status = spawn_role()
+	status = spawn_role()
 	if((status == WAITING_FOR_SOMETHING))
 		if(retry >= MAX_SPAWN_ATTEMPT)
 			message_admins("[role_name] event has exceeded maximum spawn attempts. Aborting and refunding.")
@@ -35,9 +36,13 @@
 	else if(status == NOT_ENOUGH_PLAYERS)
 		message_admins("[role_name] cannot be spawned due to lack of players \
 			signing up.")
+		deadchat_broadcast(" did not get enough candidates ([minimum_required]) to spawn.", "<b>[role_name]</b>", message_type=DEADCHAT_ANNOUNCEMENT)
 	else if(status == SUCCESSFUL_SPAWN)
 		message_admins("[role_name] spawned successfully.")
-		if(!spawned_mobs.len)
+		if(spawned_mobs.len)
+			for (var/mob/M in spawned_mobs)
+				announce_to_ghosts(M)
+		else
 			message_admins("No mobs found in the `spawned_mobs` list, this is \
 				a bug.")
 	else

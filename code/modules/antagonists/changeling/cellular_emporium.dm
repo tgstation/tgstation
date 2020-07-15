@@ -16,7 +16,7 @@
 /datum/cellular_emporium/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "cellular_emporium", name, 900, 480, master_ui, state)
+		ui = new(user, src, ui_key, "CellularEmporium", name, 900, 480, master_ui, state)
 		ui.open()
 
 /datum/cellular_emporium/ui_data(mob/user)
@@ -34,7 +34,7 @@
 	var/list/abilities = list()
 
 	for(var/path in changeling.all_powers)
-		var/obj/effect/proc_holder/changeling/ability = path
+		var/datum/action/changeling/ability = path
 
 		var/dna_cost = initial(ability.dna_cost)
 		if(dna_cost <= 0)
@@ -72,7 +72,7 @@
 	name = "Cellular Emporium"
 	icon_icon = 'icons/obj/drinks.dmi'
 	button_icon_state = "changelingsting"
-	background_icon_state = "bg_alien"
+	background_icon_state = "bg_changeling"
 	var/datum/cellular_emporium/cellular_emporium
 
 /datum/action/innate/cellular_emporium/New(our_target)
@@ -81,7 +81,7 @@
 	if(istype(our_target, /datum/cellular_emporium))
 		cellular_emporium = our_target
 	else
-		throw EXCEPTION("cellular_emporium action created with non emporium")
+		CRASH("cellular_emporium action created with non emporium")
 
 /datum/action/innate/cellular_emporium/Activate()
 	cellular_emporium.ui_interact(owner)

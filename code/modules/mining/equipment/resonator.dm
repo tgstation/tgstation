@@ -3,7 +3,7 @@
 	name = "resonator"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
-	item_state = "resonator"
+	inhand_icon_state = "resonator"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It does increased damage in low pressure."
@@ -19,7 +19,7 @@
 	name = "upgraded resonator"
 	desc = "An upgraded version of the resonator that can produce more fields at once, as well as having no damage penalty for bursting a resonance field early."
 	icon_state = "resonator_u"
-	item_state = "resonator_u"
+	inhand_icon_state = "resonator_u"
 	fieldlimit = 6
 	quick_burst_mod = 1
 
@@ -45,7 +45,7 @@
 /obj/item/resonator/pre_attack(atom/target, mob/user, params)
 	if(check_allowed_items(target, 1))
 		CreateResonance(target, user)
-	return TRUE
+	. = ..()
 
 //resonance field, crushes rock, damages mobs
 /obj/effect/temp_visual/resonance
@@ -66,7 +66,7 @@
 	res = set_resonator
 	if(res)
 		res.fields += src
-	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
+	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
 	transform = matrix()*0.75
 	animate(src, transform = matrix()*1.5, time = duration)
 	deltimer(timerid)
@@ -97,10 +97,10 @@
 		var/turf/closed/mineral/M = T
 		M.gets_drilled(creator)
 	check_pressure(T)
-	playsound(T,'sound/weapons/resonator_blast.ogg',50,1)
+	playsound(T,'sound/weapons/resonator_blast.ogg',50,TRUE)
 	for(var/mob/living/L in T)
 		if(creator)
-			add_logs(creator, L, "used a resonator field on", "resonator")
+			log_combat(creator, L, "used a resonator field on", "resonator")
 		to_chat(L, "<span class='userdanger'>[src] ruptured with you in it!</span>")
 		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)

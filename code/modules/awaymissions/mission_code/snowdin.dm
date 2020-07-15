@@ -149,13 +149,8 @@
 
 //liquid plasma!!!!!!//
 
-/turf/open/floor/plasteel/vault/snowdin
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	planetary_atmos = 1
-	temperature = 180
-
 /turf/open/floor/plasteel/dark/snowdin
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = 1
 	temperature = 180
 
@@ -176,8 +171,8 @@
 	if(C.reagents.total_volume >= C.volume)
 		to_chat(user, "<span class='danger'>[C] is full.</span>")
 		return
-	C.reagents.add_reagent("plasma", rand(5, 10))
-	user.visible_message("[user] scoops some plasma from the [src] with \the [C].", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
+	C.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10))
+	user.visible_message("<span class='notice'>[user] scoops some plasma from the [src] with \the [C].</span>", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
 
 /turf/open/lava/plasma/burn_stuff(AM)
 	. = 0
@@ -251,6 +246,11 @@
 							PP.visible_message("<span class='warning'>[L] bursts into a brilliant purple flame as [L.p_their()] entire body is that of a skeleton!</span>", \
 											  "<span class='userdanger'>Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!</span>")
 
+//mafia specific tame happy plasma (normal atmos, no slowdown)
+/turf/open/lava/plasma/mafia
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	baseturfs = /turf/open/lava/plasma/mafia
+	slowdown = 0
 
 /obj/vehicle/ridden/lavaboat/plasma
 	name = "plasma boat"
@@ -265,7 +265,7 @@
 /obj/item/paper/crumpled/ruins/snowdin/foreshadowing
 	name = "scribbled note"
 	info = {"Something's gone VERY wrong here. Jouslen has been mumbling about some weird shit in his cabin during the night and he seems always tired when we're working. I tried to confront him about it and he blew up on me,
-	 telling me to mind my own business. I reported him to the officer, said he'd look into it. We only got another 2 months here before we're pulled for another assignment, so this shit can't go any quicker.."}
+	 telling me to mind my own business. I reported him to the officer, said he'd look into it. We only got another 2 months here before we're pulled for another assignment, so this shit can't go any quicker..."}
 
 /obj/item/paper/crumpled/ruins/snowdin/misc1
 	name = "Mission Prologue"
@@ -276,7 +276,7 @@
 	name = "scribbled note"
 	info = {"If you're reading this: GET OUT! The mining go on here has unearthed something that was once-trapped by the layers of ice on this hell-hole. The overseer and Jouslen have gone missing. The officer is
 	 keeping the rest of us on lockdown and I swear to god I keep hearing strange noises outside the walls at night. The gateway link has gone dead and without a supply of resources from Central, we're left
-	 for dead here. We haven't heard anything back from the mining squad either, so I can only assume whatever the fuck they unearthed got them first before coming for us. I don't want to die here.."}
+	 for dead here. We haven't heard anything back from the mining squad either, so I can only assume whatever the fuck they unearthed got them first before coming for us. I don't want to die here..."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/saw_usage
 	name = "SAW Usage"
@@ -485,7 +485,7 @@
 				/obj/item/storage/firstaid/brute = 27,
 				/obj/item/storage/firstaid/fire = 27,
 				/obj/item/storage/toolbox/syndicate = 12,
-				/obj/item/grenade/plastic/c4 = 7,
+				/obj/item/grenade/c4 = 7,
 				/obj/item/grenade/clusterbuster/smoke = 15,
 				/obj/item/clothing/under/chameleon = 13,
 				/obj/item/clothing/shoes/chameleon/noslip = 10,
@@ -515,17 +515,16 @@
 				/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
 				/obj/item/book/granter/spell/barnyard = 4,
 				/obj/item/pickaxe/drill/diamonddrill = 6,
-				/obj/item/borg/upgrade/vtec = 7,
 				/obj/item/borg/upgrade/disablercooler = 7)
 
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonheavy
 	name = "dungeon heavy"
-	loot = list(/obj/item/twohanded/singularityhammer = 25,
-				/obj/item/twohanded/mjollnir = 10,
-				/obj/item/twohanded/fireaxe = 25,
+	loot = list(/obj/item/singularityhammer = 25,
+				/obj/item/mjollnir = 10,
+				/obj/item/fireaxe = 25,
 				/obj/item/organ/brain/alien = 17,
-				/obj/item/twohanded/dualsaber = 15,
+				/obj/item/dualsaber = 15,
 				/obj/item/organ/heart/demon = 7,
 				/obj/item/gun/ballistic/automatic/c20r/unrestricted = 16,
 				/obj/item/gun/magic/wand/resurrection/inert = 15,
@@ -546,7 +545,7 @@
 	loot = list(/obj/item/stack/sheet/mineral/snow{amount = 25} = 10,
 				/obj/item/toy/snowball = 15,
 				/obj/item/shovel = 10,
-				/obj/item/twohanded/spear = 8,
+				/obj/item/spear = 8,
 				)
 
 //special items//--
@@ -563,6 +562,7 @@
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 25, "acid" = 25)
 	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
 /obj/item/clothing/shoes/combat/coldres
 	name = "insulated combat boots"
 	desc = "High speed, low drag combat boots, now with an added layer of insulation."
@@ -595,8 +595,9 @@
 	death = FALSE
 	faction = ROLE_SYNDICATE
 	outfit = /datum/outfit/snowsyndie
-	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be
-	disposed of swirfly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}
+	short_desc = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
+	flavour_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \
+	disposed of swiftly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."
 
 /datum/outfit/snowsyndie
 	name = "Syndicate Snow Operative"
@@ -607,14 +608,6 @@
 	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
 
-/datum/outfit/vr/snowtide
-	name = "Snowdin Outfit"
-	shoes = /obj/item/clothing/shoes/winterboots
-	suit = /obj/item/clothing/suit/hooded/wintercoat
-	back = /obj/item/storage/backpack
-	mask = /obj/item/clothing/mask/breath
-	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
-	internals_slot = SLOT_R_STORE
 
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE
@@ -675,6 +668,3 @@
 
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
-
-/obj/effect/landmark/vr_spawn/snowdin
-	vr_outfit = /datum/outfit/vr/snowtide

@@ -1,0 +1,164 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$bg-map: colors.$bg-map !default;
+$fg-map: colors.$fg-map !default;
+$ring-color: #6a96c9 !default;
+$knob-color: #333333 !default;
+
+$inner-padding: 0.1em;
+
+.Knob {
+  position: relative;
+  font-size: 1rem;
+  width: 2.6em;
+  height: 2.6em;
+  margin: 0 auto;
+  margin-bottom: -0.2em;
+  cursor: n-resize;
+
+  // Adjusts a baseline in a way, that makes knob middle-aligned
+  // when it flows with the text.
+  &:after {
+    content: '.';
+    color: transparent;
+    line-height: 2.5em;
+  }
+}
+
+.Knob__circle {
+  position: absolute;
+  top: $inner-padding;
+  bottom: $inner-padding;
+  left: $inner-padding;
+  right: $inner-padding;
+  margin: 0.3em;
+  background-color: $knob-color;
+  background-image: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0) 100%);
+  border-radius: 50%;
+  box-shadow: 0 0.05em 0.5em 0 rgba(0, 0, 0, 0.5);
+}
+
+.Knob__cursorBox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.Knob__cursor {
+  position: relative;
+  top: 0.05em;
+  margin: 0 auto;
+  width: 0.2em;
+  height: 0.8em;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.Knob__popupValue {
+  position: absolute;
+  top: -2rem;
+  right: 50%;
+  font-size: 1rem;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  background-color: #000;
+  transform: translateX(50%);
+  white-space: nowrap;
+}
+
+.Knob__ring {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $inner-padding;
+}
+
+$pi: 3.1416;
+
+.Knob__ringTrackPivot {
+  transform: rotateZ(135deg);
+}
+
+.Knob__ringTrack {
+  // transform-origin: 50% 50%;
+  fill: transparent;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 75 * $pi;
+}
+
+.Knob__ringFillPivot {
+  transform: rotateZ(135deg);
+}
+
+.Knob--bipolar .Knob__ringFillPivot {
+  transform: rotateZ(270deg);
+}
+
+.Knob__ringFill {
+  fill: transparent;
+  stroke: $ring-color;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 100 * $pi;
+  transition: stroke 50ms;
+}
+
+@each $color-name, $color-value in $fg-map {
+  .Knob--color--#{$color-name} {
+    .Knob__ringFill {
+      stroke: $color-value;
+    }
+  }
+}
+
+// .Slider__cursorOffset {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   transition: none !important;
+// }
+
+// .Slider__cursor {
+//   position: absolute;
+//   top: 0;
+//   right: -1px;
+//   bottom: 0;
+//   width: 0;
+//   border-left: 2px solid #fff;
+// }
+
+// .Slider__pointer {
+//   position: absolute;
+//   right: -5px;
+//   bottom: -4px;
+//   width: 0;
+//   height: 0;
+//   border-left: 5px solid transparent;
+//   border-right: 5px solid transparent;
+//   border-bottom: 5px solid #fff;
+// }
+
+// .Slider__popupValue {
+//   position: absolute;
+//   right: 0;
+//   top: -22px;
+//   padding: 2px 4px;
+//   background-color: #000;
+//   transform: translateX(50%);
+//   white-space: nowrap;
+// }

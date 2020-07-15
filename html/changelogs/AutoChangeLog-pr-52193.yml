@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a runtime when log_wound wasn't passed a wound or a victim to apply it to."

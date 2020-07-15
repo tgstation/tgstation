@@ -4,10 +4,12 @@
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
-#define WRITE_LOG(log, text) rustg_log_write(log, text)
+//This is an external call, "true" and "false" are how rust parses out booleans
+#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
 //print a warning message to world.log
-#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
+#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
 /proc/warning(msg)
 	msg = "## WARNING: [msg]"
 	log_world(msg)
@@ -44,6 +46,7 @@
 		WRITE_LOG(GLOB.world_game_log, "ADMINPRIVATE: [text]")
 
 /proc/log_adminsay(text)
+	GLOB.admin_log.Add(text)
 	if (CONFIG_GET(flag/log_adminchat))
 		WRITE_LOG(GLOB.world_game_log, "ADMINPRIVATE: ASAY: [text]")
 
@@ -57,6 +60,24 @@
 	if (CONFIG_GET(flag/log_game))
 		WRITE_LOG(GLOB.world_game_log, "GAME: [text]")
 
+/proc/log_mecha(text)
+	if (CONFIG_GET(flag/log_mecha))
+		WRITE_LOG(GLOB.world_mecha_log, "MECHA: [text]")
+
+/proc/log_virus(text)
+	if (CONFIG_GET(flag/log_virus))
+		WRITE_LOG(GLOB.world_virus_log, "VIRUS: [text]")
+
+/proc/log_cloning(text, mob/initiator)
+	if(CONFIG_GET(flag/log_cloning))
+		WRITE_LOG(GLOB.world_cloning_log, "CLONING: [text]")
+
+/proc/log_paper(text)
+	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
+
+/proc/log_asset(text)
+	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
+
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
@@ -69,10 +90,31 @@
 	if (CONFIG_GET(flag/log_attack))
 		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
 
+/proc/log_wounded(text)
+	if (CONFIG_GET(flag/log_attack))
+		WRITE_LOG(GLOB.world_attack_log, "WOUND: [text]")
+
+/proc/log_econ(text)
+	if (CONFIG_GET(flag/log_econ))
+		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
+
 /proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
 		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
 
+/proc/log_bomber(atom/user, details, atom/bomb, additional_details, message_admins = TRUE)
+	var/bomb_message = "[details][bomb ? " [bomb.name] at [AREACOORD(bomb)]": ""][additional_details ? " [additional_details]" : ""]."
+
+	if(user)
+		user.log_message(bomb_message, LOG_GAME) //let it go to individual logs as well as the game log
+		bomb_message = "[key_name(user)] at [AREACOORD(user)] [bomb_message]"
+	else
+		log_game(bomb_message)
+
+	GLOB.bombers += bomb_message
+
+	if(message_admins)
+		message_admins("[user ? "[ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)] " : ""][details][bomb ? " [bomb.name] at [ADMIN_VERBOSEJMP(bomb)]": ""][additional_details ? " [additional_details]" : ""].")
 
 /proc/log_say(text)
 	if (CONFIG_GET(flag/log_say))
@@ -103,6 +145,10 @@
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		WRITE_LOG(GLOB.world_pda_log, "COMMENT: [text]")
 
+/proc/log_telecomms(text)
+	if (CONFIG_GET(flag/log_telecomms))
+		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")
+
 /proc/log_chat(text)
 	if (CONFIG_GET(flag/log_pda))
 		//same thing here
@@ -112,6 +158,9 @@
 	if (CONFIG_GET(flag/log_vote))
 		WRITE_LOG(GLOB.world_game_log, "VOTE: [text]")
 
+/proc/log_shuttle(text)
+	if (CONFIG_GET(flag/log_shuttle))
+		WRITE_LOG(GLOB.world_shuttle_log, "SHUTTLE: [text]")
 
 /proc/log_topic(text)
 	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
@@ -134,7 +183,9 @@
 
 /* Log to both DD and the logfile. */
 /proc/log_world(text)
+#ifdef USE_CUSTOM_ERROR_HANDLER
 	WRITE_LOG(GLOB.world_runtime_log, text)
+#endif
 	SEND_TEXT(world.log, text)
 
 /* Log to the logfile only. */
@@ -146,6 +197,13 @@
 	WRITE_LOG(GLOB.config_error_log, text)
 	SEND_TEXT(world.log, text)
 
+/proc/log_mapping(text)
+	WRITE_LOG(GLOB.world_map_error_log, text)
+
+/* ui logging */
+
+/proc/log_tgui(text)
+	WRITE_LOG(GLOB.tgui_log, text)
 
 /* For logging round startup. */
 /proc/start_log(log)
@@ -157,19 +215,100 @@
 
 
 /* Helper procs for building detailed log lines */
-/proc/datum_info_line(datum/D)
-	if(!istype(D))
-		return
-	if(!ismob(D))
-		return "[D] ([D.type])"
-	var/mob/M = D
-	return "[M] ([M.ckey]) ([M.type])"
+/proc/key_name(whom, include_link = null, include_name = TRUE)
+	var/mob/M
+	var/client/C
+	var/key
+	var/ckey
+	var/fallback_name
 
-/proc/atom_loc_line(atom/A)
+	if(!whom)
+		return "*null*"
+	if(istype(whom, /client))
+		C = whom
+		M = C.mob
+		key = C.key
+		ckey = C.ckey
+	else if(ismob(whom))
+		M = whom
+		C = M.client
+		key = M.key
+		ckey = M.ckey
+	else if(istext(whom))
+		key = whom
+		ckey = ckey(whom)
+		C = GLOB.directory[ckey]
+		if(C)
+			M = C.mob
+	else if(istype(whom,/datum/mind))
+		var/datum/mind/mind = whom
+		key = mind.key
+		ckey = ckey(key)
+		if(mind.current)
+			M = mind.current
+			if(M.client)
+				C = M.client
+		else
+			fallback_name = mind.name
+	else // Catch-all cases if none of the types above match
+		var/swhom = null
+
+		if(istype(whom, /atom))
+			var/atom/A = whom
+			swhom = "[A.name]"
+		else if(istype(whom, /datum))
+			swhom = "[whom]"
+
+		if(!swhom)
+			swhom = "*invalid*"
+
+		return "\[[swhom]\]"
+
+	. = ""
+
+	if(!ckey)
+		include_link = FALSE
+
+	if(key)
+		if(C && C.holder && C.holder.fakekey && !include_name)
+			if(include_link)
+				. += "<a href='?priv_msg=[C.findStealthKey()]'>"
+			. += "Administrator"
+		else
+			if(include_link)
+				. += "<a href='?priv_msg=[ckey]'>"
+			. += key
+		if(!C)
+			. += "\[DC\]"
+
+		if(include_link)
+			. += "</a>"
+	else
+		. += "*no key*"
+
+	if(include_name)
+		if(M)
+			if(M.real_name)
+				. += "/([M.real_name])"
+			else if(M.name)
+				. += "/([M.name])"
+		else if(fallback_name)
+			. += "/([fallback_name])"
+
+	return .
+
+/proc/key_name_admin(whom, include_name = TRUE)
+	return key_name(whom, TRUE, include_name)
+
+/proc/loc_name(atom/A)
 	if(!istype(A))
-		return
-	var/turf/T = get_turf(A)
+		return "(INVALID LOCATION)"
+
+	var/turf/T = A
+	if (!istype(T))
+		T = get_turf(A)
+
 	if(istype(T))
-		return "[A.loc] [COORD(T)] ([A.loc.type])"
+		return "([AREACOORD(T)])"
 	else if(A.loc)
-		return "[A.loc] (0, 0, 0) ([A.loc.type])"
+		return "(UNKNOWN (?, ?, ?))"

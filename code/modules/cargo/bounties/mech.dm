@@ -13,10 +13,15 @@
 /datum/bounty/item/mech/mark_high_priority(scale_reward)
 	return ..(max(scale_reward * 0.7, 1.2))
 
-/datum/bounty/item/mech/ripley
-	name = "APLU \"Ripley\""
+/datum/bounty/item/mech/ripleymkii
+	name = "APLU MK-II \"Ripley\""
 	reward = 13000
-	wanted_types = list(/obj/mecha/working/ripley)
+	wanted_types = list(/obj/mecha/working/ripley/mkii)
+
+/datum/bounty/item/mech/clarke
+	name = "Clarke"
+	reward = 16000
+	wanted_types = list(/obj/mecha/working/clarke)
 
 /datum/bounty/item/mech/odysseus
 	name = "Odysseus"
@@ -32,9 +37,3 @@
 	name = "Durand"
 	reward = 20000
 	wanted_types = list(/obj/mecha/combat/durand)
-
-/datum/bounty/item/mech/phazon
-	name = "Phazon"
-	reward = 50000
-	wanted_types = list(/obj/mecha/combat/phazon)
-

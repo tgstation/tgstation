@@ -67,9 +67,8 @@
 	shuttleId = "caravantrade1"
 	lock_override = NONE
 	shuttlePortId = "caravantrade1_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "caravantrade1_ambush" = 1)
-	view_range = 14
+	view_range = 6.5
 	x_offset = -5
 	y_offset = -5
 	designate_time = 100
@@ -92,9 +91,8 @@
 	shuttleId = "caravanpirate"
 	lock_override = NONE
 	shuttlePortId = "caravanpirate_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("caravanpirate_ambush" = 1)
-	view_range = 14
+	view_range = 6.5
 	x_offset = 3
 	y_offset = -6
 
@@ -117,9 +115,8 @@
 	shuttleId = "caravansyndicate1"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate1_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("caravansyndicate1_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
-	view_range = 7
+	view_range = 0
 	x_offset = 2
 	y_offset = 0
 
@@ -142,9 +139,8 @@
 	shuttleId = "caravansyndicate2"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate2_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("caravansyndicate2_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
-	view_range = 7
+	view_range = 0
 	x_offset = 0
 	y_offset = 2
 
@@ -167,8 +163,7 @@
 	shuttleId = "caravansyndicate3"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate3_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("caravansyndicate3_ambush" = 1, "caravansyndicate3_listeningpost" = 1)
-	view_range = 10
+	view_range = 2.5
 	x_offset = -1
 	y_offset = -3

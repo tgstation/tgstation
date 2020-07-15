@@ -4,13 +4,13 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "DIRI CEL"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = -1
 	cooldown_min = 400 //50 deciseconds reduction per rank
-	include_user = 1
-
+	include_user = TRUE
+	action_icon_state = "charge"
 
 /obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in targets)
@@ -29,7 +29,7 @@
 				to_chat(M, "<span class='notice'>You feel raw magic flowing through you. It feels good!</span>")
 			else
 				to_chat(M, "<span class='notice'>You feel very strange for a moment, but then it passes.</span>")
-				burnt_out = 1
+				burnt_out = TRUE
 			charged_item = M
 			break
 		for(var/obj/item in hand_items)
@@ -97,7 +97,7 @@
 		if(!charged_item)
 			to_chat(L, "<span class='notice'>You feel magical power surging through your hands, but the feeling rapidly fades...</span>")
 		else if(burnt_out)
-			to_chat(L, "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>")
+			to_chat(L, "<span class='warning'>[charged_item] doesn't seem to be reacting to the spell!</span>")
 		else
-			playsound(get_turf(L), 'sound/magic/charge.ogg', 50, 1)
+			playsound(get_turf(L), 'sound/magic/charge.ogg', 50, TRUE)
 			to_chat(L, "<span class='notice'>[charged_item] suddenly feels very warm!</span>")

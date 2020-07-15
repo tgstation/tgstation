@@ -6,24 +6,43 @@
 	icon_state = "cutout_basic"
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
-	// Possible restyles for the cutout;
-	// add an entry in change_appearance() if you add to here
-	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
-		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
-		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
-		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
-		"Laughter Demon", "Private Security Officer")
-	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
-	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
+	/// Possible restyles for the cutout, add an entry in change_appearance() if you add to here
+	var/list/possible_appearances = list()
+	/// If the cutout is pushed over and has to be righted
+	var/pushed_over = FALSE
+	/// If the cutout actually appears as what it portray and not a discolored version
+	var/deceptive = FALSE
 
-	var/lastattacker = null
+/obj/item/cardboard_cutout/Initialize()
+	. = ..()
+	possible_appearances = sortList(list(
+		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
+		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
+		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),
+		"Traitor" = image(icon = src.icon, icon_state = "cutout_traitor"),
+		"Nuke Op" = image(icon = src.icon, icon_state = "cutout_fluke"),
+		"Cultist" = image(icon = src.icon, icon_state = "cutout_cultist"),
+		"Clockwork Cultist" = image(icon = src.icon, icon_state = "cutout_servant"),
+		"Revolutionary" = image(icon = src.icon, icon_state = "cutout_viva"),
+		"Wizard" = image(icon = src.icon, icon_state = "cutout_wizard"),
+		"Shadowling" = image(icon = src.icon, icon_state = "cutout_shadowling"),
+		"Xenomorph" = image(icon = src.icon, icon_state = "cutout_fukken_xeno"),
+		"Xenomorph Maid" = image(icon = src.icon, icon_state = "cutout_lusty"),
+		"Swarmer" = image(icon = src.icon, icon_state = "cutout_swarmer"),
+		"Ash Walker" = image(icon = src.icon, icon_state = "cutout_free_antag"),
+		"Deathsquad Officer" = image(icon = src.icon, icon_state = "cutout_deathsquad"),
+		"Ian" = image(icon = src.icon, icon_state = "cutout_ian"),
+		"Slaughter Demon" = image(icon = 'icons/mob/mob.dmi', icon_state = "daemon"),
+		"Laughter Demon" = image(icon = 'icons/mob/mob.dmi', icon_state = "bowmon"),
+		"Private Security Officer" = image(icon = src.icon, icon_state = "cutout_ntsec")
+	))
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
-	playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
 /obj/item/cardboard_cutout/proc/push_over()
@@ -52,45 +71,43 @@
 	if(I.item_flags & NOBLUDGEON)
 		return
 	if(!I.force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(I.hitsound)
-		playsound(loc, I.hitsound, get_clamped_volume(), 1, -1)
+		playsound(loc, I.hitsound, get_clamped_volume(), TRUE, -1)
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit \
-			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
-			with [I]!</span>")
-
+		user.visible_message("<span class='danger'>[user] hits [src] with [I]!</span>", \
+			"<span class='danger'>You hit [src] with [I]!</span>")
 		if(prob(I.force))
 			push_over()
 
-/obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
-	if(istype(P, /obj/item/projectile/bullet/reusable))
+/obj/item/cardboard_cutout/bullet_act(obj/projectile/P)
+	if(istype(P, /obj/projectile/bullet/reusable))
 		P.on_hit(src, 0)
-	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
-	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
+	visible_message("<span class='danger'>[src] is hit by [P]!</span>")
+	playsound(src, 'sound/weapons/slice.ogg', 50, TRUE)
 	if(prob(P.damage))
 		push_over()
+	return BULLET_ACT_HIT
 
+/**
+  * change_appearance: Changes a skin of the cardboard cutout based on a user's choice
+  *
+  * Arguments:
+  * * crayon The crayon used to change and recolor the cardboard cutout
+  * * user The mob choosing a skin of the cardboard cutout
+  */
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
-	if(!crayon || !user)
-		return
-	if(pushed_over)
-		to_chat(user, "<span class='warning'>Right [src] first!</span>")
-		return
-	if(crayon.check_empty(user))
-		return
-	if(crayon.is_capped)
-		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
-		return
-	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
-	if(!new_appearance || !crayon || !user.canUseTopic(src))
-		return
+	var/new_appearance = show_radial_menu(user, src, possible_appearances, custom_check = CALLBACK(src, .proc/check_menu, user, crayon), radius = 36, require_near = TRUE)
+	if(!new_appearance)
+		return FALSE
 	if(!do_after(user, 10, FALSE, src, TRUE))
-		return
+		return FALSE
+	if(!check_menu(user, crayon))
+		return FALSE
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	crayon.use_charges(1)
 	crayon.check_empty(user)
@@ -179,10 +196,37 @@
 			name = "Private Security Officer"
 			desc = "A cardboard cutout of a private security officer."
 			icon_state = "cutout_ntsec"
-	return 1
+		else
+			return FALSE
+	return TRUE
+
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  * * crayon The crayon used to interact with a menu
+  */
+/obj/item/cardboard_cutout/proc/check_menu(mob/living/user, obj/item/toy/crayon/crayon)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	if(pushed_over)
+		to_chat(user, "<span class='warning'>Right [src] first!</span>")
+		return FALSE
+	if(!crayon || !user.is_holding(crayon))
+		return FALSE
+	if(crayon.check_empty(user))
+		return FALSE
+	if(crayon.is_capped)
+		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
+		return FALSE
+	return TRUE
 
 /obj/item/cardboard_cutout/setDir(newdir)
-	dir = SOUTH
+	newdir = SOUTH
+	return ..()
 
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
 	deceptive = TRUE

@@ -41,31 +41,33 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	if(delete_after_roundstart)
 		qdel(src)
 
-/obj/effect/landmark/start/New()
+/obj/effect/landmark/start/Initialize()
+	. = ..()
 	GLOB.start_landmarks_list += src
 	if(jobspawn_override)
-		if(!GLOB.jobspawn_overrides[name])
-			GLOB.jobspawn_overrides[name] = list()
-		GLOB.jobspawn_overrides[name] += src
-	..()
+		LAZYADDASSOC(GLOB.jobspawn_overrides, name, src)
 	if(name != "start")
 		tag = "start*[name]"
 
 /obj/effect/landmark/start/Destroy()
 	GLOB.start_landmarks_list -= src
 	if(jobspawn_override)
-		GLOB.jobspawn_overrides[name] -= src
+		LAZYREMOVEASSOC(GLOB.jobspawn_overrides, name, src)
 	return ..()
 
 // START LANDMARKS FOLLOW. Don't change the names unless
 // you are refactoring shitty landmark code.
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
-	icon_state = "Assistant"
+	icon_state = "Assistant" //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
 
 /obj/effect/landmark/start/assistant/override
 	jobspawn_override = TRUE
 	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/prisoner
+	name = "Prisoner"
+	icon_state = "Prisoner"
 
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
@@ -151,6 +153,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Medical Doctor"
 	icon_state = "Medical Doctor"
 
+/obj/effect/landmark/start/paramedic
+	name = "Paramedic"
+	icon_state = "Paramedic"
+
 /obj/effect/landmark/start/scientist
 	name = "Scientist"
 	icon_state = "Scientist"
@@ -179,6 +185,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Virologist"
 	icon_state = "Virologist"
 
+/obj/effect/landmark/start/psychologist
+	name = "Psychologist"
+	icon_state = "Psychologist"
+
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
 	icon_state = "Chaplain"
@@ -196,7 +206,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/ai/after_round_start()
 	if(latejoin_active && !used)
-		new /obj/structure/AIcore/latejoin_inactive(loc)
+		new /obj/structure/ai_core/latejoin_inactive(loc)
 	return ..()
 
 /obj/effect/landmark/start/ai/secondary
@@ -230,6 +240,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/depsec/science
 	name = "science_sec"
+
+//Antagonist spawns
 
 /obj/effect/landmark/start/wizard
 	name = "wizard"
@@ -281,17 +293,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	SSjob.latejoin_trackers += loc
 	return INITIALIZE_HINT_QDEL
 
-// carp.
+//space carps, magicarps, lone ops, slaughter demons, possibly revenants spawn here
 /obj/effect/landmark/carpspawn
 	name = "carpspawn"
 	icon_state = "carp_spawn"
 
-// observer-start.
+//observer start
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"
 	icon_state = "observer_start"
 
-// xenos.
+//xenos, morphs and nightmares spawn here
 /obj/effect/landmark/xeno_spawn
 	name = "xeno_spawn"
 	icon_state = "xeno_spawn"
@@ -301,7 +313,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.xeno_spawn += loc
 	return INITIALIZE_HINT_QDEL
 
-// blobs.
+//objects with the stationloving component (nuke disk) respawn here.
+//also blobs that have their spawn forcemoved (running out of time when picking their spawn spot), santa and respawning devils
 /obj/effect/landmark/blobstart
 	name = "blobstart"
 	icon_state = "blob_start"
@@ -311,6 +324,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.blobstart += loc
 	return INITIALIZE_HINT_QDEL
 
+//spawns sec equipment lockers depending on the number of sec officers
 /obj/effect/landmark/secequipment
 	name = "secequipment"
 	icon_state = "secequipment"
@@ -320,6 +334,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.secequipment += loc
 	return INITIALIZE_HINT_QDEL
 
+//players that get put in admin jail show up here
 /obj/effect/landmark/prisonwarp
 	name = "prisonwarp"
 	icon_state = "prisonwarp"
@@ -338,6 +353,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.emergencyresponseteamspawn += loc
 	return INITIALIZE_HINT_QDEL
 
+//ninja energy nets teleport victims here
 /obj/effect/landmark/holding_facility
 	name = "Holding Facility"
 	icon_state = "holding_facility"
@@ -383,27 +399,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.tdomeadmin += loc
 	return INITIALIZE_HINT_QDEL
 
-//Servant spawn locations
-/obj/effect/landmark/servant_of_ratvar
-	name = "servant of ratvar spawn"
-	icon_state = "clockwork_orange"
-	layer = MOB_LAYER
-
-/obj/effect/landmark/servant_of_ratvar/Initialize(mapload)
-	..()
-	GLOB.servant_spawns += loc
-	return INITIALIZE_HINT_QDEL
-
-//City of Cogs entrances
-/obj/effect/landmark/city_of_cogs
-	name = "city of cogs entrance"
-	icon_state = "city_of_cogs"
-
-/obj/effect/landmark/city_of_cogs/Initialize(mapload)
-	..()
-	GLOB.city_of_cogs_spawns += loc
-	return INITIALIZE_HINT_QDEL
-
 //generic event spawns
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
@@ -432,3 +427,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+// handled in portals.dm, id connected to one-way portal
+/obj/effect/landmark/portal_exit
+	name = "portal exit"
+	icon_state = "portal_exit"
+	var/id

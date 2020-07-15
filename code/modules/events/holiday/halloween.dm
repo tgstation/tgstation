@@ -8,15 +8,16 @@
 
 /datum/round_event/spooky/start()
 	..()
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		var/obj/item/storage/backpack/b = locate() in H.contents
 		if(b)
 			new /obj/item/storage/spooky(b)
 
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/bedsheet(Ian))
-	for(var/mob/living/simple_animal/parrot/Poly/Poly in GLOB.mob_living_list)
-		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
+	for(var/mob/living/simple_animal/parrot/poly/Poly in GLOB.mob_living_list)
+		new /mob/living/simple_animal/parrot/poly/ghost(Poly.loc)
 		qdel(Poly)
 
 /datum/round_event/spooky/announce(fake)
@@ -43,9 +44,9 @@
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "treatbag"
 
-/obj/item/storage/spooky/New()
-	..()
-	for(var/distrobuteinbag=0 to 5)
+/obj/item/storage/spooky/Initialize()
+	. = ..()
+	for(var/distrobuteinbag in 0 to 5)
 		var/type = pick(/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
 		/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin,
 		/obj/item/reagent_containers/food/snacks/candy_corn,
@@ -54,8 +55,3 @@
 		/obj/item/reagent_containers/food/snacks/chocolatebar,
 		/obj/item/organ/brain ) // OH GOD THIS ISN'T CANDY!
 		new type(src)
-
-/obj/item/card/emag/halloween
-	name = "hack-o'-lantern"
-	desc = "It's a pumpkin with a cryptographic sequencer sticking out."
-	icon_state = "hack_o_lantern"

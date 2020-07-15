@@ -47,6 +47,9 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
 	return pick(GLOB.socks_list)
 
+/proc/random_backpack()
+	return pick(GLOB.backpacklist)
+
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
@@ -70,27 +73,28 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
 	if(!GLOB.moth_wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
-
+	if(!GLOB.moth_markings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list)))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list), "moth_markings" = pick(GLOB.moth_markings_list)))
 
-/proc/random_hair_style(gender)
+/proc/random_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.hair_styles_male_list)
+			return pick(GLOB.hairstyles_male_list)
 		if(FEMALE)
-			return pick(GLOB.hair_styles_female_list)
+			return pick(GLOB.hairstyles_female_list)
 		else
-			return pick(GLOB.hair_styles_list)
+			return pick(GLOB.hairstyles_list)
 
-/proc/random_facial_hair_style(gender)
+/proc/random_facial_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.facial_hair_styles_male_list)
+			return pick(GLOB.facial_hairstyles_male_list)
 		if(FEMALE)
-			return pick(GLOB.facial_hair_styles_female_list)
+			return pick(GLOB.facial_hairstyles_female_list)
 		else
-			return pick(GLOB.facial_hair_styles_list)
+			return pick(GLOB.facial_hairstyles_list)
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
@@ -116,6 +120,13 @@
 		if(!findname(.))
 			break
 
+/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(ethereal_name())
+
+		if(!findname(.))
+			break
+
 /proc/random_unique_moth_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
@@ -126,7 +137,7 @@
 /proc/random_skin_tone()
 	return pick(GLOB.skin_tones)
 
-GLOBAL_LIST_INIT(skin_tones, list(
+GLOBAL_LIST_INIT(skin_tones, sortList(list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -139,7 +150,7 @@ GLOBAL_LIST_INIT(skin_tones, list(
 	"indian",
 	"african1",
 	"african2"
-	))
+	)))
 
 GLOBAL_LIST_EMPTY(species_list)
 
@@ -166,104 +177,54 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/*
-Proc for attack log creation, because really why not
-1 argument is the actor
-2 argument is the target of action
-3 is the description of action(like punched, throwed, or any other verb)
-4 is the tool with which the action was made(usually item)					4 and 5 are very similar(5 have "by " before it, that it) and are separated just to keep things in a bit more in order
-5 is additional information, anything that needs to be added
-*/
-
-/proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
-	var/turf/attack_location = get_turf(target)
-
-	var/is_mob_user = user && ismob(user)
-	var/is_mob_target = target && ismob(target)
-
-	var/mob/living/living_target
-
-	if(target && isliving(target))
-		living_target = target
-
-	var/hp =" "
-	if(living_target)
-		hp = " (NEWHP: [living_target.health]) "
-
-	var/starget = "NON-EXISTENT SUBJECT"
-	if(target)
-		if(is_mob_target && target.ckey)
-			starget = "[target.name]([target.ckey])"
-		else
-			starget = "[target.name]"
-
-	var/ssource = "NON-EXISTENT USER" //How!?
-	if(user)
-		if(is_mob_user && user.ckey)
-			ssource = "[user.name]([user.ckey])"
-		else
-			ssource = "[user.name]"
-
-	var/sobject = ""
-	if(object)
-		sobject = "[object]"
-		if(addition)
-			addition = " [addition]"
-
-	var/sattackloc = ""
-	if(attack_location)
-		sattackloc = "([attack_location.x],[attack_location.y],[attack_location.z])"
-
-	if(is_mob_user)
-		var/message = "<font color='red'>has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
-		user.log_message(message, INDIVIDUAL_ATTACK_LOG)
-
-	if(is_mob_target)
-		var/message = "<font color='orange'>has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
-		target.log_message(message, INDIVIDUAL_ATTACK_LOG)
-
-	log_attack("[ssource] [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]")
-
-
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
+///Timed action involving two mobs, the user and the target.
+/proc/do_mob(mob/user , mob/target, time = 3 SECONDS, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || !target)
-		return 0
+		return FALSE
 	var/user_loc = user.loc
 
-	var/drifting = 0
+	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
+		drifting = TRUE
 
 	var/target_loc = target.loc
 
+	LAZYADD(user.do_afters, target)
+	LAZYADD(target.targeted_by, user)
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
 	if (progress)
 		progbar = new(user, time, target)
+	if(target.pixel_x != 0) //shifts the progress bar if target has an offset sprite
+		progbar.bar.pixel_x -= target.pixel_x
 
 	var/endtime = world.time+time
 	var/starttime = world.time
-	. = 1
+	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
-		if (progress)
+		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 		if(QDELETED(user) || QDELETED(target))
-			. = 0
+			. = FALSE
 			break
 		if(uninterruptible)
 			continue
-
+		if(!(target in user.do_afters))
+			. = FALSE
+			break
 		if(drifting && !user.inertia_dir)
-			drifting = 0
+			drifting = FALSE
 			user_loc = user.loc
 
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
-			. = 0
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
+			. = FALSE
 			break
-	if (progress)
-		qdel(progbar)
-
+	if(!QDELETED(progbar))
+		progbar.end_progress()
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
 
 //some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
 /mob/proc/break_do_after_checks(list/checked_health, check_clicks)
@@ -279,83 +240,107 @@ Proc for attack log creation, because really why not
 		checked_health["health"] = health
 	return ..()
 
-/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
+///Timed action involving one mob user. Target is optional.
+/proc/do_after(mob/user, var/delay, needhand = TRUE, atom/target = null, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user)
-		return 0
+		return FALSE
 	var/atom/Tloc = null
 	if(target && !isturf(target))
 		Tloc = target.loc
 
+	if(target)
+		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
+
 	var/atom/Uloc = user.loc
 
-	var/drifting = 0
+	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
+		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
 
-	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
+	var/holdingnull = TRUE //User's hand started out empty, check for an empty hand
 	if(holding)
-		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
+		holdingnull = FALSE //Users hand started holding something, check to see if it's still holding that
 
 	delay *= user.do_after_coefficent()
 
 	var/datum/progressbar/progbar
-	if (progress)
-		progbar = new(user, delay, target)
+	if(progress)
+		progbar = new(user, delay, target || user)
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
-	. = 1
+	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
-		if (progress)
+		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
 		if(drifting && !user.inertia_dir)
-			drifting = 0
+			drifting = FALSE
 			Uloc = user.loc
 
-		if(QDELETED(user) || user.stat || user.IsKnockdown() || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
-			. = 0
+		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+			. = FALSE
 			break
+
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.IsStun() || L.IsParalyzed())
+				. = FALSE
+				break
 
 		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
-				. = 0
+				. = FALSE
 				break
+
+		if(target && !(target in user.do_afters))
+			. = FALSE
+			break
 
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to pull some item/tool out of the construction
 			if(!holdingnull)
 				if(!holding)
-					. = 0
+					. = FALSE
 					break
 			if(user.get_active_held_item() != holding)
-				. = 0
+				. = FALSE
 				break
-	if (progress)
-		qdel(progbar)
+	if(!QDELETED(progbar))
+		progbar.end_progress()
+
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
 
 /mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
 	. = 1
 	return
 
-/proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
-	if(!user || !targets)
-		return 0
+///Timed action involving at least one mob user and a list of targets.
+/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
+	if(!user)
+		return FALSE
 	if(!islist(targets))
 		targets = list(targets)
+	if(!length(targets))
+		return FALSE
 	var/user_loc = user.loc
 
-	var/drifting = 0
+	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
+		drifting = TRUE
 
 	var/list/originalloc = list()
 	for(var/atom/target in targets)
 		originalloc[target] = target.loc
+		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
 
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
@@ -364,28 +349,41 @@ Proc for attack log creation, because really why not
 
 	var/endtime = world.time + time
 	var/starttime = world.time
-	. = 1
+	var/mob/living/L
+	if(isliving(user))
+		L = user
+	. = TRUE
 	mainloop:
 		while(world.time < endtime)
 			stoplag(1)
-			if(progress)
+			if(!QDELETED(progbar))
 				progbar.update(world.time - starttime)
 			if(QDELETED(user) || !targets)
-				. = 0
+				. = FALSE
 				break
 			if(uninterruptible)
 				continue
 
 			if(drifting && !user.inertia_dir)
-				drifting = 0
+				drifting = FALSE
 				user_loc = user.loc
 
+			if(L && !((L.mobility_flags & required_mobility_flags) == required_mobility_flags))
+				. = FALSE
+				break
+
 			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
-					. = 0
+				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
+					. = FALSE
 					break mainloop
-	if(progbar)
-		qdel(progbar)
+	if(!QDELETED(progbar))
+		progbar.end_progress()
+
+	for(var/thing in targets)
+		var/atom/target = thing
+		if(!QDELETED(target))
+			LAZYREMOVE(user.do_afters, target)
+			LAZYREMOVE(target.targeted_by, user)
 
 /proc/is_species(A, species_datum)
 	. = FALSE
@@ -402,11 +400,12 @@ Proc for attack log creation, because really why not
 	var/list/new_args = list(T)
 	if(extra_args)
 		new_args += extra_args
-
+	var/atom/X
 	for(var/j in 1 to amount)
-		var/atom/X = new spawn_type(arglist(new_args))
+		X = new spawn_type(arglist(new_args))
 		if (admin_spawn)
 			X.flags_1 |= ADMIN_SPAWNED_1
+	return X //return the last mob spawned
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
@@ -414,10 +413,21 @@ Proc for attack log creation, because really why not
 	if(!T)
 		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
+	var/list/spawned_mobs = new(amount)
+
 	for(var/j in 1 to amount)
-		var/atom/movable/X = new spawn_type(T)
+		var/atom/movable/X
+
+		if (istype(spawn_type, /list))
+			var/mob_type = pick(spawn_type)
+			X = new mob_type(T)
+		else
+			X = new spawn_type(T)
+
 		if (admin_spawn)
 			X.flags_1 |= ADMIN_SPAWNED_1
+
+		spawned_mobs[j] = X
 
 		if(always_max_walk || prob(walk_chance))
 			if(always_max_walk)
@@ -428,31 +438,46 @@ Proc for attack log creation, because really why not
 			for(var/i in 1 to step_count)
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
-/proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
-	message = "<span class='linkify'>[message]</span>"
-	for(var/mob/M in GLOB.player_list)
-		var/datum/preferences/prefs
-		if(M.client && M.client.prefs)
-			prefs = M.client.prefs
-		else
-			prefs = new
+	return spawned_mobs
 
-		var/adminoverride = 0
-		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
-			adminoverride = 1
-		if(isnewplayer(M) && !adminoverride)
+// Displays a message in deadchat, sent by source. Source is not linkified, message is, to avoid stuff like character names to be linkified.
+// Automatically gives the class deadsay to the whole message (message + source)
+/proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
+	for(var/mob/M in GLOB.player_list)
+		var/chat_toggles = TOGGLES_DEFAULT_CHAT
+		var/toggles = TOGGLES_DEFAULT
+		var/list/ignoring
+		if(M.client.prefs)
+			var/datum/preferences/prefs = M.client.prefs
+			chat_toggles = prefs.chat_toggles
+			toggles = prefs.toggles
+			ignoring = prefs.ignoring
+
+
+		var/override = FALSE
+		if(M.client.holder && (chat_toggles & CHAT_DEAD))
+			override = TRUE
+		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE) && message_type == DEADCHAT_REGULAR)
+			override = TRUE
+		if(SSticker.current_state == GAME_STATE_FINISHED)
+			override = TRUE
+		if(isnewplayer(M) && !override)
 			continue
-		if(M.stat != DEAD && !adminoverride)
+		if(M.stat != DEAD && !override)
 			continue
-		if(speaker_key && speaker_key in prefs.ignoring)
+		if(speaker_key && (speaker_key in ignoring))
 			continue
 
 		switch(message_type)
 			if(DEADCHAT_DEATHRATTLE)
-				if(prefs.toggles & DISABLE_DEATHRATTLE)
+				if(toggles & DISABLE_DEATHRATTLE)
 					continue
 			if(DEADCHAT_ARRIVALRATTLE)
-				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
+				if(toggles & DISABLE_ARRIVALRATTLE)
+					continue
+			if(DEADCHAT_LAWCHANGE)
+				if(!(chat_toggles & CHAT_GHOSTLAWS))
 					continue
 
 		if(isobserver(M))
@@ -472,41 +497,6 @@ Proc for attack log creation, because really why not
 			to_chat(M, rendered_message)
 		else
 			to_chat(M, message)
-
-
-/proc/log_talk(mob/user,message,logtype)
-	var/turf/say_turf = get_turf(user)
-
-	var/sayloc = ""
-	if(say_turf)
-		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
-
-
-	var/logmessage = "[message] [sayloc]"
-
-	switch(logtype)
-
-		if(LOGDSAY)
-			log_dsay(logmessage)
-		if(LOGSAY)
-			log_say(logmessage)
-		if(LOGWHISPER)
-			log_whisper(logmessage)
-		if(LOGEMOTE)
-			log_emote(logmessage)
-		if(LOGPDA)
-			log_pda(logmessage)
-		if(LOGCHAT)
-			log_chat(logmessage)
-		if(LOGCOMMENT)
-			log_comment(logmessage)
-		if(LOGASAY)
-			log_adminsay(logmessage)
-		if(LOGOOC)
-			log_ooc(logmessage)
-		else
-			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
-			log_say(logmessage)
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
@@ -529,3 +519,88 @@ Proc for attack log creation, because really why not
 		chosen = pick(mob_spawn_meancritters)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
+
+/proc/passtable_on(target, source)
+	var/mob/living/L = target
+	if (!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
+		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
+	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
+	L.pass_flags |= PASSTABLE
+
+/proc/passtable_off(target, source)
+	var/mob/living/L = target
+	REMOVE_TRAIT(L, TRAIT_PASSTABLE, source)
+	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
+		L.pass_flags &= ~PASSTABLE
+
+/proc/dance_rotate(atom/movable/AM, datum/callback/callperrotate, set_original_dir=FALSE)
+	set waitfor = FALSE
+	var/originaldir = AM.dir
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		if(!AM)
+			return
+		AM.setDir(i)
+		callperrotate?.Invoke()
+		sleep(1)
+	if(set_original_dir)
+		AM.setDir(originaldir)
+
+///////////////////////
+///Silicon Mob Procs///
+///////////////////////
+
+//Returns a list of unslaved cyborgs
+/proc/active_free_borgs()
+	. = list()
+	for(var/mob/living/silicon/robot/R in GLOB.alive_mob_list)
+		if(R.connected_ai || R.shell)
+			continue
+		if(R.stat == DEAD)
+			continue
+		if(R.emagged || R.scrambledcodes)
+			continue
+		. += R
+
+//Returns a list of AI's
+/proc/active_ais(check_mind=FALSE, var/z = null)
+	. = list()
+	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
+		if(A.stat == DEAD)
+			continue
+		if(A.control_disabled)
+			continue
+		if(check_mind)
+			if(!A.mind)
+				continue
+		if(z && !(z == A.z) && (!is_station_level(z) || !is_station_level(A.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+			continue
+		. += A
+	return .
+
+//Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
+/proc/select_active_ai_with_fewest_borgs(var/z)
+	var/mob/living/silicon/ai/selected
+	var/list/active = active_ais(FALSE, z)
+	for(var/mob/living/silicon/ai/A in active)
+		if(!selected || (selected.connected_robots.len > A.connected_robots.len))
+			selected = A
+
+	return selected
+
+/proc/select_active_free_borg(mob/user)
+	var/list/borgs = active_free_borgs()
+	if(borgs.len)
+		if(user)
+			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sortList(borgs)
+		else
+			. = pick(borgs)
+	return .
+
+/proc/select_active_ai(mob/user, var/z = null)
+	var/list/ais = active_ais(FALSE, z)
+	if(ais.len)
+		if(user)
+			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sortList(ais)
+		else
+			. = pick(ais)
+	return .

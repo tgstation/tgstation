@@ -3,8 +3,8 @@
 	typepath = /datum/round_event/electrical_storm
 	earliest_start = 10 MINUTES
 	min_players = 5
-	weight = 40
-	alertadmins = 0
+	weight = 20
+	alert_observers = 0
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount	= 1

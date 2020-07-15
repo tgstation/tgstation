@@ -11,6 +11,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Charge modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Titanium, a lightweight, agile fighter.</span>"
 	var/charging = 0
 	var/obj/screen/alert/chargealert
 
@@ -47,25 +48,25 @@
 	if(!charging)
 		..()
 
-/mob/living/simple_animal/hostile/guardian/charger/throw_impact(atom/A)
+/mob/living/simple_animal/hostile/guardian/charger/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!charging)
 		return ..()
 
-	else if(A)
-		if(isliving(A) && A != summoner)
-			var/mob/living/L = A
+	else if(hit_atom)
+		if(isliving(hit_atom) && hit_atom != summoner)
+			var/mob/living/L = hit_atom
 			var/blocked = FALSE
-			if(hasmatchingsummoner(A)) //if the summoner matches don't hurt them
+			if(hasmatchingsummoner(hit_atom)) //if the summoner matches don't hurt them
 				blocked = TRUE
-			if(ishuman(A))
-				var/mob/living/carbon/human/H = A
+			if(ishuman(hit_atom))
+				var/mob/living/carbon/human/H = hit_atom
 				if(H.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
 					blocked = TRUE
 			if(!blocked)
 				L.drop_all_held_items()
 				L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
 				L.apply_damage(20, BRUTE)
-				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
+				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, TRUE)
 				shake_camera(L, 4, 3)
 				shake_camera(src, 2, 3)
 

@@ -2,19 +2,27 @@
 	name = "Ninja"
 	antagpanel_category = "Ninja"
 	job_rank = ROLE_NINJA
+	antag_hud_type = ANTAG_HUD_NINJA
+	antag_hud_name = "ninja"
 	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
 	var/give_equipment = TRUE
 
+/datum/antagonist/ninja/New()
+	if(helping_station)
+		can_hijack = HIJACK_PREVENT
+	. = ..()
+
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_ninja_icons_added(M)
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 /datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_ninja_icons_removed(M)
+	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
 	return H.equipOutfit(/datum/outfit/ninja)
@@ -91,7 +99,6 @@
 	var/datum/objective/O = new /datum/objective/survive()
 	O.owner = owner
 	objectives += O
-	owner.objectives |= objectives
 
 /proc/remove_ninja(mob/living/L)
 	if(!L || !L.mind)
@@ -137,18 +144,10 @@
 			adj = "objectiveless"
 		else
 			return
+	if(helping_station)
+		can_hijack = HIJACK_PREVENT
 	new_owner.assigned_role = ROLE_NINJA
 	new_owner.special_role = ROLE_NINJA
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [new_owner.current].")
-	log_admin("[key_name(admin)] has [adj] ninja'ed [new_owner.current].")
-
-/datum/antagonist/ninja/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
-	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
-	ninjahud.join_hud(ninja)
-	set_antag_hud(ninja, "ninja")
-
-/datum/antagonist/ninja/proc/update_ninja_icons_removed(var/mob/living/carbon/human/ninja)
-	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
-	ninjahud.leave_hud(ninja)
-	set_antag_hud(ninja, null)
+	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has [adj] ninja'ed [key_name(new_owner)].")

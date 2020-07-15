@@ -29,7 +29,9 @@ Bonus
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 45
-	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
+	threshold_descs = list(
+		"Stealth 4" = "The symptom is less noticeable."
+	)
 
 /datum/symptom/weight_loss/Start(datum/disease/advance/A)
 	if(!..())
@@ -48,4 +50,4 @@ Bonus
 		else
 			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
 			M.overeatduration = max(M.overeatduration - 100, 0)
-			M.nutrition = max(M.nutrition - 100, 0)
+			M.adjust_nutrition(-100)

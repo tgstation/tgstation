@@ -5,6 +5,7 @@
 /datum/game_mode/monkey
 	name = "monkey"
 	config_tag = "monkey"
+	report_type = "monkey"
 	antag_flag = ROLE_MONKEY
 	false_report_weight = 1
 
@@ -12,7 +13,10 @@
 	required_enemies = 1
 	recommended_enemies = 1
 
-	restricted_jobs = list("Cyborg", "AI")
+	restricted_jobs = list("Prisoner", "Cyborg", "AI")
+
+	announce_span = "Monkey"
+	announce_text = "One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to CentCom. Monkeys: Ensure that your kind lives on! Rise up against your captors!"
 
 	var/carriers_to_make = 1
 	var/list/carriers = list()
@@ -43,11 +47,6 @@
 		setup_error = "No monkey candidates"
 		return FALSE
 	return TRUE
-
-
-/datum/game_mode/monkey/announce()
-	to_chat(world, "<B>The current game mode is - Monkey!</B>")
-	to_chat(world, "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to CentCom. Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>")
 
 /datum/game_mode/monkey/post_setup()
 	for(var/datum/mind/carriermind in carriers)
@@ -99,12 +98,12 @@
 
 /datum/game_mode/monkey/special_report()
 	if(check_monkey_victory())
-		return "<span class='redtext big'>The monkeys have overthrown their captors! Eeek eeeek!!</span>"
+		return "<div class='panel redborder'><span class='redtext big'>The monkeys have overthrown their captors! Eeek eeeek!!</span></div>"
 	else
-		return "<span class='redtext big'>The staff managed to contain the monkey infestation!</span>"
+		return "<div class='panel redborder'><span class='redtext big'>The staff managed to contain the monkey infestation!</span></div>"
 
 /datum/game_mode/monkey/generate_report()
-	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."
+	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant. Due to strain mutation, such infections are no longer curable by any known means. If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."
 
 /proc/add_monkey_leader(datum/mind/monkey_mind)
 	if(is_monkey_leader(monkey_mind))

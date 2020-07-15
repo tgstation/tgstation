@@ -9,10 +9,38 @@
 	margin: 2px 2px 0 10px;
 	text-align: center;
 }
-
 .dnaBlock
 {
 	font-family: Fixed, monospace;
 	float: left;
 }
-
+a.incompleteBlock
+{
+	background: #8a4040;
+}
+a.incompleteBlock:hover
+{
+	color: #40628a;
+	background: #ffffff;
+}
+img.selected
+{
+	border: 1px solid blue;
+}
+img.unselected
+{
+	border: 2px solid black;
+}
+div>table {
+	float: left;
+}
+td
+{
+	text-align: center;
+}
+a.clean
+{
+	background: none;
+	border: none;
+	marging: none;
+}

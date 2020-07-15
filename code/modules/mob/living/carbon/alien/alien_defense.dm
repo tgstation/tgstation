@@ -5,7 +5,7 @@
 /mob/living/carbon/alien/get_ear_protection()
 	return 2 //no ears
 
-/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush)
+/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..(AM, skipcatch = TRUE, hitpush = FALSE)
 
 
@@ -21,9 +21,13 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
-			resting = 0
+			if(M == src && check_self_for_injuries())
+				return
+			set_resting(FALSE)
 			AdjustStun(-60)
 			AdjustKnockdown(-60)
+			AdjustImmobilized(-60)
+			AdjustParalyzed(-60)
 			AdjustUnconscious(-60)
 			AdjustSleeping(-100)
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
@@ -34,11 +38,12 @@ In all, this is a lot like the monkey code. /N
 		else
 			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+								"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
+				to_chat(M, "<span class='danger'>You bite [src]!</span>")
 				adjustBruteLoss(1)
-				add_logs(M, src, "attacked")
+				log_combat(M, src, "attacked")
 				updatehealth()
 			else
 				to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
@@ -97,27 +102,32 @@ In all, this is a lot like the monkey code. /N
 		if(M.is_adult)
 			damage = rand(10, 40)
 		adjustBruteLoss(damage)
-		add_logs(M, src, "attacked")
+		log_combat(M, src, "attacked")
 		updatehealth()
 
 /mob/living/carbon/alien/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
+	if(QDELETED(src))
+		return
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	switch (severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			gib()
 			return
 
-		if (2)
+		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
-			adjustEarDamage(30,120)
+			if(ears)
+				ears.adjustEarDamage(30,120)
 
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_overall_damage(30,0)
 			if(prob(50))
 				Unconscious(20)
-			adjustEarDamage(15,60)
+			if(ears)
+				ears.adjustEarDamage(15,60)
 
 /mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	return 0

@@ -1,7 +1,7 @@
 /obj/item/onetankbomb
 	name = "bomb"
 	icon = 'icons/obj/tank.dmi'
-	item_state = "assembly"
+	inhand_icon_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throwforce = 5
@@ -17,19 +17,22 @@
 	return TRUE
 
 /obj/item/onetankbomb/examine(mob/user)
-	bombtank.examine(user)
+	return bombtank.examine(user)
 
-/obj/item/onetankbomb/update_icon()
-	cut_overlays()
+/obj/item/onetankbomb/update_icon_state()
 	if(bombtank)
 		icon = bombtank.icon
 		icon_state = bombtank.icon_state
+
+/obj/item/onetankbomb/update_overlays()
+	. = ..()
 	if(bombassembly)
-		add_overlay(bombassembly.icon_state)
-		copy_overlays(bombassembly)
-		add_overlay("bomb_assembly")
+		. += bombassembly.icon_state
+		. += bombassembly.overlays
+		. += "bomb_assembly"
 
 /obj/item/onetankbomb/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
 	if(bombassembly)
 		bombassembly.forceMove(drop_location())
@@ -43,23 +46,19 @@
 	return TRUE
 
 /obj/item/onetankbomb/welder_act(mob/living/user, obj/item/I)
+	..()
 	. = FALSE
 	if(status)
-		to_chat(user, "<span class='notice'>[bombtank] already has a pressure hole!</span>")
+		to_chat(user, "<span class='warning'>[bombtank] already has a pressure hole!</span>")
 		return
 	if(!I.tool_start_check(user, amount=0))
 		return
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
-		GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-		message_admins("[ADMIN_LOOKUPFLW(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
+		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bombtank.air_contents.temperature-T0C]")
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		add_fingerprint(user)
 		return TRUE
-
-
-/obj/item/onetankbomb/analyzer_act(mob/living/user, obj/item/I)
-	bombtank.analyzer_act(user, I)
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, TRUE)
@@ -158,8 +157,10 @@
 	if(bomb_mixture.temperature > (T0C + 400))
 		strength = (fuel_moles/15)
 
-		if(strength >=1)
+		if(strength >=2)
 			explosion(ground_zero, round(strength,1), round(strength*2,1), round(strength*3,1), round(strength*4,1))
+		else if(strength >=1)
+			explosion(ground_zero, round(strength,1), round(strength*2,1), round(strength*2,1), round(strength*3,1))
 		else if(strength >=0.5)
 			explosion(ground_zero, 0, 1, 2, 4)
 		else if(strength >=0.2)
@@ -173,7 +174,7 @@
 
 		if(strength >=1)
 			explosion(ground_zero, 0, round(strength,1), round(strength*2,1), round(strength*3,1))
-		else if (strength >=0.5)
+		else if(strength >=0.5)
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
 			ground_zero.assume_air(bomb_mixture)
@@ -182,7 +183,7 @@
 	else if(bomb_mixture.temperature > (T0C + 100))
 		strength = (fuel_moles/25)
 
-		if (strength >=1)
+		if(strength >=1)
 			explosion(ground_zero, -1, 0, round(strength,1), round(strength*3,1))
 		else
 			ground_zero.assume_air(bomb_mixture)
@@ -201,3 +202,9 @@
 		return
 	T.assume_air(removed)
 	air_update_turf()
+
+/obj/item/onetankbomb/return_analyzable_air()
+	if(bombtank)
+		return bombtank.return_analyzable_air()
+	else
+		return null
