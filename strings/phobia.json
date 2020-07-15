@@ -284,5 +284,16 @@
 		"neet",
 		"ora",
 		"~"
+	],
+"insects": [
+		"fly",
+		"moth",
+		"buzz",
+		"flutter",
+		"insect",
+		"moff",
+		"roach",
+		"cockroach",
+		"glockroach"
 	]
 }
