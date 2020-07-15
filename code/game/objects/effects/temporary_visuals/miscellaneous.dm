@@ -502,3 +502,15 @@
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
+
+/obj/effect/temp_visual/dir_setting/entropic
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "entropic_plume"
+	duration = 12
+
+/obj/effect/temp_visual/dir_setting/entropic/setDir(dir)
+	. = ..()
+	if(dir == NORTH || dir == SOUTH)
+		pixel_x = -80
+	else if(dir == EAST || dir == WEST)
+		pixel_y = -80
