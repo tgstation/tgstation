@@ -9,17 +9,18 @@
 	actor.dis_integrate(src)
 	return TRUE //return TRUE/FALSE whether or not an AI swarmer should try this swarmer_act() again, NOT whether it succeeded.
 
-/obj/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return FALSE
 	for(var/mob/living/living_content in contents)
-		if(!issilicon(living_content) && !isbrain(living_content))
-			to_chat(S, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
-			return FALSE
+		if(issilicon(living_content) || isbrain(living_content))
+			continue
+		to_chat(actor, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
+		return FALSE
 	return ..()
 
-/obj/item/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	return S.Integrate(src)
+/obj/item/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	return actor.Integrate(src)
 
 /**
   * Return used to determine how many resources a swarmer gains when consuming an object
