@@ -1297,8 +1297,8 @@
 				SSmobs.clients_by_zlevel[new_z] += src
 				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
 					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
-					if (SA)
-						SA.toggle_ai(AI_ON) // Guarantees responsiveness for when appearing right next to mobs
+					if (SA && get_dist(get_turf(src), get_turf(SA)) < MAX_SIMPLEMOB_WAKEUP_RANGE)
+						SA.consider_wakeup() // Ask the mob if it wants to turn on it's AI
 					else
 						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
 
