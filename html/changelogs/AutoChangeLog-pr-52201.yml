@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed putting on a damaged suit and then it taking more damage afterwards spamming runtime logs with a warning."
