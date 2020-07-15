@@ -515,3 +515,46 @@
 		human_user.adjustStaminaLoss(-10, FALSE)
 		human_user.adjustToxLoss(-10, FALSE)
 		human_user.adjustOxyLoss(-10)
+
+/obj/effect/temp_visual/dir_setting/entropic
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "entropic_plume"
+	duration = 12
+
+/obj/effect/temp_visual/dir_setting/entropic/setDir(dir)
+	. = ..()
+	switch(dir)
+		if(NORTH)
+			pixel_x = -64
+		if(SOUTH)
+			pixel_x = -64
+			pixel_y = -128
+		if(EAST)
+			pixel_y = -64
+		if(WEST)
+			pixel_y = -64
+			pixel_x = -128
+
+/obj/effect/proc_holder/spell/cone/entropic_plume
+	name = "Entropic Plume"
+	desc = "Spews forth a disorienting plume that causes enemies to strike each other, slur and to move inverse relative to their intended direction. Also spreads rust in the path of the plume."
+	invocation = "CL'Y 'N H'S H'ND"
+	invocation_type = INVOCATION_WHISPER
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "smoke"
+	charge_max = 400
+	cone_levels = 2
+	narrow = TRUE
+	respect_density = TRUE
+
+/obj/effect/proc_holder/spell/cone/entropic_plume/cast(list/targets,mob/user = usr)
+	. = ..()
+	new /obj/effect/temp_visual/dir_setting/entropic(get_step(user, user.dir), user.dir)
+
+/obj/effect/proc_holder/spell/cone/entropic_plume/do_turf_cone_effect(turf/T)
+ 	. = ..()
+ 	T.rust_heretic_act()
+
+

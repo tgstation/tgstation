@@ -94,7 +94,7 @@
 	desc = "You can now send a projectile that converts an area into rust."
 	gain_text = "Messenger's of hope fear the rustbringer!"
 	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
+	spell_to_add = /obj/effect/proc_holder/spell/cone/entropic_plume
 	next_knowledge = list(/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/rusty)
 	route = PATH_RUST
 
