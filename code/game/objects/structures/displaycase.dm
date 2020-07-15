@@ -542,7 +542,7 @@
 				to_chat(user, "<span class='notice'>You unsecure [src].</span>")
 			else
 				to_chat(user, "<span class='notice'>You secure [src].</span>")
-			anchored = !anchored
+			setAnchored(!anchored)
 			return
 	else if(!open && user.a_intent == INTENT_HELP)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")

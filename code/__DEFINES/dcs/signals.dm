@@ -269,6 +269,8 @@
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
+///called when the movable sucessfully has it's anchored var changed, from base atom/movable/setAnchored(): (value)
+#define COMSIG_MOVABLE_SETANCHORED "movable_setanchored"
 
 // /mob signals
 
@@ -413,8 +415,6 @@
 
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
-///called in /obj/structure/setAnchored(): (value)
-#define COMSIG_OBJ_SETANCHORED "obj_setanchored"
 ///from base of code/game/machinery
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide

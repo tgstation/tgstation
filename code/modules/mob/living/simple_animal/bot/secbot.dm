@@ -325,7 +325,7 @@ Auto Patrol: []"},
 						stun_attack(target)
 
 					mode = BOT_PREP_ARREST
-					anchored = TRUE
+					setAnchored(TRUE)
 					target_lastloc = target.loc
 					return
 
@@ -359,7 +359,7 @@ Auto Patrol: []"},
 
 		if(BOT_ARREST)
 			if(!target)
-				anchored = FALSE
+				setAnchored(FALSE)
 				mode = BOT_IDLE
 				last_found = world.time
 				frustration = 0
@@ -377,7 +377,7 @@ Auto Patrol: []"},
 				return
 			else //Try arresting again if the target escapes.
 				mode = BOT_PREP_ARREST
-				anchored = FALSE
+				setAnchored(FALSE)
 
 		if(BOT_START_PATROL)
 			look_for_perp()

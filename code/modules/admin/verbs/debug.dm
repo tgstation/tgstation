@@ -597,7 +597,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			F.active = 1
 			F.state = 2
 			F.power = 250
-			F.anchored = TRUE
+			F.setAnchored(TRUE)
 			F.warming_up = 3
 			F.start_fields()
 			F.update_icon()

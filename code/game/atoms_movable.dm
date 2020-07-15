@@ -456,6 +456,14 @@
 			return
 	A.Bumped(src)
 
+///Sets the anchored var and returns if it was sucessfully changed or not.
+/atom/movable/proc/setAnchored(anchorvalue)
+	if(anchored == anchorvalue)
+		return FALSE
+	anchored = anchorvalue
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SETANCHORED, anchorvalue)
+	return TRUE
+
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE
 	if(destination)
