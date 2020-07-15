@@ -536,7 +536,7 @@
 	if(player_ckey)
 		create_message("note", player_ckey, admin_ckey, note_reason, null, null, 0, 0, null, 0, severity)
 	var/client/C = GLOB.directory[player_ckey]
-	var/datum/admin_help/AH = admin_ticket_log(player_ckey, msg)
+	var/datum/admin_help/AH = admin_ticket_log(player_ckey, "[kna] [msg]")
 	var/appeal_url = "No ban appeal url set!"
 	appeal_url = CONFIG_GET(string/banappeals)
 	var/is_admin = FALSE
@@ -838,12 +838,12 @@
 	var/datum/db_query/query_edit_ban = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("ban")]
 		SET
-			expiration_time = IF(:duration IS NULL, NULL, bantime + INTERVAL :duration [interval])
+			expiration_time = IF(:duration IS NULL, NULL, bantime + INTERVAL :duration [interval]),
 			applies_to_admins = :applies_to_admins,
 			reason = :reason,
 			ckey = :ckey,
 			ip = INET_ATON(:ip),
-			computerid = :ci
+			computerid = :cid,
 			edits = CONCAT(IFNULL(edits,''), :change_message)
 		WHERE [where]
 	"}, arguments)

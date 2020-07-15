@@ -134,15 +134,13 @@
 		return ..()
 
 /obj/item/card/id/proc/insert_money(obj/item/I, mob/user, physical_currency)
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
+		return
 	var/cash_money = I.get_item_credit_value()
 	if(!cash_money)
 		to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
 		return
-
-	if(!registered_account)
-		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
-		return
-
 	registered_account.adjust_money(cash_money)
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
 	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
@@ -155,17 +153,20 @@
 	qdel(I)
 
 /obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit into!</span>")
+		return FALSE
+
 	if (!money || !money.len)
 		return FALSE
 
 	var/total = 0
 
 	for (var/obj/item/physical_money in money)
-		var/cash_money = physical_money.get_item_credit_value()
+		total += physical_money.get_item_credit_value()
+		CHECK_TICK
 
-		total += cash_money
-
-		registered_account.adjust_money(cash_money)
+	registered_account.adjust_money(total)
 	SSblackbox.record_feedback("amount", "credits_inserted", total)
 	log_econ("[total] credits were inserted into [src] owned by [src.registered_name]")
 	QDEL_LIST(money)

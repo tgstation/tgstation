@@ -417,6 +417,12 @@
 /mob/living/proc/setMaxHealth(newMaxHealth)
 	maxHealth = newMaxHealth
 
+/// Returns the health of the mob while ignoring damage of non-organic (prosthetic) limbs
+/// Used by cryo cells to not permanently imprison those with damage from prosthetics,
+/// as they cannot be healed through chemicals.
+/mob/living/proc/get_organic_health()
+	return health
+
 // MOB PROCS //END
 
 /mob/living/proc/mob_sleep()
@@ -1550,3 +1556,7 @@
 	switch(stat) //Current stat.
 		if(UNCONSCIOUS)
 			become_blind(UNCONSCIOUS_BLIND)
+
+/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
+/mob/living/proc/is_face_visible()
+	return TRUE

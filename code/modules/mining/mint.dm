@@ -10,7 +10,7 @@
 	ui_x = 300
 	ui_y = 250
 	needs_item_input = TRUE
-
+	var/obj/item/storage/bag/money/bag_to_use
 	var/produced_coins = 0 // how many coins the machine has made in it's last cycle
 	var/processing = FALSE
 	var/chosen = /datum/material/iron //which material will be used to make coins
@@ -65,6 +65,7 @@
 				for(var/coin_to_make in 1 to 5)
 					create_coins()
 					produced_coins++
+					CHECK_TICK
 			else
 				var/found_new = FALSE
 				for(var/datum/material/inserted_material in materials.materials)
@@ -138,10 +139,10 @@
 	temp_list[chosen] = 400
 	if(T)
 		var/obj/item/O = new /obj/item/coin(src)
-		var/obj/item/storage/bag/money/B = locate(/obj/item/storage/bag/money, T)
 		O.set_custom_materials(temp_list)
-		if(!B)
-			B = new /obj/item/storage/bag/money(src)
-			unload_mineral(B)
-		O.forceMove(B)
+		if(QDELETED(bag_to_use) || (bag_to_use.loc != T) || !SEND_SIGNAL(bag_to_use, COMSIG_TRY_STORAGE_INSERT, O, null, TRUE)) //important to send the signal so we don't overfill the bag.
+			bag_to_use = new(src) //make a new bag if we can't find or use the old one.
+			unload_mineral(bag_to_use) //just forcemove memes.
+			O.forceMove(bag_to_use) //don't bother sending the signal, the new bag is empty and all that.
+
 		SSblackbox.record_feedback("amount", "coins_minted", 1)

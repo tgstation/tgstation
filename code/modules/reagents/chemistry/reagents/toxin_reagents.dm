@@ -41,7 +41,7 @@
 /datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
 		return
-	if(!M.has_dna() || (HAS_TRAIT(M, TRAIT_RADIMMUNE) || HAS_TRAIT(M, TRAIT_BADDNA)))
+	if(!M.has_dna() || HAS_TRAIT(M, TRAIT_GENELESS) || HAS_TRAIT(M, TRAIT_BADDNA))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
@@ -107,6 +107,23 @@
 		M.adjust_fire_stacks(reac_volume / 5)
 		return
 	..()
+
+/datum/reagent/toxin/hot_ice
+	name = "Hot Ice Slush"
+	description = "Frozen plasma, worth its weight in gold, to the right people"
+	reagent_state = SOLID
+	color = "#724cb8" // rgb: 114, 76, 184
+	taste_description = "thick and smokey"
+	specific_heat = SPECIFIC_HEAT_PLASMA
+	toxpwr = 3
+	material = /datum/material/hot_ice
+
+/datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/M)
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+	M.adjustPlasma(20)
+	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
+	return ..()
 
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
@@ -872,7 +889,7 @@
 	name = "Nitric acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
-	toxpwr = 2
+	toxpwr = 3
 	acidpwr = 5.0
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)

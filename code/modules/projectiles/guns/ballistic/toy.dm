@@ -76,6 +76,8 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamcrossbow"
 	inhand_icon_state = "crossbow"
+	worn_icon_state = "gun"
+	worn_icon = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/crossbow
 	fire_sound = 'sound/items/syringeproj.ogg'
 	slot_flags = ITEM_SLOT_BELT
