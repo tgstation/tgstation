@@ -127,6 +127,9 @@
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
 	switch(var_name)
+		if(NAMEOF(src, anchored))
+			setAnchored(var_name)
+			return TRUE
 		if("x")
 			var/turf/T = locate(var_value, y, z)
 			if(T)

@@ -44,9 +44,6 @@
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
-		if("anchored")
-			setAnchored(vval)
-			return TRUE
 		if("obj_flags")
 			if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
 				return FALSE
