@@ -13,6 +13,7 @@
 	strip_delay = 10
 	equip_delay_other = 10
 	dynamic_hair_suffix = ""
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/chefhat
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
