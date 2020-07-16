@@ -100,7 +100,6 @@
  * optional ui /datum/tgui
  */
 /datum/tgui_window/proc/acquire_lock(datum/tgui/ui)
-	log_tgui(client, "[id]/acquire_lock")
 	locked = TRUE
 	locked_by = ui
 
@@ -108,7 +107,6 @@
  * Release the window lock.
  */
 /datum/tgui_window/proc/release_lock()
-	log_tgui(client, "[id]/release_lock")
 	locked = FALSE
 	locked_by = null
 
@@ -120,14 +118,14 @@
  * optional can_be_suspended bool
  */
 /datum/tgui_window/proc/close(can_be_suspended = TRUE)
-	log_tgui(client, "[id]/close")
 	if(!client)
 		return
 	if(can_be_suspended && can_be_suspended())
-		log_tgui(client, "suspending")
+		log_tgui(client, "[id]/close: suspending")
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
 		return
+	log_tgui(client, "[id]/close")
 	locked = FALSE
 	locked_by = null
 	status = TGUI_WINDOW_CLOSED
