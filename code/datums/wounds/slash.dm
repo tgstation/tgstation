@@ -116,12 +116,12 @@
 
 
 /datum/wound/slash/on_stasis()
-	if(blood_flow < minimum_flow)
-		if(demotes_to)
-			replace_wound(demotes_to)
-			return
-		qdel(src)
+	if(blood_flow >= minimum_flow)
 		return
+	if(demotes_to)
+		replace_wound(demotes_to)
+		return
+	qdel(src)
 
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
 
@@ -279,3 +279,4 @@
 	demotes_to = /datum/wound/slash/severe
 	status_effect_type = /datum/status_effect/wound/slash/critical
 	scar_keyword = "slashcritical"
+	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE | MANGLES_FLESH)

@@ -117,7 +117,7 @@
 	if(strikes_to_lose_limb <= 0)
 		return "<span class='deadsay'><B>[victim.p_their(TRUE)] [limb.name] is completely dead and unrecognizable as organic.</B></span>"
 
-	var/condition = ""
+	var/list/condition = list("[victim.p_their(TRUE)] [limb.name] [examine_desc]")
 	if(limb.current_gauze)
 		var/bandage_condition
 		switch(limb.current_gauze.absorption_capacity)
@@ -144,7 +144,7 @@
 			else
 				condition += "!"
 
-	return "<B>[victim.p_their(TRUE)] [limb.name] [examine_desc][condition]</B>"
+	return "<B>[condition.Join()]</B>"
 
 /datum/wound/burn/get_scanner_description(mob/user)
 	if(strikes_to_lose_limb == 0)

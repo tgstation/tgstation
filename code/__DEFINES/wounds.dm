@@ -37,10 +37,10 @@
 #define CANT_WOUND -100
 
 // list in order of highest severity to lowest
-#define WOUND_LIST_BLUNT		list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate)
-#define WOUND_LIST_SLASH		list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate)
-#define WOUND_LIST_PIERCE		list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate)
-#define WOUND_LIST_BURN			list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate)
+GLOBAL_LIST_INIT(WOUND_LIST_BLUNT, list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
+GLOBAL_LIST_INIT(WOUND_LIST_SLASH, list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate))
+GLOBAL_LIST_INIT(WOUND_LIST_PIERCE, list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate))
+GLOBAL_LIST_INIT(WOUND_LIST_BURN, list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate))
 
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse
 /// below this has no ill effects from infection
@@ -88,7 +88,7 @@
 // see [/obj/item/bodypart/proc/get_mangled_state] for more information
 #define BODYPART_MANGLED_NONE	0
 #define BODYPART_MANGLED_BONE	1
-#define BODYPART_MANGLED_SKIN	2
+#define BODYPART_MANGLED_FLESH	2
 #define BODYPART_MANGLED_BOTH	3
 
 // What kind of biology we have, and what wounds we can suffer, mostly relies on the HAS_FLESH and HAS_BONE species traits on human species
@@ -101,8 +101,14 @@
 /// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember
 #define BIO_FLESH_BONE	3
 
-
+/// If this wound requires having the HAS_FLESH flag for humanoids
 #define FLESH_WOUND		(1<<0)
+/// If this wound requires having the HAS_BONE flag for humanaoids
 #define BONE_WOUND		(1<<1)
-#define ACCEPTS_GAUZE	(1<<2)
+/// If having this wound counts as mangled flesh for dismemberment
+#define MANGLES_FLESH	(1<<2)
+/// If having this wound counts as mangled bone for dismemberment
+#define MANGLES_BONE	(1<<3)
+/// If this wound marks the limb as being allowed to have gauze applied
+#define ACCEPTS_GAUZE	(1<<4)
 

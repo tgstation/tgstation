@@ -49,8 +49,6 @@
 	var/list/treatable_by_grabbed
 	/// Tools with the specified tool flag will also be able to try directly treating this wound
 	var/treatable_tool
-	/// Can we use a bandage/gauze on this wound in some kind of way?
-	var/accepts_gauze = TRUE
 	/// How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery
 	var/base_treat_time = 5 SECONDS
 

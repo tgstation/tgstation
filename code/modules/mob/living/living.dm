@@ -680,10 +680,7 @@
 	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
 
-	var/blood_exists = FALSE
-	for(var/obj/effect/decal/cleanable/trail_holder/C in start) //pretty sure this can just be a locate() instead of a loop but this isn't why i'm looking at this proc so whoever looks here next can double check
-		blood_exists = TRUE
-		break
+	var/blood_exists = locate(obj/effect/decal/cleanable/trail_holder) in start
 
 	var/trail_type = getTrail()
 	if(!trail_type)
@@ -698,9 +695,9 @@
 	var/newdir = get_dir(target_turf, start)
 	if(newdir != direction)
 		newdir = newdir | direction
-		if(newdir == 3) //N + S
+		if(newdir == (NORTH|SOUTH))
 			newdir = NORTH
-		else if(newdir == 12) //E + W
+		else if(newdir == (EAST|WEST))
 			newdir = EAST
 	if((newdir in GLOB.cardinals) && (prob(50)))
 		newdir = turn(get_dir(target_turf, start), 180)

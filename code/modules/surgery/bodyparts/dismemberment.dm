@@ -162,23 +162,16 @@
   * Dismemberment for flesh and bone requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture
   * (severe bone), at which point we can start rolling for dismembering. The attack must also deal at least 10 damage, and must be a brute attack of some kind (sorry for now, cakehat, maybe later)
   *
-  * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_SKIN if our skin is broken, BODYPART_MANGLED_BONE if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
+  * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_FLESH if our skin is broken, BODYPART_MANGLED_BONE if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
   */
 /obj/item/bodypart/proc/get_mangled_state()
-	var/mangled_state = BODYPART_MANGLED_NONE
-	var/required_bone_severity = WOUND_SEVERITY_SEVERE
+	. = BODYPART_MANGLED_NONE
 
-	if(owner && owner.get_biological_state() == BIO_JUST_BONE && !HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
-		required_bone_severity = WOUND_SEVERITY_CRITICAL
-
-	// we can (generally) only have one wound per type, but remember there's multiple types
 	for(var/datum/wound/iter_wound in wounds)
-		if(istype(iter_wound, /datum/wound/blunt) && iter_wound.severity >= required_bone_severity)
-			mangled_state |= BODYPART_MANGLED_BONE
-		else if((istype(iter_wound, /datum/wound/slash) || istype(iter_wound, /datum/wound/pierce)) && iter_wound.severity >= WOUND_SEVERITY_CRITICAL)
-			mangled_state |= BODYPART_MANGLED_SKIN
-
-	return mangled_state
+		if((iter_wound.wound_flags & MANGLES_BONE))
+			. |= BODYPART_MANGLED_BONE
+		if((iter_wound.wound_flags & MANGLES_FLESH))
+			. |= BODYPART_MANGLED_FLESH
 
 /**
   * try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it
@@ -198,10 +191,8 @@
 		return
 
 	var/base_chance = wounding_dmg + (get_damage() / max_damage * 50) // how much damage we dealt with this blow, + 50% of the damage percentage we already had on this bodypart
-	for(var/datum/wound/iter_wound in wounds)
-		if(istype(iter_wound, /datum/wound/blunt/critical)) // we only require a severe bone break, but if there's a critical bone break, we'll add 10% more
-			base_chance += 10
-			break
+	if(locate(/datum/wound/blunt/critical) in wounds) // we only require a severe bone break, but if there's a critical bone break, we'll add 10% more
+		base_chance += 10
 
 	if(!prob(base_chance))
 		return

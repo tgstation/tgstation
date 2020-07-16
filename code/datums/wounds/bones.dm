@@ -134,9 +134,9 @@
 	if(!limb.current_gauze && !gelled && !taped)
 		return ..()
 
-	var/msg = ""
+	var/list/msg = list()
 	if(!limb.current_gauze)
-		msg = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
+		msg += "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
 	else
 		var/sling_condition = ""
 		// how much life we have left in these bandages
@@ -150,7 +150,7 @@
 			if(75 to INFINITY)
 				sling_condition = "tightly "
 
-		msg = "[victim.p_their(TRUE)] [limb.name] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
+		msg += "[victim.p_their(TRUE)] [limb.name] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
 
 	if(taped)
 		msg += ", <span class='notice'>and appears to be reforming itself under some surgical tape!</span>"
@@ -158,7 +158,7 @@
 		msg += ", <span class='notice'>with fizzing flecks of blue bone gel sparking off the bone!</span>"
 	else
 		msg +=  "!"
-	return "<B>[msg]</B>"
+	return "<B>[msg.Join()]</B>"
 
 /*
 	New common procs for /datum/wound/blunt/
@@ -305,6 +305,7 @@
 	brain_trauma_group = BRAIN_TRAUMA_MILD
 	trauma_cycle_cooldown = 1.5 MINUTES
 	internal_bleeding_chance = 40
+	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
 
 /datum/wound/blunt/critical
 	name = "Compound Fracture"
@@ -326,6 +327,7 @@
 	brain_trauma_group = BRAIN_TRAUMA_SEVERE
 	trauma_cycle_cooldown = 2.5 MINUTES
 	internal_bleeding_chance = 60
+	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
 
 // doesn't make much sense for "a" bone to stick out of your head
 /datum/wound/blunt/critical/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited)

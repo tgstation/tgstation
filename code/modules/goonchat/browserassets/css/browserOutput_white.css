@@ -296,6 +296,7 @@ h1.alert, h2.alert		{color: #000000;}
 .emote					{					font-style: italic;}
 
 .userdanger				{color: #ff0000;	font-weight: bold;	font-size: 185%;}
+.bolddanger				{color: #ff0000;	font-weight: bold;}
 .danger					{color: #ff0000;}
 .tinydanger				{color: #ff0000; font-size: 85%;}
 .smalldanger			{color: #ff0000; font-size: 90%;}

@@ -401,9 +401,8 @@ SUBSYSTEM_DEF(persistence)
 			if(ending_human.client) // i was told if i don't check this every step of the way byond might decide a client ceases to exist mid proc so here we go
 				ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ""
 		else
-			for(var/k in ending_human.all_wounds)
-				var/datum/wound/W = k
-				W.remove_wound() // so we can get the scars for open wounds
+			for(var/datum/wound/iter_wound in ending_human.all_wounds)
+				iter_wound.remove_wound() // so we can get the scars for open wounds
 			if(!ending_human.client)
 				return
 			ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ending_human.format_scars()

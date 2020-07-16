@@ -1211,8 +1211,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				for(var/obj/item/bodypart/slice_part in dude.bodyparts)
 					var/shots_this_limb = 0
 					for(var/t in shuffle(open_adj_turfs))
-						var/turf/open/OT = t
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/firing_squad, dude, OT, slice_part.body_zone, wound_bonuses[wound_bonus_rep], damage), delay_counter)
+						var/turf/iter_turf = t
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/firing_squad, dude, iter_turf, slice_part.body_zone, wound_bonuses[wound_bonus_rep], damage), delay_counter)
 						delay_counter += delay_per_shot
 						shots_this_limb++
 						if(shots_this_limb > shots_per_limb_per_rep)
@@ -1238,17 +1238,17 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	punish_log(target, punishment)
 
-/proc/firing_squad(mob/living/carbon/target, turf/open/OT, body_zone, wound_bonus, damage)
+/proc/firing_squad(mob/living/carbon/target, turf/source_turf, body_zone, wound_bonus, damage)
 	if(!target.get_bodypart(body_zone))
 		return
 	playsound(target, 'sound/weapons/gun/revolver/shot.ogg', 100)
-	var/obj/projectile/bullet/smite/divine_wrath = new(OT)
+	var/obj/projectile/bullet/smite/divine_wrath = new(source_turf)
 	divine_wrath.damage = damage
 	divine_wrath.wound_bonus = wound_bonus
 	divine_wrath.original = target
 	divine_wrath.def_zone = body_zone
 	divine_wrath.spread = 0
-	divine_wrath.preparePixelProjectile(target, OT)
+	divine_wrath.preparePixelProjectile(target, source_turf)
 	divine_wrath.fire()
 
 /client/proc/punish_log(whom, punishment)

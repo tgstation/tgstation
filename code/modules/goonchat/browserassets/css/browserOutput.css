@@ -298,6 +298,7 @@ em						{font-style: normal;	font-weight: bold;}
 .emote					{					font-style: italic;}
 
 .userdanger				{color: #c51e1e;	font-weight: bold;	font-size: 185%;}
+.bolddanger				{color: #c51e1e;font-weight: bold;}
 .danger					{color: #c51e1e;}
 .tinydanger				{color: #c51e1e; font-size: 85%;}
 .smalldanger			{color: #c51e1e; font-size: 90%;}

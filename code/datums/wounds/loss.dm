@@ -29,7 +29,7 @@
 
 	victim = dismembered_part.owner
 
-	var/msg = "<b><span class='danger'>[victim]'s [dismembered_part.name] [occur_text]!</span></b>"
+	var/msg = "<span class='bolddanger'>[victim]'s [dismembered_part.name] [occur_text]!</span>"
 
 	victim.visible_message(msg, "<span class='userdanger'>Your [dismembered_part.name] [occur_text]!</span>")
 

@@ -61,6 +61,7 @@ h1.alert, h2.alert		{color: #000000;}
 .emote					{					font-style: italic;}
 
 .userdanger				{color: #ff0000;	font-weight: bold;	font-size: 3;}
+.danger					{color: #ff0000;	font-weight: bold;}
 .danger					{color: #ff0000;}
 .tinydanger				{color: #ff0000; font-size: 85%;}
 .smalldanger			{color: #ff0000; font-size: 90%;}
@@ -74,6 +75,7 @@ h1.alert, h2.alert		{color: #000000;}
 .notice					{color: #000099;}
 .tinynotice				{color: #000099; font-size: 85%;}
 .smallnotice			{color: #000099; font-size: 90%;}
+.smallnoticeital		{color: #000099; font-style: italic;	font-size: 90%;}
 .boldnotice				{color: #000099;	font-weight: bold;}
 .hear					{color: #000099;	font-style: italic;}
 .adminnotice			{color: #0000ff;}

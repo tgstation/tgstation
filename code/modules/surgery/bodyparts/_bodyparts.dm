@@ -160,11 +160,11 @@
 /obj/item/bodypart/proc/get_organs()
 	if(!owner)
 		return
-	var/list/our_organs
+	. = list()
 	for(var/obj/item/organ/organ_check in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
 		var/org_zone = check_zone(organ_check.zone)
 		if(org_zone == body_zone)
-			LAZYADD(our_organs, organ_check)
+			. += organ_check
 
 	return our_organs
 
@@ -250,7 +250,7 @@
 		if(BIO_FLESH_BONE)
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
-			if(mangled_state == BODYPART_MANGLED_SKIN && sharpness)
+			if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
 				playsound(src, "sound/effects/crackandbleed.ogg", 100)
 				if(wounding_type == SHARP_EDGED && !easy_dismember)
 					wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
@@ -306,7 +306,7 @@
 	var/original_type = wounding_type
 	// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 	// So a big sharp weapon is still all you need to destroy a limb
-	if(mangled_state == BODYPART_MANGLED_SKIN)
+	if(mangled_state == BODYPART_MANGLED_FLESH)
 		playsound(src, "sound/effects/crackandbleed.ogg", 100)
 		wounding_type = WOUND_BLUNT
 		if(wounding_type == WOUND_SLASH)
@@ -363,10 +363,9 @@
 
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		var/list/clothing = H.clothingonpart(src)
-		for(var/c in clothing)
-			var/obj/item/clothing/clothes_check = c
+		var/mob/living/carbon/human/human_wearer = owner
+		var/list/clothing = human_wearer.clothingonpart(src)
+		for(var/obj/item/clothing/clothes_check in clothing)
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			if(clothes_check.armor.getRating("wound"))
 				bare_wound_bonus = 0
