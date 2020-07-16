@@ -58,10 +58,6 @@
 								"Misc"
 								)
 
-	// tgui interface dimensions. These are suggested as a minimum.
-	ui_x = 1100
-	ui_y = 640
-
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = new
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init)

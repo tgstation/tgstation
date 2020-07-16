@@ -142,8 +142,13 @@ export const ExosuitFabricator = (props, context) => {
   ] = useSharedState(context, "display_mats", false);
 
   return (
-    <Window resizable>
-      <Window.Content scrollable>
+    <Window
+      resizable
+      title="Exosuit Fabricator"
+      width={1100}
+      height={640}>
+      <Window.Content
+        scrollable>
         <Flex
           fillPositionedParent
           direction="column">
