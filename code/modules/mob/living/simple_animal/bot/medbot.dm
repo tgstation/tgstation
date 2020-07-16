@@ -204,7 +204,6 @@
 			heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
 			if(oldheal_amount < heal_amount)
 				speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
-
 	update_controls()
 	return
 
@@ -267,7 +266,6 @@
 	else
 		visible_message("<span class='notice'>[src] manages to wriggle enough to right itself.</span>")
 		messagevoice = list("Fuck you." = 'sound/voice/medbot/fuck_you.ogg', "Your behavior has been reported, have a nice day." = 'sound/voice/medbot/reported.ogg')
-
 	tipper_name = null
 	if(world.time > last_tipping_action_voice + 15 SECONDS)
 		last_tipping_action_voice = world.time
