@@ -388,7 +388,7 @@
 
 	playsound(src.loc, on_sound, 50, TRUE)
 	add_fingerprint(user)
-
+	//Crowbar
 /obj/item/melee/classic_baton/telescopic/crowbar
 	name = "telescopic crowbar"
 	desc = "A compact crowbar which was once used to fight off facehuggers. Can be concealed when folded."
@@ -400,7 +400,6 @@
 	on_icon_state = "telebar_1"
 	off_icon_state = "telebar_0"
 	on_inhand_icon_state = "crowbar"
-	usesound = 'sound/items/crowbar.ogg'
 	flags_1 = CONDUCT_1
 	stamina_damage = 0
 	cooldown = 30
@@ -419,6 +418,7 @@
 		tool_behaviour = TOOL_CROWBAR
 		toolspeed = 1.2
 		stamina_damage = 75
+		usesound = 'sound/items/crowbar.ogg'
 
 	else
 		to_chat(user, desc["local_off"])
@@ -431,6 +431,7 @@
 		tool_behaviour = TOOL_SCREWDRIVER
 		toolspeed = 10
 		stamina_damage = 0
+		usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 
 	playsound(src.loc, on_sound, 50, TRUE)
 	add_fingerprint(user)

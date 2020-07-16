@@ -140,6 +140,12 @@
 	can_adjust = FALSE
 	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
 
+/obj/item/clothing/under/misc/durathread/rebel
+	name = "Rebel attire"
+	desc = "It's time for me to live up to my family name and face FULL LIFE CONSEQUENCES!"
+	icon_state = "durarebel"
+	inhand_icon_state = "durarebel"
+
 /obj/item/clothing/under/misc/bouncer
 	name = "bouncer uniform"
 	desc = "A uniform made from a little bit more resistant fibers, makes you seem like a cool guy."
