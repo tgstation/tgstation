@@ -73,7 +73,9 @@
 
 		flick("[icon_state]_active",src)
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
-		for(var/to_disappear in selected_atoms)
+		//we are doing this since some on_finished_recipe subtract the atoms from selected_atoms making them invisible permanently.
+		var/list/atoms_to_disappear = selected_atoms.Copy()
+		for(var/to_disappear in atoms_to_disappear)
 			var/atom/atom_to_disappear = to_disappear
 			//temporary so we dont have to deal with the bs of someone picking those up when they may be deleted
 			atom_to_disappear.invisibility = INVISIBILITY_ABSTRACT
@@ -81,12 +83,10 @@
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
 			is_in_use = FALSE
 
-		listclearnulls(selected_atoms)
-
-		for(var/to_disappear in selected_atoms)
-			var/atom/atom_to_disappear = to_disappear
+		for(var/to_appear in atoms_to_disappear)
+			var/atom/atom_to_appear = to_appear
 			//we need to reappear the item just in case the ritual didnt consume everything... or something.
-			atom_to_disappear.invisibility = initial(atom_to_disappear.invisibility)
+			atom_to_appear.invisibility = initial(atom_to_appear.invisibility)
 
 		return
 	is_in_use = FALSE
