@@ -73,6 +73,8 @@
 	. = ..()
 	if(!proximity)
 		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && ismob(A))
+		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
@@ -107,6 +109,8 @@
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	. = ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
 	if(isliving(M) && force > 0)
 		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
 		log_combat(user, M, "attacked", src)
