@@ -43,14 +43,9 @@
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
 
 /obj/vv_edit_var(vname, vval)
-	switch(vname)
-		if("obj_flags")
-			if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
-				return FALSE
-		if("control_object")
-			var/obj/O = vval
-			if(istype(O) && (O.obj_flags & DANGEROUS_POSSESSION))
-				return FALSE
+	if(vname == NAMEOF(src, obj_flags))
+		if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
+			return FALSE
 	return ..()
 
 /obj/Initialize()
