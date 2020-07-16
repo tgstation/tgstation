@@ -458,12 +458,14 @@
 	UnregisterSignal(game,COMSIG_MAFIA_SUNDOWN)
 
 /datum/mafia_role/obsessed/proc/check_victory(datum/source,datum/mafia_controller/game,lynch)
+	UnregisterSignal(source,COMSIG_MAFIA_ON_KILL)
+	if(game_status == MAFIA_DEAD)
+		return
 	if(lynch)
 		game.send_message("<span class='big comradio'>!! OBSESSED VICTORY !!</span>")
 		reveal_role(game, FALSE)
 	else
 		to_chat(body, "<span class='userdanger'>You have failed your objective to lynch [obsession.body]!</span>")
-	UnregisterSignal(source,COMSIG_MAFIA_ON_KILL)
 
 /datum/mafia_role/clown
 	name = "Clown"
