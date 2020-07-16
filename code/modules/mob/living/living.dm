@@ -680,7 +680,7 @@
 	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
 
-	var/blood_exists = locate(obj/effect/decal/cleanable/trail_holder) in start
+	var/blood_exists = locate(/obj/effect/decal/cleanable/trail_holder) in start
 
 	var/trail_type = getTrail()
 	if(!trail_type)

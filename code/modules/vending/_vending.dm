@@ -546,10 +546,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 						for(var/i in C.bodyparts)
 							var/obj/item/bodypart/squish_part = i
 							if(squish_part.is_organic_limb())
-								var/type_wound = pick(list(/datum/wound/blunt/critical ; 2,\
-									/datum/wound/blunt/severe ; 2,\
-									/datum/wound/blunt/moderate ; 1\
-									))
+								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
 								squish_part.force_wound_upwards(type_wound)
 							else
 								squish_part.receive_damage(brute=30)

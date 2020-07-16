@@ -162,11 +162,8 @@
 		return
 	. = list()
 	for(var/obj/item/organ/organ_check in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
-		var/org_zone = check_zone(organ_check.zone)
-		if(org_zone == body_zone)
+		if(check_zone(organ_check.zone) == body_zone)
 			. += organ_check
-
-	return our_organs
 
 /obj/item/bodypart/proc/consider_processing()
 	if(stamina_dam > DAMAGE_PRECISION)
