@@ -203,7 +203,8 @@
 		if(tech_boosters)
 			heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
 			if(oldheal_amount < heal_amount)
-				speak("New Knowledge Found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
+				speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
+
 	update_controls()
 	return
 
