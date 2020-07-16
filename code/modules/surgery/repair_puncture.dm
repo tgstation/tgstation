@@ -48,13 +48,14 @@
 	var/datum/wound/pierce/pierce_wound = surgery.operated_wound
 	if(!pierce_wound)
 		to_chat(user, "<span class='warning'>[target] has no puncture wound there!</span>")
-	else
-		display_results(user, target, "<span class='notice'>You successfully realign some of the blood vessels in [target]'s [parse_zone(target_zone)].</span>",
-			"<span class='notice'>[user] successfully realigns some of the blood vessels in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
-			"<span class='notice'>[user] successfully realigns some of the blood vessels in  [target]'s [parse_zone(target_zone)]!</span>")
-		log_combat(user, target, "excised infected flesh in", addition="INTENT: [uppertext(user.a_intent)]")
-		surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
-		pierce_wound.blood_flow -= 0.25
+		return ..()
+
+	display_results(user, target, "<span class='notice'>You successfully realign some of the blood vessels in [target]'s [parse_zone(target_zone)].</span>",
+		"<span class='notice'>[user] successfully realigns some of the blood vessels in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
+		"<span class='notice'>[user] successfully realigns some of the blood vessels in  [target]'s [parse_zone(target_zone)]!</span>")
+	log_combat(user, target, "excised infected flesh in", addition="INTENT: [uppertext(user.a_intent)]")
+	surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
+	pierce_wound.blood_flow -= 0.25
 	return ..()
 
 /datum/surgery_step/repair_innards/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)

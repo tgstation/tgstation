@@ -53,18 +53,20 @@
 	if(!limb.current_gauze)
 		return ..()
 
-	var/bandage_condition = ""
+	var/list/msg = list("The cuts on [victim.p_their()] [limb.name] are wrapped with")
 	// how much life we have left in these bandages
 	switch(limb.current_gauze.absorption_capacity)
 		if(0 to 1.25)
-			bandage_condition = "nearly ruined "
+			msg += "nearly ruined "
 		if(1.25 to 2.75)
-			bandage_condition = "badly worn "
+			msg += "badly worn "
 		if(2.75 to 4)
-			bandage_condition = "slightly bloodied "
+			msg += "slightly bloodied "
 		if(4 to INFINITY)
-			bandage_condition = "clean "
-	return "<B>The cuts on [victim.p_their()] [limb.name] are wrapped with [bandage_condition] [limb.current_gauze.name]!</B>"
+			msg += "clean "
+	msg += "[limb.current_gauze.name]!"
+
+	return "<B>[msg.Join()]</B>"
 
 /datum/wound/slash/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
