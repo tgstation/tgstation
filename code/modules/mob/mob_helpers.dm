@@ -48,6 +48,7 @@
 		return 1
 	else
 		return 0
+
 /**
   * Convert random parts of a passed in message to stars
   *
