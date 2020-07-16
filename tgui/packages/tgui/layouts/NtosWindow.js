@@ -11,6 +11,9 @@ import { Window } from './Window';
 
 export const NtosWindow = (props, context) => {
   const {
+    title,
+    width = 575,
+    height = 700,
     resizable,
     theme = 'ntos',
     children,
@@ -29,6 +32,9 @@ export const NtosWindow = (props, context) => {
   } = data;
   return (
     <Window
+      title={title}
+      width={width}
+      height={height}
       theme={theme}
       resizable={resizable}>
       <div className="NtosWindow">

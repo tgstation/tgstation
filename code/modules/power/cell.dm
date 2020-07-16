@@ -42,7 +42,7 @@
 
 /obj/item/stock_parts/cell/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if("self_recharge")
+		if(NAMEOF(src, self_recharge))
 			if(var_value)
 				START_PROCESSING(SSobj, src)
 			else

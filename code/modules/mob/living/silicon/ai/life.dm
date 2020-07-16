@@ -150,7 +150,7 @@
 				to_chat(src, "<span class='notice'>Receiving control information from APC.</span>")
 				sleep(2)
 				apc_override = 1
-				theAPC.ui_interact(src, state = GLOB.conscious_state)
+				theAPC.ui_interact(src)
 				apc_override = 0
 				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
 		sleep(50)

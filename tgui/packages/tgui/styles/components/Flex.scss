@@ -12,11 +12,11 @@
   display: inline-flex;
 }
 
-.Flex--ie8 {
+.Flex--iefix {
   display: table !important;
 }
 
-.Flex--ie8--column {
+.Flex--iefix--column {
   display: block !important;
 
   & > .Flex__item {
@@ -26,7 +26,7 @@
   }
 }
 
-.Flex__item--ie8 {
+.Flex__item--iefix {
   display: table-cell !important;
 }
 

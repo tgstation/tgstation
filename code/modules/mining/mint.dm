@@ -7,8 +7,6 @@
 	icon_state = "coinpress0"
 	density = TRUE
 	input_dir = EAST
-	ui_x = 300
-	ui_y = 250
 	needs_item_input = TRUE
 	var/obj/item/storage/bag/money/bag_to_use
 	var/produced_coins = 0 // how many coins the machine has made in it's last cycle
@@ -81,11 +79,10 @@
 		end_processing()
 		icon_state = "coinpress0"
 
-/obj/machinery/mineral/mint/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/mineral/mint/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Mint", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Mint", name)
 		ui.open()
 
 /obj/machinery/mineral/mint/ui_data()
