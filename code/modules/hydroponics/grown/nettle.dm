@@ -73,8 +73,6 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(HAS_TRAIT(user, TRAIT_PACIFISM) && ismob(A))
-		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
@@ -107,16 +105,17 @@
 			user.Paralyze(100)
 			to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
 
-/obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
+/obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/M, mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-	if(isliving(M) && force > 0)
-		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
-		log_combat(user, M, "attacked", src)
+		return TRUE
+	if(isliving(M) && istype(M,/mob/living/carbon))
+		var/mob/living/carbon/target = M
+		to_chat(target, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
+		log_combat(user, target, "attacked", src)
 
-		M.adjust_blurriness(force/7)
+		target.adjust_blurriness(force/7)
 		if(prob(20))
-			M.Unconscious(force / 0.3)
-			M.Paralyze(force / 0.75)
-		M.drop_all_held_items()
+			target.Unconscious(force / 0.3)
+			target.Paralyze(force / 0.75)
+		target.drop_all_held_items()

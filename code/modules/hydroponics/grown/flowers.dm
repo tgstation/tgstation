@@ -235,22 +235,21 @@
 	..()
 	force = round((5 + seed.potency / 5), 1)
 
-/obj/item/grown/novaflower/attack(mob/living/carbon/M, mob/user)
+/obj/item/grown/novaflower/attack(mob/living/M, mob/user)
 	. = ..()
-	if(isliving(M))
-		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			return
-		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
-		M.adjust_fire_stacks(seed.potency / 20)
-		if(M.IgniteMob())
-			message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(M)] on fire with [src] at [AREACOORD(user)]")
-			log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return TRUE
+	if(isliving(M) && istype(M,/mob/living/carbon))
+		var/mob/living/carbon/burned = M
+		to_chat(burned, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
+		burned.adjust_fire_stacks(seed.potency / 20)
+		if(burned.IgniteMob())
+			message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(burned)] on fire with [src] at [AREACOORD(user)]")
+			log_game("[key_name(user)] set [key_name(burned)] on fire with [src] at [AREACOORD(user)]")
 
 /obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
 	. = ..()
 	if(!proximity)
-		return
-	if(HAS_TRAIT(user, TRAIT_PACIFISM) && ismob(A))
 		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
