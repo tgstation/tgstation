@@ -255,7 +255,12 @@ const EjectMaterial = (props, context) => {
         minValue={1}
         maxValue={sheets || 1}
         initial={1}
-        onDrag={(e, val) => setRemoveMaterials(val)} />
+        onDrag={(e, val) => {
+          const newVal = parseInt(val, 10);
+          if (Number.isInteger(newVal)) {
+            setRemoveMaterials(newVal);
+          }
+        }} />
       <Button
         icon="eject"
         disabled={!removable}
@@ -349,13 +354,15 @@ const PartSets = (props, context) => {
     <Tabs
       vertical>
       {partSets.map(set => (
-        <Tabs.Tab
-          key={set}
-          selected={set === selectedPartTab}
-          disabled={!(buildableParts[set])}
-          onClick={() => setSelectedPartTab(set)}>
-          {set}
-        </Tabs.Tab>
+        !!(buildableParts[set]) && (
+          <Tabs.Tab
+            key={set}
+            selected={set === selectedPartTab}
+            disabled={!(buildableParts[set])}
+            onClick={() => setSelectedPartTab(set)}>
+            {set}
+          </Tabs.Tab>
+        )
       ))}
     </Tabs>
   );
