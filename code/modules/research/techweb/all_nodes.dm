@@ -1081,9 +1081,9 @@
 /datum/techweb_node/extreme_office
 	id = "extreme_office"
 	display_name = "Advanced Office Applications"
-	description = "An application of some of smartest lab guys got together on a friday and improved office efficiency by 350%. Here's how."
+	description = "Some of smartest lab guys got together on a friday and improved office efficiency by 350%. Here's how."
 	prereq_ids = list("base")
-	design_ids = list("rolling_table, mauna_mug")
+	design_ids = list("rolling_table", "mauna_mug")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 2500
 	hidden = TRUE
