@@ -236,7 +236,7 @@
 	force = round((5 + seed.potency / 5), 1)
 
 /obj/item/grown/novaflower/attack(mob/living/carbon/M, mob/user)
-	if(!..())
+	. = ..()
 		return
 	if(isliving(M))
 		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
