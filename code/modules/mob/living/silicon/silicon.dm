@@ -246,8 +246,6 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (force || hackedcheck[index] == "Yes")
-				if(get_message_mode(num))
-					num = "![num]" //to prevent us from using a symbol that changes the message type (ie whipsering, singing, ect)
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
@@ -256,8 +254,6 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (force || ioncheck[index] == "Yes")
-				if(get_message_mode(num))
-					num = "![num]" //to prevent us from using a symbol that changes the message type (ie whipsering, singing, ect)
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
