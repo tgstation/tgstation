@@ -106,9 +106,8 @@
 			to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
-	if(!..())
-		return
-	if(isliving(M))
+	. = ..()
+	if(isliving(M) && force > 0)
 		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
 		log_combat(user, M, "attacked", src)
 

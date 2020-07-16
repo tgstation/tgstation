@@ -237,8 +237,9 @@
 
 /obj/item/grown/novaflower/attack(mob/living/carbon/M, mob/user)
 	. = ..()
-		return
 	if(isliving(M))
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			return
 		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
 		M.adjust_fire_stacks(seed.potency / 20)
 		if(M.IgniteMob())
@@ -248,6 +249,8 @@
 /obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
 	. = ..()
 	if(!proximity)
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && ismob(A))
 		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
