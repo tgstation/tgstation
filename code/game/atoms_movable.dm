@@ -128,7 +128,7 @@
 		return FALSE
 	switch(var_name)
 		if(NAMEOF(src, anchored))
-			setAnchored(var_name)
+			setAnchored(var_value)
 			return TRUE
 		if(NAMEOF(src, x))
 			var/turf/T = locate(var_value, y, z)
