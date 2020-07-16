@@ -1,12 +1,14 @@
-import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
 import { classes } from 'common/react';
-import { Box, Button, LabeledList, NoticeBox, Section, Table, Flex, Icon } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Icon, NoticeBox, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosRadar = (props, context) => {
   return (
-    <NtosWindow theme="ntos">
+    <NtosWindow
+      width={800}
+      height={600}
+      theme="ntos">
       <NtosRadarContent />
     </NtosWindow>
   );
@@ -20,9 +22,8 @@ export const NtosRadarContent = (props, context) => {
     target = [],
     scanning,
   } = data;
-
   return (
-    <Flex 
+    <Flex
       direction={"row"}
       hight="100%">
       <Flex.Item

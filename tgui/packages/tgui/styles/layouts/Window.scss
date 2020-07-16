@@ -38,6 +38,21 @@
   right: 0;
 }
 
+.Window__contentPadding {
+  margin: 6px;
+  height: calc(100% - 12px);
+}
+
+.Window__contentPadding:after {
+  height: 0;
+}
+
+.Layout__content--scrollable .Window__contentPadding:after {
+  display: block;
+  content: '';
+  height: 6px;
+}
+
 .Window__dimmer {
   position: fixed;
   top: 0;
