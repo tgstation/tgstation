@@ -184,9 +184,9 @@
 				to_chat(src, "<span class='notice'>PM to-<b>Admins</b>: <span class='linkify'>[msg]</span></span>", confidential = TRUE)
 				SSblackbox.LogAhelp(current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
 
-				//play the receiving admin the adminhelp sound (if they have them enabled)
-				if(recipient.prefs.toggles & SOUND_ADMINHELP)
-					SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
+			//play the receiving admin the adminhelp sound (if they have them enabled)
+			if(recipient.prefs.toggles & SOUND_ADMINHELP)
+				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
 		else
 			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
