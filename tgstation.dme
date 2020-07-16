@@ -425,6 +425,7 @@
 #include "code\datums\components\omen.dm"
 #include "code\datums\components\orbiter.dm"
 #include "code\datums\components\paintable.dm"
+#include "code\datums\components\payment.dm"
 #include "code\datums\components\pellet_cloud.dm"
 #include "code\datums\components\pricetag.dm"
 #include "code\datums\components\punchcooldown.dm"
