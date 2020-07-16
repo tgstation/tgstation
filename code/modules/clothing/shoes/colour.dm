@@ -48,6 +48,13 @@
 	desc = "Very gay shoes."
 	icon_state = "rain_bow"
 
+/obj/item/clothing/shoes/sneakers/rebel
+	name = "rebel boots"
+	desc = "Its a good day to do what has to be done by me and help my brother to defeat the enemys."
+	icon_state = "durre_shoes"
+	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
+	inhand_icon_state = "durre_shoes"
+
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
 	icon_state = "orange"
