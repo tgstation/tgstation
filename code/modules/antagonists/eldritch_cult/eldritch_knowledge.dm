@@ -88,6 +88,7 @@
 	for(var/X in atoms)
 		var/atom/A = X
 		if(!isliving(A))
+			atoms -= A
 			qdel(A)
 	return
 
@@ -97,7 +98,7 @@
   * Gives addtional effects to mansus grasp spell
   */
 /datum/eldritch_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	return
+	return FALSE
 
 
 /**
@@ -187,9 +188,7 @@
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)
-	//delaying the returning makes the cleanup_atoms break on the rune base, so we are calling it here.
-	cleanup_atoms(atoms)
-	return FALSE
+	return TRUE
 
 //Ascension knowledge
 /datum/eldritch_knowledge/final
@@ -213,6 +212,7 @@
 /datum/eldritch_knowledge/final/cleanup_atoms(list/atoms)
 	. = ..()
 	for(var/mob/living/carbon/human/H in atoms)
+		atoms -= H
 		H.gib()
 
 
@@ -281,4 +281,13 @@
 	cost = 0
 	required_atoms = list(/obj/item/organ/heart,/obj/effect/decal/cleanable/blood,/obj/item/reagent_containers/food/snacks/grown/poppy)
 	result_atoms = list(/obj/item/living_heart)
+	route = "Start"
+
+/datum/eldritch_knowledge/codex_cicatrix
+	name = "Codex Cicatrix"
+	desc = "Allows you to create a spare Codex Cicatrix if you have lost one, using a bible, human skin, a pen and a pair of eyes."
+	gain_text = "Their hand is at your throats, yet you see Them not."
+	cost = 0
+	required_atoms = list(/obj/item/organ/eyes,/obj/item/stack/sheet/animalhide/human,/obj/item/storage/book/bible,/obj/item/pen)
+	result_atoms = list(/obj/item/forbidden_book)
 	route = "Start"

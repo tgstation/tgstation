@@ -289,7 +289,7 @@
 /obj/structure/sign/painting/update_icon_state()
 	. = ..()
 	if(C && C.generated_icon)
-		icon_state = null
+		icon_state = "frame-overlay"
 	else
 		icon_state = "frame-empty"
 
@@ -343,7 +343,7 @@
 		stack_trace("Invalid persistence_id - [persistence_id]")
 		return
 	var/data = C.get_data_string()
-	var/md5 = md5(data)
+	var/md5 = md5(lowertext(data))
 	var/list/current = SSpersistence.paintings[persistence_id]
 	if(!current)
 		current = list()
@@ -387,7 +387,7 @@
 		if(!persistence_id || !C)
 			to_chat(user,"<span class='warning'>This is not a persistent painting.</span>")
 			return
-		var/md5 = md5(C.get_data_string())
+		var/md5 = md5(lowertext(C.get_data_string()))
 		var/author = C.author_ckey
 		var/list/current = SSpersistence.paintings[persistence_id]
 		if(current)

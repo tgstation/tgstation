@@ -92,3 +92,7 @@
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)
 #define MSG_AUDIBLE (1<<1)
+
+#define INVOCATION_SHOUT "shout"
+#define INVOCATION_EMOTE "emote"
+#define INVOCATION_WHISPER "whisper"

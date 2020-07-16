@@ -80,7 +80,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is [mode].</span>"
+		. += "<span class='notice'>This canister is [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit(pressure_limit, "Pa", 0)]</b>.</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
@@ -249,13 +249,11 @@
 	release_pressure = ONE_ATMOSPHERE*2
 
 /obj/machinery/portable_atmospherics/canister/tier_1
-	name = "Tier 1 canister"
 	heat_limit = 5000
 	pressure_limit = 50000
 	mode = CANISTER_TIER_1
 
 /obj/machinery/portable_atmospherics/canister/tier_2
-	name = "Tier 2 canister"
 	heat_limit = 500000
 	pressure_limit = 5e6
 	volume = 3000
@@ -265,7 +263,6 @@
 	mode = CANISTER_TIER_2
 
 /obj/machinery/portable_atmospherics/canister/tier_3
-	name = "Tier 3 canister"
 	heat_limit = 1e12
 	pressure_limit = 1e14
 	volume = 5000
@@ -280,7 +277,7 @@
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
-	update_overlays()
+	update_icon()
 
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
@@ -355,11 +352,12 @@
 		return TRUE
 	var/pressure = air_contents.return_pressure()
 	if(pressure > 300)
-		to_chat(user, "<span class='alert'>The [src] meter shows high pressure inside!</span>")
+		to_chat(user, "<span class='alert'>The pressure gauge on \the [src] indicates a high pressure inside... maybe you want to reconsider?</span>")
 		message_admins("[src] deconstructed by [ADMIN_LOOKUPFLW(user)]")
 		log_game("[src] deconstructed by [key_name(user)]")
-	to_chat(user, "<span class='notice'>You begin cutting the[src] apart...</span>")
-	if(I.use_tool(src, user, 30, volume=50))
+	to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
+	if(I.use_tool(src, user, 3 SECONDS, volume=50))
+		to_chat(user, "<span class='notice'>You cut \the [src] apart.</span>")
 		deconstruct(TRUE)
 
 	return TRUE

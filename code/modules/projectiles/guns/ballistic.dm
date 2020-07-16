@@ -121,18 +121,18 @@
 				. += "[icon_state]_mag_empty"
 		else
 			. += "[icon_state]_mag"
-			var/capacity_number = 0
+			var/capacity_number
 			switch(get_ammo() / magazine.max_ammo)
-				if(0.2 to 0.39)
-					capacity_number = 20
-				if(0.4 to 0.59)
-					capacity_number = 40
-				if(0.6 to 0.79)
-					capacity_number = 60
-				if(0.8 to 0.99)
-					capacity_number = 80
-				if(1.0)
+				if(1 to INFINITY) //cause we can have one in the chamber.
 					capacity_number = 100
+				if(0.8 to 1)
+					capacity_number = 80
+				if(0.6 to 0.8)
+					capacity_number = 60
+				if(0.4 to 0.6)
+					capacity_number = 40
+				if(0.2 to 0.4)
+					capacity_number = 20
 			if (capacity_number)
 				. += "[icon_state]_mag_[capacity_number]"
 
@@ -253,7 +253,7 @@
 			if (chambered && !chambered.BB)
 				chambered.forceMove(drop_location())
 				chambered = null
-			var/num_loaded = magazine.attackby(A, user, params, TRUE)
+			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
 			if (num_loaded)
 				to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
 				playsound(src, load_sound, load_sound_volume, load_sound_vary)
@@ -410,7 +410,8 @@
 		rounds.Add(chambered)
 		if(drop_all)
 			chambered = null
-	rounds.Add(magazine.ammo_list(drop_all))
+	if(magazine)
+		rounds.Add(magazine.ammo_list(drop_all))
 	return rounds
 
 #define BRAINS_BLOWN_THROW_RANGE 3
@@ -471,6 +472,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		desc = sawn_desc
 		w_class = WEIGHT_CLASS_NORMAL
 		inhand_icon_state = "gun"
+		worn_icon_state = "gun"
 		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
 		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		recoil = SAWN_OFF_RECOIL
