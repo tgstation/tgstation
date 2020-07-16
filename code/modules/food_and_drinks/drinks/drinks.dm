@@ -52,12 +52,12 @@
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE
 
-/* 
+/*
  * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
  */
 /obj/item/reagent_containers/food/drinks/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(isGlass && !custom_materials)
-		custom_materials = list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5) //sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
+		custom_materials = list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5) //sets it to glass so, later on, it gets picked up by the glass catch
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)

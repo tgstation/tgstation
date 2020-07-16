@@ -357,7 +357,7 @@ All foods are distributed among various categories. Use common sense.
 	if(istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
 		return FALSE
 
-	if((bypass_weight_limit || W.w_class <= WEIGHT_CLASS_SMALL)) 
+	if((bypass_weight_limit || W.w_class <= WEIGHT_CLASS_SMALL))
 		if(W.get_sharpness() && user.a_intent != INTENT_DISARM)
 			return FALSE
 		if(istype(W, /obj/item/storage))
@@ -372,7 +372,7 @@ All foods are distributed among various categories. Use common sense.
 		user.visible_message("<span class='notice'>[user.name] begins inserting [W] into [src].</span>", \
 						"<span class='notice'>You start to insert the [W] into \the [src].</span>")
 		if(!do_after(user, 1.5 SECONDS, target = src))
-			return FALSE			
+			return FALSE
 		to_chat(user, "<span class='notice'>You slip [W] inside [src].</span>")
 		user.transferItemToLoc(W, src)
 		log_message("[key_name(user)] inserted [W.name] into [src.name] at [AREACOORD(src)]", LOG_ATTACK)
@@ -400,7 +400,6 @@ All foods are distributed among various categories. Use common sense.
 				to_chat(M, "<span class='warning'>It feels like there's something in this [src.name]...!</span>")
 
 			else if(prob(bad_chance_of_discovery))
-				//sharp things, nuke disks, pills, syringes, anything with mats, tiny things, bullets, organs, drink cans, bottles
 				log_message("[key_name(user)] just fed [key_name(M)] a/an [I.name] which was hidden in [src.name] at [AREACOORD(src)]", LOG_ATTACK)
 				discovered = I.on_accidental_consumption(M, user, src)
 
@@ -412,7 +411,7 @@ All foods are distributed among various categories. Use common sense.
 				else
 					to_chat(M, "<span class='warning'>[I] falls out of \the [src].</span>")
 
-	return 0
+	return FALSE
 
 /obj/item/reagent_containers/food/snacks/MouseDrop(atom/over)
 	var/turf/T = get_turf(src)
