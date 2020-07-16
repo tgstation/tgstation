@@ -446,19 +446,19 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff, roundto)
 
-/obj/machinery/mecha_part_fabricator/ui_base_html(html)
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/obj/machinery/mecha_part_fabricator/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+	)
 
-/obj/machinery/mecha_part_fabricator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
-	. = ..()
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/mecha_part_fabricator/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
-		assets.send(user)
-		ui = new(user, src, ui_key, "ExosuitFabricator", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ExosuitFabricator")
 		ui.open()
+
+/obj/machinery/mecha_part_fabricator/ui_state()
+	return GLOB.default_state
 
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
 	var/list/data = list()
