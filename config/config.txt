@@ -363,7 +363,7 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 #PANIC_SERVER_NAME [Put the name here]
 
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
-#AGGRESSIVE_CHANGELOG
+AGGRESSIVE_CHANGELOG
 
 ## Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
 AUTOCONVERT_NOTES
@@ -423,7 +423,7 @@ CLIENT_ERROR_BUILD 1421
 ## Set to 0 or comment out to disable.
 SECOND_TOPIC_LIMIT 10
 
-MINUTE_TOPIC_LIMIT 100
+MINUTE_TOPIC_LIMIT 200
 
 
 ## CLICK RATE LIMITING
@@ -519,7 +519,7 @@ REQUIRED_LIVING_HOURS 0
 #DISCORD_TOKEN someDiscordToken
 
 ## Add the ID of your guild (server) here
-#DISCORD_GUILDID 000000000000000000
+DISCORD_GUILDID 213314594251341824
 
 ## Add the ID of the role you want assigning here
-#DISCORD_ROLEID 000000000000000000
+#DISCORD_ROLEID 628111133458300949

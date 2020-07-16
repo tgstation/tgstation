@@ -206,8 +206,8 @@
 /obj/item/melee/classic_baton/proc/get_on_description()
 	. = list()
 
-	.["local_on"] = "<span class ='warning'>You extend the baton.</span>"
-	.["local_off"] = "<span class ='notice'>You collapse the baton.</span>"
+	.["local_on"] = "<span class ='warning'>You extend the [src].</span>"
+	.["local_off"] = "<span class ='notice'>You collapse the [src].</span>"
 
 	return .
 
@@ -339,6 +339,7 @@
 	on = FALSE
 	on_sound = 'sound/weapons/batonextend.ogg'
 
+
 	on_icon_state = "telebaton_1"
 	off_icon_state = "telebaton_0"
 	on_inhand_icon_state = "nullrod"
@@ -384,6 +385,52 @@
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
 		attack_verb = list("hit", "poked")
+
+	playsound(src.loc, on_sound, 50, TRUE)
+	add_fingerprint(user)
+
+/obj/item/melee/classic_baton/telescopic/crowbar
+	name = "telescopic crowbar"
+	desc = "A compact crowbar which was once used to fight off facehuggers. Can be concealed when folded."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "telebar_0"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	inhand_icon_state = null
+	on_icon_state = "telebar_1"
+	off_icon_state = "telebar_0"
+	on_inhand_icon_state = "crowbar"
+	usesound = 'sound/items/crowbar.ogg'
+	flags_1 = CONDUCT_1
+	stamina_damage = 0
+	cooldown = 30
+
+/obj/item/melee/classic_baton/telescopic/crowbar/attack_self(mob/user)
+	on = !on
+	var/list/desc = get_on_description()
+
+	if(on)
+		to_chat(user, desc["local_on"])
+		icon_state = on_icon_state
+		inhand_icon_state = on_inhand_icon_state
+		w_class = weight_class_on
+		force = force_on
+		attack_verb = list("smacked", "struck", "cracked", "beaten")
+		tool_behaviour = TOOL_CROWBAR
+		toolspeed = 1.2
+		stamina_damage = 75
+
+	else
+		to_chat(user, desc["local_off"])
+		icon_state = off_icon_state
+		inhand_icon_state = null //no sprite for concealment even when in hand
+		slot_flags = ITEM_SLOT_BELT
+		w_class = WEIGHT_CLASS_SMALL
+		force = force_off
+		attack_verb = list("hit", "poked")
+		tool_behaviour = TOOL_SCREWDRIVER
+		toolspeed = 10
+		stamina_damage = 0
 
 	playsound(src.loc, on_sound, 50, TRUE)
 	add_fingerprint(user)
