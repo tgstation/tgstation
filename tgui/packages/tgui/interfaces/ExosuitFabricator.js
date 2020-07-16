@@ -31,12 +31,12 @@ const COLOR_KEYS = {
 };
 
 const materialArrayToObj = materials => {
-  let material_obj = {};
+  let materialObj = {};
 
   materials.forEach(m => {
-    material_obj[m.name] = m.amount; });
+    materialObj[m.name] = m.amount; });
 
-  return material_obj;
+  return materialObj;
 };
 
 const partBuildColor = (cost, tally, material) => {
@@ -56,13 +56,13 @@ const partBuildColor = (cost, tally, material) => {
 };
 
 const partCondFormat = (materials, tally, part) => {
-  let format = { "text_color": COLOR_NONE };
+  let format = { "textColor": COLOR_NONE };
 
   Object.keys(part.cost).forEach(mat => {
     format[mat] = partBuildColor(part.cost[mat], tally[mat], materials[mat]);
 
-    if (format[mat].color > format["text_color"]) {
-      format["text_color"] = format[mat].color;
+    if (format[mat].color > format["textColor"]) {
+      format["textColor"] = format[mat].color;
     }
   });
 
@@ -70,34 +70,34 @@ const partCondFormat = (materials, tally, part) => {
 };
 
 const queueCondFormat = (materials, queue) => {
-  let material_tally = {};
-  let mat_format = {};
-  let missing_mat_tally = {};
-  let text_colors = {};
+  let materialTally = {};
+  let matFormat = {};
+  let missingMatTally = {};
+  let textColors = {};
 
   queue.forEach((part, i) => {
-    text_colors[i] = COLOR_NONE;
+    textColors[i] = COLOR_NONE;
     Object.keys(part.cost).forEach(mat => {
-      material_tally[mat] = material_tally[mat] || 0;
-      missing_mat_tally[mat] = missing_mat_tally[mat] || 0;
+      materialTally[mat] = materialTally[mat] || 0;
+      missingMatTally[mat] = missingMatTally[mat] || 0;
 
-      mat_format[mat] = partBuildColor(
-        part.cost[mat], material_tally[mat], materials[mat]
+      matFormat[mat] = partBuildColor(
+        part.cost[mat], materialTally[mat], materials[mat]
       );
 
-      if (mat_format[mat].color !== COLOR_NONE) {
-        if (text_colors[i] < mat_format[mat].color) {
-          text_colors[i] = mat_format[mat].color;
+      if (matFormat[mat].color !== COLOR_NONE) {
+        if (textColors[i] < matFormat[mat].color) {
+          textColors[i] = matFormat[mat].color;
         }
       }
       else {
-        material_tally[mat] += part.cost[mat];
+        materialTally[mat] += part.cost[mat];
       }
 
-      missing_mat_tally[mat] += mat_format[mat].deficit;
+      missingMatTally[mat] += matFormat[mat].deficit;
     });
   });
-  return { material_tally, missing_mat_tally, text_colors, mat_format };
+  return { materialTally, missingMatTally, textColors, matFormat };
 };
 
 const searchFilter = (search, allparts) => {
@@ -110,7 +110,7 @@ const searchFilter = (search, allparts) => {
   const resultFilter = createSearch(search, part => (
     (part.name || "")
     + (part.desc || "")
-    + (part.search_meta || "")
+    + (part.searchMeta || "")
   ));
 
   Object.keys(allparts).forEach(category => {
@@ -128,13 +128,13 @@ export const ExosuitFabricator = (props, context) => {
   const { act, data } = useBackend(context);
 
   const queue = data.queue || [];
-  const material_obj = materialArrayToObj(data.materials || []);
+  const materialAsObj = materialArrayToObj(data.materials || []);
 
   const {
-    material_tally,
-    missing_mat_tally,
-    text_colors,
-  } = queueCondFormat(material_obj, queue);
+    materialTally,
+    missingMatTally,
+    textColors,
+  } = queueCondFormat(materialAsObj, queue);
 
   const [
     displayMatCost,
@@ -200,17 +200,17 @@ export const ExosuitFabricator = (props, context) => {
                   fillPositionedParent
                   overflowY="auto">
                   <PartLists
-                    queueMaterials={material_tally}
-                    materials={material_obj} />
+                    queueMaterials={materialTally}
+                    materials={materialAsObj} />
                 </Box>
               </Flex.Item>
               <Flex.Item
                 width="420px"
                 position="relative">
                 <Queue
-                  queueMaterials={material_tally}
-                  missingMaterials={missing_mat_tally}
-                  textColors={text_colors} />
+                  queueMaterials={materialTally}
+                  missingMaterials={missingMatTally}
+                  textColors={textColors} />
               </Flex.Item>
             </Flex>
           </Flex.Item>
@@ -328,22 +328,26 @@ const MaterialAmount = (props, context) => {
 const PartSets = (props, context) => {
   const { data } = useBackend(context);
 
-  const part_sets = data.part_sets || [];
-  const buildable_parts = data.buildable_parts || {};
+  const partSets = data.partSets || [];
+  const buildableParts = data.buildableParts || {};
 
   const [
     selectedPartTab,
     setSelectedPartTab,
-  ] = useSharedState(context, "part_tab", part_sets.length ? part_sets[0] : "");
+  ] = useSharedState(
+    context,
+    "part_tab",
+    partSets.length ? buildableParts[0] : ""
+  );
 
   return (
     <Tabs
       vertical>
-      {part_sets.map(set => (
+      {partSets.map(set => (
         <Tabs.Tab
           key={set}
           selected={set === selectedPartTab}
-          disabled={!(buildable_parts[set])}
+          disabled={!(buildableParts[set])}
           onClick={() => setSelectedPartTab(set)}>
           {set}
         </Tabs.Tab>
@@ -357,15 +361,15 @@ const PartLists = (props, context) => {
 
   const getFirstValidPartSet = (sets => {
     for (let set of sets) {
-      if (buildable_parts[set]) {
+      if (buildableParts[set]) {
         return set;
       }
     }
     return null;
   });
 
-  const part_sets = data.part_sets || [];
-  const buildable_parts = data.buildable_parts || [];
+  const partSets = data.partSets || [];
+  const buildableParts = data.buildableParts || [];
 
   const {
     queueMaterials,
@@ -378,7 +382,7 @@ const PartLists = (props, context) => {
   ] = useSharedState(
     context,
     "part_tab",
-    getFirstValidPartSet(part_sets)
+    getFirstValidPartSet(partSets)
   );
 
   const [
@@ -386,37 +390,37 @@ const PartLists = (props, context) => {
     setSearchText,
   ] = useSharedState(context, "search_text", "");
 
-  if (!selectedPartTab || !buildable_parts[selectedPartTab]) {
-    const valid_set = getFirstValidPartSet(part_sets);
-    if (valid_set) {
-      setSelectedPartTab(valid_set);
+  if (!selectedPartTab || !buildableParts[selectedPartTab]) {
+    const validSet = getFirstValidPartSet(partSets);
+    if (validSet) {
+      setSelectedPartTab(validSet);
     }
     else {
       return;
     }
   }
 
-  let parts_list;
+  let partsList;
   // Build list of sub-categories if not using a search filter.
   if (!searchText) {
-    parts_list = { "Parts": [] };
-    buildable_parts[selectedPartTab].forEach(part => {
+    partsList = { "Parts": [] };
+    buildableParts[selectedPartTab].forEach(part => {
       part["format"] = partCondFormat(materials, queueMaterials, part);
-      if (!part.sub_category) {
-        parts_list["Parts"].push(part);
+      if (!part.subCategory) {
+        partsList["Parts"].push(part);
         return;
       }
-      if (!(part.sub_category in parts_list)) {
-        parts_list[part.sub_category] = [];
+      if (!(part.subCategory in partsList)) {
+        partsList[part.subCategory] = [];
       }
-      parts_list[part.sub_category].push(part);
+      partsList[part.subCategory].push(part);
     });
   }
   else {
-    parts_list = [];
-    searchFilter(searchText, buildable_parts).forEach(part => {
+    partsList = [];
+    searchFilter(searchText, buildableParts).forEach(part => {
       part["format"] = partCondFormat(materials, queueMaterials, part);
-      parts_list.push(part);
+      partsList.push(part);
     });
   }
 
@@ -441,15 +445,15 @@ const PartLists = (props, context) => {
       {(!!searchText && (
         <PartCategory
           name={"Search Results"}
-          parts={parts_list}
+          parts={partsList}
           forceShow
           placeholder="No matching results..." />
       )) || (
-        Object.keys(parts_list).map(category => (
+        Object.keys(partsList).map(category => (
           <PartCategory
             key={category}
             name={category}
-            parts={parts_list[category]} />
+            parts={partsList[category]} />
         ))
       )}
     </Fragment>
@@ -460,7 +464,7 @@ const PartCategory = (props, context) => {
   const { act, data } = useBackend(context);
 
   const {
-    building_part,
+    buildingPart,
   } = data;
 
   const {
@@ -496,8 +500,8 @@ const PartCategory = (props, context) => {
               align="center">
               <Flex.Item>
                 <Button
-                  disabled={building_part
-                  || (part.format.text_color === COLOR_BAD)}
+                  disabled={buildingPart
+                  || (part.format.textColor === COLOR_BAD)}
                   color="good"
                   height="20px"
                   mr={1}
@@ -515,7 +519,7 @@ const PartCategory = (props, context) => {
               <Flex.Item>
                 <Box
                   inline
-                  textColor={COLOR_KEYS[part.format.text_color]}>
+                  textColor={COLOR_KEYS[part.format.textColor]}>
                   {part.name}
                 </Box>
               </Flex.Item>
@@ -528,7 +532,7 @@ const PartCategory = (props, context) => {
                   height="20px"
                   tooltip={
                     "Build Time: "
-                  + part.print_time + "s. "
+                  + part.printTime + "s. "
                   + (part.desc || "")
                   }
                   tooltipPosition="left" />
@@ -563,7 +567,7 @@ const PartCategory = (props, context) => {
 const Queue = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const { is_processing_queue } = data;
+  const { isProcessingQueue } = data;
 
   const queue = data.queue || [];
 
@@ -593,7 +597,7 @@ const Queue = (props, context) => {
                 icon="minus-circle"
                 content="Clear Queue"
                 onClick={() => act("clear_queue")} />
-              {(!!is_processing_queue && (
+              {(!!isProcessingQueue && (
                 <Button
                   disabled={!queue.length}
                   content="Stop"
@@ -717,14 +721,14 @@ const BeingBuilt = (props, context) => {
   const { data } = useBackend(context);
 
   const {
-    building_part,
-    stored_part,
+    buildingPart,
+    storedPart,
   } = data;
 
-  if (stored_part) {
+  if (storedPart) {
     const {
       name,
-    } = stored_part;
+    } = storedPart;
 
     return (
       <Box>
@@ -748,20 +752,20 @@ const BeingBuilt = (props, context) => {
     );
   }
 
-  if (building_part) {
+  if (buildingPart) {
     const {
       name,
       duration,
-      print_time,
-    } = building_part;
+      printTime,
+    } = buildingPart;
 
-    const time_left = Math.ceil(duration/10);
+    const timeLeft = Math.ceil(duration/10);
 
     return (
       <Box>
         <ProgressBar
           minValue={0}
-          maxValue={print_time}
+          maxValue={printTime}
           value={duration}>
           <Flex>
             <Flex.Item>
@@ -770,7 +774,7 @@ const BeingBuilt = (props, context) => {
             <Flex.Item
               grow={1} />
             <Flex.Item>
-              {((time_left >= 0) && (time_left + "s")) || ("Dispensing...")}
+              {((timeLeft >= 0) && (timeLeft + "s")) || ("Dispensing...")}
             </Flex.Item>
           </Flex>
         </ProgressBar>

@@ -159,12 +159,12 @@
 	var/list/part = list(
 		"name" = D.name,
 		"desc" = initial(built_item.desc),
-		"print_time" = get_construction_time_w_coeff(D)/10,
+		"printTime" = get_construction_time_w_coeff(D)/10,
 		"cost" = cost,
 		"id" = D.id,
-		"sub_category" = sub_category,
-		"category_override" = category_override,
-		"search_meta" = D.search_metadata
+		"subCategory" = sub_category,
+		"categoryOverride" = category_override,
+		"searchMeta" = D.search_metadata
 	)
 
 	return part
@@ -489,8 +489,8 @@
 
 				buildable_parts[cat] += list(part)
 
-	data["part_sets"] = final_sets
-	data["buildable_parts"] = buildable_parts
+	data["partSets"] = final_sets
+	data["buildableParts"] = buildable_parts
 
 	return data
 
@@ -503,20 +503,20 @@
 		var/list/part = list(
 			"name" = being_built.name,
 			"duration" = build_finish - world.time,
-			"print_time" = get_construction_time_w_coeff(being_built)
+			"printTime" = get_construction_time_w_coeff(being_built)
 		)
-		data["building_part"] = part
+		data["buildingPart"] = part
 	else
-		data["building_part"] = null
+		data["buildingPart"] = null
 
 	data["queue"] = list_queue()
 
 	if(stored_part)
-		data["stored_part"] = stored_part.name
+		data["storedPart"] = stored_part.name
 	else
-		data["stored_part"] = null
+		data["storedPart"] = null
 
-	data["is_processing_queue"] = process_queue
+	data["isProcessingQueue"] = process_queue
 
 	return data
 
