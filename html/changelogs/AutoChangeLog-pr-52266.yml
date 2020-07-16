@@ -1,0 +1,4 @@
+author: "jdawg1290"
+delete-after: True
+changes: 
+  - code_imp: "text files now use lf line endings"

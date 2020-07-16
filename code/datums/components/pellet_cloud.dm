@@ -285,5 +285,5 @@
 /datum/component/pellet_cloud/proc/on_target_qdel(atom/target)
 	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 	targets_hit -= target
-	bodies -= target
+	LAZYREMOVE(bodies, target)
 	LAZYREMOVE(purple_hearts, target)

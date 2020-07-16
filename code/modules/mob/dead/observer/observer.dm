@@ -277,9 +277,13 @@ Works together with spawning an observer, noted above.
 			ghost.key = key
 			if(!can_reenter_corpse)	// Disassociates observer mind from the body mind
 				ghost.mind = null
-			else
-				ghost.mind.current?.med_hud_set_status()
 			return ghost
+
+/mob/living/ghostize(can_reenter_corpse = TRUE)
+	. = ..()
+	if(. && can_reenter_corpse)
+		var/mob/dead/observer/ghost = .
+		ghost.mind.current?.med_hud_set_status()
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
@@ -798,13 +802,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
 	switch(var_name)
-		if("icon")
+		if(NAMEOF(src, icon))
 			ghostimage_default.icon = icon
 			ghostimage_simple.icon = icon
-		if("icon_state")
+		if(NAMEOF(src, icon_state))
 			ghostimage_default.icon_state = icon_state
 			ghostimage_simple.icon_state = icon_state
-		if("fun_verbs")
+		if(NAMEOF(src, fun_verbs))
 			if(fun_verbs)
 				verbs += /mob/dead/observer/verb/boo
 				verbs += /mob/dead/observer/verb/possess
@@ -905,6 +909,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!invisibility)
 		. += "It seems extremely obvious."
 
+/mob/dead/observer/examine_more(mob/user)
+	if(!IsAdminGhost(user, TRUE))
+		return ..()
+	. = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
+	. += list("\t><span class='admin'>[ADMIN_FULLMONTY(src)]</span>")
+
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value
 	if(!value)
@@ -918,7 +928,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(var_name == "invisibility")
+	if(var_name == NAMEOF(src, invisibility))
 		set_invisibility(invisibility) // updates light
 
 /proc/set_observer_default_invisibility(amount, message=null)
@@ -948,8 +958,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/t_ray_images = list()
 	var/static/list/stored_t_ray_images = list()
 	for(var/obj/O in orange(client.view, src) )
-
-		if(O.invisibility == INVISIBILITY_MAXIMUM)
+		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128

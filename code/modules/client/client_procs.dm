@@ -908,13 +908,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/vv_edit_var(var_name, var_value)
 	switch (var_name)
-		if ("holder")
+		if (NAMEOF(src, holder))
 			return FALSE
-		if ("ckey")
+		if (NAMEOF(src, ckey))
 			return FALSE
-		if ("key")
+		if (NAMEOF(src, key))
 			return FALSE
-		if("view")
+		if(NAMEOF(src, view))
 			view_size.setDefault(var_value)
 			return TRUE
 	. = ..()
