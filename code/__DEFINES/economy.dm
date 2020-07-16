@@ -28,3 +28,7 @@
 #define ACCOUNT_SEC_NAME "Defense Budget"
 
 #define NO_FREEBIES "commies go home"
+
+#define PAYMENT_CLINICAL "clinical"
+#define PAYMENT_FRIENDLY "friendly"
+#define PAYMENT_ANGRY "angry"

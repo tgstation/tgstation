@@ -1,6 +1,3 @@
-#define PAYMENT_CLINICAL "clinical"
-#define PAYMENT_FRIENDLY "friendly"
-#define PAYMENT_ANGRY "angry"
 
 /**
   * Handles simple payment operations where the cost of the object in question doesn't change.
