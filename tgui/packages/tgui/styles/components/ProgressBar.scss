@@ -24,9 +24,9 @@ $bg-map: colors.$bg-map !default;
 
 .ProgressBar__fill {
   position: absolute;
-  top: -1px;
-  left: -1px;
-  bottom: -1px;
+  top: -0.5px;
+  left: 0px;
+  bottom: -0.5px;
 }
 
 .ProgressBar__fill--animated {
