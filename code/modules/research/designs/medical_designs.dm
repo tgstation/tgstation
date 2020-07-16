@@ -605,6 +605,32 @@
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
 	build_path = /obj/item/organ/lungs/cybernetic/tier3
 
+/datum/design/cybernetic_stomach
+	name = "Basic Cybernetic Stomach"
+	desc = "A basic cybernetic stomach."
+	id = "cybernetic_stomach"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/stomach/cybernetic
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cybernetic_stomach/tier2
+	name = "Cybernetic Stomach"
+	desc = "A cybernetic stomach."
+	id = "cybernetic_stomach_tier2"
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/stomach/cybernetic/tier2
+
+/datum/design/cybernetic_stomach/tier3
+	name = "Upgraded Cybernetic Stomach"
+	desc = "An upgraded cybernetic stomach."
+	id = "cybernetic_stomach_tier3"
+	construction_time = 50
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
+	build_path = /obj/item/organ/stomach/cybernetic/tier3
+
 /datum/design/cybernetic_ears
 	name = "Cybernetic Ears"
 	desc = "A pair of cybernetic ears."
@@ -774,3 +800,10 @@
 	id = "surgery_zombie"
 	surgery = /datum/surgery/advanced/necrotic_revival
 	research_icon_state = "surgery_head"
+
+/datum/design/surgery/wing_reconstruction
+	name = "Wing Reconstruction"
+	desc = "An experimental surgical procedure that reconstructs the damaged wings of moth people. Requires Instabitaluri."
+	id = "surgery_wing_reconstruction"
+	surgery = /datum/surgery/advanced/wing_reconstruction
+	research_icon_state = "surgery_chest"

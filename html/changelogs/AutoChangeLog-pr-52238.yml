@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed things like Nar-Sie and CRAB-17 spawning outside the station on icemoon maps."
