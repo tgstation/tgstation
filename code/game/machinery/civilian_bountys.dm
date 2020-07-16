@@ -8,8 +8,6 @@
 /obj/machinery/computer/piratepad_control/civilian
 	name = "civilian bounty control terminal"
 	desc = "A console for assigning civilian bounties to inserted ID cards, and for controlling the bounty pad for export."
-	ui_x = 500
-	ui_y = 375
 	status_report = "Ready for delivery."
 	icon_screen = "civ_bounty"
 	icon_keyboard = "id_key"
@@ -107,11 +105,10 @@
 	. = ..()
 	id_eject(user, inserted_scan_id)
 
-/obj/machinery/computer/piratepad_control/civilian/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/piratepad_control/civilian/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "CivCargoHoldTerminal", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "CivCargoHoldTerminal", name)
 		ui.open()
 
 /obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
