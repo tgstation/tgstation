@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Added Star Cactus, a new mutation of lavaland cacti."
+  - rscadd: "Added the Prickly Adhesion plant trait, enabling embedding on plants, but is mutually exclusive with liquid contents."
