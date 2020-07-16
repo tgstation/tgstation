@@ -13,7 +13,7 @@
 #define TGUI_WINDOW_HARD_LIMIT 9
 
 /// Maximum ping timeout allowed to detect zombie windows
-#define TGUI_PING_TIMEOUT 5 SECONDS
+#define TGUI_PING_TIMEOUT 4 SECONDS
 
 /// Window does not exist
 #define TGUI_WINDOW_CLOSED 0

@@ -58,7 +58,6 @@ SUBSYSTEM_DEF(tgui)
  * return datum/tgui
  */
 /datum/controller/subsystem/tgui/proc/request_pooled_window(mob/user)
-	log_tgui(user, "request_pooled_window()")
 	if(!user.client)
 		return null
 	var/list/windows = user.client.tgui_windows
@@ -76,7 +75,6 @@ SUBSYSTEM_DEF(tgui)
 		if(window.locked)
 			continue
 		if(window.status == TGUI_WINDOW_READY)
-			log_tgui(user, "found ready [window_id]")
 			return window
 		if(window.status == TGUI_WINDOW_CLOSED)
 			window.status = TGUI_WINDOW_LOADING
