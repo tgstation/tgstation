@@ -95,21 +95,6 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.</span>"
 
-
-// TODO - Delete me, I no longer work.
-/obj/machinery/mecha_part_fabricator/emag_act()
-	if(obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	req_access = list()
-	say("DB error \[Code 0x00F1\]")
-	sleep(10)
-	say("Attempting auto-repair...")
-	sleep(15)
-	say("User DB corrupted \[Code 0x00FA\]. Truncating data structure...")
-	sleep(30)
-	say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
-
 /**
   * Generates an info list for a given part.
   *
