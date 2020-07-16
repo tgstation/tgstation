@@ -58,6 +58,14 @@
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, 0, 0)]'s admin help.")
 		return
+	if(!C) //We lost the client during input, disconnected or relogged.
+		if(GLOB.directory[AH.initiator_ckey]) // Client has reconnected, lets try to recover
+			whom = GLOB.directory[AH.initiator_ckey]
+		else
+			to_chat(src, "<span class='danger'>Error: Admin-PM: Client not found.</span>", confidential = TRUE)
+			to_chat(src, "<span class='danger'><b>Message not sent:</b></span><br>[msg]", confidential = TRUE)
+			AH.AddInteraction("<b>No client found, message not sent:</b><br>[msg]")
+			return
 	cmd_admin_pm(whom, msg)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
@@ -85,6 +93,10 @@
 			recipient = GLOB.directory[whom]
 	else if(istype(whom, /client))
 		recipient = whom
+
+	if(!recipient)
+		to_chat(src, "<span class='danger'>Error: Admin-PM: Client not found.</span>", confidential = TRUE)
+		return
 
 	recipient_ckey = recipient.ckey
 	recipient_ticket = recipient.current_ticket
@@ -116,9 +128,9 @@
 			else
 				if(holder)
 					to_chat(src, "<span class='danger'>Error: Admin-PM: Client not found.</span>", confidential = TRUE)
-					to_chat(src, msg, confidential = TRUE)
+					to_chat(src, "<span class='danger'><b>Message not sent:</b></span><br>[msg]", confidential = TRUE)
 					if(recipient_ticket)
-						recipient_ticket.AddInteraction("No client found, message not sent:<br>[msg]")
+						recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[msg]")
 					return
 				else
 					current_ticket.MessageNoRecipient(msg)
