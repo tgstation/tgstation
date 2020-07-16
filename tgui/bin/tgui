@@ -52,6 +52,7 @@ task-dev-server() {
 task-eslint() {
   cd "${base_dir}"
   eslint ./packages "${@}"
+  echo "tgui: eslint check passed"
 }
 
 ## Mr. Proper
