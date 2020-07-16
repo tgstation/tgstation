@@ -147,9 +147,9 @@
 			inv1.icon_state = "[initial(inv1.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_ALL_DISABLED
 
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
-			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>")
-			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+			audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\"</span>")
+			to_chat(src, "<span class='userdanger'>CRITICAL ERROR: ALL modules OFFLINE.</span>")
 
 		if(2)
 			if(disabled_modules & BORG_MODULE_TWO_DISABLED)
@@ -169,9 +169,9 @@
 			inv3.icon_state = "[initial(inv3.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_THREE_DISABLED
 
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
-			audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\"</span>")
-			to_chat(src, "<span class='userdanger'>CRITICAL ERROR: ALL modules OFFLINE.</span>")
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
+			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>")
+			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
 
 	return TRUE
 
