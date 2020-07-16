@@ -1,7 +1,7 @@
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "glassbox0"
+	icon_state = "glassbox"
 	desc = "A display case for prized possessions."
 	density = TRUE
 	anchored = TRUE
@@ -31,6 +31,11 @@
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_icon()
+
+/obj/structure/displaycase/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, open))
+		update_icon()
 
 /obj/structure/displaycase/Destroy()
 	if(electronics)
@@ -85,20 +90,17 @@
 		alarmed.burglaralert(src)
 		playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
 
-/obj/structure/displaycase/update_icon()
-	var/icon/I
-	if(open)
-		I = icon('icons/obj/stationobjs.dmi',"glassbox_open")
-	else
-		I = icon('icons/obj/stationobjs.dmi',"glassbox0")
-	if(broken)
-		I = icon('icons/obj/stationobjs.dmi',"glassboxb0")
+/obj/structure/displaycase/update_overlays()
+	. = ..()
 	if(showpiece)
-		var/icon/S = getFlatIcon(showpiece)
-		S.Scale(17,17)
-		I.Blend(S,ICON_UNDERLAY,8,8)
-	src.icon = I
-	return
+		var/mutable_appearance/showpiece_overlay = mutable_appearance(showpiece.icon, showpiece.icon_state)
+		showpiece_overlay.copy_overlays(showpiece)
+		showpiece_overlay.transform *= 0.6
+		. += showpiece_overlay
+	if(broken)
+		. += "[initial(icon_state)]_broken"
+	else if(!open)
+		. += "[initial(icon_state)]_closed"
 
 /obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
 	if(W.GetID() && !broken && openable)
@@ -366,7 +368,7 @@
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "laserbox0"
+	icon_state = "laserbox"
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents."
 	density = FALSE
 	max_integrity = 100
@@ -381,7 +383,7 @@
 	///We're using the same trick as paper does in order to cache the image, and only load the UI when messed with.
 	var/list/viewing_ui = list()
 
-/obj/structure/displaycase/forsale/update_icon()	//remind me to fix my shitcode later
+/obj/structure/displaycase/forsale/update_icon_state()	//remind me to fix my shitcode later
 	var/icon/I
 	if(open)
 		I = icon('icons/obj/stationobjs.dmi',"laserboxb0")
