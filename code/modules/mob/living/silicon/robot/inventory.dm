@@ -29,21 +29,15 @@
 	if(activated(I))
 		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return FALSE
-	
+
 	if(disabled_modules & BORG_MODULE_ALL_DISABLED)
 		to_chat(src, "<span class='warning'>All modules are disabled!</span>")
 		return FALSE
 
 	/// What's the first free slot for the borg?
-	var/first_free_slot = 0
-	if(!held_items[1])
-		first_free_slot = 1
-	else if(!held_items[2])
-		first_free_slot = 2
-	else if(!held_items[3])
-		first_free_slot = 3
+	var/first_free_slot = !held_items[1] ? 1 : (!held_items[2] ? 2 : (!held_items[3] ? 3 : null)
 
-	if(is_invalid_module_number(first_free_slot))
+	if(!first_free_slot || is_invalid_module_number(first_free_slot))
 		to_chat(src, "<span class='warning'>Deactivate a module first!</span>")
 		return FALSE
 
@@ -65,7 +59,7 @@
 		if(3)
 			I.screen_loc = inv3.screen_loc
 
-	held_items[module_num] = I		
+	held_items[module_num] = I
 	I.equipped(src, ITEM_SLOT_HANDS)
 	I.mouse_opacity = initial(I.mouse_opacity)
 	I.layer = ABOVE_HUD_LAYER
@@ -91,7 +85,7 @@
 	if(!I)
 		return FALSE
 
-	if(!(I in module.modules)) 
+	if(!(I in module.modules))
 		return FALSE
 
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
@@ -112,17 +106,17 @@
 	switch(module_num)
 		if(1)
 			if(!(disabled_modules & BORG_MODULE_ALL_DISABLED))
-				inv1.icon_state = "inv1"
+				inv1.icon_state = initial(inv1.icon_state)
 		if(2)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
-				inv2.icon_state = "inv2"
+				inv2.icon_state = initial(inv2.icon_state)
 		if(3)
 			if(!(disabled_modules & BORG_MODULE_THREE_DISABLED))
-				inv3.icon_state = "inv3"
+				inv3.icon_state = initial(inv3.icon_state)
 
 	if(I.item_flags & DROPDEL)
 		I.item_flags &= ~DROPDEL //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
-		
+
 	held_items[module_num] = null
 	I.cyborg_unequip(src)
 	I.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
@@ -149,33 +143,41 @@
 		if(1)
 			if(disabled_modules & BORG_MODULE_ALL_DISABLED)
 				return FALSE
-		
-			inv1.icon_state = "inv1 +b"
+
+			inv1.icon_state = "[initial(inv1.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_ALL_DISABLED
+
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
+			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>")
+			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
 
 		if(2)
 			if(disabled_modules & BORG_MODULE_TWO_DISABLED)
 				return FALSE
-		
-			inv2.icon_state = "inv2 +b"
+
+			inv2.icon_state = "[initial(inv2.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_TWO_DISABLED
+
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
+			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>"
+			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
 
 		if(3)
 			if(disabled_modules & BORG_MODULE_THREE_DISABLED)
 				return FALSE
-		
-			inv3.icon_state = "inv3 +b"
+
+			inv3.icon_state = "[initial(inv3.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_THREE_DISABLED
 
-	playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
-	audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>", self_message = null)
-	to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+			audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\"</span>")
+			to_chat(src, "<span class='userdanger'>CRITICAL ERROR: ALL modules OFFLINE.</span>")
 
 	return TRUE
-	
+
 
 /**
-  * Breaks all of a cyborg's slots. 
+  * Breaks all of a cyborg's slots.
   */
 /mob/living/silicon/robot/proc/break_all_cyborg_slots()
 	for(var/S in 1 to 3)
@@ -195,20 +197,20 @@
 		if(1)
 			if(!(disabled_modules & BORG_MODULE_ALL_DISABLED))
 				return FALSE
-		
-			inv1.icon_state = "inv1"
+
+			inv1.icon_state = initial(inv1.icon_state)
 			disabled_modules &= ~BORG_MODULE_ALL_DISABLED
 		if(2)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
 				return FALSE
-		
-			inv2.icon_state = "inv2"
+
+			inv2.icon_state = initial(inv2.icon_state)
 			disabled_modules &= ~BORG_MODULE_TWO_DISABLED
 		if(3)
 			if(!(disabled_modules & BORG_MODULE_THREE_DISABLED))
 				return FALSE
-		
-			inv3.icon_state = "inv3"
+
+			inv3.icon_state = initial(inv3.icon_state)
 			disabled_modules &= ~BORG_MODULE_THREE_DISABLED
 
 	to_chat(src, "<span class='notice'>ERROR CLEARED: Module [module_num] back online.</span>")
@@ -259,7 +261,7 @@
 
 /**
   * Checks if the item is currently in a slot.
-  * 
+  *
   * If the item is found in a slot, this returns TRUE. Otherwise, it returns FALSE
   * Arguments
   * * I - the item being checked
@@ -271,7 +273,7 @@
 
 /**
   * Checks if the provided module number is a valid number.
-  * 
+  *
   * If the number is between 1 and 3, or between 1 and the number of disabled
   * modules (if check_all_slots is true), then it returns FALSE. Otherwise, it returns TRUE.
   * Arguments
@@ -279,6 +281,9 @@
   * * check_all_slots - TRUE = the proc checks all slots | FALSE = the proc only checks un-disabled slots
   */
 /mob/living/silicon/robot/proc/is_invalid_module_number(module_num, check_all_slots = FALSE)
+	if(!module_num)
+		return TRUE
+
 	/// The number of module slots we're checking
 	var/max_number = 3
 	if(!check_all_slots)
@@ -312,13 +317,13 @@
 	switch(module_num)
 		if(1)
 			if(module_active != held_items[module_num])
-				inv1.icon_state = "inv1 +a"
+				inv1.icon_state = "[initial(inv1.icon_state)] +a"
 		if(2)
 			if(module_active != held_items[module_num])
-				inv2.icon_state = "inv2 +a"
+				inv2.icon_state = "[initial(inv2.icon_state)] +a"
 		if(3)
 			if(module_active != held_items[module_num])
-				inv3.icon_state = "inv3 +a"
+				inv3.icon_state = "[initial(inv3.icon_state)] +a"
 	module_active = held_items[module_num]
 
 /**
@@ -330,13 +335,13 @@
 	switch(module_num)
 		if(1)
 			if(module_active == held_items[module_num])
-				inv1.icon_state = "inv1"
+				inv1.icon_state = initial(inv1.icon_state)
 		if(2)
 			if(module_active == held_items[module_num])
-				inv2.icon_state = "inv2"
+				inv2.icon_state = initial(inv2.icon_state)
 		if(3)
 			if(module_active == held_items[module_num])
-				inv3.icon_state = "inv3"
+				inv3.icon_state = initial(inv3.icon_state)
 	module_active = null
 
 /**
@@ -369,7 +374,7 @@
 	else
 		slot_num = 1
 		slot_start = 4
-		
+
 	while(slot_num != slot_start) //If we wrap around without finding any free slots, just give up.
 		if(select_module(slot_num))
 			return
