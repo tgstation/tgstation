@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the throw button's icon not updating properly if the mob caught something while their client was disconnected."

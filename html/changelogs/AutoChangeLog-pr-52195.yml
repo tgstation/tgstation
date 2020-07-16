@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - admin: "Fixed admin help tickets not logging the name of the admin who generated a ban."
