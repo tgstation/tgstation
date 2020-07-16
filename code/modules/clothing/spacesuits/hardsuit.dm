@@ -198,6 +198,24 @@
 		// Chance to scream
 		if (user.stat < UNCONSCIOUS && prob(10))
 			user.emote("scream")
+	//HEV
+/obj/item/clothing/head/helmet/space/hardsuit/HEV
+	name = "HEV Mark IV Helmet"
+	desc = "A special helmet designed for work in hazardous environments. Has radiation shielding."
+	icon_state = "hardsuit0-HEV"
+	inhand_icon_state = "hardsuit0-HEV"
+	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 75, "wound" = 10)
+	hardsuit_type = "HEV"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/suit/space/hardsuit/HEV
+	name = "HEV Mark IV"
+	desc = "A special suit that protects against hazardous environments. Has radiation shielding."
+	icon_state = "HEV"
+	inhand_icon_state = "HEV"
+	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 75, "wound" = 10)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/HEV
+	resistance_flags = FIRE_PROOF
 
 	//Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/engine
@@ -544,10 +562,26 @@
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/gun/energy/wormhole_projector,
-	/obj/item/hand_tele, /obj/item/aicard)
-	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 20, "bomb" = 100, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 80, "wound" = 15)
+	/obj/item/hand_tele, /obj/item/aicard, /obj/item/melee/classic_baton/telescopic/crowbar)
+	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 20, "bomb" = 100, "bio" = 100, "rad" = 65, "fire" = 70, "acid" = 80, "wound" = 15)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
 	cell = /obj/item/stock_parts/cell/super
+
+		//RD HEV
+/obj/item/clothing/suit/space/hardsuit/rd/HEV
+	name = "HEV Mark V"
+	desc = "A prototype upgrade to the HEV suit. Painted purple by request."
+	icon_state = "HEVRD"
+	inhand_icon_state = "HEVRD"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd/HEV
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/HEV
+	name = "HEV Mark V Helmet"
+	desc = "A prototype helmet for the Mark V. Scientific data flashes across the visor."
+	icon_state = "hardsuit0-HEVRD"
+	hardsuit_type = "HEVRD"
+	inhand_icon_state = "HEVRD"
+
 
 	//Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security

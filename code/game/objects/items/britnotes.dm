@@ -50,7 +50,7 @@
 /obj/item/britnotes/proc/open(mob/user)
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
-		if(alert("If this doesn't open a new page, DM Wallem the word 'carcerem' in discord.",,"Ok","No")!="Ok")
+		if(alert("You are about to open a new window.",,"Ok","No")!="Ok")
 			return
 		usr << link(rulesurl)
 	else
