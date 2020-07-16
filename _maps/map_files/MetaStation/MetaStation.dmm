@@ -7402,19 +7402,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
-"apB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "apC" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -29990,7 +29983,7 @@
 "bro" = (
 /obj/structure/cable,
 /obj/machinery/firealarm{
-	pixel_z = -28
+	pixel_y = -28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -35652,6 +35645,7 @@
 	req_access_txt = "46"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "bFC" = (
@@ -36251,6 +36245,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "bHg" = (
@@ -42749,7 +42744,6 @@
 /area/hydroponics)
 "bWR" = (
 /obj/effect/landmark/start/botanist,
-/obj/machinery/holopad,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -70123,16 +70117,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
-"idz" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "ifK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -102729,7 +102713,7 @@ lMJ
 lMJ
 dne
 aoi
-apB
+doJ
 apC
 dne
 dne
@@ -102987,7 +102971,7 @@ aax
 aio
 dne
 dne
-idz
+apC
 dne
 aaa
 aaa

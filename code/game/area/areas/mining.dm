@@ -145,6 +145,7 @@
 	flags_1 = NONE
 	flora_allowed = TRUE
 	blob_allowed = FALSE
+	valid_territory = FALSE
 
 /area/icemoon/surface
 	name = "Icemoon"
