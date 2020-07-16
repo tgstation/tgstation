@@ -532,7 +532,7 @@
 			return
 		if("add_queue_set")
 			// Add all parts of a set to queue
-			var/part_list_str = params["part_list"]
+			var/part_list = params["part_list"]
 			add_part_set_to_queue(part_list)
 			return
 		if("add_queue_part")
