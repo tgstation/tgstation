@@ -52278,9 +52278,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "hnW" = (
-/obj/effect/spawner/structure/window/reinforced{
-	pixel_w = 1
-	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
 "hox" = (

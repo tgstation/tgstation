@@ -108,7 +108,7 @@
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("assignment","registered_name","registered_age")
+			if(NAMEOF(src, assignment),NAMEOF(src, registered_name),NAMEOF(src, registered_age))
 				update_label()
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
@@ -387,7 +387,7 @@ update_label()
 			return
 		if(popup_input == "Forge/Reset" && !forged)
 			var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
-			input_name = reject_bad_name(input_name)
+			input_name = sanitize_name(input_name)
 			if(!input_name)
 				// Invalid/blank names give a randomly generated one.
 				if(user.gender == MALE)

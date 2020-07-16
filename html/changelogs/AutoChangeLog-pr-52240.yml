@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed filters/radiation overlays not being added/cleared properly on action buttons."

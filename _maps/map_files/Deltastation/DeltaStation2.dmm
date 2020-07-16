@@ -20426,7 +20426,7 @@
 	},
 /obj/item/storage/box/shipping{
 	pixel_x = 4;
-	pixel_z = 4
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
@@ -114898,6 +114898,9 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "qKq" = (

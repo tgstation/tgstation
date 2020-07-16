@@ -332,7 +332,7 @@
 	if(user.mind)
 		gang_mode = user.mind.has_antag_datum(/datum/antagonist/gang)
 
-	if(gang_mode && (!can_claim_for_gang(user, target)))
+	if(gang_mode && (!can_claim_for_gang(user, target, gang_mode)))
 		return
 
 
@@ -452,7 +452,7 @@
 	else
 		..()
 
-/obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
+/obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/antagonist/gang/user_gang)
 	var/area/A = get_area(target)
 	if(!A || (!is_station_level(A.z)))
 		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
@@ -466,9 +466,12 @@
 		to_chat(user, "<span class='warning'>You can't tag an APC.</span>")
 		return FALSE
 
-	var/occupying_gang = territory_claimed(A, user)
+	var/obj/effect/decal/cleanable/crayon/gang/occupying_gang = territory_claimed(A, user)
 	if(occupying_gang && !spraying_over)
-		to_chat(user, "<span class='danger'>[A] has already been tagged by a gang! You must find and spray over the old tag first!</span>")
+		if(occupying_gang.my_gang == user_gang.my_gang)
+			to_chat(user, "<span class='danger'>[A] has already been tagged by our gang!</span>")
+		else
+			to_chat(user, "<span class='danger'>[A] has already been tagged by a gang! You must find and spray over the old tag instead!</span>")
 		return FALSE
 
 	// stolen from oldgang lmao
@@ -490,7 +493,7 @@
 /obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
 	for(var/obj/effect/decal/cleanable/crayon/gang/G in GLOB.gang_tags)
 		if(get_area(G) == territory)
-			return TRUE
+			return G
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
