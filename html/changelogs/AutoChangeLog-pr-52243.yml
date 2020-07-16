@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "Obsessed can't win by lynching their target after they're dead."
