@@ -8,6 +8,8 @@ env:
   es6: true
   browser: true
   node: true
+globals:
+  Byond: readonly
 plugins:
   - react
 settings:

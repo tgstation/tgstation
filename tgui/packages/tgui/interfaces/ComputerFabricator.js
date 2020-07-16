@@ -7,7 +7,11 @@ import { Window } from '../layouts';
 export const ComputerFabricator = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      title="Personal Computer Vendor"
+      width={500}
+      height={400}
+      resizable>
       <Window.Content>
         <Section italic fontSize="20px">
           Your perfect device, only three steps away...
@@ -108,7 +112,7 @@ const CfStep2 = (props, context) => {
               `}
               position="right" />
           </Table.Cell>
-          <Table.Cell >
+          <Table.Cell>
             <Button
               content="Standard"
               selected={data.hw_battery === 1}

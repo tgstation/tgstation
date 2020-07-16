@@ -153,6 +153,13 @@ if [[ ${1} == '--lint-harder' ]]; then
   exit 0
 fi
 
+if [[ ${1} == '--fix' ]]; then
+  shift 1
+  task-install
+  task-eslint --fix "${@}"
+  exit 0
+fi
+
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
   task-install
