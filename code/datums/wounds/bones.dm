@@ -9,7 +9,7 @@
 */
 /datum/wound/blunt
 	sound_effect = 'sound/effects/crack1.ogg'
-	wound_type = WOUND_LIST_BLUNT
+	wound_type = WOUND_BLUNT
 	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE)
 
 	/// Have we been taped?

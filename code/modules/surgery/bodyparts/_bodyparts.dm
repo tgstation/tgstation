@@ -249,9 +249,9 @@
 			// So a big sharp weapon is still all you need to destroy a limb
 			if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
 				playsound(src, "sound/effects/crackandbleed.ogg", 100)
-				if(wounding_type == SHARP_EDGED && !easy_dismember)
+				if(wounding_type == WOUND_SLASH && !easy_dismember)
 					wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
-				if(wounding_type == SHARP_POINTY && !easy_dismember)
+				if(wounding_type == WOUND_PIERCE && !easy_dismember)
 					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 				wounding_type = WOUND_BLUNT
 			else if(mangled_state == BODYPART_MANGLED_BOTH && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
@@ -326,7 +326,7 @@
   * We can promote a wound from a lesser to a higher severity this way, but we give up if we have a wound of the given type and fail to roll a higher severity, so no sidegrades/downgrades
   *
   * Arguments:
-  * * woundtype- Either WOUND_SLASH, WOUND_BLUNT, or WOUND_BURN based on the attack type.
+  * * woundtype- Either WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, or WOUND_BURN based on the attack type.
   * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
   * * wound_bonus- The wound_bonus of an attack
   * * bare_wound_bonus- The bare_wound_bonus of an attack
@@ -338,7 +338,7 @@
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
 	if(HAS_TRAIT(owner,TRAIT_HARDLIMBDISABLE))
-		damage *= 0.5
+		damage *= 0.8
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
 		damage *= 1.25
@@ -346,17 +346,7 @@
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
-	var/list/wounds_checking
-
-	switch(woundtype)
-		if(WOUND_BLUNT)
-			wounds_checking = WOUND_LIST_BLUNT
-		if(WOUND_SLASH)
-			wounds_checking = WOUND_LIST_SLASH
-		if(WOUND_PIERCE)
-			wounds_checking = WOUND_LIST_PIERCE
-		if(WOUND_BURN)
-			wounds_checking = WOUND_LIST_BURN
+	var/list/wounds_checking = GLOB.global_wound_types[woundtype]
 
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
@@ -394,9 +384,8 @@
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
 /obj/item/bodypart/proc/force_wound_upwards(specific_woundtype, smited = FALSE)
 	var/datum/wound/potential_wound = specific_woundtype
-	for(var/i in wounds)
-		var/datum/wound/existing_wound = i
-		if(existing_wound.type in (initial(potential_wound.wound_type)))
+	for(var/datum/wound/existing_wound in wounds)
+		if(existing_wound.wound_type == initial(potential_wound.wound_type))
 			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
 				existing_wound.replace_wound(potential_wound, smited)
 			return
@@ -711,10 +700,9 @@
 	if(isnull(wounds))
 		return
 
-	for(var/thing in wounds)
-		var/datum/wound/W = thing
-		if(istype(W, checking_type))
-			return W
+	for(var/datum/wound/iter_wound in wounds)
+		if(istype(iter_wound, checking_type))
+			return iter_wound
 
 /**
   * update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status

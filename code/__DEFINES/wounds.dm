@@ -16,13 +16,13 @@
 #define WOUND_SEVERITY_LOSS		4 // theoretical total limb loss, like dismemberment for cuts
 
 /// any brute weapon/attack that doesn't have sharpness. rolls for blunt bone wounds
-#define WOUND_BLUNT		0
+#define WOUND_BLUNT		1
 /// any brute weapon/attack with sharpness = SHARP_EDGED. rolls for slash wounds
-#define WOUND_SLASH		1
+#define WOUND_SLASH		2
 /// any brute weapon/attack with sharpness = SHARP_POINTY. rolls for piercing wounds
-#define WOUND_PIERCE	2
+#define WOUND_PIERCE	3
 /// any concentrated burn attack (lasers really). rolls for burning wounds
-#define WOUND_BURN		3
+#define WOUND_BURN		4
 
 // How much determination reagent to add each time someone gains a new wound in [/datum/wound/proc/second_wind()]
 #define WOUND_DETERMINATION_MODERATE	1
@@ -37,10 +37,17 @@
 #define CANT_WOUND -100
 
 // list in order of highest severity to lowest
-#define WOUND_LIST_BLUNT list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate)
-#define WOUND_LIST_SLASH list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate)
-#define WOUND_LIST_PIERCE list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate)
-#define WOUND_LIST_BURN list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate)
+GLOBAL_LIST_INIT(global_wound_types,
+	list(WOUND_BLUNT = list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate),
+		WOUND_SLASH = list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate),
+		WOUND_PIERCE = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
+		WOUND_BURN = list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate)
+		))
+
+GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate,
+	/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate,
+	/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate,
+	/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate))
 
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse
 /// below this has no ill effects from infection

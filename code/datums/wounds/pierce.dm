@@ -6,7 +6,7 @@
 /datum/wound/pierce
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
-	wound_type = WOUND_LIST_PIERCE
+	wound_type = WOUND_PIERCE
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tool = TOOL_CAUTERY
 	base_treat_time = 3 SECONDS
