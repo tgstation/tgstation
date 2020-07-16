@@ -510,16 +510,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
-		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
-			if(current_ticket)
-				current_ticket.MessageNoRecipient(msg)
-				current_ticket.TimeoutVerb()
-				return
-			else
-				to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>", confidential = TRUE)
+		if(current_ticket)
+			current_ticket.MessageNoRecipient(msg)
+			current_ticket.TimeoutVerb()
+			return
 		else
-			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
-			current_ticket.Close()
+			to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>", confidential = TRUE)
 
 	new /datum/admin_help(msg, src, FALSE)
 
