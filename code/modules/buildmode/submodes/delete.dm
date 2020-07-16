@@ -7,27 +7,34 @@
 	to_chat(c, "<span class='notice'>Right Mouse Button on anything to delete everything of the type. Probably dont do this unless you know what you are doing.</span>")
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
-/datum/buildmode_mode/delete/handle_click(client/c, params, obj/object)
+/datum/buildmode_mode/delete/handle_click(client/c, params, object)
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 	var/right_click = pa.Find("right")
 
 	if(left_click)
-		qdel(object)
+		if(isturf(object))
+			var/turf/T = object
+			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+		else if(isatom(object))
+			qdel(object)
 
 	if(right_click)
 		if(check_rights(R_DEBUG|R_SERVER))	//Prevents buildmoded non-admins from breaking everything.
-			var/action_type = alert("Strict type ([object.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
+			if(isturf(object))
+				return
+			var/atom/deleting = object
+			var/action_type = alert("Strict type ([deleting.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
 			if(action_type == "Cancel" || !action_type)
 				return
 
-			if(alert("Are you really sure you want to delete all instances of type [object.type]?",,"Yes","No") != "Yes")
+			if(alert("Are you really sure you want to delete all instances of type [deleting.type]?",,"Yes","No") != "Yes")
 				return
 
 			if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
 				return
 
-			var/O_type = object.type
+			var/O_type = deleting.type
 			switch(action_type)
 				if("Strict type")
 					var/i = 0

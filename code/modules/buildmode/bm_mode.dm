@@ -28,6 +28,7 @@
 	return
 
 /datum/buildmode_mode/proc/get_button_iconstate()
+	to_chat(world, "buildmode_[key]")
 	return "buildmode_[key]"
 
 /datum/buildmode_mode/proc/show_help(client/c)

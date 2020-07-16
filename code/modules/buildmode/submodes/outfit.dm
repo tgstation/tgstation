@@ -8,7 +8,7 @@
 
 /datum/buildmode_mode/outfit/show_help(client/c)
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Select outfit to eqiup.</span>")
+	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Select outfit to equip.</span>")
 	to_chat(c, "<span class='notice'>Left Mouse Button on mob/living/carbon/human = Equip the selected outfit.</span>")
 	to_chat(c, "<span class='notice'>Right Mouse Button on mob/living/carbon/human = Strip and delete current outfit.</span>")
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
@@ -20,7 +20,7 @@
 /datum/buildmode_mode/outfit/change_settings(client/c)
 	dressuptime = c.robust_dress_shop()
 
-/datum/buildmode_mode/outfit/handle_click(client/c, params, obj/object)
+/datum/buildmode_mode/outfit/handle_click(client/c, params, object)
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 	var/right_click = pa.Find("right")
