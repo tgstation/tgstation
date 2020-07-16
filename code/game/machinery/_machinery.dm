@@ -126,11 +126,8 @@ Class Procs:
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
-	// For storing and overriding ui id and dimensions
+	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
-	var/ui_style // ID of custom TGUI style (optional)
-	var/ui_x // Default size of TGUI window, in pixels
-	var/ui_y
 
 /obj/machinery/Initialize()
 	if(!armor)

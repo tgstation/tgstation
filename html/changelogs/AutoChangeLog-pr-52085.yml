@@ -1,0 +1,4 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - refactor: "tgui windows should load faster after an initial load, if using the fancy mode. Please report any breakages."

@@ -1,0 +1,4 @@
+author: "ArcaneMusic Ft. Kriskog"
+delete-after: True
+changes: 
+  - rscadd: "Plants above 30 instability when harvested have a (instability/3)% chance of producing a wildly mutated product instead of their own."

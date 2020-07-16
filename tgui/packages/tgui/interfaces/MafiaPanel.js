@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Flex, Button, LabeledList, Section, Box, TimeDisplay } from '../components';
 import { Fragment } from 'inferno';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, LabeledList, Section, TimeDisplay } from '../components';
 import { Window } from '../layouts';
 
 export const MafiaPanel = (props, context) => {
@@ -18,7 +18,10 @@ export const MafiaPanel = (props, context) => {
   } = data;
   return (
     <Window
+      title="Mafia"
       theme={role_theme}
+      width={650}
+      height={550}
       resizable>
       <Window.Content>
         <Section title={phase}>
