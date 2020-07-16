@@ -510,14 +510,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
-		if(current_ticket)
-			current_ticket.MessageNoRecipient(msg)
-			current_ticket.TimeoutVerb()
-			return
-		else
-			to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>", confidential = TRUE)
+		current_ticket.MessageNoRecipient(msg)
+		current_ticket.TimeoutVerb()
+		return
 
 	new /datum/admin_help(msg, src, FALSE)
+
 
 //
 // LOGGING
