@@ -1065,32 +1065,27 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/plasma)])
 			M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8))
-			if(S?.reagents)
-				S.reagents.add_reagent(/datum/reagent/toxin/plasma, S.reagents.total_volume*(2/5))
+			S?.reagents?.add_reagent(/datum/reagent/toxin/plasma, S.reagents.total_volume*(2/5))
 			found_mats++
 
 		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/uranium)])
 			M.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
-			if(S?.reagents)
-				S.reagents.add_reagent(/datum/reagent/uranium, S.reagents.total_volume*(2/5))
+			S?.reagents?.add_reagent(/datum/reagent/uranium, S.reagents.total_volume*(2/5))
 			found_mats++
 
 		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/bluespace)])
 			M.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
-			if(S?.reagents)
-				S.reagents.add_reagent(/datum/reagent/bluespace, S.reagents.total_volume*(2/5))
+			S?.reagents?.add_reagent(/datum/reagent/bluespace, S.reagents.total_volume*(2/5))
 			found_mats++
 
 		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/bananium)])
 			M.reagents.add_reagent(/datum/reagent/consumable/banana, rand(8, 12))
-			if(S?.reagents)
-				S.reagents.add_reagent(/datum/reagent/consumable/banana, S.reagents.total_volume*(2/5))
+			S?.reagents?.add_reagent(/datum/reagent/consumable/banana, S.reagents.total_volume*(2/5))
 			found_mats++
 
 		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/hot_ice)])
 			M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 6))
-			if(S?.reagents)
-				S.reagents.add_reagent(/datum/reagent/toxin/plasma, S.reagents.total_volume*(3/5))
+			S?.reagents?.add_reagent(/datum/reagent/toxin/plasma, S.reagents.total_volume*(3/5))
 			if(S?.tastes?.len)
 				S.tastes += "salt"
 				S.tastes["salt"] = 3
