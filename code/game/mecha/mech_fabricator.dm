@@ -466,9 +466,6 @@
 		ui = new(user, src, "ExosuitFabricator")
 		ui.open()
 
-/obj/machinery/mecha_part_fabricator/ui_state()
-	return GLOB.default_state
-
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
 	var/list/data = list()
 
