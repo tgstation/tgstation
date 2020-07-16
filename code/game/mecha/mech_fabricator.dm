@@ -11,6 +11,8 @@
 	circuit = /obj/item/circuitboard/machine/mechfab
 	processing_flags = START_PROCESSING_MANUALLY
 
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+
 	/// Current items in the build queue.
 	var/list/queue = list()
 	/// Whether or not the machine is building the entire queue automagically.
@@ -20,6 +22,8 @@
 	var/datum/design/being_built
 	/// World time when the build will finish.
 	var/build_finish = 0
+	/// World time when the build started.
+	var/build_start = 0
 	/// Reference to all materials used in the creation of the item being_built.
 	var/list/build_materials
 	/// Part currently stored in the Exofab.
@@ -83,6 +87,14 @@
 	for(var/obj/item/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
+
+	// Adjust the build time of any item currently being built.
+	if(being_built)
+		var/last_const_time = build_finish - build_start
+		var/new_const_time = get_construction_time_w_coeff(initial(being_built.construction_time))
+		var/const_time_left = build_finish - world.time
+		var/new_build_time = (new_const_time / last_const_time) * const_time_left
+		build_finish = world.time + new_build_time
 
 	update_static_data(usr)
 
@@ -155,7 +167,7 @@
 	var/list/part = list(
 		"name" = D.name,
 		"desc" = initial(built_item.desc),
-		"printTime" = get_construction_time_w_coeff(D)/10,
+		"printTime" = get_construction_time_w_coeff(initial(D.construction_time))/10,
 		"cost" = cost,
 		"id" = D.id,
 		"subCategory" = sub_category,
@@ -292,7 +304,8 @@
 
 	materials.use_materials(build_materials)
 	being_built = D
-	build_finish = world.time + get_construction_time_w_coeff(D)
+	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
+	build_start = world.time
 	desc = "It's building \a [D.name]."
 
 	rmat.silo_log(src, "built", -1, "[D.name]", build_materials)
@@ -439,8 +452,8 @@
   * * D - Design datum to calculate the modified build time of.
   * * roundto - Rounding value for round() proc
   */
-/obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
-	return round(initial(D.construction_time)*time_coeff, roundto)
+/obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(construction_time, roundto = 1) //aran
+	return round(construction_time*time_coeff, roundto)
 
 /obj/machinery/mecha_part_fabricator/ui_assets(mob/user)
 	return list(
@@ -499,7 +512,7 @@
 		var/list/part = list(
 			"name" = being_built.name,
 			"duration" = build_finish - world.time,
-			"printTime" = get_construction_time_w_coeff(being_built)
+			"printTime" = get_construction_time_w_coeff(initial(being_built.construction_time))
 		)
 		data["buildingPart"] = part
 	else
