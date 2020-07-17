@@ -16,13 +16,12 @@
 
 /datum/surgery/healing/can_start(mob/user, mob/living/patient)
 	. = ..()
-	if(patient.mob_biotypes & MOB_ORGANIC)
-		return
 	if(isanimal(patient))
 		var/mob/living/simple_animal/critter = patient
-		if(critter.healable)
-			return
-	return FALSE
+		if(!critter.healable)
+			return FALSE
+	if(!(patient.mob_biotypes & MOB_ORGANIC))
+		return FALSE
 
 /datum/surgery/healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
