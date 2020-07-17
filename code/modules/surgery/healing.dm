@@ -20,7 +20,7 @@
 		var/mob/living/simple_animal/critter = patient
 		if(!critter.healable)
 			return FALSE
-	if(!(patient.mob_biotypes & MOB_ORGANIC))
+	if(!(patient.mob_biotypes & (MOB_ORGANIC|MOB_HUMANOID)))
 		return FALSE
 
 /datum/surgery/healing/New(surgery_target, surgery_location, surgery_bodypart)
