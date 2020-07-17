@@ -3,7 +3,10 @@ import { NtosWindow } from '../layouts';
 
 export const NtosRequestKiosk = (props, context) => {
   return (
-    <NtosWindow resizable>
+    <NtosWindow
+      width={550}
+      height={600}
+      resizable>
       <NtosWindow.Content scrollable>
         <RequestKioskContent />
       </NtosWindow.Content>

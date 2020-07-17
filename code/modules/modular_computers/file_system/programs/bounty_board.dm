@@ -7,8 +7,6 @@
 	network_destination = "bounty board interface"
 	size = 10
 	tgui_id = "NtosRequestKiosk"
-	ui_x = 550
-	ui_y = 600
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.
