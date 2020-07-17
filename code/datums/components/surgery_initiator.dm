@@ -5,7 +5,7 @@
   */
 /datum/component/surgery_initiator
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	//allows for post-selection manipulation of parent
+	///allows for post-selection manipulation of parent
 	var/datum/callback/after_select_cb
 
 /datum/component/surgery_initiator/Initialize(_after_select_cb)
@@ -109,7 +109,11 @@
 	else if(!current_surgery.step_in_progress)
 		attempt_cancel_surgery(current_surgery, parent, M, user)
 
-
+		/**
+		  *
+		  * Does the surgery de-initiation.
+		  *
+		  */
 /datum/component/surgery_initiator/proc/attempt_cancel_surgery(datum/surgery/S, obj/item/I, mob/living/M, mob/user)
 	var/selected_zone = user.zone_selected
 
