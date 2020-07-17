@@ -1,5 +1,5 @@
 // This component holds no behavior on its own. This is intentional.
-// It's strength is checked by /mob/living/get_confusion().
+// Its strength is checked by /mob/living/get_confusion().
 
 /// A component used for specifying confusion on a living mob.
 /// Checked by /mob/living/get_confusion().
