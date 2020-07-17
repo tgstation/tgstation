@@ -72,7 +72,6 @@
 		return ..()
 	return FALSE
 
-
 /obj/machinery/door/firedoor/power_change()
 	. = ..()
 	latetoggle()
@@ -191,16 +190,18 @@
 
 /obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled || prob(30))
-			var/obj/structure/firelock_frame/F = new assemblytype(get_turf(src))
+		var/turf/T = get_turf(src)
+		if(disassembled || prob(40))
+			var/obj/structure/firelock_frame/F = new assemblytype(T)
 			if(disassembled)
 				F.constructionStep = CONSTRUCTION_PANEL_OPEN
 			else
 				F.constructionStep = CONSTRUCTION_NO_CIRCUIT
 				F.obj_integrity = F.max_integrity * 0.5
 			F.update_icon()
+		else
+			new /obj/item/electronics/firelock (T)
 	qdel(src)
-
 
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || machine_stat & NOPOWER || !nextstate)
