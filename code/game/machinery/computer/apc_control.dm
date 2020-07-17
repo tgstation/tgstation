@@ -12,8 +12,6 @@
 	var/restoring = FALSE
 	var/list/logs
 	var/auth_id = "\[NULL\]:"
-	ui_x = 550
-	ui_y = 500
 
 /obj/machinery/computer/apc_control/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -41,13 +39,12 @@
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
 	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
 
-/obj/machinery/computer/apc_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+/obj/machinery/computer/apc_control/ui_interact(mob/user, datum/tgui/ui)
 	operator = user
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ApcControl", "APC Controller", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ApcControl")
 		ui.open()
-
 
 /obj/machinery/computer/apc_control/ui_data(mob/user)
 	var/list/data = list()

@@ -153,7 +153,7 @@
 	else
 		. += "<span class='notice'>\The [src] has its scanner clipped to the side. Alt-Click to remove.</span>"
 
-/obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/medical_kiosk/ui_interact(mob/user, datum/tgui/ui)
 	var/patient_distance = 0
 	if(!ishuman(user))
 		to_chat(user, "<span class='warning'>[src] is unable to interface with non-humanoids!</span>")
@@ -169,10 +169,9 @@
 		say("Patient out of range. Resetting biometrics.")
 		clearScans()
 		return
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "MedicalKiosk", name, 575, 420, master_ui, state)
+		ui = new(user, src, "MedicalKiosk", name)
 		ui.open()
 		icon_state = "kiosk_off"
 		RefreshParts()

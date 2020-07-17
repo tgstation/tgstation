@@ -126,11 +126,8 @@ Class Procs:
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
-	// For storing and overriding ui id and dimensions
+	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
-	var/ui_style // ID of custom TGUI style (optional)
-	var/ui_x // Default size of TGUI window, in pixels
-	var/ui_y
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -407,7 +404,7 @@ Class Procs:
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 			component_parts.Cut()
-	qdel(src)
+	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
 	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
@@ -437,6 +434,7 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
