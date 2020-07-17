@@ -10,8 +10,6 @@
 	desc = "A canister for the storage of gas."
 	icon_state = "yellow"
 	density = TRUE
-	ui_x = 300
-	ui_y = 232
 
 	///The base iconstate, used to make dealing with breaking the canister less hellish
 	var/base_icon_state = "yellow"
@@ -80,7 +78,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is [mode].</span>"
+		. += "<span class='notice'>This canister is [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit(pressure_limit, "Pa", 0)]</b>.</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
@@ -418,11 +416,13 @@
 		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Canister", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Canister", name)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data()

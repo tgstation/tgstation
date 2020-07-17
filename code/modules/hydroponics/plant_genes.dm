@@ -220,6 +220,11 @@
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 
+/datum/plant_gene/trait/squash/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/sticky))
+		return FALSE
+	. = ..()
+
 /datum/plant_gene/trait/squash/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	// Squash the plant on slip.
 	G.squash(C)
@@ -513,6 +518,23 @@
 	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
 	googly.appearance_flags = RESET_COLOR
 	G.add_overlay(googly)
+
+/datum/plant_gene/trait/sticky
+	name = "Prickly Adhesion"
+
+/datum/plant_gene/trait/sticky/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+	. = ..()
+	if(G.seed.get_gene(/datum/plant_gene/trait/stinging))
+		G.embedding = EMBED_POINTY
+	else
+		G.embedding = EMBED_HARMLESS
+	G.updateEmbedding()
+	G.throwforce = (G.seed.potency/20)
+
+/datum/plant_gene/trait/sticky/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/squash))
+		return FALSE
+	. = ..()
 
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"

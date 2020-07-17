@@ -1,9 +1,7 @@
 import { createSearch } from 'common/string';
-import { Box, Button, Input, Icon, Section, Flex } from '../components';
-import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
-
-import { createLogger } from '../logging';
+import { Box, Button, Flex, Icon, Input, Section } from '../components';
+import { Window } from '../layouts';
 
 const PATTERN_DESCRIPTOR = / \[(?:ghost|dead)\]$/;
 const PATTERN_NUMBER = / \(([0-9]+)\)$/;
@@ -120,7 +118,10 @@ export const Orbit = (props, context) => {
   };
 
   return (
-    <Window>
+    <Window
+      title="Orbit"
+      width={350}
+      height={700}>
       <Window.Content scrollable>
         <Section>
           <Flex>

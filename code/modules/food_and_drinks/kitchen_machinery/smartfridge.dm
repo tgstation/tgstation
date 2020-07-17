@@ -12,8 +12,6 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
-	ui_x = 440
-	ui_y = 550
 
 	var/max_n_of_items = 1500
 	var/allow_ai_retrieve = FALSE
@@ -162,10 +160,10 @@
 		adjust_item_drop_location(O)
 
 
-/obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/smartfridge/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "SmartVend", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "SmartVend", name)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 

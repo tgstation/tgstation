@@ -10,8 +10,6 @@
 	active_power_usage = 10000
 	dir = NORTH
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	ui_x = 350
-	ui_y = 185
 	var/strength_upper_limit = 2
 	var/interface_control = TRUE
 	var/list/obj/structure/particle_accelerator/connected_parts
@@ -277,11 +275,10 @@
 		return ..()
 	return UI_CLOSE
 
-/obj/machinery/particle_accelerator/control_box/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/particle_accelerator/control_box/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ParticleAccelerator", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ParticleAccelerator", name)
 		ui.open()
 
 /obj/machinery/particle_accelerator/control_box/ui_data(mob/user)
