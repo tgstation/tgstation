@@ -8112,6 +8112,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"asx" = (
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "12;38"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "asy" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Firefighting Equipment";
@@ -8721,6 +8727,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/port/fore)
+"auf" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "aug" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -10888,6 +10900,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hydroponics/garden)
+"azr" = (
+/obj/structure/rack,
+/obj/item/pressure_plate,
+/obj/item/pressure_plate,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "azs" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -51285,10 +51303,6 @@
 "dGF" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
-"dHJ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/maintenance/starboard/fore)
 "dHL" = (
 /obj/machinery/suit_storage_unit/cmo,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -55624,12 +55638,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engine_smes)
-"rfI" = (
-/obj/item/pressure_plate,
-/obj/item/pressure_plate,
-/obj/structure/rack,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "rgu" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -96663,7 +96671,7 @@ arj
 auB
 auB
 arj
-aUx
+asx
 alP
 alP
 boP
@@ -96921,7 +96929,7 @@ boP
 boP
 alP
 anf
-rfI
+azr
 alP
 boP
 boP
@@ -97435,7 +97443,7 @@ alO
 alP
 alP
 anf
-auC
+auf
 alP
 alP
 alP
@@ -97692,7 +97700,7 @@ anf
 gjD
 anf
 anf
-atw
+anf
 aBE
 alP
 tdZ
@@ -99751,7 +99759,7 @@ arr
 apE
 anf
 ezU
-dHJ
+alO
 pAz
 bKs
 bKK
