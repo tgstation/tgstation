@@ -423,6 +423,14 @@
 /mob/living/proc/get_organic_health()
 	return health
 
+/// Returns the amount of confusion on the mob.
+/// Use this over reading the confused variable directly
+/// if you are tying confusion to an effect.
+/mob/living/proc/get_confusion()
+	. = confused
+	for (var/datum/component/confusion/confusion in GetComponents(/datum/component/confusion))
+		. += confusion.strength
+
 // MOB PROCS //END
 
 /mob/living/proc/mob_sleep()

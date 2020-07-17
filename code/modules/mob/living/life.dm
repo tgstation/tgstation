@@ -118,8 +118,15 @@
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(confused)
+	if (confused)
 		confused = max(0, confused - 1)
+	else if (get_confusion())
+		// Our confused variable is 0, but we still have some confusion.
+		// That means we have a confusion component, so lower one of those to 1.
+		for (var/datum/component/confusion/confusion in GetComponents(/datum/component/confusion))
+			if (confusion.strength)
+				confusion.strength = max(0, confusion.strength - 1)
+				break
 
 /mob/living/proc/handle_traits()
 	//Eyes

@@ -16,7 +16,6 @@ Bonus
 */
 
 /datum/symptom/confusion
-
 	name = "Confusion"
 	desc = "The virus interferes with the proper function of the neural system, leading to bouts of confusion and erratic movement."
 	stealth = 1
@@ -35,6 +34,8 @@ Bonus
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
 
+	var/list/confusion_components
+
 /datum/symptom/confusion/Start(datum/disease/advance/A)
 	if(!..())
 		return
@@ -44,6 +45,19 @@ Bonus
 		power = 1.5
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
+
+/datum/symptom/confusion/End(datum/disease/advance/A)
+	QDEL_NULL(confusion_components[A.affected_mob])
+	return ..()
+
+/// Gets the confusion component for the affected mob.
+/// Creates one if it does not exist.
+/datum/symptom/confusion/proc/get_confusion_component(datum/M)
+	RETURN_TYPE(/datum/component/confusion)
+	. = LAZYACCESS(confusion_components, M)
+	if (!.)
+		. = M.AddComponent(/datum/component/confusion)
+		LAZYSET(confusion_components, M, .)
 
 /datum/symptom/confusion/Activate(datum/disease/advance/A)
 	if(!..())
@@ -55,8 +69,8 @@ Bonus
 				to_chat(M, "<span class='warning'>[pick("Your head hurts.", "Your mind blanks for a moment.")]</span>")
 		else
 			to_chat(M, "<span class='userdanger'>You can't think straight!</span>")
-			if(M.confused < 100)
-				M.confused += (16 * power)
+			if(M.get_confusion() < 100)
+				get_confusion_component(M).strength += 16 * power
 			if(brain_damage)
 				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				M.updatehealth()
