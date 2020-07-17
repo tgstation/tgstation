@@ -50,6 +50,16 @@ $color-separator: colors.$primary !default;
   padding: 8px 6px;
 }
 
+.Section--fill {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.Section--fill .Section__content {
+  flex-grow: 1;
+}
+
 .Section--level--1 .Section__titleText {
   font-size: 14px;
 }

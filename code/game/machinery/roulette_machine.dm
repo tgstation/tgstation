@@ -29,8 +29,6 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 	max_integrity = 500
-	ui_x = 603
-	ui_y = 475
 	armor = list("melee" = 45, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 10, "bio" = 30, "rad" = 30, "fire" = 30, "acid" = 30)
 	var/static/list/numbers = list("0" = "green", "1" = "red", "3" = "red", "5" = "red", "7" = "red", "9" = "red", "12" = "red", "14" = "red", "16" = "red",\
 	"18" = "red", "19" = "red", "21" = "red", "23" = "red", "25" = "red", "27" = "red", "30" = "red", "32" = "red", "34" = "red", "36" = "red",\
@@ -60,12 +58,12 @@
 	prize_theft(0.05)
 	. = ..()
 
-/obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/roulette/ui_interact(mob/user, datum/tgui/ui)
 	if(machine_stat & MAINT)
 		return
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Roulette", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Roulette", name)
 		ui.open()
 
 /obj/machinery/roulette/ui_data(mob/user)
