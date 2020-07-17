@@ -79,10 +79,6 @@
 	D.set_vehicle_dir_layer(WEST, layer)
 	diag_hud_set_mulebotcell()
 
-/mob/living/simple_animal/bot/mulebot/get_movespeed_modifiers()
-	. = ..()
-
-
 /mob/living/simple_animal/bot/mulebot/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/ntnet_interface)
@@ -368,6 +364,7 @@
 		if(BOT_NO_ROUTE)
 			dat += "<span class='bad'>[mode_name[BOT_NO_ROUTE]]</span>"
 	dat += "</div>"
+
 	var/load_message = get_load_name()
 	dat += "<b>Current Load:</b> <i>[load_message ? load_message : "None"]</i><BR>"
 	dat += "<b>Destination:</b> [!destination ? "<i>None</i>" : destination]<BR>"
