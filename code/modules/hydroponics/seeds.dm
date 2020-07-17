@@ -213,7 +213,12 @@
 			t_prod = initial(new_prod.product)
 			if(t_prod)
 				t_prod = new t_prod(output_loc, src)
-				t_prod.seed.instability = instability/2
+				if(t_prod.seed)
+					t_prod.seed = initial(t_prod.seed)
+					t_prod.seed = new t_prod.seed
+					t_prod.seed.instability = instability/2
+					t_amount++
+					continue
 		else
 			t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
