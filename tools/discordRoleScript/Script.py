@@ -48,7 +48,7 @@ for user in usersToProcess:
     count += 1  # Why the fuck does python not have ++
     # user[0] = ckey, user[1] = discord ID
     print("Processing "+str(user[0])+" (Discord ID: " + str(user[1]) + ") | User "+str(count)+"/"+str(total))
-    url = "https://discordapp.com/api/guilds/"+str(guildID)+"/members/"+str(user[1])+"/roles/"+str(roleID)
+    url = "https://discord.com/api/guilds/"+str(guildID)+"/members/"+str(user[1])+"/roles/"+str(roleID)
     response = requests.put(url, headers={"Authorization": "Bot "+str(botToken)})
     # Adding a role returns a code 204, not a code 200. Dont ask
     if response.status_code != 204:
