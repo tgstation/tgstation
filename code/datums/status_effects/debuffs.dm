@@ -809,3 +809,41 @@
 			H.adjustOrganLoss(ORGAN_SLOT_TONGUE,10)
 		if(100)
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN,20)
+
+/datum/status_effect/befuddled
+	id = "befuddled"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 10 SECONDS
+
+/datum/status_effect/befuddled/on_apply()
+	ADD_TRAIT(owner, TRAIT_BEFUDDLED, "befuddled")
+	return ..()
+
+/datum/status_effect/befuddled/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_BEFUDDLED, "befuddled")
+
+/datum/status_effect/amok
+	id = "amok"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 10 SECONDS
+	tick_interval = 1 SECONDS
+
+/datum/status_effect/amok/on_creation(mob/living/afflicted)
+	. = ..()
+	to_chat(owner, "<span class='boldwarning'>Your feel filled with a rage that is not your own!</span>")
+
+/datum/status_effect/amok/tick()
+	. = ..()
+	var/prev_intent = owner.a_intent
+	owner.a_intent = INTENT_HARM
+
+	var/list/mob/living/targets = list()
+	for(var/mob/M in oview(owner, 1))
+		if(isliving(M) && !IS_HERETIC(M) && !M.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+			targets += M
+	if(LAZYLEN(targets))
+		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
+		owner.ClickOn(pick(targets))
+	owner.a_intent = prev_intent

@@ -85,6 +85,9 @@
 
 #define STATUS_EFFECT_LIMP /datum/status_effect/limp //For when you have a busted leg (or two!) and want additional slowdown when walking on that leg
 
+#define STATUS_EFFECT_BEFUDDLED /datum/status_effect/befuddled //inverts movement for the duration of the effect.
+
+#define STATUS_EFFECT_AMOK /datum/status_effect/amok //Makes the target automatically strike out at adjecent non-heretics.
 /////////////
 // NEUTRAL //
 /////////////

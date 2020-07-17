@@ -537,8 +537,9 @@
 
 /obj/effect/proc_holder/spell/cone/entropic_plume
 	name = "Entropic Plume"
-	desc = "Spews forth a disorienting plume that causes enemies to strike each other, slur and to move inverse relative to their intended direction. Also spreads rust in the path of the plume."
-	invocation = "CL'Y 'N H'S H'ND"
+	desc = "Spews forth a disorienting plume that causes enemies to strike each other, slur and inverts their movement. Also spreads rust in the path of the plume."
+	school = "illusion"
+	invocation = "'NTR'P'C PL'M'"
 	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
@@ -557,4 +558,12 @@
  	. = ..()
  	T.rust_heretic_act()
 
-
+/obj/effect/proc_holder/spell/cone/entropic_plume/do_mob_cone_effect(mob/M)
+	. = ..()
+	if(isliving(M))
+		var/mob/living/victim = M
+		if(victim.anti_magic_check() || IS_HERETIC(victim) || victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+			return
+		victim.apply_status_effect(STATUS_EFFECT_BEFUDDLED)
+		victim.apply_status_effect(STATUS_EFFECT_AMOK)
+		victim.apply_effect(5, EFFECT_SLUR)

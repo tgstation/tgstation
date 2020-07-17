@@ -85,8 +85,8 @@
 				if(ismob(A))
 					do_mob_cone_effect(A)
 
-/obj/effect/proc_holder/spell/cone/proc/do_turf_cone_effect(var/turf/T)
+/obj/effect/proc_holder/spell/cone/proc/do_turf_cone_effect(turf/T)
 
-/obj/effect/proc_holder/spell/cone/proc/do_obj_cone_effect(var/obj/O)
+/obj/effect/proc_holder/spell/cone/proc/do_obj_cone_effect(obj/O)
 
-/obj/effect/proc_holder/spell/cone/proc/do_mob_cone_effect(var/mob/M)
+/obj/effect/proc_holder/spell/cone/proc/do_mob_cone_effect(mob/M)
