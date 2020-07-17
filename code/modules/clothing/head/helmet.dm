@@ -121,12 +121,6 @@
 	icon_state = "darkalt"
 	inhand_icon_state = "darkalt"
 
-/obj/item/clothing/head/helmet/alt/bloodred
-	name = "bloodred camouflage helmet"
-	desc = "A bulletproof bloodred camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
-	icon_state = "bloodredalt"
-	inhand_icon_state = "bloodredalt"
-
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."

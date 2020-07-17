@@ -103,13 +103,6 @@
 	inhand_icon_state = "lp_suit"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/syndicate/bloodredcamo
-	name = "blood-red camouflage fatigues"
-	desc = "A bloodred-camouflaged military camouflage uniform. This blood-red color is similar to what a syndicate hardsuit would be like."
-	icon_state = "camobloodred"
-	inhand_icon_state = "br_suit"
-	can_adjust = FALSE
-
 /obj/item/clothing/under/syndicate/darkcamo
 	name = "dark camouflage fatigues"
 	desc = "A dark-camouflaged military camouflage uniform, typically for wandering in the dark."

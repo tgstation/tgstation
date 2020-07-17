@@ -184,12 +184,6 @@
 	icon_state = "greybulletproof"
 	inhand_icon_state = "greyarmor"
 
-/obj/item/clothing/suit/armor/bulletproof/camobloodred
-	name = "blood-red camouflaged bulletproof armor"
-	desc = "A Type III heavy bulletproof vest, camouflaged in blood-red, that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
-	icon_state = "bloodredbulletproof"
-	inhand_icon_state = "bloodredarmor"
-
 /obj/item/clothing/suit/armor/bulletproof/camodark
 	name = "dark camouflaged bulletproof armor"
 	desc = "A Type III heavy bulletproof vest, camouflaged in dark, that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."

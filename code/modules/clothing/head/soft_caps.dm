@@ -151,13 +151,6 @@
 	soft_type = "jungle"
 	dog_fashion = FALSE
 
-/obj/item/clothing/head/soft/sec/bloodredcamo
-	name = "blood-red camouflage cap"
-	desc = "It's a robust baseball hat in a tasteless jungle camouflage."
-	icon_state = "bloodredsoft"
-	soft_type = "bloodred"
-	dog_fashion = FALSE
-
 /obj/item/clothing/head/soft/sec/darkcamo
 	name = "dark camouflage cap"
 	desc = "It's a robust baseball hat in a tasteless jungle camouflage."
