@@ -104,6 +104,9 @@
 					var/obj/structure/falsewall/F = new (loc)
 					transfer_fingerprints_to(F)
 					qdel(src)
+			else if(state == GIRDER_REINF)
+				to_chat(user, "<span class='warning'>You can't finish a reinforced girder with regular metal. You need a plasteel sheet for that.</span>")
+				return
 			else
 				if(S.get_amount() < 2)
 					to_chat(user, "<span class='warning'>You need two sheets of metal to finish a wall!</span>")
