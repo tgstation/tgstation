@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - tweak: "Tagging an area already tagged by your gang will now say so, instead of generically telling you it's tagged by \"a\" gang."

@@ -51,6 +51,7 @@
 			to_chat(body,"<span class='danger'>You are a crewmember. Find out and lynch the changelings!</span>")
 		if(MAFIA_TEAM_SOLO)
 			to_chat(body,"<span class='danger'>You are not aligned to town or mafia. Accomplish your own objectives!</span>")
+	to_chat(body, "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Mafia\">the wiki page</a> to learn more, if you have no idea what's going on.</b>")
 
 //please take care with this, they can break shit with their equipment unless you specifically disallow them (aka stun at the end of the game)
 /datum/mafia_role/proc/reveal_role(datum/mafia_controller/game, verbose = FALSE)
@@ -458,12 +459,14 @@
 	UnregisterSignal(game,COMSIG_MAFIA_SUNDOWN)
 
 /datum/mafia_role/obsessed/proc/check_victory(datum/source,datum/mafia_controller/game,lynch)
+	UnregisterSignal(source,COMSIG_MAFIA_ON_KILL)
+	if(game_status == MAFIA_DEAD)
+		return
 	if(lynch)
 		game.send_message("<span class='big comradio'>!! OBSESSED VICTORY !!</span>")
 		reveal_role(game, FALSE)
 	else
 		to_chat(body, "<span class='userdanger'>You have failed your objective to lynch [obsession.body]!</span>")
-	UnregisterSignal(source,COMSIG_MAFIA_ON_KILL)
 
 /datum/mafia_role/clown
 	name = "Clown"

@@ -41,8 +41,6 @@ Possible to do for anyone motivated enough:
 	max_integrity = 300
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	circuit = /obj/item/circuitboard/machine/holopad
-	ui_x = 440
-	ui_y = 245
 	/// List of living mobs that use the holopad
 	var/list/masters
 	/// Holoray-mob link
@@ -208,11 +206,10 @@ obj/machinery/holopad/secure/Initialize()
 		return UI_CLOSE
 	return ..()
 
-/obj/machinery/holopad/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/holopad/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Holopad", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Holopad", name)
 		ui.open()
 
 /obj/machinery/holopad/ui_data(mob/user)

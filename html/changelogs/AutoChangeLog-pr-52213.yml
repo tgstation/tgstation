@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Corrupted power cells will no longer get reset if you remove plasma from them."

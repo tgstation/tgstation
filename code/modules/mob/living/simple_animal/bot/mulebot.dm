@@ -31,10 +31,8 @@
 	model = "MULE"
 	bot_core_type = /obj/machinery/bot_core/mulebot
 
-	var/ui_x = 350 ///tgui window width
-	var/ui_y = 425 ///tgui window height
-
-	var/id /// unique identifier in case there are multiple mulebots.
+	/// unique identifier in case there are multiple mulebots.
+	var/id
 
 	path_image_color = "#7F5200"
 
@@ -228,11 +226,10 @@
 			return
 		ui_interact(user)
 
-/mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Mule", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Mule", name)
 		ui.open()
 
 /mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
@@ -366,7 +363,7 @@
 	dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
 	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
-	if(locked && !ai && !IsAdminGhost(user))
+	if(locked && !ai && !isAdminGhostAI(user))
 		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=[REF(src)];op=unlock'>Unlock Controls</A>"
 	else
 		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>"

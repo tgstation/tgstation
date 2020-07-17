@@ -64,14 +64,39 @@ SUBSYSTEM_DEF(throwing)
 	var/delayed_time = 0
 	var/last_move = 0
 
+
+/datum/thrownthing/New(thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
+	. = ..()
+	src.thrownthing = thrownthing
+	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
+	src.target = target
+	src.target_turf = target_turf
+	src.init_dir = init_dir
+	src.maxrange = maxrange
+	src.speed = speed
+	src.thrower = thrower
+	src.diagonals_first = diagonals_first
+	src.force = force
+	src.gentle = gentle
+	src.callback = callback
+	src.target_zone = target_zone
+
+
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
 	thrownthing.throwing = null
 	thrownthing = null
 	target = null
 	thrower = null
-	callback = null
+	if(callback)
+		QDEL_NULL(callback) //It stores a reference to the thrownthing, its source. Let's clean that.
 	return ..()
+
+
+///Defines the datum behavior on the thrownthing's qdeletion event.
+/datum/thrownthing/proc/on_thrownthing_qdel(atom/movable/source, force)
+	qdel(src)
+
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
@@ -136,15 +161,21 @@ SUBSYSTEM_DEF(throwing)
 			if (A == target)
 				hit = TRUE
 				thrownthing.throw_impact(A, src)
+				if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+					return //deletion should already be handled by on_thrownthing_qdel()
 				break
 		if (!hit)
 			thrownthing.throw_impact(get_turf(thrownthing), src)  // we haven't hit something yet and we still must, let's hit the ground.
+			if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+				return //deletion should already be handled by on_thrownthing_qdel()
 			thrownthing.newtonian_move(init_dir)
 	else
 		thrownthing.newtonian_move(init_dir)
 
 	if(target)
 		thrownthing.throw_impact(target, src)
+		if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+			return //deletion should already be handled by on_thrownthing_qdel()
 
 	if (callback)
 		callback.Invoke()
