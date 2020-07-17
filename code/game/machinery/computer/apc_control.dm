@@ -31,7 +31,7 @@
 			active_apc = null
 
 /obj/machinery/computer/apc_control/attack_ai(mob/user)
-	if(!IsAdminGhost(user))
+	if(!isAdminGhostAI(user))
 		to_chat(user,"<span class='warning'>[src] does not support AI control.</span>") //You already have APC access, cheater!
 		return
 	..()

@@ -794,7 +794,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_icon()
 
 /mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	return IsAdminGhost(usr)
+	return isAdminGhostAI(usr)
 
 /mob/dead/observer/is_literate()
 	return TRUE
@@ -910,7 +910,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		. += "It seems extremely obvious."
 
 /mob/dead/observer/examine_more(mob/user)
-	if(!IsAdminGhost(user, TRUE))
+	if(!isAdminObserver(user))
 		return ..()
 	. = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
 	. += list("\t><span class='admin'>[ADMIN_FULLMONTY(src)]</span>")
