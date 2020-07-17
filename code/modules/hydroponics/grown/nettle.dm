@@ -109,7 +109,7 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return TRUE
-	if(isliving(M) && istype(M,/mob/living/carbon))
+	if(iscarbon(M))
 		var/mob/living/carbon/target = M
 		to_chat(target, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
 		log_combat(user, target, "attacked", src)

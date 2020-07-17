@@ -239,7 +239,7 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return TRUE
-	if(isliving(M) && istype(M,/mob/living/carbon))
+	if(iscarbon(M))
 		var/mob/living/carbon/burned = M
 		to_chat(burned, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
 		burned.adjust_fire_stacks(seed.potency / 20)
