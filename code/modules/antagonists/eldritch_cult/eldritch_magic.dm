@@ -544,7 +544,7 @@
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "smoke"
+	action_icon_state = "entropic_plume"
 	charge_max = 400
 	cone_levels = 2
 	narrow = TRUE
