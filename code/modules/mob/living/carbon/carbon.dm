@@ -1190,3 +1190,32 @@
   */
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
+
+/// Returns maximum number of active chip skills for this mob
+/mob/living/carbon/proc/get_max_skillchip_count()
+	. = 2
+	if(dna && dna.check_mutation(BIOTECHCOMPAT))
+		. += 1
+
+/// Disables or re-enables any extra skillchips after skillchip limit changes
+/mob/living/carbon/proc/update_skillchips()
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B)
+		return
+	var/limit = get_max_skillchip_count()
+	var/list/inactive_skillchips = list()
+	for(var/obj/item/skillchip/S in B)
+		inactive_skillchips += S
+	//We have skillchips to disable
+	if(length(B.skillchips) > limit)
+		var/list/removed_chips = B.skillchips.Copy(limit+1)
+		for(var/obj/item/skillchip/S in removed_chips)
+			S.on_removal(src)
+			B.skillchips -= S
+	//Something to reactivate
+	else if (length(B.skillchips) < limit && length(inactive_skillchips))
+		for(var/obj/item/skillchip/S in inactive_skillchips)
+			S.on_apply(src)
+			B.skillchips |= S
+			if(length(B.skillchips) >= limit)
+				break

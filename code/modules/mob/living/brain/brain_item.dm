@@ -26,6 +26,9 @@
 
 	var/list/datum/brain_trauma/traumas = list()
 
+	/// List of skillchip items, their location should be this brain.
+	var/list/obj/item/skillchip/skillchips
+
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
 
@@ -54,10 +57,15 @@
 		BT.owner = owner
 		BT.on_gain()
 
+	for(var/obj/item/skillchip/S in skillchips)
+		S.on_apply(owner)
+
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
+	for(var/obj/item/skillchip/S in skillchips)
+		S.on_removal(owner)
 	..()
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
@@ -115,6 +123,18 @@
 		var/healby = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		setOrganDamage(damage - healby*2)	//heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
+		return
+
+	// Cutting out skill chips.
+	if(length(skillchips) && O.sharpness == IS_SHARP_ACCURATE)
+		to_chat(user,"<span class='notice'>You begin to excise skillchips from [src].</span>")
+		if(do_after(user,15 SECONDS,target=src))
+			for(var/obj/item/skillchip/S in skillchips)
+				if(S.removable)
+					S.forceMove(drop_location())
+				else
+					qdel(S)
+			skillchips = null
 		return
 
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
@@ -181,6 +201,7 @@
 	if(brainmob)
 		QDEL_NULL(brainmob)
 	QDEL_LIST(traumas)
+	QDEL_LIST(skillchips)
 	return ..()
 
 /obj/item/organ/brain/on_life()
