@@ -1057,88 +1057,36 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	else if(custom_materials?.len) //if we've got materials, lets see whats in it
 		/// How many 'bonus' mats have we found? You can only be affected by two 'bonus' material datums by default
 		var/found_mats = 0
+		/// How much of each material is in it? Used to determine if the glass should break
+		var/total_material_amount = 0
 
-		//Bonus mats (plasma, uranium, etc) applies minor effects
-		// * Adds some of a reagent to the mob
-		// * Adds some of a reagent to the item
-		// * Adds tastes to the item
+		for(var/mats in custom_materials)
+			if(found_mats >= MAX_BONUS_MATS_PER_BITE)
+				break
 
-		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/plasma)])
-			M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8))
-			S?.reagents?.add_reagent(/datum/reagent/toxin/plasma, S.reagents.total_volume*(2/5))
-			found_mats++
+			var/datum/material/FM = mats
+			total_material_amount += custom_materials[mats]
+			if(FM.on_accidental_mat_consumption(M, S))
+				found_mats++
 
-		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/uranium)])
-			M.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
-			S?.reagents?.add_reagent(/datum/reagent/uranium, S.reagents.total_volume*(2/5))
-			found_mats++
+		//if there's glass in it and the glass is more than 60% of the item, then we can shatter it
+		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)] >= total_material_amount * 0.60)
+			if(prob(66)) //66% chance to break it
+				/// The glass shard that is spawned into the source item
+				var/obj/item/shard/broken_glass = new /obj/item/shard(src)
+				broken_glass.name = "broken [src.name]"
+				broken_glass.desc = "This used to be \a [src.name], but it sure isn't anymore."
+				playsound(M, "shatter", 25, TRUE)
 
-		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/bluespace)])
-			M.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
-			S?.reagents?.add_reagent(/datum/reagent/bluespace, S.reagents.total_volume*(2/5))
-			found_mats++
-
-		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/bananium)])
-			M.reagents.add_reagent(/datum/reagent/consumable/banana, rand(8, 12))
-			S?.reagents?.add_reagent(/datum/reagent/consumable/banana, S.reagents.total_volume*(2/5))
-			found_mats++
-
-		if(found_mats < MAX_BONUS_MATS_PER_BITE && custom_materials[SSmaterials.GetMaterialRef(/datum/material/hot_ice)])
-			M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 6))
-			S?.reagents?.add_reagent(/datum/reagent/toxin/plasma, S.reagents.total_volume*(3/5))
-			if(S?.tastes?.len)
-				S.tastes += "salt"
-				S.tastes["salt"] = 3
-			found_mats++
-
-		//Primary mats (glass, iron, etc) in order of hardness (something with both iron and glass probably won't shatter when you bite into it)
-
-		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/adamantine)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/runite)])
-			M.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10) //oof my tooth
-
-		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/diamond)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/titanium)])
-			M.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
-
-		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
-			M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
-
-		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/wood)])
-			M.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-			if(S?.tastes?.len)
-				S.tastes += "wood chips and sawdust"
-				S.tastes["wood chips and sawdust"] = 3
-
-		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
-			M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
-
-			//biting glass doesn't mean you swallow the glass, but it DOES leave the shard in there if you keep eating like an idiot
-			/// The glass shard that is spawned into the source item
-			var/obj/item/shard/broken_glass = null
-
-			if(istype(src, /obj/item/reagent_containers)) //if it's a glass reagent container...
-				if(reagents?.reagent_list?.len)
-					for(var/P in reagents.reagent_list)
-						if(istype(P, /datum/reagent/toxin/plasma) || istype(P, /datum/reagent/stable_plasma))
-							broken_glass = new /obj/item/shard/plasma(src) //if there's plasma in the beaker, make a plasma glass shard
-							break
-
-			if(!broken_glass)
-				if(found_mats && custom_materials[SSmaterials.GetMaterialRef(/datum/material/plasma)])
-					broken_glass = new /obj/item/shard/plasma(src) //or if it's plasma glass, make a plasma glass shard
+				if(S)
+					S.contents += broken_glass //puts the glass back into the source item...
 				else
-					broken_glass = new /obj/item/shard(src) //and if it's normal glass, make a normal shard
+					broken_glass.on_accidental_consumption(M, user)
 
-			playsound(M, "shatter", 25, TRUE)
-			if(source_item)
-				source_item.contents += broken_glass //puts the glass back into the source item...
-				source_item.contents -= src
-			else
-				broken_glass.on_accidental_consumption(M, user)
-
-			qdel(src)
-
-		else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/plastic)])
-			M.adjust_disgust(17) //(33 +  17 = 50) finding metal is pretty disgusting, but finding plastic is always the worst
+				qdel(src)
+			else //33% chance to just "crack" it (play a sound) and leave it in the bread
+				playsound(M, "shatter", 15, TRUE)
+				discover_after = FALSE
 
 		M.adjust_disgust(33)
 		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something hard.</span>", \

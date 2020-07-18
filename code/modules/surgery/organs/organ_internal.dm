@@ -164,7 +164,6 @@
 
 	if((damage >= maxHealth) && !istype(src, /obj/item/organ/brain)) //don't qdel brains
 		discover_after = FALSE
-		S?.contents -= src
 		qdel(src) //oops, all gone
 
 	return discover_after
