@@ -216,7 +216,7 @@
 				if(t_prod.seed)
 					t_prod.seed = initial(t_prod.seed)
 					t_prod.seed = new t_prod.seed
-					t_prod.seed.instability = instability/2
+					t_prod.seed.instability = round(instability/2)
 					t_amount++
 					continue
 		else
