@@ -231,8 +231,7 @@
 		var/obj/machinery/light/L = AM
 		if(L.status == 1)
 			return
-		var/obj/item/light/I = L.drop_light_tube()
-		I.burn()
+		disintegrate(L.drop_light_tube(), AM)
 
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O, atom/A)
