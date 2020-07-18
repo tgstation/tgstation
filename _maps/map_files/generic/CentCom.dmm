@@ -633,7 +633,7 @@
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "bS" = (
-/obj/item/storage/bag/easterbasket{
+/obj/item/storage/basket/easter{
 	name = "picnic basket";
 	pixel_y = 6
 	},
