@@ -1,6 +1,7 @@
 // Sleeper, Medical Beam, and Syringe gun
 
 /obj/item/mecha_parts/mecha_equipment/medical
+	mech_flags = EXOSUIT_MODULE_MEDICAL
 
 /obj/item/mecha_parts/mecha_equipment/medical/Initialize()
 	. = ..()
