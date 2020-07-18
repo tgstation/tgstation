@@ -121,7 +121,7 @@
  */
 /datum/tgui_window/proc/release_lock()
 	// Clean up assets sent by tgui datum which requested the lock
-	if(locked && locked_by)
+	if(locked)
 		sent_assets = list()
 	locked = FALSE
 	locked_by = null

@@ -33,8 +33,6 @@
 	var/status = UI_INTERACTIVE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
-	/// Asset data to be sent with every update
-	var/list/asset_data
 
 /**
  * public
@@ -215,8 +213,6 @@
 	var/static_data = with_static_data && src_object.ui_static_data(user)
 	if(static_data)
 		json_data["static_data"] = static_data
-	if(asset_data)
-		json_data["assets"] = asset_data
 	if(src_object.tgui_shared_states)
 		json_data["shared"] = src_object.tgui_shared_states
 	return json_data
