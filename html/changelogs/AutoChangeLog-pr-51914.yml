@@ -1,0 +1,4 @@
+author: "carshalash"
+delete-after: True
+changes: 
+  - tweak: "Reintroduces module type to AI shell name"
