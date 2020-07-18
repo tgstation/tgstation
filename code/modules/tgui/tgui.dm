@@ -82,11 +82,14 @@
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		window.initialize()
+		window.initialize(inline_assets = list(
+			get_asset_datum(/datum/asset/simple/tgui),
+		))
 	else
 		window.send_message("ping")
+	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
 	for(var/datum/asset/asset in src_object.ui_assets(user))
-		send_asset(asset)
+		window.send_asset(asset)
 	window.send_message("update", get_payload(
 		with_data = TRUE,
 		with_static_data = TRUE))
@@ -143,14 +146,10 @@
  *
  * required asset datum/asset
  */
-/datum/tgui/proc/send_asset(var/datum/asset/asset)
-	if(!user.client)
-		return
-	if(istype(asset, /datum/asset/spritesheet))
-		var/datum/asset/spritesheet/spritesheet = asset
-		LAZYINITLIST(asset_data)
-		LAZYADD(asset_data["styles"], list(spritesheet.css_filename()))
-	asset.send(user)
+/datum/tgui/proc/send_asset(datum/asset/asset)
+	if(!window)
+		CRASH("send_asset() can only be called after open().")
+	window.send_asset(asset)
 
 /**
  * public

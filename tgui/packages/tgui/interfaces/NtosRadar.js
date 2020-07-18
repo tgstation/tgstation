@@ -1,4 +1,5 @@
 import { classes } from 'common/react';
+import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, NoticeBox, Section } from '../components';
 import { NtosWindow } from '../layouts';
@@ -68,7 +69,9 @@ export const NtosRadarContent = (props, context) => {
       </Flex.Item>
       <Flex.Item
         style={{
-          'background-image': 'url("ntosradarbackground.png")',
+          'background-image': 'url("'
+            + resolveAsset('ntosradarbackground.png')
+            + '")',
           'background-position': 'center',
           'background-repeat': 'no-repeat',
           'top': '20px',
@@ -91,14 +94,13 @@ export const NtosRadarContent = (props, context) => {
           )
           : !!target.userot && (
             <Box as="img"
-              src={target.arrowstyle}
+              src={resolveAsset(target.arrowstyle)}
               position="absolute"
               top="20px"
               left="243px"
               style={{
                 'transform': `rotate(${target.rot}deg)`,
-              }}
-            />
+              }} />
           ) || (
             <Icon
               name={target.pointer}
@@ -106,8 +108,7 @@ export const NtosRadarContent = (props, context) => {
               size={2}
               color={target.color}
               top={((target.locy * 10) + 19) + 'px'}
-              left={((target.locx * 10) + 16) + 'px'}
-            />
+              left={((target.locx * 10) + 16) + 'px'} />
           )}
       </Flex.Item>
     </Flex>

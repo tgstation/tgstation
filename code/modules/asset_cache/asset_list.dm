@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		if (!ACI)
 			continue
 		.[asset_name] = ACI.url
-	
+
 
 // For registering or sending multiple others at once
 /datum/asset/group
@@ -86,17 +86,15 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	if (!name)
 		CRASH("spritesheet [type] cannot register without a name")
 	ensure_stripped()
-
+	for(var/size_id in sizes)
+		var/size = sizes[size_id]
+		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
 	fdel(fname)
 	text2file(generate_css(), fname)
 	register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
-
-	for(var/size_id in sizes)
-		var/size = sizes[size_id]
-		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 
 /datum/asset/spritesheet/send(client/C)
 	if (!name)
