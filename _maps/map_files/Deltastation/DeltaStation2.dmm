@@ -72449,11 +72449,11 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEu" = (
-/obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/manifold/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEv" = (

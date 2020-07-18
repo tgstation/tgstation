@@ -14296,12 +14296,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aHb" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/stack/package_wrap,
+/obj/machinery/skill_station,
 /turf/open/floor/wood,
 /area/library)
 "aHc" = (
@@ -57161,6 +57156,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
+"vyO" = (
+/obj/structure/table/wood,
+/obj/structure/disposalpipe/segment,
+/obj/item/stack/package_wrap,
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/turf/open/floor/wood,
+/area/library)
 "vzp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -101862,7 +101867,7 @@ aDZ
 aFu
 aHc
 aIw
-aJS
+vyO
 aJS
 aMJ
 aNP
