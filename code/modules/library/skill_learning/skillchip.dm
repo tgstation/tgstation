@@ -4,6 +4,7 @@
 
 	icon = 'icons/obj/card.dmi'
 	icon_state = "data_3"
+	custom_price = 500
 
 	/// Trait automatically granted by this chip, optional
 	var/auto_trait
