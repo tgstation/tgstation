@@ -343,7 +343,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	updateUsrDialog()
 
-/obj/machinery/requests_console/say_mod(input, message_mode)
+/obj/machinery/requests_console/say_mod(input, list/message_mods = list())
 	if(spantext_char(input, "!", -3))
 		return "blares"
 	else
