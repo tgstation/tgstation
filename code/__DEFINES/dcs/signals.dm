@@ -310,6 +310,8 @@
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
+	///Return this to interrupt the throw
+	#define COMPONENT_MOB_NO_THROW (1<<0)
 ///from base of /mob/verb/examinate(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
 ///from /mob/living/handle_eye_contact(): (mob/living/other_mob)

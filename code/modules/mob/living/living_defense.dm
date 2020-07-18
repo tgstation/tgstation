@@ -69,31 +69,33 @@
 				return 0
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(AM, /obj/item))
-		var/obj/item/I = AM
-		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-		var/dtype = BRUTE
-		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
-		if(nosell_hit)
-			skipcatch = TRUE
-			hitpush = FALSE
-
-		dtype = I.damtype
-		if(!blocked)
-			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
-							"<span class='userdanger'>You're hit by [I]!</span>")
-			if(!I.throwforce)
-				return
-			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-			apply_damage(I.throwforce, dtype, zone, armor, sharpness=I.sharpness)
-			if(I.thrownby)
-				log_combat(I.thrownby, src, "threw and hit", I)
-		else
-			return 1
-	else
+	if(!isitem(AM))
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
-	..()
+		return ..()
 
+	var/obj/item/I = AM
+	var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
+	var/dtype = BRUTE
+	var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+	if(nosell_hit)
+		skipcatch = TRUE
+		hitpush = FALSE
+	if(blocked)
+		return 1
+
+	var/power_throw = throwingdatum.speed - I.throw_speed
+	visible_message("<span class='danger'>[src] is hit by [I][power_throw ? " really hard" : ""]!</span>", \
+					"<span class='userdanger'>You're hit by [I][power_throw ? " really hard" : ""]!</span>")
+	if(!I.throwforce)
+		return
+
+	dtype = I.damtype
+	var/damage = I.throwforce + POWER_THROW_DAMAGE_BONUS * power_throw
+	var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened a hit to your [parse_zone(zone)].",I.armour_penetration)
+	apply_damage(damage, dtype, zone, armor, sharpness=I.sharpness)
+	if(I.thrownby)
+		log_combat(I.thrownby, src, "threw and hit", I)
+	..()
 
 
 /mob/living/mech_melee_attack(obj/mecha/M)

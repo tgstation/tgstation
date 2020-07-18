@@ -242,3 +242,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
 
 #define NICE_SHOT_RICOCHET_BONUS	10			//if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
+
+/// If you throw something faster than its normal throwspeed at a living mob, and it has a throwforce, multiply this by the extra speed and add it to the damage total
+#define POWER_THROW_DAMAGE_BONUS	5

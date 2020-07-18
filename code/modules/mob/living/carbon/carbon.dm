@@ -130,11 +130,15 @@
 		hud_used.throw_icon.icon_state = "act_throw_on"
 
 /mob/proc/throw_item(atom/target)
-	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
-	return
+	if(SEND_SIGNAL(src, COMSIG_MOB_THROW, target) & COMPONENT_MOB_NO_THROW)
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/throw_item(atom/target)
 	. = ..()
+	if(!.)
+		return
+
 	throw_mode_off()
 	if(!target || !isturf(loc))
 		return
@@ -156,27 +160,37 @@
 	else
 		thrown_thing = I.on_thrown(src, target)
 
-	if(thrown_thing)
+	if(!thrown_thing)
+		return
 
-		if(isliving(thrown_thing))
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-			var/turf/end_T = get_turf(target)
-			if(start_T && end_T)
-				log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
-		var/power_throw = 0
-		if(HAS_TRAIT(src, TRAIT_HULK))
-			power_throw++
-		if(HAS_TRAIT(src, TRAIT_DWARF))
-			power_throw--
-		if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
-			power_throw++
-		if(pulling && grab_state >= GRAB_NECK)
-			power_throw++
-		visible_message("<span class='danger'>[src] throws [thrown_thing][power_throw ? " really hard!" : "."]</span>", \
-						"<span class='danger'>You throw [thrown_thing][power_throw ? " really hard!" : "."]</span>")
-		log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
-		newtonian_move(get_dir(target, src))
-		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
+	if(isliving(thrown_thing))
+		var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
+		var/turf/end_T = get_turf(target)
+		if(start_T && end_T)
+			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
+	var/power_throw = get_throwspeed_mods(thrown_thing)
+
+	visible_message("<span class='danger'>[src] throws [thrown_thing][power_throw ? " really hard!" : "."]</span>", \
+					"<span class='danger'>You throw [thrown_thing][power_throw ? " really hard!" : "."]</span>")
+	log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
+	newtonian_move(get_dir(target, src))
+	thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
+
+///Handle things that can make you throw a given atom faster or slower th an normal
+/mob/proc/get_throwspeed_mods(atom/target)
+	return
+
+/mob/living/carbon/get_throwspeed_mods(atom/thrown_thing)
+	var/power_throw = 0
+	if(HAS_TRAIT(src, TRAIT_HULK))
+		power_throw++
+	if(HAS_TRAIT(src, TRAIT_DWARF))
+		power_throw--
+	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
+		power_throw++
+	if(pulling && grab_state >= GRAB_NECK)
+		power_throw++
+	return power_throw
 
 /mob/living/carbon/restrained(ignore_grab)
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))

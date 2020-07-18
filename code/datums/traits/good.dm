@@ -261,3 +261,86 @@ datum/quirk/fan_mime
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
+
+/datum/quirk/fastballer
+	name = "Fastball Special"
+	desc = "You've got a strong arm and good pitching fundamentals, throwing an item on harm intent will cause you to perform a short wind-up and give your throws some extra punch."
+	value = 2
+	mob_trait = TRAIT_FASTBALLER
+	gain_text = "<span class='notice'>You start considering going pro with pitching!</span>"
+	lose_text = "<span class='danger'>You feel your minor league prospects disappearing before your eyes.</span>"
+	medical_record_text = "Patient showed up to recent appointment with hands completely coated in synthetic pine tar."
+
+	///How long it takes to fully wind-up a pitch. If the thrower is interrupted less than 40% into this, they balk and just don't throw
+	var/windup_time = 2 SECONDS
+	///How much stamina a successful pitch costs
+	var/stamina_cost = 15
+	///How much stamina a wild pitch (interrupted more than 40% into do_after) costs
+	var/stamina_cost_wild = 25
+	///How much extra speed + range you get
+	var/power_bonus = 2
+	///How far off target we can go with a wild pitch
+	var/wild_pitch_radius = 4
+
+/datum/quirk/fastballer/add()
+	. = ..()
+	RegisterSignal(quirk_holder, COMSIG_MOB_THROW, .proc/check_pitch)
+
+/datum/quirk/fastballer/remove()
+	. = ..()
+	UnregisterSignal(quirk_holder, COMSIG_MOB_THROW)
+
+///We're trying to throw, check if we're on harm intent with an item and not trying to throw a person
+/datum/quirk/fastballer/proc/check_pitch(datum/source, atom/target)
+	if(!target || !isturf(quirk_holder.loc) || quirk_holder.a_intent != INTENT_HARM || istype(target, /obj/screen))
+		return
+
+	var/obj/item/I = quirk_holder.get_active_held_item()
+	if(!I || (isliving(quirk_holder.pulling) && quirk_holder.grab_state >= GRAB_AGGRESSIVE))
+		return
+
+	. = COMPONENT_MOB_NO_THROW
+	INVOKE_ASYNC(src, .proc/windup, target, I)
+
+///Handle the do_after for the wind-up
+/datum/quirk/fastballer/proc/windup(atom/target, obj/item/thrown_thing)
+	var/mob/living/carbon/C = quirk_holder
+	C.throw_mode_off()
+	C.visible_message("<span class='danger'>[C] begins winding up to pitch [thrown_thing] at [target].</span>", "<span class='warning'>You begin winding up to pitch [thrown_thing] at [target]...</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	var/start_windup = world.time
+	if(do_after(C, windup_time))
+		pitch(target, thrown_thing)
+	else
+		if(world.time > start_windup + (0.4 * windup_time))
+			wild_pitch(target, thrown_thing)
+		else
+			C.visible_message("<span class='danger'>[C] balks and decides not to throw [thrown_thing].</span>", "<span class='danger'>You balk and decide not to throw [thrown_thing].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+
+///A successful pitch, add some zest on that sucker
+/datum/quirk/fastballer/proc/pitch(atom/target, obj/item/thrown_thing)
+	var/mob/living/carbon/C = quirk_holder
+	if(!thrown_thing.on_thrown(C, target))
+		return
+
+	C.adjustStaminaLoss(stamina_cost)
+	var/power_throw = C.get_throwspeed_mods(thrown_thing) + power_bonus
+	C.visible_message("<span class='danger'>[C] pitches [thrown_thing][power_throw ? " really hard!" : "."]</span>", \
+					"<span class='danger'>You pitch [thrown_thing][power_throw ? " really hard!" : "."]</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	C.log_message("has pitched [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
+	C.newtonian_move(get_dir(target, C))
+	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + power_bonus, thrown_thing.throw_speed + power_throw, C, null, null, null, C.move_force)
+
+///We were interrupted more than 40% into the windup, throw it away
+/datum/quirk/fastballer/proc/wild_pitch(atom/target, obj/item/thrown_thing)
+	var/mob/living/carbon/C = quirk_holder
+	target = pick(shuffle(range(target, wild_pitch_radius)))
+	if(!thrown_thing.on_thrown(C, target))
+		return
+
+	C.adjustStaminaLoss(stamina_cost_wild)
+	var/power_throw = C.get_throwspeed_mods(thrown_thing) + power_bonus
+	C.visible_message("<span class='danger'>[C] wildly pitches [thrown_thing][power_throw ? " really hard!" : "."]</span>", \
+					"<span class='danger'>You wildly pitch [thrown_thing][power_throw ? " really hard!" : "."]</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	C.log_message("has wildly pitched [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
+	C.newtonian_move(get_dir(target, C))
+	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + power_bonus, thrown_thing.throw_speed + power_throw, C, null, null, null, C.move_force)
