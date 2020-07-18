@@ -234,12 +234,10 @@
 		if(BIO_JUST_BONE)
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
-				if(!easy_dismember)
-					wounding_dmg *= 0.5
+				wounding_dmg *= (easy_dismember ? 1 : 0.5)
 			else if(wounding_type == WOUND_PIERCE)
 				wounding_type = WOUND_BLUNT
-				if(!easy_dismember)
-					wounding_dmg *= 0.75
+				wounding_dmg *= (easy_dismember ? 1 : 0.75)
 			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 		// note that there's no handling for BIO_JUST_FLESH since we don't have any that are that right now (slimepeople maybe someday)
@@ -294,29 +292,48 @@
 	update_disabled()
 	return update_bodypart_damage_state() || .
 
-/// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds (note this doesn't let sharp go to bone) TODO: look at new wounding stuff
-/obj/item/bodypart/proc/painless_wound_roll(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus)
-	if(!owner || phantom_wounding_dmg <= 5 || wound_bonus == CANT_WOUND)
+/// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
+/obj/item/bodypart/proc/painless_wound_roll(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=SHARP_NONE)
+	if(!owner || phantom_wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND)
 		return
 
 	var/mangled_state = get_mangled_state()
-	var/original_type = wounding_type
-	// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
-	// So a big sharp weapon is still all you need to destroy a limb
-	if(mangled_state == BODYPART_MANGLED_FLESH)
-		playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
-		wounding_type = WOUND_BLUNT
-		if(wounding_type == WOUND_SLASH)
-			phantom_wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
-		if(wounding_type == WOUND_PIERCE)
-			phantom_wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
+	var/bio_state = owner.get_biological_state()
+	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
-	// if both the skin and the bone are destroyed, and we're doing more than 10 damage, we're ripe to try dismembering
-	else if(mangled_state == BODYPART_MANGLED_BOTH && phantom_wounding_dmg >= DISMEMBER_MINIMUM_DAMAGE)
-		if(try_dismember(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus))
-			return
+	if(wounding_type == WOUND_BLUNT)
+		if(sharpness == SHARP_EDGED)
+			wounding_type = WOUND_SLASH
+		else if(sharpness == SHARP_POINTY)
+			wounding_type = WOUND_PIERCE
 
-	wounding_type = original_type
+	//Handling for bone only/flesh only(none right now)/flesh and bone targets
+	switch(bio_state)
+		// if we're bone only, all cutting attacks go straight to the bone
+		if(BIO_JUST_BONE)
+			if(wounding_type == WOUND_SLASH)
+				wounding_type = WOUND_BLUNT
+				phantom_wounding_dmg *= (easy_dismember ? 1 : 0.5)
+			else if(wounding_type == WOUND_PIERCE)
+				wounding_type = WOUND_BLUNT
+				phantom_wounding_dmg *= (easy_dismember ? 1 : 0.75)
+			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus))
+				return
+		// note that there's no handling for BIO_JUST_FLESH since we don't have any that are that right now (slimepeople maybe someday)
+		// standard humanoids
+		if(BIO_FLESH_BONE)
+			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
+			// So a big sharp weapon is still all you need to destroy a limb
+			if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
+				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
+				if(wounding_type == WOUND_SLASH && !easy_dismember)
+					phantom_wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
+				if(wounding_type == WOUND_PIERCE && !easy_dismember)
+					phantom_wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
+				wounding_type = WOUND_BLUNT
+			else if(mangled_state == BODYPART_MANGLED_BOTH && try_dismember(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus))
+				return
+
 	check_wounding(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus)
 
 /**
