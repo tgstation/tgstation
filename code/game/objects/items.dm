@@ -1074,16 +1074,14 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			if(prob(66)) //66% chance to break it
 				/// The glass shard that is spawned into the source item
 				var/obj/item/shard/broken_glass = new /obj/item/shard(src)
-				broken_glass.name = "broken [src.name]"
-				broken_glass.desc = "This used to be \a [src.name], but it sure isn't anymore."
+				broken_glass.name = "broken [name]"
+				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
 				playsound(M, "shatter", 25, TRUE)
-
+				qdel(src)
 				if(S)
-					S.contents += broken_glass //puts the glass back into the source item...
+					S.contents += broken_glass //puts the glass back into the source item
 				else
 					broken_glass.on_accidental_consumption(M, user)
-
-				qdel(src)
 			else //33% chance to just "crack" it (play a sound) and leave it in the bread
 				playsound(M, "shatter", 15, TRUE)
 				discover_after = FALSE
