@@ -13,8 +13,7 @@
 	keybind_signal = COMSIG_KB_HUMAN_QUICKEQUIP_DOWN
 
 /datum/keybinding/human/quick_equip/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/living/carbon/human/H = user.mob
 	H.quick_equip()
@@ -28,8 +27,7 @@
 	keybind_signal = COMSIG_KB_HUMAN_QUICKEQUIPBELT_DOWN
 
 /datum/keybinding/human/quick_equipbelt/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/living/carbon/human/H = user.mob
 	H.smart_equipbelt()
@@ -43,8 +41,7 @@
 	keybind_signal = COMSIG_KB_HUMAN_BAGEQUIP_DOWN
 
 /datum/keybinding/human/bag_equip/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/living/carbon/human/H = user.mob
 	H.smart_equipbag()
@@ -58,8 +55,7 @@
 	keybind_signal = COMSIG_KB_HUMAN_EQUIPMENTSWAP_DOWN
 
 /datum/keybinding/human/equipment_swap/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/living/carbon/human/H = user.mob
 	H.equipment_swap()

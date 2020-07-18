@@ -13,8 +13,7 @@
 	keybind_signal = COMSIG_KB_LIVING_RESIST_DOWN
 
 /datum/keybinding/living/resist/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/living/L = user.mob
 	L.resist()
@@ -28,8 +27,7 @@
 	keybind_signal = COMSIG_KB_LIVING_LOOKUP_DOWN
 
 /datum/keybinding/living/look_up/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/living/L = user.mob
 	L.look_up()

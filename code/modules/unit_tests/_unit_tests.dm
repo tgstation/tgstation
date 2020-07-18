@@ -15,6 +15,7 @@
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
 #include "component_tests.dm"
+#include "keybinding_init.dm"
 #include "plantgrowth_tests.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"

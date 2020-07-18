@@ -13,8 +13,7 @@
 	keybind_signal = COMSIG_KB_ADMIN_ASAY_DOWN
 
 /datum/keybinding/admin/admin_say/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.get_admin_say()
 	return TRUE
@@ -27,8 +26,7 @@
 	keybind_signal = COMSIG_KB_ADMIN_AGHOST_DOWN
 
 /datum/keybinding/admin/admin_ghost/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.admin_ghost()
 	return TRUE
@@ -41,8 +39,7 @@
 	keybind_signal = COMSIG_KB_ADMIN_PLAYERPANELNEW_DOWN
 
 /datum/keybinding/admin/player_panel_new/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.holder.player_panel_new()
 	return TRUE
@@ -55,8 +52,7 @@
 	keybind_signal = COMSIG_KB_ADMIN_TOGGLEBUILDMODE_DOWN
 
 /datum/keybinding/admin/toggle_buildmode_self/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.togglebuildmodeself()
 	return TRUE
@@ -69,8 +65,7 @@
 	keybind_signal = COMSIG_KB_ADMIN_STEALTHMODETOGGLE_DOWN
 
 /datum/keybinding/admin/stealthmode/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.stealth()
 	return TRUE
@@ -83,8 +78,7 @@
 	keybind_signal = COMSIG_KB_ADMIN_INVISIMINTOGGLE_DOWN
 
 /datum/keybinding/admin/invisimin/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.invisimin()
 	return TRUE
@@ -97,8 +91,7 @@
 	keybind_signal = COMSIG_KB_ADMIN_DSAY_DOWN
 
 /datum/keybinding/admin/deadsay/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.get_dead_say()
 	return TRUE
@@ -111,8 +104,7 @@
 	keybind_signal = COMSIG_KB_ADMIN_DEADMIN_DOWN
 
 /datum/keybinding/admin/deadmin/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.deadmin()
 	return TRUE
@@ -125,8 +117,7 @@
 	keybind_signal = COMSIG_KB_ADMIN_READMIN_DOWN
 
 /datum/keybinding/admin/readmin/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.readmin()
 	return TRUE

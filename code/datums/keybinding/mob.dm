@@ -11,8 +11,7 @@
 	keybind_signal = COMSIG_KB_MOB_FACENORTH_DOWN
 
 /datum/keybinding/mob/face_north/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.northface()
@@ -27,8 +26,7 @@
 	keybind_signal = COMSIG_KB_MOB_FACEEAST_DOWN
 
 /datum/keybinding/mob/face_east/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.eastface()
@@ -43,8 +41,7 @@
 	keybind_signal = COMSIG_KB_MOB_FACESOUTH_DOWN
 
 /datum/keybinding/mob/face_south/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.southface()
@@ -58,8 +55,7 @@
 	keybind_signal = COMSIG_KB_MOB_FACEWEST_DOWN
 
 /datum/keybinding/mob/face_west/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.westface()
@@ -73,8 +69,7 @@
 	keybind_signal = COMSIG_KB_MOB_STOPPULLING_DOWN
 
 /datum/keybinding/mob/stop_pulling/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	if(!M.pulling)
@@ -91,8 +86,7 @@
 	keybind_signal = COMSIG_KB_MOB_CYCLEINTENTRIGHT_DOWN
 
 /datum/keybinding/mob/cycle_intent_right/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.a_intent_change(INTENT_HOTKEY_RIGHT)
@@ -106,8 +100,7 @@
 	keybind_signal = COMSIG_KB_MOB_CYCLEINTENTLEFT_DOWN
 
 /datum/keybinding/mob/cycle_intent_left/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.a_intent_change(INTENT_HOTKEY_LEFT)
@@ -121,8 +114,7 @@
 	keybind_signal = COMSIG_KB_MOB_SWAPHANDS_DOWN
 
 /datum/keybinding/mob/swap_hands/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.swap_hand()
@@ -136,8 +128,7 @@
 	keybind_signal = COMSIG_KB_MOB_ACTIVATEINHAND_DOWN
 
 /datum/keybinding/mob/activate_inhand/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.mode()
@@ -151,8 +142,7 @@
 	keybind_signal = COMSIG_KB_MOB_DROPITEM_DOWN
 
 /datum/keybinding/mob/drop_item/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	if(iscyborg(user.mob)) //cyborgs can't drop items
 		return FALSE
@@ -172,8 +162,7 @@
 	keybind_signal = COMSIG_KB_MOB_TOGGLEMOVEINTENT_DOWN
 
 /datum/keybinding/mob/toggle_move_intent/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.toggle_move_intent()
@@ -192,8 +181,7 @@
 	keybind_signal = COMSIG_KB_MOB_TOGGLEMOVEINTENTALT_DOWN
 
 /datum/keybinding/mob/toggle_move_intent_alternative/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/mob/M = user.mob
 	M.toggle_move_intent()
@@ -207,8 +195,7 @@
 	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
 
 /datum/keybinding/mob/target_head_cycle/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.body_toggle_head()
 	return TRUE
@@ -221,8 +208,7 @@
 	keybind_signal = COMSIG_KB_MOB_TARGETRIGHTARM_DOWN
 
 /datum/keybinding/mob/target_r_arm/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.body_r_arm()
 	return TRUE
@@ -235,8 +221,7 @@
 	keybind_signal = COMSIG_KB_MOB_TARGETBODYCHEST_DOWN
 
 /datum/keybinding/mob/target_body_chest/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.body_chest()
 	return TRUE
@@ -249,8 +234,7 @@
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTARM_DOWN
 
 /datum/keybinding/mob/target_left_arm/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.body_l_arm()
 	return TRUE
@@ -263,8 +247,7 @@
 	keybind_signal = COMSIG_KB_MOB_TARGETRIGHTLEG_DOWN
 
 /datum/keybinding/mob/target_right_leg/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.body_r_leg()
 	return TRUE
@@ -277,8 +260,7 @@
 	keybind_signal = COMSIG_KB_MOB_TARGETBODYGROIN_DOWN
 
 /datum/keybinding/mob/target_body_groin/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.body_groin()
 	return TRUE
@@ -291,8 +273,7 @@
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTLEG_DOWN
 
 /datum/keybinding/mob/target_left_leg/down(client/user)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	user.body_l_leg()
 	return TRUE
