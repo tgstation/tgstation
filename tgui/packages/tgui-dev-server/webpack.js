@@ -55,6 +55,9 @@ export const setupWebpack = async config => {
       logger.error('compilation error', err);
       return;
     }
-    logger.log(stats.toString(config.devServer.stats));
+    stats
+      .toString(config.devServer.stats)
+      .split('\n')
+      .forEach(line => logger.log(line));
   });
 };

@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
+	if(tgui_Topic(href_list))
 		return
 
 	// Admin PM
@@ -320,7 +320,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		set_macros()
 		update_movement_keys()
 
-	chatOutput.start() // Starts the chat
+	// Setup tgui panel
+	tgui_panel_setup(src)
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -454,6 +455,24 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.setZoomMode()
 	fit_viewport()
 	Master.UpdateTickRate()
+
+/client/proc/benchmark_chat_queued(iter = 200)
+	var/started_at
+	var/finished_at
+	started_at = world.tick_usage
+	for(var/i in 1 to iter)
+		to_chat(src, "Testing the chat [i]", TRUE, TRUE, FALSE)
+	finished_at = world.tick_usage
+	to_chat(src, "Finished in [finished_at - started_at] ds")
+
+/client/proc/benchmark_chat_immediate(iter = 200)
+	var/started_at
+	var/finished_at
+	started_at = world.tick_usage
+	for(var/i in 1 to iter)
+		to_chat_immediate(src, "Testing the chat [i]", TRUE, TRUE, FALSE)
+	finished_at = world.tick_usage
+	to_chat(src, "Finished in [finished_at - started_at] ds")
 
 //////////////
 //DISCONNECT//

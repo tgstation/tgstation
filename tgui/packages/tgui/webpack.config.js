@@ -30,11 +30,14 @@ module.exports = (env = {}, argv) => {
       tgui: [
         path.resolve(__dirname, './index.js'),
       ],
+      'tgui-panel': [
+        path.resolve(__dirname, '../tgui-panel/index.js'),
+      ],
     },
     output: {
-      path: argv.mode === 'production'
-        ? path.resolve(__dirname, './public')
-        : path.resolve(__dirname, './public/.tmp'),
+      path: argv.devServer
+        ? path.resolve(__dirname, './public/.tmp')
+        : path.resolve(__dirname, './public'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
@@ -133,7 +136,7 @@ module.exports = (env = {}, argv) => {
     ];
   }
 
-  // Production specific options
+  // Production build specific options
   if (argv.mode === 'production') {
     const TerserPlugin = require('terser-webpack-plugin');
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -166,18 +169,22 @@ module.exports = (env = {}, argv) => {
     ];
   }
 
-  // Development specific options
+  // Development build specific options
   if (argv.mode !== 'production') {
+    if (argv.hot) {
+      config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    }
+    config.devtool = 'cheap-module-source-map';
+  }
+
+  // Development server specific options
+  if (argv.devServer) {
     config.plugins = [
       ...config.plugins,
       new BuildNotifierPlugin({
         suppressSuccess: true,
       }),
     ];
-    if (argv.hot) {
-      config.plugins.push(new webpack.HotModuleReplacementPlugin());
-    }
-    config.devtool = 'cheap-module-source-map';
     config.devServer = {
       progress: false,
       quiet: false,

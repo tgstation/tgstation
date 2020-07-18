@@ -90,6 +90,13 @@ interface ByondType {
    * Sets a property on the BYOND skin element to a certain value.
    */
   winset(id: string, propName: string, propValue: any): void;
+
+  /**
+   * Parses BYOND JSON
+   *
+   * Uses a special encoding to preverse Infinity and NaN.
+   */
+  parseJson(text: string): any;
 };
 
 declare const Byond: ByondType;

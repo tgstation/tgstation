@@ -28,6 +28,7 @@ export const Layout = props => {
     className,
     theme = 'nanotrasen',
     children,
+    ...rest
   } = props;
   return (
     <div className={'theme-' + theme}>
@@ -35,7 +36,9 @@ export const Layout = props => {
         className={classes([
           'Layout',
           className,
-        ])}>
+          ...computeBoxClassName(rest),
+        ])}
+        {...computeBoxProps(rest)}>
         {children}
       </div>
     </div>

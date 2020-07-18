@@ -81,7 +81,7 @@ export const applyMiddleware = (...middlewares) => {
 export const combineReducers = reducersObj => {
   const keys = Object.keys(reducersObj);
   let hasChanged = false;
-  return (prevState, action) => {
+  return (prevState = {}, action) => {
     const nextState = { ...prevState };
     for (let key of keys) {
       const reducer = reducersObj[key];

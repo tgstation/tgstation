@@ -10,40 +10,38 @@ import 'core-js/web/immediate';
 import 'core-js/web/queue-microtask';
 import 'core-js/web/timers';
 import 'regenerator-runtime/runtime';
-import './polyfills/html5shiv';
-import './polyfills/ie8';
-import './polyfills/dom4';
-import './polyfills/css-om';
-import './polyfills/inferno';
+import 'tgui/polyfills/html5shiv';
+import 'tgui/polyfills/ie8';
+import 'tgui/polyfills/dom4';
+import 'tgui/polyfills/css-om';
+import 'tgui/polyfills/inferno';
 
 // Themes
-import './styles/main.scss';
-import './styles/themes/abductor.scss';
-import './styles/themes/cardtable.scss';
-import './styles/themes/hackerman.scss';
-import './styles/themes/malfunction.scss';
-import './styles/themes/neutral.scss';
-import './styles/themes/ntos.scss';
-import './styles/themes/paper.scss';
-import './styles/themes/retro.scss';
-import './styles/themes/syndicate.scss';
+import 'tgui/styles/main.scss';
+import './chat.scss';
 
 import { perf } from 'common/perf';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-import { createRenderer } from './renderer';
-import { configureStore, StoreProvider } from './store';
+import { createRenderer } from 'tgui/renderer';
+import { configureStore, StoreProvider } from 'tgui/store';
+import { chatMiddleware } from 'tgchat';
 
 perf.mark('inception', window.__inception__);
 perf.mark('init');
 
-const store = configureStore();
+const store = configureStore({
+  middleware: {
+    pre: [
+      chatMiddleware,
+    ],
+  },
+});
 
 const renderApp = createRenderer(() => {
-  const { getRoutedComponent } = require('./routes');
-  const Component = getRoutedComponent(store);
+  const { PanelRoot } = require('./PanelRoot');
   return (
     <StoreProvider store={store}>
-      <Component />
+      <PanelRoot />
     </StoreProvider>
   );
 });
@@ -55,10 +53,10 @@ const setupApp = () => {
     return;
   }
 
-  // Subscribe for state updates
+  // Subscribe for Redux state updates
   store.subscribe(renderApp);
 
-  // Dispatch incoming messages
+  // Subscribe for bankend updates
   window.update = msg => store.dispatch(Byond.parseJson(msg));
 
   // Process the early update queue
@@ -74,9 +72,7 @@ const setupApp = () => {
   if (module.hot) {
     setupHotReloading();
     module.hot.accept([
-      './components',
-      './layouts',
-      './routes',
+      './PanelRoot',
     ], () => {
       renderApp();
     });

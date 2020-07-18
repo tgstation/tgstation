@@ -19,7 +19,7 @@ For the main html chat area
 	/// Has the client loaded the browser output area?
 	var/loaded = FALSE
 	/// If they haven't loaded chat, this is where messages will go until they do
-	var/list/messageQueue 
+	var/list/messageQueue
 	var/cookieSent = FALSE // Has the client sent a cookie for analysis
 	var/broken = FALSE
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
@@ -256,69 +256,6 @@ For the main html chat area
 /// Called by js client on js error
 /datum/chat_output/proc/debug(error)
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
-
-/// Global chat proc. to_chat_immediate will circumvent SSchat and send data as soon as possible.
-/proc/to_chat_immediate(target, message, handle_whitespace = TRUE, trailing_newline = TRUE, confidential = FALSE)
-	if(!target || !message)
-		return
-
-	if(target == world)
-		target = GLOB.clients
-
-	var/original_message = message
-	if(handle_whitespace)
-		message = replacetext(message, "\n", "<br>")
-		message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]") //EIGHT SPACES IN TOTAL!!
-	if(trailing_newline)
-		message += "<br>"
-
-	if(islist(target))
-		// Do the double-encoding outside the loop to save nanoseconds
-		var/twiceEncoded = url_encode(url_encode(message))
-		for(var/I in target)
-			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
-
-			if (!C)
-				continue
-
-			//Send it to the old style output window.
-			SEND_TEXT(C, original_message)
-
-			if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-				continue
-
-			if(!C.chatOutput.loaded)
-				//Client still loading, put their messages in a queue
-				C.chatOutput.messageQueue += message
-				continue
-
-			C << output(twiceEncoded, "browseroutput:output")
-	else
-		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
-
-		if (!C)
-			return
-
-		//Send it to the old style output window.
-		SEND_TEXT(C, original_message)
-
-		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-			return
-
-		if(!C.chatOutput.loaded)
-			//Client still loading, put their messages in a queue
-			C.chatOutput.messageQueue += message
-			return
-
-		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
-		C << output(url_encode(url_encode(message)), "browseroutput:output")
-
-/// Sends a text message to the target.
-/proc/to_chat(target, message, handle_whitespace = TRUE, trailing_newline = TRUE, confidential = FALSE)
-	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
-		to_chat_immediate(target, message, handle_whitespace, trailing_newline, confidential)
-		return
-	SSchat.queue(target, message, handle_whitespace, trailing_newline, confidential)
 
 /// Dark mode light mode stuff. Yell at KMC if this breaks! (See darkmode.dm for documentation)
 /datum/chat_output/proc/swaptolightmode()

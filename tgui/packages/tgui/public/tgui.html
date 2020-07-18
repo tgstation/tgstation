@@ -58,6 +58,19 @@ window.Byond = (function () {
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
 
+  // Reviver for BYOND JSON
+  // IE8: No reviver for you!
+  // See: https://stackoverflow.com/questions/1288962
+  var byondJsonReviver;
+  if (!Byond.IS_LTE_IE8) {
+    byondJsonReviver = function (key, value) {
+      if (typeof value === 'object' && value !== null && value.__number__) {
+        return parseFloat(value.__number__);
+      }
+      return value;
+    };
+  }
+
   // Makes a BYOND call.
   // See: https://secure.byond.com/docs/ref/skinparams.html
   Byond.call = function (path, params) {
@@ -146,6 +159,15 @@ window.Byond = (function () {
     return Byond.call('winset', props);
   };
 
+  Byond.parseJson = function (json) {
+    try {
+      return JSON.parse(json, byondJsonReviver);
+    }
+    catch (err) {
+      throw new Error('JSON parsing error: ' + (err && err.message));
+    }
+  };
+
   return Byond;
 })();
 
@@ -162,6 +184,8 @@ window.onerror = function (msg, url, line, col, error) {
   }
   // Append user agent info
   stack += '\nUser Agent: ' + navigator.userAgent;
+  // Augment the stack
+  stack = window.__augmentStack__(stack, error);
   // Print error to the page
   var errorRoot = document.getElementById('FatalError');
   var errorStack = document.getElementById('FatalError__stack');
@@ -185,11 +209,6 @@ window.onerror = function (msg, url, line, col, error) {
   };
   setFatalErrorGeometry();
   setInterval(setFatalErrorGeometry, 1000);
-  // Use a hook that comes with the bundle to augment the stack
-  // and send errors to a dev server (if using a development build).
-  if (window.__logger__) {
-    stack = window.__logger__.fatal(error, stack);
-  }
   // Send logs to the game server
   Byond.topic({
     tgui: 1,
@@ -203,6 +222,11 @@ window.onerror = function (msg, url, line, col, error) {
   window.update = function () {};
   // Prevent default action
   return true;
+};
+
+// Helper stub for augmenting stack traces on fatal errors
+window.__augmentStack__ = function (stack, error) {
+  return stack;
 };
 
 // Early initialization

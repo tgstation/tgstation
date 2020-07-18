@@ -33,7 +33,8 @@ const SuspendedWindow = () => {
   );
 };
 
-export const getRoutedComponent = state => {
+export const getRoutedComponent = store => {
+  const state = store.getState();
   const { suspended, config } = selectBackend(state);
   if (suspended) {
     return SuspendedWindow;

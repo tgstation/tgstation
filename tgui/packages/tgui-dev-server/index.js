@@ -14,6 +14,7 @@ const setupServer = async () => {
   const config = await getWebpackConfig({
     mode: 'development',
     hot: !noHot,
+    devServer: true,
   });
   // Reload cache once
   if (reloadOnce) {
