@@ -31,6 +31,8 @@
 	keybind_signal = COMSIG_KB_HUMAN_QUICKEQUIPBELT_DOWN
 
 /datum/keybinding/human/quick_equip_belt/down(client/user)
+	if(..())
+		return
 	var/mob/living/carbon/human/H = user.mob
 	H.smart_equip_targeted(slot_type, slot_item_name)
 	return TRUE
