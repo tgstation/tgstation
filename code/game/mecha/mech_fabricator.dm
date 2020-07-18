@@ -258,7 +258,7 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff, roundto)
 
-/obj/machinery/mecha_part_fabricator/ui_interact(mob/user as mob)
+/obj/machinery/mecha_part_fabricator/ui_interact(mob/user)
 	. = ..()
 	var/dat, left_part
 	user.set_machine(src)

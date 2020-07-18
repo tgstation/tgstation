@@ -209,7 +209,7 @@
 		"boss4.gif" = 'icons/UI_Icons/Arcade/boss4.gif',
 		"boss5.gif" = 'icons/UI_Icons/Arcade/boss5.gif',
 		"boss6.gif" = 'icons/UI_Icons/Arcade/boss6.gif',
-		)
+	)
 
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"

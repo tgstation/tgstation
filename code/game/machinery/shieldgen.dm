@@ -85,7 +85,7 @@
 	if(parent_rune)
 		parent_rune.visible_message("<span class='danger'>The [parent_rune] fades away as [src] is destroyed!</span>")
 		QDEL_NULL(parent_rune)
-	..()
+	return ..()
 
 /**
 *Turns the shield on and off.
