@@ -445,7 +445,7 @@
 /datum/mafia_role/traitor/proc/try_to_kill(datum/mafia_controller/source)
 	var/datum/mafia_role/R = current_victim
 	current_victim = null
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"traitor kill",R) & MAFIA_PREVENT_ACTION)
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,source,"traitor kill",R) & MAFIA_PREVENT_ACTION)
 		return
 	if(game_status == MAFIA_ALIVE && R && R.game_status == MAFIA_ALIVE)
 		if(!R.kill(source))
@@ -502,7 +502,7 @@
 /datum/mafia_role/nightmare/proc/flicker_or_hunt(datum/mafia_controller/source)
 	if(game_status != MAFIA_ALIVE || !flicker_target)
 		return
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"nightmare actions",flicker_target) & MAFIA_PREVENT_ACTION)
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,source,"nightmare actions",flicker_target) & MAFIA_PREVENT_ACTION)
 		to_chat(flicker_target.body, "<span class='warning'>Your actions were prevented!</span>")
 		return
 	var/datum/mafia_role/R = flicker_target
