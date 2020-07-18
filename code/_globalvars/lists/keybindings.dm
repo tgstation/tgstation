@@ -2,7 +2,7 @@
 /proc/init_keybindings()
 	for(var/KB in subtypesof(/datum/keybinding))
 		var/datum/keybinding/keybinding = KB
-		if(!initial(keybinding.keybind_signal))
+		if(!initial(keybinding.keybind_signal) || !initial(keybinding.name))
 			continue
 		add_keybinding(new keybinding)
 	init_emote_keybinds()
