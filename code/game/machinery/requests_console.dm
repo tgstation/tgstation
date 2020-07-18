@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
 				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
 				dat += "<A href='?src=[REF(src)];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
-				if ((announceAuth || IsAdminGhost(user)) && message)
+				if ((announceAuth || isAdminGhostAI(user)) && message)
 					dat += "<A href='?src=[REF(src)];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
 					dat += "<span class='linkOff'>Announce Message</span><BR>"

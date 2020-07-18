@@ -9,8 +9,6 @@
 	unsendable = 1
 	undeletable = 1
 	tgui_id = "SyndContractor"
-	ui_x = 500
-	ui_y = 600
 	var/error = ""
 	var/info_screen = TRUE
 	var/assigned = FALSE

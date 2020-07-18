@@ -1,15 +1,15 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { classes } from 'common/react';
 import { Fragment } from 'inferno';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, TextArea } from '../components';
 import { formatMoney } from '../format';
-import { refocusLayout, Window } from '../layouts';
+import { Window } from '../layouts';
 
 export const RequestKiosk = (props, context) => {
   return (
-    <Window resizable>
+    <Window
+      width={550}
+      height={600}
+      resizable>
       <Window.Content scrollable>
         <RequestKioskContent />
       </Window.Content>
@@ -123,12 +123,11 @@ export const RequestKioskContent = (props, context) => {
             <Section>
               <TextArea
                 fluid
-                value={bountyText}
                 height="250px"
                 width="200px"
                 backgroundColor="black"
                 textColor="white"
-                onInput={(e, value) => act('bountyText', {
+                onChange={(e, value) => act('bountyText', {
                   bountytext: value,
                 })} />
               <Box>

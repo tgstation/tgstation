@@ -420,8 +420,8 @@
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
 
-///Is the passed in mob an admin ghost
-/proc/IsAdminGhost(var/mob/user)
+///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
+/proc/isAdminObserver(var/mob/user)
 	if(!user)		//Are they a mob? Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
@@ -429,6 +429,12 @@
 	if(!isobserver(user)) // Are they a ghost?
 		return
 	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	return TRUE
+
+///Is the passed in mob an admin ghost WITH AI INTERACT enabled
+/proc/isAdminGhostAI(var/mob/user)
+	if(!isAdminObserver(user))
 		return
 	if(!user.client.AI_Interact) // Do they have it enabled?
 		return

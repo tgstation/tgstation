@@ -3,11 +3,8 @@
 	name = "reaction chamber"
 	desc = "Keeps chemicals seperated until given conditions are met."
 	icon_state = "reaction_chamber"
-
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
-	ui_x = 250
-	ui_y = 225
 	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
@@ -31,10 +28,10 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ChemReactionChamber", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ChemReactionChamber", name)
 		ui.open()
 
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
