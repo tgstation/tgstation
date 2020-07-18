@@ -122,8 +122,8 @@
 		confused = max(0, confused - 1)
 	else if (get_confusion())
 		// Our confused variable is 0, but we still have some confusion.
-		// That means we have a confusion component, so lower one of those to 1.
-		for (var/datum/component/confusion/confusion in GetComponents(/datum/component/confusion))
+		// That means we have a confusion status effect, so lower one of those to 1.
+		for (var/datum/status_effect/confusion/confusion in has_status_effect_list(STATUS_EFFECT_CONFUSION))
 			if (confusion.strength)
 				confusion.strength = max(0, confusion.strength - 1)
 				break

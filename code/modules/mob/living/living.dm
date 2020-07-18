@@ -428,7 +428,7 @@
 /// if you are tying confusion to an effect.
 /mob/living/proc/get_confusion()
 	. = confused
-	for (var/datum/component/confusion/confusion in GetComponents(/datum/component/confusion))
+	for (var/datum/status_effect/confusion/confusion in has_status_effect_list(STATUS_EFFECT_CONFUSION))
 		. += confusion.strength
 
 // MOB PROCS //END

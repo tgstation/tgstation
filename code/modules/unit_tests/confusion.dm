@@ -15,13 +15,13 @@
 
 	ian.confused = 0
 
-	var/datum/component/confusion/confusion1 = ian.AddComponent(/datum/component/confusion, 5)
-	TEST_ASSERT_EQUAL(ian.get_confusion(), 5, "get_confusion() didn't factor in the first confusion component")
+	var/datum/status_effect/confusion/confusion1 = ian.apply_status_effect(STATUS_EFFECT_CONFUSION, 5)
+	TEST_ASSERT_EQUAL(ian.get_confusion(), 5, "get_confusion() didn't factor in the first confusion status effect")
 	ian.handle_status_effects()
-	TEST_ASSERT(ian.get_confusion() < 5, "handle_status_effects didn't lower the confusion of the first confusion component")
+	TEST_ASSERT(ian.get_confusion() < 5, "handle_status_effects didn't lower the confusion of the first confusion status effect")
 
-	var/datum/component/confusion/confusion2 = ian.AddComponent(/datum/component/confusion, 5)
-	TEST_ASSERT(ian.get_confusion() > 5, "get_confusion() didn't factor in multiple confusion components")
+	var/datum/status_effect/confusion/confusion2 = ian.apply_status_effect(STATUS_EFFECT_CONFUSION, 5)
+	TEST_ASSERT(ian.get_confusion() > 5, "get_confusion() didn't factor in multiple confusion status effects")
 
 	qdel(confusion1)
 	qdel(confusion2)

@@ -85,6 +85,10 @@
 
 #define STATUS_EFFECT_LIMP /datum/status_effect/limp //For when you have a busted leg (or two!) and want additional slowdown when walking on that leg
 
+/// Makes the mob move randomly.
+/// Read the documentation for /datum/status_effect/confusion for more information.
+#define STATUS_EFFECT_CONFUSION /datum/status_effect/confusion
+
 /////////////
 // NEUTRAL //
 /////////////

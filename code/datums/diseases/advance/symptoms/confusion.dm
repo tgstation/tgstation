@@ -34,7 +34,7 @@ Bonus
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
 
-	var/list/confusion_components
+	var/list/confusion_effects
 
 /datum/symptom/confusion/Start(datum/disease/advance/A)
 	if(!..())
@@ -47,17 +47,17 @@ Bonus
 		suppress_warning = TRUE
 
 /datum/symptom/confusion/End(datum/disease/advance/A)
-	QDEL_NULL(confusion_components[A.affected_mob])
+	QDEL_NULL(confusion_effects[A.affected_mob])
 	return ..()
 
 /// Gets the confusion component for the affected mob.
 /// Creates one if it does not exist.
-/datum/symptom/confusion/proc/get_confusion_component(datum/M)
-	RETURN_TYPE(/datum/component/confusion)
-	. = LAZYACCESS(confusion_components, M)
+/datum/symptom/confusion/proc/get_confusion_effect(mob/living/M)
+	RETURN_TYPE(STATUS_EFFECT_CONFUSION)
+	. = LAZYACCESS(confusion_effects, M)
 	if (!.)
-		. = M.AddComponent(/datum/component/confusion)
-		LAZYSET(confusion_components, M, .)
+		. = M.apply_status_effect(STATUS_EFFECT_CONFUSION)
+		LAZYSET(confusion_effects, M, .)
 
 /datum/symptom/confusion/Activate(datum/disease/advance/A)
 	if(!..())
@@ -70,7 +70,7 @@ Bonus
 		else
 			to_chat(M, "<span class='userdanger'>You can't think straight!</span>")
 			if(M.get_confusion() < 100)
-				get_confusion_component(M).strength += 16 * power
+				get_confusion_effect(M).strength += 16 * power
 			if(brain_damage)
 				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				M.updatehealth()
