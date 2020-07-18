@@ -10,6 +10,7 @@
 	occupant_typecache = list(/mob/living/carbon) //todo make occupant_typecache per type
 	state_open = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND //Don't call ui_interac by default - we only want that when inside
+	circuit = /obj/item/circuitboard/machine/skill_station
 	/// Currently implanting/removing
 	var/working = FALSE
 	/// Timer until implanting/removing finishes.
