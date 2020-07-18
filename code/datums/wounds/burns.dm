@@ -6,7 +6,7 @@
 	a_or_from = "from"
 	wound_type = WOUND_BURN
 	processes = TRUE
-	sound_effect = 'sound/effects/sizzle1.ogg'
+	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
 	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE)
 
 	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
@@ -287,7 +287,7 @@
 	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
 	severity = WOUND_SEVERITY_CRITICAL
 	damage_mulitplier_penalty = 1.3
-	sound_effect = 'sound/effects/sizzle2.ogg'
+	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
 	threshold_minimum = 140
 	threshold_penalty = 80
 	status_effect_type = /datum/status_effect/wound/burn/critical

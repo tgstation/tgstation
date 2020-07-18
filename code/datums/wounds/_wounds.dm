@@ -156,7 +156,7 @@
 
 		victim.visible_message(msg, "<span class='userdanger'>Your [limb.name] [occur_text]!</span>", vision_distance = vis_dist)
 		if(sound_effect)
-			playsound(L.owner, sound_effect, 60 + 20 * severity, TRUE)
+			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
 
 	if(!demoted)
 		wound_injury(old_wound)

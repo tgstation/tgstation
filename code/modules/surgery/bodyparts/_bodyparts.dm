@@ -248,7 +248,7 @@
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
 			if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
-				playsound(src, "sound/effects/crackandbleed.ogg", 100)
+				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
 					wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
 				if(wounding_type == WOUND_PIERCE && !easy_dismember)
@@ -304,7 +304,7 @@
 	// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 	// So a big sharp weapon is still all you need to destroy a limb
 	if(mangled_state == BODYPART_MANGLED_FLESH)
-		playsound(src, "sound/effects/crackandbleed.ogg", 100)
+		playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
 		wounding_type = WOUND_BLUNT
 		if(wounding_type == WOUND_SLASH)
 			phantom_wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area

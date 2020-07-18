@@ -8,7 +8,7 @@
 	Base definition
 */
 /datum/wound/blunt
-	sound_effect = 'sound/effects/crack1.ogg'
+	sound_effect = 'sound/effects/wounds/crack1.ogg'
 	wound_type = WOUND_BLUNT
 	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE)
 
@@ -316,7 +316,7 @@
 	severity = WOUND_SEVERITY_CRITICAL
 	interaction_efficiency_penalty = 4
 	limp_slowdown = 9
-	sound_effect = 'sound/effects/crack2.ogg'
+	sound_effect = 'sound/effects/wounds/crack2.ogg'
 	threshold_minimum = 115
 	threshold_penalty = 50
 	disabling = TRUE
