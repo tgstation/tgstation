@@ -381,14 +381,16 @@
 	return game.phase == MAFIA_PHASE_NIGHT && target.game_status == MAFIA_ALIVE && target != src
 
 /datum/mafia_role/mafia/thoughtfeeder/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
-	if(!target || target.game_status != MAFIA_ALIVE)
-		to_chat(body,"<span class='warning'>You can only investigate alive people.</span>")
-		return
 	to_chat(body,"<span class='warning'>You will feast on the memories of [target.body.real_name] tonight.</span>")
 	current_investigation = target
 
 /datum/mafia_role/mafia/thoughtfeeder/proc/investigate(datum/mafia_controller/game)
 	var/datum/mafia_role/R = current_investigation
+	current_investigation = null
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,src,"thoughtfeed",R) & MAFIA_PREVENT_ACTION)
+		to_chat(body,"<span class='warning'>You were unable to investigate [R.body.real_name].</span>")
+		add_note("N[game.turn] - [R.body.real_name] - Unable to investigate")
+		return
 	if(R)
 		if(R.detect_immune)
 			to_chat(body,"<span class='warning'>[R.body.real_name]'s memories reveal that they are the Assistant.</span>")
@@ -396,7 +398,7 @@
 		else
 			to_chat(body,"<span class='warning'>[R.body.real_name]'s memories reveal that they are the [R.name].</span>")
 			add_note("N[game.turn] - [R.body.real_name] - [R.name]")
-	current_investigation = null
+
 
 ///SOLO ROLES/// they range from anomalous factors to deranged killers that try to win alone.
 
@@ -441,10 +443,13 @@
 	to_chat(body,"<span class='warning'>You will attempt to kill [target.body.real_name] tonight.</span>")
 
 /datum/mafia_role/traitor/proc/try_to_kill(datum/mafia_controller/source)
-	if(game_status == MAFIA_ALIVE && current_victim && current_victim.game_status == MAFIA_ALIVE)
-		if(!current_victim.kill(source))
-			to_chat(body,"<span class='danger'>Your attempt at killing [current_victim.body] was prevented!</span>")
+	var/datum/mafia_role/R = current_victim
 	current_victim = null
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,src,"traitor kill",R) & MAFIA_PREVENT_ACTION)
+		return
+	if(game_status == MAFIA_ALIVE && R && R.game_status == MAFIA_ALIVE)
+		if(!R.kill(source))
+			to_chat(body,"<span class='danger'>Your attempt at killing [R.body] was prevented!</span>")
 
 /datum/mafia_role/nightmare
 	name = "Nightmare"
@@ -497,15 +502,19 @@
 /datum/mafia_role/nightmare/proc/flicker_or_hunt(datum/mafia_controller/source)
 	if(game_status != MAFIA_ALIVE || !flicker_target)
 		return
-
-	if(flicker_target != src) //flicker
-		to_chat(flicker_target.body, "<span class='userdanger'>The lights begin to flicker and dim. You're in danger.</span>")
-		flickering += flicker_target
+	if(SEND_SIGNAL(killer,COMSIG_MAFIA_CAN_PERFORM_ACTION,src,"nightmare actions",flicker_target) & MAFIA_PREVENT_ACTION)
+		to_chat(flicker_target.body, "<span class='warning'>Your actions were prevented!</span>")
+		return
+	var/datum/mafia_role/R = flicker_target
+	flicker_target = null
+	if(R != src) //flicker
+		to_chat(R.body, "<span class='userdanger'>The lights begin to flicker and dim. You're in danger.</span>")
+		flickering += R
 	else //hunt
 		for(var/r in flickering)
 			var/datum/mafia_role/role = r
 			if(role && role.game_status == MAFIA_ALIVE)
-				to_chat(flicker_target.body, "<span class='userdanger'>A shadowy monster appears out of the darkness!</span>")
+				to_chat(role.body, "<span class='userdanger'>A shadowy monster appears out of the darkness!</span>")
 				role.kill(source)
 			flickering -= role
 
