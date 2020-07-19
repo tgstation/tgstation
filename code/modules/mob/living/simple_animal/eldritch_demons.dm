@@ -83,7 +83,7 @@
 	if(M in linked_mobs)
 		return FALSE
 	linked_mobs.Add(M)
-	to_chat(M, "<span class='notice'>You are now connected to Raw Prophet's Mansus Link.</span>")
+	to_chat(M, "<span class='notice'>You are now connected to [src]'s Mansus Link.</span>")
 	var/datum/action/innate/mansus_speech/action = new(src)
 	linked_actions.Add(action)
 	action.Grant(M)
