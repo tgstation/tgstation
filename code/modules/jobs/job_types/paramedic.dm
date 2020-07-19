@@ -17,6 +17,7 @@
 	paycheck_department = ACCOUNT_MED
 
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
+	bounty_types = CIV_JOB_MED
 
 /datum/outfit/job/paramedic
 	name = "Paramedic"

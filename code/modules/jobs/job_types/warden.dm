@@ -22,6 +22,7 @@
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_WARDEN
+	bounty_types = CIV_JOB_SEC
 
 /datum/job/warden/get_access()
 	var/list/L = list()
