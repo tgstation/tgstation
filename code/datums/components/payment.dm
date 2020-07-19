@@ -31,12 +31,12 @@
 	if(!cost) //In case a free variant of anything is made it'll skip charging anyone.
 		return
 	if(!istype(user))
-		return
+		return COMSIG_ITEM_CANCEL_CHARGE
 	var/obj/item/card/id/card = user.get_idcard(TRUE)
 	if(!card)
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
-				to_chat(user, "<span class='warning'>ID Card not detected, sorry [user]!</span>")
+				to_chat(user, "<span class='warning'>ID not detected, sorry [user]!</span>")
 			if(PAYMENT_ANGRY)
 				to_chat(user, "<span class='warning'>WHERE IS YOUR GOD DAMN CARD! GOD DAMNIT!</span>")
 			if(PAYMENT_CLINICAL)
@@ -45,7 +45,7 @@
 	if(!card.registered_account)
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
-				to_chat(user, "<span class='warning'>There's no account detected on your ID card, how mysterious!</span>")
+				to_chat(user, "<span class='warning'>There's no account detected on your ID, how mysterious!</span>")
 			if(PAYMENT_ANGRY)
 				to_chat(user, "<span class='warning'>ARE YOU JOKING. YOU DON'T HAVE A BANK ACCOUNT ON YOUR ID YOU IDIOT.</span>")
 			if(PAYMENT_CLINICAL)
