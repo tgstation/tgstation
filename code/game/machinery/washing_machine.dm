@@ -187,14 +187,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		animate(src, transform=M, time=2)
 
 /obj/machinery/washing_machine/proc/clean_blood()
-	if(!busy)
+	if(!busy && bloody_mess)
 		bloody_mess = FALSE
 		update_icon()
 
 /obj/machinery/washing_machine/proc/wash_cycle()
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		AM.wash(CLEAN_WEAK)
 		AM.machine_wash(src)
 
 	busy = FALSE

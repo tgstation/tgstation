@@ -296,8 +296,8 @@
 			if(occupant)
 				things_to_clear += occupant
 				things_to_clear += occupant.GetAllContents()
-			for(var/atom/movable/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
+			for(var/atom/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
+				AM.wash(CLEAN_GOD)
 				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_RADIATION, CLEAN_GOD)
 		open_machine(FALSE)
 		if(occupant)

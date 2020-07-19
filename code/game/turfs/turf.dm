@@ -559,3 +559,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_turf(src, reagents[R])
+
+/**
+  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
+  */
+/turf/wash(wash_strength)
+	..(wash_strength)
+
+	for(var/atom/AM in src)
+		if(AM != src && ismopable(AM))
+			AM.wash(wash_strength)

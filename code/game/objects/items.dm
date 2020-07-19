@@ -1109,3 +1109,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return discover_after
 
 #undef MAX_BONUS_MATS_PER_BITE
+
+// Update icons if this is being carried by a mob
+/obj/item/wash(wash_strength)
+	..(wash_strength)
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.regenerate_icons()

@@ -185,10 +185,10 @@
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-	for(var/obj/effect/O in src)
-		if(is_cleanable(O))
-			qdel(O)
+	wash(CLEAN_WEAK)
+	for(var/atom/AM in src)
+		if(!ismopable(AM)) // Will already get washed by the wash call above
+			AM.wash(CLEAN_WEAK)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
