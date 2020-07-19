@@ -440,6 +440,9 @@
 		if("styleCult")
 			temp_pod.setStyle(STYLE_CULT)
 			. = TRUE
+		if("styleSecurity")
+			temp_pod.setStyle(STYLE_SECURITY)
+			. = TRUE
 		if("styleMissile")
 			temp_pod.setStyle(STYLE_MISSILE)
 			. = TRUE

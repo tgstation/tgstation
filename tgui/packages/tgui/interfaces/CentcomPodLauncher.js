@@ -85,7 +85,7 @@ export const CentcomPodLauncherContent = (props, context) => {
                 `}
                 onClick={() => act('clearDropoffTurf')} />
               <p>
-                Reverse Drop-off Location: 
+                Reverse Drop-off Location:
                 {data.dropoff_turf ? data.dropoff_turf : 'None'}
               </p>
             </LabeledList.Item>
@@ -96,7 +96,7 @@ export const CentcomPodLauncherContent = (props, context) => {
                 [Enable Reverse Mode for this feature]
               </p>
             </LabeledList.Item>
-          )} 
+          )}
           <LabeledList.Item label="Teleport to">
             <Button
               content={data.bay}
@@ -191,7 +191,7 @@ export const CentcomPodLauncherContent = (props, context) => {
               content="Projectile Cloud"
               selected={data.effectShrapnel}
               tooltip={multiline`
-                This will create a cloud of shrapnel on landing, 
+                This will create a cloud of shrapnel on landing,
                 of any projectile you'd like!
               `}
               onClick={() => act('effectShrapnel')} />
@@ -416,13 +416,20 @@ export const CentcomPodLauncherContent = (props, context) => {
               `}
               onClick={() => act('styleBlue')} />
             <Button
-              content="Cult Pod"
+              content="Cult"
               selected={data.styleChoice === 6}
               tooltip="A blood and rune covered cult pod!"
               onClick={() => act('styleCult')} />
             <Button
-              content="Missile"
+              content="Security"
               selected={data.styleChoice === 7}
+              tooltip={multiline`
+                A black and red with the Security logo
+              `}
+              onClick={() => act('styleSecurity')} />
+            <Button
+              content="Missile"
+              selected={data.styleChoice === 8}
               tooltip={multiline`
                 A large missile. Combos well with a missile mode, so the
                 missile doesnt stick around after landing.
@@ -430,7 +437,7 @@ export const CentcomPodLauncherContent = (props, context) => {
               onClick={() => act('styleMissile')} />
             <Button
               content="Syndicate Missile"
-              selected={data.styleChoice === 8}
+              selected={data.styleChoice === 9}
               tooltip={multiline`
                 A large blood-red missile. Combos well with missile mode,
                 so the missile doesnt stick around after landing.
@@ -438,22 +445,22 @@ export const CentcomPodLauncherContent = (props, context) => {
               onClick={() => act('styleSMissile')} />
             <Button
               content="Supply Crate"
-              selected={data.styleChoice === 9}
+              selected={data.styleChoice === 10}
               tooltip="A large, dark-green military supply crate."
               onClick={() => act('styleBox')} />
             <Button
               content="HONK"
-              selected={data.styleChoice === 10}
+              selected={data.styleChoice === 11}
               tooltip="A colorful, clown inspired look."
               onClick={() => act('styleHONK')} />
             <Button
               content="~Fruit"
-              selected={data.styleChoice === 11}
+              selected={data.styleChoice === 12}
               tooltip="For when an orange is angry"
               onClick={() => act('styleFruit')} />
             <Button
               content="Invisible"
-              selected={data.styleChoice === 12}
+              selected={data.styleChoice === 13}
               tooltip={multiline`
                 Makes the supplypod invisible! Useful for when you want to
                 use this feature with a gateway or something. Combos well
@@ -462,7 +469,7 @@ export const CentcomPodLauncherContent = (props, context) => {
               onClick={() => act('styleInvisible')} />
             <Button
               content="Gondola"
-              selected={data.styleChoice === 13}
+              selected={data.styleChoice === 14}
               tooltip={multiline`
                 This gondola can control when he wants to deliver his supplies
                 if he has a smart enough mind, so offer up his body to ghosts
@@ -472,7 +479,7 @@ export const CentcomPodLauncherContent = (props, context) => {
               onClick={() => act('styleGondola')} />
             <Button
               content="Show Contents (See Through Pod)"
-              selected={data.styleChoice === 14}
+              selected={data.styleChoice === 15}
               tooltip={multiline`
                 By selecting this, the pod will instead look like whatevers
                 inside it (as if it were the contents falling by themselves,
