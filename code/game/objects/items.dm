@@ -1061,11 +1061,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		var/total_material_amount = 0
 
 		for(var/mats in custom_materials)
+			total_material_amount += custom_materials[mats]
 			if(found_mats >= MAX_BONUS_MATS_PER_BITE)
-				break
+				continue //continue instead of break so we can finish adding up all the mats to the total
 
 			var/datum/material/FM = mats
-			total_material_amount += custom_materials[mats]
 			if(FM.on_accidental_mat_consumption(M, S))
 				found_mats++
 
