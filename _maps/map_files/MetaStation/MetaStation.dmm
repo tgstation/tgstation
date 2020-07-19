@@ -13507,7 +13507,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Storage";
-	req_access_txt = "32"
+	req_access_txt = "10"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4

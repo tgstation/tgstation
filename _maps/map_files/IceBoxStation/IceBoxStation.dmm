@@ -44045,7 +44045,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Power Storage";
-	req_one_access_txt = "11;24"
+	req_access_txt = "11"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
