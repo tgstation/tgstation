@@ -18,6 +18,10 @@ if grep -P 'step_[xy]' _maps/**/*.dmm;	then
     echo "ERROR: step_x/step_y variables detected in maps, please remove them."
     st=1
 fi;
+if grep -P 'pixel_[^xy]' _maps/**/*.dmm;	then
+    echo "ERROR: incorrect pixel offset variables detected in maps, please remove them."
+    st=1
+fi;
 if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1

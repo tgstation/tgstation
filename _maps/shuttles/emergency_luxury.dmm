@@ -262,8 +262,7 @@
 "aR" = (
 /obj/structure/mirror{
 	pixel_x = -23;
-	pixel_y = -4;
-	pixel_z = 2
+	pixel_y = -2
 	},
 /obj/structure/sink/greyscale{
 	dir = 4;

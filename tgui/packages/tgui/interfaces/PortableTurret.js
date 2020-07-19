@@ -21,7 +21,9 @@ export const PortableTurret = (props, context) => {
     lasertag_turret,
   } = data;
   return (
-    <Window>
+    <Window
+      width={305}
+      height={lasertag_turret ? 110 : 300}>
       <Window.Content>
         <NoticeBox>
           Swipe an ID card to {locked ? 'unlock' : 'lock'} this interface.

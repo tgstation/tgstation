@@ -14,7 +14,7 @@
 @use '../base.scss' with (
   $color-bg: #117039,
   $color-bg-grad-spread: 0%,
-  $border-radius: 0px,
+  $border-radius: 0,
 );
 
 //Made for the roulette table, probably requires a bunch of manual hacks to work for anything else
@@ -31,7 +31,7 @@
     'color-danger': #9a9d00,
   ));
   @include meta.load-css('../components/NumberInput.scss', $with: (
-    'border-color': #FFFFFF,
+    'border-color': #fff,
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
     'color-background': rgba(0, 0, 0, 0.5),
@@ -46,8 +46,6 @@
   ));
 
   .Button {
-    border-color: #FFFFFF;
-    border-width: 2px;
-    border-style: solid;
+    border: base.em(2px) solid #fff;
   }
 }
