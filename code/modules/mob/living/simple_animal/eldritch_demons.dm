@@ -98,7 +98,7 @@
 	UnregisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/mansus_speech/action = linked_actions[link_id]
 	action.Remove(M)
-	to_chat(M, "<span class='notice'>You are no longer connected to Raw Prophet's Mansus Link.</span>")
+	to_chat(M, "<span class='notice'>You are no longer connected to [src]'s Mansus Link.</span>")
 	linked_mobs[link_id] = null
 	linked_actions[link_id] = null
 
