@@ -1057,8 +1057,8 @@
 	action_icon_state = "snowball"
 
 /datum/species/golem/capitalist
-	name = "Capitalist Golem"
-	id = "capitalist golem"
+	name = "Capitalism Golem"
+	id = "capitalism golem"
 	prefix = "Capitalist"
 	attack_verb = "monopolize"
 	limbs_id = "ca_golem"
@@ -1094,7 +1094,9 @@
 	speech_args[SPEECH_MESSAGE] = "Hello, I like money!"
 
 /datum/species/golem/capitalist/spread
-	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
+	name = "Tycoon Golem"
+	id = "tycoon golem"
+	info_text = "As a <span class='danger'>Tycoon Golem</span>, your fist spreads the powerful industrializing light of capitalism. Punching any lazy good-for-nothings will instill in them the hard-working ideologies of Capitalism!"
 
 /datum/species/golem/capitalist/spread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
@@ -1106,8 +1108,8 @@
 	target.adjust_nutrition(40)
 
 /datum/species/golem/soviet
-	name = "Soviet Golem"
-	id = "soviet golem"
+	name = "Socialism Golem"
+	id = "socialism golem"
 	prefix = "Comrade"
 	attack_verb = "nationalize"
 	limbs_id = "s_golem"
@@ -1115,7 +1117,7 @@
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_NOFLASH, TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	info_text = "As a <span class='danger'>Soviet Golem</span>, you must spread the glorious word of Communism."
+	info_text = "As a <span class='danger'>Socialism Golem</span>, you must spread the glorious word of Communism."
 	changesource_flags = MIRROR_BADMIN
 	random_eligible = FALSE
 
@@ -1139,7 +1141,9 @@
 	speech_args[SPEECH_MESSAGE] = "Cyka Blyat"
 
 /datum/species/golem/soviet/spread
-	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the glorious word of Communism to the non-believers."
+	name = "Tzar Golem"
+	id = "tzar golem"
+	info_text = "As a <span class='danger'>Tzar Golem</span>, your fist spreads the glorious word of Communism to the non-believers. Punching any of the decadent carbon-based pigs will convert them to a glorious Socialism Golem!"
 
 /datum/species/golem/soviet/spread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
