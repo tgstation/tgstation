@@ -12509,6 +12509,9 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -14895,9 +14898,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aHZ" = (
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/tank/internals/emergency_oxygen/engi,
