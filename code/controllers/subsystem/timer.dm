@@ -13,16 +13,21 @@ SUBSYSTEM_DEF(timer)
 	var/list/datum/timedevent/second_queue = list() //awe, yes, you've had first queue, but what about second queue?
 	var/list/hashes = list()
 
-	var/head_offset = 0 //world.time of the first entry in the the bucket.
-	var/practical_offset = 1 //index of the first non-empty item in the bucket.
-	var/bucket_resolution = 0 //world.tick_lag the bucket was designed for
-	var/bucket_count = 0 //how many timers are in the buckets
+	/// world.time of the first entry in the bucket
+	var/head_offset = 0
+	/// Index of the first non-empty item in the bucket
+	var/practical_offset = 1
+	/// world.tick_lag the bucket was designed for
+	var/bucket_resolution = 0
+	/// How many timers are in the buckets
+	var/bucket_count = 0
 
-	var/list/bucket_list = list() //list of buckets, each bucket holds every timer that has to run that byond tick.
-
-	var/list/timer_id_dict = list() //list of all active timers assoicated to their timer id (for easy lookup)
-
-	var/list/clienttime_timers = list() //special snowflake timers that run on fancy pansy "client time"
+	/// List of buckets, each bucket holds every timer that has to run that byond tick
+	var/list/bucket_list = list()
+	/// List of all active timers associated to their timer ID (for easy lookup)
+	var/list/timer_id_dict = list()
+	/// Special snowflake timers that run on fancy pansy "client time"
+	var/list/clienttime_timers = list()
 
 	var/last_invoke_tick = 0
 	var/static/last_invoke_warning = 0
