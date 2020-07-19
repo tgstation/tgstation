@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Depowered and/or non-interactive tgui interfaces are now approriately non-interactive."
