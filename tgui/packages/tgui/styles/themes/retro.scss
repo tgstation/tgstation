@@ -14,7 +14,7 @@
 @use '../base.scss' with (
   $color-bg: #E8E4C9,
   $color-bg-grad-spread: 0%,
-  $border-radius: 0px,
+  $border-radius: 0,
 );
 
 // A fat warning to anyone who wants to use this: this only half works.
@@ -46,10 +46,8 @@
   .Button {
     font-family: monospace;
     color: #161613;
-    border-width: 8px;
-    border-style: outset;
-    border-color: #E8E4C9;
-    outline: 3px solid #161613;
+    border: base.em(2px) outset #E8E4C9;
+    outline: base.em(1px) solid #161613;
   }
 
   .Layout__content {
