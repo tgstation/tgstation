@@ -383,8 +383,9 @@
 	polling = FALSE
 	if(!candidates.len)
 		magnification = null
-		visible_message("<span class='notice'>[src] falls silent. Maybe you should try again later?</span>")
+		visible_message("<span class='notice'>[src] falls silent and drops on the floor. Maybe you should try again later?</span>")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		user.dropItemToGround(src)
 	var/mob/picked = pick(candidates)
 	magnification.key = picked.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)

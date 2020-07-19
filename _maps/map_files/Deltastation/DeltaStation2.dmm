@@ -20426,7 +20426,7 @@
 	},
 /obj/item/storage/box/shipping{
 	pixel_x = 4;
-	pixel_z = 4
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
@@ -31712,18 +31712,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"bjO" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
 "bjP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -32676,33 +32664,6 @@
 "blE" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/hallway/primary/fore)
-"blF" = (
-/obj/structure/table,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/item/clipboard,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
-"blG" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "blH" = (
 /obj/effect/turf_decal/tile/brown,
@@ -114937,6 +114898,9 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "qKq" = (
@@ -116595,6 +116559,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
+"xzu" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/piratepad/civilian,
+/obj/effect/turf_decal/trimline/yellow,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "xzY" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
@@ -116784,6 +116760,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
+"yjg" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 
 (1,1,1) = {"
 aaa
@@ -156467,8 +156456,8 @@ bdO
 bfl
 bgy
 bhX
-bjO
-blF
+yjg
+xzu
 bfk
 boO
 bqS
@@ -156725,7 +156714,7 @@ bfm
 bgz
 bhY
 bfo
-blG
+blH
 bfk
 boO
 bqT

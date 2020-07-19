@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - admin: "The client playtime panel is now sorted alphabetically as opposed to the order in which they were added to the list."

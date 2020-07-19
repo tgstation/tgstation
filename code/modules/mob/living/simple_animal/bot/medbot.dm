@@ -153,7 +153,7 @@
 	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += "<TT>Healing Threshold: "
 		dat += "<a href='?src=[REF(src)];adj_threshold=-10'>--</a> "
 		dat += "<a href='?src=[REF(src)];adj_threshold=-5'>-</a> "

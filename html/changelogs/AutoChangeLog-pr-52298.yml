@@ -1,0 +1,4 @@
+author: "Gamer025"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer enter book or author names that are too long for the database to store"

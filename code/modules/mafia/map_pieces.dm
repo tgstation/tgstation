@@ -64,3 +64,8 @@
 	name = "Snowdin"
 	description = "Based off of the icey moon map of the same name, the guy who reworked it pretty much did it for nothing since away missions are disabled but at least he'll get this...?"
 	mappath = "_maps/map_files/Mafia/mafia_snow.dmm"
+
+/datum/map_template/mafia/gothic
+	name = "Vampire's Castle"
+	description = "Vampires and changelings clash to find out who's the superior bloodsucking monster in this creepy castle map."
+	mappath = "_maps/map_files/Mafia/mafia_gothic.dmm"
