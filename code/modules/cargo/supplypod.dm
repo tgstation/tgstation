@@ -103,6 +103,9 @@
 
 /obj/structure/closet/supplypod/Initialize()
 	. = ..()
+	if (!mapload)
+		var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/fly_me_to_the_moon]
+		forceMove(shippingLane)
 	setStyle(style, TRUE) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
 /obj/structure/closet/supplypod/extractionpod/Initialize()
