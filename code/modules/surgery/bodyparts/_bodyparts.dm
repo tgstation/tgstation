@@ -765,7 +765,17 @@
 		bleed_rate *= 0.75
 	return bleed_rate
 
-
+/**
+  * apply_gauze() is used to- well, apply gauze to a bodypart
+  *
+  * As of the Wounds 2 PR, all bleeding is now bodypart based rather than the old bleedstacks system, and 90% of standard bleeding comes from flesh wounds (the exception is embedded weapons).
+  * The same way bleeding is totaled up by bodyparts, gauze now applies to all wounds on the same part. Thus, having a slash wound, a pierce wound, and a broken bone wound would have the gauze
+  * applying blood staunching to the first two wounds, while also acting as a sling for the third one. Once enough blood has been absorbed or all wounds with the ACCEPTS_GAUZE flag have been cleared,
+  * the gauze falls off.
+  *
+  * Arguments:
+  * * gauze- Just the gauze stack we're taking a sheet from to apply here
+  */
 /obj/item/bodypart/proc/apply_gauze(obj/item/stack/gauze)
 	if(!istype(gauze) || !gauze.absorption_capacity)
 		return

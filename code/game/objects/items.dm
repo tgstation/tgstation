@@ -139,7 +139,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 	///Does it embed and if yes, what kind of embed
-	var/list/embedding = null
+	var/list/embedding
 
 	///for flags such as [GLASSESCOVERSEYES]
 	var/flags_cover = 0
