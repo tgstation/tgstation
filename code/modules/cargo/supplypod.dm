@@ -101,7 +101,7 @@
 		QDEL_NULL(Radio)
 		..()
 
-/obj/structure/closet/supplypod/Initialize()
+/obj/structure/closet/supplypod/Initialize(mapload)
 	. = ..()
 	if (!mapload)
 		var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/fly_me_to_the_moon]
@@ -527,7 +527,7 @@
 			var/atom/movable/O = single_order
 			O.forceMove(pod)
 	for (var/mob/living/M in pod) //If there are any mobs in the supplypod, we want to set their view to the pod_landingzone. This is so that they can see where they are about to land
-		M.forceMove(src)
+		M.reset_perspective(src)
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this pod_landingzone until the pod gets a chance to hit them
 		for (var/mob/living/M in get_turf(src))
 			M.Stun(pod.landingDelay+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
@@ -550,6 +550,8 @@
 	if (pod.style != STYLE_INVISIBLE)
 		pod.add_filter("motionblur",1,list("type"="motion_blur", "x"=0, "y"=3))
 	pod.forceMove(drop_location())
+	for (var/mob/living/M in pod)
+		M.reset_perspective(null)
 	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from
 	pod.pixel_x = cos(angle)*32*length(smoke_effects) //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the pod_landingzone
 	pod.pixel_z = sin(angle)*32*length(smoke_effects)
