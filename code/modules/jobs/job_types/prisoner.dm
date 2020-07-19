@@ -28,9 +28,7 @@
 	if(latejoin)
 		var/mob/living/carbon/human/prisoner = H
 		var/droplocation = pick(GLOB.prisoner_start)
-		var/obj/structure/closet/supplypod/arrival_pod = new()
-		arrival_pod.explosionSize = list(0,0,0,1)
-		arrival_pod.bluespace = TRUE
+		var/obj/structure/closet/supplypod/securitypod/arrival_pod = new()
 		prisoner.forceMove(arrival_pod)
 		new /obj/effect/pod_landingzone(droplocation, arrival_pod)
 

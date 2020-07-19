@@ -4,14 +4,15 @@
 #define STYLE_SYNDICATE 4
 #define STYLE_BLUE 5
 #define STYLE_CULT 6
-#define STYLE_MISSILE 7
-#define STYLE_RED_MISSILE 8
-#define STYLE_BOX 9
-#define STYLE_HONK 10
-#define STYLE_FRUIT 11
-#define STYLE_INVISIBLE 12
-#define STYLE_GONDOLA 13
-#define STYLE_SEETHROUGH 14
+#define STYLE_SECURITY 7
+#define STYLE_MISSILE 8
+#define STYLE_RED_MISSILE 9
+#define STYLE_BOX 10
+#define STYLE_HONK 11
+#define STYLE_FRUIT 12
+#define STYLE_INVISIBLE 13
+#define STYLE_GONDOLA 14
+#define STYLE_SEETHROUGH 15
 
 #define POD_SHAPE 1
 #define POD_BASE 2
@@ -36,6 +37,7 @@
     list(POD_SHAPE_NORML, "darkpod",     "syndicate",	"red",      RUBBLE_NORMAL,	"blood-red supply pod", 				"An intimidating supply pod, covered in the blood-red markings of the Syndicate. It's probably best to stand back from this."),\
     list(POD_SHAPE_NORML, "darkpod",     "deathsquad",	"blue",     RUBBLE_NORMAL,	"\improper Deathsquad drop pod", 	    "A Nanotrasen drop pod. This one has been marked the markings of Nanotrasen's elite strike team."),\
     list(POD_SHAPE_NORML, "pod",         "cultist",		"red",      RUBBLE_NORMAL,	"bloody supply pod", 				    "A Nanotrasen supply pod covered in scratch-marks, blood, and strange runes."),\
+	list(POD_SHAPE_NORML, "darkpod",     "security",	"red",      RUBBLE_NORMAL,	"\improper Security drop pod", 	    	"A Nanotrasen drop pod. This one is used by the security team for important transfers."),\
     list(POD_SHAPE_OTHER, "missile",     null,			"yellow",   RUBBLE_THIN,	    "cruise missile", 						"A big ass missile that didn't seem to fully detonate. It was likely launched from some far-off deep space missile silo. There appears to be an auxillery payload hatch on the side, though manually opening it is likely impossible."),\
     list(POD_SHAPE_OTHER, "smissile",    null,	        "yellow",   RUBBLE_THIN,	    "\improper Syndicate cruise missile", 	"A big ass, blood-red missile that didn't seem to fully detonate. It was likely launched from some deep space Syndicate missile silo. There appears to be an auxillery payload hatch on the side, though manually opening it is likely impossible."),\
     list(POD_SHAPE_OTHER, "box",         null,            "yellow",   RUBBLE_WIDE,  	"\improper Aussec supply crate", 		"An incredibly sturdy supply crate, designed to withstand orbital re-entry. Has 'Aussec Armory - 2532' engraved on the side."),\
