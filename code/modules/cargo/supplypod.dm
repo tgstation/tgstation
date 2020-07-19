@@ -57,6 +57,7 @@
 	var/effectShrapnel = FALSE
 	var/shrapnel_type = /obj/projectile/bullet/shrapnel
 	var/shrapnel_magnitude = 3
+	var/list/queued_announces	//people coming in that we have to announce
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
@@ -100,6 +101,9 @@
 		Radio.talk_into(src, "SECURITY ALERT: New prisoner dropping into [get_area(src)].", FREQ_SECURITY)
 		QDEL_NULL(Radio)
 		..()
+
+/obj/structure/closet/supplypod/proc/QueueAnnounce(mob, rank)
+	LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
 
 /obj/structure/closet/supplypod/Initialize(mapload)
 	. = ..()
@@ -301,6 +305,10 @@
 			addtimer(CALLBACK(src, .proc/SetReverseIcon), departureDelay/2) //Finish up the pod's duties after a certain amount of time
 		if(!stay_after_drop) // Departing should be handled manually
 			addtimer(CALLBACK(src, .proc/startExitSequence, holder), departureDelay) //Finish up the pod's duties after a certain amount of time
+	for(var/L in queued_announces)
+		var/datum/callback/C = L
+		C.Invoke()
+	LAZYCLEARLIST(queued_announces)
 
 /obj/structure/closet/supplypod/proc/startExitSequence(atom/movable/holder)
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
