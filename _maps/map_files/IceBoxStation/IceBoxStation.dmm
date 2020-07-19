@@ -34831,7 +34831,7 @@
 /area/medical/medbay/aft)
 "bDX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold,
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bDY" = (
@@ -37104,7 +37104,7 @@
 	target_pressure = 4500
 	},
 /turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/area/maintenance/disposal/incinerator)
 "bJN" = (
 /turf/closed/wall,
 /area/science/xenobiology)
@@ -37118,7 +37118,7 @@
 "bJP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/area/maintenance/disposal/incinerator)
 "bJQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -37145,7 +37145,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/area/maintenance/disposal/incinerator)
 "bJW" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
