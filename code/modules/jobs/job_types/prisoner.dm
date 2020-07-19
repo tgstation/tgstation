@@ -23,14 +23,16 @@
 	ears = null
 	belt = null
 
-/datum/job/prisoner/after_spawn(mob/living/carbon/human/H, mob/M, latejoin)
+/datum/job/prisoner/after_spawn(mob/living/H, mob/M, latejoin)
 	. = ..()
 	if(latejoin)
-		var/obj/structure/closet/supplypod/bluespacepod/pod = new()
-		pod.style = STYLE_STANDARD
-		H.forceMove(pod)
+		var/mob/living/carbon/human/prisoner = H
 		var/droplocation = pick(GLOB.prisoner_start)
-		new /obj/effect/pod_landingzone(droplocation, pod)
+		var/obj/structure/closet/supplypod/arrival_pod = new()
+		arrival_pod.explosionSize = list(0,0,0,1)
+		arrival_pod.bluespace = TRUE
+		prisoner.forceMove(arrival_pod)
+		new /obj/effect/pod_landingzone(droplocation, arrival_pod)
 
 /datum/job/prisoner/override_latejoin_spawn()
 	return TRUE

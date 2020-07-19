@@ -17,7 +17,7 @@
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE 
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	density = FALSE
 
 	//*****NOTE*****: Many of these comments are similarly described in centcom_podlauncher.dm. If you change them here, please consider doing so in the centcom podlauncher code as well!
@@ -107,7 +107,7 @@
 	fin_mask = "bottomfin"
 	if (POD_STYLES[style][POD_SHAPE] == POD_SHAPE_NORML)
 		icon_state = POD_STYLES[style][POD_BASE] + "_reverse"
-	pixel_x = initial(pixel_x) 
+	pixel_x = initial(pixel_x)
 	transform = matrix()
 	update_icon()
 
@@ -115,7 +115,7 @@
 	fin_mask = initial(fin_mask)
 	if (POD_STYLES[style][POD_SHAPE] == POD_SHAPE_NORML)
 		icon_state = POD_STYLES[style][POD_BASE]
-	pixel_x = initial(pixel_x) 
+	pixel_x = initial(pixel_x)
 	transform = matrix()
 	update_icon()
 
@@ -151,7 +151,7 @@
 		else
 			var/icon/masked_door = new(icon, door) //The door we want to apply
 			var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
-			fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1) 
+			fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
 			fin_masker.SwapColor("#ffffffff", null)
 			fin_masker.Blend("#000000", ICON_SUBTRACT)
 			masked_door.Blend(fin_masker, ICON_ADD)
@@ -201,7 +201,7 @@
 	if (landingSound)
 		playsound(get_turf(src), landingSound, soundVolume, FALSE, FALSE)
 	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
-	if(effectShrapnel)	
+	if(effectShrapnel)
 		SEND_SIGNAL(src, COMSIG_SUPPLYPOD_LANDED)
 	for (var/mob/living/M in T)
 		if (effectLimb && iscarbon(M)) //If effectLimb is true (which means we pop limbs off when we hit people):
@@ -335,9 +335,9 @@
 	if (leavingSound)
 		playsound(get_turf(holder), leavingSound, soundVolume, FALSE, FALSE)
 	deleteRubble()
-	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) 
+	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(holder, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising pod
-	
+
 	addtimer(CALLBACK(src, .proc/handleReturnAfterDeparting, holder), 15) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
@@ -437,7 +437,7 @@
 /obj/effect/supplypod_rubble/proc/getForeground(obj/structure/closet/supplypod/pod)
 	var/mutable_appearance/rubble_overlay = mutable_appearance('icons/obj/supplypods.dmi', foreground)
 	rubble_overlay.appearance_flags = KEEP_APART|RESET_TRANSFORM
-	rubble_overlay.transform = matrix().Translate(SUPPLYPOD_X_OFFSET - pod.pixel_x, verticle_offset)  
+	rubble_overlay.transform = matrix().Translate(SUPPLYPOD_X_OFFSET - pod.pixel_x, verticle_offset)
 	return rubble_overlay
 
 /obj/effect/supplypod_rubble/proc/fadeAway()
@@ -503,7 +503,7 @@
 			var/atom/movable/O = single_order
 			O.forceMove(pod)
 	for (var/mob/living/M in pod) //If there are any mobs in the supplypod, we want to set their view to the pod_landingzone. This is so that they can see where they are about to land
-		M.reset_perspective(src)
+		M.forceMove(src)
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this pod_landingzone until the pod gets a chance to hit them
 		for (var/mob/living/M in get_turf(src))
 			M.Stun(pod.landingDelay+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
@@ -526,8 +526,6 @@
 	if (pod.style != STYLE_INVISIBLE)
 		pod.add_filter("motionblur",1,list("type"="motion_blur", "x"=0, "y"=3))
 	pod.forceMove(drop_location())
-	for (var/mob/living/M in pod) //Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace? Time to get them out
-		M.reset_perspective(null)
 	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from
 	pod.pixel_x = cos(angle)*32*length(smoke_effects) //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the pod_landingzone
 	pod.pixel_z = sin(angle)*32*length(smoke_effects)
@@ -569,6 +567,8 @@
 	pod.layer = initial(pod.layer)
 	pod.endGlow()
 	QDEL_NULL(helper)
+	for (var/mob/living/M in src) //Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace? Time to get them out
+		M.forceMove(pod)
 	pod.preOpen() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place
 	drawSmoke()
 	qdel(src) //The pod_landingzone's purpose is complete. It can rest easy now
