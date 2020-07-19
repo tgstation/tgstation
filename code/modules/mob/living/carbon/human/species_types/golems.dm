@@ -1060,13 +1060,13 @@
 	name = "Capitalist Golem"
 	id = "capitalist golem"
 	prefix = "Capitalist"
-	attack_verb = "monopoliz"
+	attack_verb = "monopolize"
 	limbs_id = "ca_golem"
 	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr. Moneybags", "Adam Smith")
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
+	info_text = "As a <span class='danger'>Capitalist Golem</span>, you must spread the powerful industrializing light of capitalism."
 	changesource_flags = MIRROR_BADMIN
 	random_eligible = FALSE
 
@@ -1089,30 +1089,33 @@
 	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
 		C.RemoveSpell(spell)
 
-/datum/species/golem/capitalist/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/species/golem/capitalist/proc/handle_speech(datum/source, list/speech_args)
+	playsound(source, 'sound/misc/mymoney.ogg', 25, FALSE)
+	speech_args[SPEECH_MESSAGE] = "Hello, I like money!"
+
+/datum/species/golem/capitalist/spread
+	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
+
+/datum/species/golem/capitalist/spread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
 	if(isgolem(target))
 		return
 	if(target.nutrition >= NUTRITION_LEVEL_FAT)
-		target.set_species(/datum/species/golem/capitalist)
+		target.set_species(/datum/species/golem/capitalist/spread)
 		return
 	target.adjust_nutrition(40)
-
-/datum/species/golem/capitalist/proc/handle_speech(datum/source, list/speech_args)
-	playsound(source, 'sound/misc/mymoney.ogg', 25, FALSE)
-	speech_args[SPEECH_MESSAGE] = "Hello, I like money!"
 
 /datum/species/golem/soviet
 	name = "Soviet Golem"
 	id = "soviet golem"
 	prefix = "Comrade"
-	attack_verb = "nationaliz"
+	attack_verb = "nationalize"
 	limbs_id = "s_golem"
 	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_NOFLASH, TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
+	info_text = "As a <span class='danger'>Soviet Golem</span>, you must spread the glorious word of Communism."
 	changesource_flags = MIRROR_BADMIN
 	random_eligible = FALSE
 
@@ -1131,18 +1134,21 @@
 		C.RemoveSpell(spell)
 	UnregisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
 
-/datum/species/golem/soviet/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/species/golem/soviet/proc/handle_speech(datum/source, list/speech_args)
+	playsound(source, 'sound/misc/Cyka Blyat.ogg', 25, FALSE)
+	speech_args[SPEECH_MESSAGE] = "Cyka Blyat"
+
+/datum/species/golem/soviet/spread
+	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the glorious word of Communism to the non-believers."
+
+/datum/species/golem/soviet/spread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
 	if(isgolem(target))
 		return
 	if(target.nutrition <= NUTRITION_LEVEL_STARVING)
-		target.set_species(/datum/species/golem/soviet)
+		target.set_species(/datum/species/golem/soviet/spread)
 		return
 	target.adjust_nutrition(-40)
-
-/datum/species/golem/soviet/proc/handle_speech(datum/source, list/speech_args)
-	playsound(source, 'sound/misc/Cyka Blyat.ogg', 25, FALSE)
-	speech_args[SPEECH_MESSAGE] = "Cyka Blyat"
 
 /datum/species/golem/mhydrogen
 	name = "Metallic Hydrogen Golem"

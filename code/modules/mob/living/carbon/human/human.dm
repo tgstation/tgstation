@@ -1247,8 +1247,14 @@
 /mob/living/carbon/human/species/golem/capitalist
 	race = /datum/species/golem/capitalist
 
+/mob/living/carbon/human/species/golem/capitalist/spread
+	race = /datum/species/golem/capitalist/spread
+
 /mob/living/carbon/human/species/golem/soviet
 	race = /datum/species/golem/soviet
+
+/mob/living/carbon/human/species/golem/soviet/spread
+	race = /datum/species/golem/soviet/spread
 
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly
