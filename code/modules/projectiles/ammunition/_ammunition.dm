@@ -50,7 +50,7 @@
  * On accidental consumption, 'spend' the ammo, and add in some gunpowder
  */
 /obj/item/ammo_casing/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
-	if(BB != null)
+	if(BB)
 		BB = null
 		update_icon()
 		var/obj/item/reagent_containers/food/snacks/S = source_item
