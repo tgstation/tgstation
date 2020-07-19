@@ -59,7 +59,7 @@
 	maxHealth = 50
 	health = 50
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,/obj/effect/proc_holder/spell/pointed/manse_link,/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch)
+	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,/obj/effect/proc_holder/spell/pointed/manse_link,/obj/effect/proc_holder/spell/targeted/telepathy/eldritch,/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch)
 
 	var/list/linked_mobs = list()
 	var/list/linked_actions = list()
