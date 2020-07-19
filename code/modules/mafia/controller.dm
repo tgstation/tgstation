@@ -620,8 +620,7 @@
 					var/role_count = input(usr,"How many? Zero to cancel.","Custom Setup Creation",0) as null|num
 					if(role_count > 0)
 						debug_setup[found_path] = role_count
-				if(!cancelled)
-					custom_setup = debug_setup
+				custom_setup = debug_setup
 			if("cancel_setup")
 				custom_setup = list()
 	switch(action)
