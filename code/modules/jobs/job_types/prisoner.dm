@@ -5,7 +5,7 @@
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 4
-	spawn_positions = 4
+	spawn_positions = 3
 	supervisors = "the security team"
 	selection_color = "#ffe1c3"
 
