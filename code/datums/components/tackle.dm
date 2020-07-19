@@ -366,6 +366,7 @@
 			user.adjustBruteLoss(30)
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
+			playsound(user, 'sound/effects/crack2.ogg', 70, TRUE)
 			user.emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
@@ -434,13 +435,13 @@
 		W.obj_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(30)
-		user.visible_message("<span class='danger'>[user] slams into [W] and shatters it, shredding [user.p_them()]self with glass!</span>", "<span class='userdanger'>You slam into [W] and shatter it, shredding yourself with glass!</span>")
+		user.visible_message("<span class='danger'>[user] smacks into [W] and shatters it, shredding [user.p_them()]self with glass!</span>", "<span class='userdanger'>You smacks into [W] and shatter it, shredding yourself with glass!</span>")
 
 	else
-		user.visible_message("<span class='danger'>[user] slams into [W] like a bug, then slowly slides off it!</span>", "<span class='userdanger'>You slam into [W] like a bug, then slowly slide off it!</span>")
+		user.visible_message("<span class='danger'>[user] smacks into [W] like a bug!</span>", "<span class='userdanger'>You smacks into [W] like a bug!</span>")
 		user.Paralyze(10)
 		user.Knockdown(30)
-		W.take_damage(20 * speed)
+		W.take_damage(30 * speed)
 		user.adjustStaminaLoss(10 * speed)
 		user.adjustBruteLoss(5 * speed)
 

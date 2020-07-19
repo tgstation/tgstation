@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "The sm will no longer gain eer when hugboxed, such as on shuttles."
-  - admin: "Added some more hugbox flags, use as desired."

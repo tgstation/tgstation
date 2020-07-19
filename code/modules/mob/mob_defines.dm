@@ -136,7 +136,7 @@
 	var/research_scanner = FALSE
 
 	/// Is the mob throw intent on
-	var/in_throw_mode = 0
+	var/in_throw_mode = FALSE
 
 	/// What job does this mob have
 	var/job = null//Living

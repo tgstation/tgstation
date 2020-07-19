@@ -8,8 +8,6 @@
 	network_destination = "cargo claims interface"
 	size = 10
 	tgui_id = "NtosBountyConsole"
-	ui_x = 750
-	ui_y = 600
 	///cooldown var for printing paper sheets.
 	var/printer_ready = 0
 	///The cargo account for grabbing the cargo account's credits.
@@ -18,7 +16,7 @@
 /datum/computer_file/program/bounty/proc/print_paper()
 	new /obj/item/paper/bounty_printout(get_turf(computer))
 
-/datum/computer_file/program/bounty/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
+/datum/computer_file/program/bounty/ui_interact(mob/user, datum/tgui/ui)
 	if(!GLOB.bounties_list.len)
 		setup_bounties()
 	printer_ready = world.time + PRINTER_TIMEOUT

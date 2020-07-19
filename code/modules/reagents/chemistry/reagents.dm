@@ -54,6 +54,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/overrides_metab = 0
 	/// above this overdoses happen
 	var/overdose_threshold = 0
+	///Overrides what addiction this chemicals feeds into, allowing you to have multiple chems that treat a single addiction.
+	var/addiction_type
 	/// above this amount addictions start
 	var/addiction_threshold = 0
 	/// increases as addiction gets worse
@@ -70,9 +72,14 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/harmful = FALSE
 	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
 	var/datum/material/material
+	///A list of causes why this chem should skip being removed, if the length is 0 it will be removed from holder naturally, if this is >0 it will not be removed from the holder.
+	var/list/reagent_removal_skip_list = list()
 
 /datum/reagent/New()
 	. = ..()
+
+	if(!addiction_type)
+		addiction_type = type
 
 	if(material)
 		material = SSmaterials.GetMaterialRef(material)
@@ -108,8 +115,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /// Called from [/datum/reagents/proc/metabolize]
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
 	current_cycle++
+	if(length(reagent_removal_skip_list))
+		return
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
-	return
 
 ///Called after a reagent is transfered
 /datum/reagent/proc/on_transfer(atom/A, method=TOUCH, trans_volume)

@@ -5,7 +5,7 @@
 	icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCT_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 	max_integrity = 50
@@ -15,7 +15,6 @@
 	var/rods_broken = TRUE
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))

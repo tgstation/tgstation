@@ -92,8 +92,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/atmos_control
-	ui_x = 400
-	ui_y = 925
 
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/list/sensors = list(
@@ -124,11 +122,10 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	SSradio.remove_object(src, frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AtmosControlConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AtmosControlConsole", name)
 		ui.open()
 
 /obj/machinery/computer/atmos_control/ui_data(mob/user)
@@ -169,16 +166,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	name = "Incinerator Air Control"
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber")
 	circuit = /obj/item/circuitboard/computer/atmos_control/incinerator
-	ui_x = 400
-	ui_y = 300
 
 //Toxins mix sensor only
 /obj/machinery/computer/atmos_control/toxinsmix
 	name = "Toxins Mixing Air Control"
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber")
 	circuit = /obj/item/circuitboard/computer/atmos_control/toxinsmix
-	ui_x = 400
-	ui_y = 300
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
@@ -189,12 +182,8 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/output_tag
 	frequency = FREQ_ATMOS_STORAGE
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank
-
 	var/list/input_info
 	var/list/output_info
-
-	ui_x = 500
-	ui_y = 315
 
 /obj/machinery/computer/atmos_control/tank/oxygen_tank
 	name = "Oxygen Supply Control"
@@ -276,13 +265,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
-/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "AtmosControlConsole", name, ui_x, ui_y, master_ui, state)
-		ui.open()
-
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
@@ -290,7 +272,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
 	data["outputting"] = output_info ? output_info["power"] : FALSE
 	data["outputPressure"] = output_info ? output_info["internal"] : 0
-
 	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)

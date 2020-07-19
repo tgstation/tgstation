@@ -207,7 +207,15 @@
 	if(get_gene(/datum/plant_gene/trait/maxchem))
 		product_count = clamp(round(product_count/2),0,5)
 	while(t_amount < product_count)
-		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
+		var/obj/item/reagent_containers/food/snacks/grown/t_prod
+		if(instability >= 30 && prob(instability/3) && mutatelist.len)
+			var/obj/item/seeds/new_prod = pick(mutatelist)
+			t_prod = initial(new_prod.product)
+			if(t_prod)
+				t_prod = new t_prod(output_loc, src)
+				t_prod.seed.instability = instability/2
+		else
+			t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = lowertext(parent.myseed.plantname)
 		if(productdesc)
@@ -226,7 +234,12 @@
 
 	return result
 
-
+/**
+  * This is where plant chemical products are handled.
+  *
+  * Individually, the formula for individual amounts of chemicals is Potency * the chemical production %, rounded to the fullest 1.
+  * Specific chem handling is also handled here, like bloodtype, food taste within nutriment, and the auto-distilling trait.
+  */
 /obj/item/seeds/proc/prepare_result(var/obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
@@ -246,6 +259,10 @@
 				data = list("blood_type" = "O-")
 			if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
 				data = grown_edible.tastes // apple tastes of apple.
+				//Handles the distillary trait, swaps nutriment and vitamins for that species brewable if it exists.
+				if(get_gene(/datum/plant_gene/trait/brewing) && grown_edible.distill_reagent)
+					T.reagents.add_reagent(grown_edible.distill_reagent, amount/2)
+					continue
 			T.reagents.add_reagent(rid, amount, data)
 
 

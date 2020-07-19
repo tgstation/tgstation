@@ -130,20 +130,14 @@
 	icon_state = "cleanercloak"
 	associated_skill_path = /datum/skill/cleaning
 
-/obj/item/clothing/neck/cloak/skill_reward/healing
-	name = "legendary healer's cloak"
-	desc = "Worn by the most skilled healers, this legendary cloak is only attainable by achieving true medical enlightenment. This status symbol represents a being who has saved enough lives to repopulate a small country, a being who could transplant a monkey's brain into your skull faster than you could yell ;HELP SEC."
-	icon_state = "healercloak"
-	associated_skill_path = /datum/skill/healing
-
 /obj/item/clothing/neck/cloak/skill_reward/mining
-	name = "legendary miner's cloak" 
+	name = "legendary miner's cloak"
 	desc = "Worn by the most skilled miners, this legendary cloak is only attainable by achieving true mineral enlightenment. This status symbol represents a being who has forgotten more about rocks than most miners will ever know, a being who has moved mountains and filled valleys."
 	icon_state = "minercloak"
 	associated_skill_path = /datum/skill/mining
 
 /obj/item/clothing/neck/cloak/skill_reward/playing
-	name = "legendary veteran's cloak" 
+	name = "legendary veteran's cloak"
 	desc = "Worn by the wisest of veteran employees, this legendary cloak is only attainable by maintaining a living employment agreement with Nanotrasen for over <b>five thousand hours</b>. This status symbol represents a being is better than you in nearly every quantifiable way, simple as that."
 	icon_state = "playercloak"
 

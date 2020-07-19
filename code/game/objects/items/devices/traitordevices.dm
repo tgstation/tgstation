@@ -70,8 +70,6 @@ effective or pretty fucking useless.
 
 /obj/item/healthanalyzer/rad_laser
 	custom_materials = list(/datum/material/iron=400)
-	var/ui_x = 320
-	var/ui_y = 335
 	var/irradiate = TRUE
 	var/stealth = FALSE
 	var/used = FALSE // is it cooling down?
@@ -111,11 +109,13 @@ effective or pretty fucking useless.
 /obj/item/healthanalyzer/rad_laser/interact(mob/user)
 	ui_interact(user)
 
-/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/healthanalyzer/rad_laser/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "RadioactiveMicrolaser", "Radioactive Microlaser", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "RadioactiveMicrolaser")
 		ui.open()
 
 /obj/item/healthanalyzer/rad_laser/ui_data(mob/user)

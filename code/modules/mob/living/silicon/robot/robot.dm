@@ -757,6 +757,7 @@
 
 	if(sight_mode & BORGTHERM)
 		sight |= SEE_MOBS
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_invisible = min(see_invisible, SEE_INVISIBLE_LIVING)
 		see_in_dark = 8
 
@@ -913,7 +914,7 @@
   * * AI - AI unit that initiated the deployment into the AI shell
   */
 /mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] Shell-[ident]"
+	real_name = "[AI.real_name] [designation] Shell-[ident]"
 	name = real_name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name	//update the camera name too
