@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - code_imp: "VScode will now always default to LF line breaks for new files."

@@ -363,7 +363,7 @@
 	dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
 	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
-	if(locked && !ai && !IsAdminGhost(user))
+	if(locked && !ai && !isAdminGhostAI(user))
 		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=[REF(src)];op=unlock'>Unlock Controls</A>"
 	else
 		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>"

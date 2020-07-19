@@ -209,7 +209,7 @@
 		"boss4.gif" = 'icons/UI_Icons/Arcade/boss4.gif',
 		"boss5.gif" = 'icons/UI_Icons/Arcade/boss5.gif',
 		"boss6.gif" = 'icons/UI_Icons/Arcade/boss6.gif',
-	)
+		)
 
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"
@@ -389,3 +389,13 @@
 	assets = list(
 		"view_variables.css" = 'html/admin/view_variables.css'
 	)
+
+/datum/asset/spritesheet/sheetmaterials
+	name = "sheetmaterials"
+
+/datum/asset/spritesheet/sheetmaterials/register()
+	InsertAll("", 'icons/obj/stack_objects.dmi')
+
+	// Special case to handle Bluespace Crystals
+	Insert("polycrystal", 'icons/obj/telescience.dmi', "polycrystal")
+	..()

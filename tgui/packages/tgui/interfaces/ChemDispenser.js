@@ -89,7 +89,7 @@ export const ChemDispenser = (props, context) => {
                 key={recipe.name}
                 icon="tint"
                 width="129.5px"
-                lineHeight="21px"
+                lineHeight={1.75}
                 content={recipe.name}
                 onClick={() => act('dispense_recipe', {
                   recipe: recipe.name,
@@ -122,7 +122,7 @@ export const ChemDispenser = (props, context) => {
                 key={chemical.id}
                 icon="tint"
                 width="129.5px"
-                lineHeight="21px"
+                lineHeight={1.75}
                 content={chemical.title}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,

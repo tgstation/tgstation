@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - bugfix: "Random events no longer trigger after emergency shuttle departure. No more Sentient Disease spawning right as the round ends."

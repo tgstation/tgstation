@@ -37,7 +37,7 @@
 	var/translate_binary = FALSE  // If true, can hear the special binary channel.
 	var/independent = FALSE  // If true, can say/hear on the special CentCom channel.
 	var/syndie = FALSE  // If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel.
-	var/list/channels = list()  // Map from name (see communications.dm) to on/off. First entry is current department (:h).
+	var/list/channels = list()  // Map from name (see communications.dm) to on/off. First entry is current department (:h)
 	var/list/secure_radio_connections
 
 /obj/item/radio/suicide_act(mob/living/user)
@@ -184,15 +184,15 @@
 					recalculateChannels()
 				. = TRUE
 
-/obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
+/obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(!spans)
 		spans = list(M.speech_span)
 	if(!language)
 		language = M.get_selected_language()
-	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
+	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language, message_mods)
 	return ITALICS | REDUCE_RANGE
 
-/obj/item/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
+/obj/item/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(!on)
 		return // the device has to be on
 	if(!M || !message)
@@ -238,7 +238,7 @@
 	var/atom/movable/virtualspeaker/speaker = new(null, M, src)
 
 	// Construct the signal
-	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans)
+	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans, message_mods)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
 	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE))
@@ -270,21 +270,18 @@
 	signal.levels = list(T.z)
 	signal.broadcast()
 
-/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
 
-	if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
-		// radios don't pick up whispers very well
-		raw_message = stars(raw_message)
-	else if(message_mode == MODE_L_HAND || message_mode == MODE_R_HAND)
+	if(message_mods[RADIO_EXTENSION] == MODE_L_HAND || message_mods[RADIO_EXTENSION] == MODE_R_HAND)
 		// try to avoid being heard double
 		if (loc == speaker && ismob(speaker))
 			var/mob/M = speaker
 			var/idx = M.get_held_index_of_item(src)
 			// left hands are odd slots
-			if (idx && (idx % 2) == (message_mode == MODE_L_HAND))
+			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
 
 	talk_into(speaker, raw_message, , spans, language=message_language)

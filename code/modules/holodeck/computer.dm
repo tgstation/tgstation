@@ -99,7 +99,7 @@
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
-	data["can_toggle_safety"] = issilicon(user) || IsAdminGhost(user)
+	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
 
 	return data
 

@@ -732,7 +732,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!(issilicon(user) || IsAdminGhost(user)))
+	if(!(issilicon(user) || isAdminGhostAI(user)))
 		if(isElectrified())
 			if(shock(user, 100))
 				return
@@ -775,7 +775,7 @@
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if(!usr.canUseTopic(src) && !IsAdminGhost(usr))
+	if(!usr.canUseTopic(src) && !isAdminGhostAI(usr))
 		return
 	add_fingerprint(usr)
 
@@ -790,7 +790,7 @@
 
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
-	if(!issilicon(user) && !IsAdminGhost(user))
+	if(!issilicon(user) && !isAdminGhostAI(user))
 		if(isElectrified())
 			if(shock(user, 75))
 				return
@@ -1417,7 +1417,7 @@
 			. = TRUE
 
 /obj/machinery/door/airlock/proc/user_allowed(mob/user)
-	return (issilicon(user) && canAIControl(user)) || IsAdminGhost(user)
+	return (issilicon(user) && canAIControl(user)) || isAdminGhostAI(user)
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
 	if(!user_allowed(user))
