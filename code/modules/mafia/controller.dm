@@ -605,7 +605,6 @@
 				var/list/debug_setup = list()
 				var/list/rolelist_dict = list()
 				var/done = FALSE
-				var/cancelled = FALSE
 				for(var/p in subtypesof(/datum/mafia_role))
 					var/datum/mafia_role/path = p
 					rolelist_dict[initial(path.name) + " ([uppertext(initial(path.team))])"] = path
@@ -614,8 +613,7 @@
 					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
 					var/chosen_role_name = input(usr,"Select a role!","Custom Setup Creation",rolelist_dict[1]) as null|anything in rolelist_dict
 					if(chosen_role_name == "CANCEL")
-						cancelled = TRUE
-						break
+						return
 					if(chosen_role_name == "FINISH")
 						break
 					var/found_path = rolelist_dict[chosen_role_name]
@@ -708,10 +706,10 @@
 /datum/mafia_controller/proc/generate_random_setup()
 	var/invests_left = 2
 	var/protects_left = 1
-	var/miscs_left = prob(35) ? 1 : 0
+	var/miscs_left = prob(35)
 	var/mafiareg_left = 2
 	var/mafiaspe_left = 1
-	var/killing_role = prob(50) ? 1 : 0
+	var/killing_role = prob(50)
 	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
 
 	var/overflow = 12 - (invests_left + protects_left + miscs_left + mafiareg_left + mafiaspe_left + killing_role + disruptors)

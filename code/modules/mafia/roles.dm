@@ -507,16 +507,16 @@
 		return
 	var/datum/mafia_role/R = flicker_target
 	flicker_target = null
-	if(R != src) //flicker
+	if(R != src) //flicker instead of hunt
 		to_chat(R.body, "<span class='userdanger'>The lights begin to flicker and dim. You're in danger.</span>")
 		flickering += R
-	else //hunt
-		for(var/r in flickering)
-			var/datum/mafia_role/role = r
-			if(role && role.game_status == MAFIA_ALIVE)
-				to_chat(role.body, "<span class='userdanger'>A shadowy monster appears out of the darkness!</span>")
-				role.kill(source)
-			flickering -= role
+		return
+	for(var/r in flickering)
+		var/datum/mafia_role/role = r
+		if(role && role.game_status == MAFIA_ALIVE)
+			to_chat(role.body, "<span class='userdanger'>A shadowy monster appears out of the darkness!</span>")
+			role.kill(source)
+		flickering -= role
 
 //just helps read better
 #define FUGITIVE_NOT_PRESERVING 0//will not become night immune tonight
