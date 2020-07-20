@@ -7,11 +7,11 @@
 	return ..()
 
 /datum/buildmode_mode/outfit/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Select outfit to equip.</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button on mob/living/carbon/human = Equip the selected outfit.</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button on mob/living/carbon/human = Strip and delete current outfit.</span>")
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c, "<span class='notice'>***********************************************************\n\
+		Right Mouse Button on buildmode button = Select outfit to equip.\n\
+		Left Mouse Button on mob/living/carbon/human = Equip the selected outfit.\n\
+		Right Mouse Button on mob/living/carbon/human = Strip and delete current outfit.\n\
+		***********************************************************</span>")
 
 /datum/buildmode_mode/outfit/Reset()
 	. = ..()
