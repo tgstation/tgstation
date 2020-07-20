@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Defibbing someone will no longer work if their chest is covered by thick clothing. Used to just check to see if they had a spacesuit someone on their person (even if they weren't wearing it / only had it stuck to their hands.)"
-  - bugfix: "Defibbing someone will now actually require you to hold the shock paddles for the entire duration of the process. No more defibbing someone if you were disarmed during the charge time."
