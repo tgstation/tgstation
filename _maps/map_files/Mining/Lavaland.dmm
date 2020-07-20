@@ -122,6 +122,19 @@
 "aw" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
+"ax" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
 "ay" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -1000,10 +1013,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"da" = (
-/obj/machinery/mineral/mint,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "db" = (
@@ -20384,7 +20393,7 @@ cl
 cH
 cO
 cX
-ck
+ax
 dJ
 ia
 cn
@@ -21668,7 +21677,7 @@ cp
 bf
 cL
 bq
-da
+bP
 du
 dL
 cH

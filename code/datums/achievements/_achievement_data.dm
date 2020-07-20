@@ -91,16 +91,18 @@
 	else if(istype(A, /datum/award/score))
 		data[achievement_type] = 0
 
-/datum/achievement_data/ui_base_html(html)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/datum/achievement_data/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/simple/achievements),
+	)
 
-/datum/achievement_data/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/achievement_data/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/achievement_data/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
-		assets.send(user)
-		ui = new(user, src, ui_key, "Achievements", "Achievements Menu", 540, 680, master_ui, state)
+		ui = new(user, src, "Achievements")
 		ui.open()
 
 /datum/achievement_data/ui_data(mob/user)

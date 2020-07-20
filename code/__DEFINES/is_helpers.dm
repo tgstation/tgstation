@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
-#define issiliconoradminghost(A) (istype(A, /mob/living/silicon) || IsAdminGhost(A))
+#define issiliconoradminghost(A) (istype(A, /mob/living/silicon) || isAdminGhostAI(A))
 
 #define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 
@@ -159,6 +159,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isgrenade(A) (istype(A, /obj/item/grenade))
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
+
+#define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
 
 #define isammocasing(A) (istype(A, /obj/item/ammo_casing))
 

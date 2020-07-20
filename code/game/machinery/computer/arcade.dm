@@ -596,6 +596,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	last_three_move = null
 	return ..() //well boys we did it, lists are no more
 
+/obj/machinery/computer/arcade/battle/examine_more(mob/user)
+	var/list/msg = list("<span class='notice'><i>You notice some writing scribbled on the side of [src]...</i></span>")
+	msg += "\t<span class='info'>smart -> defend, defend, light attack</span>"
+	msg += "\t<span class='info'>shotgun -> defend, defend, power attack</span>"
+	msg += "\t<span class='info'>short temper -> counter, counter, counter</span>"
+	msg += "\t<span class='info'>poisonous -> light attack, light attack, light attack</span>"
+	msg += "\t<span class='info'>chonker -> power attack, power attack, power attack</span>"
+	return msg
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

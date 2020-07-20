@@ -34,6 +34,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ADMIN_SPAWNED_1			    (1<<15)
 /// should not get harmed if this gets caught by an explosion?
 #define PREVENT_CONTENTS_EXPLOSION_1 (1<<16)
+/// should the contents of this atom be acted upon
+#define RAD_PROTECT_CONTENTS_1 (1 << 17)
+/// should this object be allowed to be contaminated
+#define RAD_NO_CONTAMINATE_1 (1 << 18)
 
 
 /// If the thing can reflect light (lasers/energy)
@@ -125,10 +129,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
 #define MOBILITY_FLAGS_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
-
-// radiation
-#define RAD_PROTECT_CONTENTS (1<<0)
-#define RAD_NO_CONTAMINATE (1<<1)
 
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)

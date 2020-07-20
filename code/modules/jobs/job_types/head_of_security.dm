@@ -31,6 +31,7 @@
 	paycheck_department = ACCOUNT_SEC
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_SECURITY
+	bounty_types = CIV_JOB_SEC
 
 /datum/outfit/job/hos
 	name = "Head of Security"

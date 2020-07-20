@@ -28,6 +28,7 @@
 	paycheck_department = ACCOUNT_MED
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
+	bounty_types = CIV_JOB_MED
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"

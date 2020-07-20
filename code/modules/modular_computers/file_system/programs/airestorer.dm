@@ -9,8 +9,6 @@
 	transfer_access = ACCESS_HEADS
 	available_on_ntnet = TRUE
 	tgui_id = "NtosAiRestorer"
-	ui_x = 370
-	ui_y = 400
 	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
@@ -113,7 +111,7 @@
 				data["restoring"] = restoring
 				data["health"] = (AI.health + 100) / 2
 				data["isDead"] = AI.stat == DEAD
-				data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
+				data["laws"] = AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 
 	return data
 

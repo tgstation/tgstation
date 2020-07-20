@@ -7,18 +7,18 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	var/claimed = FALSE
 	var/high_priority = FALSE
 
-// Displayed on bounty UI screen.
+/// Displayed on bounty UI screen.
 /datum/bounty/proc/completion_string()
 	return ""
 
-// Displayed on bounty UI screen.
+/// Displayed on bounty UI screen.
 /datum/bounty/proc/reward_string()
 	return "[reward] Credits"
 
 /datum/bounty/proc/can_claim()
 	return !claimed
 
-// Called when the claim button is clicked. Override to provide fancy rewards.
+/// Called when the claim button is clicked. Override to provide fancy rewards.
 /datum/bounty/proc/claim()
 	if(can_claim())
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -26,16 +26,17 @@ GLOBAL_LIST_EMPTY(bounties_list)
 			D.adjust_money(reward)
 		claimed = TRUE
 
-// If an item sent in the cargo shuttle can satisfy the bounty.
+/// If an item sent in the cargo shuttle can satisfy the bounty.
 /datum/bounty/proc/applies_to(obj/O)
 	return FALSE
 
-// Called when an object is shipped on the cargo shuttle.
+/// Called when an object is shipped on the cargo shuttle.
 /datum/bounty/proc/ship(obj/O)
 	return
 
-// When randomly generating the bounty list, duplicate bounties must be avoided.
-// This proc is used to determine if two bounties are duplicates, or incompatible in general.
+/** When randomly generating the bounty list, duplicate bounties must be avoided.
+  * This proc is used to determine if two bounties are duplicates, or incompatible in general.
+  */
 /datum/bounty/proc/compatible_with(other_bounty)
 	return TRUE
 
@@ -45,8 +46,9 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	high_priority = TRUE
 	reward = round(reward * scale_reward)
 
-// This proc is called when the shuttle docks at CentCom.
-// It handles items shipped for bounties.
+/** This proc is called when the shuttle docks at CentCom.
+  * It handles items shipped for bounties.
+  */
 /proc/bounty_ship_item_and_contents(atom/movable/AM, dry_run=FALSE)
 	if(!GLOB.bounties_list.len)
 		setup_bounties()
@@ -64,7 +66,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 			qdel(thing)
 	return matched_one
 
-// Returns FALSE if the bounty is incompatible with the current bounties.
+/// Returns FALSE if the bounty is incompatible with the current bounties.
 /proc/try_add_bounty(datum/bounty/new_bounty)
 	if(!new_bounty || !new_bounty.name || !new_bounty.description)
 		return FALSE
@@ -75,9 +77,17 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	GLOB.bounties_list += new_bounty
 	return TRUE
 
-// Returns a new bounty of random type, but does not add it to GLOB.bounties_list.
-/proc/random_bounty()
-	switch(rand(1, 13))
+/** Returns a new bounty of random type, but does not add it to GLOB.bounties_list.
+  *
+  * *Guided determines what specific catagory of bounty should be chosen.
+  */
+/proc/random_bounty(var/guided = 0)
+	var/bounty_num
+	if(guided)
+		bounty_num = guided
+	else
+		bounty_num = rand(1,13)
+	switch(bounty_num)
 		if(1)
 			var/subtype = pick(subtypesof(/datum/bounty/item/assistant))
 			return new subtype
@@ -102,21 +112,21 @@ GLOBAL_LIST_EMPTY(bounties_list)
 			var/subtype = pick(subtypesof(/datum/bounty/virus))
 			return new subtype
 		if(8)
-			var/subtype = pick(subtypesof(/datum/bounty/item/science))
-			return new subtype
-		if(9)
+			if(rand(2) == 1)
+				var/subtype = pick(subtypesof(/datum/bounty/item/science))
+				return new subtype
 			var/subtype = pick(subtypesof(/datum/bounty/item/slime))
 			return new subtype
-		if(10)
+		if(9)
 			var/subtype = pick(subtypesof(/datum/bounty/item/engineering))
 			return new subtype
-		if(11)
+		if(10)
 			var/subtype = pick(subtypesof(/datum/bounty/item/mining))
 			return new subtype
-		if(12)
+		if(11)
 			var/subtype = pick(subtypesof(/datum/bounty/item/medical))
 			return new subtype
-		if(13)
+		if(12)
 			var/subtype = pick(subtypesof(/datum/bounty/item/botany))
 			return new subtype
 

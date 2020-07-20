@@ -1,0 +1,868 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/riveted,
+/area/mafia)
+"b" = (
+/obj/structure/closet/syndicate{
+	desc = "A storage closet for syndicate conflict resolution operatives.";
+	name = "red closet"
+	},
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/under/syndicate/tacticool/skirt,
+/turf/open/floor/mineral/plastitanium,
+/area/mafia)
+"c" = (
+/turf/closed/wall/rust,
+/area/mafia)
+"d" = (
+/turf/open/floor/plating,
+/area/mafia)
+"e" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
+"f" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
+"g" = (
+/obj/mafia_game_board,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
+"h" = (
+/obj/structure/grille/indestructable,
+/turf/open/floor/plating,
+/area/mafia)
+"i" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/mafia)
+"j" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	max_integrity = 99999;
+	name = "Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/mafia)
+"k" = (
+/obj/mafia_game_board,
+/turf/open/floor/plating,
+/area/mafia)
+"l" = (
+/obj/structure/closet/syndicate{
+	desc = "A storage closet for syndicate conflict resolution operatives.";
+	name = "red closet"
+	},
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/under/syndicate/tacticool/skirt,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"m" = (
+/obj/structure/closet/syndicate{
+	desc = "A storage closet for syndicate conflict resolution operatives.";
+	name = "red closet"
+	},
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/under/syndicate/tacticool/skirt,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"n" = (
+/obj/effect/landmark/mafia,
+/turf/open/floor/mineral/plastitanium,
+/area/mafia)
+"o" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"p" = (
+/obj/machinery/door/poddoor/preopen{
+	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
+	id = "mafia";
+	max_integrity = 99999;
+	name = "Station Night Shutters"
+	},
+/turf/closed/indestructible/opsglass,
+/area/mafia)
+"q" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/chair/office{
+	dir = 1;
+	name = "tactical swivel chair"
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"r" = (
+/turf/open/floor/mineral/plastitanium,
+/area/mafia)
+"s" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/mafia)
+"t" = (
+/turf/open/floor/circuit/red,
+/area/mafia)
+"u" = (
+/obj/effect/baseturf_helper/asteroid,
+/obj/effect/landmark/mafia/town_center,
+/obj/structure/chair,
+/turf/open/floor/circuit/red,
+/area/mafia)
+"v" = (
+/obj/mafia_game_board,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
+"w" = (
+/turf/closed/indestructible/syndicate,
+/area/mafia)
+"x" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/chair/office{
+	dir = 4;
+	name = "tactical swivel chair"
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"y" = (
+/obj/structure/chair/office{
+	dir = 2;
+	name = "tactical swivel chair"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/mafia)
+"z" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/chair/office{
+	dir = 2;
+	name = "tactical swivel chair"
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"A" = (
+/obj/structure/chair/office{
+	dir = 8;
+	name = "tactical swivel chair"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/mafia)
+"B" = (
+/obj/structure/chair/office{
+	dir = 4;
+	name = "tactical swivel chair"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/mafia)
+"C" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/chair/office{
+	dir = 8;
+	name = "tactical swivel chair"
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"E" = (
+/obj/structure/chair/office{
+	dir = 1;
+	name = "tactical swivel chair"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/mafia)
+"F" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/closet/syndicate{
+	desc = "A storage closet for syndicate conflict resolution operatives.";
+	name = "red closet"
+	},
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/under/syndicate/tacticool/skirt,
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"G" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/structure/closet/syndicate{
+	desc = "A storage closet for syndicate conflict resolution operatives.";
+	name = "red closet"
+	},
+/obj/item/clothing/under/syndicate/tacticool/skirt,
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"H" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/landmark/mafia,
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+a
+"}
+(3,1,1) = {"
+a
+w
+w
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+w
+w
+a
+"}
+(4,1,1) = {"
+a
+w
+w
+c
+g
+h
+d
+d
+d
+d
+d
+e
+d
+d
+d
+d
+d
+h
+k
+c
+w
+w
+a
+"}
+(5,1,1) = {"
+a
+w
+w
+c
+h
+d
+d
+e
+w
+w
+j
+w
+j
+w
+w
+d
+d
+i
+h
+c
+w
+w
+a
+"}
+(6,1,1) = {"
+a
+w
+w
+c
+i
+w
+w
+j
+w
+b
+r
+w
+o
+F
+w
+j
+w
+w
+d
+c
+w
+w
+a
+"}
+(7,1,1) = {"
+a
+w
+c
+c
+d
+w
+l
+o
+p
+n
+r
+p
+o
+H
+p
+r
+b
+w
+d
+c
+c
+w
+a
+"}
+(8,1,1) = {"
+a
+w
+c
+d
+d
+w
+H
+o
+w
+w
+r
+w
+o
+w
+w
+r
+n
+w
+d
+d
+c
+w
+a
+"}
+(9,1,1) = {"
+a
+w
+c
+d
+w
+w
+p
+o
+x
+p
+B
+p
+x
+p
+B
+r
+p
+w
+w
+d
+c
+w
+a
+"}
+(10,1,1) = {"
+a
+w
+c
+d
+w
+b
+p
+w
+p
+p
+p
+p
+p
+p
+p
+w
+p
+m
+w
+d
+c
+w
+a
+"}
+(11,1,1) = {"
+a
+w
+c
+d
+j
+n
+r
+r
+y
+p
+s
+t
+s
+p
+q
+o
+o
+H
+j
+e
+c
+w
+a
+"}
+(12,1,1) = {"
+a
+w
+c
+e
+w
+w
+p
+w
+p
+p
+t
+u
+t
+p
+p
+w
+p
+w
+w
+d
+c
+w
+a
+"}
+(13,1,1) = {"
+a
+w
+c
+d
+j
+H
+o
+o
+z
+p
+s
+t
+s
+p
+E
+r
+r
+n
+j
+d
+c
+w
+a
+"}
+(14,1,1) = {"
+a
+w
+c
+d
+w
+l
+p
+w
+p
+p
+p
+p
+p
+p
+p
+w
+p
+b
+w
+i
+c
+w
+a
+"}
+(15,1,1) = {"
+a
+w
+c
+d
+w
+w
+p
+r
+A
+p
+C
+p
+A
+p
+C
+o
+p
+w
+w
+d
+c
+w
+a
+"}
+(16,1,1) = {"
+a
+w
+c
+f
+d
+w
+n
+r
+w
+w
+o
+w
+r
+w
+w
+o
+H
+w
+d
+d
+c
+w
+a
+"}
+(17,1,1) = {"
+a
+w
+c
+c
+d
+w
+b
+r
+p
+H
+o
+p
+r
+n
+p
+o
+G
+w
+d
+c
+c
+w
+a
+"}
+(18,1,1) = {"
+a
+w
+w
+c
+d
+w
+w
+j
+w
+F
+o
+w
+r
+b
+w
+j
+w
+w
+d
+c
+w
+w
+a
+"}
+(19,1,1) = {"
+a
+w
+w
+c
+h
+i
+d
+d
+w
+w
+j
+w
+j
+w
+w
+d
+e
+d
+h
+c
+w
+w
+a
+"}
+(20,1,1) = {"
+a
+w
+w
+c
+k
+h
+d
+d
+e
+d
+d
+d
+d
+d
+d
+d
+d
+h
+v
+c
+w
+w
+a
+"}
+(21,1,1) = {"
+a
+w
+w
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+w
+w
+a
+"}
+(22,1,1) = {"
+a
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

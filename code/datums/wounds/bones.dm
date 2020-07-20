@@ -258,15 +258,11 @@
 /// If someone is snapping our dislocated joint back into place by hand with an aggro grab and help intent
 /datum/wound/brute/bone/moderate/proc/chiropractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
-	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER)
-	var/prob_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_PROBS_MODIFIER)
-	if(time_mod)
-		time *= time_mod
 
 	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
-	if(prob(65 + prob_mod))
+	if(prob(65))
 		user.visible_message("<span class='danger'>[user] snaps [victim]'s dislocated [limb.name] back into place!</span>", "<span class='notice'>You snap [victim]'s dislocated [limb.name] back into place!</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[user] snaps your dislocated [limb.name] back into place!</span>")
 		victim.emote("scream")
@@ -281,19 +277,15 @@
 /// If someone is snapping our dislocated joint into a fracture by hand with an aggro grab and harm or disarm intent
 /datum/wound/brute/bone/moderate/proc/malpractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
-	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER)
-	var/prob_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_PROBS_MODIFIER)
-	if(time_mod)
-		time *= time_mod
 
 	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
-	if(prob(65 + prob_mod))
+	if(prob(65))
 		user.visible_message("<span class='danger'>[user] snaps [victim]'s dislocated [limb.name] with a sickening crack!</span>", "<span class='danger'>You snap [victim]'s dislocated [limb.name] with a sickening crack!</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[user] snaps your dislocated [limb.name] with a sickening crack!</span>")
 		victim.emote("scream")
-		limb.receive_damage(brute=25, wound_bonus=30 + prob_mod * 3)
+		limb.receive_damage(brute=25, wound_bonus=30)
 	else
 		user.visible_message("<span class='danger'>[user] wrenches [victim]'s dislocated [limb.name] around painfully!</span>", "<span class='danger'>You wrench [victim]'s dislocated [limb.name] around painfully!</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[user] wrenches your dislocated [limb.name] around painfully!</span>")

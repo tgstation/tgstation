@@ -5,7 +5,7 @@
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "GIN'YU CAPAN"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'

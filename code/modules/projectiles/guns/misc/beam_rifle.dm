@@ -15,7 +15,7 @@
 		changing where you're pointing at while aiming will delay the aiming process depending on how much you changed.</span>"
 	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "esniper"
-	inhand_icon_state = "esniper"
+	inhand_icon_state = null
 	worn_icon_state = null
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	slot_flags = ITEM_SLOT_BACK
