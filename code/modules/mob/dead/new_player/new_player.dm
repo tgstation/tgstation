@@ -324,7 +324,7 @@
 		GLOB.data_core.manifest_inject(humanc)
 		if(istype(humanc.loc, /obj/structure/closet/supplypod))
 			var/obj/structure/closet/supplypod/pod = humanc.loc
-			pod.QueueAnnounce(humanc,rank)
+			pod.queue_announce(humanc,rank)
 		else if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else

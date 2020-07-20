@@ -57,7 +57,8 @@
 	var/effectShrapnel = FALSE
 	var/shrapnel_type = /obj/projectile/bullet/shrapnel
 	var/shrapnel_magnitude = 3
-	var/list/queued_announces	//people coming in that we have to announce
+	///List of people coming in that we have to announce
+	var/list/queued_announces
 
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
@@ -85,24 +86,25 @@
 	style = STYLE_SECURITY
 	bluespace = TRUE
 	explosionSize = list(0,0,0,1)
-	var/obj/item/radio/Radio
+	var/obj/item/radio/radio
 
 /obj/structure/closet/supplypod/securitypod/Initialize()
 	. = ..()
-	Radio = new /obj/item/radio(src)
-	Radio.listening = 0
+	radio = new /obj/item/radio(src)
+	radio.listening = FALSE
+	radio.set_frequency(FREQ_SECURITY)
 
 /obj/structure/closet/supplypod/securitypod/Destroy()
-	QDEL_NULL(Radio)
+	QDEL_NULL(radio)
 	return ..()
 
 /obj/structure/closet/supplypod/securitypod/preOpen()
-		Radio.set_frequency(FREQ_SECURITY)
-		Radio.talk_into(src, "SECURITY ALERT: New prisoner dropping into [get_area(src)].", FREQ_SECURITY)
-		QDEL_NULL(Radio)
+		radio.talk_into(src, "SECURITY ALERT: New prisoner dropping into [get_area(src)].", FREQ_SECURITY)
+		QDEL_NULL(radio)
 		..()
 
-/obj/structure/closet/supplypod/proc/QueueAnnounce(mob, rank)
+///Causes a mob to be added to the list of queued_announces to have AnnounceArrival happen when they land
+/obj/structure/closet/supplypod/proc/queue_announce(mob, rank)
 	LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
 
 /obj/structure/closet/supplypod/Initialize(mapload)
