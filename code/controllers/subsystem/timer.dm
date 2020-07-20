@@ -1,19 +1,28 @@
-#define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
+/// Controls how many buckets should be kept, each representing a tick. (1 minutes worth)
+#define BUCKET_LEN (world.fps*1*60)
+/// Helper for getting the correct bucket for a given timer
 #define BUCKET_POS(timer) (((round((timer.timeToRun - SStimer.head_offset) / world.tick_lag)+1) % BUCKET_LEN)||BUCKET_LEN)
+/// <need description>
 #define TIMER_MAX (world.time + TICKS2DS(min(BUCKET_LEN-(SStimer.practical_offset-DS2TICKS(world.time - SStimer.head_offset))-1, BUCKET_LEN-1)))
-#define TIMER_ID_MAX (2**24) //max float with integer precision
+/// Max float with integer precision
+#define TIMER_ID_MAX (2**24)
 
+/**
+  * # Timer Subsystem
+  *
+  * Handles creation, callbacks, and destruction of timed events.
+  */
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 //SS_TICKER subsystem, so wait is in ticks
 	init_order = INIT_ORDER_TIMER
 	priority = FIRE_PRIORITY_TIMER
-
 	flags = SS_TICKER|SS_NO_INIT
 
-	var/list/datum/timedevent/second_queue = list() //awe, yes, you've had first queue, but what about second queue?
+	/// Queue used for storing timers that do not fit into the current buckets
+	var/list/datum/timedevent/second_queue = list()
+	/// A hashlist dictionary used for storing unique timers
 	var/list/hashes = list()
-
 	/// world.time of the first entry in the bucket
 	var/head_offset = 0
 	/// Index of the first non-empty item in the bucket
@@ -22,16 +31,17 @@ SUBSYSTEM_DEF(timer)
 	var/bucket_resolution = 0
 	/// How many timers are in the buckets
 	var/bucket_count = 0
-
 	/// List of buckets, each bucket holds every timer that has to run that byond tick
 	var/list/bucket_list = list()
 	/// List of all active timers associated to their timer ID (for easy lookup)
 	var/list/timer_id_dict = list()
-	/// Special snowflake timers that run on fancy pansy "client time"
+	/// Special timers that run in real-time, not BYOND time; these are more expensive to run and maintain
 	var/list/clienttime_timers = list()
-
+	/// Contains the last time that a timer's callback was invoked, or the last tick the SS fired if no timers are being processed
 	var/last_invoke_tick = 0
+	/// Contains the last time that a warning was issued for not invoking callbacks
 	var/static/last_invoke_warning = 0
+	/// Boolean operator controlling if the timer SS will automatically reset buckets if it fails to invoke callbacks for an extended period of time
 	var/static/bucket_auto_reset = TRUE
 
 /datum/controller/subsystem/timer/PreInit()
