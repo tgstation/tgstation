@@ -79,7 +79,7 @@
   */
 /proc/htmlrendertext(t)
 	// Trim "whitespace" by lazily capturing word characters in the middle
-	var/regex/matchMiddle = new(@"^\s*([\W\w]*?)\s*$")
+	var/static/regex/matchMiddle = new(@"^\s*([\W\w]*?)\s*$")
 	if(matchMiddle.Find(t) == 0)
 		return t
 	t = matchMiddle.group[1]
