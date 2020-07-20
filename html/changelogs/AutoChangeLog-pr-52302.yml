@@ -1,4 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "Fix hidden pipes and unpowered devices in Icebox turbine."
