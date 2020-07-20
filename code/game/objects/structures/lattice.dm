@@ -122,44 +122,25 @@
 			to_chat(user, "<span class='warning'>You need one floor tile to build atop [src].</span>")
 		return
 
-/obj/structure/lift_support
-	name = "lift support"
-	desc = "A hightweight lift support. These hold lift platform."
-	icon = 'icons/turf/walls/clockwork_wall.dmi'
-	icon_state = "clockwork_wall"
-	density = TRUE
-	anchored = TRUE
-
-	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
-	max_integrity = 50
-	//layer = LATTICE_LAYER //under pipes
-	//plane = FLOOR_PLANE
-	var/number_of_mats = 1
-	var/build_material = /obj/item/stack/rods
-	//canSmoothWith = list(/obj/structure/lattice/lift,/obj/structure/lift_support)//add lift support here later
-	//smooth = SMOOTH_MORE
-	//	flags = CONDUCT_1
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
 /obj/structure/lattice/lift
 	name = "lift lattice"
 	desc = "A lightweight support lattice. These hold lift platform together."
-	icon = 'icons/obj/smooth_structures/lattice.dmi'
-	icon_state = "lattice"
+	icon = 'icons/obj/smooth_structures/catwalk.dmi'
+	icon_state = "catwalk"
 	density = FALSE
 	anchored = TRUE
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
-	var/number_of_mats = 1
-	var/build_material = /obj/item/stack/rods
-	canSmoothWith = list(/obj/structure/lattice/lift,/obj/structure/lift_support)//add lift support here later
+	canSmoothWith = list(/obj/structure/lattice/lift)
 	smooth = SMOOTH_MORE
 	//	flags = CONDUCT_1
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	
 	var/list/lift_load = list() //things to move
+	var/datum/lift_master/LM
 
 
 /obj/structure/lattice/lift/Initialize(mapload)
@@ -169,31 +150,82 @@
 	RegisterSignal(src, COMSIG_MOVABLE_UNCROSS, .proc/RemoveItemFromLift)
 
 /obj/structure/lattice/lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
+	to_chat(world, "[src] RemoveItemFromLift([AM])")
 	lift_load -= AM
-	//UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+
+	/*
+	if(source != loc)
+		to_chat(world, "[src] RemoveItemFromLift([AM])")
+		lift_load -= AM
+		//lift_load -= source
+		//UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+	else
+		to_chat(world, "[src] RemoveItemFromLift([AM]) but it on ")*/
 
 /obj/structure/lattice/lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
-	if(istype(AM))
-		lift_load |= AM
-		//RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromLift) //Listen for the pickup event, unregister on pick-up so we aren't moved
-	else
-		WARNING("Try load wrong type on lift")
+	to_chat(world, "[src] AddItemOnLift([AM])")
+	//if(istype(AM))
+	lift_load |= AM
+	//RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromLift) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	//else
+	//	WARNING("Try load wrong type on lift")
 
-/obj/structure/lattice/lift/proc/travel(going_up, mob/user, is_ghost, var/turf/destination)
-	if(!is_ghost)
-		show_fluff_message(going_up, user)
-		add_fingerprint(user)
+datum/lift_master
+	var/list/lift_platforms = list()
 
-//	var/OldLoc=loc
+datum/lift_master/New(obj/structure/lattice/lift/lift_platform)
+	lift_platforms |= lift_platform
+	Rebuild_lift_plaform(lift_platform)
+
+datum/lift_master/proc/Rebuild_lift_plaform(obj/structure/lattice/lift/base_lift_platform)
+	var/list/possible_expansions = list(base_lift_platform)
+	while(possible_expansions.len)
+		for(var/obj/structure/lattice/lift/borderline in possible_expansions)
+			var/list/result = borderline.lift_platform_expansion(src)
+			if(result && result.len)
+				for(var/obj/structure/lattice/lift/LP in result)
+					if(!lift_platforms.Find(LP))
+						LP.LM = src
+						lift_platforms += LP
+						possible_expansions += LP
+			possible_expansions -= borderline
+
+datum/lift_master/proc/MoveLift(going_up, mob/user, var/turf/destination)
+	for(var/x in lift_platforms)
+		var/obj/structure/lattice/lift/lift_platform = x
+		lift_platform.travel(going_up)
+
+/obj/structure/lattice/lift/proc/lift_platform_expansion(datum/lift_master/LM)
+	. = list()
+	for(var/D in GLOB.cardinals)
+		var/turf/T = get_step(src, D)
+		. |= locate(/obj/structure/lattice/lift) in T 
+
+
+//datum/lift_master/proc/travel(going_up, mob/user, is_ghost, var/turf/destination)
+/obj/structure/lattice/lift/proc/travel(going_up)
+//	if(!is_ghost)
+//		show_fluff_message(going_up, user)
+//		add_fingerprint(user)
+
+	//var/turf/OldLoc=loc
+	var/list/things2move = lift_load.Copy()
+	
+	var/turf/destination = get_step_multiz(src, going_up ? UP : DOWN )
+	
 	forceMove(destination)
-//	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
-//		M.forceMove(loc)
-	for(var/x in lift_load)
+
+	//for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
+	//	M.forceMove(loc)
+	for(var/x in things2move)
 		var/atom/movable/AM = x
-		if(!AM.forceMove(destination))
-			RemoveItemFromLift(AM, AM.loc)	
+		AM.forceMove(destination)
+	//	if(!AM.forceMove(destination))
+	//		RemoveItemFromLift(AM, AM.loc)	
 
 /obj/structure/lattice/lift/proc/use(mob/user, is_ghost=FALSE)
+	if(!LM)
+		LM = new(src)
 	if (!is_ghost && !in_range(src, user))
 		return
 
@@ -202,8 +234,8 @@
 		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
 		)
 
-	var/turf/down_level = get_step_multiz(src, UP)
-	var/turf/up_level = get_step_multiz(src, DOWN)
+	var/turf/up_level = get_step_multiz(src, UP)
+	var/turf/down_level = get_step_multiz(src, DOWN)
 
 	if (up_level || down_level)
 		var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
@@ -212,14 +244,22 @@
 		switch(result)
 			if("Up")
 				if(up_level)
-					travel(TRUE, user, is_ghost, up_level)
+					//travel(TRUE, user, is_ghost, up_level)
+					LM.MoveLift(TRUE, user, up_level)
+					//travel(TRUE)
+					use(user)
 				else
 					to_chat(user, "<span class='warning'>[src] doesn't seem to able move up!</span>")
+					use(user)
 			if("Down")
 				if(down_level)
-					travel(FALSE, user, is_ghost, down_level)
+					//travel(FALSE, user, is_ghost, down_level)
+					LM.MoveLift(FALSE, user, up_level)
+					//travel(FALSE)
+					use(user)
 				else
 					to_chat(user, "<span class='warning'>[src] doesn't seem to able move down!</span>")
+					use(user)
 			if("Cancel")
 				return
 	else
