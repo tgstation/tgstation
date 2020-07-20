@@ -25,7 +25,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 */
 /datum/preferences/proc/savefile_needs_update(savefile/S)
 	var/savefile_version
-	S["version"] >> savefile_version
+	READ_FILE(S["version"], savefile_version)
 
 	if(savefile_version < SAVEFILE_VERSION_MIN)
 		S.dir.Cut()
@@ -80,15 +80,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/job_engsec_med = 0
 		var/job_engsec_low = 0
 
-		S["job_civilian_high"]	>> job_civilian_high
-		S["job_civilian_med"]	>> job_civilian_med
-		S["job_civilian_low"]	>> job_civilian_low
-		S["job_medsci_high"]	>> job_medsci_high
-		S["job_medsci_med"]		>> job_medsci_med
-		S["job_medsci_low"]		>> job_medsci_low
-		S["job_engsec_high"]	>> job_engsec_high
-		S["job_engsec_med"]		>> job_engsec_med
-		S["job_engsec_low"]		>> job_engsec_low
+		READ_FILE(S["job_civilian_high"], job_civilian_high)
+		READ_FILE(S["job_civilian_med"], job_civilian_med)
+		READ_FILE(S["job_civilian_low"], job_civilian_low)
+		READ_FILE(S["job_medsci_high"], job_medsci_high)
+		READ_FILE(S["job_medsci_med"], job_medsci_med)
+		READ_FILE(S["job_medsci_low"], job_medsci_low)
+		READ_FILE(S["job_engsec_high"], job_engsec_high)
+		READ_FILE(S["job_engsec_med"], job_engsec_med)
+		READ_FILE(S["job_engsec_low"], job_engsec_low)
 
 		//Can't use SSjob here since this happens right away on login
 		for(var/job in subtypesof(/datum/job))
@@ -136,11 +136,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(S["species_is_always_random"] == 1)
 			randomise[RANDOM_SPECIES] = TRUE
 		if(S["backbag"])
-			S["backbag"]	>> backpack
+			READ_FILE(S["backbag"], backpack)
 		if(S["hair_style_name"])
-			S["hair_style_name"]	>> hairstyle
+			READ_FILE(S["hair_style_name"], hairstyle)
 		if(S["facial_style_name"])
-			S["facial_style_name"]	>> facial_hairstyle
+			READ_FILE(S["facial_style_name"], facial_hairstyle)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -163,50 +163,51 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return FALSE
 
 	//general preferences
-	S["asaycolor"]			>> asaycolor
-	S["ooccolor"]			>> ooccolor
-	S["lastchangelog"]		>> lastchangelog
-	S["UI_style"]			>> UI_style
-	S["hotkeys"]			>> hotkeys
-	S["chat_on_map"]		>> chat_on_map
-	S["max_chat_length"]	>> max_chat_length
-	S["see_chat_non_mob"] 	>> see_chat_non_mob
-	S["tgui_fancy"]			>> tgui_fancy
-	S["tgui_lock"]			>> tgui_lock
-	S["buttons_locked"]		>> buttons_locked
-	S["windowflash"]		>> windowflashing
-	S["be_special"] 		>> be_special
+	READ_FILE(S["asaycolor"], asaycolor)
+	READ_FILE(S["ooccolor"], ooccolor)
+	READ_FILE(S["lastchangelog"], lastchangelog)
+	READ_FILE(S["UI_style"], UI_style)
+	READ_FILE(S["hotkeys"], hotkeys)
+	READ_FILE(S["chat_on_map"], chat_on_map)
+	READ_FILE(S["max_chat_length"], max_chat_length)
+	READ_FILE(S["see_chat_non_mob"] , see_chat_non_mob)
+	READ_FILE(S["see_rc_emotes"] , see_rc_emotes)
+	READ_FILE(S["tgui_fancy"], tgui_fancy)
+	READ_FILE(S["tgui_lock"], tgui_lock)
+	READ_FILE(S["buttons_locked"], buttons_locked)
+	READ_FILE(S["windowflash"], windowflashing)
+	READ_FILE(S["be_special"] , be_special)
 
 
-	S["default_slot"]		>> default_slot
-	S["chat_toggles"]		>> chat_toggles
-	S["toggles"]			>> toggles
-	S["ghost_form"]			>> ghost_form
-	S["ghost_orbit"]		>> ghost_orbit
-	S["ghost_accs"]			>> ghost_accs
-	S["ghost_others"]		>> ghost_others
-	S["preferred_map"]		>> preferred_map
-	S["ignoring"]			>> ignoring
-	S["ghost_hud"]			>> ghost_hud
-	S["inquisitive_ghost"]	>> inquisitive_ghost
-	S["uses_glasses_colour"]>> uses_glasses_colour
-	S["clientfps"]			>> clientfps
-	S["parallax"]			>> parallax
-	S["ambientocclusion"]	>> ambientocclusion
-	S["auto_fit_viewport"]	>> auto_fit_viewport
-	S["widescreenpref"]	    >> widescreenpref
-	S["pixel_size"]	    	>> pixel_size
-	S["scaling_method"]	    >> scaling_method
-	S["menuoptions"]		>> menuoptions
-	S["enable_tips"]		>> enable_tips
-	S["tip_delay"]			>> tip_delay
-	S["pda_style"]			>> pda_style
-	S["pda_color"]			>> pda_color
+	READ_FILE(S["default_slot"], default_slot)
+	READ_FILE(S["chat_toggles"], chat_toggles)
+	READ_FILE(S["toggles"], toggles)
+	READ_FILE(S["ghost_form"], ghost_form)
+	READ_FILE(S["ghost_orbit"], ghost_orbit)
+	READ_FILE(S["ghost_accs"], ghost_accs)
+	READ_FILE(S["ghost_others"], ghost_others)
+	READ_FILE(S["preferred_map"], preferred_map)
+	READ_FILE(S["ignoring"], ignoring)
+	READ_FILE(S["ghost_hud"], ghost_hud)
+	READ_FILE(S["inquisitive_ghost"], inquisitive_ghost)
+	READ_FILE(S["uses_glasses_colour"], uses_glasses_colour)
+	READ_FILE(S["clientfps"], clientfps)
+	READ_FILE(S["parallax"], parallax)
+	READ_FILE(S["ambientocclusion"], ambientocclusion)
+	READ_FILE(S["auto_fit_viewport"], auto_fit_viewport)
+	READ_FILE(S["widescreenpref"], widescreenpref)
+	READ_FILE(S["pixel_size"], pixel_size)
+	READ_FILE(S["scaling_method"], scaling_method)
+	READ_FILE(S["menuoptions"], menuoptions)
+	READ_FILE(S["enable_tips"], enable_tips)
+	READ_FILE(S["tip_delay"], tip_delay)
+	READ_FILE(S["pda_style"], pda_style)
+	READ_FILE(S["pda_color"], pda_color)
 
 	// Custom hotkeys
-	S["key_bindings"]		>> key_bindings
+	READ_FILE(S["key_bindings"], key_bindings)
 	// hearted
-	S["hearted_until"]		>> hearted_until
+	READ_FILE(S["hearted_until"], hearted_until)
 	if(hearted_until > world.realtime)
 		hearted = TRUE
 
@@ -219,21 +220,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, GLOB.available_ui_styles, GLOB.available_ui_styles[1])
-	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
-	chat_on_map		= sanitize_integer(chat_on_map, 0, 1, initial(chat_on_map))
+	hotkeys			= sanitize_integer(hotkeys, FALSE, TRUE, initial(hotkeys))
+	chat_on_map		= sanitize_integer(chat_on_map, FALSE, TRUE, initial(chat_on_map))
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
-	see_chat_non_mob	= sanitize_integer(see_chat_non_mob, 0, 1, initial(see_chat_non_mob))
-	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
-	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
-	buttons_locked	= sanitize_integer(buttons_locked, 0, 1, initial(buttons_locked))
-	windowflashing	= sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
+	see_chat_non_mob	= sanitize_integer(see_chat_non_mob, FALSE, TRUE, initial(see_chat_non_mob))
+	see_rc_emotes	= sanitize_integer(see_rc_emotes, FALSE, TRUE, initial(see_rc_emotes))
+	tgui_fancy		= sanitize_integer(tgui_fancy, FALSE, TRUE, initial(tgui_fancy))
+	tgui_lock		= sanitize_integer(tgui_lock, FALSE, TRUE, initial(tgui_lock))
+	buttons_locked	= sanitize_integer(buttons_locked, FALSE, TRUE, initial(buttons_locked))
+	windowflashing	= sanitize_integer(windowflashing, FALSE, TRUE, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, (2**24)-1, initial(toggles))
 	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
-	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
-	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
-	widescreenpref  = sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
+	ambientocclusion	= sanitize_integer(ambientocclusion, FALSE, TRUE, initial(ambientocclusion))
+	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, FALSE, TRUE, initial(auto_fit_viewport))
+	widescreenpref  = sanitize_integer(widescreenpref, FALSE, TRUE, initial(widescreenpref))
 	pixel_size		= sanitize_integer(pixel_size, PIXEL_SCALING_AUTO, PIXEL_SCALING_3X, initial(pixel_size))
 	scaling_method  = sanitize_text(scaling_method, initial(scaling_method))
 	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
@@ -268,6 +270,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["chat_on_map"], chat_on_map)
 	WRITE_FILE(S["max_chat_length"], max_chat_length)
 	WRITE_FILE(S["see_chat_non_mob"], see_chat_non_mob)
+	WRITE_FILE(S["see_rc_emotes"], see_rc_emotes)
 	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
 	WRITE_FILE(S["tgui_lock"], tgui_lock)
 	WRITE_FILE(S["buttons_locked"], buttons_locked)
@@ -324,7 +327,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Species
 	var/species_id
-	S["species"]			>> species_id
+	READ_FILE(S["species"], species_id)
 	if(species_id)
 		var/newtype = GLOB.species_list[species_id]
 		if(newtype)
@@ -339,65 +342,65 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		WRITE_FILE(S["feature_ethcolor"]	, "9c3030")
 
 	//Character
-	S["real_name"]			>> real_name
-	S["gender"]				>> gender
-	S["body_type"]			>> body_type
-	S["age"]				>> age
-	S["hair_color"]			>> hair_color
-	S["facial_hair_color"]	>> facial_hair_color
-	S["eye_color"]			>> eye_color
-	S["skin_tone"]			>> skin_tone
-	S["hairstyle_name"]	>> hairstyle
-	S["facial_style_name"]	>> facial_hairstyle
-	S["underwear"]			>> underwear
-	S["underwear_color"]	>> underwear_color
-	S["undershirt"]			>> undershirt
-	S["socks"]				>> socks
-	S["backpack"]			>> backpack
-	S["jumpsuit_style"]		>> jumpsuit_style
-	S["uplink_loc"]			>> uplink_spawn_loc
-	S["playtime_reward_cloak"] >> playtime_reward_cloak
-	S["phobia"] >> phobia
-	S["randomise"]	>>  randomise
-	S["feature_mcolor"]					>> features["mcolor"]
-	S["feature_ethcolor"]					>> features["ethcolor"]
-	S["feature_lizard_tail"]			>> features["tail_lizard"]
-	S["feature_lizard_snout"]			>> features["snout"]
-	S["feature_lizard_horns"]			>> features["horns"]
-	S["feature_lizard_frills"]			>> features["frills"]
-	S["feature_lizard_spines"]			>> features["spines"]
-	S["feature_lizard_body_markings"]	>> features["body_markings"]
-	S["feature_lizard_legs"]			>> features["legs"]
-	S["feature_moth_wings"]				>> features["moth_wings"]
-	S["feature_moth_markings"]			>> features["moth_markings"]
-	S["persistent_scars"] 				>> persistent_scars
-	S["scars1"]							>> scars_list["1"]
-	S["scars2"]							>> scars_list["2"]
-	S["scars3"]							>> scars_list["3"]
-	S["scars4"]							>> scars_list["4"]
-	S["scars5"]							>> scars_list["5"]
+	READ_FILE(S["real_name"], real_name)
+	READ_FILE(S["gender"], gender)
+	READ_FILE(S["body_type"], body_type)
+	READ_FILE(S["age"], age)
+	READ_FILE(S["hair_color"], hair_color)
+	READ_FILE(S["facial_hair_color"], facial_hair_color)
+	READ_FILE(S["eye_color"], eye_color)
+	READ_FILE(S["skin_tone"], skin_tone)
+	READ_FILE(S["hairstyle_name"], hairstyle)
+	READ_FILE(S["facial_style_name"], facial_hairstyle)
+	READ_FILE(S["underwear"], underwear)
+	READ_FILE(S["underwear_color"], underwear_color)
+	READ_FILE(S["undershirt"], undershirt)
+	READ_FILE(S["socks"], socks)
+	READ_FILE(S["backpack"], backpack)
+	READ_FILE(S["jumpsuit_style"], jumpsuit_style)
+	READ_FILE(S["uplink_loc"], uplink_spawn_loc)
+	READ_FILE(S["playtime_reward_cloak"], playtime_reward_cloak)
+	READ_FILE(S["phobia"], phobia)
+	READ_FILE(S["randomise"],  randomise)
+	READ_FILE(S["feature_mcolor"], features["mcolor"])
+	READ_FILE(S["feature_ethcolor"], features["ethcolor"])
+	READ_FILE(S["feature_lizard_tail"], features["tail_lizard"])
+	READ_FILE(S["feature_lizard_snout"], features["snout"])
+	READ_FILE(S["feature_lizard_horns"], features["horns"])
+	READ_FILE(S["feature_lizard_frills"], features["frills"])
+	READ_FILE(S["feature_lizard_spines"], features["spines"])
+	READ_FILE(S["feature_lizard_body_markings"], features["body_markings"])
+	READ_FILE(S["feature_lizard_legs"], features["legs"])
+	READ_FILE(S["feature_moth_wings"], features["moth_wings"])
+	READ_FILE(S["feature_moth_markings"], features["moth_markings"])
+	READ_FILE(S["persistent_scars"] , persistent_scars)
+	READ_FILE(S["scars1"], scars_list["1"])
+	READ_FILE(S["scars2"], scars_list["2"])
+	READ_FILE(S["scars3"], scars_list["3"])
+	READ_FILE(S["scars4"], scars_list["4"])
+	READ_FILE(S["scars5"], scars_list["5"])
 	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
 		features["ears"] = "none"
 	else
-		S["feature_human_tail"]				>> features["tail_human"]
-		S["feature_human_ears"]				>> features["ears"]
+		READ_FILE(S["feature_human_tail"], features["tail_human"])
+		READ_FILE(S["feature_human_ears"], features["ears"])
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
-		S[savefile_slot_name] >> custom_names[custom_name_id]
+		READ_FILE(S[savefile_slot_name], custom_names[custom_name_id])
 
-	S["preferred_ai_core_display"] >> preferred_ai_core_display
-	S["prefered_security_department"] >> prefered_security_department
+	READ_FILE(S["preferred_ai_core_display"], preferred_ai_core_display)
+	READ_FILE(S["prefered_security_department"], prefered_security_department)
 
 	//Jobs
-	S["joblessrole"]		>> joblessrole
+	READ_FILE(S["joblessrole"], joblessrole)
 	//Load prefs
-	S["job_preferences"] >> job_preferences
+	READ_FILE(S["job_preferences"], job_preferences)
 
 	//Quirks
-	S["all_quirks"]			>> all_quirks
+	READ_FILE(S["all_quirks"], all_quirks)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)

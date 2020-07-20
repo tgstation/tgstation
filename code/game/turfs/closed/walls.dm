@@ -146,7 +146,7 @@
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-		hulk_recoil(arm)
+		hulk_recoil(arm, user)
 		dismantle_wall(1)
 
 	else
@@ -158,17 +158,22 @@
 	return TRUE
 
 /**
-  *Deals damage back to the hulk.
+  *Deals damage back to the hulk's arm.
   *
   *When a hulk manages to break a wall using their hulk smash, this deals back damage to the arm used.
   *This is in its own proc just to be easily overridden by other wall types. Default allows for three
   *smashed walls per arm. Also, we use CANT_WOUND here because wounds are random. Wounds are applied
-  *by hulk code based on arm damage and checked after an attack completes.
+  *by hulk code based on arm damage and checked when we call break_an_arm().
   *Arguments:
   **arg1 is the arm to deal damage to.
+  **arg2 is the hulk
  */
-/turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm)
-	arm.receive_damage(brute = 20, blocked = 0, wound_bonus = CANT_WOUND)
+/turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 20)
+	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
+	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
+	if(!smasher || !damage) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky
+		return
+	smasher.break_an_arm(arm)
 
 /turf/closed/wall/attack_hand(mob/user)
 	. = ..()

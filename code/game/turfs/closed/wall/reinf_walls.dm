@@ -47,8 +47,8 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
 
-/turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm)
-	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
+/turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 41)
+	return ..()
 
 /turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user, turf/T)
 	//DECONSTRUCTION

@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - rscdel: "Spraypaint can no longer be applied to any object type"
