@@ -100,6 +100,7 @@
 		            /obj/item/clothing/suit/ianshirt = 1,
 		            /obj/item/clothing/shoes/laceup = 2,
 		            /obj/item/clothing/shoes/sandal = 2,
+					/obj/item/clothing/shoes/winterboots = 2
 		            /obj/item/clothing/shoes/cowboy = 2,
 		            /obj/item/clothing/shoes/cowboy/white = 2,
 		            /obj/item/clothing/shoes/cowboy/black = 2,
