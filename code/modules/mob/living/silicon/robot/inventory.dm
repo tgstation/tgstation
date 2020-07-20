@@ -14,19 +14,19 @@
 	return
 
 /**
-  * Finds the first available slot and attemps to put item I in it.
+  * Finds the first available slot and attemps to put item item_module in it.
   *
   * Arguments
-  * * I - the item being equipped to a slot.
+  * * item_module - the item being equipped to a slot.
   */
-/mob/living/silicon/robot/proc/activate_module(obj/item/I)
-	if(!I)
-		return FALSE
+/mob/living/silicon/robot/proc/activate_module(obj/item/item_module)
+	if(QDELETED(item_module))
+		CRASH("activate_module called with improper item_module")
 
-	if(!(I in module.modules))
-		return FALSE
+	if(!(item_module in module.modules))
+		CRASH("activate_module called with item_module not in module.modules")
 
-	if(activated(I))
+	if(activated(item_module))
 		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return FALSE
 
@@ -41,66 +41,66 @@
 		to_chat(src, "<span class='warning'>Deactivate a module first!</span>")
 		return FALSE
 
-	return equip_module_to_slot(I, first_free_slot)
+	return equip_module_to_slot(item_module, first_free_slot)
 
 /**
   * Is passed an item and a module slot. Equips the item to that borg slot.
   *
   * Arguments
-  * * I - the item being equipped to a slot
+  * * item_module - the item being equipped to a slot
   * * module_num - the slot number being equipped to.
   */
-/mob/living/silicon/robot/proc/equip_module_to_slot(obj/item/I, module_num)
+/mob/living/silicon/robot/proc/equip_module_to_slot(obj/item/item_module, module_num)
 	switch(module_num)
 		if(1)
-			I.screen_loc = inv1.screen_loc
+			item_module.screen_loc = inv1.screen_loc
 		if(2)
-			I.screen_loc = inv2.screen_loc
+			item_module.screen_loc = inv2.screen_loc
 		if(3)
-			I.screen_loc = inv3.screen_loc
+			item_module.screen_loc = inv3.screen_loc
 
-	held_items[module_num] = I
-	I.equipped(src, ITEM_SLOT_HANDS)
-	I.mouse_opacity = initial(I.mouse_opacity)
-	I.layer = ABOVE_HUD_LAYER
-	I.plane = ABOVE_HUD_PLANE
-	I.forceMove(src)
+	held_items[module_num] = item_module
+	item_module.equipped(src, ITEM_SLOT_HANDS)
+	item_module.mouse_opacity = initial(item_module.mouse_opacity)
+	item_module.layer = ABOVE_HUD_LAYER
+	item_module.plane = ABOVE_HUD_PLANE
+	item_module.forceMove(src)
 
-	if(istype(I, /obj/item/borg/sight))
-		var/obj/item/borg/sight/S = I
-		sight_mode |= S.sight_mode
+	if(istype(item_module, /obj/item/borg/sight))
+		var/obj/item/borg/sight/borg_sight = item_module
+		sight_mode |= borg_sight.sight_mode
 		update_sight()
 
-	observer_screen_update(I,TRUE)
+	observer_screen_update(item_module, TRUE)
 	return TRUE
 
 /**
-  * Unequips item I from slot module_num. Deletes it if delete_after = TRUE.
+  * Unequips item item_module from slot module_num. Deletes it if delete_after = TRUE.
   *
   * Arguments
-  * * I - the item being unequipped
+  * * item_module - the item being unequipped
   * * module_num - the slot number being unequipped.
   */
-/mob/living/silicon/robot/proc/unequip_module_from_slot(obj/item/I, module_num)
-	if(!I)
-		return FALSE
+/mob/living/silicon/robot/proc/unequip_module_from_slot(obj/item/item_module, module_num)
+	if(QDELETED(item_module))
+		CRASH("unequip_module_from_slot called with improper item_module")
 
-	if(!(I in module.modules))
-		return FALSE
+	if(!(item_module in module.modules))
+		CRASH("unequip_module_from_slot called with item_module not in module.modules")
 
-	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
+	item_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
 
-	if(istype(I, /obj/item/storage/bag/tray/))
-		SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY)
-	if(istype(I, /obj/item/borg/sight))
-		var/obj/item/borg/sight/S = I
-		sight_mode &= ~S.sight_mode
+	if(istype(item_module, /obj/item/storage/bag/tray/))
+		SEND_SIGNAL(item_module, COMSIG_TRY_STORAGE_QUICK_EMPTY)
+	if(istype(item_module, /obj/item/borg/sight))
+		var/obj/item/borg/sight/borg_sight = item_module
+		sight_mode &= ~borg_sight.sight_mode
 		update_sight()
 
 	if(client)
-		client.screen -= I
+		client.screen -= item_module
 
-	if(module_active == I)
+	if(module_active == item_module)
 		module_active = null
 
 	switch(module_num)
@@ -114,14 +114,14 @@
 			if(!(disabled_modules & BORG_MODULE_THREE_DISABLED))
 				inv3.icon_state = initial(inv3.icon_state)
 
-	if(I.item_flags & DROPDEL)
-		I.item_flags &= ~DROPDEL //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
+	if(item_module.item_flags & DROPDEL)
+		item_module.item_flags &= ~DROPDEL //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
 
 	held_items[module_num] = null
-	I.cyborg_unequip(src)
-	I.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
+	item_module.cyborg_unequip(src)
+	item_module.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
 
-	observer_screen_update(I, FALSE)
+	observer_screen_update(item_module, FALSE)
 	hud_used.update_robot_modules_display()
 	return TRUE
 
@@ -180,8 +180,8 @@
   * Breaks all of a cyborg's slots.
   */
 /mob/living/silicon/robot/proc/break_all_cyborg_slots()
-	for(var/S in 1 to 3)
-		break_cyborg_slot(S)
+	for(var/cyborg_slot in 1 to 3)
+		break_cyborg_slot(cyborg_slot)
 
 /**
   * Repairs the slot number, updating the icon.
@@ -221,24 +221,24 @@
   * Repairs all slots. Unbroken slots are unaffected.
   */
 /mob/living/silicon/robot/proc/repair_all_cyborg_slots()
-	for(var/S in 1 to 3)
-		repair_cyborg_slot(S)
+	for(var/cyborg_slot in 1 to 3)
+		repair_cyborg_slot(cyborg_slot)
 
 /**
   * Updates the observers's screens with cyborg itemss.
   * Arguments
-  * * I - the item being added or removed from the screen
+  * * item_module - the item being added or removed from the screen
   * * add - whether or not the item is being added, or removed.
   */
-/mob/living/silicon/robot/proc/observer_screen_update(obj/item/I,add = TRUE)
+/mob/living/silicon/robot/proc/observer_screen_update(obj/item/item_module, add = TRUE)
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			if(observe.client && observe.client.eye == src)
 				if(add)
-					observe.client.screen += I
+					observe.client.screen += item_module
 				else
-					observe.client.screen -= I
+					observe.client.screen -= item_module
 			else
 				observers -= observe
 				if(!observers.len)
@@ -255,27 +255,28 @@
   * Unequips all held items.
   */
 /mob/living/silicon/robot/proc/uneq_all()
-	for(var/I in 1 to 3)
-		if(held_items[I])
-			unequip_module_from_slot(held_items[I], I)
+	for(var/cyborg_slot in 1 to 3)
+		if(!held_items[cyborg_slot])
+			continue
+		unequip_module_from_slot(held_items[cyborg_slot], cyborg_slot)
 
 /**
   * Checks if the item is currently in a slot.
   *
   * If the item is found in a slot, this returns TRUE. Otherwise, it returns FALSE
   * Arguments
-  * * I - the item being checked
+  * * item_module - the item being checked
   */
-/mob/living/silicon/robot/proc/activated(obj/item/I)
-	if(I in held_items)
+/mob/living/silicon/robot/proc/activated(obj/item/item_module)
+	if(item_module in held_items)
 		return TRUE
 	return FALSE
 
 /**
   * Checks if the provided module number is a valid number.
   *
-  * If the number is between 1 and 3, or between 1 and the number of disabled
-  * modules (if check_all_slots is true), then it returns FALSE. Otherwise, it returns TRUE.
+  * If the number is between 1 and 3 (if check_all_slots is true) or between 1 and the number of disabled
+  * modules (if check_all_slots is false), then it returns FALSE. Otherwise, it returns TRUE.
   * Arguments
   * * module_num - the passed module num that is checked for validity.
   * * check_all_slots - TRUE = the proc checks all slots | FALSE = the proc only checks un-disabled slots
