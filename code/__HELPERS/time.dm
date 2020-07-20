@@ -41,18 +41,26 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	return GLOB.midnight_rollovers
 
 /proc/weekdayofthemonth()
-	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
-	switch(DD)
-		if(8 to 13)
-			return 2
-		if(14 to 20)
-			return 3
-		if(21 to 27)
-			return 4
-		if(28 to INFINITY)
-			return 5
-		else
-			return 1
+	var/day = time2text(world.timeofday, "DDD") 	// get the current day
+	var/date = text2num(time2text(world.timeofday, "DD")) 	// get the current date
+
+	switch(day)
+		if(MONDAY)
+			date -= 1
+		if(TUESDAY)
+			date -= 2
+		if(WEDNESDAY)
+			date -= 3
+		if(THURSDAY)
+			date -= 4
+		if(FRIDAY)
+			date -= 5
+		if(SATURDAY)
+			date -= 6
+		if(SUNDAY)
+			date -= 7
+
+	return CEILING(date / 7, 1) + 1
 
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
