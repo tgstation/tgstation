@@ -326,6 +326,9 @@
 	QDEL_LIST(all_roles)
 	turn = 0
 	votes = list()
+	//map gen does not deal with landmarks
+	QDEL_LIST(landmarks)
+	QDEL_NULL(town_center_landmark)
 	phase = MAFIA_PHASE_SETUP
 
 /**
@@ -573,9 +576,6 @@
 				basic_setup()
 			if("nuke")
 				end_game()
-				for(var/i in landmarks)
-					qdel(i)
-				qdel(town_center_landmark)
 				qdel(src)
 			if("next_phase")
 				var/datum/timedevent/timer = SStimer.timer_id_dict[next_phase_timer]
