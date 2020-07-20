@@ -79,7 +79,6 @@ export const backendReducer = (state = initialState, action) => {
     return {
       ...state,
       config,
-      assets: payload.assets || {},
       data,
       shared,
       visible,
@@ -253,7 +252,6 @@ export const sendAct = (action, payload = {}) => {
  *     },
  *   },
  *   data: any,
- *   assets: any,
  *   shared: any,
  *   visible: boolean,
  *   interactive: boolean,

@@ -1,4 +1,5 @@
 import { createSearch } from 'common/string';
+import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Icon, Input, Section } from '../components';
 import { Window } from '../layouts';
@@ -67,7 +68,7 @@ const OrbitedButton = (props, context) => {
           {"("}{thing.orbiters}{" "}
           <Box
             as="img"
-            src="ghost.png"
+            src={resolveAsset('ghost.png')}
             opacity={0.7} />
           {")"}
         </Box>

@@ -6,13 +6,22 @@
 				/datum/surgery_step/heal,
 				/datum/surgery_step/close)
 
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = FALSE
 	replaced_by = /datum/surgery
 	ignore_clothes = TRUE
 	var/healing_step_type
 	var/antispam = FALSE
+
+/datum/surgery/healing/can_start(mob/user, mob/living/patient)
+	. = ..()
+	if(isanimal(patient))
+		var/mob/living/simple_animal/critter = patient
+		if(!critter.healable)
+			return FALSE
+	if(!(patient.mob_biotypes & (MOB_ORGANIC|MOB_HUMANOID)))
+		return FALSE
 
 /datum/surgery/healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()

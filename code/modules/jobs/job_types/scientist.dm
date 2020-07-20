@@ -20,6 +20,7 @@
 	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
+	bounty_types = CIV_JOB_SCI
 
 /datum/outfit/job/scientist
 	name = "Scientist"
