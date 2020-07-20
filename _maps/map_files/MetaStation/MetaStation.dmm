@@ -27405,6 +27405,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/sign/directions/engineering{
+	dir = 4;
+	pixel_y = -24
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "blg" = (
@@ -28076,13 +28080,6 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/maintenance/starboard)
-"bmU" = (
-/obj/structure/sign/directions/engineering{
-	dir = 4;
-	pixel_y = 8
-	},
-/turf/closed/wall,
 /area/maintenance/starboard)
 "bmV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -118965,7 +118962,7 @@ aWw
 bhQ
 gjw
 blf
-bmU
+alq
 alq
 alq
 alq
