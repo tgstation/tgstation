@@ -365,6 +365,7 @@
 		for(var/datum/export/E in ex.total_amount)
 			total_report.total_amount[E] += ex.total_amount[E]
 			total_report.total_value[E] += ex.total_value[E]
+		playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 
 	points += value
 
@@ -380,7 +381,7 @@
 	if(sending)
 		return
 	sending = TRUE
-	status_report = "Sending..."
+	status_report = "Sending... "
 	pad.visible_message("<span class='notice'>[pad] starts charging up.</span>")
 	pad.icon_state = pad.warmup_state
 	sending_timer = addtimer(CALLBACK(src,.proc/send),warmup_time, TIMER_STOPPABLE)

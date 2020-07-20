@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - admin: "Adminhelps has gotten a little bit smarter. Improved handling of target dis- and re-connections, admin->admin PM now opens a ticket, players can no longer close their own tickets."

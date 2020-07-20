@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "All methods of changing text output, like singing (%), whispering (#), radio (;) and languages (,) all now work together in any order."

@@ -23293,18 +23293,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
-"bbZ" = (
-/obj/machinery/newscaster{
-	pixel_x = 1;
-	pixel_y = 34
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/obj/structure/disposalpipe/segment,
-/obj/item/kirbyplants/random,
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
 "bcb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/status_display/evac{
@@ -23973,15 +23961,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
-"bdt" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
-"bdu" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "bdv" = (
@@ -66256,15 +66235,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dxo" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
 "dxQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -68613,6 +68583,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"fNk" = (
+/obj/structure/sign/departments/cargo,
+/turf/closed/wall,
+/area/quartermaster/warehouse)
 "fNH" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -69300,12 +69274,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
-"gHt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/construction/storage_wing)
 "gHT" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -70280,6 +70248,14 @@
 /obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"itG" = (
+/obj/machinery/newscaster{
+	pixel_x = 1;
+	pixel_y = 34
+	},
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/quartermaster/sorting)
 "iuX" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -70419,6 +70395,12 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"iHb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "iHk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -71524,13 +71506,6 @@
 "krD" = (
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
-"ksI" = (
-/obj/item/radio/intercom{
-	pixel_x = -29
-	},
-/obj/item/kirbyplants/random,
-/turf/open/floor/plasteel,
-/area/construction/storage_wing)
 "ksN" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -74317,6 +74292,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"oYv" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/construction/storage_wing)
 "oZg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -75002,6 +74986,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"pXD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "pYC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -76753,6 +76743,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"syh" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "sze" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -77207,6 +77201,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"tAh" = (
+/obj/item/radio/intercom{
+	pixel_x = -29
+	},
+/obj/machinery/piratepad/civilian,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/camera{
+	c_tag = "Central Primary Hallway - Fore - Port Corner";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/construction/storage_wing)
 "tBJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
@@ -77542,6 +77548,16 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
+"ufe" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/plasteel,
+/area/construction/storage_wing)
 "ugf" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/tile/blue{
@@ -78674,6 +78690,16 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"vZX" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/disposalpipe/segment,
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "waj" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -78940,20 +78966,6 @@
 "wtq" = (
 /turf/closed/wall,
 /area/maintenance/aft/secondary)
-"wtw" = (
-/obj/machinery/camera{
-	c_tag = "Central Primary Hallway - Fore - Port Corner";
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/turf/open/floor/plasteel,
-/area/construction/storage_wing)
 "wtW" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -79458,16 +79470,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/janitor)
-"xdZ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/obj/structure/disposalpipe/segment,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
 "xel" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/backpack/duffelbag/med/surgery,
@@ -101481,9 +101483,9 @@ aVO
 aXr
 bmm
 baB
-bbY
-bdt
-dxo
+iHb
+pXD
+bgY
 bgY
 biP
 bku
@@ -101732,15 +101734,15 @@ aSZ
 aSZ
 aSZ
 aSZ
-aSZ
+fNk
 rVn
 mBz
 aXs
 bmh
 bmh
-bbZ
-bdu
-xdZ
+itG
+syh
+biQ
 biQ
 biQ
 bkv
@@ -101993,8 +101995,8 @@ aTa
 dhL
 pMn
 vpX
-ksI
-bmk
+tAh
+ufe
 bmk
 bdv
 bff
@@ -102250,8 +102252,8 @@ aTb
 aUo
 aXo
 aXu
-gHt
-wtw
+oYv
+aXq
 bmk
 bdw
 bfg
@@ -103023,7 +103025,7 @@ aVR
 aXx
 aYW
 baH
-bfi
+vZX
 bfi
 xYW
 vTZ

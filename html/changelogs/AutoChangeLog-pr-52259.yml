@@ -1,4 +1,0 @@
-author: "Caldony"
-delete-after: True
-changes: 
-  - bugfix: "the microwave will no longer be turned on infinitely when the power is cut off while it's still on"

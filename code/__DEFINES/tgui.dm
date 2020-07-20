@@ -21,8 +21,6 @@
 #define TGUI_WINDOW_LOADING 1
 /// Window is free and ready to receive data
 #define TGUI_WINDOW_READY 2
-/// Window is in use by a tgui datum
-#define TGUI_WINDOW_ACTIVE 3
 
 /// Get a window id based on the provided pool index
 #define TGUI_WINDOW_ID(index) "tgui-window-[index]"
