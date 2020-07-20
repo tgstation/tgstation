@@ -111,3 +111,8 @@
 	name = "HA, GOTTEM"
 	desc = "Made you look!"
 	database_id = MEDAL_GOTTEM
+
+/datum/award/achievement/misc/beanball
+	name = "Brained Bird"
+	desc = "Today, Poly learned a very important lesson about trash talking those who are capable of throwing things over 100MPH."
+	database_id = MEDAL_BEANBALL

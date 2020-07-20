@@ -432,6 +432,11 @@
 	name = "\improper DNA injector (Anti-Antiglowy)"
 	remove_mutations = list(ANTIGLOWY)
 
+/obj/item/dnainjector/fastball
+	name = "\improper DNA injector (Randy Johnson Syndrome)"
+	desc = "The 26th century version of steroids."
+	add_mutations = list(FASTBALL)
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 

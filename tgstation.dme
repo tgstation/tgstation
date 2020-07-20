@@ -599,6 +599,7 @@
 #include "code\datums\mutations\body.dm"
 #include "code\datums\mutations\chameleon.dm"
 #include "code\datums\mutations\cold.dm"
+#include "code\datums\mutations\fastball.dm"
 #include "code\datums\mutations\hulk.dm"
 #include "code\datums\mutations\radioactive.dm"
 #include "code\datums\mutations\sight.dm"

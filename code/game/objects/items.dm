@@ -631,29 +631,32 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 
 /obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(hit_atom && !QDELETED(hit_atom))
-		SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-		if(get_temperature() && isliving(hit_atom))
-			var/mob/living/L = hit_atom
-			L.IgniteMob()
-		var/itempush = 1
-		if(w_class < 4)
-			itempush = 0 //too light to push anything
-		if(istype(hit_atom, /mob/living)) //Living mobs handle hit sounds differently.
-			var/volume = get_volume_by_throwforce_and_or_w_class()
-			if (throwforce > 0)
-				if (mob_throw_hit_sound)
-					playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
-				else if(hitsound)
-					playsound(hit_atom, hitsound, volume, TRUE, -1)
-				else
-					playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
-			else
-				playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+	if(!hit_atom || QDELETED(hit_atom))
+		return
 
-		else
-			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+	if(get_temperature() && isliving(hit_atom))
+		var/mob/living/L = hit_atom
+		L.IgniteMob()
+	var/itempush = 1
+	if(w_class < 4)
+		itempush = 0 //too light to push anything
+
+	if(!isliving(hit_atom)) //Living mobs handle hit sounds differently.
+		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
+
+	var/volume = get_volume_by_throwforce_and_or_w_class()
+	if(throwforce <= 0)
+		playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+	else if (mob_throw_hit_sound)
+		playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
+	else if(hitsound)
+		playsound(hit_atom, hitsound, volume, TRUE, -1)
+	else
+		playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
+
+	return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))

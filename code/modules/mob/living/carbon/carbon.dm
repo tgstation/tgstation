@@ -181,16 +181,15 @@
 	return
 
 /mob/living/carbon/get_throwspeed_mods(atom/thrown_thing)
-	var/power_throw = 0
+	. = 0
 	if(HAS_TRAIT(src, TRAIT_HULK))
-		power_throw++
+		.++
 	if(HAS_TRAIT(src, TRAIT_DWARF))
-		power_throw--
+		.--
 	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
-		power_throw++
+		.++
 	if(pulling && grab_state >= GRAB_NECK)
-		power_throw++
-	return power_throw
+		.++
 
 /mob/living/carbon/restrained(ignore_grab)
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
