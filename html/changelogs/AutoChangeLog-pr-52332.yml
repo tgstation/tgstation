@@ -1,0 +1,4 @@
+author: "Winterous"
+delete-after: True
+changes: 
+  - tweak: "Large water bottles (made from plastic) now have the same starting and optional transfer volumes as large beakers."

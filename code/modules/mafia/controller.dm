@@ -326,6 +326,9 @@
 	QDEL_LIST(all_roles)
 	turn = 0
 	votes = list()
+	//map gen does not deal with landmarks
+	QDEL_LIST(landmarks)
+	QDEL_NULL(town_center_landmark)
 	phase = MAFIA_PHASE_SETUP
 
 /**
@@ -573,9 +576,6 @@
 				basic_setup()
 			if("nuke")
 				end_game()
-				for(var/i in landmarks)
-					qdel(i)
-				qdel(town_center_landmark)
 				qdel(src)
 			if("next_phase")
 				var/datum/timedevent/timer = SStimer.timer_id_dict[next_phase_timer]
@@ -651,10 +651,13 @@
 			judgement_guilty_votes -= user_role//no double voting
 			judgement_guilty_votes += user_role
 
-/datum/mafia_controller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, null, force_open)
+/datum/mafia_controller/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/mafia_controller/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, null)
 	if(!ui)
-		ui = new(user, src, ui_key, "MafiaPanel", "Mafia", 650, 550, master_ui, state)
+		ui = new(user, src, "MafiaPanel")
 		ui.set_autoupdate(FALSE)
 		ui.open()
 

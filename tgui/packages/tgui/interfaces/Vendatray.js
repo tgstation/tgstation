@@ -1,12 +1,10 @@
-import { useBackend } from '../backend';
 import { Fragment } from 'inferno';
-import { Button, LabeledList, Section, Flex, Box } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Vendatray = (props, context) => {
   const { act, data } = useBackend(context);
-  const locked = data.locked && !data.siliconUser;
   const {
     product_name,
     product_cost,
@@ -15,7 +13,9 @@ export const Vendatray = (props, context) => {
     owner_name,
   } = data;
   return (
-    <Window>
+    <Window
+      width={300}
+      height={270}>
       <Window.Content>
         <Flex
           mb={1}>

@@ -40,15 +40,12 @@
 	name = "satellite control"
 	desc = "Used to control the satellite network."
 	circuit = /obj/item/circuitboard/computer/sat_control
-	ui_x = 400
-	ui_y = 305
-
 	var/notice
 
-/obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/sat_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "SatelliteControl", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "SatelliteControl", name)
 		ui.open()
 
 /obj/machinery/computer/sat_control/ui_act(action, params)

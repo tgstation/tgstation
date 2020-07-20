@@ -1,4 +1,4 @@
-/*
+/**
  * Paper
  * also scraps of paper
  *
@@ -11,12 +11,11 @@
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
 
-
 /**
- ** This is a custom ui state.  All it really does is keep track of pen
- ** being used and if they are editing it or not.  This way we can keep
- ** the data with the ui rather than on the paper
- **/
+ * This is a custom ui state.  All it really does is keep track of pen
+ * being used and if they are editing it or not.  This way we can keep
+ * the data with the ui rather than on the paper
+ */
 /datum/ui_state/default/paper_state
 	/// What edit mode we are in and who is
 	/// writing on it right now
@@ -33,7 +32,6 @@
 	var/stamp_name = ""
 	var/stamp_class = ""
 
-
 /datum/ui_state/default/paper_state/proc/copy_from(datum/ui_state/default/paper_state/from)
 	switch(from.edit_mode)
 		if(MODE_READING)
@@ -49,12 +47,11 @@
 			stamp_class = from.stamp_class
 			stamp_name = from.stamp_name
 
-
 /**
- ** Paper is now using markdown (like in github pull notes) for ALL rendering
- ** so we do loose a bit of functionality but we gain in easy of use of
- ** paper and getting rid of that crashing bug
- **/
+ * Paper is now using markdown (like in github pull notes) for ALL rendering
+ * so we do loose a bit of functionality but we gain in easy of use of
+ * paper and getting rid of that crashing bug
+ */
 /obj/item/paper
 	name = "paper"
 	gender = NEUTER
@@ -92,9 +89,6 @@
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
 
-	// ui stuff
-	var/ui_x = 600
-	var/ui_y = 800
 	// Ok, so WHY are we caching the ui's?
 	// Since we are not using autoupdate we
 	// need some way to update the ui's of
@@ -105,7 +99,6 @@
 	// live updates and have multipule
 	// people look at it
 	var/list/viewing_ui = list()
-
 
 	/// When the sheet can be "filled out"
 	/// This is an associated list
@@ -119,10 +112,10 @@
 	. = ..()
 
 /**
- ** This proc copies this sheet of paper to a new
- ** sheet,  Makes it nice and easy for carbon and
- ** the copyer machine
- **/
+ * This proc copies this sheet of paper to a new
+ * sheet,  Makes it nice and easy for carbon and
+ * the copyer machine
+ */
 /obj/item/paper/proc/copy()
 	var/obj/item/paper/N = new(arglist(args))
 	N.info = info
@@ -136,10 +129,10 @@
 	return N
 
 /**
- ** This proc sets the text of the paper and updates the
- ** icons.  You can modify the pen_color after if need
- ** be.
- **/
+ * This proc sets the text of the paper and updates the
+ * icons.  You can modify the pen_color after if need
+ * be.
+ */
 /obj/item/paper/proc/setText(text)
 	info = text
 	form_fields = null
@@ -155,23 +148,15 @@
 			contact_poison = null
 	. = ..()
 
-
 /obj/item/paper/Initialize()
 	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
 	update_icon()
 
-
 /obj/item/paper/update_icon_state()
 	if(info && show_written_words)
 		icon_state = "[initial(icon_state)]_words"
-
-/obj/item/paper/ui_base_html(html)
-	/// This might change in a future PR
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
-
 
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
@@ -192,16 +177,13 @@
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
-
 /obj/item/paper/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
 
-
 /// ONLY USED FOR APRIL FOOLS
 /obj/item/paper/proc/reset_spamflag()
 	spam_flag = FALSE
-
 
 /obj/item/paper/attack_self(mob/user)
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
@@ -211,7 +193,6 @@
 			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
 	. = ..()
 
-
 /obj/item/paper/proc/clearpaper()
 	info = ""
 	stamps = null
@@ -219,30 +200,28 @@
 	cut_overlays()
 	update_icon_state()
 
-
 /obj/item/paper/examine_more(mob/user)
 	ui_interact(user)
 	return list("<span class='notice'><i>You try to read [src]...</i></span>")
 
-
 /obj/item/paper/can_interact(mob/user)
 	if(!..())
 		return FALSE
-	if(resistance_flags & ON_FIRE)		// Are we on fire?  Hard ot read if so
+	// Are we on fire?  Hard ot read if so
+	if(resistance_flags & ON_FIRE)
 		return FALSE
-	if(user.is_blind())					// Even harder to read if your blind...braile? humm
+	// Even harder to read if your blind...braile? humm
+	if(user.is_blind())
 		return FALSE
-	return user.can_read(src)			// checks if the user can read.
-
+	// checks if the user can read.
+	return user.can_read(src)
 
 /**
- ** This creates the ui, since we are using a custom state but not much else
- ** just makes it easyer to make it.  Also we make a custom ui_key as I am
- ** not sure how tgui handles many producers?
-**/
+ * This creates the ui, since we are using a custom state but not much else
+ * just makes it easyer to make it.
+ */
 /obj/item/paper/proc/create_ui(mob/user, datum/ui_state/default/paper_state/state)
-	ui_interact(user, "main", null, FALSE, null, state)
-
+	ui_interact(user, state = state)
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
 	var/ignition_message = I.ignition_effect(src, user)
@@ -317,24 +296,27 @@
 	if(.)
 		info = "[stars(info)]"
 
-/obj/item/paper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/default/paper_state/state = new)
-	ui_key = "main-[REF(user)]"
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/paper/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/simple/paper),
+	)
+
+/obj/item/paper/ui_interact(mob/user, datum/tgui/ui,
+		datum/ui_state/default/paper_state/state)
+	// Update the state
+	ui = ui || SStgui.get_open_ui(user, src)
+	if(ui && state)
+		var/datum/ui_state/default/paper_state/current_state = ui.state
+		current_state.copy_from(state)
+	// Update the UI
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-		assets.send(user)
-		// The x size is because we double the width for the editor
-		ui = new(user, src, ui_key, "PaperSheet", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "PaperSheet", name)
+		state = new
+		ui.set_state(state)
 		ui.set_autoupdate(FALSE)
 		viewing_ui[user] = ui
 		ui.open()
-	else
-		var/datum/ui_state/default/paper_state/last_state = ui.state
-		if(last_state)
-			last_state.copy_from(state)
-		else
-			ui.state = state
-
 
 /obj/item/paper/ui_close(mob/user)
 	/// close the editing window and change the mode
@@ -344,7 +326,7 @@
 // Again, we have to do this as autoupdate is off
 /obj/item/paper/proc/update_all_ui()
 	for(var/datum/tgui/ui in viewing_ui)
-		ui.update()
+		ui.process(force = TRUE)
 
 // Again, we have to do this as autoupdate is off
 /obj/item/paper/proc/close_all_ui()
@@ -379,7 +361,6 @@
 	data["form_fields"] = form_fields
 
 	return data
-
 
 /obj/item/paper/ui_act(action, params, datum/tgui/ui, datum/ui_state/default/paper_state/state)
 	if(..())
@@ -442,21 +423,18 @@
 
 			. = TRUE
 
-
-/*
+/**
  * Construction paper
  */
-
 /obj/item/paper/construction
 
 /obj/item/paper/construction/Initialize()
 	. = ..()
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
-/*
+/**
  * Natural paper
  */
-
 /obj/item/paper/natural/Initialize()
 	. = ..()
 	color = "#FFF5ED"

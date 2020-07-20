@@ -35,7 +35,7 @@
 	..()
 	ui_interact(user)
 
-/obj/structure/votebox/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
+/obj/structure/votebox/ui_interact(mob/user)
 	. = ..()
 
 	var/list/dat = list()

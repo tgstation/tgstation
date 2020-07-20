@@ -73,7 +73,7 @@
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("icon")
+			if(NAMEOF(src, icon))
 				SStitle.icon = icon
 
 /turf/closed/indestructible/riveted

@@ -47,6 +47,14 @@ SUBSYSTEM_DEF(economy)
 							"rainbow" = 1000)
 	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
 	var/list/dep_cards = list()
+	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
+	var/station_total = 0
+	/// A var that tracks how much money is expected to be on station at a given time. If less than station_total prices go up in vendors.
+	var/station_target = 1
+	/// A var that displays the result of inflation_value for easier debugging and tracking.
+	var/inflation_value = 1
+	/// Contains the message to send to newscasters about price inflation and earnings, updated on price_update()
+	var/earning_report
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
@@ -60,10 +68,14 @@ SUBSYSTEM_DEF(economy)
 	secmedsrv_payout() // Payout based on crew safety, health, and mood.
 	civ_payout() // Payout based on ??? Profit
 	car_payout() // Cargo's natural gain in the cash moneys.
+	station_total = 0
 	for(var/A in bank_accounts)
 		var/datum/bank_account/B = A
 		B.payday(1)
-
+		if(!istype(B, /datum/bank_account/department))
+			station_total += B.account_balance
+			station_target += (STATION_TARGET_INCREMENT - generated_accounts.len) //More generous the less crew there are.
+	price_update()
 
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)
@@ -137,3 +149,33 @@ SUBSYSTEM_DEF(economy)
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
 	if(D)
 		D.adjust_money(min(civ_cash, MAX_GRANT_CIV))
+
+
+/**
+  * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
+  *
+  * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
+  **/
+/datum/controller/subsystem/economy/proc/price_update()
+	for(var/obj/machinery/vending/V in GLOB.machines)
+		if(istype(V, /obj/machinery/vending/custom))
+			continue
+		if(!is_station_level(V.z))
+			continue
+		V.reset_prices(V.product_records, V.coin_records)
+		V.updateUsrDialog()
+	earning_report = "Sector Economic Report<br /> Sector price inflation is currently at [SSeconomy.inflation_value()*100]%.<br /> The station budget is currently <b>[station_total] Credits</b>, and the station's targeted allowance is at <b>[station_target] Credits</b>.<br /> That's all from the <i>Nanotrasen Economist Division</i>."
+	GLOB.news_network.SubmitArticle(earning_report, "Station Earnings Report", "Station Announcements", null)
+
+/**
+  * Proc that returns a value meant to undercut the value of civilian bounties, based on how much money exists on the station.
+  *
+  * If crew are somehow aquiring far too much money, this value will dynamically cause vendables across the station to skyrocket in price until some money is spent.
+  **/
+/datum/controller/subsystem/economy/proc/inflation_value()
+	if(station_total > station_target)
+		var/holder = station_total - station_target
+		holder = clamp(round((holder / max(station_target,1) + 1),0.1),1,5)
+		inflation_value = holder
+		return holder
+	return 1
