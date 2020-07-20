@@ -5,7 +5,7 @@ import { Button, Input, LabeledList, Section, Table, NoticeBox, NumberInput, Lab
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
-export const Tcomm = (props, context) => {
+export const Telecomms = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     type,
@@ -53,7 +53,7 @@ export const Tcomm = (props, context) => {
                 <Input
                   width={13}
                   value={id}
-                  onChange={(e, value) => act('id', { value: value })} />
+                  onChange={(e, value) => act('id', { value })} />
               } />
             <LabeledList.Item 
               label="Network"
@@ -62,7 +62,7 @@ export const Tcomm = (props, context) => {
                   width={10}
                   value={network}
                   defaultValue={"tcommsat"}
-                  onChange={(e, value) => act('network', { value: value })} />
+                  onChange={(e, value) => act('network', { value })} />
               } />
             <LabeledList.Item 
               label="Prefabrication"
@@ -86,9 +86,12 @@ export const Tcomm = (props, context) => {
                     <Table.Cell>
                       {RADIO_CHANNELS
                         .find(channel => channel.freq === changefrequency) && (
-                        <Box inline color={RADIO_CHANNELS
-                          .find(channel => channel.freq === changefrequency)
-                          .color} ml={2}>
+                        <Box
+                          inline
+                          color={RADIO_CHANNELS
+                            .find(channel => channel.freq === changefrequency)
+                            .color} 
+                          ml={2}>
                           [{RADIO_CHANNELS
                             .find(channel => channel
                               .freq === changefrequency).name}]
@@ -104,7 +107,7 @@ export const Tcomm = (props, context) => {
                       maxValue={maxfreq / 10}
                       value={changefrequency / 10}
                       onChange={(e, value) => act(
-                        'change_freq', { value: value })}
+                        'change_freq', { value })}
                     />
                     <Button 
                       icon={"times"}
@@ -156,9 +159,12 @@ export const Tcomm = (props, context) => {
                     <Table.Cell>
                       {RADIO_CHANNELS
                         .find(channel => channel.freq === entry) && (
-                        <Box inline color={RADIO_CHANNELS
-                          .find(channel => channel.freq === entry)
-                          .color} ml={2}>
+                        <Box
+                          inline 
+                          color={RADIO_CHANNELS
+                            .find(channel => channel.freq === entry)
+                            .color} 
+                          ml={2}>
                           [{RADIO_CHANNELS
                             .find(channel => channel
                               .freq === entry).name } ]
@@ -181,13 +187,16 @@ export const Tcomm = (props, context) => {
                     </Table.Cell>
                     <Table.Cell>
                       {RADIO_CHANNELS
-                        .find(channel => channel.freq === (frequency * 10)) && (
-                        <Box inline color={RADIO_CHANNELS
-                          .find(channel => channel.freq === (frequency * 10))
-                          .color} ml={2}>
+                        .find(channel => channel.freq === frequency) && (
+                        <Box 
+                          inline 
+                          color={RADIO_CHANNELS
+                            .find(channel => channel.freq === frequency)
+                            .color} 
+                          ml={2}>
                           [{RADIO_CHANNELS
                             .find(channel => channel
-                              .freq === (frequency * 10)).name}]
+                              .freq === frequency).name}]
                         </Box>
                       )}
                     </Table.Cell>
@@ -199,9 +208,9 @@ export const Tcomm = (props, context) => {
                         stepPixelSize={10}
                         minValue={minfreq / 10}
                         maxValue={maxfreq / 10}
-                        value={frequency}
+                        value={frequency / 10}
                         onChange={(e, value) => act(
-                          "tempfreq", { value: value })}
+                          "tempfreq", { value })}
                       />
                     </Table.Cell>
                     <Button 

@@ -7,7 +7,7 @@
 
 /obj/machinery/telecomms
 	var/temp = "" // output message
-	var/tempfreq = FREQ_COMMON / 10
+	var/tempfreq = FREQ_COMMON
 	var/mob/living/operator
 
 /obj/machinery/telecomms/attackby(obj/item/P, mob/user, params)
@@ -33,7 +33,7 @@
 	operator = user
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Tcomm")
+		ui = new(user, src, "Telecomms")
 		ui.open()
 
 /obj/machinery/telecomms/ui_data(mob/user)
@@ -48,7 +48,7 @@
 	var/obj/item/multitool/heldmultitool = get_multitool(user)
 	data["multitool"] = heldmultitool
 
-	if(heldmultitool) 
+	if(heldmultitool)
 		data["multibuff"] = heldmultitool.buffer
 
 	data["toggled"] = toggled
@@ -97,11 +97,19 @@
 			. = TRUE
 		if("id")
 			if(params["value"])
-				id = params["value"]
-				. = TRUE
+				if(length(params["value"]) > 32)
+					to_chat(operator, "<span class='warning'>Error: Machine ID too long!</span>")
+					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+					return
+				else
+					id = params["value"]
+					log_game("[key_name(operator)] has changed the ID for [src] at [AREACOORD(src)] to [id].")
+					. = TRUE
 		if("network")
 			if(params["value"])
 				if(length(params["value"]) > 15)
+					to_chat(operator, "<span class='warning'>Error: Network name too long!</span>")
+					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
 					for(var/obj/machinery/telecomms/T in links)
@@ -112,7 +120,7 @@
 					. = TRUE
 		if("tempfreq")
 			if(params["value"])
-				tempfreq = text2num(params["value"])
+				tempfreq = text2num(params["value"]) * 10
 		if("freq")
 			var/newfreq = tempfreq * 10
 			if(newfreq == FREQ_SYNDICATE)
@@ -186,10 +194,8 @@
 /obj/machinery/telecomms/bus/add_act(action, params)
 	switch(action)
 		if("change_freq")
-			var/newfreq = params["value"]
+			var/newfreq = text2num(params["value"]) * 10
 			if(newfreq)
-				if(findtext(num2text(newfreq), "."))
-					newfreq *= 10 // shift the decimal one place
 				if(newfreq < 10000)
 					change_frequency = newfreq
 					. = TRUE
