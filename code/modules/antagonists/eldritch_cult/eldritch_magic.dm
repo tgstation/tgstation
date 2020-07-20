@@ -572,7 +572,10 @@
 
 	var/message = sanitize(input("Message:", "Telepathy from the Manse") as text|null)
 
-	if(!originator || !(living_owner in originator.linked_mobs))
+	if(QDELETED(living_owner))
+		return
+
+	if(QDELETED(originator) || !(living_owner in originator.linked_mobs))
 		to_chat(living_owner, "<span class='warning'>The link seems to have been severed...</span>")
 		Remove(living_owner)
 		return
