@@ -542,12 +542,13 @@
 
 	to_chat(originator, "<span class='notice'>You begin linking [target]'s mind to yours...</span>")
 	to_chat(target, "<span class='warning'>You feel your mind being pulled... connected... intertwined with the very fabric of reality...</span>")
-	if(do_after(originator, 60, target))
-		if(originator.link_mob(target))
-			to_chat(originator, "<span class='notice'>You connect [target]'s mind to your mansus link!</span>")
-		else
-			to_chat(originator, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
-			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
+	if(!do_after(originator, 6 SECONDS, target))
+		return
+	if(!originator.link_mob(target))
+		to_chat(originator, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
+		to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
+		return
+	to_chat(originator, "<span class='notice'>You connect [target]'s mind to your mansus link!</span>")
 
 
 /datum/action/innate/mansus_speech
