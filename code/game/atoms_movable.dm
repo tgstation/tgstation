@@ -96,12 +96,12 @@
 		orbiting.end_orbit(src)
 		orbiting = null
 
+	. = ..()
+
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
 	LAZYCLEARLIST(client_mobs_in_contents)
-
-	. = ..()
 
 	moveToNullspace()
 
