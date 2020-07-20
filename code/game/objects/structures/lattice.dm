@@ -121,3 +121,123 @@
 		else
 			to_chat(user, "<span class='warning'>You need one floor tile to build atop [src].</span>")
 		return
+
+
+/obj/structure/lattice/lift
+	name = "lift lattice"
+	desc = "A lightweight support lattice. These hold lift platform together."
+	icon = 'icons/obj/smooth_structures/lattice.dmi'
+	icon_state = "lattice"
+	density = FALSE
+	anchored = TRUE
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+	max_integrity = 50
+	layer = LATTICE_LAYER //under pipes
+	plane = FLOOR_PLANE
+	var/number_of_mats = 1
+	var/build_material = /obj/item/stack/rods
+	canSmoothWith = list(/obj/structure/lattice/lift)//add lift support here later
+	smooth = SMOOTH_MORE
+	//	flags = CONDUCT_1
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	
+	var/list/lift_load = list() //things to move
+
+
+/obj/structure/lattice/lift/Initialize(mapload)
+	. = ..()
+
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/AddItemOnLift)
+	RegisterSignal(src, COMSIG_MOVABLE_UNCROSS, .proc/RemoveItemFromLift)
+
+/obj/structure/lattice/lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
+	lift_load -= AM
+	//UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+
+/obj/structure/lattice/lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
+	if(istype(AM))
+		lift_load |= AM
+		//RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromLift) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	else
+		WARNING("Try load wrong type on lift")
+
+/obj/structure/lattice/lift/proc/travel(going_up, mob/user, is_ghost, var/turf/destination)
+	if(!is_ghost)
+		show_fluff_message(going_up, user)
+		add_fingerprint(user)
+
+//	var/OldLoc=loc
+	forceMove(destination)
+//	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
+//		M.forceMove(loc)
+	for(var/x in lift_load)
+		var/atom/movable/AM = x
+		if(!AM.forceMove(destination))
+			RemoveItemFromLift(AM, AM.loc)	
+
+/obj/structure/lattice/lift/proc/use(mob/user, is_ghost=FALSE)
+	if (!is_ghost && !in_range(src, user))
+		return
+
+	var/list/tool_list = list(
+		"Up" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
+		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+		)
+
+	var/turf/down_level = get_step_multiz(src, UP)
+	var/turf/up_level = get_step_multiz(src, DOWN)
+
+	if (up_level || down_level)
+		var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+		if (!is_ghost && !in_range(src, user))
+			return  // nice try
+		switch(result)
+			if("Up")
+				if(up_level)
+					travel(TRUE, user, is_ghost, up_level)
+				else
+					to_chat(user, "<span class='warning'>[src] doesn't seem to able move up!</span>")
+			if("Down")
+				if(down_level)
+					travel(FALSE, user, is_ghost, down_level)
+				else
+					to_chat(user, "<span class='warning'>[src] doesn't seem to able move down!</span>")
+			if("Cancel")
+				return
+	else
+		to_chat(user, "<span class='warning'>[src] doesn't seem to able move anywhere!</span>")
+
+	if(!is_ghost)
+		add_fingerprint(user)
+
+/obj/structure/lattice/lift/proc/check_menu(mob/user)
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+/obj/structure/lattice/lift/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	use(user)
+
+/obj/structure/lattice/lift/attack_paw(mob/user)
+	return use(user)
+
+/obj/structure/lattice/lift/attackby(obj/item/W, mob/user, params)
+	return use(user)
+
+/obj/structure/lattice/lift/attack_robot(mob/living/silicon/robot/R)
+	if(R.Adjacent(src))
+		return use(R)
+
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
+/obj/structure/lattice/lift/attack_ghost(mob/dead/observer/user)
+	use(user, TRUE)
+	return ..()
+
+/obj/structure/lattice/lift/proc/show_fluff_message(going_up, mob/user)
+	if(going_up)
+		user.visible_message("<span class='notice'>[user] move lift up [src].</span>", "<span class='notice'>Lift move up [src].</span>")
+	else
+		user.visible_message("<span class='notice'>[user] move lift down [src].</span>", "<span class='notice'>Lift move down [src].</span>")
