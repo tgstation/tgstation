@@ -137,7 +137,7 @@ SUBSYSTEM_DEF(discord)
 	if(!CONFIG_GET(flag/enable_discord_autorole))
 		return
 
-	var/url = "https://discordapp.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[id]/roles/[CONFIG_GET(string/discord_roleid)]"
+	var/url = "https://discord.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[id]/roles/[CONFIG_GET(string/discord_roleid)]"
 
 	// Make the request
 	var/datum/http_request/req = new()

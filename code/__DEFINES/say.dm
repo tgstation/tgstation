@@ -2,8 +2,12 @@
 	Defines for use in saycode and text formatting.
 	Currently contains speech spans and message modes
 */
+#define RADIO_EXTENSION "department specific"
+#define RADIO_KEY "department specific key"
+#define LANGUAGE_EXTENSION "language specific"
 
 //Message modes. Each one defines a radio channel, more or less.
+//if you use ! as a mode key for some ungodly reason, change the first character for ionnum() so get_message_mode() doesn't freak out with state law prompts - shiz.
 #define MODE_HEADSET "headset"
 #define MODE_ROBOT "robot"
 
@@ -21,6 +25,7 @@
 #define MODE_KEY_BINARY "b"
 #define MODE_TOKEN_BINARY ":b"
 
+#define WHISPER_MODE "the type of whisper"
 #define MODE_WHISPER "whisper"
 #define MODE_WHISPER_CRIT "whispercrit"
 
@@ -46,7 +51,7 @@
 
 #define MODE_MONKEY "monkeyhive"
 
-#define MODE_SING "%"
+#define MODE_SING "sing"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"

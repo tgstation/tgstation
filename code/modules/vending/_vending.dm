@@ -318,10 +318,34 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.custom_price = initial(temp.custom_price)
-		R.custom_premium_price = initial(temp.custom_premium_price)
+		R.custom_price = initial(temp.custom_price) * SSeconomy.inflation_value()
+		R.custom_premium_price = initial(temp.custom_premium_price) * SSeconomy.inflation_value()
 		R.age_restricted = initial(temp.age_restricted)
 		recordlist += R
+
+/**
+  * Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy
+  *
+  * This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
+  * Arguments:
+  * * recordlist - the list of standard product datums in the vendor to refresh their prices.
+  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
+  */
+/obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
+	for(var/R in recordlist)
+		var/datum/data/vending_product/record = R
+		var/atom/potential_product = record.product_path
+		record.custom_price = round(initial(potential_product.custom_price) * SSeconomy.inflation_value())
+	for(var/R in premiumlist)
+		var/datum/data/vending_product/record = R
+		var/atom/potential_product = record.product_path
+		var/premium_sanity = round(initial(potential_product.custom_premium_price))
+		if(premium_sanity)
+			record.custom_premium_price = round(premium_sanity * SSeconomy.inflation_value())
+			continue
+		//For some ungodly reason, some premium only items only have a custom_price
+		record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price) * (SSeconomy.inflation_value() - 1)))
+
 /**
   * Refill a vending machine from a refill canister
   *

@@ -285,8 +285,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
 					brain.Remove(C,TRUE, TRUE) //brain argument used so it doesn't cause any... sudden death.
 					QDEL_NULL(brain)
-			oldorgan.Remove(C,TRUE)
-			QDEL_NULL(oldorgan)
+					oldorgan = null //now deleted
+			else
+				oldorgan.Remove(C,TRUE)
+				QDEL_NULL(oldorgan) //we cannot just tab this out because we need to skip the deleting if it is a decoy brain.
+
 
 		if(oldorgan)
 			oldorgan.setOrganDamage(0)

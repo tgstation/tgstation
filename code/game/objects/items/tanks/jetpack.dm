@@ -74,7 +74,7 @@
 /obj/item/tank/jetpack/proc/move_react(mob/user)
 	if(!on)//If jet dont work, it dont work
 		return
-	if(!user)//Don't allow jet self using
+	if(!user || !user.client)//Don't allow jet self using
 		return
 	if(!isturf(user.loc))//You can't use jet in nowhere or from mecha/closet
 		return
