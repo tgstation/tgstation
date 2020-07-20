@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 //SS_TICKER subsystem, so wait is in ticks
 	init_order = INIT_ORDER_TIMER
+	priority = FIRE_PRIORITY_TIMER
 
 	flags = SS_TICKER|SS_NO_INIT
 
@@ -39,7 +40,7 @@ SUBSYSTEM_DEF(timer)
 	bucket_resolution = world.tick_lag
 
 /datum/controller/subsystem/timer/stat_entry(msg)
-	..("B:[bucket_count] P:[length(second_queue)] H:[length(hashes)] C:[length(clienttime_timers)] S:[length(timer_id_dict)]")
+	..("B:[bucket_count] P:[second_queue.len] H:[hashes.len] C:[clienttime_timers.len] S:[timer_id_dict.len]")
 
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
 	var/lit = last_invoke_tick
@@ -58,7 +59,7 @@ SUBSYSTEM_DEF(timer)
 			bucket_resolution = 0
 
 		log_world("Timer bucket reset. world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
-		for (var/i in 1 to length(bucket_list))
+		for (var/i in 1 to bucket_list.len)
 			var/datum/timedevent/bucket_head = bucket_list[i]
 			if (!bucket_head)
 				continue
@@ -77,9 +78,7 @@ SUBSYSTEM_DEF(timer)
 			log_world(get_timer_debug_string(I))
 
 	var/next_clienttime_timer_index = 0
-	var/len = length(clienttime_timers)
-
-	for (next_clienttime_timer_index in 1 to len)
+	for (next_clienttime_timer_index in 1 to clienttime_timers.len)
 		if (MC_TICK_CHECK)
 			next_clienttime_timer_index--
 			break
@@ -90,7 +89,7 @@ SUBSYSTEM_DEF(timer)
 
 		var/datum/callback/callBack = ctime_timer.callBack
 		if (!callBack)
-			clienttime_timers.Cut(next_clienttime_timer_index,next_clienttime_timer_index+1)
+			clienttime_timers.Cut(next_clienttime_timer_index, next_clienttime_timer_index + 1)
 			CRASH("Invalid timer: [get_timer_debug_string(ctime_timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset], REALTIMEOFDAY: [REALTIMEOFDAY]")
 
 		ctime_timer.spent = REALTIMEOFDAY
@@ -105,7 +104,7 @@ SUBSYSTEM_DEF(timer)
 
 
 	if (next_clienttime_timer_index)
-		clienttime_timers.Cut(1, next_clienttime_timer_index+1)
+		clienttime_timers.Cut(1, next_clienttime_timer_index + 1)
 
 	if (MC_TICK_CHECK)
 		return
@@ -117,7 +116,7 @@ SUBSYSTEM_DEF(timer)
 		practical_offset = 1
 		resumed = FALSE
 
-	if ((length(bucket_list) != BUCKET_LEN) || (world.tick_lag != bucket_resolution))
+	if ((bucket_list.len != BUCKET_LEN) || (world.tick_lag != bucket_resolution))
 		reset_buckets()
 		bucket_list = src.bucket_list
 		resumed = FALSE
@@ -155,8 +154,7 @@ SUBSYSTEM_DEF(timer)
 
 		//we freed up a bucket, lets see if anything in second_queue needs to be shifted to that bucket.
 		var/i = 0
-		var/L = length(second_queue)
-		for (i in 1 to L)
+		for (i in 1 to second_queue.len)
 			timer = second_queue[i]
 			if (timer.timeToRun >= TIMER_MAX)
 				i--
@@ -202,14 +200,13 @@ SUBSYSTEM_DEF(timer)
 			timer.next.prev = timer
 			timer.prev.next = timer
 		if (i)
-			second_queue.Cut(1, i+1)
+			second_queue.Cut(1, i + 1)
 
 		timer = null
 
-	bucket_count -= length(spent)
+	bucket_count -= spent.len
 
-	for (var/i in spent)
-		var/datum/timedevent/qtimer = i
+	for (var/datum/timedevent/qtimer in spent)
 		if(QDELETED(qtimer))
 			bucket_count++
 			continue
@@ -219,10 +216,7 @@ SUBSYSTEM_DEF(timer)
 			bucket_count++
 			qtimer.spent = 0
 			qtimer.bucketEject()
-			if(qtimer.flags & TIMER_CLIENT_TIME)
-				qtimer.timeToRun = REALTIMEOFDAY + qtimer.wait
-			else
-				qtimer.timeToRun = world.time + qtimer.wait
+			qtimer.timeToRun = qtimer.flags & TIMER_CLIENT_TIME ? REALTIMEOFDAY + qtimer.wait : world.time + qtimer.wait
 			qtimer.bucketJoin()
 
 	spent.len = 0
@@ -260,7 +254,7 @@ SUBSYSTEM_DEF(timer)
 	bucket_resolution = world.tick_lag
 
 	alltimers += second_queue
-	if (!length(alltimers))
+	if (!alltimers.len)
 		return
 
 	sortTim(alltimers, .proc/cmp_timer)
@@ -272,7 +266,7 @@ SUBSYSTEM_DEF(timer)
 
 	var/new_bucket_count
 	var/i = 1
-	for (i in 1 to length(alltimers))
+	for (i in 1 to alltimers.len)
 		var/datum/timedevent/timer = alltimers[i]
 		if (!timer)
 			continue
@@ -407,9 +401,9 @@ SUBSYSTEM_DEF(timer)
 	else if(timeToRun < TIMER_MAX || next || prev)
 		SStimer.bucket_count--
 	else
-		var/l = length(second_queue)
+		var/l = second_queue.len
 		second_queue -= src
-		if(l == length(second_queue))
+		if(l == second_queue.len)
 			SStimer.bucket_count--
 	if(prev != next)
 		prev.next = next
@@ -421,7 +415,6 @@ SUBSYSTEM_DEF(timer)
 
 /datum/timedevent/proc/bucketJoin()
 	var/list/L
-
 	if (flags & TIMER_CLIENT_TIME)
 		L = SStimer.clienttime_timers
 	else if (timeToRun >= TIMER_MAX)
@@ -484,13 +477,10 @@ SUBSYSTEM_DEF(timer)
 		CRASH("Attempted to create timer with INFINITY delay")
 
 	var/hash
-
 	if (flags & TIMER_UNIQUE)
-		var/list/hashlist
-		if(flags & TIMER_NO_HASH_WAIT)
-			hashlist = list(callback.object, "([REF(callback.object)])", callback.delegate, flags & TIMER_CLIENT_TIME)
-		else
-			hashlist = list(callback.object, "([REF(callback.object)])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
+		var/list/hashlist = list(callback.object, "([REF(callback.object)])", callback.delegate, flags & TIMER_CLIENT_TIME)
+		if (!(flags & TIMER_NO_HASH_WAIT))
+			hashlist += wait
 		hashlist += callback.arguments
 		hash = hashlist.Join("|||||||")
 
