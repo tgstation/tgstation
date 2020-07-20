@@ -155,9 +155,16 @@
 	if(!..())
 		return FALSE
 	for(var/datum/plant_gene/reagent/R in S.genes)
-		if(R.reagent_id == reagent_id)
+		if(R.reagent_id == reagent_id && R.rate <= rate)
 			return FALSE
 	return TRUE
+
+/datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/S)
+	for(var/datum/plant_gene/reagent/R in S.genes)
+		if(R.reagent_id == reagent_id && R.rate > rate)
+			rate = R.rate
+			return TRUE
+	return FALSE
 
 /datum/plant_gene/reagent/polypyr
 	name = "Polypyrylium Oligomers"
