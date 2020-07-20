@@ -1589,7 +1589,7 @@
 			floor = front_hole
 			lower_level = get_step_multiz(front_hole, DOWN)
 		else
-			var/list/checkturfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))-floor-front_hole //Try find hole near of us
+			var/list/checkturfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))-floor //Try find hole near of us
 			for(var/turf/checkhole in checkturfs)
 				if(istransparentturf(checkhole))
 					floor = checkhole
