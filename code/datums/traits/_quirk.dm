@@ -12,6 +12,7 @@
 	var/mob_trait //if applicable, apply and remove this mob trait
 	///Amount of points this trait is worth towards the hardcore character mode; minus points implies a positive quirk, positive means its hard. This is used to pick the quirks assigned to a hardcore character. 0 means its not available to hardcore draws.
 	var/hardcore_value = 0
+	var/post_add_ran = FALSE /// Tracks if the post_add was run on the quirk on process tick
 	var/mob/living/quirk_holder
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
@@ -29,7 +30,6 @@
 	add()
 	if(spawn_effects)
 		on_spawn()
-		addtimer(CALLBACK(src, .proc/post_add), 30)
 
 /datum/quirk/Destroy()
 	STOP_PROCESSING(SSquirks, src)
@@ -65,6 +65,9 @@
 		return
 	if(quirk_holder.stat == DEAD)
 		return
+	if(!post_add_ran)
+		post_add()
+		post_add_ran = TRUE
 	on_process()
 
 /**
