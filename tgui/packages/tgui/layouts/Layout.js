@@ -5,7 +5,7 @@
  */
 
 import { classes } from 'common/react';
-import { IS_IE8 } from '../byond';
+import { computeBoxProps, computeBoxClassName } from '../components/Box';
 
 /**
  * Brings Layout__content DOM element back to focus.
@@ -14,7 +14,7 @@ import { IS_IE8 } from '../byond';
  */
 export const refocusLayout = () => {
   // IE8: Focus method is seemingly fucked.
-  if (IS_IE8) {
+  if (Byond.IS_LTE_IE8) {
     return;
   }
   const element = document.getElementById('Layout__content');
@@ -47,6 +47,7 @@ const LayoutContent = props => {
     className,
     scrollable,
     children,
+    ...rest
   } = props;
   return (
     <div
@@ -55,7 +56,9 @@ const LayoutContent = props => {
         'Layout__content',
         scrollable && 'Layout__content--scrollable',
         className,
-      ])}>
+        ...computeBoxClassName(rest),
+      ])}
+      {...computeBoxProps(rest)}>
       {children}
     </div>
   );

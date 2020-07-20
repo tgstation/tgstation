@@ -33,10 +33,13 @@
 	var/inaccuracy_percentage = 1.5
 	var/positive_cash_offset = 0
 	var/negative_cash_offset = 0
-	var/minor_rewards = list(/obj/item/stack/circuit_stack/full,	//To add a new minor reward, add it here.
-					/obj/item/pen/survival,
-					/obj/item/circuitboard/machine/sleeper/party,
-					/obj/item/toy/sprayoncan)
+	var/minor_rewards = list(
+		//To add a new minor reward, add it here.
+		/obj/item/stack/circuit_stack/full,
+		/obj/item/pen/survival,
+		/obj/item/circuitboard/machine/sleeper/party,
+		/obj/item/toy/sprayoncan,
+	)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
@@ -179,10 +182,10 @@
 		icon_state = "chamber"
 		return
 
-/obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/rnd/bepis/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Bepis", name, 500, 480, master_ui, state)
+		ui = new(user, src, "Bepis", name)
 		ui.open()
 	RefreshParts()
 

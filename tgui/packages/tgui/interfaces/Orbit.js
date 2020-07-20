@@ -1,9 +1,8 @@
 import { createSearch } from 'common/string';
-import { Box, Button, Input, Icon, Section, Flex } from '../components';
-import { Window } from '../layouts';
+import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
-
-import { createLogger } from '../logging';
+import { Box, Button, Flex, Icon, Input, Section } from '../components';
+import { Window } from '../layouts';
 
 const PATTERN_DESCRIPTOR = / \[(?:ghost|dead)\]$/;
 const PATTERN_NUMBER = / \(([0-9]+)\)$/;
@@ -69,7 +68,7 @@ const OrbitedButton = (props, context) => {
           {"("}{thing.orbiters}{" "}
           <Box
             as="img"
-            src="ghost.png"
+            src={resolveAsset('ghost.png')}
             opacity={0.7} />
           {")"}
         </Box>
@@ -120,7 +119,10 @@ export const Orbit = (props, context) => {
   };
 
   return (
-    <Window>
+    <Window
+      title="Orbit"
+      width={350}
+      height={700}>
       <Window.Content scrollable>
         <Section>
           <Flex>

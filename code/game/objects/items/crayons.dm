@@ -144,13 +144,15 @@
 		to_chat(user, "<span class='warning'>There is not enough of [src] left!</span>")
 		. = TRUE
 
-/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	// tgui is a plague upon this codebase
+/obj/item/toy/crayon/ui_state(mob/user)
+	return GLOB.hands_state
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/toy/crayon/ui_interact(mob/user, datum/tgui/ui)
+	// tgui is a plague upon this codebase
+	// no u
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Crayon", name, 600, 600,
-			master_ui, state)
+		ui = new(user, src, "Crayon", name)
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
@@ -732,20 +734,13 @@
 
 		return
 
-	if(isobj(target) && !istype(target, /obj/effect/decal/cleanable/crayon/gang))
+	if(istype(target, /obj/structure/window))
 		if(actually_paints)
-			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
-				to_chat(usr, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
-				return FALSE
-
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-
-			if(istype(target, /obj/structure/window))
-				if(color_hex2num(paint_color) < 255)
-					target.set_opacity(255)
-				else
-					target.set_opacity(initial(target.opacity))
-
+			if(color_hex2num(paint_color) < 255)
+				target.set_opacity(255)
+			else
+				target.set_opacity(initial(target.opacity))
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(target, TOUCH, fraction * volume_multiplier)

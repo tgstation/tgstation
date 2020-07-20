@@ -80,19 +80,15 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		to_chat(user, "<span class='notice'>[parent] is now tracking, and visible to other GPS devices.</span>")
 		tracking = TRUE
 
-/datum/component/gps/item/ui_interact(mob/user, ui_key = "gps", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+/datum/component/gps/item/ui_interact(mob/user, datum/tgui/ui)
 	if(emped)
 		to_chat(user, "<span class='hear'>[parent] fizzles weakly.</span>")
 		return
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		// Variable window height, depending on how many GPS units there are
-		// to show, clamped to relatively safe range.
-		var/gps_window_height = clamp(325 + GLOB.GPS_list.len * 14, 325, 700)
-		ui = new(user, src, ui_key, "Gps", "Global Positioning System", 470, gps_window_height, master_ui, state) //width, height
+		ui = new(user, src, "Gps")
 		ui.open()
-
-	ui.set_autoupdate(state = updating)
+	ui.set_autoupdate(updating)
 
 /datum/component/gps/item/ui_data(mob/user)
 	var/list/data = list()
