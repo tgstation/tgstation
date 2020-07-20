@@ -80,9 +80,12 @@ All foods are distributed among various categories. Use common sense.
 		if(istype(location))
 			location.put_in_hands(trash_item)
 
+//it's never an accident when you eat food! right?
+/obj/item/reagent_containers/food/snacks/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	return TRUE
+
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
-
 
 /obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/living/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
@@ -185,10 +188,9 @@ All foods are distributed among various categories. Use common sense.
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
-	var/sharp = W.get_sharpness()
-	if(sharp)
-		if(slice(sharp, W, user))
-			return 1
+	if(user.a_intent != INTENT_DISARM)
+		var/sharp = W.get_sharpness()
+		return sharp && slice(sharp, W, user)
 	else
 		..()
 
@@ -338,26 +340,78 @@ All foods are distributed among various categories. Use common sense.
 /// All the food items that can store an item inside itself, like bread or cake.
 /obj/item/reagent_containers/food/snacks/store
 	w_class = WEIGHT_CLASS_NORMAL
-	var/stored_item = 0
+	/// If an item has been stored in the food
+	var/stored_item = FALSE
+	/// The amount of volume the food has on creation
+	var/volume_on_creation = 0
+	/// Allows someone to bypass the small weight class requirement, so they can put whatever they want into a slice of bread
+	var/bypass_weight_limit = FALSE
+
+/obj/item/reagent_containers/food/snacks/store/Initialize()
+	. = ..()
+	if(reagents?.total_volume)
+		volume_on_creation = reagents.total_volume
 
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
-	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(W.get_sharpness())
-			return 0
+	if(istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
+		return FALSE
+
+	if((bypass_weight_limit || W.w_class <= WEIGHT_CLASS_SMALL))
+		if(W.get_sharpness() && user.a_intent != INTENT_DISARM)
+			return FALSE
+		if(istype(W, /obj/item/storage))
+			return FALSE
 		if(stored_item)
-			return 0
+			return FALSE
 		if(!iscarbon(user))
-			return 0
+			return FALSE
 		if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
-			return 0
+			return FALSE
+		user.visible_message("<span class='notice'>[user.name] begins inserting [W] into [src].</span>", \
+						"<span class='notice'>You start to insert the [W] into \the [src].</span>")
+		if(!do_after(user, 1.5 SECONDS, target = src))
+			return FALSE
 		to_chat(user, "<span class='notice'>You slip [W] inside [src].</span>")
 		user.transferItemToLoc(W, src)
+		log_message("[key_name(user)] inserted [W.name] into [src.name] at [AREACOORD(src)]", LOG_ATTACK)
 		add_fingerprint(user)
 		contents += W
-		stored_item = 1
-		return 1 // no afterattack here
+		stored_item = TRUE
+		return TRUE // no afterattack here
+
+/obj/item/reagent_containers/food/snacks/store/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(!..())
+		return
+	/// What are the odds we eat glass? - [Bitecount / Max number of bites] * 100
+	var/bad_chance_of_discovery = (bitecount / (volume_on_creation / bitesize))*100	//the closer you get to finishing it, the higher the chance you bite into it
+	/// What are the odds we see the glass but don't bite it? - ([Bitecount / Max number of bites] * 100) - 50
+	var/good_chance_of_discovery = bad_chance_of_discovery - 50	//the closer you get to finishing it, the more likely you can see what is in it
+	/// We've found the item, and plan on remove it
+	var/discovered = FALSE
+
+	if(stored_item)
+		for(var/obj/item/I in contents)
+			if(istype(I, /obj/item/reagent_containers/food/snacks))
+				return FALSE
+			if(prob(good_chance_of_discovery))
+				discovered = TRUE
+				to_chat(M, "<span class='warning'>It feels like there's something in this [src.name]...!</span>")
+
+			else if(prob(bad_chance_of_discovery))
+				log_message("[key_name(user)] just fed [key_name(M)] a/an [I.name] which was hidden in [src.name] at [AREACOORD(src)]", LOG_ATTACK)
+				discovered = I.on_accidental_consumption(M, user, src)
+
+			if(!QDELETED(I) && discovered)
+				contents -= I
+				stored_item = FALSE
+				if(M.put_in_hands(I)) //the moment when you slowly pull out whatever you just bit into in your food
+					to_chat(M, "<span class='warning'>You slowly pull [I] out of \the [src].</span>")
+				else
+					to_chat(M, "<span class='warning'>[I] falls out of \the [src].</span>")
+
+	return FALSE
 
 /obj/item/reagent_containers/food/snacks/MouseDrop(atom/over)
 	var/turf/T = get_turf(src)
@@ -366,4 +420,3 @@ All foods are distributed among various categories. Use common sense.
 		TB.MouseDrop(over)
 	else
 		return ..()
-
