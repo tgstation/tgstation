@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/add_to_rebuild_queue(atmos_machine)
 	if(istype(atmos_machine, /obj/machinery/atmospherics))
-		pipenets_needing_rebuilt += atmos_machine
+		pipenets_needing_rebuilt |= atmos_machine
 
 /datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = 0)
 	var/seconds = wait * 0.1
