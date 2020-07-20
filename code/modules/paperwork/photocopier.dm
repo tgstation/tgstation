@@ -64,7 +64,7 @@
 				return
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && copy)
-					if(attempt_charge(src, usr) & COMSIG_ITEM_CANCEL_CHARGE)
+					if(attempt_charge(src, usr) & COMPONENT_OBJ_CANCEL_CHARGE)
 						return
 					var/copy_as_paper = 1
 					if(istype(copy, /obj/item/paper/contract/employment))
@@ -100,7 +100,7 @@
 			if(busy)
 				return
 			for(var/i = 0, i < copies, i++)
-				if(attempt_charge(src, usr) & COMSIG_ITEM_CANCEL_CHARGE)
+				if(attempt_charge(src, usr) & COMPONENT_OBJ_CANCEL_CHARGE)
 					return
 				if(toner >= 5 && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
 					new /obj/item/photo (loc, photocopy.picture.Copy(greytoggle == "Greyscale"? TRUE : FALSE))
@@ -112,7 +112,7 @@
 			if(busy)
 				return
 			for(var/i = 0, i < copies, i++)
-				if(attempt_charge(src, usr) & COMSIG_ITEM_CANCEL_CHARGE)
+				if(attempt_charge(src, usr) & COMPONENT_OBJ_CANCEL_CHARGE)
 					return
 				if(toner > 5 && doccopy)
 					new /obj/item/documents/photocopy(loc, doccopy)
@@ -126,7 +126,7 @@
 			if(busy)
 				return
 			for(var/i = 0, i < copies, i++)
-				if(attempt_charge(src, usr) & COMSIG_ITEM_CANCEL_CHARGE)
+				if(attempt_charge(src, usr) & COMPONENT_OBJ_CANCEL_CHARGE)
 					return
 				var/icon/temp_img
 				if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))

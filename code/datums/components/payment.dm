@@ -15,12 +15,13 @@
 	///Flavor style for handling cash (Friendly? Hostile? etc.)
 	var/transaction_style = "Clinical"
 	///Who's getting paid?
-	var/datum/bank_account/target
+	var/datum/bank_account/target_acc
 
 /datum/component/payment/Initialize(_cost, _target, _style)
-	if(!_target)
-		target = SSeconomy.get_dep_account(ACCOUNT_CIV)
-	target = _target
+	target_acc = _target
+	if(!target_acc)
+		target_acc = SSeconomy.get_dep_account(ACCOUNT_CIV)
+
 	cost = _cost
 	transaction_style = _style
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
@@ -29,8 +30,8 @@
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, var/extra_fees = 0)
 	if(!cost) //In case a free variant of anything is made it'll skip charging anyone.
 		return
-	if(!ismob(user))
-		return COMSIG_ITEM_CANCEL_CHARGE
+	if(!ismob(target))
+		return COMPONENT_OBJ_CANCEL_CHARGE
 	var/mob/user = target
 	var/obj/item/card/id/card = user.get_idcard(TRUE)
 	if(!card)
@@ -41,7 +42,7 @@
 				to_chat(user, "<span class='warning'>WHERE IS YOUR GOD DAMN CARD! GOD DAMNIT!</span>")
 			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID card not present. Aborting.</span>")
-		return COMSIG_ITEM_CANCEL_CHARGE
+		return COMPONENT_OBJ_CANCEL_CHARGE
 	if(!card.registered_account)
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
@@ -50,7 +51,7 @@
 				to_chat(user, "<span class='warning'>ARE YOU JOKING. YOU DON'T HAVE A BANK ACCOUNT ON YOUR ID YOU IDIOT.</span>")
 			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID Card lacks a bank account. Aborting.</span>")
-		return COMSIG_ITEM_CANCEL_CHARGE
+		return COMPONENT_OBJ_CANCEL_CHARGE
 	if(!(card.registered_account.has_money(cost + extra_fees)))
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
@@ -59,8 +60,8 @@
 				to_chat(user, "<span class='warning'>YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR.</span>")
 			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID Card lacks funds. Aborting.</span>")
-		return COMSIG_ITEM_CANCEL_CHARGE
-	target.transfer_money(card.registered_account, cost)
+		return COMPONENT_OBJ_CANCEL_CHARGE
+	target_acc.transfer_money(card.registered_account, cost)
 	card.registered_account.bank_card_talk("[cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 
