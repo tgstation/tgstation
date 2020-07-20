@@ -33,7 +33,7 @@ export const Tcomm = (props, context) => {
       height={600}>
       <Window.Content scrollable>
         {!multitool && (
-          <NoticeBox>Use a multitool to change any settings.</NoticeBox>
+          <NoticeBox>Use a multitool to make changes.</NoticeBox>
         )}
         <Section title="Settings">
           <LabeledList>
