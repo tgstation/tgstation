@@ -99,7 +99,8 @@
 
 /obj/machinery/shower/proc/wash_atom(atom/A)
 	SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_RADIATION, CLEAN_WEAK) // Clean radiation
-	A.washed(src)
+	A.wash(CLEAN_WEAK)
+	SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	reagents.expose(A, TOUCH, reaction_volume)
 
 	if(isliving(A))

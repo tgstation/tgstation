@@ -1106,35 +1106,49 @@
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
 
-/mob/living/carbon/washed(var/atom/washer)
-	. = ..()
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
+/mob/living/carbon/wash(wash_strength)
+	. = ..(wash_strength)
 
-	for(var/obj/item/I in held_items)
-		I.washed(washer)
+	// Wash equipped stuff that cannot be covered
+	for(var/atom/AM in held_items)
+		if(AM.wash(wash_strength))
+			. = TRUE
 
-	if(back && back.washed(washer))
+	if(back && back.wash(wash_strength))
 		update_inv_back(0)
+		. = TRUE
 
+	if(head && head.wash(wash_strength))
+		update_inv_head()
+		. = TRUE
+
+	// Check and wash stuff that can be covered
 	var/list/obscured = check_obscured_slots()
 
-	if(head && head.washed(washer))
-		update_inv_head()
-
-	if(glasses && !(ITEM_SLOT_EYES in obscured) && glasses.washed(washer))
+	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
+	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(wash_strength))
 		update_inv_glasses()
+		. = TRUE
 
-	if(wear_mask && !(ITEM_SLOT_MASK in obscured && wear_mask.washed(washer)))
+	if(wear_mask && !(ITEM_SLOT_MASK in obscured) && wear_mask.wash(wash_strength))
 		update_inv_wear_mask()
+		. = TRUE
 
-	if(ears && !(HIDEEARS in obscured) && ears.washed(washer))
+	if(ears && !(ITEM_SLOT_EARS in obscured) && ears.wash(wash_strength))
 		update_inv_ears()
+		. = TRUE
 
-	if(wear_neck && !(ITEM_SLOT_NECK in obscured) && wear_neck.washed(washer))
+	if(wear_neck && !(ITEM_SLOT_NECK in obscured) && wear_neck.wash(wash_strength))
 		update_inv_neck()
+		. = TRUE
 
-	if(shoes && !(HIDESHOES in obscured) && shoes.washed(washer))
+	if(shoes && !(ITEM_SLOT_FEET in obscured) && shoes.wash(wash_strength))
 		update_inv_shoes()
+		. = TRUE
+
+	if(gloves && !(ITEM_SLOT_GLOVES in obscured) && gloves.wash(wash_strength))
+		update_inv_gloves()
+		. = TRUE
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()

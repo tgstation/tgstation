@@ -18,7 +18,7 @@
 
 	. = ..()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
 	GLOB.human_list += src
@@ -700,16 +700,41 @@
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
+/**
+  * Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.
+  *
+  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
+  */
+/mob/living/carbon/human/proc/wash_hands(wash_strength)
+	var/list/obscured = check_obscured_slots()
+	if(ITEM_SLOT_GLOVES in obscured)
+		return FALSE
+
 	if(gloves)
-		if(SEND_SIGNAL(gloves, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+		if(gloves.wash(wash_strength))
 			update_inv_gloves()
-	else
-		if(bloody_hands)
-			bloody_hands = 0
-			update_inv_gloves()
+	else if(wash_strength >= CLEAN_STRENGTH_BLOOD && bloody_hands > 0)
+		bloody_hands = 0
+		update_inv_gloves()
+
+	return TRUE
+
+/**
+  * Cleans the lips of any lipstick. Returns TRUE if the lips had any lipstick and was thus cleaned
+  */
+/mob/living/carbon/human/proc/clean_lips()
+	. = FALSE
+	if(lip_style != null || lip_color != initial(lip_color))
+		lip_style = null
+		lip_color = initial(lip_color)
+		update_body_parts_head_only()
+		. = TRUE
+
+/**
+  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
+  */
+/mob/living/carbon/human/proc/clean_face(datum/source, strength)
+	return clean_lips()
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
@@ -1103,23 +1128,33 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
-/mob/living/carbon/human/washed(var/atom/washer)
-	. = ..()
-	if(wear_suit && wear_suit.washed(washer))
+/mob/living/carbon/human/wash(wash_strength)
+	. = ..(wash_strength)
+
+	// Wash equipped stuff that cannot be covered
+	if(wear_suit && wear_suit.wash(wash_strength))
 		update_inv_wear_suit()
-	else if(w_uniform && w_uniform.washed(washer))
-		update_inv_w_uniform()
+		. = TRUE
 
-	if(!is_mouth_covered())
-		lip_style = null
-		update_body()
-	if(belt && belt.washed(washer))
+	if(belt && belt.wash(wash_strength))
 		update_inv_belt()
+		. = TRUE
 
+	// Check and wash stuff that can be covered
 	var/list/obscured = check_obscured_slots()
 
-	if(gloves && !(HIDEGLOVES in obscured) && gloves.washed(washer))
+	if(w_uniform && !(ITEM_SLOT_ICLOTHING in obscured) && w_uniform.wash(wash_strength))
+		update_inv_w_uniform()
+		. = TRUE
+
+	if(!is_mouth_covered() && clean_lips())
+		. = TRUE
+
+	// Wash hands if exposed
+	if(!gloves && wash_strength >= CLEAN_STRENGTH_BLOOD && bloody_hands > 0 && !(ITEM_SLOT_GLOVES in obscured))
+		bloody_hands = 0
 		update_inv_gloves()
+		. = TRUE
 
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))

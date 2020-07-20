@@ -958,14 +958,23 @@
 			return
 
 
-///Proc for being washed by a shower
-/atom/proc/washed(var/atom/washer, wash_strength = CLEAN_WEAK)
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, wash_strength)
-	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+/**
+  * Wash this atom
+  *
+  * This will clean it off any temporary stuff like blood. Override this in your item to add custom cleaning behavior.
+  * Returns true if any washing was necessary and thus performed
+  * Arguments:
+  * * wash_strength: any of the CLEAN_ constants
+  */
+/atom/proc/wash(wash_strength)
+	. = FALSE
+	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, wash_strength))
+		. = TRUE
 
-	/// we got to return true because of mob code
-	/// and not all code that uses COMSIG_COMPONENT_CLEAN_ACT returns true half the time
-	return TRUE
+	// Basically "if has washable coloration"
+	if(atom_colours && atom_colours.len >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
+		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		. = TRUE
 
 /**
   * call back when a var is edited on this atom
