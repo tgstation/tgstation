@@ -560,7 +560,7 @@
 	var/mob/living/simple_animal/hostile/eldritch/raw_prophet/originator
 
 /datum/action/innate/mansus_speech/New(_originator)
-	..()
+	. = ..()
 	originator = _originator
 
 /datum/action/innate/mansus_speech/Activate()
