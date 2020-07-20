@@ -523,10 +523,9 @@ SUBSYSTEM_DEF(timer)
 		return FALSE
 	if (id == TIMER_ID_NULL)
 		CRASH("Tried to delete a null timerid. Use TIMER_STOPPABLE flag")
-	if (!istext(id))
-		if (istype(id, /datum/timedevent))
-			qdel(id)
-			return TRUE
+	if (istype(id, /datum/timedevent))
+		qdel(id)
+		return TRUE
 	//id is string
 	var/datum/timedevent/timer = SStimer.timer_id_dict[id]
 	if (timer && !timer.spent)
@@ -545,15 +544,12 @@ SUBSYSTEM_DEF(timer)
 		return null
 	if (id == TIMER_ID_NULL)
 		CRASH("Tried to get timeleft of a null timerid. Use TIMER_STOPPABLE flag")
-	if (!istext(id))
-		if (istype(id, /datum/timedevent))
-			var/datum/timedevent/timer = id
-			return timer.timeToRun - world.time
+	if (istype(id, /datum/timedevent))
+		var/datum/timedevent/timer = id
+		return timer.timeToRun - world.time
 	//id is string
 	var/datum/timedevent/timer = SStimer.timer_id_dict[id]
-	if (timer && !timer.spent)
-		return timer.timeToRun - world.time
-	return null
+	return (timer && !timer.spent) ? timer.timeToRun - world.time : null
 
 #undef BUCKET_LEN
 #undef BUCKET_POS
