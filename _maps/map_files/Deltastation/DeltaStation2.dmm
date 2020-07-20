@@ -1527,7 +1527,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/plant_analyzer,
 /obj/machinery/camera{
-	c_tag = "Permabrig Garden";
+	c_tag = "Permabrig - Garden";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -18392,7 +18392,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/camera{
-	c_tag = "Permabrig Hall";
+	c_tag = "Permabrig - Hall";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -19259,7 +19259,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/camera{
-	c_tag = "Permabrig Cell 2";
+	c_tag = "Permabrig - Cell 2";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -19317,7 +19317,7 @@
 "aPt" = (
 /obj/machinery/vending/sustenance,
 /obj/machinery/camera{
-	c_tag = "Permabrig Kitchen";
+	c_tag = "Permabrig - Kitchen";
 	dir = 1;
 	network = list("ss13","prison")
 	},
@@ -22274,7 +22274,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/camera{
-	c_tag = "Permabrig Cell 1";
+	c_tag = "Permabrig - Cell 1";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -22340,7 +22340,7 @@
 /area/security/execution/education)
 "aUE" = (
 /obj/machinery/camera{
-	c_tag = "Permabrig Visitation";
+	c_tag = "Security - Visitation";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -112310,7 +112310,7 @@
 	prison_radio = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Permabrig Workroom";
+	c_tag = "Permabrig - Workroom";
 	dir = 4;
 	network = list("ss13","prison")
 	},
@@ -112769,7 +112769,7 @@
 /obj/structure/bed,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/camera{
-	c_tag = "Permabrig Isolation";
+	c_tag = "Permabrig - Isolation";
 	network = list("ss13","prison")
 	},
 /turf/open/floor/plating,
@@ -114680,7 +114680,7 @@
 	pixel_y = -30
 	},
 /obj/machinery/camera{
-	c_tag = "Permabrig Fitness";
+	c_tag = "Permabrig - Fitness";
 	dir = 1;
 	network = list("ss13","prison")
 	},
@@ -115463,7 +115463,7 @@
 	prison_radio = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Permabrig Central";
+	c_tag = "Permabrig - Central";
 	dir = 4;
 	network = list("ss13","prison")
 	},
@@ -115993,7 +115993,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/camera{
-	c_tag = "Permabrig Cell 3";
+	c_tag = "Permabrig - Cell 3";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -116323,7 +116323,7 @@
 	pixel_x = 30
 	},
 /obj/machinery/camera{
-	c_tag = "Permabrig Cell 5";
+	c_tag = "Permabrig - Cell 5";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -116525,7 +116525,7 @@
 /area/security/prison)
 "utK" = (
 /obj/machinery/camera{
-	c_tag = "Permabrig Kitchen Entrance";
+	c_tag = "Permabrig - Kitchen Entrance";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -117400,7 +117400,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/camera{
-	c_tag = "Permabrig Cell 4";
+	c_tag = "Permabrig - Cell 4";
 	dir = 8;
 	network = list("ss13","prison")
 	},
