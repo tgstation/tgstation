@@ -385,7 +385,8 @@
 	custom_materials = list(/datum/material/plastic=3000)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
-	amount_per_transfer_from_this = 20
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	cap_icon_state = "bottle_cap"
 
 /obj/item/reagent_containers/food/drinks/waterbottle/large/empty
