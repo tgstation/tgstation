@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 			if(islist(original.vars[V]))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
-			else if(istype(original.vars[V], /datum) || istype(original.vars[V], /mob))
+			else if(istype(original.vars[V], /datum) || ismob(original.vars[V]))
 				continue	// this would reference the original's object, that will break when it is used or deleted.
 			else
 				O.vars[V] = original.vars[V]

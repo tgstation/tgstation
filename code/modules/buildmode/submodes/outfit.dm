@@ -34,11 +34,11 @@
 			to_chat(c, "<span class='warning'>Pick an outfit first.</span>")
 			return
 
-		for (var/obj/item/I in dollie.get_equipped_items(TRUE))
-			qdel(I)
+		for (var/item in dollie.get_equipped_items(TRUE))
+			qdel(item)
 		if(dressuptime != "Naked")
 			dollie.equipOutfit(dressuptime)
 
 	if(right_click)
-		for (var/obj/item/I in dollie.get_equipped_items(TRUE))
-			qdel(I)
+		for (var/item in dollie.get_equipped_items(TRUE))
+			qdel(item)
