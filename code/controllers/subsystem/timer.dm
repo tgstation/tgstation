@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 //SS_TICKER subsystem, so wait is in ticks
 	init_order = INIT_ORDER_TIMER
+	priority = FIRE_PRIORITY_TIMER
 
 	flags = SS_TICKER|SS_NO_INIT
 
@@ -77,9 +78,7 @@ SUBSYSTEM_DEF(timer)
 			log_world(get_timer_debug_string(I))
 
 	var/next_clienttime_timer_index = 0
-	var/len = length(clienttime_timers)
-
-	for (next_clienttime_timer_index in 1 to len)
+	for (next_clienttime_timer_index in 1 to length(clienttime_timers))
 		if (MC_TICK_CHECK)
 			next_clienttime_timer_index--
 			break
@@ -122,7 +121,6 @@ SUBSYSTEM_DEF(timer)
 		bucket_list = src.bucket_list
 		resumed = FALSE
 
-
 	if (!resumed)
 		timer = null
 
@@ -155,8 +153,7 @@ SUBSYSTEM_DEF(timer)
 
 		//we freed up a bucket, lets see if anything in second_queue needs to be shifted to that bucket.
 		var/i = 0
-		var/L = length(second_queue)
-		for (i in 1 to L)
+		for (i in 1 to length(second_queue))
 			timer = second_queue[i]
 			if (timer.timeToRun >= TIMER_MAX)
 				i--
@@ -208,8 +205,7 @@ SUBSYSTEM_DEF(timer)
 
 	bucket_count -= length(spent)
 
-	for (var/i in spent)
-		var/datum/timedevent/qtimer = i
+	for (var/datum/timedevent/qtimer in spent)
 		if(QDELETED(qtimer))
 			bucket_count++
 			continue
@@ -219,10 +215,7 @@ SUBSYSTEM_DEF(timer)
 			bucket_count++
 			qtimer.spent = 0
 			qtimer.bucketEject()
-			if(qtimer.flags & TIMER_CLIENT_TIME)
-				qtimer.timeToRun = REALTIMEOFDAY + qtimer.wait
-			else
-				qtimer.timeToRun = world.time + qtimer.wait
+			qtimer.timeToRun = (qtimer.flags & TIMER_CLIENT_TIME ? REALTIMEOFDAY : world.time) + qtimer.wait
 			qtimer.bucketJoin()
 
 	spent.len = 0
@@ -486,11 +479,9 @@ SUBSYSTEM_DEF(timer)
 	var/hash
 
 	if (flags & TIMER_UNIQUE)
-		var/list/hashlist
-		if(flags & TIMER_NO_HASH_WAIT)
-			hashlist = list(callback.object, "([REF(callback.object)])", callback.delegate, flags & TIMER_CLIENT_TIME)
-		else
-			hashlist = list(callback.object, "([REF(callback.object)])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
+		var/list/hashlist = list(callback.object, "([REF(callback.object)])", callback.delegate, flags & TIMER_CLIENT_TIME)
+		if(!(flags & TIMER_NO_HASH_WAIT))
+			hashlist += wait
 		hashlist += callback.arguments
 		hash = hashlist.Join("|||||||")
 
