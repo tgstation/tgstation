@@ -41,9 +41,7 @@
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
 		return
-	var/bonus_fee = 0
-	if(pandemonium)
-		bonus_fee = rand(10,30)
+	var/bonus_fee = pandemonium ? rand(10,30) : 0
 	if(attempt_charge(src, H, bonus_fee) & COMSIG_ITEM_CANCEL_CHARGE )
 		return
 	use_power(20)

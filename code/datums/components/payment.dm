@@ -23,15 +23,15 @@
 	target = _target
 	cost = _cost
 	transaction_style = _style
-	RegisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE), .proc/attempt_charge)
-	RegisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE), .proc/change_cost)
+	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
+	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, .proc/change_cost)
 
-/datum/component/payment/proc/attempt_charge(datum/source, atom/movable/AM, var/extra_fees = 0)
-	var/mob/user = AM
+/datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, var/extra_fees = 0)
 	if(!cost) //In case a free variant of anything is made it'll skip charging anyone.
 		return
-	if(!istype(user))
+	if(!ismob(user))
 		return COMSIG_ITEM_CANCEL_CHARGE
+	var/mob/user = target
 	var/obj/item/card/id/card = user.get_idcard(TRUE)
 	if(!card)
 		switch(transaction_style)
@@ -63,10 +63,8 @@
 	target.transfer_money(card.registered_account, cost)
 	card.registered_account.bank_card_talk("[cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
-	return
 
 /datum/component/payment/proc/change_cost(datum/source, var/new_cost)
 	if(!isnum(new_cost))
-		return
+		CRASH("change_cost called with variable new_cost as not a number.")
 	cost = new_cost
-	return

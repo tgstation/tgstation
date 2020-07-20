@@ -485,7 +485,7 @@
 // /obj signals for economy
 ///called when the payment component tries to charge an account.
 #define COMSIG_OBJ_ATTEMPT_CHARGE "obj_attempt_simple_charge"
-	#define COMSIG_ITEM_CANCEL_CHARGE  (1<<0)
+	#define COMPONENT_OBJ_CANCEL_CHARGE  (1<<0)
 ///Called when a payment component changes value
 #define COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE "obj_attempt_simple_charge_change"
 
