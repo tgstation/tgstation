@@ -122,6 +122,24 @@
 			to_chat(user, "<span class='warning'>You need one floor tile to build atop [src].</span>")
 		return
 
+/obj/structure/lift_support
+	name = "lift support"
+	desc = "A hightweight lift support. These hold lift platform."
+	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	icon_state = "clockwork_wall"
+	density = TRUE
+	anchored = TRUE
+
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+	max_integrity = 50
+	//layer = LATTICE_LAYER //under pipes
+	//plane = FLOOR_PLANE
+	var/number_of_mats = 1
+	var/build_material = /obj/item/stack/rods
+	//canSmoothWith = list(/obj/structure/lattice/lift,/obj/structure/lift_support)//add lift support here later
+	//smooth = SMOOTH_MORE
+	//	flags = CONDUCT_1
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
 /obj/structure/lattice/lift
 	name = "lift lattice"
@@ -136,7 +154,7 @@
 	plane = FLOOR_PLANE
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
-	canSmoothWith = list(/obj/structure/lattice/lift)//add lift support here later
+	canSmoothWith = list(/obj/structure/lattice/lift,/obj/structure/lift_support)//add lift support here later
 	smooth = SMOOTH_MORE
 	//	flags = CONDUCT_1
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
