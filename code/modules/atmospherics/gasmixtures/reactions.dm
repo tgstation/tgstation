@@ -265,13 +265,13 @@ datum/gas_reaction/freonfire
 	name = "Freon combustion"
 	id = "freonfire"
 
-datum/gas_reaction/freonfire/init_reqs()
+/datum/gas_reaction/freonfire/init_reqs()
 	min_requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/freon = MINIMUM_MOLE_COUNT
 		)
 
-datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow

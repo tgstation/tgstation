@@ -173,7 +173,7 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
 		name = new_name
 
-mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
+/mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
 	if(isliving(target))
 		var/mob/living/L = target
 		if((L.mobility_flags & MOBILITY_STAND))
