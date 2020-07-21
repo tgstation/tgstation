@@ -48,7 +48,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 34)
 		auto_fit_viewport = TRUE
 
-	if(current_version < 36) //makes old keybinds compatible with #52040, sets the new default
+	if(current_version < 35) //makes old keybinds compatible with #52040, sets the new default
 		var/newkey = FALSE
 		for(var/list/key in key_bindings)
 			for(var/bind in key)
@@ -63,6 +63,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(bind == "quick_equip_suit_storage")
 					newkey = TRUE
 		if(!newkey && !key_bindings["ShiftQ"])
+			key_bindings["ShiftQ"] = list("quick_equip_suit_storage")
+
+	if(current_version < 36)
+		if(key_bindings["ShiftQ"] == "quick_equip_suit_storage")
 			key_bindings["ShiftQ"] = list("quick_equip_suit_storage")
 
 
