@@ -24,6 +24,14 @@
 	if(attached_light)
 		alight = new(src)
 
+
+/obj/item/clothing/head/helmet/Destroy()
+	var/obj/item/flashlight/seclite/old_light = set_attached_light(null)
+	if(old_light)
+		qdel(old_light)
+	return ..()
+
+
 /obj/item/clothing/head/helmet/examine(mob/user)
 	. = ..()
 	if(attached_light)
@@ -33,17 +41,27 @@
 	else if(can_flashlight)
 		. += "It has a mounting point for a <b>seclite</b>."
 
-/obj/item/clothing/head/helmet/Destroy()
-	QDEL_NULL(attached_light)
-	return ..()
 
 /obj/item/clothing/head/helmet/handle_atom_del(atom/A)
 	if(A == attached_light)
-		attached_light = null
+		set_attached_light(null)
 		update_helmlight()
 		update_icon()
 		QDEL_NULL(alight)
 	return ..()
+
+
+///Called when attached_light value changes.
+/obj/item/clothing/head/helmet/proc/set_attached_light(obj/item/flashlight/seclite/new_attached_light)
+	if(attached_light == new_attached_light)
+		return
+	. = attached_light
+	attached_light = new_attached_light
+	if(attached_light)
+		light_flags |= LIGHT_ATTACHED
+	else if(.)
+		light_flags &= ~LIGHT_ATTACHED
+
 
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = TRUE
@@ -460,9 +478,7 @@
 			if(!user.transferItemToLoc(S, src))
 				return
 			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
-			if(S.on)
-				set_light(0)
-			attached_light = S
+			set_attached_light(S)
 			update_icon()
 			update_helmlight()
 			alight = new(src)
@@ -480,8 +496,7 @@
 		if(Adjacent(user) && !issilicon(user))
 			user.put_in_hands(attached_light)
 
-		var/obj/item/flashlight/removed_light = attached_light
-		attached_light = null
+		var/obj/item/flashlight/removed_light = set_attached_light(null)
 		update_helmlight()
 		removed_light.update_brightness(user)
 		update_icon()
@@ -508,14 +523,8 @@
 
 /obj/item/clothing/head/helmet/proc/update_helmlight()
 	if(attached_light)
-		if(attached_light.on)
-			set_light(attached_light.brightness_on)
-		else
-			set_light(0)
 		update_icon()
 
-	else
-		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

@@ -13,18 +13,19 @@
 	wreckage = /obj/structure/mecha_wreckage/durand
 	var/obj/durand_shield/shield
 
+
 /obj/mecha/combat/durand/Initialize()
-	shield = new/obj/durand_shield
-	shield.chassis = src
-	shield.layer = layer
+	. = ..()
+	shield = new /obj/durand_shield(loc, src, layer, dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_ACTIVATE, .proc/relay)
 	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
-	. = ..()
+
 
 /obj/mecha/combat/durand/Destroy()
 	if(shield)
-		qdel(shield)
-	. = ..()
+		QDEL_NULL(shield)
+	return ..()
+
 
 /obj/mecha/combat/durand/GrantActions(mob/living/user, human_occupant = 0)
 	..()
@@ -43,7 +44,7 @@
 	. = ..()
 	if(shield)
 		shield.forceMove(loc)
-		shield.dir = dir
+		shield.setDir(dir)
 
 /obj/mecha/combat/durand/forceMove(turf/T)
 	. = ..()
@@ -59,11 +60,9 @@
 	SIGNAL_HANDLER
 
 	if(!shield) //if the shield somehow got deleted
-		shield = new/obj/durand_shield
-		shield.chassis = src
-		shield.layer = layer
-		shield.forceMove(loc)
-	shield.dir = dir
+		stack_trace("Durand triggered relay without a shield")
+		shield = new /obj/durand_shield(loc, src, layer)
+	shield.setDir(dir)
 	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_ACTIVATE, source, signal_args)
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
@@ -143,17 +142,28 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	max_integrity = 10000
 	obj_integrity = 10000
 	anchored = TRUE
+	light_system = MOVABLE_LIGHT
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_power = 5
+	light_color = LIGHT_COLOR_ELECTRIC_CYAN
+	light_on = FALSE
 	var/obj/mecha/combat/durand/chassis ///Our link back to the durand
 	var/switching = FALSE ///To keep track of things during the animation
 
-/obj/durand_shield/Initialize()
+
+/obj/durand_shield/Initialize(mapload, _chassis, _layer, _dir)
 	. = ..()
+	chassis = _chassis
+	layer = _layer
+	setDir(_dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_ACTIVATE, .proc/activate)
+
 
 /obj/durand_shield/Destroy()
 	if(chassis)
 		chassis.shield = null
-	. = ..()
+		chassis = null
+	return ..()
 
 /**Handles activating and deactivating the shield. This proc is called by a signal sent from the mech's action button
 and relayed by the mech itself. The "forced" variabe, signal_args[1], will skip the to-pilot text and is meant for when
@@ -179,11 +189,12 @@ the shield is disabled by means other than the action button (like running out o
 		chassis.log_message("defense mode state changed -- now [chassis.defense_mode?"enabled":"disabled"].", LOG_MECHA)
 	chassis.defense_action.UpdateButtonIcon()
 
+	set_light_on(chassis.defense_mode)
+
 	if(chassis.defense_mode)
 		invisibility = 0
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
-		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE	, l_power = 5, l_color = "#00FFFF")
 		addtimer(CALLBACK(src, .proc/shield_icon_enable), 3)
 	else
 		flick("shield_drop", src)
@@ -195,7 +206,6 @@ the shield is disabled by means other than the action button (like running out o
 	icon_state = "shield"
 
 /obj/durand_shield/proc/shield_icon_reset()
-	set_light(0)
 	icon_state = "shield_null"
 	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 

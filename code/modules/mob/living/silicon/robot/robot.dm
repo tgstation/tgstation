@@ -13,6 +13,8 @@
 	radio = /obj/item/radio/borg
 
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
 
 	var/custom_name = ""
 	var/braintype = "Cyborg"
@@ -105,7 +107,6 @@
 
 	wires = new /datum/wires/robot(src)
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
-
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 
 	robot_modules_background = new()
@@ -548,14 +549,15 @@
 	update_headlamp()
 
 /mob/living/silicon/robot/proc/update_headlamp(turn_off = 0, cooldown = 100)
-	set_light(0)
-
-	if(lamp_intensity && (turn_off || stat || low_power_mode))
-		to_chat(src, "<span class='danger'>Your headlamp has been deactivated.</span>")
-		lamp_intensity = 0
-		lamp_cooldown = cooldown == BORG_LAMP_CD_RESET ? 0 : max(world.time + cooldown, lamp_cooldown)
-	else
-		set_light(lamp_intensity)
+	if(lamp_intensity)
+		if(turn_off || stat || low_power_mode)
+			to_chat(src, "<span class='danger'>Your headlamp has been deactivated.</span>")
+			lamp_intensity = 0
+			lamp_cooldown = cooldown == BORG_LAMP_CD_RESET ? 0 : max(world.time + cooldown, lamp_cooldown)
+			set_light_on(FALSE)
+		else
+			set_light_range(lamp_intensity)
+			set_light_on(TRUE)
 
 	if(lamp_button)
 		lamp_button.icon_state = "lamp[lamp_intensity]"
