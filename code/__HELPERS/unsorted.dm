@@ -392,8 +392,6 @@
 	else
 		return zone
 
-rld.icon_size
-
 /proc/get(atom/loc, type)
 	while(loc)
 		if(istype(loc, type))
