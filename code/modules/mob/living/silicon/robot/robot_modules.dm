@@ -218,7 +218,7 @@
 	flick("[cyborg_base_icon]_transform", R)
 	R.notransform = TRUE
 	R.SetLockdown(1)
-	R.anchored = TRUE
+	R.set_anchored(TRUE)
 	sleep(1)
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
@@ -226,7 +226,7 @@
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.setDir(SOUTH)
-	R.anchored = FALSE
+	R.set_anchored(FALSE)
 	R.notransform = FALSE
 	R.updatehealth()
 	R.update_headlamp(FALSE, BORG_LAMP_CD_RESET)
