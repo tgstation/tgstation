@@ -1266,7 +1266,7 @@
 			var/i = 0
 			for(var/datum/antagonist/A in M.mind.antag_datums)
 				special_role_description += "[A.name]"
-				if(i++ != length(M.mind.antag_datums))
+				if(++i != length(M.mind.antag_datums))
 					special_role_description += ", "
 			special_role_description += "</b></font>"
 		else
