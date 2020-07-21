@@ -41,137 +41,6 @@
 	else if(x<0)
 		.+=360
 
-//Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
-/*
-Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
-Random error in tile placement x, error in tile placement y, and block offset.
-Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
-Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
-Turf and target are separate in case you want to teleport some distance from a turf the target is not standing on or something.
-*/
-
-	var/dirx = 0//Generic location finding variable.
-	var/diry = 0
-
-	var/xoffset = 0//Generic counter for offset location.
-	var/yoffset = 0
-
-	var/b1xerror = 0//Generic placing for point A in box. The lower left.
-	var/b1yerror = 0
-	var/b2xerror = 0//Generic placing for point B in box. The upper right.
-	var/b2yerror = 0
-
-	errorx = abs(errorx)//Error should never be negative.
-	errory = abs(errory)
-
-	switch(target.dir)//This can be done through equations but switch is the simpler method. And works fast to boot.
-	//Directs on what values need modifying.
-		if(1)//North
-			diry+=distance
-			yoffset+=eoffsety
-			xoffset+=eoffsetx
-			b1xerror-=errorx
-			b1yerror-=errory
-			b2xerror+=errorx
-			b2yerror+=errory
-		if(2)//South
-			diry-=distance
-			yoffset-=eoffsety
-			xoffset+=eoffsetx
-			b1xerror-=errorx
-			b1yerror-=errory
-			b2xerror+=errorx
-			b2yerror+=errory
-		if(4)//East
-			dirx+=distance
-			yoffset+=eoffsetx//Flipped.
-			xoffset+=eoffsety
-			b1xerror-=errory//Flipped.
-			b1yerror-=errorx
-			b2xerror+=errory
-			b2yerror+=errorx
-		if(8)//West
-			dirx-=distance
-			yoffset-=eoffsetx//Flipped.
-			xoffset+=eoffsety
-			b1xerror-=errory//Flipped.
-			b1yerror-=errorx
-			b2xerror+=errory
-			b2yerror+=errorx
-
-	var/turf/destination=locate(location.x+dirx,location.y+diry,location.z)
-
-	if(destination)//If there is a destination.
-		if(errorx||errory)//If errorx or y were specified.
-			var/destination_list[] = list()//To add turfs to list.
-			//destination_list = new()
-			/*This will draw a block around the target turf, given what the error is.
-			Specifying the values above will basically draw a different sort of block.
-			If the values are the same, it will be a square. If they are different, it will be a rectengle.
-			In either case, it will center based on offset. Offset is position from center.
-			Offset always calculates in relation to direction faced. In other words, depending on the direction of the teleport,
-			the offset should remain positioned in relation to destination.*/
-
-			var/turf/center = locate((destination.x+xoffset),(destination.y+yoffset),location.z)//So now, find the new center.
-
-			//Now to find a box from center location and make that our destination.
-			for(var/turf/T in block(locate(center.x+b1xerror,center.y+b1yerror,location.z), locate(center.x+b2xerror,center.y+b2yerror,location.z) ))
-				if(density&&T.density)
-					continue//If density was specified.
-				if(T.x>world.maxx || T.x<1)
-					continue//Don't want them to teleport off the map.
-				if(T.y>world.maxy || T.y<1)
-					continue
-				destination_list += T
-			if(destination_list.len)
-				destination = pick(destination_list)
-			else
-				return
-
-		else//Same deal here.
-			if(density&&destination.density)
-				return
-			if(destination.x>world.maxx || destination.x<1)
-				return
-			if(destination.y>world.maxy || destination.y<1)
-				return
-	else
-		return
-
-	return destination
-
-/proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
-	var/px=M.x		//starting x
-	var/py=M.y
-	var/line[] = list(locate(px,py,M.z))
-	var/dx=N.x-px	//x distance
-	var/dy=N.y-py
-	var/dxabs = abs(dx)//Absolute value of x distance
-	var/dyabs = abs(dy)
-	var/sdx = SIGN(dx)	//Sign of x distance (+ or -)
-	var/sdy = SIGN(dy)
-	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
-	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
-	var/j			//Generic integer for counting
-	if(dxabs>=dyabs)	//x distance is greater than y
-		for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
-			y+=dyabs
-			if(y>=dxabs)	//Every dyabs steps, step once in y direction
-				y-=dxabs
-				py+=sdy
-			px+=sdx		//Step on in x direction
-			line+=locate(px,py,M.z)//Add the turf to the list
-	else
-		for(j=0;j<dyabs;j++)
-			x+=dxabs
-			if(x>=dyabs)
-				x-=dyabs
-				px+=sdx
-			py+=sdy
-			line+=locate(px,py,M.z)
-	return line
-
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
 	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
@@ -340,85 +209,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 			break
 	return loc
 
-// returns the turf located at the map edge in the specified direction relative to A
-// used for mass driver
-/proc/get_edge_target_turf(atom/A, direction)
-	var/turf/target = locate(A.x, A.y, A.z)
-	if(!A || !target)
-		return 0
-		//since NORTHEAST == NORTH|EAST, etc, doing it this way allows for diagonal mass drivers in the future
-		//and isn't really any more complicated
-
-	var/x = A.x
-	var/y = A.y
-	if(direction & NORTH)
-		y = world.maxy
-	else if(direction & SOUTH) //you should not have both NORTH and SOUTH in the provided direction
-		y = 1
-	if(direction & EAST)
-		x = world.maxx
-	else if(direction & WEST)
-		x = 1
-	if(direction in GLOB.diagonals) //let's make sure it's accurately-placed for diagonals
-		var/lowest_distance_to_map_edge = min(abs(x - A.x), abs(y - A.y))
-		return get_ranged_target_turf(A, direction, lowest_distance_to_map_edge)
-	return locate(x,y,A.z)
-
-// returns turf relative to A in given direction at set range
-// result is bounded to map size
-// note range is non-pythagorean
-// used for disposal system
-/proc/get_ranged_target_turf(atom/A, direction, range)
-
-	var/x = A.x
-	var/y = A.y
-	if(direction & NORTH)
-		y = min(world.maxy, y + range)
-	else if(direction & SOUTH)
-		y = max(1, y - range)
-	if(direction & EAST)
-		x = min(world.maxx, x + range)
-	else if(direction & WEST) //if you have both EAST and WEST in the provided direction, then you're gonna have issues
-		x = max(1, x - range)
-
-	return locate(x,y,A.z)
-
-/**
-  * Get ranged target turf, but with direct targets as opposed to directions
-  *
-  * Starts at atom A and gets the exact angle between A and target
-  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
-  * Arguments:
-  * * A - Initial Firer / Position
-  * * target - Target to aim towards
-  * * range - Distance of returned target turf from A
-  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
-  */
-/proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
-	var/angle = ATAN2(target.x - A.x, target.y - A.y)
-	if(offset)
-		angle += offset
-	var/turf/T = get_turf(A)
-	for(var/i in 1 to range)
-		var/turf/check = locate(A.x + cos(angle) * i, A.y + sin(angle) * i, A.z)
-		if(!check)
-			break
-		T = check
-
-	return T
-
-
-// returns turf relative to A offset in dx and dy tiles
-// bound to map limits
-/proc/get_offset_target_turf(atom/A, dx, dy)
-	var/x = min(world.maxx, max(1, A.x + dx))
-	var/y = min(world.maxy, max(1, A.y + dy))
-	return locate(x,y,A.z)
-
 /*
 	Gets all contents of contents and returns them all in a list.
 */
-
 /atom/proc/GetAllContents(var/T, ignore_flag_1)
 	var/list/processing_list = list(src)
 	if(T)
@@ -490,37 +283,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(A.density && A.anchored)
 			return 1
 	return 0
-
-/proc/get_step_towards2(atom/ref , atom/trg)
-	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
-	var/turf/temp = get_step_towards(ref,trg)
-
-	if(is_blocked_turf(temp))
-		var/dir_alt1 = turn(base_dir, 90)
-		var/dir_alt2 = turn(base_dir, -90)
-		var/turf/turf_last1 = temp
-		var/turf/turf_last2 = temp
-		var/free_tile = null
-		var/breakpoint = 0
-
-		while(!free_tile && breakpoint < 10)
-			if(!is_blocked_turf(turf_last1))
-				free_tile = turf_last1
-				break
-			if(!is_blocked_turf(turf_last2))
-				free_tile = turf_last2
-				break
-			turf_last1 = get_step(turf_last1,dir_alt1)
-			turf_last2 = get_step(turf_last2,dir_alt2)
-			breakpoint++
-
-		if(!free_tile)
-			return get_step(ref, base_dir)
-		else
-			return get_step_towards(ref,free_tile)
-
-	else
-		return get_step(ref, base_dir)
 
 //Takes: Anything that could possibly have variables and a varname to check.
 //Returns: 1 if found, 0 if not.
@@ -605,11 +367,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	return turfs
-
-/proc/get_cardinal_dir(atom/A, atom/B)
-	var/dx = abs(B.x - A.x)
-	var/dy = abs(B.y - A.y)
-	return get_dir(A, B) & (rand() * (dx+dy) < dy ? 3 : 12)
 
 //chances are 1:value. anyprob(1) will always return true
 /proc/anyprob(value)

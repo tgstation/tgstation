@@ -53,7 +53,9 @@
 	if(teleport_distance <= 0)
 		return ..()
 	var/list/possible_ends = list()
-	for(var/turf/T in view(teleport_distance, target.loc) - view(teleport_distance - 1, target.loc))
+	var/list/target_turfs = get_bounding_turfs(target.loc, teleport_distance, teleport_distance)
+
+	for(var/turf/T in target_turfs)
 		if(isclosedturf(T))
 			continue
 		possible_ends |= T
