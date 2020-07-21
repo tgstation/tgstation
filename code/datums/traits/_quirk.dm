@@ -65,9 +65,13 @@
 		return
 	if(quirk_holder.stat == DEAD)
 		return
+	// post_add is used to get settings from the client prefs
+	// validate that a client is attached before running
 	if(!post_add_ran)
-		post_add()
-		post_add_ran = TRUE
+		var/mob/user = quirk_holder
+		if(user && user.client)
+			post_add()
+			post_add_ran = TRUE
 	on_process()
 
 /**
