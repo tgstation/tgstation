@@ -103,7 +103,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "dish water"
 	glass_name = "glass of light beer"
 	glass_desc = "A freezing pint of watery light beer."
-	
+
 /datum/reagent/consumable/ethanol/beer/maltliquor
 	name = "Malt Liquor"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety is stronger than usual, super cheap, and super terrible."
@@ -1542,11 +1542,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(2,2,2)
-		M.adjustBruteLoss(-5,0)
-		M.adjustOxyLoss(-5,0)
-		M.adjustFireLoss(-5,0)
-		M.adjustToxLoss(-5,0)
-		. = 1
+		M.heal_overall_damage(brute = 5, burn = 5, toxin = 5, oxy = 5)
 	return ..()
 
 /datum/reagent/consumable/ethanol/grasshopper

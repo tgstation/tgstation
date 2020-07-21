@@ -41,14 +41,11 @@
 	var/mob/living/carbon/C = quirk_holder
 	switch(C.drunkenness)
 		if (6 to 40)
-			C.adjustBruteLoss(-0.1, FALSE)
-			C.adjustFireLoss(-0.05, FALSE)
+			C.heal_overall_damage(brute = 0.1, burn = 0.05)
 		if (41 to 60)
-			C.adjustBruteLoss(-0.4, FALSE)
-			C.adjustFireLoss(-0.2, FALSE)
+			C.heal_overall_damage(brute = 0.4, burn = 0.2)
 		if (61 to INFINITY)
-			C.adjustBruteLoss(-0.8, FALSE)
-			C.adjustFireLoss(-0.4, FALSE)
+			C.heal_overall_damage(brute = 0.8, burn = 0.4)
 
 /datum/quirk/empath
 	name = "Empath"

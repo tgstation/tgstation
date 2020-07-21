@@ -320,8 +320,7 @@
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/C)
 	C.hal_screwyhud = SCREWYHUD_HEALTHY
-	C.adjustBruteLoss(-0.25*REM, 0)
-	C.adjustFireLoss(-0.25*REM, 0)
+	C.heal_overall_damage(brute = 0.25*REM, burn = 0.25*REM)
 	..()
 	return TRUE
 
