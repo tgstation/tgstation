@@ -699,7 +699,6 @@
   * Mafia, 2 normal mafia and one special.
   * Neutral, two disruption roles, sometimes one is a killing.
   *
-  * Assistants must be filled in their own list before merging the two because of how byond dicts work
   * See _defines.dm in the mafia folder for a rundown on what these groups of roles include.
   */
 /datum/mafia_controller/proc/generate_random_setup()
@@ -737,7 +736,6 @@
 			killing_role--
 		else
 			add_setup_role(random_setup, NEUTRAL_DISRUPT)
-	custom_setup = random_setup
 	return random_setup
 
 /**
