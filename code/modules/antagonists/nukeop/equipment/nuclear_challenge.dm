@@ -1,6 +1,6 @@
 #define CHALLENGE_TELECRYSTALS 280
 #define CHALLENGE_TIME_LIMIT 3000
-#define CHALLENGE_MIN_PLAYERS 50
+#define CHALLENGE_MIN_PLAYERS 50 //if you declare war with fewer than this number of players on the server, you'll get (proportionally) less bonus TC
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
@@ -75,6 +75,8 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 
 	var/tc_to_distribute = CHALLENGE_TELECRYSTALS
+	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS) //if there are fewer than 50 players, we give the war ops less bonus TC so that they won't steamroll everyone with the TC needed to take on a 50+ pop station
+		tc_to_distribute *= GLOB.player_list.len/CHALLENGE_MIN_PLAYERS //this will be rounded in the next line anyway
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
 	for (var/datum/component/uplink/uplink in uplinks)
@@ -102,9 +104,6 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 /obj/item/nuclear_challenge/proc/check_allowed(mob/living/user)
 	if(declaring_war)
 		to_chat(user, "<span class='boldwarning'>You are already in the process of declaring war! Make your mind up.</span>")
-		return FALSE
-	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
-		to_chat(user, "<span class='boldwarning'>The enemy crew is too small to be worth declaring war on.</span>")
 		return FALSE
 	if(!user.onSyndieBase())
 		to_chat(user, "<span class='boldwarning'>You have to be at your base to use this.</span>")
