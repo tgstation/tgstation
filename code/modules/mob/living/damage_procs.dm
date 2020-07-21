@@ -188,7 +188,7 @@
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && status_flags & GODMODE)
 		return
-	if(amount == 0 || (amount < 0 && !oxyloss))
+	if(oxyloss == amount)
 		return
 	. = oxyloss
 	oxyloss = amount
@@ -215,7 +215,7 @@
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return
-	if(amount == 0 || (amount < 0 && !toxloss))
+	if(toxloss == amount)
 		return
 	toxloss = amount
 	if(updating_health)
@@ -257,7 +257,7 @@
 /mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
 		return
-	if(amount == 0 || (amount < 0 && !cloneloss))
+	if(cloneloss == amount)
 		return
 	cloneloss = amount
 	if(updating_health)
