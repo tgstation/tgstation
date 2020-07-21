@@ -293,6 +293,9 @@
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
 
+	glowybit = mutable_appearance(LIGHTING_PLANE, base_state, layer, EMISSIVE_PLANE)
+	vis_contents += glowybit
+
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/A = get_area(src)
 		var/obj/machinery/power/apc/temp_apc = A.get_apc()
@@ -314,9 +317,6 @@
 			brightness = 4
 			if(prob(5))
 				break_light_tube(1)
-	glowybit = mutable_appearance(overlayicon, base_state, layer, EMISSIVE_PLANE)
-	vis_contents += glowybit
-
 	addtimer(CALLBACK(src, .proc/update, 0), 1)
 
 /obj/machinery/light/Destroy()
