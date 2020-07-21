@@ -1,11 +1,11 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	18
+#define SAVEFILE_VERSION_MIN	32
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	34
+#define SAVEFILE_VERSION_MAX	35
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -42,105 +42,32 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //if your savefile is 3 months out of date, then 'tough shit'.
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 30)
-		if(clientfps == 0)
-			clientfps = 60
-
-	if(current_version < 31)
-		if(clientfps == 60)
-			clientfps = 0
-
-	if(current_version < 32)	//If you remove this, remove force_reset_keybindings() too.
-		addtimer(CALLBACK(src, .proc/force_reset_keybindings), 30)	//No mob available when this is run, timer allows user choice.
-
 	if(current_version < 33)
 		toggles |= SOUND_ENDOFROUND
 
 	if(current_version < 34)
 		auto_fit_viewport = TRUE
 
+	if(current_version < 35) //makes old keybinds compatible with #52040, sets the new default
+		var/newkey = FALSE
+		for(var/list/key in key_bindings)
+			for(var/bind in key)
+				if(bind == "quick_equipbelt")
+					key -= "quick_equipbelt"
+					key |= "quick_equip_belt"
+
+				if(bind == "bag_equip")
+					key -= "bag_equip"
+					key |= "quick_equip_bag"
+
+				if(bind == "quick_equip_suit_storage")
+					newkey = TRUE
+		if(!newkey && !key_bindings["ShiftQ"])
+			key_bindings["ShiftQ"] += "quick_equip_suit_storage"
+
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(current_version < 19)
-		pda_style = "mono"
-	if(current_version < 20)
-		pda_color = "#808000"
-	if((current_version < 21) && features["ethcolor"] && (features["ethcolor"] == "#9c3030"))
-		features["ethcolor"] = "9c3030"
-	if(current_version < 22)
-		job_preferences = list() //It loaded null from nonexistent savefile field.
-		var/job_civilian_high = 0
-		var/job_civilian_med = 0
-		var/job_civilian_low = 0
-
-		var/job_medsci_high = 0
-		var/job_medsci_med = 0
-		var/job_medsci_low = 0
-
-		var/job_engsec_high = 0
-		var/job_engsec_med = 0
-		var/job_engsec_low = 0
-
-		READ_FILE(S["job_civilian_high"], job_civilian_high)
-		READ_FILE(S["job_civilian_med"], job_civilian_med)
-		READ_FILE(S["job_civilian_low"], job_civilian_low)
-		READ_FILE(S["job_medsci_high"], job_medsci_high)
-		READ_FILE(S["job_medsci_med"], job_medsci_med)
-		READ_FILE(S["job_medsci_low"], job_medsci_low)
-		READ_FILE(S["job_engsec_high"], job_engsec_high)
-		READ_FILE(S["job_engsec_med"], job_engsec_med)
-		READ_FILE(S["job_engsec_low"], job_engsec_low)
-
-		//Can't use SSjob here since this happens right away on login
-		for(var/job in subtypesof(/datum/job))
-			var/datum/job/J = job
-			var/new_value
-			var/fval = initial(J.flag)
-			switch(initial(J.department_flag))
-				if(CIVILIAN)
-					if(job_civilian_high & fval)
-						new_value = JP_HIGH
-					else if(job_civilian_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_civilian_low & fval)
-						new_value = JP_LOW
-				if(MEDSCI)
-					if(job_medsci_high & fval)
-						new_value = JP_HIGH
-					else if(job_medsci_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_medsci_low & fval)
-						new_value = JP_LOW
-				if(ENGSEC)
-					if(job_engsec_high & fval)
-						new_value = JP_HIGH
-					else if(job_engsec_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_engsec_low & fval)
-						new_value = JP_LOW
-			if(new_value)
-				job_preferences[initial(J.title)] = new_value
-	if(current_version < 23)
-		if(all_quirks)
-			all_quirks -= "Physically Obstructive"
-			all_quirks -= "Neat"
-			all_quirks -= "NEET"
-	if(current_version < 24)
-		if (!(underwear in GLOB.underwear_list))
-			underwear = "Nude"
-	if(current_version < 25)
-		randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
-		if(S["name_is_always_random"] == 1)
-			randomise[RANDOM_NAME] = TRUE
-		if(S["body_is_always_random"] == 1)
-			randomise[RANDOM_BODY] = TRUE
-		if(S["species_is_always_random"] == 1)
-			randomise[RANDOM_SPECIES] = TRUE
-		if(S["backbag"])
-			READ_FILE(S["backbag"], backpack)
-		if(S["hair_style_name"])
-			READ_FILE(S["hair_style_name"], hairstyle)
-		if(S["facial_style_name"])
-			READ_FILE(S["facial_style_name"], facial_hairstyle)
+	return
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
