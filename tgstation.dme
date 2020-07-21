@@ -146,6 +146,7 @@
 #include "code\__HELPERS\qdel.dm"
 #include "code\__HELPERS\radiation.dm"
 #include "code\__HELPERS\radio.dm"
+#include "code\__HELPERS\ray_helpers.dm"
 #include "code\__HELPERS\reagents.dm"
 #include "code\__HELPERS\records.dm"
 #include "code\__HELPERS\roundend.dm"
