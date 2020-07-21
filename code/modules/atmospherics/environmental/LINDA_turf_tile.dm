@@ -281,6 +281,7 @@
 	var/list/turf_list = list()
 	var/breakdown_cooldown = 0
 	var/dismantle_cooldown = 0
+	var/should_display = FALSE
 
 /datum/excited_group/New()
 	SSair.excited_groups += src
@@ -305,6 +306,9 @@
 			T.excited_group = E
 			E.turf_list += T
 		E.reset_cooldowns()
+	should_display = should_display || E.should_display
+	if(should_display)
+		display_turfs()
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
@@ -350,11 +354,23 @@
 	garbage_collect()
 
 /datum/excited_group/proc/garbage_collect()
+	if(should_display || SSair.display_all_groups)
+		hide_turfs() //Keeping for testing, add an if check late
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.excited_group = null
 	turf_list.Cut()
 	SSair.excited_groups -= src
+
+/datum/excited_group/proc/display_turfs()
+	for(var/thing in turf_list)
+		var/turf/display = thing
+		display.add_atom_colour("#c300ff", ADMIN_COLOUR_PRIORITY)
+
+/datum/excited_group/proc/hide_turfs()
+	for(var/thing in turf_list)
+		var/turf/display = thing
+		display.remove_atom_colour(ADMIN_COLOUR_PRIORITY, "#c300ff")
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 /turf/proc/conductivity_directions()

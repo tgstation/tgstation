@@ -37,6 +37,7 @@ SUBSYSTEM_DEF(air)
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
+	var/display_all_groups = FALSE
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -243,6 +244,8 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		EG.breakdown_cooldown++
 		EG.dismantle_cooldown++
+		if(EG.should_display || display_all_groups) //Should we make active turfs visable?
+			EG.display_turfs()
 		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
 			EG.self_breakdown()
 		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
@@ -255,7 +258,7 @@ SUBSYSTEM_DEF(air)
 	active_turfs -= T
 	if(currentpart == SSAIR_ACTIVETURFS)
 		currentrun -= T
-	#ifdef VISUALIZE_ACTIVE_TURFS
+	#ifdef VISUALIZE_ACTIVE_TURFS //Use this when you want details about how the turfs are moving, display_all_groups should work for normal operation
 	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#00ff00")
 	#endif
 	if(istype(T))
@@ -415,3 +418,72 @@ SUBSYSTEM_DEF(air)
 		return gas_string
 	var/datum/atmosphere/mix = atmos_gen[gas_string]
 	return mix.gas_string
+
+
+/datum/controller/subsystem/air/ui_state(mob/user)
+	return GLOB.debug_state
+
+/datum/controller/subsystem/air/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AtmosControlPanel")
+		ui.open()
+
+/datum/controller/subsystem/air/ui_data(mob/user)
+	var/list/data = list()
+	data["excited_groups"] = list()
+	for(var/datum/excited_group/group in excited_groups)
+		var/turf/T = group.turf_list[1]
+		var/area/target = get_area(T)
+		data["excited_groups"] += list(list(
+				"jump_to" = REF(T), //Just go to the first turf
+				"group" = REF(group),
+				"area" = target.name,
+				"breakdown" = group.breakdown_cooldown,
+				"dismantle" = group.dismantle_cooldown,
+				"size" = group.turf_list.len,
+				"should_show" = group.should_display
+				)
+			)
+	data["active_size"] = active_turfs.len
+	data["hotspots_size"] = hotspots.len
+	data["excited_size"] = excited_groups.len
+	data["frozen"] = can_fire
+	data["show_all"] = display_all_groups
+	return data
+
+/datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(..() || !check_rights_for(usr.client, R_DEBUG))
+		return
+	switch(action)
+		if("move-to-target")
+			var/turf/target = locate(params["spot"])
+			if(!target)
+				return
+			usr.forceMove(target)
+			usr.update_parallax_contents()
+		if("toggle-freeze")
+			can_fire = !can_fire
+			return TRUE
+		if("toggle_show_group")
+			var/datum/excited_group/group = locate(params["group"])
+			if(!group)
+				return
+			group.should_display = !group.should_display
+			if(display_all_groups)
+				return TRUE
+			if(group.should_display)
+				group.display_turfs()
+			else
+				group.hide_turfs()
+			return TRUE
+		if("toggle_show_all")
+			display_all_groups = !display_all_groups
+			for(var/datum/excited_group/group in excited_groups)
+				if(display_all_groups)
+					group.display_turfs()
+				else if(!group.should_display) //Don't flicker yeah?
+					group.hide_turfs()
+			return TRUE
+
+
