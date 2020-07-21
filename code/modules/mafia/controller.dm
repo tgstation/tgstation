@@ -605,10 +605,10 @@
 				var/list/debug_setup = list()
 				var/list/rolelist_dict = list()
 				var/done = FALSE
-				for(var/p in subtypesof(/datum/mafia_role))
+				for(var/p in typesof(/datum/mafia_role))
 					var/datum/mafia_role/path = p
 					rolelist_dict[initial(path.name) + " ([uppertext(initial(path.team))])"] = path
-				rolelist_dict = list("CANCEL", "FINISH") + list("Assistant (TOWN)" = /datum/mafia_role) + rolelist_dict
+				rolelist_dict = list("CANCEL", "FINISH") + rolelist_dict
 				while(!done)
 					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
 					var/chosen_role_name = input(usr,"Select a role!","Custom Setup Creation",rolelist_dict[1]) as null|anything in rolelist_dict
@@ -710,12 +710,14 @@
 	var/mafiaspe_left = 1
 	var/killing_role = prob(50)
 	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
+	var/overflow_left = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + mafiareg_left + mafiaspe_left + killing_role + disruptors)
 
-	var/overflow = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + mafiareg_left + mafiaspe_left + killing_role + disruptors)
-	var/list/assistants = list(/datum/mafia_role = overflow) //amount of people who are not any of the special roles
 	var/list/random_setup = list()
-	for(var/i in 1 to (MAFIA_MAX_PLAYER_COUNT - overflow)) //should match the number of roles to add
-		if(invests_left)
+	for(var/i in 1 to MAFIA_MAX_PLAYER_COUNT) //should match the number of roles to add
+		if(overflow_left)
+			add_setup_role(random_setup, TOWN_OVERFLOW)
+			overflow_left--
+		else if(invests_left)
 			add_setup_role(random_setup, TOWN_INVEST)
 			invests_left--
 		else if(protects_left)
@@ -735,11 +737,11 @@
 			killing_role--
 		else
 			add_setup_role(random_setup, NEUTRAL_DISRUPT)
-	return assistants + random_setup
+	custom_setup = random_setup
+	return random_setup
 
 /**
   * Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one
-  * Don't put overflow roles through here, for the moment. byond will not treat it kindly.
   */
 /datum/mafia_controller/proc/add_setup_role(setup_list, wanted_role_type)
 	var/list/role_type_paths = list()
@@ -749,7 +751,13 @@
 			role_type_paths += instance
 
 	var/mafia_path = pick(role_type_paths)
-	var/found_role = locate(mafia_path) in setup_list
+	var/datum/mafia_role/mafia_path_type = mafia_path
+	var/found_role
+	for(var/searched_path in setup_list)
+		var/datum/mafia_role/searched_path_type = searched_path
+		if(initial(mafia_path_type.name) == initial(searched_path_type.name))
+			found_role = searched_path
+			break
 	if(found_role)
 		setup_list[found_role] += 1
 		return
