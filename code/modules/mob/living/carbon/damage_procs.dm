@@ -65,6 +65,8 @@
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+	if(amount == 0)
+		return FALSE
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health, required_status)
 	else
@@ -74,6 +76,8 @@
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+	if(amount == 0)
+		return FALSE
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health, required_status)
 	else
@@ -81,15 +85,20 @@
 	return amount
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
+	if(amount == 0)
+		return
+	var/tox_immune = HAS_TRAIT(src, TRAIT_TOXINLOVER)
+	if(!forced && tox_immune) //damage becomes healing and healing becomes damage
 		amount = -amount
-		if(amount > 0)
-			blood_volume -= 5*amount
-		else
-			blood_volume -= amount
 	if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
-	return ..()
+	. = ..()
+	if(isnull(.) || forced || !tox_immune)
+		return
+	if(amount > 0) //finish toxin lover damage if we actually changed health
+		blood_volume -= 5*amount
+	else
+		blood_volume -= amount
 
 /mob/living/carbon/getStaminaLoss()
 	. = 0
@@ -100,6 +109,8 @@
 /mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+	if(amount == 0)
+		return
 	if(amount > 0)
 		take_overall_damage(0, 0, amount, updating_health)
 	else
@@ -219,7 +230,12 @@
 
 ///Heal MANY bodyparts, in random order
 /mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE)
+	if(!brute && !burn && !stamina)
+		return //nothing to update. likely due to varediting heal rates.
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, stamina, required_status)
+
+	if(!parts.len) //nothing was damaged or valid to be healed (ie trying to heal robotic limbs when we only have normal ones)
+		return
 
 	var/update = NONE
 	while(parts.len && (brute > 0 || burn > 0 || stamina > 0))
@@ -244,10 +260,14 @@
 
 /// damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
+	if(!brute && !burn && !stamina)
+		return //nothing to update. likely due to varediting something's damage values.
 	if(status_flags & GODMODE)
 		return	//godmode
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_status)
+	if(!parts.len) //nothing valid to be damaged (ie trying to damage robotic limbs when we only have normal ones)
+		return
 	var/update = 0
 	while(parts.len && (brute > 0 || burn > 0 || stamina > 0))
 		var/obj/item/bodypart/picked = pick(parts)
