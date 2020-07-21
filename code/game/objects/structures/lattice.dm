@@ -147,7 +147,7 @@
 	. = ..()
 
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/AddItemOnLift)
-	RegisterSignal(src, COMSIG_MOVABLE_UNCROSS, .proc/RemoveItemFromLift)
+	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, .proc/RemoveItemFromLift)
 
 /obj/structure/lattice/lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
 	to_chat(world, "[src] RemoveItemFromLift([AM])")
