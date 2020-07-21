@@ -273,32 +273,36 @@
 			//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
 			if(itemUser.health < itemUser.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
-			itemUser.adjustBruteLoss(-1.5)
-			itemUser.adjustFireLoss(-1.5)
-			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
-			itemUser.adjustOxyLoss(-1.5)
-			itemUser.adjustStaminaLoss(-1.5)
-			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
-			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
+			itemUser.adjustBruteLoss(-5, FALSE)
+			itemUser.adjustFireLoss(-5, FALSE)
+			itemUser.adjustToxLoss(-5, FALSE, TRUE) //Because Slime People are people too
+			itemUser.adjustOxyLoss(-5, FALSE)
+			itemUser.adjustStaminaLoss(-5, FALSE)
+			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
+			itemUser.adjustCloneLoss(-1.5, FALSE) //Becasue apparently clone damage is the bastion of all health
+			itemUser.updatehealth() //after all healing is done, update health once
 		//Heal all those around you, unbiased
 		for(var/mob/living/L in view(7, owner))
+			if(L == owner)
+				continue
 			if(L.health < L.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(L), "#375637")
 			if(iscarbon(L))
-				L.adjustBruteLoss(-3.5)
-				L.adjustFireLoss(-3.5)
-				L.adjustToxLoss(-3.5, forced = TRUE) //Because Slime People are people too
-				L.adjustOxyLoss(-3.5)
-				L.adjustStaminaLoss(-3.5)
+				L.adjustBruteLoss(-3.5, FALSE)
+				L.adjustFireLoss(-3.5, FALSE)
+				L.adjustToxLoss(-3.5, FALSE, TRUE) //Because Slime People are people too
+				L.adjustOxyLoss(-3.5, FALSE)
+				L.adjustStaminaLoss(-3.5, FALSE)
 				L.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3.5)
-				L.adjustCloneLoss(-1) //Becasue apparently clone damage is the bastion of all health
+				L.adjustCloneLoss(-1, FALSE) //Becasue apparently clone damage is the bastion of all health
+				L.updatehealth() //after all healing is done, update health once
 			else if(issilicon(L))
-				L.adjustBruteLoss(-3.5)
-				L.adjustFireLoss(-3.5)
+				L.adjustBruteLoss(-3.5, FALSE)
+				L.adjustFireLoss(-3.5, FALSE)
+				L.updatehealth()
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SM = L
 				SM.adjustHealth(-3.5, forced = TRUE)
-
 /datum/status_effect/hippocratic_oath/proc/consume_owner()
 	owner.visible_message("<span class='notice'>[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.</span>")
 	var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
