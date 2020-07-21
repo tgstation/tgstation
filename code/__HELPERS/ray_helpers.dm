@@ -40,19 +40,19 @@
 	var/list/turfs = list()
 
 	//Go along the y axis from start x
-	for(var/y = start_y; y < end_y; y++)
+	for(var/y = start_y; y <= end_y; y++)
 		turfs |= get_offset_target_turf(A, start_x, y)
 
 	//Go along the y axis from end x
-	for(var/y = start_y; y < end_y; y++)
+	for(var/y = start_y; y <= end_y; y++)
 		turfs |= get_offset_target_turf(A, end_x, y)
 
 	// Go along the x axis from start y
-	for(var/x = start_x; x < end_x; x++)
+	for(var/x = start_x; x <= end_x; x++)
 		turfs |= get_offset_target_turf(A, x, start_y)
 
 	// Go along the x axis from end y
-	for(var/x = start_x; x < end_x; x++)
+	for(var/x = start_x; x <= end_x; x++)
 		turfs |= get_offset_target_turf(A, x, end_y)
 
 	return turfs
