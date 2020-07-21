@@ -159,8 +159,21 @@
 
 	var/area/A = get_area(src)
 	if(!A.air_vent_names[id_tag])
-		name = "\improper [A.name] vent pump #[A.air_vent_names.len + 1]"
-		A.air_vent_names[id_tag] = name
+		var/valid_name = TRUE
+		var/vent_number = A.air_vent_names.len + 1
+		while(TRUE)
+			name = "\improper [A.name] vent pump #[vent_number]"
+			for(var/check_id_tag in A.air_vent_names)
+				var/check_name = A.air_vent_names[check_id_tag]
+				if(check_name == name)
+					valid_name = FALSE
+					vent_number += 1
+					break
+			if(valid_name)
+				A.air_vent_names[id_tag] = name
+				break
+			valid_name = TRUE
+
 	A.air_vent_info[id_tag] = signal.data
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
