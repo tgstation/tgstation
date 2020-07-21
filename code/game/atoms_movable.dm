@@ -464,7 +464,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(anchored == anchorvalue)
 		return
-	. = anchorvalue
+	. = anchored
 	anchored = anchorvalue
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
