@@ -293,7 +293,7 @@
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
 
-	glowybit = SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, LIGHTING_PLANE, dir, alpha = 0, add_appearance_flags = RESET_ALPHA, unique = TRUE)
+	glowybit = SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir, alpha = 0, unique = TRUE)
 
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/A = get_area(src)
