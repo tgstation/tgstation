@@ -15,7 +15,6 @@
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
 #include "component_tests.dm"
-#include "metabolizing.dm"
 #include "outfit_sanity.dm"
 #include "plantgrowth_tests.dm"
 #include "reagent_id_typos.dm"
