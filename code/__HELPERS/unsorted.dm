@@ -392,63 +392,7 @@
 	else
 		return zone
 
-/*
-
- Gets the turf this atom's *ICON* appears to inhabit
- It takes into account:
- * Pixel_x/y
- * Matrix x/y
-
- NOTE: if your atom has non-standard bounds then this proc
- will handle it, but:
- * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
- (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
- * if the bounds are odd, the true middle turf of the atom is returned
-
-*/
-
-/proc/get_turf_pixel(atom/AM)
-	if(!istype(AM))
-		return
-
-	//Find AM's matrix so we can use it's X/Y pixel shifts
-	var/matrix/M = matrix(AM.transform)
-
-	var/pixel_x_offset = AM.pixel_x + M.get_x_shift()
-	var/pixel_y_offset = AM.pixel_y + M.get_y_shift()
-
-	//Irregular objects
-	var/icon/AMicon = icon(AM.icon, AM.icon_state)
-	var/AMiconheight = AMicon.Height()
-	var/AMiconwidth = AMicon.Width()
-	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
-		pixel_x_offset += ((AMiconwidth/world.icon_size)-1)*(world.icon_size*0.5)
-		pixel_y_offset += ((AMiconheight/world.icon_size)-1)*(world.icon_size*0.5)
-
-	//DY and DX
-	var/rough_x = round(round(pixel_x_offset,world.icon_size)/world.icon_size)
-	var/rough_y = round(round(pixel_y_offset,world.icon_size)/world.icon_size)
-
-	//Find coordinates
-	var/turf/T = get_turf(AM) //use AM's turfs, as it's coords are the same as AM's AND AM's coords are lost if it is inside another atom
-	if(!T)
-		return null
-	var/final_x = T.x + rough_x
-	var/final_y = T.y + rough_y
-
-	if(final_x || final_y)
-		return locate(final_x, final_y, T.z)
-
-//Finds the distance between two atoms, in pixels
-//centered = FALSE counts from turf edge to edge
-//centered = TRUE counts from turf center to turf center
-//of course mathematically this is just adding world.icon_size on again
-/proc/getPixelDistance(atom/A, atom/B, centered = TRUE)
-	if(!istype(A)||!istype(B))
-		return 0
-	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
-	if(centered)
-		. += world.icon_size
+rld.icon_size
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -567,64 +511,11 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tY = clamp(origin.y + text2num(tY) - round(actual_view[2] / 2) - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
-/proc/screen_loc2turf(text, turf/origin, client/C)
-	if(!text)
-		return null
-	var/tZ = splittext(text, ",")
-	var/tX = splittext(tZ[1], "-")
-	var/tY = text2num(tX[2])
-	tX = splittext(tZ[2], "-")
-	tX = text2num(tX[2])
-	tZ = origin.z
-	var/list/actual_view = getviewsize(C ? C.view : world.view)
-	tX = clamp(origin.x + round(actual_view[1] / 2) - tX, 1, world.maxx)
-	tY = clamp(origin.y + round(actual_view[2] / 2) - tY, 1, world.maxy)
-	return locate(tX, tY, tZ)
-
 /proc/IsValidSrc(datum/D)
 	if(istype(D))
 		return !QDELETED(D)
 	return 0
 
-//Compare A's dir, the clockwise dir of A and the anticlockwise dir of A
-//To the opposite dir of the dir returned by get_dir(B,A)
-//If one of them is a match, then A is facing B
-/proc/is_A_facing_B(atom/A,atom/B)
-	if(!istype(A) || !istype(B))
-		return FALSE
-	if(isliving(A))
-		var/mob/living/LA = A
-		if(!(LA.mobility_flags & MOBILITY_STAND))
-			return FALSE
-	var/goal_dir = get_dir(A,B)
-	var/clockwise_A_dir = turn(A.dir, -45)
-	var/anticlockwise_A_dir = turn(A.dir, 45)
-
-	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
-		return TRUE
-	return FALSE
-
-
-/*
-rough example of the "cone" made by the 3 dirs checked
-
- B
-  \
-   \
-    >
-      <
-       \
-        \
-B --><-- A
-        /
-       /
-      <
-     >
-    /
-   /
- B
-
-*/
 
 
 //Center's an image.
@@ -662,135 +553,6 @@ B --><-- A
 
 	return I
 
-//ultra range (no limitations on distance, faster than range for distances > 8); including areas drastically decreases performance
-/proc/urange(dist=0, atom/center=usr, orange=0, areas=0)
-	if(!dist)
-		if(!orange)
-			return list(center)
-		else
-			return list()
-
-	var/list/turfs = RANGE_TURFS(dist, center)
-	if(orange)
-		turfs -= get_turf(center)
-	. = list()
-	for(var/V in turfs)
-		var/turf/T = V
-		. += T
-		. += T.contents
-		if(areas)
-			. |= T.loc
-
-//similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
-/proc/spiral_range(dist=0, center=usr, orange=0)
-	var/list/L = list()
-	var/turf/t_center = get_turf(center)
-	if(!t_center)
-		return list()
-
-	if(!orange)
-		L += t_center
-		L += t_center.contents
-
-	if(!dist)
-		return L
-
-
-	var/turf/T
-	var/y
-	var/x
-	var/c_dist = 1
-
-
-	while( c_dist <= dist )
-		y = t_center.y + c_dist
-		x = t_center.x - c_dist + 1
-		for(x in x to t_center.x+c_dist)
-			T = locate(x,y,t_center.z)
-			if(T)
-				L += T
-				L += T.contents
-
-		y = t_center.y + c_dist - 1
-		x = t_center.x + c_dist
-		for(y in t_center.y-c_dist to y)
-			T = locate(x,y,t_center.z)
-			if(T)
-				L += T
-				L += T.contents
-
-		y = t_center.y - c_dist
-		x = t_center.x + c_dist - 1
-		for(x in t_center.x-c_dist to x)
-			T = locate(x,y,t_center.z)
-			if(T)
-				L += T
-				L += T.contents
-
-		y = t_center.y - c_dist + 1
-		x = t_center.x - c_dist
-		for(y in y to t_center.y+c_dist)
-			T = locate(x,y,t_center.z)
-			if(T)
-				L += T
-				L += T.contents
-		c_dist++
-
-	return L
-
-//similar function to RANGE_TURFS(), but will search spiralling outwards from the center (like the above, but only turfs)
-/proc/spiral_range_turfs(dist=0, center=usr, orange=0, list/outlist = list(), tick_checked)
-	outlist.Cut()
-	if(!dist)
-		outlist += center
-		return outlist
-
-	var/turf/t_center = get_turf(center)
-	if(!t_center)
-		return outlist
-
-	var/list/L = outlist
-	var/turf/T
-	var/y
-	var/x
-	var/c_dist = 1
-
-	if(!orange)
-		L += t_center
-
-	while( c_dist <= dist )
-		y = t_center.y + c_dist
-		x = t_center.x - c_dist + 1
-		for(x in x to t_center.x+c_dist)
-			T = locate(x,y,t_center.z)
-			if(T)
-				L += T
-
-		y = t_center.y + c_dist - 1
-		x = t_center.x + c_dist
-		for(y in t_center.y-c_dist to y)
-			T = locate(x,y,t_center.z)
-			if(T)
-				L += T
-
-		y = t_center.y - c_dist
-		x = t_center.x + c_dist - 1
-		for(x in t_center.x-c_dist to x)
-			T = locate(x,y,t_center.z)
-			if(T)
-				L += T
-
-		y = t_center.y - c_dist + 1
-		x = t_center.x - c_dist
-		for(y in y to t_center.y+c_dist)
-			T = locate(x,y,t_center.z)
-			if(T)
-				L += T
-		c_dist++
-		if(tick_checked)
-			CHECK_TICK
-
-	return L
 
 /atom/proc/contains(var/atom/A)
 	if(!A)
