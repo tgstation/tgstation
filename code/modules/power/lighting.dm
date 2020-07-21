@@ -239,7 +239,7 @@
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
 
-	var/mutable_appearance/glowybit		// the light overlay
+	var/obj/effect/overlay/vis/glowybit		// the light overlay
 
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
@@ -293,8 +293,7 @@
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
 
-	glowybit = mutable_appearance(overlayicon, base_state, layer, LIGHTING_PLANE)
-	vis_contents += glowybit
+	glowybit = SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, LIGHTING_PLANE, dir, alpha = 0, add_appearance_flags = RESET_ALPHA, unique = TRUE)
 
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/A = get_area(src)
