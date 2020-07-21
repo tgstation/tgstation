@@ -87,7 +87,7 @@
   * Result is bounded to the map size and the range used is non pythagorean
   *
   * Arguments:
-  * * atom/A the source of the ray
+  * * atom/A The source of the ray
   * * direction The direction the ray should go in
   * * range The max rang ethe ray should travel
   */
@@ -583,4 +583,3 @@ Turf and target are separate in case you want to teleport some distance from a t
 			CHECK_TICK
 
 	return L
-
