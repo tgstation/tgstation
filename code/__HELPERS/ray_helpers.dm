@@ -24,7 +24,7 @@
   *
   * Gets the turfs on the edge of a bounding box of
   * given x and y height/width that surround the passed
-  * in source atom, uses [proc/get_offset_target_turf]
+  * in source atom, uses [/proc/get_offset_target_turf]
   * internally so will be bounded by map edges
   *
   * Arguments:
