@@ -68,7 +68,7 @@
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
-	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckled || HAS_TRAIT(user, TRAIT_INCAPACITATED))
+	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
 		return
 
 	if(!A || !(isturf(A) || isturf(A.loc)))
