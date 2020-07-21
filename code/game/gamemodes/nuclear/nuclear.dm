@@ -3,7 +3,7 @@
 	config_tag = "nuclear"
 	report_type = "nuclear"
 	false_report_weight = 10
-	required_players = 50 // the former threshold for declaring war. if you want to lower this, consider also lowering CHALLENGE_TELECRYSTALS in nuclear_challenge.dm
+	required_players = 50 // Remember the existence of war ops when changing this value. If you want to lower (or raise) this value, consider also lowering (or raising) CHALLENGE_TELECRYSTALS in nuclear_challenge.dm.
 	required_enemies = 2
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
