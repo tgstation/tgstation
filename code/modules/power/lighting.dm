@@ -239,6 +239,8 @@
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
 
+	var/mutable_appearance/glowybit		// the light overlay
+
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
@@ -312,6 +314,9 @@
 			brightness = 4
 			if(prob(5))
 				break_light_tube(1)
+	glowybit = mutable_appearance(overlayicon, base_state, layer, EMISSIVE_PLANE)
+	vis_contents += glowybit
+
 	addtimer(CALLBACK(src, .proc/update, 0), 1)
 
 /obj/machinery/light/Destroy()
@@ -320,6 +325,8 @@
 		on = FALSE
 //		A.update_lights()
 	QDEL_NULL(cell)
+	vis_contents.Cut()
+	QDEL_NULL(glowybit)
 	return ..()
 
 /obj/machinery/light/update_icon_state()
@@ -340,9 +347,9 @@
 /obj/machinery/light/update_overlays()
 	. = ..()
 	if(on && status == LIGHT_OK)
-		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, layer, EMISSIVE_PLANE)
 		glowybit.alpha = clamp(light_power*250, 30, 200)
-		. += glowybit
+	else
+		glowybit.alpha = 0
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
