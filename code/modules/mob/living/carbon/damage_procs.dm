@@ -227,9 +227,9 @@
 	var/obj/item/bodypart/picked = pick(parts)
 	if(picked.receive_damage(brute, burn, stamina,check_armor ? run_armor_check(picked, (brute ? "melee" : burn ? "fire" : stamina ? "bullet" : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
-
+//brute = 1.5, burn = 1.5, stamina = 1.5, toxin = 1.5, toxin_forced = TRUE, oxy = 1.5, clone = 0.5)
 ///Heal MANY bodyparts, in random order
-/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE)
+/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE, force_health_update)
 	if(!brute && !burn && !stamina)
 		return //nothing to update. likely due to varediting heal rates.
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, stamina, required_status)
@@ -257,9 +257,9 @@
 		update_stamina()
 	if(update)
 		update_damage_overlays()
-
+//brute = 1.5, burn = 1.5, stamina = 1.5, toxin = 1.5, toxin_forced = TRUE, oxy = 1.5, clone = 0.5)
 /// damage MANY bodyparts, in random order
-/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
+/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, force_health_update)
 	if(!brute && !burn && !stamina)
 		return //nothing to update. likely due to varediting something's damage values.
 	if(status_flags & GODMODE)
