@@ -293,7 +293,7 @@
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
 
-	glowybit = mutable_appearance(LIGHTING_PLANE, base_state, layer, EMISSIVE_PLANE)
+	glowybit = mutable_appearance(overlayicon, base_state, layer, LIGHTING_PLANE)
 	vis_contents += glowybit
 
 	if(!mapload) //sync up nightshift lighting for player made lights
