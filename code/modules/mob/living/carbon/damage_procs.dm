@@ -227,16 +227,17 @@
 	var/obj/item/bodypart/picked = pick(parts)
 	if(picked.receive_damage(brute, burn, stamina,check_armor ? run_armor_check(picked, (brute ? "melee" : burn ? "fire" : stamina ? "bullet" : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
-//brute = 1.5, burn = 1.5, stamina = 1.5, toxin = 1.5, toxin_forced = TRUE, oxy = 1.5, clone = 0.5)
+
 ///Heal MANY bodyparts, in random order
-/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE, force_health_update)
-	if(!brute && !burn && !stamina)
+/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE, toxin = 0, toxin_forced = FALSE, oxy = 0, clone = 0)
+	if(!brute && !burn && !stamina && !toxin && !oxy && !clone)
 		return //nothing to update. likely due to varediting heal rates.
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, stamina, required_status)
 
-	if(!parts.len) //nothing was damaged or valid to be healed (ie trying to heal robotic limbs when we only have normal ones)
+	if(!parts.len && !(toxin || oxy || clone)) //nothing was damaged or valid to be healed (ie trying to heal robotic limbs when we only have normal ones)
 		return
 
+	var/healed_something
 	var/update = NONE
 	while(parts.len && (brute > 0 || burn > 0 || stamina > 0))
 		var/obj/item/bodypart/picked = pick(parts)
@@ -252,22 +253,28 @@
 		stamina = round(stamina - (stamina_was - picked.stamina_dam), DAMAGE_PRECISION)
 
 		parts -= picked
+
+	adjustToxLoss(toxin, FALSE, toxin_forced)
+	adjustOxyLoss(oxy, FALSE)
+	adjustCloneLoss(clone, FALSE)
+
 	if(updating_health)
 		updatehealth()
 		update_stamina()
 	if(update)
 		update_damage_overlays()
-//brute = 1.5, burn = 1.5, stamina = 1.5, toxin = 1.5, toxin_forced = TRUE, oxy = 1.5, clone = 0.5)
+
 /// damage MANY bodyparts, in random order
-/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, force_health_update)
-	if(!brute && !burn && !stamina)
+/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, toxin = 0, toxin_forced = FALSE, oxy = 0, clone = 0)
+	if(!brute && !burn && !stamina && !toxin && !oxy && !clone)
 		return //nothing to update. likely due to varediting something's damage values.
 	if(status_flags & GODMODE)
 		return	//godmode
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_status)
-	if(!parts.len) //nothing valid to be damaged (ie trying to damage robotic limbs when we only have normal ones)
+	if(!parts.len && !(toxin || oxy || clone)) //nothing valid to be damaged (ie trying to damage robotic limbs when we only have normal ones)
 		return
+
 	var/update = 0
 	while(parts.len && (brute > 0 || burn > 0 || stamina > 0))
 		var/obj/item/bodypart/picked = pick(parts)
@@ -287,6 +294,11 @@
 		stamina = round(stamina - (picked.stamina_dam - stamina_was), DAMAGE_PRECISION)
 
 		parts -= picked
+
+	adjustToxLoss(toxin, FALSE, toxin_forced)
+	adjustOxyLoss(oxy, FALSE)
+	adjustCloneLoss(clone, FALSE)
+
 	if(updating_health)
 		updatehealth()
 	if(update)

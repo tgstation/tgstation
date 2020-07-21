@@ -32,7 +32,7 @@
 	. = ..()
 	if(is_deployed() && toggle && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.heal_overall_damage(brute = 5, burn = 5, oxygen = 5, toxin = 5)
+		C.heal_overall_damage(brute = 5, burn = 5, oxy = 5, toxin = 5)
 		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(C))
 		if(guardiancolor)
 			H.color = guardiancolor

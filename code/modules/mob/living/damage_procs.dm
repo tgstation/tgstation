@@ -303,19 +303,25 @@
 		update_stamina()
 
 /// heal MANY bodyparts, in random order
-/mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE)
+/mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE, toxin = 0, toxin_forced = FALSE, oxy = 0, clone = 0)
 	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(-burn, FALSE)
 	adjustStaminaLoss(-stamina, FALSE)
+	adjustToxLoss(toxin, FALSE, toxin_forced)
+	adjustOxyLoss(oxy, FALSE)
+	adjustCloneLoss(clone, FALSE)
 	if(updating_health)
 		updatehealth()
 		update_stamina()
 
 /// damage MANY bodyparts, in random order
-/mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
+/mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null, toxin = 0, toxin_forced = FALSE, oxy = 0, clone = 0)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)
+	adjustToxLoss(toxin, FALSE, toxin_forced)
+	adjustOxyLoss(oxy, FALSE)
+	adjustCloneLoss(clone, FALSE)
 	if(updating_health)
 		updatehealth()
 		update_stamina()
