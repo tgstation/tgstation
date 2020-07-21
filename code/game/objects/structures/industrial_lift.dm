@@ -14,9 +14,10 @@
 			var/list/result = borderline.lift_platform_expansion(src)
 			if(result && result.len)
 				for(var/obj/structure/lift/lift_platform in result)
-					lift_platform.LMaster = src
-					lift_platforms |= lift_platform
-					possible_expansions |= lift_platform
+					if(!lift_platforms.Find(lift_platform))
+						lift_platform.LMaster = src
+						lift_platforms |= lift_platform
+						possible_expansions |= lift_platform
 			possible_expansions -= borderline
 
 ///Move all platforms together
@@ -61,11 +62,9 @@
 		LMaster = new(src)
 
 /obj/structure/lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
-	to_chat(world, "[src] RemoveItemFromLift([AM])")
 	lift_load -= AM
 
 /obj/structure/lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
-	to_chat(world, "[src] AddItemOnLift([AM])")
 	lift_load |= AM
 
 /obj/structure/lift/proc/lift_platform_expansion(datum/lift_master/LMaster)
