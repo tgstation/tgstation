@@ -33,10 +33,10 @@
   * * radius_y the radius of the box in the y dimension
   */
 /proc/get_bounding_turfs(atom/A, radius_x, radius_y)
-	start_x = A.x - radius_x
-	end_x = A.x + radius_x
-	start_y = A.y - radius_y
-	end_y = A.y + radius_y
+	var/start_x = A.x - radius_x
+	var/end_x = A.x + radius_x
+	var/start_y = A.y - radius_y
+	var/end_y = A.y + radius_y
 	var/list/turfs = list()
 
 	//Go along the y axis from start x
@@ -368,7 +368,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return 0
 	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
 	if(centered)
-		. += wo
+		. += world.icon_size
 
 /**
   * Convert a screen loc text entry to a turf location
