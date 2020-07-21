@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	35
+#define SAVEFILE_VERSION_MAX	36
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -48,7 +48,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 34)
 		auto_fit_viewport = TRUE
 
-	if(current_version < 35) //makes old keybinds compatible with #52040, sets the new default
+	if(current_version < 36) //makes old keybinds compatible with #52040, sets the new default
 		var/newkey = FALSE
 		for(var/list/key in key_bindings)
 			for(var/bind in key)
@@ -63,7 +63,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(bind == "quick_equip_suit_storage")
 					newkey = TRUE
 		if(!newkey && !key_bindings["ShiftQ"])
-			key_bindings["ShiftQ"] += "quick_equip_suit_storage"
+			key_bindings["ShiftQ"] = list("quick_equip_suit_storage")
 
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
