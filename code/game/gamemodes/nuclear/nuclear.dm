@@ -3,7 +3,7 @@
 	config_tag = "nuclear"
 	report_type = "nuclear"
 	false_report_weight = 10
-	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
+	required_players = 50 // the former threshold for declaring war. if you want to lower this, consider also lowering CHALLENGE_TELECRYSTALS in nuclear_challenge.dm
 	required_enemies = 2
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
