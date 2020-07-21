@@ -13,7 +13,8 @@
 	keybind_signal = COMSIG_KB_SILICON_TOGGLEMODULEONE_DOWN
 
 /datum/keybinding/robot/moduleone/down(client/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/robot/R = user.mob
 	R.toggle_module(1)
@@ -27,7 +28,8 @@
 	keybind_signal = COMSIG_KB_SILICON_TOGGLEMODULETWO_DOWN
 
 /datum/keybinding/robot/moduletwo/down(client/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/robot/R = user.mob
 	R.toggle_module(2)
@@ -41,7 +43,8 @@
 	keybind_signal = COMSIG_KB_SILICON_TOGGLEMODULETHREE_DOWN
 
 /datum/keybinding/robot/modulethree/down(client/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/robot/R = user.mob
 	R.toggle_module(3)
@@ -55,7 +58,8 @@
 	keybind_signal = COMSIG_KB_SILICON_CYCLEINTENT_DOWN
 
 /datum/keybinding/robot/intent_cycle/down(client/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/robot/R = user.mob
 	R.a_intent_change(INTENT_HOTKEY_LEFT)
@@ -69,7 +73,8 @@
 	keybind_signal = COMSIG_KB_SILICON_UNEQUIPMODULE_DOWN
 
 /datum/keybinding/robot/unequip_module/down(client/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/robot/R = user.mob
 	R.uneq_active()

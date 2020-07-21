@@ -11,7 +11,8 @@
 	keybind_signal = COMSIG_KB_CLIENT_GETHELP_DOWN
 
 /datum/keybinding/client/admin_help/down(client/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	user.get_adminhelp()
 	return TRUE
@@ -25,7 +26,8 @@
 	keybind_signal = COMSIG_KB_CLIENT_SCREENSHOT_DOWN
 
 /datum/keybinding/client/screenshot/down(client/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	winset(user, null, "command=.screenshot [!user.keys_held["shift"] ? "auto" : ""]")
 	return TRUE
@@ -38,7 +40,8 @@
 	keybind_signal = COMSIG_KB_CLIENT_MINIMALHUD_DOWN
 
 /datum/keybinding/client/minimal_hud/down(client/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	user.mob.button_pressed_F12()
 	return TRUE
