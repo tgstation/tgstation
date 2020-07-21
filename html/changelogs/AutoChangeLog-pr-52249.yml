@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - admin: "Added a few new buildmode modes. Outfit, to quickly apply or remove outfits. Delete, to quickly delete any atoms. Slightly overhauled the copy proc used here and in supply pods, now compatible with most mobs."

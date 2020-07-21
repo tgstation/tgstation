@@ -4,7 +4,6 @@
 		return
 
 	..()
-	adjustOxyLoss(-10) //we're a robot!
 	handle_robot_hud_updates()
 	handle_robot_cell()
 
@@ -100,4 +99,3 @@
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
 	update_transform()
 	update_action_buttons_icon()
-

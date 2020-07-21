@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer use broken cyborg slots by being fast at clicking"
+  - code_imp: "Removed a bunch of deprecated cyborg code involving taking toxin and oxygen damage"
+  - refactor: "Refactored part of cyborg inventory code"
