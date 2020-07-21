@@ -89,7 +89,7 @@
   * Arguments:
   * * atom/A The source of the ray
   * * direction The direction the ray should go in
-  * * range The max rang ethe ray should travel
+  * * range The max range the ray should travel
   */
 /proc/get_ranged_target_turf(atom/A, direction, range)
 
