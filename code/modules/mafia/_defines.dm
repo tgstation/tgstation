@@ -1,3 +1,6 @@
+///how many people can play mafia without issues (running out of spawns, procs not expecting more than this amount of people, etc)
+#define MAFIA_MAX_PLAYER_COUNT 12
+
 #define MAFIA_TEAM_TOWN "town"
 #define MAFIA_TEAM_MAFIA "mafia"
 #define MAFIA_TEAM_SOLO "solo"

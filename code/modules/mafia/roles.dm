@@ -139,15 +139,15 @@
 	current_investigation = target
 
 /datum/mafia_role/detective/proc/investigate(datum/mafia_controller/game)
-	var/datum/mafia_role/R = current_investigation
-	if(R)
-		if(R.detect_immune)
-			to_chat(body,"<span class='warning'>Your investigations reveal that [R.body.real_name] is a true member of the station.</span>")
-			add_note("N[game.turn] - [R.body.real_name] - Town")
+	var/datum/mafia_role/target = current_investigation
+	if(target)
+		if(target.detect_immune)
+			to_chat(body,"<span class='warning'>Your investigations reveal that [target.body.real_name] is a true member of the station.</span>")
+			add_note("N[game.turn] - [target.body.real_name] - Town")
 		else
 			var/team_text
 			var/fluff
-			switch(R.team)
+			switch(target.team)
 				if(MAFIA_TEAM_TOWN)
 					team_text = "Town"
 					fluff = "a true member of the station."
@@ -157,8 +157,8 @@
 				if(MAFIA_TEAM_SOLO)
 					team_text = "Solo"
 					fluff = "a rogue, with their own objectives..."
-			to_chat(body,"<span class='warning'>Your investigations reveal that [R.body.real_name] is [fluff]</span>")
-			add_note("N[game.turn] - [R.body.real_name] - [team_text]")
+			to_chat(body,"<span class='warning'>Your investigations reveal that [target.body.real_name] is [fluff]</span>")
+			add_note("N[game.turn] - [target.body.real_name] - [team_text]")
 	current_investigation = null
 
 /datum/mafia_role/psychologist
@@ -219,10 +219,10 @@
 	current_target = target
 
 /datum/mafia_role/chaplain/proc/commune(datum/mafia_controller/game)
-	var/datum/mafia_role/R = current_target
-	if(R)
-		to_chat(body,"<span class='warning'>You invoke spirit of [R.body.real_name] and learn their role was <b>[R.name]<b>.</span>")
-		add_note("N[game.turn] - [R.body.real_name] - [R.name]")
+	var/datum/mafia_role/target = current_target
+	if(target)
+		to_chat(body,"<span class='warning'>You invoke spirit of [target.body.real_name] and learn their role was <b>[target.name]<b>.</span>")
+		add_note("N[game.turn] - [target.body.real_name] - [target.name]")
 		current_target = null
 
 /datum/mafia_role/md
@@ -385,19 +385,19 @@
 	current_investigation = target
 
 /datum/mafia_role/mafia/thoughtfeeder/proc/investigate(datum/mafia_controller/game)
-	var/datum/mafia_role/R = current_investigation
+	var/datum/mafia_role/target = current_investigation
 	current_investigation = null
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"thoughtfeed",R) & MAFIA_PREVENT_ACTION)
-		to_chat(body,"<span class='warning'>You were unable to investigate [R.body.real_name].</span>")
-		add_note("N[game.turn] - [R.body.real_name] - Unable to investigate")
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"thoughtfeed",target) & MAFIA_PREVENT_ACTION)
+		to_chat(body,"<span class='warning'>You were unable to investigate [target.body.real_name].</span>")
+		add_note("N[game.turn] - [target.body.real_name] - Unable to investigate")
 		return
-	if(R)
-		if(R.detect_immune)
-			to_chat(body,"<span class='warning'>[R.body.real_name]'s memories reveal that they are the Assistant.</span>")
-			add_note("N[game.turn] - [R.body.real_name] - Assistant")
+	if(target)
+		if(target.detect_immune)
+			to_chat(body,"<span class='warning'>[target.body.real_name]'s memories reveal that they are the Assistant.</span>")
+			add_note("N[game.turn] - [target.body.real_name] - Assistant")
 		else
-			to_chat(body,"<span class='warning'>[R.body.real_name]'s memories reveal that they are the [R.name].</span>")
-			add_note("N[game.turn] - [R.body.real_name] - [R.name]")
+			to_chat(body,"<span class='warning'>[target.body.real_name]'s memories reveal that they are the [target.name].</span>")
+			add_note("N[game.turn] - [target.body.real_name] - [target.name]")
 
 
 ///SOLO ROLES/// they range from anomalous factors to deranged killers that try to win alone.
@@ -443,13 +443,13 @@
 	to_chat(body,"<span class='warning'>You will attempt to kill [target.body.real_name] tonight.</span>")
 
 /datum/mafia_role/traitor/proc/try_to_kill(datum/mafia_controller/source)
-	var/datum/mafia_role/R = current_victim
+	var/datum/mafia_role/target = current_victim
 	current_victim = null
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,source,"traitor kill",R) & MAFIA_PREVENT_ACTION)
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,source,"traitor kill",target) & MAFIA_PREVENT_ACTION)
 		return
-	if(game_status == MAFIA_ALIVE && R && R.game_status == MAFIA_ALIVE)
-		if(!R.kill(source))
-			to_chat(body,"<span class='danger'>Your attempt at killing [R.body] was prevented!</span>")
+	if(game_status == MAFIA_ALIVE && target && target.game_status == MAFIA_ALIVE)
+		if(!target.kill(source))
+			to_chat(body,"<span class='danger'>Your attempt at killing [target.body] was prevented!</span>")
 
 /datum/mafia_role/nightmare
 	name = "Nightmare"
@@ -505,11 +505,11 @@
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,source,"nightmare actions",flicker_target) & MAFIA_PREVENT_ACTION)
 		to_chat(flicker_target.body, "<span class='warning'>Your actions were prevented!</span>")
 		return
-	var/datum/mafia_role/R = flicker_target
+	var/datum/mafia_role/target = flicker_target
 	flicker_target = null
-	if(R != src) //flicker instead of hunt
-		to_chat(R.body, "<span class='userdanger'>The lights begin to flicker and dim. You're in danger.</span>")
-		flickering += R
+	if(target != src) //flicker instead of hunt
+		to_chat(target.body, "<span class='userdanger'>The lights begin to flicker and dim. You're in danger.</span>")
+		flickering += target
 		return
 	for(var/r in flickering)
 		var/datum/mafia_role/role = r
