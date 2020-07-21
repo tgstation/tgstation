@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(vis_overlays)
 		var/cache_id = "\ref[overlay]@{[world.time]}"
 		unique_vis_overlays += overlay
 		vis_overlay_cache[cache_id] = overlay
-		. = overlay
+	. = overlay
 	thing.vis_contents += overlay
 
 	if(!isatom(thing)) // Automatic rotation is not supported on non atoms
