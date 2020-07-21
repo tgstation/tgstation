@@ -41,7 +41,7 @@ All the important duct code:
 
 	if(no_anchor)
 		active = FALSE
-		setAnchored(FALSE)
+		set_anchored(FALSE)
 	else if(!can_anchor())
 		qdel(src)
 		CRASH("Overlapping ducts detected")
@@ -153,8 +153,8 @@ All the important duct code:
 
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/proc/disconnect_duct(skipanchor)
-	if(!skipanchor) //since setAnchored calls us too.
-		setAnchored(FALSE)
+	if(!skipanchor) //since set_anchored calls us too.
+		set_anchored(FALSE)
 	active = FALSE
 	if(duct)
 		duct.remove_duct(src)
@@ -273,9 +273,9 @@ All the important duct code:
 	pixel_y = offset
 
 
-/obj/machinery/duct/setAnchored(anchorvalue)
+/obj/machinery/duct/set_anchored(anchorvalue)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
 	if(anchorvalue)
 		active = TRUE
@@ -288,7 +288,7 @@ All the important duct code:
 	add_fingerprint(user)
 	I.play_tool_sound(src)
 	if(anchored || can_anchor())
-		setAnchored(!anchored)
+		set_anchored(!anchored)
 		user.visible_message( \
 		"[user] [anchored ? null : "un"]fastens \the [src].", \
 		"<span class='notice'>You [anchored ? null : "un"]fasten \the [src].</span>", \

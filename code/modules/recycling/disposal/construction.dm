@@ -13,9 +13,9 @@
 	var/obj/pipe_type = /obj/structure/disposalpipe/segment
 	var/pipename
 
-/obj/structure/disposalconstruct/setAnchored(anchorvalue)
+/obj/structure/disposalconstruct/set_anchored(anchorvalue)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
 	density = anchorvalue ? initial(pipe_type.density) : FALSE
 
@@ -24,7 +24,7 @@
 	if(make_from)
 		pipe_type = make_from.type
 		setDir(make_from.dir)
-		setAnchored(TRUE)
+		set_anchored(TRUE)
 
 	else
 		if(_pipe_type)
@@ -110,7 +110,7 @@
 /obj/structure/disposalconstruct/wrench_act(mob/living/user, obj/item/I)
 	..()
 	if(anchored)
-		setAnchored(FALSE)
+		set_anchored(FALSE)
 		to_chat(user, "<span class='notice'>You detach the [pipename] from the underfloor.</span>")
 	else
 		var/ispipe = is_pipe() // Indicates if we should change the level of this pipe
@@ -145,7 +145,7 @@
 				to_chat(user, "<span class='warning'>The [pipename] requires a trunk underneath it in order to work!</span>")
 				return TRUE
 
-		setAnchored(TRUE)
+		set_anchored(TRUE)
 		to_chat(user, "<span class='notice'>You attach the [pipename] to the underfloor.</span>")
 	I.play_tool_sound(src, 100)
 	update_icon()

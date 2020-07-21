@@ -128,7 +128,7 @@
 		return FALSE
 	switch(var_name)
 		if(NAMEOF(src, anchored))
-			setAnchored(var_value)
+			set_anchored(var_value)
 			return TRUE
 		if(NAMEOF(src, x))
 			var/turf/T = locate(var_value, y, z)
@@ -460,12 +460,13 @@
 	A.Bumped(src)
 
 ///Sets the anchored var and returns if it was sucessfully changed or not.
-/atom/movable/proc/setAnchored(anchorvalue)
+/atom/movable/proc/set_anchored(anchorvalue)
+	SHOULD_CALL_PARENT(TRUE)
 	if(anchored == anchorvalue)
-		return FALSE
+		return
+	. = anchorvalue
 	anchored = anchorvalue
-	SEND_SIGNAL(src, COMSIG_MOVABLE_SETANCHORED, anchorvalue)
-	return TRUE
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE

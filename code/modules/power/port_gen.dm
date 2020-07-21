@@ -174,9 +174,9 @@
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	explosion(src.loc, 2, 5, 2, -1)
 
-/obj/machinery/power/port_gen/pacman/setAnchored(anchorvalue)
+/obj/machinery/power/port_gen/pacman/set_anchored(anchorvalue)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return //no need to process if we didn't change anything.
 	if(anchorvalue)
 		connect_to_network()
@@ -197,10 +197,10 @@
 	else if(!active)
 		if(O.tool_behaviour == TOOL_WRENCH)
 			if(!anchored && !isinspace())
-				setAnchored(TRUE)
+				set_anchored(TRUE)
 				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
 			else if(anchored)
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)

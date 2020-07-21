@@ -189,7 +189,7 @@
 	. = ..()
 	if(!panel_open)
 		return
-	setAnchored(!anchored)
+	set_anchored(!anchored)
 	I.play_tool_sound(src)
 	if(!anchored)
 		kill_circs()

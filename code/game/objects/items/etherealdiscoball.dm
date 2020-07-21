@@ -38,7 +38,7 @@
 
 /obj/structure/etherealball/AltClick(mob/living/carbon/human/user)
 	. = ..()
-	setAnchored(!anchored)
+	set_anchored(!anchored)
 	to_chat(user, "<span class='notice'>You [anchored ? null : "un"]lock the disco ball.</span>")
 
 /obj/structure/etherealball/proc/TurnOn()

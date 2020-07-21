@@ -51,7 +51,7 @@
 	. = ..()
 	if(!mapload)
 		return
-	setAnchored(TRUE)
+	set_anchored(TRUE)
 	state = BOOKCASE_FINISHED
 	for(var/obj/item/I in loc)
 		if(!isbook(I))
@@ -59,9 +59,9 @@
 		I.forceMove(src)
 	update_icon()
 
-/obj/structure/bookcase/setAnchored(anchorvalue)
+/obj/structure/bookcase/set_anchored(anchorvalue)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
 	state = anchorvalue
 	if(!anchorvalue) //in case we were vareditted or uprooted by a hostile mob, ensure we drop all our books instead of having them disappear till we're rebuild.
@@ -78,7 +78,7 @@
 			if(I.tool_behaviour == TOOL_WRENCH)
 				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					setAnchored(TRUE)
+					set_anchored(TRUE)
 			else if(I.tool_behaviour == TOOL_CROWBAR)
 				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You pry the frame apart.</span>")
@@ -95,7 +95,7 @@
 			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 
 		if(BOOKCASE_FINISHED)
 			var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
