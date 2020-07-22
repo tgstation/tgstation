@@ -1,10 +1,20 @@
-/// Controls how many buckets should be kept, each representing a tick. (1 minutes worth)
-#define BUCKET_LEN (world.fps * 1 * 60)
+/// Controls how many buckets should be kept, each representing a tick. (30 seconds worth)
+#define BUCKET_LEN (world.fps * 1 * 30)
 /// Helper for getting the correct bucket for a given chatmessage
 #define BUCKET_POS(scheduled_destruction) (((round((scheduled_destruction - SSrunechat.head_offset) / world.tick_lag) + 1) % BUCKET_LEN) || BUCKET_LEN)
 /// Gets the maximum time at which messages will be handled in buckets, used for deferring to secondary queue
 #define BUCKET_LIMIT (world.time + TICKS2DS(min(BUCKET_LEN - (SSrunechat.practical_offset - DS2TICKS(world.time - SSrunechat.head_offset)) - 1, BUCKET_LEN - 1)))
 
+/**
+  * # Runechat Subsystem
+  *
+  * Maintains a timer-like system to handle destruction of runechat messages. Much of this code is modeled
+  * after or adapted from the timer subsystem.
+  *
+  * Note that this has the same structure for storing and queueing messages as the timer subsystem does
+  * for handling timers: the bucket_list is a list of chatmessage datums, each of which are the head
+  * of a circularly linked list. Any given index in bucket_list could be null, representing an empty bucket.
+  */
 SUBSYSTEM_DEF(runechat)
 	name = "Runechat"
 	flags = SS_TICKER | SS_NO_INIT
@@ -106,7 +116,7 @@ SUBSYSTEM_DEF(runechat)
 	second_queue |= SSrunechat.second_queue
 
 /**
-  * Has a chatmessage enter the subsystem, inserting it into the deletion queue
+  * Enters the runechat subsystem with this chatmessage, inserting it into the end-of-life queue
   *
   * This will also account for a chatmessage already being registered, and in which case
   * the position will be updated to remove it from the previous location if necessary
@@ -163,6 +173,10 @@ SUBSYSTEM_DEF(runechat)
 	next.prev = src
 	prev.next = src
 
+
+/**
+  * Removes this chatmessage datum from the runechat subsystem
+  */
 /datum/chatmessage/proc/leave_subsystem()
 	// Attempt to find the bucket that contains this chat message
 	var/bucket_pos = BUCKET_POS(scheduled_destruction)
