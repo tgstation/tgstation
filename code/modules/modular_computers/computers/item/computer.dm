@@ -189,7 +189,7 @@
 		return
 	if(enabled)
 		ui_interact(user)
-	else if(IsAdminGhost(user))
+	else if(isAdminGhostAI(user))
 		var/response = alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", "Yes", "No")
 		if(response == "Yes")
 			turn_on(user)

@@ -48,15 +48,6 @@
 		else
 			light = new/datum/light_source(src, .)
 
-// If we have opacity, make sure to tell (potentially) affected light sources.
-/atom/movable/Destroy()
-	var/turf/T = loc
-	. = ..()
-	if (opacity && istype(T))
-		var/old_has_opaque_atom = T.has_opaque_atom
-		T.recalc_atom_opacity()
-		if (old_has_opaque_atom != T.has_opaque_atom)
-			T.reconsider_lights()
 
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).
@@ -89,17 +80,17 @@
 
 /atom/vv_edit_var(var_name, var_value)
 	switch (var_name)
-		if ("light_range")
+		if (NAMEOF(src, light_range))
 			set_light(l_range=var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
 
-		if ("light_power")
+		if (NAMEOF(src, light_power))
 			set_light(l_power=var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
 
-		if ("light_color")
+		if (NAMEOF(src, light_color))
 			set_light(l_color=var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE

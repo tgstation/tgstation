@@ -1375,6 +1375,7 @@
 		description = "An invisible powder. Unfortunately, since it's invisible, it doesn't look like it'd color much of anything..."
 	else
 		description = "\An [colorname] powder, used for coloring things [colorname]."
+	return ..()
 
 /datum/reagent/colorful_reagent/powder/red
 	name = "Red Powder"
@@ -1748,6 +1749,7 @@
 
 /datum/reagent/colorful_reagent/New()
 	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+	return ..()
 
 /datum/reagent/colorful_reagent/proc/UpdateColor()
 	color = pick(random_color_list)
@@ -1773,6 +1775,7 @@
 
 /datum/reagent/hair_dye/New()
 	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+	return ..()
 
 /datum/reagent/hair_dye/proc/UpdateColor()
 	color = pick(potential_colors)

@@ -8,7 +8,10 @@ import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 export const CargoExpress = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window resizable>
+    <Window
+      width={600}
+      height={700}
+      resizable>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox
           accessText="a QM-level ID card" />

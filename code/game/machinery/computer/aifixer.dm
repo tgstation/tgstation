@@ -6,8 +6,7 @@
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 	light_color = LIGHT_COLOR_PINK
-	ui_x = 370
-	ui_y = 360
+
 	/// Variable containing transferred AI
 	var/mob/living/silicon/ai/occupier
 	/// Variable dictating if we are in the process of restoring the occupier AI
@@ -22,11 +21,10 @@
 	else
 		return ..()
 
-/obj/machinery/computer/aifixer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/aifixer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AiRestorer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AiRestorer", name)
 		ui.open()
 
 /obj/machinery/computer/aifixer/ui_data(mob/user)
@@ -64,11 +62,9 @@
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	use_power(1000)
-	occupier.adjustOxyLoss(-5, 0)
-	occupier.adjustFireLoss(-5, 0)
-	occupier.adjustToxLoss(-5, 0)
+	occupier.adjustOxyLoss(-5, 0, FALSE)
+	occupier.adjustFireLoss(-5, 0, FALSE)
 	occupier.adjustBruteLoss(-5, 0)
-	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive(full_heal = FALSE, admin_revive = FALSE)
 		if(!occupier.radio_enabled)

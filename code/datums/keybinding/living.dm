@@ -29,5 +29,21 @@
 
 /datum/keybinding/living/look_up/up(client/user)
 	var/mob/living/L = user.mob
-	L.stop_look_up()
+	L.end_look_up()
+	return TRUE
+
+/datum/keybinding/living/look_down
+	hotkey_keys = list(";")
+	name = "look down"
+	full_name = "Look Down"
+	description = "Look down at the previous z-level.  Only works if directly above open space."
+
+/datum/keybinding/living/look_down/down(client/user)
+	var/mob/living/L = user.mob
+	L.look_down()
+	return TRUE
+
+/datum/keybinding/living/look_down/up(client/user)
+	var/mob/living/L = user.mob
+	L.end_look_down()
 	return TRUE

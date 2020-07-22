@@ -1,3 +1,7 @@
+#define BOOKCASE_UNANCHORED 0
+#define BOOKCASE_ANCHORED 1
+#define BOOKCASE_FINISHED 2
+
 /* Library Items
  *
  * Contains:
@@ -21,8 +25,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
-	var/state = 0
-	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
+	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase when first interacted with.
 	var/load_random_books = FALSE
 	/// The category of books to pick from when populating random books.
@@ -37,55 +40,66 @@
 	else
 		. += "<span class='notice'>It's secured in place with <b>bolts</b>.</span>"
 	switch(state)
-		if(0)
+		if(BOOKCASE_UNANCHORED)
 			. += "<span class='notice'>There's a <b>small crack</b> visible on the back panel.</span>"
-		if(1)
+		if(BOOKCASE_ANCHORED)
 			. += "<span class='notice'>There's space inside for a <i>wooden</i> shelf.</span>"
-		if(2)
+		if(BOOKCASE_FINISHED)
 			. += "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>"
 
 /obj/structure/bookcase/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		return
-	state = 2
-	icon_state = "book-0"
-	anchored = TRUE
+	set_anchored(TRUE)
+	state = BOOKCASE_FINISHED
 	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/book))
-			I.forceMove(src)
+		if(!isbook(I))
+			continue
+		I.forceMove(src)
+	update_icon()
+
+/obj/structure/bookcase/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	state = anchorvalue
+	if(!anchorvalue) //in case we were vareditted or uprooted by a hostile mob, ensure we drop all our books instead of having them disappear till we're rebuild.
+		var/atom/Tsec = drop_location()
+		for(var/obj/I in contents)
+			if(!isbook(I))
+				continue
+			I.forceMove(Tsec)
 	update_icon()
 
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
-		if(0)
+		if(BOOKCASE_UNANCHORED)
 			if(I.tool_behaviour == TOOL_WRENCH)
 				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					anchored = TRUE
-					state = 1
-			if(I.tool_behaviour == TOOL_CROWBAR)
+					set_anchored(TRUE)
+			else if(I.tool_behaviour == TOOL_CROWBAR)
 				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You pry the frame apart.</span>")
 					deconstruct(TRUE)
 
-		if(1)
+		if(BOOKCASE_ANCHORED)
 			if(istype(I, /obj/item/stack/sheet/mineral/wood))
 				var/obj/item/stack/sheet/mineral/wood/W = I
 				if(W.get_amount() >= 2)
 					W.use(2)
 					to_chat(user, "<span class='notice'>You add a shelf.</span>")
-					state = 2
-					icon_state = "book-0"
-			if(I.tool_behaviour == TOOL_WRENCH)
+					state = BOOKCASE_FINISHED
+					update_icon()
+			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
-				anchored = FALSE
-				state = 0
+				set_anchored(FALSE)
 
-		if(2)
+		if(BOOKCASE_FINISHED)
 			var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
-			if(is_type_in_list(I, allowed_books))
+			if(isbook(I))
 				if(!user.transferItemToLoc(I, src))
 					return
 				update_icon()
@@ -113,8 +127,8 @@
 					I.play_tool_sound(src, 100)
 					to_chat(user, "<span class='notice'>You pry the shelf out.</span>")
 					new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
-					state = 1
-					icon_state = "bookempty"
+					state = BOOKCASE_ANCHORED
+					update_icon()
 			else
 				return ..()
 
@@ -142,17 +156,24 @@
 
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/mineral/wood(loc, 4)
-	for(var/obj/item/book/B in contents)
-		B.forceMove(get_turf(src))
-	qdel(src)
+	var/atom/Tsec = drop_location()
+	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
+	for(var/obj/item/I in contents)
+		if(!isbook(I))
+			continue
+		I.forceMove(Tsec)
+	return ..()
 
 
 /obj/structure/bookcase/update_icon_state()
+	if(state == BOOKCASE_UNANCHORED)
+		icon_state = "bookempty"
+		return
+
 	var/amount = contents.len
 	if(load_random_books)
 		amount += books_to_load
-	icon_state = "book-[amount < 5 ? amount : 5]"
+	icon_state = "book-[clamp(amount, 0, 5)]"
 
 
 /obj/structure/bookcase/manuals/engineering
@@ -351,3 +372,8 @@
 	else
 		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
 	to_chat(user, "\n")
+
+
+#undef BOOKCASE_UNANCHORED
+#undef BOOKCASE_ANCHORED
+#undef BOOKCASE_FINISHED

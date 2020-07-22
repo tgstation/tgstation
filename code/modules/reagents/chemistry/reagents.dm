@@ -54,6 +54,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/overrides_metab = 0
 	/// above this overdoses happen
 	var/overdose_threshold = 0
+	///Overrides what addiction this chemicals feeds into, allowing you to have multiple chems that treat a single addiction.
+	var/addiction_type
 	/// above this amount addictions start
 	var/addiction_threshold = 0
 	/// increases as addiction gets worse
@@ -74,7 +76,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/reagent_removal_skip_list = list()
 
 /datum/reagent/New()
+	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
+
+	if(!addiction_type)
+		addiction_type = type
 
 	if(material)
 		material = SSmaterials.GetMaterialRef(material)

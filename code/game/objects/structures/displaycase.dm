@@ -398,11 +398,10 @@
 	src.icon = I
 	return
 
-/obj/structure/displaycase/forsale/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
-	. = ..()
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/structure/displaycase/forsale/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Vendatray", name, 300, 270, master_ui, state)
+		ui = new(user, src, "Vendatray", name)
 		ui.set_autoupdate(FALSE)
 		viewing_ui[user] = ui
 		ui.open()
@@ -542,7 +541,7 @@
 				to_chat(user, "<span class='notice'>You unsecure [src].</span>")
 			else
 				to_chat(user, "<span class='notice'>You secure [src].</span>")
-			anchored = !anchored
+			set_anchored(!anchored)
 			return
 	else if(!open && user.a_intent == INTENT_HELP)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
@@ -570,4 +569,4 @@
 
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
-	req_access = list(ACCESS_KITCHEN)
+	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)

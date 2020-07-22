@@ -29,35 +29,23 @@
 
 /obj/machinery/medical_kiosk/Initialize() //loaded subtype for mapping use
 	. = ..()
+	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
 	scanner_wand = new/obj/item/scanner_wand(src)
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
-	if (pandemonium == TRUE)
-		active_price += (rand(10,30)) //The wheel of capitalism says health care ain't cheap.
-	if(!istype(C))
-		say("No ID card detected.") // No unidentified crew.
-		return
-	if(C.registered_account)
+	if(C?.registered_account)
 		account = C.registered_account
-	else
-		say("No account detected.")  //No homeless crew.
-		return
 	if(account?.account_job?.paycheck_department == payment_department)
 		use_power(20)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
 		return
-	if(!account.has_money(active_price))
-		say("You do not possess the funds to purchase this.")  //No jobless crew, either.
+	var/bonus_fee = pandemonium ? rand(10,30) : 0
+	if(attempt_charge(src, H, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
-	else
-		account.adjust_money(-active_price)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_MED)
-		if(D)
-			D.adjust_money(active_price)
-		use_power(20)
-		paying_customer = TRUE
+	use_power(20)
+	paying_customer = TRUE
 	icon_state = "kiosk_active"
 	say("Thank you for your patronage!")
 	RefreshParts()
@@ -153,7 +141,7 @@
 	else
 		. += "<span class='notice'>\The [src] has its scanner clipped to the side. Alt-Click to remove.</span>"
 
-/obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/medical_kiosk/ui_interact(mob/user, datum/tgui/ui)
 	var/patient_distance = 0
 	if(!ishuman(user))
 		to_chat(user, "<span class='warning'>[src] is unable to interface with non-humanoids!</span>")
@@ -169,10 +157,9 @@
 		say("Patient out of range. Resetting biometrics.")
 		clearScans()
 		return
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "MedicalKiosk", name, 575, 420, master_ui, state)
+		ui = new(user, src, "MedicalKiosk", name)
 		ui.open()
 		icon_state = "kiosk_off"
 		RefreshParts()
@@ -333,22 +320,26 @@
 		return
 	switch(action)
 		if("beginScan_1")
-			inuse()
+			if(!scan_active_1)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_1 = TRUE
 				paying_customer = FALSE
 		if("beginScan_2")
-			inuse()
+			if(!scan_active_2)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_2 = TRUE
 				paying_customer = FALSE
 		if("beginScan_3")
-			inuse()
+			if(!scan_active_3)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_3 = TRUE
 				paying_customer = FALSE
 		if("beginScan_4")
-			inuse()
+			if(!scan_active_4)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_4 = TRUE
 				paying_customer = FALSE
