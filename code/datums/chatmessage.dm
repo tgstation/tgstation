@@ -20,9 +20,9 @@
 	var/atom/message_loc
 	/// The client who heard this message
 	var/client/owned_by
-	/// Contains the scheduled destruction time
+	/// Contains the scheduled destruction time, used for scheduling EOL
 	var/scheduled_destruction
-	/// Contains the time that the EOL for the message started
+	/// Contains the time that the EOL for the message will be complete, used for qdel scheduling
 	var/eol_complete
 	/// Contains the approximate amount of lines for height decay
 	var/approx_lines
@@ -137,10 +137,13 @@
 			var/datum/chatmessage/m = msg
 			animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME)
 			combined_height += m.approx_lines
+
+			// When choosing to update the remaining time we have to be careful not to update the
+			// scheduled time once the EOL completion time has been set.
 			var/sched_remaining = m.scheduled_destruction - world.time
 			if (sched_remaining > CHAT_MESSAGE_EOL_FADE && !eol_complete)
 				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
-				m.enter_subsystem(world.time + remaining_time)
+				m.enter_subsystem(world.time + remaining_time) // push updated time to runechat SS
 
 	// Build message image
 	message = image(loc = message_loc, layer = CHAT_LAYER)
@@ -158,18 +161,18 @@
 	owned_by.images |= message
 	animate(message, alpha = 255, time = CHAT_MESSAGE_SPAWN_TIME)
 
-	// Prepare for destruction
+	// Register with the runechat SS to handle EOL and destruction
 	scheduled_destruction = world.time + (lifespan - CHAT_MESSAGE_EOL_FADE)
 	enter_subsystem()
 
 /**
   * Applies final animations to overlay CHAT_MESSAGE_EOL_FADE deciseconds prior to message deletion,
-  * sets time for scheduling deletion
+  * sets time for scheduling deletion and re-enters the runechat SS for qdeling
   */
 /datum/chatmessage/proc/end_of_life(fadetime = CHAT_MESSAGE_EOL_FADE)
 	eol_complete = scheduled_destruction + CHAT_MESSAGE_EOL_FADE
 	animate(message, alpha = 0, time = fadetime, flags = ANIMATION_PARALLEL)
-	enter_subsystem(eol_complete)
+	enter_subsystem(eol_complete) // re-enter the runechat SS with the EOL completion time to QDEL self
 
 /**
   * Creates a message overlay at a defined location for a given speaker

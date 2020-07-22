@@ -74,7 +74,7 @@ SUBSYSTEM_DEF(runechat)
 			var/datum/chatmessage/next = cm.next
 			if (!cm.eol_complete)
 				cm.end_of_life()
-			else if (!QDELETED(cm))
+			else if (!QDELETED(cm)) // otherwise if we haven't deleted it yet, do so (this is after EOL completion)
 				qdel(cm)
 
 			if (MC_TICK_CHECK)
