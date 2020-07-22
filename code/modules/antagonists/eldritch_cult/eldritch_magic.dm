@@ -406,9 +406,7 @@
 		for(var/turf/T in spiral_range_turfs(_range,centre))
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
-			for(var/mob/living/livies in T.contents)
-				if(user == livies)
-					continue
+			for(var/mob/living/livies in T.contents - user)
 				livies.adjustFireLoss(10)
 		_range++
 		sleep(3)
@@ -457,9 +455,7 @@
 	for(var/turf/T in range(1,current_user))
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
-		for(var/mob/living/livies in T.contents)
-			if(current_user == livies)
-				continue
+		for(var/mob/living/livies in T.contents - current_user)
 			livies.adjustFireLoss(5)
 
 
