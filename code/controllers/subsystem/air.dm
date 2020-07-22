@@ -436,15 +436,14 @@ SUBSYSTEM_DEF(air)
 		var/turf/T = group.turf_list[1]
 		var/area/target = get_area(T)
 		data["excited_groups"] += list(list(
-				"jump_to" = REF(T), //Just go to the first turf
-				"group" = REF(group),
-				"area" = target.name,
-				"breakdown" = group.breakdown_cooldown,
-				"dismantle" = group.dismantle_cooldown,
-				"size" = group.turf_list.len,
-				"should_show" = group.should_display
-				)
-			)
+			"jump_to" = REF(T), //Just go to the first turf
+			"group" = REF(group),
+			"area" = target.name,
+			"breakdown" = group.breakdown_cooldown,
+			"dismantle" = group.dismantle_cooldown,
+			"size" = group.turf_list.len,
+			"should_show" = group.should_display
+		))
 	data["active_size"] = active_turfs.len
 	data["hotspots_size"] = hotspots.len
 	data["excited_size"] = excited_groups.len
