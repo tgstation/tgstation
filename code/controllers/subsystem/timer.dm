@@ -20,7 +20,6 @@ SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 // SS_TICKER subsystem, so wait is in ticks
 	init_order = INIT_ORDER_TIMER
-	priority = FIRE_PRIORITY_TIMER
 	flags = SS_TICKER|SS_NO_INIT
 
 	/// Queue used for storing timers that do not fit into the current buckets
@@ -76,23 +75,27 @@ SUBSYSTEM_DEF(timer)
 		if(bucket_auto_reset)
 			bucket_resolution = 0
 
-		log_world("Timer bucket reset. world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
+		var/list/to_log = list("Timer bucket reset. world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
 		for (var/i in 1 to length(bucket_list))
 			var/datum/timedevent/bucket_head = bucket_list[i]
 			if (!bucket_head)
 				continue
 
-			log_world("Active timers at index [i]:")
+			to_log += "Active timers at index [i]:"
 			var/datum/timedevent/bucket_node = bucket_head
 			var/anti_loop_check = 1000
 			do
-				log_world(get_timer_debug_string(bucket_node))
+				to_log += get_timer_debug_string(bucket_node)
 				bucket_node = bucket_node.next
 				anti_loop_check--
 			while(bucket_node && bucket_node != bucket_head && anti_loop_check)
-		log_world("Active timers in the second_queue queue:")
+
+		to_log += "Active timers in the second_queue queue:"
 		for(var/I in second_queue)
-			log_world(get_timer_debug_string(I))
+			to_log += get_timer_debug_string(I)
+
+		// Dump all the logged data to the world log
+		log_world(to_log.Join("\n"))
 
 	// Process client-time timers
 	var/next_clienttime_timer_index = 0
@@ -108,7 +111,8 @@ SUBSYSTEM_DEF(timer)
 		var/datum/callback/callBack = ctime_timer.callBack
 		if (!callBack)
 			clienttime_timers.Cut(next_clienttime_timer_index,next_clienttime_timer_index + 1)
-			CRASH("Invalid timer: [get_timer_debug_string(ctime_timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset], REALTIMEOFDAY: [REALTIMEOFDAY]")
+			CRASH("Invalid timer: [get_timer_debug_string(ctime_timer)] world.time: [world.time], \
+				head_offset: [head_offset], practical_offset: [practical_offset], REALTIMEOFDAY: [REALTIMEOFDAY]")
 
 		ctime_timer.spent = REALTIMEOFDAY
 		callBack.InvokeAsync()
@@ -127,32 +131,40 @@ SUBSYSTEM_DEF(timer)
 	if (MC_TICK_CHECK)
 		return
 
-	var/static/list/invoked_timers = list()
-	var/static/datum/timedevent/timer
+	// Check for when we need to loop the buckets, this occurs when
+	// the head_offset is approaching BUCKET_LEN ticks in the past
 	if (practical_offset > BUCKET_LEN)
 		head_offset += TICKS2DS(BUCKET_LEN)
 		practical_offset = 1
 		resumed = FALSE
 
+	// Check for when we have to reset buckets, typically from auto-reset
 	if ((length(bucket_list) != BUCKET_LEN) || (world.tick_lag != bucket_resolution))
 		reset_buckets()
 		bucket_list = src.bucket_list
 		resumed = FALSE
 
+	var/static/list/invoked_timers = list()
+	var/static/datum/timedevent/timer
 	if (!resumed)
 		timer = null
 
-	while (practical_offset <= BUCKET_LEN && head_offset + ((practical_offset-1)*world.tick_lag) <= world.time)
+	// Iterate through each bucket starting from the practical offset
+	while (practical_offset <= BUCKET_LEN && head_offset + ((practical_offset - 1) * world.tick_lag) <= world.time)
 		var/datum/timedevent/head = bucket_list[practical_offset]
 		if (!timer || !head || timer == head)
 			head = bucket_list[practical_offset]
 			timer = head
+
+		// Iterate through each timer, invoking callbacks as necessary
 		while (timer)
 			var/datum/callback/callBack = timer.callBack
 			if (!callBack)
-				bucket_resolution = null //force bucket recreation
-				CRASH("Invalid timer: [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
+				bucket_resolution = null // force bucket recreation
+				CRASH("Invalid timer: [get_timer_debug_string(timer)] world.time: [world.time], \
+					head_offset: [head_offset], practical_offset: [practical_offset]")
 
+			// Invoke callback if possible
 			if (!timer.spent)
 				invoked_timers += timer
 				timer.spent = world.time
@@ -162,14 +174,13 @@ SUBSYSTEM_DEF(timer)
 			if (MC_TICK_CHECK)
 				return
 
+			// Break once we've invoked the entire bucket
 			timer = timer.next
 			if (timer == head)
 				break
 
-
+		// Empty the bucket, check if anything in the secondary queue should be shifted to this bucket
 		bucket_list[practical_offset++] = null
-
-		//we freed up a bucket, lets see if anything in second_queue needs to be shifted to that bucket.
 		var/i = 0
 		for (i in 1 to length(second_queue))
 			timer = second_queue[i]
@@ -177,9 +188,11 @@ SUBSYSTEM_DEF(timer)
 				i--
 				break
 
+			// Check for timers that are scheduled to run in the past
 			if (timer.timeToRun < head_offset)
-				bucket_resolution = null //force bucket recreation
-				stack_trace("[i] Invalid timer state: Timer in long run queue with a time to run less then head_offset. [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
+				bucket_resolution = null // force bucket recreation
+				stack_trace("[i] Invalid timer state: Timer in long run queue with a time to run less then head_offset. \
+					[get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
 
 				if (timer.callBack && !timer.spent)
 					timer.callBack.InvokeAsync()
@@ -189,9 +202,11 @@ SUBSYSTEM_DEF(timer)
 					qdel(timer)
 				continue
 
+			// Check for timers that are not capable of being scheduled to run without rebuilding buckets
 			if (timer.timeToRun < head_offset + TICKS2DS(practical_offset - 1))
-				bucket_resolution = null //force bucket recreation
-				stack_trace("[i] Invalid timer state: Timer in long run queue that would require a backtrack to transfer to short run queue. [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
+				bucket_resolution = null // force bucket recreation
+				stack_trace("[i] Invalid timer state: Timer in long run queue that would require a backtrack to transfer to \
+					short run queue. [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
 				if (timer.callBack && !timer.spent)
 					timer.callBack.InvokeAsync()
 					invoked_timers += timer
@@ -200,9 +215,9 @@ SUBSYSTEM_DEF(timer)
 					qdel(timer)
 				continue
 
+			// Transfer the timer into the bucket, performing necessary circular doubly-linked list operations
 			bucket_count++
 			var/bucket_pos = max(1, BUCKET_POS(timer))
-
 			var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
 			if (!bucket_head)
 				bucket_list[bucket_pos] = timer
@@ -228,7 +243,7 @@ SUBSYSTEM_DEF(timer)
 			continue
 		if(!(qtimer.flags & TIMER_LOOP))
 			qdel(qtimer)
-		else
+		else // Prepare looping timers to re-enter the queue
 			bucket_count++
 			qtimer.spent = 0
 			qtimer.bucketEject()
@@ -312,7 +327,8 @@ SUBSYSTEM_DEF(timer)
 
 		// Check that timer has a valid callback and hasn't been invoked
 		if (!timer.callBack || timer.spent)
-			WARNING("Invalid timer: [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
+			WARNING("Invalid timer: [get_timer_debug_string(timer)] world.time: [world.time], \
+				head_offset: [head_offset], practical_offset: [practical_offset]")
 			if (timer.callBack)
 				qdel(timer)
 			continue
@@ -556,7 +572,8 @@ SUBSYSTEM_DEF(timer)
 		stack_trace("addtimer called with a negative wait. Converting to [world.tick_lag]")
 
 	if (callback.object != GLOBAL_PROC && QDELETED(callback.object) && !QDESTROYING(callback.object))
-		stack_trace("addtimer called with a callback assigned to a qdeleted object. In the future such timers will not be supported and may refuse to run or run with a 0 wait")
+		stack_trace("addtimer called with a callback assigned to a qdeleted object. In the future such timers will not \
+			be supported and may refuse to run or run with a 0 wait")
 
 	wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
 
