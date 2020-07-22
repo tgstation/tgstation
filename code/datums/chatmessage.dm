@@ -142,7 +142,7 @@
 				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
 				var/prev_time = m.scheduled_destruction
 				m.scheduled_destruction = world.time + remaining_time
-				enter_subsystem(prev_time)
+				m.enter_subsystem(prev_time)
 
 	// Build message image
 	message = image(loc = message_loc, layer = CHAT_LAYER)
