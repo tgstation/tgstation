@@ -134,15 +134,18 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
+	var/datum/mind/op_mind = M.mind
 
 	var/datum/antagonist/nukeop/new_op = new()
 	new_op.send_to_spawnpoint = FALSE
 	new_op.nukeop_outfit = /datum/outfit/syndicate/no_crystals
 
-	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	if(creator_op)
-		M.mind.add_antag_datum(new_op,creator_op.nuke_team)
-		M.mind.special_role = "Nuclear Operative"
+		op_mind.add_antag_datum(new_op, creator_op.nuke_team)
+	else
+		op_mind.add_antag_datum(new_op)
+	op_mind.special_role = "Nuclear Operative"
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown
@@ -153,15 +156,18 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
+	var/datum/mind/clown_mind = M.mind
 
-	var/datum/antagonist/nukeop/clownop/new_op = new /datum/antagonist/nukeop/clownop()
+	var/datum/antagonist/nukeop/clownop/new_op = new()
 	new_op.send_to_spawnpoint = FALSE
 	new_op.nukeop_outfit = /datum/outfit/syndicate/clownop/no_crystals
 
-	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop/clownop,TRUE)
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	if(creator_op)
-		M.mind.add_antag_datum(new_op, creator_op.nuke_team)
-		M.mind.special_role = "Clown Operative"
+		clown_mind.add_antag_datum(new_op, creator_op.nuke_team)
+	else
+		clown_mind.add_antag_datum(new_op)
+	clown_mind.special_role = "Clown Operative"
 
 
 //////SYNDICATE BORG
