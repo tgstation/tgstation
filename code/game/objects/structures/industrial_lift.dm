@@ -32,10 +32,10 @@
 	var/min_y = world.maxy
 	
 	for(var/obj/structure/lift/lift_platform in lift_platforms)
-		max_x = max(max_x, lift_platform.x))
-		max_y = max(max_y, lift_platform.y))
-		min_x = min(min_x, lift_platform.x))
-		min_y = min(min_y, lift_platform.y))
+		max_x = max(max_x, lift_platform.x)
+		max_y = max(max_y, lift_platform.y)
+		min_x = min(min_x, lift_platform.x)
+		min_y = min(min_y, lift_platform.y)
 		
 	//This must be safe way to tile to border tile move of bordered platforms, that excludes platform overlapping.
 	if( going & ( EAST | NORTH | SOUTH ))
