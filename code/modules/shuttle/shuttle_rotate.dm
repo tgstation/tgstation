@@ -117,3 +117,6 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	if(dir == 4)
 		pixel_x = -bound_width+32
 		pixel_y = 0
+
+	bound_x = pixel_x
+	bound_y = pixel_y
