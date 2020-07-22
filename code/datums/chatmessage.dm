@@ -22,8 +22,14 @@
 	var/client/owned_by
 	/// Contains the scheduled destruction time
 	var/scheduled_destruction
+	/// Contains the time that the EOL for the message started
+	var/eol_started
 	/// Contains the approximate amount of lines for height decay
 	var/approx_lines
+	/// Contains the reference to the next chatmessage in the bucket, used by runechat subsystem
+	var/datum/chatmessage/next
+	/// Contains the reference to the previous chatmessage in the bucket, used by runechat subsystem
+	var/datum/chatmessage/prev
 
 /**
   * Constructs a chat message overlay
@@ -53,6 +59,7 @@
 	owned_by = null
 	message_loc = null
 	message = null
+	leave_subsystem()
 	return ..()
 
 /**
@@ -133,8 +140,9 @@
 			var/sched_remaining = m.scheduled_destruction - world.time
 			if (sched_remaining > CHAT_MESSAGE_SPAWN_TIME)
 				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
+				var/prev_time = m.scheduled_destruction
 				m.scheduled_destruction = world.time + remaining_time
-				addtimer(CALLBACK(m, .proc/end_of_life), remaining_time, TIMER_UNIQUE|TIMER_OVERRIDE)
+				enter_subsystem(prev_time)
 
 	// Build message image
 	message = image(loc = message_loc, layer = CHAT_LAYER)
@@ -154,12 +162,13 @@
 
 	// Prepare for destruction
 	scheduled_destruction = world.time + (lifespan - CHAT_MESSAGE_EOL_FADE)
-	addtimer(CALLBACK(src, .proc/end_of_life), lifespan - CHAT_MESSAGE_EOL_FADE, TIMER_UNIQUE|TIMER_OVERRIDE)
+	enter_subsystem()
 
 /**
   * Applies final animations to overlay CHAT_MESSAGE_EOL_FADE deciseconds prior to message deletion
   */
 /datum/chatmessage/proc/end_of_life(fadetime = CHAT_MESSAGE_EOL_FADE)
+	eol_started = world.time
 	animate(message, alpha = 0, time = fadetime, flags = ANIMATION_PARALLEL)
 	QDEL_IN(src, fadetime)
 
