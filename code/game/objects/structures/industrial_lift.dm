@@ -25,7 +25,7 @@
 	for(var/obj/structure/lift/lift_platform in lift_platforms)
 		lift_platform.travel(going)
 
-/datum/lift_master/proc/MoveLiftOnZ(going, z) //NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST
+/datum/lift_master/proc/MoveLiftOnZ(going, z)
 	var/max_x = 1
 	var/max_y = 1
 	var/min_x = world.maxx
@@ -37,8 +37,8 @@
 		min_x = min(min_x, lift_platform.x)
 		min_y = min(min_y, lift_platform.y)
 		
-	//This must be safe way to tile to border tile move of bordered platforms, that excludes platform overlapping.
-	if( going & ( EAST | NORTH | SOUTH ))
+	//This must be safe way to border tile to tile move of bordered platforms, that excludes platform overlapping.
+	if( going & WEST )
 		//Go along the X axis from min to max, from left to right
 		for(var/x = min_x; x <= max_x; x++)
 			if( going & NORTH )
@@ -51,7 +51,7 @@
 				for(var/y = min_y; y <= max_y; y++)
 					var/obj/structure/lift/lift_platform = locate(/obj/structure/lift, locate(x, y, z))
 					lift_platform.travel(going)	
-	else	
+	else
 		//Go along the X axis from max to min, from right to left
 		for(var/x = max_x; x >= min_x; x--)
 			if( going & NORTH )
@@ -196,3 +196,53 @@
 		user.visible_message("<span class='notice'>[user] move lift up.</span>", "<span class='notice'>Lift move up.</span>")
 	else
 		user.visible_message("<span class='notice'>[user] move lift down.</span>", "<span class='notice'>Lift move down.</span>")
+
+
+/obj/structure/lift/debug/use(mob/user)
+	if (!in_range(src, user))
+		return
+//NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST
+	var/list/tool_list = list(
+		"NORTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
+		"NORTHEAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
+		"EAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = EAST),
+		"SOUTHEAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = EAST),
+		"SOUTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH),
+		"SOUTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH),
+		"WEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST),
+		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST)
+		)
+
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = FALSE)
+	if (!in_range(src, user))
+		return  // nice try
+
+	switch(result)
+		if("NORTH")
+			LMaster.MoveLiftOnZ(NORTH, z)
+			use(user)
+		if("NORTHEAST")
+			LMaster.MoveLiftOnZ(NORTHEAST, z)
+			use(user)
+		if("EAST")
+			LMaster.MoveLiftOnZ(EAST, z)
+			use(user)
+		if("SOUTHEAST")
+			LMaster.MoveLiftOnZ(SOUTHEAST, z)
+			use(user)
+		if("SOUTH")
+			LMaster.MoveLiftOnZ(SOUTH, z)
+			use(user)
+		if("SOUTHWEST")
+			LMaster.MoveLiftOnZ(SOUTHWEST, z)
+			use(user)
+		if("WEST")
+			LMaster.MoveLiftOnZ(WEST, z)
+			use(user)
+		if("NORTHWEST")
+			LMaster.MoveLiftOnZ(NORTHWEST, z)
+			use(user)
+		if("Cancel")
+			return
+
+	add_fingerprint(user)
