@@ -32,7 +32,7 @@
 	ratio = CEILING(ratio*4, 1) * 25
 
 	if(smooth)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 
 	if(ratio > 50)
 		return
@@ -70,7 +70,7 @@
 				return FALSE
 			to_chat(user, "<span class='notice'>You construct the window.</span>")
 			var/obj/structure/window/WD = new the_rcd.window_type(T, window_dir)
-			WD.setAnchored(TRUE)
+			WD.set_anchored(TRUE)
 			return TRUE
 	return FALSE
 
@@ -139,7 +139,7 @@
 	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && (isturf(loc) || anchored))
 		if(!shock(user, 90))
 			W.play_tool_sound(src, 100)
-			setAnchored(!anchored)
+			set_anchored(!anchored)
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
 								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
 			return
@@ -188,7 +188,7 @@
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
-				WD.setAnchored(FALSE)
+				WD.set_anchored(FALSE)
 				WD.state = 0
 				ST.use(2)
 				to_chat(user, "<span class='notice'>You place [WD] on [src].</span>")

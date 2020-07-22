@@ -248,7 +248,7 @@
 							if("rightsecure")
 								WA.facing = "r"
 								WA.secure = TRUE
-						WA.setAnchored(TRUE)
+						WA.set_anchored(TRUE)
 						WA.state= "02"
 						WA.setDir(dir)
 						WA.ini_dir = dir

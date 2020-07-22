@@ -78,7 +78,7 @@
 
 /datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
 
-/datum/proximity_monitor/advanced/New()
+/datum/proximity_monitor/advanced/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	if(requires_processing)
 		START_PROCESSING(SSfields, src)
 

@@ -44,8 +44,8 @@
 
 /obj/structure/table/update_icon()
 	if(smooth)
-		queue_smooth(src)
-		queue_smooth_neighbors(src)
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/table/narsie_act()
 	var/atom/A = loc
