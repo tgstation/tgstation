@@ -407,6 +407,8 @@
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
 			for(var/mob/living/livies in T.contents)
+				if(user == livies)
+					continue
 				livies.adjustFireLoss(10)
 		_range++
 		sleep(3)
@@ -456,6 +458,8 @@
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		for(var/mob/living/livies in T.contents)
+			if(current_user == livies)
+				continue
 			livies.adjustFireLoss(5)
 
 
