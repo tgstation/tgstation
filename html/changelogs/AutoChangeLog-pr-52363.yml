@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Civilian bounty pads, when submitting a bounty that the department can't pay for, will allow you to submit it later."
+  - bugfix: "Fixes 2 duplicate bounties between security/assistants."
