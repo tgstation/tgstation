@@ -151,8 +151,7 @@
 		S.tastes["meat"] = 3
 
 	if(organ_flags & ORGAN_EDIBLE)
-		var/datum/component/edible/EC = src.GetComponent(/datum/component/edible)
-		EC.checkLiked(1, M)
+		SEND_SIGNAL(src, COMSIG_EDIBLE_CHECK_LIKED, M)
 
 	//people who like gross food or are voracious (voracious people wouldn't even notice)
 	if(((M.dna.species.liked_food & GROSS) && (M.dna.species.liked_food & MEAT)) || M.has_quirk(/datum/quirk/voracious))
