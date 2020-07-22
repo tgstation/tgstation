@@ -627,7 +627,7 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 
 	if(chem.type == /datum/reagent/fuel/unholywater)
-		H.heal_overall_damage(brute = 4, fire = 4)
+		H.heal_overall_damage(brute = 4, burn = 4)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 
 /datum/species/golem/cloth

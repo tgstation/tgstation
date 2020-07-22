@@ -26,6 +26,6 @@
 
 /datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/carbon/M)
 	var/damage = 0.3*REAGENTS_EFFECT_MULTIPLIER
-	M.take_overall_damage(brute = damage, fire = damage, toxin = damage)
+	M.take_overall_damage(brute = damage, burn = damage, toxin = damage)
 	. = 1
 	..()

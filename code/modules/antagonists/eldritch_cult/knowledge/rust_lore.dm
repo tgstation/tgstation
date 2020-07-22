@@ -53,7 +53,7 @@
 	if(!istype(user_loc_turf, /turf/open/floor/plating/rust) || !isliving(user))
 		return
 	var/mob/living/living_user = user
-	living_user.heal_overall_damage(brute = 2, fire = 2, stamina = 2, toxin = 2, oxy = 0.5)
+	living_user.heal_overall_damage(brute = 2, burn = 2, stamina = 2, toxin = 2, oxy = 0.5)
 
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"

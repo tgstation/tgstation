@@ -513,4 +513,4 @@
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/eldritch_smoke(target.drop_location())
 		human_user.ExtinguishMob()
-		human_user.heal_overall_damage(brute = 10, fire = 10, stamina = 10, toxin = 10, oxy = 10)
+		human_user.heal_overall_damage(brute = 10, burn = 10, stamina = 10, toxin = 10, oxy = 10)

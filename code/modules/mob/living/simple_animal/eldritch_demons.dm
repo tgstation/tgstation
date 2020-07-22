@@ -195,7 +195,7 @@
 				prev.AIStatus = AI_OFF
 				current_stacks = 0
 
-	heal_overall_damage(brute = (maxHealth * 0.5), fire = (maxHealth * 0.5))
+	heal_overall_damage(brute = (maxHealth * 0.5), burn = (maxHealth * 0.5))
 
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Shoot(atom/targeted_atom)
@@ -282,7 +282,7 @@
 		return ..()
 	var/turf/T = get_turf(src)
 	if(istype(T,/turf/open/floor/plating/rust))
-		heal_overall_damage(brute = 3, fire = 3) //DOUBLE CHECK LIFE()
+		heal_overall_damage(brute = 3, burn = 3) //DOUBLE CHECK LIFE()
 	return ..()
 
 /mob/living/simple_animal/hostile/eldritch/ash_spirit

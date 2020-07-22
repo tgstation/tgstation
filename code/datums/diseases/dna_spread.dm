@@ -43,7 +43,6 @@
 				to_chat(affected_mob, "<span class='danger'>Your stomach hurts.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(2)
-					affected_mob.updatehealth()
 		if(4)
 			if(!transformed && !carrier)
 				//Save original dna for when the disease is cured.

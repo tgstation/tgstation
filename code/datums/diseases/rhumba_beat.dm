@@ -19,7 +19,6 @@
 		if(2)
 			if(prob(45))
 				affected_mob.adjustFireLoss(5)
-				affected_mob.updatehealth()
 			if(prob(1))
 				to_chat(affected_mob, "<span class='danger'>You feel strange...</span>")
 		if(3)

@@ -739,7 +739,7 @@
 					var/tox_dam = -((overall_damage*ratio) * (H.getToxLoss() / overall_damage))
 					var/fire_dam = -((overall_damage*ratio) * (H.getFireLoss() / overall_damage))
 					var/brute_dam = -((overall_damage*ratio) * (H.getBruteLoss() / overall_damage))
-					H.heal_overall_damage(brute = brute_dam, fire = fire_dam, tox = tox_dam, oxy = oxy_dam)
+					H.heal_overall_damage(brute = brute_dam, burn = fire_dam, toxin = tox_dam, oxy = oxy_dam)
 					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
 					user.Beam(H,icon_state="sendbeam",time=15)

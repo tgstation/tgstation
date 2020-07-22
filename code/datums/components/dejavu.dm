@@ -35,7 +35,7 @@
 	starting_turf = get_turf(parent)
 	rewinds_remaining = rewinds
 	rewind_interval = interval
-	
+
 	if(isliving(parent))
 		var/mob/living/L = parent
 		clone_loss = L.getCloneLoss()
@@ -43,22 +43,22 @@
 		oxy_loss = L.getOxyLoss()
 		brain_loss = L.getOrganLoss(ORGAN_SLOT_BRAIN)
 		rewind_type = .proc/rewind_living
-	
+
 	if(iscarbon(parent))
 		var/mob/living/carbon/C = parent
 		saved_bodyparts = C.save_bodyparts()
 		rewind_type = .proc/rewind_carbon
-	
+
 	else if(isanimal(parent))
 		var/mob/living/simple_animal/M = parent
 		brute_loss = M.bruteloss
 		rewind_type = .proc/rewind_animal
-	
+
 	else if(isobj(parent))
 		var/obj/O = parent
 		integrity = O.obj_integrity
 		rewind_type = .proc/rewind_obj
-	
+
 	addtimer(CALLBACK(src, rewind_type), rewind_interval)
 
 /datum/component/dejavu/Destroy()

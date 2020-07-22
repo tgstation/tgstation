@@ -44,7 +44,7 @@
 			gib()
 		if(2)
 			if (stat != DEAD)
-				take_overall_damage(brute = 60, fire = 60)
+				take_overall_damage(brute = 60, burn = 60)
 		if(3)
 			if (stat != DEAD)
 				adjustBruteLoss(30)

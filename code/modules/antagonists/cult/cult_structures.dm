@@ -194,7 +194,7 @@
 				if(L.health != L.maxHealth)
 					new /obj/effect/temp_visual/heal(get_turf(src), "#960000")
 					if(ishuman(L))
-						L.heal_overall_damage(brute = 1, fire = 1)
+						L.heal_overall_damage(brute = 1, burn = 1)
 					if(isshade(L) || isconstruct(L))
 						var/mob/living/simple_animal/M = L
 						if(M.health < M.maxHealth)

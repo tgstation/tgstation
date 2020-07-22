@@ -354,7 +354,7 @@
 			else
 				repair_amount = -1
 				powercost = 10
-			cyborg.heal_overall_damage(brute = -repair_amount, fire = -repair_amount)
+			cyborg.heal_overall_damage(brute = -repair_amount, burn = -repair_amount)
 			cyborg.cell.use(powercost)
 		else
 			cyborg.cell.use(5)

@@ -187,7 +187,7 @@
 		else
 			// The changes that you've been hit with no shield but not
 			// instantly critted are low, but have some healing.
-			M.heal_overall_damage(brute = 5, fire = 5)
+			M.heal_overall_damage(brute = 5, burn = 5)
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"

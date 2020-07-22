@@ -62,8 +62,7 @@
 		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool]...</span>",
 		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool]...</span>")
 	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, TRUE)
-	target.adjustOxyLoss(-50, 0)
-	target.updatehealth()
+	target.adjustOxyLoss(-50)
 	if(target.revive(full_heal = FALSE, admin_revive = FALSE))
 		target.visible_message("<span class='notice'>...[target] wakes up, alive and aware!</span>")
 		target.emote("gasp")

@@ -504,7 +504,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		M.heal_overall_damage(brute = 1, fire = 1, toxin = 1, oxy = 5)
+		M.heal_overall_damage(brute = 1, burn = 1, toxin = 1, oxy = 5)
 		. = 1
 	return ..() || .
 
@@ -738,7 +738,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/carbon/M)
 	if(dorf_mode)
-		M.heal_overall_damage(brute = 2, fire = 2)
+		M.heal_overall_damage(brute = 2, burn = 2)
 	return ..()
 
 /datum/reagent/consumable/ethanol/longislandicedtea
@@ -1581,14 +1581,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(L.health <= 0)
 		heal_points = 20 //heal more if we're in softcrit
 	for(var/i in 1 to min(volume, heal_points)) //only heals 1 point of damage per unit on add, for balance reasons
-		L.heal_overall_damage(brute = 1, fire = 1, toxin = 1, oxy = 1, stamina = 1)
+		L.heal_overall_damage(brute = 1, burn = 1, toxin = 1, oxy = 1, stamina = 1)
 	L.visible_message("<span class='warning'>[L] shivers with renewed vigor!</span>", "<span class='notice'>One taste of [lowertext(name)] fills you with energy!</span>")
 	if(!L.stat && heal_points == 20) //brought us out of softcrit
 		L.visible_message("<span class='danger'>[L] lurches to [L.p_their()] feet!</span>", "<span class='boldnotice'>Up and at 'em, kid.</span>")
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/L)
 	if(L.health > 0)
-		L.heal_overall_damage(brute = 1, fire = 1, toxin = 0.5, oxy = 3, stamina = 5)
+		L.heal_overall_damage(brute = 1, burn = 1, toxin = 0.5, oxy = 3, stamina = 5)
 		. = TRUE
 	return ..() || .
 

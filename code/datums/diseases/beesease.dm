@@ -25,7 +25,6 @@
 				to_chat(affected_mob, "<span class='danger'>Your stomach stings painfully.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(2)
-					affected_mob.updatehealth()
 		if(4)
 			if(prob(10))
 				affected_mob.visible_message("<span class='danger'>[affected_mob] buzzes.</span>", \

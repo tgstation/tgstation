@@ -684,7 +684,6 @@
 		if(they_breathe && they_lung)
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
-			C.updatehealth()
 			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
 		else if(they_breathe && !they_lung)
 			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")

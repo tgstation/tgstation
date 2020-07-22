@@ -62,7 +62,7 @@
 	return
 
 /obj/item/banner/proc/inspiration(mob/living/carbon/human/H)
-	H.heal_overall_damage(brute = 15, fire = 15)
+	H.heal_overall_damage(brute = 15, burn = 15)
 	H.AdjustStun(-40)
 	H.AdjustKnockdown(-40)
 	H.AdjustImmobilized(-40)

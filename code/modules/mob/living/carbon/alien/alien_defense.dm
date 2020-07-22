@@ -44,7 +44,6 @@ In all, this is a lot like the monkey code. /N
 				to_chat(M, "<span class='danger'>You bite [src]!</span>")
 				adjustBruteLoss(1)
 				log_combat(M, src, "attacked")
-				updatehealth()
 			else
 				to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
 
@@ -103,7 +102,6 @@ In all, this is a lot like the monkey code. /N
 			damage = rand(10, 40)
 		adjustBruteLoss(damage)
 		log_combat(M, src, "attacked")
-		updatehealth()
 
 /mob/living/carbon/alien/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))

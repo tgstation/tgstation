@@ -356,7 +356,7 @@
 	to_chat(user, "<span class='warning'>[src] explodes!</span>")
 	playsound(src,'sound/effects/explosion1.ogg',40,TRUE)
 	user.flash_act(1, 1)
-	user.take_overall_damage(brute = 6, fire = 6)
+	user.take_overall_damage(brute = 6, burn = 6)
 	qdel(src)
 
 /obj/item/book/granter/martial/carp

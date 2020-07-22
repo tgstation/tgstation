@@ -367,10 +367,10 @@
 						Unconscious(20)
 					else if(M.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 						Knockdown(40)
-					update |= temp.receive_damage(dmg, 0)
+					update |= temp.receive_damage(brute = dmg)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 				if("fire")
-					update |= temp.receive_damage(0, dmg)
+					update |= temp.receive_damage(burn = dmg)
 					playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 				if("tox")
 					M.mech_toxin_damage(src)
@@ -378,7 +378,6 @@
 					return
 			if(update)
 				update_damage_overlays()
-			updatehealth()
 
 		visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
 						"<span class='userdanger'>[M.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)

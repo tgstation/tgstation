@@ -550,9 +550,7 @@
 					continue
 				O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
 
-		adjustOxyLoss(-20, TRUE)
-		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
-		updatehealth()
+		heal_overall_damage(toxin = 20, toxin_forced = TRUE, oxy = 20)
 		grab_ghost()
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
@@ -599,9 +597,6 @@
 //admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
 /mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
-	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
-	setOxyLoss(0, 0)
-	setCloneLoss(0, 0)
 	remove_CC(FALSE)
 	set_disgust(0)
 	losebreath = 0
@@ -615,9 +610,9 @@
 	cure_blind()
 	cure_husk()
 	hallucination = 0
-	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
 	fire_stacks = 0
+	heal_overall_damage(brute = INFINITY, burn = INFINITY, stamina = INFINITY, toxin = INFINITY, oxy = INFINITY, clone = INFINITY, required_status = null, updating_health = TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	confused = 0
 	dizziness = 0
 	drowsyness = 0

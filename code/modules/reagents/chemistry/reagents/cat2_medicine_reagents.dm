@@ -417,7 +417,7 @@
 		if (carbies.stat == DEAD)
 			show_message = 0
 		if(method in list(PATCH, TOUCH, VAPOR))
-			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
+			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1) //PICK UP HERE - SHIZ
 			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
 			for(var/datum/wound/burn/burn_wound in carbies.all_wounds)
 				burn_wound.regenerate_flesh(reac_volume)
@@ -461,7 +461,7 @@
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
 	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > H.crit_threshold) //we cannot save someone above our raised crit threshold.
-		H.heal_overall_damage(brute = 2*REM, fire = 2*REM, oxy = 6*REM, toxin = 2*REM)
+		H.heal_overall_damage(brute = 2*REM, burn = 2*REM, oxy = 6*REM, toxin = 2*REM)
 
 		H.losebreath = 0
 

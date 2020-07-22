@@ -70,10 +70,6 @@
 		var/hp_gained = target.maxHealth
 		target.gib()
 		// zero as argument for no instant health update
-		user.adjustBruteLoss(-hp_gained, 0)
-		user.adjustToxLoss(-hp_gained, 0)
-		user.adjustFireLoss(-hp_gained, 0)
-		user.adjustCloneLoss(-hp_gained, 0)
-		user.updatehealth()
+		user.heal_overall_damage(brute = hp_gained, burn = hp_gained, stamina = hp_gained, toxin = hp_gained, clone = hp_gained)
 		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
 		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))

@@ -602,7 +602,7 @@
 						var/tox_heal = -((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage))
 						var/fire_heal = -((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage))
 						var/brute_heal = -((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage))
-						H.heal_overall_damage(brute = brute_heal, fire = fire_heal, oxy = oxy_heal, tox = tox_heal)
+						H.heal_overall_damage(brute = brute_heal, burn = fire_heal, oxy = oxy_heal, toxin = tox_heal)
 					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 					playsound(src, 'sound/machines/defib_success.ogg', 50, FALSE)
 					H.set_heartattack(FALSE)
