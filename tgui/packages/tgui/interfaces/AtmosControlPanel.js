@@ -20,8 +20,10 @@ export const AtmosControlPanel = (props, context) => {
       width={650}
       height={500}
       resizable>
-      <Section>
-        <Flex justify="space-between">
+      <Section m={1}>
+        <Flex
+          justify="space-between"
+          align="baseline">
           <Flex.Item>
             <Button
               onClick={() => act('toggle-freeze')}
@@ -57,16 +59,16 @@ export const AtmosControlPanel = (props, context) => {
                 <Table.Cell>
                   Area Name
                 </Table.Cell>
-                <Table.Cell>
-                  Breakdown Counter
+                <Table.Cell collapsing>
+                  Breakdown
                 </Table.Cell>
-                <Table.Cell>
-                  Dismantle Counter
+                <Table.Cell collapsing>
+                  Dismantle
                 </Table.Cell>
-                <Table.Cell>
-                  Tile Count
+                <Table.Cell collapsing>
+                  Turfs
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell collapsing>
                   Display
                 </Table.Cell>
               </Table.Row>
