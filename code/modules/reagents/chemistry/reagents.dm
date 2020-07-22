@@ -76,6 +76,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/reagent_removal_skip_list = list()
 
 /datum/reagent/New()
+	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 
 	if(!addiction_type)

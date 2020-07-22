@@ -28,7 +28,7 @@
 /datum/airlock_maker/New(var/atom/target_loc)
 	linked = new(target_loc)
 	linked.maker = src
-	linked.anchored = FALSE
+	linked.set_anchored(FALSE)
 	access_used = list()
 
 	interact()

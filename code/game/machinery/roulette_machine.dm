@@ -90,7 +90,7 @@
 		return
 	switch(action)
 		if("anchor")
-			anchored = !anchored
+			set_anchored(!anchored)
 			. = TRUE
 		if("ChangeBetAmount")
 			chosen_bet_amount = clamp(text2num(params["amount"]), 10, 500)
