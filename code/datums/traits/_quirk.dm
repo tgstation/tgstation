@@ -81,8 +81,6 @@
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
 				dat += medical ? T.medical_record_text : T.name
-				if(!dat.len)
-					return "None"
 		//Major Disabilities
 		if(CAT_QUIRK_MAJOR_DISABILITY)
 			for(var/V in roundstart_quirks)
