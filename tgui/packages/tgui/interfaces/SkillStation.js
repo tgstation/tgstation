@@ -52,7 +52,7 @@ export const SkillStation = (props, context) => {
   }
   return (
     <Window
-      title="Skillsoft Station (name pending)"
+      title="Skillsoft Station"
       width={500}
       height={300}
       resizable >

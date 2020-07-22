@@ -2,7 +2,7 @@
 #define SKILLCHIP_REMOVAL_TIME 30 SECONDS
 
 /obj/machinery/skill_station
-	name = "Skill Station (name pending)"
+	name = "Skillsoft Station"
 	desc = "learn skills with only minimal chance for brain damage."
 
 	icon = 'icons/obj/machines/implantchair.dmi'

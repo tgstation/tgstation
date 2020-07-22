@@ -858,9 +858,9 @@
 	if(S && S.on)
 		return TRUE
 
-//Same but with rice
+//Same but with wheat
 /datum/crafting_recipe/underwater_basket/wheat
-	name = "Underwater Basket (Rice)"
+	name = "Underwater Basket (Wheat)"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/grown/wheat = 50
 	)
