@@ -45,8 +45,12 @@
 	name = "look down"
 	full_name = "Look Down"
 	description = "Look down at the previous z-level.  Only works if directly above open space."
+	keybind_signal = COMSIG_KB_LIVING_LOOKDOWN_DOWN
 
 /datum/keybinding/living/look_down/down(client/user)
+	. = ..()
+	if(.)
+		return
 	var/mob/living/L = user.mob
 	L.look_down()
 	return TRUE
