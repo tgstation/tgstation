@@ -326,6 +326,7 @@
 			if(module_active != held_items[module_num])
 				inv3.icon_state = "[initial(inv3.icon_state)] +a"
 	module_active = held_items[module_num]
+	return TRUE
 
 /**
   * Deselects the module in the slot module_num.
@@ -344,6 +345,7 @@
 			if(module_active == held_items[module_num])
 				inv3.icon_state = initial(inv3.icon_state)
 	module_active = null
+	return TRUE
 
 /**
   * Toggles selection of the module in the slot module_num.
