@@ -1,6 +1,5 @@
-import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, Box, Section, NoticeBox, TimeDisplay, Flex, Icon } from '../components';
+import { Button, Box, Section, NoticeBox, TimeDisplay, Flex, Icon, Table } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 import { FlexItem } from '../components/Flex';
@@ -12,11 +11,15 @@ export const SkillStation = (props, context) => {
     timeleft,
     error,
     current = [],
-    max_skills,
+    slots_used,
+    slots_max,
     skillchip_ready,
+    implantable,
+    implantable_reason,
     skill_name,
     skill_desc,
     skill_icon,
+    skill_cost,
   } = data;
   let skillchip_section_content;
   if (!skillchip_ready) {
@@ -31,9 +34,18 @@ export const SkillStation = (props, context) => {
         <Flex.Item>
           <Box bold mb={1}>{skill_name}</Box>
           <Box italic mb={1}>{skill_desc}</Box>
+          <Box>Complexity: {skill_cost}</Box>
+          {!!implantable_reason && (
+            <Box
+              color={implantable ? "good" : "bad"}>
+              {implantable_reason}
+            </Box>)}
         </Flex.Item>
         <Flex.Item align="center">
-          <Button onClick={() => act("implant")}>Implant</Button>
+          <Button
+            disabled={!implantable}
+            onClick={() => act("implant")}>Implant
+          </Button>
           <Button onClick={() => act("eject")}>Eject</Button>
         </Flex.Item>
       </Flex>);
@@ -41,7 +53,7 @@ export const SkillStation = (props, context) => {
   return (
     <Window
       title="Skillsoft Station (name pending)"
-      width={400}
+      width={500}
       height={300}
       resizable >
       <Window.Content>
@@ -53,29 +65,44 @@ export const SkillStation = (props, context) => {
           </NoticeBox>)}
         {!working && (<Section>{skillchip_section_content}</Section>)}
         <Section
-          fill
           title="Current skillchips"
-          buttons={<Fragment>{current.length}/{max_skills}</Fragment>}>
-          <Flex direction="column">
-            {current.map((skill, index) => (
-              <Flex.Item key={skill}>
-                <Flex spacing={1} align="baseline">
-                  <FlexItem>
-                    <Icon name={skill.icon} />
-                  </FlexItem>
-                  <Flex.Item>
+          buttons={<Fragment>{slots_used}/{slots_max}</Fragment>}>
+          {!current.length && "No skillchips detected."}
+          {!!current.length && (
+            <Table>
+              <Table.Row header>
+                <Table.Cell>Chip</Table.Cell>
+                <Table.Cell>Complexity</Table.Cell>
+                <Table.Cell>Status</Table.Cell>
+                <Table.Cell>Actions</Table.Cell>
+              </Table.Row>
+              {current.map(skill => (
+                <Table.Row key={skill}>
+                  <Table.Cell>
+                    <Icon mr={1} name={skill.icon} />
                     {skill.name}
-                  </Flex.Item>
-                  {!working && (
-                    <Flex.Item >
+                  </Table.Cell>
+                  <Table.Cell>
+                    {skill.cost}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {!skill.active && (
+                      <Icon name="exclamation-triangle" color="bad" />
+                    )}
+                    {!!skill.active && (
+                      <Icon name="check" color="good" />
+                    )}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {!working && (
                       <Button
-                        onClick={() => act("remove", { "slot": index+1 })}
+                        onClick={() => act("remove", { "ref": skill.ref })}
                         icon="trash"
-                        tooltip="Extract chip" />
-                    </Flex.Item>)}
-                </Flex>
-              </Flex.Item>))}
-          </Flex>
+                        content="Extract" />)}
+                  </Table.Cell>
+                </Table.Row>))}
+            </Table>
+          )}
         </Section>
       </Window.Content>
     </Window>

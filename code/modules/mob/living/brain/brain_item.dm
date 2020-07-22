@@ -147,6 +147,8 @@
 
 /obj/item/organ/brain/examine(mob/user)
 	. = ..()
+	if(length(skillchips))
+		. += "<span class='info'>It has a skillchip embedded in it.</span>"
 	if(suicided)
 		. += "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>"
 		return
@@ -241,6 +243,19 @@
 				. += "\n[brain_message]"
 			else
 				return brain_message
+
+/obj/item/organ/brain/before_organ_replacement(obj/item/organ/replacement)
+	. = ..()
+	var/obj/item/organ/brain/replacement_brain = replacement
+	if(!istype(replacement_brain))
+		return
+	for(var/obj/item/skillchip/S in src)
+		if(S in skillchips)
+			if(owner)
+				S.on_removal(owner)
+			LAZYREMOVE(skillchips,S)
+			LAZYADD(replacement_brain.skillchips,S) //No need to call on_apply here, since it will be inserted in organ replacement soon.
+		S.forceMove(replacement)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"

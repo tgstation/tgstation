@@ -1192,30 +1192,45 @@
 	return BIO_FLESH_BONE
 
 /// Returns maximum number of active chip skills for this mob
-/mob/living/carbon/proc/get_max_skillchip_count()
+/mob/living/carbon/proc/get_max_skillchip_slot_count()
 	. = 2
 	if(dna && dna.check_mutation(BIOTECHCOMPAT))
 		. += 1
 
-/// Disables or re-enables any extra skillchips after skillchip limit changes
+/// Returns sum of slots used by active chips
+/mob/living/carbon/proc/get_used_skillchip_slot_count()
+	. = 0
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B)
+		return
+	for(var/obj/item/skillchip/S in B)
+		. += S.slot_cost
+
+/// Disables or re-enables any extra skillchips after skillchip limit changes. Inactive chips keep brain as loc but do not appear in skillchips list.
 /mob/living/carbon/proc/update_skillchips()
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B)
 		return
-	var/limit = get_max_skillchip_count()
+	var/limit = get_max_skillchip_slot_count()
+	var/dt = limit - get_used_skillchip_slot_count()
 	var/list/inactive_skillchips = list()
 	for(var/obj/item/skillchip/S in B)
 		inactive_skillchips += S
-	//We have skillchips to disable
-	if(length(B.skillchips) > limit)
-		var/list/removed_chips = B.skillchips.Copy(limit+1)
-		for(var/obj/item/skillchip/S in removed_chips)
-			S.on_removal(src)
-			B.skillchips -= S
-	//Something to reactivate
-	else if (length(B.skillchips) < limit && length(inactive_skillchips))
-		for(var/obj/item/skillchip/S in inactive_skillchips)
-			S.on_apply(src)
-			B.skillchips |= S
-			if(length(B.skillchips) >= limit)
-				break
+
+	// We have skillchips to deactivate
+	if(dt < 0)
+		//Might deactivate more than necessary but not worth sorting this
+		while(dt < 0)
+			var/obj/item/skillchip/chip = B.skillchips[length(B.skillchips)]
+			chip.on_removal(src)
+			B.skillchips -= chip
+			dt += chip.slot_cost
+	// We have skillchips to reactivate
+	else if (dt > 1)
+		while(dt > 1 && length(inactive_skillchips))
+			var/obj/item/skillchip/chip = inactive_skillchips[length(inactive_skillchips)]
+			if(chip.slot_cost <= dt)
+				chip.on_apply(src)
+				B.skillchips += chip
+				dt -= chip.slot_cost
+			inactive_skillchips -= chip

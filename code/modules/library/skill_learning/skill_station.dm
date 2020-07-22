@@ -1,5 +1,5 @@
-#define SKILLCHIP_IMPLANT_TIME 2 MINUTES
-#define SKILLCHIP_REMOVAL_TIME 1 MINUTES
+#define SKILLCHIP_IMPLANT_TIME 1 MINUTES
+#define SKILLCHIP_REMOVAL_TIME 30 SECONDS
 
 /obj/machinery/skill_station
 	name = "Skill Station (name pending)"
@@ -162,16 +162,20 @@
 		.["error"] = "Brain not detected. Please consult nearest medical practitioner."
 	else
 		var/list/current_skills = list()
-		for(var/obj/item/skillchip/S in B.skillchips)
-			current_skills += list(list("name"=S.skill_name,"icon"=S.skill_icon))
+		for(var/obj/item/skillchip/S in B)
+			current_skills += list(list("name"=S.skill_name,"icon"=S.skill_icon,"cost"=S.slot_cost,"ref"=REF(S),"active"=(S in B.skillchips)))
 		.["current"] = current_skills
-		.["max_skills"] = C.get_max_skillchip_count()
+		.["slots_used"] = C.get_used_skillchip_slot_count()
+		.["slots_max"] = C.get_max_skillchip_slot_count()
 
 	.["skillchip_ready"] = inserted_skillchip ? TRUE : FALSE
 	if(inserted_skillchip)
+		.["implantable"] = inserted_skillchip.can_be_implanted(occupant)
+		.["implantable_reason"] = inserted_skillchip.can_be_implanted_message(occupant)
 		.["skill_name"] = inserted_skillchip.skill_name
 		.["skill_desc"] = inserted_skillchip.skill_description
 		.["skill_icon"] = inserted_skillchip.skill_icon
+		.["skill_cost"] = inserted_skillchip.slot_cost
 
 /obj/machinery/skill_station/ui_act(action, list/params)
 	. = ..()
@@ -185,17 +189,19 @@
 				start_implanting()
 			return TRUE
 		if("remove")
-			var/skill_slot = text2num(params["slot"])
+			var/chipref = params["ref"]
 			var/mob/living/carbon/C = occupant
 			var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-			if(!C || !B || !length(B.skillchips) || length(B.skillchips) < skill_slot)
+			if(!C || !B)
 				return TRUE
-			var/obj/item/skillchip/to_be_removed = B.skillchips[skill_slot]
+			var/obj/item/skillchip/to_be_removed = locate(chipref) in B
+			if(!to_be_removed)
+				return TRUE
 			start_removal(to_be_removed)
 			return TRUE
 		if("eject")
 			if(inserted_skillchip)
-				to_chat(occupant,"<span class='notice'>You eject the skillchip</span>")
+				to_chat(occupant,"<span class='notice'>You eject the skillchip.</span>")
 				var/mob/living/carbon/human/H = occupant
 				H.put_in_hands(inserted_skillchip)
 				inserted_skillchip = null

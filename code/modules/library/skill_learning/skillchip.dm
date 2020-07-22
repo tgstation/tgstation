@@ -5,26 +5,24 @@
 	icon = 'icons/obj/card.dmi'
 	icon_state = "data_3"
 	custom_price = 500
+	w_class = WEIGHT_CLASS_SMALL
 
 	/// Trait automatically granted by this chip, optional
 	var/auto_trait
-
 	/// Skill name shown on UI
 	var/skill_name
-
 	/// Skill description shown on UI
 	var/skill_description
-
 	/// FS icon show on UI
 	var/skill_icon = "brain"
-
 	/// Message shown when implanting the chip
 	var/implanting_message
 	/// Message shown when extracting the chip
 	var/removal_message
-
 	//If set to TRUE, trying to extract the chip will destroy it instead
 	var/removable = TRUE
+	/// How many skillslots this one takes
+	var/slot_cost = 1
 
 /// Called after implantation and/or brain entering new body
 /obj/item/skillchip/proc/on_apply(mob/living/carbon/user,silent=TRUE)
@@ -47,12 +45,26 @@
 	if(!B)
 		return FALSE
 	//No skill slots left
-	if(length(B.skillchips) >= target.get_max_skillchip_count())
+	if(target.get_used_skillchip_slot_count() + slot_cost > target.get_max_skillchip_slot_count())
 		return FALSE
 	//Only one copy of each for now.
 	if(locate(type) in B.skillchips)
 		return FALSE
 	return TRUE
+
+/// Returns readable reason why implanting cannot succeed --todo switch to flag retval in can_be_implanted to cut down copypaste
+/obj/item/skillchip/proc/can_be_implanted_message(mob/living/carbon/target)
+	//No brain
+	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B)
+		return "No brain detected."
+	//No skill slots left
+	if(target.get_used_skillchip_slot_count() + slot_cost > target.get_max_skillchip_slot_count())
+		return "Complexity limit exceeded."
+	//Only one copy of each for now.
+	if(locate(type) in B.skillchips)
+		return "Duplicate chip detected."
+	return "Chip ready for implantation."
 
 /obj/item/skillchip/basketweaving
 	name = "Basketsoft 3000 skillchip"
@@ -80,5 +92,5 @@
 	skill_name = "Hedgetrimming"
 	skill_description = "Trim hedges and potted plants into marvelous new shapes with any old knife. Not applicable to plastic plants."
 	skill_icon = "spa"
-	implanting_message = "<span class='notice'>Your minds is filled with plant arrangments.</span>"
+	implanting_message = "<span class='notice'>Your mind is filled with plant arrangments.</span>"
 	removal_message = "<span class='notice'>Your can't remember how a hedge looks like anymore.</span>"
