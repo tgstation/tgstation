@@ -59,5 +59,3 @@
 	var/mob/living/L = user.mob
 	L.end_look_down()
 	return TRUE
-
-	
