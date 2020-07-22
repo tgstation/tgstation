@@ -215,7 +215,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/lift,
+/obj/structure/industrial_lift,
 /turf/open/floor/plating,
 /area/storage/primary)
 "aY" = (
@@ -1268,7 +1268,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/lift,
+/obj/structure/industrial_lift,
 /turf/open/floor/plating,
 /area/storage/primary)
 "mb" = (
@@ -1279,7 +1279,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/lift,
+/obj/structure/industrial_lift,
 /turf/open/floor/plating,
 /area/storage/primary)
 "mZ" = (
@@ -1302,7 +1302,7 @@
 /area/hallway/secondary/service)
 "nS" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/lift,
+/obj/structure/industrial_lift,
 /turf/open/floor/plating,
 /area/storage/primary)
 "od" = (
@@ -1474,7 +1474,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/lift,
+/obj/structure/industrial_lift,
 /turf/open/floor/plating,
 /area/storage/primary)
 "xO" = (
@@ -1494,11 +1494,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/lift,
+/obj/structure/industrial_lift,
 /turf/open/floor/plating,
 /area/storage/primary)
 "yX" = (
-/obj/structure/lift,
+/obj/structure/industrial_lift,
 /turf/open/floor/plating,
 /area/storage/primary)
 "zd" = (
@@ -1565,7 +1565,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/lift,
+/obj/structure/industrial_lift,
 /turf/open/floor/plating,
 /area/storage/primary)
 "BM" = (
@@ -1870,7 +1870,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/lift,
+/obj/structure/industrial_lift,
 /turf/open/floor/plating,
 /area/storage/primary)
 "Zv" = (
