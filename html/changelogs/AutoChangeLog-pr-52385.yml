@@ -1,0 +1,4 @@
+author: "Nebulacrity"
+delete-after: True
+changes: 
+  - imageadd: "Updated the reality fractures (Heretic influences) to have nicer sprites."
