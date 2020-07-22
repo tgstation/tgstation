@@ -453,7 +453,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return 1
 	return 0
 
-/obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language)
+/obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user, silent = FALSE)
@@ -1011,3 +1011,106 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		jostle_pain_mult = (!isnull(embedding["jostle_pain_mult"]) ? embedding["jostle_pain_mult"] : EMBEDDED_JOSTLE_PAIN_MULTIPLIER),\
 		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT))
 	return TRUE
+
+/// How many different types of mats will be counted in a bite?
+#define MAX_BONUS_MATS_PER_BITE 2
+
+/*
+ * On accidental consumption: when you somehow end up eating an item accidentally (currently, this is used for when items are hidden in food like bread or cake)
+ *
+ * The base proc will check if the item is sharp and has a decent force.
+ * Then, it checks the item's mat datums for the effects it applies afterwards.
+ * Then, it checks tiny items.
+ * After all that, it returns TRUE if the item is set to be discovered. Otherwise, it returns FALSE.
+ *
+ * This works similarily to /suicide_act: if you want an item to have a unique interaction, go to that item
+ * and give it an /on_accidental_consumption proc override. For a simple example of this, check out the nuke disk.
+ *
+ * Arguments
+ * * M - the mob accidentally consuming the item
+ * * user - the mob feeding M the item - usually, it's the same as M
+ * * source_item - the item that held the item being consumed - bread, cake, etc
+ * * discover_after - if the item will be discovered after being chomped (FALSE will usually mean it was swallowed, TRUE will usually mean it was bitten into and discovered)
+ */
+/obj/item/proc/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	/// If source_item is a snack, we can adjust its taste
+	var/obj/item/reagent_containers/food/snacks/S = source_item
+	if(!istype(S))
+		S = null
+
+	if(get_sharpness() && force >= 5) //if we've got something sharp with a decent force (ie, not plastic)
+		M.emote("scream")
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bit something they shouldn't have!</span>", \
+							"<span class='boldwarning'>OH GOD! Was that a crunch? That didn't feel good at all!!</span>")
+
+		M.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
+		M.losebreath += 2
+		if(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds in their chest, cause a lot of pain
+			M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
+			M.losebreath += 6
+			discover_after = FALSE
+
+		if(S?.tastes?.len) //is that blood in my mouth?
+			S.tastes += "iron"
+			S.tastes["iron"] = 2
+
+	else if(custom_materials?.len) //if we've got materials, lets see whats in it
+		/// How many 'bonus' mats have we found? You can only be affected by two 'bonus' material datums by default
+		var/found_mats = 0
+		/// How much of each material is in it? Used to determine if the glass should break
+		var/total_material_amount = 0
+
+		for(var/mats in custom_materials)
+			total_material_amount += custom_materials[mats]
+			if(found_mats >= MAX_BONUS_MATS_PER_BITE)
+				continue //continue instead of break so we can finish adding up all the mats to the total
+
+			var/datum/material/FM = mats
+			if(FM.on_accidental_mat_consumption(M, S))
+				found_mats++
+
+		//if there's glass in it and the glass is more than 60% of the item, then we can shatter it
+		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)] >= total_material_amount * 0.60)
+			if(prob(66)) //66% chance to break it
+				/// The glass shard that is spawned into the source item
+				var/obj/item/shard/broken_glass = new /obj/item/shard(src)
+				broken_glass.name = "broken [name]"
+				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
+				playsound(M, "shatter", 25, TRUE)
+				qdel(src)
+				if(S)
+					S.contents += broken_glass //puts the glass back into the source item
+				else
+					broken_glass.on_accidental_consumption(M, user)
+			else //33% chance to just "crack" it (play a sound) and leave it in the bread
+				playsound(M, "shatter", 15, TRUE)
+				discover_after = FALSE
+
+		M.adjust_disgust(33)
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something hard.</span>", \
+						"<span class='warning'>Eugh! Did I just bite into something?</span>")
+
+	else if(w_class == WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
+		/// M's chest (for cavity implanting the item)
+		var/obj/item/bodypart/chest/CV = M.get_bodypart(BODY_ZONE_CHEST)
+		if(CV.cavity_item)
+			M.vomit(5, FALSE, FALSE, distance = 0)
+			forceMove(drop_location())
+			to_chat(M, "<span class='warning'>You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]</span>")
+		else
+			M.transferItemToLoc(src, M, TRUE)
+			M.losebreath += 2
+			CV.cavity_item = src
+			to_chat(M, "<span class='warning'>You swallow hard. [source_item? "Something small was in \the [source_item]..." : ""]</span>")
+		discover_after = FALSE
+
+	else
+		to_chat(M, "<span class='warning'>[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] </span>")
+
+	//Just in case - can't discover something that doesn't exist
+	if(QDELETED(src))
+		return FALSE
+
+	return discover_after
+
+#undef MAX_BONUS_MATS_PER_BITE

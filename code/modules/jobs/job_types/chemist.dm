@@ -1,8 +1,6 @@
 /datum/job/chemist
 	title = "Chemist"
-	flag = CHEMIST
 	department_head = list("Chief Medical Officer")
-	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
@@ -19,6 +17,7 @@
 	paycheck_department = ACCOUNT_MED
 
 	display_order = JOB_DISPLAY_ORDER_CHEMIST
+	bounty_types = CIV_JOB_CHEM
 
 /datum/outfit/job/chemist
 	name = "Chemist"

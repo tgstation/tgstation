@@ -13,6 +13,7 @@
 	var/datum/tgui/locked_by
 	var/fatally_errored = FALSE
 	var/message_queue
+	var/sent_assets = list()
 
 /**
  * public
@@ -36,8 +37,10 @@
  * Initializes the window with a fresh page. Puts window into the "loading"
  * state. You can begin sending messages right after initializing. Messages
  * will be put into the queue until the window finishes loading.
+ *
+ * optional inline_assets list List of assets to inline into the html.
  */
-/datum/tgui_window/proc/initialize()
+/datum/tgui_window/proc/initialize(inline_assets = list())
 	log_tgui(client, "[id]/initialize")
 	if(!client)
 		return
@@ -52,13 +55,23 @@
 	else
 		options += "titlebar=1;can_resize=1;"
 	// Generate page html
-	// TODO: Make this static
 	var/html = SStgui.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
-	// Send required assets
-	var/datum/asset/asset
-	asset = get_asset_datum(/datum/asset/group/tgui)
-	asset.send(client)
+	// Process inline assets
+	var/inline_styles = ""
+	var/inline_scripts = ""
+	for(var/datum/asset/asset in inline_assets)
+		var/mappings = asset.get_url_mappings()
+		for(var/name in mappings)
+			var/url = mappings[name]
+			// Not urlencoding since asset strings are considered safe
+			if(copytext(name, -4) == ".css")
+				inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
+			else if(copytext(name, -3) == ".js")
+				inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
+		asset.send()
+	html = replacetextEx(html, "<!-- tgui:styles -->\n", inline_styles)
+	html = replacetextEx(html, "<!-- tgui:scripts -->\n", inline_scripts)
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Instruct the client to signal UI when the window is closed.
@@ -86,7 +99,7 @@
 		&& pooled \
 		&& pool_index > 0 \
 		&& pool_index <= TGUI_WINDOW_SOFT_LIMIT \
-		&& status >= TGUI_WINDOW_READY
+		&& status == TGUI_WINDOW_READY
 
 /**
  * public
@@ -107,6 +120,9 @@
  * Release the window lock.
  */
 /datum/tgui_window/proc/release_lock()
+	// Clean up assets sent by tgui datum which requested the lock
+	if(locked)
+		sent_assets = list()
 	locked = FALSE
 	locked_by = null
 
@@ -126,8 +142,7 @@
 		send_message("suspend")
 		return
 	log_tgui(client, "[id]/close")
-	locked = FALSE
-	locked_by = null
+	release_lock()
 	status = TGUI_WINDOW_CLOSED
 	message_queue = null
 	// Do not close the window to give user some time
@@ -157,12 +172,29 @@
 	// Pack for sending via output()
 	message = url_encode(message)
 	// Place into queue if window is still loading
-	if(!force && status == TGUI_WINDOW_LOADING)
+	if(!force && status != TGUI_WINDOW_READY)
 		if(!message_queue)
 			message_queue = list()
 		message_queue += list(message)
 		return
 	client << output(message, "[id].browser:update")
+
+/**
+ * public
+ *
+ * Makes an asset available to use in tgui.
+ *
+ * required asset datum/asset
+ */
+/datum/tgui_window/proc/send_asset(datum/asset/asset)
+	if(!client || !asset)
+		return
+	if(istype(asset, /datum/asset/spritesheet))
+		var/datum/asset/spritesheet/spritesheet = asset
+		send_message("asset/stylesheet", spritesheet.css_filename())
+	send_message("asset/mappings", asset.get_url_mappings())
+	sent_assets += list(asset)
+	asset.send(client)
 
 /**
  * private
@@ -184,6 +216,11 @@
 /datum/tgui_window/proc/on_message(type, list/payload, list/href_list)
 	switch(type)
 		if("ready")
+			// Status can be READY if user has refreshed the window.
+			if(status == TGUI_WINDOW_READY)
+				// Resend the assets
+				for(var/asset in sent_assets)
+					send_asset(asset)
 			status = TGUI_WINDOW_READY
 		if("log")
 			if(href_list["fatal"])
