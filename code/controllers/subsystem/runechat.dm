@@ -71,14 +71,17 @@ SUBSYSTEM_DEF(runechat)
 
 		while (cm)
 			// If the chatmessage hasn't yet had its life ended then do that now
-			if (!cm.eol_started)
-				INVOKE_ASYNC(cm, /datum/chatmessage.proc/end_of_life)
+			var/datum/chatmessage/next = cm.next
+			if (!cm.eol_complete)
+				cm.end_of_life()
+			else if (!QDELETED(cm))
+				qdel(cm)
 
 			if (MC_TICK_CHECK)
 				return
 
 			// Break once we've processed the entire bucket
-			cm = cm.next
+			cm = next
 			if (cm == bucket_head)
 				break
 
@@ -122,20 +125,20 @@ SUBSYSTEM_DEF(runechat)
   * the position will be updated to remove it from the previous location if necessary
   *
   * Arguments:
-  * * prev_sched_destruction Optional, when provided is used to deregister the message from its previous queue position
+  * * new_sched_destruction Optional, when provided is used to update an existing message with the new specified time
   */
-/datum/chatmessage/proc/enter_subsystem(prev_sched_destruction = 0)
+/datum/chatmessage/proc/enter_subsystem(new_sched_destruction = 0)
 	// Get local references from subsystem as they are faster to access than the datum references
 	var/list/bucket_list = SSrunechat.bucket_list
 	var/list/second_queue = SSrunechat.second_queue
 
 	// When necessary, de-list the chatmessage from its previous position
-	if (prev_sched_destruction)
-		if (prev_sched_destruction >= BUCKET_LIMIT)
+	if (new_sched_destruction)
+		if (scheduled_destruction >= BUCKET_LIMIT)
 			second_queue -= src
 		else
 			SSrunechat.bucket_count--
-			var/bucket_pos = BUCKET_POS(prev_sched_destruction)
+			var/bucket_pos = BUCKET_POS(scheduled_destruction)
 			if (bucket_pos > 0)
 				var/datum/chatmessage/bucket_head = bucket_list[bucket_pos]
 				if (bucket_head == src)
@@ -147,6 +150,7 @@ SUBSYSTEM_DEF(runechat)
 				prev?.next = null
 				next?.prev = null
 			prev = next = null
+		scheduled_destruction = new_sched_destruction
 
 	// Handle insertion into the secondary queue if the required time is outside our tracked amounts
 	if (scheduled_destruction >= BUCKET_LIMIT)
