@@ -1,5 +1,0 @@
-author: "Coul"
-delete-after: True
-changes: 
-  - rscadd: "visible message when someone takes the item you offer them"
-  - spellcheck: "cleaned up some spans and offer messages"
