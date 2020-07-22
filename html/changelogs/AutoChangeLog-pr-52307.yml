@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "early plant mutations from 30+ instability"

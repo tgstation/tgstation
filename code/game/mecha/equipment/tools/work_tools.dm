@@ -61,15 +61,15 @@
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 				chassis.visible_message("<span class='notice'>[chassis] lifts [target] and starts to load it into cargo compartment.</span>")
-				O.anchored = TRUE
+				O.set_anchored(TRUE)
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
 					O.forceMove(chassis)
-					O.anchored = FALSE
+					O.set_anchored(FALSE)
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]", LOG_MECHA)
 				else
-					O.anchored = initial(O.anchored)
+					O.set_anchored(initial(O.anchored))
 			else
 				occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
@@ -121,15 +121,15 @@
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 				chassis.visible_message("<span class='notice'>[chassis] lifts [target] and starts to load it into cargo compartment.</span>")
-				O.anchored = TRUE
+				O.set_anchored(TRUE)
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
 					O.forceMove(chassis)
-					O.anchored = FALSE
+					O.set_anchored(FALSE)
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]", LOG_MECHA)
 				else
-					O.anchored = initial(O.anchored)
+					O.set_anchored(initial(O.anchored))
 			else
 				occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else

@@ -58,7 +58,19 @@ const createLocalStorage = () => {
   };
 };
 
+const testLocalStorage = () => {
+  // Localstorage can sometimes throw an error, even if DOM storage is not
+  // disabled in IE11 settings.
+  // See: https://superuser.com/questions/1080011
+  try {
+    return Boolean(window.localStorage && window.localStorage.getItem);
+  }
+  catch {
+    return false;
+  }
+};
+
 export const storage = (
-  window.localStorage && createLocalStorage()
+  testLocalStorage() && createLocalStorage()
   || createMock()
 );

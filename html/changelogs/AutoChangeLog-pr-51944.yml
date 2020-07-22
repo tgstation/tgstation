@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "The photocopier now has a 5 credit cost to use."
+  - code_imp: "There is now a uniform component for simple payments."
+  - bugfix: "You can now make copies of paper with the photocopier again."
