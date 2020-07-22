@@ -56,10 +56,16 @@
 	. = ..()
 
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/AddItemOnLift)
+	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, .proc/RemoveItemFromLift)
 
 	if(!LMaster)
 		LMaster = new(src)
+
+/obj/structure/lift/Move(atom/newloc, direct)
+	UnregisterSignal(loc, COMSIG_ATOM_CREATED)
+	. = ..()
+	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 
 /obj/structure/lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
 	lift_load -= AM
