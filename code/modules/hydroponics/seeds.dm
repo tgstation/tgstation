@@ -214,16 +214,18 @@
 		if(instability >= 30 && prob(instability/3) && mutatelist.len && mutate_early)
 			var/obj/item/seeds/new_prod = pick(mutatelist)
 			t_prod = initial(new_prod.product)
-			if(t_prod)
-				t_prod = new t_prod(output_loc, src)
-				if(t_prod.seed && istype(t_prod, /obj/item/reagent_containers/food/snacks/grown))
-					t_prod.seed = initial(t_prod.seed)
-					t_prod.seed = new t_prod.seed
-					t_prod.seed.instability = round(instability/2)
-					t_amount++
-					continue
-			else
+			if(!t_prod)
 				continue
+			t_prod = new t_prod(output_loc, src)
+			t_prod.seed = new new_prod
+			t_prod.seed.name = initial(new_prod.name)
+			t_prod.seed.desc = initial(new_prod.desc)
+			t_prod.seed.plantname = initial(new_prod.plantname)
+			t_amount++
+			if(t_prod.seed)
+				//t_prod.seed = new new_prod
+				t_prod.seed.instability = round(instability/2)
+			continue
 		else
 			t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
