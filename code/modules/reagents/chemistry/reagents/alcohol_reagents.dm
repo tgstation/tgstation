@@ -147,7 +147,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
@@ -302,7 +302,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(10))
 		M.heal_bodypart_damage(1)
-		. = 1
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/threemileisland
@@ -432,7 +432,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.assigned_role == "Assistant")
 		M.heal_bodypart_damage(1,1)
-		. = 1
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/ale
@@ -504,9 +504,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		M.heal_overall_damage(brute = 1, burn = 1, toxin = 1, oxy = 5)
-		. = 1
-	return ..() || .
+		M.heal_overall_damage(brute = 1, burn = 1, toxin = 1, oxy = 5, updating_health = FALSE)
+		. = TRUE
+	..()
 
 /datum/reagent/consumable/ethanol/whiskey_cola
 	name = "Whiskey Cola"
@@ -688,13 +688,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M)
 	M.Jitter(2)
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.adjustStaminaLoss(-10, 0)
+		M.adjustStaminaLoss(-10, FALSE)
 		if(prob(20))
 			new /datum/hallucination/items_other(M)
 		if(prob(10))
 			new /datum/hallucination/stray_bullet(M)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_end_metabolize(mob/living/carbon/M)
 	if(B)
@@ -738,8 +738,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/carbon/M)
 	if(dorf_mode)
-		M.heal_overall_damage(brute = 2, burn = 2)
-	return ..()
+		M.heal_overall_damage(brute = 2, burn = 2, updating_health = FALSE)
+		. = TRUE
+	..()
 
 /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
@@ -881,8 +882,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
 		var/mob/living/carbon/human/H = M
 		if(!H.shoes)
-			H.adjustBruteLoss(-3, 0)
-			. = 1
+			H.adjustBruteLoss(-3, FALSE)
+			. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/snowwhite
@@ -1177,7 +1178,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/carbon/M)
 	if((ishuman(M) && M.job == "Clown") || ismonkey(M))
 		M.heal_bodypart_damage(1,1)
-		. = 1
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/silencer
@@ -1196,7 +1197,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M) && M.mind?.miming)
 		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
 		M.heal_bodypart_damage(1,1)
-		. = 1
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/drunkenblumpkin
@@ -1267,12 +1268,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/carbon/M)
 	if(M.health <= 0)
-		M.adjustBruteLoss(-3, 0)
-		M.adjustFireLoss(-3, 0)
-		M.adjustCloneLoss(-5, 0)
-		M.adjustOxyLoss(-4, 0)
-		M.adjustToxLoss(-3, 0)
-		. = 1
+		M.heal_overall_damage(brute = 3, burn = 3, oxy = 4, clone = 5, toxin = 3, updating_health = FALSE)
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/bacchus_blessing //An EXTREMELY powerful drink. Smashed in seconds, dead in minutes.
@@ -1309,11 +1306,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	switch(current_cycle)
 		if(51 to 200)
 			M.Sleeping(100, FALSE)
-			. = 1
+			. = TRUE
 		if(201 to INFINITY)
 			M.AdjustSleeping(40, FALSE)
-			M.adjustToxLoss(2, 0)
-			. = 1
+			M.adjustToxLoss(2, FALSE)
+			. = TRUE
 	..()
 
 /datum/reagent/consumable/ethanol/gargle_blaster
@@ -1340,9 +1337,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(55 to 200)
 			M.set_drugginess(55)
 		if(200 to INFINITY)
-			M.adjustToxLoss(2, 0)
-			. = 1
-	..()
+			M.adjustToxLoss(2, FALSE)
+			. = TRUE
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/neurotoxin
 	name = "Neurotoxin"
@@ -1364,14 +1361,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.dizziness +=2
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 150)
 	if(prob(20))
-		M.adjustStaminaLoss(10)
+		M.adjustStaminaLoss(10, FALSE)
 		M.drop_all_held_items()
 		to_chat(M, "<span class='notice'>You cant feel your hands!</span>")
 	if(current_cycle > 5)
 		if(prob(20))
 			var/t = pickt()
 			ADD_TRAIT(M, t, type)
-			M.adjustStaminaLoss(10)
+			M.adjustStaminaLoss(10, FALSE)
 		if(current_cycle > 30)
 			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
 			if(current_cycle > 50 && prob(15))
@@ -1379,8 +1376,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					M.set_heartattack(TRUE)
 					if(M.stat == CONSCIOUS)
 						M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart stopped!</span>")
-	. = 1
-	..()
+	. = TRUE
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_end_metabolize(mob/living/carbon/M)
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_ARM, type)
@@ -1388,7 +1385,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_LEG, type)
 	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_LEG, type)
 	M.adjustStaminaLoss(10)
-	..()
+	. = TRUE
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/hippies_delight
 	name = "Hippie's Delight"
@@ -1431,8 +1429,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(prob(40))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
-				M.adjustToxLoss(2, 0)
-				. = 1
+				M.adjustToxLoss(2, FALSE)
+				. = TRUE
 	..()
 
 /datum/reagent/consumable/ethanol/eggnog
@@ -1518,8 +1516,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/M)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(1, 1)
-		M.adjustBruteLoss(-2,0)
+		M.heal_bodypart_damage(1, 1, updating_health = FALSE)
+		M.adjustBruteLoss(-2, FALSE)
 		. = TRUE
 	return ..() || .
 
@@ -1538,8 +1536,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(2,2,2)
-		M.heal_overall_damage(brute = 5, burn = 5, toxin = 5, oxy = 5)
-	return ..()
+		M.heal_overall_damage(brute = 5, burn = 5, toxin = 5, oxy = 5, updating_health = FALSE)
+		. = TRUE
+	..()
 
 /datum/reagent/consumable/ethanol/grasshopper
 	name = "Grasshopper"
@@ -1581,16 +1580,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(L.health <= 0)
 		heal_points = 20 //heal more if we're in softcrit
 	for(var/i in 1 to min(volume, heal_points)) //only heals 1 point of damage per unit on add, for balance reasons
-		L.heal_overall_damage(brute = 1, burn = 1, toxin = 1, oxy = 1, stamina = 1)
+		L.heal_overall_damage(brute = 1, burn = 1, toxin = 1, oxy = 1, stamina = 1, updating_health = FALSE)
+		. = TRUE
 	L.visible_message("<span class='warning'>[L] shivers with renewed vigor!</span>", "<span class='notice'>One taste of [lowertext(name)] fills you with energy!</span>")
 	if(!L.stat && heal_points == 20) //brought us out of softcrit
 		L.visible_message("<span class='danger'>[L] lurches to [L.p_their()] feet!</span>", "<span class='boldnotice'>Up and at 'em, kid.</span>")
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/L)
 	if(L.health > 0)
-		L.heal_overall_damage(brute = 1, burn = 1, toxin = 0.5, oxy = 3, stamina = 5)
+		L.heal_overall_damage(brute = 1, burn = 1, toxin = 0.5, oxy = 3, stamina = 5, updating_health = FALSE)
 		. = TRUE
-	return ..() || .
+	..()
 
 /datum/reagent/consumable/ethanol/squirt_cider
 	name = "Squirt Cider"
@@ -1736,13 +1736,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(L.IsSleeping())
 		if(L.getBruteLoss() && L.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
 			if(prob(50))
-				L.adjustBruteLoss(-0.25)
+				L.adjustBruteLoss(-0.25), FALSE
 			else
-				L.adjustFireLoss(-0.25)
+				L.adjustFireLoss(-0.25, FALSE)
 		else if(L.getBruteLoss()) //If you have only one, it still heals but not as well.
-			L.adjustBruteLoss(-0.2)
+			L.adjustBruteLoss(-0.2, FALSE)
 		else if(L.getFireLoss())
-			L.adjustFireLoss(-0.2)
+			L.adjustFireLoss(-0.2, FALSE)
+		. = TRUE
 
 /datum/reagent/consumable/ethanol/kamikaze
 	name = "Kamikaze"
@@ -1788,10 +1789,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustToxLoss(1*REM, FALSE)
+		. = TRUE
 	M.adjust_nutrition(-5)
 	M.overeatduration = 0
-	return ..()
+	..()
 
 /datum/reagent/consumable/ethanol/fernet_cola
 	name = "Fernet Cola"
@@ -1807,9 +1809,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(0.5*REM, 0)
+		. = TRUE
 	M.adjust_nutrition(- 3)
 	M.overeatduration = 0
-	return ..()
+	..()
 
 /datum/reagent/consumable/ethanol/fanciulli
 
@@ -1855,7 +1858,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(M.health > 0)
 		M.adjustStaminaLoss(35)
 		. = TRUE
-	..()
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/blank_paper
 	name = "Blank Paper"
@@ -1873,8 +1876,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M) && M.mind?.miming)
 		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
 		M.heal_bodypart_damage(1,1)
-		. = 1
-	return ..()
+		. = TRUE
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/fruit_wine
 	name = "Fruit Wine"

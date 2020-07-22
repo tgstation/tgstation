@@ -952,7 +952,7 @@
 				M.emote("me", 1, pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
 			if(3)
 				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
-	return ..()
+	return ..() || TRUE
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
 	if(prob(4) && iscarbon(M)) //big oof
