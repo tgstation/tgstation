@@ -21,8 +21,8 @@ export const AtmosControlPanel = (props, context) => {
       height={500}
       resizable>
       <Section>
-        <Flex>
-          <Flex.Item grow={1}>
+        <Flex justify="space-between">
+          <Flex.Item>
             <Button
               onClick={() => act('toggle-freeze')}
               color={data.frozen === 1 ? 'good' : 'bad'}>
@@ -31,16 +31,16 @@ export const AtmosControlPanel = (props, context) => {
                 : 'Unfreeze Subsystem'}
             </Button>
           </Flex.Item>
-          <Flex.Item grow={1}>
+          <Flex.Item>
             Active Turfs: {data.active_size}
           </Flex.Item>
-          <Flex.Item grow={1}>
+          <Flex.Item>
             Hotspots: {data.hotspots_size}
           </Flex.Item>
-          <Flex.Item grow={1}>
+          <Flex.Item>
             Excited Groups: {data.excited_size}
           </Flex.Item>
-          <Flex.Item grow={1}>
+          <Flex.Item>
             <Button.Checkbox
               checked={data.show_all}
               onClick={() => act('toggle_show_all')}>
