@@ -79,7 +79,7 @@
 	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	var/active_stack = 0
 	var/datum/bank_account/dept_account = SSeconomy.get_dep_account(inserted_scan_id.registered_account.account_job.paycheck_department)
-	if(!dept_account.has_money(curr_bounty.reward) || !dept_account)
+	if(!dept_account?.has_money(curr_bounty.reward))
 		playsound(loc, 'sound/machines/synth_no.ogg', 50 , TRUE)
 		stop_sending("Not enough funds to submit bounty at this time, please try again later.")
 		return FALSE
