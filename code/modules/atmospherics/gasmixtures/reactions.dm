@@ -260,7 +260,7 @@ nobiliumsuppression = INFINITY
 	return cached_results["fire"] ? REACTING : NO_REACTION
 
 //freon reaction (is not a fire yet)
-datum/gas_reaction/freonfire
+/datum/gas_reaction/freonfire
 	priority = -4
 	name = "Freon combustion"
 	id = "freonfire"

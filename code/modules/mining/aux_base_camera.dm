@@ -209,7 +209,7 @@
 	B.RCD.change_airlock_setting()
 
 
-datum/action/innate/aux_base/window_type
+/datum/action/innate/aux_base/window_type
 	name = "Select Window Type"
 	button_icon_state = "window_select"
 
@@ -218,7 +218,7 @@ datum/action/innate/aux_base/window_type
 		return
 	B.RCD.toggle_window_type()
 
-datum/action/innate/aux_base/place_fan
+/datum/action/innate/aux_base/place_fan
 	name = "Place Tiny Fan"
 	button_icon_state = "build_fan"
 
