@@ -32,7 +32,7 @@
 	ratio = CEILING(ratio*4, 1) * 25
 
 	if(smooth)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 
 	if(ratio > 50)
 		return

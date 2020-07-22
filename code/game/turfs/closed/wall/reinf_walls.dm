@@ -200,8 +200,8 @@
 		clear_smooth_overlays()
 	else
 		smooth = SMOOTH_TRUE
-		queue_smooth_neighbors(src)
-		queue_smooth(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
+		QUEUE_SMOOTH(src)
 
 /turf/closed/wall/r_wall/update_icon_state()
 	if(d_state != INTACT)

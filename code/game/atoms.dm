@@ -99,6 +99,20 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	///Icon-smoothing behavior.
+	var/smooth = SMOOTH_FALSE
+	///Smoothing variable
+	var/top_left_corner
+	///Smoothing variable
+	var/top_right_corner
+	///Smoothing variable
+	var/bottom_left_corner
+	///Smoothing variable
+	var/bottom_right_corner
+	///Type path list this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
+	var/list/canSmoothWith = null
+
+
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
@@ -236,6 +250,9 @@
 
 	targeted_by = null
 	QDEL_NULL(light)
+
+	if(smooth & SMOOTH_QUEUED)
+		SSicon_smooth.remove_from_queues(src)
 
 	return ..()
 

@@ -34,6 +34,7 @@ SUBSYSTEM_DEF(idlenpcpool)
 		--currentrun.len
 		if (!SA)
 			GLOB.simple_animals[AI_IDLE] -= SA
+			log_world("Found a null in simple_animals list!")
 			continue
 
 		if(!SA.ckey)

@@ -24,6 +24,51 @@ export const MafiaPanel = (props, context) => {
       height={550}
       resizable>
       <Window.Content>
+        {!!admin_controls && (
+          <Section
+            title="ADMIN CONTROLS"
+            backgroundColor="red">
+            THESE ARE DEBUG, THEY WILL BREAK THE GAME, DO NOT TOUCH <br />
+            Also because an admin did it: do not gib/delete/etc
+            anyone! It will runtime the game to death! <br />
+            <Button
+              icon="arrow-right"
+              onClick={() => act("next_phase")}>
+              Next Phase
+            </Button>
+            <Button
+              icon="home"
+              onClick={() => act("players_home")}>
+              Send All Players Home
+            </Button>
+            <Button
+              icon="radiation"
+              onClick={() => act("new_game")}>
+              New Game
+            </Button>
+            <br />
+            This makes the next game what you input.
+            Resets after one round automatically.
+            <br />
+            <Button
+              icon="exclamation-circle"
+              onClick={() => act("debug_setup")}>
+              Create Custom Setup
+            </Button>
+            <Button
+              icon="arrow-left"
+              onClick={() => act("cancel_setup")}>
+              Reset Custom Setup
+            </Button>
+            <br />
+            <Button
+              icon="skull"
+              onClick={() => act("nuke")}
+              color="black">
+              Nuke (delete datum + landmarks, hope it fixes everything!)
+            </Button>
+          </Section>
+        )}
         <Section title={phase}>
           {!!roleinfo && (
             <Fragment>
@@ -49,37 +94,6 @@ export const MafiaPanel = (props, context) => {
             </Flex.Item>
           ))}
         </Flex>
-        {!!admin_controls && (
-          <Section
-            title="ADMIN CONTROLS"
-            backgroundColor="red">
-            THESE ARE DEBUG, THEY WILL BREAK THE GAME, DO NOT TOUCH <br />
-            Also because an admin did it: do not gib/delete/etc
-            anyone! It will runtime the game to death! <br />
-            <Button
-              icon="arrow-right"
-              onClick={() => act("next_phase")}>
-              Next Phase
-            </Button>
-            <Button
-              icon="home"
-              onClick={() => act("players_home")}>
-              Send All Players Home
-            </Button>
-            <Button
-              icon="radiation"
-              onClick={() => act("new_game")}>
-              New Game
-            </Button>
-            <br />
-            <Button
-              icon="skull"
-              onClick={() => act("nuke")}
-              color="black">
-              Nuke (delete datum + landmarks, hope it fixes everything!)
-            </Button>
-          </Section>
-        )}
         <Section title="Players">
           <LabeledList>
             {!!players && players.map(player => (

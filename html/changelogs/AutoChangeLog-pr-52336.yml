@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a runtime caused by a target being deleted by a gun's projectiles."
