@@ -2,18 +2,24 @@
 /datum/lift_master
 	var/list/lift_platforms = list()
 
-/datum/lift_master/New(obj/structure/lift/lift_platform)
+/datum/lift_master/Destroy()
+	for(var/obj/structure/industrial_lift/lift_platform in lift_platforms)
+		lift_platform.LMaster = null
+	lift_platforms.Cut()
+	. = ..()
+
+/datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
 	Rebuild_lift_plaform(lift_platform)
 
 ///Collect all bordered platforms
-/datum/lift_master/proc/Rebuild_lift_plaform(obj/structure/lift/base_lift_platform)
+/datum/lift_master/proc/Rebuild_lift_plaform(obj/structure/industrial_lift/base_lift_platform)
 	lift_platforms |= base_lift_platform
 	var/list/possible_expansions = list(base_lift_platform)
 	while(possible_expansions.len)
-		for(var/obj/structure/lift/borderline in possible_expansions)
+		for(var/obj/structure/industrial_lift/borderline in possible_expansions)
 			var/list/result = borderline.lift_platform_expansion(src)
 			if(result && result.len)
-				for(var/obj/structure/lift/lift_platform in result)
+				for(var/obj/structure/industrial_lift/lift_platform in result)
 					if(!lift_platforms.Find(lift_platform))
 						lift_platform.LMaster = src
 						lift_platforms |= lift_platform
@@ -22,7 +28,7 @@
 
 ///Move all platforms together
 /datum/lift_master/proc/MoveLift(going, mob/user)
-	for(var/obj/structure/lift/lift_platform in lift_platforms)
+	for(var/obj/structure/industrial_lift/lift_platform in lift_platforms)
 		lift_platform.travel(going)
 
 /datum/lift_master/proc/MoveLiftOnZ(going, z)
@@ -31,7 +37,7 @@
 	var/min_x = world.maxx
 	var/min_y = world.maxy
 	
-	for(var/obj/structure/lift/lift_platform in lift_platforms)
+	for(var/obj/structure/industrial_lift/lift_platform in lift_platforms)
 		max_x = max(max_x, lift_platform.x)
 		max_y = max(max_y, lift_platform.y)
 		min_x = min(min_x, lift_platform.x)
@@ -44,12 +50,12 @@
 			if( going & NORTH )
 				//Go along the Y axis from max to min, from up to down
 				for(var/y = max_y; y >= min_y; y--)
-					var/obj/structure/lift/lift_platform = locate(/obj/structure/lift, locate(x, y, z))
+					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 					lift_platform.travel(going)
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y = min_y; y <= max_y; y++)
-					var/obj/structure/lift/lift_platform = locate(/obj/structure/lift, locate(x, y, z))
+					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 					lift_platform.travel(going)	
 	else
 		//Go along the X axis from max to min, from right to left
@@ -57,23 +63,23 @@
 			if( going & NORTH )
 				//Go along the Y axis from max to min, from up to down
 				for(var/y = max_y; y >= min_y; y--)
-					var/obj/structure/lift/lift_platform = locate(/obj/structure/lift, locate(x, y, z))
+					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 					lift_platform.travel(going)
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y = min_y; y <= max_y; y++)
-					var/obj/structure/lift/lift_platform = locate(/obj/structure/lift, locate(x, y, z))
+					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 					lift_platform.travel(going)		
 
 ///Check destination turfs
 /datum/lift_master/proc/Check_lift_move(check_dir)
-	for(var/obj/structure/lift/lift_platform in lift_platforms)
+	for(var/obj/structure/industrial_lift/lift_platform in lift_platforms)
 		var/turf/T = get_step_multiz(lift_platform, check_dir)
 		if(!T)// || !isopenturf(T))
 			return FALSE
 	return TRUE
 
-/obj/structure/lift
+/obj/structure/industrial_lift
 	name = "lift platform"
 	desc = "A lightweight lift platform. It moves up and down."
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
@@ -84,7 +90,7 @@
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
-	canSmoothWith = list(/obj/structure/lift)
+	canSmoothWith = list(/obj/structure/industrial_lift)
 	smooth = SMOOTH_MORE
 	//	flags = CONDUCT_1
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
@@ -92,7 +98,7 @@
 	var/list/lift_load = list() //things to move
 	var/datum/lift_master/LMaster    //control from
 
-/obj/structure/lift/Initialize(mapload)
+/obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
 
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/AddItemOnLift)
@@ -102,24 +108,24 @@
 	if(!LMaster)
 		LMaster = new(src)
 
-/obj/structure/lift/Move(atom/newloc, direct)
+/obj/structure/industrial_lift/Move(atom/newloc, direct)
 	UnregisterSignal(loc, COMSIG_ATOM_CREATED)
 	. = ..()
 	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 
-/obj/structure/lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
+/obj/structure/industrial_lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
 	lift_load -= AM
 
-/obj/structure/lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
+/obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	lift_load |= AM
 
-/obj/structure/lift/proc/lift_platform_expansion(datum/lift_master/LMaster)
+/obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/LMaster)
 	. = list()
 	for(var/D in GLOB.cardinals)
 		var/turf/T = get_step(src, D)
-		. |= locate(/obj/structure/lift) in T
+		. |= locate(/obj/structure/industrial_lift) in T
 
-/obj/structure/lift/proc/travel(going)
+/obj/structure/industrial_lift/proc/travel(going)
 	var/list/things2move = lift_load.Copy()
 	var/turf/destination
 	if(!isturf(going))
@@ -130,7 +136,7 @@
 	for(var/atom/movable/AM in things2move)
 		AM.forceMove(destination)
 
-/obj/structure/lift/proc/use(mob/user, is_ghost=FALSE)
+/obj/structure/industrial_lift/proc/use(mob/user, is_ghost=FALSE)
 	if (is_ghost && !in_range(src, user))
 		return
 
@@ -170,35 +176,47 @@
 
 	add_fingerprint(user)
 
-/obj/structure/lift/proc/check_menu(mob/user)
+/obj/structure/industrial_lift/proc/check_menu(mob/user)
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
-/obj/structure/lift/attack_hand(mob/user)
+/obj/structure/industrial_lift/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
 	use(user)
 
-/obj/structure/lift/attack_paw(mob/user)
+/obj/structure/industrial_lift/attack_paw(mob/user)
 	return use(user)
 
-/obj/structure/lift/attackby(obj/item/W, mob/user, params)
+/obj/structure/industrial_lift/attackby(obj/item/W, mob/user, params)
 	return use(user)
 
-/obj/structure/lift/attack_robot(mob/living/silicon/robot/R)
+/obj/structure/industrial_lift/attack_robot(mob/living/silicon/robot/R)
 	if(R.Adjacent(src))
 		return use(R)
 
-/obj/structure/lift/proc/show_fluff_message(going_up, mob/user)
+/obj/structure/industrial_lift/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
 		user.visible_message("<span class='notice'>[user] move lift up.</span>", "<span class='notice'>Lift move up.</span>")
 	else
 		user.visible_message("<span class='notice'>[user] move lift down.</span>", "<span class='notice'>Lift move down.</span>")
 
+/obj/structure/industrial_lift/Destroy()
+	QDEL_NULL(LMaster)
+	var/list/border_lift_platforms = lift_platform_expansion()
+	moveToNullspace()
+	for(var/obj/structure/industrial_lift/BorderLift in border_lift_platforms)
+		LMaster = new(BorderLift)
+	. = ..()
 
-/obj/structure/lift/debug/use(mob/user)
+/obj/structure/industrial_lift/debug
+	name = "transport platform"
+	desc = "A lightweight platform. It moves in any direction, except up and down."
+	color = "#5286b9ff"
+
+/obj/structure/industrial_lift/debug/use(mob/user)
 	if (!in_range(src, user))
 		return
 //NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST
