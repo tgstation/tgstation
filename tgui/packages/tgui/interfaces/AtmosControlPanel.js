@@ -1,7 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { Box, Button, Section, Table, Flex } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 export const AtmosControlPanel = (props, context) => {
@@ -20,89 +20,85 @@ export const AtmosControlPanel = (props, context) => {
       width={650}
       height={500}
       resizable>
-      <Flex>
-        <Flex.Item grow={1}>
-          <Button
-            onClick={() => act('toggle-freeze')}
-            content={
-              data.frozen === 1 ? 'Freeze Subsystem' : 'Unfreeze Subsystem'
-            }
-            color={data.frozen === 1 ? 'good' : 'bad'}
-          />
-        </Flex.Item>
-        <Flex.Item grow={1}>
-          <Box>
+      <Section>
+        <Flex>
+          <Flex.Item grow={1}>
+            <Button
+              onClick={() => act('toggle-freeze')}
+              color={data.frozen === 1 ? 'good' : 'bad'}>
+              {data.frozen === 1
+                ? 'Freeze Subsystem'
+                : 'Unfreeze Subsystem'}
+            </Button>
+          </Flex.Item>
+          <Flex.Item grow={1}>
             Active Turfs: {data.active_size}
-          </Box>
-        </Flex.Item>
-        <Flex.Item grow={1}>
-          <Box>
+          </Flex.Item>
+          <Flex.Item grow={1}>
             Hotspots: {data.hotspots_size}
-          </Box>
-        </Flex.Item>
-        <Flex.Item grow={1}>
-          <Box>
+          </Flex.Item>
+          <Flex.Item grow={1}>
             Excited Groups: {data.excited_size}
-          </Box>
-        </Flex.Item>
-        <Flex.Item grow={1}>
-          <Button.Checkbox
-            content="Display all"
-            checked={data.show_all}
-            onClick={() => act('toggle_show_all')}
-          />
-        </Flex.Item>
-      </Flex>
-      <Box fillPositionedParent top="21px">
+          </Flex.Item>
+          <Flex.Item grow={1}>
+            <Button.Checkbox
+              checked={data.show_all}
+              onClick={() => act('toggle_show_all')}>
+              Display all
+            </Button.Checkbox>
+          </Flex.Item>
+        </Flex>
+      </Section>
+      <Box fillPositionedParent top="45px">
         <Window.Content scrollable>
-          <Table>
-            <tr>
-              <td>
-                Area Name
-              </td>
-              <td>
-                Breakdown Counter
-              </td>
-              <td>
-                Dismantle Counter
-              </td>
-              <td>
-                Tile Count
-              </td>
-              <td>
-                Display
-              </td>
-            </tr>
-            {groups.map((group, i) => (
-              <tr key={group.id}>
-                <td>
-                  <Button
-                    content={group.area}
-                    onClick={() => act('move-to-target', {
-                      spot: group.jump_to,
-                    })}
-                  />
-                </td>
-                <td>
-                  {group.breakdown}
-                </td>
-                <td>
-                  {group.dismantle}
-                </td>
-                <td>
-                  {group.size}
-                </td>
-                <td>
-                  <Button.Checkbox
-                    checked={group.should_show}
-                    onClick={() => act('toggle_show_group', {
-                      group: group.group,
-                    })}
-                  />
-                </td>
-              </tr>
-            ))}
-          </Table>
+          <Section>
+            <Table>
+              <Table.Row header>
+                <Table.Cell>
+                  Area Name
+                </Table.Cell>
+                <Table.Cell>
+                  Breakdown Counter
+                </Table.Cell>
+                <Table.Cell>
+                  Dismantle Counter
+                </Table.Cell>
+                <Table.Cell>
+                  Tile Count
+                </Table.Cell>
+                <Table.Cell>
+                  Display
+                </Table.Cell>
+              </Table.Row>
+              {groups.map(group => (
+                <tr key={group.id}>
+                  <td>
+                    <Button
+                      content={group.area}
+                      onClick={() => act('move-to-target', {
+                        spot: group.jump_to,
+                      })} />
+                  </td>
+                  <td>
+                    {group.breakdown}
+                  </td>
+                  <td>
+                    {group.dismantle}
+                  </td>
+                  <td>
+                    {group.size}
+                  </td>
+                  <td>
+                    <Button.Checkbox
+                      checked={group.should_show}
+                      onClick={() => act('toggle_show_group', {
+                        group: group.group,
+                      })} />
+                  </td>
+                </tr>
+              ))}
+            </Table>
+          </Section>
         </Window.Content>
       </Box>
     </Window>
