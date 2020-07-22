@@ -12,9 +12,9 @@
   *
   * Handles creation, callbacks, and destruction of timed events.
   *
-  * It is important to understand the buckets used in the timer subsystem are just a circular doubly-linked list. The
-  * object at a given index in the bucket list is a /datum/timedevent, the head of the list, which has prev and next
-  * references for the respective elements in that buckets circular list.
+  * It is important to understand the buckets used in the timer subsystem are just a series of circular doubly-linked
+  * lists. The object at a given index in bucket_list is a /datum/timedevent, the head of a circular list, which has prev
+  * and next references for the respective elements in that bucket's circular list.
   */
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
