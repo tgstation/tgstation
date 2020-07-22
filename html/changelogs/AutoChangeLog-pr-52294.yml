@@ -1,4 +1,0 @@
-author: "Donkie"
-delete-after: True
-changes: 
-  - tweak: "Prevent being able to finish a reinforced girder using regular metal, making the added reinforcement disappear."

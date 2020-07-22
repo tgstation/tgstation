@@ -56,6 +56,7 @@
 #include "code\__DEFINES\inventory.dm"
 #include "code\__DEFINES\is_helpers.dm"
 #include "code\__DEFINES\jobs.dm"
+#include "code\__DEFINES\keybinding.dm"
 #include "code\__DEFINES\language.dm"
 #include "code\__DEFINES\layers.dm"
 #include "code\__DEFINES\lighting.dm"

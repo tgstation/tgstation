@@ -6852,12 +6852,13 @@
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "aor" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -66584,12 +66585,14 @@
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
 "dCg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -77592,6 +77595,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_c)
+"uhk" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "uiN" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/cable,
@@ -105305,7 +105315,7 @@ agL
 aky
 awp
 awp
-awp
+uhk
 awp
 aos
 apF
@@ -105562,7 +105572,7 @@ dtX
 lrV
 ajQ
 uiS
-alS
+atN
 alS
 alS
 alS

@@ -1,8 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - refactor: "Converted everything to use setAnchored() as opposed to setting the anchored var directly. This means that COMSIG_MOVABLE_SETANCHORED can now actually be used reliably to track if an object's anchored var has changed."
-  - bugfix: "The refactor also means that varediting the anchored var will now properly update most items' other states that rely on it being set a certain way."
-  - bugfix: "Fixed bookcases having the incorrect icon when they're unanchored."
-  - bugfix: "Fixed bookcases not automatically picking up spellbooks / storage books when made/spawned."
-  - bugfix: "Fixed bookcases not dropping spellbooks / storage books when deconstructed."
