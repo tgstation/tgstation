@@ -25,6 +25,46 @@
 	for(var/obj/structure/lift/lift_platform in lift_platforms)
 		lift_platform.travel(going)
 
+/datum/lift_master/proc/MoveLiftOnZ(going, z) //NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST
+	var/max_x = 1
+	var/max_y = 1
+	var/min_x = world.maxx
+	var/min_y = world.maxy
+	
+	for(var/obj/structure/lift/lift_platform in lift_platforms)
+		max_x = max(max_x, lift_platform.x))
+		max_y = max(max_y, lift_platform.y))
+		min_x = min(min_x, lift_platform.x))
+		min_y = min(min_y, lift_platform.y))
+		
+	//This must be safe way to tile to border tile move of bordered platforms, that excludes platform overlapping.
+	if( going & ( EAST | NORTH | SOUTH ))
+		//Go along the X axis from min to max, from left to right
+		for(var/x = min_x; x <= max_x; x++)
+			if( going & NORTH )
+				//Go along the Y axis from max to min, from up to down
+				for(var/y = max_y; y >= min_y; y--)
+					var/obj/structure/lift/lift_platform = locate(/obj/structure/lift, locate(x, y, z))
+					lift_platform.travel(going)
+			else
+				//Go along the Y axis from min to max, from down to up
+				for(var/y = min_y; y <= max_y; y++)
+					var/obj/structure/lift/lift_platform = locate(/obj/structure/lift, locate(x, y, z))
+					lift_platform.travel(going)	
+	else	
+		//Go along the X axis from max to min, from right to left
+		for(var/x = max_x; x >= min_x; x--)
+			if( going & NORTH )
+				//Go along the Y axis from max to min, from up to down
+				for(var/y = max_y; y >= min_y; y--)
+					var/obj/structure/lift/lift_platform = locate(/obj/structure/lift, locate(x, y, z))
+					lift_platform.travel(going)
+			else
+				//Go along the Y axis from min to max, from down to up
+				for(var/y = min_y; y <= max_y; y++)
+					var/obj/structure/lift/lift_platform = locate(/obj/structure/lift, locate(x, y, z))
+					lift_platform.travel(going)		
+
 ///Check destination turfs
 /datum/lift_master/proc/Check_lift_move(check_dir)
 	for(var/obj/structure/lift/lift_platform in lift_platforms)
