@@ -1,3 +1,5 @@
+#define QUIRK_POST_ADD_RAN (1<<0)
+
 //every quirk in this folder should be coded around being applied on spawn
 //these are NOT "mob quirks" like GOTTAGOFAST, but exist as a medium to apply them and other different effects
 /datum/quirk
@@ -12,7 +14,7 @@
 	var/mob_trait //if applicable, apply and remove this mob trait
 	///Amount of points this trait is worth towards the hardcore character mode; minus points implies a positive quirk, positive means its hard. This is used to pick the quirks assigned to a hardcore character. 0 means its not available to hardcore draws.
 	var/hardcore_value = 0
-	var/post_add_ran = FALSE /// Tracks if the post_add was run on the quirk on process tick
+	var/quirk_flags = NONE /// bitflag to track that post_add was run
 	var/mob/living/quirk_holder
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
@@ -67,11 +69,9 @@
 		return
 	// post_add is used to get settings from the client prefs
 	// validate that a client is attached before running
-	if(!post_add_ran)
-		var/mob/user = quirk_holder
-		if(user && user.client)
-			post_add()
-			post_add_ran = TRUE
+	if(!(quirk_flags & QUIRK_POST_ADD_RAN) && quirk_holder.client)
+		post_add()
+		quirk_flags |= QUIRK_POST_ADD_RAN
 	on_process()
 
 /**
@@ -161,3 +161,5 @@ Use this as a guideline
 //If you don't need any special effects like spawning glasses, then you don't need an add()
 
 */
+
+#undef QUIRK_POST_ADD_RAN
