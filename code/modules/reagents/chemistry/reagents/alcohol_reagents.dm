@@ -504,10 +504,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		M.adjustBruteLoss(-1, 0)
-		M.adjustFireLoss(-1, 0)
-		M.adjustToxLoss(-1, 0)
-		M.adjustOxyLoss(-5, 0)
+		M.heal_overall_damage(brute = 1, fire = 1, toxin = 1, oxy = 5)
 		. = 1
 	return ..() || .
 
@@ -741,8 +738,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/carbon/M)
 	if(dorf_mode)
-		M.adjustBruteLoss(-2)
-		M.adjustFireLoss(-2)
+		M.heal_overall_damage(brute = 2, fire = 2)
 	return ..()
 
 /datum/reagent/consumable/ethanol/longislandicedtea
@@ -1524,8 +1520,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1, 1)
 		M.adjustBruteLoss(-2,0)
-		. = 1
-	return ..()
+		. = TRUE
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/quintuple_sec
 	name = "Quintuple Sec"
@@ -1585,24 +1581,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(L.health <= 0)
 		heal_points = 20 //heal more if we're in softcrit
 	for(var/i in 1 to min(volume, heal_points)) //only heals 1 point of damage per unit on add, for balance reasons
-		L.adjustBruteLoss(-1)
-		L.adjustFireLoss(-1)
-		L.adjustToxLoss(-1)
-		L.adjustOxyLoss(-1)
-		L.adjustStaminaLoss(-1)
+		L.heal_overall_damage(brute = 1, fire = 1, toxin = 1, oxy = 1, stamina = 1)
 	L.visible_message("<span class='warning'>[L] shivers with renewed vigor!</span>", "<span class='notice'>One taste of [lowertext(name)] fills you with energy!</span>")
 	if(!L.stat && heal_points == 20) //brought us out of softcrit
 		L.visible_message("<span class='danger'>[L] lurches to [L.p_their()] feet!</span>", "<span class='boldnotice'>Up and at 'em, kid.</span>")
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/L)
 	if(L.health > 0)
-		L.adjustBruteLoss(-1)
-		L.adjustFireLoss(-1)
-		L.adjustToxLoss(-0.5)
-		L.adjustOxyLoss(-3)
-		L.adjustStaminaLoss(-5)
+		L.heal_overall_damage(brute = 1, fire = 1, toxin = 0.5, oxy = 3, stamina = 5)
 		. = TRUE
-	..()
+	return ..() || .
 
 /datum/reagent/consumable/ethanol/squirt_cider
 	name = "Squirt Cider"
@@ -1719,7 +1707,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(mighty_shield)
 		mighty_shield.block_chance -= 10
 		to_chat(L,"<span class='notice'>You notice [mighty_shield] looks worn again. Weird.</span>")
-	..()
+	return ..()
 
 /datum/reagent/consumable/ethanol/sidecar
 	name = "Sidecar"

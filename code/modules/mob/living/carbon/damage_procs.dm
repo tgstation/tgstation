@@ -237,7 +237,6 @@
 	if(!parts.len && !(toxin || oxy || clone)) //nothing was damaged or valid to be healed (ie trying to heal robotic limbs when we only have normal ones)
 		return
 
-	var/healed_something
 	var/update = NONE
 	while(parts.len && (brute > 0 || burn > 0 || stamina > 0))
 		var/obj/item/bodypart/picked = pick(parts)

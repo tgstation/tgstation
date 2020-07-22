@@ -23,7 +23,6 @@
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
 		adjustBruteLoss(60)
-		updatehealth()
 		return 1
 	return 0
 
@@ -45,8 +44,7 @@
 			gib()
 		if(2)
 			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
+				take_overall_damage(brute = 60, fire = 60)
 		if(3)
 			if (stat != DEAD)
 				adjustBruteLoss(30)

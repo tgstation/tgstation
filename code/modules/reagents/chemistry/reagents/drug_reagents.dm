@@ -93,8 +93,7 @@
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.take_overall_damage(brute = 2*REM, toxin = 2*REM, required_status = BODYPART_ORGANIC)
 	..()
 	. = 1
 

@@ -104,11 +104,7 @@
 			spell.charge_counter = spell.charge_max
 			spell.recharging = FALSE
 			spell.update_icon()
-		rewarded.adjustBruteLoss(-25)
-		rewarded.adjustFireLoss(-25)
-		rewarded.adjustToxLoss(-25)
-		rewarded.adjustOxyLoss(-25)
-		rewarded.adjustCloneLoss(-25)
+		rewarded.heal_overall_damage(brute = 25, fire = 25, toxin = 25, oxy = 25, clone = 25)
 
 // heldup is for the person being aimed at
 /datum/status_effect/heldup

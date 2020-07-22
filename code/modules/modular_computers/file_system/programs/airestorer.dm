@@ -72,9 +72,7 @@
 		restoring = FALSE
 		return
 	ai_slot.locked =TRUE
-	A.adjustOxyLoss(-5, 0, FALSE)
-	A.adjustFireLoss(-5, 0, FALSE)
-	A.adjustBruteLoss(-5, 0)
+	A.heal_overall_damage(brute = 5, fire = 5, oxy = 5)
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive(full_heal = FALSE, admin_revive = FALSE)
 	// Finished restoring

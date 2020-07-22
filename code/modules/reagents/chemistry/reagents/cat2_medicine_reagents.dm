@@ -99,7 +99,6 @@
 	overdose_threshold = 20
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-2.25*REM, FALSE)
 	var/ooo_youaregettingsleepy = 3.5
 	switch(round(M.getStaminaLoss()))
 		if(10 to 40)
@@ -108,7 +107,7 @@
 			ooo_youaregettingsleepy = 2.5
 		if(61 to 200) //you really can only go to 120
 			ooo_youaregettingsleepy = 2
-	M.adjustStaminaLoss(ooo_youaregettingsleepy*REM, FALSE)
+	M.heal_overall_damage(brute = 2.25*REM, stamina = ooo_youaregettingsleepy*REM)
 	..()
 	. = TRUE
 
@@ -462,11 +461,7 @@
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
 	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > H.crit_threshold) //we cannot save someone above our raised crit threshold.
-
-		H.adjustToxLoss(-2 * REM, 0)
-		H.adjustBruteLoss(-2 * REM, 0)
-		H.adjustFireLoss(-2 * REM, 0)
-		H.adjustOxyLoss(-6 * REM, 0)
+		H.heal_overall_damage(brute = 2*REM, fire = 2*REM, oxy = 6*REM, toxin = 2*REM)
 
 		H.losebreath = 0
 

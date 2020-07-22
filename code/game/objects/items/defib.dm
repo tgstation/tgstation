@@ -594,15 +594,15 @@
 
 					//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 					if (H.health > HALFWAYCRITDEATH)
-						H.adjustOxyLoss(H.health - HALFWAYCRITDEATH, 0)
+						H.adjustOxyLoss(H.health - HALFWAYCRITDEATH)
 					else
 						var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
 						var/mobhealth = H.health
-						H.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (H.getOxyLoss() / overall_damage), 0)
-						H.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), 0)
-						H.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), 0)
-						H.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), 0)
-					H.updatehealth() // Previous "adjust" procs don't update health, so we do it manually.
+						var/oxy_heal = -((mobhealth - HALFWAYCRITDEATH) * (H.getOxyLoss() / overall_damage))
+						var/tox_heal = -((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage))
+						var/fire_heal = -((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage))
+						var/brute_heal = -((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage))
+						H.heal_overall_damage(brute = brute_heal, fire = fire_heal, oxy = oxy_heal, tox = tox_heal)
 					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 					playsound(src, 'sound/machines/defib_success.ogg', 50, FALSE)
 					H.set_heartattack(FALSE)

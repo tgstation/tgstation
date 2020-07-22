@@ -384,8 +384,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return
 		if(2)
 			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
+				take_overall_damage(brute = 60, fire = 60)
 		if(3)
 			if (stat != DEAD)
 				adjustBruteLoss(30)

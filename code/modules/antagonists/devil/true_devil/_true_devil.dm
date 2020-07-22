@@ -165,13 +165,11 @@
 	if(.)
 		switch(M.a_intent)
 			if ("harm")
-				var/damage = rand(1, 5)
 				playsound(loc, "punch", 25, TRUE, -1)
 				visible_message("<span class='danger'>[M] punches [src]!</span>", \
 						"<span class='userdanger'>[M] punches you!</span>")
-				adjustBruteLoss(damage)
+				adjustBruteLoss(rand(1, 5))
 				log_combat(M, src, "attacked")
-				updatehealth()
 			if ("disarm")
 				if (!(mobility_flags & MOBILITY_STAND) && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
