@@ -39,3 +39,4 @@
 	var/mob/living/L = user.mob
 	L.stop_look_up()
 	return TRUE
+	
