@@ -21,9 +21,9 @@
 			possible_expansions -= borderline
 
 ///Move all platforms together
-/datum/lift_master/proc/MoveLift(going_up, mob/user, var/turf/destination)
+/datum/lift_master/proc/MoveLift(going, mob/user)
 	for(var/obj/structure/lift/lift_platform in lift_platforms)
-		lift_platform.travel(going_up)
+		lift_platform.travel(going)
 
 ///Check destination turfs
 /datum/lift_master/proc/Check_lift_move(check_dir)
@@ -79,9 +79,13 @@
 		var/turf/T = get_step(src, D)
 		. |= locate(/obj/structure/lift) in T
 
-/obj/structure/lift/proc/travel(going_up)
+/obj/structure/lift/proc/travel(going)
 	var/list/things2move = lift_load.Copy()
-	var/turf/destination = get_step_multiz(src, going_up ? UP : DOWN )
+	var/turf/destination
+	if(!isturf(going))
+		destination = get_step_multiz(src, going)
+	else
+		destination = going
 	forceMove(destination)
 	for(var/atom/movable/AM in things2move)
 		AM.forceMove(destination)
@@ -105,7 +109,7 @@
 		switch(result)
 			if("Up")
 				if(can_move_up)
-					LMaster.MoveLift(TRUE, user, can_move_up)
+					LMaster.MoveLift(UP, user)
 					show_fluff_message(TRUE, user)
 					use(user)
 				else
@@ -113,7 +117,7 @@
 					use(user)
 			if("Down")
 				if(can_move_up_down)
-					LMaster.MoveLift(FALSE, user, can_move_up)
+					LMaster.MoveLift(DOWN, user)
 					show_fluff_message(FALSE, user)
 					use(user)
 				else
