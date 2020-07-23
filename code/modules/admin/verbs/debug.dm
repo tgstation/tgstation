@@ -917,11 +917,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if (!_event)
 			continue
 		var/datum/timedevent/event = _event
-		if (event.source)
-			if (per_source[event.source] == null)
-				per_source[event.source] = 1
-			else
-				per_source[event.source] += 1
+
+		do
+			if (event.source)
+				if (per_source[event.source] == null)
+					per_source[event.source] = 1
+				else
+					per_source[event.source] += 1
+			event = event.next
+		while (event && event != _event)
 
 	// Now, sort them in order
 	var/list/sorted = list()
