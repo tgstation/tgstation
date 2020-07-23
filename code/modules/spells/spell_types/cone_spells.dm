@@ -9,7 +9,7 @@
 	sound = 'sound/magic/forcewall.ogg'
 	action_icon_state = "shield"
 	range = -1
-	cooldown_min = 5
+	cooldown_min = 0.5 SECONDS
 	///This controls how many levels the cone has, increase this value to make a bigger cone.
 	var/cone_levels = 3
 	///This var controls how many tiles the cone grows in a straight line before expanding.
@@ -75,15 +75,15 @@
 
 /obj/effect/proc_holder/spell/cone/cast(list/targets,mob/user = usr)
 	var/list/cone_turfs = cone_helper(get_step(user, user.dir), user.dir, cone_levels)
-	for(var/T in cone_turfs)
-		do_turf_cone_effect(T)
-		if(isopenturf(T))
-			var/turf/open/O = T
-			for(var/A in O)
-				if(isobj(A))
-					do_obj_cone_effect(A)
-				if(ismob(A))
-					do_mob_cone_effect(A)
+	for(var/target_turf in cone_turfs)
+		do_turf_cone_effect(target_turf)
+		if(isopenturf(target_turf))
+			var/turf/open/open_turf = target_turf
+			for(var/movable_content in open_turf)
+				if(isobj(movable_content))
+					do_obj_cone_effect(movable_content)
+				else if(ismob(movable_content))
+					do_mob_cone_effect(movable_content)
 
 /obj/effect/proc_holder/spell/cone/proc/do_turf_cone_effect(turf/T)
 

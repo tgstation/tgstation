@@ -519,7 +519,7 @@
 /obj/effect/temp_visual/dir_setting/entropic
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "entropic_plume"
-	duration = 12
+	duration = 1.2 SECONDS
 
 /obj/effect/temp_visual/dir_setting/entropic/setDir(dir)
 	. = ..()

@@ -817,11 +817,12 @@
 	duration = 10 SECONDS
 
 /datum/status_effect/befuddled/on_apply()
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_BEFUDDLED, "befuddled")
-	return ..()
 
 /datum/status_effect/befuddled/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_BEFUDDLED, "befuddled")
+	return ..()
 
 /datum/status_effect/amok
 	id = "amok"
