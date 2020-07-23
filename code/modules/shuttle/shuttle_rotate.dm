@@ -103,7 +103,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 		wall_turret_direction = turn(wall_turret_direction,rotation)
 
 /obj/structure/shuttle/shuttleRotate(rotation, params)
-	dir = angle2dir(rotation+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 	if(dir == 2)
 		pixel_x = 0
