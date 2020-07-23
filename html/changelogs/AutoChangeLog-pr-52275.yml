@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed display cases going invisible when you put things inside of them."
+  - bugfix: "Fixed the pedestal for open display cases being glass colored."
