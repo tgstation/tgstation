@@ -593,8 +593,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			continue
 		if(target_servers && !(I in target_servers))
 			continue
-		world.Export("[servers[I]]?[list2params(message)]")
-
+		INVOKE_ASYNC(world, /world.proc/Export, "[servers[I]]?[list2params(message)]")
 
 /proc/tgsadminwho()
 	var/list/message = list("Admins: ")
