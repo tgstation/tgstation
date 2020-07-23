@@ -159,10 +159,16 @@
 			return FALSE
 	return TRUE
 
-/datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/S)
-	for(var/datum/plant_gene/reagent/R in S.genes)
-		if(R.reagent_id == reagent_id && R.rate > rate)
-			rate = R.rate
+/**
+  * Intends to compare a reagent gene with a set of seeds, and if the seeds contain the same gene, with more production rate, upgrades the rate to the highest of the two.
+  *
+  * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
+  */
+
+/datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/seed)
+	for(var/datum/plant_gene/reagent/reagent in seed.genes)
+		if(reagent.reagent_id == reagent_id && reagent.rate > rate)
+			rate = reagent.rate
 			return TRUE
 	return FALSE
 

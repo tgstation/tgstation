@@ -211,7 +211,7 @@
 		product_count = clamp(round(product_count/2),0,5)
 	while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod
-		if(instability >= 30 && prob(instability/3) && mutatelist.len && mutate_early)
+		if(instability >= 30 && prob(instability/3) && length(mutatelist) && mutate_early)
 			var/obj/item/seeds/new_prod = pick(mutatelist)
 			t_prod = initial(new_prod.product)
 			if(!t_prod)
@@ -224,7 +224,7 @@
 			t_amount++
 			if(t_prod.seed)
 				//t_prod.seed = new new_prod
-				t_prod.seed.instability = round(instability/2)
+				t_prod.seed.instability = round(instability * 0.5)
 			continue
 		else
 			t_prod = new product(output_loc, src)
