@@ -50,7 +50,7 @@
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
 	icon_state = "sandstone"
 	baseturfs = /turf/closed/indestructible/sandstone
-	smooth_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
@@ -79,12 +79,12 @@
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
-	smooth_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 
 /turf/closed/indestructible/syndicate
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle"
-	smooth_flags = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
@@ -99,7 +99,7 @@
 /turf/closed/indestructible/wood
 	icon = 'icons/turf/walls/wood_wall.dmi'
 	icon_state = "wood"
-	smooth_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"
@@ -111,7 +111,7 @@
 	name = "window"
 	icon_state = "fake_window"
 	opacity = 0
-	smooth_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 
 /turf/closed/indestructible/fakeglass/Initialize()
@@ -124,7 +124,7 @@
 	name = "window"
 	icon_state = "plastitanium_window"
 	opacity = 0
-	smooth_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 
 /turf/closed/indestructible/opsglass/Initialize()
@@ -161,7 +161,7 @@
 /turf/closed/indestructible/rock/snow/ice/ore
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock"
-	smooth_flags = SMOOTH_MORE|SMOOTH_BORDER
+	smoothing_flags = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	pixel_x = -4
 	pixel_y = -4

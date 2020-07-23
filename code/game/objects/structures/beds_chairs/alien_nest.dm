@@ -6,7 +6,7 @@
 	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest"
 	max_integrity = 120
-	smooth_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 	can_be_unanchored = FALSE
 	canSmoothWith = null
 	buildstacktype = null
