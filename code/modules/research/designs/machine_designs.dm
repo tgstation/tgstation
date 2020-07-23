@@ -230,7 +230,7 @@
 	id = "bepis"
 	build_path = /obj/item/circuitboard/machine/bepis
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/board/protolathe
 	name = "Machine Design (Protolathe Board)"

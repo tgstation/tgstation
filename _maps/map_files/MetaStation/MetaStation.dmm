@@ -122,6 +122,23 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"aat" = (
+/obj/machinery/rnd/bepis,
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"aau" = (
+/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aav" = (
 /turf/open/space,
 /area/space)
@@ -316,6 +333,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"aaL" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	name = "Cargo Bay Maintenance";
+	req_one_access_txt = "31;48"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "aaM" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -617,6 +642,37 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"abi" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"abj" = (
+/obj/item/emptysandbag,
+/obj/item/emptysandbag,
+/obj/item/emptysandbag,
+/obj/item/emptysandbag,
+/obj/item/emptysandbag,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"abk" = (
+/turf/open/floor/circuit,
+/area/science/misc_lab/range)
+"abl" = (
+/obj/structure/table,
+/turf/open/floor/circuit,
+/area/science/misc_lab/range)
 "abn" = (
 /obj/item/radio/intercom{
 	pixel_x = -28
@@ -21004,14 +21060,6 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
-"aXe" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "aXf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -21744,14 +21792,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
-"aYK" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Cargo Bay Maintenance";
-	req_one_access_txt = "31;48"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/quartermaster/storage)
 "aYL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -65765,14 +65805,6 @@
 /obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
-"dmF" = (
-/obj/item/emptysandbag,
-/obj/item/emptysandbag,
-/obj/item/emptysandbag,
-/obj/item/emptysandbag,
-/obj/item/emptysandbag,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "dmH" = (
 /turf/closed/wall,
 /area/quartermaster/qm)
@@ -73700,10 +73732,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
-"obb" = (
-/obj/machinery/rnd/bepis,
-/turf/open/floor/circuit,
-/area/science/misc_lab/range)
 "obv" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -77461,11 +77489,6 @@
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"tVY" = (
-/obj/structure/table,
-/obj/item/storage/bag/money,
-/turf/open/floor/circuit,
-/area/science/misc_lab/range)
 "tXK" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
@@ -96863,8 +96886,8 @@ lAu
 aUe
 aUe
 aUe
-doJ
-dne
+aaL
+aUe
 dmH
 beU
 dmH
@@ -97118,10 +97141,10 @@ aIg
 aIg
 aIg
 aUe
-aXe
-aUe
-doJ
-dmF
+aat
+aau
+abi
+abj
 dmH
 byI
 bgF
@@ -97376,8 +97399,8 @@ aRH
 aUf
 kiy
 faT
-aYK
-doJ
+aYM
+aYM
 dmH
 dmH
 luZ
@@ -117470,7 +117493,7 @@ cpJ
 cqZ
 cuZ
 cuZ
-obb
+abk
 fam
 kOt
 krD
@@ -117727,7 +117750,7 @@ dxh
 clY
 crZ
 cuZ
-tVY
+abl
 fUC
 hHS
 nLi
