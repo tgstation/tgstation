@@ -38,10 +38,11 @@
 	set_ready_state(0)
 	for(var/i=1 to get_shot_amount())
 		var/obj/projectile/A = new projectile(curloc)
-		A.firer = chassis.occupant
+		A.firer = chassis
 		A.original = target
 		if(!A.suppressed && firing_effect_type)
-			new firing_effect_type(get_turf(src), chassis.dir)
+			var/atom/movable/E = new firing_effect_type(get_turf(src), chassis.dir)
+			E.forceStep(chassis)
 
 		var/spread = 0
 		if(variance)
@@ -49,7 +50,7 @@
 				spread = round((rand() - 0.5) * variance)
 			else
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
-		A.preparePixelProjectile(target, chassis.occupant, params, spread)
+		A.preparePixelProjectile(target, chassis, params, spread)
 
 		A.fire()
 		playsound(chassis, fire_sound, 50, TRUE)
@@ -514,7 +515,7 @@
 		PG.throwforce = 0
 
 	 //has to be low sleep or it looks weird, the beam doesn't exist for very long so it's a non-issue
-	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20, maxdistance = missile_range + 2, beam_sleep_time = 1)
+	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20)
 
 /obj/item/punching_glove
 	name = "punching glove"

@@ -69,6 +69,7 @@
 		return
 	next_click = world.time + 1
 
+	client?.mouseParams = params
 	if(check_click_intercept(params,A))
 		return
 
@@ -80,7 +81,7 @@
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
-		ShiftMiddleClickOn(A)
+		ShiftMiddleClickOn(A, params)
 		return
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
@@ -119,7 +120,7 @@
 		return
 
 	if(in_throw_mode)
-		throw_item(A)
+		throw_item(A, params)
 		return
 
 	var/obj/item/W = get_active_held_item()
@@ -193,9 +194,13 @@
 		--depth
 
 		for(var/atom/target in checking)  // will filter out nulls
-			if(closed[target] || isarea(target))  // avoid infinity situations
+			if(closed[target])  // avoid infinity situations
 				continue
 			closed[target] = TRUE
+
+			if(isarea(target))
+				continue
+
 			if(isturf(target) || isturf(target.loc) || (target in direct_access)) //Directly accessible atoms
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
@@ -369,8 +374,9 @@
 	A.CtrlShiftClick(src)
 	return
 
-/mob/proc/ShiftMiddleClickOn(atom/A)
-	src.pointed(A)
+/mob/proc/ShiftMiddleClickOn(atom/A, params)
+	client?.mouseParams = params
+	src.pointed(A, params)
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)

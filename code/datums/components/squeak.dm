@@ -6,14 +6,15 @@
 	var/volume = 30
 
 	// This is so shoes don't squeak every step
-	var/steps = 0
-	var/step_delay = 1
+	var/last_played
+	var/turf/last_played_turf
+	var/cooldown = 0.5 SECONDS
 
 	// This is to stop squeak spam from inhand usage
 	var/last_use = 0
 	var/use_delay = 20
 
-/datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override)
+/datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, cooldown_override, use_delay_override)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
@@ -35,24 +36,25 @@
 		squeak_chance = chance_override
 	if(volume_override)
 		volume = volume_override
-	if(isnum(step_delay_override))
-		step_delay = step_delay_override
+	if(isnum(cooldown_override))
+		cooldown = cooldown_override
 	if(isnum(use_delay_override))
 		use_delay = use_delay_override
 
 /datum/component/squeak/proc/play_squeak()
 	if(prob(squeak_chance))
+		var/turf/T = get_turf(parent)
+		if(T == last_played_turf && world.time < last_played + cooldown)
+			return
+		last_played_turf = T
+		last_played = world.time
 		if(!override_squeak_sounds)
 			playsound(parent, pickweight(default_squeak_sounds), volume, TRUE, -1)
 		else
 			playsound(parent, pickweight(override_squeak_sounds), volume, TRUE, -1)
 
 /datum/component/squeak/proc/step_squeak()
-	if(steps > step_delay)
-		play_squeak()
-		steps = 0
-	else
-		steps++
+	play_squeak()
 
 /datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/AM)
 	if(isitem(AM))

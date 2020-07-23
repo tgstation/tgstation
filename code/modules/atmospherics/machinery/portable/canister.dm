@@ -32,6 +32,11 @@
 	max_integrity = 250
 	integrity_failure = 0.4
 	pressure_resistance = 7 * ONE_ATMOSPHERE
+	bound_y = 3
+	bound_height = 25
+	bound_x = 8
+	bound_width = 17
+	brotation = NONE
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
 	// Prototype vars

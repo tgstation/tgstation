@@ -19,8 +19,8 @@
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
 
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	if(loc)
+		forceMove(loc, rand(-5, 5), rand(-5, 5))
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)

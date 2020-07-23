@@ -148,6 +148,6 @@
 	return
 
 // Override here to prevent things accidentally moving around overlays.
-/atom/movable/lighting_object/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
+/atom/movable/lighting_object/forceMove(atom/destination, _step_x, _step_y, no_tp=FALSE, harderforce = FALSE)
 	if(harderforce)
 		. = ..()

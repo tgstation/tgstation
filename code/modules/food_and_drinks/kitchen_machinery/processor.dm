@@ -165,12 +165,10 @@
 	if(!(i = slimecores.Find(AM.type))) // If the item is not found
 		return
 	if (i <= 16) // If in the first 12 slots
-		AM.pixel_x = -12 + ((i%4)*8)
-		AM.pixel_y = -12 + (round(i/4)*8)
+		AM.forceMove(AM.loc, -12 + ((i%4)*8), -12 + (round(i/4)*8))
 		return i
 	var/ii = i - 16
-	AM.pixel_x = -8 + ((ii%3)*8)
-	AM.pixel_y = -8 + (round(ii/3)*8)
+	AM.forceMove(AM.loc, -8 + ((ii%3)*8), -8 + (round(ii/3)*8))
 	return i
 
 /obj/machinery/processor/slime/process()

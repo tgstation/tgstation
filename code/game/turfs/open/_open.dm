@@ -215,7 +215,6 @@
 				C.accident(I)
 
 		var/olddir = C.dir
-		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
 		if(!(lube & SLIDE_ICE))
 			C.Knockdown(knockdown_amount)
 			C.Paralyze(paralyze_amount)

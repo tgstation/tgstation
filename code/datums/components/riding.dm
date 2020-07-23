@@ -1,5 +1,4 @@
 /datum/component/riding
-	var/last_vehicle_move = 0 //used for move delays
 	var/last_move_diagonal = FALSE
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype
@@ -28,9 +27,14 @@
 /datum/component/riding/Initialize()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+	update_movespeed()
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
+
+/datum/component/riding/proc/update_movespeed()
+	var/atom/movable/AM = parent
+	AM.step_size = CEILING(initial(AM.step_size) / max(1, vehicle_move_delay), 1)
 
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	var/atom/movable/AM = parent
@@ -173,10 +177,6 @@
 		Unbuckle(user)
 		return
 
-	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
-		return
-	last_vehicle_move = world.time
-
 	if(keycheck(user))
 		var/turf/next = get_step(AM, direction)
 		var/turf/current = get_turf(AM)
@@ -214,9 +214,11 @@
 	if(M.get_num_legs() < 2 && !slowed)
 		vehicle_move_delay = vehicle_move_delay + slowvalue
 		slowed = TRUE
+		update_movespeed()
 	else if(slowed)
 		vehicle_move_delay = vehicle_move_delay - slowvalue
 		slowed = FALSE
+		update_movespeed()
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human

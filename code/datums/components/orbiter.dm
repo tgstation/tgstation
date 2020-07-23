@@ -3,6 +3,9 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/orbiters
 	var/datum/movement_detector/tracker
+	var/last_move
+
+	var/atom/movable/current_mover
 
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -96,31 +99,35 @@
 		qdel(src)
 
 // This proc can receive signals by either the thing being directly orbited or anything holding it
-/datum/component/orbiter/proc/move_react(atom/movable/master, atom/mover, atom/oldloc, direction)
+/datum/component/orbiter/proc/move_react(atom/movable/master, atom/movable/mover, atom/oldloc, direction)
 	set waitfor = FALSE // Transfer calls this directly and it doesnt care if the ghosts arent done moving
 
-	if(master.loc == oldloc)
-		return
+	var/this_move
+	this_move = last_move = world.time
 
 	var/turf/newturf = get_turf(master)
+
 	if(!newturf)
 		qdel(src)
 
-	var/atom/curloc = master.loc
+	var/atom/movable/topmost = mover
+	while(topmost.loc != newturf)
+		topmost = mover.loc
+
 	for(var/i in orbiters)
 		var/atom/movable/thing = i
-		if(QDELETED(thing) || thing.loc == newturf)
+		if(QDELETED(thing))
 			continue
-		thing.forceMove(newturf)
-		if(CHECK_TICK && master.loc != curloc)
+		current_mover = thing
+		thing.forceMove(newturf, topmost.step_x, topmost.step_y)
+		if(CHECK_TICK && this_move != last_move)
 			// We moved again during the checktick, cancel current operation
-			break
-
+			return
+	current_mover = null
 
 /datum/component/orbiter/proc/orbiter_move_react(atom/movable/orbiter, atom/oldloc, direction)
-	if(orbiter.loc == get_turf(parent))
-		return
-	end_orbit(orbiter)
+	if(orbiter != current_mover)
+		end_orbit(orbiter)
 
 /////////////////////
 

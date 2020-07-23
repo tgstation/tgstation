@@ -45,7 +45,7 @@
 		shield.forceMove(loc)
 		shield.dir = dir
 
-/obj/mecha/combat/durand/forceMove(var/turf/T)
+/obj/mecha/combat/durand/forceMove(var/turf/T, _step_x, _step_y)
 	. = ..()
 	shield.forceMove(T)
 

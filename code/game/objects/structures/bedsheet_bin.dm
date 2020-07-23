@@ -36,8 +36,7 @@ LINEN BINS
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
 		to_chat(user, "<span class='notice'>You cover yourself with [src].</span>")
-		pixel_x = 0
-		pixel_y = 0
+		forceMove(loc, 0, 0)
 	else
 		layer = initial(layer)
 		to_chat(user, "<span class='notice'>You smooth [src] out beneath you.</span>")

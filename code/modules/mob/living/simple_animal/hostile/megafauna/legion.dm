@@ -45,7 +45,7 @@
 	pixel_y = -16
 	pixel_x = -32
 	loot = list(/obj/item/stack/sheet/bone = 3)
-	vision_range = 13
+	vision_range = 416
 	wander = FALSE
 	elimination = TRUE
 	appearance_flags = 0

@@ -9,6 +9,10 @@
 	integrity_failure = 0.25
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 
+	bound_width = 16
+	bound_x = 8
+	brotation = NONE // We dont want none of that rotation shit
+
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
@@ -117,8 +121,7 @@
 		return TRUE
 	if(welded || locked)
 		return FALSE
-	var/turf/T = get_turf(src)
-	for(var/mob/living/L in T)
+	for(var/mob/living/L in obounds())
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" )
@@ -126,11 +129,10 @@
 	return TRUE
 
 /obj/structure/closet/proc/can_close(mob/living/user)
-	var/turf/T = get_turf(src)
-	for(var/obj/structure/closet/closet in T)
-		if(closet != src && !closet.wall_mounted)
+	for(var/obj/structure/closet/closet in obounds())
+		if(!closet.wall_mounted)
 			return FALSE
-	for(var/mob/living/L in T)
+	for(var/mob/living/L in obounds())
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, "<span class='danger'>There's something too large in [src], preventing it from closing.</span>")
@@ -140,16 +142,15 @@
 /obj/structure/closet/dump_contents()
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
-		AM.forceMove(L)
+		AM.forceMove(L, step_x, step_y)
 		if(throwing) // you keep some momentum when getting out of a thrown closet
 			step(AM, dir)
 	if(throwing)
 		throwing.finalize(FALSE)
 
 /obj/structure/closet/proc/take_contents()
-	var/atom/L = drop_location()
-	for(var/atom/movable/AM in L)
-		if(AM != src && insert(AM) == -1) // limit reached
+	for(var/atom/movable/thing in bounds())
+		if(insert(thing) == -1) // limit reached
 			break
 
 /obj/structure/closet/proc/open(mob/living/user, force = FALSE)
@@ -335,9 +336,9 @@
 			if(!issilicon(L))
 				L.Paralyze(40)
 			if(istype(src, /obj/structure/closet/supplypod/extractionpod))
-				O.forceMove(src)
+				O.forceMove(src, step_x, step_y)
 			else
-				O.forceMove(T)
+				O.forceMove(T, step_x, step_y)
 				close()
 	else
 		O.forceMove(T)
@@ -391,10 +392,13 @@
 // and due to an oversight in turf/Enter() were going through walls.  That
 // should be independently resolved, but this is also an interesting twist.
 /obj/structure/closet/Exit(atom/movable/AM)
-	open()
+	. = ..()
 	if(AM.loc == src)
-		return 0
-	return 1
+		return FALSE
+
+/obj/structure/closet/Exited(atom/movable/AM, atom/newLoc)
+	. = ..()
+	open()
 
 /obj/structure/closet/container_resist(mob/living/user)
 	if(opened)

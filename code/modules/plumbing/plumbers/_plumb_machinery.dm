@@ -38,6 +38,8 @@
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I)
+	if(anchored)
+		forceMove(nearest_turf(loc), 0, 0)
 	return TRUE
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)

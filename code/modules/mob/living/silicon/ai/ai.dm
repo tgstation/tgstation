@@ -1010,7 +1010,7 @@
 /mob/living/silicon/ai/proc/camera_visibility(mob/camera/ai_eye/moved_eye)
 	GLOB.cameranet.visibility(moved_eye, client, all_eyes, USE_STATIC_OPAQUE)
 
-/mob/living/silicon/ai/forceMove(atom/destination)
+/mob/living/silicon/ai/forceMove(atom/destination, _step_x, _step_y)
 	. = ..()
 	if(.)
 		end_multicam()

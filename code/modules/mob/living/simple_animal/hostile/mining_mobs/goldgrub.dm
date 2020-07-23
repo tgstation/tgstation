@@ -9,9 +9,9 @@
 	icon_dead = "Goldgrub_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	vision_range = 2
-	aggro_vision_range = 9
-	move_to_delay = 5
+	vision_range = 64
+	aggro_vision_range = 288
+	move_to_delay = 0.5
 	friendly_verb_continuous = "harmlessly rolls into"
 	friendly_verb_simple = "harmlessly roll into"
 	maxHealth = 45
@@ -159,5 +159,5 @@
 	return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	vision_range = 9
+	vision_range = 288
 	. = ..()

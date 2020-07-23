@@ -15,7 +15,7 @@
 /mob/camera/experience_pressure_difference()
 	return
 
-/mob/camera/forceMove(atom/destination)
+/mob/camera/forceMove(atom/destination, _step_x, _step_y)
 	var/oldloc = loc
 	loc = destination
 	Moved(oldloc, NONE, TRUE)

@@ -205,8 +205,9 @@
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			var/_step_x = clamp(text2num(params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			var/_step_y = clamp(text2num(params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			W.forceStep(null, _step_x, _step_y)
 		else
 			return ..()
 

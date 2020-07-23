@@ -39,8 +39,8 @@
 
 	see_in_dark = 13
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	vision_range = 12
-	aggro_vision_range = 12
+	vision_range = 384
+	aggro_vision_range = 384
 
 	search_objects = 1 // So that it can see through walls
 

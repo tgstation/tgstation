@@ -46,9 +46,6 @@
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
 	current_key_address = ((current_key_address + 1) % HELD_KEY_BUFFER_LENGTH)
-	var/movement = movement_keys[_key]
-	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
-		next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time
 	// Things like taking screenshots, hitting tab, and adminhelps.
@@ -80,9 +77,6 @@
 		if(keys_held[i] == _key)
 			keys_held[i] = null
 			break
-	var/movement = movement_keys[_key]
-	if(!(next_move_dir_add & movement))
-		next_move_dir_sub |= movement
 
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically

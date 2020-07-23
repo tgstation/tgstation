@@ -99,11 +99,7 @@
 				AIproc = 0
 				break
 
-		var/sleeptime = cached_multiplicative_slowdown
-		if(sleeptime <= 0)
-			sleeptime = 1
-
-		sleep(sleeptime + 2) // this is about as fast as a player slime can go
+		sleep(3) // this is about as fast as a player slime can go
 
 	AIproc = 0
 

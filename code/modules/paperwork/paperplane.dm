@@ -21,8 +21,8 @@
 
 /obj/item/paperplane/Initialize(mapload, obj/item/paper/newPaper)
 	. = ..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	if(loc)
+		forceMove(loc, rand(-8, 8), rand(-9, 9))
 	if(newPaper)
 		internalPaper = newPaper
 		flags_1 = newPaper.flags_1
@@ -93,8 +93,8 @@
 	return ..()
 
 
-/obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback, quickstart = TRUE)
-	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback, quickstart = quickstart)
+/obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback, quickstart = TRUE, params)
+	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback, quickstart = quickstart, params = params)
 
 /obj/item/paperplane/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))

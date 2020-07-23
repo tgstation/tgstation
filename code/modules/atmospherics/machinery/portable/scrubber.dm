@@ -5,6 +5,12 @@
 	max_integrity = 250
 	volume = 1000
 
+	bound_width = 30
+	bound_height = 17
+	bound_x = 1
+	bound_y = 3
+	brotation = NONE
+
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
 	var/heat_limit = 5000
 	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)

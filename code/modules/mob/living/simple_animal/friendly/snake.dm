@@ -41,7 +41,7 @@
 
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/ListTargets(atom/the_target)
-	. = oview(vision_range, targets_from) //get list of things in vision range
+	. = oview((vision_range / PIXELS), targets_from) //get list of things in vision range
 	var/list/living_mobs = list()
 	var/list/mice = list()
 	for (var/HM in .)

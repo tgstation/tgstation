@@ -29,6 +29,8 @@
 	var/innate_accuracy_penalty = 0
 	var/last_effect = 0
 	var/force_teleport = FALSE
+	var/last_bump = 0
+	var/cooldown = 1 SECONDS
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -50,6 +52,10 @@
 		return TRUE
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
+	if(world.time < last_bump + cooldown)
+		return ..()
+	last_bump = world.time
+	linked?.last_bump = world.time
 	if(force_stop)
 		return ..()
 	if(isobserver(AM))

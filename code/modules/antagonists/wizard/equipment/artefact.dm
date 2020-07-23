@@ -47,7 +47,6 @@
 	src.desc = desc
 	src.spawn_fast = spawn_fast
 	START_PROCESSING(SSobj, src)
-	return
 
 /obj/effect/rend/process()
 	if(!spawn_fast)
@@ -67,10 +66,8 @@
 		return ..()
 
 /obj/effect/rend/singularity_act()
-	return
 
 /obj/effect/rend/singularity_pull()
-	return
 
 /obj/item/veilrender/vealrender
 	name = "veal render"
@@ -105,19 +102,21 @@
 	desc = "This isn't right."
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "reality"
+	bound_width = 224
+	bound_height = 224
 	pixel_x = -96
 	pixel_y = -96
+	bound_x = -96
+	bound_y = -96
 	dissipate = 0
 	move_self = 0
-	consume_range = 3
 	grav_pull = 4
 	current_size = STAGE_FOUR
 	allowed_size = STAGE_FOUR
 
 /obj/singularity/wizard/process()
-	move()
+	automatic_movement()
 	eat()
-	return
 
 /obj/singularity/wizard/attack_tk(mob/user)
 	if(iscarbon(user))
@@ -139,7 +138,6 @@
 	C.death()
 
 /obj/singularity/wizard/mapped/admin_investigate_setup()
-	return
 
 /////////////////////////////////////////Scrying///////////////////
 

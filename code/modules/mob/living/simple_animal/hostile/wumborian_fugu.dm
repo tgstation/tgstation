@@ -11,11 +11,11 @@
 	health_doll_icon = "Fugu0"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_to_delay = 5
+	move_to_delay = 0.5
 	friendly_verb_continuous = "floats near"
 	friendly_verb_simple = "float near"
 	speak_emote = list("puffs")
-	vision_range = 5
+	vision_range = 160
 	speed = 0
 	maxHealth = 50
 	health = 50
@@ -28,7 +28,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "is avoided by the"
-	aggro_vision_range = 9
+	aggro_vision_range = 288
 	mob_size = MOB_SIZE_SMALL
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -91,7 +91,7 @@
 	F.throw_message = "is absorbed by the girth of the"
 	F.retreat_distance = null
 	F.minimum_distance = 1
-	F.move_to_delay = 6
+	F.move_to_delay = 0.6
 	F.environment_smash = ENVIRONMENT_SMASH_WALLS
 	F.mob_size = MOB_SIZE_LARGE
 	F.speed = 1
@@ -109,7 +109,7 @@
 		throw_message = "is avoided by the"
 		retreat_distance = 9
 		minimum_distance = 9
-		move_to_delay = 2
+		move_to_delay = 0.2
 		inflate_cooldown = 4
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		mob_size = MOB_SIZE_SMALL

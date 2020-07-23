@@ -202,7 +202,7 @@
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube"
 	desc = "A lighting fixture."
-	layer = WALL_OBJ_LAYER
+	layer = BELOW_MOB_LAYER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2

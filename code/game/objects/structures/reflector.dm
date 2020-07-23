@@ -5,6 +5,11 @@
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
+	bound_x = 4
+	bound_y = 2
+	bound_width = 16
+	bound_height = 6
+	brotation = NONE
 	var/deflector_icon_state
 	var/image/deflector_overlay
 	var/finished = FALSE
@@ -69,6 +74,8 @@
 	P.ignore_source_check = TRUE
 	P.range = P.decayedRange
 	P.decayedRange = max(P.decayedRange--, 0)
+	P.loc = loc
+	P.forceStep(src) // reset offsets to whatever the reflectors set to
 	return BULLET_ACT_FORCE_PIERCE
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)

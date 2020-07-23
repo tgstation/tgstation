@@ -47,8 +47,10 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!AStar(user, target.loc, /turf/proc/Distance, changeling.sting_range, simulated_only = FALSE))
+	var/list/path = AStar(user, target.loc, /turf/proc/Distance, changeling.sting_range, simulated_only = FALSE)
+	if(!path)
 		return
+	QDEL_LIST(path)
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
 		sting_feedback(user, target)
 		changeling.chem_charges -= chemical_cost

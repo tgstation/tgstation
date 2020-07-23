@@ -92,7 +92,7 @@
 	. = ..()
 	if(.)
 		return
-	user.Move_Pulled(src)
+	user.Move_Pulled(src, user.client?.mouseParams)
 
 //air filled floors; used in atmos pressure chambers
 

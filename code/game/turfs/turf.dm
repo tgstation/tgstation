@@ -130,7 +130,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	if(.)
 		return
-	user.Move_Pulled(src)
+	user.Move_Pulled(src, user.client?.mouseParams)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
 
@@ -219,54 +219,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return FALSE
 
-//There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
-/turf/Enter(atom/movable/mover, atom/oldloc)
-	// Do not call ..()
-	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
-	// By default byond will call Bump() on the first dense object in contents
-	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
-	var/atom/firstbump
-	var/canPassSelf = CanPass(mover, src)
-	if(canPassSelf || (mover.movement_type & UNSTOPPABLE))
-		for(var/i in contents)
-			if(QDELETED(mover))
-				return FALSE		//We were deleted, do not attempt to proceed with movement.
-			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
-				continue
-			var/atom/movable/thing = i
-			if(!thing.Cross(mover))
-				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
-					return FALSE
-				if((mover.movement_type & UNSTOPPABLE))
-					mover.Bump(thing)
-					continue
-				else
-					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
-						firstbump = thing
-	if(QDELETED(mover))					//Mover deleted from Cross/CanPass/Bump, do not proceed.
-		return FALSE
-	if(!canPassSelf)	//Even if mover is unstoppable they need to bump us.
-		firstbump = src
-	if(firstbump)
-		mover.Bump(firstbump)
-		return (mover.movement_type & UNSTOPPABLE)
-	return TRUE
-
-/turf/Exit(atom/movable/mover, atom/newloc)
-	. = ..()
-	if(!. || QDELETED(mover))
-		return FALSE
-	for(var/i in contents)
-		if(i == mover)
-			continue
-		var/atom/movable/thing = i
-		if(!thing.Uncross(mover, newloc))
-			if(thing.flags_1 & ON_BORDER_1)
-				mover.Bump(thing)
-			if(!(mover.movement_type & UNSTOPPABLE))
-				return FALSE
-		if(QDELETED(mover))
-			return FALSE		//We were deleted.
+/turf/Cross(atom/movable/mover)
+	return CanPass(mover, src)
 
 /turf/Entered(atom/movable/AM)
 	..()
@@ -514,6 +468,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge = FALSE)
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
+	V.forceMove(V.loc, M.step_x, M.step_y)
 
 	//if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(V))

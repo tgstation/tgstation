@@ -76,7 +76,6 @@
 	current_amount--
 	for(var/i in 1 to projectiles_per_fire)
 		var/obj/projectile/P = new projectile_type(user.loc)
-		P.firer = user
 		P.preparePixelProjectile(target, user)
 		for(var/V in projectile_var_overrides)
 			if(P.vars[V])

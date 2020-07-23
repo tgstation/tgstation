@@ -91,6 +91,7 @@
 	update_icon()
 
 /mob/living/simple_animal/bot/firebot/proc/soft_reset()
+	QDEL_LIST(path)
 	path = list()
 	target_fire = null
 	mode = BOT_IDLE
@@ -231,7 +232,7 @@
 		return
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
-
+		QDEL_LIST(path) // clear old path
 		path = get_path_to(src, get_turf(target_fire), /turf/proc/Distance_cardinal, 0, 30, 1, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len)

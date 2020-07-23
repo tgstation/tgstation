@@ -31,6 +31,10 @@
 	can_be_held = TRUE
 	held_state = "mouse_gray"
 	faction = list("rat")
+	bound_x = 11
+	bound_width = 12
+	bound_height = 12
+	bound_y = 4
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()

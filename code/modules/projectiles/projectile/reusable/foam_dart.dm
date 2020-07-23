@@ -15,6 +15,11 @@
 	if(dropped)
 		return
 	var/turf/T = get_turf(src)
+	if(iswallturf(T))
+		for(var/turf/W in locs) // try to find non wall turfs to drop in
+			if(!iswallturf(W))
+				T = W
+				break
 	dropped = 1
 	var/obj/item/ammo_casing/caseless/foam_dart/newcasing = new ammo_type(T)
 	newcasing.modified = modified

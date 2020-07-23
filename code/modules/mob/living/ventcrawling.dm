@@ -8,6 +8,10 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 /mob/living/proc/handle_ventcrawl(atom/A)
 	if(!ventcrawler || !Adjacent(A))
 		return
+	// We don't precalculate the delay because movement speed could change
+	if(world.time < (last_ventcrawl + (world.icon_size / step_size)))
+		return
+	last_ventcrawl = world.time
 	if(stat)
 		to_chat(src, "<span class='warning'>You must be conscious to do this!</span>")
 		return

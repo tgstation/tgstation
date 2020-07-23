@@ -21,8 +21,8 @@
 
 /obj/item/stack/ore/bluespace_crystal/Initialize()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	if(loc)
+		forceMove(loc, rand(-5, 5), rand(-5, 5))
 
 /obj/item/stack/ore/bluespace_crystal/get_part_rating()
 	return 1

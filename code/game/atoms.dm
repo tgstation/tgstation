@@ -328,6 +328,15 @@
 				if(T in shuttle_area)
 					return TRUE
 
+
+/// Gets the true pixel accurate x coordinate of the atom
+/atom/proc/true_x()
+	return x * PIXELS
+
+/// Gets the true pixel accurate y coordinate of the atom
+/atom/proc/true_y()
+	return y * PIXELS
+
 /**
   * Is the atom in any of the centcom syndicate areas
   *
@@ -1081,7 +1090,7 @@
 
 ///Where atoms should drop if taken from this atom
 /atom/proc/drop_location()
-	var/atom/L = loc
+	var/atom/L = get_turf(src)
 	if(!L)
 		return null
 	return L.AllowDrop() ? L : L.drop_location()

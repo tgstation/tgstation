@@ -58,23 +58,23 @@
 	var/atom/tar = target
 
 	if(!recursive)
-		. = step_towards(vic, tar)
+		. = step_towards(vic, tar, 32)
 
 	//shit way for getting around corners
 	if(!.)
 		if(tar.x > vic.x)
-			if(step(vic, EAST))
+			if(step(vic, EAST, 32))
 				. = TRUE
 		else if(tar.x < vic.x)
-			if(step(vic, WEST))
+			if(step(vic, WEST, 32))
 				. = TRUE
 
 		if(!.)
 			if(tar.y > vic.y)
-				if(step(vic, NORTH))
+				if(step(vic, NORTH, 32))
 					. = TRUE
 			else if(tar.y < vic.y)
-				if(step(vic, SOUTH))
+				if(step(vic, SOUTH, 32))
 					. = TRUE
 
 			if(!.)
@@ -83,7 +83,7 @@
 				else
 					. = TryMove(TRUE)
 
-	. = . && (vic.loc != tar.loc)
+	. = . && !(get_turf(tar) in vic.locs)
 
 /mob/Bump(atom/A)
 	. = ..()

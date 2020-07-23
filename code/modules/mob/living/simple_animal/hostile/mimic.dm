@@ -27,7 +27,7 @@
 	minbodytemp = 0
 
 	faction = list("mimic")
-	move_to_delay = 9
+	move_to_delay = 0.9
 	del_on_death = 1
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			health = 15 * I.w_class
 			melee_damage_lower = 2 + I.force
 			melee_damage_upper = 2 + I.force
-			move_to_delay = 2 * I.w_class + 1
+			move_to_delay = 0.2 * I.w_class + 1
 		maxHealth = health
 		if(user)
 			creator = user
@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		var/obj/item/gun/G = O
 		melee_damage_upper = G.force
 		melee_damage_lower = G.force - max(0, (G.force / 2))
-		move_to_delay = 2 * G.w_class + 1
+		move_to_delay = 0.2 * G.w_class + 1
 		projectilesound = G.fire_sound
 		TrueGun = G
 		if(istype(G, /obj/item/gun/magic))

@@ -4,6 +4,11 @@
 	max_buckled_mobs = 1
 	buckle_lying = FALSE
 	default_driver_move = FALSE
+	step_size = 16
+	bound_height = 16
+	bound_width = 16
+	bound_x = 8
+	brotation = NONE
 	var/legs_required = 2
 	var/arms_required = 1	//why not?
 	var/fall_off_if_missing_arms = FALSE //heh...

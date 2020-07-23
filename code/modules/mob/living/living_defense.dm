@@ -200,7 +200,7 @@
 				to_chat(user, "<span class='danger'>You grab [src] by the neck!</span>")
 				update_mobility() //we fall down
 				if(!buckled && !density)
-					Move(user.loc)
+					Move(user.loc, NONE, user.step_x, user.step_y)
 			if(GRAB_KILL)
 				log_combat(user, src, "strangled", addition="kill grab")
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
@@ -208,7 +208,7 @@
 				to_chat(user, "<span class='danger'>You're strangling [src]!</span>")
 				update_mobility() //we fall down
 				if(!buckled && !density)
-					Move(user.loc)
+					Move(user.loc, NONE, user.step_x, user.step_y)
 		user.set_pull_offsets(src, grab_state)
 		return 1
 

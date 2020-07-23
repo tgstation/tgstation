@@ -55,7 +55,7 @@ Difficulty: Medium
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 5
-	move_to_delay = 5
+	move_to_delay = 0.5
 	ranged = TRUE
 	pixel_x = -16
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
