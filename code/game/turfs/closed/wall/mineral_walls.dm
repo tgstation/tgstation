@@ -207,6 +207,9 @@
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
 
+/turf/closed/wall/mineral/titanium/rust_heretic_act()
+	return // titanium does not rust
+
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smooth = SMOOTH_MORE
 	icon_state = "map-shuttle_nd"
@@ -268,6 +271,9 @@
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plasma/reinforced/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+
+/turf/closed/wall/mineral/plastitanium/rust_heretic_act()
+	return // plastitanium does not rust
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
 	smooth = SMOOTH_MORE
