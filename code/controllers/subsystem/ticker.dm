@@ -62,6 +62,8 @@ SUBSYSTEM_DEF(ticker)
 	/// People who have been commended and will receive a heart
 	var/list/hearts
 
+	var/play_easter_egg_endsound = FALSE
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -199,6 +201,12 @@ SUBSYSTEM_DEF(ticker)
 			check_queue()
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
+				if(prob(1) && !play_easter_egg_endsound)
+					play_easter_egg_endsound = TRUE
+					var/sound/assistant_rant = sound('sound/roundend/assistant_rant.ogg')
+					for(var/mob/M in GLOB.player_list)
+						if(M.client.prefs?.toggles & SOUND_ENDOFROUND)
+							SEND_SOUND(M.client, assistant_rant)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
@@ -645,24 +653,24 @@ SUBSYSTEM_DEF(ticker)
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	save_admin_data()
 	update_everything_flag_in_db()
-	if(!round_end_sound)
-		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg',
-		'sound/roundend/scrunglartiy.ogg',
-		'sound/roundend/petersondisappointed.ogg',
-		'sound/roundend/assistant_rant.ogg'\
-		)
-	///The reference to the end of round sound that we have chosen.
-	var/sound/end_of_round_sound_ref = sound(round_end_sound)
-	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs?.toggles & SOUND_ENDOFROUND)
-			SEND_SOUND(M.client, end_of_round_sound_ref)
+	if(!play_easter_egg_endsound)
+		if(!round_end_sound)
+			round_end_sound = pick(\
+			'sound/roundend/newroundsexy.ogg',
+			'sound/roundend/apcdestroyed.ogg',
+			'sound/roundend/bangindonk.ogg',
+			'sound/roundend/leavingtg.ogg',
+			'sound/roundend/its_only_game.ogg',
+			'sound/roundend/yeehaw.ogg',
+			'sound/roundend/disappointed.ogg',
+			'sound/roundend/scrunglartiy.ogg',
+			'sound/roundend/petersondisappointed.ogg'\
+			)
+		///The reference to the end of round sound that we have chosen.
+		var/sound/end_of_round_sound_ref = sound(round_end_sound)
+		for(var/mob/M in GLOB.player_list)
+			if(M.client.prefs?.toggles & SOUND_ENDOFROUND)
+				SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	text2file(login_music, "data/last_round_lobby_music.txt")
 
