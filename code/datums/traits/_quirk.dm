@@ -29,7 +29,16 @@
 	add()
 	if(spawn_effects)
 		on_spawn()
-	RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, .proc/post_add)
+	if(quirk_holder.client)
+		post_add()
+	else
+		RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, .proc/on_quirk_holder_first_login)
+
+
+///Description of what this proc does here.
+/datum/quirk/proc/on_quirk_holder_first_login(mob/living/source)
+		UnregisterSignal(source, COMSIG_MOB_LOGIN)
+		post_add()
 
 /datum/quirk/Destroy()
 	STOP_PROCESSING(SSquirks, src)
