@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(timer)
 	var/list/hashes = list()
 	/// world.time of the first entry in the bucket list, effectively the 'start time' of the current buckets
 	var/head_offset = 0
-	/// Index of the first non-empty bucket
+	/// Index of the wrap around pivot for buckets. buckets before this are later running buckets wrapped around from the end of the bucket list.
 	var/practical_offset = 1
 	/// world.tick_lag the bucket was designed for
 	var/bucket_resolution = 0
