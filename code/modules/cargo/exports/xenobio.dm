@@ -26,7 +26,7 @@
 	export_types = list(/obj/item/stock_parts/cell/high/slime)
 
 /datum/export/slime/hypercharged
-	cost = 5000
+	cost = 11000
 	unit_name = "hypercharged slime core"
 	export_types = list(/obj/item/stock_parts/cell/high/slime/hypercharged)
 
@@ -36,7 +36,7 @@
 	export_types = list(/obj/item/slime_extract/black,/obj/item/slime_extract/cerulean,/obj/item/slime_extract/oil,/obj/item/slime_extract/sepia,/obj/item/slime_extract/pyrite,/obj/item/slime_extract/adamantine,/obj/item/slime_extract/lightpink,/obj/item/slime_extract/bluespace)
 
 /datum/export/slime/rainbow
-	cost = 2000
+	cost = 1000
 	unit_name = "rainbow slime core"
 	export_types = list(/obj/item/slime_extract/rainbow)
 
