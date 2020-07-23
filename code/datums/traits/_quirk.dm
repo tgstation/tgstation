@@ -32,7 +32,6 @@
 	RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, .proc/post_add)
 
 /datum/quirk/Destroy()
-	UnregisterSignal(quirk_holder, COMSIG_MOB_LOGIN)
 	STOP_PROCESSING(SSquirks, src)
 	remove()
 	if(quirk_holder)
