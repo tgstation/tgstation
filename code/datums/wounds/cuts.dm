@@ -141,6 +141,18 @@
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
 		return
 
+	if(user.is_mouth_covered())
+		to_chat(user, "<span class='warning'>Your mouth is covered, you can't lick [victim]'s wounds!</span>")
+		return
+
+	if(!user.getorganslot(ORGAN_SLOT_TONGUE))
+		to_chat(user, "<span class='warning'>You can't lick wounds without a tongue!</span>") // f in chat
+		return
+
+	// transmission is one way patient -> felinid since google said cat saliva is antiseptic or whatever, and also because felinids are already risking getting beaten for this even without people suspecting they're spreading a deathvirus
+	for(var/datum/disease/D in victim.diseases)
+		user.ForceContractDisease(D)
+
 	user.visible_message("<span class='notice'>[user] begins licking the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You begin licking the wounds on [victim]'s [limb.name]...</span>", ignored_mobs=victim)
 	to_chat(victim, "<span class='notice'>[user] begins to lick the wounds on your [limb.name].</span")
 	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
