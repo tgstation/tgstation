@@ -35,7 +35,10 @@
 		RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, .proc/on_quirk_holder_first_login)
 
 
-/// Run post spawn text and client preferences
+/*
+ * Clear signal and run post_add to set client preferences.
+ * For when the client has not attached at time of gaining the perk.
+ */
 /datum/quirk/proc/on_quirk_holder_first_login(mob/living/source)
 		UnregisterSignal(source, COMSIG_MOB_LOGIN)
 		post_add()
