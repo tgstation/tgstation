@@ -1,4 +1,0 @@
-author: "Coul"
-delete-after: True
-changes: 
-  - code_imp: "All keybinds send signals when pressed"

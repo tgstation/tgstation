@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - balance: "electrolysis reaction now outputs 4.5u of reagents instead of 30u."
