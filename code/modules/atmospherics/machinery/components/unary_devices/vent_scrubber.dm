@@ -116,20 +116,17 @@
 
 	var/area/A = get_area(src)
 	if(!A.air_scrub_names[id_tag])
-		var/valid_name = TRUE
-		var/scrubber_number = A.air_scrub_names.len + 1
+		var/name_list = list()
+		for(var/id_tag in A.air_scrub_names)
+			name_list += A.air_scrub_names[id_tag]
+
+		var/scrubber_number = 1
 		while(TRUE)
 			name = "\improper [A.name] air scrubber #[scrubber_number]"
-			for(var/check_id_tag in A.air_scrub_names)
-				var/check_name = A.air_scrub_names[check_id_tag]
-				if(check_name == name)
-					valid_name = FALSE
-					scrubber_number += 1
-					break
-			if(valid_name)
+			if(!(name in name_list))
 				A.air_scrub_names[id_tag] = name
 				break
-			valid_name = TRUE
+			scrubber_number += 1
 
 	A.air_scrub_info[id_tag] = signal.data
 	radio_connection.post_signal(src, signal, radio_filter_out)
