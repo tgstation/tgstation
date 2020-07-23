@@ -554,14 +554,14 @@
 	. = ..()
 	new /obj/effect/temp_visual/dir_setting/entropic(get_step(user, user.dir), user.dir)
 
-/obj/effect/proc_holder/spell/cone/entropic_plume/do_turf_cone_effect(turf/T)
+/obj/effect/proc_holder/spell/cone/entropic_plume/do_turf_cone_effect(turf/target_turf)
  	. = ..()
- 	T.rust_heretic_act()
+ 	target_turf.rust_heretic_act()
 
-/obj/effect/proc_holder/spell/cone/entropic_plume/do_mob_cone_effect(mob/M)
+/obj/effect/proc_holder/spell/cone/entropic_plume/do_mob_cone_effect(mob/target_mob)
 	. = ..()
-	if(isliving(M))
-		var/mob/living/victim = M
+	if(isliving(target_mob))
+		var/mob/living/victim = target_mob
 		if(victim.anti_magic_check() || IS_HERETIC(victim) || victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
 			return
 		victim.apply_status_effect(STATUS_EFFECT_BEFUDDLED)

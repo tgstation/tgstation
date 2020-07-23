@@ -85,8 +85,11 @@
 				else if(ismob(movable_content))
 					do_mob_cone_effect(movable_content)
 
-/obj/effect/proc_holder/spell/cone/proc/do_turf_cone_effect(turf/T)
+/obj/effect/proc_holder/spell/cone/proc/do_turf_cone_effect(turf/target_turf)
+	return
 
-/obj/effect/proc_holder/spell/cone/proc/do_obj_cone_effect(obj/O)
+/obj/effect/proc_holder/spell/cone/proc/do_obj_cone_effect(obj/target_obj)
+	return
 
-/obj/effect/proc_holder/spell/cone/proc/do_mob_cone_effect(mob/M)
+/obj/effect/proc_holder/spell/cone/proc/do_mob_cone_effect(mob/target_mob)
+	return
