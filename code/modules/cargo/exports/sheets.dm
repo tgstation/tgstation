@@ -83,6 +83,22 @@
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 
+/datum/export/stack/plastic
+	cost = 50
+	unit_name = "plastic sheet"
+	export_types = list(/obj/item/stack/sheet/plastic)
+
+/datum/export/stack/cloth
+	cost = 5
+	message = "rolls of cloth"
+	export_types = list(/obj/item/stack/sheet/cloth)
+
+/datum/export/stack/durathread
+	cost = 70
+	message = "rolls of durathread"
+	export_types = list(/obj/item/stack/sheet/durathread)
+
+
 /datum/export/stack/cardboard
 	cost = 2
 	message = "of cardboard"
