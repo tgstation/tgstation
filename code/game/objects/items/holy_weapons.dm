@@ -650,6 +650,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bostaff0"
 	inhand_icon_state = "bostaff0"
+	worn_icon_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
@@ -677,8 +678,11 @@
 	. = ..()
 
 /obj/item/nullrod/tribal_knife/process()
-	slowdown = rand(-2, 2)
-
+	slowdown = rand(-10, 10)/10
+	if(iscarbon(loc))
+		var/mob/living/carbon/wielder = loc
+		if(wielder.is_holding(src))
+			wielder.update_equipment_speed_mods()
 
 /obj/item/nullrod/pitchfork
 	icon_state = "pitchfork0"

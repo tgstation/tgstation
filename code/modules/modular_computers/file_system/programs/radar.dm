@@ -2,30 +2,48 @@
 	filename = "genericfinder"
 	filedesc = "debug_finder"
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
-	program_icon_state = "generic"
-	extended_desc = "generic"
+	program_icon_state = "radarntos"
 	requires_ntnet = TRUE
 	transfer_access = null
 	available_on_ntnet = FALSE
+	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
 	network_destination = "tracking program"
 	size = 5
 	tgui_id = "NtosRadar"
-	ui_x = 800
-	ui_y = 600
-	special_assets = list(
-		/datum/asset/simple/radar_assets,
-	)
 	///List of trackable entities. Updated by the scan() proc.
 	var/list/objects
 	///Ref of the last trackable object selected by the user in the tgui window. Updated in the ui_act() proc.
 	var/atom/selected
 	///Used to store when the next scan is available. Updated by the scan() proc.
 	var/next_scan = 0
+	///Used to keep track of the last value program_icon_state was set to, to prevent constant unnecessary update_icon() calls
+	var/last_icon_state = ""
+	///Used by the tgui interface, themed NT or Syndicate.
+	var/arrowstyle = "ntosradarpointer.png"
+	///Used by the tgui interface, themed for NT or Syndicate colors.
+	var/pointercolor = "green"
+
+/datum/computer_file/program/radar/run_program(mob/living/user)
+	. = ..()
+	if(.)
+		START_PROCESSING(SSfastprocess, src)
+		return
+	return FALSE
 
 /datum/computer_file/program/radar/kill_program(forced = FALSE)
 	objects = list()
 	selected = null
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
+
+/datum/computer_file/program/radar/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/datum/computer_file/program/radar/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/simple/radar_assets),
+	)
 
 /datum/computer_file/program/radar/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -65,7 +83,37 @@
   *
 */
 /datum/computer_file/program/radar/proc/track()
-	return
+	var/atom/movable/signal = find_atom()
+	if(!trackable(signal))
+		return
+
+	var/turf/here_turf = (get_turf(computer))
+	var/turf/target_turf = (get_turf(signal))
+	var/userot = FALSE
+	var/rot = 0
+	var/pointer="crosshairs"
+	var/locx = (target_turf.x - here_turf.x) + 24
+	var/locy = (here_turf.y - target_turf.y) + 24
+
+	if(get_dist_euclidian(here_turf, target_turf) > 24)
+		userot = TRUE
+		rot = round(Get_Angle(here_turf, target_turf))
+	else
+		if(target_turf.z > here_turf.z)
+			pointer="caret-up"
+		else if(target_turf.z < here_turf.z)
+			pointer="caret-down"
+
+	var/list/trackinfo = list(
+		"locx" = locx,
+		"locy" = locy,
+		"userot" = userot,
+		"rot" = rot,
+		"arrowstyle" = arrowstyle,
+		"color" = pointercolor,
+		"pointer" = pointer,
+		)
+	return trackinfo
 
 /**
   *
@@ -77,10 +125,12 @@
   **arg1 is the atom being evaluated.
 */
 /datum/computer_file/program/radar/proc/trackable(atom/movable/signal)
-	if(!signal)
+	if(!signal || !computer)
 		return FALSE
 	var/turf/here = get_turf(computer)
 	var/turf/there = get_turf(signal)
+	if(!here || !there)
+		return FALSE //I was still getting a runtime even after the above check while scanning, so fuck it
 	return (there.z == here.z) || (is_station_level(here.z) && is_station_level(there.z))
 
 /**
@@ -98,6 +148,59 @@
 /datum/computer_file/program/radar/proc/scan()
 	return
 
+/**
+  *
+  *Finds the atom in the appropriate list that the `selected` var indicates
+  *
+  *The `selected` var holds a REF, which is a string. A mob REF may be
+  *something like "mob_209". In order to find the actual atom, we need
+  *to search the appropriate list for the REF string. This is dependant
+  *on the program (Lifeline uses GLOB.human_list, while Fission360 uses
+  *GLOB.poi_list), but the result will be the same; evaluate the string and
+  *return an atom reference.
+*/
+/datum/computer_file/program/radar/proc/find_atom()
+	return
+
+//We use SSfastprocess for the program icon state because it runs faster than process_tick() does.
+/datum/computer_file/program/radar/process()
+	if(computer.active_program != src)
+		STOP_PROCESSING(SSfastprocess, src) //We're not the active program, it's time to stop.
+		return
+	if(!selected)
+		return
+
+	var/atom/movable/signal = find_atom()
+	if(!trackable(signal))
+		program_icon_state = "[initial(program_icon_state)]lost"
+		if(last_icon_state != program_icon_state)
+			computer.update_icon()
+			last_icon_state = program_icon_state
+		return
+
+	var/here_turf = get_turf(computer)
+	var/target_turf = get_turf(signal)
+	var/trackdistance = get_dist_euclidian(here_turf, target_turf)
+	switch(trackdistance)
+		if(0)
+			program_icon_state = "[initial(program_icon_state)]direct"
+		if(1 to 12)
+			program_icon_state = "[initial(program_icon_state)]close"
+		if(13 to 24)
+			program_icon_state = "[initial(program_icon_state)]medium"
+		if(25 to INFINITY)
+			program_icon_state = "[initial(program_icon_state)]far"
+
+	if(last_icon_state != program_icon_state)
+		computer.update_icon()
+		last_icon_state = program_icon_state
+	computer.setDir(get_dir(here_turf, target_turf))
+
+//We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
+/datum/computer_file/program/radar/process_tick()
+	if(computer.active_program == src)
+		START_PROCESSING(SSfastprocess, src)
+
 ///////////////////
 //Suit Sensor App//
 ///////////////////
@@ -106,44 +209,13 @@
 /datum/computer_file/program/radar/lifeline
 	filename = "Lifeline"
 	filedesc = "Lifeline"
-	program_icon_state = "generic"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
 	requires_ntnet = TRUE
 	transfer_access = ACCESS_MEDICAL
 	available_on_ntnet = TRUE
 
-/datum/computer_file/program/radar/lifeline/track()
-	var/mob/living/carbon/human/humanoid = locate(selected) in GLOB.human_list
-	if(!istype(humanoid) || !trackable(humanoid))
-		return
-
-	var/turf/here_turf = (get_turf(computer))
-	var/turf/target_turf = (get_turf(humanoid))
-	var/userot = FALSE
-	var/rot = 0
-	var/pointer="crosshairs"
-	var/locx = (target_turf.x - here_turf.x)
-	var/locy = (here_turf.y - target_turf.y)
-	if(get_dist_euclidian(here_turf, target_turf) > 24) //If they're too far away, we need the angle for the arrow along the edge of the radar display
-		userot = TRUE
-		rot = round(Get_Angle(here_turf, target_turf))
-	else
-		locx = locx + 24
-		locy = locy + 24
-		if(target_turf.z > here_turf.z)
-			pointer="caret-up"
-		else if(target_turf.z < here_turf.z)
-			pointer="caret-down"
-	var/list/trackinfo = list(
-		locx = locx,
-		locy = locy,
-		userot = userot,
-		rot = rot,
-		arrowstyle = "ntosradarpointer.png", //For the rotation arrow, it's stupid I know
-		color = "green",
-		pointer = pointer,
-		)
-	return trackinfo
+/datum/computer_file/program/radar/lifeline/find_atom()
+	return locate(selected) in GLOB.human_list
 
 /datum/computer_file/program/radar/lifeline/scan()
 	if(world.time < next_scan)
@@ -184,46 +256,18 @@
 /datum/computer_file/program/radar/fission360
 	filename = "Fission360"
 	filedesc = "Fission360"
-	program_icon_state = "generic"
+	program_icon_state = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
 	requires_ntnet = FALSE
 	transfer_access = null
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosRadarSyndicate"
+	arrowstyle = "ntosradarpointerS.png"
+	pointercolor = "red"
 
-/datum/computer_file/program/radar/fission360/track()
-	var/obj/nuke = locate(selected) in GLOB.poi_list
-	if(!trackable(nuke))
-		return
-
-	var/turf/here_turf = (get_turf(computer))
-	var/turf/target_turf = (get_turf(nuke))
-	var/userot = FALSE
-	var/rot = 0
-	var/pointer="crosshairs"
-	var/locx = (target_turf.x - here_turf.x)
-	var/locy = (here_turf.y - target_turf.y)
-	if(get_dist_euclidian(here_turf, target_turf) > 24) //If they're too far away, we need the angle for the arrow along the edge of the radar display
-		userot = TRUE
-		rot = round(Get_Angle(here_turf, target_turf))
-	else
-		locx = locx + 24
-		locy = locy + 24
-		if(target_turf.z > here_turf.z)
-			pointer="caret-up"
-		else if(target_turf.z < here_turf.z)
-			pointer="caret-down"
-	var/list/trackinfo = list(
-		locx = locx,
-		locy = locy,
-		userot = userot,
-		rot = rot,
-		arrowstyle = "ntosradarpointerS.png",
-		color = "red",
-		pointer = pointer,
-		)
-	return trackinfo
+/datum/computer_file/program/radar/fission360/find_atom()
+	return locate(selected) in GLOB.poi_list
 
 /datum/computer_file/program/radar/fission360/scan()
 	if(world.time < next_scan)

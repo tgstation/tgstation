@@ -3,7 +3,7 @@
 	desc = "Safely and efficiently extracts excess fat from a subject."
 	icon = 'icons/obj/machines/fat_sucker.dmi'
 	icon_state = "fat"
-
+	circuit = /obj/item/circuitboard/machine/fat_sucker
 	state_open = FALSE
 	density = TRUE
 	req_access = list(ACCESS_KITCHEN)

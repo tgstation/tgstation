@@ -146,45 +146,6 @@
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
 
-#define PATH_POWERCOIL /obj/machinery/power/tesla_coil/power
-#define PATH_RPCOIL /obj/machinery/power/tesla_coil/research
-
-/obj/item/circuitboard/machine/tesla_coil/Initialize()
-	. = ..()
-	if(build_path)
-		build_path = PATH_POWERCOIL
-
-/obj/item/circuitboard/machine/tesla_coil/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		var/obj/item/circuitboard/new_type
-		var/new_setting
-		switch(build_path)
-			if(PATH_POWERCOIL)
-				new_type = /obj/item/circuitboard/machine/tesla_coil/research
-				new_setting = "Research"
-			if(PATH_RPCOIL)
-				new_type = /obj/item/circuitboard/machine/tesla_coil/power
-				new_setting = "Power"
-		name = initial(new_type.name)
-		build_path = initial(new_type.build_path)
-		I.play_tool_sound(src)
-		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
-	else
-		return ..()
-
-/obj/item/circuitboard/machine/tesla_coil/power
-	name = "Tesla Coil (Machine Board)"
-	build_path = PATH_POWERCOIL
-
-/obj/item/circuitboard/machine/tesla_coil/research
-	name = "Tesla Corona Researcher (Machine Board)"
-	build_path = PATH_RPCOIL
-
-#undef PATH_POWERCOIL
-#undef PATH_RPCOIL
-
-
-
 /obj/item/circuitboard/machine/cell_charger
 	name = "Cell Charger (Machine Board)"
 	icon_state = "engineering"
@@ -611,6 +572,16 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 1)
 
+/obj/item/circuitboard/machine/bountypad
+	name = "Civilian Bounty Pad (Machine Board)"
+	icon_state = "generic"
+	build_path = /obj/machinery/piratepad/civilian
+	req_components = list(
+		/obj/item/stock_parts/card_reader = 1,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/micro_laser = 1
+	)
+
 //Medical
 
 /obj/item/circuitboard/machine/chem_dispenser
@@ -666,17 +637,6 @@
 		to_chat(user, "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>")
 	else
 		return ..()
-
-/obj/item/circuitboard/machine/dnascanner
-	name = "DNA Scanner (Machine Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/dna_scannernew
-	req_components = list(
-		/obj/item/stock_parts/scanning_module = 1,
-		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stack/cable_coil = 2)
 
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
@@ -945,16 +905,16 @@
 		/obj/item/stack/sheet/glass = 1)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
-/obj/item/circuitboard/machine/bepis
-	name = "BEPIS Chamber (Machine Board)"
+/obj/item/circuitboard/machine/dnascanner
+	name = "DNA Scanner (Machine Board)"
 	icon_state = "science"
-	build_path = /obj/machinery/rnd/bepis
+	build_path = /obj/machinery/dna_scannernew
 	req_components = list(
-		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/scanning_module = 1)
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/cable_coil = 2)
 
 //Security
 
@@ -1117,6 +1077,13 @@
 	icon_state = "service"
 	build_path = /obj/machinery/rnd/production/techfab/department/service
 
+/obj/item/circuitboard/machine/vendatray
+	name = "Vend-A-Tray (Machine Board)"
+	icon_state = "service"
+	build_path = /obj/structure/displaycase/forsale
+	req_components = list(
+		/obj/item/stock_parts/card_reader = 1)
+
 //Supply
 
 /obj/item/circuitboard/machine/mining_equipment_vendor
@@ -1174,6 +1141,17 @@
 	name = "\improper Departmental Techfab (Machine Board) - Cargo"
 	icon_state = "supply"
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
+
+/obj/item/circuitboard/machine/bepis
+	name = "BEPIS Chamber (Machine Board)"
+	icon_state = "cargo"
+	build_path = /obj/machinery/rnd/bepis
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/scanning_module = 1)
 
 //Misc
 /obj/item/circuitboard/machine/sheetifier

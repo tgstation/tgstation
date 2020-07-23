@@ -93,7 +93,7 @@
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
 			Paralyze(20)
-			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed)
+			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
@@ -119,14 +119,14 @@
 
 
 /mob/living/carbon/proc/throw_mode_off()
-	in_throw_mode = 0
-	if(client && hud_used)
+	in_throw_mode = FALSE
+	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
 
 
 /mob/living/carbon/proc/throw_mode_on()
-	in_throw_mode = 1
-	if(client && hud_used)
+	in_throw_mode = TRUE
+	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
 
 /mob/proc/throw_item(atom/target)
@@ -165,6 +165,10 @@
 				log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 		var/power_throw = 0
 		if(HAS_TRAIT(src, TRAIT_HULK))
+			power_throw++
+		if(HAS_TRAIT(src, TRAIT_DWARF))
+			power_throw--
+		if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
 			power_throw++
 		if(pulling && grab_state >= GRAB_NECK)
 			power_throw++
@@ -924,7 +928,6 @@
 		var/obj/item/I = X
 		I.acid_level = 0 //washes off the acid on our clothes
 		I.extinguish() //extinguishes our clothes
-		I.cut_overlay(GLOB.fire_overlay, TRUE)
 	..()
 
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
@@ -1119,7 +1122,7 @@
 	for(var/obj/item/I in held_items)
 		I.washed(washer)
 
-	if(back)
+	if(back && back.washed(washer))
 		update_inv_back(0)
 
 	var/list/obscured = check_obscured_slots()
@@ -1185,3 +1188,6 @@
 		S.generate(BP, W)
 		S.fake = TRUE
 		QDEL_NULL(W)
+
+/mob/living/carbon/is_face_visible()
+	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)

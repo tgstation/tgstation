@@ -108,7 +108,7 @@
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("assignment","registered_name","registered_age")
+			if(NAMEOF(src, assignment),NAMEOF(src, registered_name),NAMEOF(src, registered_age))
 				update_label()
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
@@ -134,15 +134,13 @@
 		return ..()
 
 /obj/item/card/id/proc/insert_money(obj/item/I, mob/user, physical_currency)
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
+		return
 	var/cash_money = I.get_item_credit_value()
 	if(!cash_money)
 		to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
 		return
-
-	if(!registered_account)
-		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
-		return
-
 	registered_account.adjust_money(cash_money)
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
 	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
@@ -155,17 +153,20 @@
 	qdel(I)
 
 /obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit into!</span>")
+		return FALSE
+
 	if (!money || !money.len)
 		return FALSE
 
 	var/total = 0
 
 	for (var/obj/item/physical_money in money)
-		var/cash_money = physical_money.get_item_credit_value()
+		total += physical_money.get_item_credit_value()
+		CHECK_TICK
 
-		total += cash_money
-
-		registered_account.adjust_money(cash_money)
+	registered_account.adjust_money(total)
 	SSblackbox.record_feedback("amount", "credits_inserted", total)
 	log_econ("[total] credits were inserted into [src] owned by [src.registered_name]")
 	QDEL_LIST(money)
@@ -245,22 +246,36 @@
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
-	if(registered_age)
-		. += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b><span class='danger'>'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'</span></b> along the bottom of the card." : ""]"
-	if(mining_points)
-		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+	. += "<span class='notice'><i>There's more information below, you can look again to take a closer look...</i></span>"
+
+/obj/item/card/id/examine_more(mob/user)
+	var/list/msg = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
+
+	if(registered_age)
+		msg += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b><span class='danger'>'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'</span></b> along the bottom of the card." : ""]"
+	if(mining_points)
+		msg += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+	if(registered_account)
+		msg += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
-		. += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
-		. += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
+				msg += "The [D.account_holder] reports a balance of [D.account_balance] cr."
+		msg += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
+		msg += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
+		if(registered_account.civilian_bounty)
+			msg += "<span class='info'><b>There is an active civilian bounty.</b>"
+			msg += "<span class='info'><i>[registered_account.bounty_text()]</i></span>"
+			msg += "<span class='info'>Quantity: [registered_account.bounty_num()]</span>"
+			msg += "<span class='info'>Reward: [registered_account.bounty_value()]</span>"
 		if(registered_account.account_holder == user.real_name)
-			. += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
+			msg += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
 	else
-		. += "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>"
+		msg += "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>"
+
+	return msg
 
 /obj/item/card/id/GetAccess()
 	return access
@@ -372,7 +387,7 @@ update_label()
 			return
 		if(popup_input == "Forge/Reset" && !forged)
 			var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
-			input_name = reject_bad_name(input_name)
+			input_name = sanitize_name(input_name)
 			if(!input_name)
 				// Invalid/blank names give a randomly generated one.
 				if(user.gender == MALE)

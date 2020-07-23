@@ -222,13 +222,14 @@
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_range, 1)
 		for(T in view(CEILING(light_range, 1), source_turf))
-			if((!IS_DYNAMIC_LIGHTING(T) && !T.light_sources) || T.has_opaque_atom)
+			if((!IS_DYNAMIC_LIGHTING(T) && !T.light_sources))
 				continue
-			if (!T.lighting_corners_initialised)
-				T.generate_missing_corners()
-			for (thing in T.corners)
-				C = thing
-				corners[C] = 0
+			if(!T.has_opaque_atom)
+				if (!T.lighting_corners_initialised)
+					T.generate_missing_corners()
+				for (thing in T.corners)
+					C = thing
+					corners[C] = 0
 			turfs += T
 		source_turf.luminosity = oldlum
 

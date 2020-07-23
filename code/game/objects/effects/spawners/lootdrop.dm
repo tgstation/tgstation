@@ -368,7 +368,9 @@
 				/obj/item/circuitboard/computer/nanite_cloud_controller,
 				/obj/item/circuitboard/machine/nanite_chamber,
 				/obj/item/circuitboard/machine/nanite_programmer,
-				/obj/item/circuitboard/machine/nanite_program_hub
+				/obj/item/circuitboard/machine/nanite_program_hub,
+				/obj/item/circuitboard/computer/scan_consolenew,
+				/obj/item/circuitboard/machine/dnascanner
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/security
@@ -405,11 +407,9 @@
 	name = "medical circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/machine/chem_dispenser,
-				/obj/item/circuitboard/computer/scan_consolenew,
 				/obj/item/circuitboard/computer/med_data,
 				/obj/item/circuitboard/machine/smoke_machine,
 				/obj/item/circuitboard/machine/chem_master,
-				/obj/item/circuitboard/machine/dnascanner,
 				/obj/item/circuitboard/computer/pandemic
 				)
 

@@ -2,7 +2,7 @@
 	name = "belt"
 	desc = "Can hold various things."
 	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "utilitybelt"
+	icon_state = "utility"
 	inhand_icon_state = "utility"
 	worn_icon_state = "utility"
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
@@ -433,6 +433,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "belt"
 	inhand_icon_state = "security"
+	worn_icon_state = "security"
 
 /obj/item/storage/belt/military/abductor/full/PopulateContents()
 	new /obj/item/screwdriver/abductor(src)

@@ -179,7 +179,7 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(!target)
+	if(QDELETED(target))
 		return
 	if(firing_burst)
 		return

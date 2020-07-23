@@ -21,7 +21,7 @@
 
 /obj/effect/particle_effect/water/Bump(atom/A)
 	if(reagents)
-		reagents.reaction(A)
+		reagents.expose(A)
 	return ..()
 
 

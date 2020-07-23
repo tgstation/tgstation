@@ -57,6 +57,8 @@
 		if(isclosedturf(T))
 			continue
 		possible_ends |= T
+	if(!possible_ends.len)
+		return ..()
 	var/turf/end = pick(possible_ends)
 	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 	SLEEP_CHECK_DEATH(8)

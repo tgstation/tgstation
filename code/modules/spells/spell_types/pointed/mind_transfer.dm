@@ -5,7 +5,7 @@
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "GIN'YU CAPAN"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
@@ -38,6 +38,16 @@
 		var/mob/living/simple_animal/hostile/guardian/stand = victim
 		if(stand.summoner)
 			victim = stand.summoner
+
+	//You should not be able to enter one of the most powerful side-antags as a fucking wizard.
+	if(istype(victim,/mob/living/simple_animal/slaughter))
+		to_chat(user, "<span class='warning'>The devilish contract doesn't include the 'mind swappable' package, please try again another lifetime.</span>")
+		return
+
+	//You should not be able to enter a statue that is nearly indestructible
+	if(HAS_TRAIT_FROM(victim, TRAIT_MUTE, STATUE_MUTE)) // that means it is a statue okay?
+		to_chat(user, "<span class='warning'>Your mind leaves your body but the stone resists your influence!/span>")
+		return
 
 	//MIND TRANSFER BEGIN
 	var/mob/dead/observer/ghost = victim.ghostize()

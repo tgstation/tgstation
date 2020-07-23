@@ -36,6 +36,7 @@
 	name = "compact pickaxe"
 	desc = "A smaller, compact version of the standard pickaxe."
 	icon_state = "minipick"
+	worn_icon_state = "pickaxe"
 	force = 10
 	throwforce = 7
 	slot_flags = ITEM_SLOT_BELT
@@ -64,6 +65,7 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	inhand_icon_state = "jackhammer"
+	worn_icon_state = "jackhammer"
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
 	usesound = 'sound/weapons/drill.ogg'
@@ -105,6 +107,7 @@
 	desc = "A pickaxe made with a knife and crowbar taped together, how does it not break?"
 	icon_state = "ipickaxe"
 	inhand_icon_state = "ipickaxe"
+	worn_icon_state = "pickaxe"
 	force = 10
 	throwforce = 7
 	toolspeed = 3 //3 times slower than a normal pickaxe

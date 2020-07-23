@@ -1,9 +1,7 @@
 /datum/job/rd
 	title = "Research Director"
-	flag = RD_JF
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
-	department_flag = MEDSCI
 	head_announce = list("Science")
 	faction = "Station"
 	total_positions = 1
@@ -34,6 +32,7 @@
 	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
+	bounty_types = CIV_JOB_SCI
 
 /datum/outfit/job/rd
 	name = "Research Director"

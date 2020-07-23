@@ -22,7 +22,7 @@
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 	var/mineral = /obj/item/stack/sheet/metal
 	var/mineral_amount = 2
@@ -71,7 +71,7 @@
 		if(density)
 			icon_state = initial(icon_state)
 			smooth = SMOOTH_TRUE
-			queue_smooth(src)
+			QUEUE_SMOOTH(src)
 		else
 			icon_state = "fwall_open"
 

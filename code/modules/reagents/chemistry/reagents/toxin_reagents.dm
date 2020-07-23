@@ -38,10 +38,10 @@
 	taste_description = "slime"
 	taste_mult = 0.9
 
-/datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
+/datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
 		return
-	if(!M.has_dna() || (HAS_TRAIT(M, TRAIT_RADIMMUNE) || HAS_TRAIT(M, TRAIT_BADDNA)))
+	if(!M.has_dna() || HAS_TRAIT(M, TRAIT_GENELESS) || HAS_TRAIT(M, TRAIT_BADDNA))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
@@ -88,25 +88,42 @@
 		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
 		holder.del_reagent(type)
 
-/datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
+/datum/reagent/toxin/plasma/expose_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
 		O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
-/datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
+/datum/reagent/toxin/plasma/expose_turf(turf/open/T, reac_volume)
 	if(!istype(T))
 		return
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
 		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
-/datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
+/datum/reagent/toxin/plasma/expose_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(reac_volume / 5)
 		return
 	..()
+
+/datum/reagent/toxin/hot_ice
+	name = "Hot Ice Slush"
+	description = "Frozen plasma, worth its weight in gold, to the right people"
+	reagent_state = SOLID
+	color = "#724cb8" // rgb: 114, 76, 184
+	taste_description = "thick and smokey"
+	specific_heat = SPECIFIC_HEAT_PLASMA
+	toxpwr = 3
+	material = /datum/material/hot_ice
+
+/datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/M)
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+	M.adjustPlasma(20)
+	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
+	return ..()
 
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
@@ -191,7 +208,7 @@
 	L.cure_fakedeath(type)
 	..()
 
-/datum/reagent/toxin/zombiepowder/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+/datum/reagent/toxin/zombiepowder/expose_mob(mob/living/L, method=TOUCH, reac_volume)
 	L.adjustOxyLoss(0.5*REM, 0)
 	if(method == INGEST)
 		var/datum/reagent/toxin/zombiepowder/Z = L.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
@@ -260,7 +277,7 @@
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 6))
 		mytray.adjustWeeds(-rand(4,8))
 
-/datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
+/datum/reagent/toxin/plantbgone/expose_obj(obj/O, reac_volume)
 	if(istype(O, /obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
 		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
@@ -270,7 +287,7 @@
 		var/obj/structure/spacevine/SV = O
 		SV.on_chem_effect(src)
 
-/datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/toxin/plantbgone/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
@@ -305,7 +322,7 @@
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 1))
 		mytray.adjustPests(-rand(1,2))
 
-/datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/toxin/pestkiller/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
 	if(M.mob_biotypes & MOB_BUG)
 		var/damage = min(round(0.4*reac_volume, 0.1),10)
@@ -566,7 +583,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/toxin/itching_powder/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
 		M.reagents?.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
@@ -824,7 +841,7 @@
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 1.5))
 		mytray.adjustWeeds(-rand(1,2))
 
-/datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
+/datum/reagent/toxin/acid/expose_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
 		return
 	reac_volume = round(reac_volume,0.1)
@@ -836,13 +853,13 @@
 		return
 	C.acid_act(acidpwr, reac_volume)
 
-/datum/reagent/toxin/acid/reaction_obj(obj/O, reac_volume)
+/datum/reagent/toxin/acid/expose_obj(obj/O, reac_volume)
 	if(ismob(O.loc)) //handled in human acid_act()
 		return
 	reac_volume = round(reac_volume,0.1)
 	O.acid_act(acidpwr, reac_volume)
 
-/datum/reagent/toxin/acid/reaction_turf(turf/T, reac_volume)
+/datum/reagent/toxin/acid/expose_turf(turf/T, reac_volume)
 	if (!istype(T))
 		return
 	reac_volume = round(reac_volume,0.1)
@@ -872,7 +889,7 @@
 	name = "Nitric acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
-	toxpwr = 2
+	toxpwr = 3
 	acidpwr = 5.0
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
@@ -945,7 +962,7 @@
 			playsound(M, get_sfx("desecration"), 50, TRUE, -1)
 			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
 			M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
-			bp.receive_damage(0, 0, 200)
+			bp.receive_damage(20, 0, 200, wound_bonus = rand(30, 130))
 		else //SUCH A LUST FOR REVENGE!!!
 			to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
 			M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)

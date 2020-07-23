@@ -1,5 +1,11 @@
 //predominantly negative traits
 
+/// Defines for locations of items being added to your inventory on spawn
+#define LOCATION_LPOCKET "in your left pocket"
+#define LOCATION_RPOCKET "in your right pocket"
+#define LOCATION_BACKPACK "in your backpack"
+#define LOCATION_HANDS "in your hands"
+
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."
@@ -53,6 +59,11 @@
 		H.put_in_hands(B)
 	H.regenerate_icons()
 
+	/* A couple of brain tumor stats for anyone curious / looking at this quirk for balancing:
+	 * - It takes less 16 minute 40 seconds to die from brain death due to a brain tumor.
+	 * - It takes 1 minutes 40 seconds to take 10% (20 organ damage) brain damage.
+	 * - 5u mannitol will heal 12.5% (25 organ damage) brain damage
+	 */
 /datum/quirk/brainproblems
 	name = "Brain Tumor"
 	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
@@ -61,8 +72,30 @@
 	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
 	hardcore_value = 12
+	/// Location of the bottle of pills on spawn
+	var/where
+
+/datum/quirk/brainproblems/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/pills = new /obj/item/storage/pill_bottle/mannitol/braintumor()
+	var/list/slots = list(
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS
+	)
+	where = H.equip_in_one_of_slots(pills, slots, FALSE) || "at your feet"
+
+/datum/quirk/brainproblems/post_add()
+	if(where == LOCATION_BACKPACK)
+		var/mob/living/carbon/human/H = quirk_holder
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of mannitol pills [where] to keep you alive until you can secure a supply of medication. Don't rely on it too much!</span>")
 
 /datum/quirk/brainproblems/on_process()
+	if(HAS_TRAIT(quirk_holder, TRAIT_TUMOR_SUPPRESSED))
+		return
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 
 /datum/quirk/deafness
@@ -188,15 +221,15 @@
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
-		"in your left pocket" = ITEM_SLOT_LPOCKET,
-		"in your right pocket" = ITEM_SLOT_RPOCKET,
-		"in your backpack" = ITEM_SLOT_BACKPACK,
-		"in your hands" = ITEM_SLOT_HANDS
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+		LOCATION_HANDS = ITEM_SLOT_HANDS
 	)
 	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
 /datum/quirk/family_heirloom/post_add()
-	if(where == "in your backpack")
+	if(where == LOCATION_BACKPACK)
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
@@ -214,6 +247,10 @@
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+
+/datum/quirk/family_heirloom/remove()
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 
 /datum/quirk/frail
 	name = "Frail"
@@ -450,6 +487,13 @@
 	hardcore_value = 4
 	var/dumb_thing = TRUE
 
+/datum/quirk/social_anxiety/add()
+	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
+	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
+
+/datum/quirk/social_anxiety/remove()
+	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
+
 /datum/quirk/social_anxiety/on_process()
 	var/nearby_people = 0
 	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
@@ -466,6 +510,43 @@
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+
+// small chance to make eye contact with inanimate objects/mindless mobs because of nerves
+/datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
+	var/mob/living/mind_check = A
+	if(prob(85) || (istype(mind_check) && mind_check.mind))
+		return
+
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
+
+/datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
+	if(prob(75))
+		return
+	var/msg
+	if(triggering_examiner)
+		msg = "You make eye contact with [other_mob], "
+	else
+		msg = "[other_mob] makes eye contact with you, "
+
+	switch(rand(1,3))
+		if(1)
+			quirk_holder.Jitter(10)
+			msg += "causing you to start fidgeting!"
+		if(2)
+			quirk_holder.stuttering = max(3, quirk_holder.stuttering)
+			msg += "causing you to start stuttering!"
+		if(3)
+			quirk_holder.Stun(2 SECONDS)
+			msg += "causing you to freeze up!"
+
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='userdanger'>[msg]</span>"), 3) // so the examine signal has time to fire and this will print after
+	return COMSIG_BLOCK_EYECONTACT
+
+/datum/mood_event/anxiety_eyecontact
+	description = "<span class='warning'>Sometimes eye contact makes me so nervous...</span>\n"
+	mood_change = -5
+	timeout = 3 MINUTES
 
 /datum/quirk/junkie
 	name = "Junkie"
@@ -506,9 +587,9 @@
 	if (accessory_type)
 		accessory_instance = new accessory_type(current_turf)
 	var/list/slots = list(
-		"in your left pocket" = ITEM_SLOT_LPOCKET,
-		"in your right pocket" = ITEM_SLOT_RPOCKET,
-		"in your backpack" = ITEM_SLOT_BACKPACK
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK
 	)
 	where_drug = H.equip_in_one_of_slots(drug_instance, slots, FALSE) || "at your feet"
 	if (accessory_instance)
@@ -516,7 +597,7 @@
 	announce_drugs()
 
 /datum/quirk/junkie/post_add()
-	if(where_drug == "in your backpack" || where_accessory == "in your backpack")
+	if(where_drug == LOCATION_BACKPACK || where_accessory == LOCATION_BACKPACK)
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
@@ -579,3 +660,66 @@
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 	hardcore_value = 9
+
+/datum/quirk/allergic
+	name = "Extreme Medicine Allergy"
+	desc = "Ever since you were a kid, you've been allergic to certain chemicals..."
+	value = -2
+	gain_text = "<span class='danger'>You feel your immune system shift.</span>"
+	lose_text = "<span class='notice'>You feel your immune system phase back into perfect shape.</span>"
+	medical_record_text = "Patient's immune system responds violently to certain chemicals."
+	hardcore_value = 3
+	var/list/allergies = list()
+	var/list/blacklist = list(/datum/reagent/medicine/c2,/datum/reagent/medicine/epinephrine,/datum/reagent/medicine/adminordrazine,/datum/reagent/medicine/omnizine/godblood,/datum/reagent/medicine/cordiolis_hepatico,/datum/reagent/medicine/synaphydramine,/datum/reagent/medicine/diphenhydramine)
+
+/datum/quirk/allergic/on_spawn()
+	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist
+	for(var/i in 0 to 5)
+		var/chem = pick(chem_list)
+		chem_list -= chem
+		allergies += chem
+
+/datum/quirk/allergic/post_add()
+	var/display = ""
+	for(var/C in allergies)
+		var/datum/reagent/chemical = C
+		display += initial(chemical.name) + ", "
+	name = "Extreme " + display +"Allergies"
+	medical_record_text = "Patient's immune system responds violently to [display]"
+	quirk_holder?.mind.store_memory("You are allergic to [display]")
+	to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [display]make sure not to consume any of it!</span>")
+	if(!ishuman(quirk_holder))
+		return
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/obj/item/clothing/accessory/allergy_dogtag/dogtag = new(get_turf(human_holder))
+	var/list/slots = list (
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS
+	)
+	dogtag.display = display
+	human_holder.equip_in_one_of_slots(dogtag, slots , qdel_on_fail = TRUE)
+
+/datum/quirk/allergic/on_process()
+	. = ..()
+	if(!iscarbon(quirk_holder))
+		return
+	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
+	for(var/M in allergies)
+		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(M)
+		if(!instantiated_med)
+			continue
+		//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
+		if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
+			return //intentionally stops the entire proc so we avoid the organ damage after the loop
+		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
+		carbon_quirk_holder.adjustToxLoss(3)
+		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine,3)
+		if(prob(10))
+			carbon_quirk_holder.vomit()
+			carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
+
+#undef LOCATION_LPOCKET
+#undef LOCATION_RPOCKET
+#undef LOCATION_BACKPACK
+#undef LOCATION_HANDS

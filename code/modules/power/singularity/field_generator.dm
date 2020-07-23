@@ -3,8 +3,8 @@
 
 /*
 field_generator power level display
-   The icon used for the field_generator need to have 'num_power_levels' number of icon states
-   named 'Field_Gen +p[num]' where 'num' ranges from 1 to 'num_power_levels'
+   The icon used for the field_generator need to have 6 icon states
+   named 'Field_Gen +p[num]' where 'num' ranges from 1 to 6
 
    The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
    The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
@@ -35,7 +35,6 @@ field_generator power level display
 	CanAtmosPass = ATMOS_PASS_YES
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
-	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
 	var/power = 20  // Current amount of power
@@ -59,6 +58,10 @@ field_generator power level display
 	. = ..()
 	fields = list()
 	connected_gens = list()
+
+/obj/machinery/field/generator/anchored/Initialize()
+	. = ..()
+	set_anchored(TRUE)
 
 /obj/machinery/field/generator/ComponentInitialize()
 	. = ..()
@@ -85,6 +88,14 @@ field_generator power level display
 	else
 		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 
+/obj/machinery/field/generator/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	if(active)
+		turn_off()
+	state = anchorvalue ? FG_SECURED : FG_UNSECURED
+
 /obj/machinery/field/generator/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
 		if(!silent)
@@ -97,14 +108,6 @@ field_generator power level display
 		return FAILED_UNFASTEN
 
 	return ..()
-
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
-	. = ..()
-	if(. == SUCCESSFUL_UNFASTEN)
-		if(anchored)
-			state = FG_SECURED
-		else
-			state = FG_UNSECURED
 
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -146,8 +149,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
-		state = FG_UNSECURED
-		anchored = FALSE
+		set_anchored(FALSE)
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
 	else
 		..()
@@ -171,9 +173,14 @@ field_generator power level display
 	cleanup()
 	return ..()
 
+/*
+   The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
+   The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
+   no power level overlay is currently in the overlays list.
+   */
 
 /obj/machinery/field/generator/proc/check_power_level()
-	var/new_level = round(num_power_levels * power / field_generator_max_power)
+	var/new_level = round(6 * power / field_generator_max_power)
 	if(new_level != power_level)
 		power_level = new_level
 		update_icon()
@@ -203,7 +210,7 @@ field_generator power level display
 	warming_up++
 	update_icon()
 	if(warming_up >= 3)
-		start_fields()		
+		start_fields()
 	else
 		addtimer(CALLBACK(src, .proc/warm_up), 50)
 
@@ -264,7 +271,7 @@ field_generator power level display
 	addtimer(CALLBACK(src, .proc/setup_field, 2), 2)
 	addtimer(CALLBACK(src, .proc/setup_field, 4), 3)
 	addtimer(CALLBACK(src, .proc/setup_field, 8), 4)
-	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)	
+	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
 	var/turf/T = loc
@@ -345,13 +352,13 @@ field_generator power level display
 	if(connected_gens.len < 2)
 		return
 	var/CGcounter
-	for(CGcounter = 1; CGcounter < connected_gens.len, CGcounter++)		
-		 
+	for(CGcounter = 1; CGcounter < connected_gens.len, CGcounter++)
+
 		var/list/CGList = ((connected_gens[CGcounter].connected_gens & connected_gens[CGcounter+1].connected_gens)^src)
 		if(!CGList.len)
 			return
 		var/obj/machinery/field/generator/CG = CGList[1]
-		
+
 		var/x_step
 		var/y_step
 		if(CG.x > x && CG.y > y)
@@ -370,14 +377,14 @@ field_generator power level display
 			for(x_step=x; x_step >= CG.x; x_step--)
 				for(y_step=y; y_step >= CG.y; y_step--)
 					place_floor(locate(x_step,y_step,z),create)
-					
+
 
 /obj/machinery/field/generator/proc/place_floor(Location,create)
 	if(create && !locate(/obj/effect/shield) in Location)
 		new/obj/effect/shield(Location)
-	else if(!create)		
+	else if(!create)
 		var/obj/effect/shield/S=locate(/obj/effect/shield) in Location
-		if(S)			
+		if(S)
 			qdel(S)
 
 /obj/machinery/field/generator/proc/notify_admins()

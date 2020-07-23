@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "You can now take off clothes while in stasis."

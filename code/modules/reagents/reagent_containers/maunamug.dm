@@ -15,6 +15,9 @@
 	. = ..()
 	cell = new /obj/item/stock_parts/cell(src)
 
+/obj/item/reagent_containers/glass/maunamug/get_cell()
+	return cell
+
 /obj/item/reagent_containers/glass/maunamug/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The status display reads: Current temperature: <b>[reagents.chem_temp]K</b> Current Charge:[cell ? "[cell.charge / cell.maxcharge * 100]%" : "No cell found"].</span>"
