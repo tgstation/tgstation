@@ -215,6 +215,8 @@
 		statelaws()
 
 	if (href_list["printlawtext"]) // this is kinda backwards
+		if (href_list["dead"] && (!isdead(usr) && !usr.client.holder)) // do not print deadchat law notice if the user is now alive
+			return
 		to_chat(usr, href_list["printlawtext"])
 
 	return
