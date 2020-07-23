@@ -290,6 +290,12 @@
 	return TRUE
 
 #define ANGLE_ADJUST 10
+/**
+  * Handles the movement of the object src is pulling
+  *
+  * Tries to correct the pulled object if it's stuck
+  * uses degstep to move the pulled object at an angle
+  */
 /atom/movable/proc/handle_pulled_movement()
 	if(!pulling)
 		return FALSE
@@ -313,8 +319,14 @@
 	return TRUE
 
 #undef ANGLE_ADJUST
-
-/atom/movable/proc/handle_pulled_premove(atom/newloc, direct, _step_x, _step_y)
+/**
+  * Checks the distance between the object we're pulling before moving
+  *
+  * Returns FALSE and prevents movement if the object we're pulling is too far and the direction
+  * src is moving isn't towards the pulled object.
+  * Returns TRUE and allows movement if the object we're pulling is in range.
+  */
+/atom/movable/proc/handle_pulled_premove()
 	if((bounds_dist(src, pulling) > 16 + step_size) && !(direct & get_pixeldir(src, pulling)))
 		return FALSE
 	return TRUE
@@ -323,7 +335,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc, direct, _step_x, _step_y) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 		return FALSE
 
-	if(pulling && !handle_pulled_premove(newloc, direct, _step_x, _step_y))
+	if(pulling && !handle_pulled_premove())
 		handle_pulled_movement()
 		return FALSE
 
@@ -390,7 +402,16 @@
 			return
 	A.Bumped(src)
 
-///handle sidestepping an obstacle
+/**
+  * Moves the movable to the side of an obstacle
+  *
+  * Called by Bump
+  * Uses bounds to check for an opening on the left or right
+  * Shifts the object over accordingly, isn't applied to players.
+  * Only applies to clientless mobs and doesn't kick in on unanchored movables or other mobs.
+  * Arguments:
+  * * A - atom that we're going to try and sidestep
+  */
 /atom/movable/proc/handle_sidestep(atom/A)
 	if(sidestep || ismob(A)) // already sidestepping or bumped into a mob
 		return
@@ -409,7 +430,7 @@
 	sidestep = FALSE
 
 
-///check if the left side of src is clear
+///checks if the left side of src is clear
 /atom/movable/proc/check_left(slide_dist)
 	var/list/atoms
 
@@ -428,7 +449,7 @@
 
 	return TRUE
 
-///slide to the left
+///slides src to the left
 /atom/movable/proc/slide_left(slide_dist)
 	if(dir == EAST)
 		step(src, NORTH, slide_dist)
@@ -439,7 +460,7 @@
 	else if(dir == SOUTH)
 		step(src, EAST, slide_dist)
 
-///check if the right side of src is clear
+///checks if the right side of src is clear
 /atom/movable/proc/check_right(slide_dist)
 	var/list/atoms
 
@@ -458,7 +479,7 @@
 
 	return TRUE
 
-///slide to the right
+///slides src to the right
 /atom/movable/proc/slide_right(slide_dist)
 	if(dir == EAST)
 		step(src, SOUTH, slide_dist)
@@ -483,7 +504,15 @@
 	. = ..()
 	. += step_y
 
-// Unless you have some really weird rotation try to implement a generic version of your rotation here and make a flag for it
+/**
+  * Updates bounds of the object depending on its brotation define
+  *
+  * Called on setDir and updates the bounds accordingly
+  * Unless you have some really weird rotation try to implement a generic version of your rotation here and make a flag for it
+  * Arguments:
+  * * olddir - The old direction
+  * * newdir - The new direction
+  */
 /atom/movable/proc/update_bounds(olddir, newdir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_BOUNDS, args)
 
@@ -519,8 +548,21 @@
 		. = doMove(destination, _step_x, _step_y)
 	else
 		CRASH("No valid destination passed into forceMove")
+
 /// sets the step_ offsets to AM, or if AM is null sets the step_ values to the offsets
-/atom/movable/proc/forceStep(atom/movable/AM, _step_x=0, _step_y=0)
+/**
+  * sets the step_ offsets to that of AM, or if AM is null sets the step_ values to the offsets
+  *
+  * Pixel counterpart of forceMove
+  * should be used when only wanting to set the step values
+  * can either pass a movable you want to copy step values from
+  * leave AM null and input step_ values manually
+  * Arguments:
+  * * AM - The movable we want to copy step_ values from
+  * * _step_x - Alternative step_x value when AM is null
+  * * _step_y - Alternative step_y value when AM is null
+  */
+/atom/movable/proc/forceStep(atom/movable/AM=null, _step_x=0, _step_y=0)
 	if(!AM)
 		step_x = _step_x
 		step_y = _step_y

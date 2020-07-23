@@ -141,6 +141,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return FALSE
 	return TRUE
 
+/**
+  * Adds movables that cross over the conveyor belt to affecting list
+  *
+  * The conveyor starts processing when there are people in the affecting list
+  * Arguments:
+  * * mover - the movable that crossed us
+  */
 /obj/machinery/conveyor/proc/RegisterMover(atom/movable/mover)
 	RegisterSignal(mover, COMSIG_PARENT_QDELETING, .proc/UnregisterMover)
 	if(!affecting)
@@ -150,6 +157,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(LAZYLEN(affecting))
 		START_PROCESSING(SSconveyors, src)
 
+/**
+  * Removes movables that leave the conveyor belt from the affecting list
+  *
+  * The conveyor stops processing when there are no more movables on it
+  * Arguments:
+  * * mover - the movable that left us
+  */
 /obj/machinery/conveyor/proc/UnregisterMover(atom/movable/mover)
 	UnregisterSignal(mover, COMSIG_PARENT_QDELETING)
 	if(!affecting) // Some stuff like decal spawners get removed before init has happened

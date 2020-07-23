@@ -328,12 +328,19 @@
 				if(T in shuttle_area)
 					return TRUE
 
-
-/// Gets the true pixel accurate x coordinate of the atom
+/**
+  * Returns the true pixel accurate x position of the atom
+  *
+  * Overriden by movables to include step_x values
+  */
 /atom/proc/true_x()
 	return x * PIXELS
 
-/// Gets the true pixel accurate y coordinate of the atom
+/**
+  * Returns the true pixel accurate y position of the atom
+  *
+  * Overriden by movables to include step_y values
+  */
 /atom/proc/true_y()
 	return y * PIXELS
 

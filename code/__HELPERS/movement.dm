@@ -1,6 +1,5 @@
+/// PIXEL define for general use with pixel movement(converting turf x and y values and dist values to pixel dist)
 #define PIXELS 32
-//use to check if x(/atom) is centered
-#define CENTERED(x) (x.step_x == 0 && x.step_y == 0) // if one of these is 0 then the mob is centered
 
 /// Returns the direction from thingA to thingB in degrees
 /// EAST is 0 and goes counter clockwise
@@ -9,13 +8,34 @@
 /// Use this instead of get_dir when things can be on the same turf
 #define get_pixeldir(thingA, thingB) (get_dir(thingA, thingB) || angle2dir(get_deg(thingA, thingB)))
 
+/**
+  * Walk for a set amount of time
+  *
+  * Makes the movable walk in the direction passed as direct
+  * until the time defined in until expires
+  * Arguments:
+  * * thing - movable that will walk
+  * * direct - Direction to walk in
+  * * lag - Delay in world ticks between movement(from BYOND ref)
+  * * spped - Speed to move, in pixels.(from BYOND ref)
+  */
 /proc/walk_for(atom/movable/thing, direct, lag, speed, until)
 	set waitfor = FALSE
 	walk(thing, direct, lag, speed)
 	stoplag(until)
 	walk(thing, NONE)
 
-/// Like step but you move on an angle instead of a cardinal direction
+/**
+  * Moves the reference at an angle
+  *
+  * Useful for more precise movements though
+  * if you want even more accuracy and handling for rounding
+  * use degstepprojectile
+  * Arguments:
+  * * thing - Movable that will move at an angle
+  * * deg - Angle to move in
+  * * dist - Distance in pixels to move
+  */
 /proc/degstep(atom/movable/thing, deg, dist)
 	var/x = thing.step_x
 	var/y = thing.step_y
@@ -24,8 +44,17 @@
 	y += dist * cos(deg)
 	return thing.Move(place, get_dir(thing.loc, place), x, y)
 
-///degstep but more accurate, for projectiles, credit to kaiochao for the code this compensates for rounding errors
-///relevant post (http://www.byond.com/forum/post/1544790)
+/**
+  * Moves the reference at an angle, more accurate than degstep
+  *
+  * Useful for the most precise movements like with projectiles
+  * compensates for rounding errors, credit to Kaiochao for the logic
+  * relevant byond post: http://www.byond.com/forum/post/1544790
+  * Arguments:
+  * * thing - Movable that will move at an angle
+  * * deg - Angle to move in
+  * * dist - Distance in pixels to move
+  */
 /proc/degstepprojectile(atom/movable/thing, deg, dist)
 	var/turf/place = thing.loc
 	var/rx
@@ -45,7 +74,14 @@
 	. = (rx || ry) ? thing.Move(place, get_dir(thing.loc, place), thing.step_x + rx, thing.step_y + ry) : TRUE
 	thing.step_size = ss
 
-/// Returns the closest turf to the movable
+/**
+  * Returns the closest turf to the movable
+  *
+  * This proc gets all the turfs that the movable is touching
+  * and compares them by their pixel distance to the movable
+  * Arguments:
+  * * turf - turf the movable is on
+  */
 /atom/movable/proc/nearest_turf(var/turf)
 	var/lowest_diff = 0
 	var/turf/lowest = turf
