@@ -24,6 +24,26 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 			var/oldPY = pixel_y
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
+	
+	//rotate the physical bounds and offsets for multitile atoms too. Owerride upper "rotate the pixel offsets" for multitile atoms.
+	//Owerride non zero bound_x, bound_y, pixel_x, pixel_y to zero. 
+	//Dont take in account starting bound_x, bound_y, pixel_x, pixel_y.
+	//So it can unintentionally shift physical bounds of things that starts with non zero bound_x, bound_y.
+	if(((bound_height != world.icon_size) || (bound_width != world.icon_size)) && (bound_x==0) && (bound_y==0)) //Dont shift things that have non zero bound_x and bound_y, or it move somewhere.
+		if(dir == 2)
+			pixel_x = 0
+			pixel_y = 0
+		if(dir == 8)
+			pixel_x = 0
+			pixel_y = -bound_height+world.icon_size
+		if(dir == 1)
+			pixel_x = -bound_width+world.icon_size
+			pixel_y = -bound_height+world.icon_size
+		if(dir == 4)
+			pixel_x = -bound_width+world.icon_size
+			pixel_y = 0
+		bound_x = pixel_x
+		bound_y = pixel_y
 
 /************************************Turf rotate procs************************************/
 
@@ -101,22 +121,3 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	. = ..()
 	if(wall_turret_direction && (params & ROTATE_DIR))
 		wall_turret_direction = turn(wall_turret_direction,rotation)
-
-/obj/structure/shuttle/shuttleRotate(rotation, params)
-	setDir(angle2dir(rotation+dir2angle(dir)))
-
-	if(dir == 2)
-		pixel_x = 0
-		pixel_y = 0
-	if(dir == 8)
-		pixel_x = 0
-		pixel_y = -bound_height+32
-	if(dir == 1)
-		pixel_x = -bound_width+32
-		pixel_y = -bound_height+32
-	if(dir == 4)
-		pixel_x = -bound_width+32
-		pixel_y = 0
-
-	bound_x = pixel_x
-	bound_y = pixel_y
