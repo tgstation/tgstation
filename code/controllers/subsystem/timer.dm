@@ -386,7 +386,7 @@ SUBSYSTEM_DEF(timer)
 	var/list/flags
 	/// Time at which the timer was invoked or destroyed
 	var/spent = 0
-	/// An informative name generated for the timer, useful for bugging
+	/// An informative name generated for the timer as its representation in strings, useful for debugging
 	var/name
 	/// Next timed event in the bucket
 	var/datum/timedevent/next
