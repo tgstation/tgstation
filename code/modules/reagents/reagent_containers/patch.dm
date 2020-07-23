@@ -36,7 +36,7 @@
 /obj/item/reagent_containers/pill/patch/aiuri
 	name = "aiuri patch (burn)"
 	desc = "Helps with burn injuries. Does minor eye damage. Diluted with Granibitaluri."
-	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 1, /datum/reagent/medicine/granibitaluri = 9)
+	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 2, /datum/reagent/medicine/granibitaluri = 8)
 	icon_state = "bandaid_burn"
 
 /obj/item/reagent_containers/pill/patch/instabitaluri

@@ -64,3 +64,9 @@
 	description = "With the price of rechargers on the rise, upper management is interested in purchasing guns that are self-powered. If you ship one, they'll pay."
 	reward = 10000
 	wanted_types = list(/obj/item/gun/energy/e_gun/nuclear)
+
+/datum/bounty/item/science/bepis_disc
+	name = "Reformatted Tech Disk"
+	description = "It turns out the diskettes the BEPIS prints experimental nodes on are extremely space-efficient. Send us one of your spares when you're done with it."
+	reward = 4000
+	wanted_types = list(/obj/item/disk/tech_disk/major)

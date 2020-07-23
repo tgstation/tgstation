@@ -7,6 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "graft_plant"
+	worn_icon_state = "graft"
 	attack_verb = list("planted", "vegitized", "cropped", "reaped", "farmed")
 	///The stored trait taken from the parent plant. Defaults to perenial growth.
 	var/datum/plant_gene/trait/stored_trait

@@ -65,7 +65,7 @@ const CfStep1 = (props, context) => {
               content="Laptop"
               textAlign="center"
               fontSize="30px"
-              lineHeight="50px"
+              lineHeight={2}
               onClick={() => act('pick_device', {
                 pick: '1',
               })} />
@@ -77,7 +77,7 @@ const CfStep1 = (props, context) => {
               content="Tablet"
               textAlign="center"
               fontSize="30px"
-              lineHeight="50px"
+              lineHeight={2}
               onClick={() => act('pick_device', {
                 pick: '2',
               })} />
@@ -339,7 +339,7 @@ const CfStep2 = (props, context) => {
         color="good"
         textAlign="center"
         fontSize="18px"
-        lineHeight="26px"
+        lineHeight={2}
         onClick={() => act('confirm_order')} />
     </Section>
   );
@@ -393,7 +393,7 @@ const CfStep3 = (props, context) => {
         color="good"
         textAlign="center"
         fontSize="20px"
-        lineHeight="28px"
+        lineHeight={2}
         onClick={() => act('purchase')} />
     </Section>
   );

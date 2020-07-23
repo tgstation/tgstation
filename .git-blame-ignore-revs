@@ -1,0 +1,6 @@
+#Ignores big formatting commits when checking blame.
+#To make use of this file by default, run 'git config blame.ignoreRevsFile .git-blame-ignore-revs'
+#in the project folder
+
+# Force LF line endings with gitattributes and convert repo
+62676e72a85cd23e7a87d94adff96d17859dbdc5

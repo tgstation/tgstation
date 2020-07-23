@@ -4,6 +4,7 @@
  */
 
 @use 'sass:color';
+@use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
 
@@ -20,8 +21,8 @@ $bg-map: colors.$bg-map !default;
     rgba(0, 0, 0, 1),
     rgba(255, 255, 255, 1));
 
-  padding: 4px 6px;
-  margin-bottom: 6px;
+  padding: 0.33em 0.5em;
+  margin-bottom: 0.5em;
   box-shadow: none;
   font-weight: bold;
   font-style: italic;
@@ -30,9 +31,9 @@ $bg-map: colors.$bg-map !default;
   background-image: repeating-linear-gradient(
     -45deg,
     transparent,
-    transparent 10px,
-    $color-stripes 10px,
-    $color-stripes 20px);
+    transparent base.em(10px),
+    $color-stripes base.em(10px),
+    $color-stripes base.em(20px));
 }
 
 @mixin box-color($color) {

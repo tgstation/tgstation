@@ -141,3 +141,12 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_removed_turf(turf/T, material_flags)
 	return
+
+/**
+  *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
+  * Arguments
+  * * M - person consuming the mat
+  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
+  */
+/datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
+	return FALSE

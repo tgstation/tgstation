@@ -16,6 +16,7 @@
 #include "chain_pull_through_space.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
+#include "keybinding_init.dm"
 #include "outfit_sanity.dm"
 #include "plantgrowth_tests.dm"
 #include "reagent_id_typos.dm"

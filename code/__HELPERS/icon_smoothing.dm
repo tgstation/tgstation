@@ -45,14 +45,11 @@
 #define DEFAULT_UNDERLAY_ICON 			'icons/turf/floors.dmi'
 #define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
 
-/atom/var/smooth = SMOOTH_FALSE
-/atom/var/top_left_corner
-/atom/var/top_right_corner
-/atom/var/bottom_left_corner
-/atom/var/bottom_right_corner
-/atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-/atom/movable/var/can_be_unanchored = FALSE
-/turf/var/list/fixed_underlay = null
+
+#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smooth) {SSicon_smooth.add_to_queue(thing_to_queue)}
+
+#define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/neighbor in orange(1, thing_to_queue)) {var/atom/atom_neighbor = neighbor; QUEUE_SMOOTH(atom_neighbor)}
+
 
 /proc/calculate_adjacencies(atom/A)
 	if(!A.loc)
@@ -108,7 +105,7 @@
 
 	return adjacencies
 
-//do not use, use queue_smooth(atom)
+//do not use, use QUEUE_SMOOTH(atom)
 /proc/smooth_icon(atom/A)
 	if(!A || !A.smooth)
 		return
@@ -307,14 +304,14 @@
 			if(now)
 				smooth_icon(T)
 			else
-				queue_smooth(T)
+				QUEUE_SMOOTH(T)
 		for(var/R in T)
 			var/atom/A = R
 			if(A.smooth)
 				if(now)
 					smooth_icon(A)
 				else
-					queue_smooth(A)
+					QUEUE_SMOOTH(A)
 
 /atom/proc/clear_smooth_overlays()
 	cut_overlay(top_left_corner)
@@ -375,22 +372,6 @@
 			return SOUTHEAST
 		else
 			return 0
-
-//SSicon_smooth
-/proc/queue_smooth_neighbors(atom/A)
-	for(var/V in orange(1,A))
-		var/atom/T = V
-		if(T.smooth)
-			queue_smooth(T)
-
-//SSicon_smooth
-/proc/queue_smooth(atom/A)
-	if(!A.smooth || A.smooth & SMOOTH_QUEUED)
-		return
-
-	SSicon_smooth.smooth_queue += A
-	SSicon_smooth.can_fire = 1
-	A.smooth |= SMOOTH_QUEUED
 
 
 //Example smooth wall

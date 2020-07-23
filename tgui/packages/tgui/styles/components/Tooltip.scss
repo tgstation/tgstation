@@ -23,7 +23,7 @@ $border-radius: base.$border-radius !default;
     display: block;
     white-space: nowrap;
     z-index: 2;
-    padding: 6px 10px;
+    padding: 0.5em 0.75em;
     transform: translateX(-50%);
     pointer-events: none;
     visibility: hidden;
@@ -32,7 +32,7 @@ $border-radius: base.$border-radius !default;
     content: attr(data-tooltip);
     transition: all 150ms;
     background-color: $color-background;
-    box-shadow: 1px 1px 15px -1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0.1em 0.1em 1.25em -0.1em rgba(0, 0, 0, 0.5);
     border-radius: $border-radius;
   }
 
@@ -46,7 +46,7 @@ $border-radius: base.$border-radius !default;
 
 .Tooltip--long {
   &::after {
-    width: 250px;
+    width: base.em(250px);
     white-space: normal;
   }
 }
@@ -54,59 +54,59 @@ $border-radius: base.$border-radius !default;
 .Tooltip--top::after {
   bottom: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(8px);
+  transform: translateX(-50%) translateY(0.5em);
 }
 
 .Tooltip--top:hover::after {
-  transform: translateX(-50%) translateY(-8px);
+  transform: translateX(-50%) translateY(-0.5em);
 }
 
 .Tooltip--bottom::after {
   top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(-8px);
+  transform: translateX(-50%) translateY(-0.5em);
 }
 
 .Tooltip--bottom:hover::after {
-  transform: translateX(-50%) translateY(8px);
+  transform: translateX(-50%) translateY(0.5em);
 }
 
 .Tooltip--bottom-left::after {
   top: 100%;
   right: 50%;
-  transform: translateX(12px) translateY(-8px);
+  transform: translateX(12px) translateY(-0.5em);
 }
 
 .Tooltip--bottom-left:hover::after {
-  transform: translateX(12px) translateY(8px);
+  transform: translateX(12px) translateY(0.5em);
 }
 
 .Tooltip--bottom-right::after {
   top: 100%;
   left: 50%;
-  transform: translateX(-12px) translateY(-8px);
+  transform: translateX(-12px) translateY(-0.5em);
 }
 
 .Tooltip--bottom-right:hover::after {
-  transform: translateX(-12px) translateY(8px);
+  transform: translateX(-12px) translateY(0.5em);
 }
 
 .Tooltip--left::after {
   top: 50%;
   right: 100%;
-  transform: translateX(8px) translateY(-50%);
+  transform: translateX(0.5em) translateY(-50%);
 }
 
 .Tooltip--left:hover::after {
-  transform: translateX(-8px) translateY(-50%);
+  transform: translateX(-0.5em) translateY(-50%);
 }
 
 .Tooltip--right::after {
   top: 50%;
   left: 100%;
-  transform: translateX(-8px) translateY(-50%);
+  transform: translateX(-0.5em) translateY(-50%);
 }
 
 .Tooltip--right:hover::after {
-  transform: translateX(8px) translateY(-50%);
+  transform: translateX(0.5em) translateY(-50%);
 }

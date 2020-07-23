@@ -39,16 +39,26 @@
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		source.changeNext_move(CLICK_CD_MELEE)
 
-		var/obj/item/bodypart/arm = source.hand_bodyparts[source.active_hand_index]
-		switch(arm.brute_dam)
-			if(45 to 50)
-				arm.force_wound_upwards(/datum/wound/brute/bone/critical)
-			if(41 to 45)
-				arm.force_wound_upwards(/datum/wound/brute/bone/severe)
-			if(35 to 41)
-				arm.force_wound_upwards(/datum/wound/brute/bone/moderate)
-
 		return COMPONENT_NO_ATTACK_HAND
+
+
+/**
+  *Checks damage of a hulk's arm and applies bone wounds as necessary.
+  *
+  *Called by specific atoms being attacked, such as walls. If an atom
+  *does not call this proc, than punching that atom will not cause
+  *arm breaking (even if the atom deals recoil damage to hulks).
+  *Arguments:
+  *arg1 is the arm to evaluate damage of and possibly break.
+  */
+/datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
+	switch(arm.brute_dam)
+		if(45 to 50)
+			arm.force_wound_upwards(/datum/wound/brute/bone/critical)
+		if(41 to 45)
+			arm.force_wound_upwards(/datum/wound/brute/bone/severe)
+		if(35 to 41)
+			arm.force_wound_upwards(/datum/wound/brute/bone/moderate)
 
 /datum/mutation/human/hulk/on_life()
 	if(owner.health < 0)
