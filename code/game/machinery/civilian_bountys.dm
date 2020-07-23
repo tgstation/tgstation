@@ -91,7 +91,7 @@
 		status_report = "No applicable targets found. Aborting."
 		stop_sending()
 	if(curr_bounty.can_claim())
-		//Pay for the bounty with this ID's department funds.
+		//Pay for the bounty with the ID's department funds.
 		inserted_scan_id.registered_account.transfer_money(SSeconomy.get_dep_account(inserted_scan_id.registered_account.account_job.paycheck_department), curr_bounty.reward)
 		status_report += "Bounty Completed! [curr_bounty.reward] credits have been paid out. "
 		inserted_scan_id.registered_account.reset_bounty()
