@@ -1,4 +1,4 @@
-//Thing meant for allowing datums and objects to access a NTnet network datum.
+//Thing meant for allowing datums and objects to access an NTnet network datum.
 /datum/proc/ntnet_receive(datum/netdata/data)
 	return
 
@@ -6,7 +6,7 @@
 	return
 
 /datum/proc/ntnet_send(datum/netdata/data, netid)
-	GET_COMPONENT(NIC, /datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/NIC = GetComponent(/datum/component/ntnet_interface)
 	if(!NIC)
 		return FALSE
 	return NIC.__network_send(data, netid)

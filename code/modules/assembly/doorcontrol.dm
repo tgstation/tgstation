@@ -9,9 +9,9 @@
 	var/sync_doors = TRUE
 
 /obj/item/assembly/control/examine(mob/user)
-	..()
+	. = ..()
 	if(id)
-		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
+		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
 
 /obj/item/assembly/control/activate()
 	var/openclose

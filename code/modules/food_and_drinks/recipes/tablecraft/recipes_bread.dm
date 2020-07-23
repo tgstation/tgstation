@@ -75,15 +75,6 @@
 	result = /obj/item/reagent_containers/food/snacks/store/bread/mimana
 	subcategory = CAT_BREAD
 
-/datum/crafting_recipe/food/butteredtoast
-	name = "Buttered Toast"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
-		/obj/item/reagent_containers/food/snacks/butter = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/butteredtoast
-	subcategory = CAT_BREAD
-
 /datum/crafting_recipe/food/garlicbread
 	name = "Garlic Bread"
 	time = 40
@@ -110,4 +101,13 @@
 		/obj/item/reagent_containers/food/snacks/butter = 3,
 		)
 	result = /obj/item/reagent_containers/food/snacks/butterdog
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/moldybread // why would you make this?
+	name = "Moldy Bread"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/amanita = 1
+		)
+	result = /obj/item/reagent_containers/food/snacks/breadslice/moldy
 	subcategory = CAT_BREAD

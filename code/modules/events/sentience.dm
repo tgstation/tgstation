@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/parrot,
 	/mob/living/simple_animal/hostile/lizard,
 	/mob/living/simple_animal/sloth,
-	/mob/living/simple_animal/mouse/brown/Tom,
+	/mob/living/simple_animal/mouse/brown/tom,
 	/mob/living/simple_animal/hostile/retaliate/goat,
 	/mob/living/simple_animal/chicken,
 	/mob/living/simple_animal/cow,
@@ -11,6 +11,8 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/hostile/carp/cayenne,
 	/mob/living/simple_animal/butterfly,
 	/mob/living/simple_animal/hostile/retaliate/poison/snake,
+	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+	/mob/living/simple_animal/bot/mulebot,
 	/mob/living/simple_animal/bot/secbot/beepsky
 )))
 
@@ -82,7 +84,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 		SA.key = SG.key
 
-		SA.grant_all_languages(TRUE)
+		SA.grant_all_languages(TRUE, FALSE, FALSE)
 
 		SA.sentience_act()
 

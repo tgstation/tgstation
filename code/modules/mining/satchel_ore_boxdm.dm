@@ -18,17 +18,21 @@
 	else
 		return ..()
 
+/obj/structure/ore_box/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, 0.01) //please datum mats no more cancer
+
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 50, volume=50))
-		user.visible_message("[user] pries \the [src] apart.",
+		user.visible_message("<span class='notice'>[user] pries \the [src] apart.</span>",
 			"<span class='notice'>You pry apart \the [src].</span>",
-			"<span class='italics'>You hear splitting wood.</span>")
+			"<span class='hear'>You hear splitting wood.</span>")
 		deconstruct(TRUE, user)
 	return TRUE
 
 /obj/structure/ore_box/examine(mob/living/user)
 	if(Adjacent(user) && istype(user))
-		show_contents(user)
+		ui_interact(user)
 	. = ..()
 
 /obj/structure/ore_box/attack_hand(mob/user)
@@ -36,22 +40,11 @@
 	if(.)
 		return
 	if(Adjacent(user))
-		show_contents(user)
+		ui_interact(user)
 
 /obj/structure/ore_box/attack_robot(mob/user)
 	if(Adjacent(user))
-		show_contents(user)
-
-/obj/structure/ore_box/proc/show_contents(mob/user)
-	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
-	var/list/assembled = list()
-	for(var/obj/item/stack/ore/O in src)
-		assembled[O.type] += O.amount
-	for(var/type in assembled)
-		var/obj/item/stack/ore/O = type
-		dat += "[initial(O.name)] - [assembled[type]]<br>"
-	dat += text("<br><br><A href='?src=[REF(src)];removeall=1'>Empty box</A>")
-	user << browse(dat, "window=orebox")
+		ui_interact(user)
 
 /obj/structure/ore_box/proc/dump_box_contents()
 	var/drop = drop_location()
@@ -65,18 +58,37 @@
 			stoplag()
 			drop = drop_location()
 
-/obj/structure/ore_box/Topic(href, href_list)
+/obj/structure/ore_box/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "OreBox", name)
+		ui.open()
+
+/obj/structure/ore_box/ui_data()
+	var/contents = list()
+	for(var/obj/item/stack/ore/O in src)
+		contents[O.type] += O.amount
+
+	var/data = list()
+	data["materials"] = list()
+	for(var/type in contents)
+		var/obj/item/stack/ore/O = type
+		var/name = initial(O.name)
+		data["materials"] += list(list("name" = name, "amount" = contents[type], "id" = type))
+
+	return data
+
+/obj/structure/ore_box/ui_act(action, params)
 	if(..())
 		return
 	if(!Adjacent(usr))
 		return
-
-	usr.set_machine(src)
 	add_fingerprint(usr)
-	if(href_list["removeall"])
-		dump_box_contents()
-		to_chat(usr, "<span class='notice'>You open the release hatch on the box..</span>")
-	updateUsrDialog()
+	usr.set_machine(src)
+	switch(action)
+		if("removeall")
+			dump_box_contents()
+			to_chat(usr, "<span class='notice'>You open the release hatch on the box..</span>")
 
 /obj/structure/ore_box/deconstruct(disassembled = TRUE, mob/user)
 	var/obj/item/stack/sheet/mineral/wood/WD = new (loc, 4)

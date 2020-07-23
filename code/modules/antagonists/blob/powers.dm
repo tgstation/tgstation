@@ -28,6 +28,10 @@
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
 			return 0
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || A && !A.blob_allowed)
+			to_chat(src, "<span class='warning'>You cannot place your core here!</span>")
+			return 0
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))
@@ -71,13 +75,13 @@
 		var/list/nodes = list()
 		for(var/i in 1 to GLOB.blob_nodes.len)
 			var/obj/structure/blob/node/B = GLOB.blob_nodes[i]
-			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blobstrain.name]":"No Strain"])"] = B
+			nodes["Blob Node #[i] ([get_area_name(B)])"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			forceMove(chosen_node.loc)
 
-/mob/camera/blob/proc/createSpecial(price, blobstrain, nearEquals, needsNode, turf/T)
+/mob/camera/blob/proc/createSpecial(price, blobstrain, minSeparation, needsNode, turf/T)
 	if(!T)
 		T = get_turf(src)
 	var/obj/structure/blob/B = (locate(/obj/structure/blob) in T)
@@ -87,14 +91,18 @@
 	if(!istype(B, /obj/structure/blob/normal))
 		to_chat(src, "<span class='warning'>Unable to use this blob, find a normal one.</span>")
 		return
-	if(needsNode && nodes_required)
-		if(!(locate(/obj/structure/blob/node) in orange(3, T)) && !(locate(/obj/structure/blob/core) in orange(4, T)))
+	if(needsNode)
+		var/area/A = get_area(src)
+		if(!A.blob_allowed) //factory and resource blobs must be legit
+			to_chat(src, "<span class='warning'>This type of blob must be placed on the station!</span>")
+			return
+		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(3, T)) && !(locate(/obj/structure/blob/core) in orange(4, T)))
 			to_chat(src, "<span class='warning'>You need to place this blob closer to a node or core!</span>")
 			return //handholdotron 2000
-	if(nearEquals)
-		for(var/obj/structure/blob/L in orange(nearEquals, T))
+	if(minSeparation)
+		for(var/obj/structure/blob/L in orange(minSeparation, T))
 			if(L.type == blobstrain)
-				to_chat(src, "<span class='warning'>There is a similar blob nearby, move more than [nearEquals] tiles away from it!</span>")
+				to_chat(src, "<span class='warning'>There is a similar blob nearby, move more than [minSeparation] tiles away from it!</span>")
 				return
 	if(!can_buy(price))
 		return
@@ -129,25 +137,25 @@
 		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity.</span>")
 		S.change_to(/obj/structure/blob/shield/reflective, src)
 	else
-		createSpecial(15, /obj/structure/blob/shield, 0, 0, T)
+		createSpecial(15, /obj/structure/blob/shield, 0, FALSE, T)
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
 	set desc = "Create a resource tower which will generate resources for you."
-	createSpecial(40, /obj/structure/blob/resource, 4, 1)
+	createSpecial(40, /obj/structure/blob/resource, 4, TRUE)
 
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
 	set name = "Create Node Blob (50)"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
-	createSpecial(50, /obj/structure/blob/node, 5, 0)
+	createSpecial(50, /obj/structure/blob/node, 5, FALSE)
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
 	set name = "Create Factory Blob (60)"
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(60, /obj/structure/blob/factory, 7, 1)
+	createSpecial(60, /obj/structure/blob/factory, 7, TRUE)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
@@ -175,7 +183,7 @@
 		B.obj_integrity = min(B.obj_integrity, B.max_integrity)
 		B.update_icon()
 		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
-		playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(B.loc, 'sound/effects/splat.ogg', 50, TRUE)
 		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 		flick("blobbernaut_produce", blobber)
 		B.naut = blobber
@@ -296,7 +304,7 @@
 				OB = pick(diagonalblobs)
 				if(attacksuccess)
 					OB.blob_attack_animation(T, src)
-					playsound(OB, 'sound/effects/splat.ogg', 50, 1)
+					playsound(OB, 'sound/effects/splat.ogg', 50, TRUE)
 					add_points(BLOB_ATTACK_REFUND)
 				else
 					add_points(BLOB_SPREAD_COST) //if we're attacking diagonally and didn't hit anything, refund
@@ -318,7 +326,7 @@
 	if(!surrounding_turfs.len)
 		return
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
-		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
+		if(isturf(BS.loc) && get_dist(BS, T) <= 35 && !BS.key)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 
@@ -326,7 +334,7 @@
 	set category = "Blob"
 	set name = "Blob Broadcast"
 	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces."
-	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text
+	var/speak_text = stripped_input(src, "What would you like to say with your minions?", "Blob Broadcast", null)
 	if(!speak_text)
 		return
 	else
@@ -340,28 +348,25 @@
 	set category = "Blob"
 	set name = "Reactive Strain Adaptation (40)"
 	set desc = "Replaces your strain with a random, different one."
-	if(free_strain_rerolls || can_buy(40))
-		set_strain()
+	if(!rerolling && (free_strain_rerolls || can_buy(40)))
+		rerolling = TRUE
+		reroll_strain()
+		rerolling = FALSE
 		if(free_strain_rerolls)
 			free_strain_rerolls--
 		last_reroll_time = world.time
 
-/mob/camera/blob/proc/set_strain()
-	var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains - blobstrain.type))
-	blobstrain = new bs(src)
-	color = blobstrain.complementary_color
-	for(var/BL in GLOB.blobs)
-		var/obj/structure/blob/B = BL
-		B.update_icon()
-	for(var/BLO in blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
-		BM.update_icons() //If it's getting a new strain, tell it what it does!
-		to_chat(BM, "Your overmind's blob strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-		to_chat(BM, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
-	to_chat(src, "Your strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
-	to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.description]")
-	if(blobstrain.effectdesc)
-		to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
+/mob/camera/blob/proc/reroll_strain()
+	var/list/choices = list()
+	while (length(choices) < 4)
+		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
+		choices[initial(bs.name)] = bs
+
+	var/choice = input(usr, "Please choose a new strain","Strain") as anything in sortList(choices, /proc/cmp_typepaths_asc)
+	if (choice && choices[choice] && !QDELETED(src))
+		var/datum/blobstrain/bs = choices[choice]
+		set_strain(bs)
+
 
 /mob/camera/blob/verb/blob_help()
 	set category = "Blob"

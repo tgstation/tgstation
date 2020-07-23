@@ -2,6 +2,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = TRUE, on_floor = FALSE), \
 	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = 0), \
+	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin/empty, 2, time = 5, one_per_turf = 0), \
+	new/datum/stack_recipe("railing", /obj/structure/railing, 3, time = 18, window_checks = TRUE), \
 	))
 
 /obj/item/stack/rods
@@ -9,17 +11,18 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	desc = "Some rods. Can be used for building or something."
 	singular_name = "metal rod"
 	icon_state = "rods"
-	item_state = "rods"
+	inhand_icon_state = "rods"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 9
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=1000)
+	custom_materials = list(/datum/material/iron=1000)
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
-	hitsound = 'sound/weapons/grenadelaunch.ogg'
+	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	embedding = list()
 	novariants = TRUE
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
@@ -28,13 +31,15 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
-
-	recipes = GLOB.rod_recipes
 	update_icon()
 
-/obj/item/stack/rods/update_icon()
+/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.rod_recipes
+
+/obj/item/stack/rods/update_icon_state()
 	var/amount = get_amount()
-	if((amount <= 5) && (amount > 0))
+	if(amount <= 5)
 		icon_state = "rods-[amount]"
 	else
 		icon_state = "rods"
@@ -47,9 +52,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 		if(W.use_tool(src, user, 0, volume=40))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			user.visible_message("[user.name] shaped [src] into metal with [W].", \
+			user.visible_message("<span class='notice'>[user.name] shaped [src] into metal with [W].</span>", \
 						 "<span class='notice'>You shape [src] into metal with [W].</span>", \
-						 "<span class='italics'>You hear welding.</span>")
+						 "<span class='hear'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_held_item()==R)
@@ -70,12 +75,13 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		return ..()
 
 /obj/item/stack/rods/cyborg
-	materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 250
 
-/obj/item/stack/rods/cyborg/update_icon()
-	return
+/obj/item/stack/rods/cyborg/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/stack/rods/ten
 	amount = 10
@@ -85,3 +91,19 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/fifty
 	amount = 50
+
+/obj/item/stack/rods/lava
+	name = "heat resistant rod"
+	desc = "Treated, specialized metal rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
+	singular_name = "heat resistant rod"
+	icon_state = "rods"
+	inhand_icon_state = "rods"
+	color = "#5286b9ff"
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	max_amount = 30
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+
+/obj/item/stack/rods/lava/thirty
+	amount = 30

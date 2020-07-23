@@ -92,24 +92,24 @@
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.resize = 0.8
-	owner.update_transform()
-	owner.pass_flags |= PASSTABLE
+	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	owner.transform = owner.transform.Scale(1, 0.8)
+	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.resize = 1.25
-	owner.update_transform()
-	owner.pass_flags &= ~PASSTABLE
+	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	owner.transform = owner.transform.Scale(1, 1.25)
+	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
 	name = "Clumsiness"
-	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk"
+	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk!"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 
@@ -139,7 +139,7 @@
 			if(1)
 				owner.emote("twitch")
 			if(2 to 3)
-				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]", forced="tourette's syndrome")
+				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]", forced=name)
 		var/x_offset_old = owner.pixel_x
 		var/y_offset_old = owner.pixel_y
 		var/x_offset = owner.pixel_x + rand(-2,2)
@@ -177,11 +177,11 @@
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
-		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/mutation/human/glow
 	name = "Glowy"
@@ -190,29 +190,60 @@
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
 	instability = 5
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
-	var/glow = 1.5
+	var/glow = 2.5
+	var/range = 2.5
+	var/glow_color
 	power_coeff = 1
+	conflicts = list(/datum/mutation/human/glow/anti)
 
 /datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
+	glow_color = glow_color()
 	glowth = new(owner)
-	glowth.set_light(glow, glow, dna.features["mcolor"])
+	modify()
 
-/datum/mutation/human/glow/modify(mob/living/carbon/human/owner)
-	if(glowth)
-		glowth.set_light(glow + GET_MUTATION_POWER(src) , glow + GET_MUTATION_POWER(src), dna.features["mcolor"])
+/datum/mutation/human/glow/modify()
+	if(!glowth)
+		return
+	var/power = GET_MUTATION_POWER(src)
+
+	glowth.set_light(range * power, glow, glow_color)
+
+/// Returns the color for the glow effect
+/datum/mutation/human/glow/proc/glow_color()
+	return pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	qdel(glowth)
+	QDEL_NULL(glowth)
+
+/datum/mutation/human/glow/anti
+	name = "Anti-Glow"
+	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
+	text_gain_indication = "<span class='notice'>Your light around you seems to disappear.</span>"
+	glow = -1.5
+	conflicts = list(/datum/mutation/human/glow)
+	locked = TRUE
+
+/datum/mutation/human/glow/anti/glow_color()
+	return COLOR_WHITE
 
 /datum/mutation/human/strong
 	name = "Strength"
 	desc = "The user's muscles slightly expand."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
+	difficulty = 16
+
+/datum/mutation/human/stimmed
+	name = "Stimmed"
+	desc = "The user's chemical balance is more robust."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
 	difficulty = 16
 
 /datum/mutation/human/insulated
@@ -236,7 +267,7 @@
 
 /datum/mutation/human/fire
 	name = "Fiery Sweat"
-	desc = "The user's skin will randomly combust, but is generally alot more resilient to burning."
+	desc = "The user's skin will randomly combust, but is generally a lot more resilient to burning."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You feel hot.</span>"
 	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
@@ -275,7 +306,7 @@
 /datum/mutation/human/badblink/on_life()
 	if(prob(warpchance))
 		var/warpmessage = pick(
-		"<span class='warning'>With a sickening 720 degree twist of their back, [owner] vanishes into thin air.</span>",
+		"<span class='warning'>With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air.</span>",
 		"<span class='warning'>[owner] does some sort of strange backflip into another dimension. It looks pretty painful.</span>",
 		"<span class='warning'>[owner] does a jump to the left, a step to the right, and warps out of reality.</span>",
 		"<span class='warning'>[owner]'s torso starts folding inside out until it vanishes from reality, taking [owner] with it.</span>",
@@ -291,10 +322,10 @@
 
 /datum/mutation/human/acidflesh
 	name = "Acidic Flesh"
-	desc = "Subject has acidic chemicals building up underneath their skin. This is often lethal."
+	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
-	text_lose_indication = "<span class'notice'>A feeling of relief covers you as your flesh goes back to normal.</span>"
+	text_lose_indication = "<span class'notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and use on others
 	var/msgcooldown = 0
 
@@ -306,11 +337,11 @@
 		if(prob(15))
 			owner.acid_act(rand(30,50), 10)
 			owner.visible_message("<span class='warning'>[owner]'s skin bubbles and pops.</span>", "<span class='userdanger'>Your bubbling flesh pops! It burns!</span>")
-			playsound(owner,'sound/weapons/sear.ogg', 50, 1)
+			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
 
 /datum/mutation/human/gigantism
 	name = "Gigantism"//negative version of dwarfism
-	desc = "The cells within the subject spread out to cover more area, making them appear larger."
+	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
 	quality = MINOR_NEGATIVE
 	difficulty = 12
 	conflicts = list(DWARFISM)
@@ -318,6 +349,7 @@
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
+	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.resize = 1.25
 	owner.update_transform()
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
@@ -325,6 +357,7 @@
 /datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
+	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.resize = 0.8
 	owner.update_transform()
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
@@ -349,17 +382,118 @@
 
 /datum/mutation/human/extrastun
 	name = "Two Left Feet"
-	desc = "A mutation that replaces the right foot with another left foot. It makes standing up after getting knocked down very difficult."
+	desc = "A mutation that replaces the right foot with another left foot. Symptoms include kissing the floor when taking a step."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
 	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
 	difficulty = 16
-	var/stun_cooldown = 0
 
-/datum/mutation/human/extrastun/on_life()
-	if(world.time > stun_cooldown)
-		if(owner.AmountKnockdown() || owner.AmountStun())
-			owner.SetKnockdown(owner.AmountKnockdown()*2)
-			owner.SetStun(owner.AmountStun()*2)
-			owner.visible_message("<span class='danger'>[owner] tries to stand up, but trips!</span>", "<span class='userdanger'>You trip over your own feet!</span>")
-			stun_cooldown = world.time + 300
+/datum/mutation/human/extrastun/on_acquiring()
+	. = ..()
+	if(.)
+		return
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+
+/datum/mutation/human/extrastun/on_losing()
+	. = ..()
+	if(.)
+		return
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+
+///Triggers on moved(). Randomly makes the owner trip
+/datum/mutation/human/extrastun/proc/on_move()
+	if(prob(99.5)) //The brawl mutation
+		return
+	if(owner.buckled || !(owner.mobility_flags & MOBILITY_STAND) || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
+		return //remove the 'edge' cases
+	to_chat(owner, "<span class='danger'>You trip over your own feet.</span>")
+	owner.Knockdown(30)
+
+/datum/mutation/human/martyrdom
+	name = "Internal Martyrdom"
+	desc = "A mutation that makes the body destruct when near death. Not damaging, but very, VERY disorienting."
+	locked = TRUE
+	quality = POSITIVE //not that cloning will be an option a lot but generally lets keep this around i guess?
+	text_gain_indication = "<span class='warning'>You get an intense feeling of heartburn.</span>"
+	text_lose_indication = "<span class'notice'>Your internal organs feel at ease.</span>"
+
+/datum/mutation/human/martyrdom/on_acquiring()
+	. = ..()
+	if(.)
+		return TRUE
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/bloody_shower)
+
+/datum/mutation/human/martyrdom/on_losing()
+	. = ..()
+	if(.)
+		return TRUE
+	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+
+/datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
+	if(new_stat != UNCONSCIOUS)
+		return
+	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
+
+	for(var/obj/item/organ/I in organs)
+		I.Remove(owner, TRUE)
+
+	explosion(get_turf(owner), 0, 0, 2, 0, TRUE)
+	for(var/mob/living/carbon/human/H in view(2,owner))
+		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		if(eyes)
+			to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
+		else
+			to_chat(H, "<span class='userdanger'>You are knocked down by a wave of... blood?!</span>")
+		H.Stun(20)
+		H.blur_eyes(20)
+		eyes?.applyOrganDamage(5)
+		H.confused += 3
+	for(var/mob/living/silicon/S in view(2,owner))
+		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
+		S.Paralyze(60)
+	owner.gib()
+
+/datum/mutation/human/headless
+	name = "H.A.R.S."
+	desc = "A mutation that makes the body reject the head. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate head organs."
+	difficulty = 12 //pretty good for traitors
+	quality = NEGATIVE //holy shit no eyes or tongue or ears
+	text_gain_indication = "<span class='warning'>Something feels off.</span>"
+
+/datum/mutation/human/headless/on_acquiring()
+	. = ..()
+	if(.)//cant add
+		return TRUE
+	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain) //so this doesn't instantly kill you
+		brain.organ_flags &= ~ORGAN_VITAL
+		qdel(brain)
+
+	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		owner.visible_message("<span class='warning'>[owner]'s head splatters with a sickening crunch!</span>", ignored_mobs = list(owner))
+		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
+		head.dismember(BRUTE)
+		head.drop_organs()
+		qdel(head)
+		owner.regenerate_icons()
+	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, .proc/abortattachment)
+
+/datum/mutation/human/headless/on_losing()
+	. = ..()
+	if(.)
+		return TRUE
+	UnregisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB)
+	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
+	if(!successful)
+		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")
+		return TRUE
+	owner.dna.species.regenerate_organs(owner, excluded_zones = list(BODY_ZONE_CHEST)) //only regenerate head
+	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.
+	owner.visible_message("<span class='warning'>[owner]'s head returns with a sickening crunch!</span>", "<span class='warning'>Your head regrows with a sickening crack! Ouch.</span>")
+	new /obj/effect/gibspawner/generic(get_turf(owner), owner)
+
+
+/datum/mutation/human/headless/proc/abortattachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
+	if(istype(new_limb, /obj/item/bodypart/head))
+		return COMPONENT_NO_ATTACH

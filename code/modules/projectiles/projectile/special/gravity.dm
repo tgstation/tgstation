@@ -1,4 +1,4 @@
-/obj/item/projectile/gravityrepulse
+/obj/projectile/gravityrepulse
 	name = "repulsion bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
@@ -11,13 +11,13 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/item/projectile/gravityrepulse/Initialize()
+/obj/projectile/gravityrepulse/Initialize()
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/repulse/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
-/obj/item/projectile/gravityrepulse/on_hit()
+/obj/projectile/gravityrepulse/on_hit()
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
@@ -33,7 +33,7 @@
 	for(var/turf/F in range(T,power))
 		new /obj/effect/temp_visual/gravpush(F)
 
-/obj/item/projectile/gravityattract
+/obj/projectile/gravityattract
 	name = "attraction bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
@@ -46,13 +46,13 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/item/projectile/gravityattract/Initialize()
+/obj/projectile/gravityattract/Initialize()
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/attract/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
-/obj/item/projectile/gravityattract/on_hit()
+/obj/projectile/gravityattract/on_hit()
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
@@ -67,7 +67,7 @@
 	for(var/turf/F in range(T,power))
 		new /obj/effect/temp_visual/gravpush(F)
 
-/obj/item/projectile/gravitychaos
+/obj/projectile/gravitychaos
 	name = "gravitational blast"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
@@ -80,13 +80,13 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/item/projectile/gravitychaos/Initialize()
+/obj/projectile/gravitychaos/Initialize()
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/chaos/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
-/obj/item/projectile/gravitychaos/on_hit()
+/obj/projectile/gravitychaos/on_hit()
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))

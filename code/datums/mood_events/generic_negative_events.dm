@@ -8,11 +8,11 @@
 
 /datum/mood_event/on_fire
 	description = "<span class='boldwarning'>I'M ON FIRE!!!</span>\n"
-	mood_change = -8
+	mood_change = -12
 
 /datum/mood_event/suffocation
 	description = "<span class='boldwarning'>CAN'T... BREATHE...</span>\n"
-	mood_change = -6
+	mood_change = -12
 
 /datum/mood_event/burnt_thumb
 	description = "<span class='warning'>I shouldn't play with lighters...</span>\n"
@@ -21,11 +21,11 @@
 
 /datum/mood_event/cold
 	description = "<span class='warning'>It's way too cold in here.</span>\n"
-	mood_change = -2
+	mood_change = -5
 
 /datum/mood_event/hot
 	description = "<span class='warning'>It's getting hot in here.</span>\n"
-	mood_change = -2
+	mood_change = -5
 
 /datum/mood_event/creampie
 	description = "<span class='warning'>I've been creamed. Tastes like pie flavor.</span>\n"
@@ -47,20 +47,35 @@
 	mood_change = -2
 	timeout = 4 MINUTES
 
-/datum/mood_event/depression
+/datum/mood_event/depression_minimal
+	description = "<span class='warning'>I feel a bit down.</span>\n"
+	mood_change = -10
+	timeout = 2 MINUTES
+
+/datum/mood_event/depression_mild
 	description = "<span class='warning'>I feel sad for no particular reason.</span>\n"
-	mood_change = -9
+	mood_change = -12
+	timeout = 2 MINUTES
+
+/datum/mood_event/depression_moderate
+	description = "<span class='warning'>I feel miserable.</span>\n"
+	mood_change = -14
+	timeout = 2 MINUTES
+
+/datum/mood_event/depression_severe
+	description = "<span class='warning'>I've lost all hope.</span>\n"
+	mood_change = -16
 	timeout = 2 MINUTES
 
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
   description = "<span class='boldwarning'>I can't even end it all!</span>\n"
-  mood_change = -10
+  mood_change = -15
   timeout = 60 SECONDS
 
 /datum/mood_event/dismembered
   description = "<span class='boldwarning'>AHH! I WAS USING THAT LIMB!</span>\n"
-  mood_change = -8
-  timeout = 4 MINUTES
+  mood_change = -10
+  timeout = 8 MINUTES
 
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"
@@ -77,13 +92,21 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/table/add_effects()
-	if(ishuman(owner))
+	if(isfelinid(owner))
 		var/mob/living/carbon/human/H = owner
-		if(iscatperson(H))
-			H.dna.species.start_wagging_tail(H)
-			addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 30)
-			description =  "<span class='nicegreen'>They want to play on the table!</span>\n"
-			mood_change = 2
+		H.dna.species.start_wagging_tail(H)
+		addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 30)
+		description = "<span class='nicegreen'>They want to play on the table!</span>\n"
+		mood_change = 2
+
+/datum/mood_event/table_limbsmash
+	description = "<span class='warning'>That fucking table, man that hurts...</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
+	if(banged_limb)
+		description = "<span class='warning'>My fucking [banged_limb.name], man that hurts...</span>\n"
 
 /datum/mood_event/brain_damage
   mood_change = -3
@@ -157,7 +180,7 @@
 /datum/mood_event/notcreepingsevere/add_effects(name)
 	var/list/unstable = list(name)
 	for(var/i in 1 to rand(3,5))
-		unstable += copytext(name, -1)
+		unstable += copytext_char(name, -1)
 	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
 	description = "<span class='boldwarning'>THEY NEEEEEEED [unhinged]!!</span>\n"
 
@@ -172,17 +195,62 @@
 
 /datum/mood_event/sad_empath
 	description = "<span class='warning'>Someone seems upset...</span>\n"
-	mood_change = -2
+	mood_change = -1
 	timeout = 60 SECONDS
 
 /datum/mood_event/sad_empath/add_effects(mob/sadtarget)
 	description = "<span class='warning'>[sadtarget.name] seems upset...</span>\n"
 
-//These are unused so far but I want to remember them to use them later
-/datum/mood_event/cloned_corpse
-	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"
-	mood_change = -6
+/datum/mood_event/sacrifice_bad
+	description ="<span class='warning'>Those darn savages!</span>\n"
+	mood_change = -5
+	timeout = 2 MINUTES
 
+/datum/mood_event/artbad
+	description = "<span class='warning'>I've produced better art than that from my ass.</span>\n"
+	mood_change = -2
+	timeout = 1200
+
+/datum/mood_event/graverobbing
+	description ="<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
+	mood_change = -8
+	timeout = 3 MINUTES
+
+/datum/mood_event/deaths_door
+	description = "<span class='boldwarning'>This is it... I'm really going to die.</span>\n"
+	mood_change = -20
+
+/datum/mood_event/gunpoint
+	description = "<span class='boldwarning'>This guy is insane! I better be careful....</span>\n"
+	mood_change = -10
+
+/datum/mood_event/tripped
+	description = "<span class='boldwarning'>I can't believe I fell for the oldest trick in the book!</span>\n"
+	mood_change = -10
+	timeout = 2 MINUTES
+
+/datum/mood_event/untied
+	description = "<span class='boldwarning'>I hate when my shoes come untied!</span>\n"
+	mood_change = -5
+	timeout = 1 MINUTES
+
+/datum/mood_event/gates_of_mansus
+	description = "<span class='boldwarning'>LIVING IN A PERFORMANCE IS WORSE THAN DEATH</span>\n"
+	mood_change = -25
+	timeout = 4 MINUTES
+
+//These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
 	mood_change = -8
+
+/datum/mood_event/nanite_sadness
+	description = "<span class='warning robot'>+++++++HAPPINESS SUPPRESSION+++++++</span>\n"
+	mood_change = -7
+
+/datum/mood_event/nanite_sadness/add_effects(message)
+	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
+
+/datum/mood_event/bald
+	description ="<span class='warning'>I need something to cover my head...</span>\n"
+	mood_change = -3

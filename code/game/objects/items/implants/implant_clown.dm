@@ -11,7 +11,7 @@
 
 /obj/item/implant/sad_trombone/trigger(emote, mob/source)
 	if(emote == "deathgasp")
-		playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 0)
+		playsound(loc, 'sound/misc/sadtrombone.ogg', 50, FALSE)
 
 /obj/item/implanter/sad_trombone
 	name = "implanter (sad trombone)"

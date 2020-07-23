@@ -86,7 +86,7 @@
 /obj/machinery/atmospherics/components/binary/circulator/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)
 		return
-	anchored = !anchored
+	set_anchored(!anchored)
 	I.play_tool_sound(src)
 	if(generator)
 		disconnectFromGenerator()
@@ -116,7 +116,7 @@
 		if(node2)
 			node2.atmosinit()
 			node2.addMember(src)
-		build_network()
+		SSair.add_to_rebuild_queue(src)
 
 	return TRUE
 

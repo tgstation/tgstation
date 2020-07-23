@@ -5,7 +5,7 @@
 	include_user = TRUE
 	range = -1
 	clothes_req = FALSE
-	item_type = /obj/item/twohanded/pitchfork/demonic
+	item_type = /obj/item/pitchfork/demonic
 
 	school = "conjuration"
 	charge_max = 150
@@ -15,16 +15,16 @@
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater
-	item_type = /obj/item/twohanded/pitchfork/demonic/greater
+	item_type = /obj/item/pitchfork/demonic/greater
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended
-	item_type = /obj/item/twohanded/pitchfork/demonic/ascended
+	item_type = /obj/item/pitchfork/demonic/ascended
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
 	item_type = /obj/item/instrument/violin/golden
 	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
-	invocation_type = "whisper"
-	invocation = "I aint have this much fun since Georgia."
+	invocation_type = INVOCATION_WHISPER
+	invocation = "I ain't had this much fun since Georgia."
 	action_icon_state = "golden_violin"
 	name = "Summon golden violin"
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -33,7 +33,7 @@
 /obj/effect/proc_holder/spell/targeted/summon_contract
 	name = "Summon infernal contract"
 	desc = "Skip making a contract by hand, just do it by magic."
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	invocation = "Just sign on the dotted line."
 	include_user = FALSE
 	range = 5
@@ -54,7 +54,7 @@
 					user.put_in_hands(contract)
 			else
 				var/obj/item/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
-				var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Knowledge", "Friendship")
+				var/contractTypeName = input(user, "What type of contract?") in sortList(list("Power", "Wealth", "Prestige", "Magic", "Knowledge", "Friendship"))
 				switch(contractTypeName)
 					if("Power")
 						contract = new /obj/item/paper/contract/infernal/power(C.loc, C.mind, user.mind)
@@ -70,7 +70,7 @@
 						contract = new /obj/item/paper/contract/infernal/friend(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
-			to_chat(user, "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>")
+			to_chat(user, "<span class='warning'>[C] seems to not be sentient. You cannot summon a contract for [C.p_them()].</span>")
 
 
 /obj/effect/proc_holder/spell/aimed/fireball/hellish
@@ -81,10 +81,10 @@
 	charge_max = 80
 	clothes_req = FALSE
 	invocation = "Your very soul will catch fire!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 2
 
-	projectile_type = /obj/item/projectile/magic/aoe/fireball/infernal
+	projectile_type = /obj/projectile/magic/aoe/fireball/infernal
 
 	action_background_icon_state = "bg_demon"
 
@@ -144,7 +144,7 @@
 	dust_animation()
 	spawn_dust()
 	visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
-	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, TRUE, -1)
 	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(loc)
 	ExtinguishMob()
 	forceMove(holder)
@@ -160,7 +160,7 @@
 	forceMove(drop_location())
 	client.eye = src
 	visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B></span>")
-	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, TRUE, -1)
 	addtimer(CALLBACK(src, .proc/fakefireextinguish), 15, TIMER_UNIQUE)
 
 /obj/effect/proc_holder/spell/targeted/sintouch
@@ -181,7 +181,7 @@
 	random_target_priority = TARGET_RANDOM
 	max_targets = 3
 	invocation = "TASTE SIN AND INDULGE!!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 
 /obj/effect/proc_holder/spell/targeted/sintouch/ascended
 	name = "Greater sin touch"
@@ -234,7 +234,7 @@
 		dancefloor_exists = FALSE
 		for(var/i in 1 to dancefloor_turfs.len)
 			var/turf/T = dancefloor_turfs[i]
-			T.ChangeTurf(dancefloor_turfs_types[i])
+			T.ChangeTurf(dancefloor_turfs_types[i], flags = CHANGETURF_INHERIT_AIR)
 	else
 		var/list/funky_turfs = RANGE_TURFS(1, user)
 		for(var/turf/closed/solid in funky_turfs)
@@ -248,7 +248,7 @@
 			var/turf/T = t
 			dancefloor_turfs[i] = T
 			dancefloor_turfs_types[i] = T.type
-			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b)
+			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b, flags = CHANGETURF_INHERIT_AIR)
 			i++
 
 /datum/effect_system/smoke_spread/transparent/dancefloor_devil

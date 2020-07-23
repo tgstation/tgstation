@@ -49,18 +49,17 @@
 					sortTypes |= n
 
 /obj/structure/disposalpipe/sorting/mail/examine(mob/user)
-	..()
+	. = ..()
 	if(sortTypes.len)
-		to_chat(user, "It is tagged with the following tags:")
+		. += "It is tagged with the following tags:"
 		for(var/t in sortTypes)
-			to_chat(user, "\t[GLOB.TAGGERLOCATIONS[t]].")
+			. += "\t[GLOB.TAGGERLOCATIONS[t]]."
 	else
-		to_chat(user, "It has no sorting tags set.")
-
+		. += "It has no sorting tags set."
 
 /obj/structure/disposalpipe/sorting/mail/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/destTagger))
-		var/obj/item/destTagger/O = I
+	if(istype(I, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/O = I
 
 		if(O.currTag)// Tagger has a tag set
 			if(O.currTag in sortTypes)
@@ -69,7 +68,7 @@
 			else
 				sortTypes |= O.currTag
 				to_chat(user, "<span class='notice'>Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
-			playsound(src, 'sound/machines/twobeep_high.ogg', 100, 1)
+			playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 	else
 		return ..()
 

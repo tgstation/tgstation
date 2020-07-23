@@ -10,6 +10,26 @@
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 
+/datum/quirk/foreigner
+	name = "Foreigner"
+	desc = "You're not from around here. You don't know Galactic Common!"
+	value = 0
+	gain_text = "<span class='notice'>The words being spoken around you don't make any sense."
+	lose_text = "<span class='notice'>You've developed fluency in Galactic Common."
+	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
+
+/datum/quirk/foreigner/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.add_blocked_language(/datum/language/common)
+	if(ishumanbasic(H) || isfelinid(H))
+		H.grant_language(/datum/language/uncommon)
+
+/datum/quirk/foreigner/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.remove_blocked_language(/datum/language/common)
+	if(ishumanbasic(H) || isfelinid(H))
+		H.remove_language(/datum/language/uncommon)
+
 /datum/quirk/vegetarian
 	name = "Vegetarian"
 	desc = "You find the idea of eating meat morally and physically repulsive."
@@ -32,6 +52,15 @@
 			species.liked_food |= MEAT
 		if(!initial(species.disliked_food) & MEAT)
 			species.disliked_food &= ~MEAT
+
+/datum/quirk/snob
+	name = "Snob"
+	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
+	value = 0
+	gain_text = "<span class='notice'>You feel like you understand what things should look like.</span>"
+	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
+	medical_record_text = "Patient seems to be rather stuck up."
+	mob_trait = TRAIT_SNOB
 
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
@@ -93,25 +122,6 @@
 		species.liked_food = initial(species.liked_food)
 		species.disliked_food = initial(species.disliked_food)
 
-/datum/quirk/neat
-	name = "Neat"
-	desc = "You really don't like being unhygienic, and will get sad if you are."
-	mob_trait = TRAIT_NEAT
-	gain_text = "<span class='notice'>You feel like you have to stay clean.</span>"
-	lose_text = "<span class='danger'>You no longer feel the need to always be clean.</span>"
-	mood_quirk = TRUE
-	medical_record_text = "While waiting for the exam to begin, patient cleaned the examination room."
-
-/datum/quirk/neat/on_process()
-	var/mob/living/carbon/human/H = quirk_holder
-	switch (H.hygiene)
-		if(0 to HYGIENE_LEVEL_DIRTY)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "neat", /datum/mood_event/dirty)
-		if(HYGIENE_LEVEL_DIRTY to HYGIENE_LEVEL_NORMAL)
-			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "neat")
-		if(HYGIENE_LEVEL_NORMAL to HYGIENE_LEVEL_CLEAN)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "neat", /datum/mood_event/neat)
-
 /datum/quirk/monochromatic
 	name = "Monochromacy"
 	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
@@ -129,3 +139,120 @@
 /datum/quirk/monochromatic/remove()
 	if(quirk_holder)
 		quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
+
+/datum/quirk/phobia
+	name = "Phobia"
+	desc = "You are irrationally afraid of something."
+	value = 0
+	medical_record_text = "Patient has an irrational fear of something."
+
+/datum/quirk/phobia/post_add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(new /datum/brain_trauma/mild/phobia(H.client?.prefs.phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		H.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/needswayfinder
+	name = "Navigationally Challenged"
+	desc = "Lacking familiarity with certain stations, you start with a wayfinding pinpointer where available."
+	value = 0
+	medical_record_text = "Patient demonstrates a keen ability to get lost."
+
+	var/obj/item/pinpointer/wayfinding/wayfinder
+	var/where
+
+/datum/quirk/needswayfinder/on_spawn()
+	if(!GLOB.wayfindingbeacons.len)
+		return
+	var/mob/living/carbon/human/H = quirk_holder
+
+	wayfinder = new /obj/item/pinpointer/wayfinding
+	wayfinder.owner = H.real_name
+	wayfinder.roundstart = TRUE
+
+	var/list/slots = list(
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK
+	)
+	where = H.equip_in_one_of_slots(wayfinder, slots, FALSE) || "at your feet"
+
+/datum/quirk/needswayfinder/post_add()
+	if(!GLOB.wayfindingbeacons.len)
+		return
+	if(where == "in your backpack")
+		var/mob/living/carbon/human/H = quirk_holder
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+
+	to_chat(quirk_holder, "<span class='notice'>There is a pinpointer [where], which can help you find your way around. Click in-hand to activate.</span>")
+
+/datum/quirk/bald
+	name = "Smooth-Headed"
+	desc = "You have no hair and are quite insecure about it! Keep your wig on, or at least your head covered up."
+	value = 0
+	mob_trait = TRAIT_BALD
+	gain_text = "<span class='notice'>Your head is as smooth as can be, it's terrible.</span>"
+	lose_text = "<span class='notice'>Your head itches, could it be... growing hair?!</span>"
+	medical_record_text = "Patient starkly refused to take off headwear during examination."
+	///The user's starting hairstyle
+	var/old_hair
+
+/datum/quirk/bald/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	old_hair = H.hairstyle
+	H.hairstyle = "Bald"
+	H.update_hair()
+	RegisterSignal(H, COMSIG_CARBON_EQUIP_HAT, .proc/equip_hat)
+	RegisterSignal(H, COMSIG_CARBON_UNEQUIP_HAT, .proc/unequip_hat)
+
+/datum/quirk/bald/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.hairstyle = old_hair
+	H.update_hair()
+	UnregisterSignal(H, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
+	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day")
+
+/datum/quirk/bald/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/head/wig/natural/W = new(get_turf(H))
+	if (old_hair == "Bald")
+		W.hairstyle = pick(GLOB.hairstyles_list - "Bald")
+	else
+		W.hairstyle = old_hair
+	W.update_icon()
+	var/list/slots = list (
+		"head" = ITEM_SLOT_HEAD,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS,
+	)
+	H.equip_in_one_of_slots(W, slots , qdel_on_fail = TRUE)
+
+///Checks if the headgear equipped is a wig and sets the mood event accordingly
+/datum/quirk/bald/proc/equip_hat(mob/user, obj/item/hat)
+	if(istype(hat, /obj/item/clothing/head/wig))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day") //Our head is covered
+
+///Applies a bad moodlet for having an uncovered head
+/datum/quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
+
+/datum/quirk/longtimer
+	name = "Longtimer"
+	desc = "You've been around for a long time and seen more than your fair share of action, suffering some pretty nasty scars along the way. For whatever reason, you've declined to get them removed or augmented."
+	value = 0
+	gain_text = "<span class='notice'>Your body has seen better days.</span>"
+	lose_text = "<span class='notice'>Your sins may wash away, but those scars are here to stay...</span>"
+	medical_record_text = "Patient has withstood significant physical trauma and declined plastic surgery procedures to heal scarring."
+	/// the minimum amount of scars we can generate
+	var/min_scars = 3
+	/// the maximum amount of scars we can generate
+	var/max_scars = 7
+
+/datum/quirk/longtimer/on_spawn()
+	var/mob/living/carbon/C = quirk_holder
+	C.generate_fake_scars(rand(min_scars, max_scars))

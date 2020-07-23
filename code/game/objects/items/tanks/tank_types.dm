@@ -5,6 +5,7 @@
  *		Air
  *		Plasma
  *		Emergency Oxygen
+ *		Generic
  */
 
 /*
@@ -44,29 +45,13 @@
 	name = "anesthetic tank"
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
-	item_state = "an_tank"
+	inhand_icon_state = "an_tank"
 	force = 10
 
 /obj/item/tank/internals/anesthetic/populate_gas()
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-
-/*
- * Air
- */
-/obj/item/tank/internals/air
-	name = "air tank"
-	desc = "Mixed anyone?"
-	icon_state = "air"
-	item_state = "air"
-	force = 10
-	dog_fashion = /datum/dog_fashion/back
-
-/obj/item/tank/internals/air/populate_gas()
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	air_contents.gases[/datum/gas/nitrogen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
 /*
  * Plasma
@@ -112,7 +97,7 @@
 	name = "plasma internals tank"
 	desc = "A tank of plasma gas designed specifically for use as internals, particularly for plasma-based lifeforms. If you're not a Plasmaman, you probably shouldn't use this."
 	icon_state = "plasmaman_tank"
-	item_state = "plasmaman_tank"
+	inhand_icon_state = "plasmaman_tank"
 	force = 10
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 
@@ -127,7 +112,9 @@
 
 /obj/item/tank/internals/plasmaman/belt
 	icon_state = "plasmaman_tank_belt"
-	item_state = "plasmaman_tank_belt"
+	inhand_icon_state = "plasmaman_tank_belt"
+	worn_icon_state = "plasmaman_tank_belt"
+	worn_icon = null
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	volume = 6
@@ -149,6 +136,8 @@
 	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
+	worn_icon_state = "emergency"
+	worn_icon = null
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
@@ -168,6 +157,8 @@
 /obj/item/tank/internals/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
 	icon_state = "emergency_engi"
+	worn_icon_state = "emergency_engi"
+	worn_icon = null
 	volume = 2 // should last a bit over 30 minutes if full
 
 /obj/item/tank/internals/emergency_oxygen/engi/empty/populate_gas()
@@ -181,3 +172,17 @@
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return
 
+// *
+// * GENERIC
+// *
+
+/obj/item/tank/internals/generic
+	name = "gas tank"
+	desc = "A generic tank used for storing and transporting gasses. Can be used for internals."
+	icon_state = "generic"
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	force = 10
+	dog_fashion = /datum/dog_fashion/back
+
+/obj/item/tank/internals/generic/populate_gas()
+	return

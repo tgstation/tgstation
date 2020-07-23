@@ -4,7 +4,7 @@
 #define CHARS_PER_LINE 5
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
-#define FONT_STYLE "Arial Black"
+#define FONT_STYLE "Small Fonts"
 #define SCROLL_SPEED 2
 
 #define SD_BLANK 0  // 0 = Blank
@@ -27,6 +27,7 @@
 
 	maptext_height = 26
 	maptext_width = 32
+	maptext_y = -1
 
 	var/message1 = ""	// message line 1
 	var/message2 = ""	// message line 2
@@ -46,6 +47,8 @@
 
 /// Immediately change the display to the given two lines.
 /obj/machinery/status_display/proc/update_display(line1, line2)
+	line1 = uppertext(line1)
+	line2 = uppertext(line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text
@@ -55,14 +58,14 @@
 /// Call with no arguments to disable.
 /obj/machinery/status_display/proc/set_message(m1, m2)
 	if(m1)
-		index1 = (length(m1) > CHARS_PER_LINE)
+		index1 = (length_char(m1) > CHARS_PER_LINE)
 		message1 = m1
 	else
 		message1 = ""
 		index1 = 0
 
 	if(m2)
-		index2 = (length(m2) > CHARS_PER_LINE)
+		index2 = (length_char(m2) > CHARS_PER_LINE)
 		message2 = m2
 	else
 		message2 = ""
@@ -70,26 +73,26 @@
 
 // Timed process - performs default marquee action if so needed.
 /obj/machinery/status_display/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		// No power, no processing.
 		remove_display()
 		return PROCESS_KILL
 
 	var/line1 = message1
 	if(index1)
-		line1 = copytext("[message1]|[message1]", index1, index1+CHARS_PER_LINE)
-		var/message1_len = length(message1)
+		line1 = copytext_char("[message1]|[message1]", index1, index1 + CHARS_PER_LINE)
+		var/message1_len = length_char(message1)
 		index1 += SCROLL_SPEED
-		if(index1 > message1_len)
-			index1 -= message1_len
+		if(index1 > message1_len + 1)
+			index1 -= (message1_len + 1)
 
 	var/line2 = message2
 	if(index2)
-		line2 = copytext("[message2]|[message2]", index2, index2+CHARS_PER_LINE)
-		var/message2_len = length(message2)
+		line2 = copytext_char("[message2]|[message2]", index2, index2 + CHARS_PER_LINE)
+		var/message2_len = length_char(message2)
 		index2 += SCROLL_SPEED
-		if(index2 > message2_len)
-			index2 -= message2_len
+		if(index2 > message2_len + 1)
+			index2 -= (message2_len + 1)
 
 	update_display(line1, line2)
 	if (!index1 && !index2)
@@ -107,19 +110,18 @@
 
 /obj/machinery/status_display/emp_act(severity)
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	set_picture("ai_bsod")
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	if (message1 || message2)
-		var/list/msg = list("The display says:")
+		. += "The display says:"
 		if (message1)
-			msg += "<br>\t<tt>[html_encode(message1)]</tt>"
+			. += "<br>\t<tt>[html_encode(message1)]</tt>"
 		if (message2)
-			msg += "<br>\t<tt>[html_encode(message2)]</tt>"
-		to_chat(user, msg.Join())
+			. += "<br>\t<tt>[html_encode(message2)]</tt>"
 
 // Helper procs for child display types.
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)
@@ -131,7 +133,7 @@
 		var/line1 = "-[shuttle.getModeStr()]-"
 		var/line2 = shuttle.getTimerStr()
 
-		if(length(line2) > CHARS_PER_LINE)
+		if(length_char(line2) > CHARS_PER_LINE)
 			line2 = "error"
 		update_display(line1, line2)
 	else
@@ -146,9 +148,9 @@
 				modestr = "<br>\t<tt>[modestr]: [shuttle.getTimerStr()]</tt>"
 			else
 				modestr = "<br>\t<tt>[modestr]</tt>"
-		to_chat(user, "The display says:<br>\t<tt>[shuttle.name]</tt>[modestr]")
+		return "The display says:<br>\t<tt>[shuttle.name]</tt>[modestr]"
 	else
-		to_chat(user, "The display says:<br>\t<tt>Shuttle missing!</tt>")
+		return "The display says:<br>\t<tt>Shuttle missing!</tt>"
 
 
 /// Evac display which shows shuttle timer or message set by Command.
@@ -168,7 +170,7 @@
 	return ..()
 
 /obj/machinery/status_display/evac/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		// No power, no processing.
 		remove_display()
 		return PROCESS_KILL
@@ -195,9 +197,9 @@
 /obj/machinery/status_display/evac/examine(mob/user)
 	. = ..()
 	if(mode == SD_EMERGENCY)
-		examine_shuttle(user, SSshuttle.emergency)
+		. += examine_shuttle(user, SSshuttle.emergency)
 	else if(!message1 && !message2)
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 /obj/machinery/status_display/evac/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])
@@ -224,7 +226,7 @@
 	name = "supply display"
 
 /obj/machinery/status_display/supply/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		// No power, no processing.
 		remove_display()
 		return PROCESS_KILL
@@ -243,7 +245,7 @@
 	else
 		line1 = "CARGO"
 		line2 = SSshuttle.supply.getTimerStr()
-		if(lentext(line2) > CHARS_PER_LINE)
+		if(length_char(line2) > CHARS_PER_LINE)
 			line2 = "Error"
 	update_display(line1, line2)
 
@@ -257,9 +259,9 @@
 	else
 		shuttleMsg = "[shuttle.getModeStr()]: [shuttle.getTimerStr()]"
 	if (shuttleMsg)
-		to_chat(user, "The display says:<br>\t<tt>[shuttleMsg]</tt>")
+		. += "The display says:<br>\t<tt>[shuttleMsg]</tt>"
 	else
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 
 /// General-purpose shuttle status display.
@@ -268,7 +270,7 @@
 	var/shuttle_id
 
 /obj/machinery/status_display/shuttle/process()
-	if(!shuttle_id || (stat & NOPOWER))
+	if(!shuttle_id || (machine_stat & NOPOWER))
 		// No power, no processing.
 		remove_display()
 		return PROCESS_KILL
@@ -278,16 +280,16 @@
 /obj/machinery/status_display/shuttle/examine(mob/user)
 	. = ..()
 	if(shuttle_id)
-		examine_shuttle(user, SSshuttle.getShuttle(shuttle_id))
+		. += examine_shuttle(user, SSshuttle.getShuttle(shuttle_id))
 	else
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 /obj/machinery/status_display/shuttle/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(!.)
 		return
 	switch(var_name)
-		if("shuttle_id")
+		if(NAMEOF(src, shuttle_id))
 			update()
 
 /obj/machinery/status_display/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override)
@@ -317,7 +319,7 @@
 		user.ai_statuschange()
 
 /obj/machinery/status_display/ai/process()
-	if(mode == SD_BLANK || (stat & NOPOWER))
+	if(mode == SD_BLANK || (machine_stat & NOPOWER))
 		remove_display()
 		return PROCESS_KILL
 

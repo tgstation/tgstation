@@ -24,10 +24,12 @@
 		if(!obsession)//we didn't find one
 			lose_text = ""
 			qdel(src)
+			return
 	gain_text = "<span class='warning'>You hear a sickening, raspy voice in your head. It wants one small task of you...</span>"
 	owner.mind.add_antag_datum(/datum/antagonist/obsessed)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/obsessed)
 	antagonist.trauma = src
+	RegisterSignal(obsession, COMSIG_MOB_EYECONTACT, .proc/stare)
 	..()
 	//antag stuff//
 	antagonist.forge_objectives(obsession.mind)
@@ -64,18 +66,15 @@
 /datum/brain_trauma/special/obsessed/on_lose()
 	..()
 	owner.mind.remove_antag_datum(/datum/antagonist/obsessed)
+	if(obsession)
+		UnregisterSignal(obsession, COMSIG_MOB_EYECONTACT)
 
-/datum/brain_trauma/special/obsessed/on_say(message)
+/datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)
 	if(!viewing)
-		return message
-	var/choked_up
-	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
-	if(mood)
-		if(mood.sanity >= SANITY_GREAT)
-			choked_up = social_interaction()
-	if(choked_up)
-		return ""
-	return message
+		return
+	var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
+	if(mood && mood.sanity >= SANITY_GREAT && social_interaction())
+		speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/special/obsessed/on_hug(mob/living/hugger, mob/living/hugged)
 	if(hugged == obsession)
@@ -104,6 +103,13 @@
 			fail = TRUE
 	return fail
 
+// if the creep examines first, then the obsession examines them, have a 50% chance to possibly blow their cover. wearing a mask avoids this risk
+/datum/brain_trauma/special/obsessed/proc/stare(datum/source, mob/living/examining_mob, triggering_examiner)
+	if(examining_mob != owner || !triggering_examiner || prob(50))
+		return
+
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, obsession, "<span class='warning'>You catch [examining_mob] staring at you...</span>", 3))
+	return COMSIG_BLOCK_EYECONTACT
 
 /datum/brain_trauma/special/obsessed/proc/find_obsession()
 	var/chosen_victim

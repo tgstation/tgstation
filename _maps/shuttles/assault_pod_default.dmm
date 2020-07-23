@@ -16,11 +16,9 @@
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
 	name = "Assault Pod";
-	opacity = 1;
 	req_access_txt = "150"
 	},
 /obj/docking_port/mobile/assault_pod{
-	dwidth = 3;
 	name = "steel rain";
 	port_direction = 4;
 	preferred_direction = 4
@@ -38,7 +36,6 @@
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
 	name = "Assault Pod";
-	opacity = 1;
 	req_access_txt = "150"
 	},
 /turf/open/floor/plating,
@@ -66,7 +63,6 @@
 "R" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Assault Pod";
-	opacity = 1;
 	req_access_txt = "150"
 	},
 /turf/open/floor/plating,

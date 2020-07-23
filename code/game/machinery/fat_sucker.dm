@@ -3,7 +3,7 @@
 	desc = "Safely and efficiently extracts excess fat from a subject."
 	icon = 'icons/obj/machines/fat_sucker.dmi'
 	icon_state = "fat"
-
+	circuit = /obj/item/circuitboard/machine/fat_sucker
 	state_open = FALSE
 	density = TRUE
 	req_access = list(ACCESS_KITCHEN)
@@ -42,9 +42,9 @@
 
 /obj/machinery/fat_sucker/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Alt-Click to toggle the safety hatch.</span>")
-	to_chat(user, "<span class='notice'>Removing [bite_size] nutritional units per operation.</span>")
-	to_chat(user, "<span class='notice'>Requires [nutrient_to_meat] nutritional units per meat slab.</span>")
+	. += {"<span class='notice'>Alt-Click to toggle the safety hatch.</span>
+				<span class='notice'>Removing [bite_size] nutritional units per operation.</span>
+				<span class='notice'>Requires [nutrient_to_meat] nutritional units per meat slab.</span>"}
 
 /obj/machinery/fat_sucker/close_machine(mob/user)
 	if(panel_open)
@@ -57,7 +57,7 @@
 			occupant.forceMove(drop_location())
 			occupant = null
 			return
-		to_chat(occupant, "<span class='notice'>You enter [src]</span>")
+		to_chat(occupant, "<span class='notice'>You enter [src].</span>")
 		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_icon()
 
@@ -75,7 +75,7 @@
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 			"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-			"<span class='italics'>You hear a metallic creaking from [src].</span>")
+			"<span class='hear'>You hear a metallic creaking from [src].</span>")
 		if(do_after(user, breakout_time, target = src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 				return
@@ -106,31 +106,32 @@
 	free_exit = !free_exit
 	to_chat(user, "<span class='notice'>Safety hatch [free_exit ? "unlocked" : "locked"].</span>")
 
-/obj/machinery/fat_sucker/update_icon()
-	overlays.Cut()
+/obj/machinery/fat_sucker/update_overlays()
+	. = ..()
+
 	if(!state_open)
 		if(processing)
-			overlays += "[icon_state]_door_on"
-			overlays += "[icon_state]_stack"
-			overlays += "[icon_state]_smoke"
-			overlays += "[icon_state]_green"
+			. += "[icon_state]_door_on"
+			. += "[icon_state]_stack"
+			. += "[icon_state]_smoke"
+			. += "[icon_state]_green"
 		else
-			overlays += "[icon_state]_door_off"
+			. += "[icon_state]_door_off"
 			if(occupant)
-				if(powered(EQUIP))
-					overlays += "[icon_state]_stack"
-					overlays += "[icon_state]_yellow"
+				if(powered())
+					. += "[icon_state]_stack"
+					. += "[icon_state]_yellow"
 			else
-				overlays += "[icon_state]_red"
-	else if(powered(EQUIP))
-		overlays += "[icon_state]_red"
+				. += "[icon_state]_red"
+	else if(powered())
+		. += "[icon_state]_red"
 	if(panel_open)
-		overlays += "[icon_state]_panel"
+		. += "[icon_state]_panel"
 
 /obj/machinery/fat_sucker/process()
 	if(!processing)
 		return
-	if(!powered(EQUIP) || !occupant || !iscarbon(occupant))
+	if(!powered() || !occupant || !iscarbon(occupant))
 		open_machine()
 		return
 
@@ -151,7 +152,7 @@
 	use_power(500)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
-	if(state_open || !occupant || processing || !powered(EQUIP))
+	if(state_open || !occupant || processing || !powered())
 		return
 	if(iscarbon(occupant))
 		var/mob/living/carbon/C = occupant
@@ -163,7 +164,7 @@
 		else
 			say("Subject not fat enough.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
-			overlays += "[icon_state]_red" //throw a red light icon over it, to show that it wont work
+			overlays += "[icon_state]_red" //throw a red light icon over it, to show that it won't work
 
 /obj/machinery/fat_sucker/proc/stop()
 	processing = FALSE

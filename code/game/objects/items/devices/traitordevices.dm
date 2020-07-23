@@ -25,7 +25,7 @@ effective or pretty fucking useless.
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
@@ -50,7 +50,7 @@ effective or pretty fucking useless.
 		else
 			to_chat(M, "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>")
 
-	playsound(src.loc, 'sound/misc/interference.ogg', 50, 1)
+	playsound(src.loc, 'sound/misc/interference.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You trigger [src].</span>")
 	times_used += 1
 	if(times_used >= max_uses)
@@ -69,12 +69,12 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
-	materials = list(MAT_METAL=400)
-	var/irradiate = 1
+	custom_materials = list(/datum/material/iron=400)
+	var/irradiate = TRUE
+	var/stealth = FALSE
+	var/used = FALSE // is it cooling down?
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
-	var/used = 0 // is it cooling down?
-	var/stealth = FALSE
 
 /obj/item/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
 	if(!stealth || !irradiate)
@@ -83,100 +83,110 @@ effective or pretty fucking useless.
 		return
 	if(!used)
 		log_combat(user, M, "irradiated", src)
-		var/cooldown = GetCooldown()
-		used = 1
+		var/cooldown = get_cooldown()
+		used = TRUE
 		icon_state = "health1"
-		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
+		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
+		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
-		spawn((wavelength+(intensity*4))*5)
-			if(M)
-				if(intensity >= 5)
-					M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
-				M.rad_act(intensity*10)
+		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M), (wavelength+(intensity*4))*5)
 	else
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
 
-/obj/item/healthanalyzer/rad_laser/proc/handle_cooldown(cooldown)
-	spawn(cooldown)
-		used = 0
-		icon_state = "health"
+/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M)
+	if(QDELETED(M))
+		return
+	if(intensity >= 5)
+		M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
+	M.rad_act(intensity*10)
+
+/obj/item/healthanalyzer/rad_laser/proc/get_cooldown()
+	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
 
 /obj/item/healthanalyzer/rad_laser/attack_self(mob/user)
 	interact(user)
 
-/obj/item/healthanalyzer/rad_laser/proc/GetCooldown()
-	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
-
 /obj/item/healthanalyzer/rad_laser/interact(mob/user)
 	ui_interact(user)
 
-/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user)
-	. = ..()
+/obj/item/healthanalyzer/rad_laser/ui_state(mob/user)
+	return GLOB.hands_state
 
-	var/dat = "Irradiation: <A href='?src=[REF(src)];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
-	dat += "Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=[REF(src)];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>"
-	dat += "Scan Mode: <a href='?src=[REF(src)];mode=1'>"
-	if(!scanmode)
-		dat += "Scan Health"
-	else if(scanmode == 1)
-		dat += "Scan Reagents"
-	else
-		dat += "Disabled"
-	dat += "</a><br><br>"
+/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RadioactiveMicrolaser")
+		ui.open()
 
-	dat += {"
-	Radiation Intensity:
-	<A href='?src=[REF(src)];radint=-5'>-</A><A href='?src=[REF(src)];radint=-1'>-</A>
-	[intensity]
-	<A href='?src=[REF(src)];radint=1'>+</A><A href='?src=[REF(src)];radint=5'>+</A><BR>
+/obj/item/healthanalyzer/rad_laser/ui_data(mob/user)
+	var/list/data = list()
+	data["irradiate"] = irradiate
+	data["stealth"] = stealth
+	data["scanmode"] = scanmode
+	data["intensity"] = intensity
+	data["wavelength"] = wavelength
+	data["on_cooldown"] = used
+	data["cooldown"] = DisplayTimeText(get_cooldown())
+	return data
 
-	Radiation Wavelength:
-	<A href='?src=[REF(src)];radwav=-5'>-</A><A href='?src=[REF(src)];radwav=-1'>-</A>
-	[(wavelength+(intensity*4))]
-	<A href='?src=[REF(src)];radwav=1'>+</A><A href='?src=[REF(src)];radwav=5'>+</A><BR>
-	Laser Cooldown: [DisplayTimeText(GetCooldown())]<BR>
-	"}
+/obj/item/healthanalyzer/rad_laser/ui_act(action, params)
+	if(..())
+		return
 
-	var/datum/browser/popup = new(user, "radlaser", "Radioactive Microlaser Interface", 400, 240)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/item/healthanalyzer/rad_laser/Topic(href, href_list)
-	if(!usr.canUseTopic(src))
-		return 1
-
-	usr.set_machine(src)
-	if(href_list["rad"])
-		irradiate = !irradiate
-
-	else if(href_list["stealthy"])
-		stealth = !stealth
-
-	else if(href_list["mode"])
-		scanmode += 1
-		if(scanmode > 2)
-			scanmode = 0
-
-	else if(href_list["radint"])
-		var/amount = text2num(href_list["radint"])
-		amount += intensity
-		intensity = max(1,(min(20,amount)))
-
-	else if(href_list["radwav"])
-		var/amount = text2num(href_list["radwav"])
-		amount += wavelength
-		wavelength = max(0,(min(120,amount)))
-
-	attack_self(usr)
-	add_fingerprint(usr)
-	return
+	switch(action)
+		if("irradiate")
+			irradiate = !irradiate
+			. = TRUE
+		if("stealth")
+			stealth = !stealth
+			. = TRUE
+		if("scanmode")
+			scanmode = !scanmode
+			. = TRUE
+		if("radintensity")
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "min")
+				target = 1
+				. = TRUE
+			else if(target == "max")
+				target = 20
+				. = TRUE
+			else if(adjust)
+				target = intensity + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				target = round(target)
+				intensity = clamp(target, 1, 20)
+		if("radwavelength")
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "min")
+				target = 0
+				. = TRUE
+			else if(target == "max")
+				target = 120
+				. = TRUE
+			else if(adjust)
+				target = wavelength + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				target = round(target)
+				wavelength = clamp(target, 0, 120)
 
 /obj/item/shadowcloak
 	name = "cloaker belt"
 	desc = "Makes you invisible for short periods of time. Recharges in darkness."
 	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "utilitybelt"
-	item_state = "utility"
+	icon_state = "utility"
+	inhand_icon_state = "utility"
+	worn_icon_state = "utility"
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
@@ -188,7 +198,7 @@ effective or pretty fucking useless.
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/shadowcloak/ui_action_click(mob/user)
-	if(user.get_item_by_slot(SLOT_BELT) == src)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 		if(!on)
 			Activate(usr)
 		else
@@ -196,7 +206,7 @@ effective or pretty fucking useless.
 	return
 
 /obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
-	if(slot == SLOT_BELT)
+	if(slot == ITEM_SLOT_BELT)
 		return 1
 
 /obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
@@ -218,11 +228,11 @@ effective or pretty fucking useless.
 
 /obj/item/shadowcloak/dropped(mob/user)
 	..()
-	if(user && user.get_item_by_slot(SLOT_BELT) != src)
+	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
 /obj/item/shadowcloak/process()
-	if(user.get_item_by_slot(SLOT_BELT) != src)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 		return
 	var/turf/T = get_turf(src)
@@ -232,7 +242,7 @@ effective or pretty fucking useless.
 			charge = max(0,charge - 25)//Quick decrease in light
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
-		animate(user,alpha = CLAMP(255 - charge,0,255),time = 10)
+		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
 
 
 /obj/item/jammer

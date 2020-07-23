@@ -26,7 +26,7 @@
 			if(I.tool_behaviour == TOOL_WRENCH && !anchored)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
-				setAnchored(TRUE)
+				set_anchored(TRUE)
 				build_step = PTURRET_BOLTED
 				return
 
@@ -51,7 +51,7 @@
 			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 				build_step = PTURRET_UNSECURED
 				return
 
@@ -148,6 +148,7 @@
 					turret.installation = installed_gun.type
 					turret.setup(installed_gun)
 					qdel(src)
+					return
 
 			else if(I.tool_behaviour == TOOL_CROWBAR)
 				I.play_tool_sound(src, 75)

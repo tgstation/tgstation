@@ -10,7 +10,7 @@
 	attack_verb = list("bludgeoned", "smashed", "beaten")
 	icon = 'icons/obj/pneumaticCannon.dmi'
 	icon_state = "pneumaticCannon"
-	item_state = "bulldog"
+	inhand_icon_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
@@ -22,8 +22,8 @@
 	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
 	var/checktank = TRUE
 	var/range_multiplier = 1
-	var/throw_amount = 20	//How many items to throw per fire
-	var/fire_mode = PCANNON_FIREALL
+	var/throw_amount = 1	//How many items to throw per fire
+	var/fire_mode = PCANNON_FIFO
 	var/automatic = FALSE
 	var/clumsyCheck = TRUE
 	var/list/allowed_typecache		//Leave as null to allow all.
@@ -57,7 +57,7 @@
 	return automatic
 
 /obj/item/pneumatic_cannon/examine(mob/user)
-	..()
+	. = ..()
 	var/list/out = list()
 	if(!in_range(user, src))
 		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
@@ -67,7 +67,7 @@
 		CHECK_TICK
 	if(tank)
 		out += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
-	to_chat(user, out.Join("<br>"))
+	. += out.Join("\n")
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -126,7 +126,10 @@
 	else
 		I.forceMove(src)
 	loadedItems += I
-	loadedWeightClass += I.w_class
+	if(isitem(I))
+		loadedWeightClass += I.w_class
+	else
+		loadedWeightClass++
 	return TRUE
 
 /obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
@@ -137,7 +140,7 @@
 		return
 	Fire(user, target)
 
-/obj/item/pneumatic_cannon/proc/Fire(mob/living/user, var/atom/target)
+/obj/item/pneumatic_cannon/proc/Fire(mob/living/user, atom/target)
 	if(!istype(user) && !target)
 		return
 	var/discharge = 0
@@ -167,11 +170,11 @@
 				    		 "<span class='danger'>You fire \the [src]!</span>")
 	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
-	playsound(src, fire_sound, 50, 1)
+	playsound(src, fire_sound, 50, TRUE)
 	fire_items(T, user)
 	if(pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
+		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!</span>")
 		C.Paralyze(60)
 
 /obj/item/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
@@ -183,7 +186,7 @@
 		for(var/i in 1 to throw_amount)
 			if(!loadedItems.len)
 				break
-			var/obj/item/I
+			var/atom/movable/I
 			if(fire_mode == PCANNON_FILO)
 				I = loadedItems[loadedItems.len]
 			else
@@ -191,13 +194,17 @@
 			if(!throw_item(target, I, user))
 				break
 
-/obj/item/pneumatic_cannon/proc/throw_item(turf/target, obj/item/I, mob/user)
-	if(!istype(I))
+/obj/item/pneumatic_cannon/proc/throw_item(turf/target, atom/movable/AM, mob/user)
+	if(!istype(AM))
 		return FALSE
-	loadedItems -= I
-	loadedWeightClass -= I.w_class
-	I.forceMove(get_turf(src))
-	I.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
+	loadedItems -= AM
+	if(isitem(AM))
+		var/obj/item/I = AM
+		loadedWeightClass -= I.w_class
+	else
+		loadedWeightClass--
+	AM.forceMove(get_turf(src))
+	AM.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
 	return TRUE
 
 /obj/item/pneumatic_cannon/proc/get_target(turf/target, turf/starting)
@@ -205,8 +212,8 @@
 		return target
 	var/x_o = (target.x - starting.x)
 	var/y_o = (target.y - starting.y)
-	var/new_x = CLAMP((starting.x + (x_o * range_multiplier)), 0, world.maxx)
-	var/new_y = CLAMP((starting.y + (y_o * range_multiplier)), 0, world.maxy)
+	var/new_x = clamp((starting.x + (x_o * range_multiplier)), 0, world.maxx)
+	var/new_y = clamp((starting.y + (y_o * range_multiplier)), 0, world.maxy)
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 
@@ -214,17 +221,19 @@
 	. = ..()
 	if (loadedItems.Remove(A))
 		var/obj/item/I = A
-		loadedWeightClass -= I.w_class
+		if(istype(I))
+			loadedWeightClass -= I.w_class
+		else
+			loadedWeightClass--
 	else if (A == tank)
 		tank = null
 		update_icon()
 
-/obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
+/obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity
 	name = "improvised pneumatic cannon"
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
-	w_class = WEIGHT_CLASS_NORMAL
-	maxWeightClass = 7
+	maxWeightClass = 10
 	gasPerThrow = 5
 
 /obj/item/pneumatic_cannon/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
@@ -245,11 +254,11 @@
 		tank = thetank
 	update_icon()
 
-/obj/item/pneumatic_cannon/update_icon()
-	cut_overlays()
+/obj/item/pneumatic_cannon/update_overlays()
+	. = ..()
 	if(!tank)
 		return
-	add_overlay(tank.icon_state)
+	. += tank.icon_state
 
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj) && !ispath(type, /mob))
@@ -299,14 +308,15 @@
 	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "speargun"
-	item_state = "speargun"
+	inhand_icon_state = "speargun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	gasPerThrow = 0
 	checktank = FALSE
 	range_multiplier = 3
 	throw_amount = 1
+	pressureSetting = 2
 	maxWeightClass = 2 //a single magspear
 	spin_item = FALSE
 	var/static/list/magspear_typecache = typecacheof(/obj/item/throwing_star/magspear)
@@ -319,15 +329,15 @@
 	name = "quiver"
 	desc = "A quiver for holding magspears."
 	icon_state = "quiver"
-	item_state = "quiver"
+	inhand_icon_state = "quiver"
 
 /obj/item/storage/backpack/magspear_quiver/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 20
 	STR.max_combined_w_class = 40
 	STR.display_numerical_stacking = TRUE
-	STR.can_hold = typecacheof(list(
+	STR.set_holdable(list(
 		/obj/item/throwing_star/magspear
 		))
 

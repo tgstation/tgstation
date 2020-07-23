@@ -6,10 +6,13 @@
 		qdel(src)
 	owner = new_owner
 
-/datum/spawners_menu/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.observer_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/spawners_menu/ui_state(mob/user)
+	return GLOB.observer_state
+
+/datum/spawners_menu/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "spawners_menu", "Spawners Menu", 700, 600, master_ui, state)
+		ui = new(user, src, "SpawnersMenu")
 		ui.open()
 
 /datum/spawners_menu/ui_data(mob/user)
@@ -18,14 +21,18 @@
 	for(var/spawner in GLOB.mob_spawners)
 		var/list/this = list()
 		this["name"] = spawner
-		this["desc"] = ""
+		this["short_desc"] = ""
+		this["flavor_text"] = ""
+		this["important_warning"] = ""
 		this["refs"] = list()
 		for(var/spawner_obj in GLOB.mob_spawners[spawner])
 			this["refs"] += "[REF(spawner_obj)]"
 			if(!this["desc"])
 				if(istype(spawner_obj, /obj/effect/mob_spawn))
 					var/obj/effect/mob_spawn/MS = spawner_obj
-					this["desc"] = MS.flavour_text
+					this["short_desc"] = MS.short_desc
+					this["flavor_text"] = MS.flavour_text
+					this["important_info"] = MS.important_info
 				else
 					var/obj/O = spawner_obj
 					this["desc"] = O.desc

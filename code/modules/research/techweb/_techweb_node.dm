@@ -7,6 +7,7 @@
 	var/display_name = "Errored Node"
 	var/description = "Why are you seeing this?"
 	var/hidden = FALSE			//Whether it starts off hidden.
+	var/experimental = FALSE	//If the tech can be randomly granted by the BEPIS as a reward. Meant to be fully given in tech disks, not researched.
 	var/starting_node = FALSE	//Whether it's available without any research.
 	var/list/prereq_ids = list()
 	var/list/design_ids = list()
@@ -95,3 +96,6 @@
 
 /datum/techweb_node/proc/price_display(datum/techweb/TN)
 	return techweb_point_display_generic(get_price(TN))
+
+/datum/techweb_node/proc/on_research() //new proc, not currently in file
+    return

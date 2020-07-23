@@ -5,6 +5,7 @@
 	desc = "A thin spire of slightly swaying tendrils."
 	max_integrity = 60
 	point_return = 15
+	resistance_flags = LAVA_PROOF
 	var/resource_delay = 0
 
 /obj/structure/blob/resource/scannerreport()

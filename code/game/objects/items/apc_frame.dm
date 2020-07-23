@@ -1,8 +1,8 @@
 /obj/item/wallframe
 	icon = 'icons/obj/wallframe.dmi'
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*2)
 	flags_1 = CONDUCT_1
-	item_state = "syringe_kit"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -32,10 +32,10 @@
 
 /obj/item/wallframe/proc/attach(turf/on_wall, mob/user)
 	if(result_path)
-		playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
-		user.visible_message("[user.name] attaches [src] to the wall.",
+		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
+		user.visible_message("<span class='notice'>[user.name] attaches [src] to the wall.</span>",
 			"<span class='notice'>You attach [src] to the wall.</span>",
-			"<span class='italics'>You hear clicking.</span>")
+			"<span class='hear'>You hear clicking.</span>")
 		var/ndir = get_dir(on_wall,user)
 		if(inverse)
 			ndir = turn(ndir, 180)
@@ -66,8 +66,8 @@
 		if(iswallturf(T))
 			T.attackby(src, user, params)
 
-	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
-	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)
+	var/metal_amt = round(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
+	var/glass_amt = round(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
 
 	if(W.tool_behaviour == TOOL_WRENCH && (metal_amt || glass_amt))
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
@@ -92,7 +92,7 @@
 	if(!..())
 		return
 	var/turf/T = get_turf(on_wall) //the user is not where it needs to be.
-	var/area/A = get_area(T)
+	var/area/A = get_area(user)
 	if(A.get_apc())
 		to_chat(user, "<span class='warning'>This area already has an APC!</span>")
 		return //only one APC per area
@@ -114,10 +114,10 @@
 	desc = "Looks like a circuit. Probably is."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
-	grind_results = list("iron" = 10, "silicon" = 10)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)

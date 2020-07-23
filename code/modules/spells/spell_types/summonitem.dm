@@ -5,7 +5,7 @@
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "GAR YOK"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 100
@@ -36,11 +36,11 @@
 
 			if(!marked_item)
 				if(hand_items)
-					message = "<span class='caution'>You aren't holding anything that can be marked for recall.</span>"
+					message = "<span class='warning'>You aren't holding anything that can be marked for recall!</span>"
 				else
-					message = "<span class='notice'>You must hold the desired item in your hands to mark it for recall.</span>"
+					message = "<span class='warning'>You must hold the desired item in your hands to mark it for recall!</span>"
 
-		else if(marked_item && marked_item in hand_items) //unlinking item to the spell
+		else if(marked_item && (marked_item in hand_items)) //unlinking item to the spell
 			message = "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>"
 			name = "Instant Summons"
 			marked_item = 		null
@@ -73,22 +73,10 @@
 						if(issilicon(M)) //Items in silicons warp the whole silicon
 							M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
 							M.forceMove(L.loc)
-							M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
+							M.loc.visible_message("<span class='warning'>[M] suddenly appears!</span>")
 							item_to_retrieve = null
 							break
 						M.dropItemToGround(item_to_retrieve)
-
-						if(iscarbon(M)) //Edge case housekeeping
-							var/mob/living/carbon/C = M
-							for(var/X in C.bodyparts)
-								var/obj/item/bodypart/part = X
-								if(item_to_retrieve in part.embedded_objects)
-									part.embedded_objects -= item_to_retrieve
-									to_chat(C, "<span class='warning'>The [item_to_retrieve] that was embedded in your [L] has mysteriously vanished. How fortunate!</span>")
-									if(!C.has_embedded_objects())
-										C.clear_alert("embeddedobject")
-										SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-									break
 
 					else
 						if(istype(item_to_retrieve.loc, /obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
@@ -107,11 +95,11 @@
 				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
 			if(!L.put_in_hands(item_to_retrieve))
 				item_to_retrieve.forceMove(L.drop_location())
-				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
-				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, 1)
+				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly appears!</span>")
+				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 			else
-				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
-				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, 1)
+				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
+				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
 
 		if(message)

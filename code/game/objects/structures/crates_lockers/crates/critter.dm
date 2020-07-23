@@ -8,6 +8,10 @@
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
 	var/obj/item/tank/internals/emergency_oxygen/tank
 
 /obj/structure/closet/crate/critter/Initialize()
@@ -22,14 +26,17 @@
 
 	return ..()
 
-/obj/structure/closet/crate/critter/update_icon()
-	cut_overlays()
+/obj/structure/closet/crate/critter/update_icon_state()
+	return
+
+/obj/structure/closet/crate/critter/update_overlays()
+	. = ..()
 	if(opened)
-		add_overlay("crittercrate_door_open")
+		. += "crittercrate_door_open"
 	else
-		add_overlay("crittercrate_door")
+		. += "crittercrate_door"
 		if(manifest)
-			add_overlay("manifest")
+			. += "manifest"
 
 /obj/structure/closet/crate/critter/return_air()
 	if(tank)

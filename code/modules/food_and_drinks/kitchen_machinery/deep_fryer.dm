@@ -46,14 +46,14 @@ God bless America.
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/food/condiment,
 		/obj/item/storage,
-		/obj/item/smallDelivery,
+		/obj/item/small_delivery,
 		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
-	reagents.add_reagent("cooking_oil", 25)
+	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
 	component_parts += new /obj/item/stock_parts/micro_laser(null)
@@ -68,11 +68,11 @@ God bless America.
 	fry_speed = oil_efficiency
 
 /obj/machinery/deepfryer/examine(mob/user)
-	..()
+	. = ..()
 	if(frying)
-		to_chat(usr, "You can make out \a [frying] in the oil.")
+		. += "You can make out \a [frying] in the oil."
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.<span>")
+		. += "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.</span>"
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -83,7 +83,7 @@ God bless America.
 		I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = user)
 		qdel(I)
 		return
-	if(!reagents.has_reagent("cooking_oil"))
+	if(!reagents.has_reagent(/datum/reagent/consumable/cooking_oil))
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
@@ -107,7 +107,7 @@ God bless America.
 
 /obj/machinery/deepfryer/process()
 	..()
-	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent("cooking_oil")
+	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent(/datum/reagent/consumable/cooking_oil)
 	if(!C)
 		return
 	reagents.chem_temp = C.fry_temperature
@@ -116,7 +116,7 @@ God bless America.
 		cook_time += fry_speed
 		if(cook_time >= 30 && !frying_fried)
 			frying_fried = TRUE //frying... frying... fried
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 			audible_message("<span class='notice'>[src] dings!</span>")
 		else if (cook_time >= 60 && !frying_burnt)
 			frying_burnt = TRUE
@@ -146,9 +146,10 @@ God bless America.
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/carbon/C = user.pulling
-		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
-		reagents.reaction(C, TOUCH)
-		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
+		user.visible_message("<span class='danger'>[user] dunks [C]'s face in [src]!</span>")
+		reagents.expose(C, TOUCH)
+		var/permeability = 1 - C.get_permeability_protection(list(HEAD))
+		C.apply_damage(min(30 * permeability, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
 		C.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)

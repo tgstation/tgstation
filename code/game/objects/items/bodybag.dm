@@ -30,7 +30,7 @@
 		R.add_fingerprint(user)
 		qdel(src)
 		user.forceMove(R)
-		playsound(src, 'sound/items/zip.ogg', 15, 1, -3)
+		playsound(src, 'sound/items/zip.ogg', 15, TRUE, -3)
 		return (OXYLOSS)
 	..()
 
@@ -44,20 +44,12 @@
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_MAT_REDEMPTION
-	var/static/datum/callback/canreach_blocking_callback = CALLBACK(GLOBAL_PROC, .proc/__bluespace_bodybag_canreach_block)
-
-/obj/item/bodybag/bluespace/Initialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_CANREACH, canreach_blocking_callback)
-
-/proc/__bluespace_bodybag_canreach_block()
-	return COMPONENT_BLOCK_REACH
 
 /obj/item/bodybag/bluespace/examine(mob/user)
-	..()
+	. = ..()
 	if(contents.len)
 		var/s = contents.len == 1 ? "" : "s"
-		to_chat(user, "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>")
+		. += "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>"
 
 /obj/item/bodybag/bluespace/Destroy()
 	for(var/atom/movable/A in contents)

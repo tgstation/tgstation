@@ -1,6 +1,0 @@
-author: "RaveRadbury"
-delete-after: True
-changes: 
-  - rscadd: "Quirks have flavor text in medical records"
-  - rscadd: "All quirks have medical record entries"
-  - spellcheck: "All quirk medical records refer to \"Patient\", removing a few instances of \"Subject\""

@@ -28,7 +28,7 @@
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
-	B.item_state = "melted"
+	B.inhand_icon_state = "melted"
 	B.lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	B.righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(B)
@@ -43,7 +43,7 @@
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
-//	projectile_type = "/obj/item/projectile/practice"
+//	projectile_type = "/obj/projectile/practice"
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate sub-machine guns.
@@ -112,7 +112,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	info = {"<b>Target:</b> Research-station Epsilon<br>
 			<b>Objective:</b> Prototype weaponry. The captain likely keeps them locked in her safe.<br>
 			<br>
-			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunatly he has been captured by security
+			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunately he has been captured by security
 			Your objective is to split up, locate any of the papers containing the captain's safe code, open the safe and
 			secure anything found inside. If possible, recover the imprisioned syndicate operative and receive the code from him.<br>
 			<br>

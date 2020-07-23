@@ -7,7 +7,7 @@
 
 	icon = 'icons/obj/vending_restock.dmi'
 	icon_state = "refill_snack"
-	item_state = "restock_unit"
+	inhand_icon_state = "restock_unit"
 	desc = "A vending machine restock cart."
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
@@ -30,14 +30,14 @@
 	name = "\improper [machine_name] restocking unit"
 
 /obj/item/vending_refill/examine(mob/user)
-	..()
+	. = ..()
 	var/num = get_part_rating()
 	if (num == INFINITY)
-		to_chat(user, "It's sealed tight, completely full of supplies.")
+		. += "It's sealed tight, completely full of supplies."
 	else if (num == 0)
-		to_chat(user, "It's empty!")
+		. += "It's empty!"
 	else
-		to_chat(user, "It can restock [num] item\s.")
+		. += "It can restock [num] item\s."
 
 /obj/item/vending_refill/get_part_rating()
 	if (!products || !contraband || !premium)

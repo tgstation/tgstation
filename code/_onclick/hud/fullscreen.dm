@@ -1,7 +1,3 @@
-
-/mob
-	var/list/screens = list()
-
 /mob/proc/overlay_fullscreen(category, type, severity)
 	var/obj/screen/fullscreen/screen = screens[category]
 	if (!screen || screen.type != type)
@@ -112,16 +108,6 @@
 
 /obj/screen/fullscreen/curse
 	icon_state = "curse"
-	layer = CURSE_LAYER
-	plane = FULLSCREEN_PLANE
-
-/obj/screen/fullscreen/hive_mc
-	icon_state = "hive_mc"
-	layer = CURSE_LAYER
-	plane = FULLSCREEN_PLANE
-
-/obj/screen/fullscreen/hive_eyes
-	icon_state = "hive_eyes"
 	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 

@@ -17,12 +17,16 @@
 	time = 155
 
 /datum/surgery_step/ground_nerves/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] starts splicing together [target]'s nerves.", "<span class='notice'>You start splicing together [target]'s nerves.</span>")
+	display_results(user, target, "<span class='notice'>You start rerouting [target]'s nerves.</span>",
+		"<span class='notice'>[user] starts rerouting [target]'s nerves.</span>",
+		"<span class='notice'>[user] starts manipulating [target]'s nervous system.</span>")
 
-/datum/surgery_step/ground_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] successfully splices [target]'s nervous system!", "<span class='notice'>You successfully splice [target]'s nervous system!</span>")
+/datum/surgery_step/ground_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	display_results(user, target, "<span class='notice'>You successfully reroute [target]'s nervous system!</span>",
+		"<span class='notice'>[user] successfully reroutes [target]'s nervous system!</span>",
+		"<span class='notice'>[user] finishes manipulating [target]'s nervous system.</span>")
 	new /datum/bioware/grounded_nerves(target)
-	return TRUE
+	return ..()
 
 /datum/bioware/grounded_nerves
 	name = "Grounded Nerves"

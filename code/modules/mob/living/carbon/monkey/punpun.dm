@@ -26,10 +26,12 @@
 	//These have to be after the parent new to ensure that the monkey
 	//bodyparts are actually created before we try to equip things to
 	//those slots
+	if(ancestor_chain > 1)
+		generate_fake_scars(rand(ancestor_chain, ancestor_chain * 4))
 	if(relic_hat)
-		equip_to_slot_or_del(new relic_hat, SLOT_HEAD)
+		equip_to_slot_or_del(new relic_hat, ITEM_SLOT_HEAD)
 	if(relic_mask)
-		equip_to_slot_or_del(new relic_mask, SLOT_WEAR_MASK)
+		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
 
 /mob/living/carbon/monkey/punpun/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)

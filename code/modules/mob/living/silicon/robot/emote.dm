@@ -39,12 +39,6 @@
 	message_param = "pings at %t."
 	sound = 'sound/machines/ping.ogg'
 
-/datum/emote/silicon/chime
-	key = "chime"
-	key_third_person = "chimes"
-	message = "chimes."
-	sound = 'sound/machines/chime.ogg'
-
 /datum/emote/silicon/sad
 	key = "sad"
 	message = "plays a sad trombone..."
@@ -61,8 +55,8 @@
 
 	if(stat == CONSCIOUS)
 		if(!cell || !cell.charge)
-			visible_message("The power warning light on <span class='name'>[src]</span> flashes urgently.",\
+			visible_message("<span class='notice'>The power warning light on <span class='name'>[src]</span> flashes urgently.</span>", \
 							"You announce you are operating in low power mode.")
-			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+			playsound(loc, 'sound/machines/buzz-two.ogg', 50, FALSE)
 		else
 			to_chat(src, "<span class='warning'>You can only use this emote when you're out of charge.</span>")

@@ -2,7 +2,7 @@
 	name = "muzzle"
 	desc = "To stop that awful noise."
 	icon_state = "muzzle"
-	item_state = "blindfold"
+	inhand_icon_state = "blindfold"
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.9
@@ -20,7 +20,7 @@
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
-	item_state = "sterile"
+	inhand_icon_state = "sterile"
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
@@ -43,11 +43,12 @@
 /obj/item/clothing/mask/fakemoustache/italian
 	name = "italian moustache"
 	desc = "Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly."
-	clothing_flags = SHOWEROKAY
-	
-/obj/item/clothing/mask/fakemoustache/italian/speechModification(M)
-	if(copytext(M, 1, 2) != "*")
-		M = " [M]"
+	modifies_speech = TRUE
+
+/obj/item/clothing/mask/fakemoustache/italian/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
 		var/list/italian_words = strings("italian_replacement.json", "italian")
 
 		for(var/key in italian_words)
@@ -55,13 +56,13 @@
 			if(islist(value))
 				value = pick(value)
 
-			M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
-			M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
-			M = replacetextEx(M, " [key]", " [value]")
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
 
 		if(prob(3))
-			M += pick(" Ravioli, ravioli, give me the formuoli!"," Mamma-mia!"," Mamma-mia! That's a spicy meat-ball!", " La la la la la funiculi funicula!")
-	return trim(M)
+			message += pick(" Ravioli, ravioli, give me the formuoli!"," Mamma-mia!"," Mamma-mia! That's a spicy meat-ball!", " La la la la la funiculi funicula!")
+	speech_args[SPEECH_MESSAGE] = trim(message)
 
 /obj/item/clothing/mask/joy
 	name = "joy mask"
@@ -70,46 +71,46 @@
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
-	desc = "A rubber pig mask with a builtin voice modulator."
+	desc = "A rubber pig mask with a built-in voice modulator."
 	icon_state = "pig"
-	item_state = "pig"
+	inhand_icon_state = "pig"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	clothing_flags = VOICEBOX_TOGGLABLE
 	w_class = WEIGHT_CLASS_SMALL
+	modifies_speech = TRUE
 
-/obj/item/clothing/mask/pig/speechModification(message)
-	. = message
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
-		. = pick("Oink!","Squeeeeeeee!","Oink Oink!")
+/obj/item/clothing/mask/pig/handle_speech(datum/source, list/speech_args)
+	if(!(clothing_flags & VOICEBOX_DISABLED))
+		speech_args[SPEECH_MESSAGE] = pick("Oink!","Squeeeeeeee!","Oink Oink!")
 
 /obj/item/clothing/mask/pig/cursed
 	name = "pig face"
-	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
+	desc = "It looks like a mask, but closer inspection reveals it's melded onto this person's face!"
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
 /obj/item/clothing/mask/pig/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, TRUE)
 
 ///frog mask - reeee!!
 /obj/item/clothing/mask/frog
 	name = "frog mask"
 	desc = "An ancient mask carved in the shape of a frog.<br> Sanity is like gravity, all it needs is a push."
 	icon_state = "frog"
-	item_state = "frog"
+	inhand_icon_state = "frog"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	clothing_flags = VOICEBOX_TOGGLABLE
+	modifies_speech = TRUE
 
-/obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
-	. = message
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+/obj/item/clothing/mask/frog/handle_speech(datum/source, list/speech_args) //whenever you speak
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
-			. = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
+			speech_args[SPEECH_MESSAGE] = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
 		else
-			. = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
+			speech_args[SPEECH_MESSAGE] = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
 
 /obj/item/clothing/mask/frog/cursed
 	clothing_flags = NONE
@@ -126,42 +127,40 @@
 
 /obj/item/clothing/mask/cowmask
 	name = "cow mask"
-	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
-	item_state = "cowmask"
+	inhand_icon_state = "cowmask"
 	clothing_flags = VOICEBOX_TOGGLABLE
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
+	modifies_speech = TRUE
 
-/obj/item/clothing/mask/cowmask/speechModification(message)
-	. = message
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
-		. = pick("Moooooooo!","Moo!","Moooo!")
+/obj/item/clothing/mask/cowmask/handle_speech(datum/source, list/speech_args)
+	if(!(clothing_flags & VOICEBOX_DISABLED))
+		speech_args[SPEECH_MESSAGE] = pick("Moooooooo!","Moo!","Moooo!")
 
 /obj/item/clothing/mask/cowmask/cursed
 	name = "cow face"
-	desc = "It looks like a cow mask, but closer inspection reveals it's melded onto this persons face!"
+	desc = "It looks like a cow mask, but closer inspection reveals it's melded onto this person's face!"
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
 /obj/item/clothing/mask/cowmask/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/horsehead
 	name = "horse head mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
-	item_state = "horsehead"
+	inhand_icon_state = "horsehead"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEYES|HIDEEARS
 	w_class = WEIGHT_CLASS_SMALL
 	clothing_flags = VOICEBOX_TOGGLABLE
 
-/obj/item/clothing/mask/horsehead/speechModification(message)
-	. = message
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
-		. = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
+/obj/item/clothing/mask/horsehead/handle_speech(datum/source, list/speech_args)
+	if(!(clothing_flags & VOICEBOX_DISABLED))
+		speech_args[SPEECH_MESSAGE] = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 
 /obj/item/clothing/mask/horsehead/cursed
 	name = "horse face"
@@ -172,13 +171,13 @@
 /obj/item/clothing/mask/horsehead/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/rat
 	name = "rat mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a rat."
 	icon_state = "rat"
-	item_state = "rat"
+	inhand_icon_state = "rat"
 	flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 
@@ -186,43 +185,43 @@
 	name = "fox mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a fox."
 	icon_state = "fox"
-	item_state = "fox"
+	inhand_icon_state = "fox"
 
 /obj/item/clothing/mask/rat/bee
 	name = "bee mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a bee."
 	icon_state = "bee"
-	item_state = "bee"
+	inhand_icon_state = "bee"
 
 /obj/item/clothing/mask/rat/bear
 	name = "bear mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a bear."
 	icon_state = "bear"
-	item_state = "bear"
+	inhand_icon_state = "bear"
 
 /obj/item/clothing/mask/rat/bat
 	name = "bat mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a bat."
 	icon_state = "bat"
-	item_state = "bat"
+	inhand_icon_state = "bat"
 
 /obj/item/clothing/mask/rat/raven
 	name = "raven mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a raven."
 	icon_state = "raven"
-	item_state = "raven"
+	inhand_icon_state = "raven"
 
 /obj/item/clothing/mask/rat/jackal
 	name = "jackal mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a jackal."
 	icon_state = "jackal"
-	item_state = "jackal"
+	inhand_icon_state = "jackal"
 
 /obj/item/clothing/mask/rat/tribal
 	name = "tribal mask"
 	desc = "A mask carved out of wood, detailed carefully by hand."
 	icon_state = "bumba"
-	item_state = "bumba"
+	inhand_icon_state = "bumba"
 
 /obj/item/clothing/mask/bandana
 	name = "botany bandana"
@@ -231,7 +230,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
-	visor_flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
 	icon_state = "bandbotany"
@@ -243,7 +242,7 @@
 	. = ..()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if((C.get_item_by_slot(SLOT_HEAD == src)) || (C.get_item_by_slot(SLOT_WEAR_MASK) == src))
+		if((C.get_item_by_slot(ITEM_SLOT_HEAD == src)) || (C.get_item_by_slot(ITEM_SLOT_MASK) == src))
 			to_chat(user, "<span class='warning'>You can't tie [src] while wearing it!</span>")
 			return
 	if(slot_flags & ITEM_SLOT_HEAD)
@@ -254,6 +253,7 @@
 			nk.name = "[name] neckerchief"
 			nk.desc = "[desc] It's tied up like a neckerchief."
 			nk.icon_state = icon_state
+			nk.worn_icon = 'icons/misc/hidden.dmi' //hide underlying neckerchief object while it applies its own mutable appearance
 			nk.sourceBandanaType = src.type
 			var/currentHandIndex = user.get_held_index_of_item(src)
 			user.transferItemToLoc(src, null)
@@ -261,7 +261,7 @@
 			user.visible_message("<span class='notice'>You tie [src] up like a neckerchief.</span>", "<span class='notice'>[user] ties [src] up like a neckerchief.</span>")
 			qdel(src)
 		else
-			to_chat(user, "<span class='warning'>You must be holding [src] in order to tie it!")
+			to_chat(user, "<span class='warning'>You must be holding [src] in order to tie it!</span>")
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
@@ -302,33 +302,35 @@
 	name = "mummy mask"
 	desc = "Ancient bandages."
 	icon_state = "mummy_mask"
-	item_state = "mummy_mask"
+	inhand_icon_state = "mummy_mask"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/mask/scarecrow
 	name = "sack mask"
 	desc = "A burlap sack with eyeholes."
 	icon_state = "scarecrow_sack"
-	item_state = "scarecrow_sack"
+	inhand_icon_state = "scarecrow_sack"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/mask/gondola
 	name = "gondola mask"
 	desc = "Genuine gondola fur."
 	icon_state = "gondola"
-	item_state = "gondola"
+	inhand_icon_state = "gondola"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
+	modifies_speech = TRUE
 
-/obj/item/clothing/mask/gondola/speechModification(M)
-	if(copytext(M, 1, 2) != "*")
-		M = " [M]"
+/obj/item/clothing/mask/gondola/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
 		var/list/spurdo_words = strings("spurdo_replacement.json", "spurdo")
 		for(var/key in spurdo_words)
 			var/value = spurdo_words[key]
 			if(islist(value))
 				value = pick(value)
-			M = replacetextEx(M,regex(uppertext(key),"g"), "[uppertext(value)]")
-			M = replacetextEx(M,regex(capitalize(key),"g"), "[capitalize(value)]")
-			M = replacetextEx(M,regex(key,"g"), "[value]")
-	return trim(M)
+			message = replacetextEx(message,regex(uppertext(key),"g"), "[uppertext(value)]")
+			message = replacetextEx(message,regex(capitalize(key),"g"), "[capitalize(value)]")
+			message = replacetextEx(message,regex(key,"g"), "[value]")
+	speech_args[SPEECH_MESSAGE] = trim(message)

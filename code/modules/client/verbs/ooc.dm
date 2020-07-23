@@ -28,7 +28,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(QDELETED(src))
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
 
 	if(!msg)
@@ -36,8 +36,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	msg = emoji_parse(msg)
 
-	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
-		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+	if(SSticker.HasRoundStarted() && (msg[1] in list(".",";",":","#") || findtext_char(msg, "say", 1, 5)))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "Yes", "No") != "Yes")
 			return
 
 	if(!holder)
@@ -56,12 +56,17 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	mob.log_talk(raw_msg, LOG_OOC)
 
 	var/keyname = key
+	if(prefs.hearted)
+		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
+		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
+			if(holder?.fakekey in C.prefs.ignoring)
+				continue
 			if(holder)
 				if(!holder.fakekey || C.holder)
 					if(check_rights_for(src, R_ADMIN))
@@ -102,13 +107,13 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 /client/proc/set_ooc(newColor as color)
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
-	set category = "Fun"
+	set category = "Server"
 	GLOB.OOC_COLOR = sanitize_ooccolor(newColor)
 
 /client/proc/reset_ooc()
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
-	set category = "Fun"
+	set category = "Server"
 	GLOB.OOC_COLOR = null
 
 /client/verb/colorooc()
@@ -156,7 +161,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/action = alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", "Recreate Chat Output data", "Cancel")
 		if (action != "Recreate Chat Output data")
 			return
-		chatOutput = new /datum/chatOutput(src)
+		chatOutput = new /datum/chat_output(src)
 		chatOutput.start()
 		action = alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
 		if (action == "Fixed")
@@ -264,42 +269,130 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 
 	var/list/body = list()
-	body += "<html><head><title>Playtime for [key]</title></head><BODY><BR>Playtime:"
+	body += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime for [key]</title></head><BODY><BR>Playtime:"
 	body += get_exp_report()
 	body += "</BODY></HTML>"
 	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
 
-/client/proc/ignore_key(client)
-	var/client/C = client
-	if(C.key in prefs.ignoring)
-		prefs.ignoring -= C.key
-	else
-		prefs.ignoring |= C.key
-	to_chat(src, "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel.")
-	prefs.save_preferences()
-
+// Ignore verb
 /client/verb/select_ignore()
 	set name = "Ignore"
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
+	// Make a list to choose players from
+	var/list/players = list()
 
-	var/see_ghost_names = isobserver(mob)
-	var/list/choices = list()
+	// Use keys and fakekeys for the same purpose
+	var/displayed_key = ""
+
+	// Try to add every player who's online to the list
 	for(var/client/C in GLOB.clients)
-		if(isobserver(C.mob) && see_ghost_names)
-			choices["[C.mob]([C])"] = C
+		// Don't add ourself
+		if(C == src)
+			continue
+
+		// Don't add players we've already ignored if they're not using a fakekey
+		if((C.key in prefs.ignoring) && !C.holder?.fakekey)
+			continue
+
+		// Don't add players using a fakekey we've already ignored
+		if(C.holder?.fakekey in prefs.ignoring)
+			continue
+
+		// Use the player's fakekey if they're using one
+		if(C.holder?.fakekey)
+			displayed_key = C.holder.fakekey
+
+		// Use the player's key if they're not using a fakekey
 		else
-			choices[C] = C
-	choices = sortList(choices)
-	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in choices
-	if(!selection || !(selection in choices))
+			displayed_key = C.key
+
+		// Check if both we and the player are ghosts and they're not using a fakekey
+		if(isobserver(mob) && isobserver(C.mob) && !C.holder?.fakekey)
+			// Show us the player's mob name in the list in front of their displayed key
+			// Add the player's displayed key to the list
+			players["[C.mob]([displayed_key])"] = displayed_key
+
+		// Add the player's displayed key to the list if we or the player aren't a ghost or they're using a fakekey
+		else
+			players[displayed_key] = displayed_key
+
+	// Check if the list is empty
+	if(!players.len)
+		// Express that there are no players we can ignore in chat
+		to_chat(src, "There are no other players you can ignore!")
+
+		// Stop running
 		return
-	selection = choices[selection]
-	if(selection == src)
-		to_chat(src, "You can't ignore yourself.")
+
+	// Sort the list
+	players = sortList(players)
+
+	// Request the player to ignore
+	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in players
+
+	// Stop running if we didn't receieve a valid selection
+	if(!selection || !(selection in players))
 		return
-	ignore_key(selection)
+
+	// Store the selected player
+	selection = players[selection]
+
+	// Check if the selected player is on our ignore list
+	if(selection in prefs.ignoring)
+		// Express that the selected player is already on our ignore list in chat
+		to_chat(src, "You are already ignoring [selection]!")
+
+		// Stop running
+		return
+
+	// Add the selected player to our ignore list
+	prefs.ignoring.Add(selection)
+
+	// Save our preferences
+	prefs.save_preferences()
+
+	// Express that we've ignored the selected player in chat
+	to_chat(src, "You are now ignoring [selection] on the OOC channel.")
+
+// Unignore verb
+/client/verb/select_unignore()
+	set name = "Unignore"
+	set category = "OOC"
+	set desc = "Stop ignoring a player's messages on the OOC channel"
+
+	// Check if we've ignored any players
+	if(!prefs.ignoring.len)
+		// Express that we haven't ignored any players in chat
+		to_chat(src, "You haven't ignored any players!")
+
+		// Stop running
+		return
+
+	// Request the player to unignore
+	var/selection = input("Please, select a player!", "Unignore", null, null) as null|anything in prefs.ignoring
+
+	// Stop running if we didn't receive a selection
+	if(!selection)
+		return
+
+	// Check if the selected player is not on our ignore list
+	if(!(selection in prefs.ignoring))
+		// Express that the selected player is not on our ignore list in chat
+		to_chat(src, "You are not ignoring [selection]!")
+
+		// Stop running
+		return
+
+	// Remove the selected player from our ignore list
+	prefs.ignoring.Remove(selection)
+
+	// Save our preferences
+	prefs.save_preferences()
+
+	// Express that we've unignored the selected player in chat
+	to_chat(src, "You are no longer ignoring [selection] on the OOC channel.")
 
 /client/proc/show_previous_roundend_report()
 	set name = "Your Last Round"
@@ -353,3 +446,25 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 		pct += delta
 		winset(src, "mainwindow.split", "splitter=[pct]")
+
+
+/client/verb/policy()
+	set name = "Show Policy"
+	set desc = "Show special server rules related to your current character."
+	set category = "OOC"
+
+	//Collect keywords
+	var/list/keywords = mob.get_policy_keywords()
+	var/header = get_policy(POLICY_VERB_HEADER)
+	var/list/policytext = list(header,"<hr>")
+	var/anything = FALSE
+	for(var/keyword in keywords)
+		var/p = get_policy(keyword)
+		if(p)
+			policytext += p
+			policytext += "<hr>"
+			anything = TRUE
+	if(!anything)
+		policytext += "No related rules found."
+
+	usr << browse(policytext.Join(""),"window=policy")

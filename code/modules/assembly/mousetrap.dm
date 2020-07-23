@@ -2,15 +2,17 @@
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
-	item_state = "mousetrap"
-	materials = list(MAT_METAL=100)
+	inhand_icon_state = "mousetrap"
+	custom_materials = list(/datum/material/iron=100)
 	attachable = TRUE
 	var/armed = FALSE
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 
 /obj/item/assembly/mousetrap/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The pressure plate is [armed?"primed":"safe"].</span>")
+	. = ..()
+	. += "<span class='notice'>The pressure plate is [armed?"primed":"safe"].</span>"
 
 /obj/item/assembly/mousetrap/activate()
 	if(..())

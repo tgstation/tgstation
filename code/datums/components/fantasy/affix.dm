@@ -3,6 +3,10 @@
 	var/alignment
 	var/weight = 10
 
+// For those occasional affixes which only make sense in certain circumstances
+/datum/fantasy_affix/proc/validate(datum/component/fantasy/comp)
+	return TRUE
+
 /datum/fantasy_affix/proc/apply(datum/component/fantasy/comp, newName)
 	return newName
 
