@@ -16,3 +16,46 @@
 	if(sold_food.silver_spawned)
 		return FOOD_WORTHLESS
 	return sold_food.value
+
+// Humanlike meats
+/datum/export/meat/human
+	cost = 70
+	unit_name = "human meat"
+	include_subtypes = FALSE
+	export_category = EXPORT_CONTRABAND
+	export_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/human)
+
+/datum/export/meat/human/slime
+	cost = 150
+	unit_name = "slimeperson meat"
+	export_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime)
+
+/datum/export/meat/human/lizard
+	cost = 100
+	unit_name = "lizard meat"
+	export_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard)
+
+/datum/export/meat/human/plant
+	cost = 120
+	unit_name = "plant meat"
+	export_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant)
+
+/datum/export/meat/human/shadow
+	cost = 500
+	unit_name = "shadowy meat"
+	export_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow)
+
+/datum/export/meat/human/fly
+	cost = 120
+	unit_name = "insect meat"
+	export_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly,/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth)
+
+/datum/export/meat/human/ethereal
+	cost = 120
+	unit_name = "ethereal meat"
+	export_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal)
+
+/datum/export/meat/human/golem
+	cost = 100
+	unit_name = "golem meat"
+	export_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem)
