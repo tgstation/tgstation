@@ -223,7 +223,7 @@
 	name = "\improper L6 SAW"
 	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6"
-	inhand_icon_state = "l6closedmag"
+	inhand_icon_state = "l6"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/mm712x82
@@ -246,6 +246,10 @@
 	pin = /obj/item/firing_pin
 
 
+/obj/item/gun/ballistic/automatic/l6_saw/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	. = ..()
 	. += "<b>alt + click</b> to [cover_open ? "close" : "open"] the dust cover."
@@ -254,11 +258,15 @@
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/AltClick(mob/user)
+	if(!user.canUseTopic(src))
+		return
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
-	playsound(user, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
+	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_icon()
 
+/obj/item/gun/ballistic/automatic/l6_saw/update_icon_state()
+	inhand_icon_state = "[initial(icon_state)][cover_open ? "open" : "closed"][magazine ? "mag":"nomag"]"
 
 /obj/item/gun/ballistic/automatic/l6_saw/update_overlays()
 	. = ..()
@@ -298,6 +306,7 @@
 	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
 	icon_state = "sniper"
 	inhand_icon_state = "sniper"
+	worn_icon_state = null
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 90
 	vary_fire_sound = FALSE
@@ -331,6 +340,7 @@
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon_state = "surplus"
 	inhand_icon_state = "moistnugget"
+	worn_icon_state = null
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
 	fire_delay = 30

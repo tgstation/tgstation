@@ -376,15 +376,16 @@
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
 					if(R.addiction_threshold)
 						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, cached_addictions))
-							var/datum/reagent/new_reagent = new R.type()
+							var/datum/reagent/new_reagent = new R.addiction_type()
 							cached_addictions.Add(new_reagent)
 							log_game("[key_name(C)] has become addicted to [R.name] at [R.volume] units.")
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
-					if(is_type_in_list(R,cached_addictions))
+					var/datum/reagent/addiction_type = new R.addiction_type()
+					if(is_type_in_list(addiction_type ,cached_addictions))
 						for(var/addiction in cached_addictions)
 							var/datum/reagent/A = addiction
-							if(istype(R, A))
+							if(istype(addiction_type, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
 				need_mob_update += R.on_mob_life(C)
 
@@ -664,12 +665,13 @@
 	if(isnull(A))
 		return null
 
-	if(!istype(R))
+	if(ispath(R))
 		R = get_reagent(R)
-		if(isnull(R))
-			return null
+	if(isnull(R))
+		return null
 
-	return A.expose_reagents(list(R = R.volume * volume_modifier), src, method, volume_modifier, show_message)
+	// Yes, we need the parentheses.
+	return A.expose_reagents(list((R) = R.volume * volume_modifier), src, method, volume_modifier, show_message)
 
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()

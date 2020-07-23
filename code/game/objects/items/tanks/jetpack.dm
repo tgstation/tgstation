@@ -74,7 +74,7 @@
 /obj/item/tank/jetpack/proc/move_react(mob/user)
 	if(!on)//If jet dont work, it dont work
 		return
-	if(!user)//Don't allow jet self using
+	if(!user || !user.client)//Don't allow jet self using
 		return
 	if(!isturf(user.loc))//You can't use jet in nowhere or from mecha/closet
 		return
@@ -120,6 +120,7 @@
 	desc = "A jetpack made from two air tanks, a fire extinguisher and some atmospherics equipment. It doesn't look like it can hold much."
 	icon_state = "jetpack-improvised"
 	inhand_icon_state = "jetpack-sec"
+	worn_icon_state = "jetpack-sec"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
 	full_speed = FALSE //moves at hardsuit jetpack speeds

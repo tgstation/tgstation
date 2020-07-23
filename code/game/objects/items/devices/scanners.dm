@@ -67,8 +67,7 @@ GENE SCANNER
 		return
 	var/list/t_ray_images = list()
 	for(var/obj/O in orange(distance, viewer) )
-
-		if(O.invisibility == INVISIBILITY_MAXIMUM || HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128
@@ -441,8 +440,12 @@ GENE SCANNER
 		render_list += "</span>"
 
 	if(render_list == "")
-		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
-		to_chat(user, "<span class='notice'>\The [scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no wounds!</span>")
+		if(istype(scanner))
+			// Only emit the cheerful scanner message if this scan came from a scanner
+			playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
+			to_chat(user, "<span class='notice'>\The [scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no wounds!</span>")
+		else
+			to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
 	else
 		to_chat(user, jointext(render_list, ""))
 
@@ -722,7 +725,8 @@ GENE SCANNER
 	name = "nanite scanner"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_scanner"
-	inhand_icon_state = "nanite_remote"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to detect nanites and their programming."
@@ -750,6 +754,7 @@ GENE SCANNER
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gene"
 	inhand_icon_state = "healthanalyzer"
+	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Hold near a DNA console to update the internal database."
@@ -768,7 +773,7 @@ GENE SCANNER
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if (!HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
 		user.visible_message("<span class='notice'>[user] analyzes [M]'s genetic sequence.</span>", \
 							"<span class='notice'>You analyze [M]'s genetic sequence.</span>")
 		gene_scan(M, user)

@@ -5,6 +5,8 @@
 	icon_state = ""
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
+	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
+	var/is_in_use = FALSE
 
 /obj/effect/eldritch/attack_hand(mob/living/user)
 	. = ..()
@@ -15,7 +17,8 @@
 /obj/effect/eldritch/proc/try_activate(mob/living/user)
 	if(!IS_HERETIC(user))
 		return
-	activate(user)
+	if(!is_in_use)
+		INVOKE_ASYNC(src, .proc/activate , user)
 
 /obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -23,6 +26,7 @@
 		qdel(src)
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
+	is_in_use = TRUE
 	// Have fun trying to read this proc.
 	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/list/knowledge = cultie.get_all_knowledge()
@@ -39,7 +43,6 @@
 			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
 				continue
 		atoms_in_range += atom_in_range
-
 	for(var/X in knowledge)
 		var/datum/eldritch_knowledge/current_eldritch_knowledge = knowledge[X]
 
@@ -70,9 +73,23 @@
 
 		flick("[icon_state]_active",src)
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
+		//we are doing this since some on_finished_recipe subtract the atoms from selected_atoms making them invisible permanently.
+		var/list/atoms_to_disappear = selected_atoms.Copy()
+		for(var/to_disappear in atoms_to_disappear)
+			var/atom/atom_to_disappear = to_disappear
+			//temporary so we dont have to deal with the bs of someone picking those up when they may be deleted
+			atom_to_disappear.invisibility = INVISIBILITY_ABSTRACT
 		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
+			is_in_use = FALSE
+
+		for(var/to_appear in atoms_to_disappear)
+			var/atom/atom_to_appear = to_appear
+			//we need to reappear the item just in case the ritual didnt consume everything... or something.
+			atom_to_appear.invisibility = initial(atom_to_appear.invisibility)
+
 		return
+	is_in_use = FALSE
 	to_chat(user,"<span class='warning'>Your ritual failed! You used either wrong components or are missing something important!</span>")
 
 /obj/effect/eldritch/big
@@ -135,7 +152,7 @@
 		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			continue
-		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location.loc)
+		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location)
 		smashes += RS
 	ReworkNetwork()
 
@@ -171,6 +188,42 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/effect/broken_illusion/attack_hand(mob/living/user)
+	if(!ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/human_user = user
+	if(IS_HERETIC(human_user))
+		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
+	else
+		var/obj/item/bodypart/arm = human_user.get_active_hand()
+		if(prob(25))
+			to_chat(human_user,"<span class='userdanger'>Otherwordly presence tears your arm aparts into atoms as you try to touch the hole in the very fabric of reality!</span>")
+			arm.dismember()
+			qdel(arm)
+		else
+			to_chat(human_user,"<span class='danger'>You pull your hand away from the hole as the eldritch energy flails trying to catch onto the existance itself!</span>")
+
+/obj/effect/broken_illusion/attack_tk(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if(IS_HERETIC(human_user))
+		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
+	else
+		//a very elaborate way to suicide
+		to_chat(human_user,"<span class='userdanger'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
+		human_user.ghostize()
+		var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
+		if(head)
+			head.dismember()
+			qdel(head)
+		else
+			human_user.gib()
+
+		var/datum/effect_system/reagents_explosion/explosion = new()
+		explosion.set_up(1, get_turf(human_user), 1, 0)
+		explosion.start()
 
 /obj/effect/broken_illusion/examine(mob/user)
 	if(!IS_HERETIC(user) && ishuman(user))
@@ -230,7 +283,7 @@
 
 ///Generates random name
 /obj/effect/reality_smash/proc/generate_name()
-	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful")
-	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze")
+	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful","Arrogant","Threatening","Peaceful","Aggressive")
+	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze","Grasp","Sight","Whisper","Flow","Touch","Veil","Thought","Imperfection","Blemish","Blush")
 
 	name = pick(prefix) + " " + pick(postfix)

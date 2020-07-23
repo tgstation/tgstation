@@ -1,8 +1,6 @@
 /// The datum and interface for the malf unlock menu, which lets them choose actions to unlock.
 /datum/module_picker
 	var/name = "Malfunction Modules Menu"
-	var/ui_x = 620
-	var/ui_y = 525
 	var/selected_cat
 	var/compact_mode = FALSE
 	var/processing_time = 50
@@ -30,11 +28,13 @@
 
 	return filtered_modules
 
-/datum/module_picker/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/module_picker/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/module_picker/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "MalfunctionModulePicker", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "MalfunctionModulePicker", name)
 		ui.open()
 
 /datum/module_picker/ui_data(mob/user)

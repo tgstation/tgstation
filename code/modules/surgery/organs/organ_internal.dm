@@ -126,6 +126,48 @@
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
 	useable = FALSE //You can't use it anymore after eating it you spaztic
 
+/*
+ * On accidental consumption, cause organ damage and check if they like eating organs
+ */
+/obj/item/organ/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	if(organ_flags & ORGAN_SYNTHETIC)
+		return ..()
+
+	if(organ_flags & ORGAN_FROZEN)
+		return TRUE
+
+	applyOrganDamage(25)
+	OnEatFrom(M, user)
+	if(istype(src, /obj/item/organ/brain)) //brain takes some extra damage
+		applyOrganDamage(25)
+		if(!iszombie(M)) //brains...
+			M.adjust_disgust(50)
+	else if(istype(src, /obj/item/organ/heart)) //heart makes a puddle of blood
+		M.add_splatter_floor(get_turf(src))
+
+	var/obj/item/reagent_containers/food/snacks/S = source_item
+	if(S?.tastes?.len && istype(S))
+		S.tastes += "meat"
+		S.tastes["meat"] = 3
+
+	if(organ_flags & ORGAN_EDIBLE)
+		var/datum/component/edible/EC = src.GetComponent(/datum/component/edible)
+		EC.checkLiked(1, M)
+
+	//people who like gross food or are voracious (voracious people wouldn't even notice)
+	if(((M.dna.species.liked_food & GROSS) && (M.dna.species.liked_food & MEAT)) || M.has_quirk(/datum/quirk/voracious))
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something strange.</span>", \
+						"<span class='warning'>Huh, did I just bite into a [name]?</span>")
+	else
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something awful!</span>", \
+						"<span class='boldwarning'>Ew!! Did I just bite into \a [name]?!</span>")
+
+	if((damage >= maxHealth) && !istype(src, /obj/item/organ/brain)) //don't qdel brains
+		discover_after = FALSE
+		qdel(src) //oops, all gone
+
+	return discover_after
+
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 

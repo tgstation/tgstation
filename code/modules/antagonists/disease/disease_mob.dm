@@ -1,3 +1,5 @@
+#define FREEMOVE_TIME 2 MINUTES
+
 /*
 A mob of type /mob/camera/disease is an overmind coordinating at least one instance of /datum/disease/advance/sentient_disease
 that has infected a host. All instances in a host will be synchronized with the stats of the overmind's disease_template. Any
@@ -23,7 +25,6 @@ the new instance inside the host to be updated to the template's stats.
 
 	var/freemove = TRUE
 	var/freemove_end = 0
-	var/const/freemove_time = 1200
 	var/freemove_end_timerid
 
 	var/datum/action/innate/disease_adapt/adaptation_menu_action
@@ -67,8 +68,8 @@ the new instance inside the host to be updated to the template's stats.
 
 	browser = new /datum/browser(src, "disease_menu", "Adaptation Menu", 1000, 770, src)
 
-	freemove_end = world.time + freemove_time
-	freemove_end_timerid = addtimer(CALLBACK(src, .proc/infect_random_patient_zero), freemove_time, TIMER_STOPPABLE)
+	freemove_end = world.time + FREEMOVE_TIME
+	freemove_end_timerid = addtimer(CALLBACK(src, .proc/infect_random_patient_zero), FREEMOVE_TIME, TIMER_STOPPABLE)
 
 /mob/camera/disease/Destroy()
 	. = ..()
@@ -118,7 +119,7 @@ the new instance inside the host to be updated to the template's stats.
 			follow_next(Dir & NORTHWEST)
 			last_move_tick = world.time
 
-/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
 	var/atom/movable/to_follow = speaker
 	if(radio_freq)
@@ -131,9 +132,9 @@ the new instance inside the host to be updated to the template's stats.
 		link = ""
 	// Create map text prior to modifying message for goonchat
 	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
-		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
+		create_chat_message(speaker, message_language, raw_message, spans)
 	// Recompose the message, because it's scrambled by default
-	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 	to_chat(src, "[link] [message]")
 
 
@@ -409,3 +410,5 @@ the new instance inside the host to be updated to the template's stats.
 /datum/action/innate/disease_adapt/Activate()
 	var/mob/camera/disease/D = owner
 	D.adaptation_menu()
+
+#undef FREEMOVE_TIME

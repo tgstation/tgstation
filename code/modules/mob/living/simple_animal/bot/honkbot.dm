@@ -90,7 +90,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += text({"<BR> Auto Patrol: []"},
 
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
@@ -250,7 +250,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						if(threatlevel >= 6)
 							set waitfor = 0
 							stun_attack(target)
-							anchored = FALSE
+							set_anchored(FALSE)
 							target_lastloc = target.loc
 					return
 

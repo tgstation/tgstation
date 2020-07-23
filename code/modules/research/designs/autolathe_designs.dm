@@ -253,7 +253,16 @@
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/airlock_painter
 	category = list("initial","Tools","Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/airlock_painter/decal
+	name = "Decal Painter"
+	id = "decal_painter"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
+	build_path = /obj/item/airlock_painter/decal
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/emergency_oxygen
 	name = "Emergency Oxygen Tank"
@@ -728,6 +737,14 @@
 	build_path = /obj/item/wallframe/newscaster
 	category = list("initial", "Construction")
 
+/datum/design/bounty_board_frame
+	name = "Bounty Board Frame"
+	id = "bountyboard_frame"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
+	build_path = /obj/item/wallframe/bounty_board
+	category = list("initial", "Construction")
+
 /datum/design/syringe
 	name = "Syringe"
 	id = "syringe"
@@ -897,7 +914,8 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/toy/crayon/spraycan
-	category = list("initial", "Tools")
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/desttagger
 	name = "Destination Tagger"
