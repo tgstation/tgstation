@@ -575,30 +575,31 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //
 /proc/send2otherserver(source,msg,type = "Ahelp",target_servers)
-	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday])
+	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday]")
 	var/comms_key = CONFIG_GET(string/comms_key)
 	if(!comms_key)
 		return
-	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday])
+	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday]")
 	var/our_id = CONFIG_GET(string/cross_comms_name)
-	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday])
+	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday]")
 	var/list/message = list()
 	message["message_sender"] = source
 	message["message"] = msg
 	message["source"] = "([our_id])"
 	message["key"] = comms_key
 	message += type
-	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday])
+	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday]")
 	var/list/servers = CONFIG_GET(keyed_list/cross_server)
-	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday])
+	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday]")
 	for(var/I in servers)
 		if(I == our_id) //No sending to ourselves
 			continue
 		if(target_servers && !(I in target_servers))
 			continue
-		debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday])
+		debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday]")
 		world.Export("[servers[I]]?[list2params(message)]")
-		debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday])
+		debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday]")
+	debug_world_log("LINUXSHUTDOWNDEBUG: [__FILE__]:[__LINE__] @ [world.timeofday]")
 
 
 /proc/tgsadminwho()
