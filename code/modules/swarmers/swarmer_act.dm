@@ -84,16 +84,16 @@
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/turf_in_range in range(1, src))
-		var/area/turf_area = get_area(T)
-		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
-			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-			S.target = null
+		var/area/turf_area = get_area(turf_in_range)
+		if(isspaceturf(turf_in_range) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
+			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			actor.target = null
 			return FALSE
-		else if(istype(A, /area/engine/supermatter))
-			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
-			S.target = null
+		else if(istype(turf_area, /area/engine/supermatter))
+			to_chat(actor, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
+			actor.target = null
 			return FALSE
-	S.dis_integrate(src)
+	actor.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
@@ -165,14 +165,14 @@
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(loc, /area/shuttle)
 	for(var/turf/turf_in_range in range(1, src))
-		var/area/turf_area = get_area(T)
-		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
-			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-			S.target = null
+		var/area/turf_area = get_area(turf_in_range)
+		if(isspaceturf(turf_area) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
+			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			actor.target = null
 			return TRUE
-		else if(istype(A, /area/engine/supermatter))
-			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
-			S.target = null
+		else if(istype(turf_area, /area/engine/supermatter))
+			to_chat(actor, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
+			actor.target = null
 			return TRUE
 	return ..()
 
