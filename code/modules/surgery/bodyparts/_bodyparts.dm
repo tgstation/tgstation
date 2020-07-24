@@ -786,7 +786,6 @@
 		return
 	QDEL_NULL(current_gauze)
 	current_gauze = new gauze.type(src, 1)
-	current_gauze.amount =
 	gauze.use(1)
 
 /**
