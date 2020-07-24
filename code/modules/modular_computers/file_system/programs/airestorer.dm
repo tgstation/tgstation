@@ -81,6 +81,7 @@
 
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive(full_heal = FALSE, admin_revive = FALSE)
+		cardhold.update_icon()
 
 	// Finished restoring
 	if(A.health >= 100)
