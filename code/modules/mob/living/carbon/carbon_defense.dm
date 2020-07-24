@@ -100,7 +100,7 @@
 
 /mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
 	var/message_verb = "attacked"
-	if(I.attack_verb && length(I.attack_verb))
+	if(length(I.attack_verb))
 		message_verb = "[pick(I.attack_verb)]"
 	else if(!I.force)
 		return

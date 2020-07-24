@@ -1161,7 +1161,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				return
 			var/mob/living/carbon/C = target
 			for(var/i in C.bodyparts)
-				var/obj/item/bodypart/squish_part
+				var/obj/item/bodypart/squish_part = i
 				var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
 				squish_part.force_wound_upwards(type_wound, smited=TRUE)
 		if(ADMIN_PUNISHMENT_BLEED)
