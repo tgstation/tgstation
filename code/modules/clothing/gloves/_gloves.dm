@@ -11,14 +11,11 @@
 	strip_delay = 20
 	equip_delay_other = 40
 
-/obj/item/clothing/gloves/ComponentInitialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
-
-/obj/item/clothing/gloves/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
-	transfer_blood = 0
+/obj/item/clothing/gloves/wash(wash_strength)
+	. = ..(wash_strength)
+	if(wash_strength >= CLEAN_STRENGTH_BLOOD && transfer_blood > 0)
+		transfer_blood = 0
+		. = TRUE
 
 /obj/item/clothing/gloves/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>\the [src] are forcing [user]'s hands around [user.p_their()] neck! It looks like the gloves are possessed!</span>")

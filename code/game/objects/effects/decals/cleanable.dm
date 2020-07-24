@@ -32,8 +32,6 @@
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
-
 /obj/effect/decal/cleanable/Destroy()
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
@@ -103,8 +101,10 @@
 			update_icon()
 			H.update_inv_shoes()
 
-/obj/effect/decal/cleanable/proc/clean_react(datum/source, strength)
+/obj/effect/decal/cleanable/wash(wash_strength)
+	..(wash_strength)
 	qdel(src)
+	return TRUE
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

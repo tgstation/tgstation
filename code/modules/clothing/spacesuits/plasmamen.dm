@@ -114,15 +114,12 @@
 	else
 		cut_overlays()
 
-/obj/item/clothing/head/helmet/space/plasmaman/ComponentInitialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/wipe_that_smile_off_your_face)
-
-///gets called when receiving the CLEAN_ACT signal from something, i.e soap or a shower. exists to remove any smiley faces drawn on the helmet.
-/obj/item/clothing/head/helmet/space/plasmaman/proc/wipe_that_smile_off_your_face()
+/obj/item/clothing/head/helmet/space/plasmaman/wash(wash_strength)
+	. = ..(wash_strength)
 	if(smile)
 		smile = FALSE
 		cut_overlays()
+		. = TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	on = !on
