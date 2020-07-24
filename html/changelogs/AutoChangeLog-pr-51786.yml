@@ -1,0 +1,13 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Introduces piercing wounds, a new type of wound mostly related to pointy things like bullets. Piercing wounds cause bleeding that does not clot over time, as well as when that limb is hit."
+  - rscadd: "Skeletons and plasmamen can now suffer bone wounds!"
+  - tweak: "Dismemberment is now integrated with wounds! Simply apply a critical bleeding wound and a severe bone wound, keep whacking, and pop! Sharp weapons will cut through to bones on limbs with critical bleeding wounds, allowing you to still dismember with just a sword or axe."
+  - tweak: "A few projectile types, namely buckshot and shotgun slugs, have had their damage reduced slightly to account for their new wounding abilities. Buckshot may take three shots to crit now, but you can also blast peoples limbs off! Cool!"
+  - rscadd: "Health analyzers now tell you if a humanoid is missing a heart, lungs, liver, or stomach (and they need them to survive)"
+  - tweak: "Formaldehyde replaces calomel in paramedic belts"
+  - bugfix: "Having brute damage on a limb no longer causes bleeding. Bandages now apply to all wounds on a limb, rather than be applied per-wound. Gauze also stops bleeding from dragging, but this wears out the gauze faster"
+  - tweak: "Wounds that have their removal requirements met while the patient is on a stasis bed will now be cured of their wounds as expected. In addition, burn wounds will slowly recover while stasis'd if they have flesh regen/sanitizer applied"
+  - bugfix: "Examining a bleeding dead body now reflects that dead bodies don't actually bleed, saying their blood is pooling instead"
+  - tweak: "Coagulant is now slightly less effective per bleeding wound for each bleed wound on a patient"
