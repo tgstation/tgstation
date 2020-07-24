@@ -37,7 +37,7 @@
 	target.apply_status_effect(STATUS_EFFECT_HELDUP)
 
 	if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)
-		if(target.stat == CONSCIOUS && is_nuclear_operative(shooter) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
+		if(target.stat == CONSCIOUS && is_nuclear_operative(shooter) && !is_nuclear_operative(target) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
 			shooter.client.give_award(/datum/award/achievement/misc/rocket_holdup, shooter)
 
 	target.do_alert_animation(target)
