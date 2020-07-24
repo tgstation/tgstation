@@ -133,8 +133,22 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	user.Move_Pulled(src)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
+	if((dir == DOWN) && (T in vis_contents))
+		update_multiz()
 
 /turf/proc/multiz_turf_new(turf/T, dir)
+	if((dir == DOWN) && (T in vis_contents))
+		update_multiz()
+
+/turf/update_multiz(prune_on_fail = FALSE, init = FALSE)
+	. = ..()
+	var/turf/T = below()
+	if(!T)
+		vis_contents.len = 0
+		return FALSE
+	if(init)
+		vis_contents += T
+	return TRUE
 
 //zPassIn doesn't necessarily pass an atom!
 //direction is direction of travel of air
