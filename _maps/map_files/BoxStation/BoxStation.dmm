@@ -47841,6 +47841,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
+"kNT" = (
+/mob/living/simple_animal/pet/cat/bolty,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "kOw" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
@@ -52636,10 +52640,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"sJe" = (
-/mob/living/simple_animal/pet/cat/bolty,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "sKP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 4
@@ -99789,7 +99789,7 @@ awJ
 anf
 alP
 aAv
-sJe
+kNT
 alP
 hcG
 aFu
