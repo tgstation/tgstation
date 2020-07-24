@@ -166,6 +166,7 @@
 		set_scanline("scanning", 10)
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
+	say("Buzz!")
 	if(next_beep <= world.time)
 		next_beep = world.time + 20
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
