@@ -51686,10 +51686,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"raA" = (
-/mob/living/simple_animal/pet/cat/bolty,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "rbi" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3,
 /turf/open/floor/plasteel,
@@ -52640,6 +52636,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"sJe" = (
+/mob/living/simple_animal/pet/cat/bolty,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "sKP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 4
@@ -99789,7 +99789,7 @@ awJ
 anf
 alP
 aAv
-raA
+sJe
 alP
 hcG
 aFu

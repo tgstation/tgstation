@@ -51183,10 +51183,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
-"hSU" = (
-/obj/effect/landmark/start/head_of_service,
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/kitchen)
 "hTl" = (
 /obj/structure/sink{
 	dir = 8;
@@ -51257,11 +51253,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"hWm" = (
-/obj/structure/lattice/catwalk,
-/mob/living/simple_animal/pet/cat/bolty,
-/turf/open/space/basic,
-/area/space/nearstation)
+"hWJ" = (
+/obj/effect/landmark/start/head_of_service,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/kitchen)
 "hXt" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
@@ -56040,6 +56035,11 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/engine)
+"rJu" = (
+/obj/structure/lattice/catwalk,
+/mob/living/simple_animal/pet/cat/bolty,
+/turf/open/space/basic,
+/area/space/nearstation)
 "rJZ" = (
 /obj/docking_port/stationary{
 	dheight = 4;
@@ -87659,7 +87659,7 @@ aQP
 aRN
 aRN
 aTZ
-hSU
+hWJ
 aSK
 aRN
 aRN
@@ -93279,7 +93279,7 @@ aht
 aht
 aht
 gYo
-hWm
+rJu
 gYo
 aht
 aht
