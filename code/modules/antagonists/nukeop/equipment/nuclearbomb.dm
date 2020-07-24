@@ -393,7 +393,7 @@
 	if(isinspace() && !anchored)
 		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
 	else
-		anchored = !anchored
+		set_anchored(!anchored)
 
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
@@ -661,6 +661,15 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 	if(isobserver(user) || HAS_TRAIT(user.mind, TRAIT_DISK_VERIFIER))
 		. += "<span class='warning'>The serial numbers on [src] are incorrect.</span>"
+
+/* 
+ * You can't accidentally eat the nuke disk, bro
+ */
+/obj/item/disk/nuclear/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something important.</span>", \
+						"<span class='warning'>Wait, is this the nuke disk?</span>")				
+
+	return discover_after
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/claymore/highlander) && !fake)

@@ -65,11 +65,11 @@
 		smooth = SMOOTH_MORE
 		icon = 'icons/effects/dirt.dmi'
 		icon_state = ""
-		queue_smooth(src)
-	queue_smooth_neighbors(src)
+		QUEUE_SMOOTH(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/effect/decal/cleanable/dirt/Destroy()
-	queue_smooth_neighbors(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
 /obj/effect/decal/cleanable/dirt/dust

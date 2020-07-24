@@ -323,14 +323,6 @@
 	results = list(/datum/reagent/consumable/ethanol/thirteenloko = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/coffee = 1, /datum/reagent/consumable/limejuice = 1)
 
-/datum/chemical_reaction/chocolatepudding
-	results = list(/datum/reagent/consumable/chocolatepudding = 20)
-	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 10, /datum/reagent/consumable/eggyolk = 5)
-
-/datum/chemical_reaction/vanillapudding
-	results = list(/datum/reagent/consumable/vanillapudding = 20)
-	required_reagents = list(/datum/reagent/consumable/vanilla = 5, /datum/reagent/consumable/milk = 5, /datum/reagent/consumable/eggyolk = 5)
-
 /datum/chemical_reaction/cherryshake
 	results = list(/datum/reagent/consumable/cherryshake = 3)
 	required_reagents = list(/datum/reagent/consumable/cherryjelly = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)

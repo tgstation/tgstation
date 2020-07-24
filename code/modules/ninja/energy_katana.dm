@@ -14,7 +14,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/datum/effect_system/spark_spread/spark_system

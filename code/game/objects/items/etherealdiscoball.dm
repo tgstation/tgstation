@@ -38,12 +38,8 @@
 
 /obj/structure/etherealball/AltClick(mob/living/carbon/human/user)
 	. = ..()
-	if(anchored)
-		to_chat(user, "<span class='notice'>You unlock the disco ball.</span>")
-		anchored = FALSE
-	else
-		to_chat(user, "<span class='notice'>You lock the disco ball.</span>")
-		anchored = TRUE
+	set_anchored(!anchored)
+	to_chat(user, "<span class='notice'>You [anchored ? null : "un"]lock the disco ball.</span>")
 
 /obj/structure/etherealball/proc/TurnOn()
 	TurnedOn = TRUE //Same

@@ -180,7 +180,7 @@
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
 			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
-				setAnchored(!anchored)
+				set_anchored(!anchored)
 				to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
 		else if(I.tool_behaviour == TOOL_WRENCH && !anchored)
@@ -201,7 +201,7 @@
 
 	return ..()
 
-/obj/structure/window/setAnchored(anchorvalue)
+/obj/structure/window/set_anchored(anchorvalue)
 	..()
 	air_update_turf(TRUE)
 	update_nearby_icons()
@@ -305,7 +305,7 @@
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
 	if(smooth)
-		queue_smooth_neighbors(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 //merges adjacent full-tile windows into one
 /obj/structure/window/update_overlays()
@@ -318,7 +318,7 @@
 		ratio = CEILING(ratio*4, 1) * 25
 
 		if(smooth)
-			queue_smooth(src)
+			QUEUE_SMOOTH(src)
 
 		cut_overlay(crack_overlay)
 		if(ratio > 75)
@@ -417,7 +417,7 @@
 				if(I.use_tool(src, user, 40, volume = 50))
 					to_chat(user, "<span class='notice'>You unscrew the bolts from the frame and the window pops loose.</span>")
 					state = WINDOW_OUT_OF_FRAME
-					setAnchored(FALSE)
+					set_anchored(FALSE)
 				return
 	return ..()
 
@@ -542,7 +542,7 @@
 				if(I.use_tool(src, user, 50, volume = 50))
 					to_chat(user, "<span class='notice'>You unfasten the bolts from the frame and the window pops loose.</span>")
 					state = WINDOW_OUT_OF_FRAME
-					setAnchored(FALSE)
+					set_anchored(FALSE)
 				return
 	return ..()
 
@@ -775,7 +775,7 @@
 		cut_overlay(torn)
 		add_overlay(paper)
 		set_opacity(TRUE)
-	queue_smooth(src)
+	QUEUE_SMOOTH(src)
 
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/user)

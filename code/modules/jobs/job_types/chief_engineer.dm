@@ -1,9 +1,7 @@
 /datum/job/chief_engineer
 	title = "Chief Engineer"
-	flag = CHIEF
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
-	department_flag = ENGSEC
 	head_announce = list("Engineering")
 	faction = "Station"
 	total_positions = 1

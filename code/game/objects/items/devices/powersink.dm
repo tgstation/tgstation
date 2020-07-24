@@ -29,6 +29,10 @@
 /obj/item/powersink/update_icon_state()
 	icon_state = "powersink[mode == OPERATING]"
 
+/obj/item/powersink/set_anchored(anchorvalue)
+	. = ..()
+	density = anchorvalue
+
 /obj/item/powersink/proc/set_mode(value)
 	if(value == mode)
 		return
@@ -37,23 +41,20 @@
 			attached = null
 			if(mode == OPERATING)
 				STOP_PROCESSING(SSobj, src)
-			anchored = FALSE
-			density = FALSE
+			set_anchored(FALSE)
 
 		if(CLAMPED_OFF)
 			if(!attached)
 				return
 			if(mode == OPERATING)
 				STOP_PROCESSING(SSobj, src)
-			anchored = TRUE
-			density = TRUE
+			set_anchored(TRUE)
 
 		if(OPERATING)
 			if(!attached)
 				return
 			START_PROCESSING(SSobj, src)
-			anchored = TRUE
-			density = TRUE
+			set_anchored(TRUE)
 
 	mode = value
 	update_icon()
