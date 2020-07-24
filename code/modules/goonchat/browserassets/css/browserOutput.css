@@ -298,7 +298,10 @@ em						{font-style: normal;	font-weight: bold;}
 .emote					{					font-style: italic;}
 
 .userdanger				{color: #c51e1e;	font-weight: bold;	font-size: 185%;}
+.bolddanger				{color: #c51e1e;font-weight: bold;}
 .danger					{color: #c51e1e;}
+.tinydanger				{color: #c51e1e; font-size: 85%;}
+.smalldanger			{color: #c51e1e; font-size: 90%;}
 .warning				{color: #c51e1e;	font-style: italic;}
 .alertwarning			{color: #FF0000;	font-weight: bold}
 .boldwarning			{color: #c51e1e;	font-style: italic;	font-weight: bold}
@@ -308,8 +311,9 @@ em						{font-style: normal;	font-weight: bold;}
 .rose					{color: #ff5050;}
 .info					{color: #9ab0ff;}
 .notice					{color: #6685f5;}
-.tinynotice				{color: #6685f5; font-style: italic;	font-size: 85%;}
-.smallnotice			{color: #6685f5; font-style: italic;	font-size: 90%;}
+.tinynotice				{color: #6685f5;	font-style: italic;	font-size: 85%;}
+.smallnotice			{color: #6685f5; font-size: 90%;}
+.smallnoticeital		{color: #6685f5;	font-style: italic;	font-size: 90%;}
 .boldnotice				{color: #6685f5;	font-weight: bold;}
 .hear					{color: #6685f5;	font-style: italic;}
 .adminnotice			{color: #6685f5;}

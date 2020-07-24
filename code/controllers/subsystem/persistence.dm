@@ -402,8 +402,8 @@ SUBSYSTEM_DEF(persistence)
 				ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ""
 		else
 			for(var/k in ending_human.all_wounds)
-				var/datum/wound/W = k
-				W.remove_wound() // so we can get the scars for open wounds
+				var/datum/wound/iter_wound = k
+				iter_wound.remove_wound() // so we can get the scars for open wounds
 			if(!ending_human.client)
 				return
 			ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ending_human.format_scars()
