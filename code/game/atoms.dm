@@ -933,8 +933,7 @@
 ///Removes an instance of colour_type from the atom's atom_colours list
 /atom/proc/remove_atom_colour(colour_priority, coloration)
 	if(!atom_colours)
-		atom_colours = list()
-		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
+		return
 	if(colour_priority > atom_colours.len)
 		return
 	if(coloration && atom_colours[colour_priority] != coloration)
@@ -945,10 +944,9 @@
 
 ///Resets the atom's color to null, and then sets it to the highest priority colour available
 /atom/proc/update_atom_colour()
-	if(!atom_colours)
-		atom_colours = list()
-		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
 	color = null
+	if(!atom_colours)
+		return
 	for(var/C in atom_colours)
 		if(islist(C))
 			var/list/L = C
