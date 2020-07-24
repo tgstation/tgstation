@@ -141,7 +141,7 @@
 			// When choosing to update the remaining time we have to be careful not to update the
 			// scheduled time once the EOL completion time has been set.
 			var/sched_remaining = m.scheduled_destruction - world.time
-			if (sched_remaining > CHAT_MESSAGE_EOL_FADE && !eol_complete)
+			if (!m.eol_complete)
 				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
 				m.enter_subsystem(world.time + remaining_time) // push updated time to runechat SS
 

@@ -152,6 +152,9 @@ SUBSYSTEM_DEF(runechat)
 			prev = next = null
 		scheduled_destruction = new_sched_destruction
 
+	// Ensure the scheduled destruction time is properly bound to avoid missing a scheduled event
+	scheduled_destruction = max(CEILING(scheduled_destruction, world.tick_lag), world.time + world.tick_lag)
+
 	// Handle insertion into the secondary queue if the required time is outside our tracked amounts
 	if (scheduled_destruction >= BUCKET_LIMIT)
 		BINARY_INSERT(src, SSrunechat.second_queue, datum/chatmessage, src, scheduled_destruction, COMPARE_KEY)
