@@ -58,7 +58,7 @@
 /obj/structure/swarmer_beacon/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	to_chat(actor, "<span class='warning'>This machine is required for further reproduction of swarmers. Aborting.</span>")
 	return FALSE
-	
+
 /obj/structure/flora/swarmer_act()
 	return FALSE
 

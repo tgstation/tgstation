@@ -38,7 +38,7 @@
   * The beacon cannot be damaged by swarmers, and must be destroyed to prevent the spawning of further player-controlled swarmers.
   * Holds a swarmer within itself during the 30 seconds before releasing it and allowing for another swarmer to be spawned in.
   */
-	
+
 /obj/structure/swarmer_beacon
 	name = "swarmer beacon"
 	desc = "A machine that prints swarmers."
@@ -60,7 +60,7 @@
 		to_chat(user, "<b>A swarmer is currently being created.  Try again soon.</b>")
 		return
 	que_swarmer(user)
-	
+
 /**
   * Interaction when a ghost interacts with a swarmer beacon
   *
@@ -99,7 +99,7 @@
 						 GLORY TO !*# $*#^</span>")
 	swarmer.forceMove(get_turf(src))
 	processing_swarmer = FALSE
-	
+
 /obj/structure/swarmer/trap
 	name = "swarmer trap"
 	desc = "A quickly assembled trap that electrifies living beings and overwhelms machine sensors. Will not retain its form if damaged enough."
@@ -117,21 +117,21 @@
 				living_crosser.Paralyze(100)
 			qdel(src)
 	return ..()
-	
+
 /obj/structure/swarmer/blockade
 	name = "swarmer blockade"
 	desc = "A quickly assembled energy blockade. Will not retain its form if damaged enough, but disabler beams and swarmers pass right through."
 	icon_state = "barricade"
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	max_integrity = 50
-	
+
 /obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/O)
 	. = ..()
 	if(isswarmer(O))
 		return TRUE
 	if(istype(O, /obj/projectile/beam/disabler))
 		return TRUE
-	
+
 /obj/effect/temp_visual/swarmer //temporary swarmer visual feedback objects
 	icon = 'icons/mob/swarmer.dmi'
 	layer = BELOW_MOB_LAYER
