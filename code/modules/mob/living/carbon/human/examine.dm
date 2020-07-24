@@ -151,8 +151,9 @@
 			else
 				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
 
-		for(var/datum/wound/W in BP.wounds)
-			msg += "[W.get_examine_description(user)]\n"
+		for(var/i in BP.wounds)
+			var/datum/wound/iter_wound = i
+			msg += "[iter_wound.get_examine_description(user)]\n"
 
 	for(var/X in disabled)
 		var/obj/item/bodypart/BP = X

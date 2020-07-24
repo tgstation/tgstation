@@ -29,7 +29,8 @@
 		if(chem.volume > 10)
 			H.reagents.remove_reagent(chem.type, chem.volume - 10)
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		for(var/datum/wound/iter_wound in H.all_wounds)
+		for(var/i in H.all_wounds)
+			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(2)
 		H.heal_bodypart_damage(1,1, 0)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)

@@ -152,7 +152,8 @@
 				if(S.next_step(user, user.a_intent))
 					return TRUE
 
-	for(var/datum/wound/W in all_wounds)
+	for(var/i in all_wounds)
+		var/datum/wound/W = i
 		if(W.try_handling(user))
 			return TRUE
 

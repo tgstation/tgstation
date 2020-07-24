@@ -63,7 +63,8 @@
 			heal_amt *= 2
 		C.heal_overall_damage(heal_amt,heal_amt)
 		C.adjustToxLoss(-heal_amt)
-		for(var/datum/wound/iter_wound in C.all_wounds)
+		for(var/i in C.all_wounds)
+			var/datum/wound/iter_wound = i
 			if(prob(4-iter_wound.severity))
 				iter_wound.remove_wound()
 	if(!C.InCritical() && prob(4))

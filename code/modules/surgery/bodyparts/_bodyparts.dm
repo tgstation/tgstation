@@ -259,7 +259,8 @@
 	if(owner && wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
 		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
-	for(var/datum/wound/iter_wound in wounds)
+	for(var/i in wounds)
+		var/datum/wound/iter_wound = i
 		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus)
 
 	/*
@@ -401,7 +402,8 @@
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
 /obj/item/bodypart/proc/force_wound_upwards(specific_woundtype, smited = FALSE)
 	var/datum/wound/potential_wound = specific_woundtype
-	for(var/datum/wound/existing_wound in wounds)
+	for(var/i in wounds)
+		var/datum/wound/existing_wound = i
 		if(existing_wound.wound_type == initial(potential_wound.wound_type))
 			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
 				existing_wound.replace_wound(potential_wound, smited)
@@ -717,9 +719,9 @@
 	if(isnull(wounds))
 		return
 
-	for(var/datum/wound/iter_wound in wounds)
-		if(istype(iter_wound, checking_type))
-			return iter_wound
+	for(var/i in wounds)
+		if(istype(i, checking_type))
+			return i
 
 /**
   * update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status
@@ -733,8 +735,9 @@
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
 
 	// we can (normally) only have one wound per type, but remember there's multiple types (smites like :B:loodless can generate multiple cuts on a limb)
-	for(var/datum/wound/W in wounds)
-		dam_mul *= W.damage_mulitplier_penalty
+	for(var/i in wounds)
+		var/datum/wound/iter_wound = i
+		dam_mul *= iter_wound.damage_mulitplier_penalty
 
 	if(!LAZYLEN(wounds) && current_gauze && !replaced)
 		owner.visible_message("<span class='notice'>\The [current_gauze] on [owner]'s [name] fall away.</span>", "<span class='notice'>The [current_gauze] on your [name] fall away.</span>")

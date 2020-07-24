@@ -167,7 +167,8 @@
 /obj/item/bodypart/proc/get_mangled_state()
 	. = BODYPART_MANGLED_NONE
 
-	for(var/datum/wound/iter_wound in wounds)
+	for(var/i in wounds)
+		var/datum/wound/iter_wound = i
 		if((iter_wound.wound_flags & MANGLES_BONE))
 			. |= BODYPART_MANGLED_BONE
 		if((iter_wound.wound_flags & MANGLES_FLESH))

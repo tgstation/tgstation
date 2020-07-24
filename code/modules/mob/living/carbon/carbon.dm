@@ -65,7 +65,8 @@
 	if(!all_wounds || !(user.a_intent == INTENT_HELP || user == src))
 		return ..()
 
-	for(var/datum/wound/W in shuffle(all_wounds))
+	for(var/i in shuffle(all_wounds))
+		var/datum/wound/W = i
 		if(W.try_treating(I, user))
 			return 1
 

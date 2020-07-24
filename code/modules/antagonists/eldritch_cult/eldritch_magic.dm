@@ -140,14 +140,15 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C1 = target
 		for(var/obj/item/bodypart/bodypart in C2.bodyparts)
-			for(var/datum/wound/wound in bodypart.wounds)
+			for(var/i in bodypart.wounds)
+				var/datum/wound/iter_wound = i
 				if(prob(50))
 					continue
 				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in C1.bodyparts
 				if(!target_bodypart)
 					continue
-				wound.remove_wound()
-				wound.apply_wound(target_bodypart)
+				iter_wound.remove_wound()
+				iter_wound.apply_wound(target_bodypart)
 
 		C1.blood_volume -= 20
 		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
