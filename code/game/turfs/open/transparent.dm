@@ -10,7 +10,12 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/transparent/LateInitialize()
-	update_multiz(TRUE, TRUE)
+	if(!update_multiz(TRUE, TRUE))
+		return
+	for(var/turf/T in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		if(istransparentturf(T))
+			continue
+		T.update_multiz(TRUE, TRUE)
 
 /turf/open/transparent/Destroy()
 	vis_contents.len = 0
