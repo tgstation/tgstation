@@ -1,0 +1,53 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:meta';
+
+@use '~tgui/styles/colors.scss';
+@use '~tgui/styles/base.scss' with (
+  $color-bg: #202020,
+  $color-bg-grad-spread: 0%,
+);
+
+// Core styles
+@include meta.load-css('~tgui/styles/reset.scss');
+
+// Atomic classes
+@include meta.load-css('~tgui/styles/atomic/candystripe.scss');
+@include meta.load-css('~tgui/styles/atomic/color.scss');
+@include meta.load-css('~tgui/styles/atomic/debug-layout.scss');
+@include meta.load-css('~tgui/styles/atomic/outline.scss');
+@include meta.load-css('~tgui/styles/atomic/text.scss');
+
+// Components
+@include meta.load-css('~tgui/styles/components/BlockQuote.scss');
+@include meta.load-css('~tgui/styles/components/Button.scss');
+@include meta.load-css('~tgui/styles/components/ColorBox.scss');
+@include meta.load-css('~tgui/styles/components/Dimmer.scss');
+@include meta.load-css('~tgui/styles/components/Divider.scss');
+@include meta.load-css('~tgui/styles/components/Dropdown.scss');
+@include meta.load-css('~tgui/styles/components/FatalError.scss');
+@include meta.load-css('~tgui/styles/components/Flex.scss');
+@include meta.load-css('~tgui/styles/components/Input.scss');
+@include meta.load-css('~tgui/styles/components/Knob.scss');
+@include meta.load-css('~tgui/styles/components/LabeledList.scss');
+@include meta.load-css('~tgui/styles/components/Modal.scss');
+@include meta.load-css('~tgui/styles/components/NoticeBox.scss');
+@include meta.load-css('~tgui/styles/components/NumberInput.scss');
+@include meta.load-css('~tgui/styles/components/ProgressBar.scss');
+@include meta.load-css('~tgui/styles/components/Section.scss');
+@include meta.load-css('~tgui/styles/components/Slider.scss');
+@include meta.load-css('~tgui/styles/components/Table.scss');
+@include meta.load-css('~tgui/styles/components/Tabs.scss');
+@include meta.load-css('~tgui/styles/components/TextArea.scss');
+@include meta.load-css('~tgui/styles/components/Tooltip.scss');
+
+// Layouts
+@include meta.load-css('~tgui/styles/layouts/Layout.scss');
+@include meta.load-css('~tgui/styles/layouts/TitleBar.scss');
+@include meta.load-css('~tgui/styles/layouts/Window.scss');
+
+// Chat
+@include meta.load-css('./chat.scss');

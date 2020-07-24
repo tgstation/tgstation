@@ -17,22 +17,30 @@ import 'tgui/polyfills/css-om';
 import 'tgui/polyfills/inferno';
 
 // Themes
-import 'tgui/styles/main.scss';
-import './chat.scss';
+import './styles/main.scss';
 
 import { perf } from 'common/perf';
+import { combineReducers } from 'common/redux';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { createRenderer } from 'tgui/renderer';
 import { configureStore, StoreProvider } from 'tgui/store';
-import { chatMiddleware } from 'tgchat';
+import { chatMiddleware } from './chat';
+import { pingMiddleware, pingReducer } from './ping';
+import { settingsMiddleware, settingsReducer } from './settings';
 
 perf.mark('inception', window.__inception__);
 perf.mark('init');
 
 const store = configureStore({
+  reducer: combineReducers({
+    settings: settingsReducer,
+    ping: pingReducer,
+  }),
   middleware: {
     pre: [
       chatMiddleware,
+      pingMiddleware,
+      settingsMiddleware,
     ],
   },
 });
