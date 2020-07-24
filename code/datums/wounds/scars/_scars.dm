@@ -130,12 +130,12 @@
 	if(!ishuman(victim) || isobserver(viewer) || victim == viewer)
 		return TRUE
 
-	var/mob/living/carbon/human/H = victim
+	var/mob/living/carbon/human/human_victim = victim
 	if(istype(limb, /obj/item/bodypart/head))
-		if((H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE)))
+		if((human_victim.wear_mask && (human_victim.wear_mask.flags_inv & HIDEFACE)) || (human_victim.head && (human_victim.head.flags_inv & HIDEFACE)))
 			return FALSE
 	else if(limb.scars_covered_by_clothes)
-		var/num_covers = LAZYLEN(H.clothingonpart(limb))
+		var/num_covers = LAZYLEN(human_victim.clothingonpart(limb))
 		if(num_covers + get_dist(viewer, victim) >= visibility)
 			return FALSE
 

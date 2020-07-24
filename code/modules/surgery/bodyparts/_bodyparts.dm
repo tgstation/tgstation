@@ -161,7 +161,8 @@
 	if(!owner)
 		return
 	. = list()
-	for(var/obj/item/organ/organ_check in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
+	for(var/i in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
+		var/obj/item/organ/organ_check = i
 		if(check_zone(organ_check.zone) == body_zone)
 			. += organ_check
 
@@ -370,7 +371,8 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
 		var/list/clothing = human_wearer.clothingonpart(src)
-		for(var/obj/item/clothing/clothes_check in clothing)
+		for(var/i in clothing)
+			var/obj/item/clothing/clothes_check = i
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			if(clothes_check.armor.getRating("wound"))
 				bare_wound_bonus = 0
@@ -783,8 +785,8 @@
 	if(!istype(gauze) || !gauze.absorption_capacity)
 		return
 	QDEL_NULL(current_gauze)
-	current_gauze = new gauze.type(src)
-	current_gauze.amount = 1
+	current_gauze = new gauze.type(src, 1)
+	current_gauze.amount =
 	gauze.use(1)
 
 /**

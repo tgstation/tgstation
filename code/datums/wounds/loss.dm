@@ -35,8 +35,6 @@
 	victim.visible_message(msg, "<span class='userdanger'>Your [dismembered_part.name] [occur_text]!</span>")
 
 	limb = dismembered_part
-	if(!limb || !victim)
-		return
 	severity = WOUND_SEVERITY_LOSS
 	second_wind()
 	log_wound(victim, src)

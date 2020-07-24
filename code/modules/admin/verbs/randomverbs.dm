@@ -1160,7 +1160,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
 				return
 			var/mob/living/carbon/C = target
-			for(var/obj/item/bodypart/squish_part in C.bodyparts)
+			for(var/i in C.bodyparts)
+				var/obj/item/bodypart/squish_part
 				var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
 				squish_part.force_wound_upwards(type_wound, smited=TRUE)
 		if(ADMIN_PUNISHMENT_BLEED)
@@ -1168,7 +1169,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
 				return
 			var/mob/living/carbon/C = target
-			for(var/obj/item/bodypart/slice_part in C.bodyparts)
+			for(var/i in C.bodyparts)
+				var/obj/item/bodypart/slice_part = i
 				var/type_wound = pick(list(/datum/wound/slash/severe, /datum/wound/slash/moderate))
 				slice_part.force_wound_upwards(type_wound, smited=TRUE)
 				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate))
@@ -1208,7 +1210,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 			dude.Immobilize(5 SECONDS)
 			for(var/wound_bonus_rep in 1 to repetitions)
-				for(var/obj/item/bodypart/slice_part in dude.bodyparts)
+				for(var/i in dude.bodyparts)
+					var/obj/item/bodypart/slice_part = i
 					var/shots_this_limb = 0
 					for(var/t in shuffle(open_adj_turfs))
 						var/turf/iter_turf = t

@@ -106,8 +106,8 @@
 	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)
 		return
 	if(ishuman(victim))
-		var/mob/living/carbon/human/H = victim
-		if(NOBLOOD in H.dna?.species.species_traits)
+		var/mob/living/carbon/human/human_victim = victim
+		if(NOBLOOD in human_victim.dna?.species.species_traits)
 			return
 
 	if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume && prob(internal_bleeding_chance + wounding_dmg))
