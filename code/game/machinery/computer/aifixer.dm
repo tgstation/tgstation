@@ -65,6 +65,7 @@
 	occupier.adjustOxyLoss(-5, 0, FALSE)
 	occupier.adjustFireLoss(-5, 0, FALSE)
 	occupier.adjustBruteLoss(-5, 0)
+	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive(full_heal = FALSE, admin_revive = FALSE)
 		if(!occupier.radio_enabled)
