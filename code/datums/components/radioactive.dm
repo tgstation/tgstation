@@ -23,6 +23,7 @@
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
 	else
 		return COMPONENT_INCOMPATIBLE
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_RADIATION, .proc/rad_clean)
 	if(strength > RAD_MINIMUM_CONTAMINATION)
 		SSradiation.warn(src)
 	//Let's make er glow
@@ -89,6 +90,18 @@
 	if(!hl3_release_date)
 		return
 	strength -= strength / hl3_release_date
+
+/datum/component/radioactive/proc/rad_clean(datum/source, wash_strength)
+	if(QDELETED(src))
+		return
+
+	if(wash_strength >= CLEAN_GOD)
+		qdel(src)
+		return
+
+	strength -= max(0, (strength - (RAD_BACKGROUND_RADIATION * 2)))
+	if(strength <= RAD_BACKGROUND_RADIATION)
+		qdel(src)
 
 #undef RAD_AMOUNT_LOW
 #undef RAD_AMOUNT_MEDIUM

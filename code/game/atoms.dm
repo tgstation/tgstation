@@ -963,12 +963,6 @@
 	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, wash_strength)
 	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 
-	var/datum/component/radioactive/healthy_green_glow = GetComponent(/datum/component/radioactive)
-	if(!QDELETED(healthy_green_glow))
-		healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)))
-		if(healthy_green_glow.strength <= RAD_BACKGROUND_RADIATION)
-			qdel(healthy_green_glow)
-
 	/// we got to return true because of mob code
 	/// and not all code that uses COMSIG_COMPONENT_CLEAN_ACT returns true half the time
 	return TRUE

@@ -98,6 +98,7 @@
 		wash_atom(AM)
 
 /obj/machinery/shower/proc/wash_atom(atom/A)
+	SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_RADIATION, CLEAN_WEAK) // Clean radiation
 	A.washed(src)
 	reagents.expose(A, TOUCH, reaction_volume)
 
