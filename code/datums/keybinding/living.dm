@@ -37,7 +37,8 @@
 
 /datum/keybinding/living/look_up/up(client/user)
 	var/mob/living/L = user.mob
-	L.end_look_up()
+	if(istype(L))
+		L.end_look_up()
 	return TRUE
 
 /datum/keybinding/living/look_down
@@ -57,5 +58,7 @@
 
 /datum/keybinding/living/look_down/up(client/user)
 	var/mob/living/L = user.mob
+	if(istype(L))
+		L.end_look_down()
 	L.end_look_down()
 	return TRUE
