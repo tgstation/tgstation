@@ -10,7 +10,7 @@
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000) //hardcore
 	build_path = /obj/item/storage/part_replacer
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/bs_rped
 	name = "Bluespace RPED"
@@ -20,7 +20,7 @@
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 5000, /datum/material/silver = 2500) //hardcore
 	build_path = /obj/item/storage/part_replacer/bluespace
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 //Capacitors
 /datum/design/basic_capacitor
@@ -32,7 +32,7 @@
 	build_path = /obj/item/stock_parts/capacitor
 	category = list("Stock Parts","Machinery","initial")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
@@ -43,7 +43,7 @@
 	build_path = /obj/item/stock_parts/capacitor/adv
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/super_capacitor
 	name = "Super Capacitor"
@@ -54,7 +54,7 @@
 	build_path = /obj/item/stock_parts/capacitor/super
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/quadratic_capacitor
 	name = "Quadratic Capacitor"
@@ -65,7 +65,7 @@
 	build_path = /obj/item/stock_parts/capacitor/quadratic
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 //Scanning modules
 /datum/design/basic_scanning
@@ -77,7 +77,7 @@
 	build_path = /obj/item/stock_parts/scanning_module
 	category = list("Stock Parts","Machinery","initial")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/adv_scanning
 	name = "Advanced Scanning Module"
@@ -88,7 +88,7 @@
 	build_path = /obj/item/stock_parts/scanning_module/adv
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/phasic_scanning
 	name = "Phasic Scanning Module"
@@ -99,7 +99,7 @@
 	build_path = /obj/item/stock_parts/scanning_module/phasic
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/triphasic_scanning
 	name = "Triphasic Scanning Module"
@@ -110,7 +110,7 @@
 	build_path = /obj/item/stock_parts/scanning_module/triphasic
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 //Maipulators
 /datum/design/micro_mani
@@ -122,7 +122,7 @@
 	build_path = /obj/item/stock_parts/manipulator
 	category = list("Stock Parts","Machinery","initial")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/nano_mani
 	name = "Nano Manipulator"
@@ -133,7 +133,7 @@
 	build_path = /obj/item/stock_parts/manipulator/nano
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/pico_mani
 	name = "Pico Manipulator"
@@ -144,7 +144,7 @@
 	build_path = /obj/item/stock_parts/manipulator/pico
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/femto_mani
 	name = "Femto Manipulator"
@@ -155,7 +155,7 @@
 	build_path = /obj/item/stock_parts/manipulator/femto
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 //Micro-lasers
 /datum/design/basic_micro_laser
@@ -167,7 +167,7 @@
 	build_path = /obj/item/stock_parts/micro_laser
 	category = list("Stock Parts","Machinery","initial")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/high_micro_laser
 	name = "High-Power Micro-Laser"
@@ -178,7 +178,7 @@
 	build_path = /obj/item/stock_parts/micro_laser/high
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/ultra_micro_laser
 	name = "Ultra-High-Power Micro-Laser"
@@ -189,7 +189,7 @@
 	build_path = /obj/item/stock_parts/micro_laser/ultra
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/quadultra_micro_laser
 	name = "Quad-Ultra Micro-Laser"
@@ -200,7 +200,7 @@
 	build_path = /obj/item/stock_parts/micro_laser/quadultra
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/basic_matter_bin
 	name = "Basic Matter Bin"
@@ -211,7 +211,7 @@
 	build_path = /obj/item/stock_parts/matter_bin
 	category = list("Stock Parts","Machinery","initial")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/adv_matter_bin
 	name = "Advanced Matter Bin"
@@ -222,7 +222,7 @@
 	build_path = /obj/item/stock_parts/matter_bin/adv
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/super_matter_bin
 	name = "Super Matter Bin"
@@ -233,7 +233,7 @@
 	build_path = /obj/item/stock_parts/matter_bin/super
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/bluespace_matter_bin
 	name = "Bluespace Matter Bin"
@@ -244,7 +244,7 @@
 	build_path = /obj/item/stock_parts/matter_bin/bluespace
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 //electrolite
 /datum/design/basic_electrolite
@@ -256,7 +256,7 @@
 	build_path = /obj/item/stock_parts/electrolite
 	category = list("Stock Parts","Machinery","initial")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/adv_electrolite
 	name = "Advanced Electrolite"
@@ -267,7 +267,7 @@
 	build_path = /obj/item/stock_parts/electrolite/adv
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/super_electrolite
 	name = "Super Electrolite"
@@ -278,7 +278,7 @@
 	build_path = /obj/item/stock_parts/electrolite/super
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/bluespace_electrolite
 	name = "Bluespace Electrolite"
@@ -289,7 +289,7 @@
 	build_path = /obj/item/stock_parts/electrolite/bluespace
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 //T-Comms devices
 /datum/design/subspace_ansible
@@ -300,7 +300,7 @@
 	materials = list(/datum/material/iron = 100, /datum/material/silver = 100)
 	build_path = /obj/item/stock_parts/subspace/ansible
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/hyperwave_filter
 	name = "Hyperwave Filter"
@@ -310,7 +310,7 @@
 	materials = list(/datum/material/iron = 100, /datum/material/silver = 100)
 	build_path = /obj/item/stock_parts/subspace/filter
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/subspace_amplifier
 	name = "Subspace Amplifier"
@@ -320,7 +320,7 @@
 	materials = list(/datum/material/iron = 100, /datum/material/gold = 100, /datum/material/uranium = 100)
 	build_path = /obj/item/stock_parts/subspace/amplifier
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/subspace_treatment
 	name = "Subspace Treatment Disk"
@@ -330,7 +330,7 @@
 	materials = list(/datum/material/iron = 100, /datum/material/silver = 200)
 	build_path = /obj/item/stock_parts/subspace/treatment
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/subspace_analyzer
 	name = "Subspace Analyzer"
@@ -340,7 +340,7 @@
 	materials = list(/datum/material/iron = 100, /datum/material/gold = 100)
 	build_path = /obj/item/stock_parts/subspace/analyzer
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/subspace_crystal
 	name = "Ansible Crystal"
@@ -350,7 +350,7 @@
 	materials = list(/datum/material/glass = 800, /datum/material/silver = 100, /datum/material/gold = 100)
 	build_path = /obj/item/stock_parts/subspace/crystal
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/subspace_transmitter
 	name = "Subspace Transmitter"
@@ -360,7 +360,7 @@
 	materials = list(/datum/material/glass = 100, /datum/material/silver = 100, /datum/material/uranium = 100)
 	build_path = /obj/item/stock_parts/subspace/transmitter
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/card_reader
 	name = "Card Reader"
