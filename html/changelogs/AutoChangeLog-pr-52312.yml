@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Re-added old keybinds for quick equip, set new default for suit storage slot if none was set yet."
-  - code_imp: "Savefile version minimum bumped to 32."

@@ -1,8 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Player/pAI controlled MULEbots will now use power when they move."
-  - bugfix: "Player/pAI controlled MULEbots will now turn off properly if they ran out of power while moving."
-  - tweak: "MULEbot's power levels now show up on the diagnostic HUD."
-  - tweak: "Players controlling a MULEbot will now see their power level and current load on the status panel."
-  - bugfix: "Player controlled bots (ie securitrons, ED209's, MULEbots, ect) will now get a chat notification when they're turned on/off."

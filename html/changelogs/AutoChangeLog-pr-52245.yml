@@ -1,0 +1,7 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - tweak: "All maps now receive a blood crate and surplus limb crate in Medical."
+  - tweak: "All maps now have a chemical locker in the Pharmacy or in Plumbing."
+  - rscdel: "The last chemistry wardrobe locker has been removed from DeltaStation."
+  - bugfix: "IceBox blood freezer not spawning the correct number of blood bags."

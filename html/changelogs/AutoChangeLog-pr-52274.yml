@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "The BEPIS has been moved to the Cargo Bay from Science, and it's prices have been adjusted to roughly late-game proportions for most players."
+  - balance: "The Rolling Tables and Mauna Mug BEPIS techs have been merged into one."
