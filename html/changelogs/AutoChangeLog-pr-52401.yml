@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "Routing protocols for contractor pods have been fixed - they should no longer send victims to mysterious crystal filled rooms"
