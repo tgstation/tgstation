@@ -123,7 +123,7 @@
 	var/weakness = check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone)
 	var/message_verb = ""
-	if(I.attack_verb && I.attack_verb.len)
+	if(I.attack_verb && length(I.attack_verb))
 		message_verb = "[pick(I.attack_verb)]"
 	else if(I.force)
 		message_verb = "attacked"
