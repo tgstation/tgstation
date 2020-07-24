@@ -60,7 +60,7 @@
 	///Type-path of trait to be applied when grafting a plant.
 	var/graft_gene
 	///Determines if the plant should be allowed to mutate early at 30+ instability.
-	var/mutate_early = TRUE
+	var/seed_flags = TRUE
 
 /obj/item/seeds/Initialize(mapload, nogenes = 0)
 	. = ..()
@@ -211,7 +211,7 @@
 		product_count = clamp(round(product_count/2),0,5)
 	while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod
-		if(instability >= 30 && prob(instability/3) && length(mutatelist) && mutate_early)
+		if(instability >= 30 && prob(instability/3) && length(mutatelist) && (seed_flags & MUTATE_EARLY))
 			var/obj/item/seeds/new_prod = pick(mutatelist)
 			t_prod = initial(new_prod.product)
 			if(!t_prod)
