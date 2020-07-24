@@ -54,10 +54,13 @@
 /datum/component/forensics/proc/clean_act(datum/source, strength)
 	if(strength >= CLEAN_STRENGTH_FINGERPRINTS)
 		wipe_fingerprints()
+		. = TRUE
 	if(strength >= CLEAN_STRENGTH_BLOOD)
 		wipe_blood_DNA()
+		. = TRUE
 	if(strength >= CLEAN_STRENGTH_FIBERS)
 		wipe_fibers()
+		. = TRUE
 
 /datum/component/forensics/proc/add_fingerprint_list(list/_fingerprints)	//list(text)
 	if(!length(_fingerprints))

@@ -83,6 +83,7 @@
 /datum/component/decal/proc/clean_react(datum/source, strength)
 	if(strength >= cleanable)
 		qdel(src)
+		return TRUE
 
 /datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
 	examine_list += description

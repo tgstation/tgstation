@@ -60,3 +60,4 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 /datum/component/creamed/proc/clean_up(datum/source, strength)
 	if(strength >= CLEAN_WEAK)
 		qdel(src)
+		return TRUE

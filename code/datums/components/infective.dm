@@ -12,7 +12,7 @@
 	if(expire_in)
 		expire_time = world.time + expire_in
 		QDEL_IN(src, expire_in)
-	
+
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
@@ -37,6 +37,7 @@
 /datum/component/infective/proc/clean(datum/source, clean_strength)
 	if(clean_strength >= min_clean_strength)
 		qdel(src)
+		return TRUE
 
 /datum/component/infective/proc/try_infect_buckle(datum/source, mob/M, force)
 	if(isliving(M))
