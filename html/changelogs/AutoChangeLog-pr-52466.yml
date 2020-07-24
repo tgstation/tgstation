@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "AI integrity restorer program now appropriately restores the integrity of AIs."
