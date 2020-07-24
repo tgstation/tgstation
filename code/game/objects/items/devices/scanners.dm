@@ -11,9 +11,10 @@ GENE SCANNER
 
 */
 
-// Describes the two modes of scanning available for health analyzers
+// Describes the three modes of scanning available for health analyzers
 #define SCANMODE_HEALTH		0
 #define SCANMODE_CHEMICAL 	1
+#define SCANMODE_WOUND	 	2
 #define SCANNER_CONDENSED 	0
 #define SCANNER_VERBOSE 	1
 
@@ -26,7 +27,8 @@ GENE SCANNER
 	var/on = FALSE
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=150)
@@ -65,10 +67,7 @@ GENE SCANNER
 		return
 	var/list/t_ray_images = list()
 	for(var/obj/O in orange(distance, viewer) )
-		if(O.level != 1)
-			continue
-
-		if(O.invisibility == INVISIBILITY_MAXIMUM || HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128
@@ -82,7 +81,8 @@ GENE SCANNER
 	name = "health analyzer"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "health"
-	item_state = "healthanalyzer"
+	inhand_icon_state = "healthanalyzer"
+	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner capable of distinguishing vital signs of the subject."
@@ -104,8 +104,14 @@ GENE SCANNER
 	return BRUTELOSS
 
 /obj/item/healthanalyzer/attack_self(mob/user)
-	scanmode = !scanmode
-	to_chat(user, "<span class='notice'>You switch the health analyzer to [scanmode ? "scan chemical contents" : "check physical health"].</span>")
+	scanmode = (scanmode + 1) % 3
+	switch(scanmode)
+		if(SCANMODE_HEALTH)
+			to_chat(user, "<span class='notice'>You switch the health analyzer to check physical health.</span>")
+		if(SCANMODE_CHEMICAL)
+			to_chat(user, "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>")
+		if(SCANMODE_WOUND)
+			to_chat(user, "<span class='notice'>You switch the health analyzer to report extra info on wounds.</span>")
 
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 	flick("[icon_state]-scan", src)	//makes it so that it plays the scan animation upon scanning, including clumsy scanning
@@ -120,20 +126,26 @@ GENE SCANNER
 					 \n<span class='info'>Body temperature: ???</span>")
 		return
 
+	if(ispodperson(M)&& !advanced)
+		to_chat(user, "<span class='info'>[M]'s biologal structure is too complex for the health analyzer.")
+		return
+
 	user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
 						"<span class='notice'>You analyze [M]'s vitals.</span>")
 
 	if(scanmode == SCANMODE_HEALTH)
 		healthscan(user, M, mode, advanced)
-	else
+	else if(scanmode == SCANMODE_CHEMICAL)
 		chemscan(user, M)
+	else
+		woundscan(user, M, src)
 
 	add_fingerprint(user)
 
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/M, mode = SCANNER_VERBOSE, advanced = FALSE)
-	if(isliving(user) && (user.incapacitated() || user.eye_blind))
+	if(isliving(user) && (user.incapacitated() || user.is_blind()))
 		return
 
 	// the final list of strings to render
@@ -187,13 +199,17 @@ GENE SCANNER
 						trauma_desc += "severe "
 					if(TRAUMA_RESILIENCE_LOBOTOMY)
 						trauma_desc += "deep-rooted "
+					if(TRAUMA_RESILIENCE_WOUND)
+						trauma_desc += "fracture-derived "
 					if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
 						trauma_desc += "permanent "
 				trauma_desc += B.scan_desc
 				trauma_text += trauma_desc
 			render_list += "<span class='alert ml-1'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>\n"
 		if(C.roundstart_quirks.len)
-			render_list += "<span class='info ml-1'>Subject has the following physiological traits: [C.get_trait_string()].</span>\n"
+			render_list += "<span class='info ml-1'>Subject Major Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY)].</span>\n"
+			if(advanced)
+				render_list += "<span class='info ml-1'>Subject Minor Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY)].</span>\n"
 	if(advanced)
 		render_list += "<span class='info ml-1'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
 
@@ -242,6 +258,8 @@ GENE SCANNER
 			message = ""
 			if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
 				message = "\n<span class='alert ml-2'>Subject is genetically deaf.</span>"
+			else if(HAS_TRAIT_FROM(C, TRAIT_DEAF, EAR_DAMAGE))
+				message = "\n<span class='alert ml-2'>Subject is deaf from ear damage.</span>"
 			else if(HAS_TRAIT(C, TRAIT_DEAF))
 				message = "\n<span class='alert ml-2'>Subject is deaf.</span>"
 			else
@@ -256,7 +274,7 @@ GENE SCANNER
 		message = "\n<span class='alert ml-2'>Subject does not have eyes.</span>"
 		if(istype(eyes))
 			message = ""
-			if(HAS_TRAIT(C, TRAIT_BLIND))
+			if(C.is_blind())
 				message += "\n<span class='alert ml-2'>Subject is blind.</span>"
 			if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
 				message += "\n<span class='alert ml-2'>Subject is nearsighted.</span>"
@@ -302,15 +320,15 @@ GENE SCANNER
 		var/datum/species/S = H.dna.species
 		var/mutant = H.dna.check_mutation(HULK) \
 			|| S.mutantlungs != initial(S.mutantlungs) \
-			|| S.mutant_brain != initial(S.mutant_brain) \
-			|| S.mutant_heart != initial(S.mutant_heart) \
+			|| S.mutantbrain != initial(S.mutantbrain) \
+			|| S.mutantheart != initial(S.mutantheart) \
 			|| S.mutanteyes != initial(S.mutanteyes) \
 			|| S.mutantears != initial(S.mutantears) \
 			|| S.mutanthands != initial(S.mutanthands) \
 			|| S.mutanttongue != initial(S.mutanttongue) \
-			|| S.mutanttail != initial(S.mutanttail) \
 			|| S.mutantliver != initial(S.mutantliver) \
 			|| S.mutantstomach != initial(S.mutantstomach) \
+			|| S.mutantappendix != initial(S.mutantappendix) \
 			|| S.flying_species != initial(S.flying_species)
 
 		render_list += "<span class='info ml-1'>Species: [S.name][mutant ? "-derived mutant" : ""]</span>\n"
@@ -321,6 +339,18 @@ GENE SCANNER
 		render_list += "<span class='info ml-1'>Time of Death: [M.tod]</span>\n"
 		var/tdelta = round(world.time - M.timeofdeath)
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(tdelta)] ago.</b></span>\n"
+
+	// Wounds
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		var/list/wounded_parts = C.get_wounded_bodyparts()
+		for(var/i in wounded_parts)
+			var/obj/item/bodypart/wounded_part = i
+			render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.name]</b>"
+			for(var/k in wounded_part.wounds)
+				var/datum/wound/W = k
+				render_list += "<div class='ml-2'>Type: [W.name]\nSeverity: [W.severity_text()]\nRecommended Treatment: [W.treat_text]</div>\n" // less lines than in woundscan() so we don't overload people trying to get basic med info
+			render_list += "</span>"
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
@@ -336,7 +366,7 @@ GENE SCANNER
 		if(blood_id)
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
-				if(H.bleed_rate)
+				if(H.is_bleeding())
 					render_list += "<span class='alert ml-1'><b>Subject is bleeding!</b></span>\n"
 			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
 			var/blood_type = C.dna.blood_type
@@ -350,12 +380,13 @@ GENE SCANNER
 			else
 				render_list += "<span class='info ml-1'>Blood level: [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>\n"
 
-		var/cyberimp_detect = ""
+		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
 			if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
-				cyberimp_detect += "[C.name] is modified with a [CI.name].\n"
-		if(cyberimp_detect != "")
-			render_list += "<span class='notice ml-1'>Detected cybernetic modifications:</span>\n<span class='notice ml-2'>[cyberimp_detect]</span>\n"
+				cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
+		if(cyberimp_detect)
+			render_list += "<span class='notice ml-1'>Detected cybernetic modifications:</span>\n"
+			render_list += "<span class='notice ml-2'>[cyberimp_detect]</span>\n"
 
 	SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, FALSE)
 	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
@@ -394,13 +425,74 @@ GENE SCANNER
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
 	advanced = TRUE
 
+/// Displays wounds with extended information on their status vs medscanners
+/proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
+	if(!istype(patient))
+		return
+
+	var/render_list = ""
+	for(var/i in patient.get_wounded_bodyparts())
+		var/obj/item/bodypart/wounded_part = i
+		render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.name]</b>"
+		for(var/k in wounded_part.wounds)
+			var/datum/wound/W = k
+			render_list += "<div class='ml-2'>[W.get_scanner_description()]</div>\n"
+		render_list += "</span>"
+
+	if(render_list == "")
+		if(istype(scanner))
+			// Only emit the cheerful scanner message if this scan came from a scanner
+			playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
+			to_chat(user, "<span class='notice'>\The [scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no wounds!</span>")
+		else
+			to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
+	else
+		to_chat(user, jointext(render_list, ""))
+
+/obj/item/healthanalyzer/wound
+	name = "first aid analyzer"
+	icon_state = "adv_spectrometer"
+	desc = "A prototype MeLo-Tech medical scanner used to diagnose injuries and recommend treatment for serious wounds, but offers no further insight into the patient's health. You hope the final version is less annoying to read!"
+	var/next_encouragement
+	var/greedy
+
+/obj/item/healthanalyzer/wound/attack_self(mob/user)
+	if(next_encouragement < world.time)
+		playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+		var/list/encouragements = list("briefly displays a happy face, gazing emptily at you", "briefly displays a spinning cartoon heart", "displays an encouraging message about eating healthy and exercising", \
+				"reminds you that everyone is doing their best", "displays a message wishing you well", "displays a sincere thank-you for your interest in first-aid", "formally absolves you of all your sins")
+		to_chat(user, "<span class='notice'>\The [src] makes a happy ping and [pick(encouragements)]!</span>")
+		next_encouragement = world.time + 10 SECONDS
+		greedy = FALSE
+	else if(!greedy)
+		to_chat(user, "<span class='warning'>\The [src] displays an eerily high-definition frowny face, chastizing you for asking it for too much encouragement.</span>")
+		greedy = TRUE
+	else
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		if(isliving(user))
+			var/mob/living/L = user
+			to_chat(L, "<span class='warning'>\The [src] makes a disappointed buzz and pricks your finger for being greedy. Ow!</span>")
+			L.adjustBruteLoss(4)
+			L.dropItemToGround(src)
+
+/obj/item/healthanalyzer/wound/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
+	add_fingerprint(user)
+	user.visible_message("<span class='notice'>[user] scans [patient] for serious injuries.</span>", "<span class='notice'>You scan [patient] for serious injuries.</span>")
+
+	if(!istype(patient))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		to_chat(user, "<span class='notice'>\The [src] makes a sad buzz and briefly displays a frowny face, indicating it can't scan [patient].</span>")
+		return
+
+	woundscan(user, patient, src)
+
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "analyzer"
 	custom_price = 100
 	icon = 'icons/obj/device.dmi'
 	icon_state = "analyzer"
-	item_state = "analyzer"
+	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -428,7 +520,7 @@ GENE SCANNER
 /obj/item/analyzer/attack_self(mob/user)
 	add_fingerprint(user)
 
-	if (user.stat || user.eye_blind)
+	if (user.stat || user.is_blind())
 		return
 
 	var/turf/location = user.loc
@@ -502,7 +594,7 @@ GENE SCANNER
 				to_chat(user, "<span class='warning'>[src]'s barometer function says that the next storm will breeze on by.</span>")
 		else
 			var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
-			var/fixed = next_hit ? next_hit - world.time : -1
+			var/fixed = next_hit ? timeleft(next_hit) : -1
 			if(fixed < 0)
 				to_chat(user, "<span class='warning'>[src]'s barometer function was unable to trace any weather patterns.</span>")
 			else
@@ -536,7 +628,7 @@ GENE SCANNER
 	var/icon = target
 	var/render_list = list()
 	if(!silent && isliving(user))
-		user.visible_message("<span class='notice'>[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].</span>", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+		user.visible_message("<span class='notice'>[user] uses the analyzer on [icon2html(icon, viewers(user))] [target].</span>", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	render_list += "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>"
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
@@ -578,7 +670,7 @@ GENE SCANNER
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "adv_spectrometer"
-	item_state = "analyzer"
+	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -589,7 +681,7 @@ GENE SCANNER
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
 
 /obj/item/slime_scanner/attack(mob/living/M, mob/living/user)
-	if(user.stat || user.eye_blind)
+	if(user.stat || user.is_blind())
 		return
 	if (!isslime(M))
 		to_chat(user, "<span class='warning'>This device can only scan slimes!</span>")
@@ -633,7 +725,8 @@ GENE SCANNER
 	name = "nanite scanner"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_scanner"
-	item_state = "nanite_remote"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to detect nanites and their programming."
@@ -660,7 +753,8 @@ GENE SCANNER
 	name = "genetic sequence scanner"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gene"
-	item_state = "healthanalyzer"
+	inhand_icon_state = "healthanalyzer"
+	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Hold near a DNA console to update the internal database."
@@ -679,13 +773,13 @@ GENE SCANNER
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if (!HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
 		user.visible_message("<span class='notice'>[user] analyzes [M]'s genetic sequence.</span>", \
 							"<span class='notice'>You analyze [M]'s genetic sequence.</span>")
 		gene_scan(M, user)
 
 	else
-		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
+		user.visible_message("<span class='notice'>[user] fails to analyze [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
 
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)
@@ -761,10 +855,10 @@ GENE SCANNER
 	name = "kiosk scanner wand"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner_wand"
-	item_state = "healthanalyzer"
+	inhand_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	desc = "An wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
+	desc = "A wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -799,5 +893,6 @@ GENE SCANNER
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_CHEMICAL
+#undef SCANMODE_WOUND
 #undef SCANNER_CONDENSED
 #undef SCANNER_VERBOSE

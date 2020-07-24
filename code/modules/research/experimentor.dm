@@ -72,8 +72,8 @@
 /obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
 
-	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
-	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
+	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list
+	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/runtime) in GLOB.mob_living_list
 	SetTypeReactions()
 
 	critical_items_typecache = typecacheof(list(
@@ -522,10 +522,10 @@
 			use_power(500000)
 			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
 		if(globalMalf == 99)
-			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!")
+			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!</span>")
 			addtimer(CALLBACK(src, .proc/boom), 50)
 		if(globalMalf == 100)
-			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!")
+			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!</span>")
 			addtimer(CALLBACK(src, .proc/honk), 50)
 
 	addtimer(CALLBACK(src, .proc/reset_exp), resetTime)
@@ -541,7 +541,7 @@
 	update_icon()
 	recentlyExperimented = FALSE
 
-/obj/machinery/rnd/experimentor/update_icon()
+/obj/machinery/rnd/experimentor/update_icon_state()
 	icon_state = "h_lathe"
 
 /obj/machinery/rnd/experimentor/proc/warn_admins(user, ReactionName)

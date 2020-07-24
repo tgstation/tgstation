@@ -5,12 +5,16 @@
 	desc = "A device that automatically inserts an implant or organ into the user without the hassle of extensive surgery. It has a slot to insert implants/organs and a screwdriver slot for removing accidentally added items."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "autoimplanter"
-	item_state = "nothing"
+	inhand_icon_state = "nothing"
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/item/organ/storedorgan
 	var/organ_type = /obj/item/organ
 	var/uses = INFINITE
 	var/starting_organ
+
+/obj/item/autosurgeon/syndicate
+	name = "suspicious autosurgeon"
+	icon_state = "syndicate_autoimplanter"
 
 /obj/item/autosurgeon/Initialize(mapload)
 	. = ..()
@@ -82,15 +86,19 @@
 	uses = 1
 	starting_organ = /obj/item/organ/cyberimp/eyes/hud/medical
 
+/obj/item/autosurgeon/syndicate/laser_arm
+	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+	uses = 1
+	starting_organ = /obj/item/organ/cyberimp/arm/gun/laser
 
-/obj/item/autosurgeon/thermal_eyes
+/obj/item/autosurgeon/syndicate/thermal_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/thermals
 
-/obj/item/autosurgeon/xray_eyes
+/obj/item/autosurgeon/syndicate/xray_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/xray
 
-/obj/item/autosurgeon/anti_stun
+/obj/item/autosurgeon/syndicate/anti_stun
 	starting_organ = /obj/item/organ/cyberimp/brain/anti_stun
 
-/obj/item/autosurgeon/reviver
+/obj/item/autosurgeon/syndicate/reviver
 	starting_organ = /obj/item/organ/cyberimp/chest/reviver

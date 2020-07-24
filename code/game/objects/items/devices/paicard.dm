@@ -2,7 +2,8 @@
 	name = "personal AI device"
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -109,7 +110,7 @@
 			to_chat(usr,"<span class='warning'>You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!</span>")
 			to_chat(pai,"<span class='warning'>Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!</span>")
 		if(href_list["setlaws"])
-			var/newlaws = stripped_multiline_input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], MAX_MESSAGE_LEN)
+			var/newlaws = stripped_multiline_input(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], MAX_MESSAGE_LEN)
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
 		if(href_list["toggle_holo"])

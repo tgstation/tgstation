@@ -25,18 +25,18 @@
 		new /obj/item/tank/internals/plasma(src)
 	update_icon()
 
-/obj/structure/tank_dispenser/update_icon()
-	cut_overlays()
+/obj/structure/tank_dispenser/update_overlays()
+	. = ..()
 	switch(oxygentanks)
 		if(1 to 3)
-			add_overlay("oxygen-[oxygentanks]")
+			. += "oxygen-[oxygentanks]"
 		if(4 to TANK_DISPENSER_CAPACITY)
-			add_overlay("oxygen-4")
+			. += "oxygen-4"
 	switch(plasmatanks)
 		if(1 to 4)
-			add_overlay("plasma-[plasmatanks]")
+			. += "plasma-[plasmatanks]"
 		if(5 to TANK_DISPENSER_CAPACITY)
-			add_overlay("plasma-5")
+			. += "plasma-5"
 
 /obj/structure/tank_dispenser/attackby(obj/item/I, mob/user, params)
 	var/full
@@ -67,11 +67,13 @@
 	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 	update_icon()
 
-/obj/structure/tank_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/structure/tank_dispenser/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/structure/tank_dispenser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "tank_dispenser", name, 275, 103, master_ui, state)
+		ui = new(user, src, "TankDispenser", name)
 		ui.open()
 
 /obj/structure/tank_dispenser/ui_data(mob/user)

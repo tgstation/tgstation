@@ -63,7 +63,7 @@
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray."
-	targetitem = /obj/item/reagent_containers/hypospray/CMO
+	targetitem = /obj/item/reagent_containers/hypospray/cmo
 	difficulty = 5
 	excludefromjob = list("Chief Medical Officer")
 
@@ -165,6 +165,12 @@
 	if(E.Uses > 0)
 		return 1
 	return 0
+
+/datum/objective_item/steal/blackbox
+	name = "The Blackbox."
+	targetitem = /obj/item/blackbox
+	difficulty = 10
+	excludefromjob = list("Chief Engineer","Station Engineer","Atmospheric Technician")
 
 //Unique Objectives
 /datum/objective_item/unique/docs_red

@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/snappops = 2,
-		/obj/item/toy/talking/AI = 2,
+		/obj/item/toy/talking/ai = 2,
 		/obj/item/toy/talking/codex_gigas = 2,
 		/obj/item/clothing/under/syndicate/tacticool = 2,
 		/obj/item/toy/sword = 2,
@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/prize/odysseus = 1,
 		/obj/item/toy/prize/phazon = 1,
 		/obj/item/toy/prize/reticence = 1,
+		/obj/item/toy/prize/clarke = 1,
 		/obj/item/toy/cards/deck = 2,
 		/obj/item/toy/nuke = 2,
 		/obj/item/toy/minimeteor = 2,
@@ -30,6 +31,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/coin/antagtoken = 2,
 		/obj/item/stack/tile/fakespace/loaded = 2,
 		/obj/item/stack/tile/fakepit/loaded = 2,
+		/obj/item/stack/tile/eighties/loaded = 2,
 		/obj/item/toy/toy_xeno = 2,
 		/obj/item/storage/box/actionfigure = 1,
 		/obj/item/restraints/handcuffs/fake = 2,
@@ -37,21 +39,27 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/grenade/chem_grenade/glitter/blue = 1,
 		/obj/item/grenade/chem_grenade/glitter/white = 1,
 		/obj/item/toy/eightball = 2,
-		/obj/item/toy/windupToolbox = 2,
+		/obj/item/toy/windup_toolbox = 2,
 		/obj/item/toy/clockwork_watch = 2,
 		/obj/item/toy/toy_dagger = 2,
 		/obj/item/extendohand/acme = 1,
 		/obj/item/hot_potato/harmless/toy = 1,
 		/obj/item/card/emagfake = 1,
 		/obj/item/clothing/shoes/wheelys = 2,
-		/obj/item/clothing/shoes/kindleKicks = 2,
-		/obj/item/storage/belt/military/snack = 2))
+		/obj/item/clothing/shoes/kindle_kicks = 2,
+		/obj/item/toy/plush/goatplushie = 2,
+		/obj/item/toy/plush/moth = 2,
+		/obj/item/toy/plush/pkplush = 2,
+		/obj/item/storage/belt/military/snack = 2,
+		/obj/item/toy/brokenradio = 2,
+		/obj/item/toy/braintoy = 2,
+		/obj/item/clothing/glasses/trickblindfold = 2))
 
 /obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 	icon_screen = "invaders"
 	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
@@ -73,22 +81,28 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return INITIALIZE_HINT_QDEL
 	Reset()
 
-/obj/machinery/computer/arcade/proc/prizevend(mob/user)
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
-	if(prob(0.0001)) //1 in a million
-		new /obj/item/gun/energy/pulse/prize(src)
-		visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
-		user.client.give_award(/datum/award/achievement/misc/pulse, user)
-		return
+/obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
+	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
+		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
+		"<span class='notice'>You hear a flurry of buttons being pressed.</span>")
+		say("CODE ACTIVATED: EXTRA PRIZES.")
+		prizes *= 2
+	for(var/i = 0, i < prizes, i++)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
+		if(prob(0.0001)) //1 in a million
+			new /obj/item/gun/energy/pulse/prize(src)
+			visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
+			user.client.give_award(/datum/award/achievement/misc/pulse, user)
+			return
 
-	var/prizeselect
-	if(prize_override)
-		prizeselect = pickweight(prize_override)
-	else
-		prizeselect = pickweight(GLOB.arcade_prize_pool)
-	var/atom/movable/the_prize = new prizeselect(get_turf(src))
-	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+		var/prizeselect
+		if(prize_override)
+			prizeselect = pickweight(prize_override)
+		else
+			prizeselect = pickweight(GLOB.arcade_prize_pool)
+		var/atom/movable/the_prize = new prizeselect(get_turf(src))
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+		visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()
@@ -96,7 +110,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(prize_override)
 		override = TRUE
 
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 
 	var/empprize = null
@@ -128,6 +142,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
 		return
 
+
 // ** BATTLE ** //
 
 
@@ -136,18 +151,75 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
+
 	var/enemy_name = "Space Villain"
-	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
-	var/player_hp = 30 //Player health/attack points
-	var/player_mp = 10
-	var/enemy_hp = 45 //Enemy health/attack points
-	var/enemy_mp = 20
+	///Enemy health/attack points
+	var/enemy_hp = 100
+	var/enemy_mp = 40
+	///Temporary message, for attack messages, etc
+	var/temp = "<br><center><h3>Winners don't use space drugs<center><h3>"
+	///the list of passive skill the enemy currently has. the actual passives are added in the enemy_setup() proc
+	var/list/enemy_passive
+	///if all the enemy's weakpoints have been triggered becomes TRUE
+	var/finishing_move = FALSE
+	///linked to passives, when it's equal or above the max_passive finishing move will become TRUE
+	var/pissed_off = 0
+	///the number of passives the enemy will start with
+	var/max_passive = 3
+	///weapon wielded by the enemy, the shotgun doesn't count.
+	var/chosen_weapon
+
+	///Player health
+	var/player_hp = 85
+	///player magic points
+	var/player_mp = 20
+	///used to remember the last three move of the player before this turn.
+	var/list/last_three_move
+	///if the enemy or player died. restart the game when TRUE
 	var/gameover = FALSE
-	var/blocked = FALSE //Player cannot attack/heal while set
-	var/turtle = 0
-	var/list/weapons = list()
+	///the player cannot make any move while this is set to TRUE. should only TRUE during enemy turns.
+	var/blocked = FALSE
+	///used to clear the enemy_action proc timer when the game is restarted
+	var/timer_id
+	///weapon used by the enemy, pure fluff.for certain actions
+	var/list/weapons
+	///unique to the emag mode, acts as a time limit where the player dies when it reaches 0.
+	var/bomb_cooldown = 19
+
+
+///creates the enemy base stats for a new round along with the enemy passives
+/obj/machinery/computer/arcade/battle/proc/enemy_setup(player_skill)
+	player_hp = 85
+	player_mp = 20
+	enemy_hp = 100
+	enemy_mp = 40
+	gameover = FALSE
+	blocked = FALSE
+	finishing_move = FALSE
+	pissed_off = 0
+	last_three_move = null
+
+	enemy_passive = list("short_temper" = TRUE, "poisonous" = TRUE, "smart" = TRUE, "shotgun" = TRUE, "magical" = TRUE, "chonker" = TRUE)
+	for(var/i = LAZYLEN(enemy_passive); i > max_passive; i--) //we'll remove passives from the list until we have the number of passive we want
+		var/picked_passive = pick(enemy_passive)
+		LAZYREMOVE(enemy_passive, picked_passive)
+
+	if(LAZYACCESS(enemy_passive, "chonker"))
+		enemy_hp += 20
+
+	if(LAZYACCESS(enemy_passive, "shotgun"))
+		chosen_weapon = "shotgun"
+	else if(weapons)
+		chosen_weapon = pick(weapons)
+	else
+		chosen_weapon = "null gun" //if the weapons list is somehow empty, shouldn't happen but runtimes are sneaky bastards.
+
+	if(player_skill)
+		player_hp += player_skill * 2
+
 
 /obj/machinery/computer/arcade/battle/Reset()
+	max_passive = 3
 	var/name_action
 	var/name_part1
 	var/name_part2
@@ -176,101 +248,304 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	enemy_name = ("The " + name_part1 + " " + name_part2)
 	name = (name_action + " " + enemy_name)
 
+	enemy_setup(0) //in the case it's reset we assume the player skill is 0 because the VOID isn't a gamer
+
+
 /obj/machinery/computer/arcade/battle/ui_interact(mob/user)
 	. = ..()
+	screen_setup(user)
+
+
+///sets up the main screen for the user
+/obj/machinery/computer/arcade/battle/proc/screen_setup(mob/user)
 	var/dat = "<a href='byond://?src=[REF(src)];close=1'>Close</a>"
 	dat += "<center><h4>[enemy_name]</h4></center>"
 
-	dat += "<br><center><h3>[temp]</h3></center>"
+	dat += "[temp]"
 	dat += "<br><center>Health: [player_hp] | Magic: [player_mp] | Enemy Health: [enemy_hp]</center>"
 
 	if (gameover)
 		dat += "<center><b><a href='byond://?src=[REF(src)];newgame=1'>New Game</a>"
 	else
-		dat += "<center><b><a href='byond://?src=[REF(src)];attack=1'>Attack</a> | "
-		dat += "<a href='byond://?src=[REF(src)];heal=1'>Heal</a> | "
-		dat += "<a href='byond://?src=[REF(src)];charge=1'>Recharge Power</a>"
+		dat += "<center><b><a href='byond://?src=[REF(src)];attack=1'>Light attack</a>"
+		dat += "<center><b><a href='byond://?src=[REF(src)];defend=1'>Defend</a>"
+		dat += "<center><b><a href='byond://?src=[REF(src)];counter_attack=1'>Counter attack</a>"
+		dat += "<center><b><a href='byond://?src=[REF(src)];power_attack=1'>Power attack</a>"
 
 	dat += "</b></center>"
-	var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
-	popup.open()
+	if(user.client) //mainly here to avoid a runtime when the player gets gibbed when losing the emag mode.
+		var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+		popup.open()
+
 
 /obj/machinery/computer/arcade/battle/Topic(href, href_list)
 	if(..())
 		return
+	var/gamerSkill = usr.mind?.get_skill_level(/datum/skill/gaming)
 
 	if (!blocked && !gameover)
+		var/attackamt = rand(5,7) + rand(0, gamerSkill)
+
+		if(finishing_move) //time to bonk that fucker,cuban pete will sometime survive a finishing move.
+			attackamt *= 100
+
+		//light attack suck absolute ass but it doesn't cost any MP so it's pretty good to finish an enemy off
 		if (href_list["attack"])
-			blocked = TRUE
-			var/attackamt = rand(2,6)
-			var/weapon = pick(weapons)
-			temp = "You attack with a [weapon] for [attackamt] damage!"
-			playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-			updateUsrDialog()
-			if(turtle > 0)
-				turtle--
-
-			sleep(10)
+			temp = "<br><center><h3>you do quick jab for [attackamt] of damage!</h3></center>"
 			enemy_hp -= attackamt
-			arcade_action(usr)
+			arcade_action(usr,"attack",attackamt)
 
-		else if (href_list["heal"])
-			blocked = TRUE
-			var/pointamt = rand(1,3)
-			var/healamt = rand(6,8)
-			temp = "You use [pointamt] magic to heal for [healamt] damage!"
-			playsound(loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-			updateUsrDialog()
-			turtle++
+		//defend lets you gain back MP and take less damage from non magical attack.
+		else if(href_list["defend"])
+			temp = "<br><center><h3>you take a defensive stance and gain back 10 mp!</h3></center>"
+			player_mp += 10
+			arcade_action(usr,"defend",attackamt)
+			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-			sleep(10)
-			player_mp -= pointamt
-			player_hp += healamt
-			blocked = TRUE
-			updateUsrDialog()
-			arcade_action(usr)
+		//mainly used to counter short temper and their absurd damage, will deal twice the damage the player took of a non magical attack.
+		else if(href_list["counter_attack"] && player_mp >= 10)
+			temp = "<br><center><h3>you prepare yourself to counter the next attack!</h3></center>"
+			player_mp -= 10
+			arcade_action(usr,"counter_attack",attackamt)
+			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-		else if (href_list["charge"])
-			blocked = TRUE
-			var/chargeamt = rand(4,7)
-			temp = "You regain [chargeamt] points."
-			playsound(loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-			player_mp += chargeamt
-			if(turtle > 0)
-				turtle--
+		else if(href_list["counter_attack"] && player_mp < 10)
+			temp = "<br><center><h3>you don't have the mp necessary to counter attack and defend yourself instead</h3></center>"
+			player_mp += 10
+			arcade_action(usr,"defend",attackamt)
+			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-			updateUsrDialog()
-			sleep(10)
-			arcade_action(usr)
+		//power attack deals twice the amount of damage but is really expensive MP wise, mainly used with combos to get weakpoints.
+		else if (href_list["power_attack"] && player_mp >= 20)
+			temp = "<br><center><h3>You attack [enemy_name] with all your might for [attackamt * 2] damage!</h3></center>"
+			enemy_hp -= attackamt * 2
+			player_mp -= 20
+			arcade_action(usr,"power_attack",attackamt)
+
+		else if(href_list["power_attack"] && player_mp < 20)
+			temp = "<br><center><h3>You don't have the mp necessary for a power attack and settle for a light attack!</h3></center>"
+			enemy_hp -= attackamt
+			arcade_action(usr,"attack",attackamt)
 
 	if (href_list["close"])
 		usr.unset_machine()
 		usr << browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything
-		temp = "New Round"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = FALSE
-		turtle = 0
+		temp = "<br><center><h3>New Round<center><h3>"
 
 		if(obj_flags & EMAGGED)
 			Reset()
 			obj_flags &= ~EMAGGED
 
+		enemy_setup(gamerSkill)
+		screen_setup(usr)
+
+
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user)
-	if ((enemy_mp <= 0) || (enemy_hp <= 0))
+
+///happens after a player action and before the enemy turn. the enemy turn will be cancelled if there's a gameover.
+/obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user,player_stance,attackamt)
+	screen_setup(user)
+	blocked = TRUE
+	if(player_stance == "attack" || player_stance == "power_attack")
+		if(attackamt > 40)
+			playsound(src, 'sound/arcade/boom.ogg', 50, TRUE, extrarange = -3)
+		else
+			playsound(src, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3)
+
+	timer_id = addtimer(CALLBACK(src, .proc/enemy_action,player_stance,user),1 SECONDS,TIMER_STOPPABLE)
+	gameover_check(user)
+
+
+///the enemy turn, the enemy's action entirely depend on their current passive and a teensy tiny bit of randomness
+/obj/machinery/computer/arcade/battle/proc/enemy_action(player_stance,mob/user)
+	var/list/list_temp = list()
+
+	switch(LAZYLEN(last_three_move)) //we keep the last three action of the player in a list here
+		if(0 to 2)
+			LAZYADD(last_three_move, player_stance)
+		if(3)
+			for(var/i in 1 to 2)
+				last_three_move[i] = last_three_move[i + 1]
+			last_three_move[3] = player_stance
+
+		if(4 to INFINITY)
+			last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
+
+	var/enemy_stance
+	var/attack_amount = rand(8,10) //making the attack amount not vary too much so that it's easier to see if the enemy has a shotgun
+
+	if(player_stance == "defend")
+		attack_amount -= 5
+
+	//if emagged, cuban pete will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
+	if(obj_flags & EMAGGED)
+		switch(bomb_cooldown--)
+			if(18)
+				list_temp += "<br><center><h3>[enemy_name] takes two valve tank and links them together, what's he planning?<center><h3>"
+			if(15)
+				list_temp += "<br><center><h3>[enemy_name] adds a remote control to the tan- ho god is that a bomb?<center><h3>"
+			if(12)
+				list_temp += "<br><center><h3>[enemy_name] throws the bomb next to you, you'r too scared to pick it up. <center><h3>"
+			if(6)
+				list_temp += "<br><center><h3>[enemy_name]'s hand brushes the remote linked to the bomb, your heart skipped a beat. <center><h3>"
+			if(2)
+				list_temp += "<br><center><h3>[enemy_name] is going to press the button! It's now or never! <center><h3>"
+			if(0)
+				player_hp -= attack_amount * 1000 //hey it's a maxcap we might as well go all in
+
+	//yeah I used the shotgun as a passive, you know why? because the shotgun gives +5 attack which is pretty good
+	if(LAZYACCESS(enemy_passive, "shotgun"))
+		if(weakpoint_check("shotgun","defend","defend","power_attack"))
+			list_temp += "<br><center><h3>You manage to disarm [enemy_name] with a surprise power attack and shoot him with his shotgun until it runs out of ammo! <center><h3> "
+			enemy_hp -= 10
+			chosen_weapon = "empty shotgun"
+		else
+			attack_amount += 5
+
+	//heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
+	if(LAZYACCESS(enemy_passive, "chonker"))
+		if(weakpoint_check("chonker","power_attack","power_attack","power_attack"))
+			list_temp += "<br><center><h3>After a lot of power attacks you manage to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
+			enemy_hp -= 30
+
+	//smart passive trait, mainly works in tandem with other traits, makes the enemy unable to be counter_attacked
+	if(LAZYACCESS(enemy_passive, "smart"))
+		if(weakpoint_check("smart","defend","defend","attack"))
+			list_temp += "<br><center><h3>[enemy_name] is confused by your illogical strategy!<center><h3> "
+			attack_amount -= 5
+
+		else if(attack_amount >= player_hp)
+			player_hp -= attack_amount
+			list_temp += "<br><center><h3>[enemy_name] figures out you are really close to death and finishes you off with their [chosen_weapon]!<center><h3>"
+			enemy_stance = "attack"
+
+		else if(player_stance == "counter_attack")
+			list_temp += "<br><center><h3>[enemy_name] is not taking your bait. <center><h3> "
+			if(LAZYACCESS(enemy_passive, "short_temper"))
+				list_temp += "However controlling their hatred of you still takes a toll on their mental and physical health!"
+				enemy_hp -= 5
+				enemy_mp -= 5
+			enemy_stance = "defensive"
+
+	//short temper passive trait, gets easily baited into being counter attacked but will bypass your counter when low on HP
+	if(LAZYACCESS(enemy_passive, "short_temper"))
+		if(weakpoint_check("short_temper","counter_attack","counter_attack","counter_attack"))
+			list_temp += "<br><center><h3>[enemy_name] is getting frustrated at all your counter attacks and throws a tantrum!<center><h3>"
+			enemy_hp -= attack_amount
+
+		else if(player_stance == "counter_attack")
+			if(!(LAZYACCESS(enemy_passive, "smart")) && enemy_hp > 30)
+				list_temp += "<br><center><h3>[enemy_name] took the bait and allowed you to counter attack for [attack_amount * 2] damage!<center><h3>"
+				player_hp -= attack_amount
+				enemy_hp -= attack_amount * 2
+				enemy_stance = "attack"
+
+			else if(enemy_hp <= 30) //will break through the counter when low enough on HP even when smart.
+				list_temp += "<br><center><h3>[enemy_name] is getting tired of your tricks and breaks through your counter with their [chosen_weapon]!<center><h3>"
+				player_hp -= attack_amount
+				enemy_stance = "attack"
+
+		else if(!enemy_stance)
+			var/added_temp
+
+			if(rand())
+				added_temp = "you for [attack_amount + 5] damage!"
+				player_hp -= attack_amount + 5
+				enemy_stance = "attack"
+			else
+				added_temp = "the wall, breaking their skull in the process and losing [attack_amount] hp!" //[enemy_name] you have a literal dent in your skull
+				enemy_hp -= attack_amount
+				enemy_stance = "attack"
+
+			list_temp += "<br><center><h3>[enemy_name] grits their teeth and charge right into [added_temp]<center><h3>"
+
+	//in the case none of the previous passive triggered, Mainly here to set an enemy stance for passives that needs it like the magical passive.
+	if(!enemy_stance)
+		enemy_stance = pick("attack","defensive")
+		if(enemy_stance == "attack")
+			player_hp -= attack_amount
+			list_temp += "<br><center><h3>[enemy_name] attacks you for [attack_amount] points of damage with their [chosen_weapon]<center><h3>"
+			if(player_stance == "counter_attack")
+				enemy_hp -= attack_amount * 2
+				list_temp += "<br><center><h3>You counter [enemy_name]'s attack and deal [attack_amount * 2] points of damage!<center><h3>"
+
+		if(enemy_stance == "defensive" && enemy_mp < 15)
+			list_temp += "<br><center><h3>[enemy_name] take some time to get some mp back!<center><h3> "
+			enemy_mp += attack_amount
+
+		else if (enemy_stance == "defensive" && enemy_mp >= 15 && !(LAZYACCESS(enemy_passive, "magical")))
+			list_temp += "<br><center><h3>[enemy_name] quickly heal themselves for 5 hp!<center><h3> "
+			enemy_mp -= 15
+			enemy_hp += 5
+
+	//magical passive trait, recharges MP nearly every turn it's not blasting you with magic.
+	if(LAZYACCESS(enemy_passive, "magical"))
+		if(player_mp >= 50)
+			list_temp += "<br><center><h3>the huge amount of magical energy you have acumulated throws [enemy_name] off balance!<center><h3>"
+			enemy_mp = 0
+			LAZYREMOVE(enemy_passive, "magical")
+			pissed_off++
+
+		else if(LAZYACCESS(enemy_passive, "smart") && player_stance == "counter_attack" && enemy_mp >= 20)
+			list_temp += "<br><center><h3>[enemy_name] blasts you with magic from afar for 10 points of damage before you can counter!<center><h3>"
+			player_hp -= 10
+			enemy_mp -= 20
+
+		else if(enemy_hp >= 20 && enemy_mp >= 40 && enemy_stance == "defensive")
+			list_temp += "<br><center><h3>[enemy_name] Blasts you with magic from afar!<center><h3>"
+			enemy_mp -= 40
+			player_hp -= 30
+			enemy_stance = "attack"
+
+		else if(enemy_hp < 20 && enemy_mp >= 20 && enemy_stance == "defensive") //it's a pretty expensive spell so they can't spam it that much
+			list_temp += "<br><center><h3>[enemy_name] heal themselves with magic and gain back 20 hp!<center><h3>"
+			enemy_hp += 20
+			enemy_mp -= 30
+		else
+			list_temp += "<br><center><h3>[enemy_name]'s magical nature lets them get some mp back!<center><h3>"
+			enemy_mp += attack_amount
+
+	//poisonous passive trait, while it's less damage added than the shotgun it acts up even when the enemy doesn't attack at all.
+	if(LAZYACCESS(enemy_passive, "poisonous"))
+		if(weakpoint_check("poisonous","attack","attack","attack"))
+			list_temp += "<br><center><h3>your flurry of attack throws back the poisonnous gas at [enemy_name] and makes them choke on it!<center><h3> "
+			enemy_hp -= 5
+		else
+			list_temp += "<br><center><h3>the stinky breath of [enemy_name] hurts you for 3 hp!<center><h3> "
+			player_hp -= 3
+
+	//if all passive's weakpoint have been triggered, set finishing_move to TRUE
+	if(pissed_off >= max_passive && !finishing_move)
+		list_temp += "<br><center><h3>You have weakened [enemy_name] enough for them to show their weak point, you will do 10 times as much damage with your next attack!<center><h3> "
+		finishing_move = TRUE
+
+	playsound(src, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3)
+
+	temp = list_temp.Join()
+	gameover_check(user)
+	screen_setup(user)
+	blocked = FALSE
+
+
+/obj/machinery/computer/arcade/battle/proc/gameover_check(mob/user)
+	var/xp_gained = 0
+	if(enemy_hp <= 0)
 		if(!gameover)
+			if(timer_id)
+				deltimer(timer_id)
+				timer_id = null
+			if(player_hp <= 0)
+				player_hp = 1 //let's just pretend the enemy didn't kill you so not both the player and enemy look dead.
 			gameover = TRUE
-			temp = "[enemy_name] has fallen! Rejoice!"
+			blocked = FALSE
+			temp = "<br><center><h3>[enemy_name] has fallen! Rejoice!<center><h3>"
 			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 
 			if(obj_flags & EMAGGED)
@@ -280,89 +555,81 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				Reset()
 				obj_flags &= ~EMAGGED
+				xp_gained += 100
 			else
 				prizevend(user)
+				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 
-
-	else if ((obj_flags & EMAGGED) && (turtle >= 4))
-		var/boomamt = rand(5,10)
-		temp = "[enemy_name] throws a bomb, exploding you for [boomamt] damage!"
-		playsound(loc, 'sound/arcade/boom.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		player_hp -= boomamt
-
-	else if ((enemy_mp <= 5) && (prob(70)))
-		var/stealamt = rand(2,3)
-		temp = "[enemy_name] steals [stealamt] of your power!"
-		playsound(loc, 'sound/arcade/steal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		player_mp -= stealamt
-		updateUsrDialog()
-
-		if (player_mp <= 0)
-			gameover = TRUE
-			sleep(10)
-			temp = "You have been drained! GAME OVER"
-			playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-			if(obj_flags & EMAGGED)
-				usr.gib()
-			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "mana", (obj_flags & EMAGGED ? "emagged":"normal")))
-
-	else if ((enemy_hp <= 10) && (enemy_mp > 4))
-		temp = "[enemy_name] heals for 4 health!"
-		playsound(loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		enemy_hp += 4
-		enemy_mp -= 4
-
-	else
-		var/attackamt = rand(3,6)
-		temp = "[enemy_name] attacks for [attackamt] damage!"
-		playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		player_hp -= attackamt
-
-	if ((player_mp <= 0) || (player_hp <= 0))
+	else if(player_hp <= 0)
+		if(timer_id)
+			deltimer(timer_id)
+			timer_id = null
 		gameover = TRUE
-		temp = "You have been crushed! GAME OVER"
+		temp = "<br><center><h3>You have been crushed! GAME OVER<center><h3>"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
-			usr.gib()
+			user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 
-	blocked = FALSE
-	return
+	if(gameover)
+		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 
+
+///used to check if the last three move of the player are the one we want in the right order and if the passive's weakpoint has been triggered yet
+/obj/machinery/computer/arcade/battle/proc/weakpoint_check(passive,first_move,second_move,third_move)
+	if(LAZYLEN(last_three_move) < 3)
+		return FALSE
+
+	if(last_three_move[1] == first_move && last_three_move[2] == second_move && last_three_move[3] == third_move && LAZYACCESS(enemy_passive, passive))
+		LAZYREMOVE(enemy_passive, passive)
+		pissed_off++
+		return TRUE
+	else
+		return FALSE
+
+
+/obj/machinery/computer/arcade/battle/Destroy()
+	enemy_passive = null
+	weapons = null
+	last_three_move = null
+	return ..() //well boys we did it, lists are no more
+
+/obj/machinery/computer/arcade/battle/examine_more(mob/user)
+	var/list/msg = list("<span class='notice'><i>You notice some writing scribbled on the side of [src]...</i></span>")
+	msg += "\t<span class='info'>smart -> defend, defend, light attack</span>"
+	msg += "\t<span class='info'>shotgun -> defend, defend, power attack</span>"
+	msg += "\t<span class='info'>short temper -> counter, counter, counter</span>"
+	msg += "\t<span class='info'>poisonous -> light attack, light attack, light attack</span>"
+	msg += "\t<span class='info'>chonker -> power attack, power attack, power attack</span>"
+	return msg
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
+
 	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
-	temp = "If you die in the game, you die for real!"
-	player_hp = 30
-	player_mp = 10
-	enemy_hp = 45
-	enemy_mp = 20
+	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
+	max_passive = 6
+	bomb_cooldown = 18
+	var/gamerSkill = usr.mind?.get_skill_level(/datum/skill/gaming)
+	enemy_setup(gamerSkill)
+	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
+	player_hp += 30 //the player will also get a few extra HP in order to have a fucking chance
+
+	screen_setup(user)
 	gameover = FALSE
-	blocked = FALSE
 
 	obj_flags |= EMAGGED
 
 	enemy_name = "Cuban Pete"
 	name = "Outbomb Cuban Pete"
 
-
 	updateUsrDialog()
 
 
-
 // *** THE ORION TRAIL ** //
-
-/obj/item/gamer_pamphlet
-	name = "pamphlet - \'Violent Video Games and You\'"
-	desc = "A pamphlet encouraging the reader to maintain a balanced lifestyle and take care of their mental health, while still enjoying video games in a healthy way. You probably don't need this..."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "pamphlet"
-	item_state = "paper"
-	w_class = WEIGHT_CLASS_TINY
-
 
 #define ORION_TRAIL_WINTURN		9
 
@@ -488,7 +755,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if(gamers[gamer] == -1)
 		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
-		new /obj/item/gamer_pamphlet(get_turf(src))
+		new /obj/item/paper/pamphlet/violent_video_games(drop_location())
 		gamers[gamer]--
 		return
 
@@ -508,6 +775,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		gamers[gamer] = -1
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
+		gamer.mind?.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
 
 		if(!isnull(GLOB.data_core.general))
 			for(var/datum/data/record/R in GLOB.data_core.general)
@@ -549,6 +817,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];menu=1'>May They Rest In Peace</a></P>"
+		user?.mind?.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
+
 	else if(event)
 		dat = eventdat
 	else if(gameStatus == ORION_STATUS_NORMAL)
@@ -588,20 +858,25 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	busy = TRUE
 
+	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
+	var/gamerSkillRands = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+	var/xp_gained = 0
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
 			if(turns >= ORION_TRAIL_WINTURN)
 				win(usr)
+				xp_gained += 34
 			else
 				food -= (alive+lings_aboard)*2
 				fuel -= 5
-				if(turns == 2 && prob(30))
+				if(turns == 2 && prob(30-gamerSkill))
 					event = ORION_TRAIL_COLLISION
 					event()
-				else if(prob(75))
+				else if(prob(75-gamerSkill))
 					event = pickweight(events)
 					if(lings_aboard)
-						if(event == ORION_TRAIL_LING || prob(55))
+						if(event == ORION_TRAIL_LING || prob(55-gamerSkill))
 							event = ORION_TRAIL_LING_ATTACK
 					event()
 				turns += 1
@@ -609,7 +884,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				var/mob/living/carbon/M = usr //for some vars
 				switch(event)
 					if(ORION_TRAIL_RAIDERS)
-						if(prob(50))
+						if(prob(50-gamerSkill))
 							to_chat(usr, "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>")
 							M.hallucination += 30
 						else
@@ -617,7 +892,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							M.take_bodypart_damage(30)
 							playsound(loc, 'sound/weapons/genhit2.ogg', 100, TRUE)
 					if(ORION_TRAIL_ILLNESS)
-						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
+						var/maxSeverity = 3
+						if(gamerSkillLevel >= SKILL_LEVEL_EXPERT)
+							maxSeverity = 2 //part of gitting gud is rng mitigation
+						var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 						if(severity == 1)
 							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseated.</span>" )
 						if(severity == 2)
@@ -629,7 +907,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							sleep(30)
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
-						if(prob(75))
+						if(prob(75-gamerSkill))
 							M.Paralyze(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
@@ -637,7 +915,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
-						if(prob(90))
+						if(prob(90-gamerSkill))
 							playsound(loc, 'sound/effects/bang.ogg', 100, TRUE)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
@@ -720,7 +998,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				event = null
 	else if(href_list["blackhole"]) //keep speed past a black hole
 		if(turns == 7)
-			if(prob(75))
+			if(prob(75-gamerSkill))
 				event = ORION_TRAIL_BLACKHOLE
 				event()
 				if(obj_flags & EMAGGED)
@@ -758,6 +1036,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				event = null
 
 				if(killed_crew >= 4)
+					xp_gained -= 15//no cheating by spamming game overs
 					report_player(usr)
 			else if(obj_flags & EMAGGED)
 				if(usr.name == sheriff)
@@ -801,15 +1080,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if(href_list["raid_spaceport"])
 		if(gameStatus == ORION_STATUS_MARKET)
 			if(!spaceport_raided)
-				var/success = min(15 * alive,100) //default crew (4) have a 60% chance
+				var/success = min(15 * alive + gamerSkill,100) //default crew (4) have a 60% chance
 				spaceport_raided = 1
 
 				var/FU = 0
 				var/FO = 0
 				if(prob(success))
-					FU = rand(5,15)
-					FO = rand(5,15)
+					FU = rand(5 + gamerSkillRands,15 + gamerSkillRands)
+					FO = rand(5 + gamerSkillRands,15 + gamerSkillRands)
 					last_spaceport_action = "You successfully raided the spaceport! You gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
+					xp_gained += 10
 				else
 					FU = rand(-5,-15)
 					FO = rand(-5,-15)
@@ -868,7 +1148,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	add_fingerprint(usr)
 	updateUsrDialog()
 	busy = FALSE
-	return
+	usr?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/event()
@@ -1269,9 +1549,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
 		chopchop.dismember()
 		qdel(chopchop)
+		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		for(var/i=1; i<=rand(3,5); i++)
-			prizevend(user)
+		prizevend(user, rand(3,5))
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
 

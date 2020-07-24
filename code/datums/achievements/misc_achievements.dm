@@ -43,7 +43,7 @@
 	desc = "You janked hard"
 	database_id = MEDAL_HELBITALJANKEN
 	icon = "helbital"
-    
+
 /datum/award/achievement/misc/getting_an_upgrade
 	name = "Getting an upgrade"
 	desc = "Make your first unique material item!"
@@ -95,3 +95,19 @@
 	desc = "Well, that didn't take long."
 	database_id = MEDAL_LONGSHIFT
 	icon = "longshift"
+
+/datum/award/achievement/misc/snail
+	name = "KKKiiilll mmmeee"
+	desc = "You were a little too ambitious, but hey, I guess you're still alive?"
+	database_id = MEDAL_SNAIL
+	icon = "snail"
+
+/datum/award/achievement/misc/lookoutsir
+	name = "Look Out, Sir!"
+	desc = "Either awarded for making the ultimate sacrifice for your comrades, or a really dumb attempt at grenade jumping."
+	database_id = MEDAL_LOOKOUTSIR
+
+/datum/award/achievement/misc/gottem
+	name = "HA, GOTTEM"
+	desc = "Made you look!"
+	database_id = MEDAL_GOTTEM

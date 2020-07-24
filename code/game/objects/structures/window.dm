@@ -6,14 +6,13 @@
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
-	flags_1 = ON_BORDER_1
+	flags_1 = ON_BORDER_1 | RAD_PROTECT_CONTENTS_1
 	max_integrity = 25
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	CanAtmosPass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
-	rad_flags = RAD_PROTECT_CONTENTS
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
@@ -27,6 +26,8 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
+	flags_ricochet = RICOCHET_HARD
+	ricochet_chance_mod = 0.4
 
 
 /obj/structure/window/examine(mob/user)
@@ -179,7 +180,7 @@
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
 			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
-				setAnchored(!anchored)
+				set_anchored(!anchored)
 				to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
 		else if(I.tool_behaviour == TOOL_WRENCH && !anchored)
@@ -200,7 +201,7 @@
 
 	return ..()
 
-/obj/structure/window/setAnchored(anchorvalue)
+/obj/structure/window/set_anchored(anchorvalue)
 	..()
 	air_update_turf(TRUE)
 	update_nearby_icons()
@@ -304,10 +305,11 @@
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
 	if(smooth)
-		queue_smooth_neighbors(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 //merges adjacent full-tile windows into one
-/obj/structure/window/update_icon()
+/obj/structure/window/update_overlays()
+	. = ..()
 	if(!QDELETED(src))
 		if(!fulltile)
 			return
@@ -316,13 +318,13 @@
 		ratio = CEILING(ratio*4, 1) * 25
 
 		if(smooth)
-			queue_smooth(src)
+			QUEUE_SMOOTH(src)
 
 		cut_overlay(crack_overlay)
 		if(ratio > 75)
 			return
 		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-		add_overlay(crack_overlay)
+		. += crack_overlay
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
@@ -369,6 +371,7 @@
 	state = RWINDOW_SECURE
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
+	ricochet_chance_mod = 0.8
 
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this
@@ -414,7 +417,7 @@
 				if(I.use_tool(src, user, 40, volume = 50))
 					to_chat(user, "<span class='notice'>You unscrew the bolts from the frame and the window pops loose.</span>")
 					state = WINDOW_OUT_OF_FRAME
-					setAnchored(FALSE)
+					set_anchored(FALSE)
 				return
 	return ..()
 
@@ -539,7 +542,7 @@
 				if(I.use_tool(src, user, 50, volume = 50))
 					to_chat(user, "<span class='notice'>You unfasten the bolts from the frame and the window pops loose.</span>")
 					state = WINDOW_OUT_OF_FRAME
-					setAnchored(FALSE)
+					set_anchored(FALSE)
 				return
 	return ..()
 
@@ -633,7 +636,6 @@
 	smooth = SMOOTH_TRUE
 	state = RWINDOW_SECURE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
-	level = 3
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/unanchored
@@ -648,7 +650,6 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
-	level = 3
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/ice
@@ -656,7 +657,6 @@
 	icon_state = "ice_window"
 	max_integrity = 150
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
-	level = 3
 	glass_amount = 2
 
 /obj/structure/window/shuttle
@@ -675,9 +675,9 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 3
-	level = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	glass_amount = 2
+	ricochet_chance_mod = 0.9
 
 /obj/structure/window/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
@@ -703,8 +703,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 3
-	damage_deflection = 11 //The same as normal reinforced windows.
-	level = 3
+	damage_deflection = 11 //The same as normal reinforced windows.3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
 	rad_insulation = RAD_HEAVY_INSULATION
@@ -776,7 +775,7 @@
 		cut_overlay(torn)
 		add_overlay(paper)
 		set_opacity(TRUE)
-	queue_smooth(src)
+	QUEUE_SMOOTH(src)
 
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/user)

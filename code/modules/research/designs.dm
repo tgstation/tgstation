@@ -39,6 +39,8 @@ other types of metals and chemistry for reagents).
 	var/research_icon					//Replaces the item icon in the research console
 	var/research_icon_state
 	var/icon_cache
+	/// Optional string that interfaces can use as part of search filters. See- item/borg/upgrade/ai and the Exosuit Fabs.
+	var/search_metadata
 
 /datum/design/error_design
 	name = "ERROR"
@@ -49,11 +51,11 @@ other types of metals and chemistry for reagents).
 	return ..()
 
 /datum/design/proc/InitializeMaterials()
-	var/list/temp_list = list() 
+	var/list/temp_list = list()
 	for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 		var/amount = materials[i]
 		if(!istext(i)) //Not a category, so get the ref the normal way
-			var/datum/material/M =  getmaterialref(i)
+			var/datum/material/M =  SSmaterials.GetMaterialRef(i)
 			temp_list[M] = amount
 		else
 			temp_list[i] = amount

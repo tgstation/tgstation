@@ -79,7 +79,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			title = "Resolved Tickets"
 	if(!l2b)
 		return
-	var/list/dat = list("<html><head><title>[title]</title></head>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[title]</title></head>")
 	dat += "<A href='?_src_=holder;[HrefToken()];ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
@@ -113,10 +113,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
 	if(C.current_ticket)
-		C.current_ticket.AddInteraction("Client disconnected.")
-		SSblackbox.LogAhelp(C.current_ticket.id, "Disconnected", "Client disconnected", C.ckey)
-		C.current_ticket.initiator = null
-		C.current_ticket = null
+		var/datum/admin_help/T = C.current_ticket
+		T.AddInteraction("Client disconnected.")
+		SSblackbox.LogAhelp(T, "Disconnected", "Client disconnected", C.ckey)
+		T.initiator = null
 
 //Get a ticket given a ckey
 /datum/admin_help_tickets/proc/CKey2ActiveTicket(ckey)
@@ -175,7 +175,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	id = ++ticket_counter
 	opened_at = world.time
 
-	name = msg
+	name = copytext_char(msg, 1, 100)
 
 	initiator = C
 	initiator_ckey = initiator.ckey
@@ -198,10 +198,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		MessageNoRecipient(msg)
 
 		//send it to TGS if nobody is on and tell us how many were on
-		var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [name]")
+		var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [msg]")
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 		if(admin_number_present <= 0)
-			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord.</span>")
+			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord.</span>", confidential = TRUE)
 			heard_by_no_admins = TRUE
 	GLOB.ahelp_tickets.active_tickets += src
 
@@ -214,7 +214,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/AddInteraction(formatted_message)
 	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
-		send2tgs(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
+		send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
 	_interactions += "[time_stamp()]: [formatted_message]"
 
 //Removes the ahelp verb and returns it after 2 minutes
@@ -254,6 +254,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //message from the initiator without a target, all admins will see this
 //won't bug irc/discord
 /datum/admin_help/proc/MessageNoRecipient(msg)
+	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	var/ref_src = "[REF(src)]"
 	//Message to be sent to all admins
 	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='linkify'>[keywords_lookup(msg)]</span></span>"
@@ -266,20 +267,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
 		window_flash(X, ignorepref = TRUE)
-		to_chat(X, admin_msg)
+		to_chat(X, admin_msg, confidential = TRUE)
 
 	//show it to the person adminhelping too
-	to_chat(initiator, "<span class='adminnotice'>PM to-<b>Admins</b>: <span class='linkify'>[msg]</span></span>")
+	to_chat(initiator, "<span class='adminnotice'>PM to-<b>Admins</b>: <span class='linkify'>[msg]</span></span>", confidential = TRUE)
 	SSblackbox.LogAhelp(id, "Ticket Opened", msg, null, initiator.ckey)
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()
 	if(state == AHELP_ACTIVE)
-		to_chat(usr, "<span class='warning'>This ticket is already open.</span>")
+		to_chat(usr, "<span class='warning'>This ticket is already open.</span>", confidential = TRUE)
 		return
 
 	if(GLOB.ahelp_tickets.CKey2ActiveTicket(initiator_ckey))
-		to_chat(usr, "<span class='warning'>This user already has an active ticket, cannot reopen this one.</span>")
+		to_chat(usr, "<span class='warning'>This user already has an active ticket, cannot reopen this one.</span>", confidential = TRUE)
 		return
 
 	statclick = new(null, src)
@@ -340,7 +341,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 50)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
-	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
+	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>", confidential = TRUE)
 	if(!silent)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "resolved")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
@@ -358,9 +359,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 		SEND_SOUND(initiator, sound('sound/effects/adminhelp.ogg'))
 
-		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
-		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
-		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
+		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>", confidential = TRUE)
+		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>", confidential = TRUE)
+		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.", confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "rejected")
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
@@ -379,7 +380,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	msg += "<font color='red'>Your issue has been determined by an administrator to be an in character issue and does NOT require administrator intervention at this time. For further resolution you should pursue options that are in character.</font>"
 
 	if(initiator)
-		to_chat(initiator, msg)
+		to_chat(initiator, msg, confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "IC")
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
@@ -391,7 +392,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
-	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Ticket #[id]</title></head>")
 	var/ref_src = "[REF(src)]"
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
 	dat += "<b>State: "
@@ -484,20 +485,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 // Used for methods where input via arg doesn't work
 /client/proc/get_adminhelp()
-	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as text|null
+	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as message|null
 	adminhelp(msg)
 
-/client/verb/adminhelp(msg as text)
+/client/verb/adminhelp(msg as message)
 	set category = "Admin"
 	set name = "Adminhelp"
 
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>", confidential = TRUE)
 		return
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src, "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
+		to_chat(src, "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>", confidential = TRUE)
 		return
 	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
@@ -509,18 +510,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
-		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
-			if(current_ticket)
-				current_ticket.MessageNoRecipient(msg)
-				current_ticket.TimeoutVerb()
-				return
-			else
-				to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>")
-		else
-			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
-			current_ticket.Close()
+		current_ticket.MessageNoRecipient(msg)
+		current_ticket.TimeoutVerb()
+		return
 
 	new /datum/admin_help(msg, src, FALSE)
+
 
 //
 // LOGGING
@@ -575,28 +570,29 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			final = "[msg] - No admins online"
 		else
 			final = "[msg] - All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
-		send2tgs(source,final)
+		send2adminchat(source,final)
 		send2otherserver(source,final)
 
-
-/proc/send2tgs(msg,msg2)
-	msg = replacetext(replacetext(msg, "\proper", ""), "\improper", "")
-	msg2 = replacetext(replacetext(msg2, "\proper", ""), "\improper", "")
-	world.TgsTargetedChatBroadcast("[msg] | [msg2]", TRUE)
-
-/proc/send2otherserver(source,msg,type = "Ahelp")
+//
+/proc/send2otherserver(source,msg,type = "Ahelp",target_servers)
 	var/comms_key = CONFIG_GET(string/comms_key)
 	if(!comms_key)
 		return
+
+	var/our_id = CONFIG_GET(string/cross_comms_name)
 	var/list/message = list()
 	message["message_sender"] = source
 	message["message"] = msg
-	message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
+	message["source"] = "([our_id])"
 	message["key"] = comms_key
 	message += type
 
 	var/list/servers = CONFIG_GET(keyed_list/cross_server)
 	for(var/I in servers)
+		if(I == our_id) //No sending to ourselves
+			continue
+		if(target_servers && !(I in target_servers))
+			continue
 		world.Export("[servers[I]]?[list2params(message)]")
 
 
@@ -685,3 +681,34 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			return founds
 
 	return msg
+
+/proc/get_mob_by_name(msg)
+	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
+	var/list/ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
+
+	//explode the input msg into a list
+	var/list/msglist = splittext(msg, " ")
+
+	//who might fit the shoe
+	var/list/potential_hits = list()
+
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
+		var/list/nameWords = list()
+		if(!M.mind)
+			continue
+
+		for(var/string in splittext(lowertext(M.real_name), " "))
+			if(!(string in ignored_words))
+				nameWords += string
+		for(var/string in splittext(lowertext(M.name), " "))
+			if(!(string in ignored_words))
+				nameWords += string
+
+		for(var/string in nameWords)
+			testing("Name word [string]")
+			if(string in msglist)
+				potential_hits += M
+				break
+
+	return potential_hits

@@ -2,7 +2,7 @@
 	name = "polycircuit aggregate"
 	desc = "A dense, overdesigned cluster of electronics which attempted to function as a multipurpose circuit electronic. Circuits can be removed from it... if you don't bleed out in the process."
 	icon_state = "circuit_mess"
-	item_state = "rods"
+	inhand_icon_state = "rods"
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 8
 	var/circuit_type = /obj/item/electronics/airlock
@@ -46,15 +46,11 @@
 			use(1)
 			if(!amount)
 				to_chat(user, "<span class='notice'>You navigate the sharp edges of circuitry and remove the last board.</span>")
-				return
 			else
 				to_chat(user, "<span class='notice'>You navigate the sharp edges of circuitry and remove a single board from [src]</span>")
-				return
 		else
 			H.apply_damage(15, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			to_chat(user, "<span class='warning'>You give yourself a wicked cut on [src]'s many sharp corners and edges!</span>")
-			return
-		return
 
 /obj/item/stack/circuit_stack/full
 	amount = 8

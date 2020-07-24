@@ -381,6 +381,20 @@
 	description = "On the smaller size with a modern design, this shuttle is for the crew who like the cosier things, while still being able to stretch their legs."
 	credit_cost = 1000
 
+/datum/map_template/shuttle/emergency/cruise
+	suffix = "cruise"
+	name = "The NTSS Independence"
+	description = "Ordinarily reserved for special functions and events, the Cruise Shuttle Independence can bring a summery cheer to your next station evacuation for a 'modest' fee!"
+	admin_notes = "This motherfucker is BIG. You might need to force dock it."
+	credit_cost = 50000
+
+/datum/map_template/shuttle/emergency/cruise
+	suffix = "nature"
+	name = "Dynamic Environmental Interaction Shuttle"
+	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
+	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
+	credit_cost = 8000
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
@@ -478,7 +492,7 @@
 	name = "Tr%nPo2r& Z3TA"
 	description = "A glitch appears on your monitor, flickering in and out of the options laid before you. \
 	It seems strange and alien, you may need a special technology to access the signal.."
-	admin_notes = "Has an on-board experimental cloner that creates copies of its user, alien surgery tools, and a void core that provides unlimited power."
+	admin_notes = "Has alien surgery tools, and a void core that provides unlimited power."
 	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()

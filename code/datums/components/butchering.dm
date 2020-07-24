@@ -2,7 +2,7 @@
 	var/speed = 80 //time in deciseconds taken to butcher something
 	var/effectiveness = 100 //percentage effectiveness; numbers above 100 yield extra drops
 	var/bonus_modifier = 0 //percentage increase to bonus item chance
-	var/butcher_sound = 'sound/weapons/slice.ogg' //sound played when butchering
+	var/butcher_sound = 'sound/effects/butcher.ogg' //sound played when butchering
 	var/butchering_enabled = TRUE
 	var/can_be_blunt = FALSE
 
@@ -32,7 +32,7 @@
 
 	if(ishuman(M) && source.force && source.get_sharpness())
 		var/mob/living/carbon/human/H = M
-		if((H.health <= H.crit_threshold || (user.pulling == H && user.grab_state >= GRAB_NECK) || H.IsSleeping()) && user.zone_selected == BODY_ZONE_HEAD) // Only sleeping, neck grabbed, or crit, can be sliced.
+		if((user.pulling == H && user.grab_state >= GRAB_AGGRESSIVE) && user.zone_selected == BODY_ZONE_HEAD) // Only aggressive grabbed can be sliced.
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
 				user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
 								"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
@@ -47,6 +47,10 @@
 		Butcher(user, M)
 
 /datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
+	if(INTERACTING_WITH(user, H))
+		to_chat(user, "<span class='warning'>You're already interacting with [H]!</span>")
+		return
+
 	user.visible_message("<span class='danger'>[user] is slitting [H]'s throat!</span>", \
 					"<span class='danger'>You start slicing [H]'s throat!</span>", \
 					"<span class='hear'>You hear a cutting noise!</span>", ignored_mobs = H)
@@ -55,7 +59,7 @@
 	log_combat(user, H, "starts slicing the throat of")
 
 	playsound(H.loc, butcher_sound, 50, TRUE, -1)
-	if(do_mob(user, H, CLAMP(500 / source.force, 30, 100)) && H.Adjacent(source))
+	if(do_mob(user, H, clamp(500 / source.force, 30, 100)) && H.Adjacent(source))
 		if(H.has_status_effect(/datum/status_effect/neck_slice))
 			user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
 							"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
@@ -64,8 +68,11 @@
 		H.visible_message("<span class='danger'>[user] slits [H]'s throat!</span>", \
 					"<span class='userdanger'>[user] slits your throat...</span>")
 		log_combat(user, H, "finishes slicing the throat of")
-		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD)
-		H.bleed_rate = CLAMP(H.bleed_rate + 20, 0, 30)
+		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
+		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
+		if(slit_throat)
+			var/datum/wound/brute/cut/critical/screaming_through_a_slit_throat = new
+			screaming_through_a_slit_throat.apply_wound(slit_throat)
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
@@ -118,7 +125,7 @@
 	if(!istype(L))
 		return
 	var/obj/machinery/recycler/eater = parent
-	if(eater.safety_mode || (eater.stat & (BROKEN|NOPOWER))) //I'm so sorry.
+	if(eater.safety_mode || (eater.machine_stat & (BROKEN|NOPOWER))) //I'm so sorry.
 		return
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
 		Butcher(parent, L)

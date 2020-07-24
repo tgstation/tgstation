@@ -6,7 +6,7 @@
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "DIRI CEL"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = -1
 	cooldown_min = 400 //50 deciseconds reduction per rank
 	include_user = TRUE

@@ -29,7 +29,7 @@
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 
 /obj/machinery/plumbing/proc/can_be_rotated(mob/user,rotation_type)
-	return TRUE
+	return !anchored
 
 /obj/machinery/plumbing/examine(mob/user)
 	. = ..()
@@ -41,10 +41,10 @@
 	return TRUE
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	to_chat(user, "<span class='notice'>You start furiously plunging [name].")
+	to_chat(user, "<span class='notice'>You start furiously plunging [name].</span>")
 	if(do_after(user, 30, target = src))
-		to_chat(user, "<span class='notice'>You finish plunging the [name].")
-		reagents.reaction(get_turf(src), TOUCH) //splash on the floor
+		to_chat(user, "<span class='notice'>You finish plunging the [name].</span>")
+		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
 /obj/machinery/plumbing/welder_act(mob/living/user, obj/item/I)

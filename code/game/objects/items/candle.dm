@@ -5,7 +5,7 @@
 		humankind. The jewelry he kept for himself."
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
-	item_state = "candle1"
+	inhand_icon_state = "candle1"
 	w_class = WEIGHT_CLASS_TINY
 	light_color = LIGHT_COLOR_FIRE
 	heat = 1000

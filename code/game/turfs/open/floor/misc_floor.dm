@@ -173,3 +173,18 @@
 	custom_materials = list(/datum/material/plastic=500)
 	floor_tile = /obj/item/stack/tile/plastic
 	broken_states = list("plastic-damaged1","plastic-damaged2")
+
+/turf/open/floor/eighties
+	name = "retro floor"
+	desc = "This one takes you back."
+	icon_state = "eighties"
+	floor_tile = /obj/item/stack/tile/eighties
+	broken_states = list("damaged")
+
+/turf/open/floor/plating/rust
+	name = "rusted plating"
+	desc = "Corrupted steel."
+	icon_state = "plating_rust"
+
+/turf/open/floor/plating/rust/rust_heretic_act()
+	return

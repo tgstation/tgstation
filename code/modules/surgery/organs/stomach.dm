@@ -42,6 +42,9 @@
 			H.vomit(damage)
 			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
+/obj/item/organ/stomach/get_availability(datum/species/S)
+	return !(NOSTOMACH in S.species_traits)
+
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
 		var/pukeprob = 5 + 0.05 * H.disgust
@@ -124,4 +127,38 @@
 	to_chat(owner, "<span class='notice'>You absorb some of the shock into your body!</span>")
 
 /obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
-	crystal_charge = CLAMP(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
+	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
+
+/obj/item/organ/stomach/cybernetic
+	name = "basic cybernetic stomach"
+	icon_state = "stomach-c"
+	desc = "A basic device designed to mimic the functions of a human stomach"
+	organ_flags = ORGAN_SYNTHETIC
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
+	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+
+/obj/item/organ/stomach/cybernetic/tier2
+	name = "cybernetic stomach"
+	icon_state = "stomach-c-u"
+	desc = "An electronic device designed to mimic the functions of a human stomach. Handles disgusting food a bit better."
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	disgust_metabolism = 2
+	emp_vulnerability = 40
+
+/obj/item/organ/stomach/cybernetic/tier3
+	name = "upgraded cybernetic stomach"
+	icon_state = "stomach-c-u2"
+	desc = "An upgraded version of the cybernetic stomach, designed to improve further upon organic stomachs. Handles disgusting food very well."
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	disgust_metabolism = 3
+	emp_vulnerability = 20
+
+/obj/item/organ/stomach/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.vomit(stun = FALSE)
+		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
+	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

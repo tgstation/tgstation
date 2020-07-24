@@ -131,6 +131,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
+	desc = initial(desc)
 	animate_movement = SLIDE_STEPS
 	maptext = null
 

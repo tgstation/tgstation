@@ -2,10 +2,22 @@
 	name = "12g shotgun slug"
 	damage = 60
 
+/obj/projectile/bullet/shotgun_slug/executioner
+	name = "executioner slug" // admin only, can dismember limbs
+	sharpness = TRUE
+	wound_bonus = 0
+
+/obj/projectile/bullet/shotgun_slug/pulverizer
+	name = "pulverizer slug" // admin only, can crush bones
+	sharpness = FALSE
+	wound_bonus = 0
+
 /obj/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
-	damage = 5
+	damage = 10
 	stamina = 55
+	wound_bonus = 20
+	sharpness = FALSE
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
@@ -36,7 +48,7 @@
 
 /obj/projectile/bullet/shotgun_meteorslug/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(ismovableatom(target))
+	if(ismovable(target))
 		var/atom/movable/M = target
 		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 		M.safe_throw_at(throw_target, 3, 2)
@@ -62,6 +74,7 @@
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
 	damage = 12.5
+	wound_bonus = -10
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubbershot pellet"

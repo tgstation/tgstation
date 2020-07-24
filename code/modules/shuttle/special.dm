@@ -21,7 +21,7 @@
 		desc = "Oh no, not again."
 	update_icon()
 
-/obj/machinery/power/emitter/energycannon/magical/update_icon()
+/obj/machinery/power/emitter/energycannon/magical/update_icon_state()
 	if(active)
 		icon_state = icon_state_on
 	else
@@ -190,15 +190,15 @@
 	var/boot_dir = 1
 
 /obj/structure/table/wood/bar/Crossed(atom/movable/AM)
-	if(isliving(AM) && !is_barstaff(AM))
+	var/mob/living/M = AM
+	if(istype(M) && !M.incorporeal_move && !is_barstaff(M))
 		// No climbing on the bar please
-		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Paralyze(40)
 		M.throw_at(throwtarget, 5, 1)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
-		. = ..()
+		return ..()
 
 /obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
 	. = FALSE
@@ -233,7 +233,7 @@
 	if(!isliving(mover)) //No stowaways
 		return FALSE
 
-/obj/machinery/scanner_gate/luxury_shuttle/Crossed(atom/movable/AM)
+/obj/machinery/scanner_gate/luxury_shuttle/auto_scan(atom/movable/AM)
 	return
 
 /obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, params)

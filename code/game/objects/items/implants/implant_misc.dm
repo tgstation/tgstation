@@ -34,6 +34,7 @@
 	. = ..()
 	uses--
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	imp_in.SetKnockdown(0)
 	imp_in.set_resting(FALSE)
 	imp_in.reagents.add_reagent(/datum/reagent/medicine/badstims, 6)
 	if(!uses)
@@ -92,7 +93,7 @@
 /obj/item/implant/radio/activate()
 	. = ..()
 	// needs to be GLOB.deep_inventory_state otherwise it won't open
-	radio.ui_interact(usr, "main", null, FALSE, null, GLOB.deep_inventory_state)
+	radio.ui_interact(usr, state = GLOB.deep_inventory_state)
 
 /obj/item/implant/radio/Initialize(mapload)
 	. = ..()

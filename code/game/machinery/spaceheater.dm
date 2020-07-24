@@ -13,9 +13,8 @@
 	max_integrity = 250
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
-	ui_x = 400
-	ui_y = 305
-
+	/// We don't use area power, we always use the cell
+	use_power = NO_POWER_USE
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
@@ -66,7 +65,7 @@
 
 /obj/machinery/space_heater/update_overlays()
 	. = ..()
-	
+
 	if(panel_open)
 		. += "sheater-open"
 
@@ -131,20 +130,22 @@
 	settableTemperatureRange = cap * 30
 	efficiency = (cap + 1) * 10000
 
-	targetTemperature = CLAMP(targetTemperature,
+	targetTemperature = clamp(targetTemperature,
 		max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 		settableTemperatureMedian + settableTemperatureRange)
 
 /obj/machinery/space_heater/emp_act(severity)
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
 		return
 	if(cell)
 		cell.emp_act(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(default_unfasten_wrench(user, I))
+		return
+	else if(istype(I, /obj/item/stock_parts/cell))
 		if(panel_open)
 			if(cell)
 				to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
@@ -168,11 +169,10 @@
 	else
 		return ..()
 
-/obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "space_heater", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "SpaceHeater", name)
 		ui.open()
 
 /obj/machinery/space_heater/ui_data()
@@ -219,20 +219,11 @@
 			if(!panel_open)
 				return
 			var/target = params["target"]
-			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New target temperature:", name, round(targetTemperature - T0C, 1)) as num|null
-				if(!isnull(target) && !..())
-					target += T0C
-					. = TRUE
-			else if(adjust)
-				target = targetTemperature + adjust
-				. = TRUE
-			else if(text2num(target) != null)
+			if(text2num(target) != null)
 				target= text2num(target) + T0C
 				. = TRUE
 			if(.)
-				targetTemperature = CLAMP(round(target),
+				targetTemperature = clamp(round(target),
 					max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 					settableTemperatureMedian + settableTemperatureRange)
 		if("eject")

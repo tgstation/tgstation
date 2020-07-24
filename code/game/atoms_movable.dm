@@ -16,6 +16,7 @@
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
 	var/verb_whisper = "whispers"
+	var/verb_sing = "sings"
 	var/verb_yell = "yells"
 	var/speech_span
 	var/inertia_dir = 0
@@ -24,7 +25,7 @@
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
 	var/pass_flags = NONE
-	/// If false makes CanPass call CanPassThrough on this type instead of using default behaviour
+	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
@@ -41,6 +42,80 @@
 	var/can_be_z_moved = TRUE
 
 	var/zfalling = FALSE
+
+	///Last location of the atom for demo recording purposes
+	var/atom/demo_last_loc
+
+	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
+	var/blocks_emissive = FALSE
+	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
+	var/atom/movable/emissive_blocker/em_block
+
+	///Used for the calculate_adjacencies proc for icon smoothing.
+	var/can_be_unanchored = FALSE
+
+/atom/movable/Initialize(mapload)
+	. = ..()
+	switch(blocks_emissive)
+		if(EMISSIVE_BLOCK_GENERIC)
+			update_emissive_block()
+		if(EMISSIVE_BLOCK_UNIQUE)
+			render_target = ref(src)
+			em_block = new(src, render_target)
+			vis_contents += em_block
+
+
+/atom/movable/Destroy(force)
+	QDEL_NULL(proximity_monitor)
+	QDEL_NULL(language_holder)
+	QDEL_NULL(em_block)
+
+	unbuckle_all_mobs(force = TRUE)
+
+	if(loc)
+		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
+		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
+			CanAtmosPass = ATMOS_PASS_YES
+			air_update_turf(TRUE)
+		loc.handle_atom_del(src)
+
+		// If we have opacity, make sure to tell (potentially) affected light sources.
+		if(opacity && isturf(loc))
+			var/turf/turf_loc = loc
+			var/old_has_opaque_atom = turf_loc.has_opaque_atom
+			turf_loc.recalc_atom_opacity()
+			if(old_has_opaque_atom != turf_loc.has_opaque_atom)
+				turf_loc.reconsider_lights()
+
+	invisibility = INVISIBILITY_ABSTRACT
+
+	if(pulledby)
+		pulledby.stop_pulling()
+
+	if(orbiting)
+		orbiting.end_orbit(src)
+		orbiting = null
+
+	. = ..()
+
+	for(var/movable_content in contents)
+		qdel(movable_content)
+
+	LAZYCLEARLIST(client_mobs_in_contents)
+
+	moveToNullspace()
+
+
+/atom/movable/proc/update_emissive_block()
+	if(blocks_emissive != EMISSIVE_BLOCK_GENERIC)
+		return
+	if(length(managed_vis_overlays))
+		for(var/a in managed_vis_overlays)
+			var/obj/effect/overlay/vis/vs
+			if(vs.plane == EMISSIVE_BLOCKER_PLANE)
+				SSvis_overlays.remove_vis_overlay(src, list(vs))
+				break
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE, dir)
 
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
 	if(!direction)
@@ -65,7 +140,6 @@
 			if(A.layer > highest.layer)
 				highest = A
 	INVOKE_ASYNC(src, .proc/SpinAnimation, 5, 2)
-	throw_impact(highest)
 	return TRUE
 
 //For physical constraints to travelling up/down.
@@ -93,25 +167,28 @@
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
 	switch(var_name)
-		if("x")
+		if(NAMEOF(src, anchored))
+			set_anchored(var_value)
+			return TRUE
+		if(NAMEOF(src, x))
 			var/turf/T = locate(var_value, y, z)
 			if(T)
 				forceMove(T)
 				return TRUE
 			return FALSE
-		if("y")
+		if(NAMEOF(src, y))
 			var/turf/T = locate(x, var_value, z)
 			if(T)
 				forceMove(T)
 				return TRUE
 			return FALSE
-		if("z")
+		if(NAMEOF(src, z))
 			var/turf/T = locate(x, y, var_value)
 			if(T)
 				forceMove(T)
 				return TRUE
 			return FALSE
-		if("loc")
+		if(NAMEOF(src, loc))
 			if(istype(var_value, /atom))
 				forceMove(var_value)
 				return TRUE
@@ -352,6 +429,7 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
@@ -361,29 +439,6 @@
 
 	return TRUE
 
-/atom/movable/Destroy(force)
-	QDEL_NULL(proximity_monitor)
-	QDEL_NULL(language_holder)
-
-	unbuckle_all_mobs(force=1)
-
-	. = ..()
-	if(loc)
-		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
-		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
-			CanAtmosPass = ATMOS_PASS_YES
-			air_update_turf(TRUE)
-		loc.handle_atom_del(src)
-	for(var/atom/movable/AM in contents)
-		qdel(AM)
-	moveToNullspace()
-	invisibility = INVISIBILITY_ABSTRACT
-	if(pulledby)
-		pulledby.stop_pulling()
-
-	if(orbiting)
-		orbiting.end_orbit(src)
-		orbiting = null
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
@@ -394,6 +449,8 @@
 
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/AM, oldloc)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
 /atom/movable/Uncross(atom/movable/AM, atom/newloc)
@@ -417,6 +474,15 @@
 		if(QDELETED(A))
 			return
 	A.Bumped(src)
+
+///Sets the anchored var and returns if it was sucessfully changed or not.
+/atom/movable/proc/set_anchored(anchorvalue)
+	SHOULD_CALL_PARENT(TRUE)
+	if(anchored == anchorvalue)
+		return
+	. = anchored
+	anchored = anchorvalue
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE
@@ -486,11 +552,17 @@
 /atom/movable/proc/setMovetype(newval)
 	movement_type = newval
 
-//Called whenever an object moves and by mobs when they attempt to move themselves through space
-//And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move
+/**
+  * Called whenever an object moves and by mobs when they attempt to move themselves through space
+  * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
+  *
+  * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+  *
+  * Mobs should return 1 if they should be able to move of their own volition, see [/client/Move]
+  *
+  * Arguments:
+  * * movement_dir - 0 when stopping or any dir when trying to move
+  */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
 		return 1
@@ -510,7 +582,8 @@
 	return 0
 
 
-/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
+/// Only moves the object if it's under no gravity
+/atom/movable/proc/newtonian_move(direction)
 	if(!loc || Process_Spacemove(0))
 		inertia_dir = 0
 		return 0
@@ -524,21 +597,31 @@
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = 0
-	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-	return hit_atom.hitby(src, throwingdatum=throwingdatum)
+	var/hitpush = TRUE
+	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
+		hitpush = FALSE // hacky, tie this to something else or a proper workaround later
+
+	if(!(impact_signal && (impact_signal & COMPONENT_MOVABLE_IMPACT_NEVERMIND))) // in case a signal interceptor broke or deleted the thing before we could process our hit
+		return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return
-	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force)
+	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG) //If this returns FALSE then callback will not be called.
+///If this returns FALSE then callback will not be called.
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE, quickstart = TRUE)
 	. = FALSE
+
+	if(QDELETED(src))
+		CRASH("Qdeleted thing being thrown around.")
+
 	if (!target || speed <= 0)
 		return
 
@@ -574,19 +657,13 @@
 
 	. = TRUE // No failure conditions past this point.
 
-	var/datum/thrownthing/TT = new()
-	TT.thrownthing = src
-	TT.target = target
-	TT.target_turf = get_turf(target)
-	TT.init_dir = get_dir(src, target)
-	TT.maxrange = range
-	TT.speed = speed
-	TT.thrower = thrower
-	TT.diagonals_first = diagonals_first
-	TT.force = force
-	TT.callback = callback
-	if(!QDELETED(thrower))
-		TT.target_zone = thrower.zone_selected
+	var/target_zone
+	if(QDELETED(thrower))
+		thrower = null //Let's not pass a qdeleting reference if any.
+	else
+		target_zone = thrower.zone_selected
+
+	var/datum/thrownthing/TT = new(src, target, get_turf(target), get_dir(src, target), range, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -621,7 +698,8 @@
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
-	TT.tick()
+	if (quickstart)
+		TT.tick()
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
@@ -658,13 +736,14 @@
 /// Returns true or false to allow src to move through the blocker, mover has final say
 /atom/movable/proc/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
 	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_BE_PURE(TRUE)
 	return blocker_opinion
 
-// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
 	return
 
-// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
 	return
 
@@ -687,7 +766,7 @@
 				break
 	. = dense_object_backup
 
-//called when a mob resists while inside a container that is itself inside something.
+///called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
 
@@ -713,7 +792,7 @@
 		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(src, pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -884,8 +963,11 @@
 		return FALSE
 	return TRUE
 
-/// Updates the grab state of the movable
-/// This exists to act as a hook for behaviour
+/**
+  * Updates the grab state of the movable
+  *
+  * This exists to act as a hook for behaviour
+  */
 /atom/movable/proc/setGrabState(newstate)
 	grab_state = newstate
 

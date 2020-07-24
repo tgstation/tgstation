@@ -39,8 +39,8 @@
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
-	mutant_organs = list(/obj/item/organ/heart/nightmare)
-	mutant_brain = /obj/item/organ/brain/nightmare
+	mutantheart = /obj/item/organ/heart/nightmare
+	mutantbrain = /obj/item/organ/brain/nightmare
 
 	var/info_text = "You are a <span class='danger'>Nightmare</span>. The ability <span class='warning'>shadow walk</span> allows unlimited, unrestricted movement in the dark while activated. \
 					Your <span class='warning'>light eater</span> will destroy any light producing objects you attack, as well as destroy any lights a living creature may be holding. You will automatically dodge gunfire and melee attacks when on a dark tile. If killed, you will eventually revive if left in darkness."
@@ -49,7 +49,7 @@
 	. = ..()
 	to_chat(C, "[info_text]")
 
-	C.fully_replace_character_name("[pick(GLOB.nightmare_names)]")
+	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
 
 /datum/species/shadow/nightmare/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
@@ -99,6 +99,10 @@
 	decay_factor = 0
 
 
+/obj/item/organ/heart/nightmare/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
+
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
@@ -128,9 +132,6 @@
 /obj/item/organ/heart/nightmare/Stop()
 	return 0
 
-/obj/item/organ/heart/nightmare/update_icon()
-	return //always beating visually
-
 /obj/item/organ/heart/nightmare/on_death()
 	if(!owner)
 		return
@@ -153,13 +154,18 @@
 		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 		respawn_progress = 0
 
+/obj/item/organ/heart/nightmare/get_availability(datum/species/S)
+	if(istype(S,/datum/species/shadow/nightmare))
+		return TRUE
+	return ..()
+
 //Weapon
 
 /obj/item/light_eater
 	name = "light eater" //as opposed to heavy eater
 	icon = 'icons/obj/changeling_items.dmi'
 	icon_state = "arm_blade"
-	item_state = "arm_blade"
+	inhand_icon_state = "arm_blade"
 	force = 25
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -167,6 +173,8 @@
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
+	wound_bonus = -60
+	bare_wound_bonus = 20
 
 /obj/item/light_eater/Initialize()
 	. = ..()
@@ -179,37 +187,63 @@
 		return
 	if(isopenturf(AM)) //So you can actually melee with it
 		return
+
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(isethereal(AM))
 			AM.emp_act(EMP_LIGHT)
 
-		if(iscyborg(AM))
+		else if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			if(borg.lamp_intensity)
 				borg.update_headlamp(TRUE, INFINITY)
 				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
-		else
-			for(var/obj/item/O in AM)
+		else if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			for(var/obj/item/O in H.get_all_gear()) //less expensive than getallcontents
 				if(O.light_range && O.light_power)
-					disintegrate(O)
+					disintegrate(O, AM)
+		else
+			for(var/obj/item/O in AM.GetAllContents())
+				if(O.light_range && O.light_power)
+					disintegrate(O, AM)
 		if(L.pulling && L.pulling.light_range && isitem(L.pulling))
-			disintegrate(L.pulling)
+			disintegrate(L.pulling, L.pulling)
+
 	else if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.light_range && I.light_power)
-			disintegrate(I)
+			disintegrate(I, I)
 
-/obj/item/light_eater/proc/disintegrate(obj/item/O)
+	else if(ismecha(AM))
+		var/obj/mecha/M = AM
+		if(M.haslights)
+			M.visible_message("<span class='danger'>[M]'s lights burn out!</span>")
+			M.haslights = FALSE
+		M.set_light(-M.lights_power)
+		if(M.occupant)
+			M.lights_action.Remove(M.occupant)
+		for(var/obj/item/O in AM.GetAllContents())
+			if(O.light_range && O.light_power)
+				disintegrate(O, M)
+
+	else if(istype(AM, /obj/machinery/light))
+		var/obj/machinery/light/L = AM
+		if(L.status == 1)
+			return
+		disintegrate(L.drop_light_tube(), AM)
+
+
+/obj/item/light_eater/proc/disintegrate(obj/item/O, atom/A)
 	if(istype(O, /obj/item/pda))
 		var/obj/item/pda/PDA = O
 		PDA.set_light(0)
 		PDA.fon = FALSE
 		PDA.f_lum = 0
 		PDA.update_icon()
-		visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
+		A.visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
 	else
-		visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
+		A.visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
 		O.burn()
 	playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 

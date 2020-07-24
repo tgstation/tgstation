@@ -8,16 +8,12 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	reagent_flags = OPENCONTAINER
+	reagent_flags = OPENCONTAINER | DUNKABLE
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
 	resistance_flags = NONE
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
-
-/obj/item/reagent_containers/food/drinks/on_reagent_change(changetype)
-	. = ..()
-	gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 
@@ -51,10 +47,18 @@
 
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	checkLiked(fraction, M)
-	reagents.reaction(M, INGEST, fraction)
+	reagents.expose(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size, transfered_by = user)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE
+
+/*
+ * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
+ */
+/obj/item/reagent_containers/food/drinks/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	if(isGlass && !custom_materials)
+		custom_materials = list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5) //sets it to glass so, later on, it gets picked up by the glass catch
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -226,7 +230,7 @@
 	name = "mug"
 	desc = "A drink served in a classy mug."
 	icon_state = "tea"
-	item_state = "coffee"
+	inhand_icon_state = "coffee"
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
@@ -263,7 +267,7 @@
 	desc = "A bottle of water filled at an old Earth bottling facility."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
-	item_state = "bottle"
+	inhand_icon_state = "bottle"
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
 	custom_materials = list(/datum/material/plastic=1000)
 	volume = 50
@@ -283,7 +287,12 @@
 	cap_overlay = mutable_appearance(icon, cap_icon_state)
 	if(cap_on)
 		spillable = FALSE
-		add_overlay(cap_overlay, TRUE)
+		update_icon()
+
+/obj/item/reagent_containers/food/drinks/waterbottle/update_overlays()
+	. = ..()
+	if(cap_on)
+		. += cap_overlay
 
 /obj/item/reagent_containers/food/drinks/waterbottle/examine(mob/user)
 	. = ..()
@@ -304,7 +313,6 @@
 	if(cap_on || fumbled)
 		cap_on = FALSE
 		spillable = TRUE
-		cut_overlay(cap_overlay, TRUE)
 		animate(src, transform = null, time = 2, loop = 0)
 		if(fumbled)
 			to_chat(user, "<span class='warning'>You fumble with [src]'s cap! The cap falls onto the ground and simply vanishes. Where the hell did it go?</span>")
@@ -314,7 +322,6 @@
 	else
 		cap_on = TRUE
 		spillable = FALSE
-		add_overlay(cap_overlay, TRUE)
 		to_chat(user, "<span class='notice'>You put the cap on [src].</span>")
 	update_icon()
 
@@ -328,11 +335,19 @@
 		return FALSE
 	. = ..()
 
-/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/M, mob/user, obj/target)
-	if(cap_on && reagents.total_volume && istype(M))
-		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/user, def_zone)
+	if(!target)
 		return
-	. = ..()
+
+	if(user.a_intent != INTENT_HARM)
+		if(cap_on && reagents.total_volume && istype(target))
+			to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+			return
+
+		return ..()
+
+	if(!cap_on)
+		SplashReagents(target)
 
 /obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/user, proximity)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
@@ -370,7 +385,8 @@
 	custom_materials = list(/datum/material/plastic=3000)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
-	amount_per_transfer_from_this = 20
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	cap_icon_state = "bottle_cap"
 
 /obj/item/reagent_containers/food/drinks/waterbottle/large/empty
@@ -408,7 +424,7 @@
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
-	item_state = "beer"
+	inhand_icon_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
 	foodtype = GRAIN | ALCOHOL
 	custom_price = 60
@@ -474,6 +490,11 @@
 				name = "grape juice box"
 				desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
 				foodtype = FRUIT
+			if(/datum/reagent/consumable/pineapplejuice)
+				icon_state = "pineapplebox"
+				name = "pineapple juice box"
+				desc = "Why would you even want this?"
+				foodtype = FRUIT | PINEAPPLE
 			if(/datum/reagent/consumable/milk/chocolate_milk)
 				icon_state = "chocolatebox"
 				name = "carton of chocolate milk"
@@ -497,18 +518,21 @@
 	icon_state = "colocup"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	item_state = "colocup"
+	inhand_icon_state = "colocup"
 	custom_materials = list(/datum/material/plastic = 1000)
 	possible_transfer_amounts = list(5, 10, 15, 20)
 	volume = 20
 	amount_per_transfer_from_this = 5
 	isGlass = FALSE
+	/// Allows the lean sprite to display upon crafting
+	var/random_sprite = TRUE
 
 /obj/item/reagent_containers/food/drinks/colocup/Initialize()
 	.=..()
-	icon_state = "colocup[rand(0, 6)]"
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
+	if (random_sprite)
+		icon_state = "colocup[rand(0, 6)]"
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
@@ -563,6 +587,13 @@
 	spillable = FALSE
 	isGlass = FALSE
 	custom_price = 45
+	obj_flags = CAN_BE_HIT
+
+/obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize()
+	..()
+	var/T = pick(subtypesof(/obj/item/reagent_containers/food/drinks/soda_cans) - /obj/item/reagent_containers/food/drinks/soda_cans/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/human/H)
 	if(!reagents.total_volume)
@@ -575,7 +606,7 @@
 	playsound(H,'sound/items/drink.ogg', 80, TRUE)
 	reagents.trans_to(H, src.reagents.total_volume, transfered_by = H) //a big sip
 	sleep(5)
-	H.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "All these new fangled arcade games are too slow. I prefer the classics.", "They don't make 'em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make 'em like good old fashioned singularity engines anymore."))
+	H.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "All these new fangled arcade games are too slow. I prefer the classics.", "They don't make 'em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make 'em like good old-fashioned singularity engines anymore."))
 	if(H.age >= 30)
 		H.Stun(50)
 		sleep(50)
@@ -610,7 +641,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
 	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+	reagents.flags |= OPENCONTAINER
 	playsound(src, "can_open", 50, TRUE)
 	spillable = TRUE
 
@@ -653,7 +684,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/sol_dry
 	name = "Sol Dry"
 	desc = "Maybe this will help your tummy feel better. Maybe not."
-	icon_state = "ginger_ale"
+	icon_state = "sol_dry"
 	list_reagents = list(/datum/reagent/consumable/sol_dry = 30)
 	foodtype = SUGAR
 
@@ -694,7 +725,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/pwr_game
 	name = "Pwr Game"
-	desc = "The only drink with the PWR that true gamers crave."
+	desc = "The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to."
 	icon_state = "purple_can"
 	list_reagents = list(/datum/reagent/consumable/pwr_game = 30)
 
@@ -716,7 +747,7 @@
 	name = "Monkey Energy"
 	desc = "Unleash the ape!"
 	icon_state = "monkey_energy"
-	item_state = "monkey_energy"
+	inhand_icon_state = "monkey_energy"
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	foodtype = SUGAR | JUNKFOOD
 

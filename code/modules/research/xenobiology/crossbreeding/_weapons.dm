@@ -22,7 +22,7 @@ Slimecrossing Weapons
 	desc = "A strange, transparent knife which constantly shifts color. It hums slightly when moved."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "rainbowknife"
-	item_state = "rainbowknife"
+	inhand_icon_state = "rainbowknife"
 	force = 15
 	throwforce = 15
 	damtype = BRUTE
@@ -49,21 +49,25 @@ Slimecrossing Weapons
 	return ..()
 
 //Adamantine shield - Chilling Adamantine
-/obj/item/twohanded/required/adamantineshield
+/obj/item/shield/adamantineshield
 	name = "adamantine shield"
 	desc = "A gigantic shield made of solid adamantium."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "adamshield"
-	item_state = "adamshield"
+	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
+	force = 0
 	throw_range = 1 //How far do you think you're gonna throw a solid crystalline shield...?
 	throw_speed = 2
-	force_wielded = 15 //Heavy, but hard to wield.
 	attack_verb = list("bashed","pounded","slammed")
 	item_flags = SLOWS_WHILE_IN_HAND
+
+/obj/item/shield/adamantineshield/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=15)
 
 //Bloodchiller - Chilling Green
 /obj/item/gun/magic/bloodchill
@@ -71,7 +75,7 @@ Slimecrossing Weapons
 	desc = "A horrifying weapon made of your own bone and blood vessels. It shoots slowing globules of your own blood. Ech."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "bloodgun"
-	item_state = "bloodgun"
+	inhand_icon_state = "bloodgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL

@@ -41,20 +41,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	if(delete_after_roundstart)
 		qdel(src)
 
-/obj/effect/landmark/start/New()
+/obj/effect/landmark/start/Initialize()
+	. = ..()
 	GLOB.start_landmarks_list += src
 	if(jobspawn_override)
-		if(!GLOB.jobspawn_overrides[name])
-			GLOB.jobspawn_overrides[name] = list()
-		GLOB.jobspawn_overrides[name] += src
-	..()
+		LAZYADDASSOC(GLOB.jobspawn_overrides, name, src)
 	if(name != "start")
 		tag = "start*[name]"
 
 /obj/effect/landmark/start/Destroy()
 	GLOB.start_landmarks_list -= src
 	if(jobspawn_override)
-		GLOB.jobspawn_overrides[name] -= src
+		LAZYREMOVEASSOC(GLOB.jobspawn_overrides, name, src)
 	return ..()
 
 // START LANDMARKS FOLLOW. Don't change the names unless
@@ -66,6 +64,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/assistant/override
 	jobspawn_override = TRUE
 	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/prisoner
+	name = "Prisoner"
+	icon_state = "Prisoner"
 
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
@@ -183,6 +185,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Virologist"
 	icon_state = "Virologist"
 
+/obj/effect/landmark/start/psychologist
+	name = "Psychologist"
+	icon_state = "Psychologist"
+
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
 	icon_state = "Chaplain"
@@ -200,7 +206,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/ai/after_round_start()
 	if(latejoin_active && !used)
-		new /obj/structure/AIcore/latejoin_inactive(loc)
+		new /obj/structure/ai_core/latejoin_inactive(loc)
 	return ..()
 
 /obj/effect/landmark/start/ai/secondary
@@ -421,3 +427,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+// handled in portals.dm, id connected to one-way portal
+/obj/effect/landmark/portal_exit
+	name = "portal exit"
+	icon_state = "portal_exit"
+	var/id

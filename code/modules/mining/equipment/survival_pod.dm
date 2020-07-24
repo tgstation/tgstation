@@ -140,11 +140,10 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "sleeper"
 
-/obj/machinery/sleeper/survival_pod/update_icon()
-	if(state_open)
-		cut_overlays()
-	else
-		add_overlay("sleeper_cover")
+/obj/machinery/sleeper/survival_pod/update_overlays()
+	. = ..()
+	if(!state_open)
+		. += "sleeper_cover"
 
 //Lifeform Stasis Unit
 /obj/machinery/stasis/survival_pod
@@ -153,10 +152,11 @@
 	mattress_state = null
 	buckle_lying = 270
 
-/obj/machinery/stasis/survival_pod/play_power_sound()
-	return
+/obj/machinery/stasis/survival_pod/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
-/obj/machinery/stasis/survival_pod/update_icon()
+/obj/machinery/stasis/survival_pod/play_power_sound()
 	return
 
 //Computer
@@ -205,8 +205,9 @@
 	flags_1 = NODECONSTRUCT_1
 	var/empty = FALSE
 
-/obj/machinery/smartfridge/survival_pod/update_icon()
-	return
+/obj/machinery/smartfridge/survival_pod/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	. = ..()
@@ -279,10 +280,11 @@
 
 //Signs
 /obj/structure/sign/mining
-	name = "nanotrasen mining corps sign"
+	name = "\improper Nanotrasen mining corps sign"
 	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "ntpod"
+	buildable_sign = FALSE
 
 /obj/structure/sign/mining/survival
 	name = "shelter sign"
@@ -330,4 +332,4 @@
 	icon = initial(I.icon)
 	desc = initial(I.desc)
 	icon_state = initial(I.icon_state)
-	item_state = initial(I.item_state)
+	inhand_icon_state = initial(I.inhand_icon_state)

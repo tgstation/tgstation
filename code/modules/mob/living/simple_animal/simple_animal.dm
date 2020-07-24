@@ -145,6 +145,15 @@
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
+	///How much wounding power it has
+	var/wound_bonus = CANT_WOUND
+	///How much bare wounding power it has
+	var/bare_wound_bonus = 0
+	///If the attacks from this are sharp
+	var/sharpness = FALSE
+	///Generic flags
+	var/simple_mob_flags = NONE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -184,12 +193,12 @@
 			return
 		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
 			tame = TRUE
-			tamed()
+			tamed(user)
 		else
 			tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
-/mob/living/simple_animal/proc/tamed()
+/mob/living/simple_animal/proc/tamed(whomst)
 	return
 
 /mob/living/simple_animal/examine(mob/user)
@@ -197,9 +206,6 @@
 	if(stat == DEAD)
 		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
 
-/mob/living/simple_animal/updatehealth()
-	..()
-	health = CLAMP(health, 0, maxHealth)
 
 /mob/living/simple_animal/update_stat()
 	if(status_flags & GODMODE)
@@ -372,7 +378,7 @@
 	if(icon_gib)
 		new /obj/effect/temp_visual/gib_animation/animal(loc, icon_gib)
 
-/mob/living/simple_animal/say_mod(input, message_mode)
+/mob/living/simple_animal/say_mod(input, list/message_mods = list())
 	if(speak_emote && speak_emote.len)
 		verb_say = pick(speak_emote)
 	. = ..()
@@ -388,8 +394,8 @@
 
 /mob/living/simple_animal/proc/update_simplemob_varspeed()
 	if(speed == 0)
-		remove_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE)
-	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE, 100, multiplicative_slowdown = speed, override = TRUE)
+		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -515,7 +521,7 @@
 		..()
 
 /mob/living/simple_animal/update_mobility(value_otherwise = TRUE)
-	if(IsUnconscious() || IsParalyzed() || IsStun() || IsKnockdown() || IsParalyzed() || stat || resting)
+	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsParalyzed() || IsStun() || IsKnockdown() || IsParalyzed() || stat || resting)
 		drop_all_held_items()
 		mobility_flags = NONE
 	else if(buckled)
@@ -592,17 +598,13 @@
 		mode()
 
 /mob/living/simple_animal/swap_hand(hand_index)
+	. = ..()
+	if(!.)
+		return
 	if(!dextrous)
-		return ..()
+		return
 	if(!hand_index)
 		hand_index = (active_hand_index % held_items.len)+1
-	var/obj/item/held_item = get_active_held_item()
-	if(held_item)
-		if(istype(held_item, /obj/item/twohanded))
-			var/obj/item/twohanded/T = held_item
-			if(T.wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [T].</span>")
-				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
 	if(hud_used)
@@ -620,18 +622,12 @@
 
 /mob/living/simple_animal/update_inv_hands()
 	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-		var/obj/item/l_hand = get_item_for_held_index(1)
-		var/obj/item/r_hand = get_item_for_held_index(2)
-		if(r_hand)
-			r_hand.layer = ABOVE_HUD_LAYER
-			r_hand.plane = ABOVE_HUD_PLANE
-			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
-			client.screen |= r_hand
-		if(l_hand)
-			l_hand.layer = ABOVE_HUD_LAYER
-			l_hand.plane = ABOVE_HUD_PLANE
-			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
-			client.screen |= l_hand
+		for(var/obj/item/I in held_items)
+			var/index = get_held_index_of_item(I)
+			I.layer = ABOVE_HUD_LAYER
+			I.plane = ABOVE_HUD_PLANE
+			I.screen_loc = ui_hand_position(index)
+			client.screen |= I
 
 //ANIMAL RIDING
 

@@ -384,7 +384,7 @@
 			created_name = ""
 
 	else if(href_list["Master"])
-		forced_ai = select_active_ai(usr)
+		forced_ai = select_active_ai(usr, z)
 		if(!forced_ai)
 			to_chat(usr, "<span class='alert'>No active AIs detected.</span>")
 

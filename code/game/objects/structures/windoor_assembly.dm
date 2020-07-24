@@ -47,7 +47,7 @@
 	setDir(ini_dir)
 	move_update_air(T)
 
-/obj/structure/windoor_assembly/update_icon()
+/obj/structure/windoor_assembly/update_icon_state()
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 
 /obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, turf/target)
@@ -121,7 +121,7 @@
 							to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 							return
 					to_chat(user, "<span class='notice'>You secure the windoor assembly.</span>")
-					setAnchored(TRUE)
+					set_anchored(TRUE)
 					if(secure)
 						name = "secure anchored windoor assembly"
 					else
@@ -136,7 +136,7 @@
 					if(!anchored)
 						return
 					to_chat(user, "<span class='notice'>You unsecure the windoor assembly.</span>")
-					setAnchored(FALSE)
+					set_anchored(FALSE)
 					if(secure)
 						name = "secure windoor assembly"
 					else
@@ -315,13 +315,8 @@
 
 /obj/structure/windoor_assembly/ComponentInitialize()
 	. = ..()
-	AddComponent(
-		/datum/component/simple_rotation,
-		ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS,
-		null,
-		CALLBACK(src, .proc/can_be_rotated),
-		CALLBACK(src,.proc/after_rotation)
-		)
+	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS
+	AddComponent(/datum/component/simple_rotation, rotation_flags, can_be_rotated=CALLBACK(src, .proc/can_be_rotated), after_rotation=CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/windoor_assembly/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)

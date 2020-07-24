@@ -112,4 +112,6 @@
 
 /obj/effect/abstract/proximity_checker/Crossed(atom/movable/AM)
 	set waitfor = FALSE
-	monitor.hasprox_receiver.HasProximity(AM)
+	. = ..()
+	if(monitor)
+		monitor.hasprox_receiver.HasProximity(AM)

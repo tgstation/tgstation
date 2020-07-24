@@ -77,7 +77,7 @@
 
 /obj/structure/blob/CanAStarPass(ID, dir, caller)
 	. = 0
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSBLOB)
 
@@ -208,7 +208,7 @@
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
 /obj/structure/blob/zap_act(power)
-	..()
+	. = ..()
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
 			take_damage(power/400, BURN, "energy")

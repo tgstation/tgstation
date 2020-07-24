@@ -18,14 +18,15 @@
 	var/ride_check_rider_incapacitated = FALSE
 	var/ride_check_rider_restrained = FALSE
 	var/ride_check_ridden_incapacitated = FALSE
+	var/ride_check_ridden_restrained = FALSE
 
 	var/del_on_unbuckle_all = FALSE
-	
+
 	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
 	var/respect_mob_mobility = TRUE
 
 /datum/component/riding/Initialize()
-	if(!ismovableatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
@@ -64,22 +65,30 @@
 /datum/component/riding/proc/ride_check(mob/living/M)
 	var/atom/movable/AM = parent
 	var/mob/AMM = AM
-	if((ride_check_rider_restrained && M.restrained(TRUE)) || (ride_check_rider_incapacitated && M.incapacitated(FALSE, TRUE)) || (ride_check_ridden_incapacitated && istype(AMM) && AMM.incapacitated(FALSE, TRUE)))
+	var/kick_us_off
+	if((ride_check_rider_restrained && M.restrained(TRUE)) || (ride_check_rider_incapacitated && M.incapacitated(TRUE, TRUE)))
+		kick_us_off = TRUE
+	if(kick_us_off || (istype(AMM) && ((ride_check_ridden_restrained && AMM.restrained(TRUE)) || (ride_check_ridden_incapacitated && AMM.incapacitated(TRUE, TRUE)))))
 		M.visible_message("<span class='warning'>[M] falls off of [AM]!</span>", \
 						"<span class='warning'>You fall off of [AM]!</span>")
 		AM.unbuckle_mob(M)
 	return TRUE
 
-/datum/component/riding/proc/force_dismount(mob/living/M)
+/datum/component/riding/proc/force_dismount(mob/living/M, gentle = FALSE)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(M)
 	if(isanimal(AM) || iscyborg(AM))
 		var/turf/target = get_edge_target_turf(AM, AM.dir)
 		var/turf/targetm = get_step(get_turf(AM), AM.dir)
 		M.Move(targetm)
-		M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
-		"<span class='warning'>You're thrown clear of [AM]!</span>")
-		M.throw_at(target, 14, 5, AM)
+		if(gentle)
+			M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
+			"<span class='warning'>You're thrown clear of [AM]!</span>")
+			M.throw_at(target, 8, 3, AM, gentle = TRUE)
+		else
+			M.visible_message("<span class='warning'>[M] is thrown violently from [AM]!</span>", \
+			"<span class='warning'>You're thrown violently from [AM]!</span>")
+			M.throw_at(target, 14, 5, AM, gentle = FALSE)
 		M.Knockdown(3 SECONDS)
 
 /datum/component/riding/proc/handle_vehicle_offsets()
@@ -148,7 +157,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
+			buckled_mob.client.view_size.resetToDefault()
 
 //MOVEMENT
 /datum/component/riding/proc/turf_check(turf/next, turf/current)
@@ -192,7 +201,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		to_chat(user, "<span class='warning'>You'll need the keys in one of your hands to [drive_verb] [AM].</span>")
+		to_chat(user, "<span class='warning'>You'll need a special item in one of your hands to [drive_verb] [AM].</span>")
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
@@ -218,14 +227,15 @@
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
-	H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
+	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	. = ..()
 
 /datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	. = ..()
 	var/mob/living/carbon/human/H = parent
-	H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN)
+	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
 	var/mob/living/carbon/human/H = parent
@@ -323,6 +333,9 @@
 		else
 			inhand.rider = riding_target_override
 		inhand.parent = AM
+		for(var/obj/item/I in user.held_items) // yes i know this sucks but these are ABSTRACT++ dumbness and i'm not adding a whole new flag for these two meme items
+			if((I.obj_flags & HAND_ITEM))
+				qdel(I)
 		if(user.put_in_hands(inhand, TRUE))
 			amount_equipped++
 		else
@@ -371,4 +384,12 @@
 		if(rider in AM.buckled_mobs)
 			AM.unbuckle_mob(rider)
 	. = ..()
-	
+
+/obj/item/riding_offhand/on_thrown(mob/living/carbon/user, atom/target)
+	if(rider == user)
+		return //Piggyback user.
+	user.unbuckle_mob(rider)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='notice'>You gently let go of [rider].</span>")
+		return
+	return rider

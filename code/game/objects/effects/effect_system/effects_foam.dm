@@ -39,9 +39,10 @@
 	if(hotspot && istype(T) && T.air)
 		qdel(hotspot)
 		var/datum/gas_mixture/G = T.air
-		var/plas_amt = min(30,G.gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
-		G.gases[/datum/gas/plasma][MOLES] -= plas_amt
-		absorbed_plasma += plas_amt
+		if(G.gases[/datum/gas/plasma])
+			var/plas_amt = min(30,G.gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
+			G.gases[/datum/gas/plasma][MOLES] -= plas_amt
+			absorbed_plasma += plas_amt
 		if(G.temperature > T20C)
 			G.temperature = max(G.temperature/2,T20C)
 		G.garbage_collect()
@@ -142,10 +143,10 @@
 			continue
 		if(isturf(O.loc))
 			var/turf/T = O.loc
-			if(T.intact && O.level == 1) //hidden under the floor
+			if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 				continue
 		if(lifetime % reagent_divisor)
-			reagents.reaction(O, VAPOR, fraction)
+			reagents.expose(O, VAPOR, fraction)
 	var/hit = 0
 	for(var/mob/living/L in range(0,src))
 		hit += foam_mob(L)
@@ -153,7 +154,7 @@
 		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 	var/T = get_turf(src)
 	if(lifetime % reagent_divisor)
-		reagents.reaction(T, VAPOR, fraction)
+		reagents.expose(T, VAPOR, fraction)
 
 	if(--amount < 0)
 		return
@@ -166,7 +167,7 @@
 		return 0
 	var/fraction = 1/initial(reagent_divisor)
 	if(lifetime % reagent_divisor)
-		reagents.reaction(L, VAPOR, fraction)
+		reagents.expose(L, VAPOR, fraction)
 	lifetime--
 	return 1
 

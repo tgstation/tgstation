@@ -10,7 +10,6 @@
 	name = "fix eyes"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 45, /obj/item/pen = 25)
 	time = 64
-	experience_given = 5
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/eyes/E = target.getorganslot(ORGAN_SLOT_EYES)

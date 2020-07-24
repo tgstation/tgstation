@@ -1,7 +1,7 @@
 /obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "recharger0"
+	icon_state = "recharger"
 	desc = "A charging dock for energy based weaponry."
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
@@ -32,7 +32,7 @@
 		. += {"<span class='notice'>\The [src] contains:</span>
 		<span class='notice'>- \A [charging].</span>"}
 
-	if(!(stat & (NOPOWER|BROKEN)))
+	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "<span class='notice'>The status display reads:</span>"
 		. += "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.</span>"
 		if(charging)
@@ -57,7 +57,7 @@
 		if(charging)
 			to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
 			return
-		setAnchored(!anchored)
+		set_anchored(!anchored)
 		power_change()
 		to_chat(user, "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>")
 		G.play_tool_sound(src)
@@ -91,7 +91,8 @@
 		return 1
 
 	if(anchored && !charging)
-		if(default_deconstruction_screwdriver(user, "rechargeropen", "recharger0", G))
+		if(default_deconstruction_screwdriver(user, "recharger", "recharger", G))
+			update_icon()
 			return
 
 		if(panel_open && G.tool_behaviour == TOOL_CROWBAR)
@@ -119,7 +120,7 @@
 		setCharging(null)
 
 /obj/machinery/recharger/process()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return PROCESS_KILL
 
 	using_power = FALSE
@@ -147,7 +148,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_CONTENTS)
 		return
-	if(!(stat & (NOPOWER|BROKEN)) && anchored)
+	if(!(machine_stat & (NOPOWER|BROKEN)) && anchored)
 		if(istype(charging,  /obj/item/gun/energy))
 			var/obj/item/gun/energy/E = charging
 			if(E.cell)
@@ -158,16 +159,24 @@
 			if(B.cell)
 				B.cell.charge = 0
 
+/obj/machinery/recharger/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
+	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
+		return
+	if(panel_open)
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-open", layer, plane, dir, alpha)
+		return
 
-/obj/machinery/recharger/update_icon_state()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
-		icon_state = "rechargeroff"
-	else if(panel_open)
-		icon_state = "rechargeropen"
-	else if(charging)
+	luminosity = 1
+	if (charging)
 		if(using_power)
-			icon_state = "recharger1"
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-charging", layer, plane, dir, alpha)
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-charging", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 		else
-			icon_state = "recharger2"
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", layer, plane, dir, alpha)
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 	else
-		icon_state = "recharger0"
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", layer, plane, dir, alpha)
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)

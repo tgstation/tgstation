@@ -60,7 +60,7 @@
 	icon_state = "lattice"
 	plane = FLOOR_PLANE
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT | BLOCK_Z_FALL
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	var/id
 	var/open = FALSE
 	var/hidden = FALSE
@@ -76,7 +76,7 @@
 		toggle()
 
 /obj/structure/pitgrate/proc/update_openspace()
-	var/turf/open/openspace/T = get_turf(src)
+	var/turf/open/transparent/openspace/T = get_turf(src)
 	if(!istype(T))
 		return
 	//Simple way to keep plane conflicts away, could probably be upgraded to something less nuclear with 513
@@ -87,10 +87,10 @@
 	var/talpha
 	if(open)
 		talpha = 0
-		obj_flags &= ~BLOCK_Z_FALL
+		obj_flags &= ~(BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP)
 	else
 		talpha = 255
-		obj_flags |= BLOCK_Z_FALL
+		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	plane = BYOND_LIGHTING_LAYER //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
 	animate(src,alpha = talpha,time = 10)
 	addtimer(CALLBACK(src,.proc/reset_plane),10)

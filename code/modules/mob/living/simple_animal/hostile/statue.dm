@@ -20,7 +20,6 @@
 	maxHealth = 50000
 	health = 50000
 	healable = 0
-
 	harm_intent_damage = 10
 	obj_damage = 100
 	melee_damage_lower = 68
@@ -109,6 +108,9 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
+/mob/living/simple_animals/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
+	return FALSE
+
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
 	if(!cannot_be_seen)
 		return null
@@ -129,11 +131,11 @@
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
-				if(!M.eye_blind)
+				if(!M.is_blind())
 					return M
 		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
 			if(M.occupant && M.occupant.client)
-				if(!M.occupant.eye_blind)
+				if(!M.occupant.is_blind())
 					return M.occupant
 	return null
 

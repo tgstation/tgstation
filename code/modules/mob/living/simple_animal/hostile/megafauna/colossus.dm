@@ -32,6 +32,7 @@ Difficulty: Very Hard
 	icon_state = "eva"
 	icon_living = "eva"
 	icon_dead = ""
+	health_doll_icon = "eva"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
@@ -87,7 +88,7 @@ Difficulty: Very Hard
 	chosen_attack_num = 4
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	anger_modifier = clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
 	if(client)
@@ -144,6 +145,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/select_spiral_attack()
 	telegraph()
+	icon_state = "eva_attack"
 	if(health < maxHealth/3)
 		return double_spiral()
 	visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
@@ -171,6 +173,7 @@ Difficulty: Very Hard
 		shoot_projectile(start_turf, counter * 22.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		SLEEP_CHECK_DEATH(1)
+	icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
 	if(!isnum(set_angle) && (!marker || marker == loc))
@@ -248,6 +251,14 @@ Difficulty: Very Hard
 		AT.pixel_y += random_y
 	return ..()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/float(on) //we don't want this guy to float, messes up his animations
+	if(throwing)
+		return
+	if(on && !(movement_type & FLOATING))
+		setMovetype(movement_type | FLOATING)
+	else if(!on && (movement_type & FLOATING))
+		setMovetype(movement_type & ~FLOATING)
+
 /obj/projectile/colossus
 	name ="death bolt"
 	icon_state= "chronobolt"
@@ -261,7 +272,10 @@ Difficulty: Very Hard
 /obj/projectile/colossus/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
+		if(isobj(target))
+			SSexplosions.medobj += target
+		else
+			SSexplosions.medturf += target
 
 
 
@@ -281,8 +295,9 @@ Difficulty: Very Hard
 	var/list/stored_items = list()
 	var/list/blacklist = list()
 
-/obj/machinery/smartfridge/black_box/update_icon()
-	return
+/obj/machinery/smartfridge/black_box/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
@@ -413,7 +428,7 @@ Difficulty: Very Hard
 		. += observer_desc
 		. += "It is activated by [activation_method]."
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -503,7 +518,7 @@ Difficulty: Very Hard
 			NewFlora = list(/obj/structure/flora/grass/green, /obj/structure/flora/grass/brown, /obj/structure/flora/grass/both)
 		if("jungle") //Beneficial due to actually having breathable air. Plus, monkeys and bows and arrows.
 			NewTerrainFloors = /turf/open/floor/grass
-			NewTerrainWalls = /turf/closed/wall/mineral/sandstone
+			NewTerrainWalls = /turf/closed/wall/mineral/wood
 			NewTerrainChairs = /obj/structure/chair/wood
 			NewTerrainTables = /obj/structure/table/wood
 			NewFlora = list(/obj/structure/flora/ausbushes/sparsegrass, /obj/structure/flora/ausbushes/fernybush, /obj/structure/flora/ausbushes/leafybush,
@@ -616,7 +631,7 @@ Difficulty: Very Hard
 	if(.)
 		return
 	if(ready_to_deploy)
-		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
+		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be revived!)",,"Yes","No")
 		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
 			W.key = user.key
@@ -731,7 +746,7 @@ Difficulty: Very Hard
 				mobcheck = TRUE
 				break
 			if(!mobcheck)
-				new /mob/living/simple_animal/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it
+				new /mob/living/simple_animal/hostile/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it //i found it funny that in the file for a giant angel beast theres a cockroach
 
 /obj/structure/closet/stasis
 	name = "quantum entanglement stasis warp field"

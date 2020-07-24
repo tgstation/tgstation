@@ -1,9 +1,9 @@
 /obj/item/hand_labeler
 	name = "hand labeler"
-	desc = "A combined label printer and applicator in a portable device, designed to be easy to operate and use."
+	desc = "A combined label printer, applicator, and remover, all in a single portable device. Designed to be easy to operate and use."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
-	item_state = "flight"
+	inhand_icon_state = "flight"
 	var/label = null
 	var/labels_left = 30
 	var/mode = 0
@@ -55,9 +55,10 @@
 		to_chat(user, "<span class='warning'>You can't label creatures!</span>") // use a collar
 		return
 
-	user.visible_message("<span class='notice'>[user] labels [A] as [label].</span>", \
-						 "<span class='notice'>You label [A] as [label].</span>")
-	A.name = "[A.name] ([label])"
+	user.visible_message("<span class='notice'>[user] labels [A] with \"[label]\".</span>", \
+						 "<span class='notice'>You label [A] with \"[label]\".</span>")
+	A.AddComponent(/datum/component/label, label)
+	playsound(A, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
 	labels_left--
 
 
@@ -115,7 +116,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
-	item_state = "electropack"
+	inhand_icon_state = "electropack"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

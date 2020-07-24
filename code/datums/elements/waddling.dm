@@ -2,7 +2,7 @@
 
 /datum/element/waddling/Attach(datum/target)
 	. = ..()
-	if(!ismovableatom(target))
+	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	if(isliving(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/LivingWaddle)
@@ -20,5 +20,6 @@
 
 /datum/element/waddling/proc/Waddle(atom/movable/target)
 	animate(target, pixel_z = 4, time = 0)
-	animate(pixel_z = 0, transform = turn(matrix(), pick(-12, 0, 12)), time=2)
-	animate(pixel_z = 0, transform = matrix(), time = 0)
+	var/prev_trans = matrix(target.transform)
+	animate(pixel_z = 0, transform = turn(target.transform, pick(-12, 0, 12)), time=2)
+	animate(pixel_z = 0, transform = prev_trans, time = 0)

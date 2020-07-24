@@ -14,7 +14,6 @@
 	name = "cut excess fat"
 	implements = list(TOOL_SAW = 100, /obj/item/hatchet = 35, /obj/item/kitchen/knife/butcher = 25)
 	time = 64
-	experience_given = 2
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] begins to cut away [target]'s excess fat.</span>", "<span class='notice'>You begin to cut away [target]'s excess fat...</span>")
@@ -33,7 +32,6 @@
 	name = "remove loose fat"
 	implements = list(TOOL_RETRACTOR = 100, TOOL_SCREWDRIVER = 45, TOOL_WIRECUTTER = 35)
 	time = 32
-	experience_given = 0 //scales with fat removed
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to extract [target]'s loose fat...</span>",
@@ -48,7 +46,6 @@
 	var/removednutriment = target.nutrition
 	target.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 	removednutriment -= NUTRITION_LEVEL_WELL_FED //whatever was removed goes into the meat
-	experience_given = (round(removednutriment/30))
 	var/mob/living/carbon/human/H = target
 	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
 

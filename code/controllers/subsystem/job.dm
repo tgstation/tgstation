@@ -421,22 +421,24 @@ SUBSYSTEM_DEF(job)
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-			if(sloc.name != rank)
-				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
-				continue
-			if(locate(/mob/living) in sloc.loc)
-				continue
-			S = sloc
-			sloc.used = TRUE
-			break
 		if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
+		else
+			for(var/_sloc in GLOB.start_landmarks_list)
+				var/obj/effect/landmark/start/sloc = _sloc
+				if(sloc.name != rank)
+					continue
+				S = sloc
+				if(locate(/mob/living) in sloc.loc) //so we can revert to spawning them on top of eachother if something goes wrong
+					continue
+				sloc.used = TRUE
+				break
 		if(S)
 			S.JoinPlayerHere(living_mob, FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
-			SendToLateJoin(living_mob)
+			if(!SendToLateJoin(living_mob))
+				living_mob.move_to_error_room()
 
 
 	if(living_mob.mind)
@@ -482,13 +484,20 @@ SUBSYSTEM_DEF(job)
 	if(!C?.holder)
 		return TRUE
 	var/datum/job/job = GetJob(rank)
+
+	var/timegate_expired = FALSE
+	// allow only forcing deadminning in the first X seconds of the round if auto_deadmin_timegate is set in config
+	var/timegate = CONFIG_GET(number/auto_deadmin_timegate)
+	if(timegate && (world.time - SSticker.round_start_time > timegate))
+		timegate_expired = TRUE
+
 	if(!job)
 		return
-	if((job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD) && (CONFIG_GET(flag/auto_deadmin_heads) || (C.prefs?.toggles & DEADMIN_POSITION_HEAD)))
+	if((job.auto_deadmin_role_flags & DEADMIN_POSITION_HEAD) && ((CONFIG_GET(flag/auto_deadmin_heads) && !timegate_expired) || (C.prefs?.toggles & DEADMIN_POSITION_HEAD)))
 		return C.holder.auto_deadmin()
-	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY) && (CONFIG_GET(flag/auto_deadmin_security) || (C.prefs?.toggles & DEADMIN_POSITION_SECURITY)))
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SECURITY) && ((CONFIG_GET(flag/auto_deadmin_security) && !timegate_expired) || (C.prefs?.toggles & DEADMIN_POSITION_SECURITY)))
 		return C.holder.auto_deadmin()
-	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && (CONFIG_GET(flag/auto_deadmin_silicons) || (C.prefs?.toggles & DEADMIN_POSITION_SILICON))) //in the event there's ever psuedo-silicon roles added, ie synths.
+	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && ((CONFIG_GET(flag/auto_deadmin_silicons) && !timegate_expired) || (C.prefs?.toggles & DEADMIN_POSITION_SILICON))) //in the event there's ever psuedo-silicon roles added, ie synths.
 		return C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
@@ -612,12 +621,12 @@ SUBSYSTEM_DEF(job)
 	if(M.mind && M.mind.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
 		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role])
 		destination.JoinPlayerHere(M, FALSE)
-		return
+		return TRUE
 
 	if(latejoin_trackers.len)
 		destination = pick(latejoin_trackers)
 		destination.JoinPlayerHere(M, buckle)
-		return
+		return TRUE
 
 	//bad mojo
 	var/area/shuttle/arrival/A = GLOB.areas_by_type[/area/shuttle/arrival]
@@ -626,7 +635,7 @@ SUBSYSTEM_DEF(job)
 		var/obj/structure/chair/C = locate() in A
 		if(C)
 			C.JoinPlayerHere(M, buckle)
-			return
+			return TRUE
 
 		//last hurrah
 		var/list/avail = list()
@@ -636,7 +645,7 @@ SUBSYSTEM_DEF(job)
 		if(avail.len)
 			destination = pick(avail)
 			destination.JoinPlayerHere(M, FALSE)
-			return
+			return TRUE
 
 	//pick an open spot on arrivals and dump em
 	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
@@ -644,10 +653,11 @@ SUBSYSTEM_DEF(job)
 		for(var/turf/T in arrivals_turfs)
 			if(!is_blocked_turf(T, TRUE))
 				T.JoinPlayerHere(M, FALSE)
-				return
+				return TRUE
 		//last chance, pick ANY spot on arrivals and dump em
 		destination = arrivals_turfs[1]
 		destination.JoinPlayerHere(M, FALSE)
+		return TRUE
 	else
 		var/msg = "Unable to send mob [M] to late join!"
 		message_admins(msg)

@@ -7,10 +7,7 @@
 	requires_ntnet = 1
 	network_destination = "alarm monitoring network"
 	size = 5
-	tgui_id = "ntos_station_alert"
-	ui_x = 315
-	ui_y = 500
-
+	tgui_id = "NtosStationAlertConsole"
 	var/has_alert = 0
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
 

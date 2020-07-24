@@ -34,9 +34,8 @@
 	if(traitor_kind == TRAITOR_AI && owner.current && isAI(owner.current))
 		var/mob/living/silicon/ai/A = owner.current
 		A.set_zeroth_law("")
-		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
-		A.malf_picker.remove_malf_verbs(A)
-		qdel(A.malf_picker)
+		A.remove_malf_abilities()
+		QDEL_NULL(A.malf_picker)
 	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")

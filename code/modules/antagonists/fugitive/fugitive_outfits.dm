@@ -2,7 +2,7 @@
 	name = "Prison Escapee"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
-	r_pocket = /obj/item/kitchen/knife/carrotshiv
+	r_pocket = /obj/item/kitchen/knife/shiv
 
 /datum/outfit/prisoner/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -59,7 +59,7 @@
 	if(visualsOnly)
 		return
 	var/obj/item/organ/eyes/robotic/glow/eyes = new()
-	eyes.Insert(src, drop_if_replaced = FALSE)
+	eyes.Insert(H, drop_if_replaced = FALSE)
 
 /datum/outfit/spacepol
 	name = "Spacepol Officer"
@@ -67,7 +67,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
 	head = /obj/item/clothing/head/helmet/police
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -97,14 +97,14 @@
 	uniform = /obj/item/clothing/under/rank/prisoner
 	head = /obj/item/clothing/head/hunter
 	suit = /obj/item/clothing/suit/space/hunter
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
 	glasses = /obj/item/clothing/glasses/sunglasses/garb
 	ears = /obj/item/radio/headset
-	l_pocket = /obj/item/tank/internals/plasma/full
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id
+	l_hand = /obj/item/tank/internals/plasma/full
 	r_hand = /obj/item/flamethrower/full/tank
 
 /datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

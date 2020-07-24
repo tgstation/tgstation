@@ -7,7 +7,6 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
-	var/level = 2
 
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -16,6 +15,13 @@
 	var/flags_1 = NONE
 	///Intearaction flags
 	var/interaction_flags_atom = NONE
+
+	var/flags_ricochet = NONE
+
+	///When a projectile tries to ricochet off this atom, the projectile ricochet chance is multiplied by this
+	var/ricochet_chance_mod = 1
+	///When a projectile ricochets off this atom, it deals the normal damage * this modifier to this atom
+	var/ricochet_damage_mod = 0.33
 
 	///Reagents holder
 	var/datum/reagents/reagents = null
@@ -36,8 +42,6 @@
 	var/list/atom_colours
 
 
-	///overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
-	var/list/priority_overlays
 	/// a very temporary list of overlays to remove
 	var/list/remove_overlays
 	/// a very temporary list of overlays to add
@@ -45,7 +49,7 @@
 
 	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
 	var/list/managed_vis_overlays
-	///overlays managed by update_overlays() to prevent removing overlays that weren't added by the same proc
+	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc
 	var/list/managed_overlays
 
 	///Proximity monitor associated with this atom
@@ -61,16 +65,17 @@
 	var/custom_price
 	///Economy cost of item in premium vendor
 	var/custom_premium_price
+	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
+	var/age_restricted = FALSE
 
 	//List of datums orbiting this atom
 	var/datum/component/orbiter/orbiters
 
-	/// Will move to flags_1 when i can be arsed to (2019, has not done so)
-	var/rad_flags = NONE
 	/// Radiation insulation types
 	var/rad_insulation = RAD_NO_INSULATION
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
 	var/list/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
@@ -81,12 +86,39 @@
 
 	var/list/alternate_appearances
 
+	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
+	var/list/targeted_by
+
+	/// Last appearance of the atom for demo saving purposes
+	var/image/demo_last_appearance
+
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmessage overlays
+	var/chat_color
+	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
+	var/chat_color_darkened
+
+	///Icon-smoothing behavior.
+	var/smooth = SMOOTH_FALSE
+	///Smoothing variable
+	var/top_left_corner
+	///Smoothing variable
+	var/top_right_corner
+	///Smoothing variable
+	var/bottom_left_corner
+	///Smoothing variable
+	var/bottom_right_corner
+	///Type path list this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
+	var/list/canSmoothWith = null
+
+
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
   * Not a lot happens here in SS13 code, as we offload most of the work to the
-  * [Intialization](atom.html#proc/Initialize) proc, mostly we run the preloader
-  * if the preloader is being used and then call InitAtom of which the ultimate
+  * [Intialization][/atom/proc/Initialize] proc, mostly we run the preloader
+  * if the preloader is being used and then call [InitAtom][/datum/controller/subsystem/atoms/proc/InitAtom] of which the ultimate
   * result is that the Intialize proc is called.
   *
   * We also generate a tag here if the DF_USE_TAG flag is set on the atom
@@ -134,16 +166,21 @@
   * Any parameters from new are passed through (excluding loc), naturally if you're loading from a map
   * there are no other arguments
   *
-  * Must return an [initialization hint](code/__DEFINES/subsystems.html) or a runtime will occur.
+  * Must return an [initialization hint][INITIALIZE_HINT_NORMAL] or a runtime will occur.
   *
   * Note: the following functions don't call the base for optimization and must copypasta handling:
-  * * /turf/Initialize
-  * * /turf/open/space/Initialize
+  * * [/turf/Initialize]
+  * * [/turf/open/space/Initialize]
   */
 /atom/proc/Initialize(mapload, ...)
+	//SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	if(loc)
+		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
 	//atom color stuff
 	if(color)
@@ -159,12 +196,8 @@
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	var/temp_list = list()
-	for(var/i in custom_materials)
-		temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
-
-	custom_materials = null //Null the list to prepare for applying the materials properly
-	set_custom_materials(temp_list)
+	// apply materials properly from the default custom_materials value
+	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 
@@ -173,10 +206,9 @@
 /**
   * Late Intialization, for code that should run after all atoms have run Intialization
   *
-  * To have your LateIntialize proc be called, your atoms [Initalization](atom.html#proc/Initialize)
+  * To have your LateIntialize proc be called, your atoms [Initalization][/atom/proc/Initialize]
   *  proc must return the hint
-  * [INITIALIZE_HINT_LATELOAD](code/__DEFINES/subsystems.html#define/INITIALIZE_HINT_LATELOAD)
-  * otherwise you will never be called.
+  * [INITIALIZE_HINT_LATELOAD] otherwise you will never be called.
   *
   * useful for doing things like finding other machines on GLOB.machines because you can guarantee
   * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
@@ -185,7 +217,7 @@
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
 
-/// Put your AddComponent() calls here
+/// Put your [AddComponent] calls here
 /atom/proc/ComponentInitialize()
 	return
 
@@ -211,18 +243,38 @@
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(priority_overlays)
 
+	for(var/i in targeted_by)
+		var/mob/M = i
+		LAZYREMOVE(M.do_afters, src)
+
+	targeted_by = null
 	QDEL_NULL(light)
+
+	if(smooth & SMOOTH_QUEUED)
+		SSicon_smooth.remove_from_queues(src)
 
 	return ..()
 
 /atom/proc/handle_ricochet(obj/projectile/P)
-	return
+	var/turf/p_turf = get_turf(P)
+	var/face_direction = get_dir(src, p_turf)
+	var/face_angle = dir2angle(face_direction)
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (P.Angle + 180))
+	var/a_incidence_s = abs(incidence_s)
+	if(a_incidence_s > 90 && a_incidence_s < 270)
+		return FALSE
+	if((P.flag in list("bullet", "bomb")) && P.ricochet_incidence_leeway)
+		if((a_incidence_s < 90 && a_incidence_s < 90 - P.ricochet_incidence_leeway) || (a_incidence_s > 270 && a_incidence_s -270 > P.ricochet_incidence_leeway))
+			return
+	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
+	P.setAngle(new_angle_s)
+	return TRUE
 
 ///Can the mover object pass this atom, while heading for the target turf
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_BE_PURE(TRUE)
 	if(mover.movement_type & UNSTOPPABLE)
 		return TRUE
 	. = CanAllowThrough(mover, target)
@@ -233,6 +285,7 @@
 /// Returns true or false to allow the mover to move through src
 /atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
 	SHOULD_CALL_PARENT(TRUE)
+	//SHOULD_BE_PURE(TRUE)
 	return !density
 
 /**
@@ -331,19 +384,21 @@
   * Otherwise it simply forceMoves the atom into this atom
   */
 /atom/proc/CheckParts(list/parts_list)
-	for(var/A in parts_list)
-		if(istype(A, /datum/reagent))
-			if(!reagents)
-				reagents = new()
-			reagents.reagent_list.Add(A)
-			reagents.conditional_update()
-		else if(ismovableatom(A))
-			var/atom/movable/M = A
-			if(isliving(M.loc))
-				var/mob/living/L = M.loc
-				L.transferItemToLoc(M, src)
-			else
-				M.forceMove(src)
+	if(parts_list)
+		for(var/A in parts_list)
+			if(istype(A, /datum/reagent))
+				if(!reagents)
+					reagents = new()
+				reagents.reagent_list.Add(A)
+				reagents.conditional_update()
+			else if(ismovable(A))
+				var/atom/movable/M = A
+				if(isliving(M.loc))
+					var/mob/living/L = M.loc
+					L.transferItemToLoc(M, src)
+				else
+					M.forceMove(src)
+		parts_list.Cut()
 
 ///Hook for multiz???
 /atom/proc/update_multiz(prune_on_fail = FALSE)
@@ -397,6 +452,26 @@
 /atom/proc/is_drainable()
 	return reagents && (reagents.flags & DRAINABLE)
 
+/** Handles exposing this atom to a list of reagents.
+  *
+  * Sends COMSIG_ATOM_EXPOSE_REAGENTS
+  * Calls expose_atom() for every reagent in the reagent list.
+  *
+  * Arguments:
+  * - [reagents][/list]: The list of reagents the atom is being exposed to.
+  * - [source][/datum/reagents]: The reagent holder the reagents are being sourced from.
+  * - method: How the atom is being exposed to the reagents.
+  * - volume_modifier: Volume multiplier.
+  * - show_message: Whether to display anything to mobs when they are exposed.
+  */
+/atom/proc/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
+	if((. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, method, volume_modifier, show_message)) & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	for(var/reagent in reagents)
+		var/datum/reagent/R = reagent
+		. |= R.expose_atom(src, reagents[R])
+
 /// Are you allowed to drop this atom
 /atom/proc/AllowDrop()
 	return FALSE
@@ -411,10 +486,10 @@
 /**
   * React to an EMP of the given severity
   *
-  * Default behaviour is to send the COMSIG_ATOM_EMP_ACT signal
+  * Default behaviour is to send the [COMSIG_ATOM_EMP_ACT] signal
   *
   * If the signal does not return protection, and there are attached wires then we call
-  * emp_pulse() on the wires
+  * [emp_pulse][/datum/wires/proc/emp_pulse] on the wires
   *
   * We then return the protection value
   */
@@ -427,7 +502,7 @@
 /**
   * React to a hit by a projectile object
   *
-  * Default behaviour is to send the COMSIG_ATOM_BULLET_ACT and then call on_hit() on the projectile
+  * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile
   */
 /atom/proc/bullet_act(obj/projectile/P, def_zone)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
@@ -446,7 +521,7 @@
   * Get the name of this object for examine
   *
   * You can override what is returned from this proc by registering to listen for the
-  * COMSIG_ATOM_GET_EXAMINE_NAME signal
+  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
   */
 /atom/proc/get_examine_name(mob/user)
 	. = "\a [src]"
@@ -465,9 +540,9 @@
   * Called when a mob examines (shift click or verb) this atom
   *
   * Default behaviour is to get the name and icon of the object and it's reagents where
-  * the TRANSPARENT flag is set on the reagents holder
+  * the [TRANSPARENT] flag is set on the reagents holder
   *
-  * Produces a signal COMSIG_PARENT_EXAMINE
+  * Produces a signal [COMSIG_PARENT_EXAMINE]
   */
 /atom/proc/examine(mob/user)
 	. = list("[get_examine_string(user, TRUE)].")
@@ -476,9 +551,11 @@
 		. += desc
 
 	if(custom_materials)
+		var/list/materials_list = list()
 		for(var/i in custom_materials)
 			var/datum/material/M = i
-			. += "<u>It is made out of [M.name]</u>."
+			materials_list += "[M.name]"
+		. += "<u>It is made out of [english_list(materials_list)]</u>."
 	if(reagents)
 		if(reagents.flags & TRANSPARENT)
 			. += "It contains:"
@@ -500,6 +577,19 @@
 				. += "<span class='danger'>It's empty.</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+/**
+  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_TIME (default 1.5 seconds)
+  *
+  * This is where you can put extra information on something that may be superfluous or not important in critical gameplay
+  * moments, while allowing people to manually double-examine to take a closer look
+  *
+  * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
+  */
+/atom/proc/examine_more(mob/user)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
+	if(!LAZYLEN(.)) // lol ..length
+		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
 
 /// Updates the icon of the atom
 /atom/proc/update_icon()
@@ -535,7 +625,7 @@
   * An atom we are buckled or is contained within us has tried to move
   *
   * Default behaviour is to send a warning that the user can't move while buckled as long
-  * as the buckle_message_cooldown has expired (50 ticks)
+  * as the [buckle_message_cooldown][/atom/var/buckle_message_cooldown] has expired (50 ticks)
   */
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)
@@ -550,7 +640,7 @@
 /**
   * React to being hit by an explosion
   *
-  * Default behaviour is to call contents_explosion() and send the COMSIG_ATOM_EX_ACT signal
+  * Default behaviour is to call [contents_explosion][/atom/proc/contents_explosion] and send the [COMSIG_ATOM_EX_ACT] signal
   */
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
@@ -560,7 +650,7 @@
 /**
   * React to a hit by a blob objecd
   *
-  * default behaviour is to send the COMSIG_ATOM_BLOB_ACT signal
+  * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
   */
 /atom/proc/blob_act(obj/structure/blob/B)
 	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
@@ -573,7 +663,7 @@
 /**
   * React to being hit by a thrown object
   *
-  * Default behaviour is to call hitby_react() on ourselves after 2 seconds if we are dense
+  * Default behaviour is to call [hitby_react][/atom/proc/hitby_react] on ourselves after 2 seconds if we are dense
   * and under normal gravity.
   *
   * Im not sure why this the case, maybe to prevent lots of hitby's if the thrown object is
@@ -618,7 +708,7 @@
 	return list("UNKNOWN DNA" = "X*")
 
 /mob/living/silicon/get_blood_dna_list()
-	return list("MOTOR OIL" = "SAE 5W-30") //just a little flavor text.
+	return
 
 ///to add a mob's dna info into an object's blood_dna list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
@@ -646,8 +736,8 @@
 	else
 		return FALSE
 
-///Called when gravity returns after floating I think
-/atom/proc/handle_fall()
+///Used for making a sound when a mob involuntarily falls into the ground.
+/atom/proc/handle_fall(mob/faller)
 	return
 
 ///Respond to the singularity eating this atom
@@ -657,7 +747,7 @@
 /**
   * Respond to the singularity pulling on us
   *
-  * Default behaviour is to send COMSIG_ATOM_SING_PULL and return
+  * Default behaviour is to send [COMSIG_ATOM_SING_PULL] and return
   */
 /atom/proc/singularity_pull(obj/singularity/S, current_size)
 	SEND_SIGNAL(src, COMSIG_ATOM_SING_PULL, S, current_size)
@@ -666,7 +756,7 @@
 /**
   * Respond to acid being used on our atom
   *
-  * Default behaviour is to send COMSIG_ATOM_ACID_ACT and return
+  * Default behaviour is to send [COMSIG_ATOM_ACID_ACT] and return
   */
 /atom/proc/acid_act(acidpwr, acid_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
@@ -674,15 +764,15 @@
 /**
   * Respond to an emag being used on our atom
   *
-  * Default behaviour is to send COMSIG_ATOM_EMAG_ACT and return
+  * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
   */
-/atom/proc/emag_act(mob/user)
-	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user)
+/atom/proc/emag_act(mob/user, obj/item/card/emag/E)
+	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, E)
 
 /**
   * Respond to a radioactive wave hitting this atom
   *
-  * Default behaviour is to send COMSIG_ATOM_RAD_ACT and return
+  * Default behaviour is to send [COMSIG_ATOM_RAD_ACT] and return
   */
 /atom/proc/rad_act(strength)
 	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
@@ -690,7 +780,7 @@
 /**
   * Respond to narsie eating our atom
   *
-  * Default behaviour is to send COMSIG_ATOM_NARSIE_ACT and return
+  * Default behaviour is to send [COMSIG_ATOM_NARSIE_ACT] and return
   */
 /atom/proc/narsie_act()
 	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
@@ -704,11 +794,19 @@
 /**
   * Respond to an RCD acting on our item
   *
-  * Default behaviour is to send COMSIG_ATOM_RCD_ACT and return FALSE
+  * Default behaviour is to send [COMSIG_ATOM_RCD_ACT] and return FALSE
   */
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
 	return FALSE
+
+/**
+  * Respond to an electric bolt action on our item
+  *
+  * Default behaviour is to return, we define here to allow for cleaner code later on
+  */
+/atom/proc/zap_act(power, zap_flags, shocked_targets)
+	return
 
 /**
   * Implement the behaviour for when a user click drags a storage object to your atom
@@ -739,7 +837,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents [STR.insert_preposition]to [src] as you can.</span>")
 	STR.orient2hud(user)
 	src_object.orient2hud(user)
@@ -753,9 +851,9 @@
 	return null
 
 /**
-  * This proc is called when an atom in our contents has it's Destroy() called
+  * This proc is called when an atom in our contents has it's [Destroy][/atom/Destroy] called
   *
-  * Default behaviour is to simply send COMSIG_ATOM_CONTENTS_DEL
+  * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
   */
 /atom/proc/handle_atom_del(atom/A)
 	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, A)
@@ -790,9 +888,10 @@
 /**
   * Hook for running code when a dir change occurs
   *
-  * Not recommended to use, listen for the COMSIG_ATOM_DIR_CHANGE signal instead (sent by this proc)
+  * Not recommended to use, listen for the [COMSIG_ATOM_DIR_CHANGE] signal instead (sent by this proc)
   */
 /atom/proc/setDir(newdir)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
@@ -860,6 +959,22 @@
 			color = C
 			return
 
+
+///Proc for being washed by a shower
+/atom/proc/washed(var/atom/washer, wash_strength = CLEAN_WEAK)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, wash_strength)
+	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+
+	var/datum/component/radioactive/healthy_green_glow = GetComponent(/datum/component/radioactive)
+	if(!QDELETED(healthy_green_glow))
+		healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)))
+		if(healthy_green_glow.strength <= RAD_BACKGROUND_RADIATION)
+			qdel(healthy_green_glow)
+
+	/// we got to return true because of mob code
+	/// and not all code that uses COMSIG_COMPONENT_CLEAN_ACT returns true half the time
+	return TRUE
+
 /**
   * call back when a var is edited on this atom
   *
@@ -868,7 +983,7 @@
   * At the atom level, if you edit a var named "color" it will add the atom colour with
   * admin level priority to the atom colours list
   *
-  * Also, if GLOB.Debug2 is FALSE, it sets the ADMIN_SPAWNED_1 flag on flags_1, which signifies
+  * Also, if GLOB.Debug2 is FALSE, it sets the [ADMIN_SPAWNED_1] flag on [flags_1][/atom/var/flags_1], which signifies
   * the object has been admin edited
   */
 /atom/vv_edit_var(var_name, var_value)
@@ -876,7 +991,7 @@
 		flags_1 |= ADMIN_SPAWNED_1
 	. = ..()
 	switch(var_name)
-		if("color")
+		if(NAMEOF(src, color))
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
 
 /**
@@ -887,7 +1002,7 @@
 /atom/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
-	if(!ismovableatom(src))
+	if(!ismovable(src))
 		var/turf/curturf = get_turf(src)
 		if(curturf)
 			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
@@ -977,7 +1092,7 @@
 /**
   * An atom has entered this atom's contents
   *
-  * Default behaviour is to send the COMSIG_ATOM_ENTERED
+  * Default behaviour is to send the [COMSIG_ATOM_ENTERED]
   */
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
@@ -985,7 +1100,7 @@
 /**
   * An atom is attempting to exit this atom's contents
   *
-  * Default behaviour is to send the COMSIG_ATOM_EXIT
+  * Default behaviour is to send the [COMSIG_ATOM_EXIT]
   *
   * Return value should be set to FALSE if the moving atom is unable to leave,
   * otherwise leave value the result of the parent call
@@ -998,7 +1113,7 @@
 /**
   * An atom has exited this atom's contents
   *
-  * Default behaviour is to send the COMSIG_ATOM_EXITED
+  * Default behaviour is to send the [COMSIG_ATOM_EXITED]
   */
 /atom/Exited(atom/movable/AM, atom/newLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
@@ -1105,6 +1220,8 @@
 			log_comment(log_text)
 		if(LOG_TELECOMMS)
 			log_telecomms(log_text)
+		if(LOG_ECON)
+			log_econ(log_text)
 		if(LOG_OOC)
 			log_ooc(log_text)
 		if(LOG_ADMIN)
@@ -1144,11 +1261,12 @@
 /**
   * Log a combat message in the attack log
   *
-  * 1 argument is the actor performing the action
-  * 2 argument is the target of the action
-  * 3 is a verb describing the action (e.g. punched, throwed, kicked, etc.)
-  * 4 is a tool with which the action was made (usually an item)
-  * 5 is any additional text, which will be appended to the rest of the log line
+  * Arguments:
+  * * atom/user - argument is the actor performing the action
+  * * atom/target - argument is the target of the action
+  * * what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)
+  * * atom/object - is a tool with which the action was made (usually an item)
+  * * addition - is any additional text, which will be appended to the rest of the log line
   */
 /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
 	var/ssource = key_name(user)
@@ -1173,6 +1291,39 @@
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
+/**
+  * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
+  *
+  * Note that this has no info on the attack that dealt the wound: information about where damage came from isn't passed to the bodypart's damaged proc. When in doubt, check the attack log for attacks at that same time
+  * TODO later: Add logging for healed wounds, though that will require some rewriting of healing code to prevent admin heals from spamming the logs. Not high priority
+  *
+  * Arguments:
+  * * victim- The guy who got wounded
+  * * suffered_wound- The wound, already applied, that we're logging. It has to already be attached so we can get the limb from it
+  * * dealt_damage- How much damage is associated with the attack that dealt with this wound.
+  * * dealt_wound_bonus- The wound_bonus, if one was specified, of the wounding attack
+  * * dealt_bare_wound_bonus- The bare_wound_bonus, if one was specified *and applied*, of the wounding attack. Not shown if armor was present
+  * * base_roll- Base wounding ability of an attack is a random number from 1 to (dealt_damage ** WOUND_DAMAGE_EXPONENT). This is the number that was rolled in there, before mods
+  */
+/proc/log_wound(atom/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
+	if(QDELETED(victim) || !suffered_wound)
+		return
+	var/message = "has suffered: [suffered_wound][suffered_wound.limb ? " to [suffered_wound.limb.name]" : null]"// maybe indicate if it's a promote/demote?
+
+	if(dealt_damage)
+		message += " | Damage: [dealt_damage]"
+		// The base roll is useful since it can show how lucky someone got with the given attack. For example, dealing a cut
+		if(base_roll)
+			message += " (rolled [base_roll]/[dealt_damage ** WOUND_DAMAGE_EXPONENT])"
+
+	if(dealt_wound_bonus)
+		message += " | WB: [dealt_wound_bonus]"
+
+	if(dealt_bare_wound_bonus)
+		message += " | BWB: [dealt_bare_wound_bonus]"
+
+	victim.log_message(message, LOG_ATTACK, color="blue")
+
 /atom/movable/proc/add_filter(name,priority,list/params)
 	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
@@ -1189,40 +1340,46 @@
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
 
+/obj/item/update_filters()
+	. = ..()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
+
+/atom/movable/proc/remove_filter(name)
+	if(filter_data && filter_data[name])
+		filter_data -= name
+		update_filters()
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
-
-	if(!materials)
-		materials = custom_materials
-
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
-			var/datum/material/custom_material = getmaterialref(i)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
 	if(!length(materials))
+		custom_materials = null
 		return
 
-	custom_materials = list() //Reset the list
+	if(!(material_flags & MATERIAL_NO_EFFECTS))
+		for(var/x in materials)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
+			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
-	for(var/x in materials)
-		var/datum/material/custom_material = getmaterialref(x)
-
-		if(!(material_flags & MATERIAL_NO_EFFECTS))
-			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
-		custom_materials[custom_material] += materials[x] * multiplier
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
 /**
   * Returns true if this atom has gravity for the passed in turf
   *
-  * Sends signals COMSIG_ATOM_HAS_GRAVITY and COMSIG_TURF_HAS_GRAVITY, both can force gravity with
+  * Sends signals [COMSIG_ATOM_HAS_GRAVITY] and [COMSIG_TURF_HAS_GRAVITY], both can force gravity with
   * the forced gravity var
   *
   * Gravity situations:
@@ -1251,7 +1408,10 @@
 		return max_grav
 
 	if(isspaceturf(T)) // Turf never has gravity
-		return 0
+		return FALSE
+	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
+		if(istype(get_area(T), /area/space))
+			return FALSE
 
 	var/area/A = get_area(T)
 	if(A.has_gravity) // Areas which always has gravity
@@ -1264,3 +1424,35 @@
 				max_grav = max(G.setting,max_grav)
 			return max_grav
 	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
+
+/**
+  * Causes effects when the atom gets hit by a rust effect from heretics
+  *
+  * Override this if you want custom behaviour in whatever gets hit by the rust
+  */
+/atom/proc/rust_heretic_act()
+	return
+
+/**
+  * Used to set something as 'open' if it's being used as a supplypod
+  *
+  * Override this if you want an atom to be usable as a supplypod.
+  */
+/atom/proc/setOpened()
+	return
+
+/**
+  * Used to set something as 'closed' if it's being used as a supplypod
+  *
+  * Override this if you want an atom to be usable as a supplypod.
+  */
+/atom/proc/setClosed()
+	return
+
+/**
+  * Used to attempt to charge an object with a payment component.
+  *
+  * Use this if an atom needs to attempt to charge another atom.
+  */
+/atom/proc/attempt_charge(var/atom/sender, var/atom/target, var/extra_fees = 0)
+	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)

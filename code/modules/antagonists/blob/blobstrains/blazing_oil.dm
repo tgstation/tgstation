@@ -31,11 +31,11 @@
 	taste_description = "burning oil"
 	color = "#B68D00"
 
-/datum/reagent/blob/blazing_oil/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/blazing_oil/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.adjust_fire_stacks(round(reac_volume/10))
 	M.IgniteMob()
 	if(M)
-		M.apply_damage(0.8*reac_volume, BURN)
+		M.apply_damage(0.8*reac_volume, BURN, wound_bonus=CANT_WOUND)
 	if(iscarbon(M))
 		M.emote("scream")

@@ -22,6 +22,7 @@
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
+///Prevents players from cutting stuffing out of a plushie if true
 	var/divine = FALSE
 	var/mood_message
 	var/list/love_message
@@ -380,7 +381,7 @@
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
 	icon_state = "carpplush"
-	item_state = "carp_plushie"
+	inhand_icon_state = "carp_plushie"
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	squeak_override = list('sound/weapons/bite.ogg'=1)
 
@@ -496,7 +497,7 @@
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon_state = "plushie_lizard"
-	item_state = "plushie_lizard"
+	inhand_icon_state = "plushie_lizard"
 	attack_verb = list("clawed", "hissed", "tail slapped")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
@@ -504,7 +505,7 @@
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
 	icon_state = "plushie_snake"
-	item_state = "plushie_snake"
+	inhand_icon_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
 	squeak_override = list('sound/weapons/bite.ogg' = 1)
 
@@ -512,7 +513,7 @@
 	name = "operative plushie"
 	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
 	icon_state = "plushie_nuke"
-	item_state = "plushie_nuke"
+	inhand_icon_state = "plushie_nuke"
 	attack_verb = list("shot", "nuked", "detonated")
 	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
 
@@ -520,7 +521,7 @@
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
 	icon_state = "plushie_slime"
-	item_state = "plushie_slime"
+	inhand_icon_state = "plushie_slime"
 	attack_verb = list("blorbled", "slimed", "absorbed")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
@@ -529,7 +530,7 @@
 	name = "awakened plushie"
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
 	icon_state = "plushie_awake"
-	item_state = "plushie_awake"
+	inhand_icon_state = "plushie_awake"
 
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
@@ -539,7 +540,48 @@
 	name = "bee plushie"
 	desc = "A cute toy that resembles an even cuter bee."
 	icon_state = "plushie_h"
-	item_state = "plushie_h"
+	inhand_icon_state = "plushie_h"
 	attack_verb = list("stung")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
+
+/obj/item/toy/plush/goatplushie
+	name = "strange goat plushie"
+	icon_state = "goat"
+	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
+	squeak_override = list('sound/weapons/punch1.ogg'=1)
+
+/obj/item/toy/plush/moth
+	name = "moth plushie"
+	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
+	icon_state = "moffplush"
+	inhand_icon_state = "moffplush"
+	attack_verb = list("fluttered", "flapped")
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
+///Used to track how many people killed themselves with item/toy/plush/moth
+	var/suicide_count = 0
+
+/obj/item/toy/plush/moth/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	suicide_count++
+	if(suicide_count < 3)
+		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
+	else
+		desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
+		divine = TRUE
+		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	playsound(src, 'sound/hallucinations/wail.ogg', 50, TRUE, -1)
+	var/list/available_spots = get_adjacent_open_turfs(loc)
+	if(available_spots.len) //If the user is in a confined space the plushie will drop normally as the user dies, but in the open the plush is placed one tile away from the user to prevent squeak spam
+		var/turf/open/random_open_spot = pick(available_spots)
+		forceMove(random_open_spot)
+	user.dust(just_ash = FALSE, drop_items = TRUE)
+	return MANUAL_SUICIDE
+
+/obj/item/toy/plush/pkplush
+	name = "peacekeeper plushie"
+	desc = "A plushie depicting a peacekeeper cyborg. Only you can prevent human harm!"
+	icon_state = "pkplush"
+	inhand_icon_state = "pkplush"
+	attack_verb = list("hugged", "squeezed")
+	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)

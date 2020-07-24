@@ -11,9 +11,7 @@
 	if (client)
 		var/turf/T = get_turf(src)
 		if(!T)
-			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
-				forceMove(E.loc)
-				break
+			move_to_error_room()
 			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
 			send2tgs_adminless_only("Mob", msg, R_ADMIN)
@@ -46,6 +44,8 @@
 			handle_breathing(times_fired)
 
 		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
+		handle_wounds()
 
 		if (QDELETED(src)) // diseases can qdel the mob via transformations
 			return
@@ -81,6 +81,9 @@
 	return
 
 /mob/living/proc/handle_diseases()
+	return
+
+/mob/living/proc/handle_wounds()
 	return
 
 /mob/living/proc/handle_random_events()

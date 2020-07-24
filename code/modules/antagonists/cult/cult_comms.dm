@@ -153,6 +153,11 @@
 	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!antag)
 		return
+	var/place = get_area(owner)
+	var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
+	if(place in summon_objective.summon_spots)//cant do final reckoning in the summon area to prevent abuse, you'll need to get everyone to stand on the circle!
+		to_chat(owner, "<span class='cultlarge'>The veil is too weak here! Move to an area where it is strong enough to support this magic.</span>")
+		return
 	for(var/i in 1 to 4)
 		chant(i)
 		var/list/destinations = list()
@@ -239,7 +244,7 @@
 
 /obj/effect/proc_holder/cultmark
 	active = FALSE
-	ranged_mousepointer = 'icons/effects/cult_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	var/datum/action/innate/cult/master/cultmark/attached_action
 
 /obj/effect/proc_holder/cultmark/Destroy()
@@ -272,7 +277,7 @@
 		var/area/A = get_area(target)
 		attached_action.cooldown = world.time + attached_action.base_cooldown
 		addtimer(CALLBACK(attached_action.owner, /mob.proc/update_action_buttons_icon), attached_action.base_cooldown)
-		C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+		C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
 		C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
 		C.cult_team.blood_target_image.pixel_x = -target.pixel_x
 		C.cult_team.blood_target_image.pixel_y = -target.pixel_y
@@ -351,7 +356,7 @@
 	var/area/A = get_area(target)
 	cooldown = world.time + base_cooldown
 	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
-	C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+	C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
 	C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
 	C.cult_team.blood_target_image.pixel_x = -target.pixel_x
 	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
@@ -412,7 +417,7 @@
 
 /obj/effect/proc_holder/pulse
 	active = FALSE
-	ranged_mousepointer = 'icons/effects/throw_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 	var/datum/action/innate/cult/master/pulse/attached_action
 
 /obj/effect/proc_holder/pulse/Destroy()

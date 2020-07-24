@@ -6,7 +6,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 60
-	power_channel = EQUIP
+	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
@@ -17,10 +17,10 @@
 
 	if(!charging)
 		return
-	
+
 	. += image(charging.icon, charging.icon_state)
 	. += "ccharger-on"
-	if(!(stat & (BROKEN|NOPOWER)))
+	if(!(machine_stat & (BROKEN|NOPOWER)))
 		var/newlevel = 	round(charging.percent() * 4 / 100)
 		. += "ccharger-o[newlevel]"
 
@@ -34,7 +34,7 @@
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
-		if(stat & BROKEN)
+		if(machine_stat & BROKEN)
 			to_chat(user, "<span class='warning'>[src] is broken!</span>")
 			return
 		if(!anchored)
@@ -108,7 +108,7 @@
 /obj/machinery/cell_charger/emp_act(severity)
 	. = ..()
 
-	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_CONTENTS)
+	if(machine_stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_CONTENTS)
 		return
 
 	if(charging)
@@ -120,7 +120,7 @@
 		charge_rate *= C.rating
 
 /obj/machinery/cell_charger/process()
-	if(!charging || !anchored || (stat & (BROKEN|NOPOWER)))
+	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))
 		return
 
 	if(charging.percent() >= 100)

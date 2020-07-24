@@ -6,7 +6,7 @@
 
 	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
 	var/cell_type = /obj/item/stock_parts/cell
-	var/modifystate = 0
+	var/modifystate = FALSE ///if the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 	var/can_charge = TRUE //Can it be charged in a recharger?
@@ -14,7 +14,6 @@
 	var/charge_sections = 4
 	ammo_x_offset = 2
 	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
-	var/old_ratio = 0 // stores the gun's previous ammo "ratio" to see if it needs an updated icon
 	var/selfcharge = 0
 	var/charge_tick = 0
 	var/charge_delay = 4
@@ -46,6 +45,10 @@
 		START_PROCESSING(SSobj, src)
 	update_icon()
 
+/obj/item/gun/energy/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/gun/energy/proc/update_ammo_types()
 	var/obj/item/ammo_casing/energy/shot
 	for (var/i = 1, i <= ammo_type.len, i++)
@@ -65,7 +68,7 @@
 /obj/item/gun/energy/handle_atom_del(atom/A)
 	if(A == cell)
 		cell = null
-		update_icon(FALSE, TRUE)
+		update_icon()
 	return ..()
 
 /obj/item/gun/energy/process()
@@ -77,7 +80,7 @@
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
-		update_icon(FALSE, TRUE)
+		update_icon()
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
 	if(ammo_type.len > 1)
@@ -133,50 +136,55 @@
 		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
 	chambered = null
 	recharge_newshot(TRUE)
-	update_icon(TRUE)
+	update_icon()
 	return
 
-/obj/item/gun/energy/update_icon(force_update, force_itemstate_update)
-	if(QDELETED(src))
+/obj/item/gun/energy/update_icon_state()
+	var/skip_inhand = initial(inhand_icon_state) //only build if we aren't using a preset inhand icon
+	var/skip_worn_icon = initial(worn_icon_state) //only build if we aren't using a preset worn icon
+
+	if(skip_inhand && skip_worn_icon) //if we don't have either, don't do the math.
 		return
-	..()
+
+	var/ratio = get_charge_ratio()
+	var/temp_icon_to_use = initial(icon_state)
+	if(modifystate)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		temp_icon_to_use += "[shot.select_name]"
+
+	temp_icon_to_use += "[ratio]"
+	if(!skip_inhand)
+		inhand_icon_state = temp_icon_to_use
+	if(!skip_worn_icon)
+		worn_icon_state = temp_icon_to_use
+
+
+/obj/item/gun/energy/update_overlays()
+	. = ..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = can_shoot() ? CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
-				// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if it's power cell is removed.
-				// TG issues #5361 & #47908
-	if(ratio == old_ratio && !force_update)
-		return
-	old_ratio = ratio
-	cut_overlays()
-	var/iconState = "[icon_state]_charge"
-	var/itemState = null
-	if(!initial(item_state))
-		itemState = icon_state
-	if (modifystate)
+	var/overlay_icon_state = "[icon_state]_charge"
+	var/ratio = get_charge_ratio()
+	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-		add_overlay("[icon_state]_[shot.select_name]")
-		iconState += "_[shot.select_name]"
-		if(itemState)
-			itemState += "[shot.select_name]"
+		overlay_icon_state += "_[shot.select_name]"
+		. += "[icon_state]_[shot.select_name]"
 	if(ratio == 0)
-		add_overlay("[icon_state]_empty")
+		. += "[icon_state]_empty"
 	else
 		if(!shaded_charge)
-			var/mutable_appearance/charge_overlay = mutable_appearance(icon, iconState)
+			var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
 			for(var/i = ratio, i >= 1, i--)
 				charge_overlay.pixel_x = ammo_x_offset * (i - 1)
 				charge_overlay.pixel_y = ammo_y_offset * (i - 1)
-				add_overlay(charge_overlay)
+				. += new /mutable_appearance(charge_overlay)
 		else
-			add_overlay("[icon_state]_charge[ratio]")
-	if(itemState)
-		itemState += "[ratio]"
-		item_state = itemState
-		if(force_itemstate_update && ismob(loc)) //used if the weapon is selfcharging, otherwise the icons won't update till the item is either fired or reequipped.
-			var/mob/M = loc
-			if(M.is_holding(src))
-				M.update_inv_hands()
+			. += "[icon_state]_charge[ratio]"
+
+///Used by update_icon_state() and update_overlays()
+/obj/item/gun/energy/proc/get_charge_ratio()
+	return can_shoot() ? CEILING(clamp(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
+	// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if its power cell is removed.
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
@@ -200,7 +208,7 @@
 
 /obj/item/gun/energy/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if("selfcharge")
+		if(NAMEOF(src, selfcharge))
 			if(var_value)
 				START_PROCESSING(SSobj, src)
 			else
@@ -218,13 +226,13 @@
 		if(!BB)
 			. = ""
 		else if(BB.nodamage || !BB.damage || BB.damage_type == STAMINA)
-			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but it doesn't do anything. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but it doesn't do anything. Dumbass.</span>")
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
 			. = ""
 		else if(BB.damage_type != BURN)
-			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
@@ -234,4 +242,4 @@
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
-			. = "<span class='danger'>[user] casually lights their [A.name] with [src]. Damn.</span>"
+			. = "<span class='danger'>[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.</span>"

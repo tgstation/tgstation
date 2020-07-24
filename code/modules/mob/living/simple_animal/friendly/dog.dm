@@ -16,6 +16,7 @@
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
+	can_be_held = TRUE
 	var/turns_since_scan = 0
 	var/obj/movement_target
 
@@ -84,11 +85,11 @@
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
+	held_state = "corgi"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
 	animal_species = /mob/living/simple_animal/pet/dog
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	collar_type = "corgi"
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
@@ -123,6 +124,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
+	held_state = "pug"
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	name = "Exotic Corgi"
@@ -209,13 +211,6 @@
 		return
 	..()
 	update_corgi_fluff()
-
-/mob/living/simple_animal/pet/dog/corgi/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "corgi", null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi', FALSE)
-	if(!L.put_in_hands(holder))
-		qdel(holder)
-	else
-		L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
 	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -384,7 +379,7 @@
 		DF.apply(src)
 
 //IAN! SQUEEEEEEEEE~
-/mob/living/simple_animal/pet/dog/corgi/Ian
+/mob/living/simple_animal/pet/dog/corgi/ian
 	name = "Ian"
 	real_name = "Ian"	//Intended to hold the name without altering it.
 	gender = MALE
@@ -402,7 +397,7 @@
 	var/memory_saved = FALSE
 	var/saved_head //path
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Initialize()
+/mob/living/simple_animal/pet/dog/corgi/ian/Initialize()
 	. = ..()
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
@@ -420,22 +415,23 @@
 	else if(age == record_age)
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
+		held_state = "old_corgi"
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
+/mob/living/simple_animal/pet/dog/corgi/ian/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/death()
+/mob/living/simple_animal/pet/dog/corgi/ian/death()
 	if(!memory_saved)
 		Write_Memory(TRUE)
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
+/mob/living/simple_animal/pet/dog/corgi/ian/proc/Read_Memory()
 	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
 		S["age"] 		>> age
@@ -457,7 +453,7 @@
 	if(saved_head)
 		place_on_head(new saved_head)
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/proc/Write_Memory(dead)
+/mob/living/simple_animal/pet/dog/corgi/ian/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Ian.json")
 	var/list/file_data = list()
 	if(!dead)
@@ -477,7 +473,7 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/narsie_act()
+/mob/living/simple_animal/pet/dog/corgi/ian/narsie_act()
 	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
 	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
 	N.setDir(dir)
@@ -493,6 +489,7 @@
 	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
 	unique_pet = TRUE
+	held_state = "narsian"
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/Life()
 	..()
@@ -596,13 +593,14 @@
 	unsuitable_atmos_damage = 0
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
+	held_state = "void_puppy"
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
 	return 1	//Void puppies can navigate space.
 
 
 //LISA! SQUEEEEEEEEE~
-/mob/living/simple_animal/pet/dog/corgi/Lisa
+/mob/living/simple_animal/pet/dog/corgi/lisa
 	name = "Lisa"
 	real_name = "Lisa"
 	gender = FEMALE
@@ -618,16 +616,17 @@
 	response_disarm_simple = "bop"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
+	held_state = "lisa"
 	var/puppies = 0
 
 //Lisa already has a cute bow!
-/mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
+/mob/living/simple_animal/pet/dog/corgi/lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
 		to_chat(usr, "<span class='warning'>[src] already has a cute bow!</span>")
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Lisa/Life()
+/mob/living/simple_animal/pet/dog/corgi/lisa/Life()
 	..()
 
 	make_babies()

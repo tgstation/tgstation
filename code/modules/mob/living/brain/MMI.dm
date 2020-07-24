@@ -14,20 +14,23 @@
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
-/obj/item/mmi/update_icon()
+/obj/item/mmi/update_icon_state()
 	if(!brain)
 		icon_state = "mmi_off"
-		return
-	if(istype(brain, /obj/item/organ/brain/alien))
+	else if(istype(brain, /obj/item/organ/brain/alien))
 		icon_state = "mmi_brain_alien"
-		braintype = "Xenoborg" //HISS....Beep.
 	else
 		icon_state = "mmi_brain"
-		braintype = "Cyborg"
+
+/obj/item/mmi/update_overlays()
+	. = ..()
+	. += add_mmi_overlay()
+
+/obj/item/mmi/proc/add_mmi_overlay()
 	if(brainmob && brainmob.stat != DEAD)
-		add_overlay("mmi_alive")
-	else
-		add_overlay("mmi_dead")
+		. += "mmi_alive"
+	else if(brain)
+		. += "mmi_dead"
 
 /obj/item/mmi/Initialize()
 	. = ..()
@@ -57,17 +60,17 @@
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
-		var/fubar_brain = newbrain.brain_death && newbrain.suicided && brainmob.suiciding //brain is damaged beyond repair or from a suicider
+		var/fubar_brain = newbrain.suicided || brainmob.suiciding //brain is from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
-			GLOB.dead_mob_list -= brainmob
-			GLOB.alive_mob_list += brainmob
+			brainmob.remove_from_dead_mob_list()
+			brainmob.add_to_alive_mob_list()
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
 			to_chat(user, "<span class='warning'>[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage.</span>")
-			playsound(src, "sound/machines/synth_no.ogg", 5, TRUE)
+			playsound(src, 'sound/machines/synth_no.ogg', 5, TRUE)
 		else
 			to_chat(user, "<span class='warning'>[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [newbrain] again.</span>")
-			playsound(src, "sound/weapons/smg_empty_alarm.ogg", 5, TRUE)
+			playsound(src, 'sound/machines/triple_beep.ogg', 5, TRUE)
 
 		brainmob.reset_perspective()
 		brain = newbrain
@@ -75,6 +78,10 @@
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_icon()
+		if(istype(brain, /obj/item/organ/brain/alien))
+			braintype = "Xenoborg" //HISS....Beep.
+		else
+			braintype = "Cyborg"
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
@@ -101,8 +108,8 @@
 	brainmob.set_stat(DEAD)
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	GLOB.alive_mob_list -= brainmob //Get outta here
-	GLOB.dead_mob_list |= brainmob
+	brainmob.remove_from_alive_mob_list() //Get outta here
+	brainmob.add_to_dead_mob_list()
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
 	brainmob = null //Set mmi brainmob var to null
@@ -137,7 +144,10 @@
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_icon()
-	return
+	if(istype(brain, /obj/item/organ/brain/alien))
+		braintype = "Xenoborg" //HISS....Beep.
+	else
+		braintype = "Cyborg"
 
 /obj/item/mmi/proc/replacement_ai_name()
 	return brainmob.name
@@ -230,7 +240,7 @@
 		if(user)
 			to_chat(user, "<span class='warning'>\The [src] indicates that their mind has no will to live!</span>")
 		return FALSE
-	if(B.stat == DEAD || brain?.brain_death)
+	if(B.stat == DEAD)
 		if(user)
 			to_chat(user, "<span class='warning'>\The [src] indicates that the brain is dead!</span>")
 		return FALSE

@@ -21,7 +21,7 @@
 	if(..())
 		return TRUE
 	var/obj/machinery/bsa/full/B = locate()
-	if(B && !B.stat)
+	if(B && !B.machine_stat)
 		return TRUE
 	return FALSE
 
@@ -142,15 +142,15 @@
 		if(WEST)
 			return locate(x - 7,y,z)
 		if(EAST)
-			return locate(x + 4,y,z)
+			return locate(x + 7,y,z)
 	return get_turf(src)
 
 /obj/machinery/bsa/full/proc/get_back_turf()
 	switch(dir)
 		if(WEST)
-			return locate(x + 4,y,z)
+			return locate(x + 5,y,z)
 		if(EAST)
-			return locate(x - 6,y,z)
+			return locate(x - 5,y,z)
 	return get_turf(src)
 
 /obj/machinery/bsa/full/proc/get_target_turf()
@@ -167,11 +167,12 @@
 	switch(cannon_direction)
 		if(WEST)
 			setDir(WEST)
-			pixel_x = -192
 			top_layer.icon_state = "top_west"
 			icon_state = "cannon_west"
 		if(EAST)
 			setDir(EAST)
+			pixel_x = -128
+			bound_x = -128
 			top_layer.icon_state = "top_east"
 			icon_state = "cannon_east"
 	add_overlay(top_layer)
@@ -197,8 +198,7 @@
 			target = tile
 			break
 		else
-			tile.ex_act(EXPLODE_DEVASTATE) //also fucks everything else on the turf
-
+			SSexplosions.highturf += tile //also fucks everything else on the turf
 	point.Beam(target, icon_state = "bsa_beam", time = 50, maxdistance = world.maxx) //ZZZAP
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
@@ -235,19 +235,19 @@
 	circuit = /obj/item/circuitboard/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
-	ui_x = 400
-	ui_y = 220
 
 	var/obj/machinery/bsa/full/cannon
 	var/notice
 	var/target
 	var/area_aim = FALSE //should also show areas for targeting
 
-/obj/machinery/computer/bsa_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/bsa_control/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/computer/bsa_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "bsa", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "BluespaceArtillery", name)
 		ui.open()
 
 /obj/machinery/computer/bsa_control/ui_data()
@@ -305,7 +305,7 @@
 		return get_turf(G.parent)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)
-	if(cannon.stat)
+	if(cannon.machine_stat)
 		notice = "Cannon unpowered!"
 		return
 	notice = null

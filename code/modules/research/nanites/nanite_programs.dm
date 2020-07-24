@@ -48,7 +48,7 @@
 
 	//Extra settings
 	///Don't ever override this or I will come to your house and stand menacingly behind a bush
-	var/list/extra_settings = list()
+	VAR_FINAL/list/extra_settings = list()
 
 	//Rules
 	//Rules that automatically manage if the program's active without requiring separate sensor programs
@@ -170,14 +170,17 @@
 	if(timer_shutdown_next && world.time > timer_shutdown_next)
 		deactivate()
 		timer_shutdown_next = 0
+		return
 
 	if(timer_trigger && world.time > timer_trigger_next)
 		trigger()
 		timer_trigger_next = world.time + timer_trigger
+		return
 
 	if(timer_trigger_delay_next && world.time > timer_trigger_delay_next)
 		trigger(delayed = TRUE)
 		timer_trigger_delay_next = 0
+		return
 
 	if(check_conditions() && consume_nanites(use_rate))
 		if(!passive_enabled)
@@ -289,3 +292,23 @@
 		host_mob.investigate_log("'s [name] nanite program was deleted by [source] with code [code].", INVESTIGATE_NANITES)
 		qdel(src)
 
+///A nanite program containing a behaviour protocol. Only one protocol of each class can be active at once.
+/datum/nanite_program/protocol
+	name = "Nanite Protocol"
+	var/protocol_class = NONE
+
+/datum/nanite_program/protocol/check_conditions()
+	. = ..()
+	for(var/protocol in nanites.protocols)
+		var/datum/nanite_program/protocol/P = protocol
+		if(P != src && P.activated && P.protocol_class == protocol_class)
+			return FALSE
+
+/datum/nanite_program/protocol/on_add(datum/component/nanites/_nanites)
+	..()
+	nanites.protocols += src
+
+/datum/nanite_program/protocol/Destroy()
+	if(nanites)
+		nanites.protocols -= src
+	return ..()

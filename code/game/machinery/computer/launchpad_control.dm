@@ -4,8 +4,6 @@
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
 	circuit = /obj/item/circuitboard/computer/launchpad_console
-	ui_x = 475
-	ui_y = 260
 
 	var/selected_id
 	var/list/obj/machinery/launchpad/launchpads
@@ -53,10 +51,10 @@
 	var/obj/machinery/launchpad/pad = launchpads[number]
 	return pad
 
-/obj/machinery/computer/launchpad/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/launchpad/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "launchpad_console", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "LaunchpadConsole", name)
 		ui.open()
 
 /obj/machinery/computer/launchpad/ui_data(mob/user)
@@ -68,7 +66,7 @@
 			var/list/this_pad = list()
 			this_pad["name"] = pad.display_name
 			this_pad["id"] = i
-			if(pad.stat & NOPOWER)
+			if(pad.machine_stat & NOPOWER)
 				this_pad["inactive"] = TRUE
 			pad_list += list(this_pad)
 		else
@@ -82,7 +80,7 @@
 		data["pad_name"] = current_pad.display_name
 		data["range"] = current_pad.range
 		data["selected_pad"] = current_pad
-		if(QDELETED(current_pad) || (current_pad.stat & NOPOWER))
+		if(QDELETED(current_pad) || (current_pad.machine_stat & NOPOWER))
 			data["pad_active"] = FALSE
 			return data
 		data["pad_active"] = TRUE

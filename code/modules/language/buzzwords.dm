@@ -1,9 +1,6 @@
 /datum/language/buzzwords
 	name = "Buzzwords"
 	desc = "A common language to all insects, made by the rhythmic beating of wings."
-	speech_verb = "buzzes"
-	ask_verb = "buzzes"
-	exclaim_verb = "loudly buzzes"
 	key = "z"
 	space_chance = 0
 	syllables = list(

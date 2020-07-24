@@ -17,8 +17,8 @@
 	max_occurrences = 0
 
 /datum/round_event/portal_storm/portal_storm_narsie
-	boss_types = list(/mob/living/simple_animal/hostile/construct/builder = 6)
-	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 8,\
+	boss_types = list(/mob/living/simple_animal/hostile/construct/artificer/hostile = 6)
+	hostile_types = list(/mob/living/simple_animal/hostile/construct/juggernaut/hostile = 8,\
 						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
 
 /datum/round_event/portal_storm
@@ -66,15 +66,15 @@
 /datum/round_event/portal_storm/tick()
 	spawn_effects(get_random_station_turf())
 
-	if(spawn_hostile())
-		var/type = safepick(hostile_types)
+	if(spawn_hostile() && length(hostile_types))
+		var/type = pick(hostile_types)
 		hostile_types[type] = hostile_types[type] - 1
 		spawn_mob(type, hostiles_spawn)
 		if(!hostile_types[type])
 			hostile_types -= type
 
-	if(spawn_boss())
-		var/type = safepick(boss_types)
+	if(spawn_boss() && length(boss_types))
+		var/type = pick(boss_types)
 		boss_types[type] = boss_types[type] - 1
 		spawn_mob(type, boss_spawn)
 		if(!boss_types[type])

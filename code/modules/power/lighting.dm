@@ -207,7 +207,7 @@
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
-	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
+	power_channel = AREA_USAGE_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = FALSE					// 1 if on, 0 if off
 	var/on_gs = FALSE
 	var/static_power_used = 0
@@ -242,6 +242,11 @@
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
+
+/obj/machinery/light/dim
+	nightshift_allowed = FALSE
+	bulb_colour = "#FFDDCC"
+	bulb_power = 0.8
 
 // the smaller bulb light fixture
 
@@ -317,8 +322,7 @@
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/machinery/light/update_icon()
-	cut_overlays()
+/obj/machinery/light/update_icon_state()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
 			var/area/A = get_area(src)
@@ -326,17 +330,19 @@
 				icon_state = "[base_state]_emergency"
 			else
 				icon_state = "[base_state]"
-				if(on)
-					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
-					glowybit.alpha = CLAMP(light_power*250, 30, 200)
-					add_overlay(glowybit)
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
 		if(LIGHT_BURNED)
 			icon_state = "[base_state]-burned"
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
-	return
+
+/obj/machinery/light/update_overlays()
+	. = ..()
+	if(on && status == LIGHT_OK)
+		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, layer, EMISSIVE_PLANE)
+		glowybit.alpha = clamp(light_power*250, 30, 200)
+		. += glowybit
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -384,9 +390,9 @@
 		on_gs = on
 		if(on)
 			static_power_used = brightness * 20 //20W per unit luminosity
-			addStaticPower(static_power_used, STATIC_LIGHT)
+			addStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 		else
-			removeStaticPower(static_power_used, STATIC_LIGHT)
+			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 
 	broken_sparks(start_only=TRUE)
 
@@ -395,7 +401,7 @@
 	update()
 
 /obj/machinery/light/proc/broken_sparks(start_only=FALSE)
-	if(status == LIGHT_BROKEN && has_power())
+	if(!QDELETED(src) && status == LIGHT_BROKEN && has_power())
 		if(!start_only)
 			do_sparks(3, TRUE, src)
 		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
@@ -638,8 +644,12 @@
 		if(istype(H))
 			var/datum/species/ethereal/eth_species = H.dna?.species
 			if(istype(eth_species))
+				var/datum/species/ethereal/E = H.dna.species
+				if(E.drain_time > world.time)
+					return
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
-				if(do_after(user, 50, target = src))
+				E.drain_time = world.time + 30
+				if(do_after(user, 30, target = src))
 					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 					if(istype(stomach))
 						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
@@ -727,7 +737,7 @@
 
 /obj/machinery/light/zap_act(power, zap_flags)
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
-		explosion(src,0,0,0,flame_range = 5, adminlog = 0)
+		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
 		qdel(src)
 	else
 		return ..()
@@ -786,7 +796,7 @@
 	desc = "A replacement light tube."
 	icon_state = "ltube"
 	base_state = "ltube"
-	item_state = "c_tube"
+	inhand_icon_state = "c_tube"
 	brightness = 8
 
 /obj/item/light/tube/broken
@@ -797,7 +807,7 @@
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
 	base_state = "lbulb"
-	item_state = "contvapour"
+	inhand_icon_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	brightness = 4
@@ -831,8 +841,11 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
 
-/obj/item/light/Crossed(mob/living/L)
+/obj/item/light/Crossed(atom/movable/AM)
 	. = ..()
+	if(!isliving(AM))
+		return
+	var/mob/living/L = AM
 	if(istype(L) && !(L.is_flying() || L.is_floating() || L.buckled))
 		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)

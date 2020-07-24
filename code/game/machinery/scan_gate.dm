@@ -26,8 +26,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/scanner_gate
-	ui_x = 400
-	ui_y = 300
 
 	var/scanline_timer
 	var/next_beep = 0 //avoids spam
@@ -51,8 +49,11 @@
 		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
 /obj/machinery/scanner_gate/Crossed(atom/movable/AM)
-	..()
-	if(!(stat & (BROKEN|NOPOWER)) && isliving(AM))
+	. = ..()
+	auto_scan(AM)
+
+/obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
+	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM))
 		perform_scan(AM)
 
 /obj/machinery/scanner_gate/proc/set_scanline(type, duration)
@@ -177,11 +178,10 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/scanner_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/scanner_gate/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "scanner_gate", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ScannerGate", name)
 		ui.open()
 
 /obj/machinery/scanner_gate/ui_data()
@@ -216,7 +216,7 @@
 			. = TRUE
 		if("set_nanite_cloud")
 			var/new_cloud = text2num(params["new_cloud"])
-			nanite_cloud = CLAMP(round(new_cloud, 1), 1, 100)
+			nanite_cloud = clamp(round(new_cloud, 1), 1, 100)
 			. = TRUE
 		//Some species are not scannable, like abductors (too unknown), androids (too artificial) or skeletons (too magic)
 		if("set_target_species")

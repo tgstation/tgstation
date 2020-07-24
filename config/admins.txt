@@ -138,3 +138,7 @@ NicBR = Game Master
 LoserWasTaken = Game Master
 Fikou = Game Master
 Skoglol = Game Master
+4dplanner = Game Master
+Time-Green = Game Master
+StyleMistake = Game Master
+actioninja = Game Master

@@ -34,6 +34,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/custom_price
 	///Does the item have a custom premium price override
 	var/custom_premium_price
+	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
+	var/age_restricted = FALSE
 
 /**
   * # vending machines
@@ -55,6 +57,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
+	light_power = 0.5
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
 	///Are we ready to vend?? Is it time??
@@ -134,6 +138,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/default_price = 25
 	///Default price of premium items if not overridden
 	var/extra_price = 50
+	///Whether our age check is currently functional
+	var/age_restrictions = TRUE
   	/**
 	  * Is this item on station or not
 	  *
@@ -156,6 +162,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 	/// how many items have been inserted in a vendor
 	var/loaded_items = 0
+
+	///Name of lighting mask for the vending machine
+	var/light_mask
+
+	/// used for narcing on underages
+	var/obj/item/radio/Radio
 
 /obj/item/circuitboard
     ///determines if the circuit board originated from a vendor off station or not.
@@ -199,11 +211,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
+	Radio = new /obj/item/radio(src)
+	Radio.listening = 0
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
+	QDEL_NULL(Radio)
 	return ..()
 
 /obj/machinery/vending/can_speak()
@@ -230,15 +245,26 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	else
 		..()
 
-/obj/machinery/vending/update_icon()
-	if(stat & BROKEN)
+/obj/machinery/vending/update_icon_state()
+	if(machine_stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
+		set_light(0)
+	else if(powered())
+		icon_state = initial(icon_state)
+		set_light(1.4)
 	else
-		if(powered())
-			icon_state = initial(icon_state)
-		else
-			icon_state = "[initial(icon_state)]-off"
+		icon_state = "[initial(icon_state)]-off"
+		set_light(0)
 
+
+/obj/machinery/vending/update_overlays()
+	. = ..()
+	if(!light_mask)
+		return
+
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if(!(machine_stat & BROKEN) && powered())
+		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_LAYER, EMISSIVE_PLANE)
 
 /obj/machinery/vending/obj_break(damage_flag)
 	. = ..()
@@ -292,9 +318,34 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.custom_price = initial(temp.custom_price)
-		R.custom_premium_price = initial(temp.custom_premium_price)
+		R.custom_price = initial(temp.custom_price) * SSeconomy.inflation_value()
+		R.custom_premium_price = initial(temp.custom_premium_price) * SSeconomy.inflation_value()
+		R.age_restricted = initial(temp.age_restricted)
 		recordlist += R
+
+/**
+  * Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy
+  *
+  * This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
+  * Arguments:
+  * * recordlist - the list of standard product datums in the vendor to refresh their prices.
+  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
+  */
+/obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
+	for(var/R in recordlist)
+		var/datum/data/vending_product/record = R
+		var/atom/potential_product = record.product_path
+		record.custom_price = round(initial(potential_product.custom_price) * SSeconomy.inflation_value())
+	for(var/R in premiumlist)
+		var/datum/data/vending_product/record = R
+		var/atom/potential_product = record.product_path
+		var/premium_sanity = round(initial(potential_product.custom_premium_price))
+		if(premium_sanity)
+			record.custom_premium_price = round(premium_sanity * SSeconomy.inflation_value())
+			continue
+		//For some ungodly reason, some premium only items only have a custom_price
+		record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price) * (SSeconomy.inflation_value() - 1)))
+
 /**
   * Refill a vending machine from a refill canister
   *
@@ -390,7 +441,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
 			to_chat(user, "<span class='warning'>You should probably unscrew the service panel first!</span>")
-		else if (stat & (BROKEN|NOPOWER))
+		else if (machine_stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='notice'>[src] does not respond.</span>")
 		else
 			//if the panel is open we attempt to refill the machine
@@ -467,7 +518,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	var/crit_case
 	if(crit)
-		crit_case = rand(1,5)
+		crit_case = rand(1,6)
 
 	if(forcecrit)
 		crit_case = forcecrit
@@ -480,7 +531,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(istype(C))
 				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
 
-				if(crit_case != 5) // the head asplode case has its own description
+				if(crit_case < 5) // the body/head asplode case has its own description
 					C.visible_message("<span class='danger'>[C] is crushed by [src]!</span>", \
 						"<span class='userdanger'>You are crushed by [src]!</span>")
 
@@ -490,10 +541,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 						C.bleed(150)
 						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
 						if(l)
-							l.receive_damage(brute=200, updating_health=TRUE)
+							l.receive_damage(brute=200)
 						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
 						if(r)
-							r.receive_damage(brute=200, updating_health=TRUE)
+							r.receive_damage(brute=200)
 						if(l || r)
 							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
 								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
@@ -506,14 +557,27 @@ GLOBAL_LIST_EMPTY(vending_products)
 						crit_rebate = 50
 						for(var/i = 0, i < num_shards, i++)
 							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
-							shard.embedding = shard.embedding.setRating(embed_chance = 100, embedded_ignore_throwspeed_threshold = TRUE, embedded_impact_pain_multiplier=1,embedded_pain_chance=5)
+							shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=1, pain_chance=5)
+							shard.updateEmbedding()
 							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-							shard.embedding = shard.embedding.setRating(embed_chance = EMBED_CHANCE, embedded_ignore_throwspeed_threshold = FALSE)
+							shard.embedding = list()
+							shard.updateEmbedding()
 					if(4) // paralyze this binch
 						// the new paraplegic gets like 4 lines of losing their legs so skip them
 						visible_message("<span class='danger'>[C]'s spinal cord is obliterated with a sickening crunch!</span>", ignored_mobs = list(C))
 						C.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
-					if(5) // skull squish!
+					if(5) // limb squish!
+						for(var/i in C.bodyparts)
+							var/obj/item/bodypart/squish_part = i
+							if(squish_part.is_organic_limb())
+								//var/type_wound = pick(WOUND_LIST_BONE)
+								var/type_wound = pick(list(/datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/moderate))
+								squish_part.force_wound_upwards(type_wound)
+							else
+								squish_part.receive_damage(brute=30)
+						C.visible_message("<span class='danger'>[C]'s body is maimed underneath the mass of [src]!</span>", \
+							"<span class='userdanger'>Your body is maimed underneath the mass of [src]!</span>")
+					if(6) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
 							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath [src]!</span>", \
@@ -523,8 +587,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 							qdel(O)
 							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
 
-				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
-				C.AddElement(/datum/element/squish, 18 SECONDS)
+				if(prob(30))
+					C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE) // the 30% chance to spread the damage means you escape breaking any bones
+				else
+					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5) // otherwise, deal it to 2 random limbs (or the same one) which will likely shatter something
+					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5)
+				C.AddElement(/datum/element/squish, 80 SECONDS)
 			else
 				L.visible_message("<span class='danger'>[L] is crushed by [src]!</span>", \
 				"<span class='userdanger'>You are crushed by [src]!</span>")
@@ -548,8 +616,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		throw_at(get_turf(fatty), 1, 1, spin=FALSE)
 
 /obj/machinery/vending/proc/untilt(mob/user)
-	user.visible_message("<span class='notice'>[user] rights [src].", \
-		"<span class='notice'>You right [src].")
+	user.visible_message("<span class='notice'>[user] rights [src].</span>", \
+		"<span class='notice'>You right [src].</span>")
 
 	unbuckle_all_mobs(TRUE)
 
@@ -635,28 +703,27 @@ GLOBAL_LIST_EMPTY(vending_products)
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/_try_interact(mob/user)
-	if(seconds_electrified && !(stat & NOPOWER))
+	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
 
 	if(tilted && !user.buckled && !isAI(user))
-		to_chat(user, "<span class='notice'>You begin righting [src].")
+		to_chat(user, "<span class='notice'>You begin righting [src].</span>")
 		if(do_after(user, 50, target=src))
 			untilt(user)
 		return
 
 	return ..()
 
-/obj/machinery/vending/ui_base_html(html)
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/obj/machinery/vending/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/vending),
+	)
 
-/obj/machinery/vending/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-		assets.send(user)
-		ui = new(user, src, ui_key, "vending", ui_key, 450, 600, master_ui, state)
+		ui = new(user, src, "Vending")
 		ui.open()
 
 /obj/machinery/vending/ui_static_data(mob/user)
@@ -684,11 +751,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 			premium = TRUE
 		)
 		.["coin_records"] += list(data)
+	.["hidden_records"] = list()
 	for (var/datum/data/vending_product/R in hidden_records)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_price || default_price,
+			price = R.custom_premium_price || extra_price,
 			max_amount = R.max_amount,
 			ref = REF(R),
 			premium = TRUE
@@ -767,6 +835,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 					flick(icon_deny,src)
 					vend_ready = TRUE
 					return
+				else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
+					say("You are not of legal age to purchase [R.name].")
+					if(!(usr in GLOB.narcd_underages))
+						Radio.set_frequency(FREQ_SECURITY)
+						Radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [H] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
+						GLOB.narcd_underages += H
+					flick(icon_deny,src)
+					vend_ready = TRUE
+					return
 				var/datum/bank_account/account = C.registered_account
 				if(account.account_job && account.account_job.paycheck_department == payment_department)
 					price_to_use = 0
@@ -780,6 +857,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 				if(D)
 					D.adjust_money(price_to_use)
+					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
+					log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
 				say("Thank you for shopping with [src]!")
 				purchase_message_cooldown = world.time + 5 SECONDS
@@ -794,7 +873,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			vend_ready = TRUE
 
 /obj/machinery/vending/process()
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return PROCESS_KILL
 	if(!active)
 		return
@@ -819,7 +898,7 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * message - the message to speak
   */
 /obj/machinery/vending/proc/speak(message)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(!message)
 		return
@@ -883,7 +962,7 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * prb - probability the shock happens
   */
 /obj/machinery/vending/proc/shock(mob/living/user, prb)
-	if(!istype(user) || stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(!istype(user) || machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE
@@ -905,6 +984,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/onTransitZ()
 	return
+
+/obj/machinery/vending/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	. = ..()
+	var/mob/living/L = AM
+	if(tilted || !istype(L) || !prob(20 * (throwingdatum.speed - L.throw_speed))) // hulk throw = +20%, neckgrab throw = +20%
+		return
+
+	tilt(L)
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
@@ -1011,6 +1098,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 						var/datum/bank_account/owner = private_a
 						if(owner)
 							owner.adjust_money(S.custom_price)
+							SSblackbox.record_feedback("amount", "vending_spent", S.custom_price)
+							log_econ("[S.custom_price] credits were spent on [src] buying a [S] by [owner.account_holder], owned by [private_a.account_holder].")
 						vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
 						S.forceMove(drop_location())
 						loaded_items--

@@ -52,8 +52,14 @@
 
 /proc/filter_fancy_list(list/L, filter as text)
 	var/list/matches = new
+	var/end_len = -1
+	var/list/endcheck = splittext(filter, "!")
+	if(endcheck.len > 1)
+		filter = endcheck[1]
+		end_len = length_char(filter)
+
 	for(var/key in L)
 		var/value = L[key]
-		if(findtext("[key]", filter) || findtext("[value]", filter))
+		if(findtext("[key]", filter, -end_len) || findtext("[value]", filter, -end_len))
 			matches[key] = value
 	return matches

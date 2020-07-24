@@ -36,12 +36,13 @@
 			if(!locatedcrate.opened) //otherwise, if the located crate is closed, allow entering
 				return TRUE
 
-/obj/structure/closet/crate/update_icon()
+/obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-	cut_overlays()
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	if(manifest)
-		add_overlay("manifest")
+		. += "manifest"
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	. = ..()
@@ -50,7 +51,7 @@
 	if(manifest)
 		tear_manifest(user)
 
-/obj/structure/closet/crate/open(mob/living/user)
+/obj/structure/closet/crate/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(. && manifest)
 		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
@@ -87,10 +88,20 @@
 	name = "internals crate"
 	icon_state = "o2crate"
 
-/obj/structure/closet/crate/trashcart
+/obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_state = "trashcart"
+
+/obj/structure/closet/crate/trashcart/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
+
+/obj/structure/closet/crate/trashcart/laundry
+	name = "laundry cart"
+	desc = "A large cart for hauling around large amounts of laundry."
+	icon_state = "laundry"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
@@ -105,7 +116,7 @@
 //Snowflake organ freezer code
 //Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
 
-/obj/structure/closet/crate/freezer/open()
+/obj/structure/closet/crate/freezer/open(mob/living/user, force = FALSE)
 	recursive_organ_check(src)
 	..()
 
@@ -131,11 +142,11 @@
 	. = ..()
 	new /obj/item/reagent_containers/blood(src)
 	new /obj/item/reagent_containers/blood(src)
-	new /obj/item/reagent_containers/blood/AMinus(src)
-	new /obj/item/reagent_containers/blood/BMinus(src)
-	new /obj/item/reagent_containers/blood/BPlus(src)
-	new /obj/item/reagent_containers/blood/OMinus(src)
-	new /obj/item/reagent_containers/blood/OPlus(src)
+	new /obj/item/reagent_containers/blood/a_minus(src)
+	new /obj/item/reagent_containers/blood/b_minus(src)
+	new /obj/item/reagent_containers/blood/b_plus(src)
+	new /obj/item/reagent_containers/blood/o_minus(src)
+	new /obj/item/reagent_containers/blood/o_plus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
 	new /obj/item/reagent_containers/blood/ethereal(src)
 	for(var/i in 1 to 3)

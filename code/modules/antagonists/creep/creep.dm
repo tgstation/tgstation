@@ -173,8 +173,8 @@
 		chosen_department = "science"
 	if(oldmind.assigned_role in GLOB.supply_positions)
 		chosen_department = "supply"
-	if(oldmind.assigned_role in GLOB.civilian_positions)
-		chosen_department = "civilian"
+	if(oldmind.assigned_role in GLOB.service_positions)
+		chosen_department = "service"
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(!H.mind)
 			continue
@@ -192,8 +192,8 @@
 			their_chosen_department = "science"
 		if(H.mind.assigned_role in GLOB.supply_positions)
 			their_chosen_department = "supply"
-		if(H.mind.assigned_role in GLOB.civilian_positions)
-			their_chosen_department = "civilian"
+		if(H.mind.assigned_role in GLOB.service_positions)
+			their_chosen_department = "service"
 		if(their_chosen_department != chosen_department)
 			continue
 		viable_coworkers += H.mind
@@ -248,7 +248,7 @@
 /datum/objective/polaroid/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Take a photo with [target.name] while they're alive."
+		explanation_text = "Take a photo of [target.name] while they're alive."
 	else
 		explanation_text = "Free Objective"
 
@@ -261,7 +261,7 @@
 		for(var/obj/I in all_items) //Check for wanted items
 			if(istype(I, /obj/item/photo))
 				var/obj/item/photo/P = I
-				if(P.picture.mobs_seen.Find(owner) && P.picture.mobs_seen.Find(target) && !P.picture.dead_seen.Find(target))//you are in the picture, they are but they are not dead.
+				if(P.picture && (target.current in P.picture.mobs_seen) && !(target.current in P.picture.dead_seen)) //Does the picture exist and is the target in it and is the target not dead
 					return TRUE
 	return FALSE
 

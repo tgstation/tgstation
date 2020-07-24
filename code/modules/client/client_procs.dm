@@ -39,13 +39,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// asset_cache
 	var/asset_cache_job
 	if(href_list["asset_cache_confirm_arrival"])
-		asset_cache_job = round(text2num(href_list["asset_cache_confirm_arrival"]))
-		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
-		//	into letting append to a list without limit.
-		if (asset_cache_job > 0 && asset_cache_job <= last_asset_job && !(asset_cache_job in completed_asset_jobs))
-			completed_asset_jobs += asset_cache_job
+		asset_cache_job = asset_cache_confirm_arrival(href_list["asset_cache_confirm_arrival"])
+		if (!asset_cache_job)
 			return
 
+	// Rate limiting
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
 	if (!holder && mtl)
 		var/minute = round(world.time, 600)
@@ -86,6 +84,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (asset_cache_job && (asset_cache_job in completed_asset_jobs))
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
 		src << browse("...", "window=asset_cache_browser")
+		return
+	if (href_list["asset_cache_preload_data"])
+		asset_cache_preload_data(href_list["asset_cache_preload_data"])
+		return
 
 	// Keypress passthrough
 	if(href_list["__keydown"])
@@ -97,6 +99,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
 		if(keycode)
 			keyUp(keycode)
+		return
+
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
 		return
 
 	// Admin PM
@@ -204,7 +210,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
-	chatOutput = new /datum/chatOutput(src)
+	chatOutput = new /datum/chat_output(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
@@ -275,10 +281,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				if(matches)
 					if(C)
 						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</span>")
-						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)].")
+						log_admin_private("Notice: [key_name(src)] has the same [matches] as [key_name(C)].")
 					else
 						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </span>")
-						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
+						log_admin_private("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
 	if(GLOB.player_details[ckey])
 		player_details = GLOB.player_details[ckey]
@@ -446,6 +452,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
+	view_size = new(src, getScreenSize(prefs.widescreenpref))
+	view_size.resetFormat()
+	view_size.setZoomMode()
+	fit_viewport()
 	Master.UpdateTickRate()
 
 //////////////
@@ -453,9 +463,18 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 //////////////
 
 /client/Del()
+	if(!gc_destroyed)
+		Destroy() //Clean up signals and timers.
+	return ..()
+
+/client/Destroy()
+	GLOB.clients -= src
+	GLOB.directory -= ckey
+	log_access("Logout: [key_name(src)]")
+	GLOB.ahelp_tickets.ClientLogout(src)
+	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
-	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
@@ -476,19 +495,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				"Forever alone :("\
 			)
 
-			send2tgs("Server", "[cheesy_message] (No admins online)")
-
-	GLOB.ahelp_tickets.ClientLogout(src)
-	GLOB.directory -= ckey
-	GLOB.clients -= src
+			send2adminchat("Server", "[cheesy_message] (No admins online)")
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
+	seen_messages = null
 	Master.UpdateTickRate()
-	return ..()
-
-/client/Destroy()
 	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -497,8 +510,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	if(!SSdbcore.Connect())
 		return
-	var/sql_ckey = sanitizeSQL(src.ckey)
-	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
+	var/datum/db_query/query_get_related_ip = SSdbcore.NewQuery(
+		"SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON(:address) AND ckey != :ckey",
+		list("address" = address, "ckey" = ckey)
+	)
 	if(!query_get_related_ip.Execute())
 		qdel(query_get_related_ip)
 		return
@@ -506,7 +521,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	while(query_get_related_ip.NextRow())
 		related_accounts_ip += "[query_get_related_ip.item[1]], "
 	qdel(query_get_related_ip)
-	var/datum/DBQuery/query_get_related_cid = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
+	var/datum/db_query/query_get_related_cid = SSdbcore.NewQuery(
+		"SELECT ckey FROM [format_table_name("player")] WHERE computerid = :computerid AND ckey != :ckey",
+		list("computerid" = computer_id, "ckey" = ckey)
+	)
 	if(!query_get_related_cid.Execute())
 		qdel(query_get_related_cid)
 		return
@@ -520,11 +538,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	else
 		if (!GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
 			return
-	var/sql_ip = sanitizeSQL(address)
-	var/sql_computerid = sanitizeSQL(computer_id)
-	var/sql_admin_rank = sanitizeSQL(admin_rank)
 	var/new_player
-	var/datum/DBQuery/query_client_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
+		"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	if(!query_client_in_db.Execute())
 		qdel(query_client_in_db)
 		return
@@ -545,9 +563,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			return
 
 		new_player = 1
-		account_join_date = sanitizeSQL(findJoinDate())
-		var/sql_key = sanitizeSQL(key)
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', '[sql_key]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
+		account_join_date = findJoinDate()
+		var/datum/db_query/query_add_player = SSdbcore.NewQuery({"
+			INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`)
+			VALUES (:ckey, :key, Now(), :round_id, Now(), :round_id, INET_ATON(:ip), :computerid, :adminrank, :account_join_date)
+		"}, list("ckey" = ckey, "key" = key, "round_id" = GLOB.round_id, "ip" = address, "computerid" = computer_id, "adminrank" = admin_rank, "account_join_date" = account_join_date || null))
 		if(!query_add_player.Execute())
 			qdel(query_client_in_db)
 			qdel(query_add_player)
@@ -557,7 +577,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			account_join_date = "Error"
 			account_age = -1
 	qdel(query_client_in_db)
-	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/db_query/query_get_client_age = SSdbcore.NewQuery(
+		"SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	if(!query_get_client_age.Execute())
 		qdel(query_get_client_age)
 		return
@@ -568,11 +591,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			account_join_date = query_get_client_age.item[3]
 			account_age = text2num(query_get_client_age.item[4])
 			if(!account_age)
-				account_join_date = sanitizeSQL(findJoinDate())
+				account_join_date = findJoinDate()
 				if(!account_join_date)
 					account_age = -1
 				else
-					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),'[account_join_date]')")
+					var/datum/db_query/query_datediff = SSdbcore.NewQuery(
+						"SELECT DATEDIFF(Now(), :account_join_date)",
+						list("account_join_date" = account_join_date)
+					)
 					if(!query_datediff.Execute())
 						qdel(query_datediff)
 						return
@@ -581,16 +607,25 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 					qdel(query_datediff)
 	qdel(query_get_client_age)
 	if(!new_player)
-		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = '[GLOB.round_id]', ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
+		var/datum/db_query/query_log_player = SSdbcore.NewQuery(
+			"UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = :round_id, ip = INET_ATON(:ip), computerid = :computerid, lastadminrank = :admin_rank, accountjoindate = :account_join_date WHERE ckey = :ckey",
+			list("round_id" = GLOB.round_id, "ip" = address, "computerid" = computer_id, "admin_rank" = admin_rank, "account_join_date" = account_join_date || null, "ckey" = ckey)
+		)
 		if(!query_log_player.Execute())
 			qdel(query_log_player)
 			return
 		qdel(query_log_player)
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/db_query/query_log_connection = SSdbcore.NewQuery({"
+		INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`)
+		VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid)
+	"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id))
 	query_log_connection.Execute()
 	qdel(query_log_connection)
+
+	SSserver_maint.UpdateHubStatus()
+
 	if(new_player)
 		player_age = -1
 	. = player_age
@@ -609,9 +644,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			CRASH("Age check regex failed for [src.ckey]")
 
 /client/proc/validate_key_in_db()
-	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_key
-	var/datum/DBQuery/query_check_byond_key = SSdbcore.NewQuery("SELECT byond_key FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/db_query/query_check_byond_key = SSdbcore.NewQuery(
+		"SELECT byond_key FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	if(!query_check_byond_key.Execute())
 		qdel(query_check_byond_key)
 		return
@@ -627,8 +664,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if(F)
 			var/regex/R = regex("\\tkey = \"(.+)\"")
 			if(R.Find(F))
-				var/web_key = sanitizeSQL(R.group[1])
-				var/datum/DBQuery/query_update_byond_key = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET byond_key = '[web_key]' WHERE ckey = '[sql_ckey]'")
+				var/web_key = R.group[1]
+				var/datum/db_query/query_update_byond_key = SSdbcore.NewQuery(
+					"UPDATE [format_table_name("player")] SET byond_key = :byond_key WHERE ckey = :ckey",
+					list("byond_key" = web_key, "ckey" = ckey)
+				)
 				query_update_byond_key.Execute()
 				qdel(query_update_byond_key)
 			else
@@ -645,8 +685,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/static/tokens = list()
 	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
 	var/static/cidcheck_spoofckeys = list()
-	var/sql_ckey = sanitizeSQL(ckey)
-	var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/db_query/query_cidcheck = SSdbcore.NewQuery(
+		"SELECT computerid FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	query_cidcheck.Execute()
 
 	var/lastcid
@@ -721,10 +763,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	add_system_note("CID-Error", "Detected as using a cid randomizer.")
 
 /client/proc/add_system_note(system_ckey, message)
-	var/sql_system_ckey = sanitizeSQL(system_ckey)
-	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)")
+	var/datum/db_query/query_get_notes = SSdbcore.NewQuery(
+		"SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = :targetckey AND adminckey = :adminckey AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)",
+		list("targetckey" = ckey, "adminckey" = system_ckey)
+	)
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -733,7 +776,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	qdel(query_get_notes)
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
-	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL) ORDER BY timestamp DESC LIMIT 1")
+	query_get_notes = SSdbcore.NewQuery(
+		"SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = :targetckey AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL) ORDER BY timestamp DESC LIMIT 1",
+		list("targetckey" = ckey)
+	)
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -845,8 +891,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		'html/browser/playeroptions.css',
 		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
+
+		//load info on what assets the client has
+		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
+
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSassets.preload, register_asset = FALSE)
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/getFilesSlow, src, SSassets.preload, FALSE), 5 SECONDS)
+
 		#if (PRELOAD_RSC == 0)
 		for (var/name in GLOB.vox_sounds)
 			var/file = GLOB.vox_sounds[name]
@@ -862,24 +913,19 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/vv_edit_var(var_name, var_value)
 	switch (var_name)
-		if ("holder")
+		if (NAMEOF(src, holder))
 			return FALSE
-		if ("ckey")
+		if (NAMEOF(src, ckey))
 			return FALSE
-		if ("key")
+		if (NAMEOF(src, key))
 			return FALSE
-		if("view")
-			change_view(var_value)
+		if(NAMEOF(src, view))
+			view_size.setDefault(var_value)
 			return TRUE
 	. = ..()
 
 /client/proc/rescale_view(change, min, max)
-	var/viewscale = getviewsize(view)
-	var/x = viewscale[1]
-	var/y = viewscale[2]
-	x = CLAMP(x+change, min, max)
-	y = CLAMP(y+change, min,max)
-	change_view("[x]x[y]")
+	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
 /client/proc/update_movement_keys(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs
@@ -901,9 +947,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
-
-	if(prefs && !prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
-		new_size = CONFIG_GET(string/default_view_square)
 
 	view = new_size
 	apply_clickcatcher()
@@ -948,6 +991,21 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		qdel(S)
 	char_render_holders = null
 
+///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
+/client/proc/give_award(achievement_type, mob/user, value = 1)
+	return	player_details.achievements.unlock(achievement_type, user, value)
 
-/client/proc/give_award(achievement_type, mob/user)
-	return	player_details.achievements.unlock(achievement_type, user)
+///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
+/client/proc/get_award_status(achievement_type, mob/user, value = 1)
+	return	player_details.achievements.get_achievement_status(achievement_type)
+
+///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
+/client/proc/award_heart(heart_reason)
+	to_chat(src, "<span class='nicegreen'>Someone awarded you a heart![heart_reason ? " They said: [heart_reason]!" : ""]</span>")
+	if(!src)
+		return
+	prefs.hearted_until = world.realtime + (24 HOURS)
+	prefs.hearted = TRUE
+	if(!src)
+		return
+	prefs.save_preferences()

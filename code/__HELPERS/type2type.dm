@@ -1,7 +1,6 @@
 /*
  * Holds procs designed to change one type of value, into another.
  * Contains:
- *			hex2num & num2hex
  *			file2list
  *			angle2dir
  *			angle2text
@@ -9,64 +8,7 @@
  *			text2dir_extended & dir2text_short
  */
 
-//Returns an integer given a hex input, supports negative values "-ff"
-//skips preceding invalid characters
-//breaks when hittin invalid characters thereafter
-// If safe=TRUE, returns null on incorrect input strings instead of CRASHing
-/proc/hex2num(hex, safe=FALSE)
-	. = 0
-	var/place = 1
-	for(var/i in length(hex) to 1 step -1)
-		var/num = text2ascii(hex, i)
-		switch(num)
-			if(48 to 57)
-				num -= 48	//0-9
-			if(97 to 102)
-				num -= 87	//a-f
-			if(65 to 70)
-				num -= 55	//A-F
-			if(45)
-				return . * -1 // -
-			else
-				if(safe)
-					return null
-				else
-					CRASH("Malformed hex number")
 
-		. += num * place
-		place *= 16
-
-//Returns the hex value of a decimal number
-//len == length of returned string
-//if len < 0 then the returned string will be as long as it needs to be to contain the data
-//Only supports positive numbers
-//if an invalid number is provided, it assumes num==0
-//Note, unlike previous versions, this one works from low to high <-- that way
-/proc/num2hex(num, len=2)
-	if(!isnum(num))
-		num = 0
-	num = round(abs(num))
-	. = ""
-	var/i=0
-	while(1)
-		if(len<=0)
-			if(!num)
-				break
-		else
-			if(i>=len)
-				break
-		var/remainder = num/16
-		num = round(remainder)
-		remainder = (remainder - num) * 16
-		switch(remainder)
-			if(9,8,7,6,5,4,3,2,1)
-				. = "[remainder]" + .
-			if(10,11,12,13,14,15)
-				. = ascii2text(remainder+87) + .
-			else
-				. = "0" + .
-		i++
-	return .
 
 //Splits the text of a file at seperator and returns them in a list.
 //returns an empty list if the file doesn't exist
@@ -119,28 +61,9 @@
 		else
 	return
 
-//Converts an angle (degrees) into an ss13 direction
-/proc/angle2dir(degree)
-	degree = SIMPLIFY_DEGREES(degree)
-	switch(degree)
-		if(0 to 22.5) //north requires two angle ranges
-			return NORTH
-		if(22.5 to 67.5) //each range covers 45 degrees
-			return NORTHEAST
-		if(67.5 to 112.5)
-			return EAST
-		if(112.5 to 157.5)
-			return SOUTHEAST
-		if(157.5 to 202.5)
-			return SOUTH
-		if(202.5 to 247.5)
-			return SOUTHWEST
-		if(247.5 to 292.5)
-			return WEST
-		if(292.5 to 337.5)
-			return NORTHWEST
-		if(337.5 to 360)
-			return NORTH
+//Converts an angle (degrees) into a ss13 direction
+GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST))
+#define angle2dir(X) (GLOB.modulo_angle_to_dir[round((((X%360)+382.5)%360)/45)+1])
 
 /proc/angle2dir_cardinal(degree)
 	degree = SIMPLIFY_DEGREES(degree)
@@ -294,8 +217,24 @@
 		return (a+(b-a)*((2/3)-hue)*6)
 	return a
 
+/// For finding out what body parts a body zone covers, the inverse of the below basically
+/proc/zone2body_parts_covered(def_zone)
+	switch(def_zone)
+		if(BODY_ZONE_CHEST)
+			return list(CHEST, GROIN)
+		if(BODY_ZONE_HEAD)
+			return list(HEAD)
+		if(BODY_ZONE_L_ARM)
+			return list(ARM_LEFT, HAND_LEFT)
+		if(BODY_ZONE_R_ARM)
+			return list(ARM_RIGHT, HAND_RIGHT)
+		if(BODY_ZONE_L_LEG)
+			return list(LEG_LEFT, FOOT_LEFT)
+		if(BODY_ZONE_R_LEG)
+			return list(LEG_RIGHT, FOOT_RIGHT)
+
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
-//(I challenge you to find a use for this)
+//(I challenge you to find a use for this) -I found a use for it!!
 /proc/body_parts_covered2organ_names(bpc)
 	var/list/covered_parts = list()
 
@@ -548,4 +487,3 @@
 			return "turf"
 		else //regex everything else (works for /proc too)
 			return lowertext(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
-

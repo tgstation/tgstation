@@ -33,6 +33,14 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/rpd
+	name = "Rapid Pipe Dispenser (RPD)"
+	id = "rpd_loaded"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500)
+	build_path = /obj/item/pipe_dispenser
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/rcd_loaded
 	name = "Rapid Construction Device"
@@ -84,6 +92,16 @@
 	build_path = /obj/item/construction/rld/mini
 	category = list("Tool Designs")
 	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/geneshears
+	name = "Botanogenetic Plant Shears"
+	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
+	id = "gene_shears"
+	build_path = /obj/item/geneshears
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/silver=500)
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /////////////////////////////////////////
 //////////////Alien Tools////////////////

@@ -10,9 +10,12 @@
 					/obj/item/reagent_containers/pill/multiver = 2,
 					/obj/item/reagent_containers/medigel/libital = 2,
 					/obj/item/reagent_containers/medigel/aiuri = 2,
-					/obj/item/reagent_containers/medigel/sterilizine = 1)
+					/obj/item/reagent_containers/medigel/sterilizine = 1,
+					/obj/item/healthanalyzer/wound = 2,
+					/obj/item/stack/medical/bone_gel = 2)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2,
-	                  /obj/item/reagent_containers/pill/morphine = 2)
+	                  /obj/item/reagent_containers/pill/morphine = 2,
+	                  /obj/item/storage/box/gum/happiness = 1)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/wallmed
@@ -20,6 +23,7 @@
 	extra_price = 500
 	payment_department = ACCOUNT_MED
 	tiltable = FALSE
+	light_mask = "wallmed-light-mask"
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"

@@ -4,13 +4,14 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,CAN_SCAR)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
 	mutanttongue = /obj/item/organ/tongue/lizard
-	mutanttail = /obj/item/organ/tail/lizard
+	mutant_organs = list(/obj/item/organ/tail/lizard)
 	coldmod = 1.5
 	heatmod = 0.67
+	payday_modifier = 0.75
 	default_features = list("mcolor" = "0F0", "tail_lizard" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	attack_verb = "slash"
@@ -30,8 +31,8 @@
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
-	return 0
+/datum/species/lizard/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
+	return
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -83,6 +84,6 @@
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,CAN_SCAR)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/lizard/ash

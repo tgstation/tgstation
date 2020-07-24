@@ -4,6 +4,11 @@
 #define SWOOP_DAMAGEABLE 1
 #define SWOOP_INVULNERABLE 2
 
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_TEMP 500
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_EXPOSURE 50
+
 /*
 
 ASH DRAKE
@@ -42,6 +47,7 @@ Difficulty: Medium
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
+	health_doll_icon = "dragon"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
@@ -103,7 +109,7 @@ Difficulty: Medium
 	if(swooping)
 		return
 
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	anger_modifier = clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 	if(client)
@@ -144,7 +150,7 @@ Difficulty: Medium
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
-	
+
 	while(amount > 0)
 		if(QDELETED(target))
 			break
@@ -256,13 +262,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(offset, range, atom/at = target)
 	if(!at)
 		return
-	var/angle = ATAN2(at.x - src.x, at.y - src.y) + offset
-	var/turf/T = get_turf(src)
-	for(var/i in 1 to range)
-		var/turf/check = locate(src.x + cos(angle) * i, src.y + sin(angle) * i, src.z)
-		if(!check)
-			break
-		T = check
+	var/turf/T = get_ranged_target_turf_direct(src, at, range, offset)
 	return (getline(src, T) - get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(var/list/turfs)
@@ -270,15 +270,15 @@ Difficulty: Medium
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(source, list/turfs)
+/proc/dragon_fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			break
 		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
 		for(var/mob/living/L in T.contents)
-			if(L in hit_list || L == source)
+			if(L in hit_list || istype(L, source.type))
 				continue
 			hit_list += L
 			L.adjustFireLoss(20)
@@ -395,7 +395,7 @@ Difficulty: Medium
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
 	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
 		return
 	return ..()
@@ -520,7 +520,7 @@ Difficulty: Medium
 	else
 		animate(src, pixel_x = -16, pixel_z = 0, time = 5)
 
-obj/effect/temp_visual/fireball
+/obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	name = "fireball"
@@ -558,7 +558,7 @@ obj/effect/temp_visual/fireball
 		M.gets_drilled()
 	playsound(T, "explosion", 80, TRUE)
 	new /obj/effect/hotspot(T)
-	T.hotspot_expose(700, 50, 1)
+	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
@@ -595,78 +595,4 @@ obj/effect/temp_visual/fireball
 	player_cooldown = world.time + 200 // needs seperate cooldown or cant use fire attacks
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
-	return
-
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon
-	name = "space dragon"
-	maxHealth = 250
-	health = 250
-	faction = list("neutral")
-	desc = "A space carp turned dragon by vile magic.  Has the same ferocity of a space carp, but also a much more enabling body."
-	icon = 'icons/mob/spacedragon.dmi'
-	icon_state = "spacedragon"
-	icon_living = "spacedragon"
-	icon_dead = "spacedragon_dead"
-	obj_damage = 80
-	melee_damage_upper = 35
-	melee_damage_lower = 35
-	speed = 0
-	mouse_opacity = MOUSE_OPACITY_ICON
-	loot = list()
-	crusher_loot = list()
-	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
-	move_force = MOVE_FORCE_NORMAL
-	move_resist = MOVE_FORCE_NORMAL
-	pull_force = MOVE_FORCE_NORMAL
-	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, life estinguished."
-	attack_action_types = list()
-	small_sprite_type = /datum/action/small_sprite/megafauna/spacedragon
-
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/grant_achievement(medaltype,scoretype)
-	return
-
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/Initialize()
-	var/obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon/repulse_action = new /obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon(src)
-	repulse_action.action.Grant(src)
-	mob_spell_list += repulse_action
-	. = ..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/fire_stream(var/atom/at = target)
-	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
-	SLEEP_CHECK_DEATH(0)
-	var/range = 20
-	var/list/turfs = list()
-	turfs = line_target(0, range, at)
-	INVOKE_ASYNC(src, .proc/fire_line, turfs)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/OpenFire()
-	if(swooping)
-		return
-	ranged_cooldown = world.time + ranged_cooldown_time
-	fire_stream()
-
-/obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon
-	name = "Tail Sweep"
-	desc = "Throw back attackers with a sweep of your tail."
-	sound = 'sound/magic/tail_swing.ogg'
-	charge_max = 150
-	clothes_req = FALSE
-	antimagic_allowed = TRUE
-	range = 1
-	cooldown_min = 150
-	invocation_type = "none"
-	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
-	action_icon = 'icons/mob/actions/actions_xeno.dmi'
-	action_icon_state = "tailsweep"
-	action_background_icon_state = "bg_alien"
-	anti_magic_check = FALSE
-
-/obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon/cast(list/targets,mob/user = usr)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		playsound(C.loc,'sound/effects/hit_punch.ogg', 80, TRUE, TRUE)
-		C.spin(6,1)
-	..(targets, user, 60)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/AltClickOn(atom/movable/A)
 	return

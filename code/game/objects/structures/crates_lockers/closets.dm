@@ -55,27 +55,42 @@
 	return ..()
 
 /obj/structure/closet/update_icon()
-	cut_overlays()
+	. = ..()
+	if (istype(src, /obj/structure/closet/supplypod))
+		return
 	if(!opened)
 		layer = OBJ_LAYER
-		if(icon_door)
-			add_overlay("[icon_door]_door")
-		else
-			add_overlay("[icon_state]_door")
-		if(welded)
-			add_overlay(icon_welded)
-		if(secure && !broken)
-			if(locked)
-				add_overlay("locked")
-			else
-				add_overlay("unlocked")
-
 	else
 		layer = BELOW_OBJ_LAYER
-		if(icon_door_override)
-			add_overlay("[icon_door]_open")
+
+/obj/structure/closet/update_overlays()
+	. = ..()
+	closet_update_overlays(.)
+
+/obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
+	if(!opened)
+		if(icon_door)
+			. += "[icon_door]_door"
 		else
-			add_overlay("[icon_state]_open")
+			. += "[icon_state]_door"
+		if(welded)
+			. += icon_welded
+		if(secure && !broken)
+			//Overlay is similar enough for both that we can use the same mask for both
+			luminosity = 1
+			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+			if(locked)
+				. += "locked"
+			else
+				. += "unlocked"
+	else
+		if(icon_door_override)
+			. += "[icon_door]_open"
+		else
+			. += "[icon_state]_open"
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
@@ -97,7 +112,9 @@
 	if(wall_mounted)
 		return TRUE
 
-/obj/structure/closet/proc/can_open(mob/living/user)
+/obj/structure/closet/proc/can_open(mob/living/user, force = FALSE)
+	if(force)
+		return TRUE
 	if(welded || locked)
 		return FALSE
 	var/turf/T = get_turf(src)
@@ -135,9 +152,13 @@
 		if(AM != src && insert(AM) == -1) // limit reached
 			break
 
-/obj/structure/closet/proc/open(mob/living/user)
-	if(opened || !can_open(user))
+/obj/structure/closet/proc/open(mob/living/user, force = FALSE)
+	if(!can_open(user, force))
 		return
+	if(opened)
+		return
+	welded = FALSE
+	locked = FALSE
 	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
 	opened = TRUE
 	if(!dense_when_open)
@@ -145,7 +166,7 @@
 	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/structure/closet/proc/insert(atom/movable/AM)
 	if(contents.len >= storage_capacity)
@@ -222,7 +243,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
@@ -263,7 +284,7 @@
 	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
 		if(isinspace() && !anchored)
 			return
-		setAnchored(!anchored)
+		set_anchored(!anchored)
 		W.play_tool_sound(src, 75)
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
@@ -313,8 +334,11 @@
 			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Paralyze(40)
-			O.forceMove(T)
-			close()
+			if(istype(src, /obj/structure/closet/supplypod/extractionpod))
+				O.forceMove(src)
+			else
+				O.forceMove(T)
+				close()
 	else
 		O.forceMove(T)
 	return 1
@@ -375,7 +399,7 @@
 /obj/structure/closet/container_resist(mob/living/user)
 	if(opened)
 		return
-	if(ismovableatom(loc))
+	if(ismovable(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		var/atom/movable/AM = loc
@@ -473,8 +497,13 @@
 
 /obj/structure/closet/contents_explosion(severity, target)
 	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += A
 
 /obj/structure/closet/singularity_act()
 	dump_contents()

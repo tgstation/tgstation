@@ -50,7 +50,7 @@
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.tracker = 1
-		S.anchored = TRUE
+		S.set_anchored(TRUE)
 	S.forceMove(src)
 
 /obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
@@ -74,7 +74,7 @@
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.forceMove(loc)
-				S.give_glass(stat & BROKEN)
+				S.give_glass(machine_stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, TRUE)
 			new /obj/item/shard(src.loc)

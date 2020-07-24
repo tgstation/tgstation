@@ -491,7 +491,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "applebush"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -515,7 +515,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -820,7 +820,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/mineral/titanium/white,
@@ -1152,7 +1152,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/mineral/titanium/white,
@@ -1178,7 +1178,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "applebush"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -1281,7 +1281,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-05"
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -1357,7 +1357,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/mineral/titanium/white,

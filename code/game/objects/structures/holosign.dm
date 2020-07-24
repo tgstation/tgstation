@@ -86,7 +86,7 @@
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
@@ -97,7 +97,7 @@
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
 	alpha = 150
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos/Initialize()
@@ -135,8 +135,14 @@
 	. = ..()
 	if(force_allaccess)
 		return TRUE
+	if(istype(mover, /obj/vehicle/ridden))
+		for(var/M in mover.buckled_mobs)
+			if(ishuman(M))
+				if(!CheckHuman(M))
+					return FALSE
 	if(ishuman(mover))
 		return CheckHuman(mover)
+	return TRUE
 
 /obj/structure/holosign/barrier/medical/Bumped(atom/movable/AM)
 	. = ..()

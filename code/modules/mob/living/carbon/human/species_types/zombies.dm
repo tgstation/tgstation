@@ -37,8 +37,8 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
-/datum/species/zombie/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
-	return 0
+/datum/species/zombie/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
+	return
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
@@ -46,7 +46,7 @@
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(20, amount)
 
-/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE)
+/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = FALSE)
 	. = ..()
 	if(.)
 		regen_cooldown = world.time + REGENERATION_DELAY
@@ -63,11 +63,15 @@
 			heal_amt *= 2
 		C.heal_overall_damage(heal_amt,heal_amt)
 		C.adjustToxLoss(-heal_amt)
+		for(var/i in C.all_wounds)
+			var/datum/wound/W = i
+			if(prob(4-W.severity))
+				W.remove_wound()
 	if(!C.InCritical() && prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 
 //Congrats you somehow died so hard you stopped being a zombie
-/datum/species/zombie/infectious/spec_death(mob/living/carbon/C)
+/datum/species/zombie/infectious/spec_death(gibbed, mob/living/carbon/C)
 	. = ..()
 	var/obj/item/organ/zombie_infection/infection
 	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)

@@ -10,9 +10,7 @@
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT | USES_TGUI
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	ui_x = 300
-	ui_y = 180
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
@@ -140,7 +138,7 @@
 		if(user == target)
 			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", "<span class='notice'>You climb into [src].</span>")
 		else
-			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed you in [src].</span>")
+			target.visible_message("<span class='danger'>[user] places [target] in [src].</span>", "<span class='userdanger'>[user] places you in [src].</span>")
 			log_combat(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()
@@ -164,7 +162,7 @@
 
 // monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	flush = !flush
 	update_icon()
@@ -177,10 +175,6 @@
 		AM.forceMove(T)
 		AM.pipe_eject(0)
 	update_icon()
-
-// update the icon & overlays to reflect mode & status
-/obj/machinery/disposal/update_icon()
-	return
 
 /obj/machinery/disposal/proc/flush()
 	flushing = TRUE
@@ -201,7 +195,7 @@
 	flush = FALSE
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
-	for(var/obj/item/smallDelivery/O in src)
+	for(var/obj/item/small_delivery/O in src)
 		H.tomail = TRUE
 		return
 
@@ -234,7 +228,7 @@
 		if(stored)
 			stored.forceMove(T)
 			src.transfer_fingerprints_to(stored)
-			stored.anchored = FALSE
+			stored.set_anchored(FALSE)
 			stored.density = TRUE
 			stored.update_icon()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
@@ -283,13 +277,15 @@
 
 // handle machine interaction
 
-/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
-	if(stat & BROKEN)
+/obj/machinery/disposal/bin/ui_state(mob/user)
+	return GLOB.notcontained_state
+
+/obj/machinery/disposal/bin/ui_interact(mob/user, datum/tgui/ui)
+	if(machine_stat & BROKEN)
 		return
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "disposal_unit", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "DisposalUnit", name)
 		ui.open()
 
 /obj/machinery/disposal/bin/ui_data(mob/user)
@@ -349,30 +345,36 @@
 	pressure_charging = TRUE
 	update_icon()
 
-/obj/machinery/disposal/bin/update_icon()
-	cut_overlays()
-	if(stat & BROKEN)
-		pressure_charging = FALSE
-		flush = FALSE
+/obj/machinery/disposal/bin/update_overlays()
+	. = ..()
+
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
+
+	if(machine_stat & BROKEN)
 		return
 
 	//flush handle
 	if(flush)
-		add_overlay("dispover-handle")
+		. += "dispover-handle"
 
 	//only handle is shown if no power
-	if(stat & NOPOWER || panel_open)
+	if(machine_stat & NOPOWER || panel_open)
 		return
 
+	luminosity = 1
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay("dispover-full")
+		. += "dispover-full"
+		SSvis_overlays.add_vis_overlay(src, icon, "dispover-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 
 	//charging and ready light
 	if(pressure_charging)
-		add_overlay("dispover-charge")
+		. += "dispover-charge"
+		SSvis_overlays.add_vis_overlay(src, icon, "dispover-charge-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 	else if(full_pressure)
-		add_overlay("dispover-ready")
+		. += "dispover-ready"
+		SSvis_overlays.add_vis_overlay(src, icon, "dispover-ready-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
@@ -381,7 +383,7 @@
 //timed process
 //charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/bin/process()
-	if(stat & BROKEN) //nothing can happen if broken
+	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
 	flush_count++
@@ -396,7 +398,7 @@
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
 		do_flush()
 
-	if(stat & NOPOWER) // won't charge if no power
+	if(machine_stat & NOPOWER) // won't charge if no power
 		return
 
 	use_power(100) // base power usage
@@ -434,25 +436,25 @@
 
 //Delivery Chute
 
-/obj/machinery/disposal/deliveryChute
+/obj/machinery/disposal/delivery_chute
 	name = "delivery chute"
 	desc = "A chute for big and small packages alike!"
 	density = TRUE
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
 
-/obj/machinery/disposal/deliveryChute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+/obj/machinery/disposal/delivery_chute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 	trunk = locate() in loc
 	if(trunk)
 		trunk.linked = src	// link the pipe trunk to self
 
-/obj/machinery/disposal/deliveryChute/place_item_in_disposal(obj/item/I, mob/user)
+/obj/machinery/disposal/delivery_chute/place_item_in_disposal(obj/item/I, mob/user)
 	if(I.CanEnterDisposals())
 		..()
 		flush()
 
-/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/delivery_chute/Bumped(atom/movable/AM) //Go straight into the chute
 	if(QDELETED(AM) || !AM.CanEnterDisposals())
 		return
 	switch(dir)
@@ -495,5 +497,5 @@
 /obj/machinery/disposal/bin/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1
 
-/obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)
+/obj/machinery/disposal/delivery_chute/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1

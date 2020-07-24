@@ -5,19 +5,25 @@
 	anchored = TRUE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "uglymine"
-	var/triggered = 0
+	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
+	var/triggered = FALSE
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
 	to_chat(victim, "<span class='danger'>*click*</span>")
 
-/obj/effect/mine/Crossed(AM as mob|obj)
-	if(isturf(loc))
-		if(ismob(AM))
-			var/mob/MM = AM
-			if(!(MM.movement_type & FLYING))
-				triggermine(AM)
-		else
-			triggermine(AM)
+/obj/effect/mine/Crossed(atom/movable/AM)
+	if(triggered || !isturf(loc))
+		return
+	. = ..()
+
+	if(AM.movement_type & FLYING)
+		return
+
+	triggermine(AM)
+
+/obj/effect/mine/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	triggermine()
 
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
@@ -27,9 +33,9 @@
 	s.set_up(3, 1, src)
 	s.start()
 	mineEffect(victim)
-	triggered = 1
+	triggered = TRUE
+	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED)
 	qdel(src)
-
 
 /obj/effect/mine/explosive
 	name = "explosive mine"
@@ -41,10 +47,21 @@
 /obj/effect/mine/explosive/mineEffect(mob/victim)
 	explosion(loc, range_devastation, range_heavy, range_light, range_flash)
 
-
 /obj/effect/mine/stun
 	name = "stun mine"
 	var/stun_time = 80
+
+/obj/effect/mine/shrapnel
+	name = "shrapnel mine"
+	var/shrapnel_type = /obj/projectile/bullet/shrapnel
+	var/shrapnel_magnitude = 3
+
+/obj/effect/mine/shrapnel/mineEffect(mob/victim)
+	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+
+/obj/effect/mine/shrapnel/sting
+	name = "stinger mine"
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
@@ -77,6 +94,11 @@
 	name = "\improper N2O mine"
 	gas_type = "n2o"
 
+
+/obj/effect/mine/gas/water_vapor
+	name = "chilled vapor mine"
+	gas_amount = 500
+	gas_type = "water_vapor"
 
 /obj/effect/mine/sound
 	name = "honkblaster 1000"
@@ -127,14 +149,13 @@
 
 	INVOKE_ASYNC(src, .proc/blood_delusion, victim)
 
-	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
+	var/obj/item/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	victim.log_message("entered a blood frenzy", LOG_ATTACK)
 
 	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
 	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
-	chainsaw.wield(victim)
 	victim.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
 	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 
@@ -172,7 +193,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel fast!</span>")
-	victim.add_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+	victim.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	sleep(duration)
-	victim.remove_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB)
+	victim.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	to_chat(victim, "<span class='notice'>You slow down.</span>")

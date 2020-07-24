@@ -46,7 +46,6 @@
 		            /obj/item/storage/belt/fannypack = 3,
 		            /obj/item/storage/belt/fannypack/blue = 3,
 		            /obj/item/storage/belt/fannypack/red = 3,
-		            /obj/item/clothing/ears/headphones = 2,
 		            /obj/item/clothing/under/misc/overalls = 2,
 		            /obj/item/clothing/under/pants/jeans = 2,
 		            /obj/item/clothing/under/pants/classicjeans = 2,
@@ -72,6 +71,7 @@
 		            /obj/item/clothing/under/rank/captain/suit/skirt = 2,
 		            /obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt = 2,
 		            /obj/item/clothing/suit/jacket = 2,
+					/obj/item/clothing/suit/hooded/wintercoat = 2,
 		            /obj/item/clothing/suit/jacket/puffer/vest = 2,
 		            /obj/item/clothing/suit/jacket/puffer = 2,
 		            /obj/item/clothing/suit/jacket/letterman = 2,
@@ -101,6 +101,7 @@
 		            /obj/item/clothing/suit/ianshirt = 1,
 		            /obj/item/clothing/shoes/laceup = 2,
 		            /obj/item/clothing/shoes/sandal = 2,
+					/obj/item/clothing/shoes/winterboots = 2,
 		            /obj/item/clothing/shoes/cowboy = 2,
 		            /obj/item/clothing/shoes/cowboy/white = 2,
 		            /obj/item/clothing/shoes/cowboy/black = 2,
@@ -126,11 +127,14 @@
 		           /obj/item/clothing/suit/jacket/leather/overcoat = 1,
 		           /obj/item/clothing/under/pants/mustangjeans = 1,
 		           /obj/item/clothing/neck/necklace/dope = 3,
-		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1)
+		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
+		           /obj/item/instrument/piano_synth/headphones/spacepods = 1)
 	refill_canister = /obj/item/vending_refill/clothing
 	default_price = 60
 	extra_price = 120
 	payment_department = NO_FREEBIES
+	light_mask = "wardrobe-light-mask"
+	light_color = "#00FF00"
 
 /obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)

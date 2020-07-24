@@ -27,6 +27,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	cooked_type = null
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/pasta
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/spaghetti/pastatomato
 	name = "spaghetti"
@@ -40,6 +41,7 @@
 	filling_color = "#DC143C"
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/spaghetti/copypasta
 	name = "copypasta"
@@ -53,6 +55,7 @@
 	filling_color = "#DC143C"
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/meatballspaghetti
 	name = "spaghetti and meatballs"
@@ -64,6 +67,7 @@
 	cooked_type = null
 	tastes = list("pasta" = 1, "tomato" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/spaghetti/spesslaw
 	name = "spesslaw"
@@ -74,6 +78,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	cooked_type = null
 	tastes = list("pasta" = 1, "tomato" = 1, "meat" = 1)
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/chowmein
 	name = "chow mein"
@@ -84,6 +89,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 6)
 	cooked_type = null
 	tastes = list("noodle" = 1, "tomato" = 1)
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/beefnoodle
 	name = "beef noodle"
@@ -94,6 +100,7 @@
 	cooked_type = null
 	tastes = list("noodle" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/butternoodles
 	name = "butter noodles"
@@ -104,3 +111,4 @@
 	cooked_type = null
 	tastes = list("noodle" = 1, "butter" = 1)
 	foodtype = GRAIN | DAIRY
+	value = FOOD_FAST

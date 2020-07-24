@@ -18,11 +18,21 @@
 
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
-	return (direction == DOWN)
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_DOWN)
+				return FALSE
+		return TRUE
+	return FALSE
 
 //direction is direction of travel of A
 /turf/open/zPassOut(atom/movable/A, direction, turf/destination)
-	return (direction == UP)
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_UP)
+				return FALSE
+		return TRUE
+	return FALSE
 
 //direction is direction of travel of air
 /turf/open/zAirIn(direction, turf/source)
@@ -60,9 +70,9 @@
 	heavyfootstep = null
 	var/sound
 
-/turf/open/indestructible/sound/Entered(var/mob/AM)
+/turf/open/indestructible/sound/Entered(atom/movable/AM)
 	..()
-	if(istype(AM))
+	if(ismob(AM))
 		playsound(src,sound,50,TRUE)
 
 /turf/open/indestructible/necropolis

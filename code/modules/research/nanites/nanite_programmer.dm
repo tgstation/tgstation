@@ -8,22 +8,33 @@
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
+	flags_1 = HEAR_1
 	circuit = /obj/item/circuitboard/machine/nanite_programmer
-	ui_x = 420
-	ui_y = 550
 
 /obj/machinery/nanite_programmer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
-		if(disk)
-			eject(user)
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			if(disk)
+				eject(user)
 			disk = N
 			program = N.program
 	else
 		..()
+
+/obj/machinery/nanite_programmer/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_screwdriver(user, "nanite_programmer_t", "nanite_programmer", I)
+
+/obj/machinery/nanite_programmer/crowbar_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_crowbar(I)
 
 /obj/machinery/nanite_programmer/proc/eject(mob/living/user)
 	if(!disk)
@@ -33,10 +44,16 @@
 	disk = null
 	program = null
 
-/obj/machinery/nanite_programmer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/nanite_programmer/AltClick(mob/user)
+	if(disk && user.canUseTopic(src, !issilicon(user)))
+		to_chat(user, "<span class='notice'>You take out [disk] from [src].</span>")
+		eject(user)
+	return
+
+/obj/machinery/nanite_programmer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_programmer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "NaniteProgrammer", name)
 		ui.open()
 
 /obj/machinery/nanite_programmer/ui_data()
@@ -85,13 +102,13 @@
 			var/target_code = params["target_code"]
 			switch(target_code)
 				if("activation")
-					program.activation_code = CLAMP(round(new_code, 1),0,9999)
+					program.activation_code = clamp(round(new_code, 1),0,9999)
 				if("deactivation")
-					program.deactivation_code = CLAMP(round(new_code, 1),0,9999)
+					program.deactivation_code = clamp(round(new_code, 1),0,9999)
 				if("kill")
-					program.kill_code = CLAMP(round(new_code, 1),0,9999)
+					program.kill_code = clamp(round(new_code, 1),0,9999)
 				if("trigger")
-					program.trigger_code = CLAMP(round(new_code, 1),0,9999)
+					program.trigger_code = clamp(round(new_code, 1),0,9999)
 			. = TRUE
 		if("set_extra_setting")
 			program.set_extra_setting(params["target_setting"], params["value"])
@@ -101,7 +118,7 @@
 			var/timer = text2num(params["delay"])
 			if(!isnull(timer))
 				playsound(src, "terminal_type", 25, FALSE)
-				timer = CLAMP(round(timer, 1), 0, 3600)
+				timer = clamp(round(timer, 1), 0, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_restart = timer
 			. = TRUE
@@ -109,7 +126,7 @@
 			var/timer = text2num(params["delay"])
 			if(!isnull(timer))
 				playsound(src, "terminal_type", 25, FALSE)
-				timer = CLAMP(round(timer, 1), 0, 3600)
+				timer = clamp(round(timer, 1), 0, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_shutdown = timer
 			. = TRUE
@@ -117,7 +134,7 @@
 			var/timer = text2num(params["delay"])
 			if(!isnull(timer))
 				playsound(src, "terminal_type", 25, FALSE)
-				timer = CLAMP(round(timer, 1), 0, 3600)
+				timer = clamp(round(timer, 1), 0, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_trigger = timer
 			. = TRUE
@@ -125,7 +142,13 @@
 			var/timer = text2num(params["delay"])
 			if(!isnull(timer))
 				playsound(src, "terminal_type", 25, FALSE)
-				timer = CLAMP(round(timer, 1), 0, 3600)
+				timer = clamp(round(timer, 1), 0, 3600)
 				timer *= 10 //convert to deciseconds
 				program.timer_trigger_delay = timer
 			. = TRUE
+
+/obj/machinery/nanite_programmer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+	. = ..()
+	var/static/regex/when = regex("(?:^\\W*when|when\\W*$)", "i") //starts or ends with when
+	if(findtext(raw_message, when) && !istype(speaker, /obj/machinery/nanite_programmer))
+		say("When you code it!!")

@@ -44,6 +44,7 @@
 			movement_range = 0
 
 /obj/effect/accelerated_particle/Crossed(atom/A)
+	. = ..()
 	if(isliving(A))
 		toxmob(A)
 

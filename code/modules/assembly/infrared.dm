@@ -4,7 +4,8 @@
 	icon_state = "infrared"
 	custom_materials = list(/datum/material/iron=1000, /datum/material/glass=500)
 	is_position_sensitive = TRUE
-
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 	var/on = FALSE
 	var/visible = FALSE
 	var/maxlength = 8
@@ -12,8 +13,6 @@
 	var/olddir = 0
 	var/turf/listeningTo
 	var/hearing_range = 3
-	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 /obj/item/assembly/infra/Initialize()
 	. = ..()
@@ -22,13 +21,8 @@
 
 /obj/item/assembly/infra/ComponentInitialize()
 	. = ..()
-	AddComponent(
-		/datum/component/simple_rotation,
-		ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS,
-		null,
-		null,
-		CALLBACK(src,.proc/after_rotation)
-		)
+	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS
+	AddComponent(/datum/component/simple_rotation, rotation_flags, after_rotation=CALLBACK(src,.proc/after_rotation))
 
 /obj/item/assembly/infra/proc/after_rotation()
 	refreshBeam()
@@ -45,7 +39,7 @@
 
 /obj/item/assembly/infra/activate()
 	if(!..())
-		return FALSE//Cooldown check
+		return FALSE //Cooldown check
 	on = !on
 	refreshBeam()
 	update_icon()
@@ -140,7 +134,7 @@
 	. = ..()
 	setDir(t)
 
-/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	. = ..()
 	olddir = dir
 
@@ -183,42 +177,40 @@
 			return
 	return refreshBeam()
 
-/obj/item/assembly/infra/ui_interact(mob/user)//TODO: change this this to the wire control panel
-	. = ..()
-	if(is_secured(user))
-		user.set_machine(src)
-		var/dat = "<TT><B>Infrared Laser</B></TT>"
-		dat += "<BR><B>Status</B>: [on ? "<A href='?src=[REF(src)];state=0'>On</A>" : "<A href='?src=[REF(src)];state=1'>Off</A>"]"
-		dat += "<BR><B>Visibility</B>: [visible ? "<A href='?src=[REF(src)];visible=0'>Visible</A>" : "<A href='?src=[REF(src)];visible=1'>Invisible</A>"]"
-		dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
-		dat += "<BR><BR><A href='?src=[REF(src)];close=1'>Close</A>"
-		user << browse(dat, "window=infra")
-		onclose(user, "infra")
-		return
-
-/obj/item/assembly/infra/Topic(href, href_list)
-	..()
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		usr << browse(null, "window=infra")
-		onclose(usr, "infra")
-		return
-
-	if(href_list["state"])
-		on = !(on)
-		update_icon()
-		refreshBeam()
-	if(href_list["visible"])
-		visible = !(visible)
-		update_icon()
-		refreshBeam()
-	if(href_list["close"])
-		usr << browse(null, "window=infra")
-		return
-	if(usr)
-		attack_self(usr)
-
 /obj/item/assembly/infra/setDir()
 	. = ..()
+	refreshBeam()
+
+/obj/item/assembly/infra/ui_status(mob/user)
+	if(is_secured(user))
+		return ..()
+	return UI_CLOSE
+
+/obj/item/assembly/infra/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "InfraredEmitter", name)
+		ui.open()
+
+/obj/item/assembly/infra/ui_data(mob/user)
+	var/list/data = list()
+	data["on"] = on
+	data["visible"] = visible
+	return data
+
+/obj/item/assembly/infra/ui_act(action, params)
+	if(..())
+		return
+
+	switch(action)
+		if("power")
+			on = !on
+			. = TRUE
+		if("visibility")
+			visible = !visible
+			. = TRUE
+
+	update_icon()
 	refreshBeam()
 
 /***************************IBeam*********************************/
@@ -227,12 +219,13 @@
 	name = "infrared beam"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
-	var/obj/item/assembly/infra/master
 	anchored = TRUE
 	density = FALSE
 	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE|LETPASSTHROW
+	var/obj/item/assembly/infra/master
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
+	. = ..()
 	if(istype(AM, /obj/effect/beam))
 		return
 	if (isitem(AM))

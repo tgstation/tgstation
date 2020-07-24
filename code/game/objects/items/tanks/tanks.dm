@@ -5,6 +5,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
+	worn_icon = 'icons/mob/clothing/back.dmi' //since these can also get thrown into suit storage slots. if something goes on the belt, set this to null.
 	hitsound = 'sound/weapons/smash.ogg'
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
@@ -141,11 +142,13 @@
 	else
 		. = ..()
 
-/obj/item/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/tank/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/tank/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "tanks", name, 400, 120, master_ui, state)
+		ui = new(user, src, "Tank", name)
 		ui.open()
 
 /obj/item/tank/ui_data(mob/user)
@@ -182,15 +185,11 @@
 			else if(pressure == "max")
 				pressure = TANK_MAX_RELEASE_PRESSURE
 				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New release pressure ([TANK_MIN_RELEASE_PRESSURE]-[TANK_MAX_RELEASE_PRESSURE] kPa):", name, distribute_pressure) as num|null
-				if(!isnull(pressure) && !..())
-					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				distribute_pressure = CLAMP(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
 /obj/item/tank/remove_air(amount)
 	return air_contents.remove(amount)
@@ -212,7 +211,7 @@
 		return null
 
 	var/tank_pressure = air_contents.return_pressure()
-	var/actual_distribute_pressure = CLAMP(tank_pressure, 0, distribute_pressure)
+	var/actual_distribute_pressure = clamp(tank_pressure, 0, distribute_pressure)
 
 	var/moles_needed = actual_distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 

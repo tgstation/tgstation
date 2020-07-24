@@ -38,6 +38,7 @@ Difficulty: Hard
 	icon_state = "bubblegum"
 	icon_living = "bubblegum"
 	icon_dead = ""
+	health_doll_icon = "bubblegum"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
@@ -106,8 +107,8 @@ Difficulty: Hard
 	if(charging)
 		return
 
-	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
-	enrage_time = initial(enrage_time) * CLAMP(anger_modifier / 20, 0.5, 1)
+	anger_modifier = clamp(((maxHealth - health)/60),0,20)
+	enrage_time = initial(enrage_time) * clamp(anger_modifier / 20, 0.5, 1)
 	ranged_cooldown = world.time + 50
 
 	if(client)
@@ -244,7 +245,7 @@ Difficulty: Hard
 			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, TRUE, -1)
 			var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			L.apply_damage(10, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
+			L.apply_damage(10, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration), wound_bonus = CANT_WOUND)
 	SLEEP_CHECK_DEATH(3)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodgrab(turf/T, handedness)
@@ -460,13 +461,16 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
-			A.ex_act(EXPLODE_HEAVY)
+			if(isobj(A))
+				SSexplosions.medobj += A
+			else
+				SSexplosions.medturf += A
 		DestroySurroundings()
 		if(isliving(A))
 			var/mob/living/L = A
 			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] tramples you into the ground!</span>")
 			src.forceMove(get_turf(L))
-			L.apply_damage(istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination) ? 15 : 30, BRUTE)
+			L.apply_damage(istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination) ? 15 : 30, BRUTE, wound_bonus = CANT_WOUND)
 			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, TRUE)
 			shake_camera(L, 4, 3)
 			shake_camera(src, 2, 3)

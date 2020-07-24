@@ -153,7 +153,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "y" = (
-/obj/item/twohanded/required/kirbyplants,
+/obj/item/kirbyplants,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "z" = (
@@ -163,7 +163,7 @@
 /area/shuttle/escape)
 "A" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "B" = (

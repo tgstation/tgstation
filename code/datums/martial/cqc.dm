@@ -200,7 +200,7 @@
 		to_chat(A, "<span class='danger'>You put [D] into a chokehold!</span>")
 		D.SetSleeping(400)
 		restraining = FALSE
-		if(A.grab_state < GRAB_NECK)
+		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
 			A.setGrabState(GRAB_NECK)
 	else
 		restraining = FALSE

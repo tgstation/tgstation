@@ -152,12 +152,12 @@
 /datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has cult'ed [key_name_admin(new_owner)].")
-	log_admin("[key_name(admin)] has cult'ed [key_name(new_owner)].")
+	message_admins("[key_name_admin(admin)] has cult-ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has cult-ed [key_name(new_owner)].")
 
 /datum/antagonist/cult/admin_remove(mob/user)
-	message_admins("[key_name_admin(user)] has decult'ed [key_name_admin(owner)].")
-	log_admin("[key_name(user)] has decult'ed [key_name(owner)].")
+	message_admins("[key_name_admin(user)] has decult-ed [key_name_admin(owner)].")
+	log_admin("[key_name(user)] has decult-ed [key_name(owner)].")
 	SSticker.mode.remove_cultist(owner,silent=TRUE) //disgusting
 
 /datum/antagonist/cult/get_admin_commands()
@@ -348,7 +348,7 @@
 
 /datum/objective/sacrifice/update_explanation_text()
 	if(target)
-		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking a Sacrifice rune with [target.p_them()] on it and three acolytes around it."
+		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking an Offer rune with [target.p_them()] on it and three acolytes around it."
 	else
 		explanation_text = "The veil has already been weakened here, proceed to the final objective."
 

@@ -15,7 +15,8 @@
 	name = "pen"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
-	item_state = "pen"
+	inhand_icon_state = "pen"
+	worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -27,6 +28,7 @@
 	var/colour = "black"	//what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
+	embedding = list()
 
 /obj/item/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
@@ -41,6 +43,7 @@
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
 	colour = "red"
+	throw_speed = 4 // red ones go faster (in this case, fast enough to embed!)
 
 /obj/item/pen/invisible
 	desc = "It's an invisible pen marker."
@@ -56,8 +59,10 @@
 	switch(colour)
 		if("black")
 			colour = "red"
+			throw_speed++
 		if("red")
 			colour = "green"
+			throw_speed = initial(throw_speed)
 		if("green")
 			colour = "blue"
 		else
@@ -104,6 +109,7 @@
 						"Black and Silver" = "pen-fountain-b",
 						"Command Blue" = "pen-fountain-cb"
 						)
+	embedding = list("embed_chance" = 75)
 
 /obj/item/pen/fountain/captain/Initialize()
 	. = ..()
@@ -174,7 +180,7 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
-				reagents.reaction(M, INJECT, reagents.total_volume)
+				reagents.expose(M, INJECT, reagents.total_volume)
 				reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 
 
@@ -189,13 +195,14 @@
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	attack_verb = list("slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut") //these won't show up if the pen is off
 	sharpness = IS_SHARP
 	var/on = FALSE
 
-/obj/item/pen/edagger/Initialize()
+/obj/item/pen/edagger/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg')
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/pen/edagger/get_sharpness()
 	return on * sharpness
@@ -216,7 +223,7 @@
 		w_class = initial(w_class)
 		name = initial(name)
 		hitsound = initial(hitsound)
-		embedding = embedding.setRating(embed_chance = EMBED_CHANCE)
+		embedding = list(embed_chance = EMBED_CHANCE)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
@@ -227,21 +234,21 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
-		embedding = embedding.setRating(embed_chance = 100) //rule of cool
+		embedding = list(embed_chance = 100) //rule of cool
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+	updateEmbedding()
 	update_icon()
 
-/obj/item/pen/edagger/update_icon()
+/obj/item/pen/edagger/update_icon_state()
 	if(on)
-		icon_state = "edagger"
-		item_state = "edagger"
+		icon_state = inhand_icon_state = "edagger"
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	else
 		icon_state = initial(icon_state) //looks like a normal pen when off.
-		item_state = initial(item_state)
+		inhand_icon_state = initial(inhand_icon_state)
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
 
@@ -250,7 +257,8 @@
 	desc = "The latest in portable survival technology, this pen was designed as a miniature diamond pickaxe. Watchers find them very desirable for their diamond exterior."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "digging_pen"
-	item_state = "pen"
+	inhand_icon_state = "pen"
+	worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)

@@ -48,6 +48,7 @@
 		return 1
 	else
 		return 0
+
 /**
   * Convert random parts of a passed in message to stars
   *
@@ -158,10 +159,11 @@
 	var/leng = length(phrase)
 	. = ""
 	var/newletter = ""
-	var/rawchar
+	var/rawchar = ""
+	var/static/regex/nostutter = regex(@@[aeiouAEIOU "'()[\]{}.!?,:;_`~-]@)
 	for(var/i = 1, i <= leng, i += length(rawchar))
 		rawchar = newletter = phrase[i]
-		if(prob(80) && !(lowertext(newletter) in list("a", "e", "i", "o", "u", " ")))
+		if(prob(80) && !nostutter.Find(rawchar))
 			if(prob(10))
 				newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
 			else if(prob(20))
@@ -284,12 +286,10 @@
 	if(hud_used && hud_used.action_intent)
 		hud_used.action_intent.icon_state = "[a_intent]"
 
-///Checks if passed through item is blind
-/proc/is_blind(A)
-	if(ismob(A))
-		var/mob/B = A
-		return B.eye_blind
-	return FALSE
+///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.
+/mob/proc/is_blind()
+	SHOULD_BE_PURE(TRUE)
+	return eye_blind ? TRUE : HAS_TRAIT(src, TRAIT_BLIND)
 
 ///Is the mob hallucinating?
 /mob/proc/hallucinating()
@@ -415,14 +415,14 @@
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
-			user.visible_message("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>", \
+			user.visible_message("<span class='notice'>[user] fixes some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>", \
 			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 			return 1 //successful heal
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
 
-///Is the passed in mob an admin ghost
-/proc/IsAdminGhost(var/mob/user)
+///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
+/proc/isAdminObserver(var/mob/user)
 	if(!user)		//Are they a mob? Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
@@ -430,6 +430,12 @@
 	if(!isobserver(user)) // Are they a ghost?
 		return
 	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	return TRUE
+
+///Is the passed in mob an admin ghost WITH AI INTERACT enabled
+/proc/isAdminGhostAI(var/mob/user)
+	if(!isAdminObserver(user))
 		return
 	if(!user.client.AI_Interact) // Do they have it enabled?
 		return

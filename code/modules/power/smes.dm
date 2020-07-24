@@ -21,8 +21,6 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
-	ui_x = 340
-	ui_y = 440
 
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
@@ -99,7 +97,7 @@
 		if(!terminal)
 			to_chat(user, "<span class='alert'>No power terminal found.</span>")
 			return
-		stat &= ~BROKEN
+		machine_stat &= ~BROKEN
 		update_icon()
 		return
 
@@ -140,7 +138,7 @@
 				return
 			if(!terminal)
 				C.use(10)
-				user.visible_message("<span class='notice'>[user.name] has built a power terminal.</span>",\
+				user.visible_message("<span class='notice'>[user.name] builds a power terminal.</span>",\
 					"<span class='notice'>You build the power terminal.</span>")
 
 				//build the terminal and link it to the network
@@ -196,7 +194,7 @@
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.setDir(get_dir(T,src))
 	terminal.master = src
-	stat &= ~BROKEN
+	machine_stat &= ~BROKEN
 
 /obj/machinery/power/smes/disconnect_terminal()
 	if(terminal)
@@ -205,41 +203,45 @@
 		obj_break()
 
 
-/obj/machinery/power/smes/update_icon()
-	cut_overlays()
-	if(stat & BROKEN)
+/obj/machinery/power/smes/update_overlays()
+	. = ..()
+	if(machine_stat & BROKEN)
 		return
 
 	if(panel_open)
 		return
 
 	if(outputting)
-		add_overlay("smes-op1")
+		. += "smes-op1"
 	else
-		add_overlay("smes-op0")
+		. += "smes-op0"
 
 	if(inputting)
-		add_overlay("smes-oc1")
-	else
-		if(input_attempt)
-			add_overlay("smes-oc0")
+		. += "smes-oc1"
+	else if(input_attempt)
+		. += "smes-oc0"
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		add_overlay("smes-og[clevel]")
+		. += "smes-og[clevel]"
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
-	return CLAMP(round(5.5*charge/capacity),0,5)
+	return clamp(round(5.5*charge/capacity),0,5)
 
 /obj/machinery/power/smes/process()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
 	var/last_chrg = inputting
 	var/last_onln = outputting
+
+	//check for self-recharging cells in stock parts and use them to self-charge
+	for(var/obj/item/stock_parts/cell/C in component_parts)
+		if(C.self_recharge)
+			charge += min(capacity-charge, C.chargerate) // If capacity-charge is smaller than the attempted charge rate, this avoids overcharging
 
 	//inputting
 	if(terminal && input_attempt)
@@ -292,7 +294,7 @@
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
 /obj/machinery/power/smes/proc/restore()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 
 	if(!outputting)
@@ -319,32 +321,29 @@
 	return
 
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "smes", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Smes", name)
 		ui.open()
 
 /obj/machinery/power/smes/ui_data()
 	var/list/data = list(
-		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"capacity" = capacity,
+		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"charge" = charge,
-
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
 		"inputLevel" = input_level,
 		"inputLevel_text" = DisplayPower(input_level),
 		"inputLevelMax" = input_level_max,
-		"inputAvailable" = DisplayPower(input_available),
-
+		"inputAvailable" = input_available,
 		"outputAttempt" = output_attempt,
 		"outputting" = outputting,
 		"outputLevel" = output_level,
 		"outputLevel_text" = DisplayPower(output_level),
 		"outputLevelMax" = output_level_max,
-		"outputUsed" = DisplayPower(output_used)
+		"outputUsed" = output_used,
 	)
 	return data
 
@@ -365,11 +364,7 @@
 		if("input")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New input target (0-[input_level_max]):", name, input_level) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 0
 				. = TRUE
 			else if(target == "max")
@@ -382,16 +377,12 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				input_level = CLAMP(target, 0, input_level_max)
+				input_level = clamp(target, 0, input_level_max)
 				log_smes(usr)
 		if("output")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New output target (0-[output_level_max]):", name, output_level) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 0
 				. = TRUE
 			else if(target == "max")
@@ -404,7 +395,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				output_level = CLAMP(target, 0, output_level_max)
+				output_level = clamp(target, 0, output_level_max)
 				log_smes(usr)
 
 /obj/machinery/power/smes/proc/log_smes(mob/user)

@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				M.Paralyze(320) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
 			else
-				A.anchored = TRUE
+				A.set_anchored(TRUE)
 				A.density = FALSE
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			holder_obj.add_overlay(balloon3)
 			sleep(4)
 			holder_obj.cut_overlay(balloon3)
-			A.anchored = FALSE // An item has to be unanchored to be extracted in the first place.
+			A.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
 			A.density = initial(A.density)
 			animate(holder_obj, pixel_z = 0, time = 5)
 			sleep(5)
@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/effect/extraction_holder
 	name = "extraction holder"
-	desc = "you shouldnt see this"
+	desc = "you shouldn't see this"
 	var/atom/movable/stored_obj
 
 /obj/item/extraction_pack/proc/check_for_living_mobs(atom/A)
@@ -188,7 +188,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				return 1
 	return 0
 
-/obj/effect/extraction_holder/singularity_pull()
+/obj/effect/extraction_holder/singularity_act()
 	return
 
 /obj/effect/extraction_holder/singularity_pull()

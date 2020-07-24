@@ -145,45 +145,45 @@
 		else
 			playsound(vehicle_entered_target, hornsound, 75)
 
-/datum/action/vehicle/sealed/DumpKidnappedMobs
+/datum/action/vehicle/sealed/dump_kidnapped_mobs
 	name = "Dump Kidnapped Mobs"
 	desc = "Dump all objects and people in your car on the floor."
 	button_icon_state = "car_dump"
 
-/datum/action/vehicle/sealed/DumpKidnappedMobs/Trigger()
+/datum/action/vehicle/sealed/dump_kidnapped_mobs/Trigger()
 	vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] starts dumping the people inside of it.</span>")
 	vehicle_entered_target.DumpSpecificMobs(VEHICLE_CONTROL_KIDNAPPED)
 
 
-/datum/action/vehicle/sealed/RollTheDice
+/datum/action/vehicle/sealed/roll_the_dice
 	name = "Press Colorful Button"
 	desc = "Press one of those colorful buttons on your display panel!"
 	button_icon_state = "car_rtd"
 
-/datum/action/vehicle/sealed/RollTheDice/Trigger()
+/datum/action/vehicle/sealed/roll_the_dice/Trigger()
 	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
 		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
 		C.RollTheDice(owner)
 
-/datum/action/vehicle/sealed/Cannon
+/datum/action/vehicle/sealed/cannon
 	name = "Toggle Siege Mode"
 	desc = "Destroy them with their own fodder!"
 	button_icon_state = "car_cannon"
 
-/datum/action/vehicle/sealed/Cannon/Trigger()
+/datum/action/vehicle/sealed/cannon/Trigger()
 	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
 		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
 		if(C.cannonbusy)
 			to_chat(owner, "<span class='notice'>Please wait for the vehicle to finish its current action first.</span>")
 		C.ToggleCannon()
 
-/datum/action/vehicle/sealed/Thank
+/datum/action/vehicle/sealed/thank
 	name = "Thank the Clown Car Driver"
 	desc = "They're just doing their job."
 	button_icon_state = "car_thanktheclown"
 	var/last_thank_time
 
-/datum/action/vehicle/sealed/Thank/Trigger()
+/datum/action/vehicle/sealed/thank/Trigger()
 	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
 		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
 		if(world.time >= last_thank_time + 60)

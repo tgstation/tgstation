@@ -9,8 +9,6 @@
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_master
-	ui_x = 465
-	ui_y = 550
 
 	var/obj/item/reagent_containers/beaker = null
 	var/obj/item/storage/pill_bottle/bottle = null
@@ -53,9 +51,21 @@
 /obj/machinery/chem_master/contents_explosion(severity, target)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += beaker
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += beaker
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += beaker
 	if(bottle)
-		bottle.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += bottle
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += bottle
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += bottle
 
 /obj/machinery/chem_master/handle_atom_del(atom/A)
 	..()
@@ -66,14 +76,16 @@
 	else if(A == bottle)
 		bottle = null
 
-/obj/machinery/chem_master/update_icon()
-	cut_overlays()
-	if (stat & BROKEN)
-		add_overlay("waitlight")
+/obj/machinery/chem_master/update_icon_state()
 	if(beaker)
 		icon_state = "mixer1"
 	else
 		icon_state = "mixer0"
+
+/obj/machinery/chem_master/update_overlays()
+	. = ..()
+	if(machine_stat & BROKEN)
+		. += "waitlight"
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
@@ -114,20 +126,19 @@
 		return ..()
 
 /obj/machinery/chem_master/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	. = ..()
+	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	return
 
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(!user)
+		return FALSE
 	if(beaker)
-		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
+		user.put_in_hands(beaker)
+		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	else
-		beaker = null
 	update_icon()
 	return TRUE
 
@@ -139,20 +150,16 @@
 		bottle = null
 	return ..()
 
-/obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/chem_master/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/simple/pills),
+	)
+
+/obj/machinery/chem_master/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "chem_master", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ChemMaster", name)
 		ui.open()
-
-//Insert our custom spritesheet css link into the html
-/obj/machinery/chem_master/ui_base_html(html)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
@@ -245,7 +252,7 @@
 			amount = text2num(input(usr,
 				"Max 10. Buffer content will be split evenly.",
 				"How many to make?", 1))
-		amount = CLAMP(round(amount), 0, 10)
+		amount = clamp(round(amount), 0, 10)
 		if (amount <= 0)
 			return FALSE
 		// Get units per item
@@ -271,7 +278,7 @@
 				"Maximum [vol_each_max] units per item.",
 				"How many units to fill?",
 				vol_each_max))
-		vol_each = CLAMP(vol_each, 0, vol_each_max)
+		vol_each = clamp(vol_each, 0, vol_each_max)
 		if(vol_each <= 0)
 			return FALSE
 		// Get item name

@@ -78,7 +78,7 @@
 	w_class_on = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 	armour_penetration = 100
-	attack_verb_off = list("attacked", "chopped", "cleaved", "torn", "cut")
+	attack_verb_off = list("attacked", "chopped", "cleaved", "tore", "lacerated", "cut")
 	attack_verb_on = list()
 	light_color = "#40ceff"
 
@@ -99,7 +99,7 @@
 	throw_speed = 3
 	throw_range = 5
 	sharpness = IS_SHARP
-	embedding = list("embed_chance" = 75, "embedded_impact_pain_multiplier" = 10)
+	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 	armour_penetration = 35
 	block_chance = 50
 
@@ -235,4 +235,4 @@
 	name = "hardlight blade"
 	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
 	icon_state = "lightblade"
-	item_state = "lightblade"
+	inhand_icon_state = "lightblade"

@@ -4,14 +4,14 @@
 	icon_state = "timer"
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
 	attachable = TRUE
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 	var/timing = FALSE
 	var/time = 5
 	var/saved_time = 5
 	var/loop = FALSE
 	var/hearing_range = 3
-	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 /obj/item/assembly/timer/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] looks at the timer and decides [user.p_their()] fate! It looks like [user.p_theyre()] going to commit suicide!</span>")
@@ -43,7 +43,6 @@
 	update_icon()
 	return TRUE
 
-
 /obj/item/assembly/timer/toggle_secure()
 	secured = !secured
 	if(secured)
@@ -53,7 +52,6 @@
 		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return secured
-
 
 /obj/item/assembly/timer/proc/timer_end()
 	if(!secured || next_activate > world.time)
@@ -68,7 +66,6 @@
 		timing = TRUE
 	update_icon()
 
-
 /obj/item/assembly/timer/process()
 	if(!timing)
 		return
@@ -77,7 +74,6 @@
 		timing = FALSE
 		timer_end()
 		time = saved_time
-
 
 /obj/item/assembly/timer/update_icon()
 	cut_overlays()
@@ -88,48 +84,43 @@
 	if(holder)
 		holder.update_icon()
 
-
-/obj/item/assembly/timer/ui_interact(mob/user)//TODO: Have this use the wires
-	. = ..()
+/obj/item/assembly/timer/ui_status(mob/user)
 	if(is_secured(user))
-		var/second = time % 60
-		var/minute = (time - second) / 60
-		var/dat = "<TT><B>Timing Unit</B></TT>"
-		dat += "<BR>[(timing ? "<A href='?src=[REF(src)];time=0'>Timing</A>" : "<A href='?src=[REF(src)];time=1'>Not Timing</A>")] [minute]:[second]"
-		dat += "<BR><A href='?src=[REF(src)];tp=-30'>-</A> <A href='?src=[REF(src)];tp=-1'>-</A> <A href='?src=[REF(src)];tp=1'>+</A> <A href='?src=[REF(src)];tp=30'>+</A>"
-		dat += "<BR><BR><A href='?src=[REF(src)];repeat=[(loop ? "0'>Stop repeating" : "1'>Set to repeat")]</A>"
-		dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
-		dat += "<BR><BR><A href='?src=[REF(src)];close=1'>Close</A>"
-		var/datum/browser/popup = new(user, "timer", name)
-		popup.set_content(dat)
-		popup.open()
+		return ..()
+	return UI_CLOSE
 
+/obj/item/assembly/timer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Timer", name)
+		ui.open()
 
-/obj/item/assembly/timer/Topic(href, href_list)
-	..()
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		usr << browse(null, "window=timer")
-		onclose(usr, "timer")
+/obj/item/assembly/timer/ui_data(mob/user)
+	var/list/data = list()
+	data["seconds"] = round(time % 60)
+	data["minutes"] = round((time - data["seconds"]) / 60)
+	data["timing"] = timing
+	data["loop"] = loop
+	return data
+
+/obj/item/assembly/timer/ui_act(action, params)
+	if(..())
 		return
 
-	if(href_list["time"])
-		timing = text2num(href_list["time"])
-		if(timing && istype(holder, /obj/item/transfer_valve))
-			log_bomber(usr, "activated a", src, "attachment on [holder]")
-
-		update_icon()
-	if(href_list["repeat"])
-		loop = text2num(href_list["repeat"])
-
-	if(href_list["tp"])
-		var/tp = text2num(href_list["tp"])
-		time += tp
-		time = min(max(round(time), 1), 600)
-		saved_time = time
-
-	if(href_list["close"])
-		usr << browse(null, "window=timer")
-		return
-
-	if(usr)
-		attack_self(usr)
+	switch(action)
+		if("time")
+			timing = !timing
+			if(timing && istype(holder, /obj/item/transfer_valve))
+				log_bomber(usr, "activated a", src, "attachment on [holder]")
+			update_icon()
+			. = TRUE
+		if("repeat")
+			loop = !loop
+			. = TRUE
+		if("input")
+			var/value = text2num(params["adjust"])
+			if(value)
+				value = round(time + value)
+				time = clamp(value, 1, 600)
+				saved_time = time
+				. = TRUE

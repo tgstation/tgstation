@@ -826,19 +826,28 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/medical/medbay)
 "cK" = (
-/obj/machinery/dna_scannernew,
+/obj/machinery/light,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
 "cL" = (
-/obj/structure/table,
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /obj/item/disk/surgery/debug,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
 "cN" = (
@@ -1112,6 +1121,7 @@
 /obj/structure/table,
 /obj/machinery/light,
 /obj/item/storage/firstaid/regular,
+/obj/item/healthanalyzer/advanced,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dP" = (
@@ -1277,13 +1287,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "es" = (
-/obj/machinery/light,
-/obj/machinery/clonepod,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
@@ -1934,9 +1943,7 @@
 	pixel_x = 32
 	},
 /obj/structure/cable,
-/obj/machinery/computer/shuttle/mining{
-	dir = 2
-	},
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "gk" = (
@@ -2246,6 +2253,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"sH" = (
+/obj/structure/table,
+/obj/item/storage/box/shipping,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "tG" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -2356,17 +2368,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/science)
-"BB" = (
-/obj/machinery/computer/cloning{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/medical/medbay)
 "BD" = (
-/obj/structure/closet/secure_closet/CMO{
+/obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -2400,11 +2403,26 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"DW" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/computer/scan_consolenew{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white/corner,
+/area/medical/medbay)
 "EA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/construction)
+"EB" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 27
+	},
+/turf/open/floor/plasteel,
+/area/medical/medbay)
 "EG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2443,7 +2461,7 @@
 /turf/open/floor/plasteel,
 /area/science)
 "Iy" = (
-/obj/structure/closet/secure_closet/RD{
+/obj/structure/closet/secure_closet/research_director{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -2471,8 +2489,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	width = 7;
-	roundstart_template = /datum/map_template/shuttle/mining/box
+	roundstart_template = /datum/map_template/shuttle/mining/box;
+	width = 7
 	},
 /turf/open/floor/engine,
 /area/quartermaster/miningoffice)
@@ -6644,9 +6662,9 @@ aa
 ae
 ab
 sE
-an
 sE
-an
+sE
+sE
 sE
 ab
 bv
@@ -6736,9 +6754,9 @@ aa
 ae
 ab
 sE
-ao
-ao
-ao
+an
+sE
+an
 sE
 ab
 bv
@@ -6827,11 +6845,11 @@ aa
 aa
 ae
 ab
-ab
-ab
+sE
+an
 ao
-ab
-ab
+an
+sE
 ab
 bv
 bJ
@@ -6919,11 +6937,11 @@ aa
 aa
 ae
 ac
-ac
+ab
 ab
 ao
 ab
-ac
+ab
 ac
 bv
 bK
@@ -7865,7 +7883,7 @@ dJ
 dJ
 dJ
 dJ
-dN
+sH
 cS
 fU
 gb
@@ -8403,8 +8421,8 @@ dH
 by
 Qt
 by
-cm
-BB
+EB
+DW
 by
 cS
 cS

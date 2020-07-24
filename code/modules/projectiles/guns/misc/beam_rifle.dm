@@ -15,7 +15,8 @@
 		changing where you're pointing at while aiming will delay the aiming process depending on how much you changed.</span>"
 	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "esniper"
-	item_state = "esniper"
+	inhand_icon_state = null
+	worn_icon_state = null
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	force = 15
@@ -64,7 +65,8 @@
 
 	//ZOOMING
 	var/zoom_current_view_increase = 0
-	var/zoom_target_view_increase = 10
+	///The radius you want to zoom by
+	var/zoom_target_view_increase = 9.5
 	var/zooming = FALSE
 	var/zoom_lock = ZOOM_LOCK_OFF
 	var/zooming_angle
@@ -120,7 +122,7 @@
 /obj/item/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
 		return
-	current_user.client.change_view(world.view + zoom_target_view_increase)
+	current_user.client.view_size.setTo(zoom_target_view_increase)
 	zoom_current_view_increase = zoom_target_view_increase
 	set_autozoom_pixel_offsets_immediate(zooming_angle)
 
@@ -139,9 +141,8 @@
 		user = current_user
 	if(!user || !user.client)
 		return FALSE
-	animate(user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
+	user.client.view_size.zoomIn()
 	zoom_current_view_increase = 0
-	user.client.change_view(CONFIG_GET(string/default_view))
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0
@@ -180,7 +181,8 @@
 
 /obj/item/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
 	var/diff = abs(aiming_lastangle - lastangle)
-	check_user()
+	if(!check_user())
+		return
 	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
 		return
 	aiming_lastangle = lastangle
@@ -316,7 +318,7 @@
 		AC.sync_stats()
 
 /obj/item/gun/energy/beam_rifle/proc/delay_penalty(amount)
-	aiming_time_left = CLAMP(aiming_time_left + amount, 0, aiming_time)
+	aiming_time_left = clamp(aiming_time_left + amount, 0, aiming_time)
 
 /obj/item/ammo_casing/energy/beam_rifle
 	name = "particle acceleration lens"
@@ -367,11 +369,11 @@
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
-	HS_BB.aoe_mob_range = CLAMP(aoe_mob_range, 0, 15)				//Badmin safety lock
+	HS_BB.aoe_mob_range = clamp(aoe_mob_range, 0, 15)				//Badmin safety lock
 	HS_BB.aoe_fire_chance = aoe_fire_chance
 	HS_BB.aoe_fire_range = aoe_fire_range
 	HS_BB.aoe_structure_damage = aoe_structure_damage
-	HS_BB.aoe_structure_range = CLAMP(aoe_structure_range, 0, 15)	//Badmin safety lock
+	HS_BB.aoe_structure_range = clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
@@ -445,8 +447,6 @@
 			new /obj/effect/hotspot(T)
 	for(var/obj/O in range(aoe_structure_range, epicenter))
 		if(!isitem(O))
-			if(O.level == 1)	//Please don't break underfloor items!
-				continue
 			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, "laser", FALSE)
 
 /obj/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
@@ -461,9 +461,9 @@
 					var/turf/closed/wall/W = target
 					W.dismantle_wall(TRUE, TRUE)
 				else
-					target.ex_act(EXPLODE_HEAVY)
+					SSexplosions.medturf += target
 			return TRUE
-	if(ismovableatom(target))
+	if(ismovable(target))
 		var/atom/movable/AM = target
 		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
 			if(structure_pierce < structure_pierce_amount)

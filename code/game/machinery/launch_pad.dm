@@ -81,7 +81,7 @@
 	ghost.forceMove(target)
 
 /obj/machinery/launchpad/proc/isAvailable()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return FALSE
 	if(panel_open)
 		return FALSE
@@ -102,9 +102,9 @@
 	if(teleporting)
 		return
 	if(!isnull(x))
-		x_offset = CLAMP(x, -range, range)
+		x_offset = clamp(x, -range, range)
 	if(!isnull(y))
-		y_offset = CLAMP(y, -range, range)
+		y_offset = clamp(y, -range, range)
 	update_indicator()
 
 /obj/machinery/launchpad/proc/doteleport(mob/user, sending)
@@ -321,13 +321,15 @@
 	ui_interact(user)
 	to_chat(user, "<span class='notice'>[src] projects a display onto your retina.</span>")
 
-/obj/item/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 300, 240, master_ui, state) //width, height
-		ui.set_style("syndicate")
-		ui.open()
 
+/obj/item/launchpad_remote/ui_state(mob/user)
+	return GLOB.inventory_state
+
+/obj/item/launchpad_remote/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "LaunchpadRemote")
+		ui.open()
 	ui.set_autoupdate(TRUE)
 
 /obj/item/launchpad_remote/ui_data(mob/user)

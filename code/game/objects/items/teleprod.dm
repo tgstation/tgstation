@@ -3,7 +3,7 @@
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "teleprod"
-	item_state = "teleprod"
+	inhand_icon_state = "teleprod"
 	slot_flags = null
 
 /obj/item/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
@@ -13,12 +13,12 @@
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))//honk honk
 			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-			user.Paralyze(stunforce*3)
-			deductcharge(hitcost)
+			user.Paralyze(stun_time*3)
+			deductcharge(cell_hit_cost)
 		else
 			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-			user.Paralyze(stunforce*3)
-			deductcharge(hitcost/4)
+			user.Paralyze(stun_time*3)
+			deductcharge(cell_hit_cost/4)
 		return
 	else
 		if(turned_on)

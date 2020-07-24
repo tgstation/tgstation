@@ -164,10 +164,10 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
 	var/list/boxed = list(
-		/obj/item/autosurgeon/thermal_eyes,
-		/obj/item/autosurgeon/xray_eyes,
-		/obj/item/autosurgeon/anti_stun,
-		/obj/item/autosurgeon/reviver)
+		/obj/item/autosurgeon/syndicate/thermal_eyes,
+		/obj/item/autosurgeon/syndicate/xray_eyes,
+		/obj/item/autosurgeon/syndicate/anti_stun,
+		/obj/item/autosurgeon/syndicate/reviver)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

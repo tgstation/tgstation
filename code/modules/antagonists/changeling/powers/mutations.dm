@@ -150,7 +150,7 @@
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
 	icon = 'icons/obj/changeling_items.dmi'
 	icon_state = "arm_blade"
-	item_state = "arm_blade"
+	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
@@ -160,8 +160,10 @@
 	throw_range = 0
 	throw_speed = 0
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
+	wound_bonus = -60
+	bare_wound_bonus = 20
 	var/can_drop = FALSE
 	var/fake = FALSE
 
@@ -234,7 +236,7 @@
 	desc = "A fleshy tentacle that can stretch out and grab things or people."
 	icon = 'icons/obj/changeling_items.dmi'
 	icon_state = "tentacle"
-	item_state = "tentacle"
+	inhand_icon_state = "tentacle"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
@@ -476,6 +478,8 @@
 	clothing_flags = STOPSPRESSUREDAMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/oxygen)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90) //No armor at all.
+	actions_types = list()
+	cell = null
 
 /obj/item/clothing/suit/space/changeling/Initialize()
 	. = ..()
@@ -484,10 +488,15 @@
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
 
+// seal the cell door
+/obj/item/clothing/suit/space/changeling/toggle_spacesuit_cell(mob/user)
+	return
+
 /obj/item/clothing/suit/space/changeling/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM)
+		H.adjust_bodytemperature(temperature_setting - H.bodytemperature) // force changelings to normal temp step mode played badly
 
 /obj/item/clothing/head/helmet/space/changeling
 	name = "flesh mass"

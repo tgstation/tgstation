@@ -34,28 +34,70 @@
 	healable = 0
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 50
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 15 // reduced from 30 to 15 with wounds since they get big buffs to slicing wounds
+	melee_damage_upper = 15
+	wound_bonus = -10
+	bare_wound_bonus = 0
+	sharpness = TRUE
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	bloodcrawl = BLOODCRAWL_EAT
 	var/playstyle_string = "<span class='big bold'>You are a slaughter demon,</span><B> a terrible creature from another realm. You have a single desire: To kill. \
 							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and disappearing from the station at will. \
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
-							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
+							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. \
+							You gain strength the more attacks you land on live humanoids, though this resets when you return to the blood zone. You can also \
+							launch a devastating slam attack with ctrl+shift+click, capable of smashing bones in one strike.</B>"
 
 	loot = list(/obj/effect/decal/cleanable/blood, \
 				/obj/effect/decal/cleanable/blood/innards, \
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
 	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
+	/// How long it takes for the alt-click slam attack to come off cooldown
+	var/slam_cooldown_time = 45 SECONDS
+	/// The actual instance var for the cooldown
+	var/slam_cooldown = 0
+	/// How many times we have hit humanoid targets since we last bloodcrawled, scaling wounding power
+	var/current_hitstreak = 0
+	/// How much both our wound_bonus and bare_wound_bonus go up per hitstreak hit
+	var/wound_bonus_per_hit = 5
+	/// How much our wound_bonus hitstreak bonus caps at (peak demonry)
+	var/wound_bonus_hitstreak_max = 12
 
 /mob/living/simple_animal/slaughter/Initialize()
 	..()
+	ADD_TRAIT(src, TRAIT_BLOODCRAWL_EAT, "innate")
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
 		bloodspell.phased = TRUE
+
+/mob/living/simple_animal/slaughter/CtrlShiftClickOn(atom/A)
+	if(!isliving(A))
+		return ..()
+	if(slam_cooldown + slam_cooldown_time > world.time)
+		to_chat(src, "<span class='warning'>Your slam ability is still on cooldown!</span>")
+		return
+
+	face_atom(A)
+	var/mob/living/victim = A
+	victim.take_bodypart_damage(brute=20, wound_bonus=wound_bonus) // don't worry, there's more punishment when they hit something
+	visible_message("<span class='danger'>[src] slams into [victim] with monstrous strength!</span>", "<span class='danger'>You slam into [victim] with monstrous strength!</span>", ignored_mobs=victim)
+	to_chat(victim, "<span class='userdanger'>[src] slams into you with monstrous strength, sending you flying like a ragdoll!</span>")
+	var/turf/yeet_target = get_edge_target_turf(victim, dir)
+	victim.throw_at(yeet_target, 10, 5, src)
+	slam_cooldown = world.time
+	log_combat(src, victim, "slaughter slammed")
+
+/mob/living/simple_animal/slaughter/UnarmedAttack(atom/A, proximity)
+	if(iscarbon(A))
+		var/mob/living/carbon/target = A
+		if(target.stat != DEAD && target.mind && current_hitstreak < wound_bonus_hitstreak_max)
+			current_hitstreak++
+			wound_bonus += wound_bonus_per_hit
+			bare_wound_bonus += wound_bonus_per_hit
+
+	return ..()
 
 /obj/effect/decal/cleanable/blood/innards
 	name = "pile of viscera"
@@ -67,9 +109,8 @@
 
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()
-	add_movespeed_modifier(MOVESPEED_ID_SLAUGHTER, update=TRUE, priority=100, multiplicative_slowdown=-1)
-	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, MOVESPEED_ID_SLAUGHTER, TRUE), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
-
+	add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
+	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
 /obj/item/organ/heart/demon
@@ -79,8 +120,9 @@
 	icon_state = "demon_heart-on"
 	decay_factor = 0
 
-/obj/item/organ/heart/demon/update_icon()
-	return //always beating visually
+/obj/item/organ/heart/demon/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
@@ -149,6 +191,11 @@
 	them; but don't worry! When you die, everyone you hugged will be \
 	released and fully healed, because in the end it's just a jape, \
 	sibling!</B>"
+
+/mob/living/simple_animal/slaughter/laughter/Initialize()
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		icon_state = "honkmon"
 
 /mob/living/simple_animal/slaughter/laughter/Destroy()
 	release_friends()

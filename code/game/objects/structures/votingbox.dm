@@ -1,6 +1,9 @@
+#define VOTE_TEXT_LIMIT 255
+#define MAX_VOTES 255
+
 /obj/structure/votebox
 	name = "voting box"
-	desc = "A automatic voting box."
+	desc = "An automatic voting box."
 
 	icon = 'icons/obj/votebox.dmi'
 	icon_state = "votebox_maint"
@@ -32,7 +35,7 @@
 	..()
 	ui_interact(user)
 
-/obj/structure/votebox/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
+/obj/structure/votebox/ui_interact(mob/user)
 	. = ..()
 
 	var/list/dat = list()
@@ -110,6 +113,11 @@
 		voted += voter_card
 		to_chat(user,"<span class='notice'>You cast your vote.</span>")
 
+/obj/structure/votebox/proc/valid_vote(obj/item/paper/I)
+	if(length_char(I.info) > VOTE_TEXT_LIMIT || findtext(I.info,"<h1>Voting Results:</h1><hr><ol>"))
+		return FALSE
+	return TRUE
+
 /obj/structure/votebox/proc/shred(mob/user)
 	for(var/obj/item/paper/P in contents)
 		qdel(P)
@@ -151,8 +159,13 @@
 
 /obj/structure/votebox/proc/print_tally(mob/user)
 	var/list/results = list()
+	var/i = 0
 	for(var/obj/item/paper/P in contents)
+		if(i++ > MAX_VOTES)
+			break
 		var/text = P.info
+		if(!valid_vote(P))
+			continue
 		if(!results[text])
 			results[text] = 1
 		else
@@ -161,34 +174,38 @@
 
 	var/obj/item/paper/P = new(drop_location())
 	var/list/tally = list()
+	tally += {"
+		<style>
+			.vote_box_content{
+				max-width:250px;
+				display:inline-block;
+				overflow:hidden;
+				text-overflow:ellipsis;
+				white-space:nowrap;
+				vertical-align:bottom
+			}
+			.vote_box_content br {
+				display: none;
+			}
+			.vote_box_content hr {
+				display: none;
+			}
+		</style>
+		"}
+
 	tally += "<h1>Voting Results:</h1><hr><ol>"
 	for(var/option in results)
-		tally += "<li>\"<div class='content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
+		tally += "<li>\"<div class='vote_box_content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
 	tally += "</ol>"
-	P.extra_headers = {"
-	<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
-	<style>
-		.content{
-			max-width:250px;
-			display:inline-block;
-			overflow:hidden;
-			text-overflow:ellipsis;
-			white-space:nowrap;
-			vertical-align:bottom
-		}
-		.content br {
-			display: none;
-		}
-		.content hr {
-			display: none;
-		}
-	</style>"}
+
 	P.info = tally.Join()
 	P.name = "Voting Results"
 	P.update_icon()
 	user.put_in_hands(P)
 	to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
 
-/obj/structure/votebox/update_icon()
-	. = ..()
+/obj/structure/votebox/update_icon_state()
 	icon_state = "votebox_[voting_active ? "active" : "maint"]"
+
+#undef VOTE_TEXT_LIMIT
+#undef MAX_VOTES

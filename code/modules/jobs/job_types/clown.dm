@@ -1,13 +1,11 @@
 /datum/job/clown
 	title = "Clown"
-	flag = CLOWN
 	department_head = list("Head of Personnel")
-	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
-	selection_color = "#dddddd"
+	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/clown
 
@@ -47,7 +45,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/clown //strangely has a duffel
 
 	box = /obj/item/storage/box/hug/survival
-	
+
 	chameleon_extras = /obj/item/stamp/clown
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -56,6 +54,9 @@
 		return
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
+	ADD_TRAIT(H, TRAIT_NAIVE, JOB_TRAIT)
 	H.dna.add_mutation(CLOWNMUT)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE
+	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
+	fan.add_hud_to(H)

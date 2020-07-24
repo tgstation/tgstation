@@ -9,6 +9,8 @@
 #define TEXT_EAST			"[EAST]"
 #define TEXT_WEST			"[WEST]"
 
+/// Inverse direction, taking into account UP|DOWN if necessary.
+#define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			28		//mutations. Tk headglows, cold resistance glow, etc
@@ -113,6 +115,16 @@
 #define FACING_EACHOTHER										2
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR	3 //Do I win the most informative but also most stupid define award?
 
+//stages of shoe tying-ness
+#define SHOES_UNTIED 0
+#define SHOES_TIED 1
+#define SHOES_KNOTTED 2
+
+//how fast a disposal machinery thing is ejecting things
+#define EJECT_SPEED_SLOW 	1
+#define EJECT_SPEED_MED		2
+#define EJECT_SPEED_FAST	4
+#define EJECT_SPEED_YEET	6
 
 //Cache of bloody footprint images
 //Key:
@@ -262,14 +274,11 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
-// Defib stats
-#define DEFIB_TIME_LIMIT 900
-#define DEFIB_TIME_LOSS 60
-
 // Diagonal movement
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
 
+#define DEADCHAT_ANNOUNCEMENT "announcement"
 #define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
 #define DEADCHAT_DEATHRATTLE "deathrattle"
 #define DEADCHAT_LAWCHANGE "lawchange"
@@ -327,6 +336,8 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define CLOCK_SILICONS 22
 #define CLOCK_PROSELYTIZATION 23
 #define SHUTTLE_HIJACK 24
+#define GANG_DESTROYED 25
+#define GANG_OPERATING 26
 
 #define FIELD_TURF 1
 #define FIELD_EDGE 2
@@ -399,6 +410,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define BOOMER_FILE "boomer.json"
 #define LOCATIONS_FILE "locations.json"
 #define WANTED_FILE "wanted_message.json"
+#define VISTA_FILE "steve.json"
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
@@ -473,3 +485,26 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define FALL_INTERCEPTED		(1<<0) //Stops the movable from falling further and crashing on the ground
 #define FALL_NO_MESSAGE			(1<<1) //Used to suppress the "[A] falls through [old_turf]" messages where it'd make little sense at all, like going downstairs.
 #define FALL_STOP_INTERCEPTING	(1<<2) //Used in situations where halting the whole "intercept" loop would be better, like supermatter dusting (and thus deleting) the atom.
+
+//Religion
+
+#define HOLY_ROLE_PRIEST 1 //default priestly role
+#define HOLY_ROLE_HIGHPRIEST 2 //the one who designates the religion
+
+#define ALIGNMENT_GOOD "good"
+#define ALIGNMENT_NEUT "neutral"
+#define ALIGNMENT_EVIL "evil"
+
+
+// Play time / EXP
+#define PLAYTIME_HARDCORE_RANDOM 120
+#define PLAYTIME_VETERAN 300000 //Playtime is tracked in minutes. 300,000 minutes = 5,000 hours
+
+// The alpha we give to stuff under tiles, if they want it
+#define ALPHA_UNDERTILE 128
+
+// Anonymous names defines (used in the secrets panel)
+
+#define ANON_DISABLED "" //so it's falsey
+#define ANON_RANDOMNAMES "Random Default"
+#define ANON_EMPLOYEENAMES "Employees"

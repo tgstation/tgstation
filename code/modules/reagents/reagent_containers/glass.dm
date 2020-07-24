@@ -4,7 +4,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	reagent_flags = OPENCONTAINER
+	reagent_flags = OPENCONTAINER | DUNKABLE
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
@@ -32,19 +32,19 @@
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
 				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
-			reagents.reaction(M, TOUCH)
+			reagents.expose(M, TOUCH)
 			log_combat(user, M, "splashed", R)
 			reagents.clear_reagents()
 		else
 			if(M != user)
-				M.visible_message("<span class='danger'>[user] attempts to feed [M] something.</span>", \
-							"<span class='userdanger'>[user] attempts to feed you something.</span>")
+				M.visible_message("<span class='danger'>[user] attempts to feed [M] something from [src].</span>", \
+							"<span class='userdanger'>[user] attempts to feed you something from [src].</span>")
 				if(!do_mob(user, M))
 					return
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
-				M.visible_message("<span class='danger'>[user] feeds [M] something.</span>", \
-							"<span class='userdanger'>[user] feeds you something.</span>")
+				M.visible_message("<span class='danger'>[user] feeds [M] something from [src].</span>", \
+							"<span class='userdanger'>[user] feeds you something from [src].</span>")
 				log_combat(user, M, "fed", reagents.log_list())
 			else
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
@@ -87,7 +87,7 @@
 		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
-			reagents.reaction(target, TOUCH)
+			reagents.expose(target, TOUCH)
 			reagents.clear_reagents()
 
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
@@ -108,13 +108,20 @@
 			return
 	..()
 
+/* 
+ * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
+ */
+/obj/item/reagent_containers/glass/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	if(!custom_materials)
+		custom_materials = list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5) //sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
+	return ..()
 
 /obj/item/reagent_containers/glass/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
-	item_state = "beaker"
+	inhand_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=500)
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 
@@ -144,15 +151,11 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
+	fill_icon_state = "beakerlarge"
 	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
-
-/obj/item/reagent_containers/glass/beaker/plastic/update_icon()
-	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
-	..()
-	icon_state = "beakerwhite"
 
 /obj/item/reagent_containers/glass/beaker/meta
 	name = "metamaterial beaker"
@@ -196,29 +199,29 @@
 
 /obj/item/reagent_containers/glass/beaker/large/libital
 	name = "libital reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/c2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/aiuri
 	name = "aiuri reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/multiver
 	name = "multiver reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/c2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
 /obj/item/reagent_containers/glass/beaker/instabitaluri
-	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 50)
+	list_reagents = list(/datum/reagent/medicine/c2/instabitaluri = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
 	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "bucket"
-	item_state = "bucket"
+	inhand_icon_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	custom_materials = list(/datum/material/iron=200)
@@ -244,8 +247,8 @@
 /obj/item/reagent_containers/glass/bucket/wooden
 	name = "wooden bucket"
 	icon_state = "woodbucket"
-	item_state = "woodbucket"
-	custom_materials = null
+	inhand_icon_state = "woodbucket"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
 	resistance_flags = FLAMMABLE
 
@@ -270,7 +273,7 @@
 	if (slot == ITEM_SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
-			reagents.reaction(user, TOUCH)
+			reagents.expose(user, TOUCH)
 			reagents.clear_reagents()
 		reagents.flags = NONE
 
@@ -290,6 +293,7 @@
 /obj/item/pestle
 	name = "pestle"
 	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
@@ -301,6 +305,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
 	volume = 100
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	var/obj/item/grinded
