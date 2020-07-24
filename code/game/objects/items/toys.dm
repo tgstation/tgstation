@@ -172,7 +172,7 @@
 	
 /obj/item/toy/balloon/arrest
 	name = "arreyst balloon"
-	desc = "A half inflated balloon about a boyband that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
+	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
 	icon_state = "arrestballoon"
 	inhand_icon_state = "arrestballoon"
 	random_color = FALSE
