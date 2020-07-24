@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - tweak: "AIs disconnecting from a shell will be left looking at the shell rather than their core."
