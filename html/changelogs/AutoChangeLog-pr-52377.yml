@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Anyone with an antag datum now is shown as an antag to admin features like (?|F)"
