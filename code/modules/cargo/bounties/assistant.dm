@@ -209,3 +209,10 @@
 	required_count = 10
 	include_subtypes = FALSE
 	wanted_types = list(/obj/item/pen)
+
+/datum/bounty/item/assistant/soap
+	name = "Soap"
+	description = "We just had a [REDACTED] incident and there is now [REDACTED] everywhere. We will need some soap to clean up the mess."
+	reward = 5000
+	required_count = 4
+	wanted_types = list(/obj/item/soap) //if you use omegasoap for this you have my eternal respect
