@@ -303,7 +303,7 @@
 		return FALSE
 	if(!istype(M))
 		return FALSE
-	if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
+	if(iscyborg(M)) //as a borg you're now beholden to your laws rather than greentext
 		return FALSE
 	if(isAI(M))
 		var/mob/living/silicon/ai/A = M
