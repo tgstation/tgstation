@@ -63,7 +63,7 @@
 		if(incapacitated())
 			return
 
-		//while buckled you can still connect control things, but you can't use your robot arms
+		//while buckled, you can still connect to and control things like doors, but you can't use your modules
 		if(buckled)
 			to_chat(src, "<span class='warning'>You can't use modules while buckled to [buckled]!</span>")
 			return
