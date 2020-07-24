@@ -93,21 +93,25 @@
 		return ..()
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, repairable_by) || damaged_clothes == CLOTHING_PRISTINE)
+	if(!istype(W, repairable_by))
 		return ..()
 
-	var/obj/item/stack/S = W
-	if(damaged_clothes == CLOTHING_DAMAGED)
-		S.use(1)
-		repair(user, params)
-		return TRUE
-
-	if(damaged_clothes == CLOTHING_SHREDDED)
-		if(S.amount < 3)
-			to_chat(user, "<span class='warning'>You require 3 [S.name] to repair [src].</span>")
+	switch(damaged_clothes)
+		if(CLOTHING_PRISTINE)
+			return..()
+		if(CLOTHING_DAMAGED)
+			var/obj/item/stack/cloth_repair = W
+			cloth_repair.user(1)
+			repair(user, params)
 			return TRUE
-		to_chat(user, "<span class='notice'>You begin fixing the damage to [src] with [S]...</span>")
-		if(do_after(user, 6 SECONDS, TRUE, src) && S.use(3))
+		if(CLOTHING_SHREDDED)
+			var/obj/item/stack/cloth_repair = W
+			if(cloth_repair.amount < 3)
+				to_chat(user, "<span class='warning'>You require 3 [cloth_repair.name] to repair [src].</span>")
+				return TRUE
+			to_chat(user, "<span class='notice'>You begin fixing the damage to [src] with [cloth_repair]...</span>")
+			if(!do_after(user, 6 SECONDS, TRUE, src) || !cloth_repair.use(3))
+				return TRUE
 			repair(user, params)
 			return TRUE
 
