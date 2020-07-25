@@ -86,9 +86,9 @@
 	if(popper.mob_size < MOB_SIZE_HUMAN)
 		return
 
-	playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
+	playsound(src, 'sound/effects/pop.ogg', 90, FALSE)
 	popper.visible_message("<span class='danger'>[popper] steps on \the [src], popping the bag!</span>", "<span class='danger'>You step on \the [src], popping the bag!</span>", "<span class='danger'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE)
-	generate_trash(src.loc)
+	generate_trash(loc)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/no_raisin
