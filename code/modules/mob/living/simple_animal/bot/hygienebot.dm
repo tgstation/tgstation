@@ -214,7 +214,7 @@ Status: ["<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>"]<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel is [open ? "opened" : "closed"]"}
 
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += {"<BR> Auto Patrol: ["<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>"]"}
 
 	return	dat.Join("")
@@ -232,8 +232,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 
 /mob/living/simple_animal/bot/hygienebot/proc/do_wash(atom/A)
 	if(emagged)
-		A.fire_act()
-		return //lol pranked no cleaning besides that
+		A.fire_act()  //lol pranked no cleaning besides that
 	else
 		A.washed(src)
 

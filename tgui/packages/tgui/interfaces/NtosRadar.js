@@ -1,12 +1,15 @@
-import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
 import { classes } from 'common/react';
-import { Box, Button, LabeledList, NoticeBox, Section, Table, Flex, Icon } from '../components';
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Icon, NoticeBox, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosRadar = (props, context) => {
   return (
-    <NtosWindow theme="ntos">
+    <NtosWindow
+      width={800}
+      height={600}
+      theme="ntos">
       <NtosRadarContent />
     </NtosWindow>
   );
@@ -20,9 +23,8 @@ export const NtosRadarContent = (props, context) => {
     target = [],
     scanning,
   } = data;
-
   return (
-    <Flex 
+    <Flex
       direction={"row"}
       hight="100%">
       <Flex.Item
@@ -67,7 +69,9 @@ export const NtosRadarContent = (props, context) => {
       </Flex.Item>
       <Flex.Item
         style={{
-          'background-image': 'url("ntosradarbackground.png")',
+          'background-image': 'url("'
+            + resolveAsset('ntosradarbackground.png')
+            + '")',
           'background-position': 'center',
           'background-repeat': 'no-repeat',
           'top': '20px',
@@ -90,23 +94,21 @@ export const NtosRadarContent = (props, context) => {
           )
           : !!target.userot && (
             <Box as="img"
-              src={target.arrowstyle}
+              src={resolveAsset(target.arrowstyle)}
               position="absolute"
               top="20px"
               left="243px"
               style={{
                 'transform': `rotate(${target.rot}deg)`,
-              }}
-            />
+              }} />
           ) || (
             <Icon
               name={target.pointer}
               position="absolute"
               size={2}
               color={target.color}
-              top={((target.locy * 10) + 29) + 'px'}
-              left={((target.locx * 10) + 16) + 'px'}
-            />
+              top={((target.locy * 10) + 19) + 'px'}
+              left={((target.locx * 10) + 16) + 'px'} />
           )}
       </Flex.Item>
     </Flex>

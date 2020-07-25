@@ -24,7 +24,7 @@
 	new /obj/item/pipe_dispenser(src)
 	new /obj/item/circuitboard/machine/techfab/department/engineering(src)
 	new /obj/item/extinguisher/advanced(src)
-	new /obj/item/storage/photo_album/CE(src)
+	new /obj/item/storage/photo_album/ce(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"

@@ -13,7 +13,7 @@
 	var/obj/item/reagent_containers/spray/cleaner/myspray
 	var/obj/item/lightreplacer/myreplacer
 	var/signs = 0
-	var/const/max_signs = 4
+	var/max_signs = 4
 
 
 /obj/structure/janitorialcart/Initialize()
@@ -88,7 +88,7 @@
 		user.visible_message("<span class='notice'>[user] begins to empty the contents of [src].</span>", "<span class='notice'>You begin to empty the contents of [src]...</span>")
 		if(I.use_tool(src, user, 30))
 			to_chat(usr, "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>")
-			reagents.reaction(src.loc)
+			reagents.expose(src.loc)
 			src.reagents.clear_reagents()
 	else
 		return ..()

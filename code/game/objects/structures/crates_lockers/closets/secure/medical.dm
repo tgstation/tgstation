@@ -66,12 +66,12 @@
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/clothing/glasses/blindfold(src)
 
-/obj/structure/closet/secure_closet/CMO
+/obj/structure/closet/secure_closet/chief_medical
 	name = "\proper chief medical officer's locker"
 	req_access = list(ACCESS_CMO)
 	icon_state = "cmo"
 
-/obj/structure/closet/secure_closet/CMO/PopulateContents()
+/obj/structure/closet/secure_closet/chief_medical/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/cmo(src)
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
@@ -87,14 +87,14 @@
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/healthanalyzer/advanced(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/reagent_containers/hypospray/CMO(src)
+	new /obj/item/reagent_containers/hypospray/cmo(src)
 	new /obj/item/autosurgeon/cmo(src)
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/wallframe/defib_mount(src)
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
-	new /obj/item/storage/photo_album/CMO(src)
+	new /obj/item/storage/photo_album/cmo(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"

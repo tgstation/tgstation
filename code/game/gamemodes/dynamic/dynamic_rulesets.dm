@@ -95,16 +95,16 @@
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
-	if(minimum_players > population)
-		return FALSE
-	if(maximum_players > 0 && population > maximum_players)
-		return FALSE
-
 	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
 	if(antag_cap.len && requirements.len != antag_cap.len)
 		message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 		log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+
+	if(minimum_players > population)
+		return FALSE
+	if(maximum_players > 0 && population > maximum_players)
+		return FALSE
 	return (threat_level >= requirements[indice_pop])
 
 /// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the additional threat from scaling up.
@@ -198,21 +198,16 @@
 	for(var/mob/dead/new_player/P in candidates)
 		if (!P.client || !P.mind) // Are they connected?
 			candidates.Remove(P)
-			continue
-		if(!mode.check_age(P.client, minimum_required_age))
+		else if(!mode.check_age(P.client, minimum_required_age))
 			candidates.Remove(P)
-			continue
-		if(P.mind.special_role) // We really don't want to give antag to an antag.
+		else if(P.mind.special_role) // We really don't want to give antag to an antag.
 			candidates.Remove(P)
-			continue
-		if(antag_flag_override)
+		else if(antag_flag_override)
 			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
 				candidates.Remove(P)
-				continue
 		else
 			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				candidates.Remove(P)
-				continue
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE

@@ -65,7 +65,7 @@
 /obj/item/melee/cultblade/dagger,
 /obj/effect/step_trigger/sound_effect{
 	happens_once = 1;
-	name = "a grave mistake";
+	name = "\proper a grave mistake";
 	sound = 'sound/hallucinations/i_see_you1.ogg';
 	triggerer_only = 1
 	},

@@ -29,7 +29,22 @@
 	add()
 	if(spawn_effects)
 		on_spawn()
-		addtimer(CALLBACK(src, .proc/post_add), 30)
+	if(quirk_holder.client)
+		post_add()
+	else
+		RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, .proc/on_quirk_holder_first_login)
+
+
+/**
+  * On client connection set quirk preferences.
+  *
+  * Run post_add to set the client preferences for the quirk.
+  * Clear the attached signal for login.
+  * Used when the quirk has been gained and no client is attached to the mob.
+  */
+/datum/quirk/proc/on_quirk_holder_first_login(mob/living/source)
+		UnregisterSignal(source, COMSIG_MOB_LOGIN)
+		post_add()
 
 /datum/quirk/Destroy()
 	STOP_PROCESSING(SSquirks, src)
@@ -67,15 +82,20 @@
 		return
 	on_process()
 
-/mob/living/proc/get_trait_string(medical, category) //helper string. gets a string of all the traits the mob has
+/**
+  * get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria
+  *
+  * Arguments:
+  * * Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name
+  * * Category- Which types of quirks we want to print out. Defaults to everything
+  */
+/mob/living/proc/get_quirk_string(medical, category = CAT_QUIRK_ALL) //helper string. gets a string of all the quirks the mob has
 	var/list/dat = list()
 	switch(category)
 		if(CAT_QUIRK_ALL)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
 				dat += medical ? T.medical_record_text : T.name
-				if(!dat.len)
-					return "None"
 		//Major Disabilities
 		if(CAT_QUIRK_MAJOR_DISABILITY)
 			for(var/V in roundstart_quirks)

@@ -152,7 +152,7 @@ mob
 		add_overlay(I)
 
 		// Testing object types (and layers)
-		add_overlay(/obj/effect/overlayTest)
+		add_overlay(/obj/effect/overlay_test)
 
 		loc = locate (10,10,1)
 	verb
@@ -199,7 +199,7 @@ mob
 				getFlatIcon(src)
 			Browse_Icon()
 
-/obj/effect/overlayTest
+/obj/effect/overlay_test
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
 	pixel_x = -24
@@ -714,7 +714,7 @@ world
 /// Only the first argument is required.
 /proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	//Define... defines.
-	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
+	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
 
 	#define BLANK icon(flat_template)
 	#define SET_SELF(SETVAR) do { \

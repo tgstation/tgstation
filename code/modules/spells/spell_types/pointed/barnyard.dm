@@ -8,7 +8,7 @@
 	clothes_req = FALSE
 	stat_allowed = FALSE
 	invocation = "KN'A FTAGHU, PUCK 'BTHNK!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 7
 	cooldown_min = 30
 	ranged_mousepointer = 'icons/effects/mouse_pointers/barn_target.dmi'
