@@ -83,3 +83,10 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 	popup.open(FALSE)
 
 #endif
+
+#ifdef LEGACY_REFERENCE_TRACKING
+
+/datum/proc/find_references(skip_alert)
+	return
+
+#endif

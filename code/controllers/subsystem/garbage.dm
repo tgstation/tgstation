@@ -24,6 +24,9 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
+	#ifdef LEGACY_REFERENCE_TRACKING
+	var/list/reference_find_on_fail = list()
+	#endif
 
 
 /datum/controller/subsystem/garbage/PreInit()
@@ -131,7 +134,9 @@ SUBSYSTEM_DEF(garbage)
 		if (!D || D.gc_destroyed != GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			++gcedlasttick
 			++totalgcs
+			#ifdef LEGACY_REFERENCE_TRACKING
 			pass_counts[level]++
+			#endif
 			if (MC_TICK_CHECK)
 				return
 			continue
@@ -142,6 +147,14 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
 				D.find_references()
+				#elif defined(LEGACY_REFERENCE_TRACKING)
+				if(reference_find_on_fail[refID])
+					D.find_references_legacy()
+				#ifdef GC_FAILURE_HARD_LOOKUP
+				else
+					D.find_references_legacy()
+				#endif
+				reference_find_on_fail -= refID
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
@@ -295,6 +308,14 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.Queue(D, GC_QUEUE_HARDDELETE)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
 				SSgarbage.HardDelete(D)
+			#ifdef LEGACY_REFERENCE_TRACKING
+			if (QDEL_HINT_FINDREFERENCE) //qdel will, if LEGACY_REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
+				SSgarbage.Queue(D)
+				D.find_references_legacy()
+			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
+				SSgarbage.Queue(D)
+				SSgarbage.reference_find_on_fail[REF(D)] = TRUE
+			#endif
 			else
 				#ifdef TESTING
 				if(!I.no_hint)
