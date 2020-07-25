@@ -395,7 +395,7 @@
 		/obj/item/stack/sheet/glass/fifty=1,\
 		/obj/item/stack/sheet/plasteel/twenty=1,\
 		/obj/item/etherealballdeployer=1,\
-		/obj/item/stack/light_w=30,\
+		/obj/item/stack/light_w/thirty=1,\
 		/obj/item/construction/rcd/loaded=1)
 
 /datum/outfit/centcom/ert/clown/party

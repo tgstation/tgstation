@@ -233,7 +233,7 @@
 	if(del_on_fail)
 		qdel(I)
 		return FALSE
-	I.forceMove(drop_location(), step_x, step_y)
+	I.forceMove(drop_location())
 	I.layer = initial(I.layer)
 	I.plane = initial(I.plane)
 	I.dropped(src)

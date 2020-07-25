@@ -1408,7 +1408,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.w_uniform.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 
-		var/turf/target_oldturf = target.loc
 		var/shove_dir = get_pixeldir(user, target)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/target_collateral_human
@@ -1418,17 +1417,20 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		//Thank you based whoneedsspace
 		target_collateral_human = locate(/mob/living/carbon/human) in target_shove_turf.contents
-		
+
 		if(target_collateral_human)
 			shove_blocked = TRUE
 			if(target_collateral_human == target)
 				shove_blocked = FALSE
 				target_collateral_human = null
 		if(!target_collateral_human)
-			target.Move(target_shove_turf, shove_dir)
-			if(get_turf(target) == target_oldturf)
-				target_table = locate(/obj/structure/table) in target_shove_turf.contents
-				target_disposal_bin = locate(/obj/machinery/disposal/bin) in target_shove_turf.contents
+			var/_step_x = target.step_x
+			var/_step_y = target.step_y
+			step(target, shove_dir, 16) // jumpstart the movement so we can check if its gonna fail
+			walk_to(target, target_shove_turf, 0, 0, target.step_size)
+			if((shove_dir & (EAST|WEST) && _step_x == target.step_x) || (shove_dir & (NORTH | SOUTH) && _step_y == target.step_y))
+				target_table = locate(/obj/structure/table) in obounds(target)
+				target_disposal_bin = locate(/obj/machinery/disposal/bin) in obounds(target)
 				shove_blocked = TRUE
 
 		if(target.IsKnockdown() && !target.IsParalyzed())

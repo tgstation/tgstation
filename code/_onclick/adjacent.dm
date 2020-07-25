@@ -66,7 +66,7 @@
 	* Must be on a turf
 */
 /atom/movable/Adjacent(atom/neighbor)
-	if(neighbor == loc)
+	if(neighbor == loc || bounds_dist(src, neighbor) <= 32)
 		return TRUE
 	var/turf/T = loc
 	if(!istype(T))
