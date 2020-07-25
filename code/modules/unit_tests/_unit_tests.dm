@@ -27,6 +27,7 @@
 #include "subsystem_init.dm"
 #include "surgeries.dm"
 #include "timer_sanity.dm"
+#include "test_wounds.dm"
 #include "unit_test.dm"
 
 #undef TEST_ASSERT
