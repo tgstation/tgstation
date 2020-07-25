@@ -68,6 +68,11 @@
 		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen
 	)
 
+/obj/machinery/portable_atmospherics/canister/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 0, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	if(!allowed(user))
 		to_chat(user, "<span class='alert'>Error - Unauthorized User.</span>")
@@ -317,8 +322,8 @@
 	else if(pressure >= 10)
 		. += "can-0"
 
-/obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > (temperature_resistance * mode))
+/obj/machinery/portable_atmospherics/canister/proc/heated(datum/gas_mixture/mix, temperature, volume)
+	if(temperature > (temperature_resistance * mode))
 		take_damage(5, BURN, 0)
 
 

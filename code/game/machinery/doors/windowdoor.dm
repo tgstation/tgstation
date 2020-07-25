@@ -39,6 +39,8 @@
 
 /obj/machinery/door/window/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/heat_sensitive, T0C + (reinf ? 1600 : 800), null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
 	AddComponent(/datum/component/ntnet_interface)
 
 /obj/machinery/door/window/Destroy()
@@ -47,6 +49,8 @@
 	if(obj_integrity == 0)
 		playsound(src, "shatter", 70, TRUE)
 	electronics = null
+	var/turf/floor = get_turf(src)
+	floor.air_update_turf(1)
 	return ..()
 
 /obj/machinery/door/window/update_icon_state()
@@ -198,10 +202,8 @@
 /obj/machinery/door/window/narsie_act()
 	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
-/obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		take_damage(round(exposed_volume / 200), BURN, 0, 0)
-	..()
+/obj/machinery/door/window/proc/heated(datum/gas_mixture/mix, temperature, volume)
+	take_damage(round(volume / 200), BURN, 0, 0)
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !(obj_flags & EMAGGED))

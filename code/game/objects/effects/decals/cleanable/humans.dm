@@ -59,6 +59,9 @@
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
+	if(mapload)
+		return
+	AddComponent(/datum/component/rot/gibs)
 	if(already_rotting)
 		start_rotting(rename=FALSE)
 	else
@@ -68,7 +71,7 @@
 	if(rename)
 		name = "rotting [initial(name)]"
 		desc += " They smell terrible."
-	AddComponent(/datum/component/rot/gibs)
+	SEND_SIGNAL(src, COMSIG_START_MIASMA_GENERATION)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return

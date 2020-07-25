@@ -67,6 +67,8 @@
 /obj/structure/window/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
+	AddComponent(/datum/component/heat_sensitive, T0C + heat_resistance, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -326,11 +328,8 @@
 		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 		. += crack_overlay
 
-/obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-
-	if(exposed_temperature > (T0C + heat_resistance))
-		take_damage(round(exposed_volume / 100), BURN, 0, 0)
-	..()
+/obj/structure/window/proc/heated(datum/gas_mixture/mix, temperature, volume)
+	take_damage(round(volume / 100), BURN, 0, 0)
 
 /obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
@@ -464,6 +463,13 @@
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_NO_INSULATION
+
+/obj/structure/window/plasma/ComponentInitialize()
+	. = ..()
+	var/datum/component/bad = GetComponent(/datum/component/heat_sensitive)
+	if(!bad)
+		bad.RemoveComponent()
+	UnregisterSignal(src, COMSIG_HEAT_HOT)
 
 /obj/structure/window/plasma/spawnDebris(location)
 	. = list()

@@ -51,6 +51,12 @@
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
 
+/obj/machinery/firealarm/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, T0C + 200, BODYTEMP_COLD_DAMAGE_LIMIT)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	RegisterSignal(src, COMSIG_HEAT_COLD, .proc/heated)
+
 /obj/machinery/firealarm/Destroy()
 	LAZYREMOVE(myarea.firealarms, src)
 	return ..()
@@ -118,10 +124,9 @@
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 	playsound(src, "sparks", 50, TRUE)
 
-/obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !machine_stat)
+/obj/machinery/firealarm/proc/heated(datum/gas_mixture/mix)
+	if((last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !machine_stat)
 		alarm()
-	..()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
 	if(!is_operational() || (last_alarm+FIREALARM_COOLDOWN > world.time))

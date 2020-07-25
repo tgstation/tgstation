@@ -314,6 +314,11 @@
 				break_light_tube(1)
 	addtimer(CALLBACK(src, .proc/update, 0), 1)
 
+/obj/machinery/light/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 0, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
 	if(A)
@@ -748,10 +753,10 @@
 	var/area/A = get_area(src)
 	seton(A.lightswitch && A.power_light)
 
-// called when on fire
+// called when heated
 
-/obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
+/obj/machinery/light/proc/heated(datum/gas_mixture/mix, temperature, volume)
+	if(prob(max(0, temperature - 673)))   //0% at <400C, 100% at >500C
 		break_light_tube()
 
 // explode the light

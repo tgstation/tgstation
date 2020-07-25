@@ -95,6 +95,11 @@
 	addtimer(CALLBACK(src, .proc/Spread), delay_spread)
 	addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Start decaying the plant
 
+/obj/structure/glowshroom/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 300, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+
 /**
   * Causes glowshroom spreading across the floor/walls.
   */
@@ -203,9 +208,8 @@
 	if(damage_type == BURN && damage_amount)
 		playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+/obj/structure/glowshroom/proc/heated()
+	take_damage(5, BURN, 0, 0)
 
 /obj/structure/glowshroom/acid_act(acidpwr, acid_volume)
 	. = 1

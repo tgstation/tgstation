@@ -745,3 +745,19 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
+
+// rot component
+
+///to rot start_processing()
+#define COMSIG_START_MIASMA_GENERATION "rot_start"
+///to rot stop_processing()
+#define COMSIG_STOP_MIASMA_GENERATION "rot_stop"
+
+// heat sensitivity component
+
+//from /turf/open/temperature_expose(air, exposed_temperature, exposed_volume): (datum/component/heat_sensitivity)
+#define COMSIG_TURF_EXPOSE "turf_expose"
+//from /datum/component/heat_sensitive/proc/check_requirements(): (atom)
+#define COMSIG_HEAT_HOT "hot_expose"
+//from /datum/component/heat_sensitive/proc/check_requirements(): (atom)
+#define COMSIG_HEAT_COLD "cold_expose"

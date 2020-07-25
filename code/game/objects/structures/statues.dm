@@ -105,10 +105,10 @@
 	name = "statue of a scientist"
 	icon_state = "sci"
 
-/obj/structure/statue/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
+/obj/structure/statue/plasma/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 300, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/PlasmaBurn)
 
 /obj/structure/statue/plasma/bullet_act(obj/projectile/Proj)
 	var/burn = FALSE
@@ -134,10 +134,10 @@
 	else
 		return ..()
 
-/obj/structure/statue/plasma/proc/PlasmaBurn(exposed_temperature)
+/obj/structure/statue/plasma/proc/PlasmaBurn(datum/gas_mixture/mix, temperature, volume)
 	if(QDELETED(src))
 		return
-	atmos_spawn_air("plasma=[oreAmount*10];TEMP=[exposed_temperature]")
+	atmos_spawn_air("plasma=[oreAmount*10];TEMP=[temperature]")
 	deconstruct(FALSE)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)

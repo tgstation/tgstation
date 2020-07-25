@@ -214,11 +214,15 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = 0) //It's made of plasma. Of course it's flammable.
 	custom_materials = list(/datum/material/plasma=1000)
 
-/obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
-		visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
-		qdel(src)
+/obj/item/clothing/accessory/medal/plasma/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 300, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+
+/obj/item/clothing/accessory/medal/plasma/proc/heated(datum/gas_mixture/mix, temperature, volume)
+	atmos_spawn_air("plasma=20;TEMP=[temperature]")
+	visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
+	qdel(src)
 
 /obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"

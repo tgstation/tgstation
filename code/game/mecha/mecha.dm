@@ -149,6 +149,11 @@
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
 
+/obj/mecha/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, max_temperature, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+
 /obj/mecha/update_icon_state()
 	if(silicon_pilot && silicon_icon_state)
 		icon_state = silicon_icon_state

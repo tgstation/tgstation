@@ -27,6 +27,11 @@
 
 	add_initial_reagents()
 
+/obj/item/reagent_containers/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 0, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
@@ -132,8 +137,8 @@
 	reagents.expose_temperature(1000)
 	..()
 
-/obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	reagents.expose_temperature(exposed_temperature)
+/obj/item/reagent_containers/proc/heated(datum/gas_mixture/mix, temperature, volume)
+	reagents.expose_temperature(temperature)
 
 /obj/item/reagent_containers/on_reagent_change(changetype)
 	update_icon()

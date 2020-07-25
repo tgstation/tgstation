@@ -35,8 +35,7 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
-		LoadComponent(/datum/component/rot/corpse)
-
+		SEND_SIGNAL(src, COMSIG_START_MIASMA_GENERATION)
 	check_cremation()
 
 	//Updates the number of stored chemicals for powers

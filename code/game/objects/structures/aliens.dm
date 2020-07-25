@@ -142,6 +142,11 @@
 			if(3)
 				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 
+/obj/structure/alien/weeds/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 300, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+
 /obj/structure/alien/weeds/proc/expand()
 	var/turf/U = get_turf(src)
 	if(is_type_in_typecache(U, blacklisted_turfs))
@@ -158,9 +163,8 @@
 		new /obj/structure/alien/weeds(T)
 	return TRUE
 
-/obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+/obj/structure/alien/weeds/proc/heated()
+	take_damage(5, BURN, 0, 0)
 
 //Weed nodes
 /obj/structure/alien/weeds/node
@@ -228,6 +232,11 @@
 	proximity_monitor = new(src, status == GROWN ? 1 : 0)
 	if(status == BURST)
 		obj_integrity = integrity_failure * max_integrity
+
+/obj/structure/alien/egg/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 500, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
 
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
@@ -299,9 +308,8 @@
 		if(status != BURST)
 			Burst(kill=TRUE)
 
-/obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 500)
-		take_damage(5, BURN, 0, 0)
+/obj/structure/alien/egg/proc/heated()
+	take_damage(5, BURN, 0, 0)
 
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)

@@ -11,6 +11,11 @@
 	var/state
 	var/datum/gas_mixture/air_contents = null
 
+/obj/item/latexballon/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, T0C+100, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/burst)
+
 /obj/item/latexballon/proc/blow(obj/item/tank/tank, mob/user)
 	if (icon_state == "latexballon_bursted")
 		return
@@ -44,10 +49,6 @@
 	if(!P.nodamage)
 		burst()
 	return ..()
-
-/obj/item/latexballon/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if(temperature > T0C+100)
-		burst()
 
 /obj/item/latexballon/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/tank))

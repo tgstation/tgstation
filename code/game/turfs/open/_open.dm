@@ -144,6 +144,8 @@
 	baseturfs = /turf/open/indestructible/airblock
 
 /turf/open/Initalize_Atmos(times_fired)
+	if(planetary_atmos)
+		return
 	excited = 0
 	update_visuals()
 

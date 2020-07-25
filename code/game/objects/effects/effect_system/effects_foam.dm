@@ -66,7 +66,7 @@
 	L.adjust_fire_stacks(-2)
 	L.ExtinguishMob()
 
-/obj/effect/particle_effect/foam/firefighting/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/particle_effect/foam/firefighting/heated()
 	return
 
 /obj/effect/particle_effect/foam/metal
@@ -94,6 +94,11 @@
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
+
+/obj/effect/particle_effect/foam/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 0, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
 
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()
@@ -190,12 +195,12 @@
 		F.metal = metal
 
 
-/obj/effect/particle_effect/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 475))) //foam dissolves when heated
+/obj/effect/particle_effect/foam/proc/heated(datum/gas_mixture/mix, temperature, volume)
+	if(prob(max(0, temperature - 475))) //foam dissolves when heated
 		kill_foam()
 
 
-/obj/effect/particle_effect/foam/metal/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/particle_effect/foam/metal/heated()
 	return
 
 

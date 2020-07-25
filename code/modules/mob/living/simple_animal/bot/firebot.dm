@@ -48,6 +48,12 @@
 
 	create_extinguisher()
 
+/mob/living/simple_animal/bot/firebot/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, T0C + 200, BODYTEMP_COLD_DAMAGE_LIMIT)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	RegisterSignal(src, COMSIG_HEAT_COLD, .proc/heated)
+
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	create_extinguisher()
 
@@ -271,11 +277,10 @@
 
 	return result
 
-/mob/living/simple_animal/bot/firebot/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && foam_cooldown + FOAM_INTERVAL < world.time)
+/mob/living/simple_animal/bot/firebot/proc/heated()
+	if(foam_cooldown + FOAM_INTERVAL < world.time)
 		new /obj/effect/particle_effect/foam/firefighting(loc)
 		foam_cooldown = world.time
-	..()
 
 /mob/living/simple_animal/bot/firebot/proc/spray_water(atom/target, mob/user)
 	if(stationary_mode)

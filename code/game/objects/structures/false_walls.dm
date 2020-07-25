@@ -227,6 +227,11 @@
 	walltype = /turf/closed/wall/mineral/plasma
 	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/closed/wall/mineral/plasma)
 
+/obj/structure/falsewall/plasma/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 300, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/burnbabyburn)
+
 /obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.get_temperature() > 300)
 		var/turf/T = get_turf(src)
@@ -241,10 +246,6 @@
 	atmos_spawn_air("plasma=400;TEMP=1000")
 	new /obj/structure/girder/displaced(loc)
 	qdel(src)
-
-/obj/structure/falsewall/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		burnbabyburn()
 
 /obj/structure/falsewall/bananium
 	name = "bananium wall"

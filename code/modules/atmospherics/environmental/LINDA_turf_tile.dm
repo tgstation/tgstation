@@ -29,15 +29,24 @@
 	var/datum/gas_mixture/turf/air
 
 	var/obj/effect/hotspot/active_hotspot
-	var/atmos_cooldown  = 0
-	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
+	var/planetary_atmos = FALSE //air will revert to initial_gas_mix
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
 
+GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 /turf/open/Initialize()
 	if(!blocks_air)
-		air = new
-		air.copy_from_turf(src)
+		if(!planetary_atmos)
+			air = new
+			air.copy_from_turf(src)
+		else
+			if(!GLOB.planetary[src.initial_gas_mix])
+				var/datum/gas_mixture/turf/immutable/planetary/mix = new
+				mix.parse_string_immutable(src.initial_gas_mix)
+				GLOB.planetary[src.initial_gas_mix] = mix
+			air = GLOB.planetary[src.initial_gas_mix]
+			update_visuals()
+			return
 	. = ..()
 
 /turf/open/Destroy()
@@ -51,7 +60,7 @@
 /////////////////GAS MIXTURE PROCS///////////////////
 
 /turf/open/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-	if(!giver)
+	if(!giver || planetary_atmos)
 		return FALSE
 	air.merge(giver)
 	update_visuals()
@@ -87,6 +96,23 @@
 /turf/temperature_expose()
 	if(temperature > heat_capacity)
 		to_be_destroyed = TRUE
+	if(temperature > max_fire_temperature_sustained)
+		max_fire_temperature_sustained = temperature
+	if(to_be_destroyed && !changing_turf)
+		var/chance_of_deletion
+		if (heat_capacity) //beware of division by zero
+			chance_of_deletion = max_fire_temperature_sustained / heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
+		else
+			chance_of_deletion = 100
+		if(prob(chance_of_deletion))
+			Melt()
+		else
+			to_be_destroyed = FALSE
+			max_fire_temperature_sustained = 0
+
+/turf/open/temperature_expose(air, exposed_temperature, exposed_volume)
+	SEND_SIGNAL(src, COMSIG_TURF_EXPOSE, air, exposed_temperature, exposed_volume)
+	..()
 
 /turf/proc/archive()
 	temperature_archived = temperature
@@ -149,10 +175,8 @@
 	var/last_share = our_air.last_share;\
 	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
 		our_excited_group.reset_cooldowns();\
-		cached_atmos_cooldown = 0;\
 	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
 		our_excited_group.dismantle_cooldown = 0;\
-		cached_atmos_cooldown = 0;\
 	}
 
 /turf/proc/process_cell(fire_count)
@@ -168,11 +192,6 @@
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
 	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
-	var/cached_atmos_cooldown = atmos_cooldown + 1
-
-	var/planet_atmos = planetary_atmos
-	if (planet_atmos)
-		adjacent_turfs_length++
 
 	var/datum/gas_mixture/our_air = air
 
@@ -222,28 +241,15 @@
 
 	/******************* GROUP HANDLING FINISH *********************************************************************/
 
-	if (planet_atmos) //share our air with the "atmosphere" "above" the turf
-		var/datum/gas_mixture/G = new
-		G.copy_from_turf(src)
-		G.archive()
-		if(our_air.compare(G))
-			if(!our_excited_group)
-				var/datum/excited_group/EG = new
-				EG.add_turf(src)
-				our_excited_group = excited_group
-			our_air.share(G, adjacent_turfs_length)
-			LAST_SHARE_CHECK
 
 	our_air.react(src)
 
 	update_visuals()
 
-	if((!our_excited_group && !(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) \
-	|| (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
-		SSair.remove_from_active(src)
+	if((!(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) && !our_excited_group)
+		SSair.remove_from_active(src) //This will kill any connected excited group, be careful
 
-	atmos_cooldown = cached_atmos_cooldown
-
+	temperature_expose(our_air, our_air.temperature, CELL_VOLUME) //I should add some sanity checks to this thing
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/T, difference)
@@ -322,10 +328,10 @@
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
-		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/immutable/space))
+		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/turf/immutable/space))
 			space_in_group = TRUE
 			qdel(A)
-			A = new /datum/gas_mixture/immutable/space()
+			A = new /datum/gas_mixture/turf/immutable/space()
 			A_gases = A.gases //update the cache
 			break
 		A.merge(T.air)
@@ -336,7 +342,6 @@
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.air.copy_from(A)
-		T.atmos_cooldown = 0
 		T.update_visuals()
 
 	breakdown_cooldown = 0

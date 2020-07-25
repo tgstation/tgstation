@@ -140,6 +140,11 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	var/wetness = 30 //Reduced when exposed to high temperautres
 	var/drying_threshold_temperature = 500 //Kelvin to start drying
 
+/obj/item/stack/sheet/wethide/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, drying_threshold_temperature, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+
 /*
  * Leather SHeet
  */
@@ -242,14 +247,12 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step two - washing..... it's actually in washing machine code.
 
 //Step three - drying
-/obj/item/stack/sheet/wethide/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	..()
-	if(exposed_temperature >= drying_threshold_temperature)
-		wetness--
-		if(wetness == 0)
-			new /obj/item/stack/sheet/leather(drop_location(), 1)
-			wetness = initial(wetness)
-			use(1)
+/obj/item/stack/sheet/wethide/proc/heated()
+	wetness--
+	if(wetness == 0)
+		new /obj/item/stack/sheet/leather(drop_location(), 1)
+		wetness = initial(wetness)
+		use(1)
 
 /obj/item/stack/sheet/wethide/microwave_act(obj/machinery/microwave/MW)
 	..()

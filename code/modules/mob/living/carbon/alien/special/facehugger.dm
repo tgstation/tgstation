@@ -30,6 +30,11 @@
 
 	var/attached = 0
 
+/obj/item/clothing/mask/facehugger/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 300, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
 	sterile = 1
@@ -80,9 +85,8 @@
 		. += "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
 
 
-/obj/item/clothing/mask/facehugger/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		Die()
+/obj/item/clothing/mask/facehugger/proc/heated()
+	Die()
 
 /obj/item/clothing/mask/facehugger/equipped(mob/M)
 	. = ..()

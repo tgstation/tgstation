@@ -201,9 +201,6 @@
 	if((visual_update_tick++ % 7) == 0)
 		update_color()
 
-	if(temperature > location.max_fire_temperature_sustained)
-		location.max_fire_temperature_sustained = temperature
-
 	if(location.heat_capacity && temperature > location.heat_capacity)
 		location.to_be_destroyed = TRUE
 	return TRUE
@@ -214,23 +211,8 @@
 	var/turf/open/T = loc
 	if(istype(T) && T.active_hotspot == src)
 		T.active_hotspot = null
-	DestroyTurf()
 	return ..()
 
-/obj/effect/hotspot/proc/DestroyTurf()
-	if(isturf(loc))
-		var/turf/T = loc
-		if(T.to_be_destroyed && !T.changing_turf)
-			var/chance_of_deletion
-			if (T.heat_capacity) //beware of division by zero
-				chance_of_deletion = T.max_fire_temperature_sustained / T.heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
-			else
-				chance_of_deletion = 100
-			if(prob(chance_of_deletion))
-				T.Melt()
-			else
-				T.to_be_destroyed = FALSE
-				T.max_fire_temperature_sustained = 0
 
 /obj/effect/hotspot/Crossed(atom/movable/AM, oldLoc)
 	..()
