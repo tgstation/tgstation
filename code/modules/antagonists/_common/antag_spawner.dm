@@ -96,15 +96,18 @@
 ///////////BORGS AND OPERATIVES
 
 
+/**
+ * Device to request reinforcments from ghost pop
+ */
 /obj/item/antag_spawner/nuke_ops
 	name = "syndicate operative teleporter"
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
-	var/special_role_name = "Nuclear Operative"
-	var/datum/outfit/syndicate/no_crystals/outfit = /datum/outfit/syndicate/no_crystals
-	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
+	var/special_role_name = "Nuclear Operative" ///The name of the special role given to the recruit
+	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/no_crystals ///The applied outfit
+	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop ///The antag datam applied
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -114,7 +117,6 @@
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
 		return FALSE
 	return TRUE
-
 
 /obj/item/antag_spawner/nuke_ops/attack_self(mob/user)
 	if(!(check_usability(user)))
