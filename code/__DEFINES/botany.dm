@@ -9,4 +9,4 @@
 #define PLANT_SCANMODE_CHEMICALS 	1
 
 //Seed flags.
-#define MUTATE_EARLY	(1<<0)
+#define NO_MUTATE_EARLY	(1<<0)
