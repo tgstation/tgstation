@@ -7,7 +7,6 @@
 	requires_ntnet = TRUE
 	transfer_access = null
 	available_on_ntnet = FALSE
-	network_destination = "tracking program"
 	size = 5
 	tgui_id = "NtosRadar"
 	ui_x = 800
@@ -104,7 +103,7 @@
 
 ///A program that tracks crew members via suit sensors
 /datum/computer_file/program/radar/lifeline
-	filename = "Lifeline"
+	filename = "lifeline"
 	filedesc = "Lifeline"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
@@ -182,7 +181,7 @@
 
 ///A program that tracks crew members via suit sensors
 /datum/computer_file/program/radar/fission360
-	filename = "Fission360"
+	filename = "fission360"
 	filedesc = "Fission360"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."

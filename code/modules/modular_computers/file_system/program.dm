@@ -145,7 +145,11 @@
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
 		if(requires_ntnet && network_destination)
-			generate_network_log("Connection opened to [network_destination].")
+			var/obj/item/card/id/ID
+			var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+			if(card_holder)
+				ID = card_holder.GetID()
+			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return 1
 	return 0
@@ -154,7 +158,11 @@
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
 	if(network_destination)
-		generate_network_log("Connection to [network_destination] closed.")
+		var/obj/item/card/id/ID
+		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+		if(card_holder)
+			ID = card_holder.GetID()
+		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 	return 1
 
 

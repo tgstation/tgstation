@@ -1,12 +1,11 @@
 /datum/computer_file/program/borg_monitor
-	filename = "cyborgmonitor"
-	filedesc = "Cyborg Remote Monitoring"
+	filename = "siliconnect"
+	filedesc = "SiliConnect"
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."
 	requires_ntnet = TRUE
 	transfer_access = ACCESS_ROBOTICS
-	network_destination = "cyborg remote monitoring"
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 	ui_x = 600
@@ -83,8 +82,8 @@
 	return ID.registered_name
 
 /datum/computer_file/program/borg_monitor/syndicate
-	filename = "scyborgmonitor"
-	filedesc = "Mission-Specific Cyborg Remote Monitoring"
+	filename = "roboverlord"
+	filedesc = "Roboverlord"
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of mission-assigned cyborgs."
