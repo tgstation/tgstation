@@ -27,6 +27,9 @@
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/scanner_gate
 
+	var/green = FALSE
+	var/red = FALSE
+	var/ignore_signals = FALSE
 	var/scanline_timer
 	var/next_beep = 0 //avoids spam
 	var/locked = FALSE
@@ -39,6 +42,7 @@
 
 /obj/machinery/scanner_gate/Initialize()
 	. = ..()
+	wires = new /datum/wires/scan_gate(src)
 	set_scanline("passive")
 
 /obj/machinery/scanner_gate/examine(mob/user)
@@ -48,12 +52,18 @@
 	else
 		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
+/obj/machinery/microwave/update_icon_state()
+	if(panel_open)
+		icon_state = "scangate"
+	else
+		icon_state = "scangate"
+
 /obj/machinery/scanner_gate/Crossed(atom/movable/AM)
 	. = ..()
 	auto_scan(AM)
 
 /obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
-	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM) & (!panel_open))
 		perform_scan(AM)
 
 /obj/machinery/scanner_gate/proc/set_scanline(type, duration)
@@ -79,7 +89,12 @@
 		else
 			to_chat(user, "<span class='warning'>You try to lock [src] with [W], but nothing happens.</span>")
 	else
-		return ..()
+		if(!locked)
+			if(default_deconstruction_screwdriver(user, "scangate", "scangate", W))
+				return
+		if(panel_open && is_wire_tool(W))
+			wires.interact(user)
+	return ..()
 
 /obj/machinery/scanner_gate/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -91,6 +106,7 @@
 
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
+	var/color = FALSE
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return
@@ -162,11 +178,18 @@
 		beep = !beep
 	if(beep)
 		alarm_beep()
+		if(!ignore_signals)
+			color = wires.get_color_of_wire(WIRE_FAIL)
+			var/obj/item/assembly/S = wires.get_attached(color)
+			S.activate()
 	else
+		if(!ignore_signals)
+			color = wires.get_color_of_wire(WIRE_PASS)
+			var/obj/item/assembly/S = wires.get_attached(color)
+			S.activate()
 		set_scanline("scanning", 10)
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
-	say("Buzz!")
 	if(next_beep <= world.time)
 		next_beep = world.time + 20
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)

@@ -157,6 +157,7 @@
 			pulse_color(color)
 			return TRUE
 
+
 /datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
