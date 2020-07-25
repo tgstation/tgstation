@@ -605,7 +605,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		message["key"] = comms_key
 	var/list/servers = CONFIG_GET(keyed_list/cross_server)
 	var/server_url = servers[server_name]
-	if (!serverurl)
+	if (!server_url)
 		CRASH("Invalid cross comms config: [server_name]")
 	world.Export("[server_url]?[list2params(message)]")
 	
