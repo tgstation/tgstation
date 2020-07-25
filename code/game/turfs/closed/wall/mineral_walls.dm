@@ -34,8 +34,8 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
-/turf/closed/wall/mineral/diamond/hulk_recoil(obj/item/bodypart/arm)
-	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
+/turf/closed/wall/mineral/diamond/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 41)
+	return ..()
 
 /turf/closed/wall/mineral/bananium
 	name = "bananium wall"
@@ -87,8 +87,8 @@
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/hulk_recoil(obj/item/bodypart/arm)
-	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
+/turf/closed/wall/mineral/uranium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 41)
+	return ..()
 
 /turf/closed/wall/mineral/plasma
 	name = "plasma wall"
@@ -148,8 +148,8 @@
 			return
 	return ..()
 
-/turf/closed/wall/mineral/wood/hulk_recoil(obj/item/bodypart/arm)
-	return //No recoil damage, wood is weak
+/turf/closed/wall/mineral/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 0)
+	return ..() //No recoil damage, wood is weak
 
 /turf/closed/wall/mineral/wood/nonmetal
 	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
@@ -179,8 +179,8 @@
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 
-/turf/closed/wall/mineral/snow/hulk_recoil(obj/item/bodypart/arm)
-	return //No recoil damage, snow is weak
+/turf/closed/wall/mineral/snow/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 0)
+	return ..() //No recoil damage, snow is weak
 
 /turf/closed/wall/mineral/abductor
 	name = "alien wall"
@@ -206,6 +206,9 @@
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
+
+/turf/closed/wall/mineral/titanium/rust_heretic_act()
+	return // titanium does not rust
 
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smooth = SMOOTH_MORE
@@ -269,6 +272,9 @@
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plasma/reinforced/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
 
+/turf/closed/wall/mineral/plastitanium/rust_heretic_act()
+	return // plastitanium does not rust
+
 /turf/closed/wall/mineral/plastitanium/nodiagonal
 	smooth = SMOOTH_MORE
 	icon_state = "map-shuttle_nd"
@@ -287,8 +293,8 @@
 	bombcore.detonate()
 	..()
 
-/turf/closed/wall/mineral/plastitanium/hulk_recoil(obj/item/bodypart/arm)
-	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
+/turf/closed/wall/mineral/plastitanium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 41)
+	return ..()
 
 //have to copypaste this code
 /turf/closed/wall/mineral/plastitanium/interior/copyTurf(turf/T)

@@ -572,6 +572,16 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 1)
 
+/obj/item/circuitboard/machine/bountypad
+	name = "Civilian Bounty Pad (Machine Board)"
+	icon_state = "generic"
+	build_path = /obj/machinery/piratepad/civilian
+	req_components = list(
+		/obj/item/stock_parts/card_reader = 1,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/micro_laser = 1
+	)
+
 //Medical
 
 /obj/item/circuitboard/machine/chem_dispenser
@@ -895,17 +905,6 @@
 		/obj/item/stack/sheet/glass = 1)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
-/obj/item/circuitboard/machine/bepis
-	name = "BEPIS Chamber (Machine Board)"
-	icon_state = "science"
-	build_path = /obj/machinery/rnd/bepis
-	req_components = list(
-		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/scanning_module = 1)
-
 /obj/item/circuitboard/machine/dnascanner
 	name = "DNA Scanner (Machine Board)"
 	icon_state = "science"
@@ -1142,6 +1141,17 @@
 	name = "\improper Departmental Techfab (Machine Board) - Cargo"
 	icon_state = "supply"
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
+
+/obj/item/circuitboard/machine/bepis
+	name = "BEPIS Chamber (Machine Board)"
+	icon_state = "cargo"
+	build_path = /obj/machinery/rnd/bepis
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/scanning_module = 1)
 
 //Misc
 /obj/item/circuitboard/machine/sheetifier

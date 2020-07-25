@@ -6,12 +6,6 @@
 		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
 	)
 
-/datum/asset/group/tgui
-	children = list(
-		/datum/asset/simple/tgui,
-		/datum/asset/simple/fontawesome
-	)
-
 /datum/asset/simple/headers
 	assets = list(
 		"alarm_green.gif" 			= 'icons/program_icons/alarm_green.gif',

@@ -230,7 +230,7 @@
 	id = "bepis"
 	build_path = /obj/item/circuitboard/machine/bepis
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/board/protolathe
 	name = "Machine Design (Protolathe Board)"
@@ -621,4 +621,11 @@
 	desc = "The circuit board for a Vend-a-Tray."
 	id = "vendatray"
 	build_path = /obj/item/circuitboard/machine/vendatray
+	category = list ("Misc. Machinery")
+
+/datum/design/board/bountypad
+	name = "Machine Design (Civilian Bounty Pad)"
+	desc = "The circuit board for a Civilian Bounty Pad."
+	id = "bounty_pad"
+	build_path = /obj/item/circuitboard/machine/bountypad
 	category = list ("Misc. Machinery")

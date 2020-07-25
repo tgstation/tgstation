@@ -4799,7 +4799,7 @@
 "lS" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/holofloor/hyperspace,
-/area/centcom/supplypod/fly_me_to_the_moon)
+/area/centcom/supplypod/supplypod_temp_holding)
 "lT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";

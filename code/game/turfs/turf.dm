@@ -1,6 +1,8 @@
 GLOBAL_LIST_EMPTY(station_turfs)
 /turf
 	icon = 'icons/turf/floors.dmi'
+	flags_1 = CAN_BE_DIRTY_1
+	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE // Important for interaction with and visualization of openspace.
 
 	var/intact = 1
 
@@ -17,8 +19,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/blocks_air = FALSE
 
-	flags_1 = CAN_BE_DIRTY_1
-
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
 	var/explosion_level = 0	//for preventing explosion dodging
@@ -34,7 +34,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/tiled_dirt = FALSE // use smooth tiled dirt decal
 
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE	// Important for interaction with and visualization of openspace.
+	///Icon-smoothing variable to map a diagonal wall corner with a fixed underlay.
+	var/list/fixed_underlay = null
+
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -60,7 +62,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	levelupdate()
 	if(smooth)
-		queue_smooth(src)
+		QUEUE_SMOOTH(src)
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)

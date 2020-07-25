@@ -115,7 +115,7 @@
 	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
 		buckled_mob.buckled = null
-		buckled_mob.anchored = initial(buckled_mob.anchored)
+		buckled_mob.set_anchored(initial(buckled_mob.anchored))
 		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")
 		buckled_mobs -= buckled_mob

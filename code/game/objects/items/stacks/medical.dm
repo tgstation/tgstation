@@ -124,11 +124,34 @@
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/M, mob/user, silent)
 	var/obj/item/bodypart/limb = M.get_bodypart(check_zone(user.zone_selected))
-	if(limb)
-		if(limb.brute_dam > 40)
-			to_chat(user, "<span class='warning'>The bleeding on [user==M ? "your" : "[M]'s"] [limb.name] is from bruising, and cannot be treated with [src]!</span>")
-		else
-			to_chat(user, "<span class='warning'>There's no bleeding on [user==M ? "your" : "[M]'s"] [limb.name]</span>")
+	if(!limb)
+		to_chat(user, "<span class='notice'>There's nothing there to bandage!</span>")
+		return
+	if(!LAZYLEN(limb.wounds))
+		to_chat(user, "<span class='notice'>There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.name]!</span>") // good problem to have imo
+		return
+
+	var/gauzeable_wound = FALSE
+	for(var/i in limb.wounds)
+		var/datum/wound/woundies = i
+		if(woundies.wound_flags & ACCEPTS_GAUZE)
+			gauzeable_wound = TRUE
+			break
+	if(!gauzeable_wound)
+		to_chat(user, "<span class='notice'>There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.name]!</span>") // good problem to have imo
+		return
+
+	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 0.8 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
+		to_chat(user, "<span class='warning'>The bandage currently on [user==M ? "your" : "[M]'s"] [limb.name] is still in good condition!</span>")
+		return
+
+	user.visible_message("<span class='warning'>[user] begins wrapping the wounds on [M]'s [limb.name] with [src]...</span>", "<span class='warning'>You begin wrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.name] with [src]...</span>")
+
+	if(!do_after(user, (user == M ? self_delay : other_delay), target=M))
+		return
+
+	user.visible_message("<span class='green'>[user] applies [src] to [M]'s [limb.name].</span>", "<span class='green'>You bandage the wounds on [user == M ? "yourself" : "[M]'s"] [limb.name].</span>")
+	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
 	amount = 12
@@ -399,9 +422,9 @@
 			C.emote("scream")
 			for(var/i in C.bodyparts)
 				var/obj/item/bodypart/bone = i
-				var/datum/wound/brute/bone/severe/oof_ouch = new
+				var/datum/wound/blunt/severe/oof_ouch = new
 				oof_ouch.apply_wound(bone)
-				var/datum/wound/brute/bone/critical/oof_OUCH = new
+				var/datum/wound/blunt/critical/oof_OUCH = new
 				oof_OUCH.apply_wound(bone)
 
 			for(var/i in C.bodyparts)

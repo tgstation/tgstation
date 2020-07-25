@@ -65,6 +65,8 @@
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
+	var/bounty_types = CIV_JOB_BASIC
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
