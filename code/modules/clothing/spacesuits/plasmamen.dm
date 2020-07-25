@@ -77,13 +77,6 @@
 			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_icon()
 
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
-	. = ..()
-	if(!isinhands && !up)
-		. += mutable_appearance('icons/mob/clothing/head.dmi', visor_icon)
-	else
-		cut_overlays()
-
 /obj/item/clothing/head/helmet/space/plasmaman/update_overlays()
 	. = ..()
 	. += visor_icon
@@ -99,8 +92,7 @@
 				smile_color = CR.paint_color
 				to_chat(user, "You draw a smiley on the helmet visor.")
 				update_icon()
-				return
-		if(smile == TRUE)
+		else
 			to_chat(user, "<span class='warning'>Seems like someone already drew something on this helmet's visor!</span>")
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
@@ -118,7 +110,7 @@
 	. = ..(wash_strength)
 	if(smile)
 		smile = FALSE
-		cut_overlays()
+		update_icon()
 		. = TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
