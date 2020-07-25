@@ -306,7 +306,7 @@
 			display_turfs()
 		reset_cooldowns()
 	else
-		if(E.should_display || SSair.display_all_groups)
+		if(should_display || SSair.display_all_groups)
 			hide_turfs()
 		SSair.excited_groups -= src
 		for(var/t in turf_list)
