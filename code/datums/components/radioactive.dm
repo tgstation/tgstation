@@ -18,12 +18,12 @@
 	can_contaminate = _can_contaminate
 	if(istype(parent, /atom))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/rad_examine)
+		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_RADIATION, .proc/rad_clean)
 		if(istype(parent, /obj/item))
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/rad_attack)
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
 	else
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_RADIATION, .proc/rad_clean)
 	if(strength > RAD_MINIMUM_CONTAMINATION)
 		SSradiation.warn(src)
 	//Let's make er glow
