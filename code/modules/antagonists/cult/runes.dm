@@ -72,7 +72,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		qdel(src)
 
 /obj/effect/rune/proc/try_invoke(datum/source,mob/user)
-	if(!isliving(user) || get_dist(src,user) >= usable_distance)
+	if(!isliving(user) || get_dist(src,user) > usable_distance)
 		return
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>You aren't able to understand the words of [src].</span>")
@@ -465,7 +465,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	pixel_y = -32
 	scribe_delay = 500 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
-	usable_distance = 3
+	usable_distance = 2
 	var/used = FALSE
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
@@ -888,7 +888,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
 	scribe_delay = 100
-	usable_distance = 3
+	usable_distance = 2
 
 /obj/effect/rune/apocalypse/invoke(var/list/invokers)
 	if(rune_in_use)
