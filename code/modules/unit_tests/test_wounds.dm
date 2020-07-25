@@ -37,7 +37,7 @@
 		victim.fully_heal(TRUE) // should clear all wounds between types
 
 
-/// This test is used for making sure species with bones but no flesh (skeletons, plasmamen) can only suffer BONE_WOUNDS, and nothing tagged with FLESH_WOUND
+/// This test is used for making sure species with bones but no flesh (skeletons, plasmamen) can only suffer BONE_WOUNDS, and nothing tagged with FLESH_WOUND (it's possible to require both)
 /datum/unit_test/test_human_bone/Run()
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
 
