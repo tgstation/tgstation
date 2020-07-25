@@ -194,7 +194,7 @@
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(burn_paper_product_attackby_check(P, user))
-		close_all_ui()
+		SStgui.close_uis(src)
 		return
 
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
@@ -255,6 +255,7 @@
 		data["edit_mode"] = MODE_WRITING
 		data["is_crayon"] = TRUE
 		data["stamp_class"] = "FAKE"
+		data["stamp_icon_state"] = "FAKE"
 	else if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
 		data["pen_font"] = PEN.font
@@ -262,9 +263,10 @@
 		data["edit_mode"] = MODE_WRITING
 		data["is_crayon"] = FALSE
 		data["stamp_class"] = "FAKE"
+		data["stamp_icon_state"] = "FAKE"
 	else if(istype(O, /obj/item/stamp))
-		stamp_icon_state = O.icon_state
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+		data["stamp_icon_state"] = O.icon_state
 		data["stamp_class"] = sheet.icon_class_name(O.icon_state)
 		data["edit_mode"] = MODE_STAMPING
 		data["pen_font"] = "FAKE"
@@ -275,6 +277,8 @@
 		data["pen_font"] = "FAKE"
 		data["pen_color"] = "FAKE"
 		data["is_crayon"] = FALSE
+		data["stamp_icon_state"] = "FAKE"
+		data["stamp_class"] = "FAKE"
 	data["field_counter"] = field_counter
 	data["form_fields"] = form_fields
 
@@ -288,25 +292,26 @@
 			var/stamp_x = text2num(params["x"])
 			var/stamp_y = text2num(params["y"])
 			var/stamp_r = text2num(params["r"])	// rotation in degrees
-
+			var/stamp_icon_state = params["stamp_icon_state"]
+			var/stamp_class = params["stamp_class"]
 			if (isnull(stamps))
-				stamps = new/list()
+				stamps = list()
 			if(stamps.len < MAX_PAPER_STAMPS)
 				// I hate byond when dealing with freaking lists
-				stamps += list(list(state.stamp_class, stamp_x,  stamp_y,stamp_r))	/// WHHHHY
+				stamps[++stamps.len] = list(stamp_class, stamp_x, stamp_y, stamp_r)	/// WHHHHY
 
 				/// This does the overlay stuff
 				if (isnull(stamped))
-					stamped = new/list()
+					stamped = list()
 				if(stamped.len < MAX_PAPER_STAMPS_OVERLAYS)
-					var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[state.stamp_icon_state]")
+					var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[stamp_icon_state]")
 					stampoverlay.pixel_x = rand(-2, 2)
 					stampoverlay.pixel_y = rand(-3, 2)
 					add_overlay(stampoverlay)
-					LAZYADD(stamped, state.stamp_icon_state)
+					LAZYADD(stamped, stamp_icon_state)
 
 				update_static_data(usr,ui)
-				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [state.stamp_name]!</span>", "<span class='notice'>You stamp [src] with [state.stamp_name]!</span>")
+				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [stamp_class]!</span>", "<span class='notice'>You stamp [src] with [stamp_class]!</span>")
 			else
 				to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
 			. = TRUE
