@@ -17,7 +17,7 @@ export const AtmosControlPanel = (props, context) => {
   return (
     <Window
       title="SSAir Control Panel"
-      width={650}
+      width={720}
       height={500}
       resizable>
       <Section m={1}>
@@ -37,10 +37,13 @@ export const AtmosControlPanel = (props, context) => {
             Active Turfs: {data.active_size}
           </Flex.Item>
           <Flex.Item>
+            Excited Groups: {data.excited_size}
+          </Flex.Item>
+          <Flex.Item>
             Hotspots: {data.hotspots_size}
           </Flex.Item>
           <Flex.Item>
-            Excited Groups: {data.excited_size}
+            Superconductors: {data.conducting_size}
           </Flex.Item>
           <Flex.Item>
             <Button.Checkbox

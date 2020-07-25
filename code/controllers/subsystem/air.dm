@@ -304,6 +304,10 @@ SUBSYSTEM_DEF(air)
 
 	// Clear active turfs - faster than removing every single turf in the world
 	// one-by-one, and Initalize_Atmos only ever adds `src` back in.
+	#ifdef VISUALIZE_ACTIVE_TURFS
+	for(var/turf/active in active_turfs)
+		active.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#00ff00")
+	#endif
 	active_turfs.Cut()
 
 	for(var/thing in turfs_to_init)
@@ -447,6 +451,7 @@ SUBSYSTEM_DEF(air)
 	data["active_size"] = active_turfs.len
 	data["hotspots_size"] = hotspots.len
 	data["excited_size"] = excited_groups.len
+	data["conducting_size"] = active_super_conductivity.len
 	data["frozen"] = can_fire
 	data["show_all"] = display_all_groups
 	return data
