@@ -86,7 +86,7 @@
 	if(popper.mob_size < MOB_SIZE_HUMAN)
 		return
 
-	playsound(src, 'sound/weapons/gun/pistol/shot.ogg', 100, FALSE, frequency=50000)
+	playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
 	popper.visible_message("<span class='danger'>[popper] steps on \the [src], popping the bag!</span>", "<span class='danger'>You step on \the [src], popping the bag!</span>", "<span class='danger'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE)
 	generate_trash(src.loc)
 	qdel(src)
