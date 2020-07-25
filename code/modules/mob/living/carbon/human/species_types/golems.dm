@@ -1102,31 +1102,6 @@
 	playsound(source, 'sound/misc/mymoney.ogg', 25, FALSE)
 	speech_args[SPEECH_MESSAGE] = "Hello, I like money!"
 
-/datum/species/golem/church_capitalist
-	name = "Churchgoing Capitalist Golem"
-	id = "church_capitalist golem"
-	prefix = "Religio-Capitalist"
-	attack_verb = "monopoliz"
-	limbs_id = "ca_golem"
-	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr. Moneybags", "Adam Smith")
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
-	fixed_mut_color = null
-	inherent_traits = list(TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	info_text = "As a <span class='danger'>Churchgoing Capitalist Golem</span>, your god-given right is to make fat stacks of money!"
-	changesource_flags = MIRROR_BADMIN
-	random_eligible = FALSE
-
-	var/last_cash = 0
-	var/cash_cooldown = 100
-
-/datum/species/golem/church_capitalist/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.equip_to_slot_or_del(new /obj/item/clothing/head/that (), ITEM_SLOT_HEAD)
-	C.equip_to_slot_or_del(new /obj/item/clothing/glasses/monocle (), ITEM_SLOT_EYES)
-	C.revive(full_heal = TRUE, admin_revive = FALSE)
-
-	SEND_SOUND(C, sound('sound/misc/capitialism.ogg'))
-
 /datum/species/golem/soviet
 	name = "Soviet Golem"
 	id = "soviet golem"

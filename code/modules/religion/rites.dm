@@ -105,55 +105,12 @@
 
 /*********Capitalists**********/
 
-/datum/religion_rites/toppercent
-	name = "Reaching the Top Percent"
-	desc = "Help a moneybag to get even richer."
-	ritual_length = 1 MINUTES
-	ritual_invocations = list("%Money, money, money...",
-						"%... Must be funny...",
-						"%... In the rich man's world...")
-	invoke_msg = "... Wait, it worked?"
-	favor_cost = 10000
-
 /datum/religion_rites/looks
 	name = "Gonna look like it"
 	desc = "From rags to riches? Better get rid of the rags then!"
 	ritual_length = 0.5 MINUTES
 	invoke_msg = "Please, all i want are some nice clothes..."
 	favor_cost = 100
-
-/datum/religion_rites/toppercent/perform_rite(mob/living/user, atom/religious_tool)
-	if(!ismovable(religious_tool))
-		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
-		return FALSE
-	var/atom/movable/movable_reltool = religious_tool
-	if(!movable_reltool)
-		return FALSE
-	if(!LAZYLEN(movable_reltool.buckled_mobs))
-		. = FALSE
-		if(!movable_reltool.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
-			to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
-			return
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [movable_reltool].</span>")
-		return
-	return ..()
-
-/datum/religion_rites/toppercent/invoke_effect(mob/living/user, atom/religious_tool)
-	if(!ismovable(religious_tool))
-		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
-	var/atom/movable/movable_reltool = religious_tool
-	if(!movable_reltool?.buckled_mobs?.len)
-		return FALSE
-	var/mob/living/carbon/human/mantomoney
-	for(var/i in movable_reltool.buckled_mobs)
-		if(istype(i,/mob/living/carbon/human))
-			mantomoney = i
-			break
-	if(!mantomoney)
-		return FALSE
-	mantomoney.set_species(/datum/species/golem/church_capitalist)
-	mantomoney.visible_message("<span class='notice'>[mantomoney] has ascended to the top of society!</span>")
-	return TRUE
 
 /datum/religion_rites/looks/invoke_effect(atom/religious_tool, mob/user)
 	var/location = get_turf(user)

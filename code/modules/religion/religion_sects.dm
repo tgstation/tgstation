@@ -198,8 +198,7 @@
 	alignment = ALIGNMENT_EVIL
 	desired_items = list(/obj/item/holochip)
 	max_favor = 100000
-	rites_list = list(/datum/religion_rites/toppercent,
-					  /datum/religion_rites/looks)
+	rites_list = list(/datum/religion_rites/looks)
 
 /datum/religion_sect/capitalists/sect_bless(mob/living/L, mob/living/user)
 	if(!ishuman(L))
