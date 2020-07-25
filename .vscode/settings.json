@@ -9,5 +9,12 @@
 			"viewType": "imagePreview.previewEditor"
 		}
 	],
-	"files.eol": "\n"
+	"files.eol": "\n",
+	"search.exclude": {
+		"_maps/**/*": true,
+		"*.dme": true,
+		"html/archivedchangelog.html": true,
+		"html/changelog.html": true,
+		"html/changelogs/*": true
+	}
 }
