@@ -246,10 +246,11 @@
 					break
 
 /**
-  * Unequips the active held item.
+  * Unequips the active held item, if there is one.
   */
 /mob/living/silicon/robot/proc/uneq_active()
-	unequip_module_from_slot(module_active, get_selected_module())
+	if(module_active)
+		unequip_module_from_slot(module_active, get_selected_module())
 
 /**
   * Unequips all held items.
@@ -326,6 +327,7 @@
 			if(module_active != held_items[module_num])
 				inv3.icon_state = "[initial(inv3.icon_state)] +a"
 	module_active = held_items[module_num]
+	return TRUE
 
 /**
   * Deselects the module in the slot module_num.
@@ -344,6 +346,7 @@
 			if(module_active == held_items[module_num])
 				inv3.icon_state = initial(inv3.icon_state)
 	module_active = null
+	return TRUE
 
 /**
   * Toggles selection of the module in the slot module_num.

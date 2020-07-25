@@ -96,7 +96,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("hostile")
-	sharpness = IS_SHARP
+	sharpness = SHARP_POINTY
 	squish_chance = 0 // manual squish if relevant
 
 /mob/living/simple_animal/hostile/cockroach/hauberoach/ComponentInitialize()
