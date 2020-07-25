@@ -736,6 +736,37 @@
 /mob/living/carbon/human/proc/clean_face(datum/source, strength)
 	return clean_lips()
 
+/**
+  * Called when this human should be washed
+  */
+/mob/living/carbon/human/wash(wash_strength)
+	. = ..(wash_strength)
+
+	// Wash equipped stuff that cannot be covered
+	if(wear_suit && wear_suit.wash(wash_strength))
+		update_inv_wear_suit()
+		. = TRUE
+
+	if(belt && belt.wash(wash_strength))
+		update_inv_belt()
+		. = TRUE
+
+	// Check and wash stuff that can be covered
+	var/list/obscured = check_obscured_slots()
+
+	if(w_uniform && !(ITEM_SLOT_ICLOTHING in obscured) && w_uniform.wash(wash_strength))
+		update_inv_w_uniform()
+		. = TRUE
+
+	if(!is_mouth_covered() && clean_lips())
+		. = TRUE
+
+	// Wash hands if exposed
+	if(!gloves && wash_strength >= CLEAN_STRENGTH_BLOOD && bloody_hands > 0 && !(ITEM_SLOT_GLOVES in obscured))
+		bloody_hands = 0
+		update_inv_gloves()
+		. = TRUE
+
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
@@ -1127,34 +1158,6 @@
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
-
-/mob/living/carbon/human/wash(wash_strength)
-	. = ..(wash_strength)
-
-	// Wash equipped stuff that cannot be covered
-	if(wear_suit && wear_suit.wash(wash_strength))
-		update_inv_wear_suit()
-		. = TRUE
-
-	if(belt && belt.wash(wash_strength))
-		update_inv_belt()
-		. = TRUE
-
-	// Check and wash stuff that can be covered
-	var/list/obscured = check_obscured_slots()
-
-	if(w_uniform && !(ITEM_SLOT_ICLOTHING in obscured) && w_uniform.wash(wash_strength))
-		update_inv_w_uniform()
-		. = TRUE
-
-	if(!is_mouth_covered() && clean_lips())
-		. = TRUE
-
-	// Wash hands if exposed
-	if(!gloves && wash_strength >= CLEAN_STRENGTH_BLOOD && bloody_hands > 0 && !(ITEM_SLOT_GLOVES in obscured))
-		bloody_hands = 0
-		update_inv_gloves()
-		. = TRUE
 
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
