@@ -23,6 +23,9 @@
 #ifdef LEGACY_REFERENCE_TRACKING
 ///Use the legacy reference on things hard deleting by default.
 //define GC_FAILURE_HARD_LOOKUP
+#ifdef GC_FAILURE_HARD_LOOKUP
+#define FIND_REF_NO_CHECK_TICK
+#endif
 #endif
 
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
