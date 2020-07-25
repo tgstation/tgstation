@@ -16,6 +16,7 @@
 #include "chain_pull_through_space.dm"
 #include "component_tests.dm"
 #include "keybinding_init.dm"
+#include "medical_wounds.dm"
 #include "metabolizing.dm"
 #include "outfit_sanity.dm"
 #include "plantgrowth_tests.dm"
@@ -27,7 +28,6 @@
 #include "subsystem_init.dm"
 #include "surgeries.dm"
 #include "timer_sanity.dm"
-#include "test_wounds.dm"
 #include "unit_test.dm"
 
 #undef TEST_ASSERT
