@@ -429,14 +429,17 @@
 		/obj/machinery/smartfridge/chemistry/virology = "viruses",
 		/obj/machinery/smartfridge/disks = "disks")
 	needs_anchored = FALSE
+	var/is_special_type = FALSE
 
-/obj/item/circuitboard/machine/smartfridge/Initialize(mapload, new_type)
-	if(new_type)
-		build_path = new_type
+/obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/M)
+	build_path = M.base_build_path
+	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
+		name = "[initial(M.name)] (Machine Board)" //if it's a unique type, give it a unique name.
+		is_special_type = TRUE
 	return ..()
 
 /obj/item/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+	if(!is_special_type && I.tool_behaviour == TOOL_SCREWDRIVER)
 		var/position = fridges_name_paths.Find(build_path, fridges_name_paths)
 		position = (position == fridges_name_paths.len) ? 1 : (position + 1)
 		build_path = fridges_name_paths[position]
@@ -446,6 +449,8 @@
 
 /obj/item/circuitboard/machine/smartfridge/examine(mob/user)
 	. = ..()
+	if(is_special_type)
+		return
 	. += "<span class='info'>[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.</span>"
 
 
