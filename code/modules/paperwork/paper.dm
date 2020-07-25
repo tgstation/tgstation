@@ -239,7 +239,7 @@
 		get_asset_datum(/datum/asset/spritesheet/simple/paper),
 	)
 
-/obj/item/paper/ui_interact(mob/user, datum/tgui/ui=null)
+/obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
 	// Update the UI
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
