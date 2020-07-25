@@ -727,7 +727,7 @@
 	if(lip_style != null || lip_color != initial(lip_color))
 		lip_style = null
 		lip_color = initial(lip_color)
-		update_body_parts_head_only()
+		update_body()
 		. = TRUE
 
 /**
