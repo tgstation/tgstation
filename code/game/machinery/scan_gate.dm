@@ -52,7 +52,7 @@
 	else
 		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
-/obj/machinery/microwave/update_icon_state()
+/obj/machinery/scanner_gate/update_icon_state()
 	if(panel_open)
 		icon_state = "scangate"
 	else
