@@ -153,6 +153,7 @@
 			SSexplosions.medturf += target
 		if(EXPLODE_LIGHT)
 			SSexplosions.lowturf += target
+
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
 	buckled.ex_act(severity, null, src)
 
