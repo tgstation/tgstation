@@ -22,7 +22,7 @@
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
 	if(!istype(user) || opened || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
 		return
-	step_size = round(user.step_size / 2)
+	step_size = min(1, round(user.step_size / 2))
 	step(src, direction)
 
 
