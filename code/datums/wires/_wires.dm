@@ -37,6 +37,7 @@
 		CRASH("Wire holder is not of the expected type!")
 
 	src.holder = holder
+	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdel)
 	if(randomize)
 		randomize()
 	else
@@ -58,6 +59,12 @@
 		if(dud in wires)
 			continue
 		wires += dud
+
+
+///Called when holder is qdeleted for us to clean ourselves as not to leave any unlawful references.
+/datum/wires/proc/on_holder_qdel(atom/source, force)
+	qdel(src)
+
 
 /datum/wires/proc/randomize()
 	var/static/list/possible_colors = list(

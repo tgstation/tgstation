@@ -5,6 +5,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	inhand_icon_state = "flashlight"
+	worn_icon_state = "flashlight"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -267,6 +268,7 @@
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	inhand_icon_state = "flare"
+	worn_icon_state = "flare"
 	actions_types = list()
 	var/fuel = 0
 	var/on_damage = 7
@@ -444,6 +446,7 @@
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	inhand_icon_state = "glowstick"
+	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	var/fuel = 0
 

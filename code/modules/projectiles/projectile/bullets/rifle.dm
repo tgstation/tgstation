@@ -4,6 +4,7 @@
 	name = "5.56mm bullet"
 	damage = 35
 	armour_penetration = 30
+	wound_bonus = -40
 
 /obj/projectile/bullet/a556/phasic
 	name = "5.56mm phasic bullet"
@@ -17,6 +18,8 @@
 /obj/projectile/bullet/a762
 	name = "7.62 bullet"
 	damage = 60
+	wound_bonus = -35
+	wound_falloff_tile = 0
 
 /obj/projectile/bullet/a762_enchanted
 	name = "enchanted 7.62 bullet"
