@@ -155,9 +155,16 @@
 	cut_overlays()
 	update_icon_state()
 
-/obj/item/paper/examine_more(mob/user)
-	ui_interact(user)
-	return list("<span class='notice'><i>You try to read [src]...</i></span>")
+/obj/item/paper/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		if(user.is_literate())
+			ui_interact(user)
+		else
+			. += "<span class='warning'>You cannot read it!</span>"
+	else
+		. += "<span class='warning'>You're too far away to read it!</span>"
+
 
 /obj/item/paper/can_interact(mob/user)
 	if(!..())
@@ -224,7 +231,7 @@
 		get_asset_datum(/datum/asset/spritesheet/simple/paper),
 	)
 
-/obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/paper/ui_interact(mob/user, datum/tgui/ui=null)
 	// Update the UI
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -233,7 +240,7 @@
 
 
 /obj/item/paper/ui_state(mob/user)
-	return GLOB.hands_state
+	return GLOB.default_state
 
 /obj/item/paper/ui_static_data(mob/user)
 	. = list()
@@ -319,7 +326,7 @@
 		if("save")
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper)
-			var/list/fields = params["form_fields"]
+			// var/list/fields = params["form_fields"]
 			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
 
 			if(paper_len > MAX_PAPER_LENGTH)
