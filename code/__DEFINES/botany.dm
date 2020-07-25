@@ -9,4 +9,5 @@
 #define PLANT_SCANMODE_CHEMICALS 	1
 
 //Seed flags.
+///Determines if the plant should be allowed to mutate early at 30+ instability.
 #define MUTATE_EARLY	(1<<0)
