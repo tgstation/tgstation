@@ -63,7 +63,7 @@
 	auto_scan(AM)
 
 /obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
-	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM) & (!panel_open))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM) && !panel_open)
 		perform_scan(AM)
 
 /obj/machinery/scanner_gate/proc/set_scanline(type, duration)
