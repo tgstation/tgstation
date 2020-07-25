@@ -563,9 +563,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /**
   * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
   */
-/turf/wash(wash_strength)
-	..(wash_strength)
+/turf/wash(clean_types)
+	..(clean_types)
 
 	for(var/atom/AM in src)
 		if(AM != src && ismopable(AM))
-			AM.wash(wash_strength)
+			AM.wash(clean_types)

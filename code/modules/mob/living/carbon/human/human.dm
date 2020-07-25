@@ -705,15 +705,15 @@
   *
   * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
   */
-/mob/living/carbon/human/proc/wash_hands(wash_strength)
+/mob/living/carbon/human/proc/wash_hands(clean_types)
 	var/list/obscured = check_obscured_slots()
 	if(ITEM_SLOT_GLOVES in obscured)
 		return FALSE
 
 	if(gloves)
-		if(gloves.wash(wash_strength))
+		if(gloves.wash(clean_types))
 			update_inv_gloves()
-	else if(wash_strength >= CLEAN_STRENGTH_BLOOD && bloody_hands > 0)
+	else if((clean_types & CLEAN_TYPE_BLOOD) && bloody_hands > 0)
 		bloody_hands = 0
 		update_inv_gloves()
 
@@ -733,38 +733,38 @@
 /**
   * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
   */
-/mob/living/carbon/human/proc/clean_face(datum/source, strength)
+/mob/living/carbon/human/proc/clean_face(datum/source, clean_types)
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
-	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(strength))
+	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
 		update_inv_glasses()
 		. = TRUE
 
 	var/list/obscured = check_obscured_slots()
-	if(wear_mask && !(ITEM_SLOT_MASK in obscured) && wear_mask.wash(strength))
+	if(wear_mask && !(ITEM_SLOT_MASK in obscured) && wear_mask.wash(clean_types))
 		update_inv_wear_mask()
 		. = TRUE
 
 /**
   * Called when this human should be washed
   */
-/mob/living/carbon/human/wash(wash_strength)
-	. = ..(wash_strength)
+/mob/living/carbon/human/wash(clean_types)
+	. = ..(clean_types)
 
 	// Wash equipped stuff that cannot be covered
-	if(wear_suit && wear_suit.wash(wash_strength))
+	if(wear_suit && wear_suit.wash(clean_types))
 		update_inv_wear_suit()
 		. = TRUE
 
-	if(belt && belt.wash(wash_strength))
+	if(belt && belt.wash(clean_types))
 		update_inv_belt()
 		. = TRUE
 
 	// Check and wash stuff that can be covered
 	var/list/obscured = check_obscured_slots()
 
-	if(w_uniform && !(ITEM_SLOT_ICLOTHING in obscured) && w_uniform.wash(wash_strength))
+	if(w_uniform && !(ITEM_SLOT_ICLOTHING in obscured) && w_uniform.wash(clean_types))
 		update_inv_w_uniform()
 		. = TRUE
 
@@ -772,7 +772,7 @@
 		. = TRUE
 
 	// Wash hands if exposed
-	if(!gloves && wash_strength >= CLEAN_STRENGTH_BLOOD && bloody_hands > 0 && !(ITEM_SLOT_GLOVES in obscured))
+	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && bloody_hands > 0 && !(ITEM_SLOT_GLOVES in obscured))
 		bloody_hands = 0
 		update_inv_gloves()
 		. = TRUE

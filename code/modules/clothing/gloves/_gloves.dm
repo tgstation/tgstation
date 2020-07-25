@@ -11,9 +11,9 @@
 	strip_delay = 20
 	equip_delay_other = 40
 
-/obj/item/clothing/gloves/wash(wash_strength)
-	. = ..(wash_strength)
-	if(wash_strength >= CLEAN_STRENGTH_BLOOD && transfer_blood > 0)
+/obj/item/clothing/gloves/wash(clean_types)
+	. = ..(clean_types)
+	if((clean_types & CLEAN_TYPE_BLOOD) && transfer_blood > 0)
 		transfer_blood = 0
 		. = TRUE
 

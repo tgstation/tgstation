@@ -185,10 +185,10 @@
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
-	wash(CLEAN_WEAK)
+	wash(CLEAN_WASH)
 	for(var/atom/AM in src)
 		if(!ismopable(AM)) // Will already get washed by the wash call above
-			AM.wash(CLEAN_WEAK)
+			AM.wash(CLEAN_WASH)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)

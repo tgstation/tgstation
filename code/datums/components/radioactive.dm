@@ -18,7 +18,7 @@
 	can_contaminate = _can_contaminate
 	if(istype(parent, /atom))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/rad_examine)
-		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_RADIATION, .proc/rad_clean)
+		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/rad_clean)
 		if(istype(parent, /obj/item))
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/rad_attack)
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
@@ -91,11 +91,14 @@
 		return
 	strength -= strength / hl3_release_date
 
-/datum/component/radioactive/proc/rad_clean(datum/source, wash_strength)
+/datum/component/radioactive/proc/rad_clean(datum/source, clean_types)
 	if(QDELETED(src))
 		return
 
-	if(wash_strength >= CLEAN_GOD)
+	if(!(clean_types & CLEAN_TYPE_RADIATION))
+		return
+
+	if(!(clean_types & CLEAN_TYPE_WEAK))
 		qdel(src)
 		return
 

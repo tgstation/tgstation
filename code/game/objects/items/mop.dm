@@ -28,7 +28,7 @@
 	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
 		for(var/obj/effect/decal/cleanable/C in A)
 			cleaner?.mind.adjust_experience(/datum/skill/cleaning, max(round(C.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT,1),0)) //it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
-		A.wash(CLEAN_MEDIUM)
+		A.wash(CLEAN_SCRUB)
 
 	reagents.expose(A, TOUCH, 10)	//Needed for proper floor wetting.
 	var/val2remove = 1

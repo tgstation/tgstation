@@ -101,8 +101,8 @@
 			update_icon()
 			H.update_inv_shoes()
 
-/obj/effect/decal/cleanable/wash(wash_strength)
-	..(wash_strength)
+/obj/effect/decal/cleanable/wash(clean_types)
+	..(clean_types)
 	qdel(src)
 	return TRUE
 

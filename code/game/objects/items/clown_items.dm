@@ -147,7 +147,7 @@
 			if(isturf(target))
 				for(var/obj/effect/decal/cleanable/C in target)
 					user?.mind.adjust_experience(/datum/skill/cleaning, round(C.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT))
-			target.wash(CLEAN_MEDIUM)
+			target.wash(CLEAN_SCRUB)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			user?.mind.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)

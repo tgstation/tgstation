@@ -614,10 +614,8 @@
 ///(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"
 
-///Called on an object to "clean it", such as removing blood decals/overlays, etc
+///Called on an object to "clean it", such as removing blood decals/overlays, etc. The clean types bitfield is sent with it. Return TRUE if any cleaning was necessary and thus performed.
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"
-///Called on an object to cleanse it from radiation
-#define COMSIG_COMPONENT_CLEAN_RADIATION "clean_rad"
 
 //Creamed
 

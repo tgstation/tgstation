@@ -964,11 +964,11 @@
   * This will clean it off any temporary stuff like blood. Override this in your item to add custom cleaning behavior.
   * Returns true if any washing was necessary and thus performed
   * Arguments:
-  * * wash_strength: any of the CLEAN_ constants
+  * * clean_types: any of the CLEAN_ constants
   */
-/atom/proc/wash(wash_strength)
+/atom/proc/wash(clean_types)
 	. = FALSE
-	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, wash_strength))
+	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types))
 		. = TRUE
 
 	// Basically "if has washable coloration"

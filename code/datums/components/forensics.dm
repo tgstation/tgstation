@@ -51,14 +51,14 @@
 	fibers = null
 	return TRUE
 
-/datum/component/forensics/proc/clean_act(datum/source, strength)
-	if(strength >= CLEAN_STRENGTH_FINGERPRINTS)
+/datum/component/forensics/proc/clean_act(datum/source, clean_types)
+	if(clean_types & CLEAN_TYPE_FINGERPRINTS)
 		wipe_fingerprints()
 		. = TRUE
-	if(strength >= CLEAN_STRENGTH_BLOOD)
+	if(clean_types & CLEAN_TYPE_BLOOD)
 		wipe_blood_DNA()
 		. = TRUE
-	if(strength >= CLEAN_STRENGTH_FIBERS)
+	if(clean_types & CLEAN_TYPE_FIBERS)
 		wipe_fibers()
 		. = TRUE
 

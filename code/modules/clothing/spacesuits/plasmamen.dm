@@ -106,9 +106,9 @@
 	else
 		cut_overlays()
 
-/obj/item/clothing/head/helmet/space/plasmaman/wash(wash_strength)
-	. = ..(wash_strength)
-	if(smile)
+/obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types)
+	. = ..(clean_types)
+	if(smile && (clean_types & CLEAN_TYPE_PAINT))
 		smile = FALSE
 		update_icon()
 		. = TRUE

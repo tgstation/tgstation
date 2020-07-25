@@ -318,7 +318,7 @@
 
 		var/turf/T = get_turf(A)
 		if(do_after(src, 1, target = T))
-			T.wash(CLEAN_MEDIUM)
+			T.wash(CLEAN_WASH)
 			visible_message("<span class='notice'>[src] cleans \the [T].</span>")
 			target = null
 

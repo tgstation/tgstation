@@ -281,15 +281,15 @@
 
 	var/success = TRUE
 	if(washing_face)
-		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WEAK)
+		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.wash_hands(CLEAN_WEAK))
+		if(!H.wash_hands(CLEAN_WASH))
 			to_chat(user, "<span class='warning'>Your hands are covered by something!</span>")
 			success = FALSE
 	else
-		user.wash(CLEAN_WEAK)
+		user.wash(CLEAN_WASH)
 
 	if(success)
 		user.visible_message("<span class='notice'>[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src].</span>", \
@@ -358,7 +358,7 @@
 			busy = FALSE
 			return 1
 		busy = FALSE
-		O.wash(CLEAN_WEAK)
+		O.wash(CLEAN_WASH)
 		O.acid_level = 0
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)

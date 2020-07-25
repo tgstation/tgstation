@@ -297,8 +297,7 @@
 				things_to_clear += occupant
 				things_to_clear += occupant.GetAllContents()
 			for(var/atom/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				AM.wash(CLEAN_GOD)
-				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_RADIATION, CLEAN_GOD)
+				AM.wash(CLEAN_ALL)
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()

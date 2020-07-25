@@ -1111,8 +1111,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 #undef MAX_BONUS_MATS_PER_BITE
 
 // Update icons if this is being carried by a mob
-/obj/item/wash(wash_strength)
-	..(wash_strength)
+/obj/item/wash(clean_types)
+	..(clean_types)
 
 	if(ismob(loc))
 		var/mob/M = loc

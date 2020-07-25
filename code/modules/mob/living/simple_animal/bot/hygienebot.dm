@@ -234,7 +234,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 	if(emagged)
 		A.fire_act()  //lol pranked no cleaning besides that
 	else
-		A.wash(CLEAN_WEAK)
+		A.wash(CLEAN_WASH)
 
 
 

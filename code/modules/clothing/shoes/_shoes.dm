@@ -96,9 +96,9 @@
 		var/mob/M = loc
 		M.update_inv_shoes()
 
-/obj/item/clothing/shoes/wash(wash_strength)
-	. = ..(wash_strength)
-	if(wash_strength < CLEAN_STRENGTH_BLOOD || blood_state == BLOOD_STATE_NOT_BLOODY)
+/obj/item/clothing/shoes/wash(clean_types)
+	. = ..(clean_types)
+	if(!(clean_types & CLEAN_TYPE_BLOOD) || blood_state == BLOOD_STATE_NOT_BLOODY)
 		return
 	bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
