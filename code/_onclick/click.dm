@@ -145,6 +145,11 @@
 		return
 
 	//Standard reach turf to turf or reaching inside storage
+
+	//This is sent regardless of range and is primarily used for 3x3 runes so that you can use them while not standing one them.
+	SEND_SIGNAL(A, COMSIG_ATOM_ATTACKED_RANGE_IGNORE, src)
+
+
 	if(CanReach(A,W))
 		if(W)
 			W.melee_attack_chain(src, A, params)
@@ -277,6 +282,7 @@
   */
 /mob/proc/RangedAttack(atom/A, params)
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
+
 /**
   * Restrained ClickOn
   *

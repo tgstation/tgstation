@@ -38,8 +38,13 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
 
+	///Used to determine how far away can you stand and invoke the rune
+	var/usable_distance = 1
+
 /obj/effect/rune/Initialize(mapload, set_keyword)
 	. = ..()
+	RegisterSignal(src,COMSIG_ATOM_ATTACKED_RANGE_IGNORE,.proc/try_invoke)
+
 	if(set_keyword)
 		keyword = set_keyword
 	var/image/I = image(icon = 'icons/effects/blood.dmi', icon_state = null, loc = src)
@@ -66,9 +71,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
-/obj/effect/rune/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
+/obj/effect/rune/proc/try_invoke(datum/source,mob/user)
+	if(!isliving(user) || get_dist(src,user) >= usable_distance)
 		return
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>You aren't able to understand the words of [src].</span>")
@@ -116,7 +120,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(user)
 		invokers += user
 	if(req_cultists > 1 || istype(src, /obj/effect/rune/convert))
-		var/list/things_in_range = range(1, src)
+		var/list/things_in_range = range(usable_distance, src)
 		for(var/mob/living/L in things_in_range)
 			if(iscultist(L))
 				if(L == user)
@@ -461,6 +465,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	pixel_y = -32
 	scribe_delay = 500 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
+	usable_distance = 3
 	var/used = FALSE
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
@@ -883,6 +888,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
 	scribe_delay = 100
+	usable_distance = 3
 
 /obj/effect/rune/apocalypse/invoke(var/list/invokers)
 	if(rune_in_use)

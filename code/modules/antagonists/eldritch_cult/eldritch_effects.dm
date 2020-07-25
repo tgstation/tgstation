@@ -8,17 +8,15 @@
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
-/obj/effect/eldritch/attack_hand(mob/living/user)
+/obj/effect/eldritch/Initialize()
 	. = ..()
-	if(.)
-		return
-	try_activate(user)
+	RegisterSignal(src,COMSIG_ATOM_ATTACKED_RANGE_IGNORE,.proc/try_activate)
 
-/obj/effect/eldritch/proc/try_activate(mob/living/user)
-	if(!IS_HERETIC(user))
+/obj/effect/eldritch/proc/try_activate(datum/source,mob/user)
+	var/dist = get_dist(src,user)
+	if(!isliving(user) || dist > 2 || !IS_HERETIC(user) || is_in_use)
 		return
-	if(!is_in_use)
-		INVOKE_ASYNC(src, .proc/activate , user)
+	INVOKE_ASYNC(src, .proc/activate , user)
 
 /obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
