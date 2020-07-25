@@ -62,7 +62,7 @@
 		var/threshold_penalty = 0
 
 		for(iter_test_wound in iter_test_wound_list)
-			var/threshold = initial(iter_test_wound.threshold_minimum) - threshold_penalty // just enough to guarantee the next tier of wound,
+			var/threshold = initial(iter_test_wound.threshold_minimum) - threshold_penalty // just enough to guarantee the next tier of wound, given the existing wound threshold penalty
 			if(dam_types[i] == BRUTE)
 				tested_part.receive_damage(WOUND_MINIMUM_DAMAGE, 0, wound_bonus = threshold, sharpness=sharps[i])
 			else if(dam_types[i] == BURN)
