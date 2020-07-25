@@ -1063,24 +1063,25 @@
 	color = "#A5F0EE" // rgb: 165, 240, 238
 	taste_description = "sourness"
 	reagent_weight = 0.6 //so it sprays further
+	var/clean_strength = CLEAN_WEAK
 
 /datum/reagent/space_cleaner/expose_obj(obj/O, reac_volume)
 	if(O)
-		O.wash(CLEAN_WEAK)
+		O.wash(clean_strength)
 
 /datum/reagent/space_cleaner/expose_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
-		T.wash(CLEAN_WEAK)
+		T.wash(clean_strength)
 		for(var/atom/AM in T)
-			if(!ismopable(AM)) // Mopables be cleaned anyways by the turf wash
-				AM.wash(CLEAN_WEAK)
+			if(!ismopable(AM)) // Mopables will be cleaned anyways by the turf wash
+				AM.wash(clean_strength)
 
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
 
 /datum/reagent/space_cleaner/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.wash(CLEAN_WEAK)
+		M.wash(clean_strength)
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"
