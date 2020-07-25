@@ -165,18 +165,26 @@
 	else
 		. += "<span class='warning'>You're too far away to read it!</span>"
 
-
-/obj/item/paper/can_interact(mob/user)
-	if(!..())
-		return FALSE
-	// Are we on fire?  Hard ot read if so
+/obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+		// Are we on fire?  Hard ot read if so
+	if(in_contents_of(/obj/machinery/door/airlock))
+		return UI_INTERACTIVE
 	if(resistance_flags & ON_FIRE)
-		return FALSE
+		return UI_CLOSE
 	// Even harder to read if your blind...braile? humm
 	if(user.is_blind())
-		return FALSE
-	// checks if the user can read.
-	return user.can_read(src)
+		return UI_CLOSE
+	// .. or if you cannot read
+	if(!user.can_read(src))
+		return UI_CLOSE
+	return ..()
+
+
+
+/obj/item/paper/can_interact(mob/user)
+	if(in_contents_of(/obj/machinery/door/airlock))
+		return TRUE
+	. = ..()
 
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
