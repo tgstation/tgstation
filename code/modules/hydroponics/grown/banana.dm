@@ -61,6 +61,11 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	bound_x = 9
+	bound_width = 14
+	bound_height = 10
+	bound_y = 12
+	brotation = NONE
 
 /obj/item/grown/bananapeel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

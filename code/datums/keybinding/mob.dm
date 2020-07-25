@@ -169,10 +169,14 @@
 	name = "toggle_move_carefully"
 	full_name = "Hold to move carefully"
 	description = "Held down to move slowly and accurately, release to move fast again"
+	keybind_signal = COMSIG_KB_MOB_MOVECAREFULLY_DOWN
 	/// for updating selector icon
 	var/last_intent
 
 /datum/keybinding/mob/toggle_move_carefully/down(client/user)
+	. = ..()
+	if(.)
+		return
 	var/mob/M = user.mob
 	M.add_movespeed_modifier(/datum/movespeed_modifier/move_carefully, TRUE)
 	last_intent = M.m_intent

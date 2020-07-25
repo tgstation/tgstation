@@ -80,13 +80,13 @@
   * This proc gets all the turfs that the movable is touching
   * and compares them by their pixel distance to the movable
   * Arguments:
-  * * turf - turf the movable is on
+  * * AM - movable that we need to find the closest turf to
   */
-/atom/movable/proc/nearest_turf(var/turf)
+/proc/nearest_turf(atom/movable/AM)
 	var/lowest_diff = 0
-	var/turf/lowest = turf
-	for(var/turf/T in locs)
-		var/diff = bounds_dist(src, T)
+	var/turf/lowest = get_turf(AM)
+	for(var/turf/T in AM.locs)
+		var/diff = bounds_dist(AM, T)
 		if(diff < lowest_diff)
 			lowest_diff = diff
 			lowest = T
