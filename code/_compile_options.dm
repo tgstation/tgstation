@@ -16,13 +16,13 @@
 *
 * * Requires TESTING to be defined to work.
 */
-#define REFERENCE_TRACKING
+//#define REFERENCE_TRACKING
 
 ///Method of tracking references without using extools. Slower, kept to avoid over-reliance on extools.
-//define LEGACY_REFERENCE_TRACKING
+//#define LEGACY_REFERENCE_TRACKING
 #ifdef LEGACY_REFERENCE_TRACKING
 ///Use the legacy reference on things hard deleting by default.
-//define GC_FAILURE_HARD_LOOKUP
+//#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
 #define FIND_REF_NO_CHECK_TICK
 #endif

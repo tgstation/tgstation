@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 	find_references(FALSE)
 
 
-/datum/proc/find_references(skip_alert)
+/datum/proc/find_references_legacy(skip_alert)
 	running_find_references = type
 	if(usr?.client)
 		if(usr.client.running_find_references)
@@ -189,14 +189,19 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 			if(element_in_list == src)
 				testing("Found [type] \ref[src] in list [container_name].")
 
-			else if(element_in_list && !isnum(element_in_list) && normal && X[element_in_list] == src)
+			else if(element_in_list && !isnum(element_in_list) && normal && potential_container[element_in_list] == src)
 				testing("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
 
 			else if(islist(element_in_list))
 				DoSearchVar(element_in_list, "[container_name] -> list", recursive_limit - 1)
 
-#ifndef FIND_REF_NO_CHECK_TICK
+	#ifndef FIND_REF_NO_CHECK_TICK
 	CHECK_TICK
-#endif
+	#endif
+
+
+/proc/qdel_and_find_ref_if_fail(datum/thing_to_del, force = FALSE)
+	SSgarbage.reference_find_on_fail[REF(thing_to_del)] = TRUE
+	qdel(thing_to_del, force)
 
 #endif
