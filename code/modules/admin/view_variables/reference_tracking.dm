@@ -82,6 +82,25 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 	popup.set_content(dat)
 	popup.open(FALSE)
 
+
+/datum/proc/find_references()
+	testing("Beginning search for references to a [type].")
+	var/list/backrefs = get_back_references(src)
+	for(var/ref in backrefs)
+		if(isnull(ref))
+			log_world("## TESTING: Datum reference found, but gone now.")
+			continue
+		if(islist(ref))
+			log_world("## TESTING: Found [type] \ref[src] in list.")
+			continue
+		var/datum/datum_ref = ref
+		if(!istype(datum_ref))
+			log_world("## TESTING: Found [type] \ref[src] in unknown type reference: [datum_ref].")
+			return
+		log_world("## TESTING: Found [type] \ref[src] in [datum_ref.type][datum_ref.gc_destroyed ? " (destroyed)" : ""]")
+		message_admins("Found [type] \ref[src] [ADMIN_VV(src)] in [datum_ref.type][datum_ref.gc_destroyed ? " (destroyed)" : ""] [ADMIN_VV(datum_ref)]")
+	testing("Completed search for references to a [type].")
+
 #endif
 
 #ifdef LEGACY_REFERENCE_TRACKING
