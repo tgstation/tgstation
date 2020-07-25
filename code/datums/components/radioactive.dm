@@ -102,7 +102,7 @@
 		qdel(src)
 		return
 
-	strength -= max(0, (strength - (RAD_BACKGROUND_RADIATION * 2)))
+	strength = max(0, (strength - (RAD_BACKGROUND_RADIATION * 2)))
 	if(strength <= RAD_BACKGROUND_RADIATION)
 		qdel(src)
 
