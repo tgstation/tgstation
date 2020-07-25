@@ -101,7 +101,7 @@
 			return..()
 		if(CLOTHING_DAMAGED)
 			var/obj/item/stack/cloth_repair = W
-			cloth_repair.user(1)
+			cloth_repair.use(1)
 			repair(user, params)
 			return TRUE
 		if(CLOTHING_SHREDDED)
