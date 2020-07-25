@@ -167,9 +167,10 @@
 
 /datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/seed)
 	for(var/datum/plant_gene/reagent/reagent in seed.genes)
-		if(reagent.reagent_id == reagent_id && reagent.rate > rate)
-			rate = reagent.rate
-			return TRUE
+		if(reagent.reagent_id != reagent_id || reagent.rate <= rate)
+			continue
+		rate = reagent.rate
+		return TRUE
 	return FALSE
 
 /datum/plant_gene/reagent/polypyr

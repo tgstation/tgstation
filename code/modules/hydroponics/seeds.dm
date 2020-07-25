@@ -211,7 +211,7 @@
 		product_count = clamp(round(product_count/2),0,5)
 	while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod
-		if(instability >= 30 && prob(instability/3) && length(mutatelist) && !(seed_flags & NO_MUTATE_EARLY))
+		if(instability >= 30 && !(seed_flags & NO_MUTATE_EARLY) && length(mutatelist) && prob(instability/3))
 			var/obj/item/seeds/new_prod = pick(mutatelist)
 			t_prod = initial(new_prod.product)
 			if(!t_prod)
