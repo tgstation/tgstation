@@ -160,7 +160,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	else if(href_list["ejectsheet"])
 		var/datum/material/eject_sheet = locate(href_list["ejectsheet"])
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
+		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location()[1])
 		var/list/matlist = list()
 		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
 		silo_log(src, "ejected", -count, "sheets", matlist)

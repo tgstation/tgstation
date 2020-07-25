@@ -73,10 +73,12 @@
 	. = ..()
 	transfer_blood = rand(2, 4)
 
-/turf/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+/turf/add_blood_DNA(list/blood_dna, list/datum/disease/diseases, mob/M)
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(src, diseases)
+		if(M)
+			B.forceStep(M)
 	B.add_blood_DNA(blood_dna) //give blood info to the blood decal.
 	return TRUE //we bloodied the floor
 

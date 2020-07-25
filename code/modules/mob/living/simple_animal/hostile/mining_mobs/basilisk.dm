@@ -9,14 +9,14 @@
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	move_to_delay = 20
+	move_to_delay = 0.2
 	projectiletype = /obj/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
 	ranged_cooldown_time = 30
 	throw_message = "does nothing against the hard shell of"
-	vision_range = 2
+	vision_range = 64
 	speed = 3
 	maxHealth = 200
 	health = 200
@@ -28,7 +28,7 @@
 	attack_verb_simple = "bite into"
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	aggro_vision_range = 9
+	aggro_vision_range = 288
 	turns_per_move = 5
 	gold_core_spawnable = HOSTILE_SPAWN
 	loot = list(/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER},

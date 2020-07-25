@@ -261,6 +261,11 @@
 	name = "disposal unit"
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
+	bound_x = 10
+	bound_y = 2
+	bound_height = 20
+	bound_width = 16
+
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
@@ -442,6 +447,10 @@
 	density = TRUE
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
+	bound_x = 7
+	bound_y = 3
+	bound_width = 19
+	bound_height = 22
 
 /obj/machinery/disposal/delivery_chute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -457,19 +466,8 @@
 /obj/machinery/disposal/delivery_chute/Bumped(atom/movable/AM) //Go straight into the chute
 	if(QDELETED(AM) || !AM.CanEnterDisposals())
 		return
-	switch(dir)
-		if(NORTH)
-			if(AM.loc.y != loc.y+1)
-				return
-		if(EAST)
-			if(AM.loc.x != loc.x+1)
-				return
-		if(SOUTH)
-			if(AM.loc.y != loc.y-1)
-				return
-		if(WEST)
-			if(AM.loc.x != loc.x-1)
-				return
+	if(!(get_step(loc, dir) in AM.locs))
+		return
 
 	if(isobj(AM))
 		var/obj/O = AM

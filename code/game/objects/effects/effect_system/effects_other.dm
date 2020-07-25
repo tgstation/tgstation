@@ -7,7 +7,7 @@
 /////////////////////////////////////////////
 
 /datum/effect_system/trail_follow
-	var/turf/oldposition
+	var/cooldown
 	var/active = FALSE
 	var/allow_overlap = FALSE
 	var/auto_process = TRUE
@@ -18,21 +18,17 @@
 
 /datum/effect_system/trail_follow/set_up(atom/atom)
 	attach(atom)
-	oldposition = get_turf(atom)
 
 /datum/effect_system/trail_follow/Destroy()
-	oldposition = null
 	stop()
 	return ..()
 
 /datum/effect_system/trail_follow/proc/stop()
-	oldposition = null
 	STOP_PROCESSING(SSfastprocess, src)
 	active = FALSE
 	return TRUE
 
 /datum/effect_system/trail_follow/start()
-	oldposition = get_turf(holder)
 	if(!check_conditions())
 		return FALSE
 	if(auto_process)
@@ -46,16 +42,21 @@
 /datum/effect_system/trail_follow/generate_effect()
 	if(!check_conditions())
 		return stop()
-	if(oldposition && !(oldposition == get_turf(holder)))
-		if(!oldposition.has_gravity() || !nograv_required)
-			var/obj/effect/E = new effect_type(oldposition)
+	if(cooldown < world.time)
+		if(!holder.has_gravity() || !nograv_required)
+			if(ismovable(holder))
+				var/atom/movable/AM = holder
+				stepx = AM.step_x
+				stepy = AM.step_y
+			var/obj/effect/E = new effect_type(get_turf(holder))
+			E.forceMove(E.loc, stepx, stepy)
 			set_dir(E)
 			if(fade)
 				flick(fadetype, E)
 				E.icon_state = ""
 			if(qdel_in_time)
 				QDEL_IN(E, qdel_in_time)
-	oldposition = get_turf(holder)
+			cooldown = world.time + 0.5 SECONDS
 
 /datum/effect_system/trail_follow/proc/check_conditions()
 	if(!get_turf(holder))

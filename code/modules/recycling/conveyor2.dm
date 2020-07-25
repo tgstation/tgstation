@@ -56,11 +56,18 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		setDir(newdir)
 	if(newid)
 		id = newid
+	STOP_PROCESSING(SSfastprocess, src)
+	for(var/i in loc.contents)
+		if(i == src)
+			continue
+		RegisterMover(i)
 	update_move_direction()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/Destroy()
+	STOP_PROCESSING(SSconveyors, src)
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
+	affecting = null
 	. = ..()
 
 /obj/machinery/conveyor/vv_edit_var(var_name, var_value)
@@ -71,6 +78,15 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		LAZYADD(GLOB.conveyors_by_id[id], src)
 	else
 		return ..()
+
+/obj/machinery/conveyor/Moved(atom/OldLoc, Dir)
+	. = ..()
+	for(var/i in affecting)
+		UnregisterMover(i)
+	for(var/i in loc.contents)
+		if(i == src)
+			continue
+		RegisterMover(i)
 
 /obj/machinery/conveyor/setDir(newdir)
 	. = ..()
@@ -124,6 +140,47 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		update_icon()
 		return FALSE
 	return TRUE
+
+/**
+  * Adds movables that cross over the conveyor belt to affecting list
+  *
+  * The conveyor starts processing when there are people in the affecting list
+  * Arguments:
+  * * mover - the movable that crossed us
+  */
+/obj/machinery/conveyor/proc/RegisterMover(atom/movable/mover)
+	RegisterSignal(mover, COMSIG_PARENT_QDELETING, .proc/UnregisterMover)
+	if(!affecting)
+		affecting = list()
+	if(!mover.anchored && mover.has_gravity())
+		affecting += mover
+	if(LAZYLEN(affecting))
+		START_PROCESSING(SSconveyors, src)
+
+/**
+  * Removes movables that leave the conveyor belt from the affecting list
+  *
+  * The conveyor stops processing when there are no more movables on it
+  * Arguments:
+  * * mover - the movable that left us
+  */
+/obj/machinery/conveyor/proc/UnregisterMover(atom/movable/mover)
+	UnregisterSignal(mover, COMSIG_PARENT_QDELETING)
+	if(!affecting) // Some stuff like decal spawners get removed before init has happened
+		return
+	walk(mover, 0)
+	affecting -= mover
+	if(!length(affecting))
+		affecting = null
+		STOP_PROCESSING(SSconveyors, src)
+
+/obj/machinery/conveyor/Crossed(atom/movable/AM, oldloc)
+	. = ..()
+	RegisterMover(AM)
+
+/obj/machinery/conveyor/Uncrossed(atom/movable/AM)
+	. = ..()
+	UnregisterMover(AM)
 
 // machine process
 // move items to the target location
@@ -193,7 +250,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(.)
 		return
-	user.Move_Pulled(src)
+	user.Move_Pulled(src, user.client?.mouseParams)
 
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID

@@ -162,7 +162,7 @@ All the important duct code:
 	reset_connects(0)
 	update_icon()
 	if(ispath(drop_on_wrench) && !QDELING(src))
-		new drop_on_wrench(drop_location())
+		new drop_on_wrench(drop_location()[1])
 		qdel(src)
 
 ///''''''''''''''''optimized''''''''''''''''' proc for quickly reconnecting after a duct net was destroyed

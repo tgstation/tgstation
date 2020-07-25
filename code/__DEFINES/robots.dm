@@ -4,7 +4,7 @@
 
 //Bot defines, placed here so they can be read by other things!
 #define BOT_STEP_DELAY 4 //Delay between movemements
-#define BOT_STEP_MAX_RETRIES 5 //Maximum times a bot will retry to step from its position
+#define BOT_STEP_MAX_RETRIES 15 //Maximum times a bot will retry to step from its position
 
 #define DEFAULT_SCAN_RANGE		7	//default view range for finding targets.
 

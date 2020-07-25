@@ -109,7 +109,7 @@
 		return ..()
 	else
 		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line
-		var/list/searched_for = oview(vision_range, targets_from)
+		var/list/searched_for = oview((vision_range / PIXELS), targets_from)
 		for(var/obj/A in searched_for)
 			. += A
 		for(var/mob/A in searched_for)
@@ -233,7 +233,7 @@
 					wanted_objects |= beehometypecache //so we don't attack beeboxes when not going home
 					target = beehome
 	if(!beehome) //add outselves to a beebox (of the same reagent) if we have no home
-		for(var/obj/structure/beebox/BB in view(vision_range, src))
+		for(var/obj/structure/beebox/BB in view((vision_range / PIXELS), src))
 			if(reagent_incompatible(BB.queen_bee) || BB.bees.len >= BB.get_max_bees())
 				continue
 			BB.bees |= src
@@ -294,7 +294,7 @@
 		if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly)) //checked twice, because I really don't want royal bee jelly to be duped
 			if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly,5))
 				S.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
-				var/obj/item/queen_bee/qb = new(user.drop_location())
+				var/obj/item/queen_bee/qb = new(user.drop_location()[1])
 				qb.queen = new(qb)
 				if(queen && queen.beegent)
 					qb.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.

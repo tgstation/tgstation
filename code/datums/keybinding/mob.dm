@@ -164,6 +164,33 @@
 		user.mob.dropItemToGround(I)
 	return TRUE
 
+/datum/keybinding/mob/toggle_move_carefully
+	hotkey_keys = list("Shift")
+	name = "toggle_move_carefully"
+	full_name = "Hold to move carefully"
+	description = "Held down to move slowly and accurately, release to move fast again"
+	/// for updating selector icon
+	var/last_intent
+
+/datum/keybinding/mob/toggle_move_carefully/down(client/user)
+	var/mob/M = user.mob
+	M.add_movespeed_modifier(/datum/movespeed_modifier/move_carefully, TRUE)
+	last_intent = M.m_intent
+	M.m_intent = MOVE_INTENT_CRAWL
+	if(M.hud_used && M.hud_used.static_inventory)
+		for(var/obj/screen/mov_intent/selector in M.hud_used.static_inventory)
+			selector.update_icon()
+	return TRUE
+
+/datum/keybinding/mob/toggle_move_carefully/up(client/user)
+	var/mob/M = user.mob
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/move_carefully, TRUE)
+	M.m_intent = last_intent
+	if(M.hud_used && M.hud_used.static_inventory)
+		for(var/obj/screen/mov_intent/selector in M.hud_used.static_inventory)
+			selector.update_icon()
+	return TRUE
+
 /datum/keybinding/mob/toggle_move_intent
 	hotkey_keys = list("Alt")
 	name = "toggle_move_intent"

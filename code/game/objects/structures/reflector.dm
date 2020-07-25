@@ -5,6 +5,11 @@
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
+	bound_x = 8
+	bound_y = 8
+	bound_width = 16
+	bound_height = 16
+	brotation = NONE
 	var/deflector_icon_state
 	var/image/deflector_overlay
 	var/finished = FALSE
@@ -69,6 +74,8 @@
 	P.ignore_source_check = TRUE
 	P.range = P.decayedRange
 	P.decayedRange = max(P.decayedRange--, 0)
+	P.loc = loc
+	P.forceStep(src) // reset offsets to whatever the reflectors set to
 	return BULLET_ACT_FORCE_PIERCE
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
@@ -88,9 +95,9 @@
 		user.visible_message("<span class='notice'>[user] starts to dismantle [src].</span>", "<span class='notice'>You start to dismantle [src]...</span>")
 		if(W.use_tool(src, user, 80, volume=50))
 			to_chat(user, "<span class='notice'>You dismantle [src].</span>")
-			new framebuildstacktype(drop_location(), framebuildstackamount)
+			new framebuildstacktype(drop_location()[1], framebuildstackamount)
 			if(buildstackamount)
-				new buildstacktype(drop_location(), buildstackamount)
+				new buildstacktype(drop_location()[1], buildstackamount)
 			qdel(src)
 	else if(W.tool_behaviour == TOOL_WELDER)
 		if(obj_integrity < max_integrity)
@@ -133,21 +140,21 @@
 		var/obj/item/stack/sheet/S = W
 		if(istype(S, /obj/item/stack/sheet/glass))
 			if(S.use(5))
-				new /obj/structure/reflector/single(drop_location())
+				new /obj/structure/reflector/single(drop_location()[1])
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You need five sheets of glass to create a reflector!</span>")
 				return
 		if(istype(S, /obj/item/stack/sheet/rglass))
 			if(S.use(10))
-				new /obj/structure/reflector/double(drop_location())
+				new /obj/structure/reflector/double(drop_location()[1])
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
 				return
 		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
 			if(S.use(1))
-				new /obj/structure/reflector/box(drop_location())
+				new /obj/structure/reflector/box(drop_location()[1])
 				qdel(src)
 	else
 		return ..()

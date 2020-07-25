@@ -49,7 +49,7 @@ handles linking back and forth.
 	else if (mat_container)
 		// specify explicitly in case the other component is deleted first
 		var/atom/P = parent
-		mat_container.retrieve_all(P.drop_location())
+		mat_container.retrieve_all(P.drop_location()[1])
 	return ..()
 
 /datum/component/remote_materials/proc/_MakeLocal()

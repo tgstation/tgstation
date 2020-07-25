@@ -21,7 +21,7 @@
 				to_chat(user, "<span class='notice'>You start deconstructing the frame...</span>")
 				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
-					var/obj/item/stack/sheet/metal/M = new (drop_location(), 5)
+					var/obj/item/stack/sheet/metal/M = new (drop_location()[1], 5)
 					M.add_fingerprint(user)
 					qdel(src)
 				return
@@ -85,7 +85,7 @@
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 2
 				icon_state = "2"
-				var/obj/item/stack/cable_coil/A = new (drop_location(), 5)
+				var/obj/item/stack/cable_coil/A = new (drop_location()[1], 5)
 				A.add_fingerprint(user)
 				return
 
@@ -107,7 +107,7 @@
 				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				state = 3
 				icon_state = "3"
-				var/obj/item/stack/sheet/glass/G = new(drop_location(), 2)
+				var/obj/item/stack/sheet/glass/G = new(drop_location()[1], 2)
 				G.add_fingerprint(user)
 				return
 			if(P.tool_behaviour == TOOL_SCREWDRIVER)
@@ -125,10 +125,10 @@
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(state == 4)
-			new /obj/item/shard(drop_location())
-			new /obj/item/shard(drop_location())
+			new /obj/item/shard(drop_location()[1])
+			new /obj/item/shard(drop_location()[1])
 		if(state >= 3)
-			new /obj/item/stack/cable_coil(drop_location(), 5)
+			new /obj/item/stack/cable_coil(drop_location()[1], 5)
 	..()
 
 /obj/structure/frame/computer/AltClick(mob/user)

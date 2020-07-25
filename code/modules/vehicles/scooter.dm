@@ -15,8 +15,8 @@
 	..()
 	to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
 	if(I.use_tool(src, user, 40, volume=50))
-		var/obj/vehicle/ridden/scooter/skateboard/S = new(drop_location())
-		new /obj/item/stack/rods(drop_location(), 2)
+		var/obj/vehicle/ridden/scooter/skateboard/S = new(drop_location()[1])
+		new /obj/item/stack/rods(drop_location()[1], 2)
 		to_chat(user, "<span class='notice'>You remove the handlebars from [src].</span>")
 		if(has_buckled_mobs())
 			var/mob/living/carbon/H = buckled_mobs[1]
@@ -216,7 +216,7 @@
 /obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/I)
 	..()
 	to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
-	new /obj/item/stack/rods(drop_location(), 10)
+	new /obj/item/stack/rods(drop_location()[1], 10)
 	I.play_tool_sound(src)
 	qdel(src)
 	return TRUE
@@ -243,8 +243,8 @@
 	to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		to_chat(user, "<span class='notice'>You deconstruct the wheels on [src].</span>")
-		new /obj/item/stack/sheet/metal(drop_location(), 5)
-		new /obj/item/scooter_frame(drop_location())
+		new /obj/item/stack/sheet/metal(drop_location()[1], 5)
+		new /obj/item/scooter_frame(drop_location()[1])
 		if(has_buckled_mobs())
 			var/mob/living/carbon/H = buckled_mobs[1]
 			unbuckle_mob(H)

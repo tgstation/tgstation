@@ -10,8 +10,15 @@
 	allowed_area = A.name
 	. = ..()
 
-/mob/camera/ai_eye/remote/xenobio/setLoc(var/t)
-	var/area/new_area = get_area(t)
+/mob/camera/ai_eye/remote/xenobio/setLoc(atom/T, force_update, _pixel_x, _pixel_y)
+	var/area/new_area = get_area(T)
+	if(new_area && new_area.name == allowed_area || new_area && new_area.xenobiology_compatible)
+		return ..()
+	else
+		return
+
+/mob/camera/ai_eye/remote/xenobio/relaymove(mob/user, direct)
+	var/area/new_area = get_area(get_step(src, direct))
 	if(new_area && new_area.name == allowed_area || new_area && new_area.xenobiology_compatible)
 		return ..()
 	else
@@ -183,7 +190,7 @@
 			else
 				playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
 				visible_message("<span class='notice'>You insert [E] into a slot on the [src]. It pings and prints out some research notes worth [E.research] points!</span>")
-				new /obj/item/research_notes(drop_location(), E.research, "xenobiology")
+				new /obj/item/research_notes(drop_location()[1], E.research, "xenobiology")
 				SSresearch.slime_already_researched[E.type] = TRUE
 				qdel(O)
 				return

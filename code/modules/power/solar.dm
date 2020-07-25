@@ -221,7 +221,7 @@
 
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 	if(device_broken)
 		new /obj/item/shard(Tsec)
 		new /obj/item/shard(Tsec)

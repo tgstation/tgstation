@@ -374,6 +374,9 @@
 			icon_state = "walking"
 		if(MOVE_INTENT_RUN)
 			icon_state = "running"
+		if(MOVE_INTENT_CRAWL)
+			icon_state = "crawling"
+
 
 /obj/screen/mov_intent/proc/toggle(mob/user)
 	if(isobserver(user))

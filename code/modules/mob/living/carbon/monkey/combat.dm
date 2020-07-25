@@ -37,14 +37,15 @@
 			for(var/i = 0; i < maxStepsTick; ++i)
 				if(!IsDeadOrIncap())
 					if(myPath.len >= 1)
-						walk_to(src,myPath[1],0,5)
-						myPath -= myPath[1]
+						walk_to(src,myPath[1],0)
+						qdel(myPath[1])
+						myPath.Cut(1, 2)
+			walk_to(src, target) // we pathed to the waypoint now head straight for the target
 			return 1
 
 	// failed to path correctly so just try to head straight for a bit
-	walk_to(src,get_turf(target),0,5)
-	sleep(1)
-	walk_to(src,0)
+	QDEL_LIST(myPath)
+	walk_for(src, get_dir(loc, get_turf(target)), until=0.5 SECONDS)
 
 	return 0
 
@@ -238,8 +239,8 @@
 					return TRUE
 
 				else								// not next to perp
-					var/turf/olddist = get_dist(src, target)
-					if((get_dist(src, target)) >= (olddist))
+					var/turf/olddist = bounds_dist(src, target)
+					if((bounds_dist(src, target)) >= (olddist))
 						frustration++
 					else
 						frustration = 0
@@ -256,7 +257,7 @@
 					target = L
 
 			if(target != null)
-				walk_away(src, target, MONKEY_ENEMY_VISION, 5)
+				walk_away(src, target, MONKEY_ENEMY_VISION)
 			else
 				back_to_idle()
 

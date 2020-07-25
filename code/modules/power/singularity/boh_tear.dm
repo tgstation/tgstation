@@ -6,11 +6,14 @@
 	desc = "Your own comprehension of reality starts bending as you stare this."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "boh_tear"
+	bound_width = 96
+	bound_height = 96
 	pixel_x = -32
 	pixel_y = -32
+	bound_x = -32
+	bound_y = -32
 	dissipate = 0
 	move_self = 0
-	consume_range = 1
 	grav_pull = 25
 	current_size = STAGE_SIX
 	allowed_size = STAGE_SIX

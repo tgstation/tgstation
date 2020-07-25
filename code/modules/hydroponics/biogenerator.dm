@@ -223,7 +223,7 @@
 		if(!check_cost(D.materials, amount))
 			return FALSE
 
-		new D.build_path(drop_location(), amount)
+		new D.build_path(drop_location()[1], amount)
 		for(var/R in D.make_reagents)
 			beaker.reagents.add_reagent(R, D.make_reagents[R]*amount)
 	else

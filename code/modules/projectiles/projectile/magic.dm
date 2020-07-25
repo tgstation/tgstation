@@ -337,9 +337,9 @@
 		else
 			var/obj/O = src
 			if(istype(O, /obj/item/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location()[1], src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy(drop_location()[1], src, owner)
 
 	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
@@ -637,7 +637,7 @@
 
 /obj/projectile/magic/aoe/lightning/fire(setAngle)
 	if(caster)
-		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY)
 	..()
 
 /obj/projectile/magic/aoe/lightning/on_hit(target)

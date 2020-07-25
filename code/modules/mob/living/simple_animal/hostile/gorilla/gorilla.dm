@@ -89,7 +89,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/gib(no_brain)
 	if(!no_brain)
-		var/mob/living/brain/B = new(drop_location())
+		var/mob/living/brain/B = new(drop_location()[1])
 		B.name = real_name
 		B.real_name = real_name
 		if(mind)

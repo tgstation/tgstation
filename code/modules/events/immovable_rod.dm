@@ -70,9 +70,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(T.z == z_original)
 			special_target_valid = TRUE
 	if(special_target_valid)
-		walk_towards(src, special_target, 1)
+		walk_towards(src, special_target, 1, 32)
 	else if(end && end.z==z_original)
-		walk_towards(src, destination, 1)
+		walk_towards(src, destination, 1, 32)
 
 /obj/effect/immovablerod/Topic(href, href_list)
 	if(href_list["orbit"])
@@ -84,19 +84,22 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	GLOB.poi_list -= src
 	. = ..()
 
-/obj/effect/immovablerod/Moved()
-	if((z != z_original) || (loc == destination))
-		qdel(src)
-	if(special_target && loc == get_turf(special_target))
-		complete_trajectory()
-	return ..()
+/obj/effect/immovablerod/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(.)
+		if((z != z_original) || (destination in locs))
+			qdel(src)
+		if(OldLoc != loc)
+			if(special_target && (get_turf(special_target) in locs))
+				complete_trajectory()
 
 /obj/effect/immovablerod/proc/complete_trajectory()
 	//We hit what we wanted to hit, time to go
-	special_target = null
-	destination = get_edge_target_turf(src, dir)
+	destination = get_turf(special_target)
+	if(!destination)
+		destination = get_edge_target_turf(src, dir)
 	walk(src,0)
-	walk_towards(src, destination, 1)
+	walk_towards(src, destination, 1, 32)
 
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0
@@ -108,6 +111,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	return
 
 /obj/effect/immovablerod/Bump(atom/clong)
+	if(QDELETED(src))
+		return
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		audible_message("<span class='danger'>You hear a CLANG!</span>")
@@ -117,7 +122,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		y = clong.y
 
 	if(special_target && clong == special_target)
-		complete_trajectory()
+		special_target = null
+
 
 	if(isturf(clong) || isobj(clong))
 		if(clong.density)
@@ -136,6 +142,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		smoke.start()
 		qdel(src)
 		qdel(other)
+	addtimer(CALLBACK(src, .proc/complete_trajectory), 1)
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/L)
 	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
@@ -162,6 +169,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			else
 				U.client.give_award(/datum/award/achievement/misc/feat_of_strength, U) //rod-form wizards would probably make this a lot easier to get so keep it to regular rods only
 				U.visible_message("<span class='boldwarning'>[U] suplexes [src] into the ground!</span>", "<span class='warning'>You suplex [src] into the ground!</span>")
-				new /obj/structure/festivus/anchored(drop_location())
-				new /obj/effect/anomaly/flux(drop_location())
+				new /obj/structure/festivus/anchored(drop_location()[1])
+				new /obj/effect/anomaly/flux(drop_location()[1])
 				qdel(src)

@@ -218,7 +218,7 @@
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/effect/dumpeet_target/proc/startLaunch()
-	DF = new /obj/effect/dumpeet_fall(drop_location())
+	DF = new /obj/effect/dumpeet_fall(drop_location()[1])
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)

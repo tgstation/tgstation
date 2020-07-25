@@ -56,7 +56,7 @@
 
 		var/list/selected_atoms = list()
 
-		if(!current_eldritch_knowledge.recipe_snowflake_check(atoms_in_range,drop_location(),selected_atoms))
+		if(!current_eldritch_knowledge.recipe_snowflake_check(atoms_in_range,drop_location()[1],selected_atoms))
 			continue
 
 		for(var/LR in local_required_atoms)
@@ -263,7 +263,7 @@
 		minds -= cultie
 	GLOB.reality_smash_track.smashes -= src
 	img = null
-	new /obj/effect/broken_illusion(drop_location())
+	new /obj/effect/broken_illusion(drop_location()[1])
 
 ///Makes the mind able to see this effect
 /obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)

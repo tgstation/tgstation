@@ -301,7 +301,7 @@
 	if(!closest_atom)
 		return
 	//common stuff
-	source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
+	source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5)
 	if(!(zap_flags & ZAP_ALLOW_DUPLICATES))
 		LAZYSET(shocked_targets, closest_atom, TRUE)
 	var/zapdir = get_dir(source, closest_atom)

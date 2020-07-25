@@ -243,7 +243,7 @@
 	if(state != STATE_WIRED)
 		return
 
-	new /obj/item/stack/cable_coil(drop_location(), 2)
+	new /obj/item/stack/cable_coil(drop_location()[1], 2)
 	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You cut the wires from the circuits.</span>")
 	state = STATE_WELDED
@@ -255,7 +255,7 @@
 		return
 	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You detach [src] from its place.</span>")
-	new /obj/item/wallframe/camera(drop_location())
+	new /obj/item/wallframe/camera(drop_location()[1])
 	//drop upgrades
 	if(xray_module)
 		drop_upgrade(xray_module)

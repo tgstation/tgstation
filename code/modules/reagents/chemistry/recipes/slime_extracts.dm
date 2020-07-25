@@ -418,7 +418,7 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/renaming/on_reaction(datum/reagents/holder)
-	new /obj/item/slimepotion/slime/renaming(holder.my_atom.drop_location())
+	new /obj/item/slimepotion/slime/renaming(holder.my_atom.drop_location()[1])
 	..()
 
 

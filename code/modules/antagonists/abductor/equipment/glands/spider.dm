@@ -10,5 +10,5 @@
 /obj/item/organ/heart/gland/spiderman/activate()
 	to_chat(owner, "<span class='warning'>You feel something crawling in your skin.</span>")
 	owner.faction |= "spiders"
-	var/obj/structure/spider/spiderling/S = new(owner.drop_location())
+	var/obj/structure/spider/spiderling/S = new(owner.drop_location()[1])
 	S.directive = "Protect your nest inside [owner.real_name]."

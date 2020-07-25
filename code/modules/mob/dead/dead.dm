@@ -34,13 +34,16 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/ConveyorMove()	//lol
 	return
 
-/mob/dead/forceMove(atom/destination)
+/mob/dead/forceMove(atom/destination, _step_x, _step_y)
+	NORMALIZE_STEP(destination, _step_x, _step_y)
 	var/turf/old_turf = get_turf(src)
 	var/turf/new_turf = get_turf(destination)
 	if (old_turf?.z != new_turf?.z)
 		onTransitZ(old_turf?.z, new_turf?.z)
 	var/oldloc = loc
 	loc = destination
+	step_x = _step_x
+	step_y = _step_y
 	Moved(oldloc, NONE, TRUE)
 
 /mob/dead/Stat()

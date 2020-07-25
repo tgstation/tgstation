@@ -17,22 +17,14 @@
 	open_sound_volume = 35
 	close_sound_volume = 35
 	var/move_speed_multiplier = 1
-	var/move_delay = FALSE
 	var/egged = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
-	if(!istype(user) || opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
+	if(!istype(user) || opened || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
 		return
-	move_delay = TRUE
-	var/oldloc = loc
+	step_size = round(user.step_size / 2)
 	step(src, direction)
-	if(oldloc != loc)
-		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
-	else
-		move_delay = FALSE
 
-/obj/structure/closet/cardboard/proc/ResetMoveDelay()
-	move_delay = FALSE
 
 /obj/structure/closet/cardboard/open(mob/living/user, force = TRUE)
 	if(opened || !can_open(user, force))

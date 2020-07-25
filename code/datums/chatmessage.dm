@@ -75,7 +75,6 @@
 	// Register client who owns this message
 	owned_by = owner.client
 	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_parent_qdel)
-
 	// Clip message
 	var/maxlen = owned_by.prefs.max_chat_length
 	if (length_char(text) > maxlen)
@@ -144,7 +143,8 @@
 	message.pixel_y = owner.bound_height * 0.95
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight
-	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
+	message.maptext_x = (CHAT_MESSAGE_WIDTH - (owner.bound_width + owner.bound_x)) * -0.5
+	message.maptext_y = owner.bound_height + owner.bound_y + 5
 	message.maptext = complete_text
 
 	// View the message

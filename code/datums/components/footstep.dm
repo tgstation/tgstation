@@ -1,7 +1,5 @@
 ///Footstep component. Plays footsteps at parents location when it is appropriate.
 /datum/component/footstep
-	///How many steps the parent has taken since the last time a footstep was played.
-	var/steps = 0
 	///volume determines the extra volume of the footstep. This is multiplied by the base volume, should there be one.
 	var/volume
 	///e_range stands for extra range - aka how far the sound can be heard. This is added to the base value and ignored if there isn't a base value.
@@ -10,6 +8,10 @@
 	var/footstep_type
 	///This can be a list OR a soundfile OR null. Determines whatever sound gets played.
 	var/footstep_sounds
+
+	var/last_played
+	var/turf/last_played_turf
+	var/cooldown = 0.5 SECONDS
 
 /datum/component/footstep/Initialize(footstep_type_ = FOOTSTEP_MOB_BAREFOOT, volume_ = 0.5, e_range_ = -1)
 	if(!isliving(parent))
@@ -40,7 +42,9 @@
 	var/turf/open/T = get_turf(parent)
 	if(!istype(T))
 		return
-
+	if(world.time < last_played + cooldown)
+		return
+	last_played = world.time
 	var/mob/living/LM = parent
 	if(!T.footstep || LM.buckled || !((LM.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
 		if (!(LM.mobility_flags & MOBILITY_STAND) && !LM.buckled && !(!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING))) //play crawling sound if we're lying
@@ -51,17 +55,9 @@
 		var/mob/living/carbon/C = LM
 		if(!C.get_bodypart(BODY_ZONE_L_LEG) && !C.get_bodypart(BODY_ZONE_R_LEG))
 			return
-		if(C.m_intent == MOVE_INTENT_WALK)
+		if(C.m_intent == MOVE_INTENT_WALK || C.m_intent == MOVE_INTENT_CRAWL)
 			return// stealth
-	steps++
-
-	if(steps >= 6)
-		steps = 0
-
-	if(steps % 2)
-		return
-
-	if(steps != 0 && !LM.has_gravity(T)) // don't need to step as often when you hop around
+	if(!LM.has_gravity(T)) // don't need to step as often when you hop around
 		return
 	return T
 

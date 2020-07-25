@@ -15,8 +15,8 @@
 
 /obj/item/reagent_containers/honeycomb/Initialize()
 	. = ..()
-	pixel_x = rand(8,-8)
-	pixel_y = rand(8,-8)
+	if(loc)
+		forceMove(loc, rand(8,-8), rand(8,-8))
 	update_icon()
 
 

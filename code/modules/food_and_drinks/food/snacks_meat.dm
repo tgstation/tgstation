@@ -182,7 +182,7 @@
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer)
+	var/mob/living/bananas = new spawned_mob(drop_location()[1], TRUE, spammer)
 	if(faction)
 		bananas.faction = faction
 	if (!QDELETED(bananas))

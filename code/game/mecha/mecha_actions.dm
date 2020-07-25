@@ -178,12 +178,12 @@
 	chassis.log_message("Toggled leg actuators overload.", LOG_MECHA)
 	if(chassis.leg_overload_mode)
 		chassis.leg_overload_mode = 1
-		chassis.step_in = min(1, round(chassis.step_in/2))
+		chassis.step_size = chassis.step_size * 2
 		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
 		chassis.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
 	else
 		chassis.leg_overload_mode = 0
-		chassis.step_in = initial(chassis.step_in)
+		chassis.step_size = initial(chassis.step_size)
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		chassis.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
 	UpdateButtonIcon()

@@ -23,7 +23,7 @@
 		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
 			return
 
-		if((flags & CALTROP_IGNORE_WALKERS) && H.m_intent == MOVE_INTENT_WALK)
+		if((flags & CALTROP_IGNORE_WALKERS) && (H.m_intent == MOVE_INTENT_WALK || H.m_intent == MOVE_INTENT_CRAWL))
 			return
 
 		//move these next two down a level if you add more mobs to this.

@@ -130,6 +130,7 @@
 	update_icon()
 
 /mob/living/simple_animal/bot/medbot/proc/soft_reset() //Allows the medibot to still actively perform its medical duties without being completely halted as a hard reset does.
+	QDEL_LIST(path)
 	path = list()
 	patient = null
 	mode = BOT_IDLE
@@ -189,6 +190,7 @@
 
 	else if(href_list["stationary"])
 		stationary_mode = !stationary_mode
+		QDEL_LIST(path)
 		path = list()
 		update_icon()
 
@@ -368,6 +370,7 @@
 
 	//Patient has moved away from us!
 	else if(patient && path.len && (get_dist(patient,path[path.len]) > 2))
+		QDEL_LIST(path)
 		path = list()
 		mode = BOT_IDLE
 		last_found = world.time
@@ -377,6 +380,7 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
+		QDEL_LIST(path)
 		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
@@ -582,7 +586,7 @@
 /mob/living/simple_animal/bot/medbot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 
 	drop_part(firstaid, Tsec)
 	new /obj/item/assembly/prox_sensor(Tsec)

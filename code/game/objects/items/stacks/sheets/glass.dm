@@ -238,6 +238,10 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	desc = "A nasty looking shard of glass."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
+	bound_height = 7
+	bound_width = 8
+	bound_x = 8
+	bound_y = 20
 	w_class = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 10
@@ -268,14 +272,13 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
 		if("small")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
+			forceStep(null, rand(-12, 12), rand(-12, 12))
 		if("medium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
+			forceStep(null,	rand(-8, 8), rand(-8, 8))
 		if("large")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)
+			forceStep(null, rand(-5, 5), rand(-5, 5))
+	if(loc)
+		forceMove(loc)
 	if (icon_prefix)
 		icon_state = "[icon_prefix][icon_state]"
 

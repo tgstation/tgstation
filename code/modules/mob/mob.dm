@@ -527,10 +527,19 @@
 	var/turf/tile = get_turf(A)
 	if (!tile)
 		return FALSE
-
-	var/turf/our_tile = get_turf(src)
-	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
-	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 1.7, easing = EASE_OUT)
+	//var/turf/our_tile = get_turf(src)
+	var/obj/effect/visual = new /obj/effect/temp_visual/point(loc, invisibility)
+	var/_step_x
+	var/_step_y
+	if(isturf(A))
+		var/list/mouse_control = params2list(client?.mouseParams)
+		_step_x = clamp(text2num(mouse_control["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		_step_y = clamp(text2num(mouse_control["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+	else if(ismovable(A))
+		var/atom/movable/AM = A
+		_step_x = AM.step_x + AM.bound_x
+		_step_y = AM.step_y + AM.bound_y
+	animate(visual, pixel_x = (A.x - x) * PIXELS + _step_x, pixel_y = (A.y - y) * PIXELS + _step_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
 
@@ -1005,11 +1014,10 @@
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
 		return FALSE
-	var/turf/T = get_turf(src)
-	if(M.loc != T)
+	if(!(src in obounds(M)))
 		var/old_density = density
 		density = FALSE
-		var/can_step = step_towards(M, T)
+		var/can_step = step_towards(M, src, bounds_dist(M, src))
 		density = old_density
 		if(!can_step)
 			return FALSE

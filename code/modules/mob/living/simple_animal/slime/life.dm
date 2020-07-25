@@ -93,17 +93,13 @@
 			else if(Target in view(7, src))
 				if(!Target.Adjacent(src))
 				// Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
-					step_to(src, Target)
+					walk_to(src, Target, 0, 0, step_size)
 			else
 				Target = null
 				AIproc = 0
 				break
 
-		var/sleeptime = cached_multiplicative_slowdown
-		if(sleeptime <= 0)
-			sleeptime = 1
-
-		sleep(sleeptime + 2) // this is about as fast as a player slime can go
+		sleep(3) // this is about as fast as a player slime can go
 
 	AIproc = 0
 
@@ -363,13 +359,14 @@
 				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if((mobility_flags & MOBILITY_MOVE) && isturf(loc))
-					step_to(src, Leader)
+					walk_to(src, Leader, 0, 0, step_size)
 
 			else if(hungry)
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
 				else if((mobility_flags & MOBILITY_MOVE) && isturf(loc) && prob(50))
-					step(src, pick(GLOB.cardinals))
+					var/step = get_step(src, pick(GLOB.cardinals))
+					walk_to(src, step, 0, 0, step_size)
 
 			else
 				if(holding_still)
@@ -377,7 +374,8 @@
 				else if (docile && pulledby)
 					holding_still = 10
 				else if((mobility_flags & MOBILITY_MOVE) && isturf(loc) && prob(33))
-					step(src, pick(GLOB.cardinals))
+					var/step = get_step(src, pick(GLOB.cardinals))
+					walk_to(src, step, 0, 0, step_size)
 		else if(!AIproc)
 			INVOKE_ASYNC(src, .proc/AIprocess)
 

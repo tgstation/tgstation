@@ -27,7 +27,7 @@
 	stat_attack = UNCONSCIOUS
 	attack_sound = 'sound/weapons/rapierhit.ogg'
 	deathsound = 'sound/voice/mook_death.ogg'
-	aggro_vision_range = 15 //A little more aggressive once in combat to balance out their really low HP
+	aggro_vision_range = 480 //A little more aggressive once in combat to balance out their really low HP
 	var/attack_state = MOOK_ATTACK_NEUTRAL
 	var/struck_target_leap = FALSE
 

@@ -28,7 +28,7 @@
 	if(!result)
 		return
 	// Remove default mech power cell, as we replace it with a new one.
-	var/obj/mecha/M = new result(drop_location())
+	var/obj/mecha/M = new result(drop_location()[1])
 	QDEL_NULL(M.cell)
 	QDEL_NULL(M.scanmod)
 	QDEL_NULL(M.capacitor)

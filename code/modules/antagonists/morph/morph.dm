@@ -26,7 +26,7 @@
 	melee_damage_upper = 20
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	vision_range = 1 // Only attack when target is close
+	vision_range = 32 // Only attack when target is close
 	wander = FALSE
 	attack_verb_continuous = "glomps"
 	attack_verb_simple = "glomp"

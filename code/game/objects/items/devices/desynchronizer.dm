@@ -45,8 +45,8 @@
 /obj/item/desynchronizer/proc/desync(mob/living/user)
 	if(sync_holder)
 		return
-	sync_holder = new(drop_location())
-	new /obj/effect/temp_visual/desynchronizer(drop_location())
+	sync_holder = new(drop_location()[1])
+	new /obj/effect/temp_visual/desynchronizer(drop_location()[1])
 	to_chat(user, "<span class='notice'>You activate [src], desynchronizing yourself from the present. You can still see your surroundings, but you feel eerily dissociated from reality.</span>")
 	user.forceMove(sync_holder)
 	SEND_SIGNAL(user, COMSIG_MOVABLE_SECLUDED_LOCATION)
@@ -58,7 +58,7 @@
 	resync_timer = addtimer(CALLBACK(src, .proc/resync), duration , TIMER_STOPPABLE)
 
 /obj/item/desynchronizer/proc/resync()
-	new /obj/effect/temp_visual/desynchronizer(sync_holder.drop_location())
+	new /obj/effect/temp_visual/desynchronizer(sync_holder.drop_location()[1])
 	QDEL_NULL(sync_holder)
 	if(resync_timer)
 		deltimer(resync_timer)

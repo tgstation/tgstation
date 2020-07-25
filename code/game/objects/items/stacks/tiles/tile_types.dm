@@ -18,8 +18,8 @@
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()
-	pixel_x = rand(-3, 3)
-	pixel_y = rand(-3, 3) //randomize a little
+	if(loc)
+		forceMove(loc, rand(-3, 3), rand(-3, 3)) //randomize a little
 
 /obj/item/stack/tile/examine(mob/user)
 	. = ..()

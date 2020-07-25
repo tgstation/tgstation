@@ -145,8 +145,7 @@
 					sleep(15)
 					var/obj/item/photo/p = new /obj/item/photo (loc)
 					var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
+					p.forceMove(p.loc, rand(-10, 10), rand(-10, 10))
 					toEmbed.psize_x = 128
 					toEmbed.psize_y = 128
 					p.set_picture(toEmbed, TRUE, TRUE)
@@ -186,8 +185,7 @@
 				return
 			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
 			var/obj/item/photo/photo = new(loc, selection)
-			photo.pixel_x = rand(-10, 10)
-			photo.pixel_y = rand(-10, 10)
+			photo.forceMove(photo.loc, rand(-10, 10), rand(-10, 10))
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
 			busy = TRUE
 			addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)

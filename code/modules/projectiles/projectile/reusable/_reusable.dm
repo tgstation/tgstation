@@ -16,5 +16,10 @@
 /obj/projectile/bullet/reusable/proc/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
+		if(iswallturf(T))
+			for(var/turf/W in locs) // try to find non wall turfs to drop in
+				if(!iswallturf(W))
+					T = W
+					break
 		new ammo_type(T)
 		dropped = TRUE

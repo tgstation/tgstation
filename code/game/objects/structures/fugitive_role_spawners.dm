@@ -52,7 +52,7 @@
 	icon_state = "sleeper"
 
 /obj/effect/mob_spawn/human/fugitive/bounty/Destroy()
-	var/obj/structure/fluff/empty_sleeper/S = new(drop_location())
+	var/obj/structure/fluff/empty_sleeper/S = new(drop_location()[1])
 	S.setDir(dir)
 	return ..()
 

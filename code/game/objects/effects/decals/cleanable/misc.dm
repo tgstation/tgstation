@@ -16,8 +16,8 @@
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/ash, 30)
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	if(loc)
+		forceMove(loc, rand(-5, 5), rand(-5, 5))
 
 /obj/effect/decal/cleanable/ash/crematorium
 //crematoriums need their own ash cause default ash deletes itself if created in an obj
@@ -178,8 +178,8 @@
 		qdel(src)
 
 /obj/effect/decal/cleanable/shreds/Initialize(mapload, oldname)
-	pixel_x = rand(-10, 10)
-	pixel_y = rand(-10, 10)
+	if(loc)
+		forceMove(loc, rand(-10, 10), rand(-10, 10))
 	if(!isnull(oldname))
 		desc = "The sad remains of what used to be [oldname]"
 	. = ..()

@@ -71,12 +71,12 @@
 	return T ? "[area_name ? "[get_area_name(T, TRUE)] " : " "]([T.x],[T.y],[T.z])[admin_jump_ref ? " [ADMIN_JMP(T)]" : ""]" : "nonexistent location"
 
 /atom/proc/Safe_COORD_Location()
-	var/atom/A = drop_location()
+	var/atom/A = drop_location()[1]
 	if(!A)
 		return //not a valid atom.
 	var/turf/T = get_step(A, 0) //resolve where the thing is.
 	if(!T) //incase it's inside a valid drop container, inside another container. ie if a mech picked up a closet and has it inside it's internal storage.
-		var/atom/last_try = A.loc?.drop_location() //one last try, otherwise fuck it.
+		var/atom/last_try = A.loc?.drop_location()[1] //one last try, otherwise fuck it.
 		if(last_try)
 			T = get_step(last_try, 0)
 	return T

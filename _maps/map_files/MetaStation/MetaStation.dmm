@@ -71763,12 +71763,6 @@
 	dir = 1;
 	id = "packageExternal"
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/quartermaster/qm)
 "kEz" = (

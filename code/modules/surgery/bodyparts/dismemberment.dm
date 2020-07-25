@@ -87,7 +87,7 @@
 /obj/item/bodypart/proc/drop_limb(special, dismembered)
 	if(!owner)
 		return
-	var/atom/Tsec = owner.drop_location()
+	var/atom/Tsec = owner.drop_location()[1]
 	var/mob/living/carbon/C = owner
 	SEND_SIGNAL(C, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
 	update_limb(1)

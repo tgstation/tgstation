@@ -68,13 +68,15 @@
 
 /obj/structure/proc/do_climb(atom/movable/A)
 	if(climbable)
-		if(A.loc == src.loc)
+		if(loc in A.locs)
 			var/where_to_climb = get_step(A,dir)
 			if(!(is_blocked_turf(where_to_climb)))
-				A.forceMove(where_to_climb)
+				A.forceMove(where_to_climb, step_x, step_y)
 				return TRUE
+		passtable_on(A, src)
 		density = FALSE
-		. = step(A,get_dir(A,src.loc))
+		. = step(A , get_pixeldir(A,loc), (bounds_dist(A, src)) + 16)
+		passtable_off(A, src)
 		density = TRUE
 
 /obj/structure/proc/climb_structure(mob/living/user)

@@ -82,14 +82,14 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		tc_to_distribute -= tc_per_nukie
 
 	for (var/mob/living/L in orphans)
-		var/TC = new /obj/item/stack/telecrystal(user.drop_location(), tc_per_nukie)
+		var/TC = new /obj/item/stack/telecrystal(user.drop_location()[1], tc_per_nukie)
 		to_chat(L, "<span class='warning'>Your uplink could not be found so your share of the team's bonus telecrystals has been bluespaced to your [L.put_in_hands(TC) ? "hands" : "feet"].</span>")
 		tc_to_distribute -= tc_per_nukie
 
 	if (tc_to_distribute > 0) // What shall we do with the remainder...
 		for (var/mob/living/simple_animal/hostile/carp/cayenne/C in GLOB.mob_living_list)
 			if (C.stat != DEAD)
-				var/obj/item/stack/telecrystal/TC = new(C.drop_location(), tc_to_distribute)
+				var/obj/item/stack/telecrystal/TC = new(C.drop_location()[1], tc_to_distribute)
 				TC.throw_at(get_step(C, C.dir), 3, 3)
 				C.visible_message("<span class='notice'>[C] coughs up a half-digested telecrystal</span>","<span class='notice'>You cough up a half-digested telecrystal!</span>")
 				break

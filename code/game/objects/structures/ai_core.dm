@@ -159,7 +159,7 @@
 						to_chat(user, "<span class='notice'>You remove the cables.</span>")
 						state = SCREWED_CORE
 						update_icon()
-						new /obj/item/stack/cable_coil(drop_location(), 5)
+						new /obj/item/stack/cable_coil(drop_location()[1], 5)
 					return
 
 				if(istype(P, /obj/item/stack/sheet/rglass))

@@ -385,7 +385,7 @@
 					return
 				user.visible_message("<span class='notice'>[user] removes [src]'s circuit board.</span>", \
 									 "<span class='notice'>You remove the circuit board from [src].</span>")
-				new /obj/item/electronics/firelock(drop_location())
+				new /obj/item/electronics/firelock(drop_location()[1])
 				constructionStep = CONSTRUCTION_NOCIRCUIT
 				update_icon()
 				return

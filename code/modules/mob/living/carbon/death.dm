@@ -27,14 +27,14 @@
 			dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 	for(var/mob/M in src)
 		M.forceMove(Tsec)
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
 /mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 	if(!no_bodyparts)
 		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
 			for(var/X in internal_organs)

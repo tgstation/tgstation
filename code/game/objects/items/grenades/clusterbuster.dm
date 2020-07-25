@@ -26,9 +26,9 @@
 			numspawned--
 
 	for(var/loop in 1 to again)
-		new /obj/item/grenade/clusterbuster/segment(drop_location(), src)//Creates 'segments' that launches a few more payloads
+		new /obj/item/grenade/clusterbuster/segment(drop_location()[1], src)//Creates 'segments' that launches a few more payloads
 
-	new payload_spawner(drop_location(), payload, numspawned)//Launches payload
+	new payload_spawner(drop_location()[1], payload, numspawned)//Launches payload
 	playsound(src, prime_sound, 75, TRUE, -3)
 	qdel(src)
 
@@ -61,7 +61,7 @@
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/grenade/clusterbuster/segment/prime(mob/living/lanced_by)
-	new payload_spawner(drop_location(), payload, rand(min_spawned,max_spawned))
+	new payload_spawner(drop_location()[1], payload, rand(min_spawned,max_spawned))
 	playsound(src, prime_sound, 75, TRUE, -3)
 	qdel(src)
 

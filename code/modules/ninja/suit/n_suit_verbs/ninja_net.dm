@@ -20,7 +20,7 @@
 	if(!ninjacost(200,N_STEALTH_CANCEL))
 		H.Beam(C,"n_beam",time=15)
 		H.say("Get over here!", forced = "ninja net")
-		var/obj/structure/energy_net/E = new /obj/structure/energy_net(C.drop_location())
+		var/obj/structure/energy_net/E = new /obj/structure/energy_net(C.drop_location()[1])
 		E.affecting = C
 		E.master = H
 		H.visible_message("<span class='danger'>[H] caught [C] with an energy net!</span>","<span class='notice'>You caught [C] with an energy net!</span>")

@@ -577,7 +577,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/ion/thrust(var/movement_dir)
 	if(!chassis)
 		return FALSE
-	if(chassis.use_power(chassis.step_energy_drain))
+	if(chassis.use_power(chassis.step_energy_drain / chassis.step_size))
 		generate_effect(movement_dir)
 		return TRUE
 	return FALSE

@@ -564,7 +564,7 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location()[1])
 	return ..()
 
 /obj/effect/mob_spawn/human/oldeng
@@ -590,7 +590,7 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location()[1])
 	return ..()
 
 /obj/effect/mob_spawn/human/oldsci
@@ -615,7 +615,7 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location()[1])
 	return ..()
 
 /obj/effect/mob_spawn/human/pirate
@@ -647,7 +647,7 @@
 	return "[rank] [pick(beggings)][pick(endings)]"
 
 /obj/effect/mob_spawn/human/pirate/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location()[1])
 	return ..()
 
 /obj/effect/mob_spawn/human/pirate/captain

@@ -216,7 +216,7 @@
 
 /obj/machinery/autolathe/proc/make_item(power, list/materials_used, list/picked_materials, multiplier, coeff, is_stack, mob/user)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	var/atom/A = drop_location()
+	var/atom/A = drop_location()[1]
 	use_power(power)
 
 	materials.use_materials(materials_used)

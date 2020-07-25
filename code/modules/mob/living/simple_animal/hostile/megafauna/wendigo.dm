@@ -24,7 +24,7 @@ Difficulty: Hard
 	vision_range = 9
 	aggro_vision_range = 18 // man-eating for a reason
 	speed = 8
-	move_to_delay = 8
+	move_to_delay = 0.8
 	rapid_melee = 16 // every 1/8 second
 	melee_queue_distance = 20 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
@@ -86,7 +86,7 @@ Difficulty: Hard
 	if(health <= maxHealth*0.5)
 		stomp_range = 2
 		speed = 6
-		move_to_delay = 6
+		move_to_delay = 0.6
 	else
 		stomp_range = initial(stomp_range)
 		speed = initial(speed)

@@ -19,6 +19,11 @@
 	density = FALSE
 	dir = NORTH
 
+	bound_height = 7
+	bound_width = 32
+	bound_x = 0
+	bound_y = 25
+
 	var/ini_dir
 	var/obj/item/electronics/airlock/electronics = null
 	var/created_name = null
@@ -54,32 +59,11 @@
 	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE
-	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		return
-	if(istype(mover, /obj/structure/window))
-		var/obj/structure/window/W = mover
-		if(!valid_window_location(loc, W.ini_dir))
-			return FALSE
-	else if(istype(mover, /obj/structure/windoor_assembly))
-		var/obj/structure/windoor_assembly/W = mover
-		if(!valid_window_location(loc, W.ini_dir))
-			return FALSE
-	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
-		return FALSE
 
 /obj/structure/windoor_assembly/CanAtmosPass(turf/T)
-	if(get_dir(loc, T) == dir)
-		return !density
-	else
-		return 1
-
-/obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
-	if(get_dir(loc, target) == dir)
-		return !density
-	else
-		return 1
+	. = ..()
+	if(anchored && density && get_dir(loc, T) == dir)
+		return FALSE
 
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)

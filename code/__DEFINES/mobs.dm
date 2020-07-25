@@ -16,6 +16,7 @@
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
+#define MOVE_INTENT_CRAWL "crawl"
 
 //Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL		2150

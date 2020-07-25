@@ -421,7 +421,7 @@
 	playsound(src, "sparks", 100, TRUE)
 	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
 	magnification = null
-	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
+	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()[1]) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
 
 /obj/item/clothing/head/helmet/monkey_sentience/dropped(mob/user)
 	. = ..()

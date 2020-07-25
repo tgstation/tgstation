@@ -35,8 +35,8 @@
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
 
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	if(loc)
+		forceMove(loc, rand(-5, 5), rand(-5, 5))
 
 	if(dried_type == -1)
 		dried_type = src.type
@@ -172,7 +172,7 @@
 /*
  * Attack self for growns
  *
- * Spawns the trash item at the growns drop_location()
+ * Spawns the trash item at the growns drop_location()[1]
  *
  * Then deletes the grown object
  *
@@ -181,7 +181,7 @@
 /obj/item/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
 	var/obj/item/T
 	if(trash)
-		T = generate_trash(drop_location())
+		T = generate_trash(drop_location()[1])
 		//Delete grown so our hand is free
 		qdel(src)
 		//put trash obj in hands or drop to ground

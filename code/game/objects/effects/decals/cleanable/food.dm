@@ -48,7 +48,7 @@
 		return
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
-		if(C.m_intent == MOVE_INTENT_WALK)
+		if(C.m_intent == (MOVE_INTENT_WALK || MOVE_INTENT_CRAWL))
 			return
 	safepasses--
 	if(safepasses <= 0 && !QDELETED(src))

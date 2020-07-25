@@ -672,7 +672,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
-			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location()[1])
 			to_chat(user, "<span class='warning'>You easily splat the [target].</span>")
 			if(istype(target, /mob/living/))
 				var/mob/living/bug = target

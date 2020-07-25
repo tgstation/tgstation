@@ -40,7 +40,7 @@
 /obj/item/sparkler/process()
 	burntime--
 	if(burntime < 1)
-		new /obj/item/stack/rods(drop_location())
+		new /obj/item/stack/rods(drop_location()[1])
 		qdel(src)
 	else
 		open_flame(heat)

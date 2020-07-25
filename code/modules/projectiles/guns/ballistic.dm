@@ -363,7 +363,7 @@
 			CB.forceMove(drop_location())
 			CB.bounce_away(FALSE, NONE)
 			num_unloaded++
-			var/turf/T = get_turf(drop_location())
+			var/turf/T = get_turf(drop_location()[1])
 			if(T && is_station_level(T.z))
 				SSblackbox.record_feedback("tally", "station_mess_created", 1, CB.name)
 		if (num_unloaded)

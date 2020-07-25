@@ -56,6 +56,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	max_integrity = 200
 
+	bound_height = 16 // assume all items are 16x16 centered at the center of a tile for throwing purposes
+	bound_width = 16
+	bound_x = 8
+	bound_y = 8
+	brotation = NONE
+
 	obj_flags = NONE
 	///Item flags for the item
 	var/item_flags = NONE
@@ -655,22 +661,20 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, params)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	thrownby = thrower
 	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart, params = params)
 
 
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
 		. = callback.Invoke()
 	item_flags &= ~IN_INVENTORY
-	if(!pixel_y && !pixel_x)
-		pixel_x = rand(-8,8)
-		pixel_y = rand(-8,8)
-
+	if(loc && !step_y && !step_x)
+		forceMove(loc, rand(-8,8), rand(-8,8))
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)
@@ -772,8 +776,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
 		var/obj/effect/decal/cleanable/molten_object/MO = new(T)
-		MO.pixel_x = rand(-16,16)
-		MO.pixel_y = rand(-16,16)
+		MO.forceStep(null, step_x, step_y)
 		MO.desc = "Looks like this was \an [src] some time ago."
 		..()
 
@@ -914,7 +917,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return 0
 
 /obj/item/doMove(atom/destination)
-	if (ismob(loc))
+	if(ismob(loc))
 		var/mob/M = loc
 		var/hand_index = M.get_held_index_of_item(src)
 		if(hand_index)
@@ -962,6 +965,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(throwforce && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='notice'>You set [src] down gently on the ground.</span>")
 		return
+	var/_step_x
+	var/_step_y
+	if(user && (user.step_x || user.step_y))
+		if(user.dir == NORTH)
+			_step_x = user.step_x
+			_step_y = user.step_y - 16
+		else
+			_step_x = user.step_x
+			_step_y = user.step_y
+	forceStep(null, _step_x, _step_y)
 	return src
 
 /**

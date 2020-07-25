@@ -9,10 +9,10 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	move_to_delay = 14
+	move_to_delay = 0.7
 	ranged = 1
-	vision_range = 5
-	aggro_vision_range = 9
+	vision_range = 160
+	aggro_vision_range = 288
 	speed = 3
 	maxHealth = 75
 	health = 75
@@ -66,10 +66,10 @@
 	icon_dead = "Hivelordbrood"
 	icon_gib = "syndicate_gib"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	move_to_delay = 1
+	move_to_delay = 0.1
 	friendly_verb_continuous = "buzzes near"
 	friendly_verb_simple = "buzz near"
-	vision_range = 10
+	vision_range = 320
 	speed = 3
 	maxHealth = 1
 	health = 1
@@ -171,7 +171,7 @@
 	icon_gib = "syndicate_gib"
 	friendly_verb_continuous = "buzzes near"
 	friendly_verb_simple = "buzz near"
-	vision_range = 10
+	vision_range = 320
 	maxHealth = 1
 	health = 5
 	harm_intent_damage = 5
@@ -186,6 +186,10 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	var/can_infest_dead = FALSE
+	bound_width = 8
+	bound_height = 8
+	bound_x = 12
+	bound_y = 12
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
 	if(isturf(loc))
@@ -245,9 +249,9 @@
 	del_on_death = TRUE
 	sentience_type = SENTIENCE_BOSS
 	loot = list(/obj/item/organ/regenerative_core/legion = 3, /obj/effect/mob_spawn/human/corpse/damaged/legioninfested = 5)
-	move_to_delay = 14
-	vision_range = 5
-	aggro_vision_range = 9
+	move_to_delay = 0.4
+	vision_range = 160
+	aggro_vision_range = 288
 	speed = 3
 	faction = list("mining")
 	weather_immunities = list("lava","ash")

@@ -39,7 +39,7 @@
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
-	vision_range = 3
+	vision_range = 96
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -64,7 +64,7 @@
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/ranged
 	icon_state = "nanotrasenrangedsmg"
 	icon_living = "nanotrasenrangedsmg"
-	vision_range = 9
+	vision_range = 288
 	rapid = 3
 	ranged = 1
 	retreat_distance = 3

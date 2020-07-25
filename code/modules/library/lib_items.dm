@@ -65,7 +65,7 @@
 		return
 	state = anchorvalue
 	if(!anchorvalue) //in case we were vareditted or uprooted by a hostile mob, ensure we drop all our books instead of having them disappear till we're rebuild.
-		var/atom/Tsec = drop_location()
+		var/atom/Tsec = drop_location()[1]
 		for(var/obj/I in contents)
 			if(!isbook(I))
 				continue
@@ -126,7 +126,7 @@
 				else
 					I.play_tool_sound(src, 100)
 					to_chat(user, "<span class='notice'>You pry the shelf out.</span>")
-					new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
+					new /obj/item/stack/sheet/mineral/wood(drop_location()[1], 2)
 					state = BOOKCASE_ANCHORED
 					update_icon()
 			else
@@ -156,7 +156,7 @@
 
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
 	for(var/obj/item/I in contents)
 		if(!isbook(I))

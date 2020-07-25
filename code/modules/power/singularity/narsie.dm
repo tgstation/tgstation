@@ -3,15 +3,16 @@
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/narsie_small.dmi'
 	icon_state = "narsie"
-	pixel_x = -89
-	pixel_y = -85
+	bound_width = 192
+	bound_height = 192
+	bound_x = -89
+	bound_y = -85
 	density = FALSE
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
-	consume_range = 6 //How many tiles out do we eat
 	light_power = 0.7
 	light_range = 15
 	light_color = rgb(255, 0, 0)
@@ -20,12 +21,14 @@
 /obj/singularity/narsie/large
 	name = "Nar'Sie"
 	icon = 'icons/obj/narsie.dmi'
-	// Pixel stuff centers Narsie.
+	bound_width = 384
+	bound_height = 384
+	bound_x = -236
+	bound_y = -256
 	pixel_x = -236
 	pixel_y = -256
 	current_size = 12
 	grav_pull = 10
-	consume_range = 12 //How many tiles out do we eat
 
 /obj/singularity/narsie/large/Initialize()
 	. = ..()
@@ -139,10 +142,17 @@
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	move()
+	automatic_movement()
 	if(prob(25))
 		mezzer()
 
+/obj/singularity/narsie/eat()
+	for(var/i in obounds(src, grav_pull*16))
+		CHECK_TICK
+		var/atom/sucker = i
+		if(QDELETED(sucker))
+			continue
+		consume(sucker)
 
 /obj/singularity/narsie/Bump(atom/A)
 	var/turf/T = get_turf(A)
@@ -150,23 +160,18 @@
 		T = get_step(A, A.dir) //please don't slam into a window like a bird, Nar'Sie
 	forceMove(T)
 
-
 /obj/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/M in viewers(consume_range, src))
+	for(var/mob/living/carbon/M in bounds())
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
 				M.apply_effect(60, EFFECT_STUN)
 
-
 /obj/singularity/narsie/consume(atom/A)
 	if(isturf(A))
 		A.narsie_act()
 
-
 /obj/singularity/narsie/ex_act() //No throwing bombs at her either.
-	return
-
 
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
@@ -198,8 +203,6 @@
 		cultists += ghost
 	if(cultists.len)
 		acquire(pick(cultists))
-		return
-
 
 /obj/singularity/narsie/proc/acquire(atom/food)
 	if(food == target)
@@ -216,15 +219,9 @@
 	grav_pull = 0
 
 /obj/singularity/narsie/wizard/eat()
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 1
-	for(var/atom/X in urange(consume_range,src,1))
+	for(var/atom/X in bounds())
 		if(isturf(X) || ismovable(X))
 			consume(X)
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 0
-	return
-
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	setDir(SOUTH)

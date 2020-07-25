@@ -91,8 +91,9 @@
 			L.reset_pull_offsets(M, TRUE)
 
 	if(!check_loc && M.loc != loc)
-		M.forceMove(loc)
+		M.forceMove(loc, step_x, step_y)
 
+	M.forceStep(null, step_x, step_y)
 	M.buckling = null
 	M.buckled = src
 	M.setDir(dir)

@@ -125,7 +125,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			user.visible_message("<span class='warning'>[user] starts shaking!</span>","<span class='notice'>Your [name] starts pulsing gently...</span>")
 			if(do_after(user, 40, target = user))
-				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
+				var/mob/living/simple_animal/S = create_random_mob(user.drop_location()[1], FRIENDLY_SPAWN)
 				S.faction |= "neutral"
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message("<span class='warning'>[user] spits out [S]!</span>", "<span class='notice'>You spit out [S]!</span>")
@@ -134,7 +134,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message("<span class='warning'>[user] starts shaking violently!</span>","<span class='warning'>Your [name] starts pulsing violently...</span>")
 			if(do_after(user, 50, target = user))
-				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
+				var/mob/living/simple_animal/S = create_random_mob(user.drop_location()[1], HOSTILE_SPAWN)
 				if(user.a_intent != INTENT_HARM)
 					S.faction |= "neutral"
 				else

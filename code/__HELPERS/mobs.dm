@@ -253,6 +253,8 @@ GLOBAL_LIST_EMPTY(species_list)
 		LAZYADD(target.targeted_by, user)
 
 	var/atom/Uloc = user.loc
+	var/Ustep_x = user.step_x
+	var/Ustep_y = user.step_y
 
 	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
@@ -281,8 +283,18 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(drifting && !user.inertia_dir)
 			drifting = FALSE
 			Uloc = user.loc
+			Ustep_x = user.step_x
+			Ustep_y = user.step_y
 
-		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat)
+			. = FALSE
+			break
+
+		if(!drifting && (user.loc != Uloc || user.step_x != Ustep_x || user.step_y != Ustep_y))
+			. = FALSE
+			break
+
+		if(extra_checks && !extra_checks.Invoke())
 			. = FALSE
 			break
 
@@ -331,6 +343,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!length(targets))
 		return FALSE
 	var/user_loc = user.loc
+	var/user_step_x = user.step_x
+	var/user_step_y = user.step_y
 
 	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
@@ -367,13 +381,18 @@ GLOBAL_LIST_EMPTY(species_list)
 			if(drifting && !user.inertia_dir)
 				drifting = FALSE
 				user_loc = user.loc
+				user_step_x = user.step_x
+				user_step_y = user.step_y
 
 			if(L && !((L.mobility_flags & required_mobility_flags) == required_mobility_flags))
 				. = FALSE
 				break
 
 			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
+				if(!drifting && (user_loc != user.loc || user_step_x != user.step_x || user_step_y != user.step_y))
+					. = FALSE
+					break mainloop
+				if(QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
 					. = FALSE
 					break mainloop
 	if(!QDELETED(progbar))

@@ -101,7 +101,7 @@
 				if(!M.client || (!(M.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
 					continue
 				if(!sound_atom)
-					sound_atom = A.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
+					sound_atom = A.drop_location()[1] //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
 				if(M.can_hear())
 					M.playsound_local(get_turf(sound_atom), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")

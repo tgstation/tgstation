@@ -34,7 +34,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	throw_message = "doesn't affect the sturdiness of"
 	speed = 1
-	move_to_delay = 3
+	move_to_delay = 0.3
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathsound = 'sound/magic/curse.ogg'
 	deathmessage = "'s arms reach out before it falls apart onto the floor, lifeless."
@@ -251,7 +251,7 @@
 	attack_sound = 'sound/effects/curse1.ogg'
 	throw_message = "simply misses"
 	speed = 0
-	move_to_delay = 2
+	move_to_delay = 0.2
 	del_on_death = 1
 	deathmessage = "crumbles away!"
 	faction = list()

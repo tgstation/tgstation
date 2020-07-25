@@ -58,7 +58,7 @@
 		var/mob/living/L = AM
 		if(L.movement_type & FLYING)
 			return
-		if(L.m_intent != MOVE_INTENT_WALK && prob(40))
+		if(L.m_intent != (MOVE_INTENT_WALK || MOVE_INTENT_CRAWL) && prob(40))
 			var/acid_used = min(acid_level*0.05, 20)
 			if(L.acid_act(10, acid_used, "feet"))
 				acid_level = max(0, acid_level - acid_used*10)

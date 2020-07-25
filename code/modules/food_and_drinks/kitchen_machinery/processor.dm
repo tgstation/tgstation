@@ -29,7 +29,7 @@
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))
 		for(var/i = 0, i < (rating_amount * recipe.multiplier), i++)
-			new recipe.output(drop_location())
+			new recipe.output(drop_location()[1])
 	if (ismob(what))
 		var/mob/themob = what
 		themob.gib(TRUE,TRUE,TRUE)
@@ -165,12 +165,10 @@
 	if(!(i = slimecores.Find(AM.type))) // If the item is not found
 		return
 	if (i <= 16) // If in the first 12 slots
-		AM.pixel_x = -12 + ((i%4)*8)
-		AM.pixel_y = -12 + (round(i/4)*8)
+		AM.forceMove(AM.loc, -12 + ((i%4)*8), -12 + (round(i/4)*8))
 		return i
 	var/ii = i - 16
-	AM.pixel_x = -8 + ((ii%3)*8)
-	AM.pixel_y = -8 + (round(ii/3)*8)
+	AM.forceMove(AM.loc, -8 + ((ii%3)*8), -8 + (round(ii/3)*8))
 	return i
 
 /obj/machinery/processor/slime/process()
@@ -202,7 +200,7 @@
 			S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
 			return
 		for(var/i in 1 to (C+rating_amount-1))
-			var/atom/movable/item = new S.coretype(drop_location())
+			var/atom/movable/item = new S.coretype(drop_location()[1])
 			adjust_item_drop_location(item)
 			SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
 	..()

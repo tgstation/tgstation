@@ -63,7 +63,7 @@ It is possible to destroy the net by the occupant or someone else.
 		H.dna.species.give_important_for_life(H)
 
 	playsound(affecting, 'sound/effects/sparks4.ogg', 50, TRUE)
-	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location(), affecting.dir)
+	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location()[1], affecting.dir)
 
 	visible_message("<span class='notice'>[affecting] suddenly vanishes!</span>")
 	affecting.forceMove(pick(GLOB.holdingfacility)) //Throw mob in to the holding facility.
@@ -74,7 +74,7 @@ It is possible to destroy the net by the occupant or someone else.
 	do_sparks(5, FALSE, affecting)
 	playsound(affecting, 'sound/effects/phasein.ogg', 25, TRUE)
 	playsound(affecting, 'sound/effects/sparks2.ogg', 50, TRUE)
-	new /obj/effect/temp_visual/dir_setting/ninja/phase(affecting.drop_location(), affecting.dir)
+	new /obj/effect/temp_visual/dir_setting/ninja/phase(affecting.drop_location()[1], affecting.dir)
 
 /obj/structure/energy_net/attack_paw(mob/user)
 	return attack_hand()

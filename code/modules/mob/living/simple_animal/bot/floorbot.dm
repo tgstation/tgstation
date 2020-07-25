@@ -169,7 +169,7 @@
 	update_controls()
 
 /mob/living/simple_animal/bot/floorbot/proc/empty_tiles()
-	new tiletype(drop_location(), specialtiles)
+	new tiletype(drop_location()[1], specialtiles)
 	specialtiles = 0
 	tiletype = null
 
@@ -229,6 +229,7 @@
 				shuffle = TRUE
 				if(prob(50))	//50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
 					target = null
+					QDEL_LIST(path)
 					path = list()
 					return
 			if(isturf(target) && emagged < 2)
@@ -240,9 +241,11 @@
 				F.ReplaceWithLattice()
 				audible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
 				addtimer(CALLBACK(src, .proc/go_idle), 0.5 SECONDS)
+			QDEL_LIST(path)
 			path = list()
 			return
 		if(path.len == 0)
+			QDEL_LIST(path)
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
 				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
@@ -368,7 +371,7 @@
 /mob/living/simple_animal/bot/floorbot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 
 	drop_part(toolbox, Tsec)
 

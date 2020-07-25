@@ -1400,8 +1400,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	if(user == target)
 		return FALSE
-	if(user.loc == target.loc)
-		return FALSE
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
@@ -1411,7 +1409,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 
 		var/turf/target_oldturf = target.loc
-		var/shove_dir = get_dir(user.loc, target_oldturf)
+		var/shove_dir = get_pixeldir(user, target)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/target_collateral_human
 		var/obj/structure/table/target_table
@@ -1420,9 +1418,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		//Thank you based whoneedsspace
 		target_collateral_human = locate(/mob/living/carbon/human) in target_shove_turf.contents
+		
 		if(target_collateral_human)
 			shove_blocked = TRUE
-		else
+			if(target_collateral_human == target)
+				shove_blocked = FALSE
+				target_collateral_human = null
+		if(!target_collateral_human)
 			target.Move(target_shove_turf, shove_dir)
 			if(get_turf(target) == target_oldturf)
 				target_table = locate(/obj/structure/table) in target_shove_turf.contents

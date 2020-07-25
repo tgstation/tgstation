@@ -72,16 +72,16 @@
 		if(istype(M))
 			return M.click_action(A,src,params)
 
-/mob/living/brain/forceMove(atom/destination)
+/mob/living/brain/forceMove(atom/destination, _step_x, _step_y)
 	if(container)
 		return container.forceMove(destination)
 	else if (istype(loc, /obj/item/organ/brain))
 		var/obj/item/organ/brain/B = loc
-		B.forceMove(destination)
+		B.forceMove(destination, _step_x, _step_y)
 	else if (istype(destination, /obj/item/organ/brain))
-		doMove(destination)
+		doMove(destination, _step_x, _step_y)
 	else if (istype(destination, /obj/item/mmi))
-		doMove(destination)
+		doMove(destination, _step_x, _step_y)
 	else
 		CRASH("Brainmob without a container [src] attempted to move to [destination].")
 

@@ -102,8 +102,8 @@
 
 	var/atom/movable/A = get_teleportable_container()
 	var/atom/movable/B = linked_swapper.get_teleportable_container()
-	var/target_A = A.drop_location()
-	var/target_B = B.drop_location()
+	var/target_A = A.drop_location()[1]
+	var/target_B = B.drop_location()[1]
 
 	//TODO: add a sound effect or visual effect
 	if(do_teleport(A, target_B, forceMove = TRUE, channel = TELEPORT_CHANNEL_QUANTUM))

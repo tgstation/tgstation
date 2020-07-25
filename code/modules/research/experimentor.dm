@@ -229,7 +229,7 @@
 			return
 		var/turf/dropturf = get_turf(pick(view(1,src)))
 		if(!dropturf) //Failsafe to prevent the object being lost in the void forever.
-			dropturf = drop_location()
+			dropturf = drop_location()[1]
 		loaded_item.forceMove(dropturf)
 		if(delete)
 			qdel(loaded_item)

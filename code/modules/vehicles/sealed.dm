@@ -63,7 +63,7 @@
 	return TRUE
 
 /obj/vehicle/sealed/proc/exit_location(M)
-	return drop_location()
+	return drop_location()[1]
 
 /obj/vehicle/sealed/attackby(obj/item/I, mob/user, params)
 	if(key_type && !is_key(inserted_key) && is_key(I))

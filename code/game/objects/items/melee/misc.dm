@@ -364,7 +364,7 @@
 		if(!QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
-		new /obj/effect/gibspawner/generic(H.drop_location(), H)
+		new /obj/effect/gibspawner/generic(H.drop_location()[1], H)
 		return (BRUTELOSS)
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)

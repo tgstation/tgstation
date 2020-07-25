@@ -34,7 +34,7 @@ Difficulty: Medium
 	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 3
-	move_to_delay = 3
+	move_to_delay = 0.3
 	projectiletype = /obj/projectile/kinetic/miner
 	projectilesound = 'sound/weapons/kenetic_accel.ogg'
 	ranged = TRUE
@@ -291,7 +291,7 @@ Difficulty: Medium
 	name = "hostile-environment miner"
 	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
 	speed = 8
-	move_to_delay = 8
+	move_to_delay = 0.8
 	ranged_cooldown_time = 8
 	dash_cooldown = 8
 

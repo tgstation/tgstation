@@ -63,4 +63,4 @@
 	QDEL_NULL(current_plate)
 	update_icon()
 
-	new /obj/item/stack/license_plates/filled(drop_location(), 1)
+	new /obj/item/stack/license_plates/filled(drop_location()[1], 1)

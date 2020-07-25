@@ -47,7 +47,7 @@
 		return TRUE
 
 	if(I.use_tool(src, user, 0, volume=50, amount=15))
-		new refined_type(drop_location())
+		new refined_type(drop_location()[1])
 		use(1)
 
 	return TRUE
@@ -63,7 +63,7 @@
 		if(amountrefined < 1)
 			qdel(src)
 		else
-			new refined_type(drop_location(),amountrefined)
+			new refined_type(drop_location()[1],amountrefined)
 			qdel(src)
 
 /obj/item/stack/ore/uranium
@@ -318,8 +318,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/Initialize()
 	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	if(loc)
+		forceMove(loc, rand(0,16)-8, rand(0,8)-8)
 
 /obj/item/stack/ore/ex_act(severity, target)
 	if (!severity || severity >= 2)
@@ -353,8 +353,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	coinflip = pick(sideslist)
 	icon_state = "coin_[coinflip]"
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	if(loc)
+		forceMove(loc, rand(0,16)-8, rand(0,8)-8)
 
 /obj/item/coin/set_custom_materials(var/list/materials, multiplier = 1)
 	. = ..()
@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(!string_attached)
 		return TRUE
 
-	new /obj/item/stack/cable_coil(drop_location(), 1)
+	new /obj/item/stack/cable_coil(drop_location()[1], 1)
 	overlays = list()
 	string_attached = null
 	to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")

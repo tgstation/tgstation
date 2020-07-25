@@ -326,7 +326,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 	//doesn't drop cardboard nor its assembly, since its a very frail material.
 	if(prob(50))
 		drop_part(robot_arm, Tsec)

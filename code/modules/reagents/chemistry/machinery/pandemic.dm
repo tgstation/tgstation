@@ -208,7 +208,7 @@
 				return
 			A = A.Copy()
 			var/list/data = list("viruses" = list(A))
-			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
+			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location()[1])
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
 			B.reagents.add_reagent(/datum/reagent/blood, 20, data)
@@ -223,7 +223,7 @@
 				return
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
-			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
+			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location()[1])
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 			wait = TRUE

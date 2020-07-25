@@ -28,8 +28,8 @@
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
 
 /obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)
-	new /obj/item/stack/rods(drop_location(), 1)
-	new /obj/item/stack/sheet/metal(drop_location(), 1)
+	new /obj/item/stack/rods(drop_location()[1], 1)
+	new /obj/item/stack/sheet/metal(drop_location()[1], 1)
 	..()
 
 /obj/vehicle/ridden/wheelchair/Destroy()
@@ -79,8 +79,8 @@
 	to_chat(user, "<span class='notice'>You begin to detach the wheels...</span>")
 	if(I.use_tool(src, user, 40, volume=50))
 		to_chat(user, "<span class='notice'>You detach the wheels and deconstruct the chair.</span>")
-		new /obj/item/stack/rods(drop_location(), 6)
-		new /obj/item/stack/sheet/metal(drop_location(), 4)
+		new /obj/item/stack/rods(drop_location()[1], 6)
+		new /obj/item/stack/sheet/metal(drop_location()[1], 4)
 		qdel(src)
 	return TRUE
 

@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	if(istype(W, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/G = W
 		to_chat(user, "<span class='notice'>You fill the sandbag.</span>")
-		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location())
+		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location()[1])
 		qdel(src)
 		if (Adjacent(user) && !issilicon(user))
 			user.put_in_hands(I)

@@ -15,6 +15,7 @@
 	var/rods_broken = TRUE
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
+	var/shock_cooldown
 
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))
@@ -66,7 +67,7 @@
 			if(locate(/obj/structure/window) in loc)
 				return FALSE
 			to_chat(user, "<span class='notice'>You construct the window.</span>")
-			var/obj/structure/window/WD = new the_rcd.window_type(drop_location())
+			var/obj/structure/window/WD = new the_rcd.window_type(drop_location()[1])
 			WD.set_anchored(TRUE)
 			return TRUE
 	return FALSE
@@ -74,8 +75,11 @@
 /obj/structure/grille/Bumped(atom/movable/AM)
 	if(!ismob(AM))
 		return
-	var/mob/M = AM
-	shock(M, 70)
+	var/thingdir = get_dir(src, AM)
+	for(var/obj/structure/window/window in OBOUNDS_EDGE(src, thingdir))
+		if(window.anchored)
+			return
+	shock(AM, 70)
 
 /obj/structure/grille/attack_animal(mob/user)
 	. = ..()
@@ -172,17 +176,17 @@
 					return
 				var/obj/structure/window/WD
 				if(istype(W, /obj/item/stack/sheet/plasmarglass))
-					WD = new/obj/structure/window/plasma/reinforced/fulltile(drop_location()) //reinforced plasma window
+					WD = new/obj/structure/window/plasma/reinforced/fulltile(drop_location()[1]) //reinforced plasma window
 				else if(istype(W, /obj/item/stack/sheet/plasmaglass))
-					WD = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
+					WD = new/obj/structure/window/plasma/fulltile(drop_location()[1]) //plasma window
 				else if(istype(W, /obj/item/stack/sheet/rglass))
-					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
+					WD = new/obj/structure/window/reinforced/fulltile(drop_location()[1]) //reinforced window
 				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
-					WD = new/obj/structure/window/shuttle(drop_location())
+					WD = new/obj/structure/window/shuttle(drop_location()[1])
 				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
-					WD = new/obj/structure/window/plasma/reinforced/plastitanium(drop_location())
+					WD = new/obj/structure/window/plasma/reinforced/plastitanium(drop_location()[1])
 				else
-					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
+					WD = new/obj/structure/window/fulltile(drop_location()[1]) //normal window
 				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
 				WD.set_anchored(FALSE)
@@ -210,7 +214,7 @@
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
 	if(!(flags_1&NODECONSTRUCT_1))
-		var/obj/R = new rods_type(drop_location(), rods_amount)
+		var/obj/R = new rods_type(drop_location()[1], rods_amount)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	..()
@@ -218,7 +222,7 @@
 /obj/structure/grille/obj_break()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		new broken_type(src.loc)
-		var/obj/R = new rods_type(drop_location(), rods_broken)
+		var/obj/R = new rods_type(drop_location()[1], rods_broken)
 		transfer_fingerprints_to(R)
 		qdel(src)
 
@@ -233,6 +237,8 @@
 		return FALSE
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
 		return FALSE
+	if(shock_cooldown > world.time)
+		return FALSE
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
@@ -240,6 +246,7 @@
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
+			shock_cooldown = world.time + 0.5 SECONDS
 			return TRUE
 		else
 			return FALSE

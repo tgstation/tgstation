@@ -129,8 +129,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/stock_parts/Initialize()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	if(loc)
+		forceMove(loc, rand(-5, 5), rand(-5, 5))
 
 /obj/item/stock_parts/get_part_rating()
 	return rating

@@ -97,7 +97,7 @@
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
 			I.play_tool_sound(src)
-			new /obj/item/clothing/gloves/fingerless(drop_location())
+			new /obj/item/clothing/gloves/fingerless(drop_location()[1])
 			qdel(src)
 	..()
 

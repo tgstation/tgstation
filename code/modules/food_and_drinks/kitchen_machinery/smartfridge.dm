@@ -251,7 +251,7 @@
 	component_parts = null
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
-	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
+	new /obj/item/stack/sheet/mineral/wood(drop_location()[1], 10)
 	..()
 
 /obj/machinery/smartfridge/drying_rack/RefreshParts()
@@ -334,11 +334,11 @@
 			S.forceMove(drop_location())
 		else
 			var/dried = S.dried_type
-			new dried(drop_location())
+			new dried(drop_location()[1])
 			qdel(S)
 		return TRUE
 	for(var/obj/item/stack/sheet/wethide/WL in src)
-		new /obj/item/stack/sheet/leather(drop_location(), WL.amount)
+		new /obj/item/stack/sheet/leather(drop_location()[1], WL.amount)
 		qdel(WL)
 		return TRUE
 	return FALSE

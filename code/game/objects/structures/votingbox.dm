@@ -138,7 +138,7 @@
 	return TRUE
 
 /obj/structure/votebox/dump_contents()
-	var/atom/droppoint = drop_location()
+	var/atom/droppoint = drop_location()[1]
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(droppoint)
 
@@ -172,7 +172,7 @@
 			results[text] += 1
 	sortTim(results, cmp=/proc/cmp_numeric_dsc, associative = TRUE)
 
-	var/obj/item/paper/P = new(drop_location())
+	var/obj/item/paper/P = new(drop_location()[1])
 	var/list/tally = list()
 	tally += {"
 		<style>

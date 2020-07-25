@@ -770,6 +770,22 @@
 	var/datum/skill_panel/SP  = new(usr, target_mind)
 	SP.ui_interact(usr)
 
+/datum/admins/proc/view_boundingbox(atom/movable/A as obj|mob in world)
+	set category = "Debug"
+	set desc = "Display the bounding box of the item clicked"
+	set name = "Draw Bounding Box"
+
+	if(!check_rights(R_SPAWN|R_DEBUG))
+		return
+
+	var/icon/I = icon('icons/obj/objects.dmi', "pixelpoint")
+	I.DrawBox(COLOR_RED, A.bound_x, A.bound_y, A.bound_width + A.bound_x, A.bound_height + A.bound_y)
+	var/image/II = image(I, A.loc)
+	II.layer = ABOVE_ALL_MOB_LAYER
+	II.pixel_x = A.step_x // offset by current step values
+	II.pixel_y = A.step_y
+	flick_overlay_view(II, A, 30)
+
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"
 	set desc="Reduces view range when wearing welding helmets"

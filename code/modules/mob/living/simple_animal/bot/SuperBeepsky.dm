@@ -132,7 +132,7 @@
 
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] lets out a huge cough as it blows apart!</span>")
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 
 	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
 	Sa.build_step = 1

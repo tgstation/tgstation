@@ -47,7 +47,7 @@
 		ui_interact(user)
 
 /obj/structure/ore_box/proc/dump_box_contents()
-	var/drop = drop_location()
+	var/drop = drop_location()[1]
 	for(var/obj/item/stack/ore/O in src)
 		if(QDELETED(O))
 			continue
@@ -56,7 +56,7 @@
 		O.forceMove(drop)
 		if(TICK_CHECK)
 			stoplag()
-			drop = drop_location()
+			drop = drop_location()[1]
 
 /obj/structure/ore_box/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

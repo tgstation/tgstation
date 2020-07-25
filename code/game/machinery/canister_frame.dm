@@ -95,7 +95,7 @@
 		to_chat(user, "<span class='notice'>You start adding [next_tier_reqitem_am] [reqitem_name]\s to the frame...</span>")
 		if (ST.use_tool(src, user, 2 SECONDS, amount=next_tier_reqitem_am, volume=50))
 			to_chat(user, "<span class='notice'>You added [next_tier_reqitem_am] [reqitem_name]\s to the frame, turning it into \a [initial(next_tier.name)].</span>")
-			new next_tier(drop_location())
+			new next_tier(drop_location()[1])
 			qdel(src)
 		return
 	return ..()
@@ -108,7 +108,7 @@
 		to_chat(user, "<span class='notice'>You start tightening the screws on \the [src].</span>")
 		if (I.use_tool(src, user, 2 SECONDS, volume=50))
 			to_chat(user, "<span class='notice'>You tighten the last screws on \the [src].</span>")
-			new finished_obj(drop_location())
+			new finished_obj(drop_location()[1])
 			qdel(src)
 		return
 	return FALSE

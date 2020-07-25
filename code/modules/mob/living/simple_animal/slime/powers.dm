@@ -174,7 +174,7 @@
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
 			var/datum/component/nanites/original_nanites = GetComponent(/datum/component/nanites)
-			var/turf/drop_loc = drop_location()
+			var/turf/drop_loc = drop_location()[1]
 
 			for(var/i=1,i<=4,i++)
 				var/child_colour

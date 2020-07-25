@@ -343,7 +343,7 @@
 	add_fingerprint(user)
 	if(istype(W, /obj/item/melee/cultblade/dagger) && iscultist(user)) //Cultists can demolish cult girders instantly with their tomes
 		user.visible_message("<span class='warning'>[user] strikes [src] with [W]!</span>", "<span class='notice'>You demolish [src].</span>")
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
+		new /obj/item/stack/sheet/runed_metal(drop_location()[1], 1)
 		qdel(src)
 
 	else if(W.tool_behaviour == TOOL_WELDER)
@@ -353,7 +353,7 @@
 		to_chat(user, "<span class='notice'>You start slicing apart the girder...</span>")
 		if(W.use_tool(src, user, 40, volume=50))
 			to_chat(user, "<span class='notice'>You slice apart the girder.</span>")
-			var/obj/item/stack/sheet/runed_metal/R = new(drop_location(), 1)
+			var/obj/item/stack/sheet/runed_metal/R = new(drop_location()[1], 1)
 			transfer_fingerprints_to(R)
 			qdel(src)
 
@@ -380,7 +380,7 @@
 
 /obj/structure/girder/cult/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
+		new /obj/item/stack/sheet/runed_metal(drop_location()[1], 1)
 	qdel(src)
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -420,7 +420,7 @@
 		to_chat(user, "<span class='notice'>You start slicing apart [src]...</span>")
 		if(W.use_tool(src, user, 40, volume=50))
 			to_chat(user, "<span class='notice'>You slice apart [src].</span>")
-			var/obj/item/stack/tile/bronze/B = new(drop_location(), 2)
+			var/obj/item/stack/tile/bronze/B = new(drop_location()[1], 2)
 			transfer_fingerprints_to(B)
 			qdel(src)
 

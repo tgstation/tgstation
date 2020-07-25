@@ -135,7 +135,7 @@
 		inserted_bomb.forceMove(src)
 		say("Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected.")
 		return
-	inserted_core.create_core(drop_location(), TRUE, TRUE)
+	inserted_core.create_core(drop_location()[1], TRUE, TRUE)
 	inserted_core = null
 	say("Success. Resultant detonation has theoretical range of [range]. Required radius was [required_radius]. Core production complete.")
 

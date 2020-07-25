@@ -276,8 +276,8 @@
 		if(11)
 			//Cookie
 			T.visible_message("<span class='userdanger'>A cookie appears out of thin air!</span>")
-			var/obj/item/reagent_containers/food/snacks/cookie/C = new(drop_location())
-			do_smoke(0, drop_location())
+			var/obj/item/reagent_containers/food/snacks/cookie/C = new(drop_location()[1])
+			do_smoke(0, drop_location()[1])
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing
@@ -298,18 +298,18 @@
 		if(14)
 			//Free Gun
 			T.visible_message("<span class='userdanger'>An impressive gun appears!</span>")
-			do_smoke(0, drop_location())
-			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
+			do_smoke(0, drop_location()[1])
+			new /obj/item/gun/ballistic/revolver/mateba(drop_location()[1])
 		if(15)
 			//Random One-use spellbook
 			T.visible_message("<span class='userdanger'>A magical looking book drops to the floor!</span>")
-			do_smoke(0, drop_location())
-			new /obj/item/book/granter/spell/random(drop_location())
+			do_smoke(0, drop_location()[1])
+			new /obj/item/book/granter/spell/random(drop_location()[1])
 		if(16)
 			//Servant & Servant Summon
 			T.visible_message("<span class='userdanger'>A Dice Servant appears in a cloud of smoke!</span>")
-			var/mob/living/carbon/human/H = new(drop_location())
-			do_smoke(0, drop_location())
+			var/mob/living/carbon/human/H = new(drop_location()[1])
+			do_smoke(0, drop_location()[1])
 
 			H.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()
@@ -331,13 +331,13 @@
 		if(17)
 			//Tator Kit
 			T.visible_message("<span class='userdanger'>A suspicious box appears!</span>")
-			new /obj/item/storage/box/syndicate/bundle_a(drop_location())
-			do_smoke(0, drop_location())
+			new /obj/item/storage/box/syndicate/bundle_a(drop_location()[1])
+			do_smoke(0, drop_location()[1])
 		if(18)
 			//Captain ID
 			T.visible_message("<span class='userdanger'>A golden identification card appears!</span>")
-			new /obj/item/card/id/captains_spare(drop_location())
-			do_smoke(0, drop_location())
+			new /obj/item/card/id/captains_spare(drop_location()[1])
+			do_smoke(0, drop_location()[1])
 		if(19)
 			//Instrinct Resistance
 			T.visible_message("<span class='userdanger'>[user] looks very robust!</span>")

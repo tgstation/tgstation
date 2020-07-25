@@ -52,7 +52,7 @@
 	if(!loc) //quick check if it's qdeleted already.
 		return
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 3)
+		var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location()[1], 3)
 		transfer_fingerprints_to(rod)
 		qdel(src)
 ///Implements behaviour that makes it possible to unanchor the railing.

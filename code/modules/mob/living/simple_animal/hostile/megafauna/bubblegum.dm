@@ -47,7 +47,7 @@ Difficulty: Hard
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 5
-	move_to_delay = 5
+	move_to_delay = 0.5
 	retreat_distance = 5
 	minimum_distance = 5
 	rapid_melee = 8 // every 1/4 second
@@ -160,6 +160,7 @@ Difficulty: Hard
 			SLEEP_CHECK_DEATH(6)
 	SetRecoveryTime(20)
 
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(atom/chargeat = target, delay = 3, chargepast = 2)
 	if(!chargeat)
 		return
@@ -174,16 +175,16 @@ Difficulty: Hard
 	charging = TRUE
 	revving_charge = TRUE
 	DestroySurroundings()
-	walk(src, 0)
+	walk(src, NONE)
 	setDir(dir)
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	SLEEP_CHECK_DEATH(delay)
 	revving_charge = FALSE
-	var/movespeed = 0.7
-	walk_towards(src, T, movespeed)
-	SLEEP_CHECK_DEATH(get_dist(src, T) * movespeed)
-	walk(src, 0) // cancel the movement
+	var/charge_speed = step_size * 4
+	walk_towards(src, T, 0, charge_speed)
+	SLEEP_CHECK_DEATH(bounds_dist(src, T) / charge_speed)
+	walk(src, NONE) // cancel the movement
 	try_bloodattack()
 	charging = FALSE
 
@@ -352,6 +353,9 @@ Difficulty: Hard
 
 /obj/effect/decal/cleanable/blood/bubblegum
 	bloodiness = 0
+	bound_width = 32 // these are a tile large
+	bound_height = 32
+	bound_x = 0
 
 /obj/effect/decal/cleanable/blood/bubblegum/can_bloodcrawl_in()
 	return TRUE
@@ -442,6 +446,9 @@ Difficulty: Hard
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
+	if(!stat && next_move_sound <= world.time)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
+		next_move_sound = world.time + 0.5 SECONDS
 	update_approach()
 	if(revving_charge)
 		return FALSE
@@ -451,11 +458,10 @@ Difficulty: Hard
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	if(Dir)
-		new /obj/effect/decal/cleanable/blood/bubblegum(src.loc)
+	if(Dir && OldLoc != loc)
+		new /obj/effect/decal/cleanable/blood/bubblegum(loc)
 	if(charging)
 		DestroySurroundings()
-	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)

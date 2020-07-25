@@ -217,7 +217,7 @@
 /obj/machinery/conveyor/holodeck
 
 /obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
-	if(!user.transferItemToLoc(I, drop_location()))
+	if(!user.transferItemToLoc(I, src))
 		return ..()
 
 /obj/item/paper/fluff/holodeck/trek_diploma

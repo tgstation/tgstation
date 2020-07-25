@@ -63,7 +63,7 @@
 
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 	new /obj/item/stock_parts/cell/potato(Tsec)
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
 	S.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
@@ -331,7 +331,7 @@ Auto Patrol: []"},
 
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, target)
-					walk_to(src, target,1,4)
+					walk_to(src, target,1,0.4)
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
@@ -444,7 +444,7 @@ Auto Patrol: []"},
 
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 	if(ranged)
 		var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
 		Sa.build_step = 1

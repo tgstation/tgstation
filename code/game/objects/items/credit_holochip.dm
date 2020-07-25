@@ -89,7 +89,7 @@
 		return
 	else
 		var/new_credits = spend(split_amount, TRUE)
-		var/obj/item/holochip/H = new(user ? user : drop_location(), new_credits)
+		var/obj/item/holochip/H = new(user ? user : drop_location()[1], new_credits)
 		if(user)
 			if(!user.put_in_hands(H))
 				H.forceMove(user.drop_location())

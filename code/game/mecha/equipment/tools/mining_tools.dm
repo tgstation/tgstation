@@ -128,9 +128,9 @@
 		//blood splatters
 		var/splatter_dir = get_dir(chassis, target)
 		if(isalien(target))
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location(), splatter_dir)
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location()[1], splatter_dir)
 		else
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir)
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location()[1], splatter_dir)
 
 		//organs go everywhere
 		if(target_part && prob(10 * drill_level))

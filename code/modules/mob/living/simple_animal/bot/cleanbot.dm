@@ -115,7 +115,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
 	if(weapon)
-		var/atom/Tsec = drop_location()
+		var/atom/Tsec = drop_location()[1]
 		weapon.force = weapon_orig_force
 		drop_part(weapon, Tsec)
 	return ..()
@@ -252,7 +252,7 @@
 			mode = BOT_IDLE
 			return
 
-		if(loc == get_turf(target))
+		if(target in locs)
 			if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
 				UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 				if(QDELETED(target)) //We done here.
@@ -269,6 +269,7 @@
 			if(!bot_move(target))
 				add_to_ignore(target)
 				target = null
+				QDEL_LIST(path)
 				path = list()
 				return
 			mode = BOT_MOVING
@@ -369,7 +370,7 @@
 /mob/living/simple_animal/bot/cleanbot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/atom/Tsec = drop_location()
+	var/atom/Tsec = drop_location()[1]
 
 	new /obj/item/reagent_containers/glass/bucket(Tsec)
 

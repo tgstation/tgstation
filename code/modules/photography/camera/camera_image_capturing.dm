@@ -5,10 +5,9 @@
 	if(istype(A))
 		appearance = A.appearance
 		dir = A.dir
-		if(ismovable(A))
+		if(loc && ismovable(A))
 			var/atom/movable/AM = A
-			step_x = AM.step_x
-			step_y = AM.step_y
+			forceStep(null, AM.step_x, AM.step_y)
 			if(iscarbon(A))
 				var/mob/living/carbon/C = A
 				UNLINT(turn_angle = C.lying_angle) // this is the only place its okay to read lying directly

@@ -220,10 +220,10 @@
 									if(MA.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.
 										var/obj/item/stack/sheet/dropped_glass
 										if(heat_proof_finished)
-											dropped_glass = new /obj/item/stack/sheet/rglass(drop_location())
+											dropped_glass = new /obj/item/stack/sheet/rglass(drop_location()[1])
 											heat_proof_finished = FALSE
 										else
-											dropped_glass = new /obj/item/stack/sheet/glass(drop_location())
+											dropped_glass = new /obj/item/stack/sheet/glass(drop_location()[1])
 										glass = FALSE
 										to_chat(user, "<span class='notice'>As you finish, a [dropped_glass.singular_name] falls out of [MA]'s frame.</span>")
 

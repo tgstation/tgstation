@@ -72,7 +72,7 @@
 				if(I.use_tool(src, user, 20, volume=50, amount=5)) //uses up 5 fuel
 					build_step = PTURRET_BOLTED
 					to_chat(user, "<span class='notice'>You remove the turret's interior metal armor.</span>")
-					new /obj/item/stack/sheet/metal(drop_location(), 2)
+					new /obj/item/stack/sheet/metal(drop_location()[1], 2)
 					return
 
 

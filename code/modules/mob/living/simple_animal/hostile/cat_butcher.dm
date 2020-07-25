@@ -37,6 +37,6 @@
 		if(!QDELETED(tail))
 			visible_message("<span class='notice'>[src] severs [L]'s tail in one swift swipe!</span>", "<span class='notice'>You sever [L]'s tail in one swift swipe.</span>")
 			tail.Remove(L)
-			var/obj/item/organ/tail/cat/dropped_tail = new(target.drop_location())
+			var/obj/item/organ/tail/cat/dropped_tail = new(target.drop_location()[1])
 			dropped_tail.color = L.hair_color
 		return 1

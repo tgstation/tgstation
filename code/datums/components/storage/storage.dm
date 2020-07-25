@@ -284,8 +284,9 @@
 		if(I.loc != real_location)
 			continue
 		remove_from_storage(I, target)
-		I.pixel_x = rand(-10,10)
-		I.pixel_y = rand(-10,10)
+		var/_step_x = rand(-10,10)
+		var/_step_y = rand(-10,10)
+		I.forceStep(null, _step_x, _step_y)
 		if(trigger_on_found && I.on_found())
 			return FALSE
 		if(TICK_CHECK)

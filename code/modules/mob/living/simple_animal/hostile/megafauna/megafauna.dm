@@ -19,8 +19,8 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	vision_range = 5
-	aggro_vision_range = 18
+	vision_range = 160
+	aggro_vision_range = 576
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
@@ -54,6 +54,7 @@
 	var/list/attack_action_types = list()
 	/// If there is a small sprite icon for players controlling the megafauna to use
 	var/small_sprite_type
+	var/next_move_sound
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()

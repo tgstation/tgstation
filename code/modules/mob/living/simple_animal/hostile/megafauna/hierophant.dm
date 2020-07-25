@@ -54,10 +54,10 @@ Difficulty: Hard
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	speed = 10
-	move_to_delay = 10
+	move_to_delay = 0.5
 	ranged = TRUE
 	ranged_cooldown_time = 40
-	aggro_vision_range = 21 //so it can see to one side of the arena to the other
+	aggro_vision_range = 672 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/hierophant_club)
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman)
 	wander = FALSE
@@ -133,7 +133,7 @@ Difficulty: Hard
 	var/mob/living/L
 	if(isliving(target))
 		L = target
-		target_slowness += L.cached_multiplicative_slowdown
+		target_slowness += L.step_size
 	if(client)
 		target_slowness += 1
 
@@ -472,10 +472,12 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Moved(oldLoc, movement_dir)
 	. = ..()
-	if(!stat && .)
+	if(!stat && . && oldLoc != loc)
 		var/obj/effect/temp_visual/hierophant/squares/HS = new(oldLoc)
 		HS.setDir(movement_dir)
-		playsound(src, 'sound/mecha/mechmove04.ogg', 150, TRUE, -4)
+		if(next_move_sound <= world.time)
+			playsound(src, 'sound/mecha/mechmove04.ogg', 150, TRUE, -4)
+			next_move_sound = world.time + 0.5 SECONDS
 		if(target)
 			arena_trap(target)
 
@@ -684,7 +686,7 @@ Difficulty: Hard
 			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...
 			if(H.stat == CONSCIOUS && !H.target && H.AIStatus != AI_OFF && !H.client)
 				if(!QDELETED(caster))
-					if(get_dist(H, caster) <= H.aggro_vision_range)
+					if(bounds_dist(H, caster) <= H.aggro_vision_range)
 						H.FindTarget(list(caster), 1)
 					else
 						H.Goto(get_turf(caster), H.move_to_delay, 3)

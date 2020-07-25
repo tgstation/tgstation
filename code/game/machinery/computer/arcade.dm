@@ -755,7 +755,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if(gamers[gamer] == -1)
 		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
-		new /obj/item/paper/pamphlet/violent_video_games(drop_location())
+		new /obj/item/paper/pamphlet/violent_video_games(drop_location()[1])
 		gamers[gamer]--
 		return
 

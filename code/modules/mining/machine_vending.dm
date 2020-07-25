@@ -171,7 +171,7 @@
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in sortList(items)
 	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
-	var/drop_location = drop_location()
+	var/drop_location = drop_location()[1]
 	switch(selection)
 		if("Survival Capsule and Explorer's Webbing")
 			new /obj/item/storage/belt/mining/vendor(drop_location)
