@@ -264,6 +264,8 @@
   * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.
   */
 /datum/song/proc/tempodiv_to_delay(tempodiv)
+	if(!tempodiv)
+		tempodiv = 1		// no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
 	return max(1, round((tempo/tempodiv) / world.tick_lag, 1))
 
 /**
