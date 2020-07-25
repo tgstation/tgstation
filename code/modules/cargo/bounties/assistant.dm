@@ -196,16 +196,16 @@
 
 
 /datum/bounty/item/assistant/crayons
-	name = "Crayon Boxes"
+	name = "Crayons"
 	description = "Dr Jones' kid ate all our crayons again. Please send us yours."
-	reward = 3000
-	required_count = 5
-	wanted_types = list(/obj/item/storage/crayons)
+	reward = 2000
+	required_count = 24
+	wanted_types = list(/obj/item/toy/crayon)
 
 /datum/bounty/item/assistant/pens
 	name = "Pens"
 	description = "We are hosting the intergalactic pen balancing competition. We need you to send us some standardized ball point pens."
-	reward = 5000
+	reward = 2000
 	required_count = 10
 	include_subtypes = FALSE
 	wanted_types = list(/obj/item/pen)
