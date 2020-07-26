@@ -86,8 +86,8 @@
 	if(popper.mob_size < MOB_SIZE_HUMAN)
 		return
 
-	playsound(src, 'sound/effects/pop.ogg', 90, FALSE)
-	popper.visible_message("<span class='danger'>[popper] steps on \the [src], popping the bag!</span>", "<span class='danger'>You step on \the [src], popping the bag!</span>", "<span class='danger'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE)
+	playsound(src, 'sound/effects/chipbagpop.ogg', 100)
+	popper.visible_message("<span class='danger'>[popper] steps on \the [src], popping the bag!</span>", "<span class='danger'>You step on \the [src], popping the bag!</span>", "<span class='danger'>You hear a sharp crack!</span>", COMBAT_MESSAGE_RANGE)
 	generate_trash(loc)
 	qdel(src)
 
