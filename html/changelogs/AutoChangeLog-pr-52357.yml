@@ -1,7 +1,0 @@
-author: "WondaMegapon"
-delete-after: True
-changes: 
-  - rscadd: "Telecommunication machines now use a TGUI based interface"
-  - rscdel: "Removed HTML based telecommunication machine code"
-  - balance: "Telecommunication machines can have their interfaces viewed without a multitool"
-  - server: "Telecommunication machines now log changed settings"
