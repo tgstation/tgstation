@@ -222,7 +222,7 @@
 /obj/machinery/limbgrower/proc/get_design_cost(datum/design/D)
 	var/dat
 	if(D.reagents_list[/datum/reagent/medicine/c2/synthflesh])
-		dat += "[D.reagents_list[/datum/reagent/medicine/c2/synthflesh] * prod_coeff] SynthFlesh (synthflesh)"
+		dat += "[D.reagents_list[/datum/reagent/medicine/c2/synthflesh] * prod_coeff] SynthFlesh"
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
