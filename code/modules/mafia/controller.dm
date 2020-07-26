@@ -257,8 +257,10 @@
   * * returns TRUE if someone won the game, halting other procs from continuing in the case of a victory
   */
 /datum/mafia_controller/proc/check_victory()
+	//needed for achievements
 	var/list/total_town = list()
 	var/list/total_mafia = list()
+
 	var/alive_town = 0
 	var/alive_mafia = 0
 	var/list/solos_to_ask = list() //need to ask after because first round is counting team sizes
@@ -268,20 +270,20 @@
 	///PHASE ONE: TALLY UP ALL NUMBERS OF PEOPLE STILL ALIVE
 
 	for(var/datum/mafia_role/R in all_roles)
-			switch(R.team)
-				if(MAFIA_TEAM_MAFIA)
-					total_mafia += R
-					if(R.game_status == MAFIA_ALIVE)
-						alive_mafia += R.vote_power
-				if(MAFIA_TEAM_TOWN)
-					total_town += R
-					if(R.game_status == MAFIA_ALIVE)
+		switch(R.team)
+			if(MAFIA_TEAM_MAFIA)
+				total_mafia += R
+				if(R.game_status == MAFIA_ALIVE)
+					alive_mafia += R.vote_power
+			if(MAFIA_TEAM_TOWN)
+				total_town += R
+				if(R.game_status == MAFIA_ALIVE)
+					alive_town += R.vote_power
+			if(MAFIA_TEAM_SOLO)
+				if(R.game_status == MAFIA_ALIVE)
+					if(R.solo_counts_as_town)
 						alive_town += R.vote_power
-				if(MAFIA_TEAM_SOLO)
-					if(R.game_status == MAFIA_ALIVE)
-						if(R.solo_counts_as_town)
-							alive_town += R.vote_power
-						solos_to_ask += R
+					solos_to_ask += R
 
 	///PHASE TWO: SEND STATS TO SOLO ANTAGS, SEE IF THEY WON OR TEAMS CANNOT WIN
 
