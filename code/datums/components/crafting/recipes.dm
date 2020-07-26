@@ -758,6 +758,14 @@
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
+/datum/crafting_recipe/emergency_oxygen_double
+	name = "Double Emergency Oxygen Tank"
+	result = /obj/item/tank/internals/emergency_oxygen/double/empty
+	time = 30
+	reqs = list(/obj/item/tank/internals/emergency_oxygen/engi = 2, /obj/item/pipe = 1)
+	category = CAT_MISC
+	tools = list(TOOL_WELDER)
+
 /datum/crafting_recipe/multiduct
 	name = "Multi-layer duct"
 	result = /obj/machinery/duct/multilayered
