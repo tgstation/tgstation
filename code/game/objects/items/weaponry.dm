@@ -595,6 +595,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
 	homerun_able = 1
+	color = "#ff4c4c"
+	light_power = 5
+	light_color = "#ff4c4c"
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
@@ -604,9 +607,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, "<span class='warning'>You're already ready to do a home run!</span>")
 		..()
 		return
+	set_light(1)
 	to_chat(user, "<span class='warning'>You begin gathering strength...</span>")
 	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
-	if(do_after(user, 90, target = src))
+	if(do_after(user, 75, target = src))
+		set_light(3)
 		to_chat(user, "<span class='userdanger'>You gather power! Time for a home run!</span>")
 		homerun_ready = 1
 	..()
@@ -616,10 +621,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	if(homerun_ready)
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")
-		target.throw_at(throw_target, rand(8,10), 14, user)
+		target.throw_at(throw_target, rand(8,16), 14, user)
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
 		homerun_ready = 0
+		set_light(0)
 		return
 	else if(!target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
@@ -641,6 +647,208 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(picksound == 2)
 		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, TRUE)
 	return 1
+
+// Burn Bat
+/obj/item/melee/baseball_bat/burn
+	name = "Super Slugger"
+	desc = "An eternal napalm flame ensures whatever is thrown at you is seared to a perfect medium-rare."
+	icon_state = "baseball_bat_burn"
+	inhand_icon_state = "baseball_bat_burn"
+	attack_verb = list("beat", "cooked")
+	damtype = BURN
+
+// Barbed Bat
+/obj/item/melee/baseball_bat/barbed
+	name = "Barbara"
+	desc = "A bat wrapped in hooked wires meant to dig into the flesh of the undead, although it works just as well on the living."
+	icon_state = "baseball_bat_barbed"
+	inhand_icon_state = "baseball_bat_barbed"
+	attack_verb = list("beat", "bashed", "tears into")
+	wound_bonus = 30
+	bare_wound_bonus = 40
+
+//BuzzSaw
+/obj/item/melee/baseball_bat/buzz
+	name = "Buzzsaw Bat"
+	desc = "A circular saw attatched to a baseball bat, perfect for surprise woodwork."
+	icon_state = "baseball_bat_buzz"
+	inhand_icon_state = "baseball_bat_buzz"
+	attack_verb = list("beat", "slashes", "eviscerates")
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	force = 16
+	item_flags = SURGICAL_TOOL
+	sharpness = IS_SHARP
+	tool_behaviour = TOOL_SAW
+	toolspeed = 1.5
+	wound_bonus = 5
+	bare_wound_bonus = 10
+
+//Bluespace Bat
+/obj/item/melee/baseball_bat/bluespace
+	name = "Bluespace Bat"
+	desc = "Three bluespace crystals duct-taped to a baseball bat. Someone should be fired for this."
+	icon_state = "baseball_bat_bluespace"
+	inhand_icon_state = "baseball_bat_blue"
+	attack_verb = list("beat", "bashed")
+
+/obj/item/melee/baseball_bat/bluespace/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
+	..()
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
+							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+		if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))//honk honk
+			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
+		else
+			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
+		return
+	else
+		if(!istype(M) && M.anchored)
+			return .
+		else
+			SEND_SIGNAL(M, COMSIG_LIVING_MINOR_SHOCK)
+			do_teleport(M, get_turf(M), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+
+//Knife Bat
+/obj/item/melee/baseball_bat/knife
+	name = "Knife Bat"
+	desc = "Useful in case your ingredients are ever hurled at you at incredibly high speeds."
+	icon_state = "baseball_bat_knife"
+	inhand_icon_state = "baseball_bat_knife"
+	attack_verb = list("beat", "bashed", "slashed", "sliced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	item_flags = EYE_STAB
+	wound_bonus = -5
+	bare_wound_bonus = 10
+	sharpness = IS_SHARP_ACCURATE
+	tool_behaviour = TOOL_SCALPEL
+	toolspeed = 2
+	force = 11
+	throwforce = 14
+
+/obj/item/melee/baseball_bat/knife/proc/set_butchering()
+	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10)
+
+//Magical Girl Bat
+/obj/item/melee/baseball_bat/magic
+	name = "Enchanted Bat"
+	desc = "Knock a witches' head right off! Soul gem sold separately."
+	icon_state = "baseball_bat_magic"
+	inhand_icon_state = "baseball_bat_magic"
+	attack_verb = list("beat", "bashed", "smacked")
+
+/obj/item/melee/baseball_bat/magic/attack(mob/living/target, mob/living/user)
+	. = ..()
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
+	if(!target.anchored)
+		var/whack_speed = (prob(90) ? 3 : 6)
+		target.throw_at(throw_target, rand(25, 50), whack_speed, user)
+
+//Affront to God
+/obj/item/melee/baseball_bat/kitty
+	name = "Hello Kitty Bat"
+	desc = "'Now I am become Death, the destroyer of worlds.' -J. Robert Oppenheimer"
+	icon_state = "baseball_bat_kitty"
+	inhand_icon_state = "baseball_bat_kitty"
+	attack_verb = list("beat", "bashed", "smacked", "bopped", "poked", "whacked")
+	force = 10
+	wound_bonus = -10
+	bare_wound_bonus = 0
+	throwforce = 12
+	var/effect = null
+	var/stun_sound = 'sound/weapons/egloves.ogg'
+	var/confusion_amt = 0
+	var/stamina_loss_amt = 0
+	var/apply_stun_delay = 0 SECONDS
+	var/stun_time = 0 SECONDS
+
+/obj/item/melee/baseball_bat/kitty/attack(mob/living/target, mob/living/user)
+	. = ..()
+	set_light(rand(1, 3))
+	light_power = 10
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
+	if(!target.anchored)
+		var/whack_speed = (prob(90) ? 7 : 10)
+		target.throw_at(throw_target, rand(3, 6), whack_speed, user)
+	if(istype(target, /mob/living))
+		effect = pick(1, 2, 3, 4, 5)
+	switch(effect)
+		if(1)
+			light_color = "#FF5733"
+			force = 10
+			confusion_amt = 0
+			stamina_loss_amt = 0
+			apply_stun_delay = 0 SECONDS
+			stun_time = 0 SECONDS
+			wound_bonus = 100
+			bare_wound_bonus = 200
+		if(2)
+			force = 10
+			light_color = "#E6ED3B"
+			wound_bonus = -10
+			bare_wound_bonus = 0
+			confusion_amt = 0
+			stamina_loss_amt = 0
+			apply_stun_delay = 0 SECONDS
+			stun_time = 0 SECONDS
+			if(iscarbon(target))
+				var/mob/living/carbon/C = target
+				if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+					return
+				var/list/parts = list()
+				for(var/X in C.bodyparts)
+					var/obj/item/bodypart/bodypart = X
+					if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)
+						if(bodypart.dismemberable)
+							parts += bodypart
+				if(length(parts))
+					var/obj/item/bodypart/bodypart = pick(parts)
+					bodypart.dismember()
+		if(3)
+			force = 10
+			light_color = "#3B40ED"
+			wound_bonus = -10
+			bare_wound_bonus = 0
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				H.drop_all_held_items()
+				H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
+
+		if(4)
+			force = 10
+			light_color = "#3BED64"
+			var/mob/living/carbon/human/L = target
+			wound_bonus = -10
+			bare_wound_bonus = 0
+			confusion_amt = 10
+			stamina_loss_amt = 60
+			apply_stun_delay = 2 SECONDS
+			stun_time = 5 SECONDS
+			L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
+
+			SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
+			addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), apply_stun_delay)
+		if(5)
+			force = 25
+			light_color = "#ED3BE4"
+			wound_bonus = -10
+			bare_wound_bonus = 0
+			confusion_amt = 0
+			stamina_loss_amt = 0
+			apply_stun_delay = 0 SECONDS
+			stun_time = 0 SECONDS
+	return ..()
+
+/obj/item/melee/baseball_bat/kitty/proc/apply_stun_effect_end(mob/living/target)
+	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	if(!target.IsKnockdown())
+		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
+
+	if(trait_check)
+		target.Knockdown(stun_time * 0.1)
+	else
+		target.Knockdown(stun_time)
+
+
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"

@@ -412,3 +412,13 @@
 	if(prob(33))
 		icon_state = "cheeseburgeralt"
 
+/obj/item/reagent_containers/food/snacks/burger/bigmac
+	name = "bigmac"
+	desc = "Infused with the secret sauce of the ancients. Happy Meal toy not included."
+	icon_state = "bigmac"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bitesize = 7
+	volume = 100
+	tastes = list("bun" = 4, "secret sauce" = 10, "lettuce" = 3)
+	foodtype = GRAIN | MEAT | DAIRY

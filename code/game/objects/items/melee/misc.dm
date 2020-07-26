@@ -428,7 +428,7 @@
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
 		attack_verb = list("hit", "poked")
-		tool_behaviour = TOOL_SCREWDRIVER
+		tool_behaviour = null
 		toolspeed = 10
 		stamina_damage = 0
 		usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
