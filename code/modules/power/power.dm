@@ -15,9 +15,11 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
+	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/update_cable_icons_on_turf, get_turf(src)), 3)
 	return ..()
 
 ///////////////////////////////
@@ -28,6 +30,10 @@
 // All power generation handled in add_avail()
 // Machines should use add_load(), surplus(), avail()
 // Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+
+//override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
+/obj/machinery/power/proc/should_have_node()
+	return FALSE
 
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
@@ -42,13 +48,13 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
-/obj/machinery/power/proc/avail()
+/obj/machinery/power/proc/avail(amount)
 	if(powernet)
-		return powernet.avail
+		return amount ? powernet.avail >= amount : powernet.avail
 	else
 		return 0
 
@@ -58,7 +64,7 @@
 
 /obj/machinery/power/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
 		return 0
 
@@ -104,25 +110,43 @@
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
 	addStaticPower(-value, powerchannel)
 
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
+/**
+  * Called whenever the power settings of the containing area change
+  *
+  * by default, check equipment channel & set flag, can override if needed
+  *
+  * Returns TRUE if the NOPOWER flag was toggled
+  */
+/obj/machinery/proc/power_change()
+	SHOULD_CALL_PARENT(1)
+	if(machine_stat & BROKEN)
+		return
 	if(powered(power_channel))
-		stat &= ~NOPOWER
+		if(machine_stat & NOPOWER)
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
+			. = TRUE
+		machine_stat &= ~NOPOWER
 	else
+		if(!(machine_stat & NOPOWER))
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
+			. = TRUE
+		machine_stat |= NOPOWER
+	update_icon()
 
-		stat |= NOPOWER
-	return
-
-// connect the machine to a powernet if a node cable is present on the turf
+// connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
+	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
-		return FALSE
+		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
+		if(!term || !term.powernet)
+			return FALSE
+		else
+			term.powernet.add_machine(src)
+			return TRUE
 
 	C.powernet.add_machine(src)
 	return TRUE
@@ -156,39 +180,29 @@
 //returns all the cables WITHOUT a powernet in neighbors turfs,
 //pointing towards the turf the machine is located at
 /obj/machinery/power/proc/get_connections()
-
 	. = list()
-
-	var/cdir
 	var/turf/T
 
 	for(var/card in GLOB.cardinals)
 		T = get_step(loc,card)
-		cdir = get_dir(T,loc)
 
 		for(var/obj/structure/cable/C in T)
 			if(C.powernet)
 				continue
-			if(C.d1 == cdir || C.d2 == cdir)
-				. += C
+			. += C
 	return .
 
 //returns all the cables in neighbors turfs,
 //pointing towards the turf the machine is located at
 /obj/machinery/power/proc/get_marked_connections()
-
 	. = list()
-
-	var/cdir
 	var/turf/T
 
 	for(var/card in GLOB.cardinals)
 		T = get_step(loc,card)
-		cdir = get_dir(T,loc)
 
 		for(var/obj/structure/cable/C in T)
-			if(C.d1 == cdir || C.d2 == cdir)
-				. += C
+			. += C
 	return .
 
 //returns all the NODES (O-X) cables WITHOUT a powernet in the turf the machine is located at
@@ -197,70 +211,39 @@
 	for(var/obj/structure/cable/C in loc)
 		if(C.powernet)
 			continue
-		if(C.d1 == 0) // the cable is a node cable
-			. += C
+		. += C
 	return .
+
+/proc/update_cable_icons_on_turf(var/turf/T)
+	for(var/obj/structure/cable/C in T.contents)
+		C.update_icon()
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling
 //////////////////////////////////////////
 
-
-// returns a list of all power-related objects (nodes, cable, junctions) in turf,
-// excluding source, that match the direction d
-// if unmarked==1, only return those with no powernet
-/proc/power_list(turf/T, source, d, unmarked=0, cable_only = 0)
-	. = list()
-
-	for(var/AM in T)
-		if(AM == source)
-			continue			//we don't want to return source
-
-		if(!cable_only && istype(AM, /obj/machinery/power))
-			var/obj/machinery/power/P = AM
-			if(P.powernet == 0)
-				continue		// exclude APCs which have powernet=0
-
-			if(!unmarked || !P.powernet)		//if unmarked=1 we only return things with no powernet
-				if(d == 0)
-					. += P
-
-		else if(istype(AM, /obj/structure/cable))
-			var/obj/structure/cable/C = AM
-
-			if(!unmarked || !C.powernet)
-				if(C.d1 == d || C.d2 == d)
-					. += C
-	return .
-
-
-
-
-//remove the old powernet and replace it with a new one throughout the network.
-/proc/propagate_network(obj/O, datum/powernet/PN)
-	var/list/worklist = list()
+///remove the old powernet and replace it with a new one throughout the network.
+/proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, skip_assigned_powernets = FALSE)
 	var/list/found_machines = list()
+	var/list/cables = list()
 	var/index = 1
-	var/obj/P = null
+	var/obj/structure/cable/working_cable
 
-	worklist+=O //start propagating from the passed object
+	cables[C] = TRUE //associated list for performance reasons
 
-	while(index<=worklist.len) //until we've exhausted all power objects
-		P = worklist[index] //get the next power object found
+	while(index <= length(cables))
+		working_cable = cables[index]
 		index++
 
-		if( istype(P, /obj/structure/cable))
-			var/obj/structure/cable/C = P
-			if(C.powernet != PN) //add it to the powernet, if it isn't already there
-				PN.add_cable(C)
-			worklist |= C.get_connections() //get adjacents power objects, with or without a powernet
+		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
 
-		else if(P.anchored && istype(P, /obj/machinery/power))
-			var/obj/machinery/power/M = P
-			found_machines |= M //we wait until the powernet is fully propagates to connect the machines
+		for(var/obj/structure/cable/cable_entry in connections)
+			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries
+				cables[cable_entry] = TRUE
 
-		else
-			continue
+	for(var/obj/structure/cable/cable_entry in cables)
+		PN.add_cable(cable_entry)
+		found_machines += cable_entry.get_machine_connections(skip_assigned_powernets)
 
 	//now that the powernet is set, connect found machines to it
 	for(var/obj/machinery/power/PM in found_machines)
@@ -294,13 +277,13 @@
 
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever
-//power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
+//power_source is a source of electricity, can be power cell, area, apc, cable, powernet or null
 //source is an object caused electrocuting (airlock, grille, etc)
 //siemens_coeff - layman's terms, conductivity
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
-	if(!M || ismecha(M.loc))
+	if(!istype(M) || ismecha(M.loc))
 		return 0	//feckin mechs are dumb
 	if(dist_check)
 		if(!in_range(source,M))
@@ -310,6 +293,7 @@
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)
+				SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 				return 0		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
@@ -370,14 +354,13 @@
 // Misc.
 ///////////////////////////////////////////////
 
-
-// return a knot cable (O-X) if one is present in the turf
-// null if there's none
-/turf/proc/get_cable_node()
+// return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
+/turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
 	if(!can_have_cabling())
 		return null
 	for(var/obj/structure/cable/C in src)
-		if(C.d1 == 0)
+		if(C.machinery_layer & machinery_layer)
+			C.update_icon()
 			return C
 	return null
 

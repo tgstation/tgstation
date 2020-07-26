@@ -10,13 +10,14 @@
 	icon_state = "mecha_teleport"
 	equip_cooldown = 150
 	energy_drain = 1000
-	range = RANGED
+	range = MECHA_RANGED
+	var/teleport_range = 7
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
 	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/turf/T = get_turf(target)
-	if(T)
+	if(T && (loc.z == T.z) && (get_dist(loc, T) <= teleport_range))
 		do_teleport(chassis, T, 4, channel = TELEPORT_CHANNEL_BLUESPACE)
 		return 1
 
@@ -30,7 +31,7 @@
 	icon_state = "mecha_wholegen"
 	equip_cooldown = 50
 	energy_drain = 300
-	range = RANGED
+	range = MECHA_RANGED
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
@@ -56,7 +57,7 @@
 	var/turf/target_turf = pick(L)
 	if(!target_turf)
 		return
-	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, 300, 1, /obj/effect/portal/anom)
 	var/turf/T = get_turf(target)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [AREACOORD(T)]")
@@ -73,7 +74,7 @@
 	icon_state = "mecha_teleport"
 	equip_cooldown = 10
 	energy_drain = 100
-	range = MELEE|RANGED
+	range = MECHA_MELEE|MECHA_RANGED
 	var/atom/movable/locked
 	var/mode = 1 //1 - gravsling 2 - gravpush
 
@@ -85,15 +86,15 @@
 		if(1)
 			if(!locked)
 				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
-					occupant_message("Unable to lock on [target]")
+					occupant_message("<span class='warning'>Unable to lock on [target]!</span>")
 					return
 				if(ismob(target))
 					var/mob/M = target
 					if(M.mob_negates_gravity())
-						occupant_message("Unable to lock on [target]")
+						occupant_message("<span class='warning'>Unable to lock on [target]!</span>")
 						return
 				locked = target
-				occupant_message("Locked on [target]")
+				occupant_message("<span class='notice'>Locked on [target].</span>")
 				send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 			else if(target!=locked)
 				if(locked in view(chassis))
@@ -106,7 +107,7 @@
 					return TRUE
 				else
 					locked = null
-					occupant_message("Lock on [locked] disengaged.")
+					occupant_message("<span class='notice'>Lock on [locked] disengaged.</span>")
 					send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 		if(2)
 			var/list/atoms = list()
@@ -121,15 +122,17 @@
 					var/mob/M = A
 					if(M.mob_negates_gravity())
 						continue
-				spawn(0)
-					var/iter = 5-get_dist(A,target)
-					for(var/i=0 to iter)
-						step_away(A,target)
-						sleep(2)
+				INVOKE_ASYNC(src, .proc/do_scatter, A, target)
+
 			var/turf/T = get_turf(target)
 			log_game("[key_name(chassis.occupant)] used a Gravitational Catapult repulse wave on [AREACOORD(T)]")
 			return TRUE
 
+/obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/A, atom/movable/target)
+	var/iter = 5-get_dist(A,target)
+	for(var/i in 0 to iter)
+		step_away(A,target)
+		sleep(2)
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()
 	return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='?src=[REF(src)];mode=1'>S</a>|<a href='?src=[REF(src)];mode=2'>P</a>\]"
@@ -277,7 +280,7 @@
 	energy_drain = 0
 	range = 0
 	var/coeff = 100
-	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
+	var/list/use_channels = list(AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON,AREA_USAGE_LIGHT)
 	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Destroy()
@@ -293,12 +296,12 @@
 	if(equip_ready) //disabled
 		return
 	var/area/A = get_area(chassis)
-	var/pow_chan = get_power_channel(A)
+	var/pow_chan = GET_MUTATION_POWER_channel(A)
 	if(pow_chan)
 		return 1000 //making magic
 
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_power_channel(var/area/A)
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/GET_MUTATION_POWER_channel(var/area/A)
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
@@ -334,13 +337,13 @@
 	if(isnull(cur_charge) || !chassis.cell)
 		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		occupant_message("No powercell detected.")
+		occupant_message("<span class='notice'>No power cell detected.</span>")
 		return
 	if(cur_charge < chassis.cell.maxcharge)
 		var/area/A = get_area(chassis)
 		if(A)
 			var/pow_chan
-			for(var/c in list(EQUIP,ENVIRON,LIGHT))
+			for(var/c in use_channels)
 				if(A.powered(c))
 					pow_chan = c
 					break
@@ -359,7 +362,7 @@
 	name = "exosuit plasma converter"
 	desc = "An exosuit module that generates power using solid plasma as fuel. Pollutes the environment."
 	icon_state = "tesla"
-	range = MELEE
+	range = MECHA_MELEE
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
 	var/max_fuel = 150000
@@ -397,7 +400,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+		return "[output] \[[fuel]: [round(fuel.amount*MINERAL_MATERIAL_AMOUNT,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 /obj/item/mecha_parts/mecha_equipment/generator/action(target)
 	if(chassis)
@@ -407,15 +410,15 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(var/obj/item/stack/sheet/P)
 	if(P.type == fuel.type && P.amount > 0)
-		var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
+		var/to_load = max(max_fuel - fuel.amount*MINERAL_MATERIAL_AMOUNT,0)
 		if(to_load)
-			var/units = min(max(round(to_load / P.perunit),1),P.amount)
+			var/units = min(max(round(to_load / MINERAL_MATERIAL_AMOUNT),1),P.amount)
 			fuel.amount += units
 			P.use(units)
-			occupant_message("[units] unit\s of [fuel] successfully loaded.")
+			occupant_message("<span class='notice'>[units] unit\s of [fuel] successfully loaded.</span>")
 			return units
 		else
-			occupant_message("Unit is full.")
+			occupant_message("<span class='notice'>Unit is full.</span>")
 			return 0
 	else
 		occupant_message("<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
@@ -423,25 +426,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user, params)
 	load_fuel(weapon)
-
-/obj/item/mecha_parts/mecha_equipment/generator/critfail()
-	..()
-	var/turf/open/T = get_turf(src)
-	if(!istype(T))
-		return
-	var/datum/gas_mixture/GM = new
-	GM.add_gas(/datum/gas/plasma)
-	if(prob(10))
-		GM.gases[/datum/gas/plasma][MOLES] += 100
-		GM.temperature = 1500+T0C //should be enough to start a fire
-		T.visible_message("[src] suddenly disgorges a cloud of heated plasma.")
-		qdel(src)
-	else
-		GM.gases[/datum/gas/plasma][MOLES] += 5
-		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
-		T.visible_message("[src] suddenly disgorges a cloud of plasma.")
-	T.assume_air(GM)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/process()
 	if(!chassis)
@@ -456,7 +440,7 @@
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
 		set_ready_state(1)
-		occupant_message("No powercell detected.")
+		occupant_message("<span class='notice'>No power cell detected.</span>")
 		log_message("Deactivated.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		return
@@ -464,7 +448,7 @@
 	if(cur_charge < chassis.cell.maxcharge)
 		use_fuel = fuel_per_cycle_active
 		chassis.give_power(power_per_cycle)
-	fuel.amount -= min(use_fuel/fuel.perunit,fuel.amount)
+	fuel.amount -= min(use_fuel/MINERAL_MATERIAL_AMOUNT,fuel.amount)
 	update_equip_info()
 	return 1
 
@@ -482,9 +466,118 @@
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src, 0)
 
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/critfail()
-	return
-
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
 		radiation_pulse(get_turf(src), rad_per_cycle)
+
+
+/////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
+
+/obj/item/mecha_parts/mecha_equipment/thrusters
+	name = "generic exosuit thrusters" //parent object, in-game sources will be a child object
+	desc = "A generic set of thrusters, from an unknown source. Uses not-understood methods to propel exosuits seemingly for free."
+	icon_state = "thrusters"
+	selectable = FALSE
+	var/effect_type = /obj/effect/particle_effect/sparks
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/mecha/M)
+	for(var/obj/item/I in M.equipment)
+		if(istype(I, src))
+			to_chat(user, "<span class='warning'>[M] already has this thruster package!</span>")
+			return FALSE
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/mecha/M)
+	M.active_thrusters = src //Enable by default
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/detach()
+	if(chassis?.active_thrusters == src)
+		chassis.active_thrusters = null
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/Destroy()
+	if(chassis?.active_thrusters == src)
+		chassis.active_thrusters = null
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/Topic(href,href_list)
+	..()
+	if(!chassis)
+		return
+	if(href_list["mode"])
+		var/mode = text2num(href_list["mode"])
+		switch(mode)
+			if(0)
+				enable()
+			if(1)
+				disable()
+	return
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/proc/enable()
+	if (chassis.active_thrusters == src)
+		return
+	chassis.active_thrusters = src
+	occupant_message("<span class='notice'>[src] enabled.</span>")
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/proc/disable()
+	if(chassis.active_thrusters != src)
+		return
+	chassis.active_thrusters = null
+	occupant_message("<span class='notice'>[src] disabled.</span>")
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/get_equip_info()
+	return "[..()] \[<a href='?src=[REF(src)];mode=0'>Enable</a>|<a href='?src=[REF(src)];mode=1'>Disable</a>\]"
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/proc/thrust(var/movement_dir)
+	if(!chassis)
+		return FALSE
+	generate_effect(movement_dir)
+	return TRUE //This parent should never exist in-game outside admeme use, so why not let it be a creative thruster?
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/proc/generate_effect(var/movement_dir)
+	var/obj/effect/particle_effect/E = new effect_type(get_turf(chassis))
+	E.dir = turn(movement_dir, 180)
+	step(E, turn(movement_dir, 180))
+	QDEL_IN(E, 5)
+
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/gas
+	name = "RCS thruster package"
+	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments, by expelling gas from the internal life support tank."
+	effect_type = /obj/effect/particle_effect/smoke
+	var/move_cost = 20 //moles per step
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/mecha/M)
+	if(!M.internal_tank)
+		to_chat(user, "<span class='warning'>[M] does not have an internal tank and cannot support this upgrade!</span>")
+		return FALSE
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/gas/thrust(var/movement_dir)
+	if(!chassis || !chassis.internal_tank)
+		return FALSE
+	var/moles = chassis.internal_tank.air_contents.total_moles()
+	if(moles < move_cost)
+		chassis.internal_tank.air_contents.remove(moles)
+		return FALSE
+	chassis.internal_tank.air_contents.remove(move_cost)
+	generate_effect(movement_dir)
+	return TRUE
+
+
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/ion //for mechs with built-in thrusters, should never really exist un-attached to a mech
+	name = "Ion thruster package"
+	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments."
+	detachable = FALSE
+	salvageable = FALSE
+	effect_type = /obj/effect/particle_effect/ion_trails
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/ion/thrust(var/movement_dir)
+	if(!chassis)
+		return FALSE
+	if(chassis.use_power(chassis.step_energy_drain))
+		generate_effect(movement_dir)
+		return TRUE
+	return FALSE

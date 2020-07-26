@@ -11,17 +11,14 @@
 		AH.toggle_leap()
 
 /obj/screen/alien/plasma_display
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "power_display2"
 	name = "plasma stored"
+	icon_state = "power_display"
 	screen_loc = ui_alienplasmadisplay
 
-
 /obj/screen/alien/alien_queen_finder
-	icon = 'icons/mob/screen_alien.dmi'
-	icon_state = "queen_finder"
 	name = "queen sense"
 	desc = "Allows you to sense the general direction of your Queen."
+	icon_state = "queen_finder"
 	screen_loc = ui_alien_queen_finder
 
 /datum/hud/alien
@@ -43,16 +40,19 @@
 	using.icon = ui_style
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand_position(owner,1)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand_position(owner,2)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/act_intent/alien()
 	using.icon_state = mymob.a_intent
+	using.hud = src
 	static_inventory += using
 	action_intent = using
 
@@ -64,49 +64,58 @@
 
 	using = new/obj/screen/language_menu
 	using.screen_loc = ui_alien_language_menu
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drop_throw
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/resist()
 	using.icon = ui_style
 	using.screen_loc = ui_above_movement
+	using.hud = src
 	hotkeybuttons += using
 
 	throw_icon = new /obj/screen/throw_catch()
 	throw_icon.icon = ui_style
 	throw_icon.screen_loc = ui_drop_throw
+	throw_icon.hud = src
 	hotkeybuttons += throw_icon
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.update_icon(mymob)
+	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_above_movement
+	pull_icon.hud = src
 	static_inventory += pull_icon
 
 //begin indicators
 
 	healths = new /obj/screen/healths/alien()
+	healths.hud = src
 	infodisplay += healths
 
 	alien_plasma_display = new /obj/screen/alien/plasma_display()
+	alien_plasma_display.hud = src
 	infodisplay += alien_plasma_display
 
 	if(!isalienqueen(mymob))
 		alien_queen_finder = new /obj/screen/alien/alien_queen_finder
+		alien_queen_finder.hud = src
 		infodisplay += alien_queen_finder
 
 	zone_select = new /obj/screen/zone_sel/alien()
-	zone_select.update_icon(mymob)
+	zone_select.hud = src
+	zone_select.update_icon()
 	static_inventory += zone_select
 
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src
-			inv_slots[inv.slot_id] = inv
+			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
 			inv.update_icon()
 
 /datum/hud/alien/persistent_inventory_update()

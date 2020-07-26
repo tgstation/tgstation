@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/parrot,
 	/mob/living/simple_animal/hostile/lizard,
 	/mob/living/simple_animal/sloth,
-	/mob/living/simple_animal/mouse/brown/Tom,
+	/mob/living/simple_animal/mouse/brown/tom,
 	/mob/living/simple_animal/hostile/retaliate/goat,
 	/mob/living/simple_animal/chicken,
 	/mob/living/simple_animal/cow,
@@ -11,6 +11,8 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/hostile/carp/cayenne,
 	/mob/living/simple_animal/butterfly,
 	/mob/living/simple_animal/hostile/retaliate/poison/snake,
+	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+	/mob/living/simple_animal/bot/mulebot,
 	/mob/living/simple_animal/bot/secbot/beepsky
 )))
 
@@ -43,7 +45,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
 
 	// find our chosen mob to breathe life into
-	// Mobs have to be simple animals, mindless and on station
+	// Mobs have to be simple animals, mindless, on station, and NOT holograms.
 	// prioritize starter animals that people will recognise
 
 
@@ -56,7 +58,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 		var/turf/T = get_turf(L)
 		if(!T || !is_station_level(T.z))
 			continue
-		if((L in GLOB.player_list) || L.mind)
+		if((L in GLOB.player_list) || L.mind || (L.flags_1 & HOLOGRAM_1))
 			continue
 		if(is_type_in_typecache(L, GLOB.high_priority_sentience))
 			hi_pri += L
@@ -82,7 +84,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 		SA.key = SG.key
 
-		SA.grant_all_languages(TRUE)
+		SA.grant_all_languages(TRUE, FALSE, FALSE)
 
 		SA.sentience_act()
 

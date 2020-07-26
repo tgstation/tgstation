@@ -10,6 +10,7 @@ Research Director=1,1
 Chief Medical Officer=1,1
 
 Assistant=-1,-1
+Prisoner=0,2
 
 Quartermaster=1,1
 Cargo Technician=3,2
@@ -31,9 +32,11 @@ Station Engineer=5,5
 Atmospheric Technician=3,2
 
 Medical Doctor=5,3
+Paramedic=2,2
 Chemist=2,2
 Geneticist=2,2
 Virologist=1,1
+Psychologist=1,1
 
 Scientist=5,3
 Roboticist=2,2

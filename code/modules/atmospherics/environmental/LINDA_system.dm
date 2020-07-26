@@ -18,7 +18,7 @@
 
 /turf/open/CanAtmosPass(turf/T, vertical = FALSE)
 	var/dir = vertical? get_dir_multiz(src, T) : get_dir(src, T)
-	var/opp = dir_inverse_multiz(dir)
+	var/opp = REVERSE_DIR(dir)
 	var/R = FALSE
 	if(vertical && !(zAirOut(dir, T) && T.zAirIn(dir, src)))
 		R = TRUE
@@ -43,8 +43,8 @@
 /atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
 	return FALSE
 
-/turf/proc/CalculateAdjacentTurfs()
-	var/canpass = CANATMOSPASS(src, src) 
+/turf/proc/ImmediateCalculateAdjacentTurfs()
+	var/canpass = CANATMOSPASS(src, src)
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)
@@ -107,7 +107,7 @@
 
 /turf/air_update_turf(command = 0)
 	if(command)
-		CalculateAdjacentTurfs()
+		ImmediateCalculateAdjacentTurfs()
 	SSair.add_to_active(src,command)
 
 /atom/movable/proc/move_update_air(turf/T)

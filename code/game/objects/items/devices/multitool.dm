@@ -15,7 +15,7 @@
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "multitool"
-	item_state = "multitool"
+	inhand_icon_state = "multitool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	force = 5
@@ -24,19 +24,22 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
-	var/obj/machinery/buffer // simple machine buffer for device linkage
+	drop_sound = 'sound/items/handling/multitool_drop.ogg'
+	pickup_sound =  'sound/items/handling/multitool_pickup.ogg'
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_premium_price = 450
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
+	var/obj/machinery/buffer // simple machine buffer for device linkage
 	var/mode = 0
 
 /obj/item/multitool/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its buffer [buffer ? "contains [buffer]." : "is empty."]</span>")
+	. = ..()
+	. += "<span class='notice'>Its buffer [buffer ? "contains [buffer]." : "is empty."]</span>"
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
-	return OXYLOSS//theres a reason it wasnt recommended by doctors
+	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
@@ -49,13 +52,13 @@
 	var/rangewarning = 20 //Glows yellow when inside
 	var/hud_type = DATA_HUD_AI_DETECT
 	var/hud_on = FALSE
-	var/mob/camera/aiEye/remote/ai_detector/eye
+	var/mob/camera/ai_eye/remote/ai_detector/eye
 	var/datum/action/item_action/toggle_multitool/toggle_action
 
 /obj/item/multitool/ai_detect/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	eye = new /mob/camera/aiEye/remote/ai_detector()
+	eye = new /mob/camera/ai_eye/remote/ai_detector()
 	toggle_action = new /datum/action/item_action/toggle_multitool(src)
 
 /obj/item/multitool/ai_detect/Destroy()
@@ -129,7 +132,7 @@
 		return
 	var/datum/camerachunk/chunk = GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z)
 	if(chunk && chunk.seenby.len)
-		for(var/mob/camera/aiEye/A in chunk.seenby)
+		for(var/mob/camera/ai_eye/A in chunk.seenby)
 			if(!A.ai_detector_visible)
 				continue
 			var/turf/detect_turf = get_turf(A)
@@ -140,7 +143,7 @@
 				detect_state = PROXIMITY_NEAR
 				break
 
-/mob/camera/aiEye/remote/ai_detector
+/mob/camera/ai_eye/remote/ai_detector
 	name = "AI detector eye"
 	ai_detector_visible = FALSE
 	use_static = USE_STATIC_TRANSPARENT
@@ -158,14 +161,16 @@
 		M.toggle_hud(owner)
 	return 1
 
-/obj/item/multitool/cyborg
-	name = "multitool"
-	desc = "Optimised and stripped-down version of a regular multitool."
-	toolspeed = 0.5
-
 /obj/item/multitool/abductor
 	name = "alien multitool"
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.1
+
+/obj/item/multitool/cyborg
+	name = "electronic multitool"
+	desc = "Optimised version of a regular multitool. Streamlines processes handled by its internal microchip."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "multitool_cyborg"
+	toolspeed = 0.5

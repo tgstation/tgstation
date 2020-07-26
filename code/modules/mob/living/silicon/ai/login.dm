@@ -1,5 +1,7 @@
 /mob/living/silicon/ai/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	if(stat != DEAD)
 		for(var/each in GLOB.ai_status_displays) //change status
 			var/obj/machinery/status_display/ai/O = each

@@ -4,7 +4,7 @@
 	spread_text = "On contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "Mannitol"
-	cures = list("mannitol")
+	cures = list(/datum/reagent/medicine/mannitol)
 	agent = "Cryptococcus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 15//higher chance to cure, since two reagents are required
@@ -24,7 +24,7 @@
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You don't feel like yourself.</span>")
 			if(prob(5))
-				affected_mob.adjustBrainLoss(1, 170)
+				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 170)
 				affected_mob.updatehealth()
 		if(3)
 			if(prob(2))
@@ -32,7 +32,7 @@
 			if(prob(2))
 				affected_mob.emote("drool")
 			if(prob(10))
-				affected_mob.adjustBrainLoss(2, 170)
+				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2, 170)
 				affected_mob.updatehealth()
 				if(prob(2))
 					to_chat(affected_mob, "<span class='danger'>Your try to remember something important...but can't.</span>")
@@ -43,13 +43,14 @@
 			if(prob(2))
 				affected_mob.emote("drool")
 			if(prob(15))
-				affected_mob.adjustBrainLoss(3, 170)
+				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 170)
 				affected_mob.updatehealth()
 				if(prob(2))
 					to_chat(affected_mob, "<span class='danger'>Strange buzzing fills your head, removing all thoughts.</span>")
 			if(prob(3))
 				to_chat(affected_mob, "<span class='danger'>You lose consciousness...</span>")
-				affected_mob.visible_message("<span class='warning'>[affected_mob] suddenly collapses</span>")
+				affected_mob.visible_message("<span class='warning'>[affected_mob] suddenly collapses!</span>", \
+											"<span class='userdanger'>You suddenly collapse!</span>")
 				affected_mob.Unconscious(rand(100,200))
 				if(prob(1))
 					affected_mob.emote("snore")

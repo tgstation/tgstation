@@ -2,7 +2,8 @@
 	name = "clipboard"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "clipboard"
-	item_state = "clipboard"
+	inhand_icon_state = "clipboard"
+	worn_icon_state = "clipboard"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -25,17 +26,14 @@
 	QDEL_NULL(toppaper)	//let movable/Destroy handle the rest
 	return ..()
 
-/obj/item/clipboard/update_icon()
-	cut_overlays()
-	var/list/dat = list()
+/obj/item/clipboard/update_overlays()
+	. = ..()
 	if(toppaper)
-		dat += toppaper.icon_state
-		dat += toppaper.overlays.Copy()
+		. += toppaper.icon_state
+		. += toppaper.overlays
 	if(haspen)
-		dat += "clipboard_pen"
-	dat += "clipboard_over"
-	add_overlay(dat)
-
+		. += "clipboard_pen"
+	. += "clipboard_over"
 
 /obj/item/clipboard/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/paper))

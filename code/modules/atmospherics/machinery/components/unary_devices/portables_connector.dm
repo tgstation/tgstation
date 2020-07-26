@@ -7,8 +7,8 @@
 	can_unwrench = TRUE
 
 	use_power = NO_POWER_USE
-	level = 0
 	layer = GAS_FILTER_LAYER
+	hide = TRUE
 
 	pipe_flags = PIPING_ONE_PER_TURF
 	pipe_state = "connector"
@@ -42,13 +42,6 @@
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
 		return FALSE
 
-/obj/machinery/atmospherics/components/unary/portables_connector/portableConnectorReturnAir()
-	return connected_device.portableConnectorReturnAir()
-
-/obj/proc/portableConnectorReturnAir()
-	return
-
-
 /obj/machinery/atmospherics/components/unary/portables_connector/layer1
 	piping_layer = 1
 	icon_state = "connector_map-1"
@@ -58,7 +51,7 @@
 	icon_state = "connector_map-3"
 
 /obj/machinery/atmospherics/components/unary/portables_connector/visible
-	level = 2
+	hide = FALSE
 
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer1
 	piping_layer = 1

@@ -26,6 +26,7 @@
 		pinnedLoc.forceMove(loc)
 
 /obj/item/target/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(I.use_tool(src, user, 0, volume=40))
 		removeOverlays()
 		to_chat(user, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
@@ -59,17 +60,17 @@
 #define DECALTYPE_SCORCH 1
 #define DECALTYPE_BULLET 2
 
-/obj/item/target/clown/bullet_act(obj/item/projectile/P)
-	..()
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+/obj/item/target/clown/bullet_act(obj/projectile/P)
+	. = ..()
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 
-/obj/item/target/bullet_act(obj/item/projectile/P)
-	if(istype(P, /obj/item/projectile/bullet/reusable)) // If it's a foam dart, don't bother with any of this other shit
+/obj/item/target/bullet_act(obj/projectile/P)
+	if(istype(P, /obj/projectile/bullet/reusable)) // If it's a foam dart, don't bother with any of this other shit
 		return P.on_hit(src, 0)
 	var/p_x = P.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset P.p_x!"
 	var/p_y = P.p_y + pick(0,0,0,0,0,-1,1)
 	var/decaltype = DECALTYPE_SCORCH
-	if(istype(P, /obj/item/projectile/bullet))
+	if(istype(P, /obj/projectile/bullet))
 		decaltype = DECALTYPE_BULLET
 	var/icon/C = icon(icon,icon_state)
 	if(C.GetPixel(p_x, p_y) && P.original == src && overlays.len <= 35) // if the located pixel isn't blank (null)
@@ -82,15 +83,15 @@
 		bullet_hole.pixel_y = p_y - 1
 		if(decaltype == DECALTYPE_SCORCH)
 			bullet_hole.setDir(pick(NORTH,SOUTH,EAST,WEST))// random scorch design
-			if(P.damage >= 20 || istype(P, /obj/item/projectile/beam/practice))
+			if(P.damage >= 20 || istype(P, /obj/projectile/beam/practice))
 				bullet_hole.setDir(pick(NORTH,SOUTH,EAST,WEST))
 			else
 				bullet_hole.icon_state = "light_scorch"
 		else
 			bullet_hole.icon_state = "dent"
 		add_overlay(bullet_hole)
-		return
-	return -1
+		return BULLET_ACT_HIT
+	return BULLET_ACT_FORCE_PIERCE
 
 #undef DECALTYPE_SCORCH
 #undef DECALTYPE_BULLET

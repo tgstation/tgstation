@@ -14,7 +14,8 @@
 	var/max_spawned = 8
 	var/segment_chance = 35
 
-/obj/item/grenade/clusterbuster/prime()
+/obj/item/grenade/clusterbuster/prime(mob/living/lanced_by)
+	. = ..()
 	update_mob()
 	var/numspawned = rand(min_spawned,max_spawned)
 	var/again = 0
@@ -28,14 +29,14 @@
 		new /obj/item/grenade/clusterbuster/segment(drop_location(), src)//Creates 'segments' that launches a few more payloads
 
 	new payload_spawner(drop_location(), payload, numspawned)//Launches payload
-	playsound(src, prime_sound, 75, 1, -3)
+	playsound(src, prime_sound, 75, TRUE, -3)
 	qdel(src)
 
 //////////////////////
 //Clusterbang segment
 //////////////////////
 /obj/item/grenade/clusterbuster/segment
-	desc = "A smaller segment of a clusterbang. Better run."
+	desc = "A smaller segment of a clusterbang. Better run!"
 	name = "clusterbang segment"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
@@ -59,9 +60,9 @@
 		step_away(src,loc)
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
-/obj/item/grenade/clusterbuster/segment/prime()
+/obj/item/grenade/clusterbuster/segment/prime(mob/living/lanced_by)
 	new payload_spawner(drop_location(), payload, rand(min_spawned,max_spawned))
-	playsound(src, prime_sound, 75, 1, -3)
+	playsound(src, prime_sound, 75, TRUE, -3)
 	qdel(src)
 
 //////////////////////////////////
@@ -94,11 +95,11 @@
 		var/chem = pick(slime_chems)
 		var/amount = 5
 		if(chem == "lesser plasma") //In the rare case we get another rainbow.
-			chem = "plasma"
+			chem = /datum/reagent/toxin/plasma
 			amount = 4
 		if(chem == "holy water and uranium")
-			chem = "uranium"
-			reagents.add_reagent("holywater")
+			chem = /datum/reagent/uranium
+			reagents.add_reagent(/datum/reagent/water/holywater)
 		reagents.add_reagent(chem,amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)

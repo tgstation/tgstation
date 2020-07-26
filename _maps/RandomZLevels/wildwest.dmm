@@ -50,9 +50,7 @@
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "an" = (
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "ao" = (
 /turf/open/floor/circuit/green/off,
@@ -65,55 +63,9 @@
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
-"ar" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"as" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"at" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"au" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
 "av" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"aw" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"ax" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"ay" = (
-/obj/machinery/gateway,
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"az" = (
-/obj/machinery/gateway{
-	dir = 6
 	},
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
@@ -162,9 +114,7 @@
 /area/awaymission/wildwest/vault)
 "aL" = (
 /obj/item/paper/fluff/awaymissions/wildwest/grinder,
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "aM" = (
 /turf/closed/mineral/silver,
@@ -174,9 +124,7 @@
 /area/awaymission/wildwest/mines)
 "aO" = (
 /obj/effect/mob_spawn/human/corpse/syndicatecommando,
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "aP" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -224,9 +172,6 @@
 /area/awaymission/wildwest/mines)
 "bb" = (
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating,
-/area/awaymission/wildwest/refine)
-"bc" = (
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "bd" = (
@@ -317,7 +262,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bx" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -400,7 +345,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bN" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
@@ -462,7 +407,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bU" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -470,7 +415,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bV" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -590,7 +535,7 @@
 /area/awaymission/wildwest/mines)
 "cm" = (
 /obj/structure/bookcase/random{
-	book_count = 5
+	books_to_load = 5
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
@@ -621,7 +566,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "cs" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -631,11 +576,6 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 8
 	},
-/turf/open/space,
-/area/space/nearstation)
-"cu" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
 "cv" = (
@@ -681,7 +621,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cE" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -706,7 +646,7 @@
 /area/awaymission/wildwest/gov)
 "cI" = (
 /obj/structure/bookcase/random{
-	book_count = 5
+	books_to_load = 5
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
@@ -722,7 +662,7 @@
 /area/awaymission/wildwest/mines)
 "cL" = (
 /obj/structure/table/wood,
-/obj/item/twohanded/dualsaber,
+/obj/item/dualsaber,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cM" = (
@@ -816,13 +756,13 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "da" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "db" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -884,7 +824,6 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/gov)
 "di" = (
-/obj/machinery/mineral/mint,
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "dj" = (
@@ -1252,9 +1191,6 @@
 "et" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/wildwest/refine)
-"eu" = (
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
 "ev" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel/cafeteria{
@@ -1282,7 +1218,6 @@
 	},
 /area/awaymission/wildwest/gov)
 "eA" = (
-/obj/machinery/mineral/mint,
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "eC" = (
@@ -1596,7 +1531,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fv" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1618,7 +1553,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fx" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1674,13 +1609,13 @@
 	},
 /area/awaymission/wildwest/mines)
 "fE" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fF" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1771,7 +1706,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fT" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1852,7 +1787,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gh" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1912,7 +1847,7 @@
 /area/awaymission/wildwest/mines)
 "gu" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -17155,7 +17090,7 @@ br
 br
 br
 br
-cu
+br
 br
 aa
 aa
@@ -26418,7 +26353,7 @@ br
 br
 br
 br
-cu
+br
 br
 aa
 aa
@@ -26661,7 +26596,7 @@ aa
 aa
 aa
 br
-cu
+br
 br
 br
 br
@@ -27452,7 +27387,7 @@ br
 aa
 aa
 eP
-eu
+eA
 eP
 aa
 aa
@@ -27704,12 +27639,12 @@ aG
 aG
 aG
 br
-cu
+br
 br
 aa
 aa
 eQ
-eu
+eA
 eP
 aa
 aa
@@ -28200,7 +28135,7 @@ aa
 aa
 aa
 aa
-cu
+br
 br
 aa
 aa
@@ -28220,21 +28155,21 @@ aG
 aG
 aG
 et
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 gz
 aa
 aa
@@ -28477,21 +28412,21 @@ aG
 aG
 et
 et
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 eP
 aa
 aa
@@ -28733,22 +28668,22 @@ aG
 aG
 aG
 et
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 fj
 fo
 fo
@@ -28991,24 +28926,24 @@ aG
 aG
 et
 eA
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 pD
-eu
-eu
+eA
+eA
 Kh
 gL
 gQ
@@ -29247,22 +29182,22 @@ aW
 aW
 aW
 et
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 gA
 fo
 fo
@@ -29497,29 +29432,29 @@ aG
 aG
 aW
 bb
-bc
-bc
-bc
+di
+di
+di
 bo
-bc
+di
 bd
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 gB
 aa
 aa
@@ -29753,30 +29688,30 @@ aG
 aG
 aG
 aW
-bc
-bc
+di
+di
 bh
-bc
-bc
-bc
+di
+di
+di
 bd
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 fO
-eu
+eA
 ge
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
 eJ
 aa
 aa
@@ -30011,29 +29946,29 @@ aG
 aG
 aW
 bo
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
 aW
 et
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 gz
 aa
 aa
@@ -30267,30 +30202,30 @@ aG
 aG
 aG
 aW
-bc
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
+di
 aW
 et
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 eP
 aa
 aa
@@ -30524,30 +30459,30 @@ aG
 aG
 aG
 aW
-bc
-bc
-bc
-bc
+di
+di
+di
+di
 bh
-bc
+di
 aW
 et
 et
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 gC
 aa
 aG
@@ -30782,29 +30717,29 @@ aG
 aG
 aW
 bh
-bc
+di
 bn
-bc
-bc
-bc
+di
+di
+di
 aW
 aW
 et
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 et
 aG
 aG
@@ -31038,30 +30973,30 @@ aG
 aG
 aG
 aW
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
 bo
-bc
+di
 aW
 et
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
-eu
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+eA
 et
 aG
 aG
@@ -31295,12 +31230,12 @@ aG
 aW
 aW
 aW
-bc
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
+di
 bo
 aW
 et
@@ -31551,13 +31486,13 @@ aG
 aW
 aW
 bb
-bc
-bc
+di
+di
 bo
-bc
-bc
-bc
-bc
+di
+di
+di
+di
 aW
 aW
 aN
@@ -31807,11 +31742,11 @@ aW
 aW
 aW
 bh
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
 bh
 aW
 aW
@@ -32051,25 +31986,25 @@ aW
 aW
 aW
 bt
-bc
-bc
+di
+di
 bh
-bc
-bc
-bc
-bc
+di
+di
+di
+di
 bh
-bc
-bc
-bc
-bc
+di
+di
+di
+di
 bo
-bc
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
+di
 aW
 aN
 aN
@@ -32304,29 +32239,29 @@ bg
 bg
 aW
 bh
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
+di
+di
+di
+di
 bo
-bc
-bc
+di
+di
 bh
-bc
-bc
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
+di
+di
 bh
-bc
-bc
+di
+di
 aW
 aN
 aN
@@ -32558,30 +32493,30 @@ aW
 aW
 aW
 aW
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
 aW
 aW
 aW
@@ -32813,29 +32748,29 @@ aG
 aG
 aW
 bb
-bc
-bc
+di
+di
 bh
-bc
-bc
-bc
+di
+di
+di
 bq
-bc
-bc
-bc
+di
+di
+di
 bh
-bc
-bc
-bc
+di
+di
+di
 bo
-bc
-bc
+di
+di
 cT
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
 bh
 bo
 aW
@@ -33069,32 +33004,32 @@ aG
 aG
 aG
 aW
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
 bn
-bc
-bc
+di
+di
 bh
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
 bh
-bc
+di
 bo
-bc
-bc
-bc
+di
+di
+di
 aW
 aN
 aN
@@ -33326,30 +33261,30 @@ aG
 aG
 aV
 aW
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
 bh
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
-bc
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
+di
 aW
 aW
 aW
@@ -33583,29 +33518,29 @@ aG
 aG
 aV
 aW
-bc
-bc
-bc
-bc
-bc
-bo
-bc
-bh
-bc
-bc
-bc
-bc
-bc
-bc
-bo
-bc
-bc
-bc
-bc
-bc
-bc
 di
-bc
+di
+di
+di
+di
+bo
+di
+bh
+di
+di
+di
+di
+di
+di
+bo
+di
+di
+di
+di
+di
+di
+di
+di
 bh
 aW
 aN
@@ -33840,8 +33775,8 @@ aG
 aG
 aW
 aW
-bc
-bc
+di
+di
 aW
 aW
 aW
@@ -47411,9 +47346,9 @@ aa
 ab
 ab
 ab
-ar
-au
-ax
+ao
+ao
+ao
 ao
 ao
 ao
@@ -47668,9 +47603,9 @@ aa
 ab
 ab
 ab
-as
+ao
 av
-ay
+ao
 ao
 ao
 ao
@@ -47925,9 +47860,9 @@ aa
 aa
 ab
 ab
-at
-aw
-az
+ao
+ao
+ao
 ao
 ao
 ao

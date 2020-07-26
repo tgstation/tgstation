@@ -5,13 +5,13 @@
 		return ..()
 
 	if(istype(I, /obj/item/reagent_containers/glass))//If it's a glass beaker.
-		if(I.reagents.has_reagent("radium", a_transfer) && a_boost < a_maxamount)
-			I.reagents.remove_reagent("radium", a_transfer)
+		if(I.reagents.has_reagent(/datum/reagent/uranium/radium, a_transfer) && a_boost < a_maxamount)
+			I.reagents.remove_reagent(/datum/reagent/uranium/radium, a_transfer)
 			a_boost++;
 			to_chat(U, "<span class='notice'>There are now [a_boost] adrenaline boosts remaining.</span>")
 			return
-		if(I.reagents.has_reagent("smoke_powder", a_transfer) && s_bombs < s_maxamount)
-			I.reagents.remove_reagent("smoke_powder", a_transfer)
+		if(I.reagents.has_reagent(/datum/reagent/smoke_powder, a_transfer) && s_bombs < s_maxamount)
+			I.reagents.remove_reagent(/datum/reagent/smoke_powder, a_transfer)
 			s_bombs++;
 			to_chat(U, "<span class='notice'>There are now [s_bombs] smoke bombs remaining.</span>")
 			return
@@ -38,15 +38,21 @@
 
 	else if(istype(I, /obj/item/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 		var/obj/item/disk/tech_disk/TD = I
-		var/has_research = 0
+		var/has_research = FALSE
+		for(var/node in TD.stored_research.researched_nodes)
+			if(!stored_research.researched_nodes[node])
+				has_research = TRUE
+				break
 		if(has_research)//If it has something on it.
-			to_chat(U, "Research information detected, processing...")
+			to_chat(U, "<span class='notice'>Research information detected, processing...</span>")
 			if(do_after(U,s_delay, target = src))
 				TD.stored_research.copy_research_to(stored_research)
+				qdel(TD.stored_research)
+				TD.stored_research = new
 				to_chat(U, "<span class='notice'>Data analyzed and updated. Disk erased.</span>")
 			else
 				to_chat(U, "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated.")
 		else
-			to_chat(U, "<span class='notice'>No research information detected.</span>")
+			to_chat(U, "<span class='notice'>No new research information detected.</span>")
 		return
 	return ..()

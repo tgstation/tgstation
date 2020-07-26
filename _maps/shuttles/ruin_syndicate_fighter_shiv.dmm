@@ -5,7 +5,6 @@
 	},
 /obj/machinery/turretid{
 	ailock = 1;
-	control_area = null;
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
 	icon_state = "control_kill";
 	lethal = 1;
@@ -15,9 +14,7 @@
 	req_access = null;
 	req_access_txt = "150"
 	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
@@ -58,9 +55,7 @@
 /area/shuttle/caravan/syndicate1)
 "vD" = (
 /obj/machinery/porta_turret/syndicate/energy{
-	dir = 4;
-	icon_state = "standard_lethal";
-	mode = 1
+	dir = 4
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/syndicate1)
@@ -68,15 +63,14 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 8;
 	name = "Syndicate Fighter APC";
-	pixel_x = -24;
-	req_access = null;
+	pixel_x = -25;
 	req_access_txt = "150"
 	},
 /obj/machinery/computer/security{
 	dir = 1;
 	network = list("caravansyndicate1")
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/caravan/syndicate1)
 "wV" = (
@@ -100,6 +94,7 @@
 	preferred_direction = 4;
 	width = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate1)
 "Jv" = (

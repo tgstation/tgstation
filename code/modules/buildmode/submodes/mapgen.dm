@@ -11,10 +11,10 @@
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
 /datum/buildmode_mode/mapgen/change_settings(client/c)
-	var/list/gen_paths = subtypesof(/datum/mapGenerator)
+	var/list/gen_paths = subtypesof(/datum/map_generator)
 	var/list/options = list()
 	for(var/path in gen_paths)
-		var/datum/mapGenerator/MP = path
+		var/datum/map_generator/MP = path
 		options[initial(MP.buildmode_name)] = path
 	var/type = input(c,"Select Generator Type","Type") as null|anything in options
 	if(!type)
@@ -34,15 +34,15 @@
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 	if(left_click)
-		var/datum/mapGenerator/G = new generator_path
-		if(istype(G, /datum/mapGenerator/repair/reload_station_map))
+		var/datum/map_generator/G = new generator_path
+		if(istype(G, /datum/map_generator/repair/reload_station_map))
 			if(GLOB.reloading_map)
 				to_chat(c, "<span class='boldwarning'>You are already reloading an area! Please wait for it to fully finish loading before trying to load another!</span>")
 				deselect_region()
 				return
 		G.defineRegion(cornerA, cornerB, 1)
 		highlight_region(G.map)
-		var/confirm = alert("Are you sure you want run the map generator?", "Run generator", "Yes", "No")
+		var/confirm = alert("Are you sure you want to run the map generator?", "Run generator", "Yes", "No")
 		if(confirm == "Yes")
 			G.generate()
 		log_admin("Build Mode: [key_name(c)] ran the map generator '[G.buildmode_name]' in the region from [AREACOORD(cornerA)] to [AREACOORD(cornerB)]")

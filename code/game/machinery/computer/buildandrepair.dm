@@ -11,7 +11,7 @@
 				to_chat(user, "<span class='notice'>You start wrenching the frame into place...</span>")
 				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					setAnchored(TRUE)
+					set_anchored(TRUE)
 					state = 1
 				return
 			if(P.tool_behaviour == TOOL_WELDER)
@@ -30,13 +30,13 @@
 				to_chat(user, "<span class='notice'>You start to unfasten the frame...</span>")
 				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
-					setAnchored(FALSE)
+					set_anchored(FALSE)
 					state = 0
 				return
 			if(istype(P, /obj/item/circuitboard/computer) && !circuit)
 				if(!user.transferItemToLoc(P, src))
 					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You place [P] inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
@@ -92,7 +92,7 @@
 			if(istype(P, /obj/item/stack/sheet/glass))
 				if(!P.tool_start_check(user, amount=2))
 					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
 				if(P.use_tool(src, user, 20, amount=2))
 					if(state != 3)

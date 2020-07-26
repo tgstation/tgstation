@@ -15,20 +15,20 @@ This file contains the cult dagger and rune list code
 			GLOB.rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
 
 /obj/item/melee/cultblade/dagger/examine(mob/user)
-	..()
+	. = ..()
 	if(iscultist(user) || isobserver(user))
-		to_chat(user, "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar'Sie.</span>")
-		to_chat(user, "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>")
-		to_chat(user, "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>")
-		to_chat(user, "<span class='cult'>Striking a noncultist, however, will tear their flesh.</span>")
+		. += {"<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar'Sie.\n
+		Striking a cult structure will unanchor or reanchor it.\n
+		Striking another cultist with it will purge holy water from them.\n
+		Striking a noncultist, however, will tear their flesh.</span>"}
 
 /obj/item/melee/cultblade/dagger/attack(mob/living/M, mob/living/user)
 	if(iscultist(M))
-		if(M.reagents && M.reagents.has_reagent("holywater")) //allows cultists to be rescued from the clutches of ordained religion
+		if(M.reagents && M.reagents.has_reagent(/datum/reagent/water/holywater)) //allows cultists to be rescued from the clutches of ordained religion
 			to_chat(user, "<span class='cult'>You remove the taint from [M].</span>" )
-			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
-			M.reagents.del_reagent("holywater")
-			M.reagents.add_reagent("unholywater",holy2unholy)
+			var/holy2unholy = M.reagents.get_reagent_amount(/datum/reagent/water/holywater)
+			M.reagents.del_reagent(/datum/reagent/water/holywater)
+			M.reagents.add_reagent(/datum/reagent/fuel/unholywater,holy2unholy)
 			log_combat(user, M, "smacked", src, " removing the holy water from them")
 		return FALSE
 	. = ..()
@@ -40,17 +40,22 @@ This file contains the cult dagger and rune list code
 	scribe_rune(user)
 
 /obj/item/melee/cultblade/dagger/proc/scribe_rune(mob/living/user)
+	if(drawing_rune)
+		return
+	drawing_rune = TRUE
+	scribe_rune_attempt(user)
+	drawing_rune = FALSE
+
+/obj/item/melee/cultblade/dagger/proc/scribe_rune_attempt(mob/living/user)
 	var/turf/Turf = get_turf(user)
 	var/chosen_keyword
 	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
 	var/list/shields = list()
 	var/area/A = get_area(src)
-
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!user_antag)
 		return
-
 	if(!check_rune_turf(Turf, user))
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in GLOB.rune_types
@@ -62,6 +67,7 @@ This file contains the cult dagger and rune list code
 	if(initial(rune_to_scribe.req_keyword))
 		chosen_keyword = stripped_input(user, "Enter a keyword for the new rune.", "Words of Power")
 		if(!chosen_keyword)
+			drawing_rune = FALSE
 			scribe_rune(user) //Go back a menu!
 			return
 	Turf = get_turf(user) //we may have moved. adjust as needed...
@@ -109,18 +115,18 @@ This file contains the cult dagger and rune list code
 			return
 		priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/ai/spanomalies.ogg')
 		for(var/B in spiral_range_turfs(1, user, 1))
-			var/obj/structure/emergency_shield/sanguine/N = new(B)
+			var/obj/structure/emergency_shield/cult/narsie/N = new(B)
 			shields += N
 	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open [user.p_their()] arm and begins writing in [user.p_their()] own blood":"begins sketching out a strange design"]!</span>", \
 						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
 	if(user.blood_volume)
-		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), wound_bonus = CANT_WOUND) // *cuts arm* *bone explodes* ever have one of those days?
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
-	if(istype(get_turf(user), /turf/open/floor/engine/cult))
+	if(istype(get_turf(user), /turf/open/floor/engine/cult) && !(ispath(rune_to_scribe, /obj/effect/rune/narsie)))
 		scribe_mod *= 0.5
 	if(!do_after(user, scribe_mod, target = get_turf(user)))
 		for(var/V in shields)
-			var/obj/structure/emergency_shield/sanguine/S = V
+			var/obj/structure/emergency_shield/cult/narsie/S = V
 			if(S && !QDELETED(S))
 				qdel(S)
 		return
@@ -145,7 +151,7 @@ This file contains the cult dagger and rune list code
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
 	var/area/A = get_area(T)
-	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.flags_1 & CULT_PERMITTED_1)))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 	return TRUE

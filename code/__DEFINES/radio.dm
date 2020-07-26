@@ -65,6 +65,7 @@
 #define FREQ_ENGINEERING 1357  // Engineering comms frequency, orange
 #define FREQ_SECURITY 1359  // Security comms frequency, red
 
+#define FREQ_HOLOGRID_SOLUTION 1433
 #define FREQ_STATUS_DISPLAYS 1435
 #define FREQ_ATMOS_ALARMS 1437  // air alarms <-> alert computers
 #define FREQ_ATMOS_CONTROL 1439  // air alarms <-> vents and scrubbers
@@ -103,3 +104,13 @@
 #define RADIO_MAGNETS "magnets"
 
 #define DEFAULT_SIGNALER_CODE 30
+
+//Requests Console
+#define REQ_NO_NEW_MESSAGE 				0
+#define REQ_NORMAL_MESSAGE_PRIORITY 	1
+#define REQ_HIGH_MESSAGE_PRIORITY 		2
+#define REQ_EXTREME_MESSAGE_PRIORITY 	3
+
+#define REQ_DEP_TYPE_ASSISTANCE 	(1<<0)
+#define REQ_DEP_TYPE_SUPPLIES 		(1<<1)
+#define REQ_DEP_TYPE_INFORMATION 	(1<<2)

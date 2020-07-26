@@ -1,11 +1,16 @@
 #define BP_MAX_ROOM_SIZE 300
 
+GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/engineering, \
+															    /area/engine/supermatter, \
+															    /area/engine/atmospherics_engine, \
+															    /area/ai_monitored/turret_protected/ai))
+
 // Gets an atmos isolated contained space
 // Returns an associative list of turf|dirs pairs
 // The dirs are connected turfs in the same space
 // break_if_found is a typecache of turf/area types to return false if found
 // Please keep this proc type agnostic. If you need to restrict it do it elsewhere or add an arg.
-/proc/detect_room(turf/origin, list/break_if_found)
+/proc/detect_room(turf/origin, list/break_if_found, max_size=INFINITY)
 	if(origin.blocks_air)
 		return list(origin)
 
@@ -17,6 +22,8 @@
 		found_turfs.Cut(1, 2)
 		var/dir_flags = checked_turfs[sourceT]
 		for(var/dir in GLOB.alldirs)
+			if(length(.) > max_size)
+				return
 			if(dir_flags & dir) // This means we've checked this dir before, probably from the other turf
 				continue
 			var/turf/checkT = get_step(sourceT, dir)
@@ -43,12 +50,12 @@
 	var/static/blacklisted_areas = typecacheof(list(
 		/area/space,
 		))
-	var/list/turfs = detect_room(get_turf(creator), area_or_turf_fail_types)
+	var/list/turfs = detect_room(get_turf(creator), area_or_turf_fail_types, BP_MAX_ROOM_SIZE*2)
 	if(!turfs)
 		to_chat(creator, "<span class='warning'>The new area must be completely airtight and not a part of a shuttle.</span>")
 		return
 	if(turfs.len > BP_MAX_ROOM_SIZE)
-		to_chat(creator, "<span class='warning'>The room you're in is too big. It is [((turfs.len / BP_MAX_ROOM_SIZE)-1)*100]% larger than allowed.</span>")
+		to_chat(creator, "<span class='warning'>The room you're in is too big. It is [turfs.len >= BP_MAX_ROOM_SIZE *2 ? "more than 100" : ((turfs.len / BP_MAX_ROOM_SIZE)-1)*100]% larger than allowed.</span>")
 		return
 	var/list/areas = list("New Area" = /area)
 	for(var/i in 1 to turfs.len)

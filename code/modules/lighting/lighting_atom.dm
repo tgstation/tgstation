@@ -10,7 +10,7 @@
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
 #define NONSENSICAL_VALUE -99999
-/atom/proc/set_light(var/l_range, var/l_power, var/l_color = NONSENSICAL_VALUE)
+/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE)
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE	//Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
 	if (l_power != null)
@@ -38,7 +38,7 @@
 	if (!light_power || !light_range) // We won't emit light anyways, destroy the light source.
 		QDEL_NULL(light)
 	else
-		if (!ismovableatom(loc)) // We choose what atom should be the top atom of the light here.
+		if (!ismovable(loc)) // We choose what atom should be the top atom of the light here.
 			. = src
 		else
 			. = loc
@@ -48,15 +48,6 @@
 		else
 			light = new/datum/light_source(src, .)
 
-// If we have opacity, make sure to tell (potentially) affected light sources.
-/atom/movable/Destroy()
-	var/turf/T = loc
-	. = ..()
-	if (opacity && istype(T))
-		var/old_has_opaque_atom = T.has_opaque_atom
-		T.recalc_atom_opacity()
-		if (old_has_opaque_atom != T.has_opaque_atom)
-			T.reconsider_lights()
 
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).
@@ -89,17 +80,17 @@
 
 /atom/vv_edit_var(var_name, var_value)
 	switch (var_name)
-		if ("light_range")
+		if (NAMEOF(src, light_range))
 			set_light(l_range=var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
 
-		if ("light_power")
+		if (NAMEOF(src, light_power))
 			set_light(l_power=var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
 
-		if ("light_color")
+		if (NAMEOF(src, light_color))
 			set_light(l_color=var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE

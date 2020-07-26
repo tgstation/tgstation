@@ -3,9 +3,10 @@
 	desc = "A scroll for moving around."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
+	worn_icon_state = "scroll"
 	var/uses = 4
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	throw_speed = 3
 	throw_range = 7
 	resistance_flags = FLAMMABLE

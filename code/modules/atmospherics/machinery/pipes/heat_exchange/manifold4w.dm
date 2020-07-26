@@ -36,8 +36,6 @@
 			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
 
 	update_layer()
-	update_alpha()
-
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer1
 	piping_layer = 1

@@ -44,32 +44,51 @@
 	var/mob/dead/observer/G = usr
 	G.register_pai()
 
+/obj/screen/ghost/mafia
+	name = "Mafia Signup"
+	icon_state = "mafia"
+
+/obj/screen/ghost/mafia/Click()
+	var/mob/dead/observer/G = usr
+	G.mafia_signup()
+
 /datum/hud/ghost/New(mob/owner)
 	..()
 	var/obj/screen/using
 
 	using = new /obj/screen/ghost/jumptomob()
 	using.screen_loc = ui_ghost_jumptomob
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/ghost/orbit()
 	using.screen_loc = ui_ghost_orbit
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/ghost/reenter_corpse()
 	using.screen_loc = ui_ghost_reenter_corpse
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/ghost/teleport()
 	using.screen_loc = ui_ghost_teleport
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/ghost/pai()
 	using.screen_loc = ui_ghost_pai
+	using.hud = src
+	static_inventory += using
+
+	using = new /obj/screen/ghost/mafia()
+	using.screen_loc = ui_ghost_mafia
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/language_menu
 	using.icon = ui_style
+	using.hud = src
 	static_inventory += using
 
 /datum/hud/ghost/show_hud(version = 0, mob/viewmob)
@@ -87,3 +106,11 @@
 		screenmob.client.screen -= static_inventory
 	else
 		screenmob.client.screen += static_inventory
+
+//We should only see observed mob alerts.
+/datum/hud/ghost/reorganize_alerts(mob/viewmob)
+	var/mob/dead/observer/O = mymob
+	if (istype(O) && O.observetarget)
+		return
+	. = ..()
+

@@ -7,7 +7,8 @@
 	name = "station bounced radio"
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
-	item_state = "walkietalkie"
+	inhand_icon_state = "walkietalkie"
+	worn_icon_state = "radio"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
@@ -28,12 +29,13 @@
 
 /obj/item/uplink/debug/Initialize(mapload, owner, tc_amount = 9000)
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "debug uplink"
+	hidden_uplink.debug = TRUE
 
 /obj/item/uplink/nuclear/Initialize()
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
 /obj/item/uplink/nuclear/debug
@@ -41,19 +43,20 @@
 
 /obj/item/uplink/nuclear/debug/Initialize(mapload, owner, tc_amount = 9000)
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 	hidden_uplink.name = "debug nuclear uplink"
+	hidden_uplink.debug = TRUE
 
 /obj/item/uplink/nuclear_restricted/Initialize()
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.allow_restricted = FALSE
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
 /obj/item/uplink/clownop/Initialize()
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear/clown_ops)
 
 /obj/item/uplink/old
@@ -62,7 +65,7 @@
 
 /obj/item/uplink/old/Initialize(mapload, owner, tc_amount = 10)
 	. = ..()
-	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "dusty radio"
 
 // Multitool uplink

@@ -95,6 +95,31 @@
 	export_types = list(/obj/item/radio)
 	exclude_types = list(/obj/item/radio/mech)
 
+//Advanced/Power Tools.
+/datum/export/weldingtool/experimental
+	cost = 90
+	unit_name = "experimental welding tool"
+	export_types = list(/obj/item/weldingtool/experimental)
+
+/datum/export/jawsoflife
+	cost = 100
+	unit_name = "jaws of life"
+	export_types = list(/obj/item/crowbar/power)
+
+/datum/export/handdrill
+	cost = 100
+	unit_name = "hand drill"
+	export_types = list(/obj/item/screwdriver/power)
+
+/datum/export/rld_mini
+	cost = 150
+	unit_name = "mini rapid lighting device"
+	export_types = list(/obj/item/construction/rld/mini)
+
+/datum/export/rsf
+	cost = 100
+	unit_name = "rapid service fabricator"
+	export_types = list(/obj/item/rsf)
 
 /datum/export/rcd
 	cost = 100
@@ -108,7 +133,7 @@
 
 /datum/export/rpd
 	cost = 100
-	unit_name = "rapid piping device"
+	unit_name = "rapid pipe dispenser"
 	export_types = list(/obj/item/pipe_dispenser)
 
 /datum/export/singulo //failsafe in case someone decides to ship a live singularity to CentCom without the corresponding bounty

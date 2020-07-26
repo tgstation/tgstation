@@ -18,12 +18,16 @@
 	time = 125
 
 /datum/surgery_step/reshape_ligaments/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] starts reshaping [target]'s ligaments into a hook-like shape.", "<span class='notice'>You start reshaping [target]'s ligaments into a hook-like shape.</span>")
+	display_results(user, target, "<span class='notice'>You start reshaping [target]'s ligaments into a hook-like shape.</span>",
+		"<span class='notice'>[user] starts reshaping [target]'s ligaments into a hook-like shape.</span>",
+		"<span class='notice'>[user] starts manipulating [target]'s ligaments.</span>")
 
-/datum/surgery_step/reshape_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] reshapes [target]'s ligaments into a connective hook!", "<span class='notice'>You reshape [target]'s ligaments into a connective hook!</span>")
+/datum/surgery_step/reshape_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	display_results(user, target, "<span class='notice'>You reshape [target]'s ligaments into a connective hook!</span>",
+		"<span class='notice'>[user] reshapes [target]'s ligaments into a connective hook!</span>",
+		"<span class='notice'>[user] finishes manipulating [target]'s ligaments.</span>")
 	new /datum/bioware/hooked_ligaments(target)
-	return TRUE
+	return ..()
 
 /datum/bioware/hooked_ligaments
 	name = "Hooked Ligaments"
@@ -32,10 +36,10 @@
 
 /datum/bioware/hooked_ligaments/on_gain()
 	..()
-	owner.add_trait(TRAIT_LIMBATTACHMENT, "ligament_hook")
-	owner.add_trait(TRAIT_EASYDISMEMBER, "ligament_hook")
+	ADD_TRAIT(owner, TRAIT_LIMBATTACHMENT, "ligament_hook")
+	ADD_TRAIT(owner, TRAIT_EASYDISMEMBER, "ligament_hook")
 
 /datum/bioware/hooked_ligaments/on_lose()
 	..()
-	owner.remove_trait(TRAIT_LIMBATTACHMENT, "ligament_hook")
-	owner.remove_trait(TRAIT_EASYDISMEMBER, "ligament_hook")
+	REMOVE_TRAIT(owner, TRAIT_LIMBATTACHMENT, "ligament_hook")
+	REMOVE_TRAIT(owner, TRAIT_EASYDISMEMBER, "ligament_hook")

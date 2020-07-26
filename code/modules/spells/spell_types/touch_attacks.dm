@@ -1,9 +1,16 @@
 /obj/effect/proc_holder/spell/targeted/touch
 	var/hand_path = /obj/item/melee/touch_attack
 	var/obj/item/melee/touch_attack/attached_hand = null
+	var/drawmessage = "You channel the power of the spell to your hand."
+	var/dropmessage = "You draw the power out of your hand."
 	invocation_type = "none" //you scream on connecting, not summoning
 	include_user = TRUE
 	range = -1
+
+/obj/effect/proc_holder/spell/targeted/touch/Destroy()
+	remove_hand()
+	to_chat(usr, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
+	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
 	QDEL_NULL(attached_hand)
@@ -21,9 +28,9 @@
 /obj/effect/proc_holder/spell/targeted/touch/cast(list/targets,mob/user = usr)
 	if(!QDELETED(attached_hand))
 		remove_hand(TRUE)
-		to_chat(user, "<span class='notice'>You draw the power out of your hand.</span>")
+		to_chat(user, "<span class='notice'>[dropmessage]</span>")
 		return
-	
+
 	for(var/mob/living/carbon/C in targets)
 		if(!attached_hand)
 			if(ChargeHand(C))
@@ -46,13 +53,13 @@
 		else
 			to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return FALSE
-	to_chat(user, "<span class='notice'>You channel the power of the spell to your hand.</span>")
+	to_chat(user, "<span class='notice'>[drawmessage]</span>")
 	return TRUE
 
 
 /obj/effect/proc_holder/spell/targeted/touch/disintegrate
-	name = "Disintegrate"
-	desc = "This spell charges your hand with vile energy that can be used to violently explode victims."
+	name = "Smite"
+	desc = "This spell charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
 	hand_path = /obj/item/melee/touch_attack/disintegrate
 
 	school = "evocation"

@@ -29,7 +29,7 @@
 /area/centcom/holding
 	name = "Holding Facility"
 
-/area/centcom/supplypod/flyMeToTheMoon
+/area/centcom/supplypod/supplypod_temp_holding
 	name = "Supplypod Shipping lane"
 	icon_state = "supplypod_flight"
 
@@ -38,7 +38,7 @@
 	icon_state = "supplypod"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
-/area/centcom/supplypod/podStorage
+/area/centcom/supplypod/pod_storage
 	name = "Supplypod Storage"
 	icon_state = "supplypod_holding"
 
@@ -47,16 +47,19 @@
 	icon_state = "supplypod_loading"
 
 /area/centcom/supplypod/loading/one
-	name = "Supplypod Loading Bay #1"
+	name = "Bay #1"
 
 /area/centcom/supplypod/loading/two
-	name = "Supplypod Loading Bay #2"
+	name = "Bay #2"
 
 /area/centcom/supplypod/loading/three
-	name = "Supplypod Loading Bay #3"
+	name = "Bay #3"
 
 /area/centcom/supplypod/loading/four
-	name = "Supplypod Loading Bay #4"
+	name = "Bay #4"
+
+/area/centcom/supplypod/loading/ert
+	name = "ERT Bay"
 //THUNDERDOME
 
 /area/tdome
@@ -135,14 +138,6 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
-/area/fabric_of_reality
-	name = "Tear in the Fabric of Reality"
-	requires_power = FALSE
-	has_gravity = TRUE
-	noteleport = TRUE
-	blob_allowed = FALSE
-	var/turf/origin
-
 //CAPTURE THE FLAG
 
 /area/ctf
@@ -150,6 +145,7 @@
 	icon_state = "yellow"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
+	flags_1 = NONE
 
 /area/ctf/control_room
 	name = "Control Room A"
@@ -177,19 +173,3 @@
 
 /area/ctf/flag_room2
 	name = "Flag Room B"
-
-// REEBE
-
-/area/reebe
-	name = "Reebe"
-	icon_state = "yellow"
-	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
-	hidden = TRUE
-	ambientsounds = REEBE
-
-/area/reebe/city_of_cogs
-	name = "City of Cogs"
-	icon_state = "purple"
-	hidden = FALSE

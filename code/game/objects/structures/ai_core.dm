@@ -1,4 +1,4 @@
-/obj/structure/AIcore
+/obj/structure/ai_core
 	density = TRUE
 	anchored = FALSE
 	name = "\improper AI core"
@@ -12,12 +12,12 @@
 	var/obj/item/mmi/brain
 	var/can_deconstruct = TRUE
 
-/obj/structure/AIcore/Initialize()
+/obj/structure/ai_core/Initialize()
 	. = ..()
 	laws = new
 	laws.set_laws_config()
 
-/obj/structure/AIcore/handle_atom_del(atom/A)
+/obj/structure/ai_core/handle_atom_del(atom/A)
 	if(A == circuit)
 		circuit = null
 		if((state != GLASS_CORE) && (state != AI_READY_CORE))
@@ -28,7 +28,7 @@
 	. = ..()
 
 
-/obj/structure/AIcore/Destroy()
+/obj/structure/ai_core/Destroy()
 	if(circuit)
 		qdel(circuit)
 		circuit = null
@@ -37,8 +37,8 @@
 		brain = null
 	return ..()
 
-/obj/structure/AIcore/latejoin_inactive
-	name = "Networked AI core"
+/obj/structure/ai_core/latejoin_inactive
+	name = "networked AI core"
 	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
 	can_deconstruct = FALSE
 	icon_state = "ai-empty"
@@ -48,11 +48,12 @@
 	var/safety_checks = TRUE
 	var/active = TRUE
 
-/obj/structure/AIcore/latejoin_inactive/examine(mob/user)
+/obj/structure/ai_core/latejoin_inactive/examine(mob/user)
 	. = ..()
-	to_chat(user, "Its transmitter seems to be [active? "on" : "off"].")
+	. += "Its transmitter seems to be <b>[active? "on" : "off"]</b>."
+	. += "<span class='notice'>You could [active? "deactivate" : "activate"] it with a multitool.</span>"
 
-/obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
+/obj/structure/ai_core/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
 		return FALSE
 	if(!safety_checks)
@@ -71,22 +72,22 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/AIcore/latejoin_inactive/attackby(obj/item/P, mob/user, params)
+/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/P, mob/user, params)
 	if(P.tool_behaviour == TOOL_MULTITOOL)
 		active = !active
-		to_chat(user, "You [active? "activate" : "deactivate"] [src]'s transmitters.")
+		to_chat(user, "<span class='notice'>You [active? "activate" : "deactivate"] \the [src]'s transmitters.</span>")
 		return
 	return ..()
 
-/obj/structure/AIcore/latejoin_inactive/Initialize()
+/obj/structure/ai_core/latejoin_inactive/Initialize()
 	. = ..()
 	GLOB.latejoin_ai_cores += src
 
-/obj/structure/AIcore/latejoin_inactive/Destroy()
+/obj/structure/ai_core/latejoin_inactive/Destroy()
 	GLOB.latejoin_ai_cores -= src
 	return ..()
 
-/obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
+/obj/structure/ai_core/attackby(obj/item/P, mob/user, params)
 	if(P.tool_behaviour == TOOL_WRENCH)
 		return default_unfasten_wrench(user, P, 20)
 	if(!anchored)
@@ -109,7 +110,7 @@
 				if(istype(P, /obj/item/circuitboard/aicore))
 					if(!user.transferItemToLoc(P, src))
 						return
-					playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+					playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 					update_icon()
 					state = CIRCUIT_CORE
@@ -140,7 +141,7 @@
 				if(istype(P, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/C = P
 					if(C.get_amount() >= 5)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
 							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
@@ -164,7 +165,7 @@
 				if(istype(P, /obj/item/stack/sheet/rglass))
 					var/obj/item/stack/sheet/rglass/G = P
 					if(G.get_amount() >= 2)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
 						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
 							to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
@@ -174,36 +175,24 @@
 						to_chat(user, "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>")
 					return
 
-				if(istype(P, /obj/item/aiModule))
+				if(istype(P, /obj/item/ai_module))
 					if(brain && brain.laws.id != DEFAULT_AI_LAWID)
 						to_chat(user, "<span class='warning'>The installed [brain.name] already has set laws!</span>")
 						return
-					var/obj/item/aiModule/module = P
+					var/obj/item/ai_module/module = P
 					module.install(laws, user)
 					return
 
 				if(istype(P, /obj/item/mmi) && !brain)
 					var/obj/item/mmi/M = P
-					if(!M.brainmob)
-						to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
-						return
-					if(M.brainmob.stat == DEAD)
-						to_chat(user, "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>")
+					if(!M.brain_check(user))
 						return
 
-					if(!M.brainmob.client)
-						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
-						return
-
-					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(M.brainmob.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
+					var/mob/living/brain/B = M.brainmob
+					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
 						if(!QDELETED(M))
 							to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
-
-					if(!M.brainmob.mind)
-						to_chat(user, "<span class='warning'>This [M.name] is mindless!</span>")
-						return
-
 					if(!user.transferItemToLoc(M,src))
 						return
 
@@ -233,20 +222,20 @@
 					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
-						SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
-						if(!istype(brain.laws, /datum/ai_laws/ratvar))
-							remove_servant_of_ratvar(brain.brainmob, TRUE)
+						var/mob/living/brain/B = brain.brainmob
+						SSticker.mode.remove_antag_for_borging(B.mind)
 
 						var/mob/living/silicon/ai/A = null
 
 						if (brain.overrides_aicore_laws)
-							A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
+							A = new /mob/living/silicon/ai(loc, brain.laws, B)
 						else
-							A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+							A = new /mob/living/silicon/ai(loc, laws, B)
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
 						SSblackbox.record_feedback("amount", "ais_created", 1)
+						deadchat_broadcast(" has been brought online at <b>[get_area_name(A, TRUE)]</b>.", "<span class='name'>[A]</span>", follow_target=A, message_type=DEADCHAT_ANNOUNCEMENT)
 						qdel(src)
 					else
 						state = AI_READY_CORE
@@ -266,7 +255,7 @@
 					return
 	return ..()
 
-/obj/structure/AIcore/update_icon()
+/obj/structure/ai_core/update_icon_state()
 	switch(state)
 		if(EMPTY_CORE)
 			icon_state = "0"
@@ -284,7 +273,7 @@
 		if(AI_READY_CORE)
 			icon_state = "ai-empty"
 
-/obj/structure/AIcore/deconstruct(disassembled = TRUE)
+/obj/structure/ai_core/deconstruct(disassembled = TRUE)
 	if(state == GLASS_CORE)
 		new /obj/item/stack/sheet/rglass(loc, 2)
 	if(state >= CABLED_CORE)
@@ -295,13 +284,13 @@
 	new /obj/item/stack/sheet/plasteel(loc, 4)
 	qdel(src)
 
-/obj/structure/AIcore/deactivated
+/obj/structure/ai_core/deactivated
 	name = "inactive AI"
 	icon_state = "ai-empty"
 	anchored = TRUE
 	state = AI_READY_CORE
 
-/obj/structure/AIcore/deactivated/Initialize()
+/obj/structure/ai_core/deactivated/Initialize()
 	. = ..()
 	circuit = new(src)
 
@@ -317,11 +306,11 @@ That prevents a few funky behaviors.
 /atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(istype(card))
 		if(card.flush)
-			to_chat(user, "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol.")
+			to_chat(user, "<span class='alert'>ERROR: AI flush is in progress, cannot execute transfer protocol.</span>")
 			return FALSE
 	return TRUE
 
-/obj/structure/AIcore/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
+/obj/structure/ai_core/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(state != AI_READY_CORE || !..())
 		return
  //Transferring a carded AI to a core.
@@ -329,12 +318,14 @@ That prevents a few funky behaviors.
 		AI.control_disabled = FALSE
 		AI.radio_enabled = TRUE
 		AI.forceMove(loc) // to replace the terminal.
-		to_chat(AI, "You have been uploaded to a stationary terminal. Remote device connection restored.")
+		to_chat(AI, "<span class='notice'>You have been uploaded to a stationary terminal. Remote device connection restored.</span>")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
+		AI.battery = circuit.battery
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
-		to_chat(user, "There is no AI loaded on this terminal!")
+		to_chat(user, "<span class='alert'>There is no AI loaded on this terminal.</span>")
 
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
+	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core

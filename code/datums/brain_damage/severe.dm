@@ -13,11 +13,11 @@
 	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
 
 /datum/brain_trauma/severe/mute/on_gain()
-	owner.add_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/mute/on_lose()
-	owner.remove_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/aphasia
@@ -26,21 +26,15 @@
 	scan_desc = "extensive damage to the brain's language center"
 	gain_text = "<span class='warning'>You have trouble forming words in your head...</span>"
 	lose_text = "<span class='notice'>You suddenly remember how languages work.</span>"
-	var/datum/language_holder/prev_language
-	var/datum/language_holder/mob_language
 
 /datum/brain_trauma/severe/aphasia/on_gain()
-	mob_language = owner.get_language_holder()
-	prev_language = mob_language.copy()
-	mob_language.remove_all_languages()
-	mob_language.grant_language(/datum/language/aphasia)
+	owner.add_blocked_language(subtypesof(/datum/language/) - /datum/language/aphasia, LANGUAGE_APHASIA)
+	owner.grant_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
 	..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
-	mob_language.remove_language(/datum/language/aphasia)
-	mob_language.copy_known_languages_from(prev_language) //this will also preserve languages learned during the trauma
-	QDEL_NULL(prev_language)
-	mob_language = null
+	owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
+	owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
 	..()
 
 /datum/brain_trauma/severe/blindness
@@ -69,7 +63,8 @@
 	 //for descriptions
 
 /datum/brain_trauma/severe/paralysis/New(specific_type)
-	paralysis_type = specific_type
+	if(specific_type)
+		paralysis_type = specific_type
 	if(!paralysis_type)
 		paralysis_type = pick("full","left","right","arms","legs","r_arm","l_arm","r_leg","l_leg")
 	var/subject
@@ -108,14 +103,19 @@
 /datum/brain_trauma/severe/paralysis/on_gain()
 	..()
 	for(var/X in paralysis_traits)
-		owner.add_trait(X, "trauma_paralysis")
+		ADD_TRAIT(owner, X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
 
 /datum/brain_trauma/severe/paralysis/on_lose()
 	..()
 	for(var/X in paralysis_traits)
-		owner.remove_trait(X, "trauma_paralysis")
+		REMOVE_TRAIT(owner, X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
+
+/datum/brain_trauma/severe/paralysis/paraplegic
+	random_gain = FALSE
+	paralysis_type = "legs"
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
@@ -165,7 +165,7 @@
 		stress = max(stress - 4, 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
-	if(owner.has_trait(TRAIT_BLIND))
+	if(owner.is_blind())
 		return TRUE
 	for(var/mob/M in oview(owner, 7))
 		if(!isliving(M)) //ghosts ain't people
@@ -227,11 +227,11 @@
 	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
 
 /datum/brain_trauma/severe/discoordination/on_gain()
-	owner.add_trait(TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/discoordination/on_lose()
-	owner.remove_trait(TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/pacifism
@@ -242,11 +242,11 @@
 	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
 
 /datum/brain_trauma/severe/pacifism/on_gain()
-	owner.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
-	owner.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/hypnotic_stupor
@@ -264,3 +264,37 @@
 	..()
 	if(prob(1) && !owner.has_status_effect(/datum/status_effect/trance))
 		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
+
+/datum/brain_trauma/severe/hypnotic_trigger
+	name = "Hypnotic Trigger"
+	desc = "Patient has a trigger phrase set in their subconscious that will trigger a suggestible trance-like state."
+	scan_desc = "oneiric feedback loop"
+	gain_text = "<span class='warning'>You feel odd, like you just forgot something important.</span>"
+	lose_text = "<span class='notice'>You feel like a weight was lifted from your mind.</span>"
+	random_gain = FALSE
+	var/trigger_phrase = "Nanotrasen"
+
+/datum/brain_trauma/severe/hypnotic_trigger/New(phrase)
+	..()
+	if(phrase)
+		trigger_phrase = phrase
+
+/datum/brain_trauma/severe/hypnotic_trigger/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
+	..()
+	owner.remove_status_effect(/datum/status_effect/trance)
+
+/datum/brain_trauma/severe/hypnotic_trigger/handle_hearing(datum/source, list/hearing_args)
+	if(!owner.can_hear())
+		return
+	if(owner == hearing_args[HEARING_SPEAKER])
+		return
+
+	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
+
+	if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
+		addtimer(CALLBACK(src, .proc/hypnotrigger), 10) //to react AFTER the chat message
+		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='hypnophrase'>*********</span>")
+
+/datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
+	to_chat(owner, "<span class='warning'>The words trigger something deep within you, and you feel your consciousness slipping away...</span>")
+	owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)

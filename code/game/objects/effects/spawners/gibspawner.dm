@@ -1,5 +1,6 @@
 
 /obj/effect/gibspawner
+	icon_state = "gibspawner"// For the map editor
 	var/sparks = 0 //whether sparks spread
 	var/virusProb = 20 //the chance for viruses to spread on the gibs
 	var/gib_mob_type  //generate a fake mob to transfer DNA from if we weren't passed a mob.
@@ -46,9 +47,6 @@
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
 				gib = new gibType(loc, diseases)
-				if(iscarbon(loc))
-					var/mob/living/carbon/digester = loc
-					digester.stomach_contents += gib
 
 				gib.add_blood_DNA(dna_to_add)
 

@@ -1,0 +1,65 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+
+//  Type-casting
+// --------------------------------------------------------
+
+// Get a unit-less numeric value
+@function num($value) {
+  @if meta.type-of($value) != number {
+    @error 'Could not convert `#{$value}` - must be `type-of number`';
+    @return null;
+  }
+  @if math.unit($value) == '%' {
+    @return $value / 100%;
+  }
+  @return $value / ($value * 0 + 1);
+}
+
+
+//  Color
+// --------------------------------------------------------
+
+// Increases perceptual color lightness.
+@function lighten($color, $percent) {
+  $scaled: hsl(
+    color.hue($color),
+    color.saturation($color),
+    color.lightness($color) * (1 + num($percent)));
+  $mixed: color.mix(#ffffff, $color, 100% * num($percent));
+  @return color.mix($scaled, $mixed, 75%);
+}
+
+// Returns the NTSC luminance of `$color` as a float (between 0 and 1).
+// 1 is pure white, 0 is pure black.
+@function luminance($color) {
+  $colors: (
+    'red': color.red($color),
+    'green': color.green($color),
+    'blue': color.blue($color)
+  );
+
+  @each $name, $value in $colors {
+    $adjusted: 0;
+    $value: $value / 255;
+    @if $value < 0.03928 {
+      $value: $value / 12.92;
+    }
+    @else {
+      $value: ($value + .055) / 1.055;
+      $value: math.pow($value, 2.4);
+    }
+    $colors: map.merge($colors, ($name: $value));
+  }
+
+  @return (map.get($colors, 'red') * .2126)
+    + (map.get($colors, 'green') * .7152)
+    + (map.get($colors, 'blue') * .0722);
+}

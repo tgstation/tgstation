@@ -19,11 +19,10 @@
 	SSradio.remove_object(src, receive_frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/atmos_alert/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
+		ui = new(user, src, "AtmosAlertConsole", name)
 		ui.open()
 
 /obj/machinery/computer/atmos_alert/ui_data(mob/user)
@@ -45,11 +44,11 @@
 		if("clear")
 			var/zone = params["zone"]
 			if(zone in priority_alarms)
-				to_chat(usr, "Priority alarm for [zone] cleared.")
+				to_chat(usr, "<span class='notice'>Priority alarm for [zone] cleared.</span>")
 				priority_alarms -= zone
 				. = TRUE
 			if(zone in minor_alarms)
-				to_chat(usr, "Minor alarm for [zone] cleared.")
+				to_chat(usr, "<span class='notice'>Minor alarm for [zone] cleared.</span>")
 				minor_alarms -= zone
 				. = TRUE
 	update_icon()
@@ -78,11 +77,11 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/atmos_alert/update_icon()
-	..()
-	if(stat & (NOPOWER|BROKEN))
+/obj/machinery/computer/atmos_alert/update_overlays()
+	. = ..()
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(priority_alarms.len)
-		add_overlay("alert:2")
+		. += "alert:2"
 	else if(minor_alarms.len)
-		add_overlay("alert:1")
+		. += "alert:1"

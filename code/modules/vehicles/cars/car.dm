@@ -1,6 +1,6 @@
 /obj/vehicle/sealed/car
 	layer = ABOVE_MOB_LAYER
-	anchored = TRUE
+	move_resist = MOVE_FORCE_VERY_STRONG
 	default_driver_move = FALSE
 	var/car_traits = NONE //Bitflag for special behavior such as kidnapping
 	var/engine_sound = 'sound/vehicles/carrev.ogg'
@@ -18,7 +18,7 @@
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/remove_key, VEHICLE_CONTROL_DRIVE)
 	if(car_traits & CAN_KIDNAP)
-		initialize_controller_action_type(/datum/action/vehicle/sealed/DumpKidnappedMobs, VEHICLE_CONTROL_DRIVE)
+		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/driver_move(mob/user, direction)
 	if(key_type && !is_key(inserted_key))
@@ -30,6 +30,7 @@
 		return
 	last_enginesound_time = world.time
 	playsound(src, engine_sound, 100, TRUE)
+	return TRUE
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
 	if(M.stat || M.restrained())
@@ -42,10 +43,10 @@
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/M, mob/user, silent = FALSE)
 	if(M == user && (occupants[M] & VEHICLE_CONTROL_KIDNAPPED))
-		to_chat(user, "<span class='notice'>You push against the back of [src] trunk to try and get out.</span>")
+		to_chat(user, "<span class='notice'>You push against the back of \the [src]'s trunk to try and get out.</span>")
 		if(!do_after(user, escape_time, target = src))
 			return FALSE
-		to_chat(user,"<span class='danger'>[user] gets out of [src]</span>")
+		to_chat(user,"<span class='danger'>[user] gets out of [src].</span>")
 		mob_exit(M, silent)
 		return TRUE
 	mob_exit(M, silent)
@@ -55,7 +56,7 @@
 	if(!I.force)
 		return
 	if(occupants[user])
-		to_chat(user, "<span class='notice'>Your attack bounces off of the car's padded interior.</span>")
+		to_chat(user, "<span class='notice'>Your attack bounces off \the [src]'s padded interior.</span>")
 		return
 	return ..()
 
@@ -78,10 +79,14 @@
 		return FALSE
 	if(occupant_amount() >= max_occupants)
 		return FALSE
-	if(do_mob(forcer, get_enter_delay(M), target = src))
+	var/atom/old_loc = loc
+	if(do_mob(forcer, M, get_enter_delay(M), extra_checks=CALLBACK(src, /obj/vehicle/sealed/car/proc/is_car_stationary, old_loc)))
 		mob_forced_enter(M, silent)
 		return TRUE
 	return FALSE
+
+/obj/vehicle/sealed/car/proc/is_car_stationary(atom/old_loc)
+	return (old_loc == loc)
 
 /obj/vehicle/sealed/car/proc/mob_forced_enter(mob/M, silent = FALSE)
 	if(!silent)

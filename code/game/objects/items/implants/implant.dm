@@ -5,7 +5,7 @@
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/activated = TRUE //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
 	var/mob/living/imp_in = null
-	item_color = "b"
+	var/implant_color = "b"
 	var/allow_multiple = FALSE
 	var/uses = -1
 	item_flags = DROPDEL

@@ -42,8 +42,8 @@
 	name = "incinerator chamber gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
 
-/obj/machinery/air_sensor/update_icon()
-		icon_state = "gsensor[on]"
+/obj/machinery/air_sensor/update_icon_state()
+	icon_state = "gsensor[on]"
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
@@ -122,11 +122,10 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	SSradio.remove_object(src, frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control", name, 400, 925, master_ui, state)
+		ui = new(user, src, "AtmosControlConsole", name)
 		ui.open()
 
 /obj/machinery/computer/atmos_control/ui_data(mob/user)
@@ -162,6 +161,18 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
+//Incinerator sensor only
+/obj/machinery/computer/atmos_control/incinerator
+	name = "Incinerator Air Control"
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber")
+	circuit = /obj/item/circuitboard/computer/atmos_control/incinerator
+
+//Toxins mix sensor only
+/obj/machinery/computer/atmos_control/toxinsmix
+	name = "Toxins Mixing Air Control"
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber")
+	circuit = /obj/item/circuitboard/computer/atmos_control/toxinsmix
+
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
 /////////////////////////////////////////////////////////////
@@ -171,7 +182,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/output_tag
 	frequency = FREQ_ATMOS_STORAGE
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank
-
 	var/list/input_info
 	var/list/output_info
 
@@ -224,13 +234,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_CO2 = "Carbon Dioxide Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/carbon_tank
 
-/obj/machinery/computer/atmos_control/tank/incinerator
-	name = "Incinerator Air Control"
-	input_tag = ATMOS_GAS_MONITOR_INPUT_INCINERATOR
-	output_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
-	sensors = list(ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber")
-	circuit = /obj/item/circuitboard/computer/atmos_control/tank/incinerator
-
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
@@ -244,7 +247,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		IO |= text[1]
 	if(!IO.len)
 		to_chat(user, "<span class='alert'>No machinery detected.</span>")
-	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in IO
+	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in sortList(IO)
 	if(src)
 		src.input_tag = "[S]_in"
 		src.output_tag = "[S]_out"
@@ -262,13 +265,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
-/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control", name, 500, 305, master_ui, state)
-		ui.open()
-
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
@@ -276,7 +272,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
 	data["outputting"] = output_info ? output_info["power"] : FALSE
 	data["outputPressure"] = output_info ? output_info["internal"] : 0
-
 	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
@@ -291,18 +286,18 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 			signal.data += list("tag" = input_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("rate")
-			var/target = input("New target rate:", name, input_info ? input_info["volume_rate"] : 0) as num|null
-			if(!isnull(target) && !..())
-				target =  CLAMP(target, 0, MAX_TRANSFER_RATE)
+			var/target = text2num(params["rate"])
+			if(!isnull(target))
+				target = clamp(target, 0, MAX_TRANSFER_RATE)
 				signal.data += list("tag" = input_tag, "set_volume_rate" = target)
 				. = TRUE
 		if("output")
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("pressure")
-			var/target = input("New target pressure:", name, output_info ? output_info["internal"] : 0) as num|null
-			if(!isnull(target) && !..())
-				target =  CLAMP(target, 0, 50 * ONE_ATMOSPHERE)
+			var/target = text2num(params["pressure"])
+			if(!isnull(target))
+				target = clamp(target, 0, 4500)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
