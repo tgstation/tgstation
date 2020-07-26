@@ -438,7 +438,6 @@ Class Procs:
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-
 	if(mover.pass_flags & PASSMACHINE)
 		return TRUE
 

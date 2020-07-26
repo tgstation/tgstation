@@ -117,7 +117,6 @@
 
 /obj/structure/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-
 	if(mover.pass_flags & PASSSTRUCTURE)
 		return TRUE
 

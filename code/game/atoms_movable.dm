@@ -325,7 +325,7 @@
 			angle -= min(ANGLE_ADJUST, tempA)
 	angle = SIMPLIFY_DEGREES(angle)
 	if(!degstep(pulling, angle, distance-8))
-		return step_to(pulling, src, 0, step_size)
+		return step_towards(pulling, src, distance-8)
 	return TRUE
 
 #undef ANGLE_ADJUST
@@ -427,11 +427,11 @@
 		return
 	if(ismovable(A)) // additional checks for movables
 		var/atom/movable/AM = A
-		if(!AM.anchored || AM.sidestep) // is the thing we bumped sidestepping us or anchored?
+		if(AM.sidestep) // is the thing we bumped sidestepping?
 			return
 	sidestep = TRUE
-	var/slide_dist = 8
-	if(pulledby) // we're getting pulled by someone so let's slide over at their speed
+	var/slide_dist = density ? 8 : 16 // non-dense objects need more compensation
+	if(pulledby && pulledby.step_size > slide_dist) // we're getting pulled by someone so let's slide over at their speed
 		slide_dist = pulledby.step_size
 	if(check_left(slide_dist)) // There is an opening on the left side of src
 		slide_left(slide_dist)

@@ -65,7 +65,7 @@
 	if (istype(src, /obj/structure/closet/supplypod))
 		return
 	if(!opened)
-		layer = ABOVE_MOB_LAYER
+		layer = OBJ_LAYER
 	else
 		layer = BELOW_OBJ_LAYER
 
