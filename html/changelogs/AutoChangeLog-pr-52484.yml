@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Stepping on an unopened bag of chips will pop it and ruin all the chips inside"
