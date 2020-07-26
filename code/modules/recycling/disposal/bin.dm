@@ -412,7 +412,7 @@
 	var/atom/L = loc //recharging from loc turf
 
 	var/datum/gas_mixture/env = L.return_air()
-	if(!env)
+	if(!env.temperature)
 		return
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
