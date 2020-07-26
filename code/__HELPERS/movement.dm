@@ -83,6 +83,7 @@
   * * AM - movable that we need to find the closest turf to
   */
 /proc/nearest_turf(atom/movable/AM)
+	RETURN_TYPE(/turf)
 	var/lowest_diff = 0
 	var/turf/lowest = get_turf(AM)
 	for(var/turf/T in AM.locs)
