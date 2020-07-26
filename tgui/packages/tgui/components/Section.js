@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { classes, isFalsy, pureComponentHooks } from 'common/react';
+import { canRender, classes, pureComponentHooks } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 
 export const Section = props => {
@@ -14,17 +14,19 @@ export const Section = props => {
     level = 1,
     buttons,
     fill,
+    fitted,
     children,
     ...rest
   } = props;
-  const hasTitle = !isFalsy(title) || !isFalsy(buttons);
-  const hasContent = !isFalsy(children);
+  const hasTitle = canRender(title) || canRender(buttons);
+  const hasContent = canRender(children);
   return (
     <div
       className={classes([
         'Section',
         'Section--level--' + level,
         fill && 'Section--fill',
+        fitted && 'Section--fitted',
         className,
         ...computeBoxClassName(rest),
       ])}
@@ -39,11 +41,12 @@ export const Section = props => {
           </div>
         </div>
       )}
-      {hasContent && (
-        <div className="Section__content">
-          {children}
-        </div>
-      )}
+      {fitted && children
+        || hasContent && (
+          <div className="Section__content">
+            {children}
+          </div>
+        )}
     </div>
   );
 };

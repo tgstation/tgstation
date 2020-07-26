@@ -243,7 +243,9 @@ a.popt {
   color: #333;
 }
 
-.popup input[type=text]:hover, .popup input[type=text]:active, .popup input[type=text]:focus {
+.popup input[type=text]:hover,
+.popup input[type=text]:active,
+.popup input[type=text]:focus {
   border-color: green;
 }
 
@@ -256,7 +258,9 @@ a.popt {
   font-weight: bold;
 }
 
-.popup input[type=submit]:hover, .popup input[type=submit]:focus, .popup input[type=submit]:active {
+.popup input[type=submit]:hover,
+.popup input[type=submit]:focus,
+.popup input[type=submit]:active {
   background: #aaa;
   cursor: pointer;
 }
@@ -367,12 +371,21 @@ a.popt {
   font-family: Verdana, sans-serif;
 }
 
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {
+.motd h1,
+.motd h2,
+.motd h3,
+.motd h4,
+.motd h5,
+.motd h6 {
   color: #a4bad6;
   text-decoration: underline;
 }
 
-.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {
+.motd a,
+.motd a:link,
+.motd a:visited,
+.motd a:active,
+.motd a:hover {
   color: #a4bad6;
 }
 
@@ -381,7 +394,15 @@ a.popt {
 /* ADD HERE FOR BOLD */
 
 
-.bold, .name, .prefix, .ooc, .looc, .adminooc, .admin, .medal, .yell {
+.bold,
+.name,
+.prefix,
+.ooc,
+.looc,
+.adminooc,
+.admin,
+.medal,
+.yell {
   font-weight: bold;
 }
 

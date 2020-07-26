@@ -24,7 +24,7 @@ import { combineReducers } from 'common/redux';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { createRenderer } from 'tgui/renderer';
 import { configureStore, StoreProvider } from 'tgui/store';
-import { chatMiddleware } from './chat';
+import { chatMiddleware, chatReducer } from './chat';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 
@@ -33,8 +33,9 @@ perf.mark('init');
 
 const store = configureStore({
   reducer: combineReducers({
-    settings: settingsReducer,
+    chat: chatReducer,
     ping: pingReducer,
+    settings: settingsReducer,
   }),
   middleware: {
     pre: [
@@ -75,6 +76,15 @@ const setupApp = () => {
     }
     window.update(stateJson);
   }
+
+  // Unhide the panel
+  Byond.winset('output', {
+    'is-visible': false,
+  });
+  Byond.winset('browseroutput', {
+    'is-visible': true,
+    'is-disabled': false,
+  });
 
   // Enable hot module reloading
   if (module.hot) {

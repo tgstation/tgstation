@@ -30,7 +30,4 @@
 				),
 			),
 		))
-		winset(client, "output", "is-visible=false")
-		winset(client, "browseroutput", "is-disabled=false;is-visible=true")
-		return FALSE
 	return FALSE

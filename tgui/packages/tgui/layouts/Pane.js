@@ -50,6 +50,7 @@ export class Pane extends Component {
 const PaneContent = props => {
   const {
     className,
+    fitted,
     children,
     ...rest
   } = props;
@@ -60,7 +61,11 @@ const PaneContent = props => {
         className,
       ])}
       {...rest}>
-      {children}
+      {fitted && children || (
+        <div className="Window__contentPadding">
+          {children}
+        </div>
+      )}
     </Layout.Content>
   );
 };

@@ -7,17 +7,10 @@
  */
 
 
-import { classes, isFalsy } from 'common/react';
+import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
-
-
-const toInputValue = value => {
-  if (isFalsy(value)) {
-    return '';
-  }
-  return value;
-};
+import { toInputValue } from './Input';
 
 export class TextArea extends Component {
   constructor(props, context) {
