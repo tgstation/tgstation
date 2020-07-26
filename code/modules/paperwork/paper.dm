@@ -168,20 +168,20 @@
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 		// Are we on fire?  Hard ot read if so
+	if(resistance_flags & ON_FIRE)
+		return UI_CLOSE
 	if(!in_range(user,src))
 		return UI_CLOSE
 	if(isdead(user))
 		return UI_UPDATE
-	if(in_contents_of(/obj/machinery/door/airlock))
-		return UI_INTERACTIVE
-	if(resistance_flags & ON_FIRE)
-		return UI_CLOSE
 	// Even harder to read if your blind...braile? humm
 	if(user.is_blind())
 		return UI_CLOSE
 	// .. or if you cannot read
 	if(!user.can_read(src))
 		return UI_CLOSE
+	if(in_contents_of(/obj/machinery/door/airlock))
+		return UI_INTERACTIVE
 	return ..()
 
 
