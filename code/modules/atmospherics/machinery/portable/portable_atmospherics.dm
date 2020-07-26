@@ -61,7 +61,7 @@
 		return FALSE
 
 	//Make sure are close enough for a valid connection
-	if(new_port.loc != get_turf(src))
+	if(!(new_port.loc in locs))
 		return FALSE
 
 	//Perform the connection
