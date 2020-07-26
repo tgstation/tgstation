@@ -2075,9 +2075,13 @@
 		if(!check_rights(R_ADMIN))
 			return
 
+		if(!CONFIG_GET(string/centcom_ban_db))
+			to_chat(usr, "<span class='warning'>Centcom Galactic Ban DB is disabled!</span>")
+			return
+
 		var/ckey = href_list["centcomlookup"]
 
-		var/list/query = json_decode(rustg_http_request_blocking(RUSTG_HTTP_METHOD_GET, "https://centcom.melonmesa.com/ban/search/[ckey]", null, null))
+		var/list/query = json_decode(rustg_http_request_blocking(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/centcom_ban_db)][ckey]", null, null))
 
 		var/list/bans
 
@@ -2099,17 +2103,17 @@
 					//But now we need to readd } so it's valid json.
 					//But not if it's the final entry because that retained its }
 					var/list/bandata = json_decode("[ban][ban == bans.len ? "" : "}"]")
-					dat += "<b>Server: </b> [bandata["sourceName"]]<br>"
-					dat += "<b>Type: </b> [bandata["type"]]<br>"
-					dat += "<b>Banned By: </b> [bandata["bannedBy"]]<br>"
-					dat += "<b>Reason: </b> [bandata["reason"]]<br>"
-					dat += "<b>Datetime: </b> [bandata["bannedOn"]]<br>"
+					dat += "<b>Server: </b> [sanitize(bandata["sourceName"])]<br>"
+					dat += "<b>Type: </b> [sanitize(bandata["type"])]<br>"
+					dat += "<b>Banned By: </b> [sanitize(bandata["bannedBy"])]<br>"
+					dat += "<b>Reason: </b> [sanitize(bandata["reason"])]<br>"
+					dat += "<b>Datetime: </b> [sanitize(bandata["bannedOn"])]<br>"
 					var/expiration = bandata["expires"]
-					dat += "<b>Expires: </b> [expiration ? "[expiration]" : "Permanent"]<br>"
+					dat += "<b>Expires: </b> [expiration ? "[sanitize(expiration)]" : "Permanent"]<br>"
 					if(bandata["type"] == "job")
 						dat += "<b>Jobs: </b> "
 						for(var/job in bandata["jobs"])
-							dat += "[job], "
+							dat += "[sanitize(job)], "
 						dat += "<br>"
 					dat += "<hr>"
 
