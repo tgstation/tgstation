@@ -500,6 +500,7 @@
 	icon_state = "gumball"
 	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
 	nodamage = TRUE
+	damage = 0
 	speed = 0.5
 
 /obj/projectile/bullet/reusable/gumball/harmful
@@ -529,10 +530,11 @@
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
 	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg
-	var/color2 = rgb(0, 0, 0)
 	embedding = null
 	nodamage = TRUE
+	damage = 0
 	speed = 0.5
+	var/color2 = rgb(0, 0, 0)
 
 /obj/projectile/bullet/reusable/lollipop/harmful
 	embedding = list(embed_chance=35, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
