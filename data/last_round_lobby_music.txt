@@ -69,3 +69,5 @@ config/title_music/sounds/Title3.ogg
 config/title_music/sounds/Lil B Station.ogg
 config/title_music/sounds/3D Galax.ogg
 config/title_music/sounds/Skyline have my child.ogg
+config/title_music/sounds/Star Dance.ogg
+config/title_music/sounds/Another Medium.ogg

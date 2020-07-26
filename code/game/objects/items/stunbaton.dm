@@ -350,3 +350,44 @@
 
 /obj/item/melee/baton/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/cell/high
+
+
+/obj/item/melee/baton/baseball
+	name = "Stun Bat"
+	desc = "A stun baton taped to a baseball bat, just in case you wanted a ball that didn't move."
+	icon_state = "baseball_bat_stun"
+	inhand_icon_state = "baseball_bat_baton"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	w_class = WEIGHT_CLASS_HUGE
+	throwforce = 5
+	stun_time = 5 SECONDS
+	cell_hit_cost = 1000
+	throw_stun_chance = 10
+	slot_flags = ITEM_SLOT_BACK
+	convertible = FALSE
+	var/obj/item/assembly/igniter/sparkler = 0
+	force = 10
+	attack_verb = list("beat", "smacked")
+	hitsound = 'sound/weapons/genhit2.ogg'
+
+/obj/item/melee/baton/baseball/Initialize()
+	. = ..()
+	sparkler = new (src)
+
+/obj/item/melee/baton/baseball/baton_effect()
+	if(sparkler.activate())
+		..()
+
+/obj/item/melee/baton/baseball/Destroy()
+	if(sparkler)
+		QDEL_NULL(sparkler)
+	return ..()
+
+/obj/item/melee/baton/baseball/attack(mob/living/target, mob/living/user)
+	. = ..()
+	hitsound = 'sound/weapons/genhit2.ogg'
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
+	if(!target.anchored)
+		var/whack_speed = (prob(60) ? 1 : 4)
+		target.throw_at(throw_target, rand(1, 2), whack_speed, user)
