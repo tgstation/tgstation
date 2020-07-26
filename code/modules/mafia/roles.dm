@@ -18,12 +18,12 @@
 	//action = uses
 	var/list/actions = list()
 	var/list/targeted_actions = list()
+	//what the role gets when it wins a game
+	var/winner_award = /datum/award/achievement/mafia/assistant
 
 	//so mafia have to also kill them to have a majority
 	var/solo_counts_as_town = FALSE //(don't set this for town)
-
 	var/game_status = MAFIA_ALIVE
-
 	var/special_theme //set this to something cool for antagonists and their window will look different
 
 	var/list/role_notes = list()
@@ -116,6 +116,7 @@
 	desc = "You can investigate a single person each night to learn their team."
 	revealed_outfit = /datum/outfit/mafia/detective
 	role_type = TOWN_INVEST
+	winner_award = /datum/award/achievement/mafia/detective
 
 	targeted_actions = list("Investigate")
 
@@ -166,6 +167,7 @@
 	desc = "You can visit someone ONCE PER GAME to reveal their true role in the morning!"
 	revealed_outfit = /datum/outfit/mafia/psychologist
 	role_type = TOWN_INVEST
+	winner_award = /datum/award/achievement/mafia/psychologist
 
 	targeted_actions = list("Reveal")
 	var/datum/mafia_role/current_target
@@ -200,6 +202,7 @@
 	desc = "You can communicate with spirits of the dead each night to discover dead crewmember roles."
 	revealed_outfit = /datum/outfit/mafia/chaplain
 	role_type = TOWN_INVEST
+	winner_award = /datum/award/achievement/mafia/chaplain
 
 	targeted_actions = list("Pray")
 	var/current_target
@@ -230,9 +233,9 @@
 	desc = "You can protect a single person each night from killing."
 	revealed_outfit = /datum/outfit/mafia/md // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
 	role_type = TOWN_PROTECT
+	winner_award = /datum/award/achievement/mafia/md
 
 	targeted_actions = list("Protect")
-
 	var/datum/mafia_role/current_protected
 
 /datum/mafia_role/md/New(datum/mafia_controller/game)
@@ -275,9 +278,9 @@
 	desc = "You can choose a person during the day to provide extensive legal advice to during the night, preventing night actions."
 	revealed_outfit = /datum/outfit/mafia/lawyer
 	role_type = TOWN_PROTECT
+	winner_award = /datum/award/achievement/mafia/lawyer
 
 	targeted_actions = list("Advise")
-
 	var/datum/mafia_role/current_target
 
 /datum/mafia_role/lawyer/New(datum/mafia_controller/game)
@@ -330,6 +333,7 @@
 	desc = "You can reveal yourself once per game, tripling your vote power but becoming unable to be protected!"
 	revealed_outfit = /datum/outfit/mafia/hop
 	role_type = TOWN_MISC
+	winner_award = /datum/award/achievement/mafia/hop
 
 	targeted_actions = list("Reveal")
 
@@ -350,6 +354,8 @@
 	desc = "You're a member of the changeling hive. Use ':j' talk prefix to talk to your fellow lings."
 	team = MAFIA_TEAM_MAFIA
 	role_type = MAFIA_REGULAR
+	winner_award = /datum/award/achievement/mafia/changeling
+
 	revealed_outfit = /datum/outfit/mafia/changeling
 	special_theme = "syndicate"
 	win_condition = "become majority over the town and no solo killing role can stop them."
@@ -366,8 +372,9 @@
 	name = "Thoughtfeeder"
 	desc = "You're a changeling variant that feeds on the memories of others. Use ':j' talk prefix to talk to your fellow lings, and visit people at night to learn their role."
 	role_type = MAFIA_SPECIAL
-	targeted_actions = list("Learn Role")
+	winner_award = /datum/award/achievement/mafia/thoughtfeeder
 
+	targeted_actions = list("Learn Role")
 	var/datum/mafia_role/current_investigation
 
 /datum/mafia_role/mafia/thoughtfeeder/New(datum/mafia_controller/game)
@@ -408,6 +415,8 @@
 	win_condition = "kill everyone."
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_KILL
+	winner_award = /datum/award/achievement/mafia/traitor
+
 	targeted_actions = list("Night Kill")
 	revealed_outfit = /datum/outfit/mafia/traitor
 	special_theme = "syndicate"
@@ -459,6 +468,8 @@
 	detect_immune = TRUE
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_KILL
+	winner_award = /datum/award/achievement/mafia/nightmare
+
 	targeted_actions = list("Flicker", "Hunt")
 	var/list/flickering = list()
 	var/datum/mafia_role/flicker_target
@@ -528,6 +539,8 @@
 	win_condition = "survive to the end of the game, with anyone"
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_DISRUPT
+	winner_award = /datum/award/achievement/mafia/fugitive
+
 	actions = list("Self Preservation")
 	var/charges = 2
 	var/protection_status = FUGITIVE_NOT_PRESERVING
@@ -583,8 +596,9 @@
 	win_condition = "lynch their obsession."
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_DISRUPT
-	revealed_outfit = /datum/outfit/mafia/obsessed // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
+	winner_award = /datum/award/achievement/mafia/obsessed
 
+	revealed_outfit = /datum/outfit/mafia/obsessed // /mafia <- outfit must be readded (just make a new mafia outfits file for all of these)
 	solo_counts_as_town = TRUE //after winning or whatever, can side with whoever. they've already done their objective!
 	var/datum/mafia_role/obsession
 	var/lynched_target = FALSE
@@ -625,6 +639,7 @@
 	revealed_outfit = /datum/outfit/mafia/clown
 	team = MAFIA_TEAM_SOLO
 	role_type = NEUTRAL_DISRUPT
+	winner_award = /datum/award/achievement/mafia/clown
 
 /datum/mafia_role/clown/New(datum/mafia_controller/game)
 	. = ..()
