@@ -22,5 +22,5 @@
 /datum/component/heat_sensitive/proc/check_requirements(datum/source, datum/gas_mixture/mix, heat, volume)
 	if(max_heat && heat >= max_heat)
 		SEND_SIGNAL(parent, COMSIG_HEAT_HOT, mix, heat, volume)
-	if(min_heat && heat >= min_heat)
+	if(min_heat && heat <= min_heat)
 		SEND_SIGNAL(parent, COMSIG_HEAT_COLD, mix, heat, volume)
