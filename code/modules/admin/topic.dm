@@ -2071,6 +2071,53 @@
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
 
+	else if(href_list["centcomlookup"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/ckey = href_list["centcomlookup"]
+
+		var/list/query = json_decode(rustg_http_request_blocking(RUSTG_HTTP_METHOD_GET, "https://centcom.melonmesa.com/ban/search/[ckey]", null, null))
+
+		var/list/bans
+
+		var/dat = "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><body>"
+
+		if(!query)
+			dat += "<br>Failed to connect to CentCom."
+		else if(query["status_code"] != 200)
+			dat += "<br>Failed to connect to CentCom. Status code: [query["status_code"]]"
+		else
+			if(query["body"] == "[]")
+				dat += "<center><b>0 bans detected for [ckey]</b></center>"
+			else
+				bans = splittext(query["body"], "},", 2, length(query["body"])-1) //We don't want the [] that wraps the query
+				dat += "<center><b>[bans.len] ban\s detected for [ckey]</b></center>"
+
+				for(var/ban in bans)
+					//Okay so what's going on here is we intentionally removed }, in splittext so each ban entry wouldn't have a trailing comma (invalid json)
+					//But now we need to readd } so it's valid json.
+					//But not if it's the final entry because that retained its }
+					var/list/bandata = json_decode("[ban][ban == bans.len ? "" : "}"]")
+					dat += "<b>Server: </b> [bandata["sourceName"]]<br>"
+					dat += "<b>Type: </b> [bandata["type"]]<br>"
+					dat += "<b>Banned By: </b> [bandata["bannedBy"]]<br>"
+					dat += "<b>Reason: </b> [bandata["reason"]]<br>"
+					dat += "<b>Datetime: </b> [bandata["bannedOn"]]<br>"
+					var/expiration = bandata["expires"]
+					dat += "<b>Expires: </b> [expiration ? "[expiration]" : "Permanent"]<br>"
+					if(bandata["type"] == "job")
+						dat += "<b>Jobs: </b> "
+						for(var/job in bandata["jobs"])
+							dat += "[job], "
+						dat += "<br>"
+					dat += "<hr>"
+
+		dat += "<br></body>"
+		var/datum/browser/popup = new(usr, "centcomlookup-[ckey]", "<div align='center'>Central Command Galactic Ban Database</div>", 700, 600)
+		popup.set_content(dat)
+		popup.open(0)
+
 	else if(href_list["modantagrep"])
 		if(!check_rights(R_ADMIN))
 			return
