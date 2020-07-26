@@ -1216,6 +1216,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
+			H.adjustBruteLoss(2)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0
