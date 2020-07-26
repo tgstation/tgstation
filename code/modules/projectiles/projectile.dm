@@ -11,8 +11,8 @@
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
-	bound_height = 8
-	bound_width = 8
+	bound_height = 16
+	bound_width = 16
 	bound_x = 8 // when its horizontal the bound_y becomes 14
 	bound_y = 8
 	brotation = NONE

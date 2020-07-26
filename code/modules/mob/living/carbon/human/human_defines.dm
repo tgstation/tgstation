@@ -64,3 +64,7 @@
 	var/hardcore_survival_score = 0
 	/// For agendered spessmen, which body type to use
 	var/body_type = MALE
+
+	///Shoving vars
+	var/shoved = FALSE
+	var/mob/living/carbon/human/shover = null

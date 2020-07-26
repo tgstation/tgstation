@@ -251,15 +251,23 @@
 		L.update_mobility()// mob gets up if it was lyng down in a chokehold
 
 /atom/movable/proc/Move_Pulled(atom/A, params)
-	if(!check_pulling() || !Adjacent(A))
+	if(!check_pulling())
 		return
+	if(!Adjacent(A))
+		to_chat(src, "<span class='warning'>You can't move [pulling] that far!</span>")
+		return
+	var/od = pulling.density
 	if(params)
 		var/list/mouse = params2list(params)
 		var/sx = text2num(mouse["icon-x"]) - 16
 		var/sy = text2num(mouse["icon-y"]) - 16
+		pulling.density = FALSE
 		pulling.Move(get_step(pulling, get_dir(pulling.loc, A)), get_dir(pulling.loc, A), sx, sy)
+		pulling.density = od
 	else
+		pulling.density = FALSE
 		step(pulling, get_dir(pulling.loc, A))
+		pulling.density = od
 	return TRUE
 
 /mob/living/Move_Pulled(atom/A, params)
@@ -329,7 +337,7 @@
   * Returns TRUE and allows movement if the object we're pulling is in range.
   */
 /atom/movable/proc/handle_pulled_premove(atom/newloc, direct, _step_x, _step_y)
-	if((bounds_dist(src, pulling) > 16 + step_size) && !(direct & get_pixeldir(src, pulling)))
+	if((bounds_dist(src, pulling) > 24 + step_size) && !(direct & get_pixeldir(src, pulling)))
 		return FALSE
 	return TRUE
 
@@ -419,10 +427,10 @@
 		return
 	if(ismovable(A)) // additional checks for movables
 		var/atom/movable/AM = A
-		if(!AM.anchored) // make the player go around unanchored objects or push them
+		if(!AM.anchored || AM.sidestep) // is the thing we bumped sidestepping us or anchored?
 			return
 	sidestep = TRUE
-	var/slide_dist = 16
+	var/slide_dist = 8
 	if(pulledby) // we're getting pulled by someone so let's slide over at their speed
 		slide_dist = pulledby.step_size
 	if(check_left(slide_dist)) // There is an opening on the left side of src
