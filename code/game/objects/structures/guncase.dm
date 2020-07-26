@@ -93,10 +93,9 @@
 	var/obj/item/O = locate(weapon_reference) in contents
 	if(!O || !istype(O))
 		return
-	if(ishuman(user))
-		if(!user.put_in_hands(O))
-			O.forceMove(get_turf(src))
-		update_icon()
+	if(!user.put_in_hands(O))
+		O.forceMove(get_turf(src))
+	update_icon()
 
 /**
   * check_menu: Checks if we are allowed to interact with a radial menu
@@ -104,7 +103,7 @@
   * Arguments:
   * * user The mob interacting with a menu
   */
-/obj/structure/guncase/proc/check_menu(mob/living/user)
+/obj/structure/guncase/proc/check_menu(mob/living/carbon/human/user)
 	if(!open)
 		return FALSE
 	if(!istype(user))
