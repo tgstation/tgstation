@@ -295,8 +295,6 @@
 
 /datum/excited_group/proc/merge_groups(datum/excited_group/E)
 	if(turf_list.len > E.turf_list.len)
-		if(E.should_display || SSair.display_all_groups)
-			E.hide_turfs()
 		SSair.excited_groups -= E
 		for(var/t in E.turf_list)
 			var/turf/open/T = t
@@ -306,8 +304,6 @@
 			display_turfs()
 		reset_cooldowns()
 	else
-		if(should_display || SSair.display_all_groups)
-			hide_turfs()
 		SSair.excited_groups -= src
 		for(var/t in turf_list)
 			var/turf/open/T = t

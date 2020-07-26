@@ -146,6 +146,7 @@ SUBSYSTEM_DEF(air)
 		resumed = 0
 	currentpart = SSAIR_REBUILD_PIPENETS
 
+	SStgui.update_uis(SStgui) //Lightning fast debugging motherfucker
 
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
