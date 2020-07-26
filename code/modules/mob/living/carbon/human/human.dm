@@ -656,15 +656,18 @@
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C, panicking)
 	CHECK_DNA_AND_SPECIES(C)
 
-	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
+	if (INTERACTING_WITH(src, C))
+		return FALSE
+
+	if (C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		to_chat(src, "<span class='warning'>[C.name] is dead!</span>")
 		return FALSE
 
-	if(is_mouth_covered())
+	if (is_mouth_covered())
 		to_chat(src, "<span class='warning'>Remove your mask first!</span>")
 		return FALSE
 
-	if(C.is_mouth_covered())
+	if (C.is_mouth_covered())
 		to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
 		return FALSE
 
@@ -682,21 +685,21 @@
 	visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
 					"<span class='notice'>You try to perform CPR on [C.name]... Hold still!</span>")
 
-	if(!do_mob(src, C, time = panicking ? CPR_PANIC_SPEED : null))
+	if (!do_mob(src, C, time = panicking ? CPR_PANIC_SPEED : null))
 		to_chat(src, "<span class='warning'>You fail to perform CPR on [C]!</span>")
 		return 0
 
 	var/they_breathe = !HAS_TRAIT(C, TRAIT_NOBREATH)
 	var/they_lung = C.getorganslot(ORGAN_SLOT_LUNGS)
 
-	if(C.health > C.crit_threshold)
+	if (C.health > C.crit_threshold)
 		return FALSE
 
 	src.visible_message("<span class='notice'>[src] performs CPR on [C.name]!</span>", "<span class='notice'>You perform CPR on [C.name].</span>")
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "perform_cpr", /datum/mood_event/perform_cpr)
 	log_combat(src, C, "CPRed")
 
-	if(they_breathe && they_lung)
+	if (they_breathe && they_lung)
 		var/suff = min(C.getOxyLoss(), 7)
 		C.adjustOxyLoss(-suff)
 		C.updatehealth()
