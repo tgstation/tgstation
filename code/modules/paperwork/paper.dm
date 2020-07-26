@@ -168,6 +168,10 @@
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 		// Are we on fire?  Hard ot read if so
+	if(!in_range(user,src))
+		return UI_CLOSE
+	if(isdead(user))
+		return UI_UPDATE
 	if(in_contents_of(/obj/machinery/door/airlock))
 		return UI_INTERACTIVE
 	if(resistance_flags & ON_FIRE)
