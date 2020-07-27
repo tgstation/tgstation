@@ -2102,24 +2102,19 @@
 			if(response.body == "[]")
 				dat += "<center><b>0 bans detected for [ckey]</b></center>"
 			else
-				bans = splittext(response.body, "},", 2, length(response.body)-1) //We don't want the [] that wraps the query
+				bans = json_decode(response["body"])
 				dat += "<center><b>[bans.len] ban\s detected for [ckey]</b></center>"
-
-				for(var/ban in bans)
-					//Okay so what's going on here is we intentionally removed }, in splittext so each ban entry wouldn't have a trailing comma (invalid json)
-					//But now we need to readd } so it's valid json.
-					//But not if it's the final entry because that retained its }
-					var/list/bandata = json_decode("[ban][ban == bans.len ? "" : "}"]")
-					dat += "<b>Server: </b> [sanitize(bandata["sourceName"])]<br>"
-					dat += "<b>Type: </b> [sanitize(bandata["type"])]<br>"
-					dat += "<b>Banned By: </b> [sanitize(bandata["bannedBy"])]<br>"
-					dat += "<b>Reason: </b> [sanitize(bandata["reason"])]<br>"
-					dat += "<b>Datetime: </b> [sanitize(bandata["bannedOn"])]<br>"
-					var/expiration = bandata["expires"]
+				for(var/list/ban in bans)
+					dat += "<b>Server: </b> [sanitize(ban["sourceName"])]<br>"
+					dat += "<b>Type: </b> [sanitize(ban["type"])]<br>"
+					dat += "<b>Banned By: </b> [sanitize(ban["bannedBy"])]<br>"
+					dat += "<b>Reason: </b> [sanitize(ban["reason"])]<br>"
+					dat += "<b>Datetime: </b> [sanitize(ban["bannedOn"])]<br>"
+					var/expiration = ban["expires"]
 					dat += "<b>Expires: </b> [expiration ? "[sanitize(expiration)]" : "Permanent"]<br>"
-					if(bandata["type"] == "job")
+					if(ban["type"] == "job")
 						dat += "<b>Jobs: </b> "
-						var/list/jobs = bandata["jobs"]
+						var/list/jobs = ban["jobs"]
 						dat += sanitize(jobs.Join(", "))
 						dat += "<br>"
 					dat += "<hr>"
