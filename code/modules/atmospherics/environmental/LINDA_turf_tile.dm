@@ -99,6 +99,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	if(temperature > max_fire_temperature_sustained)
 		max_fire_temperature_sustained = temperature
 	if(to_be_destroyed && !changing_turf)
+		burn_tile()
 		var/chance_of_deletion
 		if (heat_capacity) //beware of division by zero
 			chance_of_deletion = max_fire_temperature_sustained / heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0

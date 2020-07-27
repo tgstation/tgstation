@@ -201,8 +201,6 @@
 	if((visual_update_tick++ % 7) == 0)
 		update_color()
 
-	if(location.heat_capacity && temperature > location.heat_capacity)
-		location.to_be_destroyed = TRUE
 	return TRUE
 
 /obj/effect/hotspot/Destroy()
@@ -212,7 +210,6 @@
 	if(istype(T) && T.active_hotspot == src)
 		T.active_hotspot = null
 	return ..()
-
 
 /obj/effect/hotspot/Crossed(atom/movable/AM, oldLoc)
 	..()
