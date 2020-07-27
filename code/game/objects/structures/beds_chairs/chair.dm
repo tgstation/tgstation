@@ -9,6 +9,10 @@
 	resistance_flags = NONE
 	max_integrity = 250
 	integrity_failure = 0.1
+	bound_x = 7
+	bound_width = 17
+	bound_height = 26
+	brotation = NONE // the bounds hardly change enough to warrant updating
 	custom_materials = list(/datum/material/iron = 2000)
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1

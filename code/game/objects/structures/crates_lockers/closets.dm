@@ -12,7 +12,6 @@
 	bound_height = 16
 	bound_width = 16
 	bound_x = 10
-	bound_y = 1
 	brotation = NONE // We dont want none of that rotation shit
 
 	var/icon_door = null
