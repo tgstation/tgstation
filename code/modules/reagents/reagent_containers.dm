@@ -26,11 +26,15 @@
 		reagents.add_reagent(/datum/reagent/blood, disease_amount, data)
 
 	add_initial_reagents()
+	START_PROCESSING(SSobj, src)
 
-/obj/item/reagent_containers/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 0, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+/obj/item/reagent_containers/process()
+	var/turf/open/check = get_turf(src)
+	if(!istype(check)) //YOU LIER
+		return
+	var/datum/gas_mixture/mix = check.return_air()
+	var/temp = mix.temperature
+	reagents.expose_temperature(temp, 0.0001)
 
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
@@ -136,9 +140,6 @@
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)
 	..()
-
-/obj/item/reagent_containers/proc/heated(datum/gas_mixture/mix, temperature, volume)
-	reagents.expose_temperature(temperature)
 
 /obj/item/reagent_containers/on_reagent_change(changetype)
 	update_icon()
