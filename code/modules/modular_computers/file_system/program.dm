@@ -31,15 +31,10 @@
 	var/available_on_ntnet = 1
 	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
 	var/available_on_syndinet = 0
-	/// ID of TGUI interface
+	/// Name of the tgui interface
 	var/tgui_id
-	/// Default size of TGUI window, in pixels
-	var/ui_x = 575
-	var/ui_y = 700
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 	var/ui_header = null
-	///Assets specific to programs
-	var/list/special_assets = list()
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -103,7 +98,7 @@
 	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
 		return TRUE
 
-	if(IsAdminGhost(user))
+	if(isAdminGhostAI(user))
 		return TRUE
 
 	if(issilicon(user))
@@ -171,18 +166,12 @@
 		generate_network_log("Connection to [network_destination] closed.")
 	return 1
 
-
-/datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui && tgui_id)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-		for(var/i in special_assets)
-			assets = get_asset_datum(i)
-			assets.send(user)
-
-		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y, state = state)
+		ui = new(user, src, tgui_id, filedesc)
 		ui.open()
+		ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
 // CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:
 // Topic calls are automagically forwarded from NanoModule this program contains.

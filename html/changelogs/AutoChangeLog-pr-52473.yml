@@ -1,0 +1,7 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Supermatter slivers thrown by bombs / mass drivers will now consume a mob if they're hit by it."
+  - bugfix: "Fixed an exploit allowing jaunting mobs to consume supermatter slivers on the ground."
+  - bugfix: "Fixed simple animals (ie gorillas) not being consumed by supermatter slivers after picking them up."
+  - bugfix: "Fixed an exploit allowing you to kill jaunting mobs with supermatter slivers held by tongs."

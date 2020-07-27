@@ -9,8 +9,6 @@
 	network_destination = "robotics control network"
 	size = 12
 	tgui_id = "NtosRoboControl"
-	ui_x = 550
-	ui_y = 550
 	///Number of simple robots on-station.
 	var/botcount = 0
 	///Used to find the location of the user for the purposes of summoning robots.

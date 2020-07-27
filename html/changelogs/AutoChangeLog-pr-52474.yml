@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Varediting a solar array assembly's anchored var will now correctly update its pixel offsets."

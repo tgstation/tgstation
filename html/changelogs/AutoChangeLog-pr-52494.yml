@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed \"your MMI was unable to receive your mind\" being sent to emagged borgs when self_destructed via a robotics console."

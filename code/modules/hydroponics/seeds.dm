@@ -5,6 +5,7 @@
 /obj/item/seeds
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				// Unknown plant seed - these shouldn't exist in-game.
+	worn_icon_state = "seed"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	/// Name of plant when planted.
@@ -207,7 +208,20 @@
 	if(get_gene(/datum/plant_gene/trait/maxchem))
 		product_count = clamp(round(product_count/2),0,5)
 	while(t_amount < product_count)
-		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
+		var/obj/item/reagent_containers/food/snacks/grown/t_prod
+		if(instability >= 30 && prob(instability/3) && mutatelist)
+			var/obj/item/seeds/new_prod = pick(mutatelist)
+			t_prod = initial(new_prod.product)
+			if(t_prod)
+				t_prod = new t_prod(output_loc, src)
+				if(t_prod.seed)
+					t_prod.seed = initial(t_prod.seed)
+					t_prod.seed = new t_prod.seed
+					t_prod.seed.instability = round(instability/2)
+					t_amount++
+					continue
+		else
+			t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = lowertext(parent.myseed.plantname)
 		if(productdesc)

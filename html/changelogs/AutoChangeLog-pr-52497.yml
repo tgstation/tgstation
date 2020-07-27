@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Smartfridges will now drop boards set to the type of fridge they were when deconstructed."
+  - bugfix: "Fixed survival pods, black boxes, and drying racks potentially dropping basic smartfridge boards."
+  - bugfix: "Newly constructed survival pods will no longer say that they're old and dusty."

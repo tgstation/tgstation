@@ -26,7 +26,10 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "g" = (
-/obj/machinery/smartfridge/survival_pod/empty,
+/obj/machinery/smartfridge/survival_pod{
+	name = "dusty survival pod storage";
+	desc = "A heated storage unit. This one's seen better days."
+	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "h" = (

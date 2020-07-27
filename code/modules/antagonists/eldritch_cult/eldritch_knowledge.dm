@@ -88,6 +88,7 @@
 	for(var/X in atoms)
 		var/atom/A = X
 		if(!isliving(A))
+			atoms -= A
 			qdel(A)
 	return
 
@@ -211,6 +212,7 @@
 /datum/eldritch_knowledge/final/cleanup_atoms(list/atoms)
 	. = ..()
 	for(var/mob/living/carbon/human/H in atoms)
+		atoms -= H
 		H.gib()
 
 

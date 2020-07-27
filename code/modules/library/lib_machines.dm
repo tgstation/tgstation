@@ -392,7 +392,7 @@
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = stripped_input(usr, "Enter the book's title:")
+		buffer_book = stripped_input(usr, "Enter the book's title:", max_length = 45)
 	if(href_list["editmob"])
 		buffer_mob = stripped_input(usr, "Enter the recipient's name:", max_length = MAX_NAME_LEN)
 	if(href_list["checkout"])
@@ -411,7 +411,7 @@
 		if(b && istype(b))
 			inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = stripped_input(usr, "Enter the author's name: ")
+		var/newauthor = stripped_input(usr, "Enter the author's name: ", max_length = 45)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
