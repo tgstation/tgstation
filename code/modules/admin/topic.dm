@@ -2081,21 +2081,26 @@
 
 		var/ckey = href_list["centcomlookup"]
 
-		var/list/query = json_decode(rustg_http_request_blocking(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/centcom_ban_db)][ckey]", null, null))
+		// Make the request
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/centcom_ban_db)][ckey]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
 
 		var/list/bans
 
 		var/dat = "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><body>"
 
-		if(!query)
+		if(response.errored)
 			dat += "<br>Failed to connect to CentCom."
-		else if(query["status_code"] != 200)
-			dat += "<br>Failed to connect to CentCom. Status code: [query["status_code"]]"
+		else if(response.status_code != 200)
+			dat += "<br>Failed to connect to CentCom. Status code: [response.status_code]"
 		else
-			if(query["body"] == "[]")
+			if(response.body == "[]")
 				dat += "<center><b>0 bans detected for [ckey]</b></center>"
 			else
-				bans = splittext(query["body"], "},", 2, length(query["body"])-1) //We don't want the [] that wraps the query
+				bans = splittext(response.body, "},", 2, length(response.body)-1) //We don't want the [] that wraps the query
 				dat += "<center><b>[bans.len] ban\s detected for [ckey]</b></center>"
 
 				for(var/ban in bans)
