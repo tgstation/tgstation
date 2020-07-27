@@ -4,17 +4,19 @@
 
 /datum/wires/scan_gate/New(atom/holder)
 	wires = list(
-		WIRE_PASS, WIRE_FAIL, WIRE_DISABLE, WIRE_ACTIVATE, WIRE_DISARM
+		WIRE_PASS, WIRE_FAIL, WIRE_DISABLE, WIRE_ACTIVATE, WIRE_DISARM, WIRE_PROCEED
 	)
 	..()
 
 /datum/wires/scan_gate/on_pulse(wire)
 	var/obj/machinery/scanner_gate/V = holder
 	switch(wire)
+		if(WIRE_PROCEED)
+			V.triggered = !V.triggered
 		if(WIRE_PASS)
-			V.green = !V.green
+			V.pass = !V.pass
 		if(WIRE_FAIL)
-			V.red = !V.red
+			V.fail = !V.fail
 		if(WIRE_DISARM)
 			V.ignore_signals = !V.ignore_signals
 		if(WIRE_DISABLE)
@@ -25,7 +27,8 @@
 /datum/wires/scan_gate/get_status()
 	var/obj/machinery/scanner_gate/V = holder
 	var/list/status = list()
-	status += "The Green light is [V.green ? "blinking" : "off"]."
-	status += "The Red light is [V.red ? "blinking" : "off"]."
+	status += "The Green light is [V.pass ? "blinking" : "off"]."
+	status += "The Red light is [V.fail ? "blinking" : "off"]."
+	status += "The Yellow light is [V.triggered ? "blinking" : "off"]."
 	status += "The Purple light is [V.ignore_signals ? "on" : "off"]."
 	return status

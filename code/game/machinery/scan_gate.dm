@@ -27,8 +27,9 @@
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/scanner_gate
 
-	var/green = FALSE
-	var/red = FALSE
+	var/pass = FALSE
+	var/fail = FALSE
+	var/triggered = FALSE
 	var/ignore_signals = FALSE
 	var/scanline_timer
 	var/next_beep = 0 //avoids spam
@@ -173,6 +174,12 @@
 					beep = TRUE
 				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
+
+	if(!ignore_signals)
+		color = wires.get_color_of_wire(WIRE_PROCEED)
+		var/obj/item/assembly/S = wires.get_attached(color)
+		if(istype(S))
+			S.activate()
 
 	if(reverse)
 		beep = !beep
