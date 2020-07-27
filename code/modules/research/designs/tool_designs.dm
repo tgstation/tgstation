@@ -11,7 +11,7 @@
 	materials = list(/datum/material/iron = 3500, /datum/material/silver = 1500, /datum/material/titanium = 2500)
 	build_path = /obj/item/screwdriver/power
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/jawsoflife
 	name = "Jaws of Life"
@@ -21,7 +21,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/exwelder
 	name = "Experimental Welding Tool"
