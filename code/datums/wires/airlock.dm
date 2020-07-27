@@ -26,7 +26,10 @@
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
 	if(!issilicon(user) && A.isElectrified())
-		return FALSE
+		var/mob/living/carbon/C = user
+		if (!istype(C) || C.should_electrocute(src))
+			return FALSE
+
 	if(A.panel_open)
 		return TRUE
 

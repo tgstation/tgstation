@@ -275,6 +275,38 @@
 
 	return net1
 
+/// Extracts the powernet and cell of the provided power source
+/proc/get_powernet_info_from_source(power_source)
+	var/area/source_area
+	if (istype(power_source, /area))
+		source_area = power_source
+		power_source = source_area.get_apc()
+	else if (istype(power_source, /obj/structure/cable))
+		var/obj/structure/cable/Cable = power_source
+		power_source = Cable.powernet
+
+	var/datum/powernet/PN
+	var/obj/item/stock_parts/cell/cell
+
+	if (istype(power_source, /datum/powernet))
+		PN = power_source
+	else if (istype(power_source, /obj/item/stock_parts/cell))
+		cell = power_source
+	else if (istype(power_source, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/apc = power_source
+		cell = apc.cell
+		if (apc.terminal)
+			PN = apc.terminal.powernet
+	else if (!power_source)
+		return
+	else
+		return
+
+	if (!cell && !PN)
+		return
+
+	return list("powernet" = PN, "cell" = cell)
+
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever
 //power_source is a source of electricity, can be power cell, area, apc, cable, powernet or null
@@ -285,44 +317,22 @@
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
 	if(!istype(M) || ismecha(M.loc))
 		return 0	//feckin mechs are dumb
+
 	if(dist_check)
 		if(!in_range(source,M))
-			return 0
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.gloves)
-			var/obj/item/clothing/gloves/G = H.gloves
-			if(G.siemens_coefficient == 0)
-				SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
-				return 0		//to avoid spamming with insulated glvoes on
+			return FALSE
 
-	var/area/source_area
-	if(istype(power_source, /area))
-		source_area = power_source
-		power_source = source_area.get_apc()
-	if(istype(power_source, /obj/structure/cable))
-		var/obj/structure/cable/Cable = power_source
-		power_source = Cable.powernet
+	if(M.wearing_shock_proof_gloves())
+		SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
+		return FALSE		//to avoid spamming with insulated glvoes on
 
-	var/datum/powernet/PN
-	var/obj/item/stock_parts/cell/cell
+	var/list/powernet_info = get_powernet_info_from_source(power_source)
+	if (!powernet_info)
+		return FALSE
 
-	if(istype(power_source, /datum/powernet))
-		PN = power_source
-	else if(istype(power_source, /obj/item/stock_parts/cell))
-		cell = power_source
-	else if(istype(power_source, /obj/machinery/power/apc))
-		var/obj/machinery/power/apc/apc = power_source
-		cell = apc.cell
-		if (apc.terminal)
-			PN = apc.terminal.powernet
-	else if (!power_source)
-		return 0
-	else
-		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
-		return 0
-	if (!cell && !PN)
-		return 0
+	var/datum/powernet/PN = powernet_info["powernet"]
+	var/obj/item/stock_parts/cell/cell = powernet_info["cell"]
+
 	var/PN_damage = 0
 	var/cell_damage = 0
 	if (PN)
@@ -341,7 +351,8 @@
 
 	var/drained_energy = drained_hp*20
 
-	if (source_area)
+	if (isarea(power_source))
+		var/area/source_area = power_source
 		source_area.use_power(drained_energy/GLOB.CELLRATE)
 	else if (istype(power_source, /datum/powernet))
 		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
