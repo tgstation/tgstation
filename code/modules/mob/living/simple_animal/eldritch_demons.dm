@@ -73,31 +73,31 @@
 	. = ..()
 	client?.view_size.setTo(10)
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/link_mob(mob/living/M)
-	if(QDELETED(M) || M.stat == DEAD)
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/link_mob(mob/living/mob_linked)
+	if(QDELETED(mob_linked) || mob_linked.stat == DEAD)
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD)) //mindshield implant, no dice
+	if(HAS_TRAIT(mob_linked, TRAIT_MINDSHIELD)) //mindshield implant, no dice
 		return FALSE
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
+	if(mob_linked.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		return FALSE
-	if(M in linked_mobs)
+	if(mob_linked in linked_mobs)
 		return FALSE
-	linked_mobs.Add(M)
-	to_chat(M, "<span class='notice'>You are now connected to [src]'s Mansus Link.</span>")
+	linked_mobs.Add(mob_linked)
+	to_chat(mob_linked, "<span class='notice'>You are now connected to [src]'s Mansus Link.</span>")
 	var/datum/action/innate/mansus_speech/action = new(src)
 	linked_actions.Add(action)
-	action.Grant(M)
-	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING) , .proc/unlink_mob)
+	action.Grant(mob_linked)
+	RegisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING) , .proc/unlink_mob)
 	return TRUE
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/M)
-	var/link_id = linked_mobs.Find(M)
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
+	var/link_id = linked_mobs.Find(mob_linked)
 	if(!(link_id))
 		return
-	UnregisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/mansus_speech/action = linked_actions[link_id]
-	action.Remove(M)
-	to_chat(M, "<span class='notice'>You are no longer connected to [src]'s Mansus Link.</span>")
+	action.Remove(mob_linked)
+	to_chat(mob_linked, "<span class='notice'>You are no longer connected to [src]'s Mansus Link.</span>")
 	linked_mobs[link_id] = null
 	linked_actions[link_id] = null
 
