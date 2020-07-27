@@ -6,6 +6,7 @@
 	nodamage = FALSE
 	paralyze = 100
 	flag = "bio"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/neurotoxin
 
 /obj/projectile/neurotoxin/on_hit(atom/target, blocked = FALSE)
 	if(isalien(target))
