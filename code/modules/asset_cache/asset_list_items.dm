@@ -2,12 +2,14 @@
 
 /datum/asset/simple/tgui
 	assets = list(
+		"tgui-common.chunk.js" = 'tgui/packages/tgui/public/tgui-common.chunk.js',
 		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
 	)
 
 /datum/asset/simple/tgui_panel
 	assets = list(
+		"tgui-common.chunk.js" = 'tgui/packages/tgui/public/tgui-common.chunk.js',
 		"tgui-panel.bundle.js" = 'tgui/packages/tgui/public/tgui-panel.bundle.js',
 		"tgui-panel.bundle.css" = 'tgui/packages/tgui/public/tgui-panel.bundle.css',
 	)

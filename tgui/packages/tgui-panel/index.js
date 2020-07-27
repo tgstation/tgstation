@@ -47,10 +47,10 @@ const store = configureStore({
 });
 
 const renderApp = createRenderer(() => {
-  const { PanelRoot } = require('./PanelRoot');
+  const { Panel } = require('./Panel');
   return (
     <StoreProvider store={store}>
-      <PanelRoot />
+      <Panel />
     </StoreProvider>
   );
 });
@@ -70,11 +70,11 @@ const setupApp = () => {
 
   // Process the early update queue
   while (true) {
-    let stateJson = window.__updateQueue__.shift();
-    if (!stateJson) {
+    const msg = window.__updateQueue__.shift();
+    if (!msg) {
       break;
     }
-    window.update(stateJson);
+    window.update(msg);
   }
 
   // Unhide the panel
@@ -90,7 +90,7 @@ const setupApp = () => {
   if (module.hot) {
     setupHotReloading();
     module.hot.accept([
-      './PanelRoot',
+      './Panel',
     ], () => {
       renderApp();
     });

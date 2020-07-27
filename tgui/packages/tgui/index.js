@@ -63,11 +63,11 @@ const setupApp = () => {
 
   // Process the early update queue
   while (true) {
-    let stateJson = window.__updateQueue__.shift();
-    if (!stateJson) {
+    const msg = window.__updateQueue__.shift();
+    if (!msg) {
       break;
     }
-    window.update(stateJson);
+    window.update(msg);
   }
 
   // Enable hot module reloading

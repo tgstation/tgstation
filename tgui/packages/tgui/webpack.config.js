@@ -25,7 +25,7 @@ const createStats = verbose => ({
 module.exports = (env = {}, argv) => {
   const config = {
     mode: argv.mode === 'production' ? 'production' : 'development',
-    context: __dirname,
+    context: path.resolve(__dirname, '../..'),
     entry: {
       tgui: [
         path.resolve(__dirname, './index.js'),
@@ -35,14 +35,14 @@ module.exports = (env = {}, argv) => {
       ],
     },
     output: {
-      path: argv.devServer
+      path: argv.useTmpFolder
         ? path.resolve(__dirname, './public/.tmp')
         : path.resolve(__dirname, './public'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
     resolve: {
-      extensions: ['.mjs', '.js', '.jsx'],
+      extensions: ['.js', '.jsx'],
       alias: {},
     },
     module: {
@@ -107,6 +107,10 @@ module.exports = (env = {}, argv) => {
     },
     optimization: {
       noEmitOnErrors: true,
+      splitChunks: {
+        chunks: 'initial',
+        name: 'tgui-common',
+      },
     },
     performance: {
       hints: false,

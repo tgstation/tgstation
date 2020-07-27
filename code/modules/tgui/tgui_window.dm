@@ -198,7 +198,9 @@
 			message_queue = list()
 		message_queue += list(message)
 		return
-	client << output(message, is_browser ? "[id]:update" : "[id].browser:update")
+	client << output(message, is_browser \
+		? "[id]:update" \
+		: "[id].browser:update")
 
 /**
  * public
@@ -217,7 +219,9 @@
 			message_queue = list()
 		message_queue += list(message)
 		return
-	client << output(message, is_browser ? "[id]:update" : "[id].browser:update")
+	client << output(message, is_browser \
+		? "[id]:update" \
+		: "[id].browser:update")
 
 /**
  * public
@@ -247,7 +251,9 @@
 	if(!client || !message_queue)
 		return
 	for(var/message in message_queue)
-		client << output(message, "[id].browser:update")
+		client << output(message, is_browser \
+			? "[id]:update" \
+			: "[id].browser:update")
 	message_queue = null
 
 /**
