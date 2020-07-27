@@ -91,7 +91,6 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	transfer_access = null
-	network_destination = "cyborg remote monitoring"
 	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
