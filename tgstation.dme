@@ -288,6 +288,7 @@
 #include "code\controllers\subsystem\radiation.dm"
 #include "code\controllers\subsystem\radio.dm"
 #include "code\controllers\subsystem\research.dm"
+#include "code\controllers\subsystem\runechat.dm"
 #include "code\controllers\subsystem\server_maint.dm"
 #include "code\controllers\subsystem\shuttle.dm"
 #include "code\controllers\subsystem\skills.dm"

@@ -51,7 +51,72 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">27 July 2020</h2>
+			<h3 class="author">Ryll/Shaps updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Stepping on an unopened bag of chips will pop it and ruin all the chips inside</li>
+				<li class="code_imp">Added 2 unit tests for wounds</li>
+			</ul>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed a minor runtime caused by ghosts pressing the lookup / lookdown keybind.</li>
+				<li class="bugfix">Supermatter slivers thrown by bombs / mass drivers will now consume a mob if they're hit by it.</li>
+				<li class="bugfix">Fixed an exploit allowing jaunting mobs to consume supermatter slivers on the ground.</li>
+				<li class="bugfix">Fixed simple animals (ie gorillas) not being consumed by supermatter slivers after picking them up.</li>
+				<li class="bugfix">Fixed an exploit allowing you to kill jaunting mobs with supermatter slivers held by tongs.</li>
+				<li class="bugfix">Objects and mobs that have move resist set to INFINITY will no longer be moved by a singularity.</li>
+				<li class="bugfix">Varediting a solar array assembly's anchored var will now correctly update its pixel offsets.</li>
+				<li class="bugfix">Smartfridges will now drop boards set to the type of fridge they were when deconstructed.</li>
+				<li class="bugfix">Fixed survival pods, black boxes, and drying racks potentially dropping basic smartfridge boards.</li>
+				<li class="bugfix">Newly constructed survival pods will no longer say that they're old and dusty.</li>
+				<li class="bugfix">Fixed "your MMI was unable to receive your mind" being sent to emagged borgs when self_destructed via a robotics console.</li>
+			</ul>
+			<h3 class="author">Wayland-Smithy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The "See runechat emotes" preference now works as intended.</li>
+			</ul>
+			<h3 class="author">nightred updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Sheetifier now deconstructs properly</li>
+				<li class="bugfix">Fixed guardian runtime on ghost disconnect</li>
+			</ul>
+
+			<h2 class="date">26 July 2020</h2>
+			<h3 class="author">Ryll/Shaps updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">The "Disk, Please!" achievement will now be granted to any nuclear operative who holds up any conscious non-nukie holding the disk, rather than needing the Captain. Good luck!</li>
+			</ul>
+			<h3 class="author">Skoglol updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Express supply console has had emagged pod amount reduced slightly and now has a cooldown.</li>
+				<li class="soundadd">*crack has a new sound effect.</li>
+			</ul>
+			<h3 class="author">Timberpoes updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Cybernetic Stomachs are now correctly categorised under Cybernetics in the Exosuit Fabricator.</li>
+			</ul>
+			<h3 class="author">WondaMegapon updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Telecommunication machines now use a TGUI based interface</li>
+				<li class="rscdel">Removed HTML based telecommunication machine code</li>
+				<li class="balance">Telecommunication machines can have their interfaces viewed without a multitool</li>
+				<li class="server">Telecommunication machines now log changed settings</li>
+			</ul>
+			<h3 class="author">bobbahbrown updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Runechat now runs under its own subsystem, this should improve performance and allow for finer control over its performance.</li>
+			</ul>
+			<h3 class="author">lordpidey updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Arcade toy companies have found a surplus of promotional balloons from an old boyband and put them in the prize rotation.  Warning:  balloons may only be partially inflated, and may incite security forces to arrest you.</li>
+			</ul>
+
 			<h2 class="date">25 July 2020</h2>
+			<h3 class="author">ArcaneMusic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Adds a metric ton of belt icons.</li>
+				<li class="bugfix">Paper cash, when stacked, now displays an icon scaling with it's appropriate value.</li>
+			</ul>
 			<h3 class="author">Donkie updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Fixed being able to cheese the voice analyzer by using multiple consecutive whitespaces</li>
@@ -60,9 +125,14 @@
 			<ul class="changes bgimages16">
 				<li class="balance">Swarmers have changed tactics.  They now utilize a swarmer beacon for spawning, and have received a number of other changes.</li>
 			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed several edge cases where some reagents would prevent metabolization.</li>
+			</ul>
 			<h3 class="author">Ryll/Shaps updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Anyone with an antag datum now is shown as an antag to admin features like (?|F)</li>
+				<li class="bugfix">You can now properly repair mangy/shredded clothing with cloth</li>
 			</ul>
 			<h3 class="author">Timberpoes updated:</h3>
 			<ul class="changes bgimages16">
@@ -2132,119 +2202,6 @@
 			<h3 class="author">kevinz000 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="balance">Hierophant now uses its ranged abilities in melee attacks, meaning the strategy of standing still and tanking the hits is no longer viable in 99% of circumstances.</li>
-			</ul>
-
-			<h2 class="date">25 May 2020</h2>
-			<h3 class="author">Cyberboss updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The `notify` TGS command will no longer work if the related config setting is disabled</li>
-				<li class="bugfix">Fixed not actually limiting chat sends to tagged channels as the config should allow when running under TGS4.</li>
-				<li class="bugfix">Fixed the `notify` command not working for IRC users.</li>
-			</ul>
-			<h3 class="author">Fikou updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed science glasses recipe using beer goggles instead of science glasses</li>
-			</ul>
-			<h3 class="author">Gamer025 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Nanotrasen checked the last few expenses reports and decided to reduce payday spending. Because of this, the salary of all non human employees has been reduced by 25%. Please consult your local Head of Personal for more information.</li>
-			</ul>
-			<h3 class="author">Kelenius updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Cyborgs (except Peacekeeper and Standard) now have access to their department's radio.</li>
-			</ul>
-			<h3 class="author">LemonInTheDark updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Changed the way h2o interacts with the engine. It should acts similar to o2 normally, but in high concentrations it cools the engine down. Have fun :)</li>
-				<li class="bugfix">Mulebots no longer go insane when shit starts to lag</li>
-				<li class="refactor">Refactored client.view into a datum, changed some zoom values to work properly</li>
-				<li class="rscadd">Spinning while using a binocular will work as expected</li>
-				<li class="rscadd">Fully adds widescreen support to zooming</li>
-				<li class="refactor">I've moved the pixel scaling and zoom methods from the menu bar to the game preferences window. You'll need to reset them.</li>
-				<li class="bugfix">Pixel size will now automatically update on zoom, so you won't end up with ui buttons you can't see.</li>
-				<li class="bugfix">FIxed the epic gamer skill of binocular applied to advanced camera console</li>
-			</ul>
-			<h3 class="author">LemonInTheDark, with thanks to ArcaneDefence for the pointer updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Scrubbers no longer cool pipenets attached to them when scrubbing space</li>
-			</ul>
-			<h3 class="author">MarioWizard119 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Synthflesh now also works via vapor.</li>
-			</ul>
-			<h3 class="author">NewSta updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">You might potentially see better a/an usage</li>
-			</ul>
-			<h3 class="author">Ryll/Shaps updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">You can now use ! and ? at the end of 'spawn' chatbar verb commands to search for only the ends of paths, or to automatically select a random type of the paths your search returns! Happy badminning!</li>
-				<li class="rscadd">Adds a config option for OOC kindness commendations! When enabled, a small percentage of the crew gets asked if anyone made their round better, and those people will get a little heart next to their name in OOC for 24h!</li>
-				<li class="bugfix">lobby menu work again</li>
-			</ul>
-			<h3 class="author">Shadark updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Manually printed barcodes are now working correctly.</li>
-			</ul>
-			<h3 class="author">TetraK1 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Ghosts can no longer control atmos stuff with alt/ctrl click.</li>
-				<li class="admin">Added logging to ctrl/alt clicks on atmos stuff</li>
-			</ul>
-			<h3 class="author">TheVekter updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Nanotrasen's export price for Hydrogen no longer violates the basic rules of supply and demand.</li>
-			</ul>
-			<h3 class="author">actioninja updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">smon,k weed</li>
-			</ul>
-			<h3 class="author">antropod updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fix PanDEMIC 2200 not showing Blood DNA and Blood Type</li>
-			</ul>
-			<h3 class="author">kevinz000 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">dir_inverse_multiz() should work now. should.</li>
-			</ul>
-			<h3 class="author">nemvar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The camera console looks fancier now.</li>
-			</ul>
-			<h3 class="author">qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">you can no longer move up when you are going to fall down anyways, or you know, dead.</li>
-				<li class="rscadd">simple multi-z audio</li>
-			</ul>
-			<h3 class="author">spessman-007 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">Quite a few misspellings have been corrected</li>
-			</ul>
-			<h3 class="author">tralezab updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">anomaly crystal theme warping for the jungle now uses wooden walls instead of sandstone ones</li>
-			</ul>
-			<h3 class="author">wesoda25 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The progress bar for butchering large mobs is no longer offset.</li>
-			</ul>
-			<h3 class="author">zxaber updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Explosions that were able to destroy doors before will now rip them from the universe.</li>
-			</ul>
-
-			<h2 class="date">24 May 2020</h2>
-			<h3 class="author">Cobby updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Dissection will now give XP instead of research points.</li>
-			</ul>
-			<h3 class="author">Fikou updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">admins can now do html in ahelps properly</li>
-			</ul>
-			<h3 class="author">qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes you being able to put in more than one license plate in the license plate machine</li>
 			</ul>
 		</div>
 
