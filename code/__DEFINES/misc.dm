@@ -120,6 +120,12 @@
 #define SHOES_TIED 1
 #define SHOES_KNOTTED 2
 
+//how fast a disposal machinery thing is ejecting things
+#define EJECT_SPEED_SLOW 	1
+#define EJECT_SPEED_MED		2
+#define EJECT_SPEED_FAST	4
+#define EJECT_SPEED_YEET	6
+
 //Cache of bloody footprint images
 //Key:
 //"entered-[blood_state]-[dir_of_image]"
@@ -405,6 +411,9 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define LOCATIONS_FILE "locations.json"
 #define WANTED_FILE "wanted_message.json"
 #define VISTA_FILE "steve.json"
+#define FLESH_SCAR_FILE "wounds/flesh_scar_desc.json"
+#define BONE_SCAR_FILE "wounds/bone_scar_desc.json"
+#define SCAR_LOC_FILE "wounds/scar_loc.json"
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15

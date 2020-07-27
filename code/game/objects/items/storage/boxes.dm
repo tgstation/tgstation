@@ -71,7 +71,7 @@
 	user.put_in_hands(I)
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/packageWrap))
+	if(istype(W, /obj/item/stack/package_wrap))
 		return 0
 	return ..()
 
@@ -527,12 +527,12 @@
 		new /obj/item/card/id(src)
 
 //Some spare PDAs in a box
-/obj/item/storage/box/PDAs
+/obj/item/storage/box/pdas
 	name = "spare PDAs"
 	desc = "A box of spare PDA microcomputers."
 	illustration = "pda"
 
-/obj/item/storage/box/PDAs/PopulateContents()
+/obj/item/storage/box/pdas/PopulateContents()
 	for(var/i in 1 to 4)
 		new /obj/item/pda(src)
 	new /obj/item/cartridge/head(src)
@@ -1353,10 +1353,10 @@
 
 /obj/item/storage/box/shipping/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/destTagger=1,\
+		/obj/item/dest_tagger=1,\
 		/obj/item/sales_tagger=1,\
 		/obj/item/export_scanner=1,\
-		/obj/item/stack/packageWrap/small=2,\
+		/obj/item/stack/package_wrap/small=2,\
 		/obj/item/stack/wrapping_paper/small=1
 		)
 	generate_items_inside(items_inside,src)

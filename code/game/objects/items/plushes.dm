@@ -577,3 +577,11 @@
 		forceMove(random_open_spot)
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 	return MANUAL_SUICIDE
+
+/obj/item/toy/plush/pkplush
+	name = "peacekeeper plushie"
+	desc = "A plushie depicting a peacekeeper cyborg. Only you can prevent human harm!"
+	icon_state = "pkplush"
+	inhand_icon_state = "pkplush"
+	attack_verb = list("hugged", "squeezed")
+	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)

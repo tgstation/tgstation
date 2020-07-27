@@ -388,13 +388,13 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
 	inhand_icon_state = "coil"
+	novariants = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_amount = MAXCOIL
 	amount = MAXCOIL
 	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
 	color = "yellow"
-	var/cable_color = "yellow"
 	desc = "A coil of insulated power cable."
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -408,6 +408,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	var/cable_color = "yellow"
 	var/obj/structure/cable/target_type = /obj/structure/cable
 	var/target_layer = CABLE_LAYER_2
 
@@ -422,6 +423,14 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	. = ..()
 	. += "<b>Ctrl+Click</b> to change the layer you are placing on."
 
+/obj/item/stack/cable_coil/update_icon_state()
+	if(novariants)
+		return
+	icon_state = "[initial(icon_state)][amount < 3 ? amount : ""]"
+	var/how_many_things = amount < 3 ? "piece" : "coil"
+	name = "cable [how_many_things]"
+	desc = "A [how_many_things] of insulated power cable."
+
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message("<span class='suicide'>[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -431,6 +440,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
 	if(!istype(user))
+		return FALSE
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
@@ -456,35 +468,36 @@ GLOBAL_LIST(cable_radial_layer_list)
 		return
 	switch(layer_result)
 		if("Layer 1")
-			name = "cable coil"
-			icon_state = "coil"
 			color = "red"
 			target_type = /obj/structure/cable/layer1
 			target_layer = CABLE_LAYER_1
+			novariants = FALSE
 		if("Layer 2")
-			name = "cable coil"
-			icon_state = "coil"
 			color = "yellow"
 			target_type = /obj/structure/cable
 			target_layer = CABLE_LAYER_2
+			novariants = FALSE
 		if("Layer 3")
-			name = "cable coil"
-			icon_state = "coil"
 			color = "blue"
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
+			novariants = FALSE
 		if("Multilayer cable hub")
 			name = "multilayer cable hub"
+			desc = "A multilayer cable hub."
 			icon_state = "cable_bridge"
 			color = "white"
 			target_type = /obj/structure/cable/multilayer
 			target_layer = CABLE_LAYER_2
+			novariants = TRUE
 		if("Multi Z layer cable hub")
 			name = "multi z layer cable hub"
+			desc = "A multi-z layer cable hub."
 			icon_state = "cablerelay-broken-cable"
 			color = "white"
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
+			novariants = TRUE
 	update_icon()
 
 
@@ -672,6 +685,9 @@ GLOBAL_LIST(cable_radial_layer_list)
 
 GLOBAL_LIST(hub_radial_layer_list)
 
+/obj/structure/cable/multilayer/attack_robot(mob/user)
+	attack_hand(user)
+
 /obj/structure/cable/multilayer/attack_hand(mob/living/user)
 	if(!user)
 		return
@@ -713,6 +729,9 @@ GLOBAL_LIST(hub_radial_layer_list)
 
 /obj/structure/cable/multilayer/proc/check_menu(mob/living/user)
 	if(!istype(user))
+		return FALSE
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE

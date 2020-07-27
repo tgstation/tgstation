@@ -7,7 +7,6 @@
  *		Toy swords
  *		Crayons
  *		Snap pops
- *		Mech prizes
  *		AI core prizes
  *		Toy codex gigas
  * 		Skeleton toys
@@ -25,7 +24,6 @@
  *		Squeaky Brain
  *		Broken Radio
  */
-
 
 /obj/item/toy
 	throwforce = 0
@@ -101,9 +99,9 @@
 		else
 			T = get_turf(src)
 		T.visible_message("<span class='danger'>[src] bursts!</span>","<span class='hear'>You hear a pop and a splash.</span>")
-		reagents.reaction(T)
+		reagents.expose(T)
 		for(var/atom/A in T)
-			reagents.reaction(A)
+			reagents.expose(A)
 		icon_state = "burst"
 		qdel(src)
 
@@ -234,6 +232,7 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
+	worn_icon_state = "gun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	flags_1 =  CONDUCT_1
@@ -384,7 +383,7 @@
 	resistance_flags = FLAMMABLE
 
 
-/obj/item/toy/windupToolbox
+/obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
 	icon_state = "his_grace"
@@ -396,7 +395,7 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	attack_verb = list("robusted")
 
-/obj/item/toy/windupToolbox/attack_self(mob/user)
+/obj/item/toy/windup_toolbox/attack_self(mob/user)
 	if(!active)
 		icon_state = "his_grace_awakened"
 		to_chat(user, "<span class='notice'>You wind up [src], it begins to rumble.</span>")
@@ -407,7 +406,7 @@
 	else
 		to_chat(user, "<span class='warning'>[src] is already active!</span>")
 
-/obj/item/toy/windupToolbox/proc/Rumble()
+/obj/item/toy/windup_toolbox/proc/Rumble()
 	var/static/list/transforms
 	if(!transforms)
 		var/matrix/M1 = matrix()
@@ -424,7 +423,7 @@
 	animate(transform=transforms[3], time=0.2)
 	animate(transform=transforms[4], time=0.3)
 
-/obj/item/toy/windupToolbox/proc/stopRumble()
+/obj/item/toy/windup_toolbox/proc/stopRumble()
 	icon_state = initial(icon_state)
 	active = FALSE
 	animate(src, transform=matrix())
@@ -454,6 +453,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "katana"
 	inhand_icon_state = "katana"
+	worn_icon_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -517,100 +517,6 @@
 	new /obj/item/toy/snappop/phoenix(get_turf(src))
 	qdel(src)
 
-
-/*
- * Mech prizes
- */
-/obj/item/toy/prize
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "ripleytoy"
-	var/timer = 0
-	var/cooldown = 30
-	var/quiet = 0
-	w_class = WEIGHT_CLASS_SMALL
-
-//all credit to skasi for toy mech fun ideas
-/obj/item/toy/prize/attack_self(mob/user)
-	if(timer < world.time)
-		to_chat(user, "<span class='notice'>You play with [src].</span>")
-		timer = world.time + cooldown
-		if(!quiet)
-			playsound(user, 'sound/mecha/mechstep.ogg', 20, TRUE)
-	else
-		. = ..()
-
-/obj/item/toy/prize/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(loc == user)
-		attack_self(user)
-
-/obj/item/toy/prize/ripley
-	name = "toy Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/13."
-
-/obj/item/toy/prize/fireripley
-	name = "toy firefighting Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/13."
-	icon_state = "fireripleytoy"
-
-/obj/item/toy/prize/deathripley
-	name = "toy deathsquad Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/13."
-	icon_state = "deathripleytoy"
-
-/obj/item/toy/prize/gygax
-	name = "toy Gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/13."
-	icon_state = "gygaxtoy"
-
-/obj/item/toy/prize/durand
-	name = "toy Durand"
-	desc = "Mini-Mecha action figure! Collect them all! 5/13."
-	icon_state = "durandtoy"
-
-/obj/item/toy/prize/honk
-	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/13."
-	icon_state = "honktoy"
-
-/obj/item/toy/prize/marauder
-	name = "toy Marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/13."
-	icon_state = "maraudertoy"
-
-/obj/item/toy/prize/seraph
-	name = "toy Seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/13."
-	icon_state = "seraphtoy"
-
-/obj/item/toy/prize/mauler
-	name = "toy Mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/13."
-	icon_state = "maulertoy"
-
-/obj/item/toy/prize/odysseus
-	name = "toy Odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/13."
-	icon_state = "odysseustoy"
-
-/obj/item/toy/prize/phazon
-	name = "toy Phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/13."
-	icon_state = "phazontoy"
-
-/obj/item/toy/prize/reticence
-	name = "toy Reticence"
-	desc = "Mini-Mecha action figure! Collect them all! 12/13."
-	icon_state = "reticencetoy"
-	quiet = 1
-
-/obj/item/toy/prize/clarke
-	name = "toy Clarke"
-	desc = "Mini-Mecha action figure! Collect them all! 13/13."
-	icon_state = "clarketoy"
-
 /obj/item/toy/talking
 	name = "talking action figure"
 	desc = "A generic action figure modeled after nothing in particular."
@@ -663,13 +569,13 @@
 /*
  * AI core prizes
  */
-/obj/item/toy/talking/AI
+/obj/item/toy/talking/ai
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/talking/AI/generate_messages()
+/obj/item/toy/talking/ai/generate_messages()
 	return list(generate_ion_law())
 
 /obj/item/toy/talking/codex_gigas
@@ -689,7 +595,7 @@
 		"<span class='notice'>You hear a soft click.</span>")
 
 /obj/item/toy/talking/codex_gigas/generate_messages()
-	var/datum/fakeDevil/devil = new
+	var/datum/fake_devil/devil = new
 	var/list/messages = list()
 	messages += "Some fun facts about: [devil.truename]"
 	messages += "[GLOB.lawlorify[LORE][devil.bane]]"
@@ -1208,6 +1114,7 @@
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "dread_ipad"
+	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
@@ -1481,7 +1388,7 @@
 	name = "Security Officer action figure"
 	icon_state = "secofficer"
 	toysay = "I am the law!"
-	toysound = 'sound/voice/complionator/dredd.ogg'
+	toysound = 'sound/runtime/complionator/dredd.ogg'
 
 /obj/item/toy/figure/virologist
 	name = "Virologist action figure"
@@ -1511,7 +1418,7 @@
 	to_chat(user, "<span class='notice'>You name the dummy as \"[doll_name]\".</span>")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)
+/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language, list/message_mods)
 	var/mob/M = A
 	if (istype(M))
 		M.log_talk(message, LOG_SAY, tag="dummy toy")

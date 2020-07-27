@@ -242,7 +242,7 @@
 				trans_data = copy_data(T)
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
 			if(method)
-				R.react_single(T, target_atom, method, part, show_message)
+				R.expose_single(T, target_atom, method, part, show_message)
 				T.on_transfer(target_atom, method, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
@@ -262,7 +262,7 @@
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(method)
-				R.react_single(T, target_atom, method, transfer_amount, show_message)
+				R.expose_single(T, target_atom, method, transfer_amount, show_message)
 				T.on_transfer(target_atom, method, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
@@ -376,15 +376,16 @@
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
 					if(R.addiction_threshold)
 						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, cached_addictions))
-							var/datum/reagent/new_reagent = new R.type()
+							var/datum/reagent/new_reagent = new R.addiction_type()
 							cached_addictions.Add(new_reagent)
 							log_game("[key_name(C)] has become addicted to [R.name] at [R.volume] units.")
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
-					if(is_type_in_list(R,cached_addictions))
+					var/datum/reagent/addiction_type = new R.addiction_type()
+					if(is_type_in_list(addiction_type ,cached_addictions))
 						for(var/addiction in cached_addictions)
 							var/datum/reagent/A = addiction
-							if(istype(R, A))
+							if(istype(addiction_type, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
 				need_mob_update += R.on_mob_life(C)
 
@@ -638,64 +639,39 @@
 	return 0
 
 /**
-  * Applies the relevant reaction_ proc for every reagent in this holder
-  * * [/datum/reagent/proc/reaction_mob]
-  * * [/datum/reagent/proc/reaction_turf]
-  * * [/datum/reagent/proc/reaction_obj]
+  * Applies the relevant expose_ proc for every reagent in this holder
+  * * [/datum/reagent/proc/expose_mob]
+  * * [/datum/reagent/proc/expose_turf]
+  * * [/datum/reagent/proc/expose_obj]
   */
-/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
-	var/react_type
-	if(isliving(A))
-		react_type = "LIVING"
-		if(method == INGEST)
-			var/mob/living/L = A
-			L.taste(src)
-	else if(isturf(A))
-		react_type = "TURF"
-	else if(isobj(A))
-		react_type = "OBJ"
-	else
-		return
+/datum/reagents/proc/expose(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
+	if(isnull(A))
+		return null
+
 	var/list/cached_reagents = reagent_list
+	if(!cached_reagents.len)
+		return null
+
+	var/list/reagents = list()
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		switch(react_type)
-			if("LIVING")
-				var/touch_protection = 0
-				if(method == VAPOR)
-					var/mob/living/L = A
-					touch_protection = L.get_permeability_protection()
-				R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
-			if("TURF")
-				R.reaction_turf(A, R.volume * volume_modifier, show_message)
-			if("OBJ")
-				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+		reagents[R] = R.volume * volume_modifier
 
-/// Same as [/datum/reagents/proc/reaction] but only for one reagent
-/datum/reagents/proc/react_single(datum/reagent/R, atom/A, method = TOUCH, volume_modifier = 1, show_message = TRUE)
-	var/react_type
-	if(isliving(A))
-		react_type = "LIVING"
-		if(method == INGEST)
-			var/mob/living/L = A
-			L.taste(src)
-	else if(isturf(A))
-		react_type = "TURF"
-	else if(isobj(A))
-		react_type = "OBJ"
-	else
-		return
-	switch(react_type)
-		if("LIVING")
-			var/touch_protection = 0
-			if(method == VAPOR)
-				var/mob/living/L = A
-				touch_protection = L.get_permeability_protection()
-			R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
-		if("TURF")
-			R.reaction_turf(A, R.volume * volume_modifier, show_message)
-		if("OBJ")
-			R.reaction_obj(A, R.volume * volume_modifier, show_message)
+	return A.expose_reagents(reagents, src, method, volume_modifier, show_message)
+
+
+/// Same as [/datum/reagents/proc/expose] but only for one reagent
+/datum/reagents/proc/expose_single(datum/reagent/R, atom/A, method = TOUCH, volume_modifier = 1, show_message = TRUE)
+	if(isnull(A))
+		return null
+
+	if(ispath(R))
+		R = get_reagent(R)
+	if(isnull(R))
+		return null
+
+	// Yes, we need the parentheses.
+	return A.expose_reagents(list((R) = R.volume * volume_modifier), src, method, volume_modifier, show_message)
 
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()

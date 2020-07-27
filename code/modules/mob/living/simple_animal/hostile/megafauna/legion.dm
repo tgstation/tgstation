@@ -136,7 +136,7 @@
 	. = ..()
 	if(istype(hit_atom))
 		playsound(src, attack_sound, 100, TRUE)
-		hit_atom.apply_damage(22 * size / 2) //It gets pretty hard to dodge the skulls when there are a lot of them. Scales down with size
+		hit_atom.apply_damage(22 * size / 2, wound_bonus = CANT_WOUND) //It gets pretty hard to dodge the skulls when there are a lot of them. Scales down with size
 		hit_atom.safe_throw_at(get_step(src, get_dir(src, hit_atom)), 2) //Some knockback. Prevent the legion from melee directly after the throw.
 
 //TURRETS
@@ -257,6 +257,8 @@
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
+	wound_bonus = -40
+	bare_wound_bonus = 20
 	var/storm_type = /datum/weather/ash_storm
 	var/storm_nextuse = 0
 	var/staff_cooldown = 20 SECONDS // The minimum time between uses.

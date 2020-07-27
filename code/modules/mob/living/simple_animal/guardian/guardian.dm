@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/cooldown = 0
 	var/mob/living/summoner
 	var/range = 10 //how far from the user the spirit can be
-	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
+	var/toggle_button_type = /obj/screen/guardian/toggle_mode/inactive //what sort of toggle button the hud uses
 	var/playstyle_string = "<span class='holoparasite bold'>You are a Guardian without any type. You shouldn't exist!</span>"
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
@@ -650,7 +650,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
-	icon_state = "paper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
@@ -673,10 +672,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <b>Gravitokinetic</b>: Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but this will affect the user.<br>
  <br>
 "}
-
-/obj/item/paper/guides/antag/guardian/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/paper/guides/antag/guardian/wizard
 	name = "Guardian Guide"

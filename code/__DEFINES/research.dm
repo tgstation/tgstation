@@ -85,3 +85,6 @@
 #define SLIME_RESEARCH_TIER_4 2000
 #define SLIME_RESEARCH_TIER_5 2500
 #define SLIME_RESEARCH_TIER_RAINBOW 5000
+
+///Amount of points gained per second by a single R&D server, see: [/controllers/subsystem/research.dm][research]
+#define TECHWEB_SINGLE_SERVER_INCOME 52.3

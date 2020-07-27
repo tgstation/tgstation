@@ -6,14 +6,12 @@
 	circuit = /obj/item/circuitboard/machine/hypnochair
 	density = TRUE
 	opacity = 0
-	ui_x = 375
-	ui_y = 480
+
 	var/mob/living/carbon/victim = null ///Keeps track of the victim to apply effects if it teleports away
 	var/interrogating = FALSE ///Is the device currently interrogating someone?
 	var/start_time = 0 ///Time when the interrogation was started, to calculate effect in case of interruption
 	var/trigger_phrase = "" ///Trigger phrase to implant
 	var/timerid = 0 ///Timer ID for interrogations
-
 	var/message_cooldown = 0 ///Cooldown for breakout message
 
 /obj/machinery/hypnochair/Initialize()
@@ -25,19 +23,19 @@
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_icon()
 		return
-
 	if(default_pry_open(I))
 		return
-
 	if(default_deconstruction_crowbar(I))
 		return
-
 	return ..()
 
-/obj/machinery/hypnochair/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/hypnochair/ui_state(mob/user)
+	return GLOB.notcontained_state
+
+/obj/machinery/hypnochair/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "HypnoChair", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "HypnoChair", name)
 		ui.open()
 
 /obj/machinery/hypnochair/ui_data()

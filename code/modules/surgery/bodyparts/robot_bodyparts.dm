@@ -117,6 +117,8 @@
 	var/wired = FALSE
 	var/obj/item/stock_parts/cell/cell = null
 
+/obj/item/bodypart/chest/robot/get_cell()
+	return cell
 
 /obj/item/bodypart/chest/robot/handle_atom_del(atom/A)
 	if(A == cell)

@@ -5,6 +5,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	inhand_icon_state = "flashlight"
+	worn_icon_state = "flashlight"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -166,6 +167,7 @@
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
 	icon_state = "penlight"
 	inhand_icon_state = ""
+	worn_icon_state = "pen"
 	flags_1 = CONDUCT_1
 	brightness_on = 2
 	var/holo_cooldown = 0
@@ -179,8 +181,20 @@
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
 			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
-			holo_cooldown = world.time + 100
+			holo_cooldown = world.time + 10 SECONDS
 			return
+
+// see: [/datum/wound/burn/proc/uv()]
+/obj/item/flashlight/pen/paramedic
+	name = "paramedic penlight"
+	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."
+	icon_state = "penlight_surgical"
+	/// Our current UV cooldown
+	COOLDOWN_DECLARE(uv_cooldown)
+	/// How long between UV fryings
+	var/uv_cooldown_length = 1 MINUTES
+	/// How much sanitization to apply to the burn wound
+	var/uv_power = 1
 
 /obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
@@ -254,6 +268,7 @@
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	inhand_icon_state = "flare"
+	worn_icon_state = "flare"
 	actions_types = list()
 	var/fuel = 0
 	var/on_damage = 7
@@ -431,6 +446,7 @@
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	inhand_icon_state = "glowstick"
+	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	var/fuel = 0
 

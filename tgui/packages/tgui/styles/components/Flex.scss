@@ -12,30 +12,30 @@
   display: inline-flex;
 }
 
-.Flex--ie8 {
+.Flex--iefix {
   display: table !important;
 }
 
-.Flex--ie8--column {
+.Flex--iefix--column {
   display: block !important;
 
   & > .Flex__item {
     display: block !important;
-    margin-left: 6px;
-    margin-right: 6px;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
   }
 }
 
-.Flex__item--ie8 {
+.Flex__item--iefix {
   display: table-cell !important;
 }
 
 @for $i from 1 through 2 {
   .Flex--spacing--#{$i} {
-    margin: 0 -3px * $i;
+    margin: 0 -0.25em * $i;
 
     & > .Flex__item {
-      margin: 0 3px * $i;
+      margin: 0 0.25em * $i;
     }
   }
 }

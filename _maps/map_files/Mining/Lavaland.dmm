@@ -122,6 +122,19 @@
 "aw" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
+"ax" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
 "ay" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -539,9 +552,9 @@
 /area/mine/eva)
 "bG" = (
 /obj/structure/table,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -1002,10 +1015,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
-"da" = (
-/obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "db" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1221,17 +1230,17 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/blood/AMinus,
-/obj/item/reagent_containers/blood/BMinus{
+/obj/item/reagent_containers/blood/a_minus,
+/obj/item/reagent_containers/blood/b_minus{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/blood/BPlus{
+/obj/item/reagent_containers/blood/b_plus{
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OPlus{
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_plus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -20384,7 +20393,7 @@ cl
 cH
 cO
 cX
-ck
+ax
 dJ
 ia
 cn
@@ -21668,7 +21677,7 @@ cp
 bf
 cL
 bq
-da
+bP
 du
 dL
 cH

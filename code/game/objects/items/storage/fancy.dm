@@ -16,9 +16,6 @@
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	name = "donut box"
-	desc = "Mmm. Donuts."
 	resistance_flags = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
@@ -58,23 +55,57 @@
 	fancy_open = TRUE
 	update_icon()
 
+#define DONUT_INBOX_SPRITE_WIDTH 3
+
 /*
  * Donut Box
  */
 
 /obj/item/storage/fancy/donut_box
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	icon_type = "donut"
 	name = "donut box"
+	desc = "Mmm. Donuts."
+	icon = 'icons/obj/food/donuts.dmi'
+	icon_state = "donutbox_inner"
+	icon_type = "donut"
 	spawn_type = /obj/item/reagent_containers/food/snacks/donut
 	fancy_open = TRUE
+	appearance_flags = KEEP_TOGETHER
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donut))
+
+/obj/item/storage/fancy/donut_box/PopulateContents()
+	. = ..()
+	update_icon()
+
+/obj/item/storage/fancy/donut_box/update_icon_state()
+	if(fancy_open)
+		icon_state = "donutbox_inner"
+	else
+		icon_state = "donutbox"
+
+/obj/item/storage/fancy/donut_box/update_overlays()
+	. = ..()
+
+	if (!fancy_open)
+		return
+
+	var/donuts = 0
+
+	for (var/_donut in contents)
+		var/obj/item/reagent_containers/food/snacks/donut/donut = _donut
+		if (!istype(donut))
+			continue
+
+		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		donuts += 1
+
+	. += image(icon = initial(icon), icon_state = "donutbox_top")
+
+#undef DONUT_INBOX_SPRITE_WIDTH
 
 /*
  * Egg Box
@@ -135,17 +166,21 @@
 	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
-	var/candy = FALSE //for cigarette overlay
 	custom_price = 75
 	age_restricted = TRUE
+	///for cigarette overlay
+	var/candy = FALSE
+	/// Does this cigarette packet come with a coupon attached?
 	var/spawn_coupon = TRUE
+	/// For VV'ing, set this to true if you want to force the coupon to give an omen
+	var/rigged_omen = FALSE
 
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len == 0 && spawn_coupon)
 		to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
 		var/obj/item/coupon/attached_coupon = new
 		user.put_in_hands(attached_coupon)
-		attached_coupon.generate()
+		attached_coupon.generate(rigged_omen)
 		attached_coupon = null
 		spawn_coupon = FALSE
 		name = "discarded cigarette packet"

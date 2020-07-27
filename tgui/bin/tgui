@@ -52,6 +52,7 @@ task-dev-server() {
 task-eslint() {
   cd "${base_dir}"
   eslint ./packages "${@}"
+  echo "tgui: eslint check passed"
 }
 
 ## Mr. Proper
@@ -150,6 +151,13 @@ if [[ ${1} == '--lint-harder' ]]; then
   shift 1
   task-install
   task-eslint -c .eslintrc-harder.yml "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--fix' ]]; then
+  shift 1
+  task-install
+  task-eslint --fix "${@}"
   exit 0
 fi
 

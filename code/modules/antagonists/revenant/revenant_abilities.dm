@@ -199,7 +199,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
 	for(var/obj/machinery/light/L in T)
 		if(!L.on)
-			return
+			continue
 		L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(4, 0, L)
@@ -248,7 +248,7 @@
 			new floor.floor_tile(floor)
 		floor.broken = 0
 		floor.burnt = 0
-		floor.make_plating(1)
+		floor.make_plating(TRUE)
 	if(T.type == /turf/closed/wall && prob(15))
 		new /obj/effect/temp_visual/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/rust)

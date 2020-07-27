@@ -23,13 +23,13 @@
 		holder.give_power(charge_rate * GLOB.CELLRATE)
 
 
-/obj/item/computer_hardware/recharger/APC
+/obj/item/computer_hardware/recharger/apc_recharger
 	name = "area power connector"
 	desc = "A device that wirelessly recharges connected device from nearby APC."
 	icon_state = "charger_APC"
 	w_class = WEIGHT_CLASS_SMALL // Can't be installed into tablets/PDAs
 
-/obj/item/computer_hardware/recharger/APC/use_power(amount, charging=0)
+/obj/item/computer_hardware/recharger/apc_recharger/use_power(amount, charging=0)
 	if(ismachinery(holder.physical))
 		var/obj/machinery/M = holder.physical
 		if(M.powered())

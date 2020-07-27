@@ -179,7 +179,7 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(!target)
+	if(QDELETED(target))
 		return
 	if(firing_burst)
 		return
@@ -196,6 +196,12 @@
 				return
 			user.AddComponent(/datum/component/gunpoint, target, src)
 			return
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			for(var/i in C.all_wounds)
+				var/datum/wound/W = i
+				if(W.try_treating(src, user))
+					return // another coward cured!
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user

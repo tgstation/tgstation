@@ -76,7 +76,7 @@
 	..()
 	if(M && (hudusers.len == 1))
 		for(var/V in GLOB.aiEyes)
-			var/mob/camera/aiEye/E = V
+			var/mob/camera/ai_eye/E = V
 			E.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
@@ -459,6 +459,16 @@
 			holder.icon_state = "hudmove"
 		else
 			holder.icon_state = ""
+
+/mob/living/simple_animal/bot/mulebot/proc/diag_hud_set_mulebotcell()
+	var/image/holder = hud_list[DIAG_BATT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(cell)
+		var/chargelvl = (cell.charge/cell.maxcharge)
+		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
+	else
+		holder.icon_state = "hudnobatt"
 
 /*~~~~~~~~~~~~
 	Airlocks!

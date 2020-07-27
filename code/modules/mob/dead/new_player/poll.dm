@@ -42,7 +42,7 @@
   *
   */
 /mob/dead/new_player/proc/poll_player_option(datum/poll_question/poll)
-	var/datum/DBQuery/query_option_get_voted = SSdbcore.NewQuery({"
+	var/datum/db_query/query_option_get_voted = SSdbcore.NewQuery({"
 		SELECT optionid FROM [format_table_name("poll_vote")]
 		WHERE pollid = :pollid AND ckey = :ckey AND deleted = 0
 	"}, list("pollid" = poll.poll_id, "ckey" = ckey))
@@ -86,7 +86,7 @@
   *
   */
 /mob/dead/new_player/proc/poll_player_text(datum/poll_question/poll)
-	var/datum/DBQuery/query_text_get_replytext = SSdbcore.NewQuery({"
+	var/datum/db_query/query_text_get_replytext = SSdbcore.NewQuery({"
 		SELECT replytext FROM [format_table_name("poll_textreply")]
 		WHERE pollid = :pollid AND ckey = :ckey AND deleted = 0
 	"}, list("pollid" = poll.poll_id, "ckey" = ckey))
@@ -123,7 +123,7 @@
   *
   */
 /mob/dead/new_player/proc/poll_player_rating(datum/poll_question/poll)
-	var/datum/DBQuery/query_rating_get_votes = SSdbcore.NewQuery({"
+	var/datum/db_query/query_rating_get_votes = SSdbcore.NewQuery({"
 		SELECT optionid, rating FROM [format_table_name("poll_vote")]
 		WHERE pollid = :pollid AND ckey = :ckey AND deleted = 0
 	"}, list("pollid" = poll.poll_id, "ckey" = ckey))
@@ -178,7 +178,7 @@
   *
   */
 /mob/dead/new_player/proc/poll_player_multi(datum/poll_question/poll)
-	var/datum/DBQuery/query_multi_get_votes = SSdbcore.NewQuery({"
+	var/datum/db_query/query_multi_get_votes = SSdbcore.NewQuery({"
 		SELECT optionid FROM [format_table_name("poll_vote")]
 		WHERE pollid = :pollid AND ckey = :ckey AND deleted = 0
 	"}, list("pollid" = poll.poll_id, "ckey" = ckey))
@@ -222,9 +222,9 @@
   *
   */
 /mob/dead/new_player/proc/poll_player_irv(datum/poll_question/poll)
-	var/datum/asset/irv_assets = get_asset_datum(/datum/asset/group/IRV)
+	var/datum/asset/irv_assets = get_asset_datum(/datum/asset/group/irv)
 	irv_assets.send(src)
-	var/datum/DBQuery/query_irv_get_votes = SSdbcore.NewQuery({"
+	var/datum/db_query/query_irv_get_votes = SSdbcore.NewQuery({"
 		SELECT optionid FROM [format_table_name("poll_vote")]
 		WHERE pollid = :pollid AND ckey = :ckey AND deleted = 0
 	"}, list("pollid" = poll.poll_id, "ckey" = ckey))
@@ -336,7 +336,7 @@
 		table = "poll_textreply"
 	var/sql_poll_id = poll.poll_id
 	var/vote_id //only used for option and text polls to save needing another query
-	var/datum/DBQuery/query_validate_poll_vote = SSdbcore.NewQuery({"
+	var/datum/db_query/query_validate_poll_vote = SSdbcore.NewQuery({"
 		SELECT
 			(SELECT id FROM [format_table_name(table)] WHERE ckey = :ckey AND pollid = :pollid AND deleted = 0 LIMIT 1)
 		FROM [format_table_name("poll_question")]
@@ -388,7 +388,7 @@
 	if(!option)
 		to_chat(src, "<span class='danger'>No option was selected.</span>")
 		return
-	var/datum/DBQuery/query_vote_option = SSdbcore.NewQuery({"
+	var/datum/db_query/query_vote_option = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("poll_vote")] (id, datetime, pollid, optionid, ckey, ip, adminrank)
 		VALUES (:vote_id, NOW(), :poll_id, :option_id, :ckey, INET_ATON(:ip), :admin_rank)
 		ON DUPLICATE KEY UPDATE datetime = NOW(), optionid = :option_id, ip = INET_ATON(:ip), adminrank = :admin_rank
@@ -420,7 +420,7 @@
 	if(!reply_text || (length(reply_text) > 2048))
 		to_chat(src, "<span class='danger'>The text you entered was blank or too long. Please correct the text and submit again.</span>")
 		return
-	var/datum/DBQuery/query_vote_text = SSdbcore.NewQuery({"
+	var/datum/db_query/query_vote_text = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("poll_textreply")] (id, datetime, pollid, ckey, ip, replytext, adminrank)
 		VALUES (:vote_id, NOW(), :poll_id, :ckey, INET_ATON(:ip), :reply_text, :admin_rank)
 		ON DUPLICATE KEY UPDATE datetime = NOW(), ip = INET_ATON(:ip), replytext = :reply_text, adminrank = :admin_rank
@@ -449,7 +449,7 @@
 	if(IsAdminAdvancedProcCall())
 		return
 	var/list/votes = list()
-	var/datum/DBQuery/query_get_rating_votes = SSdbcore.NewQuery({"
+	var/datum/db_query/query_get_rating_votes = SSdbcore.NewQuery({"
 		SELECT id, optionid FROM [format_table_name("poll_vote")]
 		WHERE pollid = :pollid AND ckey = :ckey AND deleted = 0
 	"}, list("pollid" = sql_poll_id, "ckey" = ckey))
@@ -518,7 +518,7 @@
 		))
 	/*with revoting and poll editing possible there can be an edge case where a poll is changed to allow less multiple choice options than a user has already voted on
 	rather than trying to calculate which options should be updated and which deleted, we just delete all of a user's votes and re-insert as needed*/
-	var/datum/DBQuery/query_delete_multi_votes = SSdbcore.NewQuery({"
+	var/datum/db_query/query_delete_multi_votes = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("poll_vote")] SET deleted = 1 WHERE pollid = :pollid AND ckey = :ckey
 	"}, list("pollid" = sql_poll_id, "ckey" = ckey))
 	if(!query_delete_multi_votes.warn_execute())
@@ -558,7 +558,7 @@
 			"adminrank" = admin_rank
 		))
 	//IRV results are calculated based on id order, we delete all of a user's votes to avoid potential errors caused by revoting and option editing
-	var/datum/DBQuery/query_delete_irv_votes = SSdbcore.NewQuery({"
+	var/datum/db_query/query_delete_irv_votes = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("poll_vote")] SET deleted = 1 WHERE pollid = :pollid AND ckey = :ckey
 	"}, list("pollid" = sql_poll_id, "ckey" = ckey))
 	if(!query_delete_irv_votes.warn_execute())

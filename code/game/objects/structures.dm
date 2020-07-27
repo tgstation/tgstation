@@ -19,15 +19,15 @@
 		armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	. = ..()
 	if(smooth)
-		queue_smooth(src)
-		queue_smooth_neighbors(src)
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 		icon_state = ""
 	GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy()
 	GLOB.cameranet.updateVisibility(src)
 	if(smooth)
-		queue_smooth_neighbors(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
 /obj/structure/attack_hand(mob/user)
@@ -115,7 +115,7 @@
 
 /obj/structure/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	
+
 	if(mover.pass_flags & PASSSTRUCTURE)
 		return TRUE
 
@@ -129,3 +129,6 @@
 		if(0 to 25)
 			if(!broken)
 				return  "<span class='warning'>It's falling apart!</span>"
+
+/obj/structure/rust_heretic_act()
+	take_damage(500, BRUTE, "melee", 1)

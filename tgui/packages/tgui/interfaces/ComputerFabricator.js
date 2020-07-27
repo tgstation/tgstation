@@ -7,7 +7,11 @@ import { Window } from '../layouts';
 export const ComputerFabricator = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      title="Personal Computer Vendor"
+      width={500}
+      height={400}
+      resizable>
       <Window.Content>
         <Section italic fontSize="20px">
           Your perfect device, only three steps away...
@@ -61,7 +65,7 @@ const CfStep1 = (props, context) => {
               content="Laptop"
               textAlign="center"
               fontSize="30px"
-              lineHeight="50px"
+              lineHeight={2}
               onClick={() => act('pick_device', {
                 pick: '1',
               })} />
@@ -73,7 +77,7 @@ const CfStep1 = (props, context) => {
               content="Tablet"
               textAlign="center"
               fontSize="30px"
-              lineHeight="50px"
+              lineHeight={2}
               onClick={() => act('pick_device', {
                 pick: '2',
               })} />
@@ -108,7 +112,7 @@ const CfStep2 = (props, context) => {
               `}
               position="right" />
           </Table.Cell>
-          <Table.Cell >
+          <Table.Cell>
             <Button
               content="Standard"
               selected={data.hw_battery === 1}
@@ -335,7 +339,7 @@ const CfStep2 = (props, context) => {
         color="good"
         textAlign="center"
         fontSize="18px"
-        lineHeight="26px"
+        lineHeight={2}
         onClick={() => act('confirm_order')} />
     </Section>
   );
@@ -389,7 +393,7 @@ const CfStep3 = (props, context) => {
         color="good"
         textAlign="center"
         fontSize="20px"
-        lineHeight="28px"
+        lineHeight={2}
         onClick={() => act('purchase')} />
     </Section>
   );
