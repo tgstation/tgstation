@@ -455,6 +455,7 @@ SUBSYSTEM_DEF(air)
 	data["conducting_size"] = active_super_conductivity.len
 	data["frozen"] = can_fire
 	data["show_all"] = display_all_groups
+	data["fire_count"] = times_fired
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

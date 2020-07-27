@@ -17,7 +17,7 @@ export const AtmosControlPanel = (props, context) => {
   return (
     <Window
       title="SSAir Control Panel"
-      width={720}
+      width={780}
       height={500}
       resizable>
       <Section m={1}>
@@ -32,6 +32,9 @@ export const AtmosControlPanel = (props, context) => {
                 ? 'Freeze Subsystem'
                 : 'Unfreeze Subsystem'}
             </Button>
+          </Flex.Item>
+          <Flex.Item>
+            Fire Cnt: {data.fire_count}
           </Flex.Item>
           <Flex.Item>
             Active Turfs: {data.active_size}
