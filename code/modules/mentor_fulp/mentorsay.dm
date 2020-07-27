@@ -1,8 +1,8 @@
 /client/proc/cmd_mentor_say(msg as text)
 	set category = "Mentor"
 	set name = "Msay"
-	set hidden = 1
 	if(!is_mentor())
+		to_chat(src, "<span class='danger'>Error: Only mentors and administrators may use this command.</span>", confidential = TRUE)
 		return
 
 	msg = emoji_parse(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))

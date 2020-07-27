@@ -5,7 +5,7 @@
 	var/msg = "<b>Current Mentors:</b>\n"
 	if(holder)
 		for(var/client/C in GLOB.mentors)
-			if(mentor_datum && !check_rights_for(C, R_ADMIN,0))
+			if(C.mentor_datum && !check_rights_for(C, R_ADMIN,0))
 				msg += "\t[C] is a mentor"
 				if(isobserver(C.mob))
 					msg += " - Observing"
@@ -21,6 +21,6 @@
 		for(var/client/C in GLOB.mentors)
 			if(C.is_afk())
 				continue
-			if(mentor_datum && !check_rights_for(C, R_ADMIN,0))
-				msg += "\t[C] is a mentor\n"
+			if(C.mentor_datum && !check_rights_for(C, R_ADMIN,0))
+				msg += "\t[C] is a Mentor\n"
 	to_chat(src, msg)
