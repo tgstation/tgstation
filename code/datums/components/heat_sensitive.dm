@@ -9,6 +9,7 @@
 	max_heat = max
 	min_heat = min
 	tracker = new /datum/movement_detector(parent, CALLBACK(src, .proc/reset_register))
+	RegisterSignal(get_turf(parent), COMSIG_TURF_EXPOSE, .proc/check_requirements)
 
 /datum/component/heat_sensitive/proc/reset_register(tracked, mover, oldloc)
 	var/atom/old = oldloc
