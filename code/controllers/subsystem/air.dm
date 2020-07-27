@@ -432,6 +432,7 @@ SUBSYSTEM_DEF(air)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AtmosControlPanel")
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/controller/subsystem/air/ui_data(mob/user)
