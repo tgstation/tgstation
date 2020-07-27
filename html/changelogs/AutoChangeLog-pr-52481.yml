@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Objects and mobs that have move resist set to INFINITY will no longer be moved by a singularity."
