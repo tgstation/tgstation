@@ -18,6 +18,7 @@ import 'tgui/polyfills/inferno';
 
 // Themes
 import './styles/main.scss';
+import './styles/themes/light.scss';
 
 import { perf } from 'common/perf';
 import { combineReducers } from 'common/redux';
@@ -27,6 +28,7 @@ import { configureStore, StoreProvider } from 'tgui/store';
 import { chatMiddleware, chatReducer } from './chat';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
+import { logger } from 'tgui/logging';
 
 perf.mark('inception', window.__inception__);
 perf.mark('init');
@@ -54,6 +56,8 @@ const renderApp = createRenderer(() => {
     </StoreProvider>
   );
 });
+
+logger.log('Hello!');
 
 const setupApp = () => {
   // Delay setup
@@ -84,6 +88,7 @@ const setupApp = () => {
   Byond.winset('browseroutput', {
     'is-visible': true,
     'is-disabled': false,
+    'size': '0x0',
   });
 
   // Enable hot module reloading

@@ -262,18 +262,19 @@
  * Callback for handling incoming tgui messages.
  */
 /datum/tgui_window/proc/on_message(type, payload, href_list)
-	switch(type)
-		if("ready")
-			// Status can be READY if user has refreshed the window.
-			if(status == TGUI_WINDOW_READY)
-				// Resend the assets
-				for(var/asset in sent_assets)
-					send_asset(asset)
-			status = TGUI_WINDOW_READY
-			flush_message_queue()
-		if("log")
-			if(href_list["fatal"])
-				fatally_errored = TRUE
+	// Status can be READY if user has refreshed the window.
+	if(type == "ready" && status == TGUI_WINDOW_READY)
+		// Resend the assets
+		for(var/asset in sent_assets)
+			send_asset(asset)
+	// Mark this window as fatally errored which prevents it from
+	// being suspended.
+	if(type == "log" && href_list["fatal"])
+		fatally_errored = TRUE
+	// Mark window as ready since we received this message from somewhere
+	if(status != TGUI_WINDOW_READY)
+		status = TGUI_WINDOW_READY
+		flush_message_queue()
 	// Pass message to UI that requested the lock
 	if(locked && locked_by)
 		var/prevent_default = locked_by.on_message(type, payload, href_list)

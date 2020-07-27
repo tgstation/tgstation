@@ -1,15 +1,27 @@
 import { toFixed } from 'common/math';
-import { LabeledList, NumberInput, Section } from 'tgui/components';
+import { Dropdown, LabeledList, NumberInput, Section } from 'tgui/components';
 import { useDispatch, useSelector } from 'tgui/store';
 import { updateSettings } from './actions';
 import { selectSettings } from './selectors';
 
 export const SettingsPanel = (props, context) => {
-  const { fontSize, lineHeight } = useSelector(context, selectSettings);
+  const {
+    theme,
+    fontSize,
+    lineHeight,
+  } = useSelector(context, selectSettings);
   const dispatch = useDispatch(context);
   return (
     <Section>
       <LabeledList>
+        <LabeledList.Item label="Theme">
+          <Dropdown
+            selected={theme}
+            options={['light', 'dark']}
+            onSelected={value => dispatch(updateSettings({
+              theme: value,
+            }))} />
+        </LabeledList.Item>
         <LabeledList.Item label="Font size">
           <NumberInput
             width="4em"

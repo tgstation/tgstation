@@ -8,6 +8,7 @@ export const Panel = (props, context) => {
   const settings = useSettings(context);
   return (
     <Pane
+      theme={settings.theme}
       fontSize={settings.fontSize + 'pt'}>
       <Flex
         direction="column"

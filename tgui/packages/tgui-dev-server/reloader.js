@@ -76,10 +76,10 @@ export const reloadByondCache = async bundleDir => {
     logger.log('found no tmp folder in cache');
     return;
   }
-  const assets = await resolveGlob(bundleDir, './*.+(bundle|hot-update).*');
+  const assets = await resolveGlob(bundleDir, './*.+(bundle|chunk|hot-update).*');
   for (let cacheDir of cacheDirs) {
     // Clear garbage
-    const garbage = await resolveGlob(cacheDir, './*.+(bundle|hot-update).*');
+    const garbage = await resolveGlob(cacheDir, './*.+(bundle|chunk|hot-update).*');
     for (let file of garbage) {
       await promisify(fs.unlink)(file);
     }

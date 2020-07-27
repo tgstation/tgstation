@@ -6,30 +6,6 @@ export const initialState = {
   currentPage: DEFAULT_PAGE.id,
   pageById: {
     [DEFAULT_PAGE.id]: DEFAULT_PAGE,
-    radio: {
-      id: 'radio',
-      name: 'Radio',
-      count: 0,
-      acceptedTypes: {
-        radio: true,
-      },
-    },
-    inspect: {
-      id: 'inspect',
-      name: 'Inspect',
-      count: 0,
-      acceptedTypes: {
-        info: true,
-      },
-    },
-    unknown: {
-      id: 'unknown',
-      name: 'Unsorted',
-      count: 0,
-      acceptedTypes: {
-        unknown: true,
-      },
-    },
   },
 };
 

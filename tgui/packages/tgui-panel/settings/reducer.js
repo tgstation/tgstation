@@ -1,7 +1,8 @@
 const initialState = {
   visible: false,
-  fontSize: 12,
+  fontSize: 9,
   lineHeight: 1.5,
+  theme: 'dark',
 };
 
 export const settingsReducer = (state = initialState, action) => {
@@ -10,6 +11,15 @@ export const settingsReducer = (state = initialState, action) => {
     return {
       ...state,
       ...payload,
+    };
+  }
+  if (type === 'settings/load') {
+    const settings = payload;
+    return {
+      ...state,
+      fontSize: settings.fontSize,
+      lineHeight: settings.lineHeight,
+      theme: settings.theme,
     };
   }
   if (type === 'settings/toggle') {
