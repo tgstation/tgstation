@@ -1141,6 +1141,13 @@
 		return FALSE
 	return ..()
 
+/mob/living/carbon/human/changeNext_move(num)
+	if(!dna)
+		next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
+		return
+	dna.species.set_click_cooldown(src, num)
+
+
 /mob/living/carbon/human/species
 	var/race = null
 
@@ -1312,3 +1319,5 @@
 
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
+
+

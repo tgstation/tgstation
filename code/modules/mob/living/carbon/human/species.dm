@@ -1210,14 +1210,37 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			H.throw_alert("nutrition", /obj/screen/alert/fat)
+			var/obj/item/organ/O = H.getorganslot(ORGAN_SLOT_HEART)
+			O.applyOrganDamage(0.25)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
 			H.clear_alert("nutrition")
+			for(var/slot in list(ORGAN_SLOT_BRAIN, ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_APPENDIX, \
+	ORGAN_SLOT_EYES, ORGAN_SLOT_EARS, ORGAN_SLOT_TONGUE, ORGAN_SLOT_LIVER))
+				var/obj/item/organ/O = H.getorganslot(slot)
+				O.applyOrganDamage(-0.25)
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
-			H.adjustBruteLoss(2)
+			for(var/slot in list(ORGAN_SLOT_BRAIN, ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_APPENDIX, \
+	ORGAN_SLOT_EYES, ORGAN_SLOT_EARS, ORGAN_SLOT_TONGUE, ORGAN_SLOT_LIVER))
+				var/obj/item/organ/O = H.getorganslot(slot)
+				O.applyOrganDamage(0.25)
 
+
+/datum/species/proc/set_click_cooldown(mob/living/carbon/human/H, num)
+	var/click_cooldown = world.time + ((num+H.next_move_adjust)*H.next_move_modifier)
+	if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
+		switch(H.nutrition)
+			if(NUTRITION_LEVEL_FULL to INFINITY)
+				click_cooldown += 0.5 SECONDS
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
+				click_cooldown -= 0.2 SECONDS
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+				click_cooldown += 0.4 SECONDS
+			if(0 to NUTRITION_LEVEL_STARVING)
+				click_cooldown += 0.8 SECONDS
+	H.next_move = click_cooldown
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0
 
