@@ -31,12 +31,13 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 					/obj/item/reagent_containers/medigel/aiuri = 2,
 					/obj/item/reagent_containers/medigel/sterilizine = 1)
 	contraband = list(/obj/item/reagent_containers/glass/bottle/cold = 2,
-					/obj/item/restraints/handcuffs = 4,
-					/obj/item/storage/backpack/duffelbag/syndie/surgery = 1,
+					/obj/item/reagent_containers/glass/bottle/virusfood = 5,
+					/obj/item/restraints/handcuffs = 15,
+					/obj/item/storage/backpack/duffelbag/syndie/surgery = 2,
 					/obj/item/storage/firstaid/tactical = 1)
 	premium = list(/obj/item/storage/pill_bottle/psicodine = 2,
-					/obj/item/reagent_containers/hypospray/medipen = 3,
-					/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+					/obj/item/reagent_containers/hypospray/medipen = 5,
+					/obj/item/reagent_containers/hypospray/medipen/atropine = 3,
 					/obj/item/storage/firstaid/regular = 3,
 					/obj/item/storage/firstaid/brute = 1,
 					/obj/item/storage/firstaid/fire = 1,
@@ -66,7 +67,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 
 /obj/item/paper/fluff/ruins/forgottenship/missionobj
 	name = "Mission objectives"
-	info = "Greetings, operatives. You are assigned to SCSBC-12(Syndicate Cyber Sun Battle Cruiser 12) to protect our high-ranking officer while he is on his way to next outpost. While you are travelling, he is the captain of this ship and <b>you must</b> obey his orders.<br><br>Remember, disobeying high-ranking officer orders is a reason for termination."
+	info = "Greetings, operatives. You are assigned to SCSBC-12(Syndicate Cyber Sun Battle Cruiser 12) to protect our high-ranking officer while he is on his way to next outpost. While you are travelling, he is the captain of this ship and <b>you must</b> obey his orders.<br><br><b>Remember, disobeying high-ranking officer orders is a reason for termination.</b>"
 
 ///////////	forgottenship items
 
@@ -91,6 +92,11 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /obj/item/storage/box/firingpins/syndicate/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/firing_pin/implant/pindicate(src)
+
+/obj/item/reagent_containers/glass/bottle/virusfood
+	name = "virus food bottle"
+	desc = "A small bottle of low-potency virus mutagenic."
+	list_reagents = list(/datum/reagent/consumable/virus_food = 30)
 
 ///////////	AI Laws
 
@@ -134,7 +140,6 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	inhand_icon_state = "cybersun"
 	hardsuit_type = "cybersun"
 	armor = list("melee" = 30, "bullet" = 40, "laser" = 55, "energy" = 55, "bomb" = 30, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 60)
-	strip_delay = 600
 	actions_types = list()
 
 
@@ -150,6 +155,164 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit)
 	jetpack = /obj/item/tank/jetpack/suit
 
+// Cybersun ship loot spawners
+
+/obj/effect/spawner/lootdrop/cybersun_vault //Random gimmick loot spawner
+	name = "cybersun vault loot spawner"
+	lootdoubles = FALSE
+	loot = list(
+				/obj/effect/spawner/lootdrop/cybersun_vault/bundle/xenobio = 4,
+				/obj/effect/spawner/lootdrop/cybersun_vault/bundle/cybertech = 3,
+				/obj/effect/spawner/lootdrop/cybersun_vault/bundle/charlie = 2
+				)
+
+/obj/effect/spawner/lootdrop/cybersun_vault/bundle
+	fan_out_items = TRUE
+	lootcount = INFINITY
+
+/obj/effect/spawner/lootdrop/cybersun_vault/bundle/xenobio //Xenobiology!
+	loot = list(
+				/obj/item/slime_extract/grey,
+				/obj/item/storage/box/monkeycubes,
+				/obj/item/circuitboard/machine/processor/slime,
+				/obj/item/circuitboard/machine/monkey_recycler,
+				/obj/item/circuitboard/computer/xenobiology,
+				/obj/item/reagent_containers/dropper,
+				/obj/item/toy/plush/slimeplushie
+				)
+
+/obj/effect/spawner/lootdrop/cybersun_vault/bundle/cybertech //All hail Omnissiah!
+	loot = list(
+				/obj/item/clothing/suit/hooded/techpriest,
+				/obj/item/clothing/suit/hooded/techpriest,
+				/obj/item/clothing/suit/hooded/techpriest,
+				/obj/item/clothing/suit/hooded/techpriest,
+				/obj/item/clothing/suit/hooded/techpriest,
+				/obj/item/organ/tongue/robot,
+				/obj/item/organ/tongue/robot,
+				/obj/item/organ/tongue/robot,
+				/obj/item/organ/tongue/robot,
+				/obj/item/organ/tongue/robot,
+				/obj/item/organ/eyes/robotic/thermals,
+				/obj/item/organ/ears/cybernetic/upgraded,
+				/obj/item/organ/heart/cybernetic/tier3,
+				/obj/item/organ/liver/cybernetic/tier3,
+				/obj/item/organ/lungs/cybernetic/tier3,
+				/obj/item/organ/cyberimp/arm/toolset,
+				/obj/item/organ/cyberimp/arm/surgery
+				)
+
+/obj/effect/spawner/lootdrop/cybersun_vault/bundle/charlie //Yes, I'm from boomer station, not syndicate. Honest!
+	loot = list(
+				/obj/item/clothing/suit/space/nasavoid,
+				/obj/item/clothing/head/helmet/space/nasavoid,
+				/obj/item/clothing/suit/space/nasavoid,
+				/obj/item/clothing/head/helmet/space/nasavoid,
+				/obj/item/clothing/suit/space/nasavoid,
+				/obj/item/clothing/head/helmet/space/nasavoid,
+				/obj/item/gun/energy/e_gun/old,
+				/obj/item/gun/energy/laser/retro/old,
+				/obj/item/gun/energy/laser/retro/old
+				)
+
+//Armory Contraband special loot
+
+/obj/effect/spawner/lootdrop/armory_contraband/cybersun
+	loot = list(/obj/item/ammo_box/c9mm = 30,
+				/obj/item/gun/ballistic/automatic/surplus = 25,
+				/obj/item/gun/ballistic/automatic/pistol = 20,
+				/obj/item/gun/ballistic/revolver = 15,
+				/obj/item/gun/medbeam = 7,
+				/obj/item/seeds/gatfruit = 2
+
+				)
+
+//Hugbox syndicate mediborg
+
+/obj/item/robot_module/med_cybersun
+	name = "Cybersun Medical"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/reagent_containers/borghypo/syndicate,
+		/obj/item/reagent_containers/borghypo,
+		/obj/item/shockpaddles/syndicate/cyborg,
+		/obj/item/healthanalyzer/advanced,
+		/obj/item/borg/apparatus/beaker,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/syringe/piercing,
+		/obj/item/reagent_containers/syringe/bluespace,
+		/obj/item/surgical_drapes,
+		/obj/item/scalpel/advanced,
+		/obj/item/retractor/advanced,
+		/obj/item/surgicaldrill/advanced,
+		/obj/item/holobed_projector/robot,
+		/obj/item/extinguisher/mini,
+		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/gun/medbeam/cyborg,
+		/obj/item/organ_storage,
+		/obj/item/screwdriver/cyborg, //For surgery on augmented people
+		/obj/item/wrench/cyborg,
+		/obj/item/multitool/cyborg)
+
+	cyborg_base_icon = "synd_medical"
+	moduleselect_icon = "malf"
+	hat_offset = 3
+
+/mob/living/silicon/robot/modules/medical/cybersun
+	icon_state = "synd_medical"
+	set_module = /obj/item/robot_module/med_cybersun
+
+/obj/item/borg/upgrade/transform/cybersun
+	name = "borg module picker (Cybersun)"
+	desc = "Allows you to to change module of cyborg to Cybersun medical variant."
+	icon_state = "cyborg_upgrade3"
+	new_module = /obj/item/robot_module/med_cybersun
+
+//Cyborg module to set syndicate faction
+
+/obj/item/borg/upgrade/syndifaction
+	name = "syndicate override module"
+	desc = "Used to override machinery codes of a cyborg, making syndicate turrets and operatives ignore it."
+	icon_state = "cyborg_upgrade3"
+	one_use = TRUE
+
+/obj/item/borg/upgrade/syndifaction/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	R.faction = ROLE_SYNDICATE //Experimental. It removes ALL faction, except for Syndicate.
+
+//Disk for autolathe
+
+/obj/item/disk/design_disk/cybersun
+	name = "Cybersun Module Disk"
+	desc = "A disk containing designs used to manufacture cybersun cyborgs. For use on Autolathe."
+	icon_state = "datadisk1"
+	max_blueprints = 2
+
+/obj/item/disk/design_disk/cybersun/Initialize()
+	. = ..()
+	var/datum/design/cybersun_medborg/G = new
+	blueprints[1] = G
+	var/datum/design/syndicate_override/H = new
+	blueprints[2] = H
+
+/datum/design/cybersun_medborg
+	name = "Cybersun Medical Cyborg Module"
+	desc = "Allows for the construction of a Cybersun Cyborg Module."
+	id = "cybersun_medborg"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 20000, /datum/material/glass = 20000, /datum/material/titanium = 10000, /datum/material/diamond = 5000)
+	build_path = /obj/item/borg/upgrade/transform/cybersun
+	category = list("Imported")
+
+/datum/design/syndicate_override
+	name = "Syndicate Override Module"
+	desc = "Allows for the construction of a Syndicate Override Module."
+	id = "syndicate_override"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000)
+	build_path = /obj/item/borg/upgrade/syndifaction
+	category = list("Imported")
+
 //Special NT NPCs
 
 /mob/living/simple_animal/hostile/nanotrasen/ranged/assault
@@ -160,7 +323,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	icon_dead = null
 	icon_gib = "syndicate_gib"
 	ranged = TRUE
-	rapid = 4
+	rapid = 3
 	rapid_fire_delay = 1
 	rapid_melee = 1
 	retreat_distance = 2

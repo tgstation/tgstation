@@ -466,7 +466,7 @@ update_label()
 	registered_name = "Syndicate"
 	assignment = "Syndicate Ship Captain"
 	icon_state = "syndie"
-	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
+	access = list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER, ACCESS_ROBOTICS) //FULP, syndicate leader access
 	uses_overlays = FALSE
 
 /obj/item/card/id/captains_spare

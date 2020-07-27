@@ -1741,6 +1741,7 @@
 #include "code\modules\antagonists\cult\ritual.dm"
 #include "code\modules\antagonists\cult\rune_spawn_action.dm"
 #include "code\modules\antagonists\cult\runes.dm"
+#include "code\modules\antagonists\cybersun\cybersun.dm"
 #include "code\modules\antagonists\devil\devil.dm"
 #include "code\modules\antagonists\devil\devil_helpers.dm"
 #include "code\modules\antagonists\devil\imp\imp.dm"
