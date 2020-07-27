@@ -451,8 +451,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 GLOBAL_LIST(cable_radial_layer_list)
 
 /obj/item/stack/cable_coil/attack_self(mob/living/user)
-	if(loc!=user)
-		return ..()
 	if(!user)
 		return
 	if(!GLOB.cable_radial_layer_list)
