@@ -3455,6 +3455,7 @@
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "code\zFulpstationCode\fulp_overwrite_vars.dm"
+#include "code\zFulpstationCode\wizard_spells_disabler.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
