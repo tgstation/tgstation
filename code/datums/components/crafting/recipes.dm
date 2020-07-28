@@ -339,6 +339,28 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/mpistol
+	name = "Makeshift pistol"
+	result = /obj/item/gun/ballistic/automatic/pistol/makeshift
+	reqs = list(/obj/item/weaponcrafting/receiver = 1,
+				/obj/item/weaponcrafting/slide = 1,
+				/obj/item/pipe = 1,
+				/obj/item/stack/package_wrap = 5)
+	tools = list(TOOL_SCREWDRIVER, TOOL_SAW)
+	time = 180
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/mmag
+	name = "Makeshift magazine"
+	result = /obj/item/ammo_box/magazine/m9mm_mkshft
+	reqs = list(/obj/item/stack/sheet/metal = 4,
+				/obj/item/weaponcrafting/magspring = 1)
+	tools = list(TOOL_WIRECUTTER)
+	time = 60
+	category = CAT_WEAPONRY
+	subcategory = CAT_AMMO
+
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
 	result = /obj/item/chainsaw
