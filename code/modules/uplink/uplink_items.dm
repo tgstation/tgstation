@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			box of syringes, Donksoft assault rifle, and some riot darts. Remember: Seal suit and equip internals before use."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle
 	cost = 30 // normally 42
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/bundles_tc/bulldog
 	name = "Bulldog bundle"
@@ -1708,8 +1708,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
-	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
-	item = /obj/item/clothing/under/color/grey/glorf
+	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you."
+	item = /obj/item/clothing/under/color/grey/ancient
 	cost = 20
 	restricted_roles = list("Assistant")
 	surplus = 0
@@ -1922,7 +1922,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	cost = 10
 	item = /obj/item/autosurgeon/syndicate/laser_arm
-	restricted_roles = list("Roboticist")
+	restricted_roles = list("Roboticist", "Research Director")
+
+/datum/uplink_item/role_restricted/ocd_device
+	name = "Organic Resources Disturbance Inducer"
+	desc = "A device that raises hell in organic resources indirectly. Single use."
+	cost = 2
+	limited_stock = 1
+	item = /obj/item/devices/ocd_device
+	restricted_roles = list("Head of Personnel", "Quartermaster")
+
+/datum/uplink_item/role_restricted/meathook
+	name = "Butcher's Meat Hook"
+	desc = "A brutal cleaver on a long chain, it allows you to pull people to your location."
+	item = /obj/item/gun/magic/hook
+	cost = 11
+	restricted_roles = list("Cook")
 
 // Pointless
 /datum/uplink_item/badass
@@ -1951,6 +1966,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Clown Costume"
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
 	item = /obj/item/storage/backpack/duffelbag/clown/syndie
+
+/datum/uplink_item/badass/costumes/tactical_naptime
+	name = "Sleepy Time Pajama Bundle"
+	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."
+	item = /obj/item/storage/box/syndie_kit/sleepytime
+	cost = 4
+	limited_stock = 1
+	cant_discount = TRUE
 
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"
@@ -1996,11 +2019,4 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 	illegal_tech = FALSE
 
-/datum/uplink_item/badass/tactical_naptime
-	name = "Sleepy Time Pajama Bundle"
-	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."
-	item = /obj/item/storage/box/syndie_kit/sleepytime
-	cost = 4
-	limited_stock = 1
-	cant_discount = TRUE
-	include_modes = list(/datum/game_mode/nuclear)
+

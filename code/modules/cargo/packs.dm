@@ -1160,6 +1160,21 @@
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
+/datum/supply_pack/medical/medipen_variety
+	name = "Medipen Variety-Pak"
+	desc = "Contains eight different medipens in three different varieties, to assist in quickly treating seriously injured patients."
+	cost = 2000
+	contains = list(/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss
+)
+	crate_name = "medipen crate"
+
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
 	desc = "Contains thirteen different chemicals, for all the fun experiments you can make."
@@ -1307,6 +1322,51 @@
 	crate_name = "plasma assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
+/datum/supply_pack/science/raw_flux_anomaly
+	name = "Raw Flux Anomaly"
+	desc = "The raw core of a flux anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/flux)
+	crate_name = "raw flux anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_grav_anomaly
+	name = "Raw Gravitational Anomaly"
+	desc = "The raw core of a gravitational anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/grav)
+	crate_name = "raw pyro anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_vortex_anomaly
+	name = "Raw Vortex Anomaly"
+	desc = "The raw core of a vortex anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/vortex)
+	crate_name = "raw vortex anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_bluespace_anomaly
+	name = "Raw Bluespace Anomaly"
+	desc = "The raw core of a bluespace anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/bluespace)
+	crate_name = "raw bluespace anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_pyro_anomaly
+	name = "Raw Pyro Anomaly"
+	desc = "The raw core of a pyro anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/pyro)
+	crate_name = "raw pyro anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
 	desc = "The tools you need to replace those finicky humans with a loyal robot army! Contains four proximity sensors, two empty first aid kits, two health analyzers, two red hardhats, two mechanical toolboxes, and two cleanbot assemblies! Requires Robotics access to open."
@@ -1365,6 +1425,14 @@
 	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
+
+/datum/supply_pack/science/monkey_helmets
+	name = "Monkey Mind Magnification Helmet crate"
+	desc = "Some research is best done with monkeys, yet sometimes they're just too dumb to complete more complicated tasks. These helmets should help."
+	cost = 1500
+	contains = list(/obj/item/clothing/head/helmet/monkey_sentience,
+					/obj/item/clothing/head/helmet/monkey_sentience)
+	crate_name = "monkey mind magnification crate"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Service //////////////////////////////////////
@@ -2214,15 +2282,14 @@
 	crate_name = "toy crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/costumes_toys/randomised/toys/generate()
-	. = ..()
+/datum/supply_pack/costumes_toys/randomised/toys/fill(obj/structure/closet/crate/C)
 	var/the_toy
 	for(var/i in 1 to num_contained)
 		if(prob(50))
 			the_toy = pickweight(GLOB.arcade_prize_pool)
 		else
 			the_toy = pick(subtypesof(/obj/item/toy/plush))
-		new the_toy(.)
+		new the_toy(C)
 
 /datum/supply_pack/costumes_toys/wizard
 	name = "Wizard Costume Crate"
@@ -2330,12 +2397,11 @@
 	contains = list()
 	crate_name = "booster pack pack"
 
-/datum/supply_pack/costumes_toys/randomised/tcg/generate()
-	. = ..()
+/datum/supply_pack/costumes_toys/randomised/tcg/fill(obj/structure/closet/crate/C)
 	var/cardpacktype
 	for(var/i in 1 to 10)
 		cardpacktype = pick(subtypesof(/obj/item/cardpack))
-		new cardpacktype(.)
+		new cardpacktype(C)
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////

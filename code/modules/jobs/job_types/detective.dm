@@ -1,9 +1,7 @@
 /datum/job/detective
 	title = "Detective"
-	flag = DETECTIVE
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
-	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1

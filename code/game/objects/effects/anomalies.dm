@@ -102,6 +102,10 @@
 			step_towards(M,src)
 	for(var/obj/O in range(0,src))
 		if(!O.anchored)
+			if(isturf(O.loc))
+				var/turf/T = O.loc
+				if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+					continue
 			var/mob/living/target = locate() in view(4,src)
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)

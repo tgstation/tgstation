@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Non-emagged mediborgs will no longer embed people with lollipops. Emagged borgs, on the other hand..... well, they can. Fun!"

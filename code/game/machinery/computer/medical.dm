@@ -184,7 +184,7 @@
 	if(!(active2 in GLOB.data_core.medical))
 		active2 = null
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			temp = null
@@ -216,7 +216,7 @@
 				authenticated = 1
 				rank = "AI"
 				screen = 1
-			else if(IsAdminGhost(M))
+			else if(isAdminGhostAI(M))
 				active1 = null
 				active2 = null
 				authenticated = 1

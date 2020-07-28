@@ -58,10 +58,10 @@
 	name = "Quantum Power Cell"
 	desc = "A rechargeable, entangled power cell."
 	id = "quantumcell"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 5500, /datum/material/plasma = 3500, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/stock_parts/cell/quantum/empty
-	category = list("Power Designs")
+	category = list("Power Designs","Misc")
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
@@ -147,6 +147,7 @@
 	maxcharge = 50000
 	custom_materials = list(/datum/material/iron = 1000, /datum/material/glass = 5500, /datum/material/plasma = 3500, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	chargerate = 5000
+	rating = 6
 
 /obj/item/stock_parts/cell/quantum/empty/Initialize()
 	. = ..()

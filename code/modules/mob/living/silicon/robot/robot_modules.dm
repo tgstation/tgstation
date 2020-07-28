@@ -161,7 +161,8 @@
 
 /obj/item/robot_module/proc/rebuild_modules() //builds the usable module list from the modules we have
 	var/mob/living/silicon/robot/R = loc
-	var/held_modules = R.held_items.Copy()
+	var/list/held_modules = R.held_items.Copy()
+	var/active_module = R.module_active
 	R.uneq_all()
 	modules = list()
 	for(var/obj/item/I in basic_modules)
@@ -173,7 +174,9 @@
 		add_module(I, FALSE, FALSE)
 	for(var/i in held_modules)
 		if(i)
-			R.activate_module(i)
+			R.equip_module_to_slot(i, held_modules.Find(i))
+	if(active_module)
+		R.select_module(held_modules.Find(active_module))
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 
@@ -215,7 +218,7 @@
 	flick("[cyborg_base_icon]_transform", R)
 	R.notransform = TRUE
 	R.SetLockdown(1)
-	R.anchored = TRUE
+	R.set_anchored(TRUE)
 	sleep(1)
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
@@ -223,8 +226,9 @@
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.setDir(SOUTH)
-	R.anchored = FALSE
+	R.set_anchored(FALSE)
 	R.notransform = FALSE
+	R.updatehealth()
 	R.update_headlamp(FALSE, BORG_LAMP_CD_RESET)
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)

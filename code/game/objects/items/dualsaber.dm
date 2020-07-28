@@ -43,7 +43,7 @@
 			to_chat(user, "<span class='warning'>You lack the grace to wield this!</span>")
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
 	wielded = TRUE
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = w_class_on
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
@@ -159,7 +159,7 @@
 		var/mob/living/carbon/C = user
 		if(C.wear_mask)
 			in_mouth = ", barely missing [user.p_their()] nose"
-	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.</span>"
+	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [A.loc == user ? "[user.p_their()] [A.name]" : A] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room

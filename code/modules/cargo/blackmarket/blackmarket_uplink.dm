@@ -4,8 +4,6 @@
 	icon_state = "uplink"
 
 	// UI variables.
-	var/ui_x = 600
-	var/ui_y = 480
 	var/viewing_category
 	var/viewing_market
 	var/selected_item
@@ -55,10 +53,10 @@
 	user.put_in_hands(holochip)
 	to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
 
-/obj/item/blackmarket_uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/blackmarket_uplink/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "BlackMarketUplink", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "BlackMarketUplink", name)
 		ui.open()
 
 /obj/item/blackmarket_uplink/ui_data(mob/user)

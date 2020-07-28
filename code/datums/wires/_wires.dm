@@ -37,6 +37,7 @@
 		CRASH("Wire holder is not of the expected type!")
 
 	src.holder = holder
+	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdel)
 	if(randomize)
 		randomize()
 	else
@@ -58,6 +59,12 @@
 		if(dud in wires)
 			continue
 		wires += dud
+
+
+///Called when holder is qdeleted for us to clean ourselves as not to leave any unlawful references.
+/datum/wires/proc/on_holder_qdel(atom/source, force)
+	qdel(src)
+
 
 /datum/wires/proc/randomize()
 	var/static/list/possible_colors = list(
@@ -215,11 +222,13 @@
 		return ..()
 	return UI_CLOSE
 
-/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = FALSE, \
-							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/wires/ui_state(mob/user)
+	return GLOB.physical_state
+
+/datum/wires/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, ui_key, "Wires", "[holder.name] Wires", 350, 150 + wires.len * 30, master_ui, state)
+		ui = new(user, src, "Wires", "[holder.name] Wires")
 		ui.open()
 
 /datum/wires/ui_data(mob/user)
@@ -228,7 +237,7 @@
 	var/reveal_wires = FALSE
 
 	// Admin ghost can see a purpose of each wire.
-	if(IsAdminGhost(user))
+	if(isAdminGhostAI(user))
 		reveal_wires = TRUE
 
 	// Same for anyone with an abductor multitool.
@@ -259,7 +268,7 @@
 	switch(action)
 		if("cut")
 			I = L.is_holding_tool_quality(TOOL_WIRECUTTER)
-			if(I || IsAdminGhost(usr))
+			if(I || isAdminGhostAI(usr))
 				if(I && holder)
 					I.play_tool_sound(holder, 20)
 				cut_color(target_wire)
@@ -268,7 +277,7 @@
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
 			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
-			if(I || IsAdminGhost(usr))
+			if(I || isAdminGhostAI(usr))
 				if(I && holder)
 					I.play_tool_sound(holder, 20)
 				pulse_color(target_wire, L)

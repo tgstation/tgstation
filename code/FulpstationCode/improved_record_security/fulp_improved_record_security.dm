@@ -96,7 +96,7 @@
 	return FALSE
 
 /obj/machinery/computer/secure_data/proc/check_input_clearance(mob/M, delete = FALSE)
-	if(!issilicon(M) && !IsAdminGhost(M)) //Silicons and AdminGhosts ignore access checks.
+	if(!issilicon(M) && !issiliconoradminghost(M)) //Silicons and AdminGhosts ignore access checks.
 		var/obj/item/card/id/I = M.get_idcard(TRUE)
 		if(!I)
 			return FALSE

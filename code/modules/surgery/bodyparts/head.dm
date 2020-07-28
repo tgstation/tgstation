@@ -14,7 +14,6 @@
 	stam_damage_coeff = 1
 	max_stamina_damage = 100
 	wound_resistance = 10
-	specific_locations = list("left eyebrow", "cheekbone", "neck", "throat", "jawline", "entire face")
 	scars_covered_by_clothes = FALSE
 
 	var/mob/living/brain/brainmob = null //The current occupant.
@@ -94,7 +93,7 @@
 
 
 /obj/item/bodypart/head/can_dismember(obj/item/I)
-	if(!((owner.stat == DEAD) || owner.InFullCritical()))
+	if(owner && !((owner.stat == DEAD) || owner.InFullCritical()))
 		return FALSE
 	return ..()
 

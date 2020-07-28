@@ -8,7 +8,7 @@
 	range = -1
 	include_user = TRUE
 	invocation = "RAC'WA NO!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "shapeshift"
 
 	var/revert_on_death = TRUE

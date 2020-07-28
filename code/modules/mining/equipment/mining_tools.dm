@@ -36,6 +36,7 @@
 	name = "compact pickaxe"
 	desc = "A smaller, compact version of the standard pickaxe."
 	icon_state = "minipick"
+	worn_icon_state = "pickaxe"
 	force = 10
 	throwforce = 7
 	slot_flags = ITEM_SLOT_BELT
@@ -64,6 +65,7 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	inhand_icon_state = "jackhammer"
+	worn_icon_state = "jackhammer"
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
 	usesound = 'sound/weapons/drill.ogg'
@@ -105,6 +107,7 @@
 	desc = "A pickaxe made with a knife and crowbar taped together, how does it not break?"
 	icon_state = "ipickaxe"
 	inhand_icon_state = "ipickaxe"
+	worn_icon_state = "pickaxe"
 	force = 10
 	throwforce = 7
 	toolspeed = 3 //3 times slower than a normal pickaxe
@@ -117,6 +120,7 @@
 	desc = "A large tool for digging and moving dirt."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
+	worn_icon_state = "shovel"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -130,7 +134,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=50)
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/shovel/Initialize()
 	. = ..()
@@ -148,6 +152,7 @@
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
 	inhand_icon_state = "spade"
+	worn_icon_state = "spade"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	force = 5
@@ -159,6 +164,7 @@
 	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs."
 	icon_state = "shovel_bone"
 	inhand_icon_state = "shovel_bone"
+	worn_icon_state = "shovel_serr"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	force = 15
@@ -166,4 +172,4 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	attack_verb = list("slashed", "impaled", "stabbed", "sliced")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED

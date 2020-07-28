@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a cyborg runtime error"
+  - bugfix: "middle mouse click to cycle modules for cyborgs works properly again"

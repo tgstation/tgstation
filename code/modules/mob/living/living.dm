@@ -417,6 +417,12 @@
 /mob/living/proc/setMaxHealth(newMaxHealth)
 	maxHealth = newMaxHealth
 
+/// Returns the health of the mob while ignoring damage of non-organic (prosthetic) limbs
+/// Used by cryo cells to not permanently imprison those with damage from prosthetics,
+/// as they cannot be healed through chemicals.
+/mob/living/proc/get_organic_health()
+	return health
+
 // MOB PROCS //END
 
 /mob/living/proc/mob_sleep()
@@ -671,40 +677,55 @@
 	return
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
-	if(!has_gravity())
+	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
-	var/blood_exists = FALSE
 
-	for(var/obj/effect/decal/cleanable/trail_holder/C in start) //checks for blood splatter already on the floor
-		blood_exists = TRUE
-	if(isturf(start))
-		var/trail_type = getTrail()
-		if(trail_type)
-			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
-				var/newdir = get_dir(target_turf, start)
-				if(newdir != direction)
-					newdir = newdir | direction
-					if(newdir == 3) //N + S
-						newdir = NORTH
-					else if(newdir == 12) //E + W
-						newdir = EAST
-				if((newdir in GLOB.cardinals) && (prob(50)))
-					newdir = turn(get_dir(target_turf, start), 180)
-				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
+	var/blood_exists = locate(/obj/effect/decal/cleanable/trail_holder) in start
 
-				for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
-					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-						TH.existing_dirs += newdir
-						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-						TH.transfer_mob_blood_dna(src)
+	var/trail_type = getTrail()
+	if(!trail_type)
+		return
+
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	if(blood_volume < max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+		return
+
+	var/bleed_amount = bleedDragAmount()
+	blood_volume = max(blood_volume - bleed_amount, 0) 					//that depends on our brute damage.
+	var/newdir = get_dir(target_turf, start)
+	if(newdir != direction)
+		newdir = newdir | direction
+		if(newdir == (NORTH|SOUTH))
+			newdir = NORTH
+		else if(newdir == (EAST|WEST))
+			newdir = EAST
+	if((newdir in GLOB.cardinals) && (prob(50)))
+		newdir = turn(get_dir(target_turf, start), 180)
+	if(!blood_exists)
+		new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
+
+	for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
+		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+			TH.existing_dirs += newdir
+			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+			TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
 	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || bleedsuppress)
 		return
 	..()
+
+///Returns how much blood we're losing from being dragged a tile, from [mob/living/proc/makeTrail]
+/mob/living/proc/bleedDragAmount()
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	return max(1, brute_ratio * 2)
+
+/mob/living/carbon/bleedDragAmount()
+	var/bleed_amount = 0
+	for(var/i in all_wounds)
+		var/datum/wound/iter_wound = i
+		bleed_amount += iter_wound.drag_bleed_amount()
+	return bleed_amount
 
 /mob/living/proc/getTrail()
 	if(getBruteLoss() < 300)
@@ -921,6 +942,8 @@
 
 /mob/living/singularity_pull(S, current_size)
 	..()
+	if(move_resist == INFINITY)
+		return
 	if(current_size >= STAGE_SIX) //your puny magboots/wings/whatever will not save you against supermatter singularity
 		throw_at(S, 14, 3, src, TRUE)
 	else if(!src.mob_negates_gravity())
@@ -1289,13 +1312,23 @@
 			SSmobs.clients_by_zlevel[registered_z] -= src
 		if (client)
 			if (new_z)
+				//Figure out how many clients were here before
+				var/oldlen = SSmobs.clients_by_zlevel[new_z].len
 				SSmobs.clients_by_zlevel[new_z] += src
 				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
 					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
 					if (SA)
-						SA.toggle_ai(AI_ON) // Guarantees responsiveness for when appearing right next to mobs
+						if(oldlen == 0)
+							//Start AI idle if nobody else was on this z level before (mobs will switch off when this is the case)
+							SA.toggle_ai(AI_IDLE)
+
+						//If they are also within a close distance ask the AI if it wants to wake up
+						if(get_dist(get_turf(src), get_turf(SA)) < MAX_SIMPLEMOB_WAKEUP_RANGE)
+							SA.consider_wakeup() // Ask the mob if it wants to turn on it's AI
+					//They should clean up in destroy, but often don't so we get them here
 					else
 						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
+
 
 			registered_z = new_z
 		else
@@ -1367,39 +1400,29 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if ("maxHealth")
+		if (NAMEOF(src, maxHealth))
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
-		if("stat")
+		if(NAMEOF(src, stat))
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				remove_from_dead_mob_list()
 				add_to_alive_mob_list()
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
 				remove_from_alive_mob_list()
 				add_to_dead_mob_list()
+		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
+			return FALSE
 	. = ..()
 	switch(var_name)
-		if("knockdown")
-			SetParalyzed(var_value)
-		if("stun")
-			SetStun(var_value)
-		if("unconscious")
-			SetUnconscious(var_value)
-		if("sleeping")
-			SetSleeping(var_value)
-		if("eye_blind")
+		if(NAMEOF(src, eye_blind))
 			set_blindness(var_value)
-		if("eye_damage")
-			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-			if(E)
-				E.setOrganDamage(var_value)
-		if("eye_blurry")
+		if(NAMEOF(src, eye_blurry))
 			set_blurriness(var_value)
-		if("maxHealth")
+		if(NAMEOF(src, maxHealth))
 			updatehealth()
-		if("resize")
+		if(NAMEOF(src, resize))
 			update_transform()
-		if("lighting_alpha")
+		if(NAMEOF(src, lighting_alpha))
 			sync_lighting_plane_alpha()
 
 /mob/living/vv_get_header()
@@ -1509,7 +1532,7 @@
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+	return !(incapacitated(ignore_restraints = TRUE))
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob
@@ -1518,27 +1541,91 @@
  *
  */
 /mob/living/proc/look_up()
-
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
 		stop_look_up()
-		return
 	if(!can_look_up())
 		return
+	changeNext_move(CLICK_CD_LOOK_UP)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_up) //We start looking again after we move.
+	start_look_up()
+
+/mob/living/proc/start_look_up()
 	var/turf/ceiling = get_step_multiz(src, UP)
 	if(!ceiling) //We are at the highest z-level.
 		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
 		return
 	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
-		to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
-		return
+		var/turf/front_hole = get_step(ceiling, dir)
+		if(istransparentturf(front_hole))
+			ceiling = front_hole
+		else
+			var/list/checkturfs = block(locate(x-1,y-1,ceiling.z),locate(x+1,y+1,ceiling.z))-ceiling-front_hole //Try find hole near of us
+			for(var/turf/checkhole in checkturfs)
+				if(istransparentturf(checkhole))
+					ceiling = checkhole
+					break
+		if(!istransparentturf(ceiling))
+			to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
+			return
 
-	changeNext_move(CLICK_CD_LOOK_UP)
 	reset_perspective(ceiling)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
 
 /mob/living/proc/stop_look_up()
 	reset_perspective()
+
+/mob/living/proc/end_look_up()
+	stop_look_up()
 	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+
+/**
+ * look_down Changes the perspective of the mob to any openspace turf below the mob
+ *
+ * This also checks if an openspace turf is below the mob before looking down or resets the perspective if already looking up
+ *
+ */
+/mob/living/proc/look_down()
+	if(client.perspective != MOB_PERSPECTIVE) //We are already looking down.
+		stop_look_down()
+	if(!can_look_up()) //if we cant look up, we cant look down.
+		return
+	changeNext_move(CLICK_CD_LOOK_UP)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_down) //We start looking again after we move.
+	start_look_down()
+
+/mob/living/proc/start_look_down()
+	var/turf/floor = get_turf(src)
+	var/turf/lower_level = get_step_multiz(floor, DOWN)
+	if(!lower_level) //We are at the lowest z-level.
+		to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
+		return
+	else if(!istransparentturf(floor)) //There is no turf we can look through below us
+		var/turf/front_hole = get_step(floor, dir)
+		if(istransparentturf(front_hole))
+			floor = front_hole
+			lower_level = get_step_multiz(front_hole, DOWN)
+		else
+			var/list/checkturfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))-floor //Try find hole near of us
+			for(var/turf/checkhole in checkturfs)
+				if(istransparentturf(checkhole))
+					floor = checkhole
+					lower_level = get_step_multiz(checkhole, DOWN)
+					break
+		if(!istransparentturf(floor))
+			to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
+			return
+
+	reset_perspective(lower_level)
+
+/mob/living/proc/stop_look_down()
+	reset_perspective()
+
+/mob/living/proc/end_look_down()
+	stop_look_down()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 
 /mob/living/set_stat(new_stat)
@@ -1551,3 +1638,7 @@
 	switch(stat) //Current stat.
 		if(UNCONSCIOUS)
 			become_blind(UNCONSCIOUS_BLIND)
+
+/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
+/mob/living/proc/is_face_visible()
+	return TRUE

@@ -132,7 +132,7 @@
   #define COMPONENT_RAD_WAVE_HANDLED (1<<0)
 ///from internal loop in atom/movable/proc/CanReach(): (list/next)
 #define COMSIG_ATOM_CANREACH "atom_can_reach"
-	#define COMPONENT_BLOCK_REACH (1<<0)
+	#define COMPONENT_ALLOW_REACH (1<<0)
 ///from base of atom/screwdriver_act(): (mob/living/user, obj/item/I)
 #define COMSIG_ATOM_SCREWDRIVER_ACT "atom_screwdriver_act"
 ///from base of atom/wrench_act(): (mob/living/user, obj/item/I)
@@ -257,7 +257,7 @@
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
 ///called when the movable is placed in an unaccessible area, used for stationloving: ()
 #define COMSIG_MOVABLE_SECLUDED_LOCATION "movable_secluded"
-///from base of atom/movable/Hear(): (proc args list(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode))
+///from base of atom/movable/Hear(): (proc args list(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list()))
 #define COMSIG_MOVABLE_HEAR "movable_hear"
 	#define HEARING_MESSAGE 1
 	#define HEARING_SPEAKER 2
@@ -269,6 +269,8 @@
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
+///called when the movable sucessfully has it's anchored var changed, from base atom/movable/set_anchored(): (value)
+#define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"
 
 // /mob signals
 
@@ -312,6 +314,10 @@
 #define COMSIG_MOB_THROW "mob_throw"
 ///from base of /mob/verb/examinate(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
+///from /mob/living/handle_eye_contact(): (mob/living/other_mob)
+#define COMSIG_MOB_EYECONTACT "mob_eyecontact"
+	/// return this if you want to block printing this message to this person, if you want to print your own (does not affect the other person's message)
+	#define COMSIG_BLOCK_EYECONTACT (1<<0)
 ///from base of /mob/update_sight(): ()
 #define COMSIG_MOB_UPDATE_SIGHT "mob_update_sight"
 ////from /mob/living/say(): ()
@@ -409,8 +415,6 @@
 
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
-///called in /obj/structure/setAnchored(): (value)
-#define COMSIG_OBJ_SETANCHORED "obj_setanchored"
 ///from base of code/game/machinery
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
@@ -475,14 +479,23 @@
 #define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"
 ///from [/obj/effect/mine/proc/triggermine]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"
+///from [/obj/structure/closet/supplypod/proc/endlaunch]:
+#define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
+
+// /obj signals for economy
+///called when the payment component tries to charge an account.
+#define COMSIG_OBJ_ATTEMPT_CHARGE "obj_attempt_simple_charge"
+	#define COMPONENT_OBJ_CANCEL_CHARGE  (1<<0)
+///Called when a payment component changes value
+#define COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE "obj_attempt_simple_charge_change"
 
 // /obj/item signals for economy
 ///called when an item is sold by the exports subsystem
 #define COMSIG_ITEM_SOLD "item_sold"
 ///called when a wrapped up structure is opened by hand
 #define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
-#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
 ///called when a wrapped up item is opened by hand
+#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
 	#define COMSIG_ITEM_SPLIT_VALUE  (1<<0)
 ///called when getting the item's exact ratio for cargo's profit.
 #define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"
@@ -543,7 +556,7 @@
 
 // /obj/projectile signals (sent to the firer)
 
-///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
+///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
 ///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"

@@ -201,6 +201,11 @@
 		M.ExtinguishMob()
 	..()
 
+/datum/reagent/water/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(M.blood_volume)
+		M.blood_volume += 0.1 // water is good for you!
+
 /datum/reagent/water/holywater
 	name = "Holy Water"
 	description = "Water blessed by some deity."
@@ -233,6 +238,8 @@
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
+	if(M.blood_volume)
+		M.blood_volume += 0.1 // water is good for you!
 	if(!data)
 		data = list("misc" = 1)
 	data["misc"]++
@@ -320,6 +327,7 @@
 	name = "Unholy Water"
 	description = "Something that shouldn't exist on this plane of existence."
 	taste_description = "suffering"
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //1u/tick
 
 /datum/reagent/fuel/unholywater/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -344,8 +352,7 @@
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
-	holder.remove_reagent(type, 1)
-	return TRUE
+	..()
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
@@ -1375,6 +1382,7 @@
 		description = "An invisible powder. Unfortunately, since it's invisible, it doesn't look like it'd color much of anything..."
 	else
 		description = "\An [colorname] powder, used for coloring things [colorname]."
+	return ..()
 
 /datum/reagent/colorful_reagent/powder/red
 	name = "Red Powder"
@@ -1748,6 +1756,7 @@
 
 /datum/reagent/colorful_reagent/New()
 	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+	return ..()
 
 /datum/reagent/colorful_reagent/proc/UpdateColor()
 	color = pick(random_color_list)
@@ -1773,6 +1782,7 @@
 
 /datum/reagent/hair_dye/New()
 	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+	return ..()
 
 /datum/reagent/hair_dye/proc/UpdateColor()
 	color = pick(potential_colors)
@@ -2282,6 +2292,7 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM // 5u (WOUND_DETERMINATION_CRITICAL) will last for ~17 ticks
+	self_consuming = TRUE
 	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
 	var/significant = FALSE
 
@@ -2310,11 +2321,12 @@
 		M.adjustStaminaLoss(-0.25*REM) // the more wounds, the more stamina regen
 	..()
 
-/datum/reagent/eldritch
+/datum/reagent/eldritch //unholy water, but for eldritch cultists. why couldn't they have both just used the same reagent? who knows. maybe nar'sie is considered to be too "mainstream" of a god to worship in the cultist community.
 	name = "Eldritch Essence"
-	description = "Strange liquid that defies the laws of physics"
+	description = "A strange liquid that defies the laws of physics. It re-energizes and heals those who can see beyond this fragile reality, but is incredibly harmful to the closed-minded. It metabolizes very quickly."
 	taste_description = "Ag'hsj'saje'sh"
 	color = "#1f8016"
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //1u/tick
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/M)
 	if(IS_HERETIC(M))
@@ -2333,5 +2345,4 @@
 		M.adjustFireLoss(2, FALSE)
 		M.adjustOxyLoss(2, FALSE)
 		M.adjustBruteLoss(2, FALSE)
-	holder.remove_reagent(type, 1)
-	return TRUE
+	..()

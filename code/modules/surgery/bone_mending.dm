@@ -8,7 +8,7 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
-	targetable_wound = /datum/wound/brute/bone/severe
+	targetable_wound = /datum/wound/blunt/severe
 
 /datum/surgery/repair_bone_hairline/can_start(mob/living/user, mob/living/carbon/target)
 	if(..())
@@ -23,7 +23,7 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
-	targetable_wound = /datum/wound/brute/bone/critical
+	targetable_wound = /datum/wound/blunt/critical
 
 /datum/surgery/repair_bone_compound/can_start(mob/living/user, mob/living/carbon/target)
 	if(..())
@@ -39,7 +39,6 @@
 	name = "repair hairline fracture (bonesetter/bone gel/tape)"
 	implements = list(/obj/item/bonesetter = 100, /obj/item/stack/medical/bone_gel = 100, /obj/item/stack/sticky_tape/surgical = 100, /obj/item/stack/sticky_tape/super = 50, /obj/item/stack/sticky_tape = 30)
 	time = 40
-	experience_given = MEDICAL_SKILL_MEDIUM
 
 /datum/surgery_step/repair_bone_hairline/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(surgery.operated_wound)
@@ -76,7 +75,6 @@
 	name = "reset bone"
 	implements = list(/obj/item/bonesetter = 100, /obj/item/stack/sticky_tape/surgical = 60, /obj/item/stack/sticky_tape/super = 40, /obj/item/stack/sticky_tape = 20)
 	time = 40
-	experience_given = MEDICAL_SKILL_MEDIUM
 
 /datum/surgery_step/reset_compound_fracture/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(surgery.operated_wound)
@@ -111,7 +109,6 @@
 	name = "repair compound fracture (bone gel/tape)"
 	implements = list(/obj/item/stack/medical/bone_gel = 100, /obj/item/stack/sticky_tape/surgical = 100, /obj/item/stack/sticky_tape/super = 50, /obj/item/stack/sticky_tape = 30)
 	time = 40
-	experience_given = MEDICAL_SKILL_MEDIUM
 
 /datum/surgery_step/repair_bone_compound/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(surgery.operated_wound)

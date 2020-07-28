@@ -24,6 +24,8 @@
 	var/mob/living/silicon/ai/mainframe = null
 	var/datum/action/innate/undeployment/undeployment_action = new
 
+	/// the last health before updating - to check net change in health
+	var/previous_health
 //Hud stuff
 
 	var/obj/screen/inv1 = null
@@ -40,6 +42,9 @@
 	var/obj/item/robot_module/module = null
 	var/obj/item/module_active = null
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
+
+	/// For checking which modules are disabled or not.
+	var/disabled_modules
 
 	var/mutable_appearance/eye_lights
 
@@ -109,6 +114,8 @@
 	robot_modules_background.plane = HUD_PLANE
 
 	ident = rand(1, 999)
+
+	previous_health = health
 
 	if(ispath(cell))
 		cell = new cell(src)
@@ -446,11 +453,10 @@
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
-		if(mmi)
-			qdel(mmi)
-		explosion(src.loc,1,2,4,flame_range = 2)
+		QDEL_NULL(mmi)
+		explosion(loc,1,2,4,flame_range = 2)
 	else
-		explosion(src.loc,-1,0,2)
+		explosion(loc,-1,0,2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
@@ -705,21 +711,30 @@
 
 /mob/living/silicon/robot/updatehealth()
 	..()
-	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
-		if(uneq_module(held_items[3]))
-			playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
-			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 3 OFFLINE.\"</span>")
-			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 3 OFFLINE.</span>")
-		if(health < 0)
-			if(uneq_module(held_items[2]))
-				audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 2 OFFLINE.\"</span>")
-				to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 2 OFFLINE.</span>")
-				playsound(loc, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
-			if(health < -maxHealth*0.5)
-				if(uneq_module(held_items[1]))
-					audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: All modules OFFLINE.\"</span>")
-					to_chat(src, "<span class='userdanger'>CRITICAL ERROR: All modules OFFLINE.</span>")
-					playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+
+	/// the current percent health of the robot (-1 to 1)
+	var/percent_hp = health/maxHealth
+	if(health <= previous_health) //if change in health is negative (we're losing hp)
+		if(percent_hp <= 0.5)
+			break_cyborg_slot(3)
+
+		if(percent_hp <= 0)
+			break_cyborg_slot(2)
+
+		if(percent_hp <= -0.5)
+			break_cyborg_slot(1)
+
+	else //if change in health is positive (we're gaining hp)
+		if(percent_hp >= 0.5)
+			repair_cyborg_slot(3)
+
+		if(percent_hp >= 0)
+			repair_cyborg_slot(2)
+
+		if(percent_hp >= -0.5)
+			repair_cyborg_slot(1)
+
+	previous_health = health
 
 /mob/living/silicon/robot/update_sight()
 	if(!client)
@@ -757,6 +772,7 @@
 
 	if(sight_mode & BORGTHERM)
 		sight |= SEE_MOBS
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_invisible = min(see_invisible, SEE_INVISIBLE_LIVING)
 		see_in_dark = 8
 
@@ -914,7 +930,7 @@
   * * AI - AI unit that initiated the deployment into the AI shell
   */
 /mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] Shell-[ident]"
+	real_name = "[AI.real_name] [designation] Shell-[ident]"
 	name = real_name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name	//update the camera name too
@@ -968,6 +984,8 @@
 	mainframe.diag_hud_set_deployed()
 	if(mainframe.laws)
 		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
+	if(mainframe.eyeobj)
+		mainframe.eyeobj.setLoc(loc)
 	mainframe = null
 
 /mob/living/silicon/robot/attack_ai(mob/user)
@@ -980,7 +998,7 @@
 	cell = null
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
-	if(can_buckle && istype(M) && !(M in buckled_mobs) && ((user!=src)||(a_intent != INTENT_HARM)))
+	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (a_intent != INTENT_HARM)))
 		if(buckle_mob(M))
 			return TRUE
 

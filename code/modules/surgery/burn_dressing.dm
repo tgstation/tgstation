@@ -24,7 +24,6 @@
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCALPEL = 85, TOOL_SAW = 60, TOOL_WIRECUTTER = 40)
 	time = 30
 	repeatable = TRUE
-	experience_given = MEDICAL_SKILL_MEDIUM
 
 /datum/surgery_step/debride/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(surgery.operated_wound)
@@ -76,7 +75,6 @@
 	name = "bandage burns"
 	implements = list(/obj/item/stack/medical/gauze = 100, /obj/item/stack/sticky_tape/surgical = 100)
 	time = 40
-	experience_given = MEDICAL_SKILL_MEDIUM
 
 /datum/surgery_step/dress/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/datum/wound/burn/burn_wound = surgery.operated_wound
@@ -96,7 +94,8 @@
 		log_combat(user, target, "dressed burns in", addition="INTENT: [uppertext(user.a_intent)]")
 		burn_wound.sanitization += 3
 		burn_wound.flesh_healing += 5
-		burn_wound.force_bandage(tool)
+		var/obj/item/bodypart/the_part = target.get_bodypart(target_zone)
+		the_part.apply_gauze(tool)
 	else
 		to_chat(user, "<span class='warning'>[target] has no burns there!</span>")
 	return ..()

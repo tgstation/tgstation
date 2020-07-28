@@ -256,7 +256,8 @@
 
 //This is where stability mutations exist now.
 			if(myseed.instability >= 80)
-				mutate(0, 0, 0, 0, 0, 0, 0, 5, 0) //Exceedingly low odds of gaining a trait.
+				var/mutation_chance = myseed.instability - 75
+				mutate(0, 0, 0, 0, 0, 0, 0, mutation_chance, 0) //Scaling odds of a random trait or chemical
 			if(myseed.instability >= 60)
 				if(prob((myseed.instability)/2) && !self_sustaining && length(myseed.mutatelist)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
 					mutatespecie()

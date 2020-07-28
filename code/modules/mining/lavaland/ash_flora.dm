@@ -220,10 +220,41 @@
 	species = "cactus"
 	plantname = "Fruiting Cactus"
 	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
+	mutatelist = list(/obj/item/seeds/star_cactus)
 	genes = list(/datum/plant_gene/trait/fire_resistance)
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/vitfro = 0.08)
+
+///Star Cactus seeds, mutation of lavaland cactus.
+/obj/item/seeds/star_cactus
+	name = "pack of star cacti seeds"
+	desc = "These seeds grow into star cacti."
+	icon_state = "seed-starcactus"
+	species = "starcactus"
+	plantname = "Star Cactus Cluster"
+	product = /obj/item/reagent_containers/food/snacks/grown/star_cactus
+	lifespan = 60
+	endurance = 30
+	maturation = 7
+	production = 6
+	yield = 3
+	growthstages = 4
+	genes = list(/datum/plant_gene/trait/sticky, /datum/plant_gene/trait/stinging)
+	graft_gene = /datum/plant_gene/trait/sticky
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/water = 0.08, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/c2/helbital = 0.05)
+
+///Star Cactus Plants.
+/obj/item/reagent_containers/food/snacks/grown/star_cactus
+	seed = /obj/item/seeds/star_cactus
+	name = "star cacti"
+	desc = "A spikey, round cluster of prickly star cacti. And no, it's not called a star cactus because it's in space."
+	icon_state = "starcactus"
+	filling_color = "#1c801c"
+	bitesize_mod = 3
+	foodtype = VEGETABLES
+	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 
 /obj/item/seeds/lavaland/polypore
 	name = "pack of polypore mycelium"

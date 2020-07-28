@@ -12,4 +12,4 @@
 	attack_verb = list("attacked", "slashed", "sliced", "ripped", "diced", "cut", "flayed", "eviscerated")
 	armour_penetration = 30 //5 points less then a double esword!
 	hitsound = "swing_hit"
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED

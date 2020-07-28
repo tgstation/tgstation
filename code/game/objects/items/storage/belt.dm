@@ -195,7 +195,7 @@
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/stack/medical/bone_gel(src)
 	new /obj/item/stack/sticky_tape/surgical(src)
-	new /obj/item/reagent_containers/glass/bottle/calomel(src)
+	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
 	update_icon()
 
 /obj/item/storage/belt/security
@@ -433,6 +433,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "belt"
 	inhand_icon_state = "security"
+	worn_icon_state = "security"
 
 /obj/item/storage/belt/military/abductor/full/PopulateContents()
 	new /obj/item/screwdriver/abductor(src)

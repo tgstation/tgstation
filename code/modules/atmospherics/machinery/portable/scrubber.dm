@@ -2,22 +2,29 @@
 	name = "portable air scrubber"
 	icon_state = "pscrubber:0"
 	density = TRUE
-	ui_x = 320
-	ui_y = 350
-
 	max_integrity = 250
+	volume = 1000
+
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
 	var/heat_limit = 5000
 	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
 	var/pressure_limit = 50000
-
 	var/on = FALSE
 	var/volume_rate = 1000
 	var/overpressure_m = 80
 	var/use_overlays = TRUE
-	volume = 1000
-
-	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitryl, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor, /datum/gas/freon, /datum/gas/hydrogen)
+	var/list/scrubbing = list(
+		/datum/gas/plasma,
+		/datum/gas/carbon_dioxide,
+		/datum/gas/nitrous_oxide,
+		/datum/gas/bz,
+		/datum/gas/nitryl,
+		/datum/gas/tritium,
+		/datum/gas/hypernoblium,
+		/datum/gas/water_vapor,
+		/datum/gas/freon,
+		/datum/gas/hydrogen,
+	)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
 	var/turf/T = get_turf(src)
@@ -88,11 +95,10 @@
 			on = !on
 		update_icon()
 
-/obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "PortableScrubber", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "PortableScrubber", name)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_data()

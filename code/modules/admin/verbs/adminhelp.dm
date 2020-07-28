@@ -512,18 +512,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
-		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
-			if(current_ticket)
-				current_ticket.MessageNoRecipient(msg)
-				current_ticket.TimeoutVerb()
-				return
-			else
-				to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>", confidential = TRUE)
-		else
-			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
-			current_ticket.Close()
+		current_ticket.MessageNoRecipient(msg)
+		current_ticket.TimeoutVerb()
+		return
 
 	new /datum/admin_help(msg, src, FALSE)
+
 
 //
 // LOGGING
@@ -581,10 +575,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		send2adminchat(source,final)
 		send2otherserver(source,final)
 
-//
+/// Sends a message to other servers.
 /proc/send2otherserver(source,msg,type = "Ahelp",target_servers)
-	var/comms_key = CONFIG_GET(string/comms_key)
-	if(!comms_key)
+	if(!CONFIG_GET(string/comms_key))
+		debug_world_log("Server cross-comms message not sent for lack of configured key")
 		return
 
 	var/our_id = CONFIG_GET(string/cross_comms_name)
@@ -592,7 +586,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message["message_sender"] = source
 	message["message"] = msg
 	message["source"] = "([our_id])"
-	message["key"] = comms_key
 	message += type
 
 	var/list/servers = CONFIG_GET(keyed_list/cross_server)
@@ -601,8 +594,23 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			continue
 		if(target_servers && !(I in target_servers))
 			continue
-		world.Export("[servers[I]]?[list2params(message)]")
+		world.send_cross_comms(I, message)
 
+/// Sends a message to a given cross comms server by name (by name for security).
+/world/proc/send_cross_comms(server_name, list/message, auth = TRUE)
+	set waitfor = FALSE
+	if (auth)
+		var/comms_key = CONFIG_GET(string/comms_key)
+		if(!comms_key)
+			debug_world_log("Server cross-comms message not sent for lack of configured key")
+			return
+		message["key"] = comms_key
+	var/list/servers = CONFIG_GET(keyed_list/cross_server)
+	var/server_url = servers[server_name]
+	if (!server_url)
+		CRASH("Invalid cross comms config: [server_name]")
+	world.Export("[server_url]?[list2params(message)]")
+	
 
 /proc/tgsadminwho()
 	var/list/message = list("Admins: ")
@@ -676,7 +684,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 							if(!ai_found && isAI(found))
 								ai_found = 1
 							var/is_antag = 0
-							if(found.mind && found.mind.special_role)
+							if(is_special_character(found))
 								is_antag = 1
 							founds += "Name: [found.name]([found.real_name]) Key: [found.key] Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
 							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;[HrefToken(TRUE)];adminmoreinfo=[REF(found)]'>?</A>|<A HREF='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(found)]'>F</A>)</font> "

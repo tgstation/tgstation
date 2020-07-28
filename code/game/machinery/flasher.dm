@@ -174,13 +174,13 @@
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
-			setAnchored(TRUE)
+			set_anchored(TRUE)
 			power_change()
 			proximity_monitor.SetRange(range)
 		else
 			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
-			setAnchored(FALSE)
+			set_anchored(FALSE)
 			power_change()
 			proximity_monitor.SetRange(0)
 

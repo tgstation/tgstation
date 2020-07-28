@@ -65,17 +65,8 @@
 	if(!all_wounds || !(user.a_intent == INTENT_HELP || user == src))
 		return ..()
 
-	// The following priority/nonpriority searching is so that if we have two wounds on a limb that use the same item for treatment (gauze can bandage cuts AND splint broken bones),
-	// we prefer whichever wound is not already treated (ignore the splinted broken bone for the open cut). If there's no priority wounds that this can treat, go through the
-	// non-priority ones randomly.
-	var/list/nonpriority_wounds = list()
-	for(var/datum/wound/W in shuffle(all_wounds))
-		if(!W.treat_priority)
-			nonpriority_wounds += W
-		else if(W.treat_priority && W.try_treating(I, user))
-			return 1
-
-	for(var/datum/wound/W in shuffle(nonpriority_wounds))
+	for(var/i in shuffle(all_wounds))
+		var/datum/wound/W = i
 		if(W.try_treating(I, user))
 			return 1
 
@@ -93,7 +84,7 @@
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
 			Paralyze(20)
-			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed)
+			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
@@ -119,14 +110,14 @@
 
 
 /mob/living/carbon/proc/throw_mode_off()
-	in_throw_mode = 0
-	if(client && hud_used)
+	in_throw_mode = FALSE
+	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
 
 
 /mob/living/carbon/proc/throw_mode_on()
-	in_throw_mode = 1
-	if(client && hud_used)
+	in_throw_mode = TRUE
+	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
 
 /mob/proc/throw_item(atom/target)
@@ -165,6 +156,10 @@
 				log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 		var/power_throw = 0
 		if(HAS_TRAIT(src, TRAIT_HULK))
+			power_throw++
+		if(HAS_TRAIT(src, TRAIT_DWARF))
+			power_throw--
+		if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
 			power_throw++
 		if(pulling && grab_state >= GRAB_NECK)
 			power_throw++
@@ -502,7 +497,7 @@
 			if(T)
 				T.add_vomit_floor(src, VOMIT_TOXIC, purge)//toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
-		if (is_blocked_turf(T))
+		if (T != null && is_blocked_turf(T))
 			break
 	return TRUE
 
@@ -924,7 +919,6 @@
 		var/obj/item/I = X
 		I.acid_level = 0 //washes off the acid on our clothes
 		I.extinguish() //extinguishes our clothes
-		I.cut_overlay(GLOB.fire_overlay, TRUE)
 	..()
 
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
@@ -1119,7 +1113,7 @@
 	for(var/obj/item/I in held_items)
 		I.washed(washer)
 
-	if(back)
+	if(back && back.washed(washer))
 		update_inv_back(0)
 
 	var/list/obscured = check_obscured_slots()
@@ -1161,16 +1155,16 @@
 /**
   * generate_fake_scars()- for when you want to scar someone, but you don't want to hurt them first. These scars don't count for temporal scarring (hence, fake)
   *
-  * If you want a specific wound scar, pass that wound type as the second arg, otherwise you can pass a list like WOUND_LIST_CUT to generate a random cut scar.
+  * If you want a specific wound scar, pass that wound type as the second arg, otherwise you can pass a list like WOUND_LIST_SLASH to generate a random cut scar.
   *
   * Arguments:
   * * num_scars- A number for how many scars you want to add
-  * * forced_type- Which wound or category of wounds you want to choose from, WOUND_LIST_BONE, WOUND_LIST_CUT, or WOUND_LIST_BURN (or some combination). If passed a list, picks randomly from the listed wounds. Defaults to all 3 types
+  * * forced_type- Which wound or category of wounds you want to choose from, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN (or some combination). If passed a list, picks randomly from the listed wounds. Defaults to all 3 types
   */
 /mob/living/carbon/proc/generate_fake_scars(num_scars, forced_type)
 	for(var/i in 1 to num_scars)
-		var/datum/scar/S = new
-		var/obj/item/bodypart/BP = pick(bodyparts)
+		var/datum/scar/scaries = new
+		var/obj/item/bodypart/scar_part = pick(bodyparts)
 
 		var/wound_type
 		if(forced_type)
@@ -1179,12 +1173,12 @@
 			else
 				wound_type = forced_type
 		else
-			wound_type = pick(WOUND_LIST_BONE + WOUND_LIST_CUT + WOUND_LIST_BURN)
+			wound_type = pick(GLOB.global_all_wound_types)
 
-		var/datum/wound/W = new wound_type
-		S.generate(BP, W)
-		S.fake = TRUE
-		QDEL_NULL(W)
+		var/datum/wound/phantom_wound = new wound_type
+		scaries.generate(scar_part, phantom_wound)
+		scaries.fake = TRUE
+		QDEL_NULL(phantom_wound)
 
 //FULP: This code used to be in human.dm, but we've moved it here (and improved it) so that mulebots and motorized wheelchairs can run over both humans AND monkeys (and xenos)
 /mob/living/carbon/Crossed(atom/movable/AM)
@@ -1197,3 +1191,14 @@
 			MW.RunOver(src)
 	. = ..()
 
+
+/mob/living/carbon/is_face_visible()
+	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
+
+/**
+  * get_biological_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums
+  *
+  * go look at the species def for more info [/datum/species/proc/get_biological_state]
+  */
+/mob/living/carbon/proc/get_biological_state()
+	return BIO_FLESH_BONE

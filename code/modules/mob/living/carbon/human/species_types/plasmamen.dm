@@ -4,8 +4,8 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD,NOTRANSSTING)
-	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER,TRAIT_ALWAYS_CLEAN)
+	species_traits = list(NOBLOOD,NOTRANSSTING, HAS_BONE)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_NOHUNGER,TRAIT_ALWAYS_CLEAN)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
@@ -34,14 +34,9 @@
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
-	var/datum/gas_mixture/environment = H.loc.return_air()
-	var/atmos_sealed = FALSE
-	if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing))
-		var/obj/item/clothing/CS = H.wear_suit
-		var/obj/item/clothing/CH = H.head
-		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
-			atmos_sealed = TRUE
-	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed) //fulp edit
+	var/atmos_sealed = CanIgniteMob(H) && (isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) && (isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE)
+	if(!atmos_sealed && (!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves)))
+		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment)
 			if(environment.total_moles())
 				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
@@ -50,14 +45,13 @@
 						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
 					H.IgniteMob()
 					internal_fire = TRUE
-	else
-		if(H.fire_stacks)
-			var/obj/item/clothing/under/plasmaman/P = H.w_uniform
-			if(istype(P))
-				P.Extinguish(H)
-				internal_fire = FALSE
-		else
+	else if(H.fire_stacks)
+		var/obj/item/clothing/under/plasmaman/P = H.w_uniform
+		if(istype(P))
+			P.Extinguish(H)
 			internal_fire = FALSE
+	else
+		internal_fire = FALSE
 	H.update_fire()
 
 /datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, no_protection)
@@ -159,14 +153,23 @@
 
 /datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
-	if(chem.type == /datum/reagent/consumable/milk)
+	if(istype(chem, /datum/reagent/consumable/milk))
 		if(chem.volume > 10)
 			H.reagents.remove_reagent(chem.type, chem.volume - 10)
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		H.heal_bodypart_damage(1.5,0, 0)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		for(var/i in H.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_xadone(2)
 		return TRUE
-	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
+	if(istype(chem, /datum/reagent/toxin/plasma))
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		for(var/i in H.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_xadone(4) // plasmamen use plasma to reform their bones or whatever
+		return TRUE
+	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
 		H.adjustStaminaLoss(7.5, 0)
 		H.adjustBruteLoss(0.5, 0)
 		if(prob(20))

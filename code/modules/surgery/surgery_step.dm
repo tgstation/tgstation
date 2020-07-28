@@ -9,8 +9,6 @@
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 	var/silicons_obey_prob = FALSE
-	/// The amount of experience given for successfully completing the step.
-	var/experience_given = MEDICAL_SKILL_EASY
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
@@ -82,8 +80,8 @@
 	if(implement_type)	//this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
 
-	speed_mod /= (get_location_modifier(target) * FULP_SURGERY_SPEEDMOD_MULTIPLIER * (1 + surgery.speed_modifier) * implement_speed_mod) //FULPSTATION MEDICAL CHANGES -Surrealistik Feb 2020
-	var/modded_time = time * speed_mod * user.mind.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER)
+	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
+	var/modded_time = time * speed_mod
 
 
 	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
@@ -127,7 +125,6 @@
 		display_results(user, target, "<span class='notice'>You succeed.</span>",
 				"<span class='notice'>[user] succeeds!</span>",
 				"<span class='notice'>[user] finishes.</span>")
-	user?.mind.adjust_experience(/datum/skill/healing, round(experience_given))
 	return TRUE
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
@@ -174,10 +171,8 @@
 			chems += chemname
 	return english_list(chems, and_text = require_all_chems ? " and " : " or ")
 
-//Replaces visible_message during operations so only people looking over the surgeon can tell what they're doing, allowing for shenanigans.
+//Replaces visible_message during operations so only people looking over the surgeon can see them.
 /datum/surgery_step/proc/display_results(mob/user, mob/living/carbon/target, self_message, detailed_message, vague_message, target_detailed = FALSE)
-	var/list/detailed_mobs = get_hearers_in_view(1, user) //Only the surgeon and people looking over his shoulder can see the operation clearly
-	if(!target_detailed)
-		detailed_mobs -= target //The patient can't see well what's going on, unless it's something like getting cut
 	user.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
-	user.visible_message(vague_message, "", ignored_mobs = detailed_mobs)
+	if(!target_detailed)
+		to_chat(target, vague_message)

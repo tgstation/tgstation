@@ -200,11 +200,11 @@
 		return 0
 	if(!broken && !burnt)
 		if(smooth)
-			queue_smooth(src)
+			QUEUE_SMOOTH(src)
 	else
 		make_plating()
 		if(smooth)
-			queue_smooth_neighbors(src)
+			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'

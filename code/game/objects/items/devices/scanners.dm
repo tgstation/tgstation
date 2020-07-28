@@ -67,8 +67,7 @@ GENE SCANNER
 		return
 	var/list/t_ray_images = list()
 	for(var/obj/O in orange(distance, viewer) )
-
-		if(O.invisibility == INVISIBILITY_MAXIMUM || HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128
@@ -187,8 +186,20 @@ GENE SCANNER
 		render_list += "<span class='alert ml-1'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>\n"
 		if(advanced)
 			render_list += "<span class='info ml-1'>Cellular Damage Level: [M.getCloneLoss()].</span>\n"
-	if (!M.getorgan(/obj/item/organ/brain))
+	if (!M.getorganslot(ORGAN_SLOT_BRAIN)) // brain not added to carbon/human check because it's funny to get to bully simple mobs
 		render_list += "<span class='alert ml-1'>Subject lacks a brain.</span>\n"
+	if(ishuman(M))
+		var/mob/living/carbon/human/the_dude = M
+		var/datum/species/the_dudes_species = the_dude.dna.species
+		if (!(NOBLOOD in the_dudes_species.species_traits) && !the_dude.getorganslot(ORGAN_SLOT_HEART))
+			render_list += "<span class='alert ml-1'>Subject lacks a heart.</span>\n"
+		if (!(TRAIT_NOBREATH in the_dudes_species.species_traits) && !the_dude.getorganslot(ORGAN_SLOT_LUNGS))
+			render_list += "<span class='alert ml-1'>Subject lacks lungs.</span>\n"
+		if (!(TRAIT_NOMETABOLISM in the_dudes_species.species_traits) && !the_dude.getorganslot(ORGAN_SLOT_LIVER))
+			render_list += "<span class='alert ml-1'>Subject lacks a liver.</span>\n"
+		if (!(NOSTOMACH in the_dudes_species.species_traits) && !the_dude.getorganslot(ORGAN_SLOT_STOMACH))
+			render_list += "<span class='alert ml-1'>Subject lacks a stomach.</span>\n"
+
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(LAZYLEN(C.get_traumas()))
@@ -730,7 +741,8 @@ GENE SCANNER
 	name = "nanite scanner"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_scanner"
-	inhand_icon_state = "nanite_remote"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to detect nanites and their programming."
@@ -758,6 +770,7 @@ GENE SCANNER
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gene"
 	inhand_icon_state = "healthanalyzer"
+	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Hold near a DNA console to update the internal database."
@@ -776,7 +789,7 @@ GENE SCANNER
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if (!HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
 		user.visible_message("<span class='notice'>[user] analyzes [M]'s genetic sequence.</span>", \
 							"<span class='notice'>You analyze [M]'s genetic sequence.</span>")
 		gene_scan(M, user)

@@ -130,6 +130,7 @@
 	update_mobility()
 	set_light(initial(light_range))
 	update_icon()
+	to_chat(src, "<span class='boldnotice'>You turned on!</span>")
 	diag_hud_set_botstat()
 	return TRUE
 
@@ -138,6 +139,7 @@
 	update_mobility()
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
+	to_chat(src, "<span class='userdanger'>You turned off!</span>")
 	update_icon()
 
 /mob/living/simple_animal/bot/Initialize()
@@ -227,6 +229,17 @@
 			. += "[src]'s parts look very loose!"
 	else
 		. += "[src] is in pristine condition."
+	. += "<span class='notice'>Its maintenance panel is [open ? "open" : "closed"].</span>"
+	. += "<span class='info'>You can use a <b>screwdriver</b> to [open ? "close" : "open"] it.</span>"
+	if(open)
+		. += "<span class='notice'>Its control panel is [locked ? "locked" : "unlocked"].</span>"
+		var/is_sillycone = issilicon(user)
+		if(!emagged && (is_sillycone || user.Adjacent(src)))
+			. += "<span class='info'>Alt-click [is_sillycone ? "" : "or use your ID on "]it to [locked ? "un" : ""]lock its control panel.</span>"
+	if(paicard)
+		. += "<span class='notice'>It has a pAI device installed.</span>"
+		if(!open)
+			. += "<span class='info'>You can use a <b>hemostat</b> to remove it.</span>"
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount>0 && prob(10))
@@ -291,6 +304,25 @@
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)
 
+/mob/living/simple_animal/bot/AltClick(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
+	unlock_with_id(user)
+
+/mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
+	if(emagged)
+		to_chat(user, "<span class='danger'>ERROR</span>")
+		return
+	if(open)
+		to_chat(user, "<span class='warning'>Please close the access panel before [locked ? "un" : ""]locking it.</span>")
+		return
+	if(!bot_core.allowed(user))
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+		return
+	locked = !locked
+	to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
+	return TRUE
+
 /mob/living/simple_animal/bot/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!locked)
@@ -299,16 +331,7 @@
 		else
 			to_chat(user, "<span class='warning'>The maintenance panel is locked!</span>")
 	else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))
-		if(bot_core.allowed(user) && !open && !emagged)
-			locked = !locked
-			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
-		else
-			if(emagged)
-				to_chat(user, "<span class='danger'>ERROR</span>")
-			if(open)
-				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
-			else
-				to_chat(user, "<span class='warning'>Access denied.</span>")
+		unlock_with_id(user)
 	else if(istype(W, /obj/item/paicard))
 		insertpai(user, W)
 	else if(W.tool_behaviour == TOOL_HEMOSTAT && paicard)
@@ -377,22 +400,19 @@
 	else
 		say(message)
 
-/mob/living/simple_animal/bot/radio(message, message_mode, list/spans, language)
+/mob/living/simple_animal/bot/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
 	if(. != 0)
 		return
 
-	switch(message_mode)
-		if(MODE_HEADSET)
-			Radio.talk_into(src, message, , spans, language)
-			return REDUCE_RANGE
-
-		if(MODE_DEPARTMENT)
-			Radio.talk_into(src, message, message_mode, spans, language)
-			return REDUCE_RANGE
-
-	if(message_mode in GLOB.radiochannels)
-		Radio.talk_into(src, message, message_mode, spans, language)
+	if(message_mods[MODE_HEADSET])
+		Radio.talk_into(src, message, , spans, language, message_mods)
+		return REDUCE_RANGE
+	else if(message_mods[RADIO_EXTENSION] == MODE_DEPARTMENT)
+		Radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
+		return REDUCE_RANGE
+	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+		Radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 		return REDUCE_RANGE
 
 /mob/living/simple_animal/bot/proc/drop_part(obj/item/drop_item, dropzone)
@@ -864,7 +884,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				log_game("Safety lock of [src] was re-enabled by [key_name(usr)] in [AREACOORD(src)]")
 				bot_reset()
 		if("ejectpai")
-			if(paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
+			if(paicard && (!locked || issilicon(usr) || isAdminGhostAI(usr)))
 				to_chat(usr, "<span class='notice'>You eject [paicard] from [bot_name].</span>")
 				ejectpai(usr)
 	update_controls()
@@ -891,13 +911,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!hacked) //Manually emagged by a human - access denied to all.
 			return TRUE
-		else if(!issilicon(user) && !IsAdminGhost(user)) //Bot is hacked, so only silicons and admins are allowed access.
+		else if(!issilicon(user) && !isAdminGhostAI(user)) //Bot is hacked, so only silicons and admins are allowed access.
 			return TRUE
 	return FALSE
 
 /mob/living/simple_animal/bot/proc/hack(mob/user)
 	var/hack
-	if(issilicon(user) || IsAdminGhost(user)) //Allows silicons or admins to toggle the emag status of a bot.
+	if(issilicon(user) || isAdminGhostAI(user)) //Allows silicons or admins to toggle the emag status of a bot.
 		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
 		hack += "Harm Prevention Safety System: <A href='?src=[REF(src)];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
@@ -906,7 +926,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/showpai(mob/user)
 	var/eject = ""
-	if((!locked || issilicon(usr) || IsAdminGhost(usr)))
+	if((!locked || issilicon(usr) || isAdminGhostAI(usr)))
 		if(paicard || allow_pai)
 			eject += "Personality card status: "
 			if(paicard)

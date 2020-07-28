@@ -20,6 +20,8 @@
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
 			H.adjust_nutrition(nutriment_factor)
+	if(length(reagent_removal_skip_list))
+		return
 	holder.remove_reagent(type, metabolization_rate)
 
 /datum/reagent/consumable/expose_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -796,3 +798,25 @@
 	color = "#78280A" // rgb: 120 40, 10
 	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
 	taste_description = "smokey sweetness"
+
+/datum/reagent/consumable/chocolatepudding
+	name = "Chocolate Pudding"
+	description = "A great dessert for chocolate lovers."
+	color = "#800000"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+	taste_description = "sweet chocolate"
+	glass_icon_state = "chocolatepudding"
+	glass_name = "chocolate pudding"
+	glass_desc = "Tasty."
+
+/datum/reagent/consumable/vanillapudding
+	name = "Vanilla Pudding"
+	description = "A great dessert for vanilla lovers."
+	color = "#FAFAD2"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+	taste_description = "sweet vanilla"
+	glass_icon_state = "vanillapudding"
+	glass_name = "vanilla pudding"
+	glass_desc = "Tasty."

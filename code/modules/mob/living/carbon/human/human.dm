@@ -279,7 +279,7 @@
 			update_body()
 
 	var/mob/living/user = usr
-	if(istype(user) && href_list["shoes"] && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
+	if(istype(user) && href_list["shoes"] && shoes && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
 		shoes.handle_tying(usr)
 
 ///////HUDs///////
@@ -1105,7 +1105,7 @@
 
 /mob/living/carbon/human/washed(var/atom/washer)
 	. = ..()
-	if(wear_suit)
+	if(wear_suit && wear_suit.washed(washer))
 		update_inv_wear_suit()
 	else if(w_uniform && w_uniform.washed(washer))
 		update_inv_w_uniform()
@@ -1119,7 +1119,7 @@
 	var/list/obscured = check_obscured_slots()
 
 	if(gloves && !(HIDEGLOVES in obscured) && gloves.washed(washer))
-		SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		update_inv_gloves()
 
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
