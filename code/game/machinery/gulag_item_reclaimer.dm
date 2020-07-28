@@ -78,7 +78,7 @@
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])
 		return
-	var/drop_location = drop_location()
+	var/list/drop_location = drop_location()
 	for(var/i in stored_items[user])
 		var/obj/item/W = i
 		stored_items[user] -= W
