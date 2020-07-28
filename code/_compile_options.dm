@@ -11,16 +11,27 @@
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 
-//#define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
-									//implies FIND_REF_NO_CHECK_TICK
+/*
+* Enables extools-powered reference tracking system, letting you see what is referencing objects that refuse to hard delete.
+*
+* * Requires TESTING to be defined to work.
+*/
+//#define REFERENCE_TRACKING
 
-//#define FIND_REF_NO_CHECK_TICK	//Sets world.loop_checks to false and prevents find references from sleeping
+///Method of tracking references without using extools. Slower, kept to avoid over-reliance on extools.
+//#define LEGACY_REFERENCE_TRACKING
+#ifdef LEGACY_REFERENCE_TRACKING
+
+///Use the legacy reference on things hard deleting by default.
+//#define GC_FAILURE_HARD_LOOKUP
+#ifdef GC_FAILURE_HARD_LOOKUP
+#define FIND_REF_NO_CHECK_TICK
+#endif //ifdef GC_FAILURE_HARD_LOOKUP
+
+#endif //ifdef LEGACY_REFERENCE_TRACKING
 
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
-#endif
-
-//#define REFERENCE_TRACKING		//Enables extools-powered reference tracking system, letting you see what is
-									//referencing objects that refuse to hard delete
+#endif //ifdef TESTING
 
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETER
 
@@ -45,10 +56,6 @@
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
-#endif
-
-#ifdef GC_FAILURE_HARD_LOOKUP
-#define FIND_REF_NO_CHECK_TICK
 #endif
 
 #ifdef TRAVISBUILDING
