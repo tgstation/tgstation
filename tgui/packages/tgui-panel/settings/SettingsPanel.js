@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'tgui/store';
 import { updateSettings } from './actions';
 import { selectSettings } from './selectors';
 
+const THEMES = ['light', 'dark'];
+
 export const SettingsPanel = (props, context) => {
   const {
     theme,
@@ -17,7 +19,7 @@ export const SettingsPanel = (props, context) => {
         <LabeledList.Item label="Theme">
           <Dropdown
             selected={theme}
-            options={['light', 'dark']}
+            options={THEMES}
             onSelected={value => dispatch(updateSettings({
               theme: value,
             }))} />

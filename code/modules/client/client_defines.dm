@@ -101,9 +101,6 @@
 	///Used for limiting the rate of clicks sends by the client to avoid abuse
 	var/list/clicklimiter
 
-	///goonchat chatoutput of the client
-	var/datum/chat_output/chatOutput
-
  	///lazy list of all credit object bound to this client
 	var/list/credits
 
@@ -177,3 +174,6 @@
 
 	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
+
+	/// Admin music volume, from 0 to 1.
+	var/admin_music_volume = 1

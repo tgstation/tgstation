@@ -1,15 +1,18 @@
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-/datum/asset/simple/tgui
+/datum/asset/simple/tgui_common
 	assets = list(
 		"tgui-common.chunk.js" = 'tgui/packages/tgui/public/tgui-common.chunk.js',
+	)
+
+/datum/asset/simple/tgui
+	assets = list(
 		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
 	)
 
 /datum/asset/simple/tgui_panel
 	assets = list(
-		"tgui-common.chunk.js" = 'tgui/packages/tgui/public/tgui-common.chunk.js',
 		"tgui-panel.bundle.js" = 'tgui/packages/tgui/public/tgui-panel.bundle.js',
 		"tgui-panel.bundle.css" = 'tgui/packages/tgui/public/tgui-panel.bundle.css',
 	)
@@ -143,30 +146,10 @@
 	parents = list("changelog.html" = 'html/changelog.html')
 	
 
-/datum/asset/group/goonchat
-	children = list(
-		/datum/asset/simple/jquery,
-		/datum/asset/simple/namespaced/goonchat,
-		/datum/asset/spritesheet/goonchat,
-		/datum/asset/simple/namespaced/fontawesome
-	)
-
 /datum/asset/simple/jquery
 	legacy = TRUE
 	assets = list(
-		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
-	)
-
-/datum/asset/simple/namespaced/goonchat
-	legacy = TRUE
-	assets = list(
-		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
-		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
-		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
-		"browserOutput_white.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_white.css',
-	)
-	parents = list(
-		//this list intentionally left empty (parent namespaced assets can't be referred to by name, only by generated url, and goonchat isn't smart enough for that. yet)
+		"jquery.min.js" = 'html/jquery.min.js',
 	)
 
 /datum/asset/simple/namespaced/fontawesome
@@ -235,7 +218,7 @@
 		"boss4.gif" = 'icons/UI_Icons/Arcade/boss4.gif',
 		"boss5.gif" = 'icons/UI_Icons/Arcade/boss5.gif',
 		"boss6.gif" = 'icons/UI_Icons/Arcade/boss6.gif',
-		)
+	)
 
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"

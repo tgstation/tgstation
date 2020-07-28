@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
  * global
  *
  * Circumvents the message queue and sends the message
@@ -26,14 +31,14 @@
 			var/client/client = CLIENT_FROM_VAR(_target)
 			if(client)
 				// Send to tgchat
-				client.tgui_panel?.window.send_raw_message(message)
+				client.tgui_panel.window.send_raw_message(message)
 				// Send to old chat
 				SEND_TEXT(client, text)
 		return
 	var/client/client = CLIENT_FROM_VAR(target)
 	if(client)
 		// Send to tgchat
-		client.tgui_panel?.window.send_raw_message(message)
+		client.tgui_panel.window.send_raw_message(message)
 		// Send to old chat
 		SEND_TEXT(client, text)
 

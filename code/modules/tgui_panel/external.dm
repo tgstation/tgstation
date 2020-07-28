@@ -1,5 +1,61 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 /client/var/datum/tgui_panel/tgui_panel
 
 /proc/tgui_panel_setup(client/client)
 	client.tgui_panel = new(client)
 	client.tgui_panel.initialize()
+
+/// Calls syncRegex on all currently owned tgui_panel datums
+/proc/sync_chat_regexes()
+	for(var/_client in GLOB.clients)
+		var/client/client = _client
+		var/datum/tgui_panel/panel = client.tgui_panel
+		if(panel?.is_ready())
+			panel.sync_chat_regexes()
+
+/client/verb/fix_chat()
+	set name = "Fix chat"
+	set category = "OOC"
+	var/action
+	log_tgui(src, "tgui_panel: Started fix_chat.")
+	// Not initialized
+	if(!tgui_panel || !istype(tgui_panel))
+		log_tgui(src, "tgui_panel: datum is missing")
+		action = alert(src, "tgui panel was not initialized!\nSet it up again?", "", "OK", "Cancel")
+		if(action != "OK")
+			return
+		tgui_panel_setup(src)
+		action = alert(src, "Wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
+		if(action == "Fixed")
+			log_tgui(src, "tgui_panel: Fixed by 'tgui_panel_setup'")
+			return
+	// Not ready
+	if(!tgui_panel?.is_ready())
+		log_tgui(src, "tgui_panel: not ready")
+		action = alert(src, "tgui panel looks like it's waiting for something.\nSend it a ping?", "", "OK", "Cancel")
+		if(action != "OK")
+			return
+		tgui_panel.window.send_message("ping", force = TRUE)
+		action = alert(src, "Wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
+		if(action == "Fixed")
+			log_tgui(src, "tgui_panel: Fixed by sending a ping")
+			return
+	// Catch all solution
+	action = alert(src, "Looks like tgui panel was already setup, but we can still try reinitializing it.\nSet it up again?", "", "OK", "Cancel")
+	if(action != "OK")
+		return
+	tgui_panel.initialize(force = TRUE)
+	action = alert(src, "Wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
+	if(action == "Fixed")
+		log_tgui(src, "tgui_panel: Fixed by calling 'initialize'")
+		return
+	// Failed to fix
+	action = alert(src, "Welp, I'm all out of ideas. Try closing BYOND and reconnecting.\nWe could also disable tgui_panel and re-enable the old UI", "", "Thanks anyways", "Switch to old UI")
+	if (action == "Switch to old UI")
+		winset(src, "output", "on-show=&is-disabled=0&is-visible=1")
+		winset(src, "browseroutput", "is-disabled=1;is-visible=0")
+	log_tgui(src, "tgui_panel: Failed to fix.")
