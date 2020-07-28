@@ -211,6 +211,15 @@
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}
 
+/**
+	Create a new timer and add it to the queue.
+	* Arguments:
+	* * callback the callback to call on timer finish
+	* * wait deciseconds to run the timer for
+	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+*/
+#define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
+
 // Air subsystem subtasks
 #define SSAIR_PIPENETS 1
 #define SSAIR_ATMOSMACHINERY 2
