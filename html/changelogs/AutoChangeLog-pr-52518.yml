@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - balance: "Spears and other embeddables are now somewhat less effective at causing damage and bloodloss"

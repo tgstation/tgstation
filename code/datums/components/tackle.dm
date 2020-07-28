@@ -68,7 +68,7 @@
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
-	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckling)
+	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
 		return
 
 	if(!A || !(isturf(A) || isturf(A.loc)))
@@ -366,7 +366,7 @@
 			user.adjustBruteLoss(30)
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
-			playsound(user, 'sound/effects/crack2.ogg', 70, TRUE)
+			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
 			user.emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
