@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			return food_reagent_ids
 	return ..()
 
-///Random recipey for meme chem metalgen. Always requires wittel and resets every 3 days
+///Random recipe for meme chem metalgen. Always requires wittel and resets every 3 days
 /datum/chemical_reaction/randomized/metalgen
 	persistent = TRUE
 	persistence_period = 3 //Resets every three days. It's the ultimate meme and is best not worn out
@@ -188,8 +188,8 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /obj/item/paper/secretrecipe
 	name = "old recipe"
 
-	///List of possible recipeys we could display
-	var/list/possible_recipeys = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
+	///List of possible recipes we could display
+	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
 	///The one we actually end up displaying
 	var/recipe_id = null
 
@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /obj/item/paper/secretrecipe/Initialize()
 	. = ..()
 
-	recipe_id = pick(possible_recipeys)
+	recipe_id = pick(possible_recipes)
 
 	if(SSpersistence.initialized)
 		UpdateInfo()
