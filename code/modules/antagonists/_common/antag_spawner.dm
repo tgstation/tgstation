@@ -146,7 +146,7 @@
 	antag_datum.nukeop_outfit = outfit
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
-	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.nuke_team : null)
+	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
 	op_mind.special_role = special_role_name
 
 //////CLOWN OP
