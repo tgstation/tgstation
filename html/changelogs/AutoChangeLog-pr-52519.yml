@@ -1,0 +1,4 @@
+author: "ike709 and bobbahbrown"
+delete-after: True
+changes: 
+  - rscadd: "Admins can now see your bans on (some) other servers."
