@@ -17,7 +17,7 @@
 	icon = "detective"
 
 /datum/award/achievement/mafia/psychologist
-	name = "Assistant Victory"
+	name = "Psychologist Victory"
 	desc = "You learned how to not reveal someone random night one! Or... maybe you're just a lucky bastard."
 	database_id = MAFIA_MEDAL_PSYCHOLOGIST
 	icon = "psychologist"
@@ -66,7 +66,7 @@
 
 /datum/award/achievement/mafia/nightmare
 	name = "Nightmare Victory"
-	desc = "Yeah I got nothing for this one, it's traitor but harder. At least you give thoughtfeeders headaches!"
+	desc = "DID YOUR LIGHT FLICKER?!"
 	database_id = MAFIA_MEDAL_NIGHTMARE
 	icon = "nightmare"
 
