@@ -386,11 +386,13 @@
 	pad.icon_state = pad.warmup_state
 	sending_timer = addtimer(CALLBACK(src,.proc/send),warmup_time, TIMER_STOPPABLE)
 
-/obj/machinery/computer/piratepad_control/proc/stop_sending()
+/obj/machinery/computer/piratepad_control/proc/stop_sending(custom_report)
 	if(!sending)
 		return
 	sending = FALSE
 	status_report = "Ready for delivery."
+	if(custom_report)
+		status_report = custom_report
 	pad.icon_state = pad.idle_state
 	deltimer(sending_timer)
 

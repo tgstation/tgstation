@@ -19,6 +19,14 @@
 		new /obj/item/reagent_containers/food/snacks/tofu(location)
 	return
 
+/datum/chemical_reaction/chocolatepudding
+	results = list(/datum/reagent/consumable/chocolatepudding = 20)
+	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 10, /datum/reagent/consumable/eggyolk = 5)
+
+/datum/chemical_reaction/vanillapudding
+	results = list(/datum/reagent/consumable/vanillapudding = 20)
+	required_reagents = list(/datum/reagent/consumable/vanilla = 5, /datum/reagent/consumable/milk = 5, /datum/reagent/consumable/eggyolk = 5)
+
 /datum/chemical_reaction/chocolate_bar
 	required_reagents = list(/datum/reagent/consumable/soymilk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
 

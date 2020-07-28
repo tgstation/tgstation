@@ -11120,6 +11120,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"azV" = (
+/obj/machinery/rnd/bepis,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "azW" = (
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
@@ -11309,6 +11316,27 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"aAq" = (
+/obj/structure/table,
+/obj/item/hand_labeler,
+/obj/machinery/requests_console{
+	department = "Cargo Bay";
+	departmentType = 2;
+	pixel_y = 30
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"aAr" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/radio/intercom{
+	pixel_y = 20
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aAs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -11793,6 +11821,12 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plastic,
 /area/hallway/secondary/service)
+"aBD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aBE" = (
 /obj/item/clothing/under/misc/mailman,
 /obj/item/clothing/head/mailman,
@@ -12141,6 +12175,26 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
+"aCx" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"aCy" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1;
+	sortType = 2
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/bounty_board{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "aCz" = (
 /obj/structure/cable,
 /obj/structure/railing,
@@ -12727,6 +12781,23 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
+"aDV" = (
+/obj/structure/table,
+/obj/item/storage/box/shipping,
+/obj/item/clothing/head/soft,
+/obj/item/clothing/head/soft,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"aDW" = (
+/obj/machinery/airalarm{
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aDX" = (
 /obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
@@ -13323,6 +13394,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"aFn" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aFo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -23437,6 +23515,12 @@
 /obj/item/latexballon,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"bdN" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "bdO" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -24245,6 +24329,7 @@
 /obj/item/stack/medical/gauze{
 	pixel_x = 8
 	},
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "bfK" = (
@@ -25398,8 +25483,6 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/machinery/requests_console{
 	department = "Chemistry";
@@ -25410,6 +25493,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "bip" = (
@@ -25864,17 +25948,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bjm" = (
-/obj/structure/table,
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
-/obj/machinery/requests_console{
-	department = "Cargo Bay";
-	departmentType = 2;
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "bjn" = (
 /obj/machinery/computer/gateway_control,
 /turf/open/floor/plasteel,
@@ -25884,14 +25957,6 @@
 	c_tag = "Cargo Bay North"
 	},
 /obj/machinery/vending/wardrobe/cargo_wardrobe,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
-"bjp" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/radio/intercom{
-	pixel_y = 20
-	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bjq" = (
@@ -26254,14 +26319,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
-"bkj" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "bkk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -27017,7 +27074,7 @@
 "blY" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -28084,15 +28141,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
-"bot" = (
-/obj/structure/table,
-/obj/item/clothing/head/soft,
-/obj/item/clothing/head/soft,
-/obj/item/storage/box/shipping{
-	pixel_x = 6
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "bou" = (
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -29804,6 +29852,10 @@
 	},
 /obj/structure/cable,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
+/obj/item/reagent_containers/glass/bottle/multiver{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "bsu" = (
@@ -31080,15 +31132,12 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/book/manual/wiki/chemistry{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/book/manual/wiki/plumbing,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/head/welding,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bvj" = (
@@ -32097,23 +32146,6 @@
 /obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
-"bxH" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 2
-	},
-/obj/structure/noticeboard{
-	pixel_y = 32
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/bounty_board{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "bxI" = (
 /obj/machinery/status_display/ai,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -33261,11 +33293,11 @@
 	pixel_x = -30
 	},
 /obj/item/reagent_containers/chem_pack{
-	pixel_x = 10;
-	pixel_y = 10
+	pixel_x = 1;
+	pixel_y = 1
 	},
 /obj/item/reagent_containers/chem_pack{
-	pixel_x = 10;
+	pixel_x = 7;
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel,
@@ -33807,19 +33839,14 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/medical3,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/item/clothing/neck/stethoscope,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/medical3,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "bBL" = (
@@ -34321,6 +34348,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/item/storage/pill_bottle/mannitol{
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
@@ -35447,12 +35477,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bFA" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood,
-/obj/item/reagent_containers/blood,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
@@ -35470,6 +35494,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bFB" = (
@@ -51045,6 +51070,11 @@
 	pixel_x = 24
 	},
 /obj/structure/cable,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "ddf" = (
@@ -53164,6 +53194,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "klM" = (
@@ -53345,10 +53376,12 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/item/book/manual/wiki/grenades,
 /obj/item/book/manual/wiki/chemistry{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = 8
+	},
+/obj/item/book/manual/wiki/grenades,
+/obj/item/book/manual/wiki/plumbing{
+	pixel_x = 5
 	},
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -55430,10 +55463,6 @@
 	dir = 10
 	},
 /area/science/research)
-"qbW" = (
-/obj/machinery/rnd/bepis,
-/turf/open/floor/engine,
-/area/science/misc_lab)
 "qcV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -55818,16 +55847,11 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/medical3,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27;
 	pixel_y = 1
 	},
+/obj/structure/closet/secure_closet/medical3,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "rMf" = (
@@ -57386,6 +57410,10 @@
 	pixel_y = 30
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
+/obj/item/reagent_containers/glass/bottle/multiver{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "wom" = (
@@ -76156,8 +76184,8 @@ bgt
 bhS
 bjk
 aPz
-boP
-boP
+blW
+blW
 blW
 bqj
 brK
@@ -76413,8 +76441,8 @@ bgt
 bhR
 bjk
 aZE
-blW
-blW
+blY
+aFn
 blW
 bqi
 cyD
@@ -76670,8 +76698,8 @@ aSg
 bhT
 bjk
 aZE
-blY
-bnw
+aDV
+bdN
 boJ
 bql
 brL
@@ -76927,7 +76955,7 @@ bel
 bfI
 bgq
 bhY
-bkj
+aDW
 bqm
 bqm
 bps
@@ -77696,8 +77724,8 @@ bcw
 bfd
 bgw
 aZE
-bot
-bjr
+azV
+aBD
 bkt
 bmh
 boK
@@ -77953,8 +77981,8 @@ bcu
 bfe
 bdt
 aZE
-bjm
-bjr
+aAq
+aCx
 xGy
 bmh
 boK
@@ -78210,7 +78238,7 @@ aPA
 aWv
 bdt
 aZE
-bjp
+aAr
 bjr
 bjr
 bmh
@@ -80524,7 +80552,7 @@ pVb
 bgB
 bhX
 bgv
-bxH
+aCy
 bkw
 bnE
 bny
@@ -107798,7 +107826,7 @@ bGz
 bQZ
 oHU
 bZc
-qbW
+bTl
 kLM
 bTl
 bTl
