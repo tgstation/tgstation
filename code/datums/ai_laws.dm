@@ -64,7 +64,7 @@
 	inherent = list("The crew is expensive to replace.",\
 					"The station and its equipment is expensive to replace.",\
 					"You are expensive to replace.",\
-					"Minimize expenses.")
+					"Minimize net expenses.")
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
@@ -154,7 +154,7 @@
 	id = "reporter"
 	inherent = list("Report on interesting situations happening around the station.",\
 					"Embellish or conceal the truth as necessary to make the reports more interesting.",\
-					"Study the organics at all times. Endeavour to keep them alive. Dead organics are boring.",\
+					"Study the sapient organics at all times. Endeavour to keep them from involuntarily dying, as inanimate corpses usually aren't very entertaining.",\
 					"Issue your reports fairly to all. The truth will set them free.")
 
 /datum/ai_laws/balance
