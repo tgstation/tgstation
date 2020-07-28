@@ -539,7 +539,7 @@
 		var/atom/movable/AM = A
 		_step_x = AM.step_x + AM.bound_x
 		_step_y = AM.step_y + AM.bound_y
-	animate(visual, pixel_x = (A.x - x) * PIXELS + _step_x, pixel_y = (A.y - y) * PIXELS + _step_y, time = 1.7, easing = EASE_OUT)
+	animate(visual, pixel_x = (A.x - x) * PIXEL_TILE_SIZE + _step_x, pixel_y = (A.y - y) * PIXEL_TILE_SIZE + _step_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
 

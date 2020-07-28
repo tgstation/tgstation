@@ -220,10 +220,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return FALSE
 
 /turf/Cross(atom/movable/mover)
-	if(CanPass(mover, src))
-		. = ..()
-	else
-		return FALSE
+	return CanPass(mover, src)
 
 /turf/Entered(atom/movable/AM)
 	..()

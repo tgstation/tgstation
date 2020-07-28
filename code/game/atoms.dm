@@ -334,7 +334,7 @@
   * Overriden by movables to include step_x values
   */
 /atom/proc/true_x()
-	return x * PIXELS
+	return x * PIXEL_TILE_SIZE
 
 /**
   * Returns the true pixel accurate y position of the atom
@@ -342,7 +342,7 @@
   * Overriden by movables to include step_y values
   */
 /atom/proc/true_y()
-	return y * PIXELS
+	return y * PIXEL_TILE_SIZE
 
 /**
   * Is the atom in any of the centcom syndicate areas

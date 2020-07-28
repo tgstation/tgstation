@@ -75,7 +75,7 @@
 				return TRUE
 		passtable_on(A, src)
 		density = FALSE
-		. = step(A , get_pixeldir(A,loc), (bounds_dist(A, src)) + 16)
+		. = step(A , GET_PIXELDIR(A,loc), (bounds_dist(A, src)) + 16)
 		passtable_off(A, src)
 		density = TRUE
 

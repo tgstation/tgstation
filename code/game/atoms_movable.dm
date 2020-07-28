@@ -316,7 +316,7 @@
 	var/distance = bounds_dist(src, pulling)
 	if(distance < 8)
 		return FALSE
-	var/angle = get_deg(pulling, src)
+	var/angle = GET_DEG(pulling, src)
 	if((angle % 45) > 1) // We arent directly on a cardinal from the thing
 		var/tempA = WRAP(angle, 0, 45)
 		if(tempA >= 22.5)
@@ -337,7 +337,7 @@
   * Returns TRUE and allows movement if the object we're pulling is in range.
   */
 /atom/movable/proc/handle_pulled_premove(atom/newloc, direct, _step_x, _step_y)
-	if((bounds_dist(src, pulling) > 24 + step_size) && !(direct & get_pixeldir(src, pulling)))
+	if((bounds_dist(src, pulling) > 24 + step_size) && !(direct & GET_PIXELDIR(src, pulling)))
 		return FALSE
 	return TRUE
 

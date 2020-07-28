@@ -1082,9 +1082,9 @@
 	. = ..()
 	if(shoved && shover)
 		walk(src, 0)
-		var/obj/structure/table/target_table = istype(A, /obj/structure/table) ? A : locate(/obj/structure/table) in obounds()
-		var/obj/machinery/disposal/bin/target_disposal_bin = istype(A, /obj/machinery/disposal/bin) ? A : locate(/obj/machinery/disposal/bin) in obounds()
-		var/mob/living/carbon/human/target_collateral_human = istype(A, /mob/living/carbon/human) ? A : locate(/mob/living/carbon/human) in obounds()
+		var/obj/structure/table/target_table = istype(A, /obj/structure/table) ? A : null
+		var/obj/machinery/disposal/bin/target_disposal_bin = istype(A, /obj/machinery/disposal/bin) ? A : null
+		var/mob/living/carbon/human/target_collateral_human = istype(A, /mob/living/carbon/human) ? A : null
 		if(!is_shove_knockdown_blocked() && !buckled)
 			if((!target_table && !target_collateral_human && !target_disposal_bin))
 				Knockdown(SHOVE_KNOCKDOWN_SOLID)

@@ -1408,7 +1408,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.w_uniform.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 
-		var/shove_dir = get_pixeldir(user, target)
+		var/shove_dir = GET_PIXELDIR(user, target)
 		walk_for(target, shove_dir, 0, 8, until=0.2 SECONDS) // 16px per 0.1 seconds
 		target.shoved = TRUE
 		target.shover = user

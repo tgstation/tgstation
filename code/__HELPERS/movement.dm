@@ -1,12 +1,12 @@
 /// PIXEL define for general use with pixel movement(converting turf x and y values and dist values to pixel dist)
-#define PIXELS 32
+#define PIXEL_TILE_SIZE 32
 
 /// Returns the direction from thingA to thingB in degrees
 /// EAST is 0 and goes counter clockwise
-#define get_deg(thingA, thingB) ATAN2(thingB.true_y() - thingA.true_y(), thingB.true_x() - thingA.true_x())
+#define GET_DEG(thingA, thingB) ATAN2(thingB.true_y() - thingA.true_y(), thingB.true_x() - thingA.true_x())
 
 /// Use this instead of get_dir when things can be on the same turf
-#define get_pixeldir(thingA, thingB) (get_dir(thingA, thingB) || angle2dir(get_deg(thingA, thingB)))
+#define GET_PIXELDIR(thingA, thingB) (get_dir(thingA, thingB) || angle2dir(GET_DEG(thingA, thingB)))
 
 /**
   * Walk for a set amount of time

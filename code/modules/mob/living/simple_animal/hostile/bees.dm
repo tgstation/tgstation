@@ -109,7 +109,7 @@
 		return ..()
 	else
 		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line
-		var/list/searched_for = oview((vision_range / PIXELS), targets_from)
+		var/list/searched_for = oview((vision_range / PIXEL_TILE_SIZE), targets_from)
 		for(var/obj/A in searched_for)
 			. += A
 		for(var/mob/A in searched_for)
@@ -233,7 +233,7 @@
 					wanted_objects |= beehometypecache //so we don't attack beeboxes when not going home
 					target = beehome
 	if(!beehome) //add outselves to a beebox (of the same reagent) if we have no home
-		for(var/obj/structure/beebox/BB in view((vision_range / PIXELS), src))
+		for(var/obj/structure/beebox/BB in view((vision_range / PIXEL_TILE_SIZE), src))
 			if(reagent_incompatible(BB.queen_bee) || BB.bees.len >= BB.get_max_bees())
 				continue
 			BB.bees |= src

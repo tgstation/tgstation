@@ -81,10 +81,6 @@
 // amount=0.5 returns the mean of a and b.
 #define LERP(a, b, amount) ( amount ? ((a) + ((b) - (a)) * (amount)) : a )
 
-// Moves the current number towards the target number by amount.
-// It won't overshoot
-#define MOVETOWARDS(cur, target, amt) ( cur > target ? max(target, cur - amt) : min(target, cur + amt) )
-
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
 

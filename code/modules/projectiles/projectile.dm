@@ -365,28 +365,8 @@
 #undef FORCE_QDEL
 
 /obj/projectile/proc/select_target(atom/target)			//Select a target from a turf.
-	if((original in obounds()) && can_hit_target(original, permutated, TRUE, TRUE))
-		return original
 	if(target && can_hit_target(target, permutated, target == original, TRUE))
 		return target
-	var/list/mob/living/possible_mobs = typecache_filter_list(obounds(), GLOB.typecache_mob)
-	var/list/mob/mobs = list()
-	for(var/mob/living/M in possible_mobs)
-		if(!can_hit_target(M, permutated, M == original, TRUE))
-			continue
-		mobs += M
-	if (length(mobs))
-		var/mob/M = pick(mobs)
-		return M.lowest_buckled_mob()
-	var/list/obj/possible_objs = typecache_filter_list(obounds(), GLOB.typecache_machine_or_structure)
-	var/list/obj/objs = list()
-	for(var/obj/O in possible_objs)
-		if(!can_hit_target(O, permutated, O == original, TRUE))
-			continue
-		objs += O
-	if (length(objs))
-		var/obj/O = pick(objs)
-		return O
 	var/turf/T = get_turf(target)
 	//Nothing else is here that we can hit, hit the turf if we haven't.
 	if(!(T in permutated) && can_hit_target(T, permutated, T == original, TRUE))
@@ -569,7 +549,7 @@
 			continue
 		if(safety-- <= 0)
 			if(loc)
-				Bump(loc)
+				process_hit(loc)
 			if(!QDELETED(src))
 				qdel(src)
 			return	//Kill!
@@ -627,7 +607,7 @@
 		return FALSE
 	if(target in passthrough)
 		return FALSE
-	if(target.density || !target.CanPass(src))		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
+	if(target.density)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
 	if(!isliving(target))
 		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
@@ -708,7 +688,7 @@
 	if(isliving(AM) && !(pass_flags & PASSMOB))
 		var/mob/living/L = AM
 		if(can_hit_target(L, permutated, (AM == original)))
-			Bump(AM)
+			process_hit(AM)
 
 /obj/projectile/Move(atom/newloc, dir = NONE)
 	. = ..()
@@ -717,7 +697,7 @@
 			temporary_unstoppable_movement = FALSE
 			movement_type &= ~(UNSTOPPABLE)
 		if(fired && can_hit_target(original, permutated, TRUE))
-			Bump(original)
+			process_hit(original)
 
 /obj/projectile/Destroy()
 	if(hitscan)

@@ -155,7 +155,7 @@
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	now_pushing = TRUE
-	var/pd = get_deg(src, AM)
+	var/pd = GET_DEG(src, AM)
 	var/t = angle2dir(pd)
 	var/push_anchored = FALSE
 	if((AM.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)

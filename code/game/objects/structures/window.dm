@@ -219,7 +219,7 @@
 
 /obj/structure/window/proc/can_be_reached(mob/user)
 	if(!fulltile)
-		if(get_pixeldir(user,src) & dir)
+		if(GET_PIXELDIR(user,src) & dir)
 			for(var/obj/O in loc)
 				if(!O.CanPass(user, user.loc, 1))
 					return 0
