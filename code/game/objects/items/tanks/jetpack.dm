@@ -59,7 +59,6 @@
 	ion_trail.start()
 	ion_trail.set_up(user)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED_TURF, .proc/move_react)
-	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
@@ -69,7 +68,6 @@
 	icon_state = initial(icon_state)
 	ion_trail.stop()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED_TURF)
-	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
