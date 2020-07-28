@@ -384,7 +384,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(data && data["vintage"])
 			return list("[data["vintage"]]" = 1)
 		else
-			return list("Synthetic wine"=1)
+			return list("synthetic wine"=1)
 	return ..()
 
 /datum/reagent/consumable/ethanol/lizardwine
