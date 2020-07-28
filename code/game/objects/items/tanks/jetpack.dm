@@ -68,7 +68,7 @@
 	stabilizers = FALSE
 	icon_state = initial(icon_state)
 	ion_trail.stop()
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED_TURF)
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
@@ -87,9 +87,6 @@
 		return
 	if(length(user.client.keys_held & user.client.movement_keys))//You use jet when press keys. yes.
 		allow_thrust(0.01, user)
-
-/obj/item/tank/jetpack/proc/pre_move_react(mob/user)
-	//ion_trail.oldposition = get_turf(src)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if((num < 0.005 || air_contents.total_moles() < num))

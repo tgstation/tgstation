@@ -48,8 +48,9 @@
 				var/atom/movable/AM = holder
 				stepx = AM.step_x
 				stepy = AM.step_y
-			var/obj/effect/E = new effect_type(get_turf(holder))
-			E.forceMove(E.loc, stepx, stepy)
+				location = nearest_turf(holder)
+			var/obj/effect/E = new effect_type(location)
+			E.forceMove(location, stepx, stepy)
 			set_dir(E)
 			if(fade)
 				flick(fadetype, E)
