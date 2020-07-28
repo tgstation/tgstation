@@ -53,12 +53,6 @@
 	else
 		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
-/obj/machinery/scanner_gate/update_icon_state()
-	if(panel_open)
-		icon_state = "scangate"
-	else
-		icon_state = "scangate"
-
 /obj/machinery/scanner_gate/Crossed(atom/movable/AM)
 	. = ..()
 	auto_scan(AM)
@@ -174,24 +168,21 @@
 					beep = TRUE
 				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
-
+	if(reverse)
+		beep = !beep
+	if(beep)
+		alarm_beep()
 	if(!ignore_signals)
 		color = wires.get_color_of_wire(WIRE_PROCEED)
 		var/obj/item/assembly/S = wires.get_attached(color)
 		if(istype(S))
 			S.activate()
-
-	if(reverse)
-		beep = !beep
-	if(beep)
-		alarm_beep()
-		if(!ignore_signals)
+		if(beep)
 			color = wires.get_color_of_wire(WIRE_FAIL)
 			var/obj/item/assembly/S = wires.get_attached(color)
 			if(istype(S))
 				S.activate()
-	else
-		if(!ignore_signals)
+		else
 			color = wires.get_color_of_wire(WIRE_PASS)
 			var/obj/item/assembly/S = wires.get_attached(color)
 			if(istype(S))
