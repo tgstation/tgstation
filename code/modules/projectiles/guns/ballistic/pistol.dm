@@ -97,3 +97,16 @@
 		to_chat(user, "<span class='notice'>..and falls into view. Whew, that was a close one.</span>")
 		user.dropItemToGround(src)
 
+/obj/item/gun/ballistic/automatic/pistol/makeshift
+	name = "makeshiftov pistol"
+	desc = "A small, makeshift 9mm handgun. It's a miracle if it'll even fire."
+	icon_state = "makeshift"
+	mag_type = /obj/item/ammo_box/magazine/m9mm_mkshft
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/makeshift/chamber_round(keep_bullet = FALSE)
+	if(prob(40))
+		//to_chat(user, "<span class='notice'>\The [src] makes a dry sound as the slide is racked.</span>")
+		playsound(src, dry_fire_sound, 30, TRUE)
+		return
+	return ..()
