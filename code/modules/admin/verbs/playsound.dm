@@ -141,9 +141,9 @@
 				var/client/C = M.client
 				if(C.prefs.toggles & SOUND_MIDI)
 					if(!stop_web_sounds)
-						C.tgui_panel.play_music(web_sound_url, music_extra_data)
+						C.tgui_panel?.play_music(web_sound_url, music_extra_data)
 					else
-						C.tgui_panel.stop_music()
+						C.tgui_panel?.stop_music()
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
 
@@ -170,5 +170,5 @@
 	for(var/mob/M in GLOB.player_list)
 		SEND_SOUND(M, sound(null))
 		var/client/C = M.client
-		C?.tgui_panel.stop_music()
+		C?.tgui_panel?.stop_music()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
