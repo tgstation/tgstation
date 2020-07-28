@@ -1,5 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where you could not start messages with an ellipses."
-  - bugfix: "Fixed not being able to sing over comms."
