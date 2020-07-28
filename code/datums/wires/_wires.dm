@@ -271,6 +271,7 @@
 		)))
 	data["wires"] = payload
 	data["status"] = get_status()
+	data["proper_name"] = (proper_name != "Unknown") ? proper_name : null
 	return data
 
 /datum/wires/ui_act(action, params)
