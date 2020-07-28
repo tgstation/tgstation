@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			.[r] += type
 		qdel(item)
 
-//Just grab every craftable medicine you can think off
+///Just grab every craftable medicine you can think off
 /proc/build_medicine_reagents()
 	. = list()
 
@@ -177,6 +177,8 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	persistence_period = 3 //Resets every three days. It's the ultimate meme and is best not worn out
 	randomize_req_temperature = TRUE
 	possible_catalysts = list(/datum/reagent/wittel)
+	min_catalysts = 1
+	max_catalysts = 1
 	results = list(/datum/reagent/metalgen=20)
 
 /datum/chemical_reaction/randomized/metalgen/GetPossibleReagents(kind)
