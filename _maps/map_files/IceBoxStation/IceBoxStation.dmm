@@ -20544,7 +20544,10 @@
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "aWB" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/closet/crate,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aWC" = (
@@ -22822,6 +22825,10 @@
 	},
 /obj/structure/disposalpipe/junction/flip{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Vacant Commissary";
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
@@ -45656,6 +45663,10 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"clK" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "clM" = (
 /obj/structure/table,
 /obj/item/crowbar/large,
@@ -52469,6 +52480,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
+"hSa" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "hSc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -52922,6 +52938,22 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
+"jwX" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/table,
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "jxy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -53036,6 +53068,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
+"jTu" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock{
+	id_tag = "commissarydoor";
+	name = "Commissary"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/vacant_room/commissary)
 "jUA" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/structure/cable,
@@ -54657,11 +54698,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"odq" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/closet/firecloset,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "ofT" = (
 /obj/machinery/computer/bounty,
 /turf/open/floor/plasteel,
@@ -54857,6 +54893,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
+"oRP" = (
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/central)
 "oUq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 8
@@ -56093,14 +56132,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"sGb" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock{
-	id_tag = "commissarydoor";
-	name = "Commissary"
-	},
-/turf/open/floor/plasteel/dark,
-/area/vacant_room/commissary)
 "sGs" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -56464,22 +56495,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"twy" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/table,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary)
 "twX" = (
 /obj/structure/chair/plastic{
 	dir = 8
@@ -56925,9 +56940,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"uNO" = (
-/turf/open/floor/plasteel/dark,
-/area/hallway/primary/central)
 "uRm" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -80309,7 +80321,7 @@ aYh
 dfx
 cCm
 aSg
-aWB
+clK
 aPz
 bdW
 aSg
@@ -80561,12 +80573,12 @@ aPK
 aSm
 aTI
 aPK
-aWv
+aWB
 akj
 soQ
 sST
 bbU
-odq
+hSa
 rPX
 pVb
 bgB
@@ -81337,7 +81349,7 @@ avr
 aYZ
 bbT
 bcG
-twy
+jwX
 tav
 aZH
 bgD
@@ -82365,7 +82377,7 @@ swH
 swH
 baU
 nXi
-sGb
+jTu
 bcV
 bfn
 beW
@@ -82622,7 +82634,7 @@ orS
 orS
 qyN
 nrB
-uNO
+oRP
 tav
 aZK
 beV

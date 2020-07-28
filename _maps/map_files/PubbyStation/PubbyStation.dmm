@@ -22749,37 +22749,19 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"bfZ" = (
-/turf/closed/wall/r_wall,
-/area/crew_quarters/lounge)
 "bga" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "loungeshutters";
-	name = "privacy shutters"
+/obj/machinery/door/airlock{
+	id_tag = "commissarydoor";
+	name = "Commissary"
 	},
-/turf/open/floor/plating,
-/area/crew_quarters/lounge)
-"bgb" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Lounge"
-	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/crew_quarters/lounge)
+/area/vacant_room/commissary)
 "bgc" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "loungeshutters";
-	name = "privacy shutters"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/crew_quarters/lounge)
-"bgd" = (
 /turf/closed/wall,
-/area/crew_quarters/lounge)
+/area/vacant_room/commissary)
 "bge" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/directions/engineering{
@@ -23093,42 +23075,97 @@
 /turf/open/space/basic,
 /area/space)
 "bgU" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
 	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/item/screwdriver,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "bgV" = (
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "bgW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Vacant Commissary"
+	},
+/obj/machinery/button/door{
+	id = "commissarydoor";
+	name = "Commissary Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -5;
+	pixel_y = 27;
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "bgX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/storage/secure/briefcase,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "bgY" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
 	},
-/obj/machinery/button/door{
-	id = "loungeshutters";
-	name = "Privacy Shutters";
-	pixel_y = 25
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/stack/sheet/metal/five,
+/obj/item/stack/cable_coil/five,
+/obj/item/circuitboard/machine/paystand,
+/obj/item/radio/intercom{
+	pixel_y = 26
 	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/obj/machinery/light_switch{
+	pixel_x = 25
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "bgZ" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
@@ -23384,39 +23421,34 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bhF" = (
-/obj/structure/chair/comfy/beige{
-	dir = 4
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
 	},
-/obj/machinery/newscaster{
-	pixel_x = -32
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
 	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
-"bhG" = (
-/turf/open/floor/carpet,
-/area/crew_quarters/lounge)
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/secure/safe{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "bhH" = (
 /obj/structure/cable,
-/turf/open/floor/carpet,
-/area/crew_quarters/lounge)
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "bhI" = (
-/obj/structure/chair/comfy/beige{
-	dir = 8
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Lounge";
-	dir = 8
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "bhJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27;
-	pixel_y = -1
-	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhK" = (
@@ -23515,33 +23547,36 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "bib" = (
-/obj/structure/chair/comfy/beige{
-	dir = 4
+/obj/structure/closet/secure_closet/personal,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
 	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
-"bic" = (
-/obj/effect/landmark/start/assistant,
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/crew_quarters/lounge)
-"bie" = (
-/obj/structure/chair/comfy/beige{
+/obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
+"bic" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
+"bie" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "bif" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_x = -32
-	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "big" = (
@@ -23733,65 +23768,84 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "biJ" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "loungeshutters";
-	name = "privacy shutters"
-	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/crew_quarters/lounge)
+/turf/closed/wall,
+/area/vacant_room/commissary)
 "biK" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/structure/table,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 4
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
 	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "biL" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "biM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/random{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "biN" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "commissaryshutters";
+	name = "Commissary Shutters Control";
+	pixel_x = 28;
+	pixel_y = 5;
+	req_access_txt = null
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/lounge";
-	name = "Lounge APC";
-	pixel_y = -23
+/obj/machinery/newscaster{
+	pixel_y = -32
 	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/lounge)
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "biO" = (
-/obj/structure/table/glass,
-/obj/item/healthanalyzer{
-	layer = 3.1
-	},
-/obj/item/pen{
-	layer = 3.2
-	},
 /obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
@@ -23799,12 +23853,12 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"biP" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-05"
 	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"biP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -23816,6 +23870,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "biR" = (
@@ -24020,18 +24077,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
-"bjI" = (
-/obj/structure/bookcase/random/nonfiction,
-/turf/open/floor/wood,
-/area/crew_quarters/lounge)
-"bjJ" = (
-/obj/structure/bookcase/random/fiction,
-/turf/open/floor/wood,
-/area/crew_quarters/lounge)
 "bjK" = (
-/obj/structure/bookcase/random/religion,
-/turf/open/floor/wood,
-/area/crew_quarters/lounge)
+/turf/closed/wall,
+/area/vacant_room/commissary)
 "bjL" = (
 /turf/closed/wall,
 /area/storage/emergency/port)
@@ -49550,6 +49598,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"eBf" = (
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "eCw" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -51294,6 +51345,9 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"hXW" = (
+/turf/closed/wall,
+/area/hallway/secondary/entry)
 "hYe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/red{
@@ -54273,7 +54327,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sign/directions/evac{
 	dir = 8;
-	pixel_x = -32
+	pixel_x = -32;
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -54462,6 +54517,11 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"omu" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "onj" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -54777,6 +54837,13 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"oHS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "oKI" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -55475,6 +55542,21 @@
 /obj/machinery/iv_drip,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"qoh" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissaryshutters";
+	name = "Vacant Commissary Shutter"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "qqa" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
 	dir = 4
@@ -55718,6 +55800,19 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"qUe" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/vacant_room/commissary";
+	name = "Vacant Commissary APC";
+	pixel_y = -22
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "qUw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -56773,10 +56868,22 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"tfc" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet/restrooms)
 "tfP" = (
 /obj/item/beacon,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"tfS" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "tfZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
@@ -81051,7 +81158,7 @@ beZ
 bfY
 bfY
 bhE
-bfY
+tfS
 biI
 bfY
 bkT
@@ -81305,13 +81412,13 @@ sEz
 bdc
 bdX
 bfa
-bfZ
-bga
-bfZ
-bfZ
+bjK
+bjK
+bjK
+bjK
 biJ
-bfZ
-aYG
+bjK
+hXW
 bmc
 bnt
 bnt
@@ -81562,13 +81669,13 @@ aXH
 bdd
 bdY
 bfb
-bfZ
+bjK
 bgU
 bhF
 bib
 biK
-bfZ
-bfZ
+bjK
+aYG
 aYG
 aYG
 aYG
@@ -81818,14 +81925,14 @@ baR
 aXI
 bde
 baK
-baN
+oHS
 bga
 bgV
-bhG
-bhG
+bhH
+eBf
 biL
-bjI
-bgd
+bjK
+bDi
 bmd
 bnu
 bmf
@@ -82076,13 +82183,13 @@ bbV
 bbT
 bdZ
 bfc
-bgb
+bjK
 bgW
 bhH
 bic
 biM
-bjJ
-bgd
+bjK
+bDi
 bme
 bnv
 bnv
@@ -82335,11 +82442,11 @@ bea
 bfd
 bgc
 bgX
-bhG
 bhH
-bgV
+omu
+qUe
 bjK
-bgd
+bDi
 bmf
 bnv
 bor
@@ -82590,13 +82697,13 @@ aXK
 bdf
 bdf
 bfe
-bgd
+bjK
 bgY
 bhI
 bie
 biN
-bgd
-bgd
+bjK
+bDi
 bmf
 bnv
 bos
@@ -82847,12 +82954,12 @@ aXK
 aGV
 aGV
 bff
-bgd
-bga
-bgd
-bgd
-bga
-bgd
+bjK
+bjK
+qoh
+qoh
+bjK
+bjK
 bkW
 bmf
 bnv
@@ -99270,7 +99377,7 @@ aDj
 aEe
 aFa
 aFG
-aGF
+tfc
 aGF
 aGF
 aFI
