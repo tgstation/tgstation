@@ -820,6 +820,22 @@
 	build_path = /obj/item/weaponcrafting/receiver
 	category = list("hacked", "Security")
 
+/datum/design/pistolslide
+	name = "Pistol Slide"
+	id = "pistolslide"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 10000)
+	build_path = /obj/item/weaponcrafting/slide
+	category = list("hacked", "Security")
+
+/datum/design/magspring
+	name = "Magazine Spring"
+	id = "magspring"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 15000)
+	build_path = /obj/item/weaponcrafting/magspring
+	category = list("hacked", "Security")
+
 /datum/design/shotgun_slug
 	name = "Shotgun Slug"
 	id = "shotgun_slug"
