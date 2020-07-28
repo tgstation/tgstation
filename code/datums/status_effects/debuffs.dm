@@ -419,12 +419,6 @@
 	max_stacks = 7
 	bleed_damage = 20
 
-/datum/status_effect/stacking/saw_bleed/bloodletting
-	id = "bloodletting"
-	stack_threshold = 7
-	max_stacks = 7
-	bleed_damage = 20
-
 /datum/status_effect/neck_slice
 	id = "neck_slice"
 	status_type = STATUS_EFFECT_UNIQUE

@@ -9,8 +9,8 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speak_emote = list("telepathically cries")
-	speed = 2
-	move_to_delay = 2
+	speed = 5
+	move_to_delay = 5
 	projectiletype = /obj/projectile/temp/basilisk/ice
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
@@ -26,8 +26,8 @@
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	vision_range = 9
-	aggro_vision_range = 9
+	vision_range = 7
+	aggro_vision_range = 7
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
@@ -46,6 +46,7 @@
 /obj/projectile/temp/basilisk/ice
 	name = "ice blast"
 	damage = 5
+	speed = 4
 	nodamage = FALSE
 	temperature = -75
 

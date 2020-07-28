@@ -69,4 +69,4 @@
 	return "mark detonation to gain a slight speed boost temporarily"
 
 /obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
-	user.apply_status_effect(/datum/status_effect/speed_boost, 5)
+	user.apply_status_effect(/datum/status_effect/speed_boost, 10)

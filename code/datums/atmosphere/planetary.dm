@@ -38,7 +38,8 @@
 		/datum/gas/carbon_dioxide=10,
 	)
 	restricted_gases = list(
-		/datum/gas/miasma=10,
+		/datum/gas/bz=2.5,
+		/datum/gas/miasma=5,
 		/datum/gas/plasma=0.1,
 		/datum/gas/water_vapor=0.1,
 	)

@@ -382,4 +382,4 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, TRUE)
 
 /datum/movespeed_modifier/status_speed_boost
-	multiplicative_slowdown = -0.25
+	multiplicative_slowdown = -1
