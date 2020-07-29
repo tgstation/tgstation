@@ -16,6 +16,7 @@
 	var/max_fields = 3
 	var/list/current_fields
 	var/field_distance_limit = 7
+	var/field_distance_min = 1
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -35,6 +36,9 @@
 	if(T.density)
 		return
 	if(get_dist(T,src) > field_distance_limit)
+		return
+	if(get_dist(T,src) < field_distance_min)
+		to_chat(user, "<span class='warning'>Target is too close, aborting!</span>")
 		return
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, "<span class='warning'>[src] cannot sustain any more forcefields!</span>")
