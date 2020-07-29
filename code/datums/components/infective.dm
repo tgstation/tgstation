@@ -25,9 +25,9 @@
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/try_infect_equipped)
 		if(istype(parent, /obj/item/reagent_containers/food/snacks))
 			RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
-		if(istype(parent, /obj/item/reagent_containers/food/drinks))
+		else if(istype(parent, /obj/item/reagent_containers/food/drinks))
 			RegisterSignal(parent, COMSIG_DRINK_DRANK, .proc/try_infect_drink)
-		if(istype(parent, /obj/item/reagent_containers/glass))
+		else if(istype(parent, /obj/item/reagent_containers/glass))
 			RegisterSignal(parent, COMSIG_GLASS_DRANK, .proc/try_infect_drink)
 	else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
 		RegisterSignal(parent, COMSIG_GIBS_STREAK, .proc/try_infect_streak)
@@ -38,8 +38,8 @@
 	try_infect(feeder, BODY_ZONE_L_ARM)
 
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
-	for(var/V in diseases)
-		drinker.ForceContractDisease(V)
+	for(var/disease in diseases)
+		drinker.ForceContractDisease(disease)
 	try_infect(feeder, BODY_ZONE_L_ARM)
 
 /datum/component/infective/proc/clean(datum/source, clean_strength)
