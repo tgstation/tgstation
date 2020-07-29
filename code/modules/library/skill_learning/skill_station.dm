@@ -165,8 +165,8 @@
 		for(var/obj/item/skillchip/skill_chip in occupant_brain)
 			current_skills += list(list("name"=skill_chip.skill_name,"icon"=skill_chip.skill_icon,"cost"=skill_chip.slot_cost,"ref"=REF(skill_chip),"active"=(skill_chip in occupant_brain.skillchips)))
 		.["current"] = current_skills
-		.["slots_used"] = carbon_occupant.get_used_skillchip_slot_count()
-		.["slots_max"] = carbon_occupant.get_max_skillchip_slot_count()
+		.["slots_used"] = carbon_occupant.used_skillchip_slots
+		.["slots_max"] = carbon_occupant.max_skillchip_slots
 
 	.["skillchip_ready"] = inserted_skillchip ? TRUE : FALSE
 	if(inserted_skillchip)

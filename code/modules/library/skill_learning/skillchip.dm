@@ -30,6 +30,7 @@
 		to_chat(user,implanting_message)
 	if(auto_trait)
 		ADD_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
+	user.used_skillchip_slots += slot_cost
 
 /// Called after removal and/or brain exiting the body
 /obj/item/skillchip/proc/on_removal(mob/living/carbon/user,silent=TRUE)
@@ -37,6 +38,7 @@
 		to_chat(user,removal_message)
 	if(auto_trait)
 		REMOVE_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
+	user.used_skillchip_slots -= slot_cost
 
 /// Checks if this implant is valid to implant in a given mob.
 /obj/item/skillchip/proc/can_be_implanted(mob/living/carbon/target)
@@ -45,7 +47,7 @@
 	if(QDELETED(target_brain))
 		return FALSE
 	//No skill slots left
-	if(target.get_used_skillchip_slot_count() + slot_cost > target.get_max_skillchip_slot_count())
+	if(target.used_skillchip_slots + slot_cost > target.max_skillchip_slots)
 		return FALSE
 	//Only one copy of each for now.
 	if(locate(type) in target_brain.skillchips)
@@ -59,7 +61,7 @@
 	if(QDELETED(target_brain))
 		return "No brain detected."
 	//No skill slots left
-	if(target.get_used_skillchip_slot_count() + slot_cost > target.get_max_skillchip_slot_count())
+	if(target.used_skillchip_slots + slot_cost > target.max_skillchip_slots)
 		return "Complexity limit exceeded."
 	//Only one copy of each for now.
 	if(locate(type) in target_brain.skillchips)
