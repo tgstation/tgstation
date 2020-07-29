@@ -1,6 +1,6 @@
 /atom/movable
 	layer = OBJ_LAYER
-	appearance_flags = TILE_BOUND|PIXEL_SCALE
+	appearance_flags = LONG_GLIDE|PIXEL_SCALE
 	// Movement related vars
 	step_size = 32
 	//PIXEL MOVEMENT VARS
@@ -430,7 +430,7 @@
 		if(AM.sidestep) // is the thing we bumped sidestepping?
 			return
 	sidestep = TRUE
-	var/slide_dist = density ? 8 : 16 // non-dense objects need more compensation
+	var/slide_dist = density ? 12 : 16 // non-dense objects need more compensation
 	if(pulledby && pulledby.step_size > slide_dist) // we're getting pulled by someone so let's slide over at their speed
 		slide_dist = pulledby.step_size
 	if(check_left(slide_dist)) // There is an opening on the left side of src
