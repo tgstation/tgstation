@@ -242,7 +242,8 @@
 			return
 		set_anchored(!anchored)
 		if(anchored)
-			forceMove(nearest_turf(src), 0, 0)
+			forceMove(nearest_turf(src))
+			forceStep(null, 0, 0)
 		user.visible_message("<span class='notice'>[user] [anchored ? null : "un"]wrenches the solar assembly into place.</span>", "<span class='notice'>You [anchored ? null : "un"]wrench the solar assembly into place.</span>")
 		W.play_tool_sound(src, 75)
 		return TRUE
