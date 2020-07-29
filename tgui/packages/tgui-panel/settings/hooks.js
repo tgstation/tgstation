@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from 'tgui/store';
+import { useDispatch, useSelector } from 'tgui/store';
+import { toggleSettings, updateSettings } from './actions';
 import { selectSettings } from './selectors';
-import { toggleSettings } from './actions';
 
 export const useSettings = context => {
   const settings = useSelector(context, selectSettings);
@@ -8,5 +8,6 @@ export const useSettings = context => {
   return {
     ...settings,
     toggle: () => dispatch(toggleSettings()),
+    update: obj => dispatch(updateSettings(obj)),
   };
 };

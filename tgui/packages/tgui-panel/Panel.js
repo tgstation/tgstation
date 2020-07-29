@@ -1,10 +1,12 @@
 import { Button, Flex, Section } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
+import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
 import { PingIndicator } from './ping';
 import { SettingsPanel, useSettings } from './settings';
 
 export const Panel = (props, context) => {
+  const audio = useAudio(context);
   const settings = useSettings(context);
   return (
     <Pane
@@ -19,6 +21,11 @@ export const Panel = (props, context) => {
               <Flex.Item mx={1} grow={1}>
                 <ChatTabs />
               </Flex.Item>
+              {audio.playing && (
+                <Flex.Item mx={1}>
+                  <NowPlayingWidget />
+                </Flex.Item>
+              )}
               <Flex.Item mx={1}>
                 <PingIndicator />
               </Flex.Item>

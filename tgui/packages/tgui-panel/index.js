@@ -26,6 +26,7 @@ import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { logger } from 'tgui/logging';
 import { createRenderer } from 'tgui/renderer';
 import { configureStore, StoreProvider } from 'tgui/store';
+import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
@@ -36,6 +37,7 @@ perf.mark('init');
 
 const store = configureStore({
   reducer: combineReducers({
+    audio: audioReducer,
     chat: chatReducer,
     ping: pingReducer,
     settings: settingsReducer,
@@ -44,8 +46,9 @@ const store = configureStore({
     pre: [
       chatMiddleware,
       pingMiddleware,
-      settingsMiddleware,
       telemetryMiddleware,
+      settingsMiddleware,
+      audioMiddleware,
     ],
   },
 });
@@ -97,7 +100,12 @@ const setupApp = () => {
   if (module.hot) {
     setupHotReloading();
     module.hot.accept([
+      './audio',
+      './chat',
       './Panel',
+      './ping',
+      './settings',
+      './telemetry',
     ], () => {
       renderApp();
     });

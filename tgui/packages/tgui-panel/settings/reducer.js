@@ -3,6 +3,7 @@ const initialState = {
   fontSize: 9,
   lineHeight: 1.5,
   theme: 'dark',
+  adminMusicVolume: 1,
 };
 
 export const settingsReducer = (state = initialState, action) => {
@@ -20,6 +21,7 @@ export const settingsReducer = (state = initialState, action) => {
       fontSize: settings.fontSize,
       lineHeight: settings.lineHeight,
       theme: settings.theme,
+      adminMusicVolume: settings.adminMusicVolume,
     };
   }
   if (type === 'settings/toggle') {

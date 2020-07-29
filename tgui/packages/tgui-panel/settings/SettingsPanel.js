@@ -1,5 +1,5 @@
 import { toFixed } from 'common/math';
-import { Dropdown, LabeledList, NumberInput, Section } from 'tgui/components';
+import { Dropdown, LabeledList, NumberInput, Section, Knob } from 'tgui/components';
 import { useDispatch, useSelector } from 'tgui/store';
 import { updateSettings } from './actions';
 import { selectSettings } from './selectors';
@@ -11,6 +11,7 @@ export const SettingsPanel = (props, context) => {
     theme,
     fontSize,
     lineHeight,
+    adminMusicVolume,
   } = useSelector(context, selectSettings);
   const dispatch = useDispatch(context);
   return (
@@ -49,6 +50,19 @@ export const SettingsPanel = (props, context) => {
             format={value => toFixed(value, 2)}
             onChange={(e, value) => dispatch(updateSettings({
               lineHeight: value,
+            }))} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Music volume">
+          <Knob
+            inline
+            step={0.0025}
+            stepPixelSize={1}
+            minValue={0}
+            maxValue={1}
+            value={adminMusicVolume}
+            format={value => toFixed(value * 100) + '%'}
+            onChange={(e, value) => dispatch(updateSettings({
+              adminMusicVolume: value,
             }))} />
         </LabeledList.Item>
       </LabeledList>

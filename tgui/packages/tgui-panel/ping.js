@@ -5,6 +5,7 @@ import { Box } from 'tgui/components';
 import { logger } from 'tgui/logging';
 import { useSelector } from 'tgui/store';
 
+const PING_INTERVAL = 2000;
 const PING_TIMEOUT = 2000;
 const PING_MAX_FAILS = 3;
 const PING_QUEUE_SIZE = 8;
@@ -62,6 +63,7 @@ export const pingReducer = (state = {}, action) => {
 };
 
 export const pingMiddleware = store => {
+  let initialized = false;
   let index = 0;
   const pings = [];
   const sendPing = () => {
@@ -80,10 +82,13 @@ export const pingMiddleware = store => {
     });
     index = (index + 1) % PING_QUEUE_SIZE;
   };
-  setInterval(sendPing, 2000);
-  sendPing();
   return next => action => {
     const { type, payload } = action;
+    if (!initialized) {
+      initialized = true;
+      setInterval(sendPing, PING_INTERVAL);
+      sendPing();
+    }
     if (type === 'pingReply') {
       const { index } = payload;
       const ping = pings[index];
