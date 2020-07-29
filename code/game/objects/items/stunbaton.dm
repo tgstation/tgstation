@@ -240,10 +240,6 @@
 
 	playsound(src, stun_sound, 50, TRUE, -1)
 
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		H.forcesay(GLOB.hit_appends)
-
 	attack_cooldown_check = world.time + attack_cooldown
 
 	ADD_TRAIT(L, TRAIT_IWASBATONED, user)

@@ -58,7 +58,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		addtimer(CALLBACK(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount)), 0)
+		INVOKE_ASYNC(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount))
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)

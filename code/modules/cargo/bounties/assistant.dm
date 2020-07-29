@@ -153,19 +153,6 @@
 	required_count = 8
 	wanted_types = list(/obj/item/kirbyplants)
 
-/datum/bounty/item/assistant/earmuffs
-	name = "Earmuffs"
-	description = "Central Command is getting tired of your station's messages. They've ordered that you ship some earmuffs to lessen the annoyance."
-	reward = 1000
-	wanted_types = list(/obj/item/clothing/ears/earmuffs)
-
-/datum/bounty/item/assistant/handcuffs
-	name = "Handcuffs"
-	description = "A large influx of escaped convicts have arrived at Central Command. Now is the perfect time to ship out spare handcuffs (or restraints)."
-	reward = 1000
-	required_count = 5
-	wanted_types = list(/obj/item/restraints/handcuffs)
-
 /datum/bounty/item/assistant/monkey_cubes
 	name = "Monkey Cubes"
 	description = "Due to a recent genetics accident, Central Command is in serious need of monkeys. Your mission is to ship monkey cubes."

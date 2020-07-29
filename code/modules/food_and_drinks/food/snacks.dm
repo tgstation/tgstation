@@ -230,21 +230,10 @@ All foods are distributed among various categories. Use common sense.
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
 		return FALSE
 
-	var/slices_lost = 0
-	if (accuracy >= IS_SHARP_ACCURATE)
-		user.visible_message( \
-			"[user] slices [src].", \
-			"<span class='notice'>You slice [src].</span>" \
-		)
-	else
-		user.visible_message( \
-			"[user] inaccurately slices [src] with [W]!", \
-			"<span class='notice'>You inaccurately slice [src] with your [W]!</span>" \
-		)
-		slices_lost = rand(1,min(1,round(slices_num/2)))
+	user.visible_message("[user] slices [src].", "<span class='notice'>You slice [src].</span>")
 
 	var/reagents_per_slice = reagents.total_volume/slices_num
-	for(var/i=1 to (slices_num-slices_lost))
+	for(var/i in 1 to slices_num)
 		var/obj/item/reagent_containers/food/snacks/slice = new slice_path (loc)
 		initialize_slice(slice, reagents_per_slice)
 	qdel(src)
@@ -261,17 +250,19 @@ All foods are distributed among various categories. Use common sense.
 		slice.foodtype = foodtype //if something happens that overrode our food type, make sure the slice carries that over
 
 /obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
-	if(trash)
-		if(ispath(trash, /obj/item))
-			. = new trash(location)
-			trash = null
-			return
-		else if(isitem(trash))
-			var/obj/item/trash_item = trash
-			trash_item.forceMove(location)
-			. = trash
-			trash = null
-			return
+	if(!trash)
+		return
+
+	if(ispath(trash, /obj/item))
+		. = new trash(location)
+		trash = null
+		return
+	else if(isitem(trash))
+		var/obj/item/trash_item = trash
+		trash_item.forceMove(location)
+		. = trash
+		trash = null
+		return
 
 /obj/item/reagent_containers/food/snacks/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
 	cut_overlays()

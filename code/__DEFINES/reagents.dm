@@ -31,7 +31,7 @@
 #define CLEAR_REAGENTS	4	// all reagents were cleared
 
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
-#define THRESHOLD_UNHUSK 50 //Health treshold for instabitaluri and rezadone to unhusk someone
+#define THRESHOLD_UNHUSK 50 //Health treshold for synthflesh and rezadone to unhusk someone
 
 //used by chem masters and pill presses
 #define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
