@@ -713,8 +713,8 @@
 	if(gloves)
 		if(gloves.wash(clean_types))
 			update_inv_gloves()
-	else if((clean_types & CLEAN_TYPE_BLOOD) && bloody_hands > 0)
-		bloody_hands = 0
+	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
+		blood_in_hands = 0
 		update_inv_gloves()
 
 	return TRUE
@@ -772,8 +772,8 @@
 		. = TRUE
 
 	// Wash hands if exposed
-	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && bloody_hands > 0 && !(ITEM_SLOT_GLOVES in obscured))
-		bloody_hands = 0
+	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(ITEM_SLOT_GLOVES in obscured))
+		blood_in_hands = 0
 		update_inv_gloves()
 		. = TRUE
 

@@ -66,5 +66,5 @@
 	var/body_type = MALE
 
 	/// How many "units of blood" we have on our hands
-	var/bloody_hands = 0
+	var/blood_in_hands = 0
 
