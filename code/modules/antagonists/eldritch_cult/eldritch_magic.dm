@@ -566,8 +566,7 @@
 /datum/action/innate/mansus_speech/Activate()
 	var/mob/living/living_owner = owner
 	if(!originator || !(living_owner in originator.linked_mobs))
-		to_chat(living_owner, "<span class='warning'>The link seems to have been severed...</span>")
-		Remove(living_owner)
+		stack_trace("Uh oh the mansus link got somehow activated without it being linked to a raw prophet or the mob not being in a list of mobs that should be able to do it. Contact your closest coder support.")
 		return
 
 	var/message = sanitize(input("Message:", "Telepathy from the Manse") as text|null)

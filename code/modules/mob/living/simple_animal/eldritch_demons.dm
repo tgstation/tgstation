@@ -83,7 +83,7 @@
 	if(mob_linked in linked_mobs)
 		return FALSE
 	linked_mobs.Add(mob_linked)
-	to_chat(mob_linked, "<span class='notice'>You are now connected to [src]'s Mansus Link.</span>")
+	to_chat(mob_linked, "<span class='notice'>You feel something new enter your sphere of mind, you hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link.</span>")
 	var/datum/action/innate/mansus_speech/action = new(src)
 	linked_actions.Add(action)
 	action.Grant(mob_linked)
@@ -97,9 +97,18 @@
 	UnregisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/mansus_speech/action = linked_actions[link_id]
 	action.Remove(mob_linked)
-	to_chat(mob_linked, "<span class='notice'>You are no longer connected to [src]'s Mansus Link.</span>")
+	to_chat(mob_linked, "<span class='notice'>Your mind shatters as the [src]'s Mansus Link leaves your mind.</span>")
+	mob_linked.emote("Scream")
+	//micro stun
+	mob_linked.AdjustParalyzed(0.5 SECONDS)
+
 	linked_mobs[link_id] = null
 	linked_actions[link_id] = null
+
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/death(gibbed)
+	for(var/linked_mob in linked_mobs)
+		unlink_mob(linked_mob)
+	return ..()
 
 /mob/living/simple_animal/hostile/eldritch/armsy
 	name = "Terror of the night"
