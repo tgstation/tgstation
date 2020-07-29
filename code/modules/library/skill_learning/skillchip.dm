@@ -107,11 +107,14 @@
 	implanting_message = "<span class='notice'>You can now implant another chip into this adapter, but the adapter also took up an existing slot ...</span>"
 	removal_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
 	allow_multiple = 1
+	slot_cost = 0
 
 /obj/item/skillchip/useless_adapter/on_apply(mob/living/carbon/user, silent)
 	. = ..()
-	user.adjust_max_skillchip_count(1)
+	user.adjust_max_skillchip_count_without_updating(1)
+	user.used_skillchip_slots++
 
 /obj/item/skillchip/useless_adapter/on_removal(mob/living/carbon/user, silent)
 	. = ..()
-	user.adjust_max_skillchip_count(-1)
+	user.adjust_max_skillchip_count_without_updating(-1)
+	user.used_skillchip_slots--
