@@ -1,7 +1,7 @@
 /datum/component/infective
 	var/list/datum/disease/diseases //make sure these are the static, non-processing versions!
 	var/expire_time
-	var/min_clean_strength = CLEAN_WEAK
+	var/required_clean_types = CLEAN_TYPE_DISEASE
 
 /datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
 	if(islist(_diseases))
@@ -42,9 +42,10 @@
 		drinker.ForceContractDisease(V)
 	try_infect(feeder, BODY_ZONE_L_ARM)
 
-/datum/component/infective/proc/clean(datum/source, clean_strength)
-	if(clean_strength >= min_clean_strength)
+/datum/component/infective/proc/clean(datum/source, clean_types)
+	if(clean_types & required_clean_types)
 		qdel(src)
+		return TRUE
 
 /datum/component/infective/proc/try_infect_buckle(datum/source, mob/M, force)
 	if(isliving(M))

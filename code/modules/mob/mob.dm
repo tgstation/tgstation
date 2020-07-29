@@ -270,7 +270,7 @@
 		return FALSE
 	return TRUE
 
-/mob/runechat_prefs_check(mob/target, message, visible_message_flags = NONE)
+/mob/runechat_prefs_check(mob/target, visible_message_flags = NONE)
 	if(!target.client?.prefs.chat_on_map)
 		return FALSE
 	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.see_rc_emotes)
@@ -287,7 +287,7 @@
 	return
 
 ///Is the mob incapacitated
-/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
+/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
 	return
 
 /**

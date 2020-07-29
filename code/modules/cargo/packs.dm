@@ -1160,6 +1160,21 @@
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
+/datum/supply_pack/medical/medipen_variety
+	name = "Medipen Variety-Pak"
+	desc = "Contains eight different medipens in three different varieties, to assist in quickly treating seriously injured patients."
+	cost = 2000
+	contains = list(/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss
+)
+	crate_name = "medipen crate"
+
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
 	desc = "Contains thirteen different chemicals, for all the fun experiments you can make."

@@ -198,3 +198,8 @@
 /datum/mood_event/confident_mane
 	description = "<span class='nicegreen'>I'm feeling confident with a head full of hair.</span>\n"
 	mood_change = 2
+
+/datum/mood_event/holy_consumption
+	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
+	mood_change = 5
+	timeout = 3 MINUTES

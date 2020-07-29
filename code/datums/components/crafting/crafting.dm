@@ -426,6 +426,8 @@
 		//Also these are typepaths so sadly we can't just do "[a]"
 		var/atom/A = a
 		req_text += " [R.reqs[A]] [initial(A.name)],"
+	if(R.additional_req_text)
+		req_text += R.additional_req_text
 	req_text = replacetext(req_text,",","",-1)
 	data["req_text"] = req_text
 

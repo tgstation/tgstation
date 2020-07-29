@@ -556,7 +556,7 @@
 
 // /obj/projectile signals (sent to the firer)
 
-///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
+///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
 ///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
@@ -613,7 +613,8 @@
 #define COMSIG_TURF_IS_WET "check_turf_wet"
 ///(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"
-///called on an object to clean it of cleanables. Usualy with soap: (num/strength)
+
+///Called on an object to "clean it", such as removing blood decals/overlays, etc. The clean types bitfield is sent with it. Return TRUE if any cleaning was necessary and thus performed.
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"
 
 //Creamed
