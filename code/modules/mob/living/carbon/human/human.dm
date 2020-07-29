@@ -723,12 +723,12 @@
   * Cleans the lips of any lipstick. Returns TRUE if the lips had any lipstick and was thus cleaned
   */
 /mob/living/carbon/human/proc/clean_lips()
-	. = FALSE
-	if(lip_style != null || lip_color != initial(lip_color))
-		lip_style = null
-		lip_color = initial(lip_color)
-		update_body()
-		. = TRUE
+	if(isnull(lip_style) && lip_color == initial(lip_color))
+		return FALSE
+	lip_style = null
+	lip_color = initial(lip_color)
+	update_body()
+	return TRUE
 
 /**
   * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
@@ -750,14 +750,14 @@
   * Called when this human should be washed
   */
 /mob/living/carbon/human/wash(clean_types)
-	. = ..(clean_types)
+	. = ..()
 
 	// Wash equipped stuff that cannot be covered
-	if(wear_suit && wear_suit.wash(clean_types))
+	if(wear_suit?.wash(clean_types))
 		update_inv_wear_suit()
 		. = TRUE
 
-	if(belt && belt.wash(clean_types))
+	if(belt?.wash(clean_types))
 		update_inv_belt()
 		. = TRUE
 

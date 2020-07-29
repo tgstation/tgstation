@@ -972,9 +972,9 @@
 		. = TRUE
 
 	// Basically "if has washable coloration"
-	if(atom_colours && atom_colours.len >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
+	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
 		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		. = TRUE
+		return TRUE
 
 /**
   * call back when a var is edited on this atom
@@ -1054,7 +1054,7 @@
 		usr.client.cmd_admin_emp(src)
 	if(href_list[VV_HK_RADIATE] && check_rights(R_FUN))
 		var/strength = input(usr, "Choose the radiation strength.", "Choose the strength.") as num|null
-		if(strength)
+		if(!isnull(strength))
 			AddComponent(/datum/component/radioactive, strength, src)
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
 		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")

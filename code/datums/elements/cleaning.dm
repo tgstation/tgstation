@@ -15,9 +15,9 @@
 		return
 
 	tile.wash(CLEAN_WASH)
-	for(var/atom/A in tile)
+	for(var/A in tile)
 		// Clean small items that are lying on the ground
-		if(istype(A, /obj/item))
+		if(isitem(A))
 			var/obj/item/I = A
 			if(I.w_class <= WEIGHT_CLASS_SMALL && !ismob(I.loc))
 				I.wash(CLEAN_WASH)

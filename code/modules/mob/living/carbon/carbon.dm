@@ -1107,18 +1107,19 @@
 			return TRUE
 
 /mob/living/carbon/wash(clean_types)
-	. = ..(clean_types)
+	. = ..()
 
 	// Wash equipped stuff that cannot be covered
-	for(var/atom/AM in held_items)
-		if(AM.wash(clean_types))
+	for(var/i in held_items)
+		var/obj/item/held_thing = i
+		if(held_thing.wash(clean_types))
 			. = TRUE
 
-	if(back && back.wash(clean_types))
+	if(back?.wash(clean_types))
 		update_inv_back(0)
 		. = TRUE
 
-	if(head && head.wash(clean_types))
+	if(head?.wash(clean_types))
 		update_inv_head()
 		. = TRUE
 

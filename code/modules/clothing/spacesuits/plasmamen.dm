@@ -107,11 +107,11 @@
 		cut_overlays()
 
 /obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types)
-	. = ..(clean_types)
+	. = ..()
 	if(smile && (clean_types & CLEAN_TYPE_PAINT))
 		smile = FALSE
 		update_icon()
-		. = TRUE
+		return TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	on = !on

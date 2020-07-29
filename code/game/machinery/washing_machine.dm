@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		animate(src, transform=M, time=2)
 
 /obj/machinery/washing_machine/wash(clean_types)
-	. = ..(clean_types)
+	. = ..()
 	if(!busy && bloody_mess && (clean_types & CLEAN_TYPE_BLOOD))
 		bloody_mess = FALSE
 		update_icon()

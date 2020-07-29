@@ -296,8 +296,9 @@
 			if(occupant)
 				things_to_clear += occupant
 				things_to_clear += occupant.GetAllContents()
-			for(var/atom/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				AM.wash(CLEAN_ALL)
+			for(var/am in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
+				var/atom/movable/dirty_movable = am
+				dirty_movable.wash(CLEAN_ALL)
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()

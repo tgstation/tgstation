@@ -284,8 +284,8 @@
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!H.wash_hands(CLEAN_WASH))
+		var/mob/living/carbon/human/human_user = user
+		if(!human_user.wash_hands(CLEAN_WASH))
 			to_chat(user, "<span class='warning'>Your hands are covered by something!</span>")
 			success = FALSE
 	else

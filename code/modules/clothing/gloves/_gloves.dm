@@ -12,10 +12,10 @@
 	equip_delay_other = 40
 
 /obj/item/clothing/gloves/wash(clean_types)
-	. = ..(clean_types)
+	. = ..()
 	if((clean_types & CLEAN_TYPE_BLOOD) && transfer_blood > 0)
 		transfer_blood = 0
-		. = TRUE
+		return TRUE
 
 /obj/item/clothing/gloves/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>\the [src] are forcing [user]'s hands around [user.p_their()] neck! It looks like the gloves are possessed!</span>")

@@ -109,9 +109,10 @@
 /obj/machinery/shower/process()
 	if(on)
 		wash_atom(loc)
-		for(var/atom/AM in loc)
-			if(!ismopable(AM)) // Mopables will be cleaned anyways by the turf wash above
-				wash_atom(AM)
+		for(var/am in loc)
+			var/atom/movable/movable_content = am
+			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
+				wash_atom(movable_content)
 	else
 		return PROCESS_KILL
 

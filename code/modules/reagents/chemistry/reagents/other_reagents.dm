@@ -1066,15 +1066,16 @@
 	var/clean_types = CLEAN_WASH
 
 /datum/reagent/space_cleaner/expose_obj(obj/O, reac_volume)
-	if(O)
-		O.wash(clean_types)
+	O?.wash(clean_types)
 
 /datum/reagent/space_cleaner/expose_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.wash(clean_types)
-		for(var/atom/AM in T)
-			if(!ismopable(AM)) // Mopables will be cleaned anyways by the turf wash
-				AM.wash(clean_types)
+		for(var/am in T)
+			var/atom/movable/movable_content
+			if(ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash
+				continue
+			movable_content.wash(clean_types)
 
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(5,10))

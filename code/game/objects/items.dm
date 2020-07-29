@@ -1112,8 +1112,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
-	..(clean_types)
+	. = ..()
 
 	if(ismob(loc))
-		var/mob/M = loc
-		M.regenerate_icons()
+		var/mob/mob_loc = loc
+		mob_loc.regenerate_icons()

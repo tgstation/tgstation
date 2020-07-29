@@ -186,9 +186,11 @@
 		M.apply_water()
 
 	wash(CLEAN_WASH)
-	for(var/atom/AM in src)
-		if(!ismopable(AM)) // Will already get washed by the wash call above
-			AM.wash(CLEAN_WASH)
+	for(var/am in src)
+		var/atom/movable/movable_content = am
+		if(ismopable(movable_content)) // Will have already been washed by the wash call above at this point.
+			continue
+		movable_content.wash(CLEAN_WASH)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
