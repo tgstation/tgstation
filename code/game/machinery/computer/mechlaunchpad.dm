@@ -87,10 +87,7 @@
 	var/obj/machinery/mechpad/pad = mechpads[number]
 	return pad
 
-/obj/machinery/computer/mechpad/ui_state(mob/user)
-	return GLOB.physical_state
-
-/obj/machinery/computer/bsa_control/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/computer/mechpad/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MechpadConsole", name)

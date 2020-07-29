@@ -20,13 +20,12 @@
 	return ..()
 
 /obj/machinery/mechpad/multitool_act(mob/living/user, obj/item/tool)
-	if(panel_open)
-		if(!multitool_check_buffer(user, tool))
-			return
-		var/obj/item/multitool/multitool = tool
-		multitool.buffer = src
-		to_chat(user, "<span class='notice'>You save the data in the [multitool.name]'s buffer.</span>")
-		return TRUE
+	if(!multitool_check_buffer(user, tool))
+		return
+	var/obj/item/multitool/multitool = tool
+	multitool.buffer = src
+	to_chat(user, "<span class='notice'>You save the data in the [multitool.name]'s buffer.</span>")
+	return TRUE
 
 /**
   * Spawns a special supply pod whitelisted to only accept mechs and have its drop off location be another mechpad
