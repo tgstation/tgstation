@@ -189,7 +189,7 @@ VOTE_PERIOD 600
 # DEFAULT_NO_VOTE
 
 ## disable abandon mob
-# NORESPAWN
+NORESPAWN
 
 ## set a hosted by name for unix platforms
 HOSTEDBY Yournamehere
