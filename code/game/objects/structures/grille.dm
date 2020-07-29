@@ -32,7 +32,7 @@
 	var/ratio = obj_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 
-	if(smooth)
+	if(smoothing_flags)
 		QUEUE_SMOOTH(src)
 
 	if(ratio > 50)

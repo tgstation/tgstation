@@ -1,4 +1,0 @@
-author: "Donkie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed being able to cheese the voice analyzer by using multiple consecutive whitespaces"

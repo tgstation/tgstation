@@ -99,7 +99,7 @@
 
 	if(damage > 0)
 		var/armor = victim.run_armor_check(limb.body_zone, "melee", "Your armor has protected your [limb.name].", "Your armor has softened a hit to your [limb.name].",I.armour_penetration)
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, blocked=armor, sharpness = I.get_sharpness())
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, blocked=armor, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 /datum/component/embedded/Destroy()
 	var/mob/living/carbon/victim = parent
@@ -140,7 +140,7 @@
 		pain_chance_current *= 0.2
 
 	if(harmful && prob(pain_chance_current))
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=TRUE, wound_bonus = CANT_WOUND)
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] hurts!</span>")
 
 	var/fall_chance_current = fall_chance
@@ -174,7 +174,7 @@
 
 	if(harmful)
 		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) // can wound
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 
 	victim.visible_message("<span class='danger'>[weapon] falls [harmful ? "out" : "off"] of [victim.name]'s [limb.name]!</span>", "<span class='userdanger'>[weapon] falls [harmful ? "out" : "off"] of your [limb.name]!</span>")
 	safeRemove()
@@ -194,7 +194,7 @@
 		return
 	if(harmful)
 		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus.
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
 		victim.emote("scream")
 
 	victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")

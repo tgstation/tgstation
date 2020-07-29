@@ -205,6 +205,7 @@
 	name = "book"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
+	worn_icon_state = "book"
 	desc = "Crack it open, inhale the musk of its pages, and learn something new."
 	throw_speed = 1
 	throw_range = 5

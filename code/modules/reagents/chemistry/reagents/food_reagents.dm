@@ -95,6 +95,9 @@
 
 	data = taste_amounts
 
+/datum/reagent/consumable/nutriment/get_taste_description(mob/living/taster)
+	return data
+
 /datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."

@@ -1,0 +1,6 @@
+author: "Donkie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed mobs/items/turfs not being predictably washed by the various methods on board"
+  - bugfix: "Fixed showers not properly reducing clothing radioactivity"
+  - refactor: "Refactored the cleaning/washing system"

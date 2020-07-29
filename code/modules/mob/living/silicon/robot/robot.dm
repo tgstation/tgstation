@@ -453,11 +453,10 @@
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
-		if(mmi)
-			qdel(mmi)
-		explosion(src.loc,1,2,4,flame_range = 2)
+		QDEL_NULL(mmi)
+		explosion(loc,1,2,4,flame_range = 2)
 	else
-		explosion(src.loc,-1,0,2)
+		explosion(loc,-1,0,2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()

@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - tweak: "user feedback for cyborgs trying to use modules while buckled to things"

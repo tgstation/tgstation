@@ -68,3 +68,6 @@
 	///Shoving vars
 	var/shoved = FALSE
 	var/mob/living/carbon/human/shover = null
+	/// How many "units of blood" we have on our hands
+	var/blood_in_hands = 0
+

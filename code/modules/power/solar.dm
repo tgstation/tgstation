@@ -229,6 +229,11 @@
 		new glass_type(Tsec, 2)
 	glass_type = null
 
+/obj/item/solar_assembly/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	randomise_offset(anchored ? 0 : random_offset)
 
 /obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH && isturf(loc))
@@ -237,16 +242,10 @@
 			return
 		set_anchored(!anchored)
 		if(anchored)
-			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>", "<span class='notice'>You wrench the solar assembly into place.</span>")
-			W.play_tool_sound(src, 75)
 			forceMove(nearest_turf(src), 0, 0)
-			pixel_x = 0
-			pixel_y = 0
-		else
-			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from its place.</span>", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
-			W.play_tool_sound(src, 75)
-			randomise_offset(random_offset)
-		return 1
+		user.visible_message("<span class='notice'>[user] [anchored ? null : "un"]wrenches the solar assembly into place.</span>", "<span class='notice'>You [anchored ? null : "un"]wrench the solar assembly into place.</span>")
+		W.play_tool_sound(src, 75)
+		return TRUE
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
 		if(!anchored)
@@ -264,22 +263,22 @@
 		else
 			to_chat(user, "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>")
 			return
-		return 1
+		return TRUE
 
 	if(!tracker)
 		if(istype(W, /obj/item/electronics/tracker))
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
-			tracker = 1
+			tracker = TRUE
 			qdel(W)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
-			return 1
+			return TRUE
 	else
 		if(W.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
-			tracker = 0
+			tracker = FALSE
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
-			return 1
+			return TRUE
 	return ..()
 
 //

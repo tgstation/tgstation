@@ -168,6 +168,14 @@
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
+	
+	
+/obj/item/toy/balloon/arrest
+	name = "arreyst balloon"
+	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
+	icon_state = "arrestballoon"
+	inhand_icon_state = "arrestballoon"
+	random_color = FALSE
 
 /*
  * Fake singularity

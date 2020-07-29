@@ -302,6 +302,7 @@
 	display_name = "Neural Programming"
 	description = "Study into networks of processing units that mimic our brains."
 	prereq_ids = list("biotech", "datatheory")
+	design_ids = list("skill_station")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

@@ -2,7 +2,7 @@
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	var/list/datum/disease/diseases //make sure these are the static, non-processing versions!
 	var/expire_time
-	var/min_clean_strength = CLEAN_WEAK
+	var/required_clean_types = CLEAN_TYPE_DISEASE
 
 /datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
 	if(islist(_diseases))
@@ -12,7 +12,7 @@
 	if(expire_in)
 		expire_time = world.time + expire_in
 		QDEL_IN(src, expire_in)
-	
+
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
@@ -34,9 +34,10 @@
 		eater.ForceContractDisease(V)
 	try_infect(feeder, BODY_ZONE_L_ARM)
 
-/datum/component/infective/proc/clean(datum/source, clean_strength)
-	if(clean_strength >= min_clean_strength)
+/datum/component/infective/proc/clean(datum/source, clean_types)
+	if(clean_types & required_clean_types)
 		qdel(src)
+		return TRUE
 
 /datum/component/infective/proc/try_infect_buckle(datum/source, mob/M, force)
 	if(isliving(M))
