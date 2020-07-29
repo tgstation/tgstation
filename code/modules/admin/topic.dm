@@ -977,7 +977,7 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to Prison!")
 
 	else if(href_list["sendbacktolobby"])
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_SPAWN))
 			return
 
 		var/mob/M = locate(href_list["sendbacktolobby"])
