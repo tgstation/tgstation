@@ -1196,10 +1196,6 @@
 	max_skillchip_slots += delta
 	update_skillchips()
 
-/// Modifies max_skillchip_count and does NOT update active skillchips
-/mob/living/carbon/proc/adjust_max_skillchip_count_without_updating(delta)
-	max_skillchip_slots += delta
-
 /// Disables or re-enables any extra skillchips after skillchip limit changes. Inactive chips keep brain as loc but do not appear in skillchips list.
 /mob/living/carbon/proc/update_skillchips()
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
