@@ -9,5 +9,5 @@
 	H.update_skillchips()
 
 /datum/mutation/human/biotechcompat/on_losing(mob/living/carbon/human/owner)
-	. = ..()
 	owner.update_skillchips()
+	return ..()

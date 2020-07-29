@@ -1194,7 +1194,7 @@
 /// Returns maximum number of active chip skills for this mob
 /mob/living/carbon/proc/get_max_skillchip_slot_count()
 	. = 2
-	if(dna && dna.check_mutation(BIOTECHCOMPAT))
+	if(dna?.check_mutation(BIOTECHCOMPAT))
 		. += 1
 
 /// Returns sum of slots used by active chips

@@ -855,7 +855,7 @@
 	if(istype(T,/turf/open/water) || istype(T,/turf/open/floor/plating/beach/water))
 		return TRUE
 	var/obj/machinery/shower/S = locate() in T
-	if(S && S.on)
+	if(S?.on)
 		return TRUE
 
 //Same but with wheat

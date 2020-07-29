@@ -1,6 +1,6 @@
 /obj/item/skillchip
 	name = "skillchip"
-	desc = "This biochip integrates with users brain to enable mastery of specific skill. Consult certified nanotrasen neurosurgeon before use."
+	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
 	icon = 'icons/obj/card.dmi'
 	icon_state = "data_3"
@@ -41,28 +41,28 @@
 /// Checks if this implant is valid to implant in a given mob.
 /obj/item/skillchip/proc/can_be_implanted(mob/living/carbon/target)
 	//No brain
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(target_brain))
 		return FALSE
 	//No skill slots left
 	if(target.get_used_skillchip_slot_count() + slot_cost > target.get_max_skillchip_slot_count())
 		return FALSE
 	//Only one copy of each for now.
-	if(locate(type) in B.skillchips)
+	if(locate(type) in target_brain.skillchips)
 		return FALSE
 	return TRUE
 
 /// Returns readable reason why implanting cannot succeed --todo switch to flag retval in can_be_implanted to cut down copypaste
 /obj/item/skillchip/proc/can_be_implanted_message(mob/living/carbon/target)
 	//No brain
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(target_brain))
 		return "No brain detected."
 	//No skill slots left
 	if(target.get_used_skillchip_slot_count() + slot_cost > target.get_max_skillchip_slot_count())
 		return "Complexity limit exceeded."
 	//Only one copy of each for now.
-	if(locate(type) in B.skillchips)
+	if(locate(type) in target_brain.skillchips)
 		return "Duplicate chip detected."
 	return "Chip ready for implantation."
 

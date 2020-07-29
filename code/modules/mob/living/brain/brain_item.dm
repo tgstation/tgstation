@@ -57,15 +57,15 @@
 		BT.owner = owner
 		BT.on_gain()
 
-	for(var/obj/item/skillchip/S in skillchips)
-		S.on_apply(owner)
+	for(var/obj/item/skillchip/skill_chip in skillchips)
+		skill_chip.on_apply(owner)
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
-	for(var/obj/item/skillchip/S in skillchips)
-		S.on_removal(owner)
+	for(var/obj/item/skillchip/skill_chip in skillchips)
+		skill_chip.on_removal(owner)
 	..()
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
@@ -128,12 +128,12 @@
 	// Cutting out skill chips.
 	if(length(skillchips) && O.sharpness == SHARP_EDGED)
 		to_chat(user,"<span class='notice'>You begin to excise skillchips from [src].</span>")
-		if(do_after(user,15 SECONDS,target=src))
-			for(var/obj/item/skillchip/S in skillchips)
-				if(S.removable)
-					S.forceMove(drop_location())
+		if(do_after(user, 15 SECONDS, target = src))
+			for(var/obj/item/skillchip/skill_chip in skillchips)
+				if(skill_chip.removable)
+					skill_chip.forceMove(drop_location())
 				else
-					qdel(S)
+					qdel(skill_chip)
 			skillchips = null
 		return
 
@@ -249,13 +249,13 @@
 	var/obj/item/organ/brain/replacement_brain = replacement
 	if(!istype(replacement_brain))
 		return
-	for(var/obj/item/skillchip/S in src)
-		if(S in skillchips)
+	for(var/obj/item/skillchip/skill_chip in src)
+		if(skill_chip in skillchips)
 			if(owner)
-				S.on_removal(owner)
-			LAZYREMOVE(skillchips,S)
-			LAZYADD(replacement_brain.skillchips,S) //No need to call on_apply here, since it will be inserted in organ replacement soon.
-		S.forceMove(replacement)
+				skill_chip.on_removal(owner)
+			LAZYREMOVE(skillchips, skill_chip)
+			LAZYADD(replacement_brain.skillchips, skill_chip) //No need to call on_apply here, since it will be inserted in organ replacement soon.
+		skill_chip.forceMove(replacement)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"

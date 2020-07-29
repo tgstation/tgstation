@@ -45,7 +45,7 @@
 	if(working)
 		. += "working"
 
-/obj/machinery/skill_station/relaymove(mob/user as mob)
+/obj/machinery/skill_station/relaymove(mob/user)
 	open_machine()
 
 /obj/machinery/skill_station/open_machine()
@@ -87,16 +87,16 @@
 		if(inserted_skillchip)
 			to_chat(user,"<span class='notice'>There's already a skillchip inside.</span>")
 			return
-		else
-			if(!user.transferItemToLoc(I, src))
-				return
-			inserted_skillchip = I
-			SStgui.update_uis(src)
+		if(!user.transferItemToLoc(I, src))
 			return
+		inserted_skillchip = I
+		SStgui.update_uis(src)
+		return
 	return ..()
 
 /obj/machinery/skill_station/dropContents(list/subset)
-	. = ..(contents - inserted_skillchip) //This is kinda annoying
+	subset = contents - inserted_skillchip
+	return ..() //This is kinda annoying
 
 /obj/machinery/skill_station/proc/toggle_open(mob/user)
 	state_open ? close_machine() : open_machine()
@@ -104,7 +104,7 @@
 // Functions below do not validate occupant exists - should be handled outer wrappers.
 /// Start implanting.
 /obj/machinery/skill_station/proc/start_implanting()
-	if(!inserted_skillchip || !inserted_skillchip.can_be_implanted(occupant))
+	if(!inserted_skillchip?.can_be_implanted(occupant))
 		return
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/implant),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
@@ -114,7 +114,7 @@
 /obj/machinery/skill_station/proc/implant()
 	working = FALSE
 	work_timer = null
-	if(inserted_skillchip && inserted_skillchip.can_be_implanted(occupant))
+	if(inserted_skillchip?.can_be_implanted(occupant))
 		implant_skillchip(occupant,inserted_skillchip)
 	update_icon()
 	SStgui.update_uis(src)
@@ -132,41 +132,41 @@
 /obj/machinery/skill_station/proc/remove_skillchip(obj/item/skillchip/to_be_removed)
 	working = FALSE
 	work_timer = null
-	var/mob/living/carbon/C = occupant
-	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!C || !B || !(to_be_removed in B.skillchips))
+	var/mob/living/carbon/carbon_occupant = occupant
+	var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(carbon_occupant) || QDELETED(occupant_brain) || !(to_be_removed in occupant_brain.skillchips))
 		return
-	to_be_removed.on_removal(C,silent=FALSE)
-	LAZYREMOVE(B.skillchips,to_be_removed)
+	to_be_removed.on_removal(carbon_occupant, silent=FALSE)
+	LAZYREMOVE(occupant_brain.skillchips, to_be_removed)
 	if(to_be_removed.removable)
-		C.put_in_hands(to_be_removed)
+		carbon_occupant.put_in_hands(to_be_removed)
 	else
 		qdel(to_be_removed)
 	update_icon()
 	SStgui.update_uis(src)
-	to_chat(C,"<span class='notice'>Operation complete!</span>")
+	to_chat(carbon_occupant,"<span class='notice'>Operation complete!</span>")
 
 /obj/machinery/skill_station/proc/implant_skillchip(mob/living/carbon/target,obj/item/skillchip/chip)
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	chip.on_apply(target,silent=FALSE)
-	chip.forceMove(B)
-	LAZYADD(B.skillchips,chip)
+	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	chip.on_apply(target, silent = FALSE)
+	chip.forceMove(target_brain)
+	LAZYADD(target_brain.skillchips, chip)
 
 /obj/machinery/skill_station/ui_data(mob/user)
 	. = ..()
 	.["working"] = working
 	.["timeleft"] = work_timer ? timeleft(work_timer) : null
-	var/mob/living/carbon/C = occupant
-	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!C || !B)
+	var/mob/living/carbon/carbon_occupant = occupant
+	var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 		.["error"] = "Brain not detected. Please consult nearest medical practitioner."
 	else
 		var/list/current_skills = list()
-		for(var/obj/item/skillchip/S in B)
-			current_skills += list(list("name"=S.skill_name,"icon"=S.skill_icon,"cost"=S.slot_cost,"ref"=REF(S),"active"=(S in B.skillchips)))
+		for(var/obj/item/skillchip/skill_chip in occupant_brain)
+			current_skills += list(list("name"=skill_chip.skill_name,"icon"=skill_chip.skill_icon,"cost"=skill_chip.slot_cost,"ref"=REF(skill_chip),"active"=(skill_chip in occupant_brain.skillchips)))
 		.["current"] = current_skills
-		.["slots_used"] = C.get_used_skillchip_slot_count()
-		.["slots_max"] = C.get_max_skillchip_slot_count()
+		.["slots_used"] = carbon_occupant.get_used_skillchip_slot_count()
+		.["slots_max"] = carbon_occupant.get_max_skillchip_slot_count()
 
 	.["skillchip_ready"] = inserted_skillchip ? TRUE : FALSE
 	if(inserted_skillchip)
@@ -190,11 +190,11 @@
 			return TRUE
 		if("remove")
 			var/chipref = params["ref"]
-			var/mob/living/carbon/C = occupant
-			var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-			if(!C || !B)
+			var/mob/living/carbon/carbon_occupant = occupant
+			var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
+			if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 				return TRUE
-			var/obj/item/skillchip/to_be_removed = locate(chipref) in B
+			var/obj/item/skillchip/to_be_removed = locate(chipref) in occupant_brain
 			if(!to_be_removed)
 				return TRUE
 			start_removal(to_be_removed)
