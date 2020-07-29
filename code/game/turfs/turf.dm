@@ -572,4 +572,4 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/atom/movable/movable_content = am
 		if(!ismopable(movable_content))
 			continue
-		AM.wash(clean_types)
+		movable_content.wash(clean_types)
