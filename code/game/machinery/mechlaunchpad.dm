@@ -16,6 +16,7 @@
 /obj/machinery/mechpad/Destroy()
 	if(connected_console)
 		connected_console.connected_mechpad = null
+		connected_console = null
 	return ..()
 
 /obj/machinery/mechpad/attackby(obj/item/I, mob/user, params)

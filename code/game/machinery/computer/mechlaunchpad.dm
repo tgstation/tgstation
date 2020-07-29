@@ -75,10 +75,10 @@
 	if(!connected_mechpad)
 		to_chat(user, "<span class='warning'>[src] has no connected pad!</span>")
 		return
-	if(locate(/obj/mecha) in get_turf(connected_mechpad))
-		connected_mechpad.launch(where)
-	else
+	if(!(locate(/obj/mecha) in get_turf(connected_mechpad)))
 		to_chat(user, "<span class='warning'>[src] detects no mecha on the pad!</span>")
+		return
+	connected_mechpad.launch(where)
 
 ///Checks if the pad of a certain number has been QDELETED, if yes returns FALSE, otherwise returns TRUE
 /obj/machinery/computer/mechpad/proc/pad_exists(number)
@@ -126,7 +126,8 @@
 	return data
 
 /obj/machinery/computer/mechpad/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/obj/machinery/mechpad/current_pad = mechpads[selected_id]
 	switch(action)
