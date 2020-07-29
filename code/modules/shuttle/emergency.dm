@@ -123,7 +123,8 @@
 
 /obj/machinery/computer/emergency_shuttle/proc/clear_recent_action(mob/user)
 	acted_recently -= user
-	ui_interact(user)
+	if (!QDELETED(user))
+		ui_interact(user)
 
 /obj/machinery/computer/emergency_shuttle/process()
 	// Launch check is in process in case auth_need changes for some reason
