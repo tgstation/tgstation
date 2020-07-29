@@ -201,6 +201,10 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		. += amt
 	step_size = max(1, initial(step_size) / .)
 	glide_size = step_size
+	if(pulling) // update the thing we're pulling too while we're at it
+		pulling.step_size = step_size
+	if(pulledby)
+		step_size = pulledby.step_size
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()
