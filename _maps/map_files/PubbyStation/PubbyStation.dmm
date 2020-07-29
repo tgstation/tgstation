@@ -22400,15 +22400,9 @@
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "bfb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -29
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/vacant_room/commissary)
 "bfc" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/cable,
@@ -22419,6 +22413,10 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -29
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bfe" = (
@@ -23086,11 +23084,12 @@
 /obj/item/screwdriver,
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = -24
+	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/item/storage/secure/briefcase,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bgV" = (
@@ -23102,12 +23101,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary)
-"bgW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
+"bgW" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -23125,6 +23124,9 @@
 	pixel_y = 27;
 	specialfunctions = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bgX" = (
@@ -23132,8 +23134,6 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/storage/secure/briefcase,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -23143,28 +23143,19 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary)
-"bgY" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/stack/sheet/metal/five,
-/obj/item/stack/cable_coil/five,
-/obj/item/circuitboard/machine/paystand,
-/obj/item/radio/intercom{
-	pixel_y = 26
-	},
 /obj/machinery/light_switch{
 	pixel_x = 25
 	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
+/area/vacant_room/commissary)
+"bgY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom{
+	pixel_y = 26
+	},
+/turf/closed/wall,
 /area/vacant_room/commissary)
 "bgZ" = (
 /obj/structure/disposalpipe/sorting/mail{
@@ -23428,8 +23419,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/secure/safe{
-	pixel_x = -27
+/obj/structure/closet/secure_closet/personal,
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
@@ -23437,28 +23429,15 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
-"bhI" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
+"bhJ" = (
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
-"bhJ" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "bhK" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/obj/structure/cable,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central)
+/area/vacant_room/commissary)
 "bhL" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=BrigS1";
@@ -23547,7 +23526,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "bib" = (
-/obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -23557,11 +23535,13 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/stack/sheet/metal/five,
+/obj/item/stack/cable_coil/five,
+/obj/item/circuitboard/machine/paystand,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bic" = (
-/obj/machinery/holopad,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bie" = (
@@ -23569,14 +23549,24 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/structure/chair/stool,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissaryshutters";
+	name = "Vacant Commissary Shutter"
+	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bif" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "big" = (
@@ -23791,6 +23781,9 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/item/storage/secure/safe{
+	pixel_x = -27
+	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "biL" = (
@@ -23805,8 +23798,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
 	},
+/obj/structure/cable,
+/obj/item/trash/chips,
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/space)
 "biM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -23816,34 +23811,17 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/vacant_room/commissary";
+	name = "Vacant Commissary APC";
+	pixel_y = -22
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "biN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/machinery/button/door{
-	id = "commissaryshutters";
-	name = "Commissary Shutters Control";
-	pixel_x = 28;
-	pixel_y = 5;
-	req_access_txt = null
-	},
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown,
-/turf/open/floor/plasteel,
+/turf/closed/wall,
 /area/vacant_room/commissary)
 "biO" = (
 /obj/structure/sign/poster/official/random{
@@ -23852,9 +23830,6 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -23870,9 +23845,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -32
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "biR" = (
@@ -49599,6 +49571,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "eBf" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "eCw" = (
@@ -51671,6 +51647,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating,
 /area/security/execution/transfer)
+"iDh" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "iEQ" = (
 /obj/structure/table,
 /obj/item/storage/box/lights/mixed,
@@ -51751,6 +51731,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"iOj" = (
+/obj/item/reagent_containers/spray/cleaner,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 "iPj" = (
 /obj/machinery/igniter{
 	id = "xenoigniter";
@@ -54518,8 +54502,11 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "omu" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "onj" = (
@@ -54908,6 +54895,15 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"oRl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "oRX" = (
 /obj/structure/closet,
 /turf/open/floor/plating,
@@ -55543,18 +55539,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "qoh" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = "commissaryshutters";
-	name = "Vacant Commissary Shutter"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "qqa" = (
@@ -55805,12 +55790,26 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/vacant_room/commissary";
-	name = "Vacant Commissary APC";
-	pixel_y = -22
+/obj/structure/table,
+/obj/machinery/newscaster{
+	pixel_y = -32
 	},
-/obj/structure/cable,
+/obj/item/paper_bin{
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_y = 5
+	},
+/obj/machinery/button/door{
+	id = "commissaryshutters";
+	name = "Commissary Shutters Control";
+	pixel_x = 28;
+	pixel_y = 5;
+	req_access_txt = null
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "qUw" = (
@@ -58045,6 +58044,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"vAZ" = (
+/obj/item/clothing/neck/stethoscope,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 "vCC" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
@@ -81668,8 +81671,8 @@ baQ
 aXH
 bdd
 bdY
+baN
 bfb
-bjK
 bgU
 bhF
 bib
@@ -81929,10 +81932,10 @@ oHS
 bga
 bgV
 bhH
-eBf
+bhH
 biL
 bjK
-bDi
+iOj
 bmd
 bnu
 bmf
@@ -82185,11 +82188,11 @@ bdZ
 bfc
 bjK
 bgW
-bhH
+bhK
 bic
 biM
 bjK
-bDi
+vAZ
 bme
 bnv
 bnv
@@ -82442,7 +82445,7 @@ bea
 bfd
 bgc
 bgX
-bhH
+eBf
 omu
 qUe
 bjK
@@ -82699,7 +82702,7 @@ bdf
 bfe
 bjK
 bgY
-bhI
+bie
 bie
 biN
 bjK
@@ -82955,10 +82958,10 @@ aGV
 aGV
 bff
 bjK
-bjK
+bhJ
 qoh
 qoh
-bjK
+bhJ
 bjK
 bkW
 bmf
@@ -83213,7 +83216,7 @@ aAL
 bfg
 nVz
 aAL
-bhJ
+aAL
 bif
 biO
 bjL
@@ -83470,7 +83473,7 @@ aEa
 aEa
 aEa
 bgZ
-bhK
+aEa
 aIe
 biP
 bjL
@@ -84498,8 +84501,8 @@ bed
 aVS
 bgh
 aJI
-aDZ
-aHN
+iDh
+big
 biT
 bjL
 kSO
@@ -84756,7 +84759,7 @@ aVS
 bgi
 aJI
 aDZ
-aHN
+oRl
 bjL
 bjL
 blb
