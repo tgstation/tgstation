@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	assemble_baseturfs()
 
 	levelupdate()
-	if(smooth)
+	if(smoothing_flags)
 		QUEUE_SMOOTH(src)
 	visibilityChanged()
 
