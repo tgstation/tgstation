@@ -476,4 +476,4 @@ obj/item/clothing/head/helmet/space/bubbleman
 	desc = "An exaggerated blue suit, worn by a hero."
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 25, "energy" = 25, "bomb" = 20, "bio" = 10, "rad" = 10, "fire" = 100, "acid" = 10)
 	slowdown = 0
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool, /obj/item/gun, /obj/item/melee/baton)
