@@ -239,6 +239,7 @@
 		if(anchored)
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>", "<span class='notice'>You wrench the solar assembly into place.</span>")
 			W.play_tool_sound(src, 75)
+			forceMove(nearest_turf(src), 0, 0)
 			pixel_x = 0
 			pixel_y = 0
 		else

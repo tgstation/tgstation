@@ -19,7 +19,6 @@
 
 /datum/component/orbiter/RegisterWithParent()
 	var/atom/target = parent
-
 	target.orbiters = src
 	if(ismovable(target))
 		tracker = new(target, CALLBACK(src, .proc/move_react))
@@ -57,7 +56,7 @@
 			orbiter.orbiting.end_orbit(orbiter)
 	orbiters[orbiter] = TRUE
 	orbiter.orbiting = src
-	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED_TURF, .proc/orbiter_move_react)
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 
 	var/matrix/initial_transform = matrix(orbiter.transform)
@@ -78,13 +77,16 @@
 
 	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
 
-	orbiter.forceMove(get_turf(parent))
+	orbiter.forceMove(nearest_turf(parent))
+	if(ismob(orbiter))
+		var/mob/M = orbiter
+		M.client.eye = parent
 	to_chat(orbiter, "<span class='notice'>Now orbiting [parent].</span>")
 
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
 	if(!orbiters[orbiter])
 		return
-	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED_TURF)
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
 	orbiter.SpinAnimation(0, 0)
 	if(istype(orbiters[orbiter],/matrix)) //This is ugly.
@@ -92,6 +94,9 @@
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
+	if(ismob(orbiter))
+		var/mob/M = orbiter
+		M.client.eye = M.client.mob
 	if(!refreshing && !length(orbiters) && !QDELING(src))
 		qdel(src)
 
@@ -109,9 +114,10 @@
 	var/atom/curloc = master.loc
 	for(var/i in orbiters)
 		var/atom/movable/thing = i
-		if(QDELETED(thing) || thing.loc == newturf)
+		if(QDELETED(thing))
 			continue
 		thing.forceMove(newturf)
+		thing.forceStep(master)
 		if(CHECK_TICK && master.loc != curloc)
 			// We moved again during the checktick, cancel current operation
 			break

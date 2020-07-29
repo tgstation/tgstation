@@ -131,7 +131,8 @@
 	return output
 
 /obj/mecha/combat/honker/play_stepsound()
-	if(squeak)
+	if(squeak && sound_cooldown < world.time)
+		sound_cooldown = world.time + 0.25 SECONDS
 		playsound(src, "clownstep", 70, 1)
 	squeak = !squeak
 

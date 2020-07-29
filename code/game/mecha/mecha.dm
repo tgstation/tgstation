@@ -121,6 +121,7 @@
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 	var/mouse_pointer
 	var/sound_cooldown = 0
+	var/turn_cooldown = 0
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
@@ -628,7 +629,8 @@
 
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
-	if(turnsound)
+	if(turnsound && turn_cooldown < world.time)
+		turn_cooldown = world.time + 0.25 SECONDS
 		playsound(src,turnsound,40,TRUE)
 	return 1
 

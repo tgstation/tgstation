@@ -200,6 +200,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 				continue
 		. += amt
 	step_size = max(1, initial(step_size) / .)
+	glide_size = step_size
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()

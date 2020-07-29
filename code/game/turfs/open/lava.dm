@@ -36,7 +36,8 @@
 /turf/open/lava/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/lava/Entered(atom/movable/AM)
+/turf/open/lava/Cross(atom/movable/AM)
+	. = ..()
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
