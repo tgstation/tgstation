@@ -1191,6 +1191,11 @@
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
 
+/// Modifies max_skillchip_count and updates active skillchips
+/mob/living/carbon/proc/adjust_max_skillchip_count(delta)
+	max_skillchip_slots += delta
+	update_skillchips()
+
 /// Disables or re-enables any extra skillchips after skillchip limit changes. Inactive chips keep brain as loc but do not appear in skillchips list.
 /mob/living/carbon/proc/update_skillchips()
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)

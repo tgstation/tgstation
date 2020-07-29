@@ -6,10 +6,8 @@
 
 /datum/mutation/human/biotechcompat/on_acquiring(mob/living/carbon/human/H)
 	. = ..()
-	H.max_skillchip_slots += 1
-	H.update_skillchips()
+	H.adjust_max_skillchip_count(1)
 
 /datum/mutation/human/biotechcompat/on_losing(mob/living/carbon/human/owner)
-	owner.max_skillchip_slots -= 1
-	owner.update_skillchips()
+	owner.adjust_max_skillchip_count(-1)
 	return ..()
