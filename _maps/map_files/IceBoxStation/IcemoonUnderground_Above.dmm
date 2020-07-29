@@ -25,10 +25,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/eva)
-"ae" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/plasteel,
-/area/mine/eva)
 "af" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/bot,
@@ -107,11 +103,16 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "as" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot,
+/obj/item/reagent_containers/food/snacks/mint,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "at" = (
@@ -628,6 +629,10 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cl" = (
@@ -934,11 +939,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/production)
-"du" = (
-/obj/effect/turf_decal/loading_area,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "dv" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -1085,13 +1085,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dL" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dM" = (
@@ -2244,6 +2237,9 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ky" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/mechbay)
 "kI" = (
@@ -3403,7 +3399,9 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "IF" = (
-/obj/machinery/mineral/mint,
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/bot,
+/obj/item/coin/gold,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "IK" = (
@@ -24432,8 +24430,8 @@ bt
 aj
 bq
 IF
-du
-dL
+Rx
+bP
 cH
 dT
 eE
@@ -24686,7 +24684,7 @@ bH
 bV
 bt
 aI
-ae
+bt
 bq
 ar
 Rx

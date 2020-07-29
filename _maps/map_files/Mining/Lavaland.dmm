@@ -508,6 +508,9 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "bD" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/mechbay)
 "bE" = (
@@ -1002,12 +1005,10 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "db" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
 	},
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dc" = (
@@ -1016,6 +1017,7 @@
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/reagent_containers/food/snacks/mint,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dd" = (
@@ -1158,7 +1160,9 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "du" = (
-/obj/effect/turf_decal/loading_area,
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/bot,
+/obj/item/coin/gold,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dv" = (
@@ -1306,13 +1310,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dL" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dM" = (
@@ -21780,9 +21777,9 @@ cp
 bf
 cL
 bq
-bP
 du
-dL
+bP
+bP
 cH
 dT
 eE

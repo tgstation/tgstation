@@ -1,8 +1,8 @@
 /obj/machinery/mechpad
 	name = "mech orbital pad"
 	desc = "A pad to drop mechs on. From space."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "bounty_trap_on"
+	icon = 'icons/obj/telescience.dmi'
+	icon_state = "mechpad"
 	circuit = /obj/item/circuitboard/machine/mechpad
 	///Name of the mechpad in a mechpad console
 	var/display_name = "Orbital Pad"
@@ -19,16 +19,14 @@
 		connected_console = null
 	return ..()
 
-/obj/machinery/mechpad/attackby(obj/item/I, mob/user, params)
+/obj/machinery/mechpad/multitool_act(mob/living/user, obj/item/tool)
 	if(panel_open)
-		if(I.tool_behaviour == TOOL_MULTITOOL)
-			if(!multitool_check_buffer(user, I))
-				return
-			var/obj/item/multitool/M = I
-			M.buffer = src
-			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
-			return TRUE
-	return ..()
+		if(!multitool_check_buffer(user, tool))
+			return
+		var/obj/item/multitool/multitool = tool
+		multitool.buffer = src
+		to_chat(user, "<span class='notice'>You save the data in the [multitool.name]'s buffer.</span>")
+		return TRUE
 
 /**
   * Spawns a special supply pod whitelisted to only accept mechs and have its drop off location be another mechpad

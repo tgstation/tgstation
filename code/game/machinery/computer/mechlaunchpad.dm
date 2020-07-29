@@ -4,8 +4,6 @@
 	icon_screen = "mechpad"
 	icon_keyboard = "teleport_key"
 	circuit = /obj/item/circuitboard/computer/mechpad
-	ui_x = 475
-	ui_y = 130
 	///Selected mechpad in the console
 	var/selected_id
 	///Mechpads that it can send mechs through to other mechpads
@@ -42,28 +40,25 @@
 			break
 	return connected_mechpad
 
-/obj/machinery/computer/mechpad/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
+/obj/machinery/computer/mechpad/multitool_act(mob/living/user, obj/item/tool)
+	if(!multitool_check_buffer(user, tool))
+		return
+	var/obj/item/multitool/multitool = tool
+	if(multitool.buffer && istype(multitool.buffer, /obj/machinery/mechpad))
+		if(!(LAZYLEN(mechpads) < maximum_pads))
+			to_chat(user, "<span class='warning'>[src] cannot handle any more connections!</span>")
 			return
-		var/obj/item/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/mechpad))
-			if(LAZYLEN(mechpads) < maximum_pads)
-				if(M.buffer == connected_mechpad)
-					to_chat(user, "<span class='warning'>[src] cannot connect to its own mechpad!</span>")
-				else if(!connected_mechpad && M.buffer == connect_to_pad())
-					connected_mechpad = M.buffer
-					connected_mechpad.connected_console = src
-					M.buffer = null
-					to_chat(user, "<span class='notice'>You connect the console to the pad with data from the [W.name]'s buffer.</span>")
-				else
-					mechpads |= M.buffer
-					M.buffer = null
-					to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
-			else
-				to_chat(user, "<span class='warning'>[src] cannot handle any more connections!</span>")
-	else
-		return ..()
+		if(multitool.buffer == connected_mechpad)
+			to_chat(user, "<span class='warning'>[src] cannot connect to its own mechpad!</span>")
+		else if(!connected_mechpad && multitool.buffer == connect_to_pad())
+			connected_mechpad = multitool.buffer
+			connected_mechpad.connected_console = src
+			multitool.buffer = null
+			to_chat(user, "<span class='notice'>You connect the console to the pad with data from the [multitool.name]'s buffer.</span>")
+		else
+			mechpads |= multitool.buffer
+			multitool.buffer = null
+			to_chat(user, "<span class='notice'>You upload the data from the [multitool.name]'s buffer.</span>")
 
 /**
   * Tries to call the launch proc on the connected mechpad, returns if there is no connected mechpad or there is no mecha on the pad
@@ -92,10 +87,13 @@
 	var/obj/machinery/mechpad/pad = mechpads[number]
 	return pad
 
-/obj/machinery/computer/mechpad/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/mechpad/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/computer/bsa_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "MechpadConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "MechpadConsole", name)
 		ui.open()
 
 /obj/machinery/computer/mechpad/ui_data(mob/user)
@@ -133,9 +131,7 @@
 	switch(action)
 		if("select_pad")
 			selected_id = text2num(params["id"])
-			. = TRUE
 		if("rename")
-			. = TRUE
 			var/new_name = params["name"]
 			if(!new_name)
 				return
@@ -144,8 +140,6 @@
 			if(usr && alert(usr, "Are you sure?", "Unlink Orbital Pad", "I'm Sure", "Abort") != "Abort")
 				mechpads -= current_pad
 				selected_id = null
-			. = TRUE
 		if("launch")
 			try_launch(usr, current_pad)
-			. = TRUE
 	. = TRUE

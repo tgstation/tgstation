@@ -91,6 +91,7 @@
 /obj/structure/chair/sofa{
 	dir = 1
 	},
+/obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "s" = (
@@ -181,6 +182,10 @@
 /area/mine/eva)
 "K" = (
 /turf/open/floor/circuit,
+/area/mine/eva)
+"M" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plating,
 /area/mine/eva)
 "N" = (
 /obj/machinery/computer/mechpad{
@@ -19650,7 +19655,7 @@ a
 a
 a
 y
-V
+M
 V
 V
 Q
@@ -21459,7 +21464,7 @@ e
 y
 C
 C
-C
+e
 y
 a
 a
