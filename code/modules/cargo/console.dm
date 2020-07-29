@@ -17,7 +17,7 @@
 	var/message_cooldown
 	var/list/loaded_coupons
 
-	light_color = "#E2853D"//orange
+	light_color = COLOR_BRIGHT_ORANGE
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"

@@ -54,7 +54,7 @@ Slimecrossing Armor
 /obj/structure/light_prism/Initialize(mapload, newcolor)
 	. = ..()
 	color = newcolor
-	light_color = newcolor
+	set_light_color(newcolor)
 	set_light(5)
 
 /obj/structure/light_prism/attack_hand(mob/user)
