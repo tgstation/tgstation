@@ -446,9 +446,9 @@ Difficulty: Hard
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
-	if(!stat && next_move_sound <= world.time)
+	if(!stat && COOLDOWN_FINISHED(src, next_move_sound))
 		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
-		next_move_sound = world.time + 0.5 SECONDS
+		COOLDOWN_START(src, next_move_sound, 0.5 SECONDS)
 	update_approach()
 	if(revving_charge)
 		return FALSE

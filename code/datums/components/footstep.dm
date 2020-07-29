@@ -9,9 +9,8 @@
 	///This can be a list OR a soundfile OR null. Determines whatever sound gets played.
 	var/footstep_sounds
 
-	var/last_played
 	var/turf/last_played_turf
-	var/cooldown = 0.5 SECONDS
+	COOLDOWN_DECLARE(last_played)
 
 /datum/component/footstep/Initialize(footstep_type_ = FOOTSTEP_MOB_BAREFOOT, volume_ = 0.5, e_range_ = -1)
 	if(!isliving(parent))
@@ -42,9 +41,9 @@
 	var/turf/open/T = get_turf(parent)
 	if(!istype(T))
 		return
-	if(world.time < last_played + cooldown)
+	if(!COOLDOWN_FINISHED(src,last_played))
 		return
-	last_played = world.time
+	COOLDOWN_START(src, last_played, 0.5 SECONDS)
 	var/mob/living/LM = parent
 	if(!T.footstep || LM.buckled || !((LM.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
 		if (!(LM.mobility_flags & MOBILITY_STAND) && !LM.buckled && !(!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING))) //play crawling sound if we're lying

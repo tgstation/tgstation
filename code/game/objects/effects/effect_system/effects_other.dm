@@ -7,7 +7,7 @@
 /////////////////////////////////////////////
 
 /datum/effect_system/trail_follow
-	var/cooldown
+	COOLDOWN_DECLARE(cooldown)
 	var/active = FALSE
 	var/allow_overlap = FALSE
 	var/auto_process = TRUE
@@ -42,7 +42,7 @@
 /datum/effect_system/trail_follow/generate_effect()
 	if(!check_conditions())
 		return stop()
-	if(cooldown < world.time)
+	if(COOLDOWN_FINISHED(src, cooldown))
 		if(!holder.has_gravity() || !nograv_required)
 			if(ismovable(holder))
 				var/atom/movable/AM = holder
@@ -57,7 +57,7 @@
 				E.icon_state = ""
 			if(qdel_in_time)
 				QDEL_IN(E, qdel_in_time)
-			cooldown = world.time + 0.5 SECONDS
+			COOLDOWN_START(src, cooldown, 0.5 SECONDS)
 
 /datum/effect_system/trail_follow/proc/check_conditions()
 	if(!get_turf(holder))

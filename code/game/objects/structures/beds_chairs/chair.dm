@@ -216,13 +216,13 @@
 	buildstackamount = 5
 	item_chair = null
 	icon_state = "officechair_dark"
-	var/last_move_sound
+	COOLDOWN_DECLARE(last_move_sound)
 
 /obj/structure/chair/office/Moved()
 	. = ..()
-	if(has_gravity() && world.time > last_move_sound + 0.5 SECONDS)
+	if(has_gravity() && COOLDOWN_FINISHED(src, last_move_sound))
 		playsound(src, 'sound/effects/roll.ogg', 100, 1)
-		last_move_sound = world.time
+		COOLDOWN_START(src, last_move_sound, 0.5 SECONDS)
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"

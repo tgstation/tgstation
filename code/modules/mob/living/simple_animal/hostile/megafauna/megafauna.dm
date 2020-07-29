@@ -54,7 +54,7 @@
 	var/list/attack_action_types = list()
 	/// If there is a small sprite icon for players controlling the megafauna to use
 	var/small_sprite_type
-	var/next_move_sound
+	COOLDOWN_DECLARE(next_move_sound)
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()

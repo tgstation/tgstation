@@ -40,7 +40,7 @@
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
-	var/next_deny // Keeps track of the cooldown for the bump deny animation so it isnt spammed
+	COOLDOWN_DECLARE(next_deny) // Keeps track of the cooldown for the bump deny animation so it isnt spammed
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -273,9 +273,9 @@
 			else
 				flick("doorc1", src)
 		if("deny")
-			if(world.time < next_deny)
+			if(COOLDOWN_FINISHED(src, next_deny))
 				return
-			next_deny = world.time + 0.5 SECONDS
+			COOLDOWN_START(src, next_deny, 0.5 SECONDS)
 			if(!machine_stat)
 				flick("door_deny", src)
 

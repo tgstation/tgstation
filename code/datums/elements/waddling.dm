@@ -23,9 +23,9 @@
 	Waddle(target)
 
 /datum/element/waddling/proc/Waddle(atom/movable/target)
-	if(world.time < waddle_tracker[target])
+	if(!COOLDOWN_FINISHED(src, waddle_tracker[target]))
 		return
-	waddle_tracker[target] = world.time + 0.25 SECONDS
+	COOLDOWN_START(src, waddle_tracker[target], 0.25 SECONDS)
 	animate(target, pixel_z = 4, time = 0)
 	var/prev_trans = matrix(target.transform)
 	animate(pixel_z = 0, transform = turn(target.transform, pick(-12, 0, 12)), time=2)

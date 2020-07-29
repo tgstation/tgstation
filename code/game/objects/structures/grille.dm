@@ -237,7 +237,7 @@
 		return FALSE
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
 		return FALSE
-	if(shock_cooldown > world.time)
+	if(!COOLDOWN_FINISHED(src, shock_cooldown))
 		return FALSE
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
@@ -246,7 +246,7 @@
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			shock_cooldown = world.time + 0.5 SECONDS
+			COOLDOWN_START(src, shock_cooldown, 0.5 SECONDS)
 			return TRUE
 		else
 			return FALSE

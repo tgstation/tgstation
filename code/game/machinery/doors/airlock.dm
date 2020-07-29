@@ -612,9 +612,9 @@
 		if("closing")
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
-			if(world.time < next_deny)
+			if(COOLDOWN_FINISHED(src, next_deny))
 				return
-			next_deny = world.time + 0.5 SECONDS
+			COOLDOWN_START(src, next_deny, 0.5 SECONDS)
 			if(!machine_stat)
 				update_icon(AIRLOCK_DENY)
 				playsound(src,doorDeni,50,FALSE,3)
