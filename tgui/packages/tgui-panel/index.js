@@ -23,12 +23,13 @@ import './styles/themes/light.scss';
 import { perf } from 'common/perf';
 import { combineReducers } from 'common/redux';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { logger } from 'tgui/logging';
 import { createRenderer } from 'tgui/renderer';
 import { configureStore, StoreProvider } from 'tgui/store';
 import { chatMiddleware, chatReducer } from './chat';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
-import { logger } from 'tgui/logging';
+import { telemetryMiddleware } from './telemetry';
 
 perf.mark('inception', window.__inception__);
 perf.mark('init');
@@ -44,6 +45,7 @@ const store = configureStore({
       chatMiddleware,
       pingMiddleware,
       settingsMiddleware,
+      telemetryMiddleware,
     ],
   },
 });

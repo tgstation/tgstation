@@ -174,6 +174,3 @@
 
 	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
-
-	/// Admin music volume, from 0 to 1.
-	var/admin_music_volume = 1

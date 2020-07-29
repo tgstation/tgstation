@@ -9,7 +9,9 @@
 	client.tgui_panel = new(client)
 	client.tgui_panel.initialize()
 
-/// Calls syncRegex on all currently owned tgui_panel datums
+/**
+ * Calls sync_chat_regexes on all currently owned tgui_panel datums
+ */
 /proc/sync_chat_regexes()
 	for(var/_client in GLOB.clients)
 		var/client/client = _client
@@ -17,6 +19,9 @@
 		if(panel?.is_ready())
 			panel.sync_chat_regexes()
 
+/**
+ * tgui panel / chat troubleshooting verb
+ */
 /client/verb/fix_chat()
 	set name = "Fix chat"
 	set category = "OOC"
@@ -45,7 +50,7 @@
 			log_tgui(src, "tgui_panel: Fixed by sending a ping")
 			return
 	// Catch all solution
-	action = alert(src, "Looks like tgui panel was already setup, but we can still try reinitializing it.\nSet it up again?", "", "OK", "Cancel")
+	action = alert(src, "Looks like tgui panel was already setup, but we can always try again.\nSet it up again?", "", "OK", "Cancel")
 	if(action != "OK")
 		return
 	tgui_panel.initialize(force = TRUE)
