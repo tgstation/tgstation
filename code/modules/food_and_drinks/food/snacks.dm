@@ -250,17 +250,19 @@ All foods are distributed among various categories. Use common sense.
 		slice.foodtype = foodtype //if something happens that overrode our food type, make sure the slice carries that over
 
 /obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
-	if(trash)
-		if(ispath(trash, /obj/item))
-			. = new trash(location)
-			trash = null
-			return
-		else if(isitem(trash))
-			var/obj/item/trash_item = trash
-			trash_item.forceMove(location)
-			. = trash
-			trash = null
-			return
+	if(!trash)
+		return
+
+	if(ispath(trash, /obj/item))
+		. = new trash(location)
+		trash = null
+		return
+	else if(isitem(trash))
+		var/obj/item/trash_item = trash
+		trash_item.forceMove(location)
+		. = trash
+		trash = null
+		return
 
 /obj/item/reagent_containers/food/snacks/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
 	cut_overlays()

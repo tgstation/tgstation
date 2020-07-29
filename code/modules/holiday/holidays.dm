@@ -595,7 +595,7 @@
 	GLOB.maintenance_loot += list(
 		list(
 			/obj/item/reagent_containers/food/snacks/egg/loaded = 15,
-			/obj/item/storage/bag/easterbasket = 15
+			/obj/item/storage/basket/easter = 15
 		) = maint_holiday_weight,
 	)
 
