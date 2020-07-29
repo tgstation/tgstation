@@ -654,8 +654,11 @@
 		last_phase = world.time + 0.2 SECONDS
 		if(phase_state)
 			flick(phase_state, src)
-		forceMove(get_step(src,dir))
-		use_power(phasing_energy_drain)
+		var/oldflags = pass_flags
+		pass_flags = PASSALL
+		step(src, dir, 4)
+		pass_flags = oldflags
+		use_power(phasing_energy_drain / 8) //we phased 1/8th of a tile
 	else
 		if(..()) //mech was thrown
 			return
