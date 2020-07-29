@@ -610,14 +610,14 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/board/sheetifier
-	name = "Sheetifier"
-	desc = "This machine turns weird things into sheets."
+	name = "Machine Design (Sheet-meister 2000)"
+	desc = "The circuit board for a Sheet-meister 2000."
 	id = "sheetifier"
 	build_path = /obj/item/circuitboard/machine/sheetifier
 	category = list ("Misc. Machinery")
 
 /datum/design/board/vendatray
-	name = "Vend-a-Tray"
+	name = "Machine Design (Vend-a-Tray)"
 	desc = "The circuit board for a Vend-a-Tray."
 	id = "vendatray"
 	build_path = /obj/item/circuitboard/machine/vendatray
