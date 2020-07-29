@@ -809,7 +809,7 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
 		if(!buckled_mob.Move(newloc, direct, _step_x, _step_y))
-			forceMove(buckled_mob.loc)
+			forceMove(buckled_mob.loc, buckled_mob.step_x, buckled_mob.step_y)
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
 			buckled_mob.inertia_dir = last_move
