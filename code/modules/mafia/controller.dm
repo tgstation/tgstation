@@ -193,7 +193,7 @@
 	var/loser_votes = get_vote_count(loser,"Day")
 	if(loser)
 		if(loser_votes > 12)
-			loser.body.client.give_award(/datum/award/achievement/mafia/universally_hated, loser.body)
+			loser.body.client?.give_award(/datum/award/achievement/mafia/universally_hated, loser.body)
 		send_message("<b>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</b>")
 		on_trial = loser
 		on_trial.body.forceMove(get_turf(town_center_landmark))
@@ -297,7 +297,8 @@
 	var/solo_end = FALSE
 	for(var/datum/mafia_role/winner in total_victors)
 		send_message("<span class='big comradio'>!! [uppertext(winner.name)] VICTORY !!</span>")
-		winner.body.client.give_award(winner.winner_award, winner.body)
+		var/client/winner_client = GLOB.directory[winner.player_key]
+		winner_client?.give_award(winner.winner_award, winner.body)
 		solo_end = TRUE
 	if(solo_end)
 		start_the_end()
@@ -306,13 +307,15 @@
 		return FALSE
 	if(alive_mafia == 0)
 		for(var/datum/mafia_role/townie in total_town)
-			townie.body.client.give_award(townie.winner_award, townie.body)
+			var/client/townie_client = GLOB.directory[townie.player_key]
+			townie_client?.give_award(townie.winner_award, townie.body)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
 	else if(alive_mafia >= alive_town) //guess could change if town nightkill is added
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		for(var/datum/mafia_role/changeling in total_mafia)
-			changeling.body.client.give_award(changeling.winner_award, changeling.body)
+			var/client/changeling_client = GLOB.directory[changeling.player_key]
+			changeling_client?.give_award(changeling.winner_award, changeling.body)
 		return TRUE
 
 /**

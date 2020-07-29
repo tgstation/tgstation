@@ -585,6 +585,8 @@
 
 /datum/mafia_role/fugitive/proc/survived(datum/mafia_controller/game)
 	if(game_status == MAFIA_ALIVE)
+		var/client/winner_client = GLOB.directory[player_key]
+		winner_client?.give_award(winner_award, body)
 		game.send_message("<span class='big comradio'>!! FUGITIVE VICTORY !!</span>")
 
 #undef FUGITIVE_NOT_PRESERVING
@@ -628,6 +630,8 @@
 		return
 	if(lynch)
 		game.send_message("<span class='big comradio'>!! OBSESSED VICTORY !!</span>")
+		var/client/winner_client = GLOB.directory[player_key]
+		winner_client?.give_award(winner_award, body)
 		reveal_role(game, FALSE)
 	else
 		to_chat(body, "<span class='userdanger'>You have failed your objective to lynch [obsession.body]!</span>")
@@ -650,4 +654,6 @@
 		var/datum/mafia_role/victim = pick(game.judgement_guilty_votes)
 		game.send_message("<span class='big clown'>[body.real_name] WAS A CLOWN! HONK! They take down [victim.body.real_name] with their last prank.</span>")
 		game.send_message("<span class='big clown'>!! CLOWN VICTORY !!</span>")
+		var/client/winner_client = GLOB.directory[player_key]
+		winner_client?.give_award(winner_award, body)
 		victim.kill(game,FALSE)
