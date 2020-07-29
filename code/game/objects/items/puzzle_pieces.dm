@@ -140,7 +140,7 @@
 /obj/item/pressure_plate/hologrid/Crossed(atom/movable/AM)
 	. = ..()
 	if(trigger_item && istype(AM, specific_item) && !claimed)
-		AM.anchored = TRUE
+		AM.set_anchored(TRUE)
 		flick("laserbox_burn", AM)
 		trigger()
 		sleep(15)

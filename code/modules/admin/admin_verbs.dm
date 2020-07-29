@@ -170,7 +170,11 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/test_cardpack_distribution,
 	/client/proc/print_cards,
 	/datum/admins/proc/create_or_modify_area,
-	/client/proc/view_refs
+#ifdef REFERENCE_TRACKING
+	/datum/admins/proc/view_refs,
+	/datum/admins/proc/view_del_failures,
+#endif
+	/client/proc/check_timer_sources
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -759,7 +763,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
-	if(mob && IsAdminGhost(mob))
+	if(mob && isAdminGhostAI(mob))
 		mob.has_unlimited_silicon_privilege = AI_Interact
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")

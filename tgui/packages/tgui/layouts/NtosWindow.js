@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button } from '../components';
 import { refocusLayout } from './Layout';
@@ -11,6 +12,9 @@ import { Window } from './Window';
 
 export const NtosWindow = (props, context) => {
   const {
+    title,
+    width = 575,
+    height = 700,
     resizable,
     theme = 'ntos',
     children,
@@ -29,6 +33,9 @@ export const NtosWindow = (props, context) => {
   } = data;
   return (
     <Window
+      title={title}
+      width={width}
+      height={height}
       theme={theme}
       resizable={resizable}>
       <div className="NtosWindow">
@@ -51,14 +58,14 @@ export const NtosWindow = (props, context) => {
               <Box key={header.icon} inline mr={1}>
                 <img
                   className="NtosHeader__icon"
-                  src={header.icon} />
+                  src={resolveAsset(header.icon)} />
               </Box>
             ))}
             <Box inline>
               {PC_ntneticon && (
                 <img
                   className="NtosHeader__icon"
-                  src={PC_ntneticon} />
+                  src={resolveAsset(PC_ntneticon)} />
               )}
             </Box>
             {!!PC_showbatteryicon && PC_batteryicon && (
@@ -66,7 +73,7 @@ export const NtosWindow = (props, context) => {
                 {PC_batteryicon && (
                   <img
                     className="NtosHeader__icon"
-                    src={PC_batteryicon} />
+                    src={resolveAsset(PC_batteryicon)} />
                 )}
                 {PC_batterypercent && (
                   PC_batterypercent
@@ -77,7 +84,7 @@ export const NtosWindow = (props, context) => {
               <Box inline mr={1}>
                 <img
                   className="NtosHeader__icon"
-                  src={PC_apclinkicon} />
+                  src={resolveAsset(PC_apclinkicon)} />
               </Box>
             )}
             {!!PC_showexitprogram && (

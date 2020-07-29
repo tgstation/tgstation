@@ -6,8 +6,6 @@
 	verb_say = "states"
 	density = TRUE
 	req_access = list(ACCESS_BAR)
-	ui_x = 370
-	ui_y = 313
 	var/active = FALSE
 	var/list/rangers = list()
 	var/stop = 0
@@ -72,10 +70,10 @@
 		if(O.tool_behaviour == TOOL_WRENCH)
 			if(!anchored && !isinspace())
 				to_chat(user,"<span class='notice'>You secure [src] to the floor.</span>")
-				setAnchored(TRUE)
+				set_anchored(TRUE)
 			else if(anchored)
 				to_chat(user,"<span class='notice'>You unsecure and disconnect [src].</span>")
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return
 	return ..()
@@ -100,11 +98,10 @@
 		return UI_CLOSE
 	return ..()
 
-/obj/machinery/jukebox/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/jukebox/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Jukebox", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Jukebox", name)
 		ui.open()
 
 /obj/machinery/jukebox/ui_data(mob/user)

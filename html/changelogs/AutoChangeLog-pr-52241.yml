@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed sheets of glass / other materials that don't have a valid false wall type being consumed without doing anything when you try to construct a false wall with them."

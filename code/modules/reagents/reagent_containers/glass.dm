@@ -108,6 +108,13 @@
 			return
 	..()
 
+/*
+ * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
+ */
+/obj/item/reagent_containers/glass/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	if(!custom_materials)
+		custom_materials = list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5) //sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
+	return ..()
 
 /obj/item/reagent_containers/glass/beaker
 	name = "beaker"
@@ -206,8 +213,8 @@
 	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
-/obj/item/reagent_containers/glass/beaker/instabitaluri
-	list_reagents = list(/datum/reagent/medicine/c2/instabitaluri = 50)
+/obj/item/reagent_containers/glass/beaker/synthflesh
+	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"

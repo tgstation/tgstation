@@ -7,19 +7,35 @@
 import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { IS_IE8, runCommand, winset } from '../byond';
-import { Box, Icon } from '../components';
+import { backendSuspendStart, useBackend } from '../backend';
+import { Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
-import { dragStartHandler, resizeStartHandler } from '../drag';
-import { releaseHeldKeys } from '../hotkeys';
+import { toggleKitchenSink, useDebug } from '../debug';
+import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
 import { createLogger } from '../logging';
+import { useDispatch } from '../store';
 import { Layout, refocusLayout } from './Layout';
 
 const logger = createLogger('Window');
 
+const DEFAULT_SIZE = [400, 600];
+
 export class Window extends Component {
   componentDidMount() {
+    const { config, suspended } = useBackend(this.context);
+    if (suspended) {
+      return;
+    }
+    logger.log('mounting');
+    const options = {
+      size: DEFAULT_SIZE,
+      ...config.window,
+    };
+    if (this.props.width && this.props.height) {
+      options.size = [this.props.width, this.props.height];
+    }
+    setWindowKey(config.window.key);
+    recallWindowGeometry(config.window.key, options);
     refocusLayout();
   }
 
@@ -27,14 +43,18 @@ export class Window extends Component {
     const {
       resizable,
       theme,
+      title,
       children,
     } = this.props;
     const {
       config,
-      debugLayout,
+      suspended,
     } = useBackend(this.context);
+    const { debugLayout } = useDebug(this.context);
+    const dispatch = useDispatch(this.context);
+    const fancy = config.window?.fancy;
     // Determine when to show dimmer
-    const showDimmer = config.observer
+    const showDimmer = config.user.observer
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE;
     return (
@@ -43,27 +63,25 @@ export class Window extends Component {
         theme={theme}>
         <TitleBar
           className="Window__titleBar"
-          title={decodeHtmlEntities(config.title)}
+          title={!suspended && (title || decodeHtmlEntities(config.title))}
           status={config.status}
-          fancy={config.fancy}
+          fancy={fancy}
           onDragStart={dragStartHandler}
           onClose={() => {
             logger.log('pressed close');
-            releaseHeldKeys();
-            winset(config.window, 'is-visible', false);
-            runCommand(`uiclose ${config.ref}`);
+            dispatch(backendSuspendStart());
           }} />
         <div
           className={classes([
             'Window__rest',
             debugLayout && 'debug-layout',
           ])}>
-          {children}
+          {!suspended && children}
           {showDimmer && (
             <div className="Window__dimmer" />
           )}
         </div>
-        {config.fancy && resizable && (
+        {fancy && resizable && (
           <Fragment>
             <div className="Window__resizeHandle__e"
               onMousedown={resizeStartHandler(1, 0)} />
@@ -79,15 +97,26 @@ export class Window extends Component {
 }
 
 const WindowContent = props => {
-  const { scrollable, children } = props;
+  const {
+    className,
+    fitted,
+    children,
+    ...rest
+  } = props;
   // A bit lazy to actually write styles for it,
   // so we simply include a Box with margins.
   return (
     <Layout.Content
-      scrollable={scrollable}>
-      <Box m={1}>
-        {children}
-      </Box>
+      className={classes([
+        'Window__content',
+        className,
+      ])}
+      {...rest}>
+      {fitted && children || (
+        <div className="Window__contentPadding">
+          {children}
+        </div>
+      )}
     </Layout.Content>
   );
 };
@@ -106,7 +135,7 @@ const statusToColor = status => {
   }
 };
 
-const TitleBar = props => {
+const TitleBar = (props, context) => {
   const {
     className,
     title,
@@ -115,6 +144,7 @@ const TitleBar = props => {
     onDragStart,
     onClose,
   } = props;
+  const dispatch = useDispatch(context);
   return (
     <div
       className={classes([
@@ -126,13 +156,21 @@ const TitleBar = props => {
         color={statusToColor(status)}
         name="eye" />
       <div className="TitleBar__title">
-        {title === title.toLowerCase()
-          ? toTitleCase(title)
-          : title}
+        {typeof title === 'string'
+          && title === title.toLowerCase()
+          && toTitleCase(title)
+          || title}
       </div>
       <div
         className="TitleBar__dragZone"
         onMousedown={e => fancy && onDragStart(e)} />
+      {process.env.NODE_ENV !== 'production' && (
+        <div
+          className="TitleBar__devBuildIndicator"
+          onClick={() => dispatch(toggleKitchenSink())}>
+          <Icon name="bug" />
+        </div>
+      )}
       {!!fancy && (
         <div
           className="TitleBar__close TitleBar__clickable"
@@ -140,7 +178,7 @@ const TitleBar = props => {
           // IE8: Use a plain character instead of a unicode symbol.
           // eslint-disable-next-line react/no-unknown-property
           onclick={onClose}>
-          {IS_IE8 ? 'x' : '×'}
+          {Byond.IS_LTE_IE8 ? 'x' : '×'}
         </div>
       )}
     </div>

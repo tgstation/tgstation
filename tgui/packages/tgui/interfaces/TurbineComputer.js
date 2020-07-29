@@ -10,7 +10,9 @@ export const TurbineComputer = (props, context) => {
     && data.turbine
     && !data.turbine_broke);
   return (
-    <Window>
+    <Window
+      width={310}
+      height={150}>
       <Window.Content>
         <Section
           title="Status"

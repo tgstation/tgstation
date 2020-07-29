@@ -95,7 +95,7 @@
 		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
-		user.anchored = FALSE
+		user.set_anchored(FALSE)
 		teleporting = 0
 		for(var/obj/item/I in user.held_items)
 			REMOVE_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
@@ -137,7 +137,7 @@
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
-		user.anchored = TRUE
+		user.set_anchored(TRUE)
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)

@@ -1,11 +1,15 @@
-#define STARTING_PAYCHECKS 5
+#define STARTING_PAYCHECKS 7
 
-#define PAYCHECK_ASSISTANT 25
-#define PAYCHECK_MINIMAL 75
-#define PAYCHECK_EASY 125
-#define PAYCHECK_MEDIUM 175
-#define PAYCHECK_HARD 200
-#define PAYCHECK_COMMAND 250
+//Experimental change: These are subject to tweaking based on the /tg/ economy overhaul.
+#define PAYCHECK_PRISONER 25
+#define PAYCHECK_ASSISTANT 50
+#define PAYCHECK_MINIMAL 55
+#define PAYCHECK_EASY 60
+#define PAYCHECK_MEDIUM 75
+#define PAYCHECK_HARD 100
+#define PAYCHECK_COMMAND 200
+
+#define STATION_TARGET_INCREMENT 200
 
 #define MAX_GRANT_CIV 2500
 #define MAX_GRANT_ENG 3000
@@ -28,3 +32,22 @@
 #define ACCOUNT_SEC_NAME "Defense Budget"
 
 #define NO_FREEBIES "commies go home"
+
+//Defines that set what kind of civilian bounties should be applied mid-round.
+#define CIV_JOB_BASIC 1
+#define CIV_JOB_ROBO 2
+#define CIV_JOB_CHEF 3
+#define CIV_JOB_SEC 4
+#define CIV_JOB_DRINK 5
+#define CIV_JOB_CHEM 6
+#define CIV_JOB_VIRO 7
+#define CIV_JOB_SCI 8
+#define CIV_JOB_ENG 9
+#define CIV_JOB_MINE 10
+#define CIV_JOB_MED 11
+#define CIV_JOB_GROW 12
+
+//These defines are to be used to with the payment component, determines which lines will be used during a transaction. If in doubt, go with clinical.
+#define PAYMENT_CLINICAL "clinical"
+#define PAYMENT_FRIENDLY "friendly"
+#define PAYMENT_ANGRY "angry"

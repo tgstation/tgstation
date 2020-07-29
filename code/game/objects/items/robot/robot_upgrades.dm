@@ -11,6 +11,8 @@
 	var/installed = 0
 	var/require_module = 0
 	var/list/module_type = null
+	///	Bitflags listing module compatibility. Used in the exosuit fabricator for creating sub-categories.
+	var/list/module_flags = NONE
 	// if true, is not stored in the robot to be ejected
 	// if module is reset
 	var/one_use = FALSE
@@ -72,6 +74,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/security)
+	module_flags = BORG_MODULE_SECURITY
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -120,6 +123,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/miner)
+	module_flags = BORG_MODULE_MINER
 
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -152,6 +156,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/miner)
+	module_flags = BORG_MODULE_MINER
 
 /obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -179,6 +184,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/janitor)
+	module_flags = BORG_MODULE_JANITOR
 
 /obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -206,6 +212,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/janitor)
+	module_flags = BORG_MODULE_JANITOR
 
 /obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -255,6 +262,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	require_module = 1
 	module_type = list(/obj/item/robot_module/miner)
+	module_flags = BORG_MODULE_MINER
 
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -372,6 +380,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical)
+	module_flags = BORG_MODULE_MEDICAL
 	var/list/additional_reagents = list()
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
@@ -428,6 +437,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical)
+	module_flags = BORG_MODULE_MEDICAL
 	var/backpack = FALSE //True if we get the defib from a physical backpack unit rather than an upgrade card, so that we can return that upon deactivate()
 
 /obj/item/borg/upgrade/defib/backpack
@@ -462,6 +472,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical, /obj/item/robot_module/syndicate_medical)
+	module_flags = BORG_MODULE_MEDICAL
 
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -516,7 +527,7 @@
 		R.notransform = TRUE
 		var/prev_lockcharge = R.lockcharge
 		R.SetLockdown(1)
-		R.anchored = TRUE
+		R.set_anchored(TRUE)
 		var/datum/effect_system/smoke_spread/smoke = new
 		smoke.set_up(1, R.loc)
 		smoke.start()
@@ -526,7 +537,7 @@
 			sleep(12)
 		if(!prev_lockcharge)
 			R.SetLockdown(0)
-		R.anchored = FALSE
+		R.set_anchored(FALSE)
 		R.notransform = FALSE
 		R.resize = 2
 		R.hasExpanded = TRUE
@@ -547,6 +558,7 @@
 	icon_state = "borgrped"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/engineering, /obj/item/robot_module/saboteur)
+	module_flags = BORG_MODULE_ENGINEERING
 
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -575,6 +587,7 @@
 	icon_state = "pinpointer_crew"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/medical, /obj/item/robot_module/syndicate_medical)
+	module_flags = BORG_MODULE_MEDICAL
 	var/datum/action/crew_monitor
 
 /obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/R, user = usr)
@@ -633,6 +646,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/engineering, /obj/item/robot_module/saboteur)
+	module_flags = BORG_MODULE_ENGINEERING
 
 /obj/item/borg/upgrade/circuit_app/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -659,6 +673,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/medical)
+	module_flags = BORG_MODULE_MEDICAL
 
 /obj/item/borg/upgrade/beaker_app/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -685,6 +700,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/janitor)
+	module_flags = BORG_MODULE_JANITOR
 
 /obj/item/borg/upgrade/broomer/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()

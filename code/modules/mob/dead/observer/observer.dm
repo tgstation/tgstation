@@ -794,7 +794,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_icon()
 
 /mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	return IsAdminGhost(usr)
+	return isAdminGhostAI(usr)
 
 /mob/dead/observer/is_literate()
 	return TRUE
@@ -887,6 +887,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
 	if(!game)
 		game = create_mafia_game("mafia")
+	var/total_slots = game.custom_setup.len ? assoc_value_sum(game.custom_setup) : 12
 	if(GLOB.mafia_signup[client.ckey])
 		GLOB.mafia_signup -= ckey
 		to_chat(usr, "<span class='notice'>You unregister from Mafia.</span>")
@@ -894,9 +895,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		GLOB.mafia_signup[ckey] = client
 		to_chat(usr, "<span class='notice'>You sign up for Mafia.</span>")
-	to_chat(usr, "<span class='bold notice'>The game currently has [GLOB.mafia_signup.len]/12 players signed up.</span>")
+	to_chat(usr, "<span class='bold notice'>The game currently has [GLOB.mafia_signup.len]/[total_slots] players signed up.</span>")
 	if(game.phase != MAFIA_PHASE_SETUP)
-		to_chat(usr, "<span class='notice'>Mafia is currently in progress, you will be signed up for next round.</span>")
+		to_chat(usr, "<span class='notice'>Mafia is currently in progress, you will be signed up for next round <b>and get messages from the current one.</b></span>")
 	else
 		game.try_autostart()
 
@@ -910,7 +911,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		. += "It seems extremely obvious."
 
 /mob/dead/observer/examine_more(mob/user)
-	if(!IsAdminGhost(user, TRUE))
+	if(!isAdminObserver(user))
 		return ..()
 	. = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
 	. += list("\t><span class='admin'>[ADMIN_FULLMONTY(src)]</span>")

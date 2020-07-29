@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 //SS_TICKER subsystem, so wait is in ticks
 	init_order = INIT_ORDER_TIMER
-
+	priority = FIRE_PRIORITY_TIMER
 	flags = SS_TICKER|SS_NO_INIT
 
 	var/list/datum/timedevent/second_queue = list() //awe, yes, you've had first queue, but what about second queue?
@@ -316,6 +316,8 @@ SUBSYSTEM_DEF(timer)
 	var/timeToRun
 	var/wait
 	var/hash
+	/// The source of the timedevent, whatever called addtimer
+	var/source
 	var/list/flags
 	var/spent = 0 //time we ran the timer.
 	var/name //for easy debugging.
@@ -323,13 +325,14 @@ SUBSYSTEM_DEF(timer)
 	var/datum/timedevent/next
 	var/datum/timedevent/prev
 
-/datum/timedevent/New(datum/callback/callBack, wait, flags, hash)
+/datum/timedevent/New(datum/callback/callBack, wait, flags, hash, source)
 	var/static/nextid = 1
 	id = TIMER_ID_NULL
 	src.callBack = callBack
 	src.wait = wait
 	src.flags = flags
 	src.hash = hash
+	src.source = source
 
 	if (flags & TIMER_CLIENT_TIME)
 		timeToRun = REALTIMEOFDAY + wait
@@ -456,14 +459,15 @@ SUBSYSTEM_DEF(timer)
 		. = "[callBack.object.type]"
 
 /**
-  * Create a new timer and insert it in the queue
+  * Create a new timer and insert it in the queue.
+  * You should not call this directly, and should instead use the addtimer macro, which includes source information.
   *
   * Arguments:
   * * callback the callback to call on timer finish
   * * wait deciseconds to run the timer for
   * * flags flags for this timer, see: code\__DEFINES\subsystems.dm
   */
-/proc/addtimer(datum/callback/callback, wait = 0, flags = 0)
+/proc/_addtimer(datum/callback/callback, wait = 0, flags = 0, file, line)
 	if (!callback)
 		CRASH("addtimer called without a callback")
 
@@ -504,7 +508,7 @@ SUBSYSTEM_DEF(timer)
 	else if(flags & TIMER_OVERRIDE)
 		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE")
 
-	var/datum/timedevent/timer = new(callback, wait, flags, hash)
+	var/datum/timedevent/timer = new(callback, wait, flags, hash, file && "[file]:[line]")
 	return timer.id
 
 /**
