@@ -1,8 +1,6 @@
-/* eslint-disable react/jsx-closing-tag-location */
 import { useBackend } from '../backend';
 import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
-
 
 export const MechpadControl = (props, context) => {
   const { topLevel } = props;
@@ -39,7 +37,8 @@ export const MechpadControl = (props, context) => {
           icon="upload"
           content="Launch"
           textAlign="center"
-          onClick={() => act('launch')} />)}
+          onClick={() => act('launch')} />
+      )}
     </Section>
   );
 };
