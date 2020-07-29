@@ -136,21 +136,21 @@
 	var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(carbon_occupant) || QDELETED(occupant_brain) || !(to_be_removed in occupant_brain.skillchips))
 		return
-	to_be_removed.on_removal(carbon_occupant, silent=FALSE)
 	LAZYREMOVE(occupant_brain.skillchips, to_be_removed)
 	if(to_be_removed.removable)
 		carbon_occupant.put_in_hands(to_be_removed)
 	else
 		qdel(to_be_removed)
+	to_be_removed.on_removal(carbon_occupant, silent=FALSE)
 	update_icon()
 	SStgui.update_uis(src)
 	to_chat(carbon_occupant,"<span class='notice'>Operation complete!</span>")
 
 /obj/machinery/skill_station/proc/implant_skillchip(mob/living/carbon/target,obj/item/skillchip/chip)
 	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	LAZYADD(target_brain.skillchips, chip)
 	chip.on_apply(target, silent = FALSE)
 	chip.forceMove(target_brain)
-	LAZYADD(target_brain.skillchips, chip)
 
 /obj/machinery/skill_station/ui_data(mob/user)
 	. = ..()
