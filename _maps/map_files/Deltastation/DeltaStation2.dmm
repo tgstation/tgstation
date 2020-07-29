@@ -22341,8 +22341,7 @@
 "aUE" = (
 /obj/machinery/camera{
 	c_tag = "Security - Visitation";
-	dir = 8;
-	network = list("ss13","prison")
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -112143,9 +112142,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"hVb" = (
-/turf/open/space,
-/area/space/nearstation)
 "hVS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -167267,7 +167263,7 @@ aaa
 aaa
 aaa
 aad
-mIc
+aaa
 aad
 aaa
 aaa
@@ -167520,9 +167516,9 @@ aac
 aac
 aad
 aad
-mIc
-hVb
-hVb
+aaa
+aaa
+aaa
 aFm
 aFm
 aFm
@@ -168290,7 +168286,7 @@ aaa
 aaa
 qYo
 aaa
-hVb
+aaa
 xjZ
 nsp
 qVm
