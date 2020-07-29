@@ -39808,13 +39808,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bPO" = (
-/obj/structure/table/wood,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/storage/crayons,
-/obj/item/toy/crayon/spraycan,
-/obj/item/toy/crayon/spraycan{
-	pixel_x = -4
-	},
+/obj/machinery/photocopier,
 /turf/open/floor/wood,
 /area/library)
 "bPP" = (
@@ -40309,10 +40304,10 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 30
 	},
-/obj/machinery/photocopier,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/skill_station,
 /turf/open/floor/wood,
 /area/library)
 "bRl" = (
@@ -41201,6 +41196,12 @@
 "bTw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/obj/item/toy/crayon/spraycan,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -4
 	},
 /turf/open/floor/wood,
 /area/library)

@@ -1190,3 +1190,37 @@
   */
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
+
+/// Modifies max_skillchip_count and updates active skillchips
+/mob/living/carbon/proc/adjust_max_skillchip_count(delta)
+	max_skillchip_slots += delta
+	update_skillchips()
+
+/// Disables or re-enables any extra skillchips after skillchip limit changes. Inactive chips keep brain as loc but do not appear in skillchips list.
+/mob/living/carbon/proc/update_skillchips()
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B)
+		return
+	var/limit = max_skillchip_slots
+	var/dt = limit - used_skillchip_slots
+	var/list/inactive_skillchips = list()
+	for(var/obj/item/skillchip/S in B)
+		inactive_skillchips += S
+
+	// We have skillchips to deactivate
+	if(dt < 0)
+		//Might deactivate more than necessary but not worth sorting this
+		while(dt < 0)
+			var/obj/item/skillchip/chip = B.skillchips[length(B.skillchips)]
+			chip.on_removal(src)
+			B.skillchips -= chip
+			dt += chip.slot_cost
+	// We have skillchips to reactivate
+	else if (dt > 1)
+		while(dt > 1 && length(inactive_skillchips))
+			var/obj/item/skillchip/chip = inactive_skillchips[length(inactive_skillchips)]
+			if(chip.slot_cost <= dt)
+				chip.on_apply(src)
+				B.skillchips += chip
+				dt -= chip.slot_cost
+			inactive_skillchips -= chip
