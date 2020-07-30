@@ -343,8 +343,8 @@
 	if(!req_defib || !defib)
 		return
 	if(!in_range(src,defib))
-		var/mob/living/user = loc
-		if(istype(user))
+		if(isliving(loc))
+			var/mob/living/user = loc
 			to_chat(user, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
 		else
 			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
