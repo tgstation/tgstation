@@ -34,18 +34,19 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	//Dont take in account starting bound_x, bound_y, pixel_x, pixel_y.
 	//So it can unintentionally shift physical bounds of things that starts with non zero bound_x, bound_y.
 	if(((bound_height != world.icon_size) || (bound_width != world.icon_size)) && (bound_x==0) && (bound_y==0)) //Dont shift things that have non zero bound_x and bound_y, or it move somewhere. Now it BSA and Gateway.
-		if(dir == 2)
-			pixel_x = 0
-			pixel_y = 0
-		if(dir == 8)
-			pixel_x = 0
-			pixel_y = -bound_height+world.icon_size
-		if(dir == 1)
-			pixel_x = -bound_width+world.icon_size
-			pixel_y = -bound_height+world.icon_size
-		if(dir == 4)
-			pixel_x = -bound_width+world.icon_size
-			pixel_y = 0
+		switch(dir)
+			if(SOUTH)
+				pixel_x = 0
+				pixel_y = 0
+			if(WEST)
+				pixel_x = 0
+				pixel_y = -bound_height+world.icon_size
+			if(NORTH)
+				pixel_x = -bound_width+world.icon_size
+				pixel_y = -bound_height+world.icon_size
+			if(EAST)
+				pixel_x = -bound_width+world.icon_size
+				pixel_y = 0
 		bound_x = pixel_x
 		bound_y = pixel_y
 
