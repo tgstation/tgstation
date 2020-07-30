@@ -1037,58 +1037,32 @@
 	..()
 	return TRUE
 
-//used for changeling's adrenaline power
-/datum/reagent/medicine/changelingadrenaline
-	name = "Changeling Adrenaline"
-	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
-	color = "#C1151D"
-	overdose_threshold = 30
-
-/datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	..()
-	M.AdjustAllImmobility(-20, FALSE)
-	M.adjustStaminaLoss(-10, 0)
-	M.Jitter(10)
-	M.Dizzy(10)
-	return TRUE
-
-/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
-	..()
-	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-
-/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
-	..()
-	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-	L.Dizzy(0)
-	L.Jitter(0)
-
-/datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
-	M.adjustToxLoss(1, 0)
-	..()
-	return TRUE
-
+///used for the adrenaline sacs changeling power
 /datum/reagent/medicine/changelinghaste
 	name = "Changeling Haste"
-	description = "Drastically increases movement speed, but deals toxin damage."
+	description = "Drastically increases movement speed, reduces the length of knockdowns received from stun batons, and grants an immunity to damage slowdown and sleep-inducing effects, but also causes jittering and dizziness. Metabolizes incredibly quickly."
 	color = "#AE151D"
 	metabolization_rate = 1
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 
 /datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	..()
 
-/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(2, 0)
+/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M as mob)
+	M.Jitter(10)
+	M.Dizzy(10)
 	..()
-	return TRUE
+	. = TRUE
 
 /datum/reagent/medicine/higadrite
 	name = "Higadrite"
