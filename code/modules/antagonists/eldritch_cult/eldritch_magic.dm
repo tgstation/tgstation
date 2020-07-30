@@ -535,7 +535,20 @@
 			pixel_y = -64
 			pixel_x = -128
 
-/obj/effect/proc_holder/spell/cone/entropic_plume
+/obj/effect/temp_visual/glowing_rune
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "small_rune_1"
+	duration = 1 MINUTES
+	layer = LOW_SIGIL_LAYER
+
+/obj/effect/temp_visual/glowing_rune/Initialize()
+	. = ..()
+	pixel_y = rand(-6,6)
+	pixel_x = rand(-6,6)
+	icon_state = "small_rune_[rand(12)]"
+	update_icon()
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"
 	desc = "Spews forth a disorienting plume that causes enemies to strike each other, slur and inverts their movement. Also spreads rust in the path of the plume."
 	school = "illusion"
@@ -545,20 +558,21 @@
 	action_background_icon_state = "bg_ecult"
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "entropic_plume"
-	charge_max = 400
-	cone_levels = 2
-	narrow = TRUE
+	charge_max = 10
+	cone_levels = 5
 	respect_density = TRUE
 
-/obj/effect/proc_holder/spell/cone/entropic_plume/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/cast(list/targets,mob/user = usr)
 	. = ..()
-	new /obj/effect/temp_visual/dir_setting/entropic(get_step(user, user.dir), user.dir)
+	new /obj/effect/temp_visual/dir_setting/entropic(get_step(user,user.dir), user.dir)
 
-/obj/effect/proc_holder/spell/cone/entropic_plume/do_turf_cone_effect(turf/target_turf)
- 	. = ..()
- 	target_turf.rust_heretic_act()
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_turf_cone_effect(turf/target_turf)
+	. = ..()
+	target_turf.rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(target_turf)
 
-/obj/effect/proc_holder/spell/cone/entropic_plume/do_mob_cone_effect(mob/target_mob)
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/target_mob)
 	. = ..()
 	if(isliving(target_mob))
 		var/mob/living/victim = target_mob

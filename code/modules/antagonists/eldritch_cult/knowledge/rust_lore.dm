@@ -94,7 +94,7 @@
 	desc = "You can now send a befuddling plume that inverts the afflicted's movement as well as makes them strike each other and slur. Also converts the area into rust."
 	gain_text = "Messenger's of hope fear the rustbringer!"
 	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/cone/entropic_plume
+	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	next_knowledge = list(/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/rusty)
 	route = PATH_RUST
 
