@@ -97,15 +97,15 @@
 	skill_description = "Trim hedges and potted plants into marvelous new shapes with any old knife. Not applicable to plastic plants."
 	skill_icon = "spa"
 	implanting_message = "<span class='notice'>Your mind is filled with plant arrangments.</span>"
-	removal_message = "<span class='notice'>Your can't remember how a hedge looks like anymore.</span>"
+	removal_message = "<span class='notice'>You can't remember how a hedge looks like anymore.</span>"
 
 /obj/item/skillchip/useless_adapter
 	name = "Skillchip adapter"
-	skill_name = "Useless adapter"
-	skill_description = "Allows you to insert another identical skillchip into this adapter, but the adapter also takes a slot ..."
+	skill_name = "Skillchip Adaptation"
+	skill_description = "Obtain a free slot for another chip with this adapter! Spend a slot with this adapter!"
 	skill_icon = "plug"
-	implanting_message = "<span class='notice'>You can now implant another chip into this adapter, but the adapter also took up an existing slot ...</span>"
-	removal_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
+	implanting_message = "<span class='notice'>You can now implant another chip into this adapter, but the adapter also took up an existing slot...</span>"
+	removal_message = "<span class='notice'>You feel like your useless adapter has perished...</span>"
 	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE
 	slot_cost = 0
 
@@ -118,3 +118,12 @@
 	user.max_skillchip_slots--
 	user.used_skillchip_slots--
 	return ..()
+
+/obj/item/skillchip/light_remover
+	name = "N16H7M4R3 skillchip"
+	auto_trait = TRAIT_LIGHTBULB_REMOVER
+	skill_name = "Lightbulb Removing"
+	skill_description = "Stop failing taking out lightbulbs today, no gloves needed!"
+	skill_icon = "lightbulb"
+	implanting_message = "<span class='notice'>Your feel like your pain receptors are less sensitive to hot objects.</span>"
+	removal_message = "<span class='notice'>You feel like hot objects could stop you again...</span>"
