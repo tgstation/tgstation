@@ -64,7 +64,6 @@
 	var/list/linked_mobs = list()
 	var/list/linked_actions = list()
 
-
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize()
 	. = ..()
 	link_mob(src)
@@ -82,28 +81,27 @@
 		return FALSE
 	if(mob_linked in linked_mobs)
 		return FALSE
-	linked_mobs.Add(mob_linked)
+	linked_mobs += mob_linked
+
 	to_chat(mob_linked, "<span class='notice'>You feel something new enter your sphere of mind, you hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link.</span>")
 	var/datum/action/innate/mansus_speech/action = new(src)
-	linked_actions.Add(action)
+	linked_mobs[mob_linked] = action
 	action.Grant(mob_linked)
 	RegisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING) , .proc/unlink_mob)
 	return TRUE
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
-	var/link_id = linked_mobs.Find(mob_linked)
-	if(!(link_id))
+	if(!(mob_linked in linked_mobs))
 		return
 	UnregisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
-	var/datum/action/innate/mansus_speech/action = linked_actions[link_id]
+	var/datum/action/innate/mansus_speech/action = linked_mobs[mob_linked]
 	action.Remove(mob_linked)
 	to_chat(mob_linked, "<span class='notice'>Your mind shatters as the [src]'s Mansus Link leaves your mind.</span>")
 	mob_linked.emote("Scream")
 	//micro stun
 	mob_linked.AdjustParalyzed(0.5 SECONDS)
-
-	linked_mobs[link_id] = null
-	linked_actions[link_id] = null
+	linked_mobs[linked_mobs] = null
+	linked_mobs -= linked_mobs[linked_mobs]
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/death(gibbed)
 	for(var/linked_mob in linked_mobs)
