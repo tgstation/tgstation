@@ -57,8 +57,6 @@
 	var/effectShrapnel = FALSE
 	var/shrapnel_type = /obj/projectile/bullet/shrapnel
 	var/shrapnel_magnitude = 3
-	///Whitelist of things that can be put in, used for reverse mode
-	var/list/whitelist = list()
 	///If it shouldn't play sounds the first time it lands, used for reverse mode
 	var/firstSounds = TRUE
 
@@ -274,7 +272,7 @@
 		playsound(get_turf(holder), openingSound, soundVolume, FALSE, FALSE) //Special admin sound to play
 	for (var/atom/movable/O in holder.contents) //Go through the contents of the holder
 		O.forceMove(T) //move everything from the contents of the holder to the turf of the holder
-	if (!openingSound && style != STYLE_SEETHROUGH) //If we aren't being stealthy, play the default pod open sound
+	if (!effectQuiet && !openingSound && style != STYLE_SEETHROUGH) //If we aren't being quiet, play the default pod open sound
 		playsound(get_turf(holder), open_sound, 15, TRUE, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return
@@ -319,8 +317,6 @@
 		return FALSE
 
 /obj/structure/closet/supplypod/insertion_allowed(atom/movable/AM)
-	if(whitelist.len && !is_type_in_typecache(AM, whitelist))
-		return FALSE
 	if(ismob(AM))
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return FALSE
