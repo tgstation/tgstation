@@ -14,8 +14,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=2000)
 	attack_verb = list("clonked", "whacked", "bashed", "thunked", "battered", "bludgeoned")
-	var/seal_time = 30
-	var/unseal_time = 20
+	var/seal_time = 3 SECONDS
+	var/unseal_time = 2 SECONDS
 
 /obj/item/door_seal/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is sealing [user.p_them()]self off from the world with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
