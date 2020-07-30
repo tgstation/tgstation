@@ -383,7 +383,7 @@ SUBSYSTEM_DEF(timer)
 	var/wait
 	/// Unique hash generated when TIMER_UNIQUE flag is present
 	var/hash
-    /// The source of the timedevent, whatever called addtimer
+	/// The source of the timedevent, whatever called addtimer
 	var/source
 	/// Flags associated with the timer, see _DEFINES/subsystems.dm
 	var/list/flags
