@@ -94,6 +94,8 @@
 /mob/living/silicon/pai/handle_atom_del(atom/A)
 	if(A == hacking_cable)
 		hacking_cable = null
+		if(!QDELETED(card))
+			card.update_icon()
 	if(A == internal_instrument)
 		internal_instrument = null
 	if(A == newscaster)
@@ -162,6 +164,8 @@
 		hacking = FALSE
 		hackdoor = null
 		QDEL_NULL(hacking_cable)
+		if(!QDELETED(card))
+			card.update_icon()
 		return
 	if(screen == "doorjack" && subscreen == 0) // Update our view, if appropriate
 		paiInterface()
@@ -293,7 +297,9 @@
 		if(get_dist(src, hacking_cable) > 1)
 			var/turf/T = get_turf(src)
 			T.visible_message("<span class='warning'>[hacking_cable] rapidly retracts back into its spool.</span>", "<span class='hear'>You hear a click and the sound of wire spooling rapidly.</span>")
-			qdel(hacking_cable)
+			QDEL_NULL(hacking_cable)
+			if(!QDELETED(card))
+				card.update_icon()
 		else if(hacking)
 			process_hack()
 	silent = max(silent - 1, 0)

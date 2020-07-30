@@ -46,7 +46,7 @@
 		icon_state = initial(icon_state)
 		return
 	name = "[initial(name)] - [AI.name]"
-	icon_state = "[initial(icon_state)]-[AI.stat == DEAD ? "404" : "full"]"
+	icon_state = "[initial(icon_state)][AI.stat == DEAD ? "-404" : "-full"]"
 	AI.cancel_camera()
 
 /obj/item/aicard/update_overlays()
