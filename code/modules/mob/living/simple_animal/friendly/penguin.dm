@@ -73,4 +73,4 @@
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
-				emote("me", 1, "crys and flaps its wings!")
+				emote("me", 1, "cries and flaps its wings!")
