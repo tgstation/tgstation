@@ -8,7 +8,7 @@
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 	var/scanning = FALSE
 	var/timing = FALSE
-	var/time = 10
+	var/time = 20
 	var/sensitivity = 1
 	var/hearing_range = 3
 
@@ -76,7 +76,7 @@
 /obj/item/assembly/prox_sensor/process()
 	if(!timing)
 		return
-	time--
+	time -= SSOBJ_DT
 	if(time <= 0)
 		timing = FALSE
 		toggle_scan(TRUE)

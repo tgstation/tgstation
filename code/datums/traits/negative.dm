@@ -38,7 +38,7 @@
 		return
 	else
 		if (H.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
-			H.blood_volume -= 0.275
+			H.blood_volume -= 0.275 * SSQUIRKS_DT
 
 /datum/quirk/blindness
 	name = "Blind"
@@ -96,7 +96,7 @@
 /datum/quirk/brainproblems/on_process()
 	if(HAS_TRAIT(quirk_holder, TRAIT_TUMOR_SUPPRESSED))
 		return
-	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
+	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * SSQUIRKS_DT)
 
 /datum/quirk/deafness
 	name = "Deaf"
@@ -120,7 +120,7 @@
 	hardcore_value = 1
 
 /datum/quirk/depression/on_process()
-	if(prob(0.05))
+	if(DT_PROB(0.05, SSQUIRKS_DT))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
 
 /datum/quirk/family_heirloom
@@ -466,7 +466,7 @@
 	if(quirk_holder.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
 		quirk_holder.hallucination = 0
 		return
-	if(prob(2)) //we'll all be mad soon enough
+	if(DT_PROB(2, SSQUIRKS_DT)) //we'll all be mad soon enough
 		madness()
 
 /datum/quirk/insanity/proc/madness()
@@ -501,12 +501,12 @@
 		if(H.client)
 			nearby_people++
 	var/mob/living/carbon/human/H = quirk_holder
-	if(prob(2 + nearby_people))
+	if(DT_PROB(2 + nearby_people, SSQUIRKS_DT))
 		H.stuttering = max(3, H.stuttering)
-	else if(prob(min(3, nearby_people)) && !H.silent)
+	else if(DT_PROB(min(3, nearby_people), SSQUIRKS_DT) && !H.silent)
 		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
 		H.silent = max(10, H.silent)
-	else if(prob(0.5) && dumb_thing)
+	else if(DT_PROB(0.5, SSQUIRKS_DT) && dumb_thing)
 		to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
@@ -718,9 +718,9 @@
 			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
 			return //intentionally stops the entire proc so we avoid the organ damage after the loop
 		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
-		carbon_quirk_holder.adjustToxLoss(3)
-		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine,3)
-		if(prob(10))
+		carbon_quirk_holder.adjustToxLoss(3 * SSQUIRKS_DT)
+		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * SSQUIRKS_DT)
+		if(DT_PROB(10, SSQUIRKS_DT))
 			carbon_quirk_holder.vomit()
 			carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
 

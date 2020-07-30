@@ -456,9 +456,9 @@
 		return
 	for(var/turf/T in range(1,current_user))
 		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+		T.hotspot_expose(700, 250 * SSFASTPROCESS_DT, 1)
 		for(var/mob/living/livies in T.contents - current_user)
-			livies.adjustFireLoss(5)
+			livies.adjustFireLoss(25 * SSFASTPROCESS_DT)
 
 
 /obj/effect/proc_holder/spell/targeted/worm_contract

@@ -198,8 +198,8 @@
 	if(!C || !is_operational)
 		return PROCESS_KILL
 	if(C.charge < C.maxcharge)
-		use_power(100)
-		C.give(80)
+		use_power(50 * SSMACHINES_DT)
+		C.give(40 * SSMACHINES_DT)
 		update_icon()
 
 //wallframe, for attaching the mounts easily

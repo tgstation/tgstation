@@ -1,7 +1,11 @@
+
+#define SSMACHINES_DT 2
+
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
 	init_order = INIT_ORDER_MACHINES
 	flags = SS_KEEP_TIMING
+	wait = SSMACHINES_DT SECONDS
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/powernets = list()
@@ -36,11 +40,10 @@ SUBSYSTEM_DEF(machines)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	var/seconds = wait * 0.1
 	while(currentrun.len)
 		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(!QDELETED(thing) && thing.process(seconds) != PROCESS_KILL)
+		if(!QDELETED(thing) && thing.process() != PROCESS_KILL)
 			if(thing.use_power)
 				thing.auto_use_power() //add back the power state
 		else

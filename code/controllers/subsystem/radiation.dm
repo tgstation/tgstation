@@ -1,6 +1,10 @@
+
+#define SSRADIATION_DT 1
+
 PROCESSING_SUBSYSTEM_DEF(radiation)
 	name = "Radiation"
 	flags = SS_NO_INIT | SS_BACKGROUND
+	wait = SSRADIATION_DT SECONDS
 
 	var/list/warned_atoms = list()
 

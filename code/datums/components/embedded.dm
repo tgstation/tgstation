@@ -132,7 +132,7 @@
 		return
 
 	var/damage = weapon.w_class * pain_mult
-	var/pain_chance_current = pain_chance
+	var/pain_chance_current = DT_PROB_RATE(pain_chance / 100, SSDCS_DT) * 100
 	if(pain_stam_pct && HAS_TRAIT_FROM(victim, TRAIT_INCAPACITATED, STAMINA)) //if it's a less-lethal embed, give them a break if they're already stamcritted
 		pain_chance_current *= 0.2
 		damage *= 0.5
@@ -143,7 +143,7 @@
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] hurts!</span>")
 
-	var/fall_chance_current = fall_chance
+	var/fall_chance_current = DT_PROB_RATE(fall_chance / 100, SSDCS_DT) * 100
 	if(victim.mobility_flags & ~MOBILITY_STAND)
 		fall_chance_current *= 0.2
 

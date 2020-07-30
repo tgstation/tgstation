@@ -41,14 +41,14 @@
 	var/mob/living/carbon/C = quirk_holder
 	switch(C.drunkenness)
 		if (6 to 40)
-			C.adjustBruteLoss(-0.1, FALSE)
-			C.adjustFireLoss(-0.05, FALSE)
+			C.adjustBruteLoss(-0.1*SSQUIRKS_DT, FALSE)
+			C.adjustFireLoss(-0.05*SSQUIRKS_DT, FALSE)
 		if (41 to 60)
-			C.adjustBruteLoss(-0.4, FALSE)
-			C.adjustFireLoss(-0.2, FALSE)
+			C.adjustBruteLoss(-0.4*SSQUIRKS_DT, FALSE)
+			C.adjustFireLoss(-0.2*SSQUIRKS_DT, FALSE)
 		if (61 to INFINITY)
-			C.adjustBruteLoss(-0.8, FALSE)
-			C.adjustFireLoss(-0.4, FALSE)
+			C.adjustBruteLoss(-0.8*SSQUIRKS_DT, FALSE)
+			C.adjustFireLoss(-0.4*SSQUIRKS_DT, FALSE)
 
 /datum/quirk/empath
 	name = "Empath"
@@ -127,7 +127,7 @@
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
 
 /datum/quirk/jolly/on_process()
-	if(prob(0.05))
+	if(DT_PROB(0.05, SSQUIRKS_DT))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
 
 /datum/quirk/light_step

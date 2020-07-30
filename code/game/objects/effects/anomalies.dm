@@ -7,7 +7,8 @@
 	density = FALSE
 	anchored = TRUE
 	light_range = 3
-	var/movechance = 70
+	/// Chance of taking a step per second
+	var/movechance = 45
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
@@ -64,7 +65,7 @@
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
-	if(prob(movechance))
+	if(DT_PROB(movechance, SSOBJ_DT))
 		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
@@ -273,15 +274,17 @@
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 	var/ticks = 0
+	/// How many seconds between each gas release
+	var/releasedelay = 10
 	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
-	ticks++
-	if(ticks < 5)
+	ticks += SSOBJ_DT
+	if(ticks < releasedelay)
 		return
 	else
-		ticks = 0
+		ticks -= releasedelay
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")

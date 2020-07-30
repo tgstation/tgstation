@@ -149,7 +149,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 
 /obj/singularity/narsie/mini/process()
 	eat()
-	if(prob(25))
+	if(DT_PROB(13, SSOBJ_DT))
 		mezzer()
 
 /obj/singularity/narsie/mini/ex_act()

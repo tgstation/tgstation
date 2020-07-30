@@ -9,8 +9,8 @@
 	idle_power_usage = 10
 	active_power_usage = 1000
 
-	///units we pump per process (2 seconds)
-	var/pump_power = 2
+	///units we pump per second
+	var/pump_power = 1
 	///set to true if the loop couldnt find a geyser in process, so it remembers and stops checking every loop until moved. more accurate name would be absolutely_no_geyser_under_me_so_dont_try
 	var/geyserless = FALSE
 	///The geyser object
@@ -50,7 +50,7 @@
 /obj/machinery/plumbing/liquid_pump/proc/pump()
 	if(!geyser || !geyser.reagents)
 		return
-	geyser.reagents.trans_to(src, pump_power)
+	geyser.reagents.trans_to(src, pump_power * SSMACHINES_DT)
 
 /obj/machinery/plumbing/liquid_pump/update_icon_state()
 	if(geyser)

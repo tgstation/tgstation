@@ -187,9 +187,8 @@
 		else
 			// The changes that you've been hit with no shield but not
 			// instantly critted are low, but have some healing.
-			living_participant.adjustBruteLoss(-5)
-			living_participant.adjustFireLoss(-5)
-
+			living_participant.adjustBruteLoss(-2.5 * SSMACHINES_DT)
+			living_participant.adjustFireLoss(-2.5 * SSMACHINES_DT)
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
@@ -672,11 +671,11 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
-	var/point_rate = 1
+	var/point_rate = 0.5
 
 /obj/machinery/control_point/process()
 	if(controlling)
-		controlling.control_points += point_rate
+		controlling.control_points += point_rate * SSMACHINES_DT
 		if(controlling.control_points >= controlling.control_points_to_win)
 			controlling.victory()
 

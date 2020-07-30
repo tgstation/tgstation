@@ -48,7 +48,7 @@
 	/// How long it takes to break out of the SSU.
 	var/breakout_time = 300
 	/// How fast it charges cells in a suit
-	var/charge_rate = 500
+	var/charge_rate = 250
 
 /obj/machinery/suit_storage_unit/Initialize()
 	. = ..()
@@ -416,8 +416,8 @@
 		return
 
 	var/obj/item/stock_parts/cell/C = suit.cell
-	use_power(charge_rate)
-	C.give(charge_rate)
+	use_power(charge_rate * SSMACHINES_DT)
+	C.give(charge_rate * SSMACHINES_DT)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))

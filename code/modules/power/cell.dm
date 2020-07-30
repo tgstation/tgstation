@@ -51,7 +51,7 @@
 
 /obj/item/stock_parts/cell/process()
 	if(self_recharge)
-		give(chargerate * 0.25)
+		give(chargerate * 0.125 * SSOBJ_DT)
 	else
 		return PROCESS_KILL
 

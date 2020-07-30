@@ -98,10 +98,10 @@ Slimecrossing Weapons
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/gun/magic/bloodchill/process()
-	charge_tick++
-	if(charge_tick < recharge_rate || charges >= max_charges)
+	charge_timer += SSOBJ_DT
+	if(charge_timer < recharge_rate || charges >= max_charges)
 		return FALSE
-	charge_tick = 0
+	charge_timer = 0
 	var/mob/living/M = loc
 	if(istype(M) && M.blood_volume >= 20)
 		charges++

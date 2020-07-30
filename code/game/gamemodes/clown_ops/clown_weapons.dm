@@ -35,7 +35,8 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	always_noslip = TRUE
 	var/max_recharge = 3000 //30 peels worth
-	var/recharge_rate = 34 //about 1/3 of a peel per tick
+	/// Recharging rate in PPS (peels per second)
+	var/recharge_rate = 17
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize()
 	. = ..()
@@ -47,7 +48,7 @@
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
 	if(bananium_amount < max_recharge)
-		bananium.insert_amount_mat(min(recharge_rate, max_recharge - bananium_amount), /datum/material/bananium)
+		bananium.insert_amount_mat(min(recharge_rate * SSOBJ_DT, max_recharge - bananium_amount), /datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/attack_self(mob/user)
 	ui_action_click(user)

@@ -46,7 +46,7 @@
 	if(!master_turf)
 		qdel(src)
 		return
-	steps++
+	steps += SSRADIATION_DT
 	var/list/atoms = get_rad_atoms()
 
 	var/strength

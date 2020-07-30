@@ -54,7 +54,7 @@
 		START_PROCESSING(SSobj, src)
 
 /turf/open/lava/process()
-	if(!burn_stuff())
+	if(!burn_stuff(null, SSOBJ_DT))
 		STOP_PROCESSING(SSobj, src)
 
 /turf/open/lava/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -116,7 +116,7 @@
 	return LAZYLEN(found_safeties)
 
 
-/turf/open/lava/proc/burn_stuff(AM)
+/turf/open/lava/proc/burn_stuff(AM, delta_time = 1)
 	. = 0
 
 	if(is_safe())
@@ -137,9 +137,9 @@
 				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 			if(O.resistance_flags & FIRE_PROOF)
 				O.resistance_flags &= ~FIRE_PROOF
-			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
-				O.armor = O.armor.setRating(fire = 50)
-			O.fire_act(10000, 1000)
+			if(O.armor.fire > 50 * delta_time) //obj with 100% fire armor still get slowly burned away.
+				O.armor = O.armor.setRating(fire = 50 * delta_time)
+			O.fire_act(10000, 1000 * delta_time)
 
 		else if (isliving(thing))
 			. = 1
@@ -172,9 +172,9 @@
 			ADD_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE,TURF_TRAIT)
 			L.update_fire()
 
-			L.adjustFireLoss(20)
+			L.adjustFireLoss(20 * delta_time)
 			if(L) //mobs turning into object corpses could get deleted here.
-				L.adjust_fire_stacks(20)
+				L.adjust_fire_stacks(20 * delta_time)
 				L.IgniteMob()
 
 /turf/open/lava/smooth

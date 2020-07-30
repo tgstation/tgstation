@@ -563,14 +563,14 @@
 /obj/item/storage/organbox/process()
 	///if there is enough coolant var
 	var/cool = FALSE
-	var/amount = reagents.get_reagent_amount(/datum/reagent/cryostylane)
-	if(amount >= 0.1)
-		reagents.remove_reagent(/datum/reagent/cryostylane, 0.1)
+	var/amount = min(reagents.get_reagent_amount(/datum/reagent/cryostylane), 0.05 * SSOBJ_DT)
+	if(amount > 0)
+		reagents.remove_reagent(/datum/reagent/cryostylane, amount)
 		cool = TRUE
 	else
-		amount = reagents.get_reagent_amount(/datum/reagent/consumable/ice)
-		if(amount >= 0.3)
-			reagents.remove_reagent(/datum/reagent/consumable/ice, 0.2)
+		amount = min(reagents.get_reagent_amount(/datum/reagent/consumable/ice), 0.1 * SSOBJ_DT)
+		if(amount > 0)
+			reagents.remove_reagent(/datum/reagent/consumable/ice, amount)
 			cool = TRUE
 	if(!cooling && cool)
 		cooling = TRUE

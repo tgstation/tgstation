@@ -231,12 +231,12 @@
 	if(!M)
 		return
 	if(M.health > 0)
-		M.adjustOxyLoss(-1)
-	M.AdjustStun(-80)
-	M.AdjustKnockdown(-80)
-	M.AdjustParalyzed(-80)
-	M.AdjustImmobilized(-80)
-	M.AdjustUnconscious(-80)
+		M.adjustOxyLoss(-0.5 * SSOBJ_DT)
+	M.AdjustStun(-40 * SSOBJ_DT)
+	M.AdjustKnockdown(-40 * SSOBJ_DT)
+	M.AdjustParalyzed(-40 * SSOBJ_DT)
+	M.AdjustImmobilized(-40 * SSOBJ_DT)
+	M.AdjustUnconscious(-40 * SSOBJ_DT)
 	if(M.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
 		M.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
 	chassis.use_power(energy_drain)
@@ -258,7 +258,7 @@
 	var/list/processed_reagents
 	var/max_syringes = 10
 	var/max_volume = 75 //max reagent volume
-	var/synth_speed = 5 //[num] reagent units per cycle
+	var/synth_speed = 2.5 //[num] reagent units per second
 	energy_drain = 10
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
 	range = MECHA_MELEE|MECHA_RANGED
@@ -515,7 +515,7 @@
 		log_message("Reagent processing stopped.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		return
-	var/amount = synth_speed / processed_reagents.len
+	var/amount = SSOBJ_DT * synth_speed / processed_reagents.len
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)
 		chassis.use_power(energy_drain)

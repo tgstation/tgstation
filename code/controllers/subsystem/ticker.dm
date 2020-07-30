@@ -195,7 +195,7 @@ SUBSYSTEM_DEF(ticker)
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
-			mode.process(wait * 0.1)
+			mode.process()
 			check_queue()
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)

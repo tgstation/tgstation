@@ -5,7 +5,7 @@
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 200
-	var/timer = 240 //eventually the person will be freed
+	var/timer = 480 //eventually the person will be freed
 	var/mob/living/petrified_mob
 
 /obj/structure/statue/petrified/New(loc, mob/living/L, statue_timer)
@@ -28,7 +28,7 @@
 /obj/structure/statue/petrified/process()
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
-	timer--
+	timer -= SSOBJ_DT
 	petrified_mob.Stun(40) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)

@@ -62,7 +62,7 @@
 		overmind.update_health_hud()
 	Pulse_Area(overmind, 12, 4, 3)
 	for(var/obj/structure/blob/normal/B in range(1, src))
-		if(prob(5))
+		if(DT_PROB(2.5, SSOBJ_DT))
 			B.change_to(/obj/structure/blob/shield/core, overmind)
 	..()
 

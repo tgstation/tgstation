@@ -9,7 +9,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	light_color = LIGHT_COLOR_FIRE
 	heat = 1000
-	var/wax = 1000
+	/// How many seconds it burns for
+	var/wax = 2000
 	var/lit = FALSE
 	var/infinite = FALSE
 	var/start_lit = FALSE
@@ -20,7 +21,7 @@
 		light()
 
 /obj/item/candle/update_icon_state()
-	icon_state = "candle[(wax > 400) ? ((wax > 750) ? 1 : 2) : 3][lit ? "_lit" : ""]"
+	icon_state = "candle[(wax > 800) ? ((wax > 1500) ? 1 : 2) : 3][lit ? "_lit" : ""]"
 
 /obj/item/candle/attackby(obj/item/W, mob/user, params)
 	var/msg = W.ignition_effect(src, user)
@@ -62,8 +63,8 @@
 	if(!lit)
 		return PROCESS_KILL
 	if(!infinite)
-		wax--
-	if(!wax)
+		wax -= SSOBJ_DT
+	if(wax <= 0)
 		new /obj/item/trash/candle(loc)
 		qdel(src)
 	update_icon()

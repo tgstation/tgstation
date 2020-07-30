@@ -93,7 +93,7 @@
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"
 	inhand_icon_state = "nucgun"
-	charge_delay = 5
+	charge_delay = 10
 	pin = null
 	can_charge = FALSE
 	ammo_x_offset = 1
@@ -105,7 +105,7 @@
 
 /obj/item/gun/energy/e_gun/nuclear/process()
 	if(fail_tick > 0)
-		fail_tick--
+		fail_tick -= SSOBJ_DT * 0.5
 	..()
 
 /obj/item/gun/energy/e_gun/nuclear/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)

@@ -71,7 +71,7 @@
 
 /obj/singularity/academy/process()
 	eat()
-	if(prob(1))
+	if(DT_PROB(0.5, SSOBJ_DT))
 		mezzer()
 
 

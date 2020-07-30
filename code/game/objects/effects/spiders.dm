@@ -90,9 +90,9 @@
 	. = ..()
 
 /obj/structure/spider/eggcluster/process()
-	amount_grown += rand(0,2)
+	amount_grown += rand(0,1) * SSOBJ_DT
 	if(amount_grown >= 100)
-		var/num = rand(3,12)
+		var/num = round(rand(1.5, 6) * SSOBJ_DT)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
 			S.faction = faction.Copy()

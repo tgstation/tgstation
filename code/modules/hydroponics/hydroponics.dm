@@ -136,9 +136,9 @@
 		update_icon()
 
 	else if(self_sustaining)
-		adjustWater(rand(1,2))
-		adjustWeeds(-1)
-		adjustPests(-1)
+		adjustWater(rand(1,2) * SSMACHINES_DT * 0.5)
+		adjustWeeds(-0.5 * SSMACHINES_DT)
+		adjustPests(-0.5 * SSMACHINES_DT)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time

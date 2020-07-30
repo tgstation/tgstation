@@ -1,8 +1,8 @@
 
 
 /obj/machinery/artillerycontrol
-	var/reload = 60
-	var/reload_cooldown = 60
+	var/reload = 120
+	var/reload_cooldown = 120
 	var/explosiondev = 3
 	var/explosionmed = 6
 	var/explosionlight = 12
@@ -13,7 +13,7 @@
 
 /obj/machinery/artillerycontrol/process()
 	if(reload < reload_cooldown)
-		reload++
+		reload += SSMACHINES_DT
 
 /obj/structure/artilleryplaceholder
 	name = "artillery"

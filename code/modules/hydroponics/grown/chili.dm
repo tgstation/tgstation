@@ -94,8 +94,8 @@
 		if(held_mob.is_holding(src))
 			if(istype(held_mob) && held_mob.gloves)
 				return
-			held_mob.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT)
-			if(prob(10))
+			held_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * SSOBJ_DT)
+			if(DT_PROB(5, SSOBJ_DT))
 				to_chat(held_mob, "<span class='warning'>Your hand holding [src] burns!</span>")
 	else
 		held_mob = null

@@ -80,9 +80,9 @@
 		drowse()
 		return
 	if(bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
-		adjust_bloodthirst(1 + FLOOR(LAZYLEN(contents) * 0.5, 1)) //Maybe adjust this?
+		adjust_bloodthirst((1 + FLOOR(LAZYLEN(contents) * 0.5, 1)) * SSPROCESSING_DT) //Maybe adjust this?
 	else
-		adjust_bloodthirst(1) //don't cool off rapidly once we're at the point where His Grace consumes all.
+		adjust_bloodthirst(1 * SSPROCESSING_DT) //don't cool off rapidly once we're at the point where His Grace consumes all.
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	if(istype(master) && (src in master.held_items))
 		switch(bloodthirst)

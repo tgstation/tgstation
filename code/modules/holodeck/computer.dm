@@ -135,9 +135,9 @@
 			say("Safeties restored. Restarting...")
 
 /obj/machinery/computer/holodeck/process()
-	if(damaged && prob(10))
+	if(damaged && DT_PROB(5, SSMACHINES_DT))
 		for(var/turf/T in linked)
-			if(prob(5))
+			if(DT_PROB(2.5, SSMACHINES_DT))
 				do_sparks(2, 1, T)
 				return
 

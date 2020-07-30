@@ -22,7 +22,7 @@
 	// Denial of Service attack variables
 	var/dos_overload = 0		// Amount of DoS "packets" in this relay's buffer
 	var/dos_capacity = 500		// Amount of DoS "packets" in buffer required to crash the relay
-	var/dos_dissipate = 1		// Amount of DoS "packets" dissipated over time.
+	var/dos_dissipate = 0.5		// Amount of DoS "packets" dissipated over time.
 
 
 ///Proc called to change the value of the `relay_enabled` variable and append behavior related to its change.
@@ -72,8 +72,8 @@
 
 	update_icon()
 
-	if(dos_overload)
-		dos_overload = max(0, dos_overload - dos_dissipate)
+	if(dos_overload > 0)
+		dos_overload = max(0, dos_overload - dos_dissipate * SSMACHINES_DT)
 
 	// If DoS traffic exceeded capacity, crash.
 	if((dos_overload > dos_capacity) && !dos_failure)

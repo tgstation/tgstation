@@ -72,8 +72,8 @@
 /obj/item/clothing/suit/space/hostile_environment/process()
 	. = ..()
 	var/mob/living/carbon/C = loc
-	if(istype(C) && prob(2)) //cursed by bubblegum
-		if(prob(15))
+	if(istype(C) && DT_PROB(1, SSOBJ_DT)) //cursed by bubblegum
+		if(DT_PROB(7.5, SSOBJ_DT))
 			new /datum/hallucination/oh_yeah(C)
 			to_chat(C, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
 		else

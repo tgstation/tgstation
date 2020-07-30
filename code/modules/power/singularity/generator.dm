@@ -32,4 +32,4 @@
 			transfer_fingerprints_to(S)
 			qdel(src)
 		else
-			energy -= 1
+			energy -= SSMACHINES_DT * 0.5

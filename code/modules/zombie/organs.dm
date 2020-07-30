@@ -48,8 +48,8 @@
 	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
 		return
 	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
-		owner.adjustToxLoss(1)
-		if (prob(10))
+		owner.adjustToxLoss(0.5 * SSOBJ_DT)
+		if(DT_PROB(5, SSOBJ_DT))
 			to_chat(owner, "<span class='danger'>You feel sick...</span>")
 	if(timer_id)
 		return

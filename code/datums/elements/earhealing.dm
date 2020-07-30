@@ -31,6 +31,6 @@
 		var/obj/item/organ/ears/ears = user.getorganslot(ORGAN_SLOT_EARS)
 		if(!ears || HAS_TRAIT_NOT_FROM(user, TRAIT_DEAF, EAR_DAMAGE))
 			continue
-		ears.deaf = max(ears.deaf - 0.25, (ears.damage < ears.maxHealth ? 0 : 1)) // Do not clear deafness if our ears are too damaged
-		ears.damage = max(ears.damage - 0.025, 0)
+		ears.deaf = max(ears.deaf - 0.25 * SSDCS_DT, (ears.damage < ears.maxHealth ? 0 : 1)) // Do not clear deafness if our ears are too damaged
+		ears.damage = max(ears.damage - 0.025 * SSDCS_DT, 0)
 		CHECK_TICK

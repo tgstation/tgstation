@@ -78,14 +78,13 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/process()
 	if(!rad_count)
-		grace_count++
-		if(grace_count == 2)
+		grace_count += SSOBJ_DT
+		if(grace_count >= 4)
 			soundloop.last_radiation = 0
 		return
 
 	grace_count = 0
-	rad_record -= rad_record/5
-	rad_record += rad_count/5
+	rad_record = (SSOBJ_DT / (8 + SSOBJ_DT)) * rad_count + (1 - SSOBJ_DT / (8 + SSOBJ_DT)) * rad_record // https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter
 	rad_count = 0
 
 	soundloop.last_radiation = rad_record

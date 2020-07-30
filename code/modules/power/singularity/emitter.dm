@@ -197,7 +197,7 @@
 				log_game("Emitter lost power in [AREACOORD(src)]")
 			return
 		if(charge <= 80)
-			charge += 5
+			charge += 2.5 * SSMACHINES_DT
 		if(!check_delay() || manual == TRUE)
 			return FALSE
 		fire_beam()

@@ -10,7 +10,7 @@
 	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
 	var/pressure_limit = 50000
 	var/on = FALSE
-	var/volume_rate = 1000
+	var/volume_rate = 500
 	var/overpressure_m = 80
 	var/use_overlays = TRUE
 	var/list/scrubbing = list(
@@ -58,16 +58,16 @@
 		return
 
 	if(holding)
-		scrub(holding.air_contents)
+		scrub(holding.air_contents, SSAIR_DT)
 	else
 		var/turf/T = get_turf(src)
-		scrub(T.return_air())
+		scrub(T.return_air(), SSAIR_DT)
 
-/obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/mixture)
+/obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/mixture, delta_time = 2)
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
 		return
 
-	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
+	var/transfer_moles = min(1, volume_rate * delta_time / mixture.volume) * mixture.total_moles()
 
 	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
 	var/datum/gas_mixture/filtered = new
@@ -182,7 +182,7 @@
 	if(!holding)
 		var/turf/T = get_turf(src)
 		for(var/turf/AT in T.GetAtmosAdjacentTurfs(alldir = TRUE))
-			scrub(AT.return_air())
+			scrub(AT.return_air(), SSMACHINES_DT)
 
 /obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/W, mob/user)
 	if(default_unfasten_wrench(user, W))

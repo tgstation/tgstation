@@ -4,9 +4,9 @@
 #define RAD_LEVEL_VERY_HIGH 800
 #define RAD_LEVEL_CRITICAL 1500
 
-#define RAD_MEASURE_SMOOTHING 5
+#define RAD_MEASURE_SMOOTHING 10
 
-#define RAD_GRACE_PERIOD 2
+#define RAD_GRACE_PERIOD 4
 
 /obj/item/geiger_counter //DISCLAIMER: I know nothing about how real-life Geiger counters work. This will not be realistic. ~Xhuis
 	name = "\improper Geiger counter"
@@ -49,15 +49,15 @@
 		current_tick_amount = 0
 		return
 
-	radiation_count -= radiation_count/RAD_MEASURE_SMOOTHING
-	radiation_count += current_tick_amount/RAD_MEASURE_SMOOTHING
+	radiation_count -= SSOBJ_DT*radiation_count/RAD_MEASURE_SMOOTHING
+	radiation_count += SSOBJ_DT*current_tick_amount/RAD_MEASURE_SMOOTHING
 
 	if(current_tick_amount)
 		grace = RAD_GRACE_PERIOD
 		last_tick_amount = current_tick_amount
 
 	else if(!(obj_flags & EMAGGED))
-		grace--
+		grace -= SSOBJ_DT
 		if(grace <= 0)
 			radiation_count = 0
 

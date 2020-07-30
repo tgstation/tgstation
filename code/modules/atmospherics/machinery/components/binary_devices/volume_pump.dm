@@ -69,14 +69,14 @@
 		return
 
 
-	var/transfer_ratio = transfer_rate/air1.volume
+	var/transfer_ratio = (transfer_rate * SSAIR_DT) / air1.volume
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
 	if(overclocked)//Some of the gas from the mixture leaks to the environment when overclocked
 		var/turf/open/T = loc
 		if(istype(T))
-			var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
+			var/datum/gas_mixture/leaked = removed.remove_ratio(DT_PROB_RATE(VOLUME_PUMP_LEAK_AMOUNT, SSAIR_DT))
 			T.assume_air(leaked)
 			T.air_update_turf()
 

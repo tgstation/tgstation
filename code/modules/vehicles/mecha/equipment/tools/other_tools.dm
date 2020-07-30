@@ -196,7 +196,9 @@
 	icon_state = "repair_droid"
 	energy_drain = 50
 	range = 0
-	var/health_boost = 1
+
+	/// Repaired health per second
+	var/health_boost = 0.5
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
 	selectable = 0
@@ -243,11 +245,11 @@
 	if(!chassis)
 		STOP_PROCESSING(SSobj, src)
 		return
-	var/h_boost = health_boost
+	var/h_boost = health_boost * SSOBJ_DT
 	var/repaired = 0
 	if(chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		h_boost *= -2
-	else if(chassis.internal_damage && prob(15))
+	else if(chassis.internal_damage && DT_PROB(8, SSOBJ_DT))
 		for(var/int_dam_flag in repairable_damage)
 			if(chassis.internal_damage & int_dam_flag)
 				chassis.clearInternalDamage(int_dam_flag)
@@ -341,7 +343,7 @@
 					pow_chan = c
 					break
 			if(pow_chan)
-				var/delta = min(20, chassis.cell.maxcharge-cur_charge)
+				var/delta = min(10 * SSOBJ_DT, chassis.cell.maxcharge-cur_charge)
 				chassis.give_power(delta)
 				A.use_power(delta*coeff, pow_chan)
 
@@ -359,9 +361,12 @@
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
 	var/max_fuel = 150000
-	var/fuel_per_cycle_idle = 25
-	var/fuel_per_cycle_active = 200
-	var/power_per_cycle = 20
+	/// Fuel used per second while idle, not generating
+	var/fuelrate_idle = 12.5
+	/// Fuel used per second while actively generating
+	var/fuelrate_active = 100
+	/// Energy recharged per second
+	var/rechargerate = 10
 
 /obj/item/mecha_parts/mecha_equipment/generator/Initialize()
 	. = ..()
@@ -432,11 +437,11 @@
 		log_message("Deactivated.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		return
-	var/use_fuel = fuel_per_cycle_idle
+	var/use_fuel = fuelrate_idle
 	if(cur_charge < chassis.cell.maxcharge)
-		use_fuel = fuel_per_cycle_active
-		chassis.give_power(power_per_cycle)
-	fuel.amount -= min(use_fuel/MINERAL_MATERIAL_AMOUNT,fuel.amount)
+		use_fuel = fuelrate_active
+		chassis.give_power(rechargerate * SSOBJ_DT)
+	fuel.amount -= min(SSOBJ_DT * use_fuel / MINERAL_MATERIAL_AMOUNT, fuel.amount)
 	update_equip_info()
 	return TRUE
 
@@ -446,17 +451,17 @@
 	desc = "An exosuit module that generates power using uranium as fuel. Pollutes the environment."
 	icon_state = "tesla"
 	max_fuel = 50000
-	fuel_per_cycle_idle = 10
-	fuel_per_cycle_active = 30
-	power_per_cycle = 50
-	var/rad_per_cycle = 30
+	fuelrate_idle = 5
+	fuelrate_active = 15
+	rechargerate = 25
+	var/radrate = 15
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src, 0)
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		radiation_pulse(get_turf(src), rad_per_cycle)
+		radiation_pulse(get_turf(src), radrate * SSOBJ_DT)
 
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
