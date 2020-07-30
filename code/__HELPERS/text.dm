@@ -68,6 +68,27 @@
 /proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
+/**
+  * Perform a whitespace cleanup on the text, similar to what HTML renderers do
+  *
+  * This is useful if you want to better predict how text is going to look like when displaying it to a user
+  * HTML renderers collapse multiple whitespaces into one, trims prepending and appending spaces, among other things. This proc attempts to do the same thing.
+  * HTML5 defines whitespace pretty much exactly like regex defines the \s group, [ \t\r\n\f].
+  * Arguments:
+  * * t - The text to "render"
+  */
+/proc/htmlrendertext(t)
+	// Trim "whitespace" by lazily capturing word characters in the middle
+	var/static/regex/matchMiddle = new(@"^\s*([\W\w]*?)\s*$")
+	if(matchMiddle.Find(t) == 0)
+		return t
+	t = matchMiddle.group[1]
+
+	// Replace any non-space whitespace characters with spaces, and also multiple occurences with just one space
+	var/static/regex/matchSpacing = new(@"\s+", "g")
+	t = replacetext(t, matchSpacing, " ")
+
+	return t
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(text, max_length = 512, ascii_only = TRUE)
@@ -135,7 +156,11 @@
 	var/charcount = 0
 	var/char = ""
 
-
+	// This is a sanity short circuit, if the users name is three times the maximum allowable length of name
+	// We bail out on trying to process the name at all, as it could be a bug or malicious input and we dont
+	// Want to iterate all of it.
+	if(t_len > 3 * MAX_NAME_LEN)
+		return
 	for(var/i = 1, i <= t_len, i += length(char))
 		char = t_in[i]
 		switch(text2ascii(char))
@@ -839,3 +864,39 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		var/limit = reverse ? numSquares - percent*numSquares : percent*numSquares
 		loadstring += i <= limit ? "█" : "░"
 	return "\[[loadstring]\]"
+
+/**
+  * Formats a number to human readable form with the appropriate SI unit.
+  *
+  * Supports SI exponents between 1e-15 to 1e15, but properly handles numbers outside that range as well.
+  * Examples:
+  * * `siunit(1234, "Pa", 1)` -> `"1.2 kPa"`
+  * * `siunit(0.5345, "A", 0)` -> `"535 mA"`
+  * * `siunit(1000, "Pa", 4)` -> `"1 kPa"`
+  * Arguments:
+  * * value - The number to convert to text. Can be positive or negative.
+  * * unit - The base unit of the number, such as "Pa" or "W".
+  * * maxdecimals - Maximum amount of decimals to display for the final number. Defaults to 1.
+  */
+/proc/siunit(value, unit, maxdecimals=1)
+	var/static/list/prefixes = list("f","p","n","μ","m","","k","M","G","T","P")
+
+	// We don't have prefixes beyond this point
+	// and this also captures value = 0 which you can't compute the logarithm for
+	// and also byond numbers are floats and doesn't have much precision beyond this point anyway
+	if(abs(value) <= 1e-18)
+		return "0 [unit]"
+
+	var/exponent = clamp(log(10, abs(value)), -15, 15) // Calculate the exponent and clamp it so we don't go outside the prefix list bounds
+	var/divider = 10 ** (round(exponent / 3) * 3) // Rounds the exponent to nearest SI unit and power it back to the full form
+	var/coefficient = round(value / divider, 10 ** -maxdecimals) // Calculate the coefficient and round it to desired decimals
+	var/prefix_index = round(exponent / 3) + 6 // Calculate the index in the prefixes list for this exponent
+
+	// An edge case which happens if we round 999.9 to 0 decimals for example, which gets rounded to 1000
+	// In that case, we manually swap up to the next prefix if there is one available
+	if(coefficient >= 1000 && prefix_index < 11)
+		coefficient /= 1e3
+		prefix_index++
+
+	var/prefix = prefixes[prefix_index]
+	return "[coefficient] [prefix][unit]"

@@ -86,7 +86,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/carbon_target = target
 			var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-			var/datum/wound/brute/cut/severe/crit_wound = new
+			var/datum/wound/slash/severe/crit_wound = new
 			crit_wound.apply_wound(bodypart)
 
 	if(QDELETED(human_target) || human_target.stat != DEAD)
@@ -157,7 +157,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-		var/datum/wound/brute/cut/severe/crit_wound = new
+		var/datum/wound/slash/severe/crit_wound = new
 		crit_wound.apply_wound(bodypart)
 
 /datum/eldritch_knowledge/summon/raw_prophet
@@ -236,6 +236,7 @@
 			var/datum/antagonist/heretic_monster/monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
 			var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 			monster.set_owner(master)
+			master.ascended = TRUE
 		if("Yes")
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy/prime(loc,TRUE,10)
 			summoned.ghostize(0)
@@ -243,6 +244,9 @@
 			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for king of arms has ascended! Lord of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 			log_game("[user.real_name] ascended as [summoned.real_name]")
 			var/mob/living/carbon/carbon_user = user
+			var/datum/antagonist/heretic/ascension = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
+			ascension.ascended = TRUE
 			carbon_user.mind.transfer_to(summoned, TRUE)
 			carbon_user.gib()
+
 	return ..()

@@ -3,7 +3,7 @@
 	desc = "Low range spell allowing you to pass through a few walls."
 	school = "transmutation"
 	invocation = "ASH'N P'SSG'"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	charge_max = 150
 	range = -1
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -83,7 +83,7 @@
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "A'GRSV SPR'D"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = 3
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "corrode"
@@ -111,7 +111,7 @@
 	charge_max = 150
 	clothes_req = FALSE
 	invocation = "FL'MS O'ET'RN'ITY"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "blood_siphon"
 	action_background_icon_state = "bg_ecult"
@@ -140,14 +140,15 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C1 = target
 		for(var/obj/item/bodypart/bodypart in C2.bodyparts)
-			for(var/datum/wound/wound in bodypart.wounds)
+			for(var/i in bodypart.wounds)
+				var/datum/wound/iter_wound = i
 				if(prob(50))
 					continue
 				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in C1.bodyparts
 				if(!target_bodypart)
 					continue
-				wound.remove_wound()
-				wound.apply_wound(target_bodypart)
+				iter_wound.remove_wound()
+				iter_wound.apply_wound(target_bodypart)
 
 		C1.blood_volume -= 20
 		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
@@ -164,7 +165,7 @@
 	action_icon_state = "rust_wave"
 	action_background_icon_state = "bg_ecult"
 	invocation = "SPR'D TH' WO'D"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 
 /obj/projectile/magic/spell/rust_wave
 	name = "Patron's Reach"
@@ -211,7 +212,7 @@
 	charge_max = 350
 	clothes_req = FALSE
 	invocation = "CL'VE"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = 9
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "cleave"
@@ -240,10 +241,9 @@
 
 		target.visible_message("<span class='danger'>[target]'s veins are shredded from within as an unholy blaze erupts from their blood!</span>", \
 							"<span class='danger'>Your veins burst from within and unholy flame erupts from your blood!</span>")
-		for(var/repetition in 0 to 2)
-			var/obj/item/bodypart/bodypart = pick(target.bodyparts)
-			var/datum/wound/brute/cut/critical/crit_wound = new
-			crit_wound.apply_wound(bodypart)
+		var/obj/item/bodypart/bodypart = pick(target.bodyparts)
+		var/datum/wound/slash/critical/crit_wound = new
+		crit_wound.apply_wound(bodypart)
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/cleave(target.drop_location())
 
@@ -299,7 +299,7 @@
 	desc = "Powerful spell that releases 5 streams of fire away from you."
 	school = "transmutation"
 	invocation = "F'RE"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	charge_max = 300
 	range = 15
 	clothes_req = FALSE
@@ -362,7 +362,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/eldritch
 	invocation = "SH'PE"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	possible_shapes = list(/mob/living/simple_animal/mouse,\
@@ -375,7 +375,7 @@
 /obj/effect/proc_holder/spell/targeted/emplosion/eldritch
 	name = "Energetic Pulse"
 	invocation = "E'P"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -391,7 +391,7 @@
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "C'SC'DE"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = 4
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "fire_ring"
@@ -407,6 +407,8 @@
 		for(var/turf/T in spiral_range_turfs(_range,centre))
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
+			for(var/mob/living/livies in T.contents - centre)
+				livies.adjustFireLoss(10)
 		_range++
 		sleep(3)
 
@@ -415,7 +417,7 @@
 
 /obj/effect/proc_holder/spell/targeted/telepathy/eldritch
 	invocation = ""
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 
@@ -423,7 +425,7 @@
 	name = "Oath of Fire"
 	desc = "For a minute you will passively create a ring of fire around you."
 	invocation = "FL'MS"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -454,6 +456,8 @@
 	for(var/turf/T in range(1,current_user))
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
+		for(var/mob/living/livies in T.contents - current_user)
+			livies.adjustFireLoss(5)
 
 
 /obj/effect/proc_holder/spell/targeted/worm_contract
@@ -489,7 +493,7 @@
 	name = "Nightwatcher's Rebirth"
 	desc = "Drains nearby alive people that are engulfed in flames. It heals 10 of each damage type per person. If a person is in critical condition it finishes them off."
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1

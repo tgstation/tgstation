@@ -12,7 +12,9 @@ export const TurretControl = (props, context) => {
     shootCyborgs,
   } = data;
   return (
-    <Window>
+    <Window
+      width={305}
+      height={168}>
       <Window.Content>
         <InterfaceLockNoticeBox />
         <Section>

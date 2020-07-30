@@ -257,11 +257,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Boolean used for logging if we've passed the emergency point
 	var/has_reached_emergency = FALSE
 
-	// For making hugbox supermatters
-	///Disables all methods of taking damage
-	var/takes_damage = TRUE
-	///Disables the production of gas, and pretty much any handling of it we do.
-	var/produces_gas = TRUE
 	///An effect we show to admins and ghosts the percentage of delam we're at
 	var/obj/effect/countdown/supermatter/countdown
 
@@ -280,6 +275,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/psy_overlay = FALSE
 	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
 	var/obj/overlay/psy/psyOverlay = /obj/overlay/psy
+
+	//For making hugbox supermatters
+	///Disables all methods of taking damage
+	var/takes_damage = TRUE
+	///Disables the production of gas, and pretty much any handling of it we do.
+	var/produces_gas = TRUE
+	///Disables power changes
+	var/power_changes = TRUE
+	///Disables the sm's proccessing totally.
+	var/processes = TRUE
 
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
@@ -444,6 +449,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/process_atmos()
+	if(!processes) //Just fuck me up bro
+		return
 	var/turf/T = loc
 
 	if(isnull(T))// We have a null turf...something is wrong, stop processing this entity.
@@ -596,7 +603,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		//Releases stored power into the general pool
 		//We get this by consuming shit or being scalpeled
-		if(matter_power)
+		if(matter_power && power_changes)
 			//We base our removed power off one 10th of the matter_power.
 			var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
 			//Adds at least 40 power
@@ -614,7 +621,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			icon_state = base_icon_state
 
 		//if there is more pluox and n2 then anything else, we receive no power increase from heat
-		power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
+		if(power_changes)
+			power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
 		if(prob(50))
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
@@ -664,7 +672,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
-	power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor) * (1 - (0.2 * psyCoeff)),0)
+	if(power_changes)
+		power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor) * (1 - (0.2 * psyCoeff)),0)
 	//After this point power is lowered
 	//This wraps around to the begining of the function
 	//Handle high power zaps/anomaly generation
@@ -703,7 +712,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zap_count >= 1)
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 			for(var/i in 1 to zap_count)
-				supermatter_zap(src, range, clamp(power*2, 4000, 20000), list(), flags)
+				supermatter_zap(src, range, clamp(power*2, 4000, 20000), flags)
 
 		if(prob(5))
 			supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
@@ -753,14 +762,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/turf/L = loc
 	if(!istype(L))
 		return FALSE
-	if(!istype(Proj.firer, /obj/machinery/power/emitter))
+	if(!istype(Proj.firer, /obj/machinery/power/emitter) && power_changes)
 		investigate_log("has been hit by [Proj] fired by [key_name(Proj.firer)]", INVESTIGATE_SUPERMATTER)
 	if(Proj.flag != "bullet")
-		power += Proj.damage * bullet_energy
-		if(!has_been_powered)
-			investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
-			message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
-			has_been_powered = TRUE
+		if(power_changes) //This needs to be here I swear
+			power += Proj.damage * bullet_energy
+			if(!has_been_powered)
+				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
+				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
+				has_been_powered = TRUE
 	else if(takes_damage)
 		damage += Proj.damage * bullet_energy
 	return BULLET_ACT_HIT
@@ -830,7 +840,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	dust_mob(user, cause = "hand")
 
 /obj/machinery/power/supermatter_crystal/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
-	if(nom.incorporeal_move || nom.status_flags & GODMODE)
+	if(nom.incorporeal_move || nom.status_flags & GODMODE) //try to keep supermatter sliver's + hemostat's dust conditions in sync with this too
 		return
 	if(!vis_msg)
 		vis_msg = "<span class='danger'>[nom] reaches out and touches [src], inducing a resonance... [nom.p_their()] body starts to glow and burst into flames before flashing into dust!</span>"
@@ -937,7 +947,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
 		user.dust(force = TRUE)
-		matter_power += 200
+		if(power_changes)
+			matter_power += 200
 	else if(istype(AM, /obj/singularity))
 		return
 	else if(isobj(AM))
@@ -948,7 +959,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				message_admins("[src] has consumed [AM], [suspicion] [ADMIN_JMP(src)].")
 			investigate_log("has consumed [AM] - [suspicion].", INVESTIGATE_SUPERMATTER)
 		qdel(AM)
-	if(!iseffect(AM))
+	if(!iseffect(AM) && power_changes)
 		matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
@@ -991,6 +1002,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	name = "anchored supermatter shard"
 	takes_damage = FALSE
 	produces_gas = FALSE
+	power_changes = FALSE
+	processes = FALSE //SHUT IT DOWN
 	moveable = FALSE
 	anchored = TRUE
 
@@ -1025,7 +1038,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(PYRO_ANOMALY)
 				new /obj/effect/anomaly/pyro(L, 200)
 
-/obj/machinery/power/supermatter_crystal/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, list/targets_hit = list(), zap_flags = ZAP_SUPERMATTER_FLAGS)
+/obj/machinery/power/supermatter_crystal/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list())
 	if(QDELETED(zapstart))
 		return
 	. = zapstart.dir
@@ -1164,7 +1177,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			zap_str -= (zap_str/10)
 			zap_count += 1
 		for(var/j in 1 to zap_count)
-			supermatter_zap(target, new_range, zap_str, targets_hit, zap_flags)
+			if(zap_count > 1)
+				targets_hit = targets_hit.Copy() //Pass by ref begone
+			supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'

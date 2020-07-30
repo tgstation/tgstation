@@ -13,7 +13,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,22)
+	var/loot = rand(1,21)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -57,17 +57,15 @@
 		if(16)
 			new /obj/item/immortality_talisman(src)
 		if(17)
-			new /obj/item/gun/magic/hook(src)
-		if(18)
 			new /obj/item/voodoo(src)
-		if(19)
+		if(18)
 			new /obj/item/book/granter/spell/summonitem(src)
-		if(20)
+		if(19)
 			new /obj/item/book_of_babel(src)
-		if(21)
+		if(20)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(22)
+		if(21)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 
 //KA modkit design discs
@@ -713,7 +711,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	faction_bonus_force = 30
 	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
@@ -819,7 +817,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 1
 	throwforce = 1
