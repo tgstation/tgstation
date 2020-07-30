@@ -18,13 +18,16 @@
 	if(mapload)
 		connected_mechpad = connect_to_pad()
 		connected_mechpad.connected_console = src
-		for(var/obj/machinery/mechpad/pad in GLOB.machines)
-			if(pad == connected_mechpad)
-				continue
-			mechpads += pad
-			pad.consoles += src
-			if(mechpads.len < maximum_pads)
-				break
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/mechpad/LateInitialize()
+	for(var/obj/machinery/mechpad/pad in GLOB.machines)
+		if(pad == connected_mechpad)
+			continue
+		mechpads += pad
+		pad.consoles += src
+		if(mechpads.len > maximum_pads)
+			break
 
 /obj/machinery/computer/mechpad/Destroy()
 	if(connected_mechpad)
