@@ -613,10 +613,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/matrix/M = matrix()
 	M.Turn(pick(90, 270))
 	transform = M
-	forceStep(fatty)
 
 	if(get_turf(fatty) != get_turf(src))
 		throw_at(get_turf(fatty), get_dist(src, fatty), 1, spin=FALSE)
+
+	forceStep(fatty)
 
 /obj/machinery/vending/proc/untilt(mob/user)
 	user.visible_message("<span class='notice'>[user] rights [src].</span>", \
