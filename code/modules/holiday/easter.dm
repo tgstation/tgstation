@@ -60,6 +60,26 @@
 	maxbodytemp = 1500
 	unsuitable_atmos_damage = 0
 
+/mob/living/simple_animal/chicken/rabbit/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	switch(M.a_intent)
+		if("help")
+			wuv(1,M)
+		if("harm")
+			wuv(-1,M)
+
+/mob/living/simple_animal/chicken/rabbit/proc/wuv(change, mob/M)
+	if(change)
+		if(change > 0)
+			if(M && stat != DEAD)
+				new /obj/effect/temp_visual/heart(loc)
+				emote("me", 1, "hops around happily!")
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
+		else
+			if(M && stat != DEAD)
+				emote("me", 1, "has a heart attack!")
+
+
 //Easter Baskets
 /obj/item/storage/basket/easter
 	name = "Easter Basket"
