@@ -349,10 +349,9 @@
 		var/mob/living/user = loc
 		if(istype(user))
 			to_chat(user, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
-			dropped(user)
 		else
 			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
-			snap_back()
+		snap_back()
 
 /obj/item/shockpaddles/proc/recharge(var/time)
 	if(req_defib || !time)
