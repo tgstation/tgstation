@@ -171,8 +171,7 @@
 /obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
 	// Update the weight of all meteor events
 	for(var/datum/round_event_control/meteor_wave/meteors in SSevents.control)
-		if(istype(meteors))
-			meteors.weight *= mod
+		meteors.weight *= mod
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()
