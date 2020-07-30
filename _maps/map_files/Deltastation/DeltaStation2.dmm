@@ -71620,11 +71620,11 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEu" = (
+/obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/manifold/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEv" = (
@@ -113871,6 +113871,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/surgery/room_b)
+"mTZ" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
+/obj/item/flashlight{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "mUS" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -114964,6 +114974,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"pND" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/extinguisher,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "pQm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -150617,7 +150638,7 @@ mQR
 cHF
 cCP
 cKo
-ljr
+pND
 cNj
 cOR
 cQz
@@ -151388,7 +151409,7 @@ txy
 cCP
 cIx
 cKr
-vZI
+mTZ
 cNl
 cOU
 cQC
