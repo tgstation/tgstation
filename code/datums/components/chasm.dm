@@ -133,7 +133,8 @@
 			qdel(S.mmi)
 		if(isliving(AM))
 			var/mob/living/L = AM
-			L.death(TRUE)
+			if(L.stat != DEAD)
+				L.death(TRUE)
 
 		falling_atoms -= AM
 		qdel(AM)
