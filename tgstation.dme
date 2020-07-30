@@ -2091,6 +2091,7 @@
 #include "code\modules\library\soapstone.dm"
 #include "code\modules\library\skill_learning\skill_station.dm"
 #include "code\modules\library\skill_learning\skillchip.dm"
+#include "code\modules\library\skill_learning\job_skillchips\robotics.dm"
 #include "code\modules\lighting\emissive_blocker.dm"
 #include "code\modules\lighting\lighting_area.dm"
 #include "code\modules\lighting\lighting_atom.dm"

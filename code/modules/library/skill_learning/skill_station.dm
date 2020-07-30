@@ -114,8 +114,7 @@
 /obj/machinery/skill_station/proc/implant()
 	working = FALSE
 	work_timer = null
-	if(inserted_skillchip?.can_be_implanted(occupant))
-		implant_skillchip(occupant,inserted_skillchip)
+	inserted_skillchip?.implant(occupant)
 	update_icon()
 	SStgui.update_uis(src)
 	to_chat(occupant,"<span class='notice'>Operation complete!</span>")

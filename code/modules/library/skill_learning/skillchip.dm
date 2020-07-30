@@ -70,6 +70,28 @@
 		return "Duplicate chip detected."
 	return "Chip ready for implantation."
 
+/**
+  * Attempts to implant a skillchip into the target carbon's brain.
+  *
+  * Returns whether the skillchip was inserted or not.
+  * Arguments:
+  * * target - The living carbon whose brain you want to insert the chip into.
+  * * silent - Whether or not to display the implanting message.
+  */
+/obj/item/skillchip/proc/implant(mob/living/carbon/target, silent = FALSE)
+	// Check the chip can actually be implanted.
+	if(!can_be_implanted(target))
+		return FALSE
+
+	// Grab the brain. It should exist as can_be_implanted() checks for it.
+	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+
+	on_apply(target, silent)
+	forceMove(target_brain)
+	LAZYADD(target_brain.skillchips, src)
+
+	return TRUE
+
 /obj/item/skillchip/basketweaving
 	name = "Basketsoft 3000 skillchip"
 	desc = "Underwater edition."
