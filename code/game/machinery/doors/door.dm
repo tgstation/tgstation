@@ -41,6 +41,7 @@
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 
+
 /obj/machinery/door/examine(mob/user)
 	. = ..()
 	if(red_alert_access)
@@ -96,6 +97,9 @@
 			try_to_crowbar(null, user)
 			return TRUE
 	return FALSE
+
+/obj/machinery/door/proc/try_remove_seal(mob/user)
+	return
 
 /obj/machinery/door/Bumped(atom/movable/AM)
 	. = ..()
@@ -170,6 +174,8 @@
 /obj/machinery/door/attack_hand(mob/user)
 	. = ..()
 	if(.)
+		return
+	if(try_remove_seal(user))
 		return
 	if(try_safety_unlock(user))
 		return
