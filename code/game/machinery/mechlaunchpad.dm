@@ -1,6 +1,6 @@
 /obj/machinery/mechpad
-	name = "mech orbital pad"
-	desc = "A pad to drop mechs on. From space."
+	name = "orbital mech pad"
+	desc = "A slab of heavy plating designed to withstand orbital-drop impacts. Through some sort of advanced bluespace tech, this one seems able to send and receive Mechs. Requires linking to a console to function."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "mechpad"
 	circuit = /obj/item/circuitboard/machine/mechpad
@@ -39,7 +39,7 @@
 
 /obj/structure/closet/supplypod/mechpod
 	style = STYLE_SEETHROUGH
-	explosionSize = list(0,0,0,1)
+	explosionSize = list(0,0,0,0)
 	reversing = TRUE
 	landingDelay = 0
 	openingDelay = 0
