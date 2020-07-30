@@ -157,3 +157,40 @@
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_EMOTEMUTE))
 			return FALSE
+
+/datum/emote/coders_screech //This is a shorthand to allow for custom emotes on our side while ignoring any player only checks that come with "me"
+	key = "code"
+
+/datum/emote/coders_screech/run_emote(mob/user, params, type_override, intentional = FALSE) //Just override the song and dance
+	. = TRUE
+	if(!can_run_emote(user, TRUE, intentional))
+		return FALSE
+	var/msg = params
+	msg = replace_pronoun(user, msg)
+
+	if(isliving(user))
+		var/mob/living/L = user
+		for(var/obj/item/implant/I in L.implants)
+			I.trigger(key, L)
+
+	if(!msg)
+		return
+
+	user.log_message(msg, LOG_EMOTE)
+	msg = "<b>[user]</b> " + msg
+
+	var/tmp_sound = get_sound(user)
+	if(tmp_sound && (!only_forced_audio || !intentional))
+		playsound(user, tmp_sound, 50, vary)
+
+	for(var/mob/M in GLOB.dead_mob_list)
+		if(!M.client || isnewplayer(M))
+			continue
+		var/T = get_turf(user)
+		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
+			M.show_message(msg)
+
+	if(emote_type == EMOTE_AUDIBLE)
+		user.audible_message(msg)
+	else
+		user.visible_message(msg)
