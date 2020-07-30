@@ -8,6 +8,8 @@
 	var/display_name = "Orbital Pad"
 	///The console the pad is linked to
 	var/obj/machinery/computer/mechpad/connected_console
+	///List of consoles that can access the pad
+	var/list/obj/machinery/computer/mechpad/consoles
 
 /obj/machinery/mechpad/Initialize()
 	. = ..()
@@ -17,9 +19,23 @@
 	if(connected_console)
 		connected_console.connected_mechpad = null
 		connected_console = null
+	for(var/obj/machinery/computer/mechpad/console in consoles)
+		console.mechpads -= src
 	return ..()
 
+/obj/machinery/mechpad/screwdriver_act(mob/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, "mechpad-o", "mechpad", tool)
+
+/obj/machinery/medipen_refiller/crowbar_act(mob/user, obj/item/tool)
+	..()
+	default_deconstruction_crowbar(tool)
+	return TRUE
+
 /obj/machinery/mechpad/multitool_act(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		return
 	if(!multitool_check_buffer(user, tool))
 		return
 	var/obj/item/multitool/multitool = tool

@@ -18,17 +18,20 @@
 	if(mapload)
 		connected_mechpad = connect_to_pad()
 		connected_mechpad.connected_console = src
-		for(var/obj/machinery/mechpad/pad in world)
+		for(var/obj/machinery/mechpad/pad in GLOB.machines)
 			if(pad == connected_mechpad)
 				continue
-			mechpads |= pad
-			if(LAZYLEN(mechpads) < maximum_pads)
+			mechpads += pad
+			pad.consoles += src
+			if(mechpads.len < maximum_pads)
 				break
 
 /obj/machinery/computer/mechpad/Destroy()
 	if(connected_mechpad)
 		connected_mechpad.connected_console = null
 		connected_mechpad = null
+	for(var/obj/machinery/mechpad/mechpad in mechpads)
+		mechpad.consoles -= src
 	return ..()
 
 ///Tries to locate a pad in the cardinal directions, if it finds one it returns it
@@ -46,18 +49,20 @@
 		return
 	var/obj/item/multitool/multitool = tool
 	if(istype(multitool.buffer, /obj/machinery/mechpad))
-		if(!(LAZYLEN(mechpads) < maximum_pads))
+		var/obj/machinery/mechpad/buffered_console = multitool.buffer
+		if(!(mechpads.len < maximum_pads))
 			to_chat(user, "<span class='warning'>[src] cannot handle any more connections!</span>")
 			return
-		if(multitool.buffer == connected_mechpad)
+		if(buffered_console == connected_mechpad)
 			to_chat(user, "<span class='warning'>[src] cannot connect to its own mechpad!</span>")
-		else if(!connected_mechpad && multitool.buffer == connect_to_pad())
-			connected_mechpad = multitool.buffer
+		else if(!connected_mechpad && buffered_console == connect_to_pad())
+			connected_mechpad = buffered_console
 			connected_mechpad.connected_console = src
 			multitool.buffer = null
 			to_chat(user, "<span class='notice'>You connect the console to the pad with data from the [multitool.name]'s buffer.</span>")
 		else
-			mechpads |= multitool.buffer
+			mechpads += buffered_console
+			buffered_console.consoles += src
 			multitool.buffer = null
 			to_chat(user, "<span class='notice'>You upload the data from the [multitool.name]'s buffer.</span>")
 
@@ -137,6 +142,7 @@
 		if("remove")
 			if(usr && alert(usr, "Are you sure?", "Unlink Orbital Pad", "I'm Sure", "Abort") != "Abort")
 				mechpads -= current_pad
+				current_pad.consoles -= src
 				selected_id = null
 		if("launch")
 			try_launch(usr, current_pad)
