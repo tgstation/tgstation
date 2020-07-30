@@ -45,7 +45,7 @@
 	if(!multitool_check_buffer(user, tool))
 		return
 	var/obj/item/multitool/multitool = tool
-	if(multitool.buffer && istype(multitool.buffer, /obj/machinery/mechpad))
+	if(istype(multitool.buffer, /obj/machinery/mechpad))
 		if(!(LAZYLEN(mechpads) < maximum_pads))
 			to_chat(user, "<span class='warning'>[src] cannot handle any more connections!</span>")
 			return
