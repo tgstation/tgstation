@@ -427,7 +427,7 @@
 	if(affected_turfs.len)
 		fraction /= affected_turfs.len
 	for(var/t in affected_turfs)
-		reagents.trans_to(t, ., volume_multiplier, transfered_by = user, method = VAPOR)
+		reagents.trans_to(t, ., volume_multiplier, transfered_by = user, method = TOUCH)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
