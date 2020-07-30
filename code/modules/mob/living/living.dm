@@ -8,6 +8,7 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
+	SSmobs.add_to_crate(src)
 	GLOB.mob_living_list += src
 
 /mob/living/prepare_huds()
@@ -44,6 +45,7 @@
 		S.sharerDies(FALSE)
 		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
 	sharedSoullinks = null
+	SSmobs.remove_from_crate(src)
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
