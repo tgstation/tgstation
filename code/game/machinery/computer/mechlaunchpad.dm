@@ -79,6 +79,9 @@
 	if(!connected_mechpad)
 		to_chat(user, "<span class='warning'>[src] has no connected pad!</span>")
 		return
+	if(connected_mechpad.panel_open)
+		to_chat(user, "<span class='warning'>[src]'s pad has its' panel open! It won't work!</span>")
+		return
 	if(!(locate(/obj/mecha) in get_turf(connected_mechpad)))
 		to_chat(user, "<span class='warning'>[src] detects no mecha on the pad!</span>")
 		return
