@@ -193,7 +193,7 @@
 
 	for (var/turf/possible_drop in contract.dropoff.contents)
 		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
-			if (!is_blocked_turf(possible_drop))
+			if (!possible_drop.is_blocked_turf())
 				possible_drop_loc.Add(possible_drop)
 
 	if (possible_drop_loc.len > 0)
