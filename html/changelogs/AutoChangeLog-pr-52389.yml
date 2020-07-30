@@ -1,0 +1,5 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - refactor: "refactored light overlay to vis_contents in case to make it unclickable and less load"
+  - bugfix: "now lihgts has light overlay, again. But now it unclickable."
