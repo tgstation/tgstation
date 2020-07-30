@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(mobs)
 	if (!resumed)
 		if(crate == 1)
 			var/most = -1
-			var/least = 999999
+			var/least = INFINITY
 			var/most_idx = 1
 			var/least_idx = 1
 			for(var/i in 1 to 4)
