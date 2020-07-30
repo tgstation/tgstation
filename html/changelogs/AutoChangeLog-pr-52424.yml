@@ -1,0 +1,4 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - bugfix: "Now engines correctly rotate on shuttle rotating."

@@ -71620,11 +71620,11 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEu" = (
+/obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/manifold/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEv" = (
@@ -74644,6 +74644,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -74682,10 +74686,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cKs" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -74697,6 +74697,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock{
+	name = "Miscellaneous Storage"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cKt" = (
@@ -75515,6 +75518,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/radio/off,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cLN" = (
@@ -113867,6 +113871,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/surgery/room_b)
+"mTZ" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
+/obj/item/flashlight{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "mUS" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -114960,6 +114974,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"pND" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/extinguisher,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "pQm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -115045,13 +115070,12 @@
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "qjp" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	id_tag = "commissarydoor";
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
 /obj/structure/barricade/wooden,
 /obj/structure/cable,
+/obj/machinery/door/airlock{
+	id_tag = "commissarydoor";
+	name = "Commissary"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "qkz" = (
@@ -150614,7 +150638,7 @@ mQR
 cHF
 cCP
 cKo
-cLL
+pND
 cNj
 cOR
 cQz
@@ -151385,7 +151409,7 @@ txy
 cCP
 cIx
 cKr
-cLO
+mTZ
 cNl
 cOU
 cQC

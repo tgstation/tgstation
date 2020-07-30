@@ -1,0 +1,7 @@
+author: "Asha108"
+delete-after: True
+changes: 
+  - tweak: "Changes to the Lavaland Syndicate Atmospherics department."
+  - rscadd: "tier 3 canisters to atmos and plasteel to storage room crates"
+  - rscadd: "added filter and connectors, i.e. toxins, in expanded atmos"
+  - rscdel: "Removed old, useless tier0 canister"

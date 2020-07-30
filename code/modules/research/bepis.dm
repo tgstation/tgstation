@@ -130,7 +130,7 @@
 	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))		//NO MORE DISCS IN WINDOWS
 	while(length(turfs))
 		var/turf/T = pick_n_take(turfs)
-		if(is_blocked_turf(T, exclude_mobs=TRUE))
+		if(T.is_blocked_turf(TRUE))
 			continue
 		else
 			dropturf = T
