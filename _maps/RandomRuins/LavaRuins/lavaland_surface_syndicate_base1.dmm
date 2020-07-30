@@ -6044,7 +6044,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "JB" = (
-/obj/machinery/atmospherics/pipe/simple/orange{
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 8;
 	name = "Plasma to Mix"
 	},
