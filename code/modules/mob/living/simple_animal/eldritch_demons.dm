@@ -80,7 +80,6 @@
 		return FALSE
 	if(linked_mobs[mob_linked])
 		return FALSE
-	linked_mobs += mob_linked
 
 	to_chat(mob_linked, "<span class='notice'>You feel something new enter your sphere of mind, you hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link.</span>")
 	var/datum/action/innate/mansus_speech/action = new(src)
@@ -90,7 +89,7 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
-	if(!(mob_linked in linked_mobs))
+	if(!linked_mobs[mob_linked]))
 		return
 	UnregisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/mansus_speech/action = linked_mobs[mob_linked]

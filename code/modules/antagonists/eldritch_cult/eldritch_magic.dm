@@ -573,7 +573,7 @@
 	if(QDELETED(living_owner))
 		return
 
-	if(QDELETED(originator) || !(living_owner in originator.linked_mobs))
+	if(!originator?.linked_mobs[living_owner])
 		to_chat(living_owner, "<span class='warning'>The link seems to have been severed...</span>")
 		Remove(living_owner)
 		return
