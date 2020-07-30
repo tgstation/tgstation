@@ -328,9 +328,6 @@
 	. = ..()
 	if(!req_defib)
 		return
-	if(!in_range(src, defib))
-		dropped(user)
-		return
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
 
 /obj/item/shockpaddles/Moved()
