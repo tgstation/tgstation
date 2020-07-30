@@ -77,13 +77,13 @@
 
 	var/list/display_names = list()
 	var/list/items = list()
-	for(var/i in 1 to contents.len)
-		var/obj/item/I = contents[i]
-		display_names[I.name + " ([i])"] = REF(I)
-		var/image/item_image = image(icon = I.icon, icon_state = I.icon_state)
-		if(length(I.overlays))
-			item_image.copy_overlays(I)
-		items += list(I.name + " ([i])" = item_image)
+	for(var/i in 1 to length(contents))
+		var/obj/item/thing = contents[i]
+		display_names[thing.name + " ([i])"] = REF(thing)
+		var/image/item_image = image(icon = thing.icon, icon_state = thing.icon_state)
+		if(length(thing.overlays))
+			item_image.copy_overlays(thing)
+		items += list(thing.name + " ([i])" = item_image)
 
 	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
 	if(!pick)
