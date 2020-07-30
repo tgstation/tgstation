@@ -62,7 +62,6 @@
 	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,/obj/effect/proc_holder/spell/pointed/manse_link,/obj/effect/proc_holder/spell/targeted/telepathy/eldritch,/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch)
 
 	var/list/linked_mobs = list()
-	var/list/linked_actions = list()
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize()
 	. = ..()
