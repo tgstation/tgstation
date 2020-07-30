@@ -594,8 +594,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
+	icon_state = "baseball_bat_home"
+	inhand_icon_state = "baseball_bat_home"
 	homerun_able = 1
-	color = "#ff4c4c"
 	light_power = 5
 	light_color = "#ff4c4c"
 
@@ -656,6 +657,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "baseball_bat_burn"
 	attack_verb = list("beat", "cooked")
 	damtype = BURN
+	hitsound = 'sound/weapons/genhit2.ogg'
 
 // Barbed Bat
 /obj/item/melee/baseball_bat/barbed

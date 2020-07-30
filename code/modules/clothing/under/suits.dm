@@ -165,3 +165,30 @@
 	inhand_icon_state = "henchmen"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
+
+//Reshia
+/obj/item/clothing/under/suit/test
+    name = "reshia test"
+    desc = "i'm going to fucking piss myself."
+    icon = 'icons/obj/clothing/under/suits.dmi'
+    icon_state = "white_suit"
+    inhand_icon_state = "white_suit"
+    body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
+    flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACE
+    var/handled = FALSE
+
+/obj/item/clothing/under/suit/test/equipped(mob/user, slot)
+	if(slot != ITEM_SLOT_ICLOTHING)
+		return
+	if(ismoth(user))
+		handled = TRUE
+		user.set_species(/datum/species/human)
+		to_chat(user, "<span class='notice'>If you read this you're gay.</span.?>")
+
+/obj/item/clothing/under/suit/test/dropped(mob/user)
+	if(handled)
+		if(ishumanbasic(user))
+			user.set_species(/datum/species/moth)
+			handled = FALSE
+			to_chat(user, "<span class='notice'>If you read this I'm gay.</span.?>")
+

@@ -77,7 +77,7 @@
 	desc = "Die the Death."
 	icon_state = "baseball_bat_exec0"
 	throwforce = 8
-
+	w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/fireaxe/baseball/ComponentInitialize()
 	AddComponent(/datum/component/two_handed, force_unwielded=2, force_wielded=13, icon_wielded="baseball_bat_exec1", dismemberment_unwielded = 0, dismemberment_wielded = 100)

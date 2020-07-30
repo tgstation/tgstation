@@ -340,6 +340,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 25), \
 	new/datum/stack_recipe("rebel attire", /obj/item/clothing/under/misc/durathread/rebel, 4, time = 40), \
 	new/datum/stack_recipe("rebel boots", /obj/item/clothing/shoes/sneakers/rebel, 2, time = 40), \
+	new/datum/stack_recipe("Bat Sheath", /obj/item/storage/belt/baseball, 4, time = 40), \
 	))
 
 /obj/item/stack/sheet/durathread

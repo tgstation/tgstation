@@ -171,7 +171,7 @@
 				/obj/item/circular_saw = 1,
 				/obj/item/stack/cable_coil = 1,)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER)
-	time = 15
+	time = 20
 	category = CAT_WEAPONRY
 	subcategory = CAT_BAT
 
@@ -212,7 +212,7 @@
 				/obj/item/stack/sheet/mineral/plastitanium = 3,
 				)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
-	time = 15
+	time = 30
 	category = CAT_WEAPONRY
 	subcategory = CAT_BAT
 
@@ -248,6 +248,17 @@
 				/obj/item/lighter = 1,
 				)
 	time = 30
+	category = CAT_WEAPONRY
+	subcategory = CAT_BAT
+
+/datum/crafting_recipe/metal_bat
+	name = "Metal Bat"
+	result = /obj/item/melee/baseball_bat/ablative
+	reqs = list(/obj/item/melee/baseball_bat = 1,
+				/obj/item/stack/sheet/plasteel = 20,
+				)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 15
 	category = CAT_WEAPONRY
 	subcategory = CAT_BAT
 
