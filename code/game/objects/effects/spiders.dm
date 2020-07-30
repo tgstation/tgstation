@@ -84,7 +84,8 @@
 	var/list/faction = list("spiders")
 
 /obj/structure/spider/eggcluster/Initialize()
-	forceStep(null, step_x, step_y)
+	if(loc)
+		forceStep(null, rand(3,-3), rand(3,-3))
 	START_PROCESSING(SSobj, src)
 	. = ..()
 

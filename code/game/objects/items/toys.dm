@@ -168,8 +168,8 @@
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
-	
-	
+
+
 /obj/item/toy/balloon/arrest
 	name = "arreyst balloon"
 	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
@@ -882,7 +882,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/cardname = null
 	var/flipped = 0
-	step_x = -5
+	pixel_x = -5
 
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
@@ -909,12 +909,12 @@
 		else
 			src.icon_state = "sc_Ace of Spades_[deckstyle]"
 			src.name = "What Card"
-		forceMove(loc, 5, step_y)
+		pixel_x = 5
 	else if(flipped)
 		src.flipped = 0
 		src.icon_state = "singlecard_down_[deckstyle]"
 		src.name = "card"
-		forceMove(loc, -5, step_y)
+		pixel_x = -5
 
 /obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/))
@@ -1446,7 +1446,8 @@
 
 /obj/item/toy/seashell/Initialize()
 	. = ..()
-	forceMove(loc, rand(-5, 5), rand(-5, 5))
+	if(loc)
+		forceMove(loc, rand(-5, 5), rand(-5, 5))
 	icon_state = "shell[rand(1,3)]"
 	color = pickweight(possible_colors)
 	setDir(pick(GLOB.cardinals))
