@@ -990,10 +990,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(cart.charges <=0)
 			to_chat(user, "<span class='notice'>Out of charges.</span>")
 			return
-		if(door.honkamount>0)
-			to_chat(user, "<span class='notice'>Previous virus is still active!</span>")
-			return
-		to_chat(user, "<span class='notice'>You upload the virus to the airlock controller!</span>")
+		to_chat(user, "<span class='notice'>You upload the virus to the airlock controller!.</span>")
 		door.honkamount = (rand(15,20))
 		cart.charges --
 		return
