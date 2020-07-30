@@ -23,8 +23,8 @@
 	var/removable = TRUE
 	/// How many skillslots this one takes
 	var/slot_cost = 1
-	/// If the chip can be implanted multiple times
-	var/allow_multiple = 0
+	/// Variable for flags
+	var/skillchip_flags = NONE
 
 /// Called after implantation and/or brain entering new body
 /obj/item/skillchip/proc/on_apply(mob/living/carbon/user,silent=TRUE)
@@ -51,8 +51,8 @@
 	//No skill slots left
 	if(target.used_skillchip_slots + slot_cost > target.max_skillchip_slots)
 		return FALSE
-	//Only one copy if allow_multiple = 0.
-	if(!allow_multiple && (locate(type) in target_brain.skillchips))
+	//Only one multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
+	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (locate(type) in target_brain.skillchips))
 		return FALSE
 	return TRUE
 
@@ -65,8 +65,8 @@
 	//No skill slots left
 	if(target.used_skillchip_slots + slot_cost > target.max_skillchip_slots)
 		return "Complexity limit exceeded."
-	//Only one copy if allow_multiple = 0.
-	if(!allow_multiple && (locate(type) in target_brain.skillchips))
+	//Only one multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
+	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (locate(type) in target_brain.skillchips))
 		return "Duplicate chip detected."
 	return "Chip ready for implantation."
 
@@ -106,7 +106,7 @@
 	skill_icon = "plug"
 	implanting_message = "<span class='notice'>You can now implant another chip into this adapter, but the adapter also took up an existing slot ...</span>"
 	removal_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
-	allow_multiple = 1
+	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE
 	slot_cost = 0
 
 /obj/item/skillchip/useless_adapter/on_apply(mob/living/carbon/user, silent)
