@@ -161,25 +161,6 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/mob/living/simple_animal/cow/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD)
-				new /obj/effect/temp_visual/heart(loc)
-				emote("me", 1, "moos happily!")
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-		else
-			if(M && stat != DEAD)
-				emote("me", 1, "moos sadly!")
-
 /mob/living/simple_animal/cow/tamed()
 	. = ..()
 	can_buckle = TRUE
@@ -303,25 +284,6 @@
 /mob/living/simple_animal/chick/holo/Life()
 	..()
 	amount_grown = 0
-
-/mob/living/simple_animal/chick/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/mob/living/simple_animal/chick/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD)
-				new /obj/effect/temp_visual/heart(loc)
-				emote("me", 1, "chirps!")
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-		else
-			if(M && stat != DEAD)
-				emote("me", 1, "chirps sadly!")
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"

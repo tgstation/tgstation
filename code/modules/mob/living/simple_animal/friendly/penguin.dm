@@ -56,21 +56,3 @@
 	mob_size = MOB_SIZE_SMALL
 	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/reagent_containers/food/snacks/meat/slab/penguin = 1)
 
-/mob/living/simple_animal/pet/penguin/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/mob/living/simple_animal/pet/penguin/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD)
-				new /obj/effect/temp_visual/heart(loc)
-				emote("me", 1, "honks happily!")
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-		else
-			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
-				emote("me", 1, "cries and flaps its wings!")

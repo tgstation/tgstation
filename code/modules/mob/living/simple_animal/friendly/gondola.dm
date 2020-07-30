@@ -62,25 +62,6 @@
 /mob/living/simple_animal/pet/gondola/IsVocal() //Gondolas are the silent walker.
 	return FALSE
 
-/mob/living/simple_animal/pet/gondola/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/mob/living/simple_animal/pet/gondola/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD)
-				new /obj/effect/temp_visual/heart(loc)
-				emote("me", 1, "smiles happily!")
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-		else
-			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
-				emote("me", 1, "frowns!")
-
 
 #undef GONDOLA_HEIGHT
 #undef GONDOLA_COLOR
