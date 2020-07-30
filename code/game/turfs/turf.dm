@@ -140,9 +140,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/is_blocked_turf(exclude_mobs)
 	if(density)
 		return TRUE
-	for(var/i in src)
-		var/atom/A = i
-		if(A.density && (!exclude_mobs || !ismob(A)))
+	for(var/i in contents)
+		var/atom/thing = i
+		if(thing.density && (!exclude_mobs || !ismob(thing)))
 			return TRUE
 	return FALSE
 
