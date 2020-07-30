@@ -79,7 +79,7 @@
 		return FALSE
 	if(mob_linked.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		return FALSE
-	if(mob_linked in linked_mobs)
+	if(linked_mobs[mob_linked])
 		return FALSE
 	linked_mobs += mob_linked
 
