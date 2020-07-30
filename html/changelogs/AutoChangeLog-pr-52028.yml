@@ -1,0 +1,6 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - balance: "Raw prophet's seeing range decreased by 1 so that people dont lag so much."
+  - balance: "Raw prophets telepathy was replaced by mansus link"
+  - rscadd: "Raw prophets now get a long range blind spell."
