@@ -317,11 +317,11 @@
 		if(change > 0)
 			if(M && stat != DEAD)
 				new /obj/effect/temp_visual/heart(loc)
-				emote("me", 1, "moos happily!")
+				emote("me", 1, "chirps!")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		else
 			if(M && stat != DEAD)
-				emote("me", 1, "moos sadly!")
+				emote("me", 1, "chirps sadly!")
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
