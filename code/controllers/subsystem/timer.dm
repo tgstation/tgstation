@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 // SS_TICKER subsystem, so wait is in ticks
 	init_order = INIT_ORDER_TIMER
+	priority = FIRE_PRIORITY_TIMER
 	flags = SS_TICKER|SS_NO_INIT
 
 	/// Queue used for storing timers that do not fit into the current buckets
@@ -382,6 +383,8 @@ SUBSYSTEM_DEF(timer)
 	var/wait
 	/// Unique hash generated when TIMER_UNIQUE flag is present
 	var/hash
+    /// The source of the timedevent, whatever called addtimer
+	var/source
 	/// Flags associated with the timer, see _DEFINES/subsystems.dm
 	var/list/flags
 	/// Time at which the timer was invoked or destroyed
@@ -393,13 +396,14 @@ SUBSYSTEM_DEF(timer)
 	/// Previous timed event in the bucket
 	var/datum/timedevent/prev
 
-/datum/timedevent/New(datum/callback/callBack, wait, flags, hash)
+/datum/timedevent/New(datum/callback/callBack, wait, flags, hash, source)
 	var/static/nextid = 1
 	id = TIMER_ID_NULL
 	src.callBack = callBack
 	src.wait = wait
 	src.flags = flags
 	src.hash = hash
+	src.source = source
 
 	// Determine time at which the timer's callback should be invoked
 	timeToRun = (flags & TIMER_CLIENT_TIME ? REALTIMEOFDAY : world.time) + wait
@@ -557,14 +561,15 @@ SUBSYSTEM_DEF(timer)
 		. = "[callBack.object.type]"
 
 /**
-  * Create a new timer and insert it in the queue
+  * Create a new timer and insert it in the queue.
+  * You should not call this directly, and should instead use the addtimer macro, which includes source information.
   *
   * Arguments:
   * * callback the callback to call on timer finish
   * * wait deciseconds to run the timer for
   * * flags flags for this timer, see: code\__DEFINES\subsystems.dm
   */
-/proc/addtimer(datum/callback/callback, wait = 0, flags = 0)
+/proc/_addtimer(datum/callback/callback, wait = 0, flags = 0, file, line)
 	if (!callback)
 		CRASH("addtimer called without a callback")
 
@@ -604,7 +609,7 @@ SUBSYSTEM_DEF(timer)
 	else if(flags & TIMER_OVERRIDE)
 		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE")
 
-	var/datum/timedevent/timer = new(callback, wait, flags, hash)
+	var/datum/timedevent/timer = new(callback, wait, flags, hash, file && "[file]:[line]")
 	return timer.id
 
 /**

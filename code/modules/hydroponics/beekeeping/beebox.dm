@@ -265,4 +265,4 @@
 	qdel(src)
 
 /obj/structure/beebox/unwrenched
-		anchored = FALSE
+	anchored = FALSE

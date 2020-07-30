@@ -60,8 +60,12 @@
 		return
 
 	if(W)
-		// buckled cannot prevent machine interlinking but stops arm movement
-		if( buckled || incapacitated())
+		if(incapacitated())
+			return
+
+		//while buckled, you can still connect to and control things like doors, but you can't use your modules
+		if(buckled)
+			to_chat(src, "<span class='warning'>You can't use modules while buckled to [buckled]!</span>")
 			return
 
 		if(W == A)
@@ -84,11 +88,6 @@
 			else
 				W.afterattack(A, src, 0, params)
 				return
-
-//Middle click cycles through selected modules.
-/mob/living/silicon/robot/MiddleClickOn(atom/A)
-	. = ..()
-	cycle_modules()
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs

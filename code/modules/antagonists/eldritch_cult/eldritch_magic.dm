@@ -140,14 +140,15 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C1 = target
 		for(var/obj/item/bodypart/bodypart in C2.bodyparts)
-			for(var/datum/wound/wound in bodypart.wounds)
+			for(var/i in bodypart.wounds)
+				var/datum/wound/iter_wound = i
 				if(prob(50))
 					continue
 				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in C1.bodyparts
 				if(!target_bodypart)
 					continue
-				wound.remove_wound()
-				wound.apply_wound(target_bodypart)
+				iter_wound.remove_wound()
+				iter_wound.apply_wound(target_bodypart)
 
 		C1.blood_volume -= 20
 		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
@@ -241,7 +242,7 @@
 		target.visible_message("<span class='danger'>[target]'s veins are shredded from within as an unholy blaze erupts from their blood!</span>", \
 							"<span class='danger'>Your veins burst from within and unholy flame erupts from your blood!</span>")
 		var/obj/item/bodypart/bodypart = pick(target.bodyparts)
-		var/datum/wound/brute/cut/critical/crit_wound = new
+		var/datum/wound/slash/critical/crit_wound = new
 		crit_wound.apply_wound(bodypart)
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/cleave(target.drop_location())
@@ -406,6 +407,8 @@
 		for(var/turf/T in spiral_range_turfs(_range,centre))
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
+			for(var/mob/living/livies in T.contents - centre)
+				livies.adjustFireLoss(10)
 		_range++
 		sleep(3)
 
@@ -453,6 +456,8 @@
 	for(var/turf/T in range(1,current_user))
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
+		for(var/mob/living/livies in T.contents - current_user)
+			livies.adjustFireLoss(5)
 
 
 /obj/effect/proc_holder/spell/targeted/worm_contract

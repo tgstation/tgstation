@@ -77,6 +77,19 @@
 	qdel(src)
 	new /obj/effect/decal/cleanable/ash(drop_location())
 
+/obj/item/reagent_containers/food/snacks/grown/holymelon/checkLiked(fraction, mob/M)    //chaplains sure love holymelons
+	if(!ishuman(M))
+		return
+	if(last_check_time + 5 SECONDS >= world.time)
+		return
+	var/mob/living/carbon/human/holy_person = M
+	if(!holy_person.mind?.holy_role || HAS_TRAIT(holy_person, TRAIT_AGEUSIA))
+		return
+	to_chat(holy_person,"<span class='notice'>Truly, a piece of heaven!</span>")
+	M.adjust_disgust(-5 + -2.5 * fraction)
+	SEND_SIGNAL(holy_person, COMSIG_ADD_MOOD_EVENT, "Divine_chew", /datum/mood_event/holy_consumption)
+	last_check_time = world.time
+
 /// Barrel melon Seeds
 /obj/item/seeds/watermelon/barrel
 	name = "pack of barrelmelon seeds"
