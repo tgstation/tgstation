@@ -43,7 +43,7 @@
 		return TRUE
 
 /obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
+	if((istype(W, /obj/item/reagent_containers/glass) && !istype(W, /obj/item/reagent_containers/glass/rag)) || istype(W, /obj/item/reagent_containers/food/drinks))
 		if(src.reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)
@@ -100,9 +100,11 @@
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
-/atom/effect/decal/cleanable/washed(atom/washer)
-	. = ..()
+
+/obj/effect/decal/cleanable/wash(clean_types)
+	..()
 	qdel(src)
+	return TRUE
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

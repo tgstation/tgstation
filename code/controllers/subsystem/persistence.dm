@@ -343,7 +343,7 @@ SUBSYSTEM_DEF(persistence)
 		var/datum/chemical_reaction/randomized/R = new randomized_type
 		var/loaded = FALSE
 		if(R.persistent && json)
-			var/list/recipe_data = json[R.type]
+			var/list/recipe_data = json["[R.type]"]
 			if(recipe_data)
 				if(R.LoadOldRecipe(recipe_data) && (daysSince(R.created) <= R.persistence_period))
 					loaded = TRUE

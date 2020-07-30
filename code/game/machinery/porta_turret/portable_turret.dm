@@ -574,13 +574,13 @@
 	if(T.density)
 		if(wall_turret_direction)
 			var/turf/closer = get_step(T,wall_turret_direction)
-			if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
+			if(istype(closer) && !closer.is_blocked_turf() && T.Adjacent(closer))
 				T = closer
 		else
 			var/target_dir = get_dir(T,target)
 			for(var/d in list(0,-45,45))
 				var/turf/closer = get_step(T,turn(target_dir,d))
-				if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
+				if(istype(closer) && !closer.is_blocked_turf() && T.Adjacent(closer))
 					T = closer
 					break
 

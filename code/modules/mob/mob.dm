@@ -629,8 +629,9 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (CONFIG_GET(flag/norespawn))
+	if (CONFIG_GET(flag/norespawn) && (!check_rights_for(usr.client, R_ADMIN) || alert(usr, "Respawn configs disabled. Do you want to use your permissions to circumvent it?", "Respawn", "Yes", "No") != "Yes"))
 		return
+
 	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
@@ -655,8 +656,6 @@
 		return
 
 	M.key = key
-//	M.Login()	//wat
-	return
 
 
 /**
