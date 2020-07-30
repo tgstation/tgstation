@@ -1,7 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - tweak: "Heads (the bodypart) are a bit easier to wound once they've hit max (200) damage than they were before. They also have a bit less inherent wound resistance, but protective headgear now has wound armor to compensate"
-  - balance: "Zombies now have the frail trait, making them much easier to wound and dismember"
-  - balance: "Plasmamen are now slightly harder to wound, since they're already simpler to dismember than normal humans and much harder to treat"
-  - balance: "RPG loot quality numbers now increase/decrease wounding power"

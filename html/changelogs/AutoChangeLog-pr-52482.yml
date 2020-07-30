@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - code_imp: "Cleaned up some unused procs and makes is_blocked_turf a turf proc."
