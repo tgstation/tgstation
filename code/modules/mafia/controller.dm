@@ -190,7 +190,10 @@
   */
 /datum/mafia_controller/proc/check_trial(verbose = TRUE)
 	var/datum/mafia_role/loser = get_vote_winner("Day")//, majority_of_town = TRUE)
+	var/loser_votes = get_vote_count(loser,"Day")
 	if(loser)
+		if(loser_votes > 12)
+			loser.body.client?.give_award(/datum/award/achievement/mafia/universally_hated, loser.body)
 		send_message("<b>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</b>")
 		on_trial = loser
 		on_trial.body.forceMove(get_turf(town_center_landmark))
@@ -254,6 +257,10 @@
   * * returns TRUE if someone won the game, halting other procs from continuing in the case of a victory
   */
 /datum/mafia_controller/proc/check_victory()
+	//needed for achievements
+	var/list/total_town = list()
+	var/list/total_mafia = list()
+
 	var/alive_town = 0
 	var/alive_mafia = 0
 	var/list/solos_to_ask = list() //need to ask after because first round is counting team sizes
@@ -263,13 +270,17 @@
 	///PHASE ONE: TALLY UP ALL NUMBERS OF PEOPLE STILL ALIVE
 
 	for(var/datum/mafia_role/R in all_roles)
-		if(R.game_status == MAFIA_ALIVE)
-			switch(R.team)
-				if(MAFIA_TEAM_MAFIA)
+		switch(R.team)
+			if(MAFIA_TEAM_MAFIA)
+				total_mafia += R
+				if(R.game_status == MAFIA_ALIVE)
 					alive_mafia += R.vote_power
-				if(MAFIA_TEAM_TOWN)
+			if(MAFIA_TEAM_TOWN)
+				total_town += R
+				if(R.game_status == MAFIA_ALIVE)
 					alive_town += R.vote_power
-				if(MAFIA_TEAM_SOLO)
+			if(MAFIA_TEAM_SOLO)
+				if(R.game_status == MAFIA_ALIVE)
 					if(R.solo_counts_as_town)
 						alive_town += R.vote_power
 					solos_to_ask += R
@@ -286,6 +297,8 @@
 	var/solo_end = FALSE
 	for(var/datum/mafia_role/winner in total_victors)
 		send_message("<span class='big comradio'>!! [uppertext(winner.name)] VICTORY !!</span>")
+		var/client/winner_client = GLOB.directory[winner.player_key]
+		winner_client?.give_award(winner.winner_award, winner.body)
 		solo_end = TRUE
 	if(solo_end)
 		start_the_end()
@@ -293,10 +306,16 @@
 	if(blocked_victory)
 		return FALSE
 	if(alive_mafia == 0)
+		for(var/datum/mafia_role/townie in total_town)
+			var/client/townie_client = GLOB.directory[townie.player_key]
+			townie_client?.give_award(townie.winner_award, townie.body)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
 	else if(alive_mafia >= alive_town) //guess could change if town nightkill is added
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
+		for(var/datum/mafia_role/changeling in total_mafia)
+			var/client/changeling_client = GLOB.directory[changeling.player_key]
+			changeling_client?.give_award(changeling.winner_award, changeling.body)
 		return TRUE
 
 /**
