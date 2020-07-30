@@ -14,6 +14,7 @@ Contains:
  - Carp hardsuit
  - Bounty hunter hardsuit
  - Blackmarket combat medic hardsuit
+ - Bubbleman Suit
 */
 
 	//Death squad armored space suits, not hardsuits!
@@ -459,3 +460,20 @@ Contains:
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
 	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/circular_saw, /obj/item/tank/internals, /obj/item/storage/box/pillbottles,\
 	/obj/item/storage/firstaid, /obj/item/stack/medical/gauze, /obj/item/stack/medical/suture, /obj/item/stack/medical/mesh, /obj/item/storage/bag/chemistry)
+
+	//Bubbleman Suit
+obj/item/clothing/head/helmet/space/bubbleman
+	name = "bubble helmet"
+	desc = "A familiar looking helmet, worn by a hero."
+	armor = list("melee" = 30, "bullet" = 20, "laser" = 25, "energy" = 25, "bomb" = 20, "bio" = 10, "rad" = 10, "fire" = 100, "acid" = 10)
+	icon_state = "bubbleman"
+	inhand_icon_state = "bubbleman"
+
+/obj/item/clothing/suit/space/bubbleman
+	name = "heroic bubble-suit"
+	icon_state = "bubbleman"
+	inhand_icon_state = "bubbleman"
+	desc = "An exaggerated blue suit, worn by a hero."
+	armor = list("melee" = 30, "bullet" = 20, "laser" = 25, "energy" = 25, "bomb" = 20, "bio" = 10, "rad" = 10, "fire" = 100, "acid" = 10)
+	slowdown = 0
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool, /obj/item/gun, /obj/item/melee/baton)
