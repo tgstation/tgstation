@@ -13,7 +13,7 @@
 	var/skill_name
 	/// Skill description shown on UI
 	var/skill_description
-	/// FS icon show on UI
+	/// Fontawesome icon show on UI, list of possible icons https://fontawesome.com/icons?d=gallery&m=free
 	var/skill_icon = "brain"
 	/// Message shown when implanting the chip
 	var/implanting_message
@@ -23,6 +23,8 @@
 	var/removable = TRUE
 	/// How many skillslots this one takes
 	var/slot_cost = 1
+	/// Variable for flags
+	var/skillchip_flags = NONE
 
 /// Called after implantation and/or brain entering new body
 /obj/item/skillchip/proc/on_apply(mob/living/carbon/user,silent=TRUE)
@@ -49,8 +51,8 @@
 	//No skill slots left
 	if(target.used_skillchip_slots + slot_cost > target.max_skillchip_slots)
 		return FALSE
-	//Only one copy of each for now.
-	if(locate(type) in target_brain.skillchips)
+	//Only one multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
+	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (locate(type) in target_brain.skillchips))
 		return FALSE
 	return TRUE
 
@@ -63,8 +65,8 @@
 	//No skill slots left
 	if(target.used_skillchip_slots + slot_cost > target.max_skillchip_slots)
 		return "Complexity limit exceeded."
-	//Only one copy of each for now.
-	if(locate(type) in target_brain.skillchips)
+	//Only one multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
+	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (locate(type) in target_brain.skillchips))
 		return "Duplicate chip detected."
 	return "Chip ready for implantation."
 
@@ -96,3 +98,23 @@
 	skill_icon = "spa"
 	implanting_message = "<span class='notice'>Your mind is filled with plant arrangments.</span>"
 	removal_message = "<span class='notice'>Your can't remember how a hedge looks like anymore.</span>"
+
+/obj/item/skillchip/useless_adapter
+	name = "Skillchip adapter"
+	skill_name = "Useless adapter"
+	skill_description = "Allows you to insert another identical skillchip into this adapter, but the adapter also takes a slot ..."
+	skill_icon = "plug"
+	implanting_message = "<span class='notice'>You can now implant another chip into this adapter, but the adapter also took up an existing slot ...</span>"
+	removal_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
+	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE
+	slot_cost = 0
+
+/obj/item/skillchip/useless_adapter/on_apply(mob/living/carbon/user, silent)
+	. = ..()
+	user.max_skillchip_slots++
+	user.used_skillchip_slots++
+
+/obj/item/skillchip/useless_adapter/on_removal(mob/living/carbon/user, silent)
+	user.max_skillchip_slots--
+	user.used_skillchip_slots--
+	return ..()
