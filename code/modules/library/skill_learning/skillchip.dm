@@ -110,9 +110,9 @@
 	slot_cost = 0
 
 /obj/item/skillchip/useless_adapter/on_apply(mob/living/carbon/user, silent)
+	. = ..()
 	user.max_skillchip_slots++
 	user.used_skillchip_slots++
-	return ..()
 
 /obj/item/skillchip/useless_adapter/on_removal(mob/living/carbon/user, silent)
 	user.max_skillchip_slots--
