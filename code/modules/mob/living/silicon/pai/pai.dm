@@ -13,6 +13,9 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
+	move_force = 0
+	pull_force = 0
+	move_resist = 0
 	worn_slot_flags = ITEM_SLOT_HEAD
 	held_lh = 'icons/mob/pai_item_lh.dmi'
 	held_rh = 'icons/mob/pai_item_rh.dmi'
