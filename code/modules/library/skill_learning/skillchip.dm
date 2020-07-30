@@ -42,56 +42,6 @@
 		REMOVE_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
 	user.used_skillchip_slots -= slot_cost
 
-/// Checks if this implant is valid to implant in a given mob.
-/obj/item/skillchip/proc/can_be_implanted(mob/living/carbon/target)
-	//No brain
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(QDELETED(target_brain))
-		return FALSE
-	//No skill slots left
-	if(target.used_skillchip_slots + slot_cost > target.max_skillchip_slots)
-		return FALSE
-	//Only one multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
-	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (locate(type) in target_brain.skillchips))
-		return FALSE
-	return TRUE
-
-/// Returns readable reason why implanting cannot succeed --todo switch to flag retval in can_be_implanted to cut down copypaste
-/obj/item/skillchip/proc/can_be_implanted_message(mob/living/carbon/target)
-	//No brain
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(QDELETED(target_brain))
-		return "No brain detected."
-	//No skill slots left
-	if(target.used_skillchip_slots + slot_cost > target.max_skillchip_slots)
-		return "Complexity limit exceeded."
-	//Only one multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
-	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (locate(type) in target_brain.skillchips))
-		return "Duplicate chip detected."
-	return "Chip ready for implantation."
-
-/**
-  * Attempts to implant a skillchip into the target carbon's brain.
-  *
-  * Returns whether the skillchip was inserted or not.
-  * Arguments:
-  * * target - The living carbon whose brain you want to insert the chip into.
-  * * silent - Whether or not to display the implanting message.
-  */
-/obj/item/skillchip/proc/implant(mob/living/carbon/target, silent = FALSE)
-	// Check the chip can actually be implanted.
-	if(!can_be_implanted(target))
-		return FALSE
-
-	// Grab the brain. It should exist as can_be_implanted() checks for it.
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-
-	on_apply(target, silent)
-	forceMove(target_brain)
-	LAZYADD(target_brain.skillchips, src)
-
-	return TRUE
-
 /obj/item/skillchip/basketweaving
 	name = "Basketsoft 3000 skillchip"
 	desc = "Underwater edition."

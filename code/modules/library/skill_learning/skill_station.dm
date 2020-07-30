@@ -104,7 +104,8 @@
 // Functions below do not validate occupant exists - should be handled outer wrappers.
 /// Start implanting.
 /obj/machinery/skill_station/proc/start_implanting()
-	if(!inserted_skillchip?.can_be_implanted(occupant))
+	var/mob/living/carbon/carbon_occupant = occupant
+	if(!carbon_occupant.can_implant_skillchip(inserted_skillchip))
 		return
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/implant),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
@@ -114,7 +115,8 @@
 /obj/machinery/skill_station/proc/implant()
 	working = FALSE
 	work_timer = null
-	inserted_skillchip?.implant(occupant)
+	var/mob/living/carbon/carbon_occupant = occupant
+	carbon_occupant.implant_skillchip(inserted_skillchip)
 	update_icon()
 	SStgui.update_uis(src)
 	to_chat(occupant,"<span class='notice'>Operation complete!</span>")
@@ -132,24 +134,22 @@
 	working = FALSE
 	work_timer = null
 	var/mob/living/carbon/carbon_occupant = occupant
-	var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
-	if(QDELETED(carbon_occupant) || QDELETED(occupant_brain) || !(to_be_removed in occupant_brain.skillchips))
-		return
-	to_be_removed.on_removal(carbon_occupant, silent=FALSE)
-	LAZYREMOVE(occupant_brain.skillchips, to_be_removed)
-	if(to_be_removed.removable)
-		carbon_occupant.put_in_hands(to_be_removed)
+
+	if(istype(carbon_occupant))
+		if(carbon_occupant.remove_skillchip(to_be_removed))
+			if(to_be_removed.removable)
+				carbon_occupant.put_in_hands(to_be_removed)
+			else
+				qdel(to_be_removed)
+
+			to_chat(carbon_occupant, "<span class='notice'>Operation complete!</span>")
+		else
+			to_chat(carbon_occupant,"<span class='notice'>Operation failed! Failed to remove skillchip.</span>")
 	else
-		qdel(to_be_removed)
+		to_chat(carbon_occupant,"<span class='notice'>Operation failed! Occupant does not appear to be a carbon-based lifeform.</span>")
+
 	update_icon()
 	SStgui.update_uis(src)
-	to_chat(carbon_occupant,"<span class='notice'>Operation complete!</span>")
-
-/obj/machinery/skill_station/proc/implant_skillchip(mob/living/carbon/target,obj/item/skillchip/chip)
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-	chip.on_apply(target, silent = FALSE)
-	chip.forceMove(target_brain)
-	LAZYADD(target_brain.skillchips, chip)
 
 /obj/machinery/skill_station/ui_data(mob/user)
 	. = ..()
@@ -169,8 +169,8 @@
 
 	.["skillchip_ready"] = inserted_skillchip ? TRUE : FALSE
 	if(inserted_skillchip)
-		.["implantable"] = inserted_skillchip.can_be_implanted(occupant)
-		.["implantable_reason"] = inserted_skillchip.can_be_implanted_message(occupant)
+		.["implantable"] = carbon_occupant?.can_implant_skillchip(inserted_skillchip)
+		.["implantable_reason"] = carbon_occupant?.can_implant_skillchip_message(inserted_skillchip)
 		.["skill_name"] = inserted_skillchip.skill_name
 		.["skill_desc"] = inserted_skillchip.skill_description
 		.["skill_icon"] = inserted_skillchip.skill_icon

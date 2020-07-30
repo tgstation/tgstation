@@ -130,10 +130,13 @@
 		to_chat(user,"<span class='notice'>You begin to excise skillchips from [src].</span>")
 		if(do_after(user, 15 SECONDS, target = src))
 			for(var/obj/item/skillchip/skill_chip in skillchips)
-				if(skill_chip.removable)
-					skill_chip.forceMove(drop_location())
+				if(remove_skillchip(skill_chip))
+					if(skill_chip.removable)
+						skill_chip.forceMove(drop_location())
+					else
+						qdel(skill_chip)
 				else
-					qdel(skill_chip)
+					CRASH("Skillchip could not be extracted from brain as either chip or doesn't exist or the chip is not in the brain.")
 			skillchips = null
 		return
 

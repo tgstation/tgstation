@@ -98,10 +98,12 @@
 
 	// Insert any skillchips associated with this job into the target's brain.
 	if(skillchips)
-		for(var/chip_path in skillchips)
-			var/obj/item/skillchip/S = new chip_path()
-			if(!S.implant(H, TRUE))
-				qdel(S)
+		var/mob/living/carbon/carbon = H
+		if(istype(H))
+			for(var/chip_path in skillchips)
+				var/obj/item/skillchip/S = new chip_path()
+				if(!carbon?.implant_skillchip(S))
+					qdel(S)
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
