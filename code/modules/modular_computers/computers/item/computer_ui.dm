@@ -65,7 +65,7 @@
 	if(all_components[MC_SDD])
 		data["removable_media"] += "removable storage disk"
 	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
-	if(intelliholder && intelliholder.stored_card)
+	if(intelliholder?.stored_card)
 		data["removable_media"] += "intelliCard"
 
 	data["programs"] = list()
