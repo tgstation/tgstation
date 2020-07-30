@@ -100,8 +100,7 @@
 	mob_linked.emote("Scream")
 	//micro stun
 	mob_linked.AdjustParalyzed(0.5 SECONDS)
-	linked_mobs[linked_mobs] = null
-	linked_mobs -= linked_mobs[linked_mobs]
+	linked_mobs -= mob_linked
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/death(gibbed)
 	for(var/linked_mob in linked_mobs)
