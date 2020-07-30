@@ -1,0 +1,6 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - tweak: "Move cable radial menu to attack_self."
+  - tweak: "Move recipe crafting to radial menu chose."
+  - tweak: "Return of ability to take part of cable coil via alt click."
