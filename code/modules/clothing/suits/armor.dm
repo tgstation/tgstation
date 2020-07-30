@@ -172,18 +172,6 @@
 	icon_state = "ashbulletproof"
 	inhand_icon_state = "asharmor"
 
-/obj/item/clothing/suit/armor/bulletproof/camoanimal
-	name = "animal camouflaged bulletproof armor"
-	desc = "A Type III heavy bulletproof vest, camouflaged in leopard skin, that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
-	icon_state = "animalbulletproof"
-	inhand_icon_state = "anarmor"
-
-/obj/item/clothing/suit/armor/bulletproof/camogrey
-	name = "floortile camouflaged bulletproof armor"
-	desc = "A Type III heavy bulletproof vest, camouflaged in floortiles, that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
-	icon_state = "greybulletproof"
-	inhand_icon_state = "greyarmor"
-
 /obj/item/clothing/suit/armor/bulletproof/camodark
 	name = "dark camouflaged bulletproof armor"
 	desc = "A Type III heavy bulletproof vest, camouflaged in dark, that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."

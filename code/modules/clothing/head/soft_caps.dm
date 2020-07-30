@@ -158,25 +158,11 @@
 	soft_type = "dark"
 	dog_fashion = FALSE
 
-/obj/item/clothing/head/soft/sec/bloodredcamo
-	name = "animal camouflage cap"
-	desc = "It's a robust baseball hat in a tasteless animal camouflage."
-	icon_state = "animalsoft"
-	soft_type = "animal"
-	dog_fashion = FALSE
-
 /obj/item/clothing/head/soft/sec/ashcamo
 	name = "ash camouflage cap"
 	desc = "It's a robust baseball hat in a tasteless ash camouflage."
 	icon_state = "ashsoft"
 	soft_type = "ash"
-	dog_fashion = FALSE
-
-/obj/item/clothing/head/soft/sec/greycamo
-	name = "grey camouflage cap"
-	desc = "It's a robust baseball hat in a tasteless grey-floortile camouflage."
-	icon_state = "greysoft"
-	soft_type = "grey"
 	dog_fashion = FALSE
 
 /obj/item/clothing/head/soft/paramedic

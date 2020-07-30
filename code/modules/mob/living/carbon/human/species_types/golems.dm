@@ -1160,3 +1160,29 @@
 /datum/species/golem/mhydrogen/on_species_loss(mob/living/carbon/C)
 	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
 	return ..()
+
+/datum/species/golem/pizza
+	name = "Pizza Golem"
+	id = "pizza golem"
+	fixed_mut_color = "ddd"
+	punchstunthreshold = 5 //Make pizza not war
+	meat = /obj/item/stack/sheet/pizza
+	liked_food = GROSS | MEAT | RAW | VEGETABLES | GRAIN | FRUIT
+	toxic_food = null
+	inherent_traits = list(TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
+	info_text = "As a <span class='danger'>Pizza Golem</span>, your attacks are quite cheesy. Being made of Pizza, your body isn't very resistant to the elements, but you don't feel hunger. Oh gosh, there's pizza all over your stuff."
+	prefix = "Pizza"
+	special_names = list("Margarita", "Pepperone", "Olive", "Veggie", "Hawaiian")
+	///Filter that holds the pizza overlay, as done in material datums.
+	var/cached_texture_filter
+
+/datum/species/golem/pizza/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	var/texture_icon = icon('icons/materials/composite.dmi', "pizza")
+	cached_texture_filter = filter(type="layer", icon=texture_icon, blend_mode = BLEND_INSET_OVERLAY)
+	C.filters += cached_texture_filter
+
+/datum/species/golem/pizza/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.filters -= cached_texture_filter
+

@@ -96,13 +96,6 @@
 	inhand_icon_state = "ft_suit"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/syndicate/leopardcamo
-	name = "animal camouflage fatigues"
-	desc = "A animal-camouflaged military camouflage uniform. For fashion."
-	icon_state = "camoanimal"
-	inhand_icon_state = "lp_suit"
-	can_adjust = FALSE
-
 /obj/item/clothing/under/syndicate/darkcamo
 	name = "dark camouflage fatigues"
 	desc = "A dark-camouflaged military camouflage uniform, typically for wandering in the dark."

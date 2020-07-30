@@ -97,23 +97,11 @@
 	icon_state = "woodlandalt"
 	inhand_icon_state = "woodlandalt"
 
-/obj/item/clothing/head/helmet/alt/animal
-	name = "animal camouflage helmet"
-	desc = "A bulletproof animal camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
-	icon_state = "animalalt"
-	inhand_icon_state = "animalalt"
-
 /obj/item/clothing/head/helmet/alt/ash
 	name = "ash camouflage helmet"
 	desc = "A bulletproof ash camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "ashalt"
 	inhand_icon_state = "ashalt"
-
-/obj/item/clothing/head/helmet/alt/grey
-	name = "floortile camouflage helmet"
-	desc = "A bulletproof floortile camouflaged combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
-	icon_state = "greyalt"
-	inhand_icon_state = "greyalt"
 
 /obj/item/clothing/head/helmet/alt/dark
 	name = "dark camouflage helmet"
