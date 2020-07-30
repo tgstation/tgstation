@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "neurotoxin and some other bullets no longer get embedded in you"
+  - rscadd: "some cool effects are added when you hit with an energy weapon or neurotoxin"

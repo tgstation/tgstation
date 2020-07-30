@@ -28,7 +28,7 @@
 	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust)
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 
 	var/list/dent_decals
 

@@ -379,7 +379,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Definitions
 ////////////////////////////////
 
-GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15), new/datum/stack_recipe("multilayer cable", /obj/structure/cable/multilayer, 1), new/datum/stack_recipe("multiZ cable", /obj/structure/cable/multilayer/multiz, 1)))
+GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15)))
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -450,9 +450,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 GLOBAL_LIST(cable_radial_layer_list)
 
-/obj/item/stack/cable_coil/CtrlClick(mob/living/user)
-	if(loc!=user)
-		return ..()
+/obj/item/stack/cable_coil/attack_self(mob/living/user)
 	if(!user)
 		return
 	if(!GLOB.cable_radial_layer_list)
@@ -461,7 +459,8 @@ GLOBAL_LIST(cable_radial_layer_list)
 		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
 		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
 		"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge"),
-		"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable")
+		"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable"),
+		"Cable crafting" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "cuff")
 		)
 	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -498,6 +497,8 @@ GLOBAL_LIST(cable_radial_layer_list)
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
 			novariants = TRUE
+		if("Cable crafting")
+			interact(user)
 	update_icon()
 
 

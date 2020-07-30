@@ -942,6 +942,8 @@
 
 /mob/living/singularity_pull(S, current_size)
 	..()
+	if(move_resist == INFINITY)
+		return
 	if(current_size >= STAGE_SIX) //your puny magboots/wings/whatever will not save you against supermatter singularity
 		throw_at(S, 14, 3, src, TRUE)
 	else if(!src.mob_negates_gravity())
@@ -1164,11 +1166,6 @@
 		IgniteMob() // Ignite us
 
 //Mobs on Fire end
-
-//Washing
-/mob/living/washed(var/atom/washer)
-	. = ..()
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(var/mob/living/carbon/C)
