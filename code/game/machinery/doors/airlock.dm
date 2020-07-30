@@ -73,6 +73,7 @@
 	var/detonated = FALSE
 	var/abandoned = FALSE
 	var/doorOpen = 'sound/machines/airlock.ogg'
+	var/doorHonk = 'sound/items/bikehorn.ogg'
 	var/doorClose = 'sound/machines/airlockclose.ogg'
 	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
 	var/boltUp = 'sound/machines/boltsup.ogg'
@@ -89,6 +90,8 @@
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
+
+	var/honkamount = 0
 
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -1036,7 +1039,11 @@
 		if(obj_flags & EMAGGED)
 			return FALSE
 		use_power(50)
-		playsound(src, doorOpen, 30, TRUE)
+		if(honkamount <= 0)
+			playsound(src, doorOpen, 30, TRUE)
+		else
+			playsound(src, doorHonk, 30, TRUE)
+			honkamount --
 		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
 			closeOther.close()
 	else
@@ -1084,7 +1091,11 @@
 		if(obj_flags & EMAGGED)
 			return
 		use_power(50)
-		playsound(src, doorClose, 30, TRUE)
+		if(honkamount <= 0)
+			playsound(src, doorClose, 30, TRUE)
+		else
+			playsound(src, doorHonk, 30, TRUE)
+			honkamount --
 	else
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 

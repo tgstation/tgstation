@@ -979,6 +979,22 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. = ..()
 	if(!proximity)
 		return
+	if(istype(A,/obj/machinery/door/airlock))
+		if(!istype(cartridge, /obj/item/cartridge/virus/clown))
+			return
+		var/obj/machinery/panel = A
+		if(!panel.panel_open)
+			return ..()
+		var/obj/machinery/door/airlock/door = A
+		var/obj/item/cartridge/virus/cart = cartridge
+		if(cart.charges <=0)
+			to_chat(user, "<span class='notice'>Out of charges.</span>")
+			return
+		to_chat(user, "<span class='notice'>You upload the virus to the airlock controller!.</span>")
+		door.honkamount = (rand(15,20))
+		cart.charges --
+		return
+
 	switch(scanmode)
 		if(PDA_SCANNER_REAGENT)
 			if(!isnull(A.reagents))
