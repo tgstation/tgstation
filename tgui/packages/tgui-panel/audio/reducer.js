@@ -1,5 +1,6 @@
 const initialState = {
   playing: false,
+  track: null,
 };
 
 export const audioReducer = (state = initialState, action) => {
@@ -14,6 +15,19 @@ export const audioReducer = (state = initialState, action) => {
     return {
       ...state,
       playing: false,
+    };
+  }
+  if (type === 'audio/playMusic') {
+    return {
+      ...state,
+      meta: payload,
+    };
+  }
+  if (type === 'audio/stopMusic') {
+    return {
+      ...state,
+      playing: false,
+      meta: null,
     };
   }
   return state;

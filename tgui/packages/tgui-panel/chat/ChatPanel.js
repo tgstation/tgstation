@@ -1,20 +1,35 @@
 import { shallowDiffers } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { Component, createRef, Fragment } from 'inferno';
+import { Button } from 'tgui/components';
 import { chatRenderer } from './renderer';
 
 export class ChatPanel extends Component {
   constructor() {
     super();
     this.ref = createRef();
+    this.state = {
+      scrollTracking: true,
+    };
+    this.handleScrollTrackingChange = value => this.setState({
+      scrollTracking: value,
+    });
   }
 
   componentDidMount() {
     chatRenderer.mount(this.ref.current);
+    chatRenderer.events.on('scrollTrackingChanged',
+      this.handleScrollTrackingChange);
     this.componentDidUpdate();
   }
 
-  shouldComponentUpdate(nextProps) {
-    return shallowDiffers(this.props, nextProps);
+  componentWillUnmount() {
+    chatRenderer.events.off('scrollTrackingChanged',
+      this.handleScrollTrackingChange);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowDiffers(this.props, nextProps)
+      || shallowDiffers(this.state, nextState);
   }
 
   componentDidUpdate() {
@@ -27,8 +42,21 @@ export class ChatPanel extends Component {
   }
 
   render() {
+    const {
+      scrollTracking,
+    } = this.state;
     return (
-      <div ref={this.ref} />
+      <Fragment>
+        <div className="Chat" ref={this.ref} />
+        {!scrollTracking && (
+          <Button
+            className="Chat__scrollButton"
+            icon="arrow-down"
+            onClick={() => chatRenderer.scrollToBottom()}>
+            Scroll to bottom
+          </Button>
+        )}
+      </Fragment>
     );
   }
 }

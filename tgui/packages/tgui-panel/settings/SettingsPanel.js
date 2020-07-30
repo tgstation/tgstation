@@ -52,19 +52,6 @@ export const SettingsPanel = (props, context) => {
               lineHeight: value,
             }))} />
         </LabeledList.Item>
-        <LabeledList.Item label="Music volume">
-          <Knob
-            inline
-            step={0.0025}
-            stepPixelSize={1}
-            minValue={0}
-            maxValue={1}
-            value={adminMusicVolume}
-            format={value => toFixed(value * 100) + '%'}
-            onChange={(e, value) => dispatch(updateSettings({
-              adminMusicVolume: value,
-            }))} />
-        </LabeledList.Item>
       </LabeledList>
     </Section>
   );

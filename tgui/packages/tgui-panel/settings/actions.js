@@ -3,10 +3,6 @@ export const updateSettings = (settings = {}) => ({
   payload: settings,
 });
 
-export const toggleSettings = () => ({
-  type: 'settings/toggle',
-});
-
 export const loadSettings = (settings = {}) => ({
   type: 'settings/load',
   payload: settings,

@@ -5,7 +5,7 @@ import { Box } from 'tgui/components';
 import { logger } from 'tgui/logging';
 import { useSelector } from 'tgui/store';
 
-const PING_INTERVAL = 2000;
+const PING_INTERVAL = 2500;
 const PING_TIMEOUT = 2000;
 const PING_MAX_FAILS = 3;
 const PING_QUEUE_SIZE = 8;

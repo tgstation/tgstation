@@ -17,11 +17,11 @@ export const audioMiddleware = store => {
     if (type === 'audio/playMusic') {
       const { url, ...options } = payload;
       player.play(url, options);
-      return;
+      return next(action);
     }
     if (type === 'audio/stopMusic') {
       player.stop();
-      return;
+      return next(action);
     }
     if (type === 'settings/update' || type === 'settings/load') {
       const { adminMusicVolume } = payload;

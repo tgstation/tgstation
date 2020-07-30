@@ -24,13 +24,11 @@
 		return
 	if(!findtext(url, GLOB.is_http_protocol))
 		return
-	var/list/payload = list(
-		"url" = url,
-	)
+	var/list/payload = list()
 	if(length(extra_data) > 0)
-		payload["pitch"] = extra_data["pitch"]
-		payload["start"] = extra_data["start"]
-		payload["end"] = extra_data["end"]
+		for(var/key in extra_data)
+			payload[key] = extra_data[key]
+	payload["url"] = url
 	window.send_message("audio/playMusic", payload)
 
 /**

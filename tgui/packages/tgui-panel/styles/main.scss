@@ -44,10 +44,13 @@
 @include meta.load-css('~tgui/styles/components/TextArea.scss');
 @include meta.load-css('~tgui/styles/components/Tooltip.scss');
 
+// Components specific to tgui-panel
+@include meta.load-css('./components/chat.scss');
+
 // Layouts
 @include meta.load-css('~tgui/styles/layouts/Layout.scss');
 @include meta.load-css('~tgui/styles/layouts/TitleBar.scss');
 @include meta.load-css('~tgui/styles/layouts/Window.scss');
 
-// Chat
+// Goonchat styles
 @include meta.load-css('./chat.scss');

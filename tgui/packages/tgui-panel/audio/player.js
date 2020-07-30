@@ -17,8 +17,8 @@ export class AudioPlayer {
     this.onPlaySubscribers = [];
     this.onStopSubscribers = [];
     // Listen for playback start events
-    this.node.addEventListener('canplay', () => {
-      logger.log('canplay');
+    this.node.addEventListener('canplaythrough', () => {
+      logger.log('canplaythrough');
       this.playing = true;
       this.node.playbackRate = this.options.pitch || 1;
       this.node.currentTime = this.options.start || 0;
@@ -45,7 +45,9 @@ export class AudioPlayer {
       if (!this.playing) {
         return;
       }
-      if (this.node.currentTime >= this.options.end) {
+      const shouldStop = this.options.end > 0
+        && this.node.currentTime >= this.options.end;
+      if (shouldStop) {
         this.stop();
       }
     }, 1000);

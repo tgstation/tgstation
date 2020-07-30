@@ -2,7 +2,7 @@ import { updateMessageCount } from './actions';
 import { chatRenderer } from './renderer';
 
 export const chatMiddleware = store => {
-  chatRenderer.onBatchProcesed(countByType => {
+  chatRenderer.events.on('batchProcessed', countByType => {
     store.dispatch(updateMessageCount(countByType));
   });
   return next => action => {

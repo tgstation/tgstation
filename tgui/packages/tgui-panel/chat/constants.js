@@ -129,7 +129,7 @@ export const MESSAGE_TYPES = [
 
 export const DEFAULT_PAGE = {
   id: createUuid(),
-  name: 'Main',
+  name: 'Chat',
   acceptedTypes: (() => {
     const obj = {};
     for (let typeDef of MESSAGE_TYPES) {

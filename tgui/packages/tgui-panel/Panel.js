@@ -4,10 +4,15 @@ import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
 import { PingIndicator } from './ping';
 import { SettingsPanel, useSettings } from './settings';
+import { useLocalState } from 'tgui/backend';
 
 export const Panel = (props, context) => {
   const audio = useAudio(context);
   const settings = useSettings(context);
+  const [audioOpen, setAudioOpen] = useLocalState(
+    context, 'audioOpen', audio.playing);
+  const [settingsOpen, setSettingsOpen] = useLocalState(
+    context, 'settingsOpen', false);
   return (
     <Pane
       theme={settings.theme}
@@ -21,23 +26,33 @@ export const Panel = (props, context) => {
               <Flex.Item mx={1} grow={1}>
                 <ChatTabs />
               </Flex.Item>
-              {audio.playing && (
-                <Flex.Item mx={1}>
-                  <NowPlayingWidget />
-                </Flex.Item>
-              )}
               <Flex.Item mx={1}>
                 <PingIndicator />
               </Flex.Item>
               <Flex.Item mx={1}>
                 <Button
+                  color="grey"
+                  selected={audioOpen || audio.playing}
+                  icon="music"
+                  onClick={() => setAudioOpen(!audioOpen)} />
+              </Flex.Item>
+              <Flex.Item mx={1}>
+                <Button
                   icon="cog"
-                  onClick={() => settings.toggle()} />
+                  selected={settingsOpen}
+                  onClick={() => setSettingsOpen(!settingsOpen)} />
               </Flex.Item>
             </Flex>
           </Section>
         </Flex.Item>
-        {settings.visible && (
+        {audioOpen && (
+          <Flex.Item mt={1}>
+            <Section>
+              <NowPlayingWidget />
+            </Section>
+          </Flex.Item>
+        )}
+        {settingsOpen && (
           <Flex.Item position="relative" grow={1}>
             <Pane.Content scrollable>
               <SettingsPanel />

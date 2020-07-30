@@ -24,11 +24,5 @@ export const settingsReducer = (state = initialState, action) => {
       adminMusicVolume: settings.adminMusicVolume,
     };
   }
-  if (type === 'settings/toggle') {
-    return {
-      ...state,
-      visible: !state.visible,
-    };
-  }
   return state;
 };
