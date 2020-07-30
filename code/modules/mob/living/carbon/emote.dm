@@ -113,7 +113,7 @@
 	key_third_person = "circles"
 	restraint_check = TRUE
 
-/datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional, hardcoded)
 	. = ..()
 	if(!length(user.get_empty_held_indexes()))
 		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
@@ -127,7 +127,7 @@
 	key_third_person = "slaps"
 	restraint_check = TRUE
 
-/datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional, hardcoded)
 	. = ..()
 	if(!.)
 		return

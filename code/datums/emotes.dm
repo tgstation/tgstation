@@ -39,7 +39,7 @@
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
-/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
+/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, hardcoded = FALSE)
 	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
@@ -161,9 +161,9 @@
 /datum/emote/coders_screech //This is a shorthand to allow for custom emotes on our side while ignoring any player only checks that come with "me"
 	key = "code"
 
-/datum/emote/coders_screech/run_emote(mob/user, params, type_override, intentional = FALSE) //Just override the song and dance
+/datum/emote/coders_screech/run_emote(mob/user, params, type_override, intentional = FALSE, hardcoded = FALSE) //Just override the song and dance
 	. = TRUE
-	if(!can_run_emote(user, TRUE, intentional))
+	if(!can_run_emote(user, TRUE, intentional) || !hardcoded)
 		return FALSE
 	var/msg = params
 	msg = replace_pronoun(user, msg)
