@@ -623,167 +623,156 @@
 /datum/supply_pack/security/armory/camowoodland
 	name = "Woodland Camouflage Crate"
 	desc = "Bulky and tough crate with a rather medium weight capacity, the contents come with illegal tactical equipment to suit a military appereance, the tag marks the theme as 'woodland'."
-	cost = 3000
+	cost = 4000
 	contraband = TRUE
 	contains = list(/obj/item/clothing/under/syndicate/forestcamo,
 					/obj/item/clothing/under/syndicate/forestcamo,
-					/obj/item/clothing/under/syndicate/forestcamo,
-					/obj/item/clothing/head/helmet/alt/woodland,
 					/obj/item/clothing/head/helmet/alt/woodland,
 					/obj/item/clothing/head/helmet/alt/woodland,
 					/obj/item/clothing/suit/armor/bulletproof/camoforest,
 					/obj/item/clothing/suit/armor/bulletproof/camoforest,
-					/obj/item/clothing/suit/armor/bulletproof/camoforest,
 					/obj/item/clothing/head/soft/sec/forestcamo,
 					/obj/item/clothing/head/soft/sec/forestcamo,
-					/obj/item/clothing/head/soft/sec/forestcamo,
-					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/mask/russian_balaclava,
-					/obj/item/clothing/mask/russian_balaclava)
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/storage/belt/military/assault,
+					/obj/item/storage/belt/military/assault)
 	crate_name = "camo military crate"
 
 /datum/supply_pack/security/armory/camodesert
 	name = "Desert Camouflage Crate"
 	desc = "Bulky and tough crate with a rather medium weight capacity, the contents come with illegal tactical equipment to suit a military appereance, the tag marks the theme as 'desert'."
-	cost = 3000
+	cost = 4000
 	contraband = TRUE
 	contains = list(/obj/item/clothing/under/syndicate/desertcamo,
 					/obj/item/clothing/under/syndicate/desertcamo,
-					/obj/item/clothing/under/syndicate/desertcamo,
-					/obj/item/clothing/head/helmet/alt/desert,
 					/obj/item/clothing/head/helmet/alt/desert,
 					/obj/item/clothing/head/helmet/alt/desert,
 					/obj/item/clothing/suit/armor/bulletproof/camodesert,
 					/obj/item/clothing/suit/armor/bulletproof/camodesert,
-					/obj/item/clothing/suit/armor/bulletproof/camodesert,
 					/obj/item/clothing/head/soft/sec/desertcamo,
 					/obj/item/clothing/head/soft/sec/desertcamo,
-					/obj/item/clothing/head/soft/sec/desertcamo,
-					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/mask/russian_balaclava,
-					/obj/item/clothing/mask/russian_balaclava)
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/storage/belt/military/assault,
+					/obj/item/storage/belt/military/assault)
 	crate_name = "camo military crate"
 
 /datum/supply_pack/security/armory/camoartic
 	name = "Artic Camouflage Crate"
 	desc = "Bulky and tough crate with a rather medium weight capacity, the contents come with illegal tactical equipment to suit a military appereance, the tag marks the theme as 'artic'."
-	cost = 3000
+	cost = 4000
 	contraband = TRUE
 	contains = list(/obj/item/clothing/under/syndicate/articcamo,
 					/obj/item/clothing/under/syndicate/articcamo,
-					/obj/item/clothing/under/syndicate/articcamo,
-					/obj/item/clothing/head/helmet/alt/artic,
 					/obj/item/clothing/head/helmet/alt/artic,
 					/obj/item/clothing/head/helmet/alt/artic,
 					/obj/item/clothing/suit/armor/bulletproof/camoartic,
 					/obj/item/clothing/suit/armor/bulletproof/camoartic,
-					/obj/item/clothing/suit/armor/bulletproof/camoartic,
 					/obj/item/clothing/head/soft/sec/articcamo,
 					/obj/item/clothing/head/soft/sec/articcamo,
-					/obj/item/clothing/head/soft/sec/articcamo,
-					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/mask/russian_balaclava,
-					/obj/item/clothing/mask/russian_balaclava)
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/storage/belt/military/assault,
+					/obj/item/storage/belt/military/assault)
 	crate_name = "camo military crate"
 
 /datum/supply_pack/security/armory/camojungle
 	name = "Jungle Camouflage Crate"
 	desc = "Bulky and tough crate with a rather medium weight capacity, the contents come with illegal tactical equipment to suit a military appereance, the tag marks the theme as 'jungle'."
-	cost = 3000
+	cost = 4000
 	contraband = TRUE
 	contains = list(/obj/item/clothing/under/syndicate/junglecamo,
 					/obj/item/clothing/under/syndicate/junglecamo,
-					/obj/item/clothing/under/syndicate/junglecamo,
-					/obj/item/clothing/head/helmet/alt/jungle,
 					/obj/item/clothing/head/helmet/alt/jungle,
 					/obj/item/clothing/head/helmet/alt/jungle,
 					/obj/item/clothing/suit/armor/bulletproof/camojungle,
 					/obj/item/clothing/suit/armor/bulletproof/camojungle,
-					/obj/item/clothing/suit/armor/bulletproof/camojungle,
 					/obj/item/clothing/head/soft/sec/junglecamo,
 					/obj/item/clothing/head/soft/sec/junglecamo,
-					/obj/item/clothing/head/soft/sec/junglecamo,
-					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/mask/russian_balaclava,
-					/obj/item/clothing/mask/russian_balaclava)
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/storage/belt/military/assault,
+					/obj/item/storage/belt/military/assault)
 	crate_name = "camo military crate"
 
 /datum/supply_pack/security/armory/camodark
 	name = "Dark Camouflage Crate"
 	desc = "Bulky and tough crate with a rather medium weight capacity, the contents come with illegal tactical equipment to suit a military appereance, the tag marks the theme as 'dark'."
-	cost = 3000
+	cost = 4000
 	contraband = TRUE
 	contains = list(/obj/item/clothing/under/syndicate/darkcamo,
 					/obj/item/clothing/under/syndicate/darkcamo,
-					/obj/item/clothing/under/syndicate/darkcamo,
-					/obj/item/clothing/head/helmet/alt/dark,
 					/obj/item/clothing/head/helmet/alt/dark,
 					/obj/item/clothing/head/helmet/alt/dark,
 					/obj/item/clothing/suit/armor/bulletproof/camodark,
 					/obj/item/clothing/suit/armor/bulletproof/camodark,
-					/obj/item/clothing/suit/armor/bulletproof/camodark,
 					/obj/item/clothing/head/soft/sec/darkcamo,
 					/obj/item/clothing/head/soft/sec/darkcamo,
-					/obj/item/clothing/head/soft/sec/darkcamo,
-					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/mask/russian_balaclava,
-					/obj/item/clothing/mask/russian_balaclava)
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/storage/belt/military/assault,
+					/obj/item/storage/belt/military/assault)
 	crate_name = "camo military crate"
 
 /datum/supply_pack/security/armory/camoash
 	name = "Ash Camouflage Crate"
 	desc = "Bulky and tough crate with a rather medium weight capacity, the contents come with illegal tactical equipment to suit a military appereance, the tag marks the theme as 'ash'."
-	cost = 3000
+	cost = 4000
 	contraband = TRUE
 	contains = list(/obj/item/clothing/under/syndicate/ashcamo,
 					/obj/item/clothing/under/syndicate/ashcamo,
-					/obj/item/clothing/under/syndicate/ashcamo,
-					/obj/item/clothing/head/helmet/alt/ash,
 					/obj/item/clothing/head/helmet/alt/ash,
 					/obj/item/clothing/head/helmet/alt/ash,
 					/obj/item/clothing/suit/armor/bulletproof/camoash,
 					/obj/item/clothing/suit/armor/bulletproof/camoash,
-					/obj/item/clothing/suit/armor/bulletproof/camoash,
 					/obj/item/clothing/head/soft/sec/ashcamo,
 					/obj/item/clothing/head/soft/sec/ashcamo,
-					/obj/item/clothing/head/soft/sec/ashcamo,
-					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/mask/russian_balaclava,
-					/obj/item/clothing/mask/russian_balaclava)
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/storage/belt/military/assault,
+					/obj/item/storage/belt/military/assault)
 	crate_name = "camo military crate"
 
 /datum/supply_pack/security/armory/camogrey
 	name = "Floortile Camouflage Crate"
 	desc = "Bulky and tough crate with a rather medium weight capacity, the contents come with illegal tactical equipment to suit a military appereance, the tag marks the theme as 'floortile'."
-	cost = 3000
+	cost = 4000
 	contraband = TRUE
 	contains = list(/obj/item/clothing/under/syndicate/greycamo,
 					/obj/item/clothing/under/syndicate/greycamo,
-					/obj/item/clothing/under/syndicate/greycamo,
-					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/shoes/combat,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/mask/russian_balaclava,
-					/obj/item/clothing/mask/russian_balaclava)
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/clothing/gloves/tackler/combat,
+					/obj/item/storage/belt/military/assault,
+					/obj/item/storage/belt/military/assault)
 	crate_name = "camo military crate"
 
 /datum/supply_pack/security/armory/wt550
