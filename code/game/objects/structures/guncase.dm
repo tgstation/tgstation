@@ -79,11 +79,11 @@
 	var/list/items = list()
 	for(var/i in 1 to length(contents))
 		var/obj/item/thing = contents[i]
-		display_names[thing.name + " ([i])"] = REF(thing)
+		display_names["[thing.name] ([i])"] = REF(thing)
 		var/image/item_image = image(icon = thing.icon, icon_state = thing.icon_state)
 		if(length(thing.overlays))
 			item_image.copy_overlays(thing)
-		items += list(thing.name + " ([i])" = item_image)
+		items += list("[thing.name] ([i])" = item_image)
 
 	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
 	if(!pick)
