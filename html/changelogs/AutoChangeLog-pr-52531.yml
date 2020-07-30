@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - rscadd: "a third spawn point for miners on meta so they don't spawn inside one another"

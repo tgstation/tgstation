@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "cyborg endoskeleton now check all parts for completion"
