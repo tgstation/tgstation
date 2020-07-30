@@ -90,11 +90,11 @@
 		return
 
 	var/weapon_reference = display_names[pick]
-	var/obj/item/O = locate(weapon_reference) in contents
-	if(!O || !istype(O))
+	var/obj/item/weapon = locate(weapon_reference) in contents
+	if(!istype(weapon))
 		return
-	if(!user.put_in_hands(O))
-		O.forceMove(get_turf(src))
+	if(!user.put_in_hands(weapon))
+		weapon.forceMove(get_turf(src))
 	update_icon()
 
 /**
