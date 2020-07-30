@@ -64,7 +64,7 @@
 	effectQuiet = TRUE
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'
 	close_sound = null
-	firstSounds = FALSE
+	pod_flags = FIRST_SOUNDS
 
 /obj/structure/closet/supplypod/mechpod/insertion_allowed(atom/movable/AM)
 	if(!ismecha(AM))
