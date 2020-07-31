@@ -164,7 +164,7 @@
 		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 20)
 
 		M.flash_act()
-		M.confused += 10
+		M.add_confusion(10)
 		M.blur_eyes(5)
 		to_chat(M, "<span class='warning'>You feel strange...</span>")
 		sleep(60)
@@ -173,7 +173,7 @@
 		sleep(65)
 		to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
 		M.flash_act()
-		M.confused += 20
+		M.add_confusion(20)
 		M.blur_eyes(3)
 		sleep(30)
 		to_chat(M, "<span class='warning'>Your head pounds...</span>")
@@ -185,7 +185,7 @@
 					so it's only a matter of time before we ship you back...\"</i></span>")
 		M.blur_eyes(10)
 		M.Dizzy(15)
-		M.confused += 20
+		M.add_confusion(20)
 
 // We're returning the victim
 /datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
@@ -224,7 +224,7 @@
 		M.flash_act()
 		M.blur_eyes(30)
 		M.Dizzy(35)
-		M.confused += 20
+		M.add_confusion(20)
 
 		new /obj/effect/pod_landingzone(possible_drop_loc[pod_rand_loc], return_pod)
 	else

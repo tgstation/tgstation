@@ -34,7 +34,7 @@
 	var/lying_prev = 0		///last value of lying on update_mobility
 
 	/// Makes the mob move in random directions.
-	/// If you want to check how confused a mob is, use get_confusion().
+	/// Do not set this directly. Use add_confusion or set_confusion.
 	var/confused = 0
 
 	var/hallucination = 0 ///Directly affects how long a mob will hallucinate for

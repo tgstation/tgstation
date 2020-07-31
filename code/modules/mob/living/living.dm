@@ -423,13 +423,18 @@
 /mob/living/proc/get_organic_health()
 	return health
 
-/// Returns the amount of confusion on the mob.
-/// Use this over reading the confused variable directly
-/// if you are tying confusion to an effect.
-/mob/living/proc/get_confusion()
-	. = confused
-	for (var/datum/status_effect/confusion/confusion in has_status_effect_list(STATUS_EFFECT_CONFUSION))
-		. += confusion.strength
+/// Set the confusion of the mob. Confusion will make the mob walk randomly.
+/mob/living/proc/set_confusion(new_confusion)
+	confused = max(new_confusion, 0)
+	if (confused)
+		apply_status_effect(STATUS_EFFECT_CONFUSION)
+	else
+		remove_status_effect(STATUS_EFFECT_CONFUSION)
+
+/// Add confusion to the mob. Confusion will make the mob walk randomly.
+/// Shorthand for set_confusion(confusion + x).
+/mob/living/proc/add_confusion(confusion_to_add)
+	set_confusion(confused + confusion_to_add)
 
 // MOB PROCS //END
 
@@ -626,7 +631,7 @@
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
 	fire_stacks = 0
-	confused = 0
+	set_confusion(0)
 	dizziness = 0
 	drowsyness = 0
 	stuttering = 0
