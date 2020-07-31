@@ -74,6 +74,7 @@ export const SkillStation = (props, context) => {
                 <Table.Cell>Chip</Table.Cell>
                 <Table.Cell>Complexity</Table.Cell>
                 <Table.Cell>Status</Table.Cell>
+                <Table.Cell>Cooldown</Table.Cell>
                 <Table.Cell>Actions</Table.Cell>
               </Table.Row>
               {current.map(skill => (
@@ -94,10 +95,16 @@ export const SkillStation = (props, context) => {
                     )}
                   </Table.Cell>
                   <Table.Cell>
+                    {(skill.cooldown > 0) && (
+                      Math.ceil(skill.cooldown / 10) + "s"
+                    ) || ("0s")}
+                  </Table.Cell>
+                  <Table.Cell>
                     {!working && (
                       <Button
                         onClick={() => act("remove", { "ref": skill.ref })}
                         icon="trash"
+                        disabled={skill.cooldown > 0}
                         content="Extract" />)}
                   </Table.Cell>
                 </Table.Row>))}

@@ -128,6 +128,10 @@
 /obj/machinery/skill_station/proc/start_removal(obj/item/skillchip/to_be_removed)
 	if(!to_be_removed)
 		return
+
+	if(!to_be_removed.can_remove_safely())
+		return
+
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/remove_skillchip,to_be_removed),SKILLCHIP_REMOVAL_TIME,TIMER_STOPPABLE)
 	update_icon()
@@ -137,6 +141,10 @@
 	working = FALSE
 	work_timer = null
 	var/mob/living/carbon/carbon_occupant = occupant
+
+	if(!to_be_removed.can_remove_safely())
+		to_chat(carbon_occupant,"<span class='notice'>Safety mechanisms activated! Skillchip cannot be safely removed.</span>")
+		return
 
 	if(istype(carbon_occupant))
 		if(carbon_occupant.remove_skillchip(to_be_removed))
@@ -165,7 +173,15 @@
 	else
 		var/list/current_skills = list()
 		for(var/obj/item/skillchip/skill_chip in occupant_brain.skillchips)
-			current_skills += list(list("name"=skill_chip.skill_name,"icon"=skill_chip.skill_icon,"cost"=skill_chip.slot_cost,"ref"=REF(skill_chip),"active"=(skill_chip in occupant_brain.skillchips)))
+			current_skills += list(
+				list(
+					"name" = skill_chip.skill_name,
+					"icon" = skill_chip.skill_icon,
+					"cost" = skill_chip.slot_cost,
+					"ref" = REF(skill_chip),
+					"active" = (skill_chip in occupant_brain.skillchips),
+					"cooldown" = skill_chip.extractable_at - world.time,
+					"removable" = skill_chip.can_remove_safely()))
 		.["current"] = current_skills
 		.["slots_used"] = carbon_occupant.used_skillchip_slots
 		.["slots_max"] = carbon_occupant.max_skillchip_slots

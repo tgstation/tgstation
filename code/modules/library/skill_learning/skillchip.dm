@@ -25,6 +25,10 @@
 	var/slot_cost = 1
 	/// Variable for flags
 	var/skillchip_flags = NONE
+	/// Cooldown before the skillchip can be extracted after it has been implanted.
+	var/cooldown = 5 MINUTES
+	/// The world.time when this skillchip should be extractable.
+	var/extractable_at = 0
 
 /// Called after implantation and/or brain entering new body
 /obj/item/skillchip/proc/on_apply(mob/living/carbon/user,silent=TRUE)
@@ -34,6 +38,8 @@
 		ADD_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
 	user.used_skillchip_slots += slot_cost
 
+	extractable_at = world.time + cooldown
+
 /// Called after removal and/or brain exiting the body
 /obj/item/skillchip/proc/on_removal(mob/living/carbon/user,silent=TRUE)
 	if(!silent && removal_message)
@@ -41,6 +47,8 @@
 	if(auto_trait)
 		REMOVE_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
 	user.used_skillchip_slots -= slot_cost
+
+	extractable_at = 0
 
 /**
   * Checks for skillchip incompatibility with other installed chips.
@@ -68,6 +76,20 @@
   * Returns TRUE if the chip is in an implantable state.
   */
 /obj/item/skillchip/proc/can_implant()
+	return TRUE
+
+/**
+  * Returns whether the chip is able to be removed safely.
+  *
+  * This does not mean the chip should be impossible to remove. It's up to each individual
+  * piece of code to decide what it does with the result of this proc.
+  *
+  * Returns FALSE if the chip's extraction cooldown hasn't yet passed.
+  */
+/obj/item/skillchip/proc/can_remove_safely()
+	if(extractable_at > world.time)
+		return FALSE
+
 	return TRUE
 
 /obj/item/skillchip/basketweaving

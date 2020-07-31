@@ -60,6 +60,8 @@
 
 /**
   * Destroys all skillchips in the brain, calling on_removal if the brain has an owner.
+  * Arguments:
+  * * silent - Whether to give the user a chat notification with the removal flavour text.
   */
 /obj/item/organ/brain/proc/destroy_all_skillchips(silent = TRUE)
 	if(!QDELETED(owner))

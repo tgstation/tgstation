@@ -681,3 +681,47 @@
 /obj/item/clothing/neck/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
+
+/datum/action/item_action/chameleon/change/skillchip
+	/// Skillchip this this chameleon action is imitating.
+	var/obj/item/skillchip/skillchip_mimic
+	var/obj/item/skillchip/usable_at_world_time = 0
+	var/cooldown = 5 MINUTES
+
+/datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
+	. = ..()
+
+	if(button)
+		button.name = "Change [chameleon_name] Function"
+
+/datum/action/item_action/chameleon/change/skillchip/update_item(obj/item/skillchip/picked_item)
+	if(istype(picked_item))
+		target.name = initial(picked_item.skill_name)
+		target.desc = initial(picked_item.skill_description)
+		target.icon_state = initial(picked_item.skill_icon)
+
+/datum/action/item_action/chameleon/change/skillchip/update_look(mob/user, obj/item/skillchip/picked_item)
+	if(usable_at_world_time <= world.time)
+		// Swap out the fake skillchips.
+		if(skillchip_mimic && istype(skillchip_mimic))
+			skillchip_mimic.on_removal(user, silent = FALSE)
+			QDEL_NULL(skillchip_mimic)
+
+		skillchip_mimic = new picked_item()
+		if(istype(skillchip_mimic))
+			skillchip_mimic.removable = FALSE
+			skillchip_mimic.on_apply(user, silent = FALSE)
+			usable_at_world_time = world.time + cooldown
+			to_chat(user, "<span class='notice'>The chameleon skillchip is recharging. It will be unable to change for another [cooldown/10] seconds.</span>")
+		else
+			QDEL_NULL(skillchip_mimic)
+	else
+		to_chat(user, "<span class='notice'>Chameleon skillchip is still recharging for another [(usable_at_world_time - world.time)/10] seconds!</span>")
+
+	..()
+
+/datum/action/item_action/chameleon/change/skillchip/IsAvailable()
+	if(usable_at_world_time > world.time)
+		return FALSE
+
+	return ..()

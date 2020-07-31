@@ -1360,3 +1360,29 @@
 		/obj/item/stack/wrapping_paper/small=1
 		)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/skillchips
+	name = "box of skillchips"
+	desc = "Contains one copy of every skillchip"
+
+/obj/item/storage/box/skillchips/PopulateContents()
+	var/list/skillchips = subtypesof(/obj/item/skillchip)
+
+	for(var/S in skillchips)
+		new S(src)
+
+/obj/item/storage/box/skillchips/science
+	name = "box of science job skillchips"
+	desc = "Contains spares of every science job skillchip."
+
+/obj/item/storage/box/skillchips/PopulateContents()
+	new/obj/item/skillchip/roboticist(src)
+	new/obj/item/skillchip/roboticist(src)
+
+/obj/item/storage/box/skillchips/engineering
+	name = "box of engineering job skillchips"
+	desc = "Contains spares of every engineering job skillchip."
+
+/obj/item/storage/box/skillchips/PopulateContents()
+	new/obj/item/skillchip/engineer(src)
+	new/obj/item/skillchip/engineer(src)
