@@ -267,3 +267,7 @@
   */
 /obj/item/organ/proc/get_availability(datum/species/S)
 	return TRUE
+
+/// Called before organs are replaced in regenerate_organs with new ones
+/obj/item/organ/proc/before_organ_replacement(obj/item/organ/replacement)
+	return

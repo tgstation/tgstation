@@ -291,6 +291,7 @@ Difficulty: Very Hard
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	pixel_y = -4
 	use_power = NO_POWER_USE
+	base_build_path = /obj/machinery/smartfridge/black_box
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
 	var/list/blacklist = list()
@@ -539,7 +540,7 @@ Difficulty: Very Hard
 					var/turf/T = Stuff
 					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
 						var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
+						if(prob(florachance) && NewFlora.len && !O.is_blocked_turf(TRUE))
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
 						continue

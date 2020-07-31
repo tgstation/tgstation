@@ -535,20 +535,20 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		spawn_guardian(user, C.key)
+		var/mob/dead/observer/candidate = pick(candidates)
+		spawn_guardian(user, candidate)
 	else
 		to_chat(user, "[failure_message]")
 		used = FALSE
 
 
-/obj/item/guardiancreator/proc/spawn_guardian(mob/living/user, key)
+/obj/item/guardiancreator/proc/spawn_guardian(mob/living/user, mob/dead/candidate)
 	var/guardiantype = "Standard"
 	if(random)
 		guardiantype = pick(possible_guardians)
 	else
 		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in sortList(possible_guardians)
-		if(!guardiantype)
+		if(!guardiantype || !candidate.client)
 			to_chat(user, "[failure_message]" )
 			used = FALSE
 			return
@@ -596,7 +596,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.name = mob_name
 	G.summoner = user
-	G.key = key
+	G.key = candidate.key
 	G.mind.enslave_mind_to_creator(user)
 	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
 	switch(theme)

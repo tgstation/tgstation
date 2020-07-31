@@ -96,12 +96,18 @@
 ///////////BORGS AND OPERATIVES
 
 
+/**
+ * Device to request reinforcments from ghost pop
+ */
 /obj/item/antag_spawner/nuke_ops
 	name = "syndicate operative teleporter"
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
+	var/special_role_name = "Nuclear Operative" ///The name of the special role given to the recruit
+	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/no_crystals ///The applied outfit
+	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop ///The antag datam applied
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -111,7 +117,6 @@
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
 		return FALSE
 	return TRUE
-
 
 /obj/item/antag_spawner/nuke_ops/attack_self(mob/user)
 	if(!(check_usability(user)))
@@ -134,35 +139,23 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
+	var/datum/mind/op_mind = M.mind
 
-	var/datum/antagonist/nukeop/new_op = new()
-	new_op.send_to_spawnpoint = FALSE
-	new_op.nukeop_outfit = /datum/outfit/syndicate/no_crystals
+	antag_datum = new()
+	antag_datum.send_to_spawnpoint = FALSE
+	antag_datum.nukeop_outfit = outfit
 
-	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
-	if(creator_op)
-		M.mind.add_antag_datum(new_op,creator_op.nuke_team)
-		M.mind.special_role = "Nuclear Operative"
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
+	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
+	op_mind.special_role = special_role_name
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown
 	name = "clown operative teleporter"
 	desc = "A single-use teleporter designed to quickly reinforce clown operatives in the field."
-
-/obj/item/antag_spawner/nuke_ops/clown/spawn_antag(client/C, turf/T, kind, datum/mind/user)
-	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.copy_to(M)
-	M.key = C.key
-
-	var/datum/antagonist/nukeop/clownop/new_op = new /datum/antagonist/nukeop/clownop()
-	new_op.send_to_spawnpoint = FALSE
-	new_op.nukeop_outfit = /datum/outfit/syndicate/clownop/no_crystals
-
-	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop/clownop,TRUE)
-	if(creator_op)
-		M.mind.add_antag_datum(new_op, creator_op.nuke_team)
-		M.mind.special_role = "Clown Operative"
-
+	special_role_name = "Clown Operative"
+	outfit = /datum/outfit/syndicate/clownop/no_crystals
+	antag_datum = /datum/antagonist/nukeop/clownop
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele

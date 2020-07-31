@@ -5,7 +5,7 @@
 	var/last_event = 0
 	var/active = null
 	canSmoothWith = null
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 
 /turf/closed/wall/mineral/gold
 	name = "gold wall"
@@ -187,7 +187,7 @@
 	desc = "A wall with alien alloy plating."
 	icon = 'icons/turf/walls/abductor_wall.dmi'
 	icon_state = "abductor"
-	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_TRUE|SMOOTH_DIAGONAL
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
@@ -204,17 +204,20 @@
 	flags_1 = CAN_BE_DIRTY_1
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
 
+/turf/closed/wall/mineral/titanium/rust_heretic_act()
+	return // titanium does not rust
+
 /turf/closed/wall/mineral/titanium/nodiagonal
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/mineral/titanium/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 
 /turf/closed/wall/mineral/titanium/overspace
 	icon_state = "map-overspace"
@@ -248,11 +251,11 @@
 	desc = "An easily-compressable wall used for temporary shelter."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "smooth"
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
 /turf/closed/wall/mineral/titanium/survival/nodiagonal
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 
 /turf/closed/wall/mineral/titanium/survival/pod
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
@@ -266,17 +269,20 @@
 	icon_state = "map-shuttle"
 	explosion_block = 4
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plasma/reinforced/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
 
+/turf/closed/wall/mineral/plastitanium/rust_heretic_act()
+	return // plastitanium does not rust
+
 /turf/closed/wall/mineral/plastitanium/nodiagonal
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/mineral/plastitanium/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"
