@@ -1112,7 +1112,7 @@
 	// Wash equipped stuff that cannot be covered
 	for(var/i in held_items)
 		var/obj/item/held_thing = i
-		if(held_thing.wash(clean_types))
+		if(held_thing?.wash(clean_types))
 			. = TRUE
 
 	if(back?.wash(clean_types))
