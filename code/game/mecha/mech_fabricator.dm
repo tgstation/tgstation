@@ -88,15 +88,15 @@
 		// FULPSTATION: Tiered part sets
 
 		part_sets = list(
-								"Cyborg", "Cyborg Upgrade Modules", "Misc"
+								"Cyborg", "Cyborg Upgrade Modules", "Misc", "Control Interfaces"
 								)
 		if( Ml.rating >= 2)
 			part_sets += list(
-								"Exosuit Equipment", "Clarke", "Ripley"
+								"Exosuit Equipment", "Clarke", "Ripley", "Implants"
 								)
 		if (Ml.rating >= 3)
 			part_sets += list(
-								"Odysseus"
+								"Odysseus", "Cybernetics"
 								)
 		if (Ml.rating >= 4)
 			part_sets += list(
