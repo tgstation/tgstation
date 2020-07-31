@@ -192,6 +192,8 @@
 
 //all air alarms in area are connected via magic
 /area
+	var/list/air_vent_ids = list()
+	var/list/air_scrub_ids = list()
 	var/list/air_vent_names = list()
 	var/list/air_scrub_names = list()
 	var/list/air_vent_info = list()

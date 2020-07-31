@@ -34,16 +34,32 @@
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 
+	var/area/scrub_area = get_area(src)
+	var/ids_len = scrub_area.air_scrub_ids.len + 1
+	var/scrub_name = "\improper [scrub_area.name] air scrubber #"
+	for(var/i=1, i<ids_len, i++)
+		if(!scrub_area.air_scrub_ids[i])
+			scrub_area.air_scrub_ids[i] = id_tag
+			scrub_area.air_scrub_names[id_tag] = "[scrub_name][i]"
+			break
+	if(!scrub_area.air_scrub_names[id_tag])
+		scrub_area.air_scrub_ids += id_tag
+		scrub_area.air_scrub_names[id_tag] = "[scrub_name][ids_len]"
+
 	for(var/f in filter_types)
 		if(istext(f))
 			filter_types -= f
 			filter_types += gas_id2path(f)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	var/area/A = get_area(src)
-	if (A)
-		A.air_scrub_names -= id_tag
-		A.air_scrub_info -= id_tag
+	var/area/scrub_area = get_area(src)
+	if(scrub_area)
+		for(var/i=scrub_area.air_scrub_ids.len, i>0, i--)
+			if(scrub_area.air_scrub_ids[i] == id_tag)
+				scrub_area.air_scrub_ids[i] = null
+				break
+		scrub_area.air_scrub_info -= id_tag
+		scrub_area.air_scrub_names -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
@@ -114,21 +130,9 @@
 		"sigtype" = "status"
 	))
 
-	var/area/A = get_area(src)
-	if(!A.air_scrub_names[id_tag])
-		var/name_list = list()
-		for(var/id_tag in A.air_scrub_names)
-			name_list += A.air_scrub_names[id_tag]
+	var/area/scrub_area = get_area(src)
+	scrub_area.air_scrub_info[id_tag] = signal.data
 
-		var/scrubber_number = 1
-		while(TRUE)
-			name = "\improper [A.name] air scrubber #[scrubber_number]"
-			if(!(name in name_list))
-				A.air_scrub_names[id_tag] = name
-				break
-			scrubber_number += 1
-
-	A.air_scrub_info[id_tag] = signal.data
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 	return TRUE

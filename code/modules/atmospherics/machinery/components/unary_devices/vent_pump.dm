@@ -39,11 +39,27 @@
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 
+	var/area/vent_area = get_area(src)
+	var/ids_len = vent_area.air_vent_ids.len + 1
+	var/vent_name = "\improper [vent_area.name] vent pump #"
+	for(var/i=1, i<ids_len, i++)
+		if(!vent_area.air_vent_ids[i])
+			vent_area.air_vent_ids[i] = id_tag
+			vent_area.air_vent_names[id_tag] = "[vent_name][i]"
+			break
+	if(!vent_area.air_vent_names[id_tag])
+		vent_area.air_vent_ids += id_tag
+		vent_area.air_vent_names[id_tag] = "[vent_name][ids_len]"
+
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
-	var/area/A = get_area(src)
-	if (A)
-		A.air_vent_names -= id_tag
-		A.air_vent_info -= id_tag
+	var/area/vent_area = get_area(src)
+	if(vent_area)
+		for(var/i=vent_area.air_vent_ids.len, i>0, i--)
+			if(vent_area.air_vent_ids[i] == id_tag)
+				vent_area.air_vent_ids[i] = null
+				break
+		vent_area.air_vent_info -= id_tag
+		vent_area.air_vent_names -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
@@ -157,21 +173,8 @@
 		"sigtype" = "status"
 	))
 
-	var/area/A = get_area(src)
-	if(!A.air_vent_names[id_tag])
-		var/name_list = list()
-		for(var/id_tag in A.air_vent_names)
-			name_list += A.air_vent_names[id_tag]
-
-		var/vent_number = 1
-		while(TRUE)
-			name = "\improper [A.name] vent pump #[vent_number]"
-			if(!(name in name_list))
-				A.air_vent_names[id_tag] = name
-				break
-			vent_number += 1
-
-	A.air_vent_info[id_tag] = signal.data
+	var/area/vent_area = get_area(src)
+	vent_area.air_vent_info[id_tag] = signal.data
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
