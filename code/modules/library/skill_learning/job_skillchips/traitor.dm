@@ -20,7 +20,7 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/skillchip
 	chameleon_action.chameleon_name = "Skillchip"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/skillchip/chameleon, /obj/item/skillchip), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = chameleon_blacklist = typecacheof(list(/obj/item/skillchip, /obj/item/skillchip/chameleon, /obj/item/skillchip/useless_adapter), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 	chameleon_action.Grant(user);

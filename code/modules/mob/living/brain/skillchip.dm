@@ -61,8 +61,8 @@
 /**
   * Destroys all skillchips in the brain, calling on_removal if the brain has an owner.
   */
-/obj/item/organ/brain/proc/destroy_all_skillchips()
+/obj/item/organ/brain/proc/destroy_all_skillchips(silent = TRUE)
 	if(!QDELETED(owner))
 		for(var/obj/item/skillchip/skill_chip in skillchips)
-			skill_chip.on_removal(owner)
+			skill_chip.on_removal(owner, silent)
 	QDEL_LIST(skillchips)
