@@ -18446,10 +18446,10 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "aNM" = (
-/mob/living/simple_animal/mouse/white,
 /obj/machinery/light{
 	dir = 4
 	},
+/mob/living/simple_animal/mouse/white,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "aNO" = (
@@ -110985,15 +110985,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
-"epN" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/prison/safe";
-	dir = 8;
-	name = "Prison Wing Cells APC";
-	pixel_x = -24
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "epU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -111335,6 +111326,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/prison)
 "fvf" = (
@@ -112743,6 +112735,13 @@
 	c_tag = "Permabrig - Isolation";
 	network = list("ss13","prison")
 	},
+/obj/machinery/power/apc{
+	areastring = "/area/security/prison/safe";
+	dir = 8;
+	name = "Prison Wing Cells APC";
+	pixel_x = -24
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "jKv" = (
@@ -114089,6 +114088,7 @@
 "nsp" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "nsP" = (
@@ -115177,6 +115177,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "qtR" = (
@@ -115367,6 +115368,7 @@
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "qWg" = (
@@ -168815,7 +168817,7 @@ qYo
 qYo
 aaa
 pff
-epN
+lsG
 reP
 reP
 npH
