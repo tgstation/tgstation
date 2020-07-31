@@ -72,13 +72,13 @@
 	var/list/mix = initial_gas
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
-		temperature = text2num(gas["TEMP"])
+		initial_temperature = text2num(gas["TEMP"])
 		gas -= "TEMP"
 	mix.Cut()
 	for(var/id in gas)
 		var/path = id
 		if(!ispath(path))
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
-		ADD_GAS(path, gases)
+		ADD_GAS(path, mix)
 		mix[path][MOLES] = text2num(gas[id])
 
