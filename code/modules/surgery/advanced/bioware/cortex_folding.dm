@@ -10,7 +10,7 @@
 				/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	bioware_target = BIOWARE_LIGAMENTS
+	bioware_target = BIOWARE_CORTEX
 
 /datum/surgery/advanced/bioware/cortex_folding/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
@@ -22,7 +22,6 @@
 	name = "fold cortex"
 	accept_hand = TRUE
 	time = 125
-	experience_given = MEDICAL_SKILL_ADVANCED
 
 /datum/surgery_step/fold_cortex/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You start folding [target]'s outer cerebral cortex into a fractal pattern.</span>",

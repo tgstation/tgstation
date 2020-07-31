@@ -45,6 +45,9 @@
 				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] stuck to [t_his] [BP.name]!</B>\n"
 			else
 				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
+		for(var/i in BP.wounds)
+			var/datum/wound/W = i
+			msg += "[W.get_examine_description(user)]\n"
 
 	for(var/X in disabled)
 		var/obj/item/bodypart/BP = X
@@ -101,6 +104,22 @@
 	if(pulledby && pulledby.grab_state)
 		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"
 
+	var/scar_severity = 0
+	for(var/i in all_scars)
+		var/datum/scar/S = i
+		if(S.is_visible(user))
+			scar_severity += S.severity
+
+	switch(scar_severity)
+		if(1 to 2)
+			msg += "<span class='smallnoticeital'>[t_He] [t_has] visible scarring, you can look again to take a closer look...</span>\n"
+		if(3 to 4)
+			msg += "<span class='notice'><i>[t_He] [t_has] several bad scars, you can look again to take a closer look...</i></span>\n"
+		if(5 to 6)
+			msg += "<span class='notice'><b><i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i></b></span>\n"
+		if(7 to INFINITY)
+			msg += "<span class='notice'><b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b></span>\n"
+
 	msg += "</span>"
 
 	. += msg.Join("")
@@ -133,3 +152,25 @@
 	. += "*---------*</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+
+/mob/living/carbon/examine_more(mob/user)
+	if(!all_scars)
+		return ..()
+
+	var/list/visible_scars
+	for(var/i in all_scars)
+		var/datum/scar/S = i
+		if(S.is_visible(user))
+			LAZYADD(visible_scars, S)
+
+	if(!visible_scars)
+		return ..()
+
+	var/msg = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
+	for(var/i in visible_scars)
+		var/datum/scar/S = i
+		var/scar_text = S.get_examine_description(user)
+		if(scar_text)
+			msg += "[scar_text]"
+
+	return msg

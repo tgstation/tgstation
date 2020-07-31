@@ -1,6 +1,6 @@
 /datum/surgery/advanced/bioware/cortex_imprint
 	name = "Cortex Imprint"
-	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
+	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass impediments caused by minor brain traumas."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,
@@ -10,7 +10,7 @@
 				/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	bioware_target = BIOWARE_LIGAMENTS
+	bioware_target = BIOWARE_CORTEX
 
 /datum/surgery/advanced/bioware/cortex_imprint/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
@@ -22,7 +22,6 @@
 	name = "imprint cortex"
 	accept_hand = TRUE
 	time = 125
-	experience_given = MEDICAL_SKILL_ADVANCED
 
 /datum/surgery_step/imprint_cortex/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You start carving [target]'s outer cerebral cortex into a self-imprinting pattern.</span>",
@@ -49,10 +48,9 @@
 
 /datum/bioware/cortex_imprint
 	name = "Cortex Imprint"
-	desc = "The cerebral cortex has been reshaped into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
+	desc = "The cerebral cortex has been reshaped into a redundant neural pattern, making the brain able to bypass impediments caused by minor brain traumas."
 	mod_type = BIOWARE_CORTEX
 	can_process = TRUE
 
 /datum/bioware/cortex_imprint/process()
 	owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
-

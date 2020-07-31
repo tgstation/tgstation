@@ -31,11 +31,8 @@
 	var/available_on_ntnet = 1
 	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
 	var/available_on_syndinet = 0
-	/// ID of TGUI interface
+	/// Name of the tgui interface
 	var/tgui_id
-	/// Default size of TGUI window, in pixels
-	var/ui_x = 575
-	var/ui_y = 700
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 	var/ui_header = null
 
@@ -72,7 +69,7 @@
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
-			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>")
+			to_chat(user, "<span class='danger'>\The [computer] flashes a \"Hardware Error - Incompatible software\" warning.</span>")
 		return 0
 	return 1
 
@@ -101,7 +98,7 @@
 	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
 		return TRUE
 
-	if(IsAdminGhost(user))
+	if(isAdminGhostAI(user))
 		return TRUE
 
 	if(issilicon(user))
@@ -148,6 +145,20 @@
 		return 1
 	return 0
 
+/**
+  *
+  *Called by the device when it is emagged.
+  *
+  *Emagging the device allows certain programs to unlock new functions. However, the program will
+  *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
+  *The device will allow an emag to be run multiple times, so the user can re-emag to run the
+  *override again, should they download something new. The run_emag() proc should return TRUE if
+  *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
+  *emag functions).
+**/
+/datum/computer_file/program/proc/run_emag()
+	return FALSE
+
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
@@ -155,15 +166,12 @@
 		generate_network_log("Connection to [network_destination] closed.")
 	return 1
 
-
-/datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui && tgui_id)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y, state = state)
+		ui = new(user, src, tgui_id, filedesc)
 		ui.open()
+		ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
 // CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:
 // Topic calls are automagically forwarded from NanoModule this program contains.

@@ -207,7 +207,7 @@
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
-	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
+	power_channel = AREA_USAGE_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = FALSE					// 1 if on, 0 if off
 	var/on_gs = FALSE
 	var/static_power_used = 0
@@ -238,6 +238,8 @@
 	var/bulb_emergency_colour = "#FF3232"	// determines the colour of the light while it's in emergency mode
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
+
+	var/obj/effect/overlay/vis/glowybit		// the light overlay
 
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
@@ -291,6 +293,8 @@
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
 
+	glowybit = SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir, alpha = 0, unique = TRUE)
+
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/A = get_area(src)
 		var/obj/machinery/power/apc/temp_apc = A.get_apc()
@@ -320,6 +324,8 @@
 		on = FALSE
 //		A.update_lights()
 	QDEL_NULL(cell)
+	vis_contents.Cut()
+	QDEL_NULL(glowybit)
 	return ..()
 
 /obj/machinery/light/update_icon_state()
@@ -340,9 +346,9 @@
 /obj/machinery/light/update_overlays()
 	. = ..()
 	if(on && status == LIGHT_OK)
-		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, layer, EMISSIVE_PLANE)
 		glowybit.alpha = clamp(light_power*250, 30, 200)
-		. += glowybit
+	else
+		glowybit.alpha = 0
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -390,9 +396,9 @@
 		on_gs = on
 		if(on)
 			static_power_used = brightness * 20 //20W per unit luminosity
-			addStaticPower(static_power_used, STATIC_LIGHT)
+			addStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 		else
-			removeStaticPower(static_power_used, STATIC_LIGHT)
+			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 
 	broken_sparks(start_only=TRUE)
 
@@ -796,7 +802,7 @@
 	desc = "A replacement light tube."
 	icon_state = "ltube"
 	base_state = "ltube"
-	item_state = "c_tube"
+	inhand_icon_state = "c_tube"
 	brightness = 8
 
 /obj/item/light/tube/broken
@@ -807,7 +813,7 @@
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
 	base_state = "lbulb"
-	item_state = "contvapour"
+	inhand_icon_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	brightness = 4

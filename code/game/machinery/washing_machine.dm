@@ -143,10 +143,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
 
-/obj/machinery/washing_machine/ComponentInitialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
-
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
 	if(!busy)
@@ -186,15 +182,17 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		M.Translate(rand(-3, 3), rand(-1, 3))
 		animate(src, transform=M, time=2)
 
-/obj/machinery/washing_machine/proc/clean_blood()
-	if(!busy)
+/obj/machinery/washing_machine/wash(clean_types)
+	. = ..()
+	if(!busy && bloody_mess && (clean_types & CLEAN_TYPE_BLOOD))
 		bloody_mess = FALSE
 		update_icon()
+		. = TRUE
 
 /obj/machinery/washing_machine/proc/wash_cycle()
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		AM.wash(CLEAN_WASH)
 		AM.machine_wash(src)
 
 	busy = FALSE
@@ -217,14 +215,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			icon_state = initial(target_type.icon_state)
 			lefthand_file = initial(target_type.lefthand_file)
 			righthand_file = initial(target_type.righthand_file)
-			item_state = initial(target_type.item_state)
-			mob_overlay_icon = initial(target_type.mob_overlay_icon)
+			inhand_icon_state = initial(target_type.inhand_icon_state)
+			worn_icon = initial(target_type.worn_icon)
+			worn_icon_state = initial(target_type.worn_icon_state)
 			inhand_x_dimension = initial(target_type.inhand_x_dimension)
 			inhand_y_dimension = initial(target_type.inhand_y_dimension)
 			name = initial(target_type.name)
 			desc = "[initial(target_type.desc)] The colors look a little dodgy."
 			return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
-	add_atom_colour(dye_color, FIXED_COLOUR_PRIORITY)
 	return FALSE
 
 //what happens to this object when washed inside a washing machine

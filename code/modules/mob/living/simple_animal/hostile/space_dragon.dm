@@ -18,7 +18,7 @@
   */
 /mob/living/simple_animal/hostile/space_dragon
 	name = "Space Dragon"
-	desc = "A vile leviathan-esque creature that flies in the most unnatural way.  Slightly looks similar to a space carp."
+	desc = "A vile, leviathan-esque creature that flies in the most unnatural way.  Looks slightly similar to a space carp."
 	maxHealth = 400
 	health = 400
 	a_intent = INTENT_HARM
@@ -37,13 +37,14 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	melee_damage_upper = 35
 	melee_damage_lower = 35
+	mob_size = MOB_SIZE_LARGE
 	armour_penetration = 30
 	pixel_x = -16
 	turns_per_move = 5
 	ranged = TRUE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
-	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, life estinguished."
+	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, its life extinguished."
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
@@ -68,9 +69,9 @@
 	/// The togglable small sprite action
 	var/small_sprite_type = /datum/action/small_sprite/megafauna/spacedragon
 	/// The innate ability to use wing gust
-	var/datum/action/innate/space_dragon/gustAttack/gust
+	var/datum/action/innate/space_dragon/gust_attack/gust
 	/// The innate ability to summon rifts
-	var/datum/action/innate/space_dragon/summonRift/rift
+	var/datum/action/innate/space_dragon/summon_rift/rift
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
@@ -208,7 +209,7 @@
   * Arguments:
   * * turf/T - The turf to trigger the effects on.
   */
-mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
+/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	var/list/hit_list = list()
 	hit_list += src
 	new /obj/effect/hotspot(T)
@@ -289,7 +290,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * QDeletes all the current rifts after removing their references to other objects.
   * Currently, the only reference they have is to the Dragon which created them, so we clear that before deleting them.
   * Currently used when Space Dragon dies.
-  */	
+  */
 /mob/living/simple_animal/hostile/space_dragon/proc/destroy_rifts()
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.dragon = null
@@ -349,7 +350,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 			main_objective.completed = TRUE
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds.  Evacuation of the remamining crew will begin immediately.", "Central Command Spacial Corps")
+	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. Evacuation of the remaining crew will begin immediately.", "Central Command Spatial Corps")
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.carp_stored = 999999
 	sleep(50)
@@ -359,12 +360,12 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	background_icon_state = "bg_default"
 	icon_icon = 'icons/mob/actions/actions_space_dragon.dmi'
 
-/datum/action/innate/space_dragon/gustAttack
+/datum/action/innate/space_dragon/gust_attack
 	name = "Gust Attack"
 	button_icon_state = "gust_attack"
 	desc = "Use your wings to knock back foes with gusts of air, pushing them away and stunning them.  Using this too often will leave you vulnerable for longer periods of time."
 
-/datum/action/innate/space_dragon/gustAttack/Activate()
+/datum/action/innate/space_dragon/gust_attack/Activate()
 	var/mob/living/simple_animal/hostile/space_dragon/S = owner
 	if(S.using_special)
 		return
@@ -372,12 +373,12 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	S.icon_state = "spacedragon_gust"
 	S.useGust(0)
 
-/datum/action/innate/space_dragon/summonRift
+/datum/action/innate/space_dragon/summon_rift
 	name = "Summon Rift"
 	button_icon_state = "carp_rift"
 	desc = "Summon a rift to bring forth a horde of space carp."
 
-/datum/action/innate/space_dragon/summonRift/Activate()
+/datum/action/innate/space_dragon/summon_rift/Activate()
 	var/mob/living/simple_animal/hostile/space_dragon/S = owner
 	if(S.using_special)
 		return
@@ -491,10 +492,10 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 		notify_ghosts("The carp rift can summon an additional carp!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Spawn Available")
 	if(time_charged == (max_charge - 120))
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [A.map_name].  Stop it at all costs!", "Central Command Spacial Corps", 'sound/ai/spanomalies.ogg')
+		priority_announce("A rift is causing an unnaturally large energy flux in [A.map_name].  Stop it at all costs!", "Central Command Spatial Corps", 'sound/ai/spanomalies.ogg')
 	if(time_charged == max_charge)
 		var/area/A = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [A.map_name], please stand-by.", "Central Command Spacial Corps")
+		priority_announce("Spatial object has reached peak energy charge in [A.map_name], please stand-by.", "Central Command Spatial Corps")
 		obj_integrity = INFINITY
 		desc = "A rift akin to the ones space carp use to travel long distances.  This one is fully charged, and is capable of bringing many carp to the station's location."
 		icon_state = "carp_rift_charged"

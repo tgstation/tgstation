@@ -1,5 +1,6 @@
 /mob/living/Initialize()
 	. = ..()
+	register_init_signals()
 	if(unique_name)
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
@@ -60,7 +61,7 @@
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
 		return
-	if (buckled || now_pushing)
+	if(buckled || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
@@ -375,8 +376,6 @@
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(incapacitated())
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_DEATHCOMA))
-		return FALSE
 	if(!..())
 		return FALSE
 	visible_message("<span class='name'>[src]</span> points at [A].", "<span class='notice'>You point at [A].</span>")
@@ -417,6 +416,12 @@
 
 /mob/living/proc/setMaxHealth(newMaxHealth)
 	maxHealth = newMaxHealth
+
+/// Returns the health of the mob while ignoring damage of non-organic (prosthetic) limbs
+/// Used by cryo cells to not permanently imprison those with damage from prosthetics,
+/// as they cannot be healed through chemicals.
+/mob/living/proc/get_organic_health()
+	return health
 
 // MOB PROCS //END
 
@@ -480,10 +485,17 @@
 /mob/living/is_drawable(mob/user, allowmobs = TRUE)
 	return (allowmobs && reagents && can_inject(user))
 
+
+///Sets the current mob's health value. Do not call directly if you don't know what you are doing, use the damage procs, instead.
+/mob/living/proc/set_health(new_value)
+	. = health
+	health = new_value
+
+
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+	set_health(maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss())
 	staminaloss = getStaminaLoss()
 	update_stat()
 	med_hud_set_health()
@@ -665,40 +677,55 @@
 	return
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
-	if(!has_gravity())
+	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
-	var/blood_exists = FALSE
 
-	for(var/obj/effect/decal/cleanable/trail_holder/C in start) //checks for blood splatter already on the floor
-		blood_exists = TRUE
-	if(isturf(start))
-		var/trail_type = getTrail()
-		if(trail_type)
-			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
-				var/newdir = get_dir(target_turf, start)
-				if(newdir != direction)
-					newdir = newdir | direction
-					if(newdir == 3) //N + S
-						newdir = NORTH
-					else if(newdir == 12) //E + W
-						newdir = EAST
-				if((newdir in GLOB.cardinals) && (prob(50)))
-					newdir = turn(get_dir(target_turf, start), 180)
-				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
+	var/blood_exists = locate(/obj/effect/decal/cleanable/trail_holder) in start
 
-				for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
-					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-						TH.existing_dirs += newdir
-						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-						TH.transfer_mob_blood_dna(src)
+	var/trail_type = getTrail()
+	if(!trail_type)
+		return
+
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	if(blood_volume < max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+		return
+
+	var/bleed_amount = bleedDragAmount()
+	blood_volume = max(blood_volume - bleed_amount, 0) 					//that depends on our brute damage.
+	var/newdir = get_dir(target_turf, start)
+	if(newdir != direction)
+		newdir = newdir | direction
+		if(newdir == (NORTH|SOUTH))
+			newdir = NORTH
+		else if(newdir == (EAST|WEST))
+			newdir = EAST
+	if((newdir in GLOB.cardinals) && (prob(50)))
+		newdir = turn(get_dir(target_turf, start), 180)
+	if(!blood_exists)
+		new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
+
+	for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
+		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+			TH.existing_dirs += newdir
+			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+			TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || bleedsuppress)
 		return
 	..()
+
+///Returns how much blood we're losing from being dragged a tile, from [mob/living/proc/makeTrail]
+/mob/living/proc/bleedDragAmount()
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	return max(1, brute_ratio * 2)
+
+/mob/living/carbon/bleedDragAmount()
+	var/bleed_amount = 0
+	for(var/i in all_wounds)
+		var/datum/wound/iter_wound = i
+		bleed_amount += iter_wound.drag_bleed_amount()
+	return bleed_amount
 
 /mob/living/proc/getTrail()
 	if(getBruteLoss() < 300)
@@ -776,10 +803,10 @@
 	. = TRUE
 	if(pulledby.grab_state || resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
 		var/altered_grab_state = pulledby.grab_state
-		if((resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
+		if((resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
-		var/resist_chance = BASE_GRAB_RESIST_CHANCE // see defines/combat.dm
-		resist_chance = max((resist_chance/altered_grab_state)-sqrt((getBruteLoss()+getFireLoss()+getOxyLoss()+getToxLoss()+getCloneLoss())*0.5+getStaminaLoss()), 0) //stamina loss is weighted twice as heavily as the other damage types in this calculation
+		var/resist_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
+		resist_chance = (resist_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
 		if(prob(resist_chance))
 			visible_message("<span class='danger'>[src] breaks free of [pulledby]'s grip!</span>", \
 							"<span class='danger'>You break free of [pulledby]'s grip!</span>", null, null, pulledby)
@@ -788,12 +815,12 @@
 			pulledby.stop_pulling()
 			return FALSE
 		else
-			adjustStaminaLoss(rand(8,15))//8 is from 7.5 rounded up
+			adjustStaminaLoss(rand(15,20))//failure to escape still imparts a pretty serious penalty
 			visible_message("<span class='danger'>[src] struggles as they fail to break free of [pulledby]'s grip!</span>", \
 							"<span class='warning'>You struggle as you fail to break free of [pulledby]'s grip!</span>", null, null, pulledby)
 			to_chat(pulledby, "<span class='danger'>[src] struggles as they fail to break free of your grip!</span>")
 		if(moving_resist && client) //we resisted by trying to move
-			client.move_delay = world.time + 20
+			client.move_delay = world.time + 40
 	else
 		pulledby.stop_pulling()
 		return FALSE
@@ -890,9 +917,14 @@
 		if(!what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
-
-		who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>", \
-						"<span class='notice'>[src] tries to put [what] on you.</span>", null, null, src)
+		if(istype(what,/obj/item/clothing))
+			var/obj/item/clothing/c = what
+			if(c.clothing_flags & DANGEROUS_OBJECT)
+				who.visible_message("<span class='danger'>[src] tries to put [what] on [who].</span>", \
+							"<span class='userdanger'>[src] tries to put [what] on you.</span>", null, null, src)
+			else
+				who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>", \
+							"<span class='notice'>[src] tries to put [what] on you.</span>", null, null, src)
 		to_chat(src, "<span class='notice'>You try to put [what] on [who]...</span>")
 		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
@@ -910,6 +942,8 @@
 
 /mob/living/singularity_pull(S, current_size)
 	..()
+	if(move_resist == INFINITY)
+		return
 	if(current_size >= STAGE_SIX) //your puny magboots/wings/whatever will not save you against supermatter singularity
 		throw_at(S, 14, 3, src, TRUE)
 	else if(!src.mob_negates_gravity())
@@ -1133,11 +1167,6 @@
 
 //Mobs on Fire end
 
-//Washing
-/mob/living/washed(var/atom/washer)
-	. = ..()
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(var/mob/living/carbon/C)
 	if(C.key) //save us from monkey hordes
@@ -1163,7 +1192,6 @@
 /mob/living/proc/update_mobility()
 	var/stat_softcrit = stat == SOFT_CRIT
 	var/stat_conscious = (stat == CONSCIOUS) || stat_softcrit
-	var/conscious = !IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/restrained = restrained()
 	var/has_legs = get_num_legs()
@@ -1172,12 +1200,12 @@
 	var/stun = IsStun()
 	var/knockdown = IsKnockdown()
 	var/ignore_legs = get_leg_ignore()
-	var/canmove = !IsImmobilized() && !stun && conscious && !paralyzed && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && !IS_IN_STASIS(src) && (has_arms || ignore_legs || has_legs)
+	var/canmove = !IsImmobilized() && !stun && stat_conscious && !paralyzed && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && !IS_IN_STASIS(src) && (has_arms || ignore_legs || has_legs)
 	if(canmove)
 		mobility_flags |= MOBILITY_MOVE
 	else
 		mobility_flags &= ~MOBILITY_MOVE
-	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyzed && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying)
+	var/canstand_involuntary = stat_conscious && !stat_softcrit && !knockdown && !chokehold && !paralyzed && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying)
 	var/canstand = canstand_involuntary && !resting
 
 	if(buckled && buckled.buckle_lying != -1)
@@ -1203,7 +1231,7 @@
 
 
 
-	var/canitem = !paralyzed && !stun && conscious && !chokehold && !restrained && has_arms
+	var/canitem = !paralyzed && !stun && stat_conscious && !chokehold && !restrained && has_arms
 	if(canitem)
 		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
 	else
@@ -1278,13 +1306,23 @@
 			SSmobs.clients_by_zlevel[registered_z] -= src
 		if (client)
 			if (new_z)
+				//Figure out how many clients were here before
+				var/oldlen = SSmobs.clients_by_zlevel[new_z].len
 				SSmobs.clients_by_zlevel[new_z] += src
 				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
 					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
 					if (SA)
-						SA.toggle_ai(AI_ON) // Guarantees responsiveness for when appearing right next to mobs
+						if(oldlen == 0)
+							//Start AI idle if nobody else was on this z level before (mobs will switch off when this is the case)
+							SA.toggle_ai(AI_IDLE)
+
+						//If they are also within a close distance ask the AI if it wants to wake up
+						if(get_dist(get_turf(src), get_turf(SA)) < MAX_SIMPLEMOB_WAKEUP_RANGE)
+							SA.consider_wakeup() // Ask the mob if it wants to turn on it's AI
+					//They should clean up in destroy, but often don't so we get them here
 					else
 						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
+
 
 			registered_z = new_z
 		else
@@ -1356,39 +1394,29 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if ("maxHealth")
+		if (NAMEOF(src, maxHealth))
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
-		if("stat")
+		if(NAMEOF(src, stat))
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				remove_from_dead_mob_list()
 				add_to_alive_mob_list()
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
 				remove_from_alive_mob_list()
 				add_to_dead_mob_list()
+		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
+			return FALSE
 	. = ..()
 	switch(var_name)
-		if("knockdown")
-			SetParalyzed(var_value)
-		if("stun")
-			SetStun(var_value)
-		if("unconscious")
-			SetUnconscious(var_value)
-		if("sleeping")
-			SetSleeping(var_value)
-		if("eye_blind")
+		if(NAMEOF(src, eye_blind))
 			set_blindness(var_value)
-		if("eye_damage")
-			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-			if(E)
-				E.setOrganDamage(var_value)
-		if("eye_blurry")
+		if(NAMEOF(src, eye_blurry))
 			set_blurriness(var_value)
-		if("maxHealth")
+		if(NAMEOF(src, maxHealth))
 			updatehealth()
-		if("resize")
+		if(NAMEOF(src, resize))
 			update_transform()
-		if("lighting_alpha")
+		if(NAMEOF(src, lighting_alpha))
 			sync_lighting_plane_alpha()
 
 /mob/living/vv_get_header()
@@ -1495,3 +1523,116 @@
 	if(!apply_change)
 		return BODYTEMP_NORMAL
 	return BODYTEMP_NORMAL + get_body_temp_normal_change()
+
+///Checks if the user is incapacitated or on cooldown.
+/mob/living/proc/can_look_up()
+	return !(incapacitated(ignore_restraints = TRUE))
+
+/**
+ * look_up Changes the perspective of the mob to any openspace turf above the mob
+ *
+ * This also checks if an openspace turf is above the mob before looking up or resets the perspective if already looking up
+ *
+ */
+/mob/living/proc/look_up()
+	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
+		stop_look_up()
+	if(!can_look_up())
+		return
+	changeNext_move(CLICK_CD_LOOK_UP)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_up) //We start looking again after we move.
+	start_look_up()
+
+/mob/living/proc/start_look_up()
+	var/turf/ceiling = get_step_multiz(src, UP)
+	if(!ceiling) //We are at the highest z-level.
+		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
+		return
+	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
+		var/turf/front_hole = get_step(ceiling, dir)
+		if(istransparentturf(front_hole))
+			ceiling = front_hole
+		else
+			var/list/checkturfs = block(locate(x-1,y-1,ceiling.z),locate(x+1,y+1,ceiling.z))-ceiling-front_hole //Try find hole near of us
+			for(var/turf/checkhole in checkturfs)
+				if(istransparentturf(checkhole))
+					ceiling = checkhole
+					break
+		if(!istransparentturf(ceiling))
+			to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
+			return
+
+	reset_perspective(ceiling)
+
+/mob/living/proc/stop_look_up()
+	reset_perspective()
+
+/mob/living/proc/end_look_up()
+	stop_look_up()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+
+/**
+ * look_down Changes the perspective of the mob to any openspace turf below the mob
+ *
+ * This also checks if an openspace turf is below the mob before looking down or resets the perspective if already looking up
+ *
+ */
+/mob/living/proc/look_down()
+	if(client.perspective != MOB_PERSPECTIVE) //We are already looking down.
+		stop_look_down()
+	if(!can_look_up()) //if we cant look up, we cant look down.
+		return
+	changeNext_move(CLICK_CD_LOOK_UP)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_down) //We start looking again after we move.
+	start_look_down()
+
+/mob/living/proc/start_look_down()
+	var/turf/floor = get_turf(src)
+	var/turf/lower_level = get_step_multiz(floor, DOWN)
+	if(!lower_level) //We are at the lowest z-level.
+		to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
+		return
+	else if(!istransparentturf(floor)) //There is no turf we can look through below us
+		var/turf/front_hole = get_step(floor, dir)
+		if(istransparentturf(front_hole))
+			floor = front_hole
+			lower_level = get_step_multiz(front_hole, DOWN)
+		else
+			var/list/checkturfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))-floor //Try find hole near of us
+			for(var/turf/checkhole in checkturfs)
+				if(istransparentturf(checkhole))
+					floor = checkhole
+					lower_level = get_step_multiz(checkhole, DOWN)
+					break
+		if(!istransparentturf(floor))
+			to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
+			return
+
+	reset_perspective(lower_level)
+
+/mob/living/proc/stop_look_down()
+	reset_perspective()
+
+/mob/living/proc/end_look_down()
+	stop_look_down()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+
+
+/mob/living/set_stat(new_stat)
+	. = ..()
+	if(isnull(.))
+		return
+	switch(.) //Previous stat.
+		if(UNCONSCIOUS)
+			cure_blind(UNCONSCIOUS_BLIND)
+	switch(stat) //Current stat.
+		if(UNCONSCIOUS)
+			become_blind(UNCONSCIOUS_BLIND)
+
+/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
+/mob/living/proc/is_face_visible()
+	return TRUE

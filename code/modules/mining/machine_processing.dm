@@ -16,10 +16,10 @@
 
 /obj/machinery/mineral/Initialize(mapload)
 	. = ..()
-	if(needs_item_input)
+	if(needs_item_input && anchored)
 		register_input_turf()
 
-/// Gets the turf in the `input_dir` direction adjacent to the machine, and registers signals for ATOM_ENTERED and ATOM_CREATED. Calls the `pickup_item()` proc when it recieves these signals.
+/// Gets the turf in the `input_dir` direction adjacent to the machine, and registers signals for ATOM_ENTERED and ATOM_CREATED. Calls the `pickup_item()` proc when it receives these signals.
 /obj/machinery/mineral/proc/register_input_turf()
 	input_turf = get_step(src, input_dir)
 	if(input_turf) // make sure there is actually a turf
@@ -29,6 +29,13 @@
 /obj/machinery/mineral/proc/unregister_input_turf()
 	if(input_turf)
 		UnregisterSignal(input_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_CREATED))
+
+/obj/machinery/mineral/Moved()
+	. = ..()
+	if(!needs_item_input || !anchored)
+		return
+	unregister_input_turf()
+	register_input_turf()
 
 /**
 	Base proc for all `/mineral` subtype machines to use. Place your item pickup behavior in this proc when you override it for your specific machine.
@@ -133,6 +140,8 @@
 	return ..()
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
+	if(QDELETED(O))
+		return
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))
@@ -178,6 +187,8 @@
 	return dat
 
 /obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+	if(QDELETED(target))
+		return
 	if(istype(target, /obj/item/stack/ore))
 		process_ore(target)
 

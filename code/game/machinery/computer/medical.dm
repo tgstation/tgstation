@@ -122,11 +122,10 @@
 						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=mi_dis_d'>&nbsp;[active2.fields["mi_dis_d"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td><br>Major Disabilities:</td><td><br><A href='?src=[REF(src)];field=ma_dis'>&nbsp;[active2.fields["ma_dis"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=ma_dis_d'>&nbsp;[active2.fields["ma_dis_d"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td><br>Allergies:</td><td><br><A href='?src=[REF(src)];field=alg'>&nbsp;[active2.fields["alg"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=alg_d'>&nbsp;[active2.fields["alg_d"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td><br>Current Diseases:</td><td><br><A href='?src=[REF(src)];field=cdi'>&nbsp;[active2.fields["cdi"]]&nbsp;</A></td></tr>" //(per disease info placed in log/comment section)
 						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=cdi_d'>&nbsp;[active2.fields["cdi_d"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td><br>Important Notes:</td><td><br><A href='?src=[REF(src)];field=notes'>&nbsp;[active2.fields["notes"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td><br>Notes Cont'd:</td><td><br><A href='?src=[REF(src)];field=notes'>&nbsp;[active2.fields["notes_d"]]&nbsp;</A></td></tr>"
 
 						dat += "<tr><td><br><b><font size='4'>Comments/Log</font></b></td></tr>"
 						var/counter = 1
@@ -185,7 +184,7 @@
 	if(!(active2 in GLOB.data_core.medical))
 		active2 = null
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			temp = null
@@ -217,7 +216,7 @@
 				authenticated = 1
 				rank = "AI"
 				screen = 1
-			else if(IsAdminGhost(M))
+			else if(isAdminGhostAI(M))
 				active1 = null
 				active2 = null
 				authenticated = 1

@@ -45,6 +45,9 @@
 					"basalt","basalt_dug",
 					"basalt0","basalt1","basalt2","basalt3","basalt4",
 					"basalt5","basalt6","basalt7","basalt8","basalt9","basalt10","basalt11","basalt12",
+					"snow","snow_dug","ice",
+					"snow0","snow1","snow2","snow3","snow4",
+					"snow5","snow6","snow7","snow8","snow9","snow10","snow11","snow12",
 					"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "carpetsymbol", "carpetstar",
 					"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 					"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
@@ -62,7 +65,7 @@
 /turf/open/floor/Destroy()
 	if(is_station_level(z))
 		GLOB.station_turfs -= src
-	..()
+	return ..()
 
 /turf/open/floor/ex_act(severity, target)
 	var/shielded = is_shielded()
@@ -138,7 +141,7 @@
 		icon_state = pick(broken_states)
 	burnt = 1
 
-/turf/open/floor/proc/make_plating()
+/turf/open/floor/proc/make_plating(force = FALSE)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 ///For when the floor is placed under heavy load. Calls break_tile(), but exists to be overridden by floor types that should resist crushing force.
@@ -204,23 +207,24 @@
 
 /turf/open/floor/singularity_pull(S, current_size)
 	..()
-	if(current_size == STAGE_THREE)
-		if(prob(30))
-			if(floor_tile)
-				new floor_tile(src)
-				make_plating()
-	else if(current_size == STAGE_FOUR)
-		if(prob(50))
-			if(floor_tile)
-				new floor_tile(src)
-				make_plating()
-	else if(current_size >= STAGE_FIVE)
-		if(floor_tile)
+	var/sheer = FALSE
+	switch(current_size)
+		if(STAGE_THREE)
+			if(prob(30))
+				sheer = TRUE
+		if(STAGE_FOUR)
+			if(prob(50))
+				sheer = TRUE
+		if(STAGE_FIVE to INFINITY)
 			if(prob(70))
-				new floor_tile(src)
-				make_plating()
-		else if(prob(50))
-			ReplaceWithLattice()
+				sheer = TRUE
+			else if(prob(50) && (/turf/open/space in baseturfs))
+				ReplaceWithLattice()
+	if(sheer)
+		if(floor_tile)
+			make_plating(TRUE)
+			new floor_tile(src)
+
 
 /turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
 	. = ..()
@@ -272,6 +276,7 @@
 			if(A.electronics.unres_sides)
 				A.unres_sides = A.electronics.unres_sides
 			A.autoclose = TRUE
+			A.update_icon()
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
@@ -283,7 +288,7 @@
 				return FALSE
 			to_chat(user, "<span class='notice'>You construct the grille.</span>")
 			var/obj/structure/grille/G = new(src)
-			G.anchored = TRUE
+			G.set_anchored(TRUE)
 			return TRUE
 		if(RCD_MACHINE)
 			if(locate(/obj/structure/frame/machine) in src)
@@ -291,13 +296,13 @@
 			var/obj/structure/frame/machine/M = new(src)
 			M.state = 2
 			M.icon_state = "box_1"
-			M.anchored = TRUE
+			M.set_anchored(TRUE)
 			return TRUE
 		if(RCD_COMPUTER)
 			if(locate(/obj/structure/frame/computer) in src)
 				return FALSE
 			var/obj/structure/frame/computer/C = new(src)
-			C.anchored = TRUE
+			C.set_anchored(TRUE)
 			C.state = 1
 			C.setDir(the_rcd.computer_dir)
 			return TRUE

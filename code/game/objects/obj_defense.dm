@@ -91,6 +91,10 @@
 	return TRUE
 
 /obj/blob_act(obj/structure/blob/B)
+	if(isturf(loc))
+		var/turf/T = loc
+		if(T.intact && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+			return
 	take_damage(400, BRUTE, "melee", 0, get_dir(src, B))
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal, and attack_slime
@@ -171,7 +175,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 		if(!acid_level)
 			SSacid.processing[src] = src
-			add_overlay(GLOB.acid_overlay, TRUE)
+			update_icon()
 		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
 		if(acid_level < acid_cap)
 			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
@@ -198,12 +202,16 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///Called when the obj is exposed to fire.
 /obj/fire_act(exposed_temperature, exposed_volume)
+	if(isturf(loc))
+		var/turf/T = loc
+		if(T.intact && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
-		add_overlay(GLOB.fire_overlay, TRUE)
+		update_icon()
 		return 1
 	return ..()
 
@@ -217,7 +225,6 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		cut_overlay(GLOB.fire_overlay, TRUE)
 		update_icon()
 		SSfire_burning.processing -= src
 

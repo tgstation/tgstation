@@ -60,6 +60,7 @@
 	body += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(M)]'>VV</a> - "
 	if(M.mind)
 		body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>TP</a> - "
+		body += "<a href='?_src_=holder;[HrefToken()];skill=[REF(M)]'>SKILLS</a> - "
 	else
 		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(M)]'>Init Mind</a> - "
 	if (iscyborg(M))
@@ -183,6 +184,7 @@
 		body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];admincommend=[REF(M)]'>Commend Behavior</A> | "
 
 	body += "<br>"
 	body += "</body></html>"
@@ -715,7 +717,7 @@
 		var/obj/structure/closet/supplypod/centcompod/pod = new()
 		var/atom/A = new chosen(pod)
 		A.flags_1 |= ADMIN_SPAWNED_1
-		new /obj/effect/DPtarget(T, pod)
+		new /obj/effect/pod_landingzone(T, pod)
 
 	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -738,22 +740,35 @@
 	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/datum/admins/proc/show_traitor_panel(mob/M in GLOB.mob_list)
+/datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
 	set category = "Admin - Game"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
-
-	if(!istype(M))
-		to_chat(usr, "This can only be used on instances of type /mob", confidential = TRUE)
-		return
-	if(!M.mind)
+	var/datum/mind/target_mind = target_mob.mind
+	if(!target_mind)
 		to_chat(usr, "This mob has no mind!", confidential = TRUE)
 		return
-
-	M.mind.traitor_panel()
+	if(!istype(target_mob) && !istype(target_mind))
+		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		return
+	target_mind.traitor_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/show_skill_panel(var/target)
+	set category = "Admin - Game"
+	set desc = "Edit mobs's experience and skill levels"
+	set name = "Show Skill Panel"
+	var/datum/mind/target_mind
+	if(ismob(target))
+		var/mob/target_mob = target
+		target_mind = target_mob.mind
+	else if (istype(target, /datum/mind))
+		target_mind = target
+	else
+		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		return
+	var/datum/skill_panel/SP  = new(usr, target_mind)
+	SP.ui_interact(usr)
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"
@@ -878,8 +893,6 @@
 		<b>Forced threat level:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_forced_threat=1'><b>[GLOB.dynamic_forced_threat_level]</b></a>.
 		<br/>The value threat is set to if it is higher than -1.<br/>
 		<br/>
-		<b>High population limit:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_high_pop_limit=1'><b>[GLOB.dynamic_high_pop_limit]</b></a>.
-		<br/>The threshold at which "high population override" will be in effect. <br/>
 		<br/>
 		<b>Stacking threeshold:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_stacking_limit=1'><b>[GLOB.dynamic_stacking_limit]</b></a>.
 		<br/>The threshold at which "round-ender" rulesets will stack. A value higher than 100 ensure this never happens. <br/>

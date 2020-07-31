@@ -18,6 +18,7 @@ First things first, we want to make it clear how you can contribute (if you've n
 /tg/station doesn't have a list of goals and features to add; we instead allow freedom for contributors to suggest and create their ideas for the game. That doesn't mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful starting guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
 If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.
+After setting it up, optionally navigate your git commandline to the project folder and run the command: 'git config blame.ignoreRevsFile .git-blame-ignore-revs'
 
 We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
@@ -104,8 +105,8 @@ The use of the : operator to override type safety checks is not allowed. You mus
 ### Type paths must begin with a /
 eg: `/datum/thing`, not `datum/thing`
 
-### Type paths must be lowercase
-eg: `/datum/thing/blue`, not `datum/thing/BLUE` or `datum/thing/Blue`
+### Type paths must be snake case
+eg: `/datum/thing/blue_bird`, not `datum/thing/BLUEBIRD` or `datum/thing/BlueBird` or `datum/thing/Bluebird` or `datum/thing/blueBird`
 
 ### Datum type paths must began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.
@@ -206,6 +207,30 @@ This is good:
 ````
 This prevents nesting levels from getting deeper then they need to be.
 
+### Use our time defines
+
+The codebase contains some defines which will automatically multiply a number by the correct amount to get a number in deciseconds. Using these is preffered over using a literal amount in deciseconds.
+
+The defines are as follows:
+* SECONDS
+* MINUTES
+* HOURS
+
+This is bad:
+````DM
+/datum/datum1/proc/proc1()
+	if(do_after(mob, 15))
+		mob.dothing()
+````
+
+This is good:
+````DM
+/datum/datum1/proc/proc1()
+	if(do_after(mob, 1.5 SECONDS))
+		mob.dothing()
+````
+
+
 ### Develop Secure Code
 
 * Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
@@ -246,7 +271,7 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Variable Editing (Var-edits)
 	* While var-editing an item within the editor is perfectly fine, it is preferred that when you are changing the base behavior of an item (how it functions) that you make a new subtype of that item within the code, especially if you plan to use the item in multiple locations on the same map, or across multiple maps. This makes it easier to make corrections as needed to all instances of the item at one time as opposed to having to find each instance of it and change them all individually.
-		* Subtypes only intended to be used on away mission or ruin maps should be contained within an .dm file with a name corresponding to that map within `code\modules\awaymissions` or `code\modules\ruins` respectively. This is so in the event that the map is removed, that subtype will be removed at the same time as well to minimize leftover/unused data within the repo.
+		* Subtypes only intended to be used on away mission or ruin maps should be contained within a .dm file with a name corresponding to that map within `code\modules\awaymissions` or `code\modules\ruins` respectively. This is so in the event that the map is removed, that subtype will be removed at the same time as well to minimize leftover/unused data within the repo.
 	* Please attempt to clean out any dirty variables that may be contained within items you alter through var-editing. For example, due to how DM functions, changing the `pixel_x` variable from 23 to 0 will leave a dirty record in the map's code of `pixel_x = 0`. Likewise this can happen when changing an item's icon to something else and then back. This can lead to some issues where an item's icon has changed within the code, but becomes broken on the map due to it still attempting to use the old entry.
 	* Areas should not be var-edited on a map to change it's name or attributes. All areas of a single type and it's altered instances are considered the same area within the code, and editing their variables on a map can lead to issues with powernets and event subsystems which are difficult to debug.
 
@@ -413,6 +438,8 @@ Do not add any of the following in a Pull Request or risk getting the PR closed:
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 
 ## A word on Git
-Yes, we know that the files have a tonne of mixed Windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.
+This repository uses `LF` line endings for all code as specified in the **.gitattributes** and **.editorconfig** files.
 
-Therefore, EOF settings of main repo are forbidden territory one must avoid wandering into, at risk of losing body and/or mind to the Git gods.
+Unless overridden or a non standard git binary is used the line ending settings should be applied to your clone automatically.
+
+Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.

@@ -238,7 +238,7 @@
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
-	item_state = "rubberducky"
+	inhand_icon_state = "rubberducky"
 
 /obj/structure/sink
 	name = "sink"
@@ -279,18 +279,19 @@
 
 	busy = FALSE
 
+	if(washing_face)
+		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
+		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
+	else if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(!human_user.wash_hands(CLEAN_WASH))
+			to_chat(user, "<span class='warning'>Your hands are covered by something!</span>")
+			return
+	else
+		user.wash(CLEAN_WASH)
+
 	user.visible_message("<span class='notice'>[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src].</span>", \
 						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
-	if(washing_face)
-		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_STRENGTH_BLOOD)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.lip_style = null //Washes off lipstick
-			H.lip_color = initial(H.lip_color)
-			H.regenerate_icons()
-		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
-	else
-		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
 	if(busy)
@@ -336,7 +337,7 @@
 		to_chat(user, "<span class='notice'>You tear off a strip of gauze and make a rag.</span>")
 		G.use(1)
 		return
-	
+
 	if(istype(O, /obj/item/stack/ore/glass))
 		new /obj/item/stack/sheet/sandblock(loc)
 		to_chat(user, "<span class='notice'>You wet the sand in the sink and form it into a block.</span>")
@@ -355,11 +356,11 @@
 			busy = FALSE
 			return 1
 		busy = FALSE
-		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		O.wash(CLEAN_WASH)
 		O.acid_level = 0
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)
-		reagents.reaction(O, TOUCH)
+		reagents.expose(O, TOUCH)
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1

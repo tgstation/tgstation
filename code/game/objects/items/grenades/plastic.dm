@@ -2,7 +2,8 @@
 	name = "C-4 charge"
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
 	icon_state = "plastic-explosive0"
-	item_state = "plastic-explosive"
+	inhand_icon_state = "plastic-explosive"
+	worn_icon_state = "c4"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -20,7 +21,7 @@
 
 /obj/item/grenade/c4/Initialize()
 	. = ..()
-	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
+	plastic_overlay = mutable_appearance(icon, "[inhand_icon_state]2", HIGH_OBJ_LAYER)
 	wires = new /datum/wires/explosive/c4(src)
 
 /obj/item/grenade/c4/ComponentInitialize()
@@ -41,7 +42,7 @@
 	else
 		return ..()
 
-/obj/item/grenade/c4/prime()
+/obj/item/grenade/c4/prime(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
 
@@ -61,7 +62,7 @@
 			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
 			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
-	resolve()
+	qdel(src)
 
 //assembly stuff
 /obj/item/grenade/c4/receive_signal()
@@ -149,7 +150,7 @@
 	shout_syndicate_crap(user)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
 	user.gib(1, 1)
-	resolve()
+	qdel(src)
 
 // X4 is an upgraded directional variant of c4 which is relatively safe to be standing next to. And much less safe to be standing on the other side of.
 // C4 is intended to be used for infiltration, and destroying tech. X4 is intended to be used for heavy breaching and tight spaces.
@@ -159,6 +160,7 @@
 	name = "X-4 charge"
 	desc = "A shaped high-explosive breaching charge. Designed to ensure user safety and wall nonsafety."
 	icon_state = "plasticx40"
-	item_state = "plasticx4"
+	inhand_icon_state = "plasticx4"
+	worn_icon_state = "x4"
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)

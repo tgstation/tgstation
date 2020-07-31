@@ -8,9 +8,6 @@ DAMAGE_MULTIPLIER 1
 ## whether pod plants work or not
 REVIVAL_POD_PLANTS
 
-## whether cloning tubes work or not
-REVIVAL_CLONING
-
 ## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
@@ -22,6 +19,10 @@ OOC_DURING_ROUND
 ## Comment this out if you want to disable emojis
 EMOJIS
 
+## HEART COMMENDATIONS ###
+## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% default)
+## COMMENDATIONS 0.05
+
 ## MOB MOVEMENT ###
 
 ## We suggest editing these variables ingame to find a good speed for your server.
@@ -32,7 +33,7 @@ EMOJIS
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-RUN_DELAY 1
+RUN_DELAY 1.5
 WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
@@ -44,7 +45,7 @@ WALK_DELAY 4
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
-MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 1
+MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
 
 
 ## NAMES ###
@@ -437,7 +438,7 @@ ROUNDSTART_RACES human
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
-#ROUNDSTART_RACES moth
+ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 
@@ -524,7 +525,10 @@ BOMBCAP 20
 ## of ruins.
 LAVALAND_BUDGET 60
 
-## Space Ruin Budged
+## Ice Moon Budget
+ICEMOON_BUDGET 90
+
+## Space Ruin Budget
 Space_Budget 16
 
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
@@ -543,9 +547,6 @@ MICE_ROUNDSTART 10
 
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
-
-## Determines if players are allowed to print integrated circuits, uncomment to allow.
-#IC_PRINTING
 
 ## Uncomment to allow roundstart quirk selection in the character setup menu.
 ## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!
@@ -571,6 +572,3 @@ RATCAP 64
 
 ## Maximum fine for a citation
 MAXFINE 2000
-
-## Enable the capitalist agenda on your server.
-ECONOMY

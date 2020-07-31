@@ -13,71 +13,59 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,28)
+	var/loot = rand(1,21)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
 		if(2)
-			new /obj/item/clothing/suit/space/hardsuit/cult(src)
-		if(3)
 			new /obj/item/soulstone/anybody(src)
-		if(4)
+		if(3)
 			new /obj/item/katana/cursed(src)
-		if(5)
+		if(4)
 			new /obj/item/clothing/glasses/godeye(src)
-		if(6)
+		if(5)
 			new /obj/item/reagent_containers/glass/bottle/potion/flight(src)
+		if(6)
+			new /obj/item/clothing/gloves/gauntlets(src)
 		if(7)
-			new /obj/item/pickaxe/diamond(src)
+			var/mod = rand(1,4)
+			switch(mod)
+				if(1)
+					new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
+				if(2)
+					new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
+				if(3)
+					new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
+				if(4)
+					new /obj/item/disk/design_disk/modkit_disc/bounty(src)
 		if(8)
-			if(prob(50))
-				new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
-			else
-				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
-		if(9)
 			new /obj/item/rod_of_asclepius(src)
-		if(10)
+		if(9)
 			new /obj/item/organ/heart/cursed/wizard(src)
-		if(11)
+		if(10)
 			new /obj/item/ship_in_a_bottle(src)
-		if(12)
+		if(11)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker(src)
-		if(13)
+		if(12)
 			new /obj/item/jacobs_ladder(src)
-		if(14)
-			new /obj/item/nullrod/scythe/talking(src)
-		if(15)
-			new /obj/item/nullrod/armblade(src)
-		if(16)
+		if(13)
 			new /obj/item/guardiancreator/miner(src)
-		if(17)
-			if(prob(50))
-				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
-			else
-				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
-		if(18)
+		if(14)
 			new /obj/item/warp_cube/red(src)
-		if(19)
+		if(15)
 			new /obj/item/wisp_lantern(src)
-		if(20)
+		if(16)
 			new /obj/item/immortality_talisman(src)
-		if(21)
-			new /obj/item/gun/magic/hook(src)
-		if(22)
+		if(17)
 			new /obj/item/voodoo(src)
-		if(23)
-			new /obj/item/grenade/clusterbuster/inferno(src)
-		if(24)
-			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
-		if(25)
+		if(18)
 			new /obj/item/book/granter/spell/summonitem(src)
-		if(26)
+		if(19)
 			new /obj/item/book_of_babel(src)
-		if(27)
+		if(20)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(28)
+		if(21)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 
 //KA modkit design discs
@@ -186,7 +174,7 @@
 		to_chat(itemUser, failText)
 		return
 	to_chat(itemUser, "<span class='notice'>The snake, satisfied with your oath, attaches itself and the rod to your forearm with an inseparable grip. Your thoughts seem to only revolve around the core idea of helping others, and harm is nothing more than a distant, wicked memory...</span>")
-	var/datum/status_effect/hippocraticOath/effect = itemUser.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
+	var/datum/status_effect/hippocratic_oath/effect = itemUser.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
 	effect.hand = usedHand
 	activated()
 
@@ -258,7 +246,7 @@
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "lantern-blue"
-	item_state = "lantern"
+	inhand_icon_state = "lantern"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	var/obj/effect/wisp/wisp
@@ -393,7 +381,7 @@
 	desc = "Mid or feed."
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
-	item_state = "hook"
+	inhand_icon_state = "hook"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	fire_sound = 'sound/weapons/batonextend.ogg'
@@ -611,7 +599,7 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/flightpotion/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		var/mob/living/carbon/C = M
 		var/holycheck = ishumanbasic(C)
@@ -658,6 +646,47 @@
 	name = "jacob's ladder"
 	desc = "An indestructible celestial ladder that violates the laws of physics."
 
+//Concussive Gauntlets
+/obj/item/clothing/gloves/gauntlets
+	name = "concussive gauntlets"
+	desc = "Pickaxes... for your hands!"
+	icon_state = "concussive_gauntlets"
+	inhand_icon_state = "concussive_gauntlets"
+	toolspeed = 0.1
+	strip_delay = 40
+	equip_delay_other = 20
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
+	armor = list("melee" = 15, "bullet" = 25, "laser" = 15, "energy" = 15, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30) //mostly bone bracer armor
+
+/obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_GLOVES)
+		tool_behaviour = TOOL_MINING
+		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/rocksmash)
+		RegisterSignal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
+	else
+		stopmining(user)
+
+/obj/item/clothing/gloves/gauntlets/dropped(mob/user)
+	. = ..()
+	stopmining(user)
+
+/obj/item/clothing/gloves/gauntlets/proc/stopmining(mob/user)
+	tool_behaviour = initial(tool_behaviour)
+	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
+
+/obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
+    if(!istype(A, /turf/closed/mineral))
+        return
+    A.attackby(src, H)
+    return COMPONENT_NO_ATTACK_HAND
+
+
 ///Bosses
 
 //Miniboss Miner
@@ -677,12 +706,12 @@
 	icon_state = "cleaving_saw"
 	icon_state_on = "cleaving_saw_open"
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb_off = list("attacked", "sawed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_off = list("attacked", "sawed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	faction_bonus_force = 30
 	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
@@ -728,6 +757,8 @@
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
 /obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
+	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
+		return
 	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
 	if(!B)
 		target.apply_status_effect(STATUS_EFFECT_SAWBLEED,bleed_stacks_per_hit)
@@ -782,16 +813,16 @@
 	name = "\improper spectral blade"
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
 	icon_state = "spectral"
-	item_state = "spectral"
+	inhand_icon_state = "spectral"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "rended")
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
@@ -928,7 +959,7 @@
 	name = "staff of lava"
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
 	icon_state = "staffofstorms"
-	item_state = "staffofstorms"
+	inhand_icon_state = "staffofstorms"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/guns/magic.dmi'
@@ -1099,7 +1130,7 @@
 	name = "hierophant club"
 	desc = "The strange technology of this large club allows various nigh-magical feats. It used to beat you, but now you can set the beat."
 	icon_state = "hierophant_club_ready_beacon"
-	item_state = "hierophant_club_ready_beacon"
+	inhand_icon_state = "hierophant_club_ready_beacon"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -1188,7 +1219,7 @@
 		blast_range -= round(health_percent * 10) //one additional range for each missing 10% of health
 
 /obj/item/hierophant_club/update_icon_state()
-	icon_state = item_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
+	icon_state = inhand_icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
 
 /obj/item/hierophant_club/proc/prepare_icon_update()
 	update_icon()
@@ -1229,7 +1260,8 @@
 	if(get_dist(user, beacon) <= 2) //beacon too close abort
 		to_chat(user, "<span class='warning'>You are too close to the beacon to teleport to it!</span>")
 		return
-	if(is_blocked_turf(get_turf(beacon), TRUE))
+	var/turf/beacon_turf = get_turf(beacon)
+	if(beacon_turf?.is_blocked_turf(TRUE))
 		to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 		return
 	if(!isturf(user.loc))
@@ -1246,7 +1278,7 @@
 	if(do_after(user, 40, target = user) && user && beacon)
 		var/turf/T = get_turf(beacon)
 		var/turf/source = get_turf(user)
-		if(is_blocked_turf(T, TRUE))
+		if(T.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
@@ -1267,7 +1299,7 @@
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
-		if(is_blocked_turf(T, TRUE))
+		if(T.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
@@ -1302,7 +1334,7 @@
 
 /obj/item/hierophant_club/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
-	if(!turf_to_teleport_to || is_blocked_turf(turf_to_teleport_to, TRUE))
+	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE))
 		return
 	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)

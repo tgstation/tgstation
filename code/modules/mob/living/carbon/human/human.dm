@@ -18,7 +18,7 @@
 
 	. = ..()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
 	GLOB.human_list += src
@@ -65,6 +65,10 @@
 				stat(null, "Internal Atmosphere Info: [internal.name]")
 				stat(null, "Tank Pressure: [internal.air_contents.return_pressure()]")
 				stat(null, "Distribution Pressure: [internal.distribute_pressure]")
+		if(istype(wear_suit, /obj/item/clothing/suit/space))
+			var/obj/item/clothing/suit/space/S = wear_suit
+			stat(null, "Thermal Regulator: [S.thermal_on ? "on" : "off"]")
+			stat(null, "Cell Charge: [S.cell ? "[round(S.cell.percent(), 0.1)]%" : "!invalid!"]")
 
 		if(mind)
 			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
@@ -275,7 +279,7 @@
 			update_body()
 
 	var/mob/living/user = usr
-	if(istype(user) && href_list["shoes"] && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
+	if(istype(user) && href_list["shoes"] && shoes && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
 		shoes.handle_tying(usr)
 
 ///////HUDs///////
@@ -392,7 +396,7 @@
 			else //Implant and standard glasses check access
 				if(H.wear_id)
 					var/list/access = H.wear_id.GetAccess()
-					if(ACCESS_SEC_DOORS in access)
+					if(ACCESS_SECURITY in access)
 						allowed_access = H.get_authentification_name()
 
 			if(!allowed_access)
@@ -696,16 +700,82 @@
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
+/**
+  * Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.
+  *
+  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
+  */
+/mob/living/carbon/human/proc/wash_hands(clean_types)
+	var/list/obscured = check_obscured_slots()
+	if(ITEM_SLOT_GLOVES in obscured)
+		return FALSE
+
 	if(gloves)
-		if(SEND_SIGNAL(gloves, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+		if(gloves.wash(clean_types))
 			update_inv_gloves()
-	else
-		if(bloody_hands)
-			bloody_hands = 0
-			update_inv_gloves()
+	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
+		blood_in_hands = 0
+		update_inv_gloves()
+
+	return TRUE
+
+/**
+  * Cleans the lips of any lipstick. Returns TRUE if the lips had any lipstick and was thus cleaned
+  */
+/mob/living/carbon/human/proc/clean_lips()
+	if(isnull(lip_style) && lip_color == initial(lip_color))
+		return FALSE
+	lip_style = null
+	lip_color = initial(lip_color)
+	update_body()
+	return TRUE
+
+/**
+  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
+  */
+/mob/living/carbon/human/proc/clean_face(datum/source, clean_types)
+	if(!is_mouth_covered() && clean_lips())
+		. = TRUE
+
+	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
+		update_inv_glasses()
+		. = TRUE
+
+	var/list/obscured = check_obscured_slots()
+	if(wear_mask && !(ITEM_SLOT_MASK in obscured) && wear_mask.wash(clean_types))
+		update_inv_wear_mask()
+		. = TRUE
+
+/**
+  * Called when this human should be washed
+  */
+/mob/living/carbon/human/wash(clean_types)
+	. = ..()
+
+	// Wash equipped stuff that cannot be covered
+	if(wear_suit?.wash(clean_types))
+		update_inv_wear_suit()
+		. = TRUE
+
+	if(belt?.wash(clean_types))
+		update_inv_belt()
+		. = TRUE
+
+	// Check and wash stuff that can be covered
+	var/list/obscured = check_obscured_slots()
+
+	if(w_uniform && !(ITEM_SLOT_ICLOTHING in obscured) && w_uniform.wash(clean_types))
+		update_inv_w_uniform()
+		. = TRUE
+
+	if(!is_mouth_covered() && clean_lips())
+		. = TRUE
+
+	// Wash hands if exposed
+	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(ITEM_SLOT_GLOVES in obscured))
+		blood_in_hands = 0
+		update_inv_gloves()
+		. = TRUE
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
@@ -825,7 +895,7 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
-	..()
+	return ..()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
@@ -1004,8 +1074,16 @@
 		if(do_after(src, carrydelay, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE) && !target.buckled)
-				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
-				return
+				if(target.loc != loc)
+					var/old_density = density
+					density = FALSE
+					step_towards(target, loc)
+					density = old_density
+					if(target.loc == loc)
+						buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+						return
+				else
+					buckle_mob(target, TRUE, TRUE, 90, 1, 0)
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!</span>")
 	else
 		to_chat(src, "<span class='warning'>You can't fireman carry [target] while they're standing!</span>")
@@ -1091,24 +1169,6 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
-/mob/living/carbon/human/washed(var/atom/washer)
-	. = ..()
-	if(wear_suit)
-		update_inv_wear_suit()
-	else if(w_uniform && w_uniform.washed(washer))
-		update_inv_w_uniform()
-
-	if(!is_mouth_covered())
-		lip_style = null
-		update_body()
-	if(belt && belt.washed(washer))
-		update_inv_belt()
-
-	var/list/obscured = check_obscured_slots()
-
-	if(gloves && !(HIDEGLOVES in obscured) && gloves.washed(washer))
-		SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		return FALSE
@@ -1116,6 +1176,16 @@
 
 /mob/living/carbon/human/set_nutrition(change) //Seriously fuck you oldcoders.
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/is_bleeding()
+	if(NOBLOOD in dna.species.species_traits || bleedsuppress)
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/get_total_bleed_rate()
+	if(NOBLOOD in dna.species.species_traits)
 		return FALSE
 	return ..()
 

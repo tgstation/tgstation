@@ -318,10 +318,34 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.custom_price = initial(temp.custom_price)
-		R.custom_premium_price = initial(temp.custom_premium_price)
+		R.custom_price = initial(temp.custom_price) * SSeconomy.inflation_value()
+		R.custom_premium_price = initial(temp.custom_premium_price) * SSeconomy.inflation_value()
 		R.age_restricted = initial(temp.age_restricted)
 		recordlist += R
+
+/**
+  * Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy
+  *
+  * This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
+  * Arguments:
+  * * recordlist - the list of standard product datums in the vendor to refresh their prices.
+  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
+  */
+/obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
+	for(var/R in recordlist)
+		var/datum/data/vending_product/record = R
+		var/atom/potential_product = record.product_path
+		record.custom_price = round(initial(potential_product.custom_price) * SSeconomy.inflation_value())
+	for(var/R in premiumlist)
+		var/datum/data/vending_product/record = R
+		var/atom/potential_product = record.product_path
+		var/premium_sanity = round(initial(potential_product.custom_premium_price))
+		if(premium_sanity)
+			record.custom_premium_price = round(premium_sanity * SSeconomy.inflation_value())
+			continue
+		//For some ungodly reason, some premium only items only have a custom_price
+		record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price) * (SSeconomy.inflation_value() - 1)))
+
 /**
   * Refill a vending machine from a refill canister
   *
@@ -494,7 +518,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	var/crit_case
 	if(crit)
-		crit_case = rand(1,5)
+		crit_case = rand(1,6)
 
 	if(forcecrit)
 		crit_case = forcecrit
@@ -507,7 +531,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(istype(C))
 				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
 
-				if(crit_case != 5) // the head asplode case has its own description
+				if(crit_case < 5) // the body/head asplode case has its own description
 					C.visible_message("<span class='danger'>[C] is crushed by [src]!</span>", \
 						"<span class='userdanger'>You are crushed by [src]!</span>")
 
@@ -517,10 +541,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 						C.bleed(150)
 						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
 						if(l)
-							l.receive_damage(brute=200, updating_health=TRUE)
+							l.receive_damage(brute=200)
 						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
 						if(r)
-							r.receive_damage(brute=200, updating_health=TRUE)
+							r.receive_damage(brute=200)
 						if(l || r)
 							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
 								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
@@ -542,7 +566,17 @@ GLOBAL_LIST_EMPTY(vending_products)
 						// the new paraplegic gets like 4 lines of losing their legs so skip them
 						visible_message("<span class='danger'>[C]'s spinal cord is obliterated with a sickening crunch!</span>", ignored_mobs = list(C))
 						C.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
-					if(5) // skull squish!
+					if(5) // limb squish!
+						for(var/i in C.bodyparts)
+							var/obj/item/bodypart/squish_part = i
+							if(squish_part.is_organic_limb())
+								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
+								squish_part.force_wound_upwards(type_wound)
+							else
+								squish_part.receive_damage(brute=30)
+						C.visible_message("<span class='danger'>[C]'s body is maimed underneath the mass of [src]!</span>", \
+							"<span class='userdanger'>Your body is maimed underneath the mass of [src]!</span>")
+					if(6) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
 							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath [src]!</span>", \
@@ -552,7 +586,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 							qdel(O)
 							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
 
-				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
+				if(prob(30))
+					C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE) // the 30% chance to spread the damage means you escape breaking any bones
+				else
+					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5) // otherwise, deal it to 2 random limbs (or the same one) which will likely shatter something
+					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5)
 				C.AddElement(/datum/element/squish, 80 SECONDS)
 			else
 				L.visible_message("<span class='danger'>[L] is crushed by [src]!</span>", \
@@ -676,16 +714,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	return ..()
 
-/obj/machinery/vending/ui_base_html(html)
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/obj/machinery/vending/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/vending),
+	)
 
-/obj/machinery/vending/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-		assets.send(user)
-		ui = new(user, src, ui_key, "Vending", ui_key, 450, 600, master_ui, state)
+		ui = new(user, src, "Vending")
 		ui.open()
 
 /obj/machinery/vending/ui_static_data(mob/user)
@@ -718,7 +755,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_price || default_price,
+			price = R.custom_premium_price || extra_price,
 			max_amount = R.max_amount,
 			ref = REF(R),
 			premium = TRUE
@@ -946,6 +983,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/onTransitZ()
 	return
+
+/obj/machinery/vending/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	. = ..()
+	var/mob/living/L = AM
+	if(tilted || !istype(L) || !prob(20 * (throwingdatum.speed - L.throw_speed))) // hulk throw = +20%, neckgrab throw = +20%
+		return
+
+	tilt(L)
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"

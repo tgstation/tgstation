@@ -68,7 +68,7 @@
 	empty_pod.explosionSize = list(0,0,0,1)
 	empty_pod.leavingSound = 'sound/effects/podwoosh.ogg'
 
-	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
+	new /obj/effect/pod_landingzone(empty_pod_turf, empty_pod)
 
 /datum/syndicate_contract/proc/enter_check(datum/source, sent_mob)
 	if (istype(source, /obj/structure/closet/supplypod/extractionpod))
@@ -111,7 +111,7 @@
 			var/obj/structure/closet/supplypod/extractionpod/pod = source
 
 			// Handle the pod returning
-			pod.send_up(pod)
+			pod.startExitSequence(pod)
 
 			if (ishuman(M))
 				var/mob/living/carbon/human/target = M
@@ -193,7 +193,7 @@
 
 	for (var/turf/possible_drop in contract.dropoff.contents)
 		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
-			if (!is_blocked_turf(possible_drop))
+			if (!possible_drop.is_blocked_turf())
 				possible_drop_loc.Add(possible_drop)
 
 	if (possible_drop_loc.len > 0)
@@ -226,7 +226,7 @@
 		M.Dizzy(35)
 		M.confused += 20
 
-		new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
+		new /obj/effect/pod_landingzone(possible_drop_loc[pod_rand_loc], return_pod)
 	else
 		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
 					be able to handle our pod... You will die here instead.\"</i></span>")

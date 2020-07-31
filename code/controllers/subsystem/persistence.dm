@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(persistence)
 	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
-	for(var/mob/living/simple_animal/parrot/Poly/P in GLOB.alive_mob_list)
+	for(var/mob/living/simple_animal/parrot/poly/P in GLOB.alive_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
 		break //Who's been duping the bird?!
 
@@ -180,6 +180,7 @@ SUBSYSTEM_DEF(persistence)
 		CollectAntagReputation()
 	SaveRandomizedRecipes()
 	SavePaintings()
+	SaveScars()
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
@@ -342,15 +343,19 @@ SUBSYSTEM_DEF(persistence)
 		var/datum/chemical_reaction/randomized/R = new randomized_type
 		var/loaded = FALSE
 		if(R.persistent && json)
-			var/list/recipe_data = json[R.type]
+			var/list/recipe_data = json["[R.type]"]
 			if(recipe_data)
 				if(R.LoadOldRecipe(recipe_data) && (daysSince(R.created) <= R.persistence_period))
 					loaded = TRUE
 		if(!loaded) //We do not have information for whatever reason, just generate new one
+			if(R.persistent)
+				log_game("Resetting persistent [randomized_type] random recipe.")
 			R.GenerateRecipe()
 
 		if(!R.HasConflicts()) //Might want to try again if conflicts happened in the future.
 			add_chemical_reaction(R)
+		else
+			log_game("Randomized recipe [randomized_type] resulted in conflicting recipes.")
 
 /datum/controller/subsystem/persistence/proc/SaveRandomizedRecipes()
 	var/json_file = file("data/RandomizedChemRecipes.json")
@@ -388,3 +393,24 @@ SUBSYSTEM_DEF(persistence)
 	var/json_file = file("data/paintings.json")
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(paintings))
+
+/datum/controller/subsystem/persistence/proc/SaveScars()
+	for(var/i in GLOB.joined_player_list)
+		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
+		if(!istype(ending_human) || !ending_human.mind || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.persistent_scars)
+			continue
+
+		var/mob/living/carbon/human/original_human = ending_human.mind.original_character
+		if(!original_human || original_human.stat == DEAD || !original_human.all_scars || !(original_human == ending_human))
+			if(ending_human.client) // i was told if i don't check this every step of the way byond might decide a client ceases to exist mid proc so here we go
+				ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ""
+		else
+			for(var/k in ending_human.all_wounds)
+				var/datum/wound/iter_wound = k
+				iter_wound.remove_wound() // so we can get the scars for open wounds
+			if(!ending_human.client)
+				return
+			ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ending_human.format_scars()
+		if(!ending_human.client)
+			return
+		ending_human.client.prefs.save_character()

@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+import { selectBackend } from './backend';
+import { selectDebug } from './debug';
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces', false, /\.js$/);
@@ -17,14 +25,27 @@ const routingError = (type, name) => () => {
   );
 };
 
+const SuspendedWindow = () => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable />
+    </Window>
+  );
+};
+
 export const getRoutedComponent = state => {
+  const { suspended, config } = selectBackend(state);
+  if (suspended) {
+    return SuspendedWindow;
+  }
   if (process.env.NODE_ENV !== 'production') {
+    const debug = selectDebug(state);
     // Show a kitchen sink
-    if (state.showKitchenSink) {
-      return require('./interfaces/manually-routed/KitchenSink').KitchenSink;
+    if (debug.kitchenSink) {
+      return require('./debug/KitchenSink').KitchenSink;
     }
   }
-  const name = state.config?.interface;
+  const name = config?.interface;
   let esModule;
   try {
     esModule = requireInterface(`./${name}.js`);

@@ -2,16 +2,17 @@
 	name = "shotgun"
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
+	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
-	item_state = "shotgun"
+	inhand_icon_state = "shotgun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	vary_fire_sound = FALSE
 	fire_sound_volume = 90
-	rack_sound = "sound/weapons/gun/shotgun/rack.ogg"
-	load_sound = "sound/weapons/gun/shotgun/insert_shell.ogg"
+	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
+	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 =  CONDUCT_1
@@ -42,7 +43,7 @@
 	name = "riot shotgun"
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
-	item_state = "shotgun"
+	inhand_icon_state = "shotgun"
 	fire_delay = 7
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
@@ -58,17 +59,10 @@
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
-	item_state = "shotgun_combat"
+	inhand_icon_state = "shotgun_combat"
 	fire_delay = 5
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
-
-/obj/item/gun/ballistic/shotgun/automatic/combat/compact
-	name = "compact combat shotgun"
-	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
-	icon_state = "cshotgunc"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
-	w_class = WEIGHT_CLASS_BULKY
 
 //Dual Feed Shotgun
 
@@ -76,6 +70,8 @@
 	name = "cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
 	icon_state = "cycler"
+	inhand_icon_state = "bulldog"
+	worn_icon_state = "cshotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	w_class = WEIGHT_CLASS_HUGE
 	var/toggled = FALSE
@@ -119,7 +115,8 @@
 	name = "\improper Bulldog Shotgun"
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
-	item_state = "bulldog"
+	inhand_icon_state = "bulldog"
+	worn_icon_state = "cshotgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_x_dimension = 32
@@ -152,7 +149,7 @@
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
-	item_state = "shotgun_db"
+	inhand_icon_state = "shotgun_db"
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	force = 10
@@ -190,7 +187,7 @@
 	name = "improvised shotgun"
 	desc = "Essentially a tube that aims shotgun shells."
 	icon_state = "ishotgun"
-	item_state = "ishotgun"
+	inhand_icon_state = "ishotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	slot_flags = null
@@ -214,9 +211,9 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon_state()
 	. = ..()
 	if(slung)
-		item_state = "ishotgunsling"
+		inhand_icon_state = "ishotgunsling"
 	if(sawn_off)
-		item_state = "ishotgun_sawn"
+		inhand_icon_state = "ishotgun_sawn"
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_overlays()
 	. = ..()
@@ -231,12 +228,16 @@
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
 		slung = 0
 		update_icon()
+		lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+		righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
 	desc = "A single-shot shotgun. Better not miss."
 	icon_state = "ishotgun_sawn"
-	item_state = "ishotgun_sawn"
+	inhand_icon_state = "ishotgun_sawn"
+	worn_icon_state = "gun"
+	worn_icon = null
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
@@ -245,8 +246,8 @@
 	name = "hook modified sawn-off shotgun"
 	desc = "Range isn't an issue when you can bring your victim to you."
 	icon_state = "hookshotgun"
-	item_state = "shotgun"
-	load_sound = "sound/weapons/shotguninsert.ogg"
+	inhand_icon_state = "shotgun"
+	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/bounty
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM

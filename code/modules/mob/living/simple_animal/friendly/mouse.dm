@@ -95,6 +95,18 @@
 		evolve()
 		return
 
+/mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity)
+	. = ..()
+	if(istype(A, /obj/item/reagent_containers/food/snacks/cheesewedge) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
+		if(health == maxHealth)
+			to_chat(src,"<span class='warning'>You don't need to eat or heal.</span>")
+			return
+		to_chat(src,"<span class='green'>You nibble some cheese, restoring your health.</span>")
+		adjustHealth(-(maxHealth-health))
+		qdel(A)
+		return
+	return ..()
+
 /**
   *Checks the mouse cap, if it's above the cap, doesn't spawn a mouse. If below, spawns a mouse and adds it to cheeserats.
   */
@@ -141,7 +153,7 @@
 	return ..()
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
-/mob/living/simple_animal/mouse/brown/Tom
+/mob/living/simple_animal/mouse/brown/tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."
 	response_help_continuous = "pets"

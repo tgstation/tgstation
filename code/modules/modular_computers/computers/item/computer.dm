@@ -7,6 +7,7 @@
 
 	var/enabled = 0											// Whether the computer is turned on.
 	var/screen_on = 1										// Whether the computer is active/opened/it's screen is on.
+	var/device_theme = "ntos"								// Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
 	var/datum/computer_file/program/active_program = null	// A currently active program running on the computer.
 	var/hardware_flag = 0									// A flag that describes this device type
 	var/last_power_usage = 0
@@ -70,62 +71,6 @@
 	physical = null
 	return ..()
 
-
-/obj/item/modular_computer/proc/add_verb(var/path)
-	switch(path)
-		if(MC_CARD)
-			verbs += /obj/item/modular_computer/proc/eject_id
-		if(MC_SDD)
-			verbs += /obj/item/modular_computer/proc/eject_disk
-		if(MC_AI)
-			verbs += /obj/item/modular_computer/proc/eject_card
-
-/obj/item/modular_computer/proc/remove_verb(path)
-	switch(path)
-		if(MC_CARD)
-			verbs -= /obj/item/modular_computer/proc/eject_id
-		if(MC_SDD)
-			verbs -= /obj/item/modular_computer/proc/eject_disk
-		if(MC_AI)
-			verbs -= /obj/item/modular_computer/proc/eject_card
-
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/item/modular_computer/proc/eject_id()
-	set name = "Eject ID"
-	set category = "Object"
-	set src in view(1)
-
-	if(issilicon(usr))
-		return
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(usr.canUseTopic(src, BE_CLOSE))
-		card_slot.try_eject(null, usr)
-
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/item/modular_computer/proc/eject_card()
-	set name = "Eject Intellicard"
-	set category = "Object"
-
-	if(issilicon(usr))
-		return
-	var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
-	if(usr.canUseTopic(src, BE_CLOSE))
-		ai_slot.try_eject(null, usr,1)
-
-
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/item/modular_computer/proc/eject_disk()
-	set name = "Eject Data Disk"
-	set category = "Object"
-
-	if(issilicon(usr))
-		return
-
-	if(usr.canUseTopic(src, BE_CLOSE))
-		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
-		if(uninstall_component(portable_drive, usr))
-			portable_drive.verb_pickup()
-
 /obj/item/modular_computer/AltClick(mob/user)
 	..()
 	if(issilicon(user))
@@ -133,17 +78,8 @@
 
 	if(user.canUseTopic(src, BE_CLOSE))
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-		var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
-		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
-		if(portable_drive)
-			if(uninstall_component(portable_drive, user))
-				portable_drive.verb_pickup()
-		else
-			if(card_slot && card_slot.try_eject(null, user))
-				return
-			if(ai_slot)
-				ai_slot.try_eject(null, user)
-
+		if(card_slot)
+			card_slot.try_eject(null, user)
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/modular_computer/GetAccess()
@@ -188,19 +124,28 @@
 		return
 	if(enabled)
 		ui_interact(user)
-	else if(IsAdminGhost(user))
+	else if(isAdminGhostAI(user))
 		var/response = alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", "Yes", "No")
 		if(response == "Yes")
 			turn_on(user)
 
 /obj/item/modular_computer/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>\The [src] was already emagged.</span>")
-		return 0
-	else
-		obj_flags |= EMAGGED
-		to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
-		return 1
+	if(!enabled)
+		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
+		return FALSE
+	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling
+	var/newemag = FALSE
+	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
+	for(var/datum/computer_file/program/app in drive.stored_files)
+		if(!istype(app))
+			continue
+		if(app.run_emag())
+			newemag = TRUE
+	if(newemag)
+		to_chat(user, "<span class='notice'>You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past.</span>")
+		return TRUE
+	to_chat(user, "<span class='notice'>You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it.</span>")
+	return FALSE
 
 /obj/item/modular_computer/examine(mob/user)
 	. = ..()
@@ -306,6 +251,8 @@
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
 	var/list/data = list()
+
+	data["PC_device_theme"] = device_theme
 
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
 	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]

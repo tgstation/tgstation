@@ -8,8 +8,6 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material
 	var/name = "material"
 	var/desc = "its..stuff."
-	///Var that's mostly used by science machines to identify specific materials, should most likely be phased out at some point
-	var/id = "mat"
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
 	var/color
 	///Base alpha of the material, is used for greyscale icons.
@@ -60,7 +58,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		addtimer(CALLBACK(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount)), 0)
+		INVOKE_ASYNC(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount))
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -143,3 +141,12 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_removed_turf(turf/T, material_flags)
 	return
+
+/**
+  *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
+  * Arguments
+  * * M - person consuming the mat
+  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
+  */
+/datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
+	return FALSE

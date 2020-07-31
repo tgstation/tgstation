@@ -74,6 +74,12 @@ SUBSYSTEM_DEF(explosions)
 /datum/controller/subsystem/explosions/proc/is_exploding()
 	return (lowturf.len || medturf.len || highturf.len || flameturf.len || throwturf.len || lowobj.len || medobj.len || highobj.len)
 
+/datum/controller/subsystem/explosions/proc/wipe_turf(turf/T)
+	lowturf -= T
+	medturf -= T
+	highturf -= T
+	flameturf -= T
+	throwturf -= T
 
 /client/proc/check_bomb_impacts()
 	set name = "Check Bomb Impact"

@@ -214,7 +214,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/AddInteraction(formatted_message)
 	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
-		send2tgs(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
+		send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
 	_interactions += "[time_stamp()]: [formatted_message]"
 
 //Removes the ahelp verb and returns it after 2 minutes
@@ -254,6 +254,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //message from the initiator without a target, all admins will see this
 //won't bug irc/discord
 /datum/admin_help/proc/MessageNoRecipient(msg)
+	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	var/ref_src = "[REF(src)]"
 	//Message to be sent to all admins
 	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='linkify'>[keywords_lookup(msg)]</span></span>"
@@ -509,18 +510,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
-		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
-			if(current_ticket)
-				current_ticket.MessageNoRecipient(msg)
-				current_ticket.TimeoutVerb()
-				return
-			else
-				to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>", confidential = TRUE)
-		else
-			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
-			current_ticket.Close()
+		current_ticket.MessageNoRecipient(msg)
+		current_ticket.TimeoutVerb()
+		return
 
 	new /datum/admin_help(msg, src, FALSE)
+
 
 //
 // LOGGING
@@ -575,19 +570,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			final = "[msg] - No admins online"
 		else
 			final = "[msg] - All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
-		send2tgs(source,final)
+		send2adminchat(source,final)
 		send2otherserver(source,final)
 
-
-/proc/send2tgs(msg,msg2)
-	msg = replacetext(replacetext(msg, "\proper", ""), "\improper", "")
-	msg2 = replacetext(replacetext(msg2, "\proper", ""), "\improper", "")
-	world.TgsTargetedChatBroadcast("[msg] | [msg2]", TRUE)
-
-//
+/// Sends a message to other servers.
 /proc/send2otherserver(source,msg,type = "Ahelp",target_servers)
-	var/comms_key = CONFIG_GET(string/comms_key)
-	if(!comms_key)
+	if(!CONFIG_GET(string/comms_key))
+		debug_world_log("Server cross-comms message not sent for lack of configured key")
 		return
 
 	var/our_id = CONFIG_GET(string/cross_comms_name)
@@ -595,7 +584,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message["message_sender"] = source
 	message["message"] = msg
 	message["source"] = "([our_id])"
-	message["key"] = comms_key
 	message += type
 
 	var/list/servers = CONFIG_GET(keyed_list/cross_server)
@@ -604,8 +592,23 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			continue
 		if(target_servers && !(I in target_servers))
 			continue
-		world.Export("[servers[I]]?[list2params(message)]")
+		world.send_cross_comms(I, message)
 
+/// Sends a message to a given cross comms server by name (by name for security).
+/world/proc/send_cross_comms(server_name, list/message, auth = TRUE)
+	set waitfor = FALSE
+	if (auth)
+		var/comms_key = CONFIG_GET(string/comms_key)
+		if(!comms_key)
+			debug_world_log("Server cross-comms message not sent for lack of configured key")
+			return
+		message["key"] = comms_key
+	var/list/servers = CONFIG_GET(keyed_list/cross_server)
+	var/server_url = servers[server_name]
+	if (!server_url)
+		CRASH("Invalid cross comms config: [server_name]")
+	world.Export("[server_url]?[list2params(message)]")
+	
 
 /proc/tgsadminwho()
 	var/list/message = list("Admins: ")
@@ -679,7 +682,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 							if(!ai_found && isAI(found))
 								ai_found = 1
 							var/is_antag = 0
-							if(found.mind && found.mind.special_role)
+							if(is_special_character(found))
 								is_antag = 1
 							founds += "Name: [found.name]([found.real_name]) Key: [found.key] Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
 							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;[HrefToken(TRUE)];adminmoreinfo=[REF(found)]'>?</A>|<A HREF='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(found)]'>F</A>)</font> "
@@ -692,3 +695,34 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			return founds
 
 	return msg
+
+/proc/get_mob_by_name(msg)
+	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
+	var/list/ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
+
+	//explode the input msg into a list
+	var/list/msglist = splittext(msg, " ")
+
+	//who might fit the shoe
+	var/list/potential_hits = list()
+
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
+		var/list/nameWords = list()
+		if(!M.mind)
+			continue
+
+		for(var/string in splittext(lowertext(M.real_name), " "))
+			if(!(string in ignored_words))
+				nameWords += string
+		for(var/string in splittext(lowertext(M.name), " "))
+			if(!(string in ignored_words))
+				nameWords += string
+
+		for(var/string in nameWords)
+			testing("Name word [string]")
+			if(string in msglist)
+				potential_hits += M
+				break
+
+	return potential_hits

@@ -6,12 +6,6 @@
 		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
 	)
 
-/datum/asset/group/tgui
-	children = list(
-		/datum/asset/simple/tgui,
-		/datum/asset/simple/fontawesome
-	)
-
 /datum/asset/simple/headers
 	assets = list(
 		"alarm_green.gif" 			= 'icons/program_icons/alarm_green.gif',
@@ -43,6 +37,13 @@
 		"borg_mon.gif"				= 'icons/program_icons/borg_mon.gif'
 	)
 
+/datum/asset/simple/radar_assets
+	assets = list(
+		"ntosradarbackground.png"	= 'icons/UI_Icons/tgui/ntosradar_background.png',
+		"ntosradarpointer.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer.png',
+		"ntosradarpointerS.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer_S.png'
+	)
+
 /datum/asset/spritesheet/simple/pda
 	name = "pda"
 	assets = list(
@@ -71,6 +72,7 @@
 		"refresh"		= 'icons/pda_icons/pda_refresh.png',
 		"scanner"		= 'icons/pda_icons/pda_scanner.png',
 		"signaler"		= 'icons/pda_icons/pda_signaler.png',
+		"skills"		= 'icons/pda_icons/pda_skills.png',
 		"status"		= 'icons/pda_icons/pda_status.png',
 		"dronephone"	= 'icons/pda_icons/pda_dronephone.png',
 		"emoji"			= 'icons/pda_icons/pda_emoji.png'
@@ -97,15 +99,15 @@
 	)
 
 
-/datum/asset/simple/IRV
+/datum/asset/simple/irv
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
 	)
 
-/datum/asset/group/IRV
+/datum/asset/group/irv
 	children = list(
 		/datum/asset/simple/jquery,
-		/datum/asset/simple/IRV
+		/datum/asset/simple/irv
 	)
 
 /datum/asset/simple/changelog
@@ -140,13 +142,11 @@
 	)
 
 /datum/asset/simple/jquery
-	verify = FALSE
 	assets = list(
 		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 	)
 
 /datum/asset/simple/goonchat
-	verify = FALSE
 	assets = list(
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
@@ -155,7 +155,6 @@
 	)
 
 /datum/asset/simple/fontawesome
-	verify = FALSE
 	assets = list(
 		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
 		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
@@ -374,3 +373,23 @@
 		"dna_undiscovered.gif"	= 'html/dna_undiscovered.gif',
 		"dna_extra.gif" 		= 'html/dna_extra.gif'
 	)
+
+/datum/asset/simple/orbit
+	assets = list(
+		"ghost.png"	= 'html/ghost.png'
+	)
+
+/datum/asset/simple/vv
+	assets = list(
+		"view_variables.css" = 'html/admin/view_variables.css'
+	)
+
+/datum/asset/spritesheet/sheetmaterials
+	name = "sheetmaterials"
+
+/datum/asset/spritesheet/sheetmaterials/register()
+	InsertAll("", 'icons/obj/stack_objects.dmi')
+
+	// Special case to handle Bluespace Crystals
+	Insert("polycrystal", 'icons/obj/telescience.dmi', "polycrystal")
+	..()

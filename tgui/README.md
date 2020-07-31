@@ -67,8 +67,9 @@ Run one of the following:
   game as you code it. Very useful, highly recommended.
   - In order to use it, you should start the game server first, connect to it
   and wait until the world has been properly loaded and you are no longer
-  in the lobby. Start tgui dev server. You'll know that it's hooked correctly
-  if data gets dumped to the log when tgui windows are opened.
+  in the lobby. Start tgui dev server, and once it has finished building,
+  press F5 on any tgui window. You'll know that it's hooked correctly if
+  you see a green bug icon in titlebar and data gets dumped to the console.
 - `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
 - `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
@@ -134,11 +135,11 @@ logs and time spent on rendering. Use this information to optimize your
 code, and try to keep re-renders below 16ms.
 
 **Kitchen Sink.**
-Press `Ctrl+Alt+=` to open the KitchenSink interface. This interface is a
+Press `F12` to open the KitchenSink interface. This interface is a
 playground to test various tgui components.
 
 **Layout Debugger.**
-Press `Ctrl+Alt+-` to toggle the *layout debugger*. It will show outlines of
+Press `F11` to toggle the *layout debugger*. It will show outlines of
 all tgui elements, which makes it easy to understand how everything comes
 together, and can reveal certain layout bugs which are not normally visible.
 
@@ -180,8 +181,11 @@ See: [Component Reference](docs/component-reference.md).
 
 ## License
 
-All code is licensed with the parent license of *tgstation*, **AGPL-3.0**.
+Source code is covered by /tg/station's parent license - **AGPL-3.0**
+(see the main [README](../README.md)), unless otherwise indicated.
 
-See the main [README](../README.md) for more details.
+Some files are annotated with a copyright header, which explicitly states
+the copyright holder and license of the file. Most of the core tgui
+source code is available under the **MIT** license.
 
 The Authors retain all copyright to their respective work here submitted.

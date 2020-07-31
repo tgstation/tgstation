@@ -1,3 +1,5 @@
+#define DEFAULT_MAP_SIZE 15
+
 /obj/machinery/computer/security
 	name = "security camera console"
 	desc = "Used to access the various cameras on the station."
@@ -5,8 +7,6 @@
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/security
 	light_color = LIGHT_COLOR_RED
-	ui_x = 870
-	ui_y = 708
 
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/active_camera
@@ -14,9 +14,9 @@
 
 	// Stuff needed to render the map
 	var/map_name
-	var/const/default_map_size = 15
 	var/obj/screen/map_view/cam_screen
-	var/obj/screen/plane_master/lighting/cam_plane_master
+	/// All the plane masters that need to be applied.
+	var/list/cam_plane_masters
 	var/obj/screen/background/cam_background
 
 /obj/machinery/computer/security/Initialize()
@@ -35,18 +35,20 @@
 	cam_screen.assigned_map = map_name
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
-	cam_plane_master = new
-	cam_plane_master.name = "plane_master"
-	cam_plane_master.assigned_map = map_name
-	cam_plane_master.del_on_map_removal = FALSE
-	cam_plane_master.screen_loc = "[map_name]:CENTER"
+	cam_plane_masters = list()
+	for(var/plane in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/instance = new plane()
+		instance.assigned_map = map_name
+		instance.del_on_map_removal = FALSE
+		instance.screen_loc = "[map_name]:CENTER"
+		cam_plane_masters += instance
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
 
 /obj/machinery/computer/security/Destroy()
 	qdel(cam_screen)
-	qdel(cam_plane_master)
+	QDEL_LIST(cam_plane_masters)
 	qdel(cam_background)
 	return ..()
 
@@ -55,11 +57,9 @@
 		network -= i
 		network += "[idnum][i]"
 
-/obj/machinery/computer/security/ui_interact(\
-		mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	// Update UI
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	// Show static if can't use the camera
 	if(!active_camera?.can_use())
 		show_camera_static()
@@ -76,10 +76,11 @@
 			use_power(active_power_usage)
 		// Register map objects
 		user.client.register_map_obj(cam_screen)
-		user.client.register_map_obj(cam_plane_master)
+		for(var/plane in cam_plane_masters)
+			user.client.register_map_obj(plane)
 		user.client.register_map_obj(cam_background)
 		// Open UI
-		ui = new(user, src, ui_key, "CameraConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "CameraConsole", name)
 		ui.open()
 
 /obj/machinery/computer/security/ui_data()
@@ -154,7 +155,7 @@
 /obj/machinery/computer/security/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()
 	cam_background.icon_state = "scanline2"
-	cam_background.fill_rect(1, 1, default_map_size, default_map_size)
+	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
 // Returns the list of cameras accessible from this computer
 /obj/machinery/computer/security/proc/get_available_cameras()
@@ -182,7 +183,7 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -214,7 +215,7 @@
 
 /obj/machinery/computer/security/qm
 	name = "\improper Quartermaster's camera console"
-	desc = "A console with access to the mining, auxillary base and vault camera networks."
+	desc = "A console with access to the mining, auxiliary base and vault camera networks."
 	network = list("mine", "auxbase", "vault")
 	circuit = null
 
@@ -318,8 +319,8 @@
 	network = list("prison")
 
 /obj/machinery/computer/security/telescreen/auxbase
-	name = "auxillary base monitor"
-	desc = "A telescreen that connects to the auxillary base's camera."
+	name = "auxiliary base monitor"
+	desc = "A telescreen that connects to the auxiliary base's camera."
 	network = list("auxbase")
 
 /obj/machinery/computer/security/telescreen/minisat
@@ -331,3 +332,5 @@
 	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
+
+#undef DEFAULT_MAP_SIZE

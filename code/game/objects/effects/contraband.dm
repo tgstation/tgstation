@@ -50,6 +50,7 @@
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
 	anchored = TRUE
+	buildable_sign = FALSE //Cannot be unwrenched from a wall.
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
@@ -68,7 +69,7 @@
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
-	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 300)), 0)
+	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 300))
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -128,7 +129,7 @@
 		return
 
 	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
-	if (smooth & SMOOTH_DIAGONAL)
+	if (smoothing_flags & SMOOTH_DIAGONAL)
 		for (var/O in overlays)
 			var/image/I = O
 			if(copytext(I.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
@@ -163,7 +164,7 @@
 			return
 
 	to_chat(user, "<span class='notice'>The poster falls down!</span>")
-	D.roll_and_drop(temp_loc)
+	D.roll_and_drop(get_turf(user))
 
 // Various possible posters follow
 
@@ -608,5 +609,10 @@
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
+
+/obj/structure/sign/poster/official/dick_gum
+	name = "Dick Gumshue"
+	desc = "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
+	icon_state = "poster36_legit"
 
 #undef PLACE_SPEED

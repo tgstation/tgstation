@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 //////////////////////
 
 /obj/effect/meteor
-	name = "the concept of meteor"
+	name = "\proper the concept of meteor"
 	desc = "You should probably run instead of gawking at this."
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "small"

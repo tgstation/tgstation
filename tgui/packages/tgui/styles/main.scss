@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 @use 'sass:meta';
 @use './base.scss';
 
@@ -8,10 +13,7 @@
 @include meta.load-css('./atomic/candystripe.scss');
 @include meta.load-css('./atomic/color.scss');
 @include meta.load-css('./atomic/debug-layout.scss');
-@include meta.load-css('./atomic/display.scss');
-@include meta.load-css('./atomic/margin.scss');
 @include meta.load-css('./atomic/outline.scss');
-@include meta.load-css('./atomic/position.scss');
 @include meta.load-css('./atomic/text.scss');
 
 // Components
@@ -34,6 +36,7 @@
 @include meta.load-css('./components/Slider.scss');
 @include meta.load-css('./components/Table.scss');
 @include meta.load-css('./components/Tabs.scss');
+@include meta.load-css('./components/TextArea.scss');
 @include meta.load-css('./components/Tooltip.scss');
 
 // Interfaces

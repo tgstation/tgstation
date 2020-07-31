@@ -53,7 +53,7 @@
 	name = "night vision health scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
-	item_state = "glasses"
+	inhand_icon_state = "glasses"
 	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -80,7 +80,7 @@
 	name = "night vision diagnostic HUD"
 	desc = "A robotics diagnostic HUD fitted with a light amplifier."
 	icon_state = "diagnostichudnight"
-	item_state = "glasses"
+	inhand_icon_state = "glasses"
 	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -90,7 +90,7 @@
 	name = "diagnostic sunglasses"
 	desc = "Sunglasses with a diagnostic HUD."
 	icon_state = "sunhuddiag"
-	item_state = "glasses"
+	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 
@@ -153,19 +153,19 @@
 	name = "\improper HUD gar glasses"
 	desc = "GAR glasses with a HUD."
 	icon_state = "gars"
-	item_state = "garb"
+	inhand_icon_state = "garb"
 	force = 10
 	throwforce = 10
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars
 	name = "giga HUD gar glasses"
 	desc = "GIGA GAR glasses with a HUD."
 	icon_state = "supergars"
-	item_state = "garb"
+	inhand_icon_state = "garb"
 	force = 12
 	throwforce = 12
 
@@ -240,5 +240,5 @@
 	name = "sunglasses"
 	desc = "These sunglasses are special, and let you view potential criminals."
 	icon_state = "sun"
-	item_state = "sunglasses"
+	inhand_icon_state = "sunglasses"
 

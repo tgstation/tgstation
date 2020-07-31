@@ -13,7 +13,7 @@
 /turf/open/floor/pod,
 /area/survivalpod)
 "d" = (
-/obj/machinery/smartfridge/survival_pod,
+/obj/machinery/smartfridge/survival_pod/preloaded,
 /turf/open/floor/pod,
 /area/survivalpod)
 "e" = (

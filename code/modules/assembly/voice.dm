@@ -27,10 +27,14 @@
 	. = ..()
 	. += "<span class='notice'>Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.</span>"
 
-/obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
 	if(speaker == src)
 		return
+
+	// raw_message can contain multiple spaces between words etc which are not seen in chat due to HTML rendering
+	// this means if the teller records a message with e.g. double spaces or tabs, other people will not be able to trigger the sensor since they don't know how to perform the same combination
+	raw_message = htmlrendertext(raw_message)
 
 	if(listening && !radio_freq)
 		record_speech(speaker, raw_message, message_language)

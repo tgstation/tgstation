@@ -132,6 +132,25 @@
 		. = 1
 	..()
 
+// i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
+/datum/reagent/consumable/banana_peel
+	name = "Pulped Banana Peel"
+	description = "Okay, so you put a banana peel in a grinder... Why, exactly?"
+	color = "#863333" // rgb: 175, 175, 0
+	reagent_state = SOLID
+	taste_description = "stringy, bitter pulp"
+	glass_name = "glass of banana peel pulp"
+	glass_desc = "Okay, so you put a banana peel in a grinder... Why, exactly?"
+
+/datum/reagent/consumable/baked_banana_peel
+	name = "Baked Banana Peel Powder"
+	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
+	color = "#863333" // rgb: 175, 175, 0
+	reagent_state = SOLID
+	taste_description = "bitter powder"
+	glass_name = "glass of banana peel powder"
+	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
+
 /datum/reagent/consumable/nothing
 	name = "Nothing"
 	description = "Absolutely nothing."
@@ -338,6 +357,26 @@
 	..()
 	. = 1
 
+/datum/reagent/consumable/hot_ice_coffee
+	name = "Hot Ice Coffee"
+	description = "Coffee with pulsing ice shards"
+	color = "#102838" // rgb: 16, 40, 56
+	nutriment_factor = 0
+	taste_description = "bitter coldness and a hint of smoke"
+	glass_icon_state = "hoticecoffee"
+	glass_name = "hot ice coffee"
+	glass_desc = "A sharp drink, this can't have come cheap"
+
+/datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-5)
+	M.drowsyness = max(0,M.drowsyness-3)
+	M.AdjustSleeping(-60, FALSE)
+	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
+	M.Jitter(5)
+	M.adjustToxLoss(1*REM, 0)
+	..()
+	. = TRUE
+
 /datum/reagent/consumable/icetea
 	name = "Iced Tea"
 	description = "No relation to a certain rap artist/actor."
@@ -408,7 +447,7 @@
 	taste_description = "carbonated oil"
 	glass_icon_state = "grey_bull_glass"
 	glass_name = "glass of Grey Bull"
-	glass_desc = "Surprisingly it isnt grey."
+	glass_desc = "Surprisingly it isn't grey."
 
 /datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/L)
 	..()
@@ -495,7 +534,7 @@
 	glass_name = "glass of Pwr Game"
 	glass_desc = "Goes well with a Vlad's salad."
 
-/datum/reagent/consumable/pwr_game/reaction_mob(mob/living/C, method=TOUCH, reac_volume)
+/datum/reagent/consumable/pwr_game/expose_mob(mob/living/C, method=TOUCH, reac_volume)
 	..()
 	if(C?.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && method==INGEST && !HAS_TRAIT(C, TRAIT_GAMERGOD))
 		ADD_TRAIT(C, TRAIT_GAMERGOD, "pwr_game")
@@ -505,7 +544,7 @@
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 	if(prob(10))
-		M?.mind.adjust_experience(/datum/skill/gaming, 5)
+		M.mind?.adjust_experience(/datum/skill/gaming, 5)
 	..()
 
 /datum/reagent/consumable/shamblers
@@ -669,28 +708,6 @@
 			M.adjust_nutrition(-2)
 	..()
 	. = 1
-
-/datum/reagent/consumable/chocolatepudding
-	name = "Chocolate Pudding"
-	description = "A great dessert for chocolate lovers."
-	color = "#800000"
-	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet chocolate"
-	glass_icon_state = "chocolatepudding"
-	glass_name = "chocolate pudding"
-	glass_desc = "Tasty."
-
-/datum/reagent/consumable/vanillapudding
-	name = "Vanilla Pudding"
-	description = "A great dessert for vanilla lovers."
-	color = "#FAFAD2"
-	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet vanilla"
-	glass_icon_state = "vanillapudding"
-	glass_name = "vanilla pudding"
-	glass_desc = "Tasty."
 
 /datum/reagent/consumable/cherryshake
 	name = "Cherry Shake"
@@ -901,11 +918,11 @@
 /datum/reagent/consumable/bungojuice
 	name = "Bungo Juice"
 	color = "#F9E43D"
-	description = "Exotic! You feel like you are on vactation already."
+	description = "Exotic! You feel like you are on vacation already."
 	taste_description = "succulent bungo"
 	glass_icon_state = "glass_yellow"
 	glass_name = "glass of bungo juice"
-	glass_desc = "Exotic! You feel like you are on vactation already."
+	glass_desc = "Exotic! You feel like you are on vacation already."
 
 /datum/reagent/consumable/prunomix
 	name = "pruno mixture"

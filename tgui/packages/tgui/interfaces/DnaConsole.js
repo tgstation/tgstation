@@ -3,6 +3,7 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { capitalize } from 'common/string';
 import { Fragment } from 'inferno';
+import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -75,7 +76,11 @@ export const DnaConsole = (props, context) => {
   } = data;
   const { consoleMode } = data.view;
   return (
-    <Window resizable>
+    <Window
+      title="DNA Console"
+      width={539}
+      height={710}
+      resizable>
       {!!isPulsingRads && (
         <Dimmer
           fontSize="14px"
@@ -559,7 +564,6 @@ const MutationInfo = (props, context) => {
     diskReadOnly,
     hasDisk,
     isInjectorReady,
-    mutationCapacity,
   } = data;
   const diskMutations = data.storage.disk ?? [];
   const mutationStorage = data.storage.console ?? [];
@@ -616,7 +620,6 @@ const MutationInfo = (props, context) => {
         )}
         {mutation.Source === 'console' && (
           <MutationCombiner
-            disabled={mutationCapacity <= 0}
             mutations={combinedMutations}
             source={mutation} />
         )}
@@ -657,7 +660,6 @@ const MutationInfo = (props, context) => {
         <Button
           icon="save"
           disabled={savedToConsole
-            || mutationCapacity <= 0
             || !mutation.Active}
           content="Save to Console"
           onClick={() => act('save_console', {
@@ -776,7 +778,7 @@ const DnaConsoleSequencer = (props, context) => {
             {mutations.map(mutation => (
               <GenomeImage
                 key={mutation.Alias}
-                url={mutation.Image}
+                url={resolveAsset(mutation.Image)}
                 selected={mutation.Alias === sequencerMutation}
                 onClick={() => {
                   act('set_view', {

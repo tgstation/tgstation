@@ -26,7 +26,7 @@
 	if (prob(40))
 		new /obj/item/storage/toolbox/emergency(src)
 
-	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pickweight(list("small" = 35, "aid" = 30, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
 		if ("small")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/tank/internals/emergency_oxygen(src)
@@ -35,7 +35,7 @@
 
 		if ("aid")
 			new /obj/item/tank/internals/emergency_oxygen(src)
-			new /obj/item/storage/firstaid/o2(src)
+			new /obj/item/storage/firstaid/emergency(src)
 			new /obj/item/clothing/mask/breath(src)
 
 		if ("tank")

@@ -250,21 +250,21 @@
 	begin_month = JULY
 	drone_hat = /obj/item/clothing/head/nursehat
 
-/datum/holiday/UFO
+/datum/holiday/ufo
 	name = "UFO Day"
 	begin_day = 2
 	begin_month = JULY
 	drone_hat = /obj/item/clothing/mask/facehugger/dead
 
-/datum/holiday/UFO/getStationPrefix() //Is such a thing even possible?
+/datum/holiday/ufo/getStationPrefix() //Is such a thing even possible?
 	return pick("Ayy","Truth","Tsoukalos","Mulder","Scully") //Yes it is!
 
-/datum/holiday/USA
+/datum/holiday/usa
 	name = "Independence Day"
 	begin_day = 4
 	begin_month = JULY
 
-/datum/holiday/USA/getStationPrefix()
+/datum/holiday/usa/getStationPrefix()
 	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
 
 /datum/holiday/writer
@@ -456,8 +456,16 @@
 /datum/holiday/moth
 	name = "Moth Week"
 
-/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July
-	return mm == JULY && (ww == 4 || (ww == 5 && ddd == SUNDAY))
+/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July, including the saturday and sunday before. See http://nationalmothweek.org/ for precise tracking.
+	if(mm == JULY)
+		var/week
+		if(first_day_of_month() >= 5)	//Friday or later start of the month means week 5 is a full week.
+			week = 5
+		else
+			week = 4
+
+		return (ww == week-1 && (ddd == SATURDAY || ddd == SUNDAY)) || ww == week
+
 
 /datum/holiday/moth/getStationPrefix()
 	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
@@ -511,16 +519,18 @@
 /datum/holiday/xmas/celebrate()
 	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
 	GLOB.maintenance_loot += list(
-		/obj/item/toy/xmas_cracker = 3,
-		/obj/item/clothing/head/santa = 1,
-		/obj/item/a_gift/anything = 1
+		list(
+			/obj/item/toy/xmas_cracker = 3,
+			/obj/item/clothing/head/santa = 1,
+			/obj/item/a_gift/anything = 1
+		) = maint_holiday_weight,
 	)
 
 /datum/holiday/xmas/proc/roundstart_celebrate()
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state_on = "entertainment_xmas"
 
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
 
@@ -583,8 +593,11 @@
 
 /datum/holiday/easter/celebrate()
 	GLOB.maintenance_loot += list(
-		/obj/item/reagent_containers/food/snacks/egg/loaded = 15,
-		/obj/item/storage/bag/easterbasket = 15)
+		list(
+			/obj/item/reagent_containers/food/snacks/egg/loaded = 15,
+			/obj/item/storage/basket/easter = 15
+		) = maint_holiday_weight,
+	)
 
 /datum/holiday/easter/greet()
 	return "Greetings! Have a Happy Easter and keep an eye out for Easter Bunnies!"

@@ -2,7 +2,7 @@
 	name = "Chronosuit Helmet"
 	desc = "A white helmet with an opaque blue visor."
 	icon_state = "chronohelmet"
-	item_state = "chronohelmet"
+	inhand_icon_state = "chronohelmet"
 	slowdown = 1
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -22,7 +22,7 @@
 	name = "Chronosuit"
 	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology."
 	icon_state = "chronosuit"
-	item_state = "chronosuit"
+	inhand_icon_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle)
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 1000)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -95,7 +95,7 @@
 		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
-		user.anchored = FALSE
+		user.set_anchored(FALSE)
 		teleporting = 0
 		for(var/obj/item/I in user.held_items)
 			REMOVE_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
@@ -137,7 +137,7 @@
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
-		user.anchored = TRUE
+		user.set_anchored(TRUE)
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)

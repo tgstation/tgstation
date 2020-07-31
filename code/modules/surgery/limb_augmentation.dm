@@ -8,7 +8,6 @@
 	name = "replace limb"
 	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100)
 	time = 32
-	experience_given = MEDICAL_SKILL_MEDIUM
 	var/obj/item/bodypart/L = null // L because "limb"
 
 

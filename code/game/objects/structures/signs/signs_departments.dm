@@ -37,7 +37,7 @@
 	desc = "A sign labelling an area containing pharmacy equipment."
 	icon_state = "pharmacy"
 	is_editable = TRUE
-	
+
 /obj/structure/sign/departments/psychology
 	name = "\improper Psychology sign"
 	sign_change_name = "Department - Medbay: Psychology"
@@ -71,7 +71,7 @@
 	is_editable = TRUE
 
 /obj/structure/sign/departments/xenobio
-	name = "\improper Xenobiolgoy sign"
+	name = "\improper Xenobiology sign"
 	sign_change_name = "Department - Science: Xenobiology"
 	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"

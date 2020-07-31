@@ -18,7 +18,7 @@
 	name = "library visitor console"
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
 	var/screenstate = 0
@@ -26,6 +26,7 @@
 	var/category = "Any"
 	var/author
 	var/search_page = 0
+	COOLDOWN_DECLARE(library_visitor_topic_cooldown)
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	. = ..()
@@ -45,9 +46,6 @@
 			else
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
-				author = sanitizeSQL(author)
-				title = sanitizeSQL(title)
-				category = sanitizeSQL(category)
 				var/SQLsearch = "isnull(deleted) AND "
 				if(category == "Any")
 					SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
@@ -55,7 +53,13 @@
 					SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
 				var/bookcount = 0
 				var/booksperpage = 20
-				var/datum/DBQuery/query_library_count_books = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("library")] WHERE [SQLsearch]")
+				var/datum/db_query/query_library_count_books = SSdbcore.NewQuery({"
+					SELECT COUNT(id) FROM [format_table_name("library")]
+					WHERE isnull(deleted)
+						AND author LIKE '%' + :author + '%'
+						AND title LIKE '%' + :title + '%'
+						AND (:category = 'Any' OR category = :category)
+				"}, list("author" = author, "title" = title, "category" = category))
 				if(!query_library_count_books.warn_execute())
 					qdel(query_library_count_books)
 					return
@@ -71,9 +75,16 @@
 						bookcount -= booksperpage
 						pagecount++
 					dat += pagelist.Join(" | ")
-				search_page = text2num(sanitizeSQL(search_page))
-				var/limit = " LIMIT [booksperpage * search_page], [booksperpage]"
-				var/datum/DBQuery/query_library_list_books = SSdbcore.NewQuery("SELECT author, title, category, id FROM [format_table_name("library")] WHERE [SQLsearch][limit]")
+				search_page = text2num(search_page)
+				var/datum/db_query/query_library_list_books = SSdbcore.NewQuery({"
+					SELECT author, title, category, id
+					FROM [format_table_name("library")]
+					WHERE isnull(deleted)
+						AND author LIKE '%' + :author + '%'
+						AND title LIKE '%' + :title + '%'
+						AND (:category = 'Any' OR category = :category)
+					LIMIT :skip, :take
+				"}, list("author" = author, "title" = title, "category" = category, "skip" = booksperpage * search_page, "take" = booksperpage))
 				if(!query_library_list_books.Execute())
 					dat += "<font color=red><b>ERROR</b>: Unable to retrieve book listings. Please contact your system administrator for assistance.</font><BR>"
 				else
@@ -94,6 +105,9 @@
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
+	if(!COOLDOWN_FINISHED(src, library_visitor_topic_cooldown))
+		return
+	COOLDOWN_START(src, library_visitor_topic_cooldown, 1 SECONDS)
 	. = ..()
 	if(.)
 		usr << browse(null, "window=publiclibrary")
@@ -140,39 +154,6 @@
 	var/getdate
 	var/duedate
 
-/*
- * Cachedbook datum
- */
-/datum/cachedbook // Datum used to cache the SQL DB books locally in order to achieve a performance gain.
-	var/id
-	var/title
-	var/author
-	var/category
-
-GLOBAL_LIST(cachedbooks) // List of our cached book datums
-
-
-/proc/load_library_db_to_cache()
-	if(GLOB.cachedbooks)
-		return
-	if(!SSdbcore.Connect())
-		return
-	GLOB.cachedbooks = list()
-	var/datum/DBQuery/query_library_cache = SSdbcore.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
-	if(!query_library_cache.Execute())
-		qdel(query_library_cache)
-		return
-	while(query_library_cache.NextRow())
-		var/datum/cachedbook/newbook = new()
-		newbook.id = query_library_cache.item[1]
-		newbook.author = query_library_cache.item[2]
-		newbook.title = query_library_cache.item[3]
-		newbook.category = query_library_cache.item[4]
-		GLOB.cachedbooks += newbook
-	qdel(query_library_cache)
-
-
-
 #define PRINTER_COOLDOWN 60
 
 /*
@@ -192,7 +173,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 
 	var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
@@ -205,25 +186,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	var/list/inventory = list()
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
-	var/list/libcomp_menu
 	var/page = 1	//current page of the external archives
-	var/cooldown = 0
-
-/obj/machinery/computer/bookmanagement/proc/build_library_menu()
-	if(libcomp_menu)
-		return
-	load_library_db_to_cache()
-	if(!GLOB.cachedbooks)
-		return
-	libcomp_menu = list("")
-
-	for(var/i in 1 to GLOB.cachedbooks.len)
-		var/datum/cachedbook/C = GLOB.cachedbooks[i]
-		var/page = round(i/250)+1
-		if (libcomp_menu.len < page)
-			libcomp_menu.len = page
-			libcomp_menu[page] = ""
-		libcomp_menu[page] += "<tr><td>[C.author]</td><td>[C.title]</td><td>[C.category]</td><td><A href='?src=[REF(src)];targetid=[C.id]'>\[Order\]</A></td></tr>\n"
+	var/printer_cooldown = 0
+	COOLDOWN_DECLARE(library_console_topic_cooldown)
 
 /obj/machinery/computer/bookmanagement/Initialize()
 	. = ..()
@@ -285,17 +250,37 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(4)
 			dat += "<h3>External Archive</h3>"
-			build_library_menu()
-
-			if(!GLOB.cachedbooks)
+			if(!SSdbcore.Connect())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
+				var/booksperpage = 50
+				var/pagecount
+				var/datum/db_query/query_library_count_books = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("library")] WHERE isnull(deleted)")
+				if(!query_library_count_books.Execute())
+					qdel(query_library_count_books)
+					return
+				if(query_library_count_books.NextRow())
+					pagecount = CEILING(text2num(query_library_count_books.item[1]) / booksperpage, 1)
+				qdel(query_library_count_books)
+				var/list/booklist = list()
+				var/datum/db_query/query_library_get_books = SSdbcore.NewQuery({"
+					SELECT id, author, title, category
+					FROM [format_table_name("library")]
+					WHERE isnull(deleted)
+					LIMIT :skip, :take
+				"}, list("skip" = booksperpage * (page - 1), "take" = booksperpage))
+				if(!query_library_get_books.Execute())
+					qdel(query_library_get_books)
+					return
+				while(query_library_get_books.NextRow())
+					booklist += "<tr><td>[query_library_get_books.item[2]]</td><td>[query_library_get_books.item[3]]</td><td>[query_library_get_books.item[4]]</td><td><A href='?src=[REF(src)];targetid=[query_library_get_books.item[1]]'>\[Order\]</A></td></tr>\n"
 				dat += "<A href='?src=[REF(src)];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
-				dat += libcomp_menu[clamp(page,1,libcomp_menu.len)]
-				dat += "<tr><td><A href='?src=[REF(src)];page=[(max(1,page-1))]'>&lt;&lt;&lt;&lt;</A></td> <td></td> <td></td> <td><span style='text-align:right'><A href='?src=[REF(src)];page=[(min(libcomp_menu.len,page+1))]'>&gt;&gt;&gt;&gt;</A></span></td></tr>"
+				dat += jointext(booklist, "")
+				dat += "<tr><td><A href='?src=[REF(src)];page=[max(1,page-1)]'>&lt;&lt;&lt;&lt;</A></td> <td></td> <td></td> <td><span style='text-align:right'><A href='?src=[REF(src)];page=[min(pagecount,page+1)]'>&gt;&gt;&gt;&gt;</A></span></td></tr>"
 				dat += "</table>"
+				qdel(query_library_get_books)
 			dat += "<BR><A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
@@ -367,6 +352,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		obj_flags |= EMAGGED
 
 /obj/machinery/computer/bookmanagement/Topic(href, href_list)
+	if(!COOLDOWN_FINISHED(src, library_console_topic_cooldown))
+		return
+	COOLDOWN_START(src, library_console_topic_cooldown, 1 SECONDS)
 	if(..())
 		usr << browse(null, "window=library")
 		onclose(usr, "library")
@@ -404,7 +392,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = stripped_input(usr, "Enter the book's title:")
+		buffer_book = stripped_input(usr, "Enter the book's title:", max_length = 45)
 	if(href_list["editmob"])
 		buffer_mob = stripped_input(usr, "Enter the recipient's name:", max_length = MAX_NAME_LEN)
 	if(href_list["checkout"])
@@ -423,7 +411,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(b && istype(b))
 			inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = stripped_input(usr, "Enter the author's name: ")
+		var/newauthor = stripped_input(usr, "Enter the author's name: ", max_length = 45)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
@@ -438,14 +426,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 					if (!SSdbcore.Connect())
 						alert("Connection to Archive has been severed. Aborting.")
 					else
-
-						var/sqltitle = sanitizeSQL(scanner.cache.name)
-						var/sqlauthor = sanitizeSQL(scanner.cache.author)
-						var/sqlcontent = sanitizeSQL(scanner.cache.dat)
-						var/sqlcategory = sanitizeSQL(upload_category)
-						var/sqlckey = sanitizeSQL(usr.ckey)
 						var/msg = "[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs"
-						var/datum/DBQuery/query_library_upload = SSdbcore.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[sqlckey]', Now(), '[GLOB.round_id]')")
+						var/datum/db_query/query_library_upload = SSdbcore.NewQuery({"
+							INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created)
+							VALUES (:author, :title, :content, :category, :ckey, Now(), :round_id)
+						"}, list("title" = scanner.cache.name, "author" = scanner.cache.author, "content" = scanner.cache.dat, "category" = upload_category, "ckey" = usr.ckey, "round_id" = GLOB.round_id))
 						if(!query_library_upload.Execute())
 							qdel(query_library_upload)
 							alert("Database error encountered uploading to Archive")
@@ -467,7 +452,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		GLOB.news_network.SubmitArticle(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
 		alert("Upload complete. Your uploaded title is now available on station newscasters.")
 	if(href_list["orderbyid"])
-		if(cooldown > world.time)
+		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
 			var/orderid = input("Enter your order:") as num|null
@@ -476,14 +461,17 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 					href_list["targetid"] = num2text(orderid)
 
 	if(href_list["targetid"])
-		var/sqlid = sanitizeSQL(href_list["targetid"])
+		var/id = href_list["targetid"]
 		if (!SSdbcore.Connect())
 			alert("Connection to Archive has been severed. Aborting.")
-		if(cooldown > world.time)
+		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			cooldown = world.time + PRINTER_COOLDOWN
-			var/datum/DBQuery/query_library_print = SSdbcore.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
+			printer_cooldown = world.time + PRINTER_COOLDOWN
+			var/datum/db_query/query_library_print = SSdbcore.NewQuery(
+				"SELECT * FROM [format_table_name("library")] WHERE id=:id AND isnull(deleted)",
+				list("id" = id)
+			)
 			if(!query_library_print.Execute())
 				qdel(query_library_print)
 				say("PRINTER ERROR! Failed to print document (0x0000000F)")
@@ -503,20 +491,20 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 				break
 			qdel(query_library_print)
 	if(href_list["printbible"])
-		if(cooldown < world.time)
+		if(printer_cooldown < world.time)
 			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(src.loc)
-			if(GLOB.bible_icon_state && GLOB.bible_item_state)
+			if(GLOB.bible_icon_state && GLOB.bible_inhand_icon_state)
 				B.icon_state = GLOB.bible_icon_state
-				B.item_state = GLOB.bible_item_state
+				B.inhand_icon_state = GLOB.bible_inhand_icon_state
 				B.name = GLOB.bible_name
 				B.deity_name = GLOB.deity
-			cooldown = world.time + PRINTER_COOLDOWN
+			printer_cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
 	if(href_list["printposter"])
-		if(cooldown < world.time)
+		if(printer_cooldown < world.time)
 			new /obj/item/poster/random_official(src.loc)
-			cooldown = world.time + PRINTER_COOLDOWN
+			printer_cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
 	add_fingerprint(usr)

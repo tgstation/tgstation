@@ -2,7 +2,7 @@
 	name = "gripper gloves"
 	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls."
 	icon_state = "tackle"
-	item_state = "tackle"
+	inhand_icon_state = "tackle"
 	transfer_prints = TRUE
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
@@ -43,7 +43,7 @@
 	name = "dolphin gloves"
 	desc = "Sleek, aerodynamic gripper gloves that are less effective at actually performing takedowns, but more effective at letting the user sail through the hallways and cause accidents."
 	icon_state = "tackledolphin"
-	item_state = "tackledolphin"
+	inhand_icon_state = "tackledolphin"
 
 	tackle_stam_cost = 15
 	base_knockdown = 0.5 SECONDS
@@ -56,7 +56,7 @@
 	name = "gorilla gloves"
 	desc = "Premium quality combative gloves, heavily reinforced to give the user an edge in close combat tackles, though they are more taxing to use than normal gripper gloves. Fireproof to boot!"
 	icon_state = "black"
-	item_state = "blackgloves"
+	inhand_icon_state = "blackgloves"
 
 	tackle_stam_cost = 35
 	base_knockdown = 1.5 SECONDS
@@ -79,7 +79,7 @@
 	name = "rocket gloves"
 	desc = "The ultimate in high risk, high reward, perfect for when you need to stop a criminal from fifty feet away or die trying. Banned in most Spinward gridiron football and rugby leagues."
 	icon_state = "tacklerocket"
-	item_state = "tacklerocket"
+	inhand_icon_state = "tacklerocket"
 
 	tackle_stam_cost = 50
 	base_knockdown = 2 SECONDS
@@ -92,7 +92,7 @@
 	name = "improvised gripper gloves"
 	desc = "Ratty looking fingerless gloves wrapped with sticky tape. Beware anyone wearing these, for they clearly have no shame and nothing to lose."
 	icon_state = "fingerless"
-	item_state = "fingerless"
+	inhand_icon_state = "fingerless"
 
 	tackle_stam_cost = 30
 	base_knockdown = 1.75 SECONDS

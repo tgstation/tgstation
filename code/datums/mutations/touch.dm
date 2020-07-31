@@ -25,7 +25,7 @@
 	catchphrase = null
 	on_use_sound = 'sound/weapons/zapbang.ogg'
 	icon_state = "zapper"
-	item_state = "zapper"
+	inhand_icon_state = "zapper"
 
 /obj/item/melee/touch_attack/shock/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)

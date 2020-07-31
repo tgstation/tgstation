@@ -1,22 +1,22 @@
 //Aux base construction console
-/mob/camera/aiEye/remote/base_construction
+/mob/camera/ai_eye/remote/base_construction
 	name = "construction holo-drone"
 	move_on_shuttle = 1 //Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "construction_drone"
 	var/area/starting_area
 
-/mob/camera/aiEye/remote/base_construction/Initialize()
+/mob/camera/ai_eye/remote/base_construction/Initialize()
 	. = ..()
 	starting_area = get_area(loc)
 
-/mob/camera/aiEye/remote/base_construction/setLoc(var/t)
+/mob/camera/ai_eye/remote/base_construction/setLoc(var/t)
 	var/area/curr_area = get_area(t)
-	if(curr_area == starting_area || istype(curr_area, /area/shuttle/auxillary_base))
+	if(curr_area == starting_area || istype(curr_area, /area/shuttle/auxiliary_base))
 		return ..()
 	//While players are only allowed to build in the base area, but consoles starting outside the base can move into the base area to begin work.
 
-/mob/camera/aiEye/remote/base_construction/relaymove(mob/user, direct)
+/mob/camera/ai_eye/remote/base_construction/relaymove(mob/user, direct)
 	dir = direct //This camera eye is visible as a drone, and needs to keep the dir updated
 	..()
 
@@ -42,7 +42,7 @@
 	var/fans_remaining = 0 //Number of fans in stock.
 	var/datum/action/innate/aux_base/install_turret/turret_action = new //Action for spawning turrets
 	var/turret_stock = 0 //Turrets in stock
-	var/obj/machinery/computer/auxillary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
+	var/obj/machinery/computer/auxiliary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
 
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
@@ -63,8 +63,8 @@
 /obj/machinery/computer/camera_advanced/base_construction/CreateEye()
 
 	var/spawn_spot
-	for(var/obj/machinery/computer/auxillary_base/ABC in GLOB.machines)
-		if(istype(get_area(ABC), /area/shuttle/auxillary_base))
+	for(var/obj/machinery/computer/auxiliary_base/ABC in GLOB.machines)
+		if(istype(get_area(ABC), /area/shuttle/auxiliary_base))
 			found_aux_console = ABC
 			break
 
@@ -74,7 +74,7 @@
 		spawn_spot = src
 
 
-	eyeobj = new /mob/camera/aiEye/remote/base_construction(get_turf(spawn_spot))
+	eyeobj = new /mob/camera/ai_eye/remote/base_construction(get_turf(spawn_spot))
 	eyeobj.origin = src
 
 
@@ -130,7 +130,7 @@
 /datum/action/innate/aux_base //Parent aux base action
 	icon_icon = 'icons/mob/actions/actions_construction.dmi'
 	var/mob/living/C //Mob using the action
-	var/mob/camera/aiEye/remote/base_construction/remote_eye //Console's eye mob
+	var/mob/camera/ai_eye/remote/base_construction/remote_eye //Console's eye mob
 	var/obj/machinery/computer/camera_advanced/base_construction/B //Console itself
 
 /datum/action/innate/aux_base/Activate()
@@ -147,7 +147,7 @@
 	var/turf/build_target = get_turf(remote_eye)
 	var/area/build_area = get_area(build_target)
 
-	if(!istype(build_area, /area/shuttle/auxillary_base))
+	if(!istype(build_area, /area/shuttle/auxiliary_base))
 		to_chat(owner, "<span class='warning'>You can only build within the mining base!</span>")
 		return FALSE
 
@@ -202,27 +202,27 @@
 	name = "Select Airlock Type"
 	button_icon_state = "airlock_select"
 
-datum/action/innate/aux_base/airlock_type/Activate()
+/datum/action/innate/aux_base/airlock_type/Activate()
 	if(..())
 		return
 
 	B.RCD.change_airlock_setting()
 
 
-datum/action/innate/aux_base/window_type
+/datum/action/innate/aux_base/window_type
 	name = "Select Window Type"
 	button_icon_state = "window_select"
 
-datum/action/innate/aux_base/window_type/Activate()
+/datum/action/innate/aux_base/window_type/Activate()
 	if(..())
 		return
 	B.RCD.toggle_window_type()
 
-datum/action/innate/aux_base/place_fan
+/datum/action/innate/aux_base/place_fan
 	name = "Place Tiny Fan"
 	button_icon_state = "build_fan"
 
-datum/action/innate/aux_base/place_fan/Activate()
+/datum/action/innate/aux_base/place_fan/Activate()
 	if(..())
 		return
 
@@ -244,11 +244,11 @@ datum/action/innate/aux_base/place_fan/Activate()
 	to_chat(owner, "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>")
 	playsound(fan_turf, 'sound/machines/click.ogg', 50, TRUE)
 
-datum/action/innate/aux_base/install_turret
+/datum/action/innate/aux_base/install_turret
 	name = "Install Plasma Anti-Wildlife Turret"
 	button_icon_state = "build_turret"
 
-datum/action/innate/aux_base/install_turret/Activate()
+/datum/action/innate/aux_base/install_turret/Activate()
 	if(..())
 		return
 
@@ -261,7 +261,7 @@ datum/action/innate/aux_base/install_turret/Activate()
 
 	var/turf/turret_turf = get_turf(remote_eye)
 
-	if(is_blocked_turf(turret_turf))
+	if(turret_turf.is_blocked_turf())
 		to_chat(owner, "<span class='warning'>Location is obstructed by something. Please clear the location and try again.</span>")
 		return
 

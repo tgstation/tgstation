@@ -92,6 +92,7 @@
 	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 30
+	wound_bonus = CANT_WOUND
 	throwforce = 15
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/add_juice()

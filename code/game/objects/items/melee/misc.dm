@@ -13,13 +13,15 @@
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
-	item_state = "chain"
+	inhand_icon_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 10
 	throwforce = 7
+	wound_bonus = 15
+	bare_wound_bonus = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
@@ -34,15 +36,15 @@
 	desc = "A grotesque blade that on closer inspection seems to be made out of synthetic flesh, it still feels like it would hurt very badly as a weapon."
 	icon = 'icons/obj/changeling_items.dmi'
 	icon_state = "arm_blade"
-	item_state = "arm_blade"
+	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharpness = IS_SHARP
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
+	sharpness = SHARP_EDGED
 
 /obj/item/melee/synthetic_arm_blade/Initialize()
 	. = ..()
@@ -52,7 +54,7 @@
 	name = "officer's sabre"
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
 	icon_state = "sabre"
-	item_state = "sabre"
+	inhand_icon_state = "sabre"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -62,10 +64,12 @@
 	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
 	armour_penetration = 75
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = 1000)
+	wound_bonus = 10
+	bare_wound_bonus = 25
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
@@ -134,13 +138,14 @@
 	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "beesword"
-	item_state = "stinger"
+	inhand_icon_state = "stinger"
+	worn_icon_state = "stinger"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	throwforce = 10
 	block_chance = 20
 	armour_penetration = 65
@@ -166,7 +171,8 @@
 	desc = "A wooden truncheon for beating criminal scum."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "classic_baton"
-	item_state = "classic_baton"
+	inhand_icon_state = "classic_baton"
+	worn_icon_state = "classic_baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -181,16 +187,18 @@
 	var/stamina_damage = 55 // Do we deal stamina damage.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
-	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
+	var/on_stun_sound = 'sound/effects/woodhit.ogg' // Default path to sound for when we stun.
 	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
 	var/on = TRUE // Are we on or off.
 
 	var/on_icon_state // What is our sprite when turned on
 	var/off_icon_state // What is our sprite when turned off
-	var/on_item_state // What is our in-hand sprite when turned on
+	var/on_inhand_icon_state // What is our in-hand sprite when turned on
 	var/force_on // Damage when on - not stunning
 	var/force_off // Damage when off - not stunning
 	var/weight_class_on // What is the new size class when turned on
+
+	wound_bonus = 15
 
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
@@ -324,7 +332,8 @@
 	icon_state = "telebaton_0"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	item_state = null
+	inhand_icon_state = null
+	worn_icon_state = null
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
@@ -334,10 +343,11 @@
 
 	on_icon_state = "telebaton_1"
 	off_icon_state = "telebaton_0"
-	on_item_state = "nullrod"
+	on_inhand_icon_state = "nullrod"
 	force_on = 10
 	force_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
+	bare_wound_bonus = 5
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -364,14 +374,14 @@
 	if(on)
 		to_chat(user, desc["local_on"])
 		icon_state = on_icon_state
-		item_state = on_item_state
+		inhand_icon_state = on_inhand_icon_state
 		w_class = weight_class_on
 		force = force_on
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
 		to_chat(user, desc["local_off"])
 		icon_state = off_icon_state
-		item_state = null //no sprite for concealment even when in hand
+		inhand_icon_state = null //no sprite for concealment even when in hand
 		slot_flags = ITEM_SLOT_BELT
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
@@ -387,7 +397,7 @@
 	icon_state = "contractor_baton_0"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	item_state = null
+	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
@@ -401,7 +411,7 @@
 
 	on_icon_state = "contractor_baton_1"
 	off_icon_state = "contractor_baton_0"
-	on_item_state = "contractor_baton"
+	on_inhand_icon_state = "contractor_baton"
 	force_on = 16
 	force_off = 5
 	weight_class_on = WEIGHT_CLASS_NORMAL
@@ -418,7 +428,7 @@
 	desc = "In a station full of bad ideas, this might just be the worst."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "supermatter_sword"
-	item_state = "supermatter_sword"
+	inhand_icon_state = "supermatter_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = null
@@ -515,7 +525,7 @@
 	name = "curator's whip"
 	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
 	icon_state = "whip"
-	item_state = "chain"
+	inhand_icon_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -535,7 +545,7 @@
 	name = "advanced roasting stick"
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
 	icon_state = "roastingstick_0"
-	item_state = "null"
+	inhand_icon_state = "null"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
@@ -594,13 +604,13 @@
 /obj/item/melee/roastingstick/proc/extend(user)
 	to_chat(user, "<span class='warning'>You extend [src].</span>")
 	icon_state = "roastingstick_1"
-	item_state = "nullrod"
+	inhand_icon_state = "nullrod"
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/roastingstick/proc/retract(user)
 	to_chat(user, "<span class='notice'>You collapse [src].</span>")
 	icon_state = "roastingstick_0"
-	item_state = null
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/melee/roastingstick/handle_atom_del(atom/target)
@@ -644,7 +654,8 @@
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "mace_greyscale"
-	item_state = "mace_greyscale"
+	inhand_icon_state = "mace_greyscale"
+	worn_icon_state = "mace"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.

@@ -8,7 +8,7 @@
 	range = -1
 	include_user = TRUE
 	invocation = "RAC'WA NO!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "shapeshift"
 
 	var/revert_on_death = TRUE
@@ -130,7 +130,7 @@
 		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth;
 		var/damapply = damage_percent * shape.maxHealth;
 
-		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
+		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 		shape.blood_volume = stored.blood_volume;
 
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
@@ -186,7 +186,7 @@
 		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
 		var/damapply = stored.maxHealth * damage_percent
 
-		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
+		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
 	if(source.convert_damage)
 		stored.blood_volume = shape.blood_volume;
 	qdel(shape)

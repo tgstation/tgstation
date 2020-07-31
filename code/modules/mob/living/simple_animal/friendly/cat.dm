@@ -90,7 +90,7 @@
 	collar_type = "kitten"
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
-/mob/living/simple_animal/pet/cat/Runtime
+/mob/living/simple_animal/pet/cat/runtime
 	name = "Runtime"
 	desc = "GCAT"
 	icon_state = "cat"
@@ -105,7 +105,7 @@
 	var/memory_saved = FALSE
 	held_state = "cat"
 
-/mob/living/simple_animal/pet/cat/Runtime/Initialize()
+/mob/living/simple_animal/pet/cat/runtime/Initialize()
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"
@@ -113,7 +113,7 @@
 	Read_Memory()
 	. = ..()
 
-/mob/living/simple_animal/pet/cat/Runtime/Life()
+/mob/living/simple_animal/pet/cat/runtime/Life()
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -121,18 +121,18 @@
 		memory_saved = TRUE
 	..()
 
-/mob/living/simple_animal/pet/cat/Runtime/make_babies()
+/mob/living/simple_animal/pet/cat/runtime/make_babies()
 	var/mob/baby = ..()
 	if(baby)
 		children += baby
 		return baby
 
-/mob/living/simple_animal/pet/cat/Runtime/death()
+/mob/living/simple_animal/pet/cat/runtime/death()
 	if(!memory_saved)
 		Write_Memory(TRUE)
 	..()
 
-/mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
+/mob/living/simple_animal/pet/cat/runtime/proc/Read_Memory()
 	if(fexists("data/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 		S["family"] >> family
@@ -146,7 +146,7 @@
 	if(isnull(family))
 		family = list()
 
-/mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
+/mob/living/simple_animal/pet/cat/runtime/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Runtime.json")
 	var/list/file_data = list()
 	family = list()
@@ -162,14 +162,14 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
+/mob/living/simple_animal/pet/cat/runtime/proc/Deploy_The_Cats()
 	cats_deployed = 1
 	for(var/cat_type in family)
 		if(family[cat_type] > 0)
 			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
 				new cat_type(loc)
 
-/mob/living/simple_animal/pet/cat/Proc
+/mob/living/simple_animal/pet/cat/_proc
 	name = "Proc"
 	gender = MALE
 	gold_core_spawnable = NO_SPAWN
@@ -200,7 +200,7 @@
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/Tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
+				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
 					if (emote_cooldown < (world.time - 600))
 						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
 						step(M, pick(GLOB.cardinals))

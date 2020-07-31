@@ -76,7 +76,7 @@
 	..()
 	if(M && (hudusers.len == 1))
 		for(var/V in GLOB.aiEyes)
-			var/mob/camera/aiEye/E = V
+			var/mob/camera/ai_eye/E = V
 			E.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
@@ -189,7 +189,7 @@
 	if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		if(key || get_ghost(FALSE, TRUE))
+		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES))
 			holder.icon_state = "huddefib"
 		else
 			holder.icon_state = "huddead"
@@ -459,6 +459,16 @@
 			holder.icon_state = "hudmove"
 		else
 			holder.icon_state = ""
+
+/mob/living/simple_animal/bot/mulebot/proc/diag_hud_set_mulebotcell()
+	var/image/holder = hud_list[DIAG_BATT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(cell)
+		var/chargelvl = (cell.charge/cell.maxcharge)
+		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
+	else
+		holder.icon_state = "hudnobatt"
 
 /*~~~~~~~~~~~~
 	Airlocks!

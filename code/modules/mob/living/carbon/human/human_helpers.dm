@@ -175,3 +175,32 @@
 		return TRUE
 	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
 		return TRUE
+
+/// For use formatting all of the scars this human has for saving for persistent scarring
+/mob/living/carbon/human/proc/format_scars()
+	var/list/missing_bodyparts = get_missing_limbs()
+	if(!all_scars && !length(missing_bodyparts))
+		return
+	var/scars = ""
+	for(var/i in missing_bodyparts)
+		var/datum/scar/scaries = new
+		scars += "[scaries.format_amputated(i)]"
+	for(var/i in all_scars)
+		var/datum/scar/scaries = i
+		scars += "[scaries.format()];"
+	return scars
+
+/// Takes a single scar from the persistent scar loader and recreates it from the saved data
+/mob/living/carbon/human/proc/load_scar(scar_line)
+	var/list/scar_data = splittext(scar_line, "|")
+	if(LAZYLEN(scar_data) != SCAR_SAVE_LENGTH)
+		return // invalid, should delete
+	var/version = text2num(scar_data[SCAR_SAVE_VERS])
+	if(!version || version < SCAR_CURRENT_VERSION) // get rid of old scars
+		return
+	var/obj/item/bodypart/the_part = get_bodypart("[scar_data[SCAR_SAVE_ZONE]]")
+	var/datum/scar/scaries = new
+	return scaries.load(the_part, scar_data[SCAR_SAVE_VERS], scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]))
+
+/mob/living/carbon/human/get_biological_state()
+	return dna.species.get_biological_state()

@@ -14,13 +14,14 @@
 	volume = 100
 	force = 15 //Smashing bottles over someone's head hurts.
 	throwforce = 15
-	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
+	inhand_icon_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	isGlass = TRUE
 	foodtype = ALCOHOL
 	age_restricted = TRUE // wrryy can't set an init value to see if foodtype contains ALCOHOL so here we go
+	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
+	var/bottle_knockdown_duration = 1.3 SECONDS
 
 /obj/item/reagent_containers/food/drinks/bottle/update_overlays()
 	. = ..()
@@ -93,13 +94,13 @@
 			headarmor = 0
 
 		//Calculate the knockdown duration for the target.
-		armor_duration = (duration - headarmor) + force
+		armor_duration = (bottle_knockdown_duration - headarmor) + force
 
 	else
 		//Only humans can have armor, right?
 		armor_block = target.run_armor_check(affecting, "melee")
 		if(affecting == BODY_ZONE_HEAD)
-			armor_duration = duration + force
+			armor_duration = bottle_knockdown_duration + force
 
 	//Apply the damage!
 	armor_block = min(90,armor_block)
@@ -142,10 +143,10 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	item_state = "beer"
+	inhand_icon_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	var/static/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
 /obj/item/broken_bottle/Initialize()
@@ -212,6 +213,12 @@
 	icon_state = "rumbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/maltliquor
+	name = "\improper Rabid Bear malt liquor"
+	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
+	icon_state = "maltliquorbottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 100)
+
 /obj/item/reagent_containers/food/drinks/bottle/holywater
 	name = "flask of holy water"
 	desc = "A flask of the chaplain's holy water."
@@ -255,9 +262,30 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 100)
 	foodtype = FRUIT | ALCOHOL
 
+/obj/item/reagent_containers/food/drinks/bottle/wine/add_initial_reagents()
+	. = ..()
+	var/wine_info = generate_vintage()
+	var/datum/reagent/consumable/ethanol/wine/W = locate() in reagents.reagent_list
+	if(W)
+		LAZYSET(W.data,"vintage",wine_info)
+
+/obj/item/reagent_containers/food/drinks/bottle/wine/proc/generate_vintage()
+	return "[GLOB.year_integer + 540] Nanotrasen Light Red"
+
+/obj/item/reagent_containers/food/drinks/bottle/wine/unlabeled
+	name = "unlabeled wine bottle"
+	desc = "There's no label on this wine bottle."
+
+/obj/item/reagent_containers/food/drinks/bottle/wine/unlabeled/generate_vintage()
+	var/current_year = GLOB.year_integer + 540
+	var/year = rand(current_year-50,current_year)
+	var/type = pick("Sparkling","Dry White","Sweet White","Rich White","Rose","Light Red","Medium Red","Bold Red","Dessert")
+	var/origin = pick("Nanotrasen","Syndicate","Local")
+	return "[year] [origin] [type]"
+
 /obj/item/reagent_containers/food/drinks/bottle/absinthe
 	name = "extra-strong absinthe"
-	desc = "An strong alcoholic drink brewed and distributed by"
+	desc = "A strong alcoholic drink brewed and distributed by"
 	icon_state = "absinthebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 100)
 
@@ -358,7 +386,7 @@
 	desc = "Full of vitamins and deliciousness!"
 	custom_price = 100
 	icon_state = "orangejuice"
-	item_state = "carton"
+	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
@@ -371,7 +399,7 @@
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	custom_price = 100
 	icon_state = "cream"
-	item_state = "carton"
+	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
@@ -384,7 +412,7 @@
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	custom_price = 100
 	icon_state = "tomatojuice"
-	item_state = "carton"
+	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
@@ -397,7 +425,7 @@
 	desc = "Sweet-sour goodness."
 	custom_price = 100
 	icon_state = "limejuice"
-	item_state = "carton"
+	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
@@ -410,7 +438,7 @@
 	desc = "Extremely tart, yellow juice."
 	custom_price = 100
 	icon_state = "pineapplejuice"
-	item_state = "carton"
+	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
@@ -423,7 +451,7 @@
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
 	custom_price = 100
 	icon_state = "mentholbox"
-	item_state = "carton"
+	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
@@ -521,7 +549,7 @@
 		log_bomber(user, "has primed a", src, "for detonation")
 
 		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
-		add_overlay(GLOB.fire_overlay)
+		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
 		if(!isGlass)
 			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
 
@@ -543,7 +571,7 @@
 			to_chat(user, "<span class='danger'>The flame's spread too far on it!</span>")
 			return
 		to_chat(user, "<span class='info'>You snuff out the flame on [src].</span>")
-		cut_overlay(GLOB.fire_overlay)
+		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
 		active = 0
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 @use 'sass:color';
 @use 'sass:meta';
 
@@ -9,7 +14,6 @@ $nanotrasen: #384e68;
 );
 @use '../base.scss' with (
   $color-bg: color.scale($nanotrasen, $lightness: -45%),
-  $border-radius: 2px,
 );
 
 .theme-ntos {

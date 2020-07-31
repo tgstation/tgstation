@@ -4,6 +4,11 @@
 #define SWOOP_DAMAGEABLE 1
 #define SWOOP_INVULNERABLE 2
 
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_TEMP 500
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_EXPOSURE 50
+
 /*
 
 ASH DRAKE
@@ -257,13 +262,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(offset, range, atom/at = target)
 	if(!at)
 		return
-	var/angle = ATAN2(at.x - src.x, at.y - src.y) + offset
-	var/turf/T = get_turf(src)
-	for(var/i in 1 to range)
-		var/turf/check = locate(src.x + cos(angle) * i, src.y + sin(angle) * i, src.z)
-		if(!check)
-			break
-		T = check
+	var/turf/T = get_ranged_target_turf_direct(src, at, range, offset)
 	return (getline(src, T) - get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(var/list/turfs)
@@ -271,15 +270,15 @@ Difficulty: Medium
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(source, list/turfs)
+/proc/dragon_fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			break
 		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
 		for(var/mob/living/L in T.contents)
-			if(L in hit_list || L == source)
+			if(L in hit_list || istype(L, source.type))
 				continue
 			hit_list += L
 			L.adjustFireLoss(20)
@@ -396,7 +395,7 @@ Difficulty: Medium
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
 	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
 		return
 	return ..()
@@ -521,7 +520,7 @@ Difficulty: Medium
 	else
 		animate(src, pixel_x = -16, pixel_z = 0, time = 5)
 
-obj/effect/temp_visual/fireball
+/obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	name = "fireball"
@@ -559,7 +558,7 @@ obj/effect/temp_visual/fireball
 		M.gets_drilled()
 	playsound(T, "explosion", 80, TRUE)
 	new /obj/effect/hotspot(T)
-	T.hotspot_expose(700, 50, 1)
+	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue

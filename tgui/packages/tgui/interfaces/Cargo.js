@@ -14,7 +14,10 @@ export const Cargo = (props, context) => {
   const cart = data.cart || [];
   const requests = data.requests || [];
   return (
-    <Window resizable>
+    <Window
+      width={780}
+      height={750}
+      resizable>
       <Window.Content scrollable>
         <CargoStatus />
         <Tabs>
@@ -185,7 +188,7 @@ export const CargoCatalog = (props, context) => {
                       onClick={() => act('add', {
                         id: pack.id,
                       })}>
-                      {formatMoney(self_paid
+                      {formatMoney(self_paid && !pack.goody
                         ? Math.round(pack.cost * 1.1)
                         : pack.cost)}
                       {' cr'}

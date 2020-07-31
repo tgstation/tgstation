@@ -74,6 +74,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/heatmod = 1
 	///multiplier for stun durations
 	var/stunmod = 1
+	///multiplier for money paid at payday
+	var/payday_modifier = 1
 	///Type of damage attack does. Ethereals attack with burn damage for example.
 	var/attack_type = BRUTE
 	///Lowest possible punch damage this species can give. If this is set to 0, punches will always miss.
@@ -281,12 +283,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(slot == ORGAN_SLOT_BRAIN)
 				var/obj/item/organ/brain/brain = oldorgan
 				if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
+					brain.before_organ_replacement(neworgan)
 					brain.Remove(C,TRUE, TRUE) //brain argument used so it doesn't cause any... sudden death.
 					QDEL_NULL(brain)
-			oldorgan.Remove(C,TRUE)
-			QDEL_NULL(oldorgan)
+					oldorgan = null //now deleted
+			else
+				oldorgan.before_organ_replacement(neworgan)
+				oldorgan.Remove(C,TRUE)
+				QDEL_NULL(oldorgan) //we cannot just tab this out because we need to skip the deleting if it is a decoy brain.
 
-		if(!oldorgan && should_have && !(initial(neworgan.zone) in excluded_zones))
+
+		if(oldorgan)
+			oldorgan.setOrganDamage(0)
+		else if(should_have && !(initial(neworgan.zone) in excluded_zones))
 			used_neworgan = TRUE
 			neworgan.Insert(C, TRUE, FALSE)
 
@@ -368,7 +377,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(TRAIT_NOMETABOLISM in inherent_traits)
 		C.reagents.end_metabolization(C, keep_liverless = TRUE)
 
-	if(TRAIT_RADIMMUNE in inherent_traits)
+	if(TRAIT_GENELESS in inherent_traits)
 		C.dna.remove_all_mutations() // Radiation immune mobs can't get mutations normally
 
 	if(inherent_factions)
@@ -762,7 +771,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!bodyparts_to_add)
 		return
 
-	var/g = (H.gender == FEMALE) ? "f" : "m"
+	var/g = (H.body_type == FEMALE) ? "f" : "m"
 
 	for(var/layer in relevent_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)
@@ -1214,12 +1223,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return 0
 
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
+	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
+		H.radiation = 0
+		return TRUE
+
 	. = FALSE
 	var/radiation = H.radiation
-
-	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
-		radiation = 0
-		return TRUE
 
 	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 		if(!H.IsParalyzed())
@@ -1376,10 +1385,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			to_chat(user, "<span class='danger'>You knock [target] down!</span>")
 			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
-			target.forcesay(GLOB.hit_appends)
 			log_combat(user, target, "got a stun punch with their previous punch")
-		else if(!(target.mobility_flags & MOBILITY_STAND))
-			target.forcesay(GLOB.hit_appends)
 
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
@@ -1552,22 +1558,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
-	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
+	var/Iwound_bonus = I.wound_bonus
+
+	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are laying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
+	if((I.item_flags & SURGICAL_TOOL) && user.a_intent == INTENT_HELP && (H.mobility_flags & ~MOBILITY_STAND) && (LAZYLEN(H.surgeries) > 0))
+		Iwound_bonus = CANT_WOUND
 
 	var/weakness = H.check_weakness(I, user)
-	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
+	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
-	H.send_item_attack_message(I, user, hit_area)
+	H.send_item_attack_message(I, user, hit_area, affecting)
 
 	if(!I.force)
 		return 0 //item force is zero
-
-	//dismemberment
-	var/probability = I.get_dismemberment_chance(affecting)
-	if(prob(probability) || (HAS_TRAIT(H, TRAIT_EASYDISMEMBER) && prob(probability))) //try twice
-		if(affecting.dismember(I.damtype))
-			I.add_mob_blood(H)
-			playsound(get_turf(H), I.get_dismember_sound(), 80, TRUE)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
@@ -1627,12 +1630,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.w_uniform.add_mob_blood(H)
 						H.update_inv_w_uniform()
 
-		if(Iforce > 10 || Iforce >= 5 && prob(33))
-			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE)
-	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
+	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone, wound_bonus, bare_wound_bonus, sharpness) // make sure putting wound_bonus here doesn't screw up other signals or uses for this signal
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || (!forced && hit_percent <= 0))
@@ -1654,7 +1655,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
 			if(BP)
-				if(BP.receive_damage(damage_amount, 0))
+				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)
@@ -1662,7 +1663,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
 			if(BP)
-				if(BP.receive_damage(0, damage_amount))
+				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage_amount)
@@ -1714,7 +1715,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////////////
 
 /**
- * Enviroment handler for species
+ * environment handler for species
  *
  * vars:
  * * environment The environment gas mix
@@ -2105,3 +2106,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			H.set_resting(FALSE, TRUE)
+
+/**
+  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
+  */
+/datum/species/proc/get_biological_state(mob/living/carbon/human/H)
+	. = BIO_INORGANIC
+	if(HAS_FLESH in species_traits)
+		. |= BIO_JUST_FLESH
+	if(HAS_BONE in species_traits)
+		. |= BIO_JUST_BONE

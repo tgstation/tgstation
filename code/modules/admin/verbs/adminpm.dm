@@ -58,6 +58,14 @@
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, 0, 0)]'s admin help.")
 		return
+	if(!C) //We lost the client during input, disconnected or relogged.
+		if(GLOB.directory[AH.initiator_ckey]) // Client has reconnected, lets try to recover
+			whom = GLOB.directory[AH.initiator_ckey]
+		else
+			to_chat(src, "<span class='danger'>Error: Admin-PM: Client not found.</span>", confidential = TRUE)
+			to_chat(src, "<span class='danger'><b>Message not sent:</b></span><br>[msg]", confidential = TRUE)
+			AH.AddInteraction("<b>No client found, message not sent:</b><br>[msg]")
+			return
 	cmd_admin_pm(whom, msg)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
@@ -73,6 +81,8 @@
 		return
 
 	var/client/recipient
+	var/recipient_ckey // Stored in case client is deleted between this and after the message is input
+	var/datum/admin_help/recipient_ticket // Stored in case client is deleted between this and after the message is input
 	var/external = 0
 	if(istext(whom))
 		if(whom[1] == "@")
@@ -84,6 +94,12 @@
 	else if(istype(whom, /client))
 		recipient = whom
 
+	if(!recipient)
+		to_chat(src, "<span class='danger'>Error: Admin-PM: Client not found.</span>", confidential = TRUE)
+		return
+
+	recipient_ckey = recipient.ckey
+	recipient_ticket = recipient.current_ticket
 
 	if(external)
 		if(!externalreplyamount)	//to prevent people from spamming irc/discord
@@ -99,16 +115,6 @@
 
 
 	else
-		if(!recipient)
-			if(holder)
-				to_chat(src, "<span class='danger'>Error: Admin-PM: Client not found.</span>", confidential = TRUE)
-				if(msg)
-					to_chat(src, msg, confidential = TRUE)
-				return
-			else if(msg) // you want to continue if there's no message instead of returning now
-				current_ticket.MessageNoRecipient(msg)
-				return
-
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)
 			msg = input(src,"Message:", "Private message to [recipient.holder?.fakekey ? "an Administrator" : key_name(recipient, 0, 0)].") as message|null
@@ -116,23 +122,31 @@
 			if(!msg)
 				return
 
-			if(prefs.muted & MUTE_ADMINHELP)
-				to_chat(src, "<span class='danger'>Error: Admin-PM: You are unable to use admin PM-s (muted).</span>", confidential = TRUE)
-				return
-
-			if(!recipient)
+		if(!recipient)
+			if(GLOB.directory[recipient_ckey]) // Client has reconnected, lets try to recover
+				recipient = GLOB.directory[recipient_ckey]
+			else
 				if(holder)
 					to_chat(src, "<span class='danger'>Error: Admin-PM: Client not found.</span>", confidential = TRUE)
+					to_chat(src, "<span class='danger'><b>Message not sent:</b></span><br>[msg]", confidential = TRUE)
+					if(recipient_ticket)
+						recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[msg]")
+					return
 				else
 					current_ticket.MessageNoRecipient(msg)
-				return
+					return
+
+
+	if(prefs.muted & MUTE_ADMINHELP)
+		to_chat(src, "<span class='danger'>Error: Admin-PM: You are unable to use admin PM-s (muted).</span>", confidential = TRUE)
+		return
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0)||external)//no sending html to the poor bots
-		msg = trim(sanitize(msg), MAX_MESSAGE_LEN)
+		msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 		if(!msg)
 			return
 
@@ -147,10 +161,13 @@
 		to_chat(src, "<span class='notice'>PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span></span>", confidential = TRUE)
 		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>External</i>: [keywordparsedmsg]</font>")
 		externalreplyamount--
-		send2tgs("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
+		send2adminchat("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
 	else
-		if(recipient.holder)
-			if(holder)	//both are admins
+		var/badmin = FALSE //Lets figure out if an admin is getting bwoinked.
+		if(holder && recipient.holder && !current_ticket) //Both are admins, and this is not a reply to our own ticket.
+			badmin = TRUE
+		if(recipient.holder && !badmin)
+			if(holder)
 				to_chat(recipient, "<span class='danger'>Admin PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span></span>", confidential = TRUE)
 				to_chat(src, "<span class='notice'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span></span>", confidential = TRUE)
 
@@ -216,7 +233,7 @@
 /client/proc/popup_admin_pm(client/recipient, msg)
 	var/sender = src
 	var/sendername = key
-	var/reply = input(recipient, msg,"Admin PM from-[sendername]", "") as message|null		//show message and await a reply
+	var/reply = input(recipient, msg,"Admin PM from-[sendername]", "") as message|null	//show message and await a reply
 	if(recipient && reply)
 		if(sender)
 			recipient.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them

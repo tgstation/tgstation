@@ -14,7 +14,7 @@
 	var/randomProbability = 1
 	var/reagentsAmount = 100
 	var/list/saferChems = list(/datum/reagent/water,/datum/reagent/carbon,/datum/reagent/consumable/flour,/datum/reagent/space_cleaner,/datum/reagent/consumable/nutriment,/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,/datum/reagent/lube,/datum/reagent/glitter/pink,/datum/reagent/cryptobiolin,
-						 /datum/reagent/toxin/plantbgone,/datum/reagent/blood,/datum/reagent/medicine/C2/multiver,/datum/reagent/drug/space_drugs,/datum/reagent/medicine/morphine,/datum/reagent/water/holywater,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/hot_coco,/datum/reagent/toxin/acid,/datum/reagent/toxin/mindbreaker,/datum/reagent/toxin/rotatium,/datum/reagent/bluespace,
+						 /datum/reagent/toxin/plantbgone,/datum/reagent/blood,/datum/reagent/medicine/c2/multiver,/datum/reagent/drug/space_drugs,/datum/reagent/medicine/morphine,/datum/reagent/water/holywater,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/hot_coco,/datum/reagent/toxin/acid,/datum/reagent/toxin/mindbreaker,/datum/reagent/toxin/rotatium,/datum/reagent/bluespace,
 						 /datum/reagent/pax,/datum/reagent/consumable/laughter,/datum/reagent/concentrated_barbers_aid,/datum/reagent/baldium,/datum/reagent/colorful_reagent,/datum/reagent/peaceborg/confuse,/datum/reagent/peaceborg/tire,/datum/reagent/consumable/sodiumchloride,/datum/reagent/consumable/ethanol/beer,/datum/reagent/hair_dye,/datum/reagent/consumable/sugar,/datum/reagent/glitter/white,/datum/reagent/growthserum)
 	//needs to be chemid unit checked at some point
 

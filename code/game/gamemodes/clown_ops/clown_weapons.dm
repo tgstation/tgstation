@@ -3,7 +3,7 @@
 	desc = "A seemingly innocent sunflower...with a twist. A <i>slippery</i> twist."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	item_state = "sunflower"
+	inhand_icon_state = "sunflower"
 	amount_per_transfer_from_this = 3
 	spray_range = 1
 	stream_range = 1
@@ -64,7 +64,7 @@
 	hitsound = null
 	attack_verb_on = list("slipped")
 	clumsy_check = FALSE
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 	sword_color = "yellow"
 	heat = 0
 	light_color = "#ffff00"
@@ -206,7 +206,7 @@
 	icon_state = "moustacheg"
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
-/obj/item/grenade/chem_grenade/teargas/moustache/prime()
+/obj/item/grenade/chem_grenade/teargas/moustache/prime(mob/living/lanced_by)
 	var/myloc = get_turf(src)
 	. = ..()
 	for(var/mob/living/carbon/M in view(6, myloc))

@@ -136,7 +136,7 @@
 	var/research_scanner = FALSE
 
 	/// Is the mob throw intent on
-	var/in_throw_mode = 0
+	var/in_throw_mode = FALSE
 
 	/// What job does this mob have
 	var/job = null//Living
@@ -203,9 +203,7 @@
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud
 
-	var/datum/hSB/sandbox = null
-
-	var/bloody_hands = 0
+	var/datum/h_sandbox/sandbox = null
 
 	var/datum/focus //What receives our keyboard inputs. src by default
 

@@ -153,11 +153,16 @@
 	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!antag)
 		return
+	var/place = get_area(owner)
+	var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
+	if(place in summon_objective.summon_spots)//cant do final reckoning in the summon area to prevent abuse, you'll need to get everyone to stand on the circle!
+		to_chat(owner, "<span class='cultlarge'>The veil is too weak here! Move to an area where it is strong enough to support this magic.</span>")
+		return
 	for(var/i in 1 to 4)
 		chant(i)
 		var/list/destinations = list()
 		for(var/turf/T in orange(1, owner))
-			if(!is_blocked_turf(T, TRUE))
+			if(!T.is_blocked_turf(TRUE))
 				destinations += T
 		if(!LAZYLEN(destinations))
 			to_chat(owner, "<span class='warning'>You need more space to summon your cult!</span>")

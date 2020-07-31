@@ -32,24 +32,36 @@
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
 				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
-			reagents.reaction(M, TOUCH)
+			reagents.expose(M, TOUCH)
 			log_combat(user, M, "splashed", R)
 			reagents.clear_reagents()
 		else
 			if(M != user)
-				M.visible_message("<span class='danger'>[user] attempts to feed [M] something.</span>", \
-							"<span class='userdanger'>[user] attempts to feed you something.</span>")
+				M.visible_message("<span class='danger'>[user] attempts to feed [M] something from [src].</span>", \
+							"<span class='userdanger'>[user] attempts to feed you something from [src].</span>")
 				if(!do_mob(user, M))
 					return
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
-				M.visible_message("<span class='danger'>[user] feeds [M] something.</span>", \
-							"<span class='userdanger'>[user] feeds you something.</span>")
+				M.visible_message("<span class='danger'>[user] feeds [M] something from [src].</span>", \
+							"<span class='userdanger'>[user] feeds you something from [src].</span>")
 				log_combat(user, M, "fed", reagents.log_list())
 			else
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
+			SEND_SIGNAL(src, COMSIG_GLASS_DRANK, M, user)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+			if(iscarbon(M))
+				var/mob/living/carbon/carbon_drinker = M
+				var/list/diseases = carbon_drinker.get_static_viruses()
+				if(LAZYLEN(diseases))
+					var/list/datum/disease/diseases_to_add = list()
+					for(var/d in diseases)
+						var/datum/disease/malady = d
+						if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+							diseases_to_add += malady
+					if(LAZYLEN(diseases_to_add))
+						AddComponent(/datum/component/infective, diseases_to_add)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	. = ..()
@@ -87,7 +99,7 @@
 		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
-			reagents.reaction(target, TOUCH)
+			reagents.expose(target, TOUCH)
 			reagents.clear_reagents()
 
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
@@ -108,13 +120,20 @@
 			return
 	..()
 
+/*
+ * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
+ */
+/obj/item/reagent_containers/glass/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	if(!custom_materials)
+		custom_materials = list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5) //sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
+	return ..()
 
 /obj/item/reagent_containers/glass/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
-	item_state = "beaker"
+	inhand_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=500)
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 
@@ -192,29 +211,29 @@
 
 /obj/item/reagent_containers/glass/beaker/large/libital
 	name = "libital reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/c2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/aiuri
 	name = "aiuri reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/multiver
 	name = "multiver reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/c2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
-/obj/item/reagent_containers/glass/beaker/instabitaluri
-	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 50)
+/obj/item/reagent_containers/glass/beaker/synthflesh
+	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
 	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "bucket"
-	item_state = "bucket"
+	inhand_icon_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	custom_materials = list(/datum/material/iron=200)
@@ -240,7 +259,7 @@
 /obj/item/reagent_containers/glass/bucket/wooden
 	name = "wooden bucket"
 	icon_state = "woodbucket"
-	item_state = "woodbucket"
+	inhand_icon_state = "woodbucket"
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
 	resistance_flags = FLAMMABLE
@@ -266,7 +285,7 @@
 	if (slot == ITEM_SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
-			reagents.reaction(user, TOUCH)
+			reagents.expose(user, TOUCH)
 			reagents.clear_reagents()
 		reagents.flags = NONE
 

@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/chasm,
 	/turf/open/lava,
 	/turf/open/water,
-	/turf/open/openspace
+	/turf/open/transparent/openspace
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -40,6 +40,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ischasm(A) (istype(A, /turf/open/chasm))
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
+
+#define istransparentturf(A) (istype(A, /turf/open/transparent))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
@@ -92,7 +94,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
-#define issiliconoradminghost(A) (istype(A, /mob/living/silicon) || IsAdminGhost(A))
+#define issiliconoradminghost(A) (istype(A, /mob/living/silicon) || isAdminGhostAI(A))
 
 #define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 
@@ -147,7 +149,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define iscameramob(A) (istype(A, /mob/camera))
 
-#define isaicamera(A) (istype(A, /mob/camera/aiEye))
+#define isaicamera(A) (istype(A, /mob/camera/ai_eye))
 
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
@@ -157,6 +159,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isgrenade(A) (istype(A, /obj/item/grenade))
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
+
+#define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
 
 #define isammocasing(A) (istype(A, /obj/item/ammo_casing))
 
@@ -168,21 +172,13 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ismecha(A) (istype(A, /obj/mecha))
 
-#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
+#define ismopable(A) (A.layer <= HIGH_SIGIL_LAYER) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
 
 #define iscash(A) (istype(A, /obj/item/coin) || istype(A, /obj/item/stack/spacecash) || istype(A, /obj/item/holochip))
-
-GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
-	/obj/item/pen,
-	/obj/item/screwdriver,
-	/obj/item/reagent_containers/syringe,
-	/obj/item/kitchen/fork)))
-
-#define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 
@@ -214,3 +210,10 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 #define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
+
+#define isbook(O) (is_type_in_typecache(O, GLOB.book_types))
+
+GLOBAL_LIST_INIT(book_types, typecacheof(list(
+	/obj/item/book,
+	/obj/item/spellbook,
+	/obj/item/storage/book)))

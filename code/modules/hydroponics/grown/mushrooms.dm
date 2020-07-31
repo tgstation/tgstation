@@ -22,7 +22,7 @@
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/medicine/morphine = 0.35, /datum/reagent/medicine/C2/multiver = 0.35, /datum/reagent/consumable/nutriment = 0)
+	reagents_add = list(/datum/reagent/medicine/morphine = 0.35, /datum/reagent/medicine/c2/multiver = 0.35, /datum/reagent/consumable/nutriment = 0)
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/reishi
@@ -160,6 +160,7 @@
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 30
+	graft_gene = /datum/plant_gene/trait/eyes
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
 	seed = /obj/item/seeds/plump/walkingmushroom
@@ -227,6 +228,7 @@
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/liquidelectricity, /datum/plant_gene/trait/plant_type/carnivory)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
+	graft_gene = /datum/plant_gene/trait/plant_type/carnivory
 
 /obj/item/seeds/chanter/jupitercup/Initialize(mapload,nogenes)
 	. = ..()

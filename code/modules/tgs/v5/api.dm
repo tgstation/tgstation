@@ -15,18 +15,16 @@
 	var/datum/tgs_revision_information/revision
 	var/list/chat_channels
 
-	var/datum/tgs_event_handler/event_handler
-
 /datum/tgs_api/v5/ApiVersion()
-	return "5.0.0"
+	return new /datum/tgs_version("5.2.2")
 
-/datum/tgs_api/v5/OnWorldNew(datum/tgs_event_handler/event_handler, minimum_required_security_level)
-	src.event_handler = event_handler
-
+/datum/tgs_api/v5/OnWorldNew(minimum_required_security_level)
 	server_port = world.params[DMAPI5_PARAM_SERVER_PORT]
 	access_identifier = world.params[DMAPI5_PARAM_ACCESS_IDENTIFIER]
 
-	var/list/bridge_response = Bridge(DMAPI5_BRIDGE_COMMAND_STARTUP, list(DMAPI5_BRIDGE_PARAMETER_MINIMUM_SECURITY_LEVEL = minimum_required_security_level, DMAPI5_BRIDGE_PARAMETER_VERSION = ApiVersion(), DMAPI5_BRIDGE_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands()))
+	var/datum/tgs_version/api_version = ApiVersion()
+	version = null
+	var/list/bridge_response = Bridge(DMAPI5_BRIDGE_COMMAND_STARTUP, list(DMAPI5_BRIDGE_PARAMETER_MINIMUM_SECURITY_LEVEL = minimum_required_security_level, DMAPI5_BRIDGE_PARAMETER_VERSION = api_version.raw_parameter, DMAPI5_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands()))
 	if(!istype(bridge_response))
 		TGS_ERROR_LOG("Failed initial bridge request!")
 		return FALSE
@@ -40,6 +38,7 @@
 		TGS_INFO_LOG("DMAPI validation, exiting...")
 		del(world)
 
+	version = new /datum/tgs_version(runtime_information[DMAPI5_RUNTIME_INFORMATION_SERVER_VERSION])
 	security_level = runtime_information[DMAPI5_RUNTIME_INFORMATION_SECURITY_LEVEL]
 	instance_name = runtime_information[DMAPI5_RUNTIME_INFORMATION_INSTANCE_NAME]
 
@@ -82,6 +81,10 @@
 
 	return TRUE
 
+/datum/tgs_api/v5/proc/RequireInitialBridgeResponse()
+	while(!version)
+		sleep(1)
+
 /datum/tgs_api/v5/OnInitializationComplete()
 	Bridge(DMAPI5_BRIDGE_COMMAND_PRIME)
 
@@ -91,11 +94,12 @@
 	sleep(1)
 	if(world.sleep_offline == tgs4_secret_sleep_offline_sauce)	//if not someone changed it
 		world.sleep_offline = old_sleep_offline
+	else
+		TGS_WARNING_LOG("world.sleep_offline unexpectedly changed!")
 
 /datum/tgs_api/v5/proc/TopicResponse(error_message = null)
 	var/list/response = list()
-	if(error_message)
-		response[DMAPI5_RESPONSE_ERROR_MESSAGE] = error_message
+	response[DMAPI5_RESPONSE_ERROR_MESSAGE] = error_message
 
 	return json_encode(response)
 
@@ -127,14 +131,14 @@
 			intercepted_message_queue = list()
 			var/list/event_notification = topic_parameters[DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]
 			if(!istype(event_notification))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]!")
+				return TopicResponse("Invalid [DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]!")
 
 			var/event_type = event_notification[DMAPI5_EVENT_NOTIFICATION_TYPE]
 			if(!isnum(event_type))
 				return TopicResponse("Invalid or missing [DMAPI5_EVENT_NOTIFICATION_TYPE]!")
 
 			var/list/event_parameters = event_notification[DMAPI5_EVENT_NOTIFICATION_PARAMETERS]
-			if(!istype(event_parameters))
+			if(event_parameters && !istype(event_parameters))
 				return TopicResponse("Invalid or missing [DMAPI5_EVENT_NOTIFICATION_PARAMETERS]!")
 
 			var/list/event_call = list(event_type)
@@ -145,8 +149,7 @@
 				event_handler.HandleEvent(arglist(event_call))
 
 			var/list/response = list()
-			if(intercepted_message_queue.len)
-				response[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
+			response[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
 			intercepted_message_queue = null
 			return json_encode(response)
 		if(DMAPI5_TOPIC_COMMAND_CHANGE_PORT)
@@ -178,6 +181,9 @@
 			if(!istext(new_instance_name))
 				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_INSTANCE_NAME]!")
 
+			if(event_handler != null)
+				event_handler.HandleEvent(TGS_EVENT_INSTANCE_RENAMED, new_instance_name)
+
 			instance_name = new_instance_name
 			return TopicResponse()
 		if(DMAPI5_TOPIC_COMMAND_CHAT_CHANNELS_UPDATE)
@@ -194,6 +200,30 @@
 
 			server_port = new_port
 			return TopicResponse()
+		if(DMAPI5_TOPIC_COMMAND_HEARTBEAT)
+			return TopicResponse()
+		if(DMAPI5_TOPIC_COMMAND_WATCHDOG_REATTACH)
+			var/new_port = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_PORT]
+			var/error_message = null
+			if (new_port != null)
+				if (!isnum(new_port) || !(new_port > 0))
+					error_message = "Invalid [DMAPI5_TOPIC_PARAMETER_NEW_PORT]]"
+				else
+					server_port = new_port
+
+			var/new_version_string = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION]
+			if (!istext(new_version_string))
+				if(error_message != null)
+					error_message += ", "
+				error_message += "Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION]]"
+			else
+				var/datum/tgs_version/new_version = new(new_version_string)
+				if (event_handler)
+					event_handler.HandleEvent(TGS_EVENT_WATCHDOG_REATTACH, new_version)
+
+				version = new_version
+
+			return json_encode(list(DMAPI5_RESPONSE_ERROR_MESSAGE = error_message, DMAPI5_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands()))
 
 	return TopicResponse("Unknown command: [command]")
 
@@ -249,29 +279,34 @@
 		TGS_ERROR_LOG("Unable to set port to [port]!")
 
 /datum/tgs_api/v5/InstanceName()
+	RequireInitialBridgeResponse()
 	return instance_name
 
 /datum/tgs_api/v5/TestMerges()
+	RequireInitialBridgeResponse()
 	return test_merges
 
 /datum/tgs_api/v5/EndProcess()
 	Bridge(DMAPI5_BRIDGE_COMMAND_KILL)
 
 /datum/tgs_api/v5/Revision()
+	RequireInitialBridgeResponse()
 	return revision
 
 /datum/tgs_api/v5/ChatBroadcast(message, list/channels)
-	var/list/ids
-	if(length(channels))
-		ids = list()
-		for(var/I in channels)
-			var/datum/tgs_chat_channel/channel = I
-			ids += channel.id
+	if(!length(channels))
+		channels = ChatChannelInfo()
+
+	var/list/ids = list()
+	for(var/I in channels)
+		var/datum/tgs_chat_channel/channel = I
+		ids += channel.id
+
 	message = list(DMAPI5_CHAT_MESSAGE_TEXT = message, DMAPI5_CHAT_MESSAGE_CHANNEL_IDS = ids)
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
-		Bridge(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE, message)
+		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = message))
 
 /datum/tgs_api/v5/ChatTargetedBroadcast(message, admin_only)
 	var/list/channels = list()
@@ -283,16 +318,17 @@
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
-		Bridge(TGS4_COMM_CHAT, message)
+		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = message))
 
 /datum/tgs_api/v5/ChatPrivateMessage(message, datum/tgs_chat_user/user)
 	message = list(DMAPI5_CHAT_MESSAGE_TEXT = message, DMAPI5_CHAT_MESSAGE_CHANNEL_IDS = list(user.channel.id))
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
-		Bridge(TGS4_COMM_CHAT, message)
+		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = message))
 
 /datum/tgs_api/v5/ChatChannelInfo()
+	RequireInitialBridgeResponse()
 	return chat_channels
 
 /datum/tgs_api/v5/proc/DecodeChannels(chat_update_json)
@@ -317,31 +353,5 @@
 	return channel
 
 /datum/tgs_api/v5/SecurityLevel()
+	RequireInitialBridgeResponse()
 	return security_level
-
-/*
-The MIT License
-
-Copyright (c) 2020 Jordan Brown
-
-Permission is hereby granted, free of charge,
-to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to
-deal in the Software without restriction, including
-without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom
-the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice
-shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/

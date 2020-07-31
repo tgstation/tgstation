@@ -2,7 +2,7 @@
 	name = "proto-kinetic accelerator"
 	desc = "A self recharging, ranged mining tool that does increased damage in low pressure."
 	icon_state = "kineticgun"
-	item_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = /obj/item/stock_parts/cell/emproof
 	item_flags = NONE
@@ -234,6 +234,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	require_module = 1
 	module_type = list(/obj/item/robot_module/miner)
+	module_flags = BORG_MODULE_MINER
 	var/denied_type = null
 	var/maximum_of_type = 1
 	var/cost = 30

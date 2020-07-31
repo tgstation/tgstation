@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 let socket;
 const queue = [];
 const subscribers = [];
@@ -92,8 +98,8 @@ const sendRawMessage = msg => {
         socket.send(json);
       }
       else {
-        // Keep only 10 latest messages in the queue
-        if (queue.length > 10) {
+        // Keep only 100 latest messages in the queue
+        if (queue.length > 100) {
           queue.shift();
         }
         queue.push(json);

@@ -10,6 +10,26 @@
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 
+/datum/quirk/foreigner
+	name = "Foreigner"
+	desc = "You're not from around here. You don't know Galactic Common!"
+	value = 0
+	gain_text = "<span class='notice'>The words being spoken around you don't make any sense."
+	lose_text = "<span class='notice'>You've developed fluency in Galactic Common."
+	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
+
+/datum/quirk/foreigner/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.add_blocked_language(/datum/language/common)
+	if(ishumanbasic(H) || isfelinid(H))
+		H.grant_language(/datum/language/uncommon)
+
+/datum/quirk/foreigner/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.remove_blocked_language(/datum/language/common)
+	if(ishumanbasic(H) || isfelinid(H))
+		H.remove_language(/datum/language/uncommon)
+
 /datum/quirk/vegetarian
 	name = "Vegetarian"
 	desc = "You find the idea of eating meat morally and physically repulsive."
@@ -220,3 +240,19 @@
 ///Applies a bad moodlet for having an uncovered head
 /datum/quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
+
+/datum/quirk/longtimer
+	name = "Longtimer"
+	desc = "You've been around for a long time and seen more than your fair share of action, suffering some pretty nasty scars along the way. For whatever reason, you've declined to get them removed or augmented."
+	value = 0
+	gain_text = "<span class='notice'>Your body has seen better days.</span>"
+	lose_text = "<span class='notice'>Your sins may wash away, but those scars are here to stay...</span>"
+	medical_record_text = "Patient has withstood significant physical trauma and declined plastic surgery procedures to heal scarring."
+	/// the minimum amount of scars we can generate
+	var/min_scars = 3
+	/// the maximum amount of scars we can generate
+	var/max_scars = 7
+
+/datum/quirk/longtimer/on_spawn()
+	var/mob/living/carbon/C = quirk_holder
+	C.generate_fake_scars(rand(min_scars, max_scars))

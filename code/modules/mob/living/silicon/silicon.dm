@@ -11,10 +11,9 @@
 	weather_immunities = list("ash")
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	mob_biotypes = MOB_ROBOTIC
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	deathsound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -34,7 +33,8 @@
 	var/hackedcheck[1]
 	var/devillawcheck[5]
 
-	var/sensors_on = 0
+	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
+	var/sensors_on = TRUE
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
@@ -57,6 +57,7 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
+	add_sensors()
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -214,6 +215,9 @@
 		statelaws()
 
 	if (href_list["printlawtext"]) // this is kinda backwards
+		if (href_list["dead"] && (!isdead(usr) && !usr.client.holder)) // do not print deadchat law notice if the user is now alive
+			to_chat(usr, "<span class='warning'>You cannot view law changes that were made while you were dead.</span>")
+			return
 		to_chat(usr, href_list["printlawtext"])
 
 	return
@@ -333,6 +337,12 @@
 	usr << browse(list, "window=laws")
 
 /mob/living/silicon/proc/ai_roster()
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
+
 	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 387, 420)
 	popup.set_content(GLOB.data_core.get_manifest_html())
 	popup.open()
@@ -423,3 +433,6 @@
 
 /mob/living/silicon/handle_high_gravity(gravity)
 	return
+
+/mob/living/silicon/rust_heretic_act()
+	adjustBruteLoss(500)

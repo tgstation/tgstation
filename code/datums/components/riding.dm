@@ -18,6 +18,7 @@
 	var/ride_check_rider_incapacitated = FALSE
 	var/ride_check_rider_restrained = FALSE
 	var/ride_check_ridden_incapacitated = FALSE
+	var/ride_check_ridden_restrained = FALSE
 
 	var/del_on_unbuckle_all = FALSE
 
@@ -64,7 +65,10 @@
 /datum/component/riding/proc/ride_check(mob/living/M)
 	var/atom/movable/AM = parent
 	var/mob/AMM = AM
-	if((ride_check_rider_restrained && M.restrained(TRUE)) || (ride_check_rider_incapacitated && M.incapacitated(FALSE, TRUE)) || (ride_check_ridden_incapacitated && istype(AMM) && AMM.incapacitated(FALSE, TRUE)))
+	var/kick_us_off
+	if((ride_check_rider_restrained && M.restrained(TRUE)) || (ride_check_rider_incapacitated && M.incapacitated(TRUE, TRUE)))
+		kick_us_off = TRUE
+	if(kick_us_off || (istype(AMM) && ((ride_check_ridden_restrained && AMM.restrained(TRUE)) || (ride_check_ridden_incapacitated && AMM.incapacitated(TRUE, TRUE)))))
 		M.visible_message("<span class='warning'>[M] falls off of [AM]!</span>", \
 						"<span class='warning'>You fall off of [AM]!</span>")
 		AM.unbuckle_mob(M)
@@ -153,7 +157,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
+			buckled_mob.client.view_size.resetToDefault()
 
 //MOVEMENT
 /datum/component/riding/proc/turf_check(turf/next, turf/current)
@@ -329,6 +333,9 @@
 		else
 			inhand.rider = riding_target_override
 		inhand.parent = AM
+		for(var/obj/item/I in user.held_items) // yes i know this sucks but these are ABSTRACT++ dumbness and i'm not adding a whole new flag for these two meme items
+			if((I.obj_flags & HAND_ITEM))
+				qdel(I)
 		if(user.put_in_hands(inhand, TRUE))
 			amount_equipped++
 		else

@@ -13,6 +13,9 @@
 	px_y = -8
 	stam_damage_coeff = 1
 	max_stamina_damage = 100
+	wound_resistance = 5
+	disabled_wound_penalty = 25
+	scars_covered_by_clothes = FALSE
 
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/obj/item/organ/brain/brain = null //The brain organ
@@ -91,7 +94,7 @@
 
 
 /obj/item/bodypart/head/can_dismember(obj/item/I)
-	if(!((owner.stat == DEAD) || owner.InFullCritical()))
+	if(owner && !((owner.stat == DEAD) || owner.InFullCritical()))
 		return FALSE
 	return ..()
 

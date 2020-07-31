@@ -19,7 +19,7 @@
 /obj/structure/plaque/static_plaque/golden/captain
 	name = "The Most Robust Captain Award for Robustness"
 
-//These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic, not gold.
+//These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
 //See: code>game>objects>structures>signs>_signs.dm
 
 /obj/structure/sign/plaques/kiddie
@@ -47,3 +47,4 @@
 	name = "\improper Mr. Deempisi portrait"
 	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
 	icon_state = "monkey_painting"
+	custom_materials = list(/datum/material/wood = 2000) //The same as /obj/structure/sign/picture_frame

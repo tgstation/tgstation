@@ -14,6 +14,7 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
 	material_modifier = 0.01
+	max_integrity = 100
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
@@ -29,6 +30,15 @@
 	var/material_type
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
 	var/obj/structure/table/tableVariant // we tables now (stores table variant to be built from this stack)
+
+		// The following are all for medical treatment, they're here instead of /stack/medical because sticky tape can be used as a makeshift bandage or splint
+	/// If set and this used as a splint for a broken bone wound, this is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
+	var/splint_factor
+	/// How much blood flow this stack can absorb if used as a bandage on a cut wound, note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
+	var/absorption_capacity
+	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in ticks is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
+	var/absorption_rate
+
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
@@ -65,7 +75,7 @@
 		var/datum/material/M = SSmaterials.GetMaterialRef(material_type) //First/main material
 		for(var/i in M.categories)
 			switch(i)
-				if(MAT_CATEGORY_RIGID && MAT_CATEGORY_BASE_RECIPES)
+				if(MAT_CATEGORY_BASE_RECIPES)
 					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
 					recipes += temp
 	update_weight()
@@ -265,6 +275,17 @@
 				qdel(I)
 		//BubbleWrap END
 
+/obj/item/stack/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, amount))
+		add(clamp(vval, 1-amount, max_amount - amount)) //there must always be one.
+		return TRUE
+	else if(vname == NAMEOF(src, max_amount))
+		max_amount = max(vval, 1)
+		add((max_amount < amount) ? (max_amount - amount) : 0) //update icon, weight, ect
+		return TRUE
+	return ..()
+
+
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (get_amount() < R.req_amount*multiplier)
 		if (R.req_amount*multiplier>1)
@@ -320,10 +341,13 @@
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check)
-		zero_amount()
-	for(var/i in mats_per_unit)
-		custom_materials[i] = amount * mats_per_unit[i]
+	if(check && zero_amount())
+		return TRUE
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
+		for(var/i in mats_per_unit)
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 	return TRUE
@@ -355,10 +379,11 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
-	if(mats_per_unit && mats_per_unit.len)
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
 		for(var/i in mats_per_unit)
-			custom_materials[i] = mats_per_unit[i] * src.amount
-		set_custom_materials() //Refresh
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 

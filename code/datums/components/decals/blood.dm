@@ -1,7 +1,7 @@
 /datum/component/decal/blood
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-/datum/component/decal/blood/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_STRENGTH_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
+/datum/component/decal/blood/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_TYPE_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()

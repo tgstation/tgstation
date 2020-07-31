@@ -9,6 +9,8 @@
 #define TEXT_EAST			"[EAST]"
 #define TEXT_WEST			"[WEST]"
 
+/// Inverse direction, taking into account UP|DOWN if necessary.
+#define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			28		//mutations. Tk headglows, cold resistance glow, etc
@@ -117,6 +119,12 @@
 #define SHOES_UNTIED 0
 #define SHOES_TIED 1
 #define SHOES_KNOTTED 2
+
+//how fast a disposal machinery thing is ejecting things
+#define EJECT_SPEED_SLOW 	1
+#define EJECT_SPEED_MED		2
+#define EJECT_SPEED_FAST	4
+#define EJECT_SPEED_YEET	6
 
 //Cache of bloody footprint images
 //Key:
@@ -403,6 +411,9 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define LOCATIONS_FILE "locations.json"
 #define WANTED_FILE "wanted_message.json"
 #define VISTA_FILE "steve.json"
+#define FLESH_SCAR_FILE "wounds/flesh_scar_desc.json"
+#define BONE_SCAR_FILE "wounds/bone_scar_desc.json"
+#define SCAR_LOC_FILE "wounds/scar_loc.json"
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
@@ -486,6 +497,11 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define ALIGNMENT_GOOD "good"
 #define ALIGNMENT_NEUT "neutral"
 #define ALIGNMENT_EVIL "evil"
+
+
+// Play time / EXP
+#define PLAYTIME_HARDCORE_RANDOM 120
+#define PLAYTIME_VETERAN 300000 //Playtime is tracked in minutes. 300,000 minutes = 5,000 hours
 
 // The alpha we give to stuff under tiles, if they want it
 #define ALPHA_UNDERTILE 128

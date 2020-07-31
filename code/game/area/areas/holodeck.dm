@@ -24,26 +24,19 @@
 	ASSERT(!istype(A, /area/holodeck))
 	return A.powered(chan)
 
-/area/holodeck/usage(var/chan)
-	if(!linked)
-		return 0
-	var/area/A = get_area(linked)
-	ASSERT(!istype(A, /area/holodeck))
-	return A.usage(chan)
-
 /area/holodeck/addStaticPower(value, powerchannel)
 	if(!linked)
 		return
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
-	return A.addStaticPower(value,powerchannel)
+	return ..()
 
 /area/holodeck/use_power(amount, chan)
 	if(!linked)
 		return 0
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
-	return A.use_power(amount,chan)
+	return ..()
 
 
 /*
