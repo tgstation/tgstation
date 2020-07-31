@@ -13,18 +13,19 @@ export const settingsMiddleware = store => {
   return next => action => {
     const { type, payload } = action;
     if (!initialized) {
-      next(action);
       initialized = true;
-      const settings = storage.get('panel-settings');
-      if (settings) {
+      storage.get('panel-settings').then(settings => {
+        if (!settings) {
+          return;
+        }
         // Set client theme
         const { theme } = settings;
         if (theme) {
           sendChangeTheme(theme);
         }
         store.dispatch(loadSettings(settings));
-      }
-      return;
+      });
+      return next(action);
     }
     if (type === 'settings/update') {
       // Set client theme

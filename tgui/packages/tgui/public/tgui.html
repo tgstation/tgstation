@@ -182,8 +182,6 @@ window.onerror = function (msg, url, line, col, error) {
       stack += ':' + col;
     }
   }
-  // Append user agent info
-  stack += '\nUser Agent: ' + navigator.userAgent;
   // Augment the stack
   stack = window.__augmentStack__(stack, error);
   // Print error to the page
@@ -224,9 +222,9 @@ window.onerror = function (msg, url, line, col, error) {
   return true;
 };
 
-// Helper stub for augmenting stack traces on fatal errors
+// Helper for augmenting stack traces on fatal errors
 window.__augmentStack__ = function (stack, error) {
-  return stack;
+  return stack + '\nUser Agent: ' + navigator.userAgent;
 };
 
 // Early initialization

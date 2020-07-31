@@ -1,9 +1,5 @@
-export const changeChatPage = page => ({
-  type: 'chat/changePage',
-  payload: { page },
-});
+import { createAction } from 'common/redux';
 
-export const updateMessageCount = countByType => ({
-  type: 'chat/updateMessageCount',
-  payload: { countByType },
-});
+export const changeChatPage = createAction('chat/changePage');
+export const updateMessageCount = createAction('chat/updateMessageCount');
+export const loadChat = createAction('chat/load');

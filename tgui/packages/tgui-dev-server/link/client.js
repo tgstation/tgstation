@@ -68,7 +68,10 @@ const serializeObject = obj => {
       }
       refs.push(value);
       // Error object
-      if (value instanceof Error) {
+      const isError = value instanceof Error || (
+        value.code && value.message && value.message.includes('Error')
+      );
+      if (isError) {
         return {
           __error__: true,
           string: String(value),

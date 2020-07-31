@@ -89,18 +89,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
 		return
 
-	// Keypress passthrough
-	if(href_list["__keydown"])
-		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
-		if(keycode)
-			keyDown(keycode)
-		return
-	if(href_list["__keyup"])
-		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
-		if(keycode)
-			keyUp(keycode)
-		return
-
 	// Tgui Topic middleware
 	if(tgui_Topic(href_list))
 		return

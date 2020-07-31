@@ -1,4 +1,5 @@
 import { toArray } from 'common/collections';
+import { changeChatPage, updateMessageCount } from './actions';
 import { DEFAULT_PAGE } from './constants';
 import { canPageAcceptType } from './selectors';
 
@@ -11,15 +12,15 @@ export const initialState = {
 
 export const chatReducer = (state = initialState, action) => {
   const { type, payload } = action;
-  if (type === 'chat/changePage') {
-    const { page } = payload;
+  if (type === changeChatPage.type) {
+    const page = payload;
     return {
       ...state,
       currentPage: page.id,
     };
   }
-  if (type === 'chat/updateMessageCount') {
-    const { countByType } = payload;
+  if (type === updateMessageCount.type) {
+    const countByType = payload;
     const pages = toArray(state.pageById);
     const nextPageById = { ...state.pageById };
     for (let page of pages) {

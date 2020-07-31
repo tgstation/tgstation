@@ -41,45 +41,47 @@ export const telemetryMiddleware = store => {
     // Keep telemetry up to date
     if (type === 'backend/update') {
       next(action);
-      // Extract client data
-      const client = payload?.config?.client;
-      if (!client) {
-        logger.error('backend/update payload is missing client data!');
-        return;
-      }
-      // Load telemetry
-      if (!telemetry) {
-        telemetry = storage.get('telemetry') || {};
-        if (!telemetry.connections) {
-          telemetry.connections = [];
+      (async () => {
+        // Extract client data
+        const client = payload?.config?.client;
+        if (!client) {
+          logger.error('backend/update payload is missing client data!');
+          return;
         }
-        logger.debug('retrieved telemetry from storage', telemetry);
-      }
-      // Append a connection record
-      let telemetryMutated = false;
-      const duplicateConnection = telemetry.connections
-        .find(conn => connectionsMatch(conn, client));
-      if (!duplicateConnection) {
-        telemetryMutated = true;
-        telemetry.connections.unshift(client);
-        if (telemetry.connections.length > MAX_CONNECTIONS_STORED) {
-          telemetry.connections.pop();
+        // Load telemetry
+        if (!telemetry) {
+          telemetry = await storage.get('telemetry') || {};
+          if (!telemetry.connections) {
+            telemetry.connections = [];
+          }
+          logger.debug('retrieved telemetry from storage', telemetry);
         }
-      }
-      // Save telemetry
-      if (telemetryMutated) {
-        logger.debug('saving telemetry to storage', telemetry);
-        storage.set('telemetry', telemetry);
-      }
-      // Continue deferred telemetry requests
-      if (wasRequestedWithPayload) {
-        const payload = wasRequestedWithPayload;
-        wasRequestedWithPayload = null;
-        store.dispatch({
-          type: 'telemetry/request',
-          payload,
-        });
-      }
+        // Append a connection record
+        let telemetryMutated = false;
+        const duplicateConnection = telemetry.connections
+          .find(conn => connectionsMatch(conn, client));
+        if (!duplicateConnection) {
+          telemetryMutated = true;
+          telemetry.connections.unshift(client);
+          if (telemetry.connections.length > MAX_CONNECTIONS_STORED) {
+            telemetry.connections.pop();
+          }
+        }
+        // Save telemetry
+        if (telemetryMutated) {
+          logger.debug('saving telemetry to storage', telemetry);
+          storage.set('telemetry', telemetry);
+        }
+        // Continue deferred telemetry requests
+        if (wasRequestedWithPayload) {
+          const payload = wasRequestedWithPayload;
+          wasRequestedWithPayload = null;
+          store.dispatch({
+            type: 'telemetry/request',
+            payload,
+          });
+        }
+      })();
       return;
     }
     return next(action);

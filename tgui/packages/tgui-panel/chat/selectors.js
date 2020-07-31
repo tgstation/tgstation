@@ -1,5 +1,7 @@
 import { toArray } from 'common/collections';
 
+export const selectChat = state => state.chat;
+
 export const selectChatPages = state => (
   toArray(state.chat.pageById)
 );

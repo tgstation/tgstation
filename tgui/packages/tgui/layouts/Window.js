@@ -14,7 +14,7 @@ import { toggleKitchenSink, useDebug } from '../debug';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
 import { createLogger } from '../logging';
 import { useDispatch } from '../store';
-import { Layout, refocusLayout } from './Layout';
+import { Layout } from './Layout';
 
 const logger = createLogger('Window');
 
@@ -38,7 +38,6 @@ export class Window extends Component {
       setWindowKey(config.window.key);
     }
     recallWindowGeometry(options);
-    refocusLayout();
   }
 
   render() {

@@ -1,13 +1,10 @@
-import { classes } from 'common/react';
 import { EventEmitter } from 'common/events';
+import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
-import { DEFAULT_PAGE, MESSAGE_TYPES } from './constants';
+import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, DEFAULT_PAGE, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES } from './constants';
 import { canPageAcceptType } from './selectors';
 
 const logger = createLogger('chatRenderer');
-
-const COMBINE_MAX_MESSAGES = 3;
-const COMBINE_MAX_TIME_WINDOW = 5000;
 
 // We consider this as the smallest possible scroll offset
 // that is still trackable.
@@ -26,6 +23,52 @@ const findNearestScrollableParent = startingNode => {
     node = node.parentElement;
   }
   return window;
+};
+
+export const createMessage = payload => ({
+  ...payload,
+  createdAt: Date.now(),
+});
+
+export const serializeMessage = message => ({
+  type: message.type,
+  text: message.text,
+  times: message.times,
+  createdAt: message.createdAt,
+});
+
+export const createReconnectedMessage = () => {
+  const node = document.createElement('div');
+  node.className = 'Chat__reconnected';
+  return createMessage({
+    type: 'internal',
+    text: 'Reconnected',
+    node,
+  });
+};
+
+/**
+ * Assigns a "times-repeated" badge to the message.
+ */
+const updateMessageBadge = message => {
+  const { node, times } = message;
+  if (!node || !times) {
+    // Nothing to update
+    return;
+  }
+  const foundBadge = node.querySelector('.Chat__badge');
+  const badge = foundBadge || document.createElement('div');
+  badge.textContent = times;
+  badge.className = classes([
+    'Chat__badge',
+    'Chat__badge--animate',
+  ]);
+  requestAnimationFrame(() => {
+    badge.className = 'Chat__badge';
+  });
+  if (!foundBadge) {
+    node.appendChild(badge);
+  }
 };
 
 class ChatRenderer {
@@ -59,6 +102,8 @@ class ChatRenderer {
         logger.debug('tracking', this.scrollTracking);
       }
     };
+    // Periodic message pruning
+    setInterval(() => this.pruneMessages(), MESSAGE_PRUNE_INTERVAL);
   }
 
   mount(node) {
@@ -76,8 +121,8 @@ class ChatRenderer {
     this.scrollToBottom();
     // Flush the queue
     if (this.queue.length > 0) {
-      this.queue = [];
       this.processBatch(this.queue);
+      this.queue = [];
     }
   }
 
@@ -145,35 +190,25 @@ class ChatRenderer {
     const countByType = {};
     let node;
     for (let payload of batch) {
-      const message = { ...payload };
+      const message = createMessage(payload);
       // Combine messages
       const combinable = this.getCombinableMessage(message);
       if (combinable) {
-        const node = combinable.node;
         combinable.times = (combinable.times || 1) + 1;
-        // Add the combined message badge
-        const foundBadge = node.querySelector('.Chat__badge');
-        const badge = foundBadge || document.createElement('div');
-        badge.textContent = combinable.times;
-        badge.className = classes([
-          'Chat__badge',
-          'Chat__badge--animate',
-        ]);
-        requestAnimationFrame(() => {
-          badge.className = 'Chat__badge';
-        });
-        if (!foundBadge) {
-          node.appendChild(badge);
-        }
+        updateMessageBadge(combinable);
         continue;
       }
+      // Reuse message node
+      if (message.node) {
+        node = message.node;
+      }
       // Create message node
-      node = document.createElement('div');
-      node.innerHTML = message.text;
-      // Store the node in the message
-      message.node = node;
-      // Store a timestamp
-      message.createdAt = Date.now();
+      else {
+        node = document.createElement('div');
+        node.innerHTML = message.text;
+        // Store the node in the message
+        message.node = node;
+      }
       // Query all possible selectors to find out the message type
       if (!message.type) {
         const typeDef = MESSAGE_TYPES.find(typeDef => (
@@ -181,6 +216,7 @@ class ChatRenderer {
         ));
         message.type = typeDef?.type || 'unknown';
       }
+      updateMessageBadge(message);
       if (!countByType[message.type]) {
         countByType[message.type] = 0;
       }
@@ -195,11 +231,25 @@ class ChatRenderer {
     if (node) {
       this.rootNode.appendChild(fragment);
       if (this.scrollTracking) {
-        this.scrollToBottom();
+        setImmediate(() => this.scrollToBottom());
       }
     }
     // Notify subscribers that we have processed the batch
     this.events.emit('batchProcessed', countByType);
+  }
+
+  pruneMessages() {
+    if (!this.rootNode) {
+      return;
+    }
+    const messages = this.visibleMessages;
+    const fromIndex = Math.max(0, messages.length - MAX_VISIBLE_MESSAGES);
+    this.visibleMessages = messages.slice(fromIndex);
+    for (let i = 0; i < fromIndex; i++) {
+      const message = messages[i];
+      this.rootNode.removeChild(message.node);
+    }
+    logger.debug(`pruned ${fromIndex} messages`);
   }
 }
 

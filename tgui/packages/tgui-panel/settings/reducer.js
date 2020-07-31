@@ -1,7 +1,7 @@
 const initialState = {
   visible: false,
   fontSize: 9,
-  lineHeight: 1.5,
+  lineHeight: 1.4,
   theme: 'dark',
   adminMusicVolume: 1,
 };

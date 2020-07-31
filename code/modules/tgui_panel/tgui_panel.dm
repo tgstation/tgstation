@@ -38,23 +38,19 @@
  */
 /datum/tgui_panel/proc/initialize(force = FALSE)
 	set waitfor = FALSE
-	// Skin is broken
+	// BYOND skin is broken
 	if(!winexists(client, "browseroutput"))
 		broken = TRUE
 		message_admins("Couldn't start chat for [key_name_admin(client)]!")
 		alert(client.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
 		return
 	initialized_at = world.time
-	// Browser was initialized
-	if(!force && winget(client, "browseroutput", "is-visible") == "true")
-		window.status = TGUI_WINDOW_LOADING
 	// Perform a clean initialization
-	else
-		window.initialize(inline_assets = list(
-			get_asset_datum(/datum/asset/simple/tgui_common),
-			get_asset_datum(/datum/asset/simple/tgui_panel),
-		))
-		window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
+	window.initialize(inline_assets = list(
+		get_asset_datum(/datum/asset/simple/tgui_common),
+		get_asset_datum(/datum/asset/simple/tgui_panel),
+	))
+	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
 	request_telemetry()
 	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 2 SECONDS)
 

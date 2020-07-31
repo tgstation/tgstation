@@ -38,21 +38,21 @@ export const broadcastMessage = (link, msg) => {
 const deserializeObject = str => {
   return JSON.parse(str, (key, value) => {
     if (typeof value === 'object' && value !== null) {
-      if (value.__error__) {
-        if (!value.stack) {
-          return value.string;
-        }
-        return retrace(value.stack);
-      }
-      if (value.__number__) {
-        return parseFloat(value.__number__);
-      }
       if (value.__undefined__) {
         // NOTE: You should not rely on deserialized object's undefined,
         // this is purely for inspection purposes.
         return {
           [inspect.custom]: () => undefined,
         };
+      }
+      if (value.__number__) {
+        return parseFloat(value.__number__);
+      }
+      if (value.__error__) {
+        if (!value.stack) {
+          return value.string;
+        }
+        return retrace(value.stack);
       }
       return value;
     }

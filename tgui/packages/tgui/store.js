@@ -56,15 +56,20 @@ const loggingMiddleware = store => next => action => {
  * to augment reported stack traces with useful data for debugging.
  */
 const createStackAugmentor = store => (stack, error) => {
+  if (error && typeof error === 'object' && !error.stack) {
+    error.stack = stack;
+  }
   logger.log('FatalError:', error || stack);
   const state = store.getState();
-  return stack + '\nState: ' + JSON.stringify({
+  let augmentedStack = stack;
+  augmentedStack += '\nUser Agent: ' + navigator.userAgent;
+  augmentedStack += '\nState: ' + JSON.stringify({
     config: state?.backend?.config,
     suspended: state?.backend?.suspended,
     suspending: state?.backend?.suspending,
   });
+  return augmentedStack;
 };
-
 
 export class StoreProvider extends Component {
   getChildContext() {

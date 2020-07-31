@@ -62,8 +62,6 @@ const renderApp = createRenderer(() => {
   );
 });
 
-logger.log('Hello!');
-
 const setupApp = () => {
   // Delay setup
   if (document.readyState === 'loading') {

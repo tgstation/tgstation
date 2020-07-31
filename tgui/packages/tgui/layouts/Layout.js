@@ -67,4 +67,8 @@ const LayoutContent = props => {
   );
 };
 
+LayoutContent.defaultHooks = {
+  onComponentDidMount: () => refocusLayout(),
+};
+
 Layout.Content = LayoutContent;

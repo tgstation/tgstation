@@ -1,5 +1,8 @@
 @use 'sass:color';
+@use '~tgui/styles/base.scss';
 @use '~tgui/styles/colors.scss';
+
+$color-bg: color.adjust(base.$color-bg, $lightness: -4%);
 
 .Chat {
   color: #abc6ec;
@@ -34,4 +37,26 @@
   right: 2em;
   bottom: 1em;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+}
+
+.Chat__reconnected {
+  font-size: 0.85em;
+  text-align: center;
+  margin: 1em 0 2em;
+
+  &:before {
+    content: 'Reconnected';
+    display: inline-block;
+    border-radius: 1em;
+    padding: 0 0.7em;
+    color: colors.$red;
+    background-color: $color-bg;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    margin-top: -0.75em;
+    border-bottom: (1em / 6) solid colors.$red;
+  }
 }

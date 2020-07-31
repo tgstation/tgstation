@@ -83,7 +83,7 @@ const touchRecents = (recents, touchedItem, limit = 50) => {
   return [nextRecents, trimmedItem];
 };
 
-export const storeWindowGeometry = () => {
+export const storeWindowGeometry = async () => {
   logger.log('storing geometry');
   const geometry = {
     pos: getWindowPosition(),
@@ -92,7 +92,7 @@ export const storeWindowGeometry = () => {
   storage.set(windowKey, geometry);
   // Update the list of stored geometries
   const [geometries, trimmedKey] = touchRecents(
-    storage.get('geometries') || [],
+    await storage.get('geometries') || [],
     windowKey);
   if (trimmedKey) {
     storage.remove(trimmedKey);
@@ -102,7 +102,7 @@ export const storeWindowGeometry = () => {
 
 export const recallWindowGeometry = async (options = {}) => {
   // Only recall geometry in fancy mode
-  const geometry = options.fancy && storage.get(windowKey);
+  const geometry = options.fancy && await storage.get(windowKey);
   if (geometry) {
     logger.log('recalled geometry:', geometry);
   }
