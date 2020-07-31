@@ -1206,8 +1206,4 @@
 
 /// Returns if the carbon is wearing shock proof gloves
 /mob/living/carbon/proc/wearing_shock_proof_gloves()
-	if (gloves)
-		var/obj/item/clothing/gloves/G = gloves
-		return G.siemens_coefficient == 0
-
-	return FALSE
+	return gloves?.siemens_coefficient == 0

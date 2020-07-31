@@ -17,8 +17,8 @@
 	..()
 
 /datum/wires/airlock/interact(mob/user)
-	var/obj/machinery/door/airlock/A = holder
-	if (!issilicon(user) && A.isElectrified() && A.shock(user, 100))
+	var/obj/machinery/door/airlock/airlock_holder = holder
+	if (!issilicon(user) && airlock_holder.isElectrified() && airlock_holder.shock(user, 100))
 		return
 
 	return ..()
@@ -26,8 +26,8 @@
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
 	if(!issilicon(user) && A.isElectrified())
-		var/mob/living/carbon/C = user
-		if (!istype(C) || C.should_electrocute(src))
+		var/mob/living/carbon/carbon_user = user
+		if (!istype(carbon_user) || carbon_user.should_electrocute(src))
 			return FALSE
 
 	if(A.panel_open)

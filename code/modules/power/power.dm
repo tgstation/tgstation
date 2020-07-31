@@ -278,7 +278,7 @@
 /// Extracts the powernet and cell of the provided power source
 /proc/get_powernet_info_from_source(power_source)
 	var/area/source_area
-	if (istype(power_source, /area))
+	if (isarea(power_source))
 		source_area = power_source
 		power_source = source_area.get_apc()
 	else if (istype(power_source, /obj/structure/cable))
@@ -297,10 +297,8 @@
 		cell = apc.cell
 		if (apc.terminal)
 			PN = apc.terminal.powernet
-	else if (!power_source)
-		return
 	else
-		return
+		return FALSE
 
 	if (!cell && !PN)
 		return
@@ -314,17 +312,17 @@
 //siemens_coeff - layman's terms, conductivity
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
-	if(!istype(M) || ismecha(M.loc))
-		return 0	//feckin mechs are dumb
+/proc/electrocute_mob(mob/living/carbon/victim, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
+	if(!istype(victim) || ismecha(victim.loc))
+		return FALSE //feckin mechs are dumb
 
 	if(dist_check)
-		if(!in_range(source,M))
+		if(!in_range(source, victim))
 			return FALSE
 
-	if(M.wearing_shock_proof_gloves())
-		SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
-		return FALSE		//to avoid spamming with insulated glvoes on
+	if(victim.wearing_shock_proof_gloves())
+		SEND_SIGNAL(victim, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
+		return FALSE //to avoid spamming with insulated glvoes on
 
 	var/list/powernet_info = get_powernet_info_from_source(power_source)
 	if (!powernet_info)
@@ -340,14 +338,14 @@
 	if (cell)
 		cell_damage = cell.get_electrocute_damage()
 	var/shock_damage = 0
-	if (PN_damage>=cell_damage)
+	if (PN_damage >= cell_damage)
 		power_source = PN
 		shock_damage = PN_damage
 	else
 		power_source = cell
 		shock_damage = cell_damage
-	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
-	log_combat(source, M, "electrocuted")
+	var/drained_hp = victim.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
+	log_combat(source, victim, "electrocuted")
 
 	var/drained_energy = drained_hp*20
 
