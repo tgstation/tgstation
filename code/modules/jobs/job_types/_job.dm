@@ -67,9 +67,6 @@
 
 	var/bounty_types = CIV_JOB_BASIC
 
-	/// List of skillchips that this job starts with. Any skillchips that exceed the maximum allowable limit will not be applied. See max_skillchip_slots in /mob/living/carbon/.
-	var/list/skillchip
-
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
@@ -95,14 +92,6 @@
 		var/mob/living/carbon/human/experiencer = H
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
-
-	// Insert any skillchips associated with this job into the target's brain.
-	if(skillchip)
-		var/mob/living/carbon/carbon = H
-		if(istype(H))
-			var/obj/item/skillchip/S = new skillchip()
-			if(!carbon.implant_skillchip(S))
-				qdel(S)
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
@@ -210,6 +199,8 @@
 
 	var/pda_slot = ITEM_SLOT_BELT
 
+	var/obj/item/skillchip/skillchip = null
+
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backpack)
 		if(GBACKPACK)
@@ -271,12 +262,20 @@
 	if(H.client?.prefs.playtime_reward_cloak)
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
+	// Insert any skillchips associated with this job into the target's brain.
+	if(skillchip && istype(H))
+		var/obj/item/skillchip/S = new skillchip()
+		if(!H.implant_skillchip(S))
+			qdel(S)
+
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
 	types -= /obj/item/storage/backpack //otherwise this will override the actual backpacks
 	types += backpack
 	types += satchel
 	types += duffelbag
+	if(skillchip)
+		types += skillchip
 	return types
 
 //Warden and regular officers add this result to their get_access()

@@ -112,9 +112,9 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 
 	// Do skillchip code after DNA code.
 	// There's a mutation that increases chip capacity, even though we force-implant skillchips.
-	
+
 	// Remove existing skillchips.
-	user.destroy_all_skillchips()
+	user.destroy_all_skillchips(silent = FALSE)
 
 	// Add new set of skillchips.
 	for(var/S in chosen_prof.skillchips)

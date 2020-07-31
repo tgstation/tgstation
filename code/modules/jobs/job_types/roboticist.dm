@@ -19,8 +19,6 @@
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 
-	skillchip = /obj/item/skillchip/roboticist
-
 /datum/outfit/job/roboticist
 	name = "Roboticist"
 	jobtype = /datum/job/roboticist
@@ -35,3 +33,5 @@
 	satchel = /obj/item/storage/backpack/satchel/tox
 
 	pda_slot = ITEM_SLOT_LPOCKET
+
+	skillchip = /obj/item/skillchip/roboticist

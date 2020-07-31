@@ -142,7 +142,13 @@
 /**
   * Destroys all skillchips in the brain, calling on_removal if the brain has an owner.
   */
-/mob/living/carbon/proc/destroy_all_skillchips()
+/mob/living/carbon/proc/destroy_all_skillchips(silent = FALSE)
+	// Check the target's brain, making sure the target exists and has a brain.
 	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
-	if(!QDELETED(brain))
-		brain.destroy_all_skillchips()
+	if(QDELETED(brain))
+		return FALSE
+
+	for(var/obj/item/skillchip/skillchip in skillchips)
+		skillchip.on_removal(src, silent)
+
+	brain.destroy_all_skillchips()
