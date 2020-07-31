@@ -5,8 +5,8 @@
 	switch(event_code)
 		if(TGS_EVENT_REBOOT_MODE_CHANGE)
 			var/list/reboot_mode_lookup = list ("[TGS_REBOOT_MODE_NORMAL]" = "be normal", "[TGS_REBOOT_MODE_SHUTDOWN]" = "shutdown the server", "[TGS_REBOOT_MODE_RESTART]" = "hard restart the server")
-			var old_reboot_mode = args[2]
-			var new_reboot_mode = args[3]
+			var/old_reboot_mode = args[2]
+			var/new_reboot_mode = args[3]
 			message_admins("TGS: Reboot will no longer [reboot_mode_lookup["[old_reboot_mode]"]], it will instead [reboot_mode_lookup["[new_reboot_mode]"]]")
 		if(TGS_EVENT_PORT_SWAP)
 			message_admins("TGS: Changing port from [world.port] to [args[2]]")

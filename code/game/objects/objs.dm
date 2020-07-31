@@ -196,6 +196,8 @@
 
 /obj/singularity_pull(S, current_size)
 	..()
+	if(move_resist == INFINITY)
+		return
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
