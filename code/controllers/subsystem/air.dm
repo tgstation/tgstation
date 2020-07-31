@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(air)
 		resumed = 0
 	currentpart = SSAIR_REBUILD_PIPENETS
 
-	SStgui.update_uis(SStgui) //Lightning fast debugging motherfucker
+	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
@@ -260,7 +260,7 @@ SUBSYSTEM_DEF(air)
 	if(currentpart == SSAIR_ACTIVETURFS)
 		currentrun -= T
 	#ifdef VISUALIZE_ACTIVE_TURFS //Use this when you want details about how the turfs are moving, display_all_groups should work for normal operation
-	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANTGREEN)
+	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
 	#endif
 	if(istype(T))
 		T.excited = 0
@@ -270,7 +270,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
-		T.add_atom_colour(COLOR_VIBRANTGREEN, TEMPORARY_COLOUR_PRIORITY)
+		T.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
 		#endif
 		T.excited = 1
 		active_turfs |= T
@@ -308,7 +308,7 @@ SUBSYSTEM_DEF(air)
 	#ifdef VISUALIZE_ACTIVE_TURFS
 	for(var/jumpy in active_turfs)
 		var/turf/active = jumpy
-		active.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANTGREEN)
+		active.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
 	#endif
 	active_turfs.Cut()
 
