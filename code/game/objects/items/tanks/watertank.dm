@@ -23,6 +23,12 @@
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
 
+
+/obj/item/watertank/Destroy()
+	QDEL_NULL(noz)
+	return ..()
+
+
 /obj/item/watertank/ui_action_click(mob/user)
 	toggle_mister(user)
 
@@ -69,10 +75,6 @@
 			var/mob/M = noz.loc
 			M.temporarilyRemoveItemFromInventory(noz, TRUE)
 		noz.forceMove(src)
-
-/obj/item/watertank/Destroy()
-	QDEL_NULL(noz)
-	return ..()
 
 /obj/item/watertank/attack_hand(mob/user)
 	if (user.get_item_by_slot(user.getBackSlot()) == src)
@@ -217,6 +219,7 @@
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
+	chem = null //holds no chems of its own, it takes from the tank.
 	var/obj/item/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -229,6 +232,12 @@
 		return INITIALIZE_HINT_QDEL
 	reagents = tank.reagents
 	max_water = tank.volume
+
+
+/obj/item/extinguisher/mini/nozzle/Destroy()
+	reagents = null //This is a borrowed reference from the tank.
+	tank = null
+	return ..()
 
 
 /obj/item/extinguisher/mini/nozzle/doMove(atom/destination)

@@ -348,10 +348,14 @@ SUBSYSTEM_DEF(persistence)
 				if(R.LoadOldRecipe(recipe_data) && (daysSince(R.created) <= R.persistence_period))
 					loaded = TRUE
 		if(!loaded) //We do not have information for whatever reason, just generate new one
+			if(R.persistent)
+				log_game("Resetting persistent [randomized_type] random recipe.")
 			R.GenerateRecipe()
 
 		if(!R.HasConflicts()) //Might want to try again if conflicts happened in the future.
 			add_chemical_reaction(R)
+		else
+			log_game("Randomized recipe [randomized_type] resulted in conflicting recipes.")
 
 /datum/controller/subsystem/persistence/proc/SaveRandomizedRecipes()
 	var/json_file = file("data/RandomizedChemRecipes.json")

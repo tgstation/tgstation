@@ -406,13 +406,13 @@
 #undef issyrinormusc
 /******COMBOS******/
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
-/datum/reagent/medicine/c2/instabitaluri
-	name = "Synthflesh (Instabitaluri)"
+/datum/reagent/medicine/c2/synthflesh
+	name = "Synthflesh"
 	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/c2/instabitaluri/expose_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		var/mob/living/carbon/carbies = M
 		if (carbies.stat == DEAD)
@@ -427,7 +427,7 @@
 			if(show_message)
 				to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/instabitaluri) + reac_volume >= 100))
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= 100))
 				carbies.cure_husk("burn")
 				carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 	..()
