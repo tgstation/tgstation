@@ -206,7 +206,8 @@
 	if(brainmob)
 		QDEL_NULL(brainmob)
 	QDEL_LIST(traumas)
-	QDEL_LIST(skillchips)
+
+	destroy_all_skillchips()
 	return ..()
 
 /obj/item/organ/brain/on_life()

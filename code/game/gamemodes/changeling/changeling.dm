@@ -105,19 +105,22 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	user.undershirt = chosen_prof.undershirt
 	user.socks = chosen_prof.socks
 
-	// Remove all old stolen skillchip traits.
-	for(var/T in user.status_traits)
-		if(CHANGELING_SKILLCHIP_TRAIT in user.status_traits[T])
-			REMOVE_TRAIT(user, T, CHANGELING_SKILLCHIP_TRAIT)
-
-	// Add a new set of stolen skillchip traits.
-	for(var/T in chosen_prof.skillchip_traits)
-		ADD_TRAIT(user, T, CHANGELING_SKILLCHIP_TRAIT)
-
 	chosen_dna.transfer_identity(user, 1)
 	user.updateappearance(mutcolor_update=1)
 	user.update_body()
 	user.domutcheck()
+
+	// Do skillchip code after DNA code.
+	// There's a mutation that increases chip capacity, even though we force-implant skillchips.
+	
+	// Remove existing skillchips.
+	user.destroy_all_skillchips()
+
+	// Add new set of skillchips.
+	for(var/S in chosen_prof.skillchips)
+		var/obj/item/skillchip/skillchip = new S()
+		skillchip.removable = FALSE
+		user.implant_skillchip(skillchip, silent = FALSE, force = TRUE)
 
 	//vars hackery. not pretty, but better than the alternative.
 	for(var/slot in GLOB.slots)

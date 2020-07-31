@@ -161,3 +161,5 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define SKILLCHIP_JOB_TYPE (1<<1)
 // Skillchip requires the target to be mindshielded to be implanted.
 #define SKILLCHIP_REQUIRE_MINDSHIELD (1<<2)
+// Used by the traitor skillchip, not implantable unless it's set to a copy of another skillchip.
+#define SKILLCHIP_CHAMELEON (1<<3)

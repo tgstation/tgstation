@@ -42,6 +42,13 @@
 		REMOVE_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
 	user.used_skillchip_slots -= slot_cost
 
+/**
+  * Checks for skillchip incompatibility with other installed chips.
+  *
+  * Returns all incompatible flags to be parsed by the calling proc.
+  * Arguments:
+  * * skillchip - The skillchip to test for implantability.
+  */
 /obj/item/skillchip/proc/check_incompatibility(obj/item/skillchip/skillchip)
 	var/incompatible_flags = 0
 
@@ -54,6 +61,14 @@
 		incompatible_flags |= SKILLCHIP_ALLOWS_MULTIPLE
 
 	return incompatible_flags
+
+/**
+  * Intended to be overridden. Returns whether the chip is in an implantable state.
+  *
+  * Returns TRUE if the chip is in an implantable state.
+  */
+/obj/item/skillchip/proc/can_implant()
+	return TRUE
 
 /obj/item/skillchip/basketweaving
 	name = "Basketsoft 3000 skillchip"

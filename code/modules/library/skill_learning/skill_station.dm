@@ -116,10 +116,13 @@
 	working = FALSE
 	work_timer = null
 	var/mob/living/carbon/carbon_occupant = occupant
-	carbon_occupant.implant_skillchip(inserted_skillchip)
+	if(carbon_occupant.implant_skillchip(inserted_skillchip))
+		inserted_skillchip = null
+		to_chat(occupant,"<span class='notice'>Operation complete!</span>")
+	else
+		to_chat(occupant,"<span class='notice'>Operation failed!</span>")
 	update_icon()
 	SStgui.update_uis(src)
-	to_chat(occupant,"<span class='notice'>Operation complete!</span>")
 
 /// Start removal.
 /obj/machinery/skill_station/proc/start_removal(obj/item/skillchip/to_be_removed)
@@ -144,9 +147,9 @@
 
 			to_chat(carbon_occupant, "<span class='notice'>Operation complete!</span>")
 		else
-			to_chat(carbon_occupant,"<span class='notice'>Operation failed! Failed to remove skillchip.</span>")
+			to_chat(carbon_occupant,"<span class='notice'>Failed to remove skillchip!</span>")
 	else
-		to_chat(carbon_occupant,"<span class='notice'>Operation failed! Occupant does not appear to be a carbon-based lifeform.</span>")
+		to_chat(carbon_occupant,"<span class='notice'>Occupant does not appear to be a carbon-based lifeform!</span>")
 
 	update_icon()
 	SStgui.update_uis(src)
@@ -161,7 +164,7 @@
 		.["error"] = "Brain not detected. Please consult nearest medical practitioner."
 	else
 		var/list/current_skills = list()
-		for(var/obj/item/skillchip/skill_chip in occupant_brain)
+		for(var/obj/item/skillchip/skill_chip in occupant_brain.skillchips)
 			current_skills += list(list("name"=skill_chip.skill_name,"icon"=skill_chip.skill_icon,"cost"=skill_chip.slot_cost,"ref"=REF(skill_chip),"active"=(skill_chip in occupant_brain.skillchips)))
 		.["current"] = current_skills
 		.["slots_used"] = carbon_occupant.used_skillchip_slots

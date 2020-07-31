@@ -291,9 +291,7 @@
 	prof.undershirt = H.undershirt
 	prof.socks = H.socks
 
-	for(var/T in H.status_traits)
-		if(SKILLCHIP_TRAIT in H.status_traits[T])
-			prof.skillchip_traits += T
+	prof.skillchips = H.get_skillchip_type_list()
 
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
@@ -528,7 +526,7 @@
 	var/undershirt
 	var/socks
 
-	var/list/skillchip_traits = list()
+	var/list/skillchips = list()
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
@@ -551,7 +549,7 @@
 	newprofile.socks = socks
 	newprofile.worn_icon_list = worn_icon_list.Copy()
 	newprofile.worn_icon_state_list = worn_icon_state_list.Copy()
-
+	newprofile.skillchips = skillchips.Copy()
 
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"

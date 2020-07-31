@@ -19,7 +19,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 
-	skillchips = list(/obj/item/skillchip/roboticist)
+	skillchip = /obj/item/skillchip/roboticist
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"

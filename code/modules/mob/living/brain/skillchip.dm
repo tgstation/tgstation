@@ -25,8 +25,6 @@
   * * skillchip - The skillchip you'd like to implant.
   */
 /obj/item/organ/brain/proc/implant_skillchip(obj/item/skillchip/skillchip)
-	// Check the brain exists.
-	forceMove(skillchip, src)
 	LAZYADD(skillchips, skillchip)
 
 	return TRUE
@@ -43,6 +41,28 @@
 
 	// If this is a job skillchip, check if any other skillchips are present.
 	for(var/obj/item/skillchip/S in skillchips)
-		incompatibility_flags &= skillchip.check_incompatibility(S)
+		incompatibility_flags |= skillchip.check_incompatibility(S)
 
 	return incompatibility_flags
+
+/**
+  * Creates a list of type paths of skillchips in the brain.
+  *
+  * Returns a simple list of typepaths.
+  */
+/obj/item/organ/brain/proc/get_skillchip_type_list()
+	var/list/skillchip_types = list()
+	// Remove and call on_removal proc if successful.
+	for(var/obj/item/skillchip/S in skillchips)
+		skillchip_types += S.type
+
+	return skillchip_types
+
+/**
+  * Destroys all skillchips in the brain, calling on_removal if the brain has an owner.
+  */
+/obj/item/organ/brain/proc/destroy_all_skillchips()
+	if(!QDELETED(owner))
+		for(var/obj/item/skillchip/skill_chip in skillchips)
+			skill_chip.on_removal(owner)
+	QDEL_LIST(skillchips)

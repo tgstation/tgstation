@@ -13,11 +13,7 @@
 		return FALSE
 	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
 	..()
-	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE | TR_KEEPSTAMINADAMAGE)
 
-	// Remove all old stolen skillchip traits.
-	for(var/T in user.status_traits)
-		if(CHANGELING_SKILLCHIP_TRAIT in user.status_traits[T])
-			REMOVE_TRAIT(user, T, CHANGELING_SKILLCHIP_TRAIT)
+	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE | TR_KEEPSTAMINADAMAGE)
 
 	return TRUE

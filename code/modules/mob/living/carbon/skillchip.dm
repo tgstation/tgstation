@@ -5,10 +5,11 @@
   * Arguments:
   * * skillchip - The skillchip you want to insert.
   * * silent - Whether or not to display the implanting message.
+  * * force - Whether to force the implant to happen. Skips checking if the chip can actually be implanted. Used by changelings.
   */
-/mob/living/carbon/proc/implant_skillchip(obj/item/skillchip/skillchip, silent = FALSE)
+/mob/living/carbon/proc/implant_skillchip(obj/item/skillchip/skillchip, silent = FALSE, force = FALSE)
 	// Check the chip can actually be implanted.
-	if(!can_implant_skillchip(skillchip))
+	if(!can_implant_skillchip(skillchip) && !force)
 		return FALSE
 
 	// Grab the brain. It should exist as can_be_implanted() checks for it.
@@ -17,6 +18,7 @@
 	// Implant and call on_apply proc if successful.
 	if(brain.implant_skillchip(skillchip))
 		skillchip.on_apply(src, silent)
+		skillchip.forceMove(brain)
 		return TRUE
 
 	return FALSE
@@ -56,6 +58,10 @@
 	if(!skillchip || !istype(skillchip))
 		return FALSE
 
+	// Skillchip is not in implantable state.
+	if(!skillchip.can_implant())
+		return FALSE
+
 	//No brain
 	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
@@ -65,8 +71,7 @@
 	if(used_skillchip_slots + skillchip.slot_cost > max_skillchip_slots)
 		return FALSE
 
-	var/incompatible_flags = brain.check_skillchip_flags(skillchip)
-	if(incompatible_flags)
+	if(brain.check_skillchip_flags(skillchip))
 		return FALSE
 
 	// Check if this skillchip requires the mob to be mindshielded.
@@ -87,7 +92,11 @@
 /mob/living/carbon/proc/can_implant_skillchip_message(obj/item/skillchip/skillchip)
 	// Not a skillchip or skillchip doesn't exist.
 	if(!skillchip || !istype(skillchip))
-		return "No valid skillchip detected."
+		return "No valid chip detected."
+
+	// Skillchip is not in implantable state.
+	if(!skillchip.can_implant())
+		return "Chip is not implantable."
 
 	//No brain
 	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
@@ -105,14 +114,35 @@
 			return "Duplicate chip detected."
 		if(incompatible_flags & SKILLCHIP_JOB_TYPE)
 			return "Existing job chip detected."
-		return "Skillchip is incompatible with existing chips."
+		return "Chip is incompatible with existing chips."
 
 	// Check if this skillchip requires the mob to be mindshielded.
 	if(!HAS_TRAIT(src, TRAIT_MINDSHIELD) && (skillchip.skillchip_flags & SKILLCHIP_REQUIRE_MINDSHIELD))
-		return "Skillchip requires mindshield."
+		return "Chip requires mindshield."
 
 	//Only one multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
 	if(!(skillchip.skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (locate(type) in brain.skillchips))
 		return "Duplicate chip detected."
 
 	return "Chip ready for implantation."
+
+/**
+  * Creates a list of type paths of skillchips in the mob's brain.
+  *
+  * Returns a simple list of typepaths.
+  */
+/mob/living/carbon/proc/get_skillchip_type_list()
+	// Check the target's brain, making sure the target exists and has a brain.
+	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(brain))
+		return list()
+
+	return brain.get_skillchip_type_list()
+
+/**
+  * Destroys all skillchips in the brain, calling on_removal if the brain has an owner.
+  */
+/mob/living/carbon/proc/destroy_all_skillchips()
+	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
+	if(!QDELETED(brain))
+		brain.destroy_all_skillchips()

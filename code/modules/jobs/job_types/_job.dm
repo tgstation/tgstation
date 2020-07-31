@@ -68,7 +68,7 @@
 	var/bounty_types = CIV_JOB_BASIC
 
 	/// List of skillchips that this job starts with. Any skillchips that exceed the maximum allowable limit will not be applied. See max_skillchip_slots in /mob/living/carbon/.
-	var/list/skillchips
+	var/list/skillchip
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
@@ -97,13 +97,12 @@
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
 	// Insert any skillchips associated with this job into the target's brain.
-	if(skillchips)
+	if(skillchip)
 		var/mob/living/carbon/carbon = H
 		if(istype(H))
-			for(var/chip_path in skillchips)
-				var/obj/item/skillchip/S = new chip_path()
-				if(!carbon?.implant_skillchip(S))
-					qdel(S)
+			var/obj/item/skillchip/S = new skillchip()
+			if(!carbon.implant_skillchip(S))
+				qdel(S)
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
