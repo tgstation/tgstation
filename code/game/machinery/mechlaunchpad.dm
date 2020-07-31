@@ -4,6 +4,8 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "mechpad"
 	circuit = /obj/item/circuitboard/machine/mechpad
+	///ID of the console, used for linking up
+	var/id = "roboticsmining"
 	///Name of the mechpad in a mechpad console
 	var/display_name = "Orbital Pad"
 	///The console the pad is linked to
@@ -14,6 +16,7 @@
 /obj/machinery/mechpad/Initialize()
 	. = ..()
 	display_name = "Orbital Pad - [get_area_name(src)]"
+	GLOB.mechpad_list += src
 
 /obj/machinery/mechpad/Destroy()
 	if(connected_console)

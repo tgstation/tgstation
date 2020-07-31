@@ -4,6 +4,8 @@
 	icon_screen = "mechpad"
 	icon_keyboard = "teleport_key"
 	circuit = /obj/item/circuitboard/computer/mechpad
+	///ID of the mechpad, used for linking up
+	var/id = "roboticsmining"
 	///Selected mechpad in the console
 	var/selected_id
 	///Mechpads that it can send mechs through to other mechpads
@@ -18,11 +20,14 @@
 	if(mapload)
 		connected_mechpad = connect_to_pad()
 		connected_mechpad.connected_console = src
+		connected_mechpad.id = id
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/mechpad/LateInitialize()
-	for(var/obj/machinery/mechpad/pad in GLOB.machines)
+	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
 		if(pad == connected_mechpad)
+			continue
+		if(pad.id != id)
 			continue
 		mechpads += pad
 		pad.consoles += src
@@ -61,6 +66,7 @@
 		else if(!connected_mechpad && buffered_console == connect_to_pad())
 			connected_mechpad = buffered_console
 			connected_mechpad.connected_console = src
+			connected_mechpad.id = id
 			multitool.buffer = null
 			to_chat(user, "<span class='notice'>You connect the console to the pad with data from the [multitool.name]'s buffer.</span>")
 		else
