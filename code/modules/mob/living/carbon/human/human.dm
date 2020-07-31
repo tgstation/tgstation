@@ -653,60 +653,63 @@
 #define CPR_PANIC_SPEED (0.8 SECONDS)
 
 /// Performs CPR on the target after a delay.
-/mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target, panicking)
-	CHECK_DNA_AND_SPECIES(target)
+/mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
+	var/panicking = FALSE
 
-	if (INTERACTING_WITH(src, target))
-		return FALSE
+	while (TRUE)
+		CHECK_DNA_AND_SPECIES(target)
 
-	if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
-		to_chat(src, "<span class='warning'>[target.name] is dead!</span>")
-		return FALSE
+		if (INTERACTING_WITH(src, target))
+			return FALSE
 
-	if (is_mouth_covered())
-		to_chat(src, "<span class='warning'>Remove your mask first!</span>")
-		return FALSE
+		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
+			to_chat(src, "<span class='warning'>[target.name] is dead!</span>")
+			return FALSE
 
-	if (target.is_mouth_covered())
-		to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
-		return FALSE
+		if (is_mouth_covered())
+			to_chat(src, "<span class='warning'>Remove your mask first!</span>")
+			return FALSE
 
-	if (!getorganslot(ORGAN_SLOT_LUNGS))
-		to_chat(src, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
-		return FALSE
+		if (target.is_mouth_covered())
+			to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
+			return FALSE
 
-	if (HAS_TRAIT(src, TRAIT_NOBREATH))
-		to_chat(src, "<span class='warning'>You do not breathe, so you cannot perform CPR!</span>")
-		return FALSE
+		if (!getorganslot(ORGAN_SLOT_LUNGS))
+			to_chat(src, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
+			return FALSE
 
-	visible_message("<span class='notice'>[src] is trying to perform CPR on [target.name]!</span>", \
-					"<span class='notice'>You try to perform CPR on [target.name]... Hold still!</span>")
+		if (HAS_TRAIT(src, TRAIT_NOBREATH))
+			to_chat(src, "<span class='warning'>You do not breathe, so you cannot perform CPR!</span>")
+			return FALSE
 
-	if (!do_mob(src, target, time = panicking ? CPR_PANIC_SPEED : null))
-		to_chat(src, "<span class='warning'>You fail to perform CPR on [target]!</span>")
-		return FALSE
+		visible_message("<span class='notice'>[src] is trying to perform CPR on [target.name]!</span>", \
+						"<span class='notice'>You try to perform CPR on [target.name]... Hold still!</span>")
 
-	if (target.health > target.crit_threshold)
-		return FALSE
+		if (!do_mob(src, target, time = panicking ? CPR_PANIC_SPEED : null))
+			to_chat(src, "<span class='warning'>You fail to perform CPR on [target]!</span>")
+			return FALSE
 
-	visible_message("<span class='notice'>[src] performs CPR on [target.name]!</span>", "<span class='notice'>You perform CPR on [target.name].</span>")
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "perform_cpr", /datum/mood_event/perform_cpr)
-	log_combat(src, target, "CPRed")
+		if (target.health > target.crit_threshold)
+			return FALSE
 
-	if (HAS_TRAIT(target, TRAIT_NOBREATH))
-		to_chat(target, "<span class='unconscious'>You feel a breath of fresh air... which is a sensation you don't recognise...</span>")
-	else if (!target.getorganslot(ORGAN_SLOT_LUNGS))
-		to_chat(target, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
-	else
-		var/suff = min(target.getOxyLoss(), 7)
-		target.adjustOxyLoss(-suff)
-		target.updatehealth()
-		to_chat(target, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
+		visible_message("<span class='notice'>[src] performs CPR on [target.name]!</span>", "<span class='notice'>You perform CPR on [target.name].</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "perform_cpr", /datum/mood_event/perform_cpr)
+		log_combat(src, target, "CPRed")
 
-	if (target.health <= target.crit_threshold)
-		if (!panicking)
-			to_chat(src, "<span class='warning'>[target] still isn't up! You try harder!</span>")
-		do_cpr(target, panicking = TRUE)
+		if (HAS_TRAIT(target, TRAIT_NOBREATH))
+			to_chat(target, "<span class='unconscious'>You feel a breath of fresh air... which is a sensation you don't recognise...</span>")
+		else if (!target.getorganslot(ORGAN_SLOT_LUNGS))
+			to_chat(target, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
+		else
+			target.adjustOxyLoss(-min(target.getOxyLoss(), 7))
+			to_chat(target, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
+
+		if (target.health <= target.crit_threshold)
+			if (!panicking)
+				to_chat(src, "<span class='warning'>[target] still isn't up! You try harder!</span>")
+			panicking = TRUE
+		else
+			return TRUE
 
 #undef CPR_PANIC_SPEED
 
