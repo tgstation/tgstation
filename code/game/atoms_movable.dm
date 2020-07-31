@@ -1,6 +1,6 @@
 /atom/movable
 	layer = OBJ_LAYER
-	appearance_flags = PIXEL_SCALE
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	// Movement related vars
 	step_size = 8
 	//PIXEL MOVEMENT VARS
@@ -67,6 +67,8 @@
 /atom/movable/Initialize(mapload)
 	. = ..()
 	update_bounds(olddir=NORTH, newdir=dir) // bounds assume north but some things arent north by default for some god knows reason
+	if(opacity) // makes opaque objects not block entire tiles
+		appearance_flags &= ~TILE_BOUND
 	switch(blocks_emissive)
 		if(EMISSIVE_BLOCK_GENERIC)
 			update_emissive_block()
@@ -359,8 +361,6 @@
 			check_pulling()
 		if(has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, step_x, step_y))
 			return FALSE
-	else
-		walk(src, NONE)
 
 /// Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
@@ -440,6 +440,7 @@
 ///checks if the left side of src is clear
 /atom/movable/proc/check_left(slide_dist)
 	var/list/atoms
+	var/checkcount = 0
 
 	if(dir == EAST)
 		atoms = obounds(src, 1, slide_dist)
@@ -451,6 +452,9 @@
 		atoms = obounds(src, slide_dist, -1)
 
 	for(var/atom/A in atoms)
+		if(checkcount > 5)
+			break
+		checkcount++
 		if(!A.CanPass(src))
 			return FALSE
 
@@ -470,6 +474,7 @@
 ///checks if the right side of src is clear
 /atom/movable/proc/check_right(slide_dist)
 	var/list/atoms
+	var/checkcount = 0
 
 	if(dir == EAST)
 		atoms = obounds(src, 1, -slide_dist)
@@ -481,6 +486,9 @@
 		atoms = obounds(src, -slide_dist, -1)
 
 	for(var/atom/A in atoms)
+		if(checkcount > 5)
+			break
+		checkcount++
 		if(!A.CanPass(src))
 			return FALSE
 

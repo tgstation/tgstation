@@ -17,7 +17,8 @@
   * * thing - movable that will walk
   * * direct - Direction to walk in
   * * lag - Delay in world ticks between movement(from BYOND ref)
-  * * spped - Speed to move, in pixels.(from BYOND ref)
+  * * speed - Speed to move, in pixels.(from BYOND ref)
+  * * until - how long to move before stopping
   */
 /proc/walk_for(atom/movable/thing, direct, lag, speed, until)
 	set waitfor = FALSE
