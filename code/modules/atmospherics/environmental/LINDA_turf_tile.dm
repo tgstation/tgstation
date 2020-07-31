@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 			air.copy_from_turf(src)
 		else
 			if(!GLOB.planetary[src.initial_gas_mix])
-				var/datum/gas_mixture/turf/immutable/planetary/mix = new
+				var/datum/gas_mixture/immutable/planetary/mix = new
 				mix.parse_string_immutable(src.initial_gas_mix)
 				GLOB.planetary[src.initial_gas_mix] = mix
 			air = GLOB.planetary[src.initial_gas_mix]
@@ -329,10 +329,10 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
-		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/turf/immutable/space))
+		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/immutable/space))
 			space_in_group = TRUE
 			qdel(A)
-			A = new /datum/gas_mixture/turf/immutable/space()
+			A = new /datum/gas_mixture/immutable/space()
 			A_gases = A.gases //update the cache
 			break
 		A.merge(T.air)

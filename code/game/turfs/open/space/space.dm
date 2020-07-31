@@ -12,7 +12,7 @@
 	var/destination_x
 	var/destination_y
 
-	var/static/datum/gas_mixture/turf/immutable/space/space_gas = new
+	var/static/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25
