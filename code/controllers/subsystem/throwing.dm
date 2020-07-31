@@ -82,7 +82,6 @@ SUBSYSTEM_DEF(throwing)
 	src.callback = callback
 	src.target_zone = target_zone
 
-
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
 	thrownthing.throwing = null
@@ -103,6 +102,9 @@ SUBSYSTEM_DEF(throwing)
 	var/atom/movable/AM = thrownthing
 	if(!angle)
 		angle = GET_DEG(AM, target_turf)
+	if(AM.step_size != 16)
+		AM.step_size = 16
+
 	if (!isturf(AM.loc) || !AM.throwing)
 		finalize()
 		return
@@ -159,10 +161,10 @@ SUBSYSTEM_DEF(throwing)
 	if(!thrownthing)
 		return
 	thrownthing.throwing = null
-	if(target != src.target && bounds_dist(thrownthing, src.target) == 0)
+	if(target != src.target && bounds_dist(thrownthing, src.target) <= 0)
 		target = src.target
 	if (!hit)
-		if(!(target in bounds(thrownthing)))
+		if(!(target in obounds(thrownthing)))
 			target = get_turf(thrownthing)	// we haven't hit something yet and we still must, let's hit the ground.
 			if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
 				return //deletion should already be handled by on_thrownthing_qdel()
@@ -182,7 +184,7 @@ SUBSYSTEM_DEF(throwing)
 		var/turf/T = get_turf(thrownthing)
 		if(T && thrownthing.has_gravity(T))
 			T.zFall(thrownthing)
-
+	thrownthing.step_size = initial(thrownthing.step_size)
 	qdel(src)
 
 /datum/thrownthing/proc/hit_atom(atom/A)
@@ -195,6 +197,6 @@ SUBSYSTEM_DEF(throwing)
 		var/atom/movable/AM = thing
 		if (AM == thrownthing || (AM == thrower && !ismob(thrownthing)))
 			continue
-		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
+		if (AM.density && !(AM.pass_flags & LETPASSTHROW))
 			finalize(hit=TRUE, target=AM)
 			return TRUE

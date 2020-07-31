@@ -33,8 +33,8 @@ EMOJIS
 ## To speed things up make the number a decimal, to slow things down make the number larger than 1
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-RUN_DELAY 3
-WALK_DELAY 7
+RUN_DELAY 4
+WALK_DELAY 8
 
 ## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
 ## Entries completely override all subtypes. Later entries have precedence over earlier entries.

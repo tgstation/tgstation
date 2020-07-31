@@ -9,7 +9,7 @@
 	integrity_failure = 0.25
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 
-	bound_height = 16
+	bound_height = 24
 	bound_width = 16
 	bound_x = 10
 	brotation = NONE // We dont want none of that rotation shit

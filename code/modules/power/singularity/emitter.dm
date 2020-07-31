@@ -12,6 +12,11 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 300
+	bound_x = 12
+	bound_y = 6
+	bound_height = 22
+	bound_width = 12
+	brotation = BOUNDS_SIMPLE_ROTATE
 
 	var/icon_state_on = "emitter_+a"
 	var/icon_state_underpowered = "emitter_+u"

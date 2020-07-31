@@ -1,6 +1,6 @@
 /atom/movable
 	layer = OBJ_LAYER
-	appearance_flags = LONG_GLIDE|PIXEL_SCALE
+	appearance_flags = PIXEL_SCALE
 	// Movement related vars
 	step_size = 8
 	//PIXEL MOVEMENT VARS
@@ -260,18 +260,7 @@
 	if(!Adjacent(A))
 		to_chat(src, "<span class='warning'>You can't move [pulling] that far!</span>")
 		return
-	var/od = pulling.density
-	if(params)
-		var/list/mouse = params2list(params)
-		var/sx = text2num(mouse["icon-x"]) - 16
-		var/sy = text2num(mouse["icon-y"]) - 16
-		pulling.density = FALSE
-		pulling.Move(get_step(pulling, get_dir(pulling.loc, A)), get_dir(pulling.loc, A), sx, sy)
-		pulling.density = od
-	else
-		pulling.density = FALSE
-		step(pulling, get_dir(pulling.loc, A))
-		pulling.density = od
+	pulling.Move(get_turf(A), get_dir(pulling.loc, A))
 	return TRUE
 
 /mob/living/Move_Pulled(atom/A, params)
@@ -318,7 +307,7 @@
 	if(pulling.move_resist > move_force)
 		return FALSE
 	var/distance = bounds_dist(src, pulling)
-	if(distance < 8)
+	if(distance < 6)
 		return FALSE
 	var/angle = GET_DEG(pulling, src)
 	if((angle % 45) > 1) // We arent directly on a cardinal from the thing
@@ -329,7 +318,7 @@
 			angle -= min(ANGLE_ADJUST, tempA)
 	angle = SIMPLIFY_DEGREES(angle)
 	var/direct = angle2dir(angle)
-	if(!degstep(pulling, angle, distance-8))
+	if(!degstep(pulling, angle, distance-6))
 		for(var/i in GLOB.cardinals)
 			if(direct & i)
 				if(step(pulling, i))
@@ -438,7 +427,7 @@
 		if(AM.sidestep) // is the thing we bumped sidestepping?
 			return
 	sidestep = TRUE
-	var/slide_dist = density ? 12 : 16 // non-dense objects need more compensation
+	var/slide_dist = 8
 	if(pulledby && pulledby.step_size > slide_dist) // we're getting pulled by someone so let's slide over at their speed
 		slide_dist = pulledby.step_size
 	if(check_left(slide_dist)) // There is an opening on the left side of src
@@ -453,16 +442,16 @@
 	var/list/atoms
 
 	if(dir == EAST)
-		atoms = obounds(src, bound_width + 1, slide_dist)
+		atoms = obounds(src, 1, slide_dist)
 	else if(dir == WEST)
-		atoms = obounds(src, -(bound_width + 1), -slide_dist)
+		atoms = obounds(src, -1, -slide_dist)
 	else if(dir == NORTH)
-		atoms = obounds(src, -slide_dist, bound_height + 1)
+		atoms = obounds(src, -slide_dist, 1)
 	else if(dir == SOUTH)
-		atoms = obounds(src, slide_dist, -(bound_height + 1))
+		atoms = obounds(src, slide_dist, -1)
 
 	for(var/atom/A in atoms)
-		if(A.density)
+		if(!A.CanPass(src))
 			return FALSE
 
 	return TRUE
@@ -483,16 +472,16 @@
 	var/list/atoms
 
 	if(dir == EAST)
-		atoms = obounds(src, bound_width + 1, -slide_dist)
+		atoms = obounds(src, 1, -slide_dist)
 	else if(dir == WEST)
-		atoms = obounds(src, -(bound_width + 1), slide_dist)
+		atoms = obounds(src, -1, slide_dist)
 	else if(dir == NORTH)
-		atoms = obounds(src, slide_dist, bound_height + 1)
+		atoms = obounds(src, slide_dist, 1)
 	else if(dir == SOUTH)
-		atoms = obounds(src, -slide_dist, -(bound_height + 1))
+		atoms = obounds(src, -slide_dist, -1)
 
 	for(var/atom/A in atoms)
-		if(A.density)
+		if(!A.CanPass(src))
 			return FALSE
 
 	return TRUE

@@ -447,10 +447,11 @@
 	density = TRUE
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
-	bound_x = 7
-	bound_y = 3
-	bound_width = 19
-	bound_height = 22
+	bound_x = 8
+	bound_y = 8
+	bound_width = 16
+	bound_height = 16
+	brotation = NONE
 
 /obj/machinery/disposal/delivery_chute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()

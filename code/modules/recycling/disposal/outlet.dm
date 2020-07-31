@@ -7,6 +7,11 @@
 	density = TRUE
 	anchored = TRUE
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	brotation = NONE
+	bound_height = 16
+	bound_width = 16
+	bound_x = 8
+	bound_y = 8
 	var/active = FALSE
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
@@ -61,7 +66,7 @@
 
 	for(var/A in H)
 		var/atom/movable/AM = A
-		AM.forceMove(T)
+		AM.forceMove(get_step(src, dir))
 		AM.pipe_eject(dir)
 		AM.throw_at(target, eject_range, eject_speed)
 

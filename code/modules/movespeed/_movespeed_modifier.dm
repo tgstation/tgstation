@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			else
 				continue
 		. += amt
-	step_size = max(1, initial(step_size) / .)
+	step_size = round(max(1, initial(step_size) / .))
 	glide_size = step_size
 	if(pulling) // update the thing we're pulling too while we're at it
 		pulling.step_size = step_size

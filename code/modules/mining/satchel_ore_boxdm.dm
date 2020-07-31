@@ -8,6 +8,11 @@
 	desc = "A heavy wooden box, which can be filled with a lot of ores."
 	density = TRUE
 	pressure_resistance = 5*ONE_ATMOSPHERE
+	bound_width = 26
+	bound_height = 22
+	bound_x = 4
+	bound_y = 10
+	brotation = NONE
 
 /obj/structure/ore_box/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/stack/ore))

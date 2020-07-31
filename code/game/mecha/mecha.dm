@@ -563,8 +563,6 @@
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180)))
 				step_silent = TRUE
-				if(occupant)
-					to_chat(occupant, "<span class='info'>You push off [backup] to propel yourself.</span>")
 		return TRUE
 
 	if(active_thrusters && movement_dir && active_thrusters.thrust(movement_dir))

@@ -10,6 +10,11 @@
 	max_integrity = 300
 	var/oxygentanks = TANK_DISPENSER_CAPACITY
 	var/plasmatanks = TANK_DISPENSER_CAPACITY
+	bound_x = 4
+	bound_y = 4
+	bound_width = 24
+	bound_height = 24
+	brotation = NONE
 
 /obj/structure/tank_dispenser/oxygen
 	plasmatanks = 0

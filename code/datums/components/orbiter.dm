@@ -76,8 +76,12 @@
 	orbiter.transform = shift
 
 	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
-
-	orbiter.forceMove(nearest_turf(parent))
+	var/turf/pturf = get_turf(parent)
+	if(pturf)
+		orbiter.forceMove(pturf)
+		if(ismovable(parent))
+			var/atom/movable/AM = parent
+			orbiter.forceStep(AM)
 	if(ismob(orbiter))
 		var/mob/M = orbiter
 		M.client.eye = parent

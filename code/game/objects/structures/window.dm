@@ -221,9 +221,9 @@
 	if(!fulltile)
 		if(GET_PIXELDIR(user,src) & dir)
 			for(var/obj/O in loc)
-				if(!O.CanPass(user, user.loc, 1))
-					return 0
-	return 1
+				if(!O.CanPass(user) && O != src)
+					return FALSE
+	return TRUE
 
 /obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()

@@ -64,6 +64,7 @@
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
 	bound_width = 26
+	bound_height = 26
 	bound_x = 3
 	brotation = NONE
 
