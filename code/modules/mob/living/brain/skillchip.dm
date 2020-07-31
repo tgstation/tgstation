@@ -19,6 +19,8 @@
   *
   * Returns whether the skillchip was implanted or not.
   * If you're implanting the skillchip into a mob, use the implant_skillchip proc in mob/living/carbon instead.
+  * DANGEROUS - This proc assumes you've done the appropriate checks to make sure the skillchip should be implanted.
+  * Where possible, call the mob/living/carbon version of this proc which does relevant checks.
   * Arguments:
   * * skillchip - The skillchip you'd like to implant.
   */
@@ -28,3 +30,19 @@
 	LAZYADD(skillchips, skillchip)
 
 	return TRUE
+
+/**
+  * Checks whether the skillchip's flags are incompatible with this brain's skillchips.
+  *
+  * Returns the flags that failed checks.
+  * Arguments:
+  * * skillchip - The skillchip you'd like to compare the flags of.
+  */
+/obj/item/organ/brain/proc/check_skillchip_flags(obj/item/skillchip/skillchip)
+	var/incompatibility_flags = 0
+
+	// If this is a job skillchip, check if any other skillchips are present.
+	for(var/obj/item/skillchip/S in skillchips)
+		incompatibility_flags &= skillchip.check_incompatibility(S)
+
+	return incompatibility_flags

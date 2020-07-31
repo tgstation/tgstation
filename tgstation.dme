@@ -2205,7 +2205,7 @@
 #include "code\modules\mob\living\brain\life.dm"
 #include "code\modules\mob\living\brain\MMI.dm"
 #include "code\modules\mob\living\brain\posibrain.dm"
-#include "code\modules\mob\living\brain\skillchips.dm"
+#include "code\modules\mob\living\brain\skillchip.dm"
 #include "code\modules\mob\living\brain\status_procs.dm"
 #include "code\modules\mob\living\carbon\carbon.dm"
 #include "code\modules\mob\living\carbon\carbon_defense.dm"

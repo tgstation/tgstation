@@ -105,6 +105,15 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	user.undershirt = chosen_prof.undershirt
 	user.socks = chosen_prof.socks
 
+	// Remove all old stolen skillchip traits.
+	for(var/T in user.status_traits)
+		if(CHANGELING_SKILLCHIP_TRAIT in user.status_traits[T])
+			REMOVE_TRAIT(user, T, CHANGELING_SKILLCHIP_TRAIT)
+
+	// Add a new set of stolen skillchip traits.
+	for(var/T in chosen_prof.skillchip_traits)
+		ADD_TRAIT(user, T, CHANGELING_SKILLCHIP_TRAIT)
+
 	chosen_dna.transfer_identity(user, 1)
 	user.updateappearance(mutcolor_update=1)
 	user.update_body()

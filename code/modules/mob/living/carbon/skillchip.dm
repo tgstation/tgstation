@@ -65,12 +65,16 @@
 	if(used_skillchip_slots + skillchip.slot_cost > max_skillchip_slots)
 		return FALSE
 
-	//Only one multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
-	if(!(skillchip.skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (locate(type) in brain.skillchips))
+	var/incompatible_flags = brain.check_skillchip_flags(skillchip)
+	if(incompatible_flags)
 		return FALSE
+
+	// Check if this skillchip requires the mob to be mindshielded.
+	if(!HAS_TRAIT(src, TRAIT_MINDSHIELD) && (skillchip.skillchip_flags & SKILLCHIP_REQUIRE_MINDSHIELD))
+		return FALSE
+
 	return TRUE
 
-/// Returns readable reason why implanting cannot succeed
 /**
   * Returns readable reason why implanting cannot succeed.
   *
@@ -93,6 +97,19 @@
 	//No skill slots left
 	if(used_skillchip_slots + skillchip.slot_cost > max_skillchip_slots)
 		return "Complexity limit exceeded."
+
+	// Incompatibiliy with other already implanted skillchips.
+	var/incompatible_flags = brain.check_skillchip_flags(skillchip)
+	if(incompatible_flags)
+		if(incompatible_flags & SKILLCHIP_ALLOWS_MULTIPLE)
+			return "Duplicate chip detected."
+		if(incompatible_flags & SKILLCHIP_JOB_TYPE)
+			return "Existing job chip detected."
+		return "Skillchip is incompatible with existing chips."
+
+	// Check if this skillchip requires the mob to be mindshielded.
+	if(!HAS_TRAIT(src, TRAIT_MINDSHIELD) && (skillchip.skillchip_flags & SKILLCHIP_REQUIRE_MINDSHIELD))
+		return "Skillchip requires mindshield."
 
 	//Only one multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
 	if(!(skillchip.skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (locate(type) in brain.skillchips))

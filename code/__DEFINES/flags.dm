@@ -157,3 +157,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //skillchip flags
 //Skillchip type can be implanted multiple times
 #define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)
+// Job skillchip, only one job skillchip can be implanted.
+#define SKILLCHIP_JOB_TYPE (1<<1)
+// Skillchip requires the target to be mindshielded to be implanted.
+#define SKILLCHIP_REQUIRE_MINDSHIELD (1<<2)

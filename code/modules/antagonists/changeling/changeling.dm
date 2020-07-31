@@ -291,6 +291,10 @@
 	prof.undershirt = H.undershirt
 	prof.socks = H.socks
 
+	for(var/T in H.status_traits)
+		if(SKILLCHIP_TRAIT in H.status_traits[T])
+			prof.skillchip_traits += T
+
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
 		if(slot in H.vars)
@@ -523,6 +527,8 @@
 	var/underwear
 	var/undershirt
 	var/socks
+
+	var/list/skillchip_traits = list()
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)

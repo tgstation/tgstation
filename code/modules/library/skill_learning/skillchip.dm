@@ -42,6 +42,19 @@
 		REMOVE_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
 	user.used_skillchip_slots -= slot_cost
 
+/obj/item/skillchip/proc/check_incompatibility(obj/item/skillchip/skillchip)
+	var/incompatible_flags = 0
+
+	// If this is a SKILLCHIP_JOB_TYPE it is incompatible with any other SKILLCHIP_JOB_TYPE.
+	if((skillchip_flags & SKILLCHIP_JOB_TYPE) && (skillchip.skillchip_flags & SKILLCHIP_JOB_TYPE))
+		incompatible_flags |= SKILLCHIP_JOB_TYPE
+
+	// Only allow multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
+	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (istype(skillchip, type)))
+		incompatible_flags |= SKILLCHIP_ALLOWS_MULTIPLE
+
+	return incompatible_flags
+
 /obj/item/skillchip/basketweaving
 	name = "Basketsoft 3000 skillchip"
 	desc = "Underwater edition."
