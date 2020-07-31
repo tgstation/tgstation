@@ -75,6 +75,9 @@ export const AtmosControlPanel = (props, context) => {
                   Turfs
                 </Table.Cell>
                 <Table.Cell collapsing>
+                  {data.display_max === 1 && "Max Share"}
+                </Table.Cell>
+                <Table.Cell collapsing>
                   Display
                 </Table.Cell>
               </Table.Row>
@@ -95,6 +98,9 @@ export const AtmosControlPanel = (props, context) => {
                   </td>
                   <td>
                     {group.size}
+                  </td>
+                  <td>
+                    {data.display_max === 1 && group.max_share}
                   </td>
                   <td>
                     <Button.Checkbox

@@ -33,6 +33,9 @@
 	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
+	#ifdef TRACK_MAX_SHARE
+	var/max_share = 0
+	#endif
 
 /turf/open/Initialize()
 	if(!blocks_air)
@@ -144,7 +147,18 @@
 			.[gastype] = TRUE
 
 /////////////////////////////SIMULATION///////////////////////////////////
-
+#ifdef TRACK_MAX_SHARE
+#define LAST_SHARE_CHECK \
+	var/last_share = our_air.last_share;\
+	max_share = max(last_share, max_share);\
+	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
+		our_excited_group.reset_cooldowns();\
+		cached_atmos_cooldown = 0;\
+	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
+		our_excited_group.dismantle_cooldown = 0;\
+		cached_atmos_cooldown = 0;\
+	}
+#else
 #define LAST_SHARE_CHECK \
 	var/last_share = our_air.last_share;\
 	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
@@ -154,6 +168,7 @@
 		our_excited_group.dismantle_cooldown = 0;\
 		cached_atmos_cooldown = 0;\
 	}
+#endif
 
 /turf/proc/process_cell(fire_count)
 	SSair.remove_from_active(src)
@@ -175,6 +190,10 @@
 		adjacent_turfs_length++
 
 	var/datum/gas_mixture/our_air = air
+
+	#ifdef TRACK_MAX_SHARE
+	max_share = 0 //Gotta reset our tracker
+	#endif
 
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t

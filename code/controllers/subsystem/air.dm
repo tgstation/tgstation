@@ -442,6 +442,11 @@ SUBSYSTEM_DEF(air)
 	for(var/datum/excited_group/group in excited_groups)
 		var/turf/T = group.turf_list[1]
 		var/area/target = get_area(T)
+		var/max = 0
+		#ifdef TRACK_MAX_SHARE
+		for(var/turf/open/lad in group.turf_list)
+			max = max(lad.max_share, max)
+		#endif
 		data["excited_groups"] += list(list(
 			"jump_to" = REF(T), //Just go to the first turf
 			"group" = REF(group),
@@ -449,7 +454,8 @@ SUBSYSTEM_DEF(air)
 			"breakdown" = group.breakdown_cooldown,
 			"dismantle" = group.dismantle_cooldown,
 			"size" = group.turf_list.len,
-			"should_show" = group.should_display
+			"should_show" = group.should_display,
+			"max_share" = max
 		))
 	data["active_size"] = active_turfs.len
 	data["hotspots_size"] = hotspots.len
@@ -458,6 +464,11 @@ SUBSYSTEM_DEF(air)
 	data["frozen"] = can_fire
 	data["show_all"] = display_all_groups
 	data["fire_count"] = times_fired
+	#ifdef TRACK_MAX_SHARE
+	data["display_max"] = TRUE
+	#else
+	data["display_max"] = FALSE
+	#endif
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

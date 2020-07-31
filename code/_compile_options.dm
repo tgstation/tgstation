@@ -31,6 +31,7 @@
 #endif //ifdef LEGACY_REFERENCE_TRACKING
 
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
+#define TRACK_MAX_SHARE	//Allows max share tracking, for use in the atmos debugging ui
 #endif //ifdef TESTING
 
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETER
