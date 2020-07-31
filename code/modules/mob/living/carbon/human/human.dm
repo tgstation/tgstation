@@ -656,7 +656,7 @@
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
 	var/panicking = FALSE
 
-	while (TRUE)
+	do
 		CHECK_DNA_AND_SPECIES(target)
 
 		if (INTERACTING_WITH(src, target))
@@ -708,8 +708,7 @@
 			if (!panicking)
 				to_chat(src, "<span class='warning'>[target] still isn't up! You try harder!</span>")
 			panicking = TRUE
-		else
-			return TRUE
+	while (target.health <= target.crit_threshold)
 
 #undef CPR_PANIC_SPEED
 
