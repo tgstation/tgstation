@@ -1202,6 +1202,9 @@
 	if(!get_powernet_info_from_source(power_source))
 		return FALSE
 
+	if (HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+		return FALSE
+
 	return TRUE
 
 /// Returns if the carbon is wearing shock proof gloves
