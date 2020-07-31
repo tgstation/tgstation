@@ -355,7 +355,7 @@
 		T.excited_group = null
 		SSair.active_turfs -= T
 		#ifdef VISUALIZE_ACTIVE_TURFS //Use this when you want details about how the turfs are moving, display_all_groups should work for normal operation
-		T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#00ff00")
+		T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANTGREEN)
 		#endif
 	garbage_collect()
 

@@ -1,1 +1,1 @@
-GLOBAL_LIST_INIT(contrast_colors, list("#fF0000", "#b900f7", "#00a2ff", "#ff7b00", "#000000"))
+GLOBAL_LIST_INIT(contrast_colors, list(COLOR_RED, COLOR_LIGHT_PURPLE, COLOR_DARK_CYAN, COLOR_ORANGER, COLOR_BLACK))
