@@ -195,7 +195,7 @@
 		F.metal = metal
 
 
-/obj/effect/particle_effect/foam/proc/heated(datum/gas_mixture/mix, temperature, volume)
+/obj/effect/particle_effect/foam/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
 	if(prob(max(0, temperature - 475))) //foam dissolves when heated
 		kill_foam()
 

@@ -237,6 +237,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 					consider_pressure_difference(enemy_tile, difference)
 				else
 					enemy_tile.consider_pressure_difference(src, -difference)
+			//This acts effectivly as a very slow timer, the max deltas of the group will slowly lower until it breaksdown, they then pop up a bit, and fall back down until irrelevant
 			LAST_SHARE_CHECK
 
 

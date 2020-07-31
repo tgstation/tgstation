@@ -755,7 +755,7 @@
 
 // called when heated
 
-/obj/machinery/light/proc/heated(datum/gas_mixture/mix, temperature, volume)
+/obj/machinery/light/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
 	if(prob(max(0, temperature - 673)))   //0% at <400C, 100% at >500C
 		break_light_tube()
 

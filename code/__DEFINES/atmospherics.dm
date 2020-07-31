@@ -25,7 +25,7 @@
 /// 20degC
 #define T20C					293.15
 
-///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
+///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
 ///compared against for superconductivity
 #define M_CELL_WITH_RATIO		(MOLES_CELLSTANDARD * 0.005)
@@ -55,9 +55,9 @@
 #define MINIMUM_AIR_RATIO_TO_SUSPEND				0.1
 /// Minimum ratio of air that must move to/from a tile
 #define MINIMUM_AIR_RATIO_TO_MOVE					0.001
-/// Minimum amount of air that has to move before a group processing can be suspended
+/// Minimum amount of air that has to move before a group processing can be suspended (Round about 10)
 #define MINIMUM_AIR_TO_SUSPEND						(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)
-/// Either this must be active
+/// Either this must be active (round about 0.10398)
 #define MINIMUM_MOLES_DELTA_TO_MOVE					(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE)
 /// or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_TO_MOVE					(T20C+100)

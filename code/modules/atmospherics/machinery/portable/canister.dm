@@ -322,7 +322,7 @@
 	else if(pressure >= 10)
 		. += "can-0"
 
-/obj/machinery/portable_atmospherics/canister/proc/heated(datum/gas_mixture/mix, temperature, volume)
+/obj/machinery/portable_atmospherics/canister/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
 	if(temperature > (temperature_resistance * mode))
 		take_damage(5, BURN, 0)
 

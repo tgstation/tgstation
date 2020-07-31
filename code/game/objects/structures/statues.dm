@@ -134,7 +134,7 @@
 	else
 		return ..()
 
-/obj/structure/statue/plasma/proc/PlasmaBurn(datum/gas_mixture/mix, temperature, volume)
+/obj/structure/statue/plasma/proc/PlasmaBurn(datum/source, datum/gas_mixture/mix, temperature, volume)
 	if(QDELETED(src))
 		return
 	atmos_spawn_air("plasma=[oreAmount*10];TEMP=[temperature]")

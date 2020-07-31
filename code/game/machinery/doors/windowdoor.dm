@@ -202,7 +202,7 @@
 /obj/machinery/door/window/narsie_act()
 	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
-/obj/machinery/door/window/proc/heated(datum/gas_mixture/mix, temperature, volume)
+/obj/machinery/door/window/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
 	take_damage(round(volume / 200), BURN, 0, 0)
 
 /obj/machinery/door/window/emag_act(mob/user)

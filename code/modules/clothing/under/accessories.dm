@@ -219,7 +219,7 @@
 	AddComponent(/datum/component/heat_sensitive, 300, null)
 	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
 
-/obj/item/clothing/accessory/medal/plasma/proc/heated(datum/gas_mixture/mix, temperature, volume)
+/obj/item/clothing/accessory/medal/plasma/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
 	atmos_spawn_air("plasma=20;TEMP=[temperature]")
 	visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
 	qdel(src)

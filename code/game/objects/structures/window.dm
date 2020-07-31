@@ -328,7 +328,7 @@
 		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 		. += crack_overlay
 
-/obj/structure/window/proc/heated(datum/gas_mixture/mix, temperature, volume)
+/obj/structure/window/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
 	take_damage(round(volume / 100), BURN, 0, 0)
 
 /obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)

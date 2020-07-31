@@ -537,7 +537,7 @@
 	if(!i && prob(100/severity))
 		qdel(src)
 
-/obj/structure/spacevine/proc/heated(datum/gas_mixture/mix, temperature, volume)
+/obj/structure/spacevine/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
 	var/override = 0
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.process_temperature(src, temperature, volume)
