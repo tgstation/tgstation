@@ -2,6 +2,7 @@
 	name = "foam force SMG"
 	desc = "A prototype three-round burst toy submachine gun. Ages 8 and up."
 	icon_state = "saber"
+	selector_switch_icon = TRUE
 	inhand_icon_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/toy/smg
 	fire_sound = 'sound/items/syringeproj.ogg'
