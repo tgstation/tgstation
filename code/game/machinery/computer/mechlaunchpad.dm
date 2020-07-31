@@ -22,6 +22,8 @@
 		connected_mechpad.connected_console = src
 		connected_mechpad.id = id
 		return INITIALIZE_HINT_LATELOAD
+	else
+		id ="handmade"
 
 /obj/machinery/computer/mechpad/LateInitialize()
 	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
