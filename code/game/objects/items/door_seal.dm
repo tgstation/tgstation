@@ -12,9 +12,11 @@
 	throw_speed = 2
 	throw_range = 1
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=5000,/datum/material/plasma=500)
 	attack_verb = list("clonked", "whacked", "bashed", "thunked", "battered", "bludgeoned")
+	/// how long the seal takes to place on the door
 	var/seal_time = 3 SECONDS
+	/// how long it takes to remove the seal from a door
 	var/unseal_time = 2 SECONDS
 
 /obj/item/door_seal/suicide_act(mob/user)

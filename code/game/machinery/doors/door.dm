@@ -98,6 +98,7 @@
 			return TRUE
 	return FALSE
 
+/// Triggered when attempting to remove an airlock seal
 /obj/machinery/door/proc/try_remove_seal(mob/user)
 	return
 
