@@ -2,6 +2,7 @@
 	name = "dart"
 	icon_state = "cbbolt"
 	damage = 6
+	embedding = null
 	var/piercing = FALSE
 
 /obj/projectile/bullet/dart/Initialize()

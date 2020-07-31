@@ -351,8 +351,8 @@
 
 /// Proc detailing contract kit buys/completed contracts/additional info
 /datum/antagonist/traitor/proc/contractor_round_end()
-	var result = ""
-	var total_spent_rep = 0
+	var/result = ""
+	var/total_spent_rep = 0
 
 	var/completed_contracts = contractor_hub.contracts_completed
 	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
@@ -389,7 +389,7 @@
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	var message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
+	var/message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
 					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
 
 	return message

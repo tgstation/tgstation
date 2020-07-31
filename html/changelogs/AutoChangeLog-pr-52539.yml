@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "Cable hubs no more can be created by handcraft. Cuble hubs available only in cable radial menu."

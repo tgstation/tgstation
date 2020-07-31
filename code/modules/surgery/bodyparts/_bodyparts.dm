@@ -352,12 +352,12 @@
   */
 /obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
 	// actually roll wounds if applicable
-	if(HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE))
+	if(HAS_TRAIT(owner, TRAIT_EASYLIMBWOUND))
 		damage *= 1.5
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
-	if(HAS_TRAIT(owner,TRAIT_HARDLIMBDISABLE))
-		damage *= 0.8
+	if(HAS_TRAIT(owner,TRAIT_HARDLIMBWOUND))
+		damage *= 0.9
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
 		damage *= 1.25
@@ -501,7 +501,7 @@
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
 
-		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
+		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBWOUND) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
 			if(!last_maxed)
 				owner.emote("scream")
 				last_maxed = TRUE
