@@ -85,7 +85,7 @@
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
 		else if(eye_color == BLOODCULT_EYE)
 			if(iscultist(src) && HAS_TRAIT(src, CULT_EYES))
-			. += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
+				. += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
 			else if(getorgan(/obj/item/organ/eyes))
 				var/obj/item/organ/eyes/E = getorgan(/obj/item/organ/eyes)
 				if(E.glowing) //blood cults aren't the only things that can make your eyes glow an unnatural red
