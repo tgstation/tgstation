@@ -33,28 +33,33 @@
 
 ///We're trying to throw, check if we're on harm intent with an item and not trying to throw a person
 /datum/mutation/human/fastballer/proc/check_pitch(datum/source, atom/target)
-	if(!target || !isturf(owner.loc) || owner.a_intent != INTENT_HARM || istype(target, /obj/screen))
-		return
+	if(QDELETED(target))
+		CRASH("check_pitch called with invalid target ([target])")
+		if(!isturf(owner.loc) || owner.a_intent != INTENT_HARM || istype(target, /obj/screen))
+			return
 
-	var/obj/item/I = owner.get_active_held_item()
-	if(!I || (isliving(owner.pulling) && owner.grab_state >= GRAB_AGGRESSIVE))
+	var/obj/item/held_item = owner.get_active_held_item()
+	if(!held_item || (isliving(owner.pulling) && owner.grab_state >= GRAB_AGGRESSIVE))
 		return
 
 	. = COMPONENT_MOB_NO_THROW
-	INVOKE_ASYNC(src, .proc/windup, target, I)
+	INVOKE_ASYNC(src, .proc/windup, target, held_item)
 
 ///Handle the do_after for the wind-up
 /datum/mutation/human/fastballer/proc/windup(atom/target, obj/item/thrown_thing)
 	owner.throw_mode_off()
-	owner.visible_message("<span class='danger'>[owner] begins winding up to pitch [thrown_thing] at [target].</span>", "<span class='warning'>You begin winding up to pitch [thrown_thing] at [target]...</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	owner.visible_message("<span class='danger'>[owner] begins winding up to pitch [thrown_thing] at [target].</span>", "<span class='warning'>You begin winding up to pitch [thrown_thing] at [target]...</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 	var/start_windup = world.time
+
 	if(do_after(owner, windup_time))
 		pitch(target, thrown_thing)
-	else
-		if(world.time > start_windup + (0.4 * windup_time))
-			pitch(target, thrown_thing, TRUE)
-		else
-			owner.visible_message("<span class='danger'>[owner] balks and decides not to throw [thrown_thing].</span>", "<span class='danger'>You balk and decide not to throw [thrown_thing].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+		return
+
+	if(world.time > start_windup + (0.4 * windup_time))
+		pitch(target, thrown_thing, TRUE)
+		return
+
+	owner.visible_message("<span class='danger'>[owner] balks and decides not to throw [thrown_thing].</span>", "<span class='danger'>You balk and decide not to throw [thrown_thing].</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 
 ///We've pitched the object, print the info and listen into the object to see if it hits a special target. If we went wild, pick the new poor target
 /datum/mutation/human/fastballer/proc/pitch(atom/target, obj/item/thrown_thing, wild=FALSE)
@@ -93,8 +98,7 @@
 		var/mob/living/simple_animal/parrot/poly/poly_go_boom = victim
 		poly_go_boom.say("SQWAK!!")
 		poly_go_boom.ex_act(EXPLODE_HEAVY)
-		if(owner.client)
-			owner.client.give_award(/datum/award/achievement/misc/beanball, owner)
+		owner.client?.give_award(/datum/award/achievement/misc/beanball, owner)
 
 ///So we can listen for the throwing datum being deleted in case our throw doesn't hit anything, so we can still stop listening for the impact
 /datum/mutation/human/fastballer/proc/get_throw_datum(obj/item/thrown_thing, datum/thrownthing/throwingdatum, spin)

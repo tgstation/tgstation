@@ -95,7 +95,7 @@
 	apply_damage(damage, dtype, zone, armor, sharpness=I.sharpness)
 	if(I.thrownby)
 		log_combat(I.thrownby, src, "threw and hit", I)
-	..()
+	. = ..()
 
 
 /mob/living/mech_melee_attack(obj/mecha/M)
