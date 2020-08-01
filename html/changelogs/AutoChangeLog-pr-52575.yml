@@ -1,0 +1,8 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - refactor: "Cleaned up a bucnh fo AI/PAI card code."
+  - tweak: "pAIs that are able to hack things will now have an icon representing such."
+  - bugfix: "pAI will now put their hacking cable in your hand when deployed."
+  - bugfix: "Fixed AI cards not sending the icon update comsig."
+  - bugfix: "pAI holograms can no longer push and pull things."
