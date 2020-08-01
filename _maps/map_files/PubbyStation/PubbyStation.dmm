@@ -27601,10 +27601,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
-"bjJ" = (
-/obj/structure/chair/stool,
-/turf/closed/wall,
-/area/maintenance/department/science)
 "bjK" = (
 /turf/closed/wall,
 /area/vacant_room/commissary)
@@ -98751,7 +98747,7 @@ aVr
 aWD
 bwm
 bwm
-bjJ
+bwm
 bwm
 bgB
 aJI
