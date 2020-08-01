@@ -187,19 +187,20 @@
 					if(!istype(new_machine, /obj/machinery))
 						qdel(src)
 						return
-					if(new_machine.circuit)
-						QDEL_NULL(new_machine.circuit)
-					new_machine.circuit = circuit
-					new_machine.set_anchored(anchored)
-					new_machine.on_construction()
-					for(var/obj/O in new_machine.component_parts)
-						qdel(O)
-					new_machine.component_parts = list()
-					for(var/obj/O in src)
-						O.moveToNullspace()
-						new_machine.component_parts += O
-					circuit.moveToNullspace()
-					new_machine.RefreshParts()
+					if(ismachinery(new_machine))
+						if(new_machine.circuit)
+							QDEL_NULL(new_machine.circuit)
+						new_machine.circuit = circuit
+						new_machine.set_anchored(anchored)
+						new_machine.on_construction()
+						for(var/obj/O in new_machine.component_parts)
+							qdel(O)
+						new_machine.component_parts = list()
+						for(var/obj/O in src)
+							O.moveToNullspace()
+							new_machine.component_parts += O
+						circuit.moveToNullspace()
+						new_machine.RefreshParts()
 					qdel(src)
 				return
 
