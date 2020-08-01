@@ -494,3 +494,8 @@
 		LAZYREMOVEASSOC(movespeed_mod_immunities, slowdown_type, source)
 	if(update)
 		update_movespeed()
+
+/// Gets the amount of confusion on the mob.
+/mob/living/proc/get_confusion()
+	var/datum/status_effect/confusion/confusion = has_status_effect(STATUS_EFFECT_CONFUSION)
+	return confusion ? confusion.strength : 0

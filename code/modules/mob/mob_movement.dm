@@ -123,7 +123,7 @@
 	else
 		move_delay = world.time
 
-	var/confusion = L.confused
+	var/confusion = L.get_confusion()
 	if(confusion)
 		var/newdir = 0
 		if(confusion > 40)

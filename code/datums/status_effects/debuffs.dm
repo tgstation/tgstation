@@ -395,9 +395,14 @@
 /datum/status_effect/confusion
 	id = "confusion"
 	alert_type = null
+	var/strength
 
 /datum/status_effect/confusion/tick()
-	owner.set_confusion(owner.confused - 1)
+	strength -= 1
+	if (strength <= 0)
+		owner.remove_status_effect(STATUS_EFFECT_CONFUSION)
+		return
+	strength -= 1
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"

@@ -75,7 +75,7 @@
 			if(1)
 				host_mob.hallucination += 15
 			if(2)
-				host_mob.confused  += 10
+				host_mob.add_confusion(10)
 			if(3)
 				host_mob.drowsyness += 10
 			if(4)

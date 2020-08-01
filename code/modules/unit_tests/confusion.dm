@@ -7,9 +7,9 @@
 	disease.update_stage(5)
 	disease.infect(H, make_copy = FALSE)
 	confusion.Activate(disease)
-	TEST_ASSERT(H.confused > 0, "Human is not confused after getting symptom.")
+	TEST_ASSERT(H.get_confusion() > 0, "Human is not confused after getting symptom.")
 	disease.cure()
-	TEST_ASSERT_EQUAL(H.confused, 0, "Human is still confused after curing confusion.")
+	TEST_ASSERT_EQUAL(H.get_confusion(), 0, "Human is still confused after curing confusion.")
 
 /datum/disease/advance/confusion/New()
 	symptoms += new /datum/symptom/confusion
