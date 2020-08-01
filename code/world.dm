@@ -22,3 +22,8 @@
 #ifdef FIND_REF_NO_CHECK_TICK
 	loop_checks = FALSE
 #endif
+
+#if DM_BUILD >= 1506
+// We don't actually care about storing the output here, this is just an easy way to ensure the profile runs first.
+var/world_init_profiler = world.Profile(PROFILE_START)
+#endif
