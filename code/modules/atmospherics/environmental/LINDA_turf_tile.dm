@@ -317,30 +317,26 @@
 /datum/excited_group/proc/merge_groups(datum/excited_group/E)
 	if(turf_list.len > E.turf_list.len)
 		SSair.excited_groups -= E
-		if(E.should_display || SSair.display_all_groups)
-			E.hide_turfs()
 		for(var/t in E.turf_list)
 			var/turf/open/T = t
 			T.excited_group = src
 			turf_list += T
+		should_display = E.should_display | should_display
 		if(should_display || SSair.display_all_groups)
-			for(var/t in E.turf_list)
-				var/turf/open/T = t
-				display_turf(T)
+			E.hide_turfs()
+			display_turfs()
 		reset_cooldowns()
 	else
 		SSair.excited_groups -= src
-		if(should_display || SSair.display_all_groups)
-			hide_turfs()
 		for(var/t in turf_list)
 			var/turf/open/T = t
 			T.excited_group = E
 			E.turf_list += T
 		E.reset_cooldowns()
+		E.should_display = E.should_display | should_display
 		if(E.should_display || SSair.display_all_groups)
-			for(var/t in turf_list)
-				var/turf/open/T = t
-				display_turf(T)
+			hide_turfs()
+			E.display_turfs()
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
