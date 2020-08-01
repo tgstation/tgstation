@@ -230,6 +230,22 @@
 		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
 		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
 		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
+		"assistant" = 'icons/UI_Icons/Achievements/Mafia/assistant.png',
+		"changeling" = 'icons/UI_Icons/Achievements/Mafia/changeling.png',
+		"chaplain" = 'icons/UI_Icons/Achievements/Mafia/chaplain.png',
+		"clown" = 'icons/UI_Icons/Achievements/Mafia/clown.png',
+		"detective" = 'icons/UI_Icons/Achievements/Mafia/detective.png',
+		"fugitive" = 'icons/UI_Icons/Achievements/Mafia/fugitive.png',
+		"hated" = 'icons/UI_Icons/Achievements/Mafia/hated.png',
+		"hop" = 'icons/UI_Icons/Achievements/Mafia/hop.png',
+		"lawyer" = 'icons/UI_Icons/Achievements/Mafia/lawyer.png',
+		"md" = 'icons/UI_Icons/Achievements/Mafia/md.png',
+		"nightmare" = 'icons/UI_Icons/Achievements/Mafia/nightmare.png',
+		"obsessed" = 'icons/UI_Icons/Achievements/Mafia/obsessed.png',
+		"psychologist" = 'icons/UI_Icons/Achievements/Mafia/psychologist.png',
+		"thoughtfeeder" = 'icons/UI_Icons/Achievements/Mafia/thoughtfeeder.png',
+		"traitor" = 'icons/UI_Icons/Achievements/Mafia/traitor.png',
+		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png'
 	)
 
 /datum/asset/spritesheet/simple/pills
