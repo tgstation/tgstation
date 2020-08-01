@@ -351,6 +351,11 @@
 	. = ..()
 	update_icon()
 
+/obj/item/storage/bag/tray/Destroy()
+	for(var/obj/objects in contents)
+		objects.forceMove(drop_location())
+	return ..()
+
 /obj/item/storage/bag/tray/cafeteria
 	name = "cafeteria tray"
 	icon = 'icons/obj/food/containers.dmi'
