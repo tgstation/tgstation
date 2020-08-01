@@ -35,8 +35,8 @@
 /datum/mutation/human/fastballer/proc/check_pitch(datum/source, atom/target)
 	if(QDELETED(target))
 		CRASH("check_pitch called with invalid target ([target])")
-		if(!isturf(owner.loc) || owner.a_intent != INTENT_HARM || istype(target, /obj/screen))
-			return
+	if(!isturf(owner.loc) || owner.a_intent != INTENT_HARM || istype(target, /obj/screen))
+		return
 
 	var/obj/item/held_item = owner.get_active_held_item()
 	if(!held_item || (isliving(owner.pulling) && owner.grab_state >= GRAB_AGGRESSIVE))
