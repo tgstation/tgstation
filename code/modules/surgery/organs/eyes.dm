@@ -30,6 +30,8 @@
 	var/lighting_alpha
 	var/no_glasses
 	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
+	///can these eyes be mistaken for glowing blood cult eyes if they're the (exact) right color?
+	var/glowing = FALSE
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE, initialising)
 	. = ..()
@@ -118,6 +120,8 @@
 	name = "burning red eyes"
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon_state = "burning_eyes"
+	glowing = TRUE
+	eye_color = BLOODCULT_EYE //they're glowing red eyes
 
 /obj/item/organ/eyes/night_vision/mushroom
 	name = "fung-eye"
@@ -298,6 +302,7 @@
 	if(!silent)
 		to_chat(owner, "<span class='warning'>Your [src] clicks and makes a whining noise, before shooting out a beam of light!</span>")
 	active = TRUE
+	glowing = TRUE //validhunter-baiting mode engaged
 	cycle_mob_overlay()
 
 /obj/item/organ/eyes/robotic/glow/proc/deactivate(silent = FALSE)
@@ -305,6 +310,7 @@
 	if(!silent)
 		to_chat(owner, "<span class='warning'>Your [src] shuts off!</span>")
 	active = FALSE
+	glowing = FALSE //IT'S JUST A PRANK BRO
 	remove_mob_overlay()
 
 /obj/item/organ/eyes/robotic/glow/proc/update_visuals(datum/source, olddir, newdir)
