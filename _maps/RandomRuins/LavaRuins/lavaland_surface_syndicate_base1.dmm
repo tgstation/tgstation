@@ -516,10 +516,10 @@
 /obj/structure/closet/crate/secure/weapon{
 	req_access_txt = "150"
 	},
-/obj/item/ammo_box/c10mm{
+/obj/item/ammo_box/c9mm{
 	pixel_y = 6
 	},
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c9mm,
 /obj/item/ammo_box/magazine/m9mm{
 	pixel_x = -5;
 	pixel_y = 5
