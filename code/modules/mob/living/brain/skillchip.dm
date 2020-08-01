@@ -9,6 +9,7 @@
 /obj/item/organ/brain/proc/remove_skillchip(obj/item/skillchip/skillchip)
 	// Check this skillchip is in the brain.
 	if(!(skillchip in skillchips))
+		stack_trace("Attempted to remove skillchip [skillchip] that wasn't in [src] skillchip list.")
 		return FALSE
 
 	LAZYREMOVE(skillchips, skillchip)
@@ -30,22 +31,6 @@
 	return TRUE
 
 /**
-  * Checks whether the skillchip's flags are incompatible with this brain's skillchips.
-  *
-  * Returns the flags that failed checks.
-  * Arguments:
-  * * skillchip - The skillchip you'd like to compare the flags of.
-  */
-/obj/item/organ/brain/proc/check_skillchip_flags(obj/item/skillchip/skillchip)
-	var/incompatibility_flags = 0
-
-	// If this is a job skillchip, check if any other skillchips are present.
-	for(var/obj/item/skillchip/S in skillchips)
-		incompatibility_flags |= skillchip.check_incompatibility(S)
-
-	return incompatibility_flags
-
-/**
   * Creates a list of type paths of skillchips in the brain.
   *
   * Returns a simple list of typepaths.
@@ -53,8 +38,13 @@
 /obj/item/organ/brain/proc/get_skillchip_type_list()
 	var/list/skillchip_types = list()
 	// Remove and call on_removal proc if successful.
-	for(var/obj/item/skillchip/S in skillchips)
-		skillchip_types += S.type
+	for(var/chip in skillchips)
+		var/obj/item/skillchip/skillchip = chip
+
+		if(!istype(skillchip))
+			stack_trace("[src] contains an item of type [skillchip.type] and this is not a skillchip.")
+			continue
+		skillchip_types += skillchip.type
 
 	return skillchip_types
 
@@ -65,6 +55,7 @@
   */
 /obj/item/organ/brain/proc/destroy_all_skillchips(silent = TRUE)
 	if(!QDELETED(owner))
-		for(var/obj/item/skillchip/skill_chip in skillchips)
-			skill_chip.on_removal(owner, silent)
+		for(var/chip in skillchips)
+			var/obj/item/skillchip/skillchip = chip
+			skillchip.on_removal(owner, silent)
 	QDEL_LIST(skillchips)

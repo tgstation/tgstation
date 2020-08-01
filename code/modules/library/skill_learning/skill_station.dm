@@ -105,8 +105,11 @@
 /// Start implanting.
 /obj/machinery/skill_station/proc/start_implanting()
 	var/mob/living/carbon/carbon_occupant = occupant
-	if(!carbon_occupant.can_implant_skillchip(inserted_skillchip))
+
+	if(inserted_skillchip.has_mob_incompatibility(carbon_occupant))
+		stack_trace("Unusual error - [usr] attempted to start implanting of [inserted_skillchip] when the interface state should not have allowed it.")
 		return
+
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/implant),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
 	update_icon()
@@ -130,6 +133,8 @@
 		return
 
 	if(!to_be_removed.can_remove_safely())
+		to_chat(occupant, "<span class='notice'>DANGER! Operation cannot be completed, removal is unsafe.</span>")
+		stack_trace("Unusual error - [usr] attempted to start removal of [to_be_removed] when the interface state should not have allowed it.")
 		return
 
 	working = TRUE
@@ -140,26 +145,32 @@
 /obj/machinery/skill_station/proc/remove_skillchip(obj/item/skillchip/to_be_removed)
 	working = FALSE
 	work_timer = null
+	update_icon()
+
 	var/mob/living/carbon/carbon_occupant = occupant
 
 	if(!to_be_removed.can_remove_safely())
 		to_chat(carbon_occupant,"<span class='notice'>Safety mechanisms activated! Skillchip cannot be safely removed.</span>")
+		SStgui.update_uis(src)
 		return
 
-	if(istype(carbon_occupant))
-		if(carbon_occupant.remove_skillchip(to_be_removed))
-			if(to_be_removed.removable)
-				carbon_occupant.put_in_hands(to_be_removed)
-			else
-				qdel(to_be_removed)
-
-			to_chat(carbon_occupant, "<span class='notice'>Operation complete!</span>")
-		else
-			to_chat(carbon_occupant,"<span class='notice'>Failed to remove skillchip!</span>")
-	else
+	if(!istype(carbon_occupant))
 		to_chat(carbon_occupant,"<span class='notice'>Occupant does not appear to be a carbon-based lifeform!</span>")
+		SStgui.update_uis(src)
+		return
 
-	update_icon()
+	if(!carbon_occupant.remove_skillchip(to_be_removed))
+		to_chat(carbon_occupant,"<span class='notice'>Failed to remove skillchip!</span>")
+		SStgui.update_uis(src)
+		return
+
+	if(to_be_removed.removable)
+		carbon_occupant.put_in_hands(to_be_removed)
+	else
+		qdel(to_be_removed)
+
+	to_chat(carbon_occupant, "<span class='notice'>Operation complete!</span>")
+
 	SStgui.update_uis(src)
 
 /obj/machinery/skill_station/ui_data(mob/user)
@@ -167,33 +178,58 @@
 	.["working"] = working
 	.["timeleft"] = work_timer ? timeleft(work_timer) : null
 	var/mob/living/carbon/carbon_occupant = occupant
-	var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
-	if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
-		.["error"] = "Brain not detected. Please consult nearest medical practitioner."
-	else
-		var/list/current_skills = list()
-		for(var/obj/item/skillchip/skill_chip in occupant_brain.skillchips)
-			current_skills += list(
-				list(
-					"name" = skill_chip.skill_name,
-					"icon" = skill_chip.skill_icon,
-					"cost" = skill_chip.slot_cost,
-					"ref" = REF(skill_chip),
-					"active" = (skill_chip in occupant_brain.skillchips),
-					"cooldown" = skill_chip.extractable_at - world.time,
-					"removable" = skill_chip.can_remove_safely()))
-		.["current"] = current_skills
-		.["slots_used"] = carbon_occupant.used_skillchip_slots
-		.["slots_max"] = carbon_occupant.max_skillchip_slots
 
 	.["skillchip_ready"] = inserted_skillchip ? TRUE : FALSE
 	if(inserted_skillchip)
-		.["implantable"] = carbon_occupant?.can_implant_skillchip(inserted_skillchip)
-		.["implantable_reason"] = carbon_occupant?.can_implant_skillchip_message(inserted_skillchip)
+		// This is safe, incompatibility check can accept a null or invalid mob.
+		var/incompatibility_check = inserted_skillchip.has_mob_incompatibility(carbon_occupant)
+		if(incompatibility_check)
+			.["incompatible"] = TRUE
+			.["implantable_reason"] = incompatibility_check
+		else
+			.["incompatible"] = FALSE
+			.["implantable_reason"] = null
 		.["skill_name"] = inserted_skillchip.skill_name
 		.["skill_desc"] = inserted_skillchip.skill_description
 		.["skill_icon"] = inserted_skillchip.skill_icon
 		.["skill_cost"] = inserted_skillchip.slot_cost
+
+	// If there's no occupant, we don't need to worry about what skillchips are in their brain.
+	if(!carbon_occupant)
+		.["error"] = "No valid occupant detected. Please consult nearest medical practitioner."
+		.["current"] = null
+		.["slots_used"] = null
+		.["slots_max"] = null
+		return
+
+	var/obj/item/organ/brain/occupant_brain = carbon_occupant?.getorganslot(ORGAN_SLOT_BRAIN)
+
+	// If there's no brain, we don't need to worry about what skillchips are in it but can still process
+	// any info about the skillslot capacity of the body, even though the info is useless without a brain.
+	if(QDELETED(occupant_brain))
+		.["error"] = "Brain not detected. Please consult nearest medical practitioner."
+		.["current"] = null
+		.["slots_used"] = carbon_occupant.used_skillchip_slots
+		.["slots_max"] = carbon_occupant.max_skillchip_slots
+		return
+
+	// If we got here, we have both an occupant and it has a brain, so we can check for skillchips.
+	var/list/current_skills = list()
+	for(var/obj/item/skillchip/skill_chip in occupant_brain.skillchips)
+		current_skills += list(
+			list(
+				"name" = skill_chip.skill_name,
+				"icon" = skill_chip.skill_icon,
+				"cost" = skill_chip.slot_cost,
+				"ref" = REF(skill_chip),
+				"active" = TRUE,
+				"cooldown" = COOLDOWN_TIMELEFT(skill_chip, extractable_at),
+				"removable" = skill_chip.can_remove_safely()))
+	.["current"] = current_skills
+	.["slots_used"] = carbon_occupant.used_skillchip_slots
+	.["slots_max"] = carbon_occupant.max_skillchip_slots
+
+
 
 /obj/machinery/skill_station/ui_act(action, list/params)
 	. = ..()

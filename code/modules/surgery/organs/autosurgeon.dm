@@ -128,11 +128,11 @@
 	if(starting_skillchip)
 		insert_skillchip(new starting_skillchip(src))
 
-/obj/item/autosurgeon/skillchip/proc/insert_skillchip(var/obj/item/skillchip/I)
-	if(!istype(I))
+/obj/item/autosurgeon/skillchip/proc/insert_skillchip(var/obj/item/skillchip/skillchip)
+	if(!istype(skillchip))
 		return
-	stored_skillchip = I
-	I.forceMove(src)
+	stored_skillchip = skillchip
+	skillchip.forceMove(src)
 	name = "[initial(name)] ([stored_skillchip.name])"
 
 /obj/item/autosurgeon/skillchip/attack_self(mob/living/carbon/user)//when the object it used...
@@ -148,16 +148,19 @@
 		to_chat(user, "<span class='alert'>[user]'s brain cannot accept skillchip implants.</span>")
 		return
 
-	if(!user.can_implant_skillchip(stored_skillchip))
-		var/fail_message = user.can_implant_skillchip_message(stored_skillchip)
+	var/fail_message = stored_skillchip.has_mob_incompatibility(user)
+	if(fail_message)
 		to_chat(user, "<span class='alert'>[stored_skillchip] cannot be implanted. [fail_message]</span>")
 		return
 
-	if(user.implant_skillchip(stored_skillchip))
-		to_chat(user,"<span class='notice'>Operation complete!</span>")
-	else
+	// The below check should never return FALSE, but we're checking it for sanity.
+	// If stored_skillchip.has_mob_incompatibility(user) returns FALSE, there should be abosolutely no reason for this to fail, ever.
+	if(!user.implant_skillchip(stored_skillchip))
+		stack_trace("Autosurgeon failed to implant [stored_skillchip] into [user] for an unknown reason.")
 		to_chat(user,"<span class='notice'>Operation failed!</span>")
 		return
+
+	to_chat(user,"<span class='notice'>Operation complete!</span>")
 
 	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your brain.</span>")
 	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
@@ -170,33 +173,38 @@
 	if(!uses)
 		desc = "[initial(desc)] Looks like it's been used up."
 
-/obj/item/autosurgeon/skillchip/attackby(obj/item/skillchip/I, mob/user, params)
-	if(istype(I, skillchip_type))
-		if(stored_skillchip)
-			to_chat(user, "<span class='alert'>[src] already has a skillchip stored.</span>")
-			return
-		else if(!uses)
-			to_chat(user, "<span class='alert'>[src] has already been used up.</span>")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		stored_skillchip = I
-		to_chat(user, "<span class='notice'>You insert the [I] into [src].</span>")
-	else
+/obj/item/autosurgeon/skillchip/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, skillchip_type))
 		return ..()
 
+	if(stored_skillchip)
+		to_chat(user, "<span class='alert'>[src] already has a skillchip stored.</span>")
+		return
+
+	if(!uses)
+		to_chat(user, "<span class='alert'>[src] has already been used up.</span>")
+		return
+
+	if(!user.transferItemToLoc(I, src))
+		to_chat(user, "<span class='alert'>You fail to insert the skillchip into [src]. It seems stuck to your hand.</span>")
+		return
+
+	stored_skillchip = I
+	to_chat(user, "<span class='notice'>You insert the [I] into [src].</span>")
+
 /obj/item/autosurgeon/skillchip/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	if(!stored_skillchip)
 		to_chat(user, "<span class='warning'>There's no skillchip in [src] for you to remove!</span>")
 		return TRUE
 
 	var/atom/drop_loc = user.drop_location()
-	for(var/J in src)
-		var/atom/movable/AM = J
-		AM.forceMove(drop_loc)
+	for(var/thing in contents)
+		var/atom/movable/movable_content = thing
+		movable_content.forceMove(drop_loc)
 
 	to_chat(user, "<span class='notice'>You remove the [stored_skillchip] from [src].</span>")
 	I.play_tool_sound(src)

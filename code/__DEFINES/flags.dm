@@ -154,12 +154,11 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define RELIGION_TOOL_SACRIFICE (1<<1)
 #define RELIGION_TOOL_SECTSELECT (1<<2)
 
-//skillchip flags
-//Skillchip type can be implanted multiple times
+// ---- Skillchip incompatability flags ---- //
+// These flags control which skill chips are compatible with eachother.
+// By default, skillchips are incompatible with themselves and multiple of the same istype() cannot be implanted together. Set this flag to disable that check.
 #define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)
-// Job skillchip, only one job skillchip can be implanted.
-#define SKILLCHIP_JOB_TYPE (1<<1)
-// Skillchip requires the target to be mindshielded to be implanted.
-#define SKILLCHIP_REQUIRE_MINDSHIELD (1<<2)
-// Used by the traitor skillchip, not implantable unless it's set to a copy of another skillchip.
-#define SKILLCHIP_CHAMELEON (1<<3)
+// This skillchip is incompatible with other skillchips from the incompatible_category list.
+#define SKILLCHIP_RESTRICTED_CATEGORIES (1<<1)
+// This skillchip is incompatible with the Chameleon skillchip and cannot be copied.
+#define SKILLCHIP_CHAMELEON_INCOMPATIBLE (1<<2)

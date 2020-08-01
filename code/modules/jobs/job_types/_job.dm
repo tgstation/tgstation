@@ -264,9 +264,10 @@
 
 	// Insert any skillchips associated with this job into the target's brain.
 	if(skillchip && istype(H))
-		var/obj/item/skillchip/S = new skillchip()
-		if(!H.implant_skillchip(S))
-			qdel(S)
+		var/obj/item/skillchip/skill_chip = new skillchip()
+		if(!H.implant_skillchip(skill_chip))
+			stack_trace("Failed to implant [H] with [skill_chip], on job [src].")
+			qdel(skill_chip)
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()

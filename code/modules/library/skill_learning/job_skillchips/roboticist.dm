@@ -1,4 +1,4 @@
-/obj/item/skillchip/roboticist
+/obj/item/skillchip/job/roboticist
 	name = "Cyborg C1-RCU-1T skillchip"
 	desc = "A roboticist's second best friend."
 	auto_trait = TRAIT_KNOW_CYBORG_WIRES
@@ -7,7 +7,3 @@
 	skill_icon = "sitemap"
 	implanting_message = "<span class='notice'>You suddenly comprehend the secrets behind cyborg circuitry.</span>"
 	removal_message = "<span class='notice'>Cyborg circuitry stops making sense as images of coloured wires fade from your mind.</span>"
-
-/obj/item/skillchip/roboticist/Initialize()
-	. = ..()
-	skillchip_flags |= SKILLCHIP_JOB_TYPE

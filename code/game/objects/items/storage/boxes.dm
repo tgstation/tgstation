@@ -1376,13 +1376,13 @@
 	desc = "Contains spares of every science job skillchip."
 
 /obj/item/storage/box/skillchips/PopulateContents()
-	new/obj/item/skillchip/roboticist(src)
-	new/obj/item/skillchip/roboticist(src)
+	new/obj/item/skillchip/job/roboticist(src)
+	new/obj/item/skillchip/job/roboticist(src)
 
 /obj/item/storage/box/skillchips/engineering
 	name = "box of engineering job skillchips"
 	desc = "Contains spares of every engineering job skillchip."
 
 /obj/item/storage/box/skillchips/PopulateContents()
-	new/obj/item/skillchip/engineer(src)
-	new/obj/item/skillchip/engineer(src)
+	new/obj/item/skillchip/job/engineer(src)
+	new/obj/item/skillchip/job/engineer(src)

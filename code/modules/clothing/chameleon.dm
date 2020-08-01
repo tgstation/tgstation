@@ -672,6 +672,10 @@
 	chameleon_action.chameleon_name = "Neck Accessory"
 	chameleon_action.initialize_disguises()
 
+/obj/item/clothing/neck/chameleon/Destroy()
+	qdel(chameleon_action)
+	. = ..()
+
 /obj/item/clothing/neck/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -683,16 +687,27 @@
 	chameleon_action.emp_randomise(INFINITY)
 
 /datum/action/item_action/chameleon/change/skillchip
-	/// Skillchip this this chameleon action is imitating.
+	/// Skillchip that this chameleon action is imitating.
 	var/obj/item/skillchip/skillchip_mimic
-	var/obj/item/skillchip/usable_at_world_time = 0
+	/// When we can next modify this skillchip
+	COOLDOWN_DECLARE(usable_at_world_time)
 	var/cooldown = 5 MINUTES
 
+/// Completely override the functionality of the initialize_disguises() proc. No longer uses chameleon_blacklist and uses skillchip flags instead.
 /datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
-	. = ..()
-
 	if(button)
 		button.name = "Change [chameleon_name] Function"
+
+	if(!ispath(chameleon_type, /obj/item/skillchip))
+		stack_trace("Attempted to initialise [src] disguise list with incompatible item path.")
+		return
+
+	for(var/chip_type in typesof(chameleon_type))
+		var/obj/item/skillchip/SC = chip_type
+		if((initial(SC.skillchip_flags) & SKILLCHIP_CHAMELEON_INCOMPATIBLE) || (initial(SC.item_flags) & ABSTRACT) || !initial(SC.icon_state))
+			continue
+		var/chameleon_item_name = "[initial(SC.name)] ([initial(SC.icon_state)])"
+		chameleon_list[chameleon_item_name] = SC
 
 /datum/action/item_action/chameleon/change/skillchip/update_item(obj/item/skillchip/picked_item)
 	if(istype(picked_item))
@@ -701,27 +716,28 @@
 		target.icon_state = initial(picked_item.skill_icon)
 
 /datum/action/item_action/chameleon/change/skillchip/update_look(mob/user, obj/item/skillchip/picked_item)
-	if(usable_at_world_time <= world.time)
-		// Swap out the fake skillchips.
-		if(skillchip_mimic && istype(skillchip_mimic))
-			skillchip_mimic.on_removal(user, silent = FALSE)
-			QDEL_NULL(skillchip_mimic)
+	if(!COOLDOWN_FINISHED(src, usable_at_world_time))
+		to_chat(user, "<span class='notice'>Chameleon skillchip is still recharging for another [COOLDOWN_TIMELEFT(src, usable_at_world_time) * 0.1] seconds!</span>")
+		return ..()
 
-		skillchip_mimic = new picked_item()
-		if(istype(skillchip_mimic))
-			skillchip_mimic.removable = FALSE
-			skillchip_mimic.on_apply(user, silent = FALSE)
-			usable_at_world_time = world.time + cooldown
-			to_chat(user, "<span class='notice'>The chameleon skillchip is recharging. It will be unable to change for another [cooldown/10] seconds.</span>")
-		else
-			QDEL_NULL(skillchip_mimic)
-	else
-		to_chat(user, "<span class='notice'>Chameleon skillchip is still recharging for another [(usable_at_world_time - world.time)/10] seconds!</span>")
+	// Swap out the fake skillchips.
+	if(istype(skillchip_mimic))
+		skillchip_mimic.on_removal(user, silent = FALSE)
+		QDEL_NULL(skillchip_mimic)
 
-	..()
+	skillchip_mimic = new picked_item(is_removable = FALSE)
+	if(!istype(skillchip_mimic))
+		stack_trace("Chameleon skillchip [src] attempted to change into non-skillchip item [picked_item].")
+		QDEL_NULL(skillchip_mimic)
+
+	COOLDOWN_START(src, usable_at_world_time, cooldown)
+	skillchip_mimic.on_apply(user, silent = FALSE)
+	to_chat(user, "<span class='notice'>The chameleon skillchip is recharging. It will be unable to change for another [cooldown * 0.1] seconds.</span>")
+
+	return ..()
 
 /datum/action/item_action/chameleon/change/skillchip/IsAvailable()
-	if(usable_at_world_time > world.time)
+	if(!COOLDOWN_FINISHED(src, usable_at_world_time))
 		return FALSE
 
 	return ..()

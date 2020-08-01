@@ -129,14 +129,22 @@
 	if(length(skillchips) && O.sharpness == SHARP_EDGED)
 		to_chat(user,"<span class='notice'>You begin to excise skillchips from [src].</span>")
 		if(do_after(user, 15 SECONDS, target = src))
-			for(var/obj/item/skillchip/skill_chip in skillchips)
-				if(remove_skillchip(skill_chip))
-					if(skill_chip.removable)
-						skill_chip.forceMove(drop_location())
-					else
-						qdel(skill_chip)
-				else
-					CRASH("Skillchip could not be extracted from brain as either chip or doesn't exist or the chip is not in the brain.")
+			for(var/chip in skillchips)
+				var/obj/item/skillchip/skillchip = chip
+
+				if(!istype(skillchip))
+					stack_trace("Item of type [skillchip.type] qdel'd from [src] skillchip list.")
+					qdel(skillchip)
+					continue
+
+				remove_skillchip(skillchip)
+
+				if(skillchip.removable)
+					skillchip.forceMove(drop_location())
+					continue
+
+				qdel(skillchip)
+
 			skillchips = null
 		return
 

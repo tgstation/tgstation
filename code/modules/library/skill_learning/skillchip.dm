@@ -7,12 +7,19 @@
 	custom_price = 500
 	w_class = WEIGHT_CLASS_SMALL
 
+	// Primarily used in the chameleon skillchip item_action code to specify an item that isn't really an item.
+	item_flags = ABSTRACT
+
 	/// Trait automatically granted by this chip, optional
 	var/auto_trait
 	/// Skill name shown on UI
 	var/skill_name
 	/// Skill description shown on UI
 	var/skill_description
+	/// Category string. Used alongside SKILLCHIP_RESTRICTED_CATEGORIES flag to make a chip incompatible with chips from another category.
+	var/chip_category = "general"
+	/// List of any incompatible categories.
+	var/list/incompatibility_list
 	/// Fontawesome icon show on UI, list of possible icons https://fontawesome.com/icons?d=gallery&m=free
 	var/skill_icon = "brain"
 	/// Message shown when implanting the chip
@@ -20,15 +27,19 @@
 	/// Message shown when extracting the chip
 	var/removal_message
 	//If set to TRUE, trying to extract the chip will destroy it instead
-	var/removable = TRUE
+	var/removable
 	/// How many skillslots this one takes
 	var/slot_cost = 1
-	/// Variable for flags
+	/// Variable for flags. DANGEROUS - Child types overwrite flags instead of adding to them. If you change this, make sure all child types have the appropriate flags set too.
 	var/skillchip_flags = NONE
 	/// Cooldown before the skillchip can be extracted after it has been implanted.
 	var/cooldown = 5 MINUTES
 	/// The world.time when this skillchip should be extractable.
-	var/extractable_at = 0
+	COOLDOWN_DECLARE(extractable_at)
+
+/obj/item/skillchip/Initialize(is_removable = TRUE)
+	. = ..()
+	removable = is_removable
 
 /// Called after implantation and/or brain entering new body
 /obj/item/skillchip/proc/on_apply(mob/living/carbon/user,silent=TRUE)
@@ -38,7 +49,7 @@
 		ADD_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
 	user.used_skillchip_slots += slot_cost
 
-	extractable_at = world.time + cooldown
+	COOLDOWN_START(src, extractable_at, cooldown)
 
 /// Called after removal and/or brain exiting the body
 /obj/item/skillchip/proc/on_removal(mob/living/carbon/user,silent=TRUE)
@@ -48,35 +59,81 @@
 		REMOVE_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
 	user.used_skillchip_slots -= slot_cost
 
-	extractable_at = 0
+	COOLDOWN_RESET(src, extractable_at)
 
 /**
-  * Checks for skillchip incompatibility with other installed chips.
+  * Checks for skillchip incompatibility with another chip.
   *
-  * Returns all incompatible flags to be parsed by the calling proc.
+  * Override this with any snowflake chip-vs-chip incompatibility checks.
+  * Returns a string with an incompatibility explanation if the chip is not compatible, returns FALSE
+  * if it is compatible.
   * Arguments:
-  * * skillchip - The skillchip to test for implantability.
+  * * skillchip - The skillchip to test for incompatability.
   */
-/obj/item/skillchip/proc/check_incompatibility(obj/item/skillchip/skillchip)
-	var/incompatible_flags = 0
-
-	// If this is a SKILLCHIP_JOB_TYPE it is incompatible with any other SKILLCHIP_JOB_TYPE.
-	if((skillchip_flags & SKILLCHIP_JOB_TYPE) && (skillchip.skillchip_flags & SKILLCHIP_JOB_TYPE))
-		incompatible_flags |= SKILLCHIP_JOB_TYPE
+/obj/item/skillchip/proc/has_skillchip_incompatibility(obj/item/skillchip/skillchip)
+	// If this is a SKILLCHIP_UNIQUE_IN_CATEGORY it is incompatible with chips of the same category.
+	if((skillchip_flags & SKILLCHIP_RESTRICTED_CATEGORIES) && (skillchip.chip_category in incompatibility_list))
+		return "Incompatible with other [chip_category] chip: [skillchip.name]"
 
 	// Only allow multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
 	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (istype(skillchip, type)))
-		incompatible_flags |= SKILLCHIP_ALLOWS_MULTIPLE
+		return "Duplicate chip detected."
 
-	return incompatible_flags
+	return FALSE
 
 /**
-  * Intended to be overridden. Returns whether the chip is in an implantable state.
+  * Performs a full sweep of checks that dictate if this chip can be implanted in a given target.
   *
-  * Returns TRUE if the chip is in an implantable state.
+  * Override this with any snowflake chip checks. An example of which would be checking if a target is
+  * mindshielded if you've got a special security skillchip.
+  * Returns a string with an incompatibility explanation if the chip is not compatible, returns FALSE
+  * if it is compatible.
+  * Arguments:
+  * * target - The mob to check for implantability with.
   */
-/obj/item/skillchip/proc/can_implant()
-	return TRUE
+/obj/item/skillchip/proc/has_mob_incompatibility(mob/living/carbon/target)
+	// No carbon/carbon of incorrect type
+	if(!istype(target))
+		return "Incompatible lifeform detected."
+
+	// No brain
+	var/obj/item/organ/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(brain))
+		return "No brain detected."
+
+	// No skill slots left
+	if(target.used_skillchip_slots + slot_cost > target.max_skillchip_slots)
+		return "Complexity limit exceeded."
+
+	// Check brain incompatibility. This also performs skillchip-to-skillchip incompatibility checks.
+	var/brain_message = has_brain_incompatibility(brain)
+	if(brain_message)
+		return brain_message
+
+	return FALSE
+
+/**
+  * Performs a full sweep of checks that dictate if this chip can be implanted in a given brain.
+  *
+  * Override this with any snowflake chip checks.
+  * Returns TRUE if the chip is fully compatible, FALSE otherwise.
+  * Arguments:
+  * * brain - The brain to check for implantability with.
+  */
+/obj/item/skillchip/proc/has_brain_incompatibility(obj/item/organ/brain/brain)
+	if(!istype(brain))
+		stack_trace("Attempted to check incompatibility with invalid brain object [brain].")
+		return "Incompatible brain."
+
+	var/chip_message
+
+	// Check if this chip is incompatible with any other chips in the brain.
+	for(var/obj/item/skillchip/skillchip in brain.skillchips)
+		chip_message = skillchip.has_skillchip_incompatibility(skillchip)
+		if(chip_message)
+			return chip_message
+
+	return FALSE
 
 /**
   * Returns whether the chip is able to be removed safely.
@@ -87,7 +144,7 @@
   * Returns FALSE if the chip's extraction cooldown hasn't yet passed.
   */
 /obj/item/skillchip/proc/can_remove_safely()
-	if(extractable_at > world.time)
+	if(!COOLDOWN_FINISHED(src, extractable_at))
 		return FALSE
 
 	return TRUE
