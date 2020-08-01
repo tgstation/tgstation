@@ -395,25 +395,25 @@
 
 /datum/excited_group/proc/display_turfs()
 	if(display_id == 0) //Hasn't been shown before
-		wrapping_id = wrapping_id % GLOB.contrast_colors.len
+		wrapping_id = wrapping_id % GLOB.colored_turfs.len
 		wrapping_id++ //We do this after because lists index at 1
 		display_id = wrapping_id
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.add_atom_colour(GLOB.contrast_colors[display_id], ADMIN_COLOUR_PRIORITY)
+		display.vis_contents += GLOB.colored_turfs[display_id]
 
 /datum/excited_group/proc/hide_turfs()
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.remove_atom_colour(ADMIN_COLOUR_PRIORITY, GLOB.contrast_colors[display_id])
+		display.vis_contents -= GLOB.colored_turfs[display_id]
 	display_id = 0
 
 /datum/excited_group/proc/display_turf(turf/thing)
 	if(display_id == 0) //Hasn't been shown before
-		wrapping_id = wrapping_id % GLOB.contrast_colors.len
+		wrapping_id = wrapping_id % GLOB.colored_turfs.len
 		wrapping_id++ //We do this after because lists index at 1
 		display_id = wrapping_id
-	thing.add_atom_colour(GLOB.contrast_colors[display_id], ADMIN_COLOUR_PRIORITY)
+	thing.vis_contents += GLOB.colored_turfs[display_id]
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 /turf/proc/conductivity_directions()

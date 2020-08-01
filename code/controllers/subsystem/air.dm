@@ -66,6 +66,7 @@ SUBSYSTEM_DEF(air)
 	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
+	setup_turf_visuals()
 	return ..()
 
 
@@ -388,13 +389,11 @@ SUBSYSTEM_DEF(air)
 		CHECK_TICK
 
 GLOBAL_LIST_EMPTY(colored_turfs)
-GLOBAL_DATUM(atmos_overlay, /image)
 /datum/controller/subsystem/air/proc/setup_turf_visuals()
-	for(var/color in GLOB.contrast_colors)
+	for(var/sharp_color in GLOB.contrast_colors)
 		var/obj/effect/overlay/atmos_excited/suger_high = new()
+		suger_high.color = sharp_color
 		GLOB.colored_turfs += suger_high
-	//GLOB.atmos_overlay = new('icons/effects/effects.dmi', suger_high, atmos_top, ATMOS_GROUP_LAYER)
-	//GLOB.atmos_overlay.plane = ATMOS_GROUP_PLANE
 		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
