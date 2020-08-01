@@ -139,6 +139,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Science Maintenance"
 	icon_state = "maint_sci"
 
+/area/maintenance/department/shipyard
+	name = "Shipyard"
+	icon_state = "maint_sci"
+
 /area/maintenance/department/science/central
 	name = "Central Science Maintenance"
 	icon_state = "maint_sci_central"
@@ -1152,6 +1156,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/vacant_room/commissary
 	name = "Vacant Commissary"
 	icon_state = "vacant_commissary"
+
+/area/vacant_room/bazaar
+	name = "Bazaar"
+	icon_state = "vacant_office"
 
 //AI
 

@@ -6852,9 +6852,7 @@
 /area/maintenance/department/security/brig)
 "aqj" = (
 /turf/closed/wall,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aqk" = (
 /obj/machinery/reagentgrinder/constructed,
 /obj/structure/table,
@@ -7230,9 +7228,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aqX" = (
 /obj/machinery/disposal/delivery_chute{
 	dir = 4;
@@ -7243,9 +7239,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aqY" = (
 /obj/docking_port/stationary{
 	dwidth = 2;
@@ -7269,9 +7263,7 @@
 /obj/structure/railing,
 /obj/item/wallframe/intercom,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "arb" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -7282,9 +7274,7 @@
 	icon_state = "small"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "arc" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -7295,9 +7285,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "ard" = (
 /obj/item/clothing/head/cone,
 /turf/open/floor/plating,
@@ -7305,23 +7293,17 @@
 "are" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "arf" = (
 /obj/structure/table/reinforced,
 /obj/item/weldingtool,
 /obj/item/stack/marker_beacon/thirty,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "arg" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "arh" = (
 /obj/structure/table,
 /obj/item/kitchen/knife,
@@ -7952,17 +7934,13 @@
 /area/maintenance/starboard)
 "ass" = (
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "ast" = (
 /obj/machinery/conveyor_switch{
 	id = "maint-smelt"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "asu" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
 	dir = 8
@@ -7979,9 +7957,7 @@
 "asv" = (
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "asw" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
@@ -8088,9 +8064,7 @@
 "asF" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "asG" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
@@ -8154,9 +8128,7 @@
 "asP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "asQ" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -8421,22 +8393,16 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "att" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "atu" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "atv" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
@@ -8468,15 +8434,11 @@
 	},
 /obj/item/airlock_painter/decal,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "atz" = (
 /obj/structure/sign/warning/docking,
 /turf/closed/wall,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "atA" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 2";
@@ -10270,9 +10232,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "axe" = (
 /obj/machinery/light{
 	dir = 4;
@@ -10296,9 +10256,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "axg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/dark,
@@ -10379,9 +10337,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "axt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -10442,9 +10398,7 @@
 	dir = 9
 	},
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "axE" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "prison release";
@@ -10596,9 +10550,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "axZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -10759,9 +10711,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "ayq" = (
 /obj/structure/table/wood,
 /obj/item/storage/backpack,
@@ -10912,9 +10862,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "ayL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -11230,9 +11178,7 @@
 	name = "Bay #3"
 	},
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "azx" = (
 /obj/structure/table/wood,
 /obj/item/paicard,
@@ -11373,9 +11319,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "azS" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Port Solar Access";
@@ -11387,32 +11331,24 @@
 "azT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "azU" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	icon_state = "propulsion_l";
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "azV" = (
 /turf/closed/wall/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "azW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "azX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
@@ -11768,9 +11704,7 @@
 /area/crew_quarters/dorms)
 "aAR" = (
 /turf/closed/wall,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aAS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -13647,6 +13581,20 @@
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
 "aEV" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissary_2";
+	name = "commissary shutters"
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/bazaar)
+"aEW" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"aEX" = (
 /obj/machinery/button/door{
 	id = "maint-bay3";
 	name = "bay blast doors #3";
@@ -13655,21 +13603,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aEW" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"aEX" = (
-/obj/structure/door_assembly/door_assembly_shuttle,
-/turf/open/floor/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aEY" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -13719,33 +13653,23 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aFg" = (
+/obj/structure/door_assembly/door_assembly_shuttle,
+/turf/open/floor/mineral/titanium,
+/area/maintenance/department/shipyard)
+"aFh" = (
 /obj/structure/chair/comfy/shuttle{
 	icon_state = "shuttle_chair";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aFh" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aFi" = (
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aFj" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = "commissary_2";
-	name = "commissary shutters"
-	},
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/maintenance/department/shipyard)
 "aFk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/spawner/lootdrop/minor/bowler_or_that,
@@ -13772,9 +13696,7 @@
 	},
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/carpet,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aFm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -13809,9 +13731,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aFr" = (
 /obj/machinery/camera{
 	c_tag = "Fore Primary Hallway Entrance";
@@ -14019,20 +13939,14 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aFQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aFR" = (
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aFS" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -15035,13 +14949,26 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aHX" = (
-/obj/structure/sign/warning/nosmoking/circle{
-	pixel_x = -32
+/obj/structure/table,
+/obj/item/storage/crayons,
+/obj/machinery/button/door{
+	id = "commissary-cargo-bolts";
+	name = "cargo door bolts control";
+	normaldoorcontrol = 1;
+	pixel_x = 24;
+	specialfunctions = 4
 	},
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/obj/machinery/button/door{
+	id = "commissary_2";
+	name = "fore shutters control";
+	pixel_y = 24
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	light_color = "#d8b1b1"
+	},
+/turf/open/floor/carpet,
+/area/vacant_room/bazaar)
 "aHY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -15194,20 +15121,18 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aIm" = (
+/obj/structure/sign/warning/nosmoking/circle{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"aIn" = (
 /obj/structure/shuttle/engine/propulsion/right{
 	icon_state = "propulsion_r";
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aIn" = (
-/obj/structure/girder,
-/turf/open/floor/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aIo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -15233,28 +15158,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aIr" = (
-/obj/structure/table,
-/obj/item/storage/crayons,
-/obj/machinery/button/door{
-	id = "commissary-cargo-bolts";
-	name = "cargo door bolts control";
-	normaldoorcontrol = 1;
-	pixel_x = 24;
-	specialfunctions = 4
-	},
-/obj/machinery/button/door{
-	id = "commissary_2";
-	name = "fore shutters control";
-	pixel_y = 24
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	light_color = "#d8b1b1"
-	},
-/turf/open/floor/carpet,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/obj/structure/girder,
+/turf/open/floor/mineral/titanium,
+/area/maintenance/department/shipyard)
 "aIs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -15264,51 +15170,39 @@
 	id_tag = "commissary-bolts"
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aIt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aIu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/open/floor/carpet/green,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aIv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aIw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet/green,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aIx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aIy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -15387,14 +15281,17 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aIK" = (
-/obj/machinery/light_switch{
-	dir = 9;
-	pixel_x = -22
+/obj/machinery/door/airlock/mining/glass{
+	id_tag = "commissary-cargo-bolts";
+	name = "Mailroom";
+	req_access_txt = "50"
 	},
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/bazaar)
 "aIL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -15417,6 +15314,18 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aIO" = (
+/obj/machinery/light_switch{
+	dir = 9;
+	pixel_x = -22
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"aIP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"aIQ" = (
 /obj/effect/decal/cleanable/oil{
 	icon_state = "floor6"
 	},
@@ -15425,21 +15334,7 @@
 	dir = 10
 	},
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aIP" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"aIQ" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aIR" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -15462,13 +15357,9 @@
 /area/hallway/primary/central)
 "aIU" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aIV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -15477,19 +15368,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aIW" = (
-/obj/machinery/door/airlock/mining/glass{
-	id_tag = "commissary-cargo-bolts";
-	name = "Mailroom";
-	req_access_txt = "50"
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/turf/open/floor/engine,
+/area/maintenance/department/shipyard)
 "aIX" = (
 /obj/effect/landmark/observer_start,
 /obj/structure/cable,
@@ -15506,9 +15390,7 @@
 	},
 /obj/item/stack/package_wrap,
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aIZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -15569,9 +15451,7 @@
 "aJg" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet/green,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aJh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable,
@@ -15585,9 +15465,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aJj" = (
 /obj/structure/table,
 /obj/structure/disposalpipe/segment{
@@ -15599,9 +15477,7 @@
 	},
 /obj/item/paper_bin,
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aJk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -16038,14 +15914,11 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aKd" = (
-/obj/machinery/light{
-	dir = 4;
-	light_color = "#e8eaff"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/turf/closed/wall,
+/area/vacant_room/bazaar)
 "aKe" = (
 /obj/machinery/camera{
 	c_tag = "Dormitories Hallway";
@@ -16092,28 +15965,23 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aKk" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
 	},
-/turf/closed/wall,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "aKl" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
 /obj/structure/table,
 /obj/item/hand_labeler,
 /turf/open/floor/carpet,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aKm" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aKn" = (
 /obj/machinery/conveyor{
 	dir = 5;
@@ -16842,29 +16710,28 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aLN" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "commissary_1";
+	name = "aft shutters control";
+	pixel_y = -24
+	},
+/obj/machinery/light_switch{
+	pixel_x = 24
+	},
+/obj/item/pen,
+/turf/open/floor/carpet,
+/area/vacant_room/bazaar)
+"aLO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aLO" = (
+/area/maintenance/department/shipyard)
+"aLP" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aLP" = (
-/obj/structure/plasticflaps,
-/obj/machinery/door/poddoor/preopen{
-	id = "maint-bay2";
-	name = "Bay #2"
-	},
-/turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aLQ" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/button/door{
@@ -17000,20 +16867,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMe" = (
-/obj/structure/table,
-/obj/machinery/button/door{
-	id = "commissary_1";
-	name = "aft shutters control";
-	pixel_y = -24
+/obj/structure/plasticflaps,
+/obj/machinery/door/poddoor/preopen{
+	id = "maint-bay2";
+	name = "Bay #2"
 	},
-/obj/machinery/light_switch{
-	pixel_x = 24
-	},
-/obj/item/pen,
-/turf/open/floor/carpet,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/turf/open/floor/engine,
+/area/maintenance/department/shipyard)
 "aMf" = (
 /obj/structure/table/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -17022,9 +16882,7 @@
 	name = "commissary shutters"
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aMg" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -17066,9 +16924,7 @@
 	name = "commissary shutters"
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/area/vacant_room/bazaar)
 "aMk" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -17138,30 +16994,26 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aMt" = (
+/obj/structure/table/reinforced,
+/obj/machinery/paystand,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissary_1";
+	name = "commissary shutters"
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/bazaar)
+"aMu" = (
 /obj/structure/girder/displaced,
 /turf/open/floor/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aMu" = (
+/area/maintenance/department/shipyard)
+"aMv" = (
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/yellow,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aMv" = (
+/area/maintenance/department/shipyard)
+"aMw" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/mineral/titanium/yellow,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aMw" = (
-/obj/structure/table/reinforced,
-/obj/item/wallframe/intercom,
-/turf/open/floor/mineral/titanium/yellow,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aMx" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -17792,6 +17644,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aNG" = (
+/obj/structure/table/reinforced,
+/obj/item/wallframe/intercom,
+/turf/open/floor/mineral/titanium/yellow,
+/area/maintenance/department/shipyard)
+"aNH" = (
 /obj/machinery/button/door{
 	id = "maint-bay2";
 	name = "bay blast doors #2";
@@ -17800,14 +17657,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aNH" = (
-/turf/open/floor/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aNI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -17864,14 +17714,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "aNN" = (
-/obj/structure/chair/comfy/shuttle{
-	icon_state = "shuttle_chair";
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/turf/open/floor/mineral/titanium,
+/area/maintenance/department/shipyard)
 "aNO" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -17882,14 +17726,12 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aNQ" = (
-/obj/structure/frame/computer{
-	icon_state = "0";
-	dir = 8
+/obj/structure/chair/comfy/shuttle{
+	icon_state = "shuttle_chair";
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aNR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -18338,37 +18180,31 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aON" = (
+/obj/structure/frame/computer{
+	icon_state = "0";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/maintenance/department/shipyard)
+"aOO" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aOO" = (
+/area/maintenance/department/shipyard)
+"aOP" = (
+/turf/open/floor/plasteel,
+/area/security/checkpoint/supply)
+"aOQ" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aOP" = (
-/turf/open/floor/plasteel,
-/area/security/checkpoint/supply)
-"aOQ" = (
+/area/maintenance/department/shipyard)
+"aOR" = (
 /obj/structure/closet/crate/secure/loot,
 /turf/open/floor/mineral/titanium/yellow,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aOR" = (
-/obj/structure/table/reinforced,
-/obj/item/wallframe/button,
-/turf/open/floor/mineral/titanium/yellow,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aOS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -18524,26 +18360,21 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aPk" = (
+/obj/structure/table/reinforced,
+/obj/item/wallframe/button,
+/turf/open/floor/mineral/titanium/yellow,
+/area/maintenance/department/shipyard)
+"aPl" = (
 /obj/machinery/firealarm{
 	pixel_x = -24
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aPl" = (
+/area/maintenance/department/shipyard)
+"aPm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aPm" = (
-/obj/structure/grille/broken,
-/turf/open/floor/mineral/titanium,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aPn" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -18858,27 +18689,20 @@
 	},
 /area/maintenance/starboard)
 "aQe" = (
+/obj/structure/grille/broken,
+/turf/open/floor/mineral/titanium,
+/area/maintenance/department/shipyard)
+"aQf" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aQf" = (
+/area/maintenance/department/shipyard)
+"aQg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aQg" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aQh" = (
 /obj/structure/railing{
 	icon_state = "railing";
@@ -19403,11 +19227,10 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aRo" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/department/shipyard)
 "aRp" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
@@ -19422,32 +19245,22 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aRr" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"aRs" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aRs" = (
+/area/maintenance/department/shipyard)
+"aRt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/item/weldingtool,
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aRt" = (
-/obj/structure/plasticflaps,
-/obj/machinery/door/poddoor{
-	id = "maint-bay1";
-	name = "Bay #1"
-	},
-/turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aRu" = (
 /obj/structure/railing{
 	icon_state = "railing";
@@ -19882,14 +19695,13 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aSn" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
+/obj/structure/plasticflaps,
+/obj/machinery/door/poddoor{
+	id = "maint-bay1";
+	name = "Bay #1"
 	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/turf/open/floor/engine,
+/area/maintenance/department/shipyard)
 "aSo" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -19901,36 +19713,28 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aSp" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -24
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"aSq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aSq" = (
+/area/maintenance/department/shipyard)
+"aSr" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aSr" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aSs" = (
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor5"
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aSt" = (
 /obj/structure/railing{
 	icon_state = "railing";
@@ -20450,18 +20254,12 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aTB" = (
-/obj/machinery/button/door{
-	id = "maint-bay1";
-	name = "bay blast doors #1";
-	pixel_x = -24;
-	pixel_y = 0;
-	req_access_txt = "2"
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor5"
 	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/engine,
+/area/maintenance/department/shipyard)
 "aTC" = (
 /obj/machinery/power/solar{
 	id = "portsolar";
@@ -21013,6 +20811,17 @@
 	},
 /area/hallway/primary/central)
 "aUK" = (
+/obj/machinery/button/door{
+	id = "maint-bay1";
+	name = "bay blast doors #1";
+	pixel_x = -24;
+	pixel_y = 0;
+	req_access_txt = "2"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"aUL" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -21020,18 +20829,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aUL" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aUM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -21117,14 +20915,11 @@
 /area/hydroponics)
 "aUV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
+	dir = 4
 	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "aUW" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -21185,12 +20980,13 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aVe" = (
-/obj/effect/decal/cleanable/oil,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/shipyard)
 "aVf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/newscaster{
@@ -21348,13 +21144,10 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aVq" = (
-/obj/structure/closet/crate,
+/obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aVr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -21906,11 +21699,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aWA" = (
-/obj/structure/closet/secure_closet/engineering_welding,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/obj/structure/closet/crate,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/engine,
+/area/maintenance/department/shipyard)
 "aWB" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -21918,14 +21711,9 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aWC" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/engine,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/obj/structure/closet/secure_closet/engineering_welding,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "aWD" = (
 /obj/machinery/firealarm{
 	pixel_y = -32
@@ -23053,17 +22841,16 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aYC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/maintenance/department/shipyard)
+"aYD" = (
 /obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aYD" = (
-/obj/structure/shuttle/engine/router,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aYE" = (
 /obj/structure/table,
 /obj/item/assembly/igniter,
@@ -23236,14 +23023,9 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aYW" = (
-/obj/structure/frame/computer{
-	icon_state = "0";
-	dir = 1
-	},
+/obj/structure/shuttle/engine/router,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aYX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -23414,36 +23196,27 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZi" = (
+/obj/structure/frame/computer{
+	icon_state = "0";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"aZj" = (
 /obj/item/wallframe/light_fixture{
 	pixel_x = 4;
 	pixel_y = 9
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aZj" = (
+/area/maintenance/department/shipyard)
+"aZk" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aZk" = (
+/area/maintenance/department/shipyard)
+"aZl" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"aZl" = (
-/obj/machinery/light/broken{
-	icon_state = "tube-broken";
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "aZm" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance,
@@ -23968,60 +23741,47 @@
 /turf/open/floor/eighties,
 /area/maintenance/starboard)
 "bau" = (
+/obj/machinery/light/broken{
+	icon_state = "tube-broken";
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"bav" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"bav" = (
+/area/maintenance/department/shipyard)
+"baw" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"baw" = (
+/area/maintenance/department/shipyard)
+"bax" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"bax" = (
+/area/maintenance/department/shipyard)
+"bay" = (
 /obj/item/wallframe/intercom{
 	pixel_x = 7;
 	pixel_y = 5
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"bay" = (
+/area/maintenance/department/shipyard)
+"baz" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"baz" = (
+/area/maintenance/department/shipyard)
+"baA" = (
 /obj/item/stack/license_plates/empty,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"baA" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "baB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24542,29 +24302,23 @@
 /turf/open/floor/eighties,
 /area/maintenance/starboard)
 "bbM" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"bbN" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"bbN" = (
+/area/maintenance/department/shipyard)
+"bbO" = (
 /obj/structure/closet/crate/engineering,
 /obj/item/wallframe/apc,
 /obj/item/wallframe/airalarm,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"bbO" = (
-/obj/structure/chair/comfy/shuttle{
-	icon_state = "shuttle_chair";
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "bbP" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -24729,14 +24483,23 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bci" = (
+/obj/structure/chair/comfy/shuttle{
+	icon_state = "shuttle_chair";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"bcj" = (
 /obj/machinery/conveyor_switch{
 	id = "maint-robo"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"bcj" = (
+/area/maintenance/department/shipyard)
+"bck" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
+"bcl" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "maint-robo"
@@ -24744,29 +24507,15 @@
 /obj/structure/barricade/wooden,
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
-"bck" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/bar)
-"bcl" = (
-/obj/item/wallframe/firealarm,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "bcm" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "bcn" = (
-/obj/structure/shuttle/engine/heater,
+/obj/item/wallframe/firealarm,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Shipyard"
-	})
+/area/maintenance/department/shipyard)
 "bco" = (
 /obj/structure/table/wood/fancy,
 /obj/item/gun/ballistic/revolver/russian{
@@ -24781,16 +24530,9 @@
 	},
 /area/crew_quarters/bar)
 "bcp" = (
-/obj/structure/table/reinforced,
-/obj/machinery/paystand,
-/obj/machinery/door/poddoor/shutters{
-	id = "commissary_1";
-	name = "commissary shutters"
-	},
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary{
-	name = "Trading Post"
-	})
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "bcq" = (
 /obj/item/clothing/glasses/monocle,
 /obj/item/instrument/recorder,
@@ -25022,16 +24764,6 @@
 /turf/open/space,
 /area/solar/starboard)
 "bcU" = (
-/turf/closed/wall,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bcV" = (
-/obj/machinery/power/tracker,
-/obj/structure/cable,
-/turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/starboard)
-"bcW" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "maint-robo"
@@ -25039,9 +24771,17 @@
 /obj/structure/plasticflaps,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
+/area/maintenance/department/shipyard)
+"bcV" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable,
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard)
+"bcW" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "bcX" = (
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -25850,31 +25590,20 @@
 /turf/closed/wall,
 /area/science/robotics/mechbay)
 "beJ" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"beK" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "maint-robo"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"beL" = (
+/area/maintenance/department/shipyard)
+"beK" = (
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "maint-robo"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"beM" = (
+/area/maintenance/department/shipyard)
+"beL" = (
 /obj/machinery/light_switch{
 	dir = 9;
 	pixel_x = 0;
@@ -25882,9 +25611,16 @@
 	},
 /obj/machinery/recharge_station,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
+/area/maintenance/department/shipyard)
+"beM" = (
+/obj/machinery/light/small/broken{
+	icon_state = "bulb-broken";
+	dir = 8
+	},
+/obj/structure/table_frame,
+/obj/item/stack/rods/ten,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "beN" = (
 /obj/item/radio/intercom{
 	pixel_x = -27
@@ -26191,35 +25927,10 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "bfB" = (
-/obj/machinery/light/small/broken{
-	icon_state = "bulb-broken";
-	dir = 8
-	},
-/obj/structure/table_frame,
-/obj/item/stack/rods/ten,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bfC" = (
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bfD" = (
 /obj/machinery/mecha_part_fabricator/maint,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bfE" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bfF" = (
+/area/maintenance/department/shipyard)
+"bfC" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -26230,9 +25941,21 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
+/area/maintenance/department/shipyard)
+"bfD" = (
+/obj/item/rack_parts,
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"bfE" = (
+/obj/item/stock_parts/micro_laser,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"bfF" = (
+/mob/living/simple_animal/hostile/hivebot,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "bfG" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -26689,26 +26412,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bgM" = (
-/obj/item/rack_parts,
-/obj/machinery/power/apc/auto_name/west,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bgN" = (
-/obj/item/stock_parts/micro_laser,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bgO" = (
-/mob/living/simple_animal/hostile/hivebot,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bgP" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "maint-robo"
@@ -26716,16 +26419,12 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bgQ" = (
+/area/maintenance/department/shipyard)
+"bgN" = (
 /obj/structure/closet/supplypod,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bgR" = (
+/area/maintenance/department/shipyard)
+"bgO" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -26738,9 +26437,22 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
+/area/maintenance/department/shipyard)
+"bgP" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"bgQ" = (
+/obj/item/stock_parts/matter_bin,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"bgR" = (
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/department/shipyard)
 "bgS" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -27052,33 +26764,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bhz" = (
-/obj/machinery/door/airlock/maintenance,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bhA" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bhB" = (
-/obj/item/stock_parts/matter_bin,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bhC" = (
-/obj/item/stack/cable_coil,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bhD" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "maint-robo"
@@ -27086,9 +26771,36 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
+/area/maintenance/department/shipyard)
+"bhA" = (
+/obj/item/shard,
+/turf/open/floor/plating{
+	luminosity = 2
+	},
+/area/maintenance/department/shipyard)
+"bhB" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/department/shipyard)
+"bhC" = (
+/obj/machinery/light/small/broken{
+	icon_state = "bulb-broken";
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/hivebot/strong,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
+"bhD" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "bhE" = (
 /obj/machinery/light{
 	dir = 4
@@ -27112,30 +26824,26 @@
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bhG" = (
-/obj/item/shard,
-/turf/open/floor/plating{
-	luminosity = 2
-	},
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
+/mob/living/simple_animal/hostile/hivebot/strong,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "bhH" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bhI" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8;
+	pixel_x = -4
+	},
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
-/obj/structure/grille/broken,
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/department/shipyard)
 "bhJ" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -27469,42 +27177,14 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "biy" = (
-/obj/machinery/light/small/broken{
-	icon_state = "bulb-broken";
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/hivebot/strong,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
+/area/maintenance/department/shipyard)
 "biz" = (
-/obj/structure/frame/machine,
+/obj/item/stock_parts/cell,
 /turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"biA" = (
-/mob/living/simple_animal/hostile/hivebot/strong,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"biB" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8;
-	pixel_x = -4
-	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
+/area/maintenance/department/shipyard)
 "biC" = (
 /obj/structure/closet,
 /obj/item/weldingtool,
@@ -27913,33 +27593,6 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"bjD" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/eight,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bjE" = (
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bjF" = (
-/obj/item/stock_parts/cell,
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
-"bjG" = (
-/obj/machinery/conveyor_switch{
-	id = "maint-robo"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/science{
-	name = "Abbandoned Robotics"
-	})
 "bjH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -99598,7 +99251,7 @@ awd
 jYe
 aBJ
 aJI
-aFj
+aEV
 aFq
 aIu
 aJg
@@ -99855,7 +99508,7 @@ awd
 jYe
 aBJ
 aJI
-aFj
+aEV
 aFP
 aIv
 aIu
@@ -100112,7 +99765,7 @@ aET
 jYe
 aBJ
 bhd
-aFj
+aEV
 aFQ
 aIw
 aJi
@@ -100369,12 +100022,12 @@ aET
 jYe
 aBJ
 aJI
-aFj
+aEV
 aFR
 aIv
 aIv
 aFR
-bcp
+aMt
 aMD
 aBJ
 aJI
@@ -100627,10 +100280,10 @@ hFy
 aJh
 bhe
 aAR
-aIr
+aHX
 aIx
 aJj
-aMe
+aLN
 aAR
 aMD
 aBJ
@@ -100885,8 +100538,8 @@ aIN
 aKe
 aAR
 aAR
-aIW
-aKk
+aIK
+aKd
 aAR
 aAR
 aMH
@@ -113489,7 +113142,7 @@ aqj
 aqj
 aqj
 aqj
-aUK
+aUL
 aqj
 aqj
 aqj
@@ -113733,24 +113386,24 @@ ass
 ats
 axf
 azR
-aEV
-aHX
-aIK
+aEX
+aIm
+aIO
 ats
 ass
 azR
-aNG
-aON
-aPk
-aQe
-aRo
-aSn
-aTB
-aUL
-aWA
-aYC
-bau
-bbM
+aNH
+aOO
+aPl
+aQf
+aRr
+aSp
+aUK
+aUV
+aWC
+aYD
+bav
+bbN
 aqj
 bew
 aYB
@@ -113994,20 +113647,20 @@ azT
 azT
 azT
 azT
-aLN
-aMt
-aNH
-aOO
-aPl
-aQf
-aRr
-aQf
-aQf
-aUV
+aLO
+aMu
+aNN
+aOQ
+aPm
+aQg
+aRs
+aQg
+aQg
+aVe
 ass
-aYD
-bav
-bbN
+aYW
+baw
+bbO
 aqj
 agC
 agC
@@ -114247,32 +113900,32 @@ asv
 ass
 axD
 azU
-aEX
-aIm
-aIO
-ass
-aLO
-aMu
-aMu
-aMu
+aFg
 aIn
-aQg
-aRs
-aSp
-aSp
-aSp
-aWC
-aYW
-baw
-bbO
-bcU
-bcU
-bcU
-bcU
-bhz
-bcU
-bcU
-bcU
+aIQ
+ass
+aLP
+aMv
+aMv
+aMv
+aIr
+aRo
+aRt
+aSq
+aSq
+aSq
+aYC
+aZi
+bax
+bci
+aqj
+aqj
+aqj
+aqj
+bgP
+aqj
+aqj
+aqj
 aaa
 aaa
 bkF
@@ -114504,32 +114157,32 @@ ass
 ass
 axY
 azV
-aFg
-aIn
-aIQ
-att
 aFh
-aMv
-aNN
-aOQ
-aPm
+aIr
+aIU
+att
+aFj
+aMw
+aNQ
+aOR
+aQe
 ass
 ayp
-aSq
 aSr
-aVe
-aIQ
-aZi
-bax
-bci
-bcU
-beJ
-bfB
-bgM
-bhA
+aSs
+aVq
+aIU
+aZj
+bay
+bcj
+aqj
+bcW
+beM
+bfD
+aRr
+bhC
 biy
-bjD
-bcU
+aqj
 aaa
 aaa
 bkF
@@ -114761,32 +114414,32 @@ ass
 atu
 ayp
 azV
-aFg
+aFh
 azV
-aIQ
+aIU
 ass
 azV
-aMw
-aNQ
-aOR
+aNG
+aON
+aPk
 azV
 ass
 ayp
-aSr
-aSr
-aSr
-aIQ
-aZj
-bay
-bcj
-bcW
-beK
-bfC
-bgN
-bhB
-bfC
-bjE
+aSs
+aSs
+aSs
+aIU
+aZk
+baz
+bcl
 bcU
+beJ
+ass
+bfE
+bgQ
+ass
+aZk
+aqj
 aaa
 aaa
 bkF
@@ -115018,32 +114671,32 @@ asF
 ass
 ayp
 azV
-aFh
+aFj
 azV
-aIQ
+aIU
 ass
 ayp
 azV
-aFh
+aFj
 azV
-aIQ
+aIU
 ass
 ayp
+aTB
 aSs
-aSr
-aVq
-aIQ
-aZk
-baz
-bcl
-bcU
-beL
-bfD
-bgO
-bhC
+aWA
+aIU
+aZl
+baA
+bcn
+aqj
+beK
+bfB
+bfF
+bgR
+bhD
 biz
-bjF
-bcU
+aqj
 aaa
 aaa
 xKc
@@ -115277,30 +114930,30 @@ ayK
 azW
 azW
 azW
-aIU
-aKd
+aIW
+aKk
 ayK
 azW
 azW
 azW
-aIU
-aKd
+aIW
+aKk
 ayK
 azW
 azW
 azW
-aIU
-aZl
-baA
-bcn
-bcU
-beL
+aIW
+bau
+bbM
+bcp
+aqj
 beK
-bgP
-bhD
-beK
-beK
-bcU
+beJ
+bgM
+bhz
+beJ
+beJ
+aqj
 aaa
 aaa
 bkF
@@ -115536,28 +115189,28 @@ azw
 azw
 azw
 atz
-aLP
-aLP
-aLP
-aLP
-aLP
+aMe
+aMe
+aMe
+aMe
+aMe
 atz
-aRt
-aRt
-aRt
-aRt
-aRt
+aSn
+aSn
+aSn
+aSn
+aSn
 atz
 asP
 aqj
-bcU
-beM
-bfE
-bgQ
+aqj
+beL
+aRo
+bgN
+bhA
 bhG
-biA
-bjG
-bcU
+bcj
+aqj
 aaa
 aaa
 sQP
@@ -115807,14 +115460,14 @@ cdm
 aaa
 aaa
 aaa
-bcU
-bcU
-bfF
-bgR
+aqj
+aqj
+bfC
+bgO
+bhB
 bhI
-biB
-bcU
-bcU
+aqj
+aqj
 aaa
 aaa
 aaa
