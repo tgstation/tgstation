@@ -402,7 +402,6 @@
 	if (strength <= 0)
 		owner.remove_status_effect(STATUS_EFFECT_CONFUSION)
 		return
-	strength -= 1
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
