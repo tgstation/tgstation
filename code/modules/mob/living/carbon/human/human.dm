@@ -708,7 +708,9 @@
 			if (!panicking)
 				to_chat(src, "<span class='warning'>[target] still isn't up! You try harder!</span>")
 			panicking = TRUE
-	while (target.health <= target.crit_threshold)
+		else
+			panicking = FALSE
+	while (panicking)
 
 #undef CPR_PANIC_SPEED
 
