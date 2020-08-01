@@ -11767,13 +11767,10 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aAR" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = "commissary_2";
-	name = "commissary shutters"
-	},
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/turf/closed/wall,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aAS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -13740,6 +13737,25 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aFj" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissary_2";
+	name = "commissary shutters"
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aFk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/spawner/lootdrop/minor/bowler_or_that,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/department/security/brig)
+"aFl" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -13756,22 +13772,9 @@
 	},
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/carpet,
-/area/vacant_room/commissary)
-"aFk" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/spawner/lootdrop/minor/bowler_or_that,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/department/security/brig)
-"aFl" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/carpet/black,
-/area/vacant_room/commissary)
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aFm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -13802,11 +13805,13 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "aFq" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary)
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aFr" = (
 /obj/machinery/camera{
 	c_tag = "Fore Primary Hallway Entrance";
@@ -14010,33 +14015,24 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aFP" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/carpet/black,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aFQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary)
-"aFQ" = (
-/turf/open/floor/carpet/black,
-/area/vacant_room/commissary)
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aFR" = (
-/obj/structure/table,
-/obj/item/storage/crayons,
-/obj/machinery/button/door{
-	id = "commissary-cargo-bolts";
-	name = "cargo door bolts control";
-	normaldoorcontrol = 1;
-	pixel_x = 24;
-	specialfunctions = 4
-	},
-/obj/machinery/button/door{
-	id = "commissary_2";
-	name = "fore shutters control";
-	pixel_y = 24
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	light_color = "#d8b1b1"
-	},
-/turf/open/floor/carpet,
-/area/vacant_room/commissary)
+/turf/open/floor/carpet/black,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aFS" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -15237,6 +15233,29 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aIr" = (
+/obj/structure/table,
+/obj/item/storage/crayons,
+/obj/machinery/button/door{
+	id = "commissary-cargo-bolts";
+	name = "cargo door bolts control";
+	normaldoorcontrol = 1;
+	pixel_x = 24;
+	specialfunctions = 4
+	},
+/obj/machinery/button/door{
+	id = "commissary_2";
+	name = "fore shutters control";
+	pixel_y = 24
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	light_color = "#d8b1b1"
+	},
+/turf/open/floor/carpet,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aIs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -15245,51 +15264,51 @@
 	id_tag = "commissary-bolts"
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
-"aIs" = (
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aIt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary)
-"aIt" = (
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aIu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/open/floor/carpet/green,
-/area/vacant_room/commissary)
-"aIu" = (
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aIv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/vacant_room/commissary)
-"aIv" = (
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aIw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet/green,
-/area/vacant_room/commissary)
-"aIw" = (
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aIx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary)
-"aIx" = (
-/obj/machinery/door/airlock/mining/glass{
-	id_tag = "commissary-cargo-bolts";
-	name = "Mailroom";
-	req_access_txt = "50"
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aIy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -15458,6 +15477,25 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aIW" = (
+/obj/machinery/door/airlock/mining/glass{
+	id_tag = "commissary-cargo-bolts";
+	name = "Mailroom";
+	req_access_txt = "50"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aIX" = (
+/obj/effect/landmark/observer_start,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"aIY" = (
 /obj/structure/cable,
 /obj/item/radio/intercom{
 	pixel_x = -27
@@ -15468,16 +15506,9 @@
 	},
 /obj/item/stack/package_wrap,
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary)
-"aIX" = (
-/obj/effect/landmark/observer_start,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"aIY" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/carpet/green,
-/area/vacant_room/commissary)
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aIZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -15536,6 +15567,17 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aJg" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/carpet/green,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aJh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"aJi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -15543,13 +15585,10 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
-/area/vacant_room/commissary)
-"aJh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"aJi" = (
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aJj" = (
 /obj/structure/table,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15560,13 +15599,9 @@
 	},
 /obj/item/paper_bin,
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary)
-"aJj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/vacant_room/commissary)
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aJk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -16057,29 +16092,28 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aKk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aKl" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
 /obj/structure/table,
 /obj/item/hand_labeler,
 /turf/open/floor/carpet,
-/area/vacant_room/commissary)
-"aKl" = (
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aKm" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet/black,
-/area/vacant_room/commissary)
-"aKm" = (
-/obj/structure/table,
-/obj/machinery/button/door{
-	id = "commissary_1";
-	name = "aft shutters control";
-	pixel_y = -24
-	},
-/obj/machinery/light_switch{
-	pixel_x = 24
-	},
-/obj/item/pen,
-/turf/open/floor/carpet,
-/area/vacant_room/commissary)
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aKn" = (
 /obj/machinery/conveyor{
 	dir = 5;
@@ -16966,6 +17000,21 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMe" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "commissary_1";
+	name = "aft shutters control";
+	pixel_y = -24
+	},
+/obj/machinery/light_switch{
+	pixel_x = 24
+	},
+/obj/item/pen,
+/turf/open/floor/carpet,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
+"aMf" = (
 /obj/structure/table/reinforced,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/shutters{
@@ -16973,16 +17022,9 @@
 	name = "commissary shutters"
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
-"aMf" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/box/shipping,
-/obj/machinery/door/poddoor/shutters{
-	id = "commissary_1";
-	name = "commissary shutters"
-	},
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aMg" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -17018,13 +17060,15 @@
 /area/quartermaster/sorting)
 "aMj" = (
 /obj/structure/table/reinforced,
-/obj/machinery/paystand,
+/obj/item/storage/box/shipping,
 /obj/machinery/door/poddoor/shutters{
 	id = "commissary_1";
 	name = "commissary shutters"
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "aMk" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -24737,9 +24781,16 @@
 	},
 /area/crew_quarters/bar)
 "bcp" = (
-/obj/structure/rack,
-/turf/open/floor/plating,
-/area/science/robotics/mechbay)
+/obj/structure/table/reinforced,
+/obj/machinery/paystand,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissary_1";
+	name = "commissary shutters"
+	},
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary{
+	name = "Trading Post"
+	})
 "bcq" = (
 /obj/item/clothing/glasses/monocle,
 /obj/item/instrument/recorder,
@@ -27901,12 +27952,20 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"bjJ" = (
+/obj/structure/chair/stool,
+/turf/closed/wall,
+/area/maintenance/department/science)
 "bjK" = (
 /turf/closed/wall,
 /area/vacant_room/commissary)
 "bjL" = (
 /turf/closed/wall,
 /area/storage/emergency/port)
+"bjM" = (
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/science)
 "bjN" = (
 /obj/machinery/door/airlock/medical{
 	name = "Psychology Maintenance";
@@ -59273,10 +59332,6 @@
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/grass,
 /area/medical/medbay/central)
-"qEm" = (
-/obj/structure/chair/stool,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "qEN" = (
 /obj/machinery/rnd/production/techfab/department/service,
 /obj/structure/window/reinforced{
@@ -59985,12 +60040,6 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"siF" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "skj" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -99035,12 +99084,12 @@ aAN
 aIf
 aJe
 aKa
-bjK
-bjK
-aIr
-bjK
-bjK
-bjK
+aAR
+aAR
+aIs
+aAR
+aAR
+aAR
 aMy
 aBJ
 aOT
@@ -99053,8 +99102,8 @@ aVr
 aWD
 bwm
 bwm
-qEm
-aAN
+bjJ
+bwm
 bgB
 aJI
 aDZ
@@ -99292,12 +99341,12 @@ aAN
 aIg
 aJf
 aKb
-bjK
-aFj
-aIs
-aIW
-aKk
-bjK
+aAR
+aFl
+aIt
+aIY
+aKl
+aAR
 aMz
 aBJ
 aOU
@@ -99310,8 +99359,8 @@ aVs
 aWG
 bwm
 lWy
-aDZ
-aGV
+lWy
+bwm
 aDZ
 aJI
 bhP
@@ -99549,12 +99598,12 @@ awd
 jYe
 aBJ
 aJI
-aAR
-aFl
-aIt
-aIY
-aKl
-aMe
+aFj
+aFq
+aIu
+aJg
+aKm
+aMf
 aMB
 aNS
 aOV
@@ -99567,8 +99616,8 @@ aVt
 aWH
 aZm
 baC
-siF
-aGV
+lWy
+bwm
 bgC
 bhi
 bhQ
@@ -99806,12 +99855,12 @@ awd
 jYe
 aBJ
 aJI
-aAR
-aFq
+aFj
+aFP
+aIv
 aIu
-aIt
-aKl
-aMe
+aKm
+aMf
 aMB
 aNX
 aJI
@@ -99824,7 +99873,7 @@ aVu
 aWL
 bwm
 baD
-bcp
+bjM
 beI
 bgD
 bhj
@@ -100063,12 +100112,12 @@ aET
 jYe
 aBJ
 bhd
-aAR
-aFP
-aIv
-aJg
+aFj
 aFQ
-aMf
+aIw
+aJi
+aFR
+aMj
 aMC
 aNZ
 aJI
@@ -100320,12 +100369,12 @@ aET
 jYe
 aBJ
 aJI
-aAR
-aFQ
-aIu
-aIu
-aFQ
-aMj
+aFj
+aFR
+aIv
+aIv
+aFR
+bcp
 aMD
 aBJ
 aJI
@@ -100577,12 +100626,12 @@ aET
 hFy
 aJh
 bhe
-bjK
-aFR
-aIw
-aJi
-aKm
-bjK
+aAR
+aIr
+aIx
+aJj
+aMe
+aAR
 aMD
 aBJ
 aJI
@@ -100834,12 +100883,12 @@ aHn
 aIi
 aIN
 aKe
-bjK
-bjK
-aIx
-aJj
-bjK
-bjK
+aAR
+aAR
+aIW
+aKk
+aAR
+aAR
 aMH
 aBJ
 aJI
