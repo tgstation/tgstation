@@ -135,10 +135,6 @@
 			direct = newdir
 			n = get_step(L, direct)
 
-	if(HAS_TRAIT(L, TRAIT_BEFUDDLED))
-		direct = turn(direct, 180)
-		n = get_step(L, direct)
-
 	. = ..()
 
 	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully

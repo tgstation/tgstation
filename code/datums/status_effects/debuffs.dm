@@ -810,20 +810,6 @@
 		if(100)
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN,20)
 
-/datum/status_effect/befuddled
-	id = "befuddled"
-	status_type = STATUS_EFFECT_REPLACE
-	alert_type = null
-	duration = 10 SECONDS
-
-/datum/status_effect/befuddled/on_apply()
-	. = ..()
-	ADD_TRAIT(owner, TRAIT_BEFUDDLED, "befuddled")
-
-/datum/status_effect/befuddled/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_BEFUDDLED, "befuddled")
-	return ..()
-
 /datum/status_effect/amok
 	id = "amok"
 	status_type = STATUS_EFFECT_REPLACE
@@ -848,3 +834,38 @@
 		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
 		owner.ClickOn(pick(targets))
 	owner.a_intent = prev_intent
+
+/datum/status_effect/cloudstruck
+	id = "cloudstruck"
+	status_type = STATUS_EFFECT_REPLACE
+	duration = 3 SECONDS
+	on_remove_on_mob_delete = TRUE
+	///This overlay is applied to the owner for the duration of the effect.
+	var/mutable_appearance/mob_overlay
+
+/datum/status_effect/cloudstruck/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/cloudstruck/on_apply()
+	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
+	owner.overlays += mob_overlay
+	owner.update_icon()
+	ADD_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	owner.update_icon()
+	return TRUE
+
+/datum/status_effect/cloudstruck/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	if(owner)
+		owner.overlays -= mob_overlay
+		owner.update_icon()
+
+/datum/status_effect/cloudstruck/proc/update_owner_overlay(atom/source, list/overlays)
+	overlays += mob_overlay
+
+/datum/status_effect/cloudstruck/Destroy()
+	. = ..()
+	QDEL_NULL(mob_overlay)

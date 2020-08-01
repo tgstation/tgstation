@@ -519,7 +519,7 @@
 /obj/effect/temp_visual/dir_setting/entropic
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "entropic_plume"
-	duration = 1.2 SECONDS
+	duration = 3 SECONDS
 
 /obj/effect/temp_visual/dir_setting/entropic/setDir(dir)
 	. = ..()
@@ -558,7 +558,7 @@
 	action_background_icon_state = "bg_ecult"
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "entropic_plume"
-	charge_max = 10
+	charge_max = 300
 	cone_levels = 5
 	respect_density = TRUE
 
@@ -566,18 +566,26 @@
 	. = ..()
 	new /obj/effect/temp_visual/dir_setting/entropic(get_step(user,user.dir), user.dir)
 
-/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_turf_cone_effect(turf/target_turf)
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_turf_cone_effect(turf/target_turf, level)
 	. = ..()
 	target_turf.rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(target_turf)
 
-/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/target_mob)
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/target_mob, level)
 	. = ..()
 	if(isliving(target_mob))
 		var/mob/living/victim = target_mob
 		if(victim.anti_magic_check() || IS_HERETIC(victim) || victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
 			return
-		victim.apply_status_effect(STATUS_EFFECT_BEFUDDLED)
 		victim.apply_status_effect(STATUS_EFFECT_AMOK)
-		victim.apply_effect(5, EFFECT_SLUR)
+		victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))
+		if(iscarbon(victim))
+			var/mob/living/carbon/carbon_victim = victim
+			carbon_victim.reagents.add_reagent(/datum/reagent/eldritch, min(1, 6-level))
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/calculate_end_taper(current_level)
+	if(current_level == cone_levels)
+		return 5
+	else if(current_level == cone_levels-1)
+		return 3
+	else
+		return 2
