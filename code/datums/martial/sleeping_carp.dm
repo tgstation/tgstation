@@ -142,7 +142,7 @@
 	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Deal additional damage every second (consecutive) punch!")
 	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch your opponent away from you with incredible force!")
 	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. Kick an opponent to the floor, knocking them down! If your opponent is already prone, this move will disarm them and deal additional stamina damage to them.")
-	to_chat(usr, "<span class='notice'>Also, while in throw mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! You are not invincible, however: Normal syringes, sutures, and regenerative meshes cannot pierce your hardened skin (try using medical gels, patches, and/or pills to heal instead), and you have a weakness to heat. In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
+	to_chat(usr, "<span class='notice'>While in throw mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! Also, your limbs cannot be dismembered. You are not invincible, however- Normal syringes, sutures, and regenerative meshes cannot pierce your hardened skin (try using medical gels, patches, and/or pills to heal instead). In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
 
 /obj/item/staff/bostaff
 	name = "bo staff"
