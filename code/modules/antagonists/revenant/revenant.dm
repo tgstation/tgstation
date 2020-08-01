@@ -48,7 +48,7 @@
 	movement_type = FLYING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_TINY
-	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB | LETPASSTHROW
 	speed = 1
 	unique_name = TRUE
 	hud_possible = list(ANTAG_HUD)
