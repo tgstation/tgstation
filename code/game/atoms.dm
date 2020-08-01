@@ -891,11 +891,9 @@
   * Not recommended to use, listen for the [COMSIG_ATOM_DIR_CHANGE] signal instead (sent by this proc)
   */
 /atom/proc/setDir(newdir)
-	var/old_dir = dir
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, old_dir, newdir)
+	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
-	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_DIR_CHANGE, old_dir)
 
 ///Handle melee attack by a mech
 /atom/proc/mech_melee_attack(obj/mecha/M)
