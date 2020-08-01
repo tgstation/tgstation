@@ -7,9 +7,6 @@
 	custom_price = 500
 	w_class = WEIGHT_CLASS_SMALL
 
-	// Primarily used in the chameleon skillchip item_action code to specify an item that isn't really an item.
-	item_flags = ABSTRACT
-
 	/// Trait automatically granted by this chip, optional
 	var/auto_trait
 	/// Skill name shown on UI
@@ -26,16 +23,20 @@
 	var/implanting_message
 	/// Message shown when extracting the chip
 	var/removal_message
-	//If set to TRUE, trying to extract the chip will destroy it instead
-	var/removable
+	//If set to FALSE, trying to extract the chip will destroy it instead
+	var/removable = TRUE
 	/// How many skillslots this one takes
 	var/slot_cost = 1
 	/// Variable for flags. DANGEROUS - Child types overwrite flags instead of adding to them. If you change this, make sure all child types have the appropriate flags set too.
 	var/skillchip_flags = NONE
 	/// Cooldown before the skillchip can be extracted after it has been implanted.
 	var/cooldown = 5 MINUTES
-	/// The world.time when this skillchip should be extractable.
-	COOLDOWN_DECLARE(extractable_at)
+	/// Cooldown for chip extractability
+	COOLDOWN_DECLARE(extract_cooldown)
+	/// Used to determine if this is an abstract type or not. If this is meant to be an abstract type, set it to the type's path. Will be overridden by subsequent abstract parents. See /datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
+	var/abstract_parent_type = /obj/item/skillchip
+	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
+	var/active = FALSE
 
 /obj/item/skillchip/Initialize(is_removable = TRUE)
 	. = ..()
@@ -49,7 +50,8 @@
 		ADD_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
 	user.used_skillchip_slots += slot_cost
 
-	COOLDOWN_START(src, extractable_at, cooldown)
+	active = TRUE
+	COOLDOWN_START(src, extract_cooldown, cooldown)
 
 /// Called after removal and/or brain exiting the body
 /obj/item/skillchip/proc/on_removal(mob/living/carbon/user,silent=TRUE)
@@ -59,7 +61,8 @@
 		REMOVE_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
 	user.used_skillchip_slots -= slot_cost
 
-	COOLDOWN_RESET(src, extractable_at)
+	active = FALSE
+	COOLDOWN_RESET(src, extract_cooldown)
 
 /**
   * Checks for skillchip incompatibility with another chip.
@@ -76,7 +79,7 @@
 		return "Incompatible with other [chip_category] chip: [skillchip.name]"
 
 	// Only allow multiple copies of a type if SKILLCHIP_ALLOWS_MULTIPLE flag is set
-	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (istype(skillchip, type)))
+	if(!(skillchip_flags & SKILLCHIP_ALLOWS_MULTIPLE) && (skillchip.type == type))
 		return "Duplicate chip detected."
 
 	return FALSE
@@ -129,7 +132,7 @@
 
 	// Check if this chip is incompatible with any other chips in the brain.
 	for(var/obj/item/skillchip/skillchip in brain.skillchips)
-		chip_message = skillchip.has_skillchip_incompatibility(skillchip)
+		chip_message = has_skillchip_incompatibility(skillchip)
 		if(chip_message)
 			return chip_message
 
@@ -144,10 +147,23 @@
   * Returns FALSE if the chip's extraction cooldown hasn't yet passed.
   */
 /obj/item/skillchip/proc/can_remove_safely()
-	if(!COOLDOWN_FINISHED(src, extractable_at))
+	if(!COOLDOWN_FINISHED(src, extract_cooldown))
 		return FALSE
 
 	return TRUE
+
+/**
+  * Returns a list of basic chip info. Used by the skill station.
+  */
+/obj/item/skillchip/proc/get_chip_data()
+	return list(
+		"name" = skill_name,
+		"icon" = skill_icon,
+		"cost" = slot_cost,
+		"ref" = REF(src),
+		"active" = active,
+		"cooldown" = COOLDOWN_TIMELEFT(src, extract_cooldown),
+		"removable" = can_remove_safely())
 
 /obj/item/skillchip/basketweaving
 	name = "Basketsoft 3000 skillchip"
@@ -185,7 +201,7 @@
 	skill_icon = "plug"
 	implanting_message = "<span class='notice'>You can now implant another chip into this adapter, but the adapter also took up an existing slot ...</span>"
 	removal_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
-	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE
+	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE | SKILLCHIP_CHAMELEON_INCOMPATIBLE
 	slot_cost = 0
 
 /obj/item/skillchip/useless_adapter/on_apply(mob/living/carbon/user, silent)

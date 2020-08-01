@@ -184,10 +184,10 @@
 		// This is safe, incompatibility check can accept a null or invalid mob.
 		var/incompatibility_check = inserted_skillchip.has_mob_incompatibility(carbon_occupant)
 		if(incompatibility_check)
-			.["incompatible"] = TRUE
+			.["implantable"] = FALSE
 			.["implantable_reason"] = incompatibility_check
 		else
-			.["incompatible"] = FALSE
+			.["implantable"] = TRUE
 			.["implantable_reason"] = null
 		.["skill_name"] = inserted_skillchip.skill_name
 		.["skill_desc"] = inserted_skillchip.skill_description
@@ -216,15 +216,7 @@
 	// If we got here, we have both an occupant and it has a brain, so we can check for skillchips.
 	var/list/current_skills = list()
 	for(var/obj/item/skillchip/skill_chip in occupant_brain.skillchips)
-		current_skills += list(
-			list(
-				"name" = skill_chip.skill_name,
-				"icon" = skill_chip.skill_icon,
-				"cost" = skill_chip.slot_cost,
-				"ref" = REF(skill_chip),
-				"active" = TRUE,
-				"cooldown" = COOLDOWN_TIMELEFT(skill_chip, extractable_at),
-				"removable" = skill_chip.can_remove_safely()))
+		current_skills += list(skill_chip.get_chip_data())
 	.["current"] = current_skills
 	.["slots_used"] = carbon_occupant.used_skillchip_slots
 	.["slots_max"] = carbon_occupant.max_skillchip_slots

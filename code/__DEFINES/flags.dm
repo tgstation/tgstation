@@ -161,4 +161,5 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // This skillchip is incompatible with other skillchips from the incompatible_category list.
 #define SKILLCHIP_RESTRICTED_CATEGORIES (1<<1)
 // This skillchip is incompatible with the Chameleon skillchip and cannot be copied.
+// If you want to blacklist an abstract path such a /obj/item/skillchip/job then look at the blacklist in /datum/action/item_action/chameleon/change/skillchip
 #define SKILLCHIP_CHAMELEON_INCOMPATIBLE (1<<2)
