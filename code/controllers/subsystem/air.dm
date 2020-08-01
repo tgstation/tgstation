@@ -245,8 +245,6 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		EG.breakdown_cooldown++
 		EG.dismantle_cooldown++
-		if(EG.should_display || display_all_groups) //Should we make active turfs visable?
-			EG.display_turfs()
 		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
 			EG.self_breakdown()
 		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
@@ -387,6 +385,16 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		AM.build_network()
+		CHECK_TICK
+
+GLOBAL_LIST_EMPTY(colored_turfs)
+GLOBAL_DATUM(atmos_overlay, /image)
+/datum/controller/subsystem/air/proc/setup_turf_visuals()
+	for(var/color in GLOB.contrast_colors)
+		var/obj/effect/overlay/atmos_excited/suger_high = new()
+		GLOB.colored_turfs += suger_high
+	//GLOB.atmos_overlay = new('icons/effects/effects.dmi', suger_high, atmos_top, ATMOS_GROUP_LAYER)
+	//GLOB.atmos_overlay.plane = ATMOS_GROUP_PLANE
 		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)

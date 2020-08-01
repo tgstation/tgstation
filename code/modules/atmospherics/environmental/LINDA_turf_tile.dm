@@ -311,26 +311,36 @@
 	turf_list += T
 	T.excited_group = src
 	reset_cooldowns()
+	if(should_display || SSair.display_all_groups)
+		display_turf(T)
 
 /datum/excited_group/proc/merge_groups(datum/excited_group/E)
 	if(turf_list.len > E.turf_list.len)
 		SSair.excited_groups -= E
+		if(E.should_display || SSair.display_all_groups)
+			E.hide_turfs()
 		for(var/t in E.turf_list)
 			var/turf/open/T = t
 			T.excited_group = src
 			turf_list += T
 		if(should_display || SSair.display_all_groups)
-			display_turfs()
+			for(var/t in E.turf_list)
+				var/turf/open/T = t
+				display_turf(T)
 		reset_cooldowns()
 	else
 		SSair.excited_groups -= src
+		if(should_display || SSair.display_all_groups)
+			hide_turfs()
 		for(var/t in turf_list)
 			var/turf/open/T = t
 			T.excited_group = E
 			E.turf_list += T
 		E.reset_cooldowns()
 		if(E.should_display || SSair.display_all_groups)
-			E.display_turfs()
+			for(var/t in turf_list)
+				var/turf/open/T = t
+				display_turf(T)
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
@@ -401,6 +411,13 @@
 		var/turf/display = thing
 		display.remove_atom_colour(ADMIN_COLOUR_PRIORITY, GLOB.contrast_colors[display_id])
 	display_id = 0
+
+/datum/excited_group/proc/display_turf(turf/thing)
+	if(display_id == 0) //Hasn't been shown before
+		wrapping_id = wrapping_id % GLOB.contrast_colors.len
+		wrapping_id++ //We do this after because lists index at 1
+		display_id = wrapping_id
+	thing.add_atom_colour(GLOB.contrast_colors[display_id], ADMIN_COLOUR_PRIORITY)
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 /turf/proc/conductivity_directions()
