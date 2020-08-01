@@ -25944,8 +25944,6 @@
 /area/maintenance/department/shipyard)
 "bfD" = (
 /obj/item/rack_parts,
-/obj/machinery/power/apc/auto_name/west,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/shipyard)
 "bfE" = (
@@ -26439,10 +26437,10 @@
 	},
 /area/maintenance/department/shipyard)
 "bgP" = (
-/obj/machinery/door/airlock/maintenance,
-/obj/structure/cable,
+/obj/structure/barricade/wooden,
+/obj/structure/girder,
 /turf/open/floor/plating,
-/area/maintenance/department/shipyard)
+/area/maintenance/starboard)
 "bgQ" = (
 /obj/item/stock_parts/matter_bin,
 /turf/open/floor/plating,
@@ -26758,11 +26756,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bhy" = (
-/obj/structure/barricade/wooden,
-/obj/structure/girder,
-/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
-/area/maintenance/starboard)
+/area/maintenance/department/shipyard)
 "bhz" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -113665,7 +113661,7 @@ aqj
 agC
 agC
 agC
-bhy
+bgP
 agC
 bjC
 acb
@@ -113922,7 +113918,7 @@ aqj
 aqj
 aqj
 aqj
-bgP
+bhy
 aqj
 aqj
 aqj
@@ -114179,7 +114175,7 @@ aqj
 bcW
 beM
 bfD
-aRr
+ass
 bhC
 biy
 aqj
