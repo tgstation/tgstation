@@ -17,7 +17,7 @@ export const AtmosControlPanel = (props, context) => {
   return (
     <Window
       title="SSAir Control Panel"
-      width={950}
+      width={900}
       height={500}
       resizable>
       <Section m={1}>
@@ -52,7 +52,7 @@ export const AtmosControlPanel = (props, context) => {
             <Button.Checkbox
               checked={data.showing_user}
               onClick={() => act('toggle_user_display')}>
-              Toggle Personal View
+              Personal View
             </Button.Checkbox>
           </Flex.Item>
           <Flex.Item>
