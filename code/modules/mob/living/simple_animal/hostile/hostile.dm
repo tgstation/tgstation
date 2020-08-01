@@ -466,7 +466,7 @@
 			DestroyObjectsInDirection(direction)
 
 
-mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
+/mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in GLOB.cardinals)

@@ -1,4 +1,4 @@
-/mob/living/carbon/human/say_mod(input, message_mode)
+/mob/living/carbon/human/say_mod(input, list/message_mods = list())
 	verb_say = dna.species.say_mod
 	if(slurring)
 		return "slurs"
@@ -58,52 +58,26 @@
 		if(dongle.translate_binary)
 			return TRUE
 
-/mob/living/carbon/human/radio(message, message_mode, list/spans, language)
+/mob/living/carbon/human/radio(message, list/message_mods = list(), list/spans, language) //Poly has a copy of this, lazy bastard
 	. = ..()
-	if(. != 0)
+	if(. != FALSE)
 		return .
 
-	switch(message_mode)
-		if(MODE_HEADSET)
-			if (ears)
-				ears.talk_into(src, message, , spans, language)
-			return ITALICS | REDUCE_RANGE
-
-		if(MODE_DEPARTMENT)
-			if (ears)
-				ears.talk_into(src, message, message_mode, spans, language)
-			return ITALICS | REDUCE_RANGE
-
-	if(message_mode in GLOB.radiochannels)
+	if(message_mods[MODE_HEADSET])
 		if(ears)
-			ears.talk_into(src, message, message_mode, spans, language)
+			ears.talk_into(src, message, , spans, language, message_mods)
+		return ITALICS | REDUCE_RANGE
+	else if(message_mods[RADIO_EXTENSION] == MODE_DEPARTMENT)
+		if(ears)
+			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
+		return ITALICS | REDUCE_RANGE
+	else if(GLOB.radiochannels[message_mods[RADIO_EXTENSION]])
+		if(ears)
+			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 
 	return 0
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return " (as [get_id_name("Unknown")])"
-
-/mob/living/carbon/human/proc/forcesay(list/append) //this proc is at the bottom of the file because quote fuckery makes notepad++ cri
-	if(stat == CONSCIOUS)
-		if(client)
-			var/temp = winget(client, "input", "text")
-			var/say_starter = "Say \"" //"
-			if(findtextEx(temp, say_starter, 1, length(say_starter) + 1) && length(temp) > length(say_starter))	//case sensitive means
-
-				temp = trim_left(copytext(temp, length(say_starter) + 1))
-				temp = replacetext(temp, ";", "", 1, 2)	//general radio
-				while(trim_left(temp)[1] == ":")	//dept radio again (necessary)
-					temp = copytext_char(trim_left(temp), 3)
-
-				if(temp[1] == "*")	//emotes
-					return
-
-				var/trimmed = trim_left(temp)
-				if(length(trimmed))
-					if(append)
-						trimmed += pick(append)
-
-					say(trimmed)
-				winset(client, "input", "text=[null]")
+		return " (as [get_id_name("Unknown")])"\

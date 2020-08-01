@@ -14,7 +14,6 @@ $nanotrasen: #384e68;
 );
 @use '../base.scss' with (
   $color-bg: color.scale($nanotrasen, $lightness: -45%),
-  $border-radius: 2px,
 );
 
 .theme-ntos {

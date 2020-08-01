@@ -51,7 +51,7 @@
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	var/on_hit_state = P.on_hit(src, armor)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
-		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness=P.sharpness)
+		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness)
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
@@ -69,7 +69,30 @@
 				return 0
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(!isitem(AM))
+	if(istype(AM, /obj/item))
+		var/obj/item/I = AM
+		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
+		var/dtype = BRUTE
+		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+		if(nosell_hit)
+			skipcatch = TRUE
+			hitpush = FALSE
+
+		dtype = I.damtype
+		if(!blocked)
+			if(I.thrownby)
+				log_combat(I.thrownby, src, "threw and hit", I)
+			if(!nosell_hit)
+				visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
+								"<span class='userdanger'>You're hit by [I]!</span>")
+				if(!I.throwforce)
+					return
+				var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
+				apply_damage(I.throwforce, dtype, zone, armor, sharpness=I.get_sharpness(), wound_bonus=(nosell_hit * CANT_WOUND))
+
+		else
+			return 1
+	else
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 		return ..()
 

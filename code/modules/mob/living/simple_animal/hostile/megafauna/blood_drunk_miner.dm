@@ -209,7 +209,7 @@ Difficulty: Medium
 		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !islava(O) && !ischasm(O))
 			var/valid = TRUE
 			for(var/turf/T in getline(own_turf, O))
-				if(is_blocked_turf(T, TRUE))
+				if(T.is_blocked_turf(TRUE))
 					valid = FALSE
 					continue
 			if(valid)

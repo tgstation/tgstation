@@ -24,7 +24,8 @@
 	plane = SPLASHSCREEN_PLANE
 	layer = SPLASHSCREEN_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "1,1"
+	screen_loc = "BOTTOM,LEFT+50%"
+	appearance_flags = APPEARANCE_UI | TILE_BOUND
 
 /datum/cinematic
 	var/id = CINEMATIC_DEFAULT
@@ -44,6 +45,7 @@
 		if(!CC)
 			continue
 		var/client/C = CC
+		C.mob.clear_fullscreen("cinematic")
 		C.screen -= screen
 	watching = null
 	QDEL_NULL(screen)
@@ -97,6 +99,7 @@
 	if(!C)
 		return
 	watching += C
+	M.overlay_fullscreen("cinematic",/obj/screen/fullscreen/cinematic_backdrop)
 	C.screen += screen
 
 //Sound helper

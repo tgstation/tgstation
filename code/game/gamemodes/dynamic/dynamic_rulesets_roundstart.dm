@@ -337,7 +337,7 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
-	var result = nuke_team.get_result()
+	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
 			SSticker.mode_result = "loss - syndicate nuked - disk secured"

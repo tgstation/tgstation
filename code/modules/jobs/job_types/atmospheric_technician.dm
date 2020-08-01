@@ -1,8 +1,6 @@
 /datum/job/atmos
 	title = "Atmospheric Technician"
-	flag = ATMOSTECH
 	department_head = list("Chief Engineer")
-	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 2
@@ -19,6 +17,7 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
 	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
+	bounty_types = CIV_JOB_ENG
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"

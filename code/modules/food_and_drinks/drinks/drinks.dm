@@ -44,13 +44,32 @@
 		M.visible_message("<span class='danger'>[user] fed [M] the contents of [src].</span>", \
 			"<span class='userdanger'>[user] fed you the contents of [src].</span>")
 		log_combat(user, M, "fed", reagents.log_list())
-
+	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	checkLiked(fraction, M)
 	reagents.expose(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size, transfered_by = user)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	if(iscarbon(M))
+		var/mob/living/carbon/carbon_drinker = M
+		var/list/diseases = carbon_drinker.get_static_viruses()
+		if(LAZYLEN(diseases))
+			var/list/datum/disease/diseases_to_add = list()
+			for(var/d in diseases)
+				var/datum/disease/malady = d
+				if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+					diseases_to_add += malady
+			if(LAZYLEN(diseases_to_add))
+				AddComponent(/datum/component/infective, diseases_to_add)
 	return TRUE
+
+/*
+ * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
+ */
+/obj/item/reagent_containers/food/drinks/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	if(isGlass && !custom_materials)
+		custom_materials = list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5) //sets it to glass so, later on, it gets picked up by the glass catch
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -377,7 +396,8 @@
 	custom_materials = list(/datum/material/plastic=3000)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
-	amount_per_transfer_from_this = 20
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	cap_icon_state = "bottle_cap"
 
 /obj/item/reagent_containers/food/drinks/waterbottle/large/empty

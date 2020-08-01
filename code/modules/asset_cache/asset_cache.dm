@@ -94,6 +94,13 @@ Note: If your code uses output() with assets you will need to call asset_flush o
 			var/list/stacktrace = gib_stack_trace()
 			log_asset("WARNING: dupe asset added to the asset cache: [asset_name] existing asset md5: [OACI.md5] new asset md5:[ACI.md5]\n[stacktrace.Join("\n")]")
 	SSassets.cache[asset_name] = ACI
+	return ACI
+
+/// Returns the url of the asset, currently this is just its name, here to allow further work cdn'ing assets.
+/// 	Can be given an asset as well, this is just a work around for buggy edge cases where two assets may have the same name, doesn't matter now, but it will when the cdn comes.
+/proc/get_asset_url(asset_name, asset = null)
+	var/datum/asset_cache_item/ACI = SSassets.cache[asset_name]
+	return ACI?.url
 
 //Generated names do not include file extention.
 //Used mainly for code that deals with assets in a generic way

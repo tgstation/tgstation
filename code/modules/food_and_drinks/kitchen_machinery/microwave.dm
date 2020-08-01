@@ -289,9 +289,8 @@
 	loop(MICROWAVE_MUCK, 4)
 
 /obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2)) // standard wait is 10
-	if(machine_stat & (NOPOWER|BROKEN))
-		if(type == MICROWAVE_PRE)
-			pre_fail()
+	if((machine_stat & BROKEN) && type == MICROWAVE_PRE)
+		pre_fail()
 		return
 	if(!time)
 		switch(type)
@@ -305,6 +304,12 @@
 	time--
 	use_power(500)
 	addtimer(CALLBACK(src, .proc/loop, type, time, wait), wait)
+
+/obj/machinery/microwave/power_change()
+	. = ..()
+	if((machine_stat & NOPOWER) && operating)
+		pre_fail()
+		eject()
 
 /obj/machinery/microwave/proc/loop_finish()
 	operating = FALSE

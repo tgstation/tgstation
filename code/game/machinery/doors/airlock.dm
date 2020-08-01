@@ -1160,7 +1160,8 @@
 
 /obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/doorjack/D)
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
-		D.use_charge(user)
+		if(istype(D, /obj/item/card/emag/doorjack))
+			D.use_charge(user)
 		operating = TRUE
 		update_icon(AIRLOCK_EMAG, 1)
 		sleep(6)
@@ -1263,7 +1264,7 @@
 			A = new /obj/structure/door_assembly(loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
 		A.heat_proof_finished = heat_proof //tracks whether there's rglass in
-		A.setAnchored(TRUE)
+		A.set_anchored(TRUE)
 		A.glass = glass
 		A.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
 		A.created_name = name
