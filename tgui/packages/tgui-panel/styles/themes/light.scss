@@ -10,18 +10,20 @@
   $primary: #ffffff,
   $bg-lightness: -25%,
   $fg-lightness: -10%,
+  $label: #3b3b3b,
+  // Makes button look actually grey due to weird maths.
+  $grey: #ffffff,
   // Commenting out color maps will adjust all colors based on the lightness
   // settings above, but will add extra 10KB to the theme.
-  $fg-map-keys: (),
-  $bg-map-keys: (),
+  // $fg-map-keys: (),
+  // $bg-map-keys: (),
 );
 @use '~tgui/styles/base.scss' with (
   $color-fg: #000000,
-  $color-bg: #ffffff,
+  $color-bg: #eeeeee,
+  $color-bg-section: #ffffff,
   $color-bg-grad-spread: 0%,
 );
-
-$font-size: 24px;
 
 // A fat warning to anyone who wants to use this: this only half works.
 // It was made almost purely for the nuke ui, and requires a good amount of manual hacks to get it working as intended.
@@ -30,142 +32,66 @@ $font-size: 24px;
   @include meta.load-css('~tgui/styles/atomic/color.scss');
 
   // Components
-  @include meta.load-css('~tgui/styles/components/Tabs.scss');
+  @include meta.load-css('~tgui/styles/components/Tabs.scss', $with: (
+    'text-color': rgba(0, 0, 0, 0.5),
+    'color-default': rgba(0, 0, 0, 1),
+  ));
   @include meta.load-css('~tgui/styles/components/Section.scss', $with: (
-    'color-background': rgba(0, 0, 0, 0.1),
-    'color-shadow': rgba(0, 0, 0, 0.2),
+    // 'background-color': rgba(0, 0, 0, 0.1),
+    'shadow-color': rgba(0, 0, 0, 0.1),
+    'shadow-size': 1em,
+    'shadow-type': outset,
+    'shadow-offset': 0 0.2em,
   ));
   @include meta.load-css('~tgui/styles/components/Button.scss', $with: (
-    'color-default': #E8E4C9,
+    'color-default': #bbbbbb,
     'color-disabled': #363636,
-    'color-selected': #9d0808,
+    'color-selected': #085a9d,
     'color-caution': #be6209,
     'color-danger': #9a9d00,
-    'color-transparent-text': rgba(0, 0, 0, 0.5),
+    'text-color-transparent': rgba(0, 0, 0, 0.5),
+  ));
+  @include meta.load-css('~tgui/styles/components/Input.scss', $with: (
+    'border-color': colors.fg(colors.$label),
+    'background-color': #ffffff,
+  ));
+  @include meta.load-css('~tgui/styles/components/NumberInput.scss');
+  @include meta.load-css('~tgui/styles/components/Knob.scss');
+  @include meta.load-css('~tgui/styles/components/Slider.scss');
+  @include meta.load-css('~tgui/styles/components/ProgressBar.scss');
+
+  // Components specific to tgui-panel
+  @include meta.load-css('../components/chat.scss', $with: (
+    'text-color': #000000,
   ));
 
   // Layouts
-  @include meta.load-css('~tgui/styles/layouts/Layout.scss');
+  @include meta.load-css('~tgui/styles/layouts/Layout.scss', $with: (
+    'scrollbar-color-multiplier': -1,
+  ));
   @include meta.load-css('~tgui/styles/layouts/Window.scss');
   @include meta.load-css('~tgui/styles/layouts/TitleBar.scss', $with: (
-    'color-text': rgba(0, 0, 0, 0.75),
-    'color-background': base.$color-bg,
-    'color-shadow-core': rgba(0, 0, 0, 0.25),
+    'text-color': rgba(0, 0, 0, 0.75),
+    'background-color': base.$color-bg,
+    'shadow-color-core': rgba(0, 0, 0, 0.25),
   ));
 
-  .PaperInput {
-    position: relative;
-    display: inline-block;
-    width: 120px;
-    border: none;
-    background: transparent;
-    border-bottom: 1px solid #000;
-    outline: none;
-    background-color:rgba(255, 255, 62, 0.8);
-    padding: 0 4px;
-    margin-right: 2px;
-    line-height: 17px;
-    overflow: visible;
+  // Goonchat styles
+  @include meta.load-css('../goon/chat-light.scss');
+
+  .Input,
+  .NumberInput {
+    box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.1);
   }
 
-  .PaperInput__baseline {
-    display: inline-block;
-    color: transparent;
-  }
+  .Chat__scrollButton {
+    background-color: #fff !important;
+    box-shadow: 0 0.1em 1em rgba(0, 0, 0, 0.25);
+    transition: box-shadow 100ms;
 
-  .PaperInput__input {
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border: 0;
-    outline: 0;
-    width: 100%;
-    font-size: 12px;
-    line-height: 17px;
-    height: 17px;
-    margin: 0;
-    padding: 0 6px;
-    font-family: Verdana, sans-serif;
-    background-color: transparent;
-    color: #fff;
-    color: inherit;
-
-    &:-ms-input-placeholder {
-      font-style: italic;
-      color: #777;
-      color: rgba(255, 255, 255, 0.45);
-    }
-  }
-
-  .Layout__content {
-    background-image: none;
-  }
-
-  .Window {
-    background-image: none;
-    color: base.$color-fg;
-  }
-
-  .paper-text {
-    input:disabled {
-      position: relative;
-      display: inline-block;
-      border: none;
-      background: transparent;
-      border-bottom: 1px solid #000;
-      outline: none;
-      background-color:rgba(255, 255, 62, 0.8);
-      padding: 0 4px;
-      margin-right: 2px;
-      line-height: 17px;
-      overflow: visible;
-    }
-
-    input {
-      position: relative;
-      display: inline-block;
-      border: none;
-      background: transparent;
-      border-bottom: 1px solid #000;
-      outline: none;
-      background-color:rgba(255, 255, 62, 0.8);
-      padding: 0 4px;
-      margin-right: 2px;
-      line-height: 17px;
-      overflow: visible;
-    }
-  }
-
-  .paper-field {
-    position: relative;
-    display: inline-block;
-
-    border: none;
-    background: transparent;
-    border-bottom: 1px solid #000;
-    outline: none;
-    background-color:rgba(255, 255, 62, 0.8);
-    padding: 0 4px;
-    margin-right: 2px;
-    line-height: 17px;
-    overflow: visible;
-
-    input:disabled {
-      position: relative;
-      display: inline-block;
-
-      border: none;
-      background: transparent;
-      border-bottom: 1px solid #000;
-      outline: none;
-      background-color:rgba(255, 255, 62, 0.8);
-      padding: 0 4px;
-      margin-right: 2px;
-      line-height: 17px;
-      overflow: visible;
+    &:hover {
+      box-shadow: 0 0em 0.75em rgba(0, 119, 255, 0.75);
+      transition: box-shadow 80ms;
     }
   }
 }

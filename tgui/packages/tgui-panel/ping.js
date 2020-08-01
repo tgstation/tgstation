@@ -107,10 +107,15 @@ export const PingIndicator = (props, context) => {
   const ping = useSelector(context, selectPing);
   return (
     <Box
+      px={1} py={0.5}
+      style={{
+        'border-radius': '0.25em',
+      }}
+      backgroundColor="black"
       textColor={Color.lookup(ping.networkQuality, [
-        new Color(219, 40, 40),
-        new Color(251, 214, 8),
-        new Color(32, 177, 66),
+        new Color(240, 60, 60),
+        new Color(240, 220, 40),
+        new Color(40, 240, 80),
       ])}>
       {ping.roundtripAvg || '--'} ms
     </Box>

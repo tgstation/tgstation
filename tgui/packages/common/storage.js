@@ -92,9 +92,8 @@ class IndexedDbBackend {
     this.impl = IMPL_INDEXED_DB;
     /** @type {Promise<IDBDatabase>} */
     this.dbPromise = new Promise((resolve, reject) => {
-      // window.indexedDB.deleteDatabase(INDEXED_DB_NAME);
-      const req = window.indexedDB.open(
-        INDEXED_DB_NAME, INDEXED_DB_VERSION);
+      const indexedDB = window.indexedDB || window.msIndexedDB;
+      const req = indexedDB.open(INDEXED_DB_NAME, INDEXED_DB_VERSION);
       req.onupgradeneeded = () => {
         try {
           req.result.createObjectStore(INDEXED_DB_STORE_NAME);

@@ -1,6 +1,26 @@
-/**
- * Old goonchat styles
- */
+/*****************************************
+*
+* GLOBAL STYLES for white theme normies
+*
+******************************************/
+
+
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  color: #000000;
+}
+
+body {
+  background: #fff;
+  font-family: Verdana, sans-serif;
+  font-size: 13px;
+  line-height: 1.2;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  word-wrap: break-word;
+}
 
 em {
   font-style: normal;
@@ -23,166 +43,22 @@ img.icon {
 }
 
 a {
-  color: #397ea5;
+  color: #0000ff;
 }
 
 a.visited {
-  color: #7c00e6;
+  color: #ff00ff;
 }
 
 a:visited {
-  color: #7c00e6;
+  color: #ff00ff;
 }
 
 a.popt {
   text-decoration: none;
 }
 
-#loading {
-  position: fixed;
-  width: 300px;
-  height: 150px;
-  text-align: center;
-  left: 50%;
-  top: 50%;
-  margin: -75px 0 0 -150px;
-}
-
-#loading i {
-  display: block;
-  padding-bottom: 3px;
-}
-
-#messages {
-  font-size: 13px;
-  padding: 3px;
-  margin: 0;
-  word-wrap: break-word;
-}
-
-#newMessages {
-  position: fixed;
-  display: block;
-  bottom: 0;
-  right: 0;
-  padding: 8px;
-  background: #202020;
-  text-decoration: none;
-  font-variant: small-caps;
-  font-size: 1.1em;
-  font-weight: bold;
-  color: #a4bad6;
-}
-
-#newMessages:hover {
-  background: #171717;
-}
-
-#newMessages i {
-  vertical-align: middle;
-  padding-left: 3px;
-}
-
-#ping {
-  position: fixed;
-  top: 0;
-  right: 135px;
-  width: 45px;
-  background: #202020;
-  height: 30px;
-  padding: 8px 0 2px 0;
-}
-
-#ping i {
-  display: block;
-  text-align: center;
-}
-
-#ping .ms {
-  display: block;
-  text-align: center;
-  font-size: 8pt;
-  padding-top: 2px;
-}
-
-#userBar {
-  position: fixed;
-  top: 0;
-  right: 0;
-}
-
-#userBar .subCell {
-  background: #202020;
-  height: 30px;
-  padding: 5px 0;
-  display: block;
-  color: #a4bad6;
-  text-decoration: none;
-  line-height: 28px;
-  border-top: 1px solid #171717;
-}
-
-#userBar .subCell:hover {
-  background: #202020;
-}
-
-#userBar .toggle {
-  width: 45px;
-  background: #202020;
-  border-top: 0;
-  float: right;
-  text-align: center;
-}
-
-#userBar .sub {
-  clear: both;
-  display: none;
-  width: 180px;
-}
-
-#userBar .sub.scroll {
-  overflow-y: scroll;
-}
-
-#userBar .sub.subCell {
-  padding: 3px 0 3px 8px;
-  line-height: 30px;
-  font-size: 0.9em;
-  clear: both;
-}
-
-#userBar .sub span {
-  display: block;
-  line-height: 30px;
-  float: left;
-}
-
-#userBar .sub i {
-  display: block;
-  padding: 0 5px;
-  font-size: 1.1em;
-  width: 22px;
-  text-align: center;
-  line-height: 30px;
-  float: right;
-}
-
-#userBar .sub input {
-  position: absolute;
-  padding: 7px 5px;
-  width: 121px;
-  line-height: 30px;
-  float: left;
-}
-
-#userBar .topCell {
-  border-top: 0;
-}
-
-
-
 /* POPUPS */
-
 
 .popup {
   position: fixed;
@@ -229,9 +105,7 @@ a.popt {
   color: #333;
 }
 
-.popup input[type=text]:hover,
-.popup input[type=text]:active,
-.popup input[type=text]:focus {
+.popup input[type=text]:hover, .popup input[type=text]:active, .popup input[type=text]:focus {
   border-color: green;
 }
 
@@ -244,9 +118,7 @@ a.popt {
   font-weight: bold;
 }
 
-.popup input[type=submit]:hover,
-.popup input[type=submit]:focus,
-.popup input[type=submit]:active {
+.popup input[type=submit]:hover, .popup input[type=submit]:focus, .popup input[type=submit]:active {
   background: #aaa;
   cursor: pointer;
 }
@@ -353,26 +225,17 @@ a.popt {
 
 
 .motd {
-  color: #a4bad6;
+  color: #638500;
   font-family: Verdana, sans-serif;
 }
 
-.motd h1,
-.motd h2,
-.motd h3,
-.motd h4,
-.motd h5,
-.motd h6 {
-  color: #a4bad6;
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {
+  color: #638500;
   text-decoration: underline;
 }
 
-.motd a,
-.motd a:link,
-.motd a:visited,
-.motd a:active,
-.motd a:hover {
-  color: #a4bad6;
+.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {
+  color: #638500;
 }
 
 
@@ -380,15 +243,7 @@ a.popt {
 /* ADD HERE FOR BOLD */
 
 
-.bold,
-.name,
-.prefix,
-.ooc,
-.looc,
-.adminooc,
-.admin,
-.medal,
-.yell {
+.bold, .name, .prefix, .ooc, .looc, .adminooc, .admin, .medal, .yell {
   font-weight: bold;
 }
 
@@ -411,12 +266,12 @@ a.popt {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #a4bad6;
+  color: #0000ff;
   font-family: Georgia, Verdana, sans-serif;
 }
 
 h1.alert, h2.alert {
-  color: #a4bad6;
+  color: #000000;
 }
 
 em {
@@ -425,7 +280,7 @@ em {
 }
 
 .ooc {
-  color: #cca300;
+  color: #002eb8;
   font-weight: bold;
 }
 
@@ -435,7 +290,7 @@ em {
 }
 
 .adminooc {
-  color: #3d5bc3;
+  color: #700038;
   font-weight: bold;
 }
 
@@ -445,7 +300,7 @@ em {
 }
 
 .admin {
-  color: #5975da;
+  color: #4473ff;
   font-weight: bold;
 }
 
@@ -457,11 +312,13 @@ em {
 }
 
 .deadsay {
-  color: #e2c1ff;
+  color: #5c00e6;
 }
 
 .binarysay {
-  color: #1e90ff;
+  color: #20c20e;
+  background-color: #000000;
+  display: block;
 }
 
 .binarysay a {
@@ -473,55 +330,55 @@ em {
 }
 
 .radio {
-  color: #1ecc43;
+  color: #008000;
 }
 
 .sciradio {
-  color: #c68cfa;
+  color: #993399;
 }
 
 .comradio {
-  color: #fcdf03;
+  color: #948f02;
 }
 
 .secradio {
-  color: #dd3535;
+  color: #a30000;
 }
 
 .medradio {
-  color: #57b8f0;
+  color: #337296;
 }
 
 .engradio {
-  color: #f37746;
+  color: #fb5613;
 }
 
 .suppradio {
-  color: #b88646;
+  color: #a8732b;
 }
 
 .servradio {
-  color: #6ca729;
+  color: #6eaa2c;
 }
 
 .syndradio {
-  color: #8f4a4b;
+  color: #6d3f40;
 }
 
 .centcomradio {
-  color: #2681a5;
+  color: #686868;
 }
 
 .aiprivradio {
-  color: #d65d95;
+  color: #ff00ff;
 }
 
 .redteamradio {
-  color: #ff4444;
+  color: #ff0000;
 }
 
 .blueteamradio {
-  color: #3434fd;
+  color: #0000ff;
 }
 
 .yell {
@@ -529,7 +386,11 @@ em {
 }
 
 .alert {
-  color: #d82020;
+  color: #ff0000;
+}
+
+h1.alert, h2.alert {
+  color: #000000;
 }
 
 .emote {
@@ -537,17 +398,32 @@ em {
 }
 
 .userdanger {
-  color: #c51e1e;
+  color: #ff0000;
   font-weight: bold;
   font-size: 185%;
 }
 
+.bolddanger {
+  color: #ff0000;
+  font-weight: bold;
+}
+
 .danger {
-  color: #c51e1e;
+  color: #ff0000;
+}
+
+.tinydanger {
+  color: #ff0000;
+  font-size: 85%;
+}
+
+.smalldanger {
+  color: #ff0000;
+  font-size: 90%;
 }
 
 .warning {
-  color: #c51e1e;
+  color: #ff0000;
   font-style: italic;
 }
 
@@ -557,23 +433,23 @@ em {
 }
 
 .boldwarning {
-  color: #c51e1e;
+  color: #ff0000;
   font-style: italic;
   font-weight: bold;
 }
 
 .announce {
-  color: #c51e1e;
+  color: #228b22;
   font-weight: bold;
 }
 
 .boldannounce {
-  color: #c51e1e;
+  color: #ff0000;
   font-weight: bold;
 }
 
 .greenannounce {
-  color: #059223;
+  color: #00ff00;
   font-weight: bold;
 }
 
@@ -582,37 +458,42 @@ em {
 }
 
 .info {
-  color: #9ab0ff;
+  color: #0000CC;
 }
 
 .notice {
-  color: #6685f5;
+  color: #000099;
 }
 
 .tinynotice {
-  color: #6685f5;
+  color: #000099;
   font-style: italic;
   font-size: 85%;
 }
 
 .smallnotice {
-  color: #6685f5;
+  color: #000099;
+  font-size: 90%;
+}
+
+.smallnoticeital {
+  color: #000099;
   font-style: italic;
   font-size: 90%;
 }
 
 .boldnotice {
-  color: #6685f5;
+  color: #000099;
   font-weight: bold;
 }
 
 .hear {
-  color: #6685f5;
+  color: #000099;
   font-style: italic;
 }
 
 .adminnotice {
-  color: #6685f5;
+  color: #0000ff;
 }
 
 .adminhelp {
@@ -621,7 +502,7 @@ em {
 }
 
 .unconscious {
-  color: #a4bad6;
+  color: #0000ff;
   font-weight: bold;
 }
 
@@ -631,7 +512,7 @@ em {
 }
 
 .green {
-  color: #059223;
+  color: #03ff39;
 }
 
 .red {
@@ -639,48 +520,48 @@ em {
 }
 
 .blue {
-  color: #215cff;
+  color: #0000FF;
 }
 
 .nicegreen {
-  color: #059223;
+  color: #14a833;
 }
 
 .cult {
-  color: #aa1c1c;
+  color: #960000;
 }
 
 .cultitalic {
-  color: #aa1c1c;
+  color: #960000;
   font-style: italic;
 }
 
 .cultbold {
-  color: #aa1c1c;
+  color: #960000;
   font-style: italic;
   font-weight: bold;
 }
 
 .cultboldtalic {
-  color: #aa1c1c;
+  color: #960000;
   font-weight: bold;
   font-size: 185%;
 }
 
 .cultlarge {
-  color: #aa1c1c;
+  color: #960000;
   font-weight: bold;
   font-size: 185%;
 }
 
 .narsie {
-  color: #aa1c1c;
+  color: #960000;
   font-weight: bold;
   font-size: 925%;
 }
 
 .narsiesmall {
-  color: #aa1c1c;
+  color: #960000;
   font-weight: bold;
   font-size: 370%;
 }
@@ -691,35 +572,35 @@ em {
 }
 
 .hierophant {
-  color: #b441ee;
+  color: #660099;
   font-weight: bold;
   font-style: italic;
 }
 
 .hierophant_warning {
-  color: #c56bf1;
+  color: #660099;
   font-style: italic;
 }
 
 .purple {
-  color: #9956d3;
+  color: #5e2d79;
 }
 
 .holoparasite {
-  color: #88809c;
+  color: #35333a;
 }
 
 .revennotice {
-  color: #c099e2;
+  color: #1d2953;
 }
 
 .revenboldnotice {
-  color: #c099e2;
+  color: #1d2953;
   font-weight: bold;
 }
 
 .revenbignotice {
-  color: #c099e2;
+  color: #1d2953;
   font-weight: bold;
   font-size: 185%;
 }
@@ -740,32 +621,32 @@ em {
 }
 
 .deconversion_message {
-  color: #a947ff;
+  color: #5000A0;
   font-size: 185%;
   font-style: italic;
 }
 
 .ghostalert {
-  color: #6600ff;
+  color: #5c00e6;
   font-style: italic;
   font-weight: bold;
 }
 
 .alien {
-  color: #855d85;
+  color: #543354;
 }
 
 .noticealien {
-  color: #059223;
+  color: #00c000;
 }
 
 .alertalien {
-  color: #059223;
+  color: #00c000;
   font-weight: bold;
 }
 
 .changeling {
-  color: #059223;
+  color: #800080;
   font-style: italic;
 }
 
@@ -776,13 +657,13 @@ em {
 }
 
 .spider {
-  color: #8800ff;
+  color: #4d004d;
   font-weight: bold;
   font-size: 185%;
 }
 
 .interface {
-  color: #750e75;
+  color: #330033;
 }
 
 .sans {
@@ -819,17 +700,17 @@ em {
 }
 
 .greentext {
-  color: #059223;
+  color: #00FF00;
   font-size: 185%;
 }
 
 .redtext {
-  color: #c51e1e;
+  color: #FF0000;
   font-size: 185%;
 }
 
 .clown {
-  color: #ff70c1;
+  color: #FF69Bf;
   font-size: 160%;
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: bold;
@@ -847,7 +728,7 @@ em {
 }
 
 .hypnophrase {
-  color: #202020;
+  color: #0d0d0d;
   font-weight: bold;
   animation: hypnocolor 1500ms infinite;
   animation-direction: alternate;
@@ -855,23 +736,23 @@ em {
 
 @keyframes hypnocolor {
   0% {
-    color: #202020;
+    color: #0d0d0d;
   }
 
   25% {
-    color: #4b02ac;
+    color: #410194;
   }
 
   50% {
-    color: #9f41f1;
+    color: #7f17d8;
   }
 
   75% {
-    color: #541c9c;
+    color: #410194;
   }
 
   100% {
-    color: #7adbf3;
+    color: #3bb5d3;
   }
 }
 
@@ -883,7 +764,7 @@ em {
 
 @keyframes phobia {
   0% {
-    color: #f75a5a;
+    color: #0d0d0d;
   }
 
   50% {
@@ -891,7 +772,7 @@ em {
   }
 
   100% {
-    color: #f75a5a;
+    color: #0d0d0d;
   }
 }
 
@@ -911,12 +792,12 @@ em {
 }
 
 .abductor {
-  color: #c204c2;
+  color: #800080;
   font-style: italic;
 }
 
 .mind_control {
-  color: #df3da9;
+  color: #A00D6F;
   font-size: 100%;
   font-weight: bold;
   font-style: italic;
@@ -943,11 +824,11 @@ em {
 }
 
 .monkeyhive {
-  color: #a56408;
+  color: #774704;
 }
 
 .monkeylead {
-  color: #af6805;
+  color: #774704;
   font-size: 80%;
 }
 
@@ -962,7 +843,7 @@ em {
 }
 
 .internal.boldnshit {
-  color: #3d5bc3;
+  color: blue;
   font-weight: bold;
 }
 

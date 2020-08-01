@@ -11,7 +11,6 @@ export const SettingsPanel = (props, context) => {
     theme,
     fontSize,
     lineHeight,
-    adminMusicVolume,
   } = useSelector(context, selectSettings);
   const dispatch = useDispatch(context);
   return (

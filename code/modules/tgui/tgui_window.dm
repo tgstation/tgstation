@@ -295,3 +295,5 @@
 			close(can_be_suspended = TRUE)
 		if("close")
 			close(can_be_suspended = FALSE)
+		if("openLink")
+			client << link(payload["url"])

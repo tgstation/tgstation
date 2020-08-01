@@ -23,7 +23,6 @@ import './styles/themes/light.scss';
 import { perf } from 'common/perf';
 import { combineReducers } from 'common/redux';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-import { logger } from 'tgui/logging';
 import { createRenderer } from 'tgui/renderer';
 import { configureStore, StoreProvider } from 'tgui/store';
 import { audioMiddleware, audioReducer } from './audio';
@@ -31,6 +30,7 @@ import { chatMiddleware, chatReducer } from './chat';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
+import { setupExternalLinkCapturing } from 'tgui/external-links';
 
 perf.mark('inception', window.__inception__);
 perf.mark('init');
@@ -72,6 +72,9 @@ const setupApp = () => {
   // Subscribe for Redux state updates
   store.subscribe(renderApp);
 
+  // Capture external links
+  setupExternalLinkCapturing();
+
   // Subscribe for bankend updates
   window.update = msg => store.dispatch(Byond.parseJson(msg));
 
@@ -91,6 +94,7 @@ const setupApp = () => {
   Byond.winset('browseroutput', {
     'is-visible': true,
     'is-disabled': false,
+    'pos': '0x0',
     'size': '0x0',
   });
 

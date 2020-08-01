@@ -12,6 +12,7 @@ $color-bg-start: color.adjust(
   $color-bg, $lightness: $color-bg-grad-spread) !default;
 $color-bg-end: color.adjust(
   $color-bg, $lightness: -$color-bg-grad-spread) !default;
+$color-bg-section: color.adjust($color-bg, $lightness: -4%) !default;
 
 $unit: 12px;
 $font-size: 1 * $unit !default;

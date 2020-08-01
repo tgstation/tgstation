@@ -1,10 +1,11 @@
-import { Button, Flex, Section } from 'tgui/components';
+import { Button, Flex, Section, Box } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
 import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
 import { PingIndicator } from './ping';
 import { SettingsPanel, useSettings } from './settings';
 import { useLocalState } from 'tgui/backend';
+import { useSelector } from 'tgui/store';
 
 export const Panel = (props, context) => {
   const audio = useAudio(context);
@@ -13,6 +14,16 @@ export const Panel = (props, context) => {
     context, 'audioOpen', audio.playing);
   const [settingsOpen, setSettingsOpen] = useLocalState(
     context, 'settingsOpen', false);
+  if (process.env.NODE_ENV !== 'production') {
+    const { selectDebug } = require('tgui/debug');
+    const { KitchenSink } = require('tgui/debug/KitchenSink');
+    const debug = useSelector(context, selectDebug);
+    if (debug.kitchenSink) {
+      return (
+        <KitchenSink panel />
+      );
+    }
+  }
   return (
     <Pane
       theme={settings.theme}

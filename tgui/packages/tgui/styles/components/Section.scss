@@ -7,21 +7,24 @@
 @use '../base.scss';
 @use '../colors.scss';
 
-$color-title: #ffffff !default;
-$color-background: rgba(0, 0, 0, 0.33) !default;
-$color-shadow: rgba(0, 0, 0, 0.5) !default;
-$color-separator: colors.$primary !default;
+$title-text-color: base.$color-fg !default;
+$background-color: base.$color-bg-section !default;
+$separator-color: colors.$primary !default;
+$shadow-color: rgba(0, 0, 0, 0.5) !default;
+$shadow-type: inset !default;
+$shadow-size: 0.5em !default;
+$shadow-offset: 0 0 !default;
 
 .Section {
   position: relative;
   margin-bottom: 0.5em;
-  // IE8: Does not support rgba colors
-  background-color: color.adjust(
-    $color-background,
-    $lightness: 10%,
-    $alpha: 1);
-  background-color: $color-background;
-  box-shadow: inset 0 0 5px $color-shadow;
+  background-color: $background-color;
+  @if $shadow-type == inset {
+    box-shadow: $shadow-offset $shadow-size $shadow-color inset;
+  }
+  @else {
+    box-shadow: $shadow-offset $shadow-size $shadow-color;
+  }
   box-sizing: border-box;
 
   &:last-child {
@@ -32,12 +35,13 @@ $color-separator: colors.$primary !default;
 .Section__title {
   position: relative;
   padding: 0.5em;
-  border-bottom: base.em(2px) solid $color-separator;
+  border-bottom: base.em(2px) solid $separator-color;
 }
 
 .Section__titleText {
   font-size: base.em(14px);
   font-weight: bold;
+  color: $title-text-color;
 }
 
 .Section__buttons {

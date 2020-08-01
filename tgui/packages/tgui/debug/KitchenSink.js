@@ -8,7 +8,7 @@ import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Box, Button, ByondUi, Collapsible, DraggableControl, Flex, Icon, Input, Knob, LabeledList, NoticeBox, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../components';
 import { formatSiUnit } from '../format';
-import { Window } from '../layouts';
+import { Pane, Window } from '../layouts';
 import { createLogger } from '../logging';
 
 const logger = createLogger('KitchenSink');
@@ -88,11 +88,13 @@ const PAGES = [
 ];
 
 export const KitchenSink = (props, context) => {
+  const { panel } = props;
   const [theme] = useLocalState(context, 'kitchenSinkTheme');
   const [pageIndex, setPageIndex] = useLocalState(context, 'pageIndex', 0);
   const PageComponent = PAGES[pageIndex].component();
+  const Layout = panel ? Pane : Window;
   return (
-    <Window
+    <Layout
       title="Kitchen Sink"
       width={600}
       height={500}
@@ -118,12 +120,12 @@ export const KitchenSink = (props, context) => {
         <Flex.Item
           position="relative"
           grow={1}>
-          <Window.Content scrollable>
+          <Layout.Content scrollable>
             <PageComponent />
-          </Window.Content>
+          </Layout.Content>
         </Flex.Item>
       </Flex>
-    </Window>
+    </Layout>
   );
 };
 

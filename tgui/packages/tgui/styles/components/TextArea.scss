@@ -9,7 +9,7 @@
 $text-color: #272727 !default;
 $border-color: #88bfff !default;
 $border-radius: base.$border-radius !default;
-$color-background: #bb9b68 !default;
+$background-color: #bb9b68 !default;
 $color-border: #272727 !default;
 
 .TextArea {
@@ -20,7 +20,7 @@ $color-border: #272727 !default;
   border: 1px solid $border-color;
   border: 1px solid rgba($border-color, 0.75);
   border-radius: $border-radius;
-  background-color: $color-background;
+  background-color: $background-color;
   margin-right: 2px;
   line-height: 17px;
   overflow: visible;

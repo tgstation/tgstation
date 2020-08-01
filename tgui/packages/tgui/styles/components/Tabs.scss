@@ -8,6 +8,8 @@
 @use '../colors.scss';
 
 $color-default: color.scale(colors.fg(colors.$primary), $lightness: 75%) !default;
+$text-color: rgba(255, 255, 255, 0.5) !default;
+$text-color-selected: color.scale($color-default, $lightness: 25%) !default;
 $border-radius: base.$border-radius !default;
 $fg-map: colors.$fg-map !default;
 
@@ -41,13 +43,13 @@ $fg-map: colors.$fg-map !default;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: rgba(255, 255, 255, 0.5);
+  color: $text-color;
   min-height: 2.25em;
   min-width: 4em;
 }
 
 .Tab--selected {
-  color: color.scale($color-default, $lightness: 25%);
+  color: $text-color-selected;
 }
 
 .Tab__text {

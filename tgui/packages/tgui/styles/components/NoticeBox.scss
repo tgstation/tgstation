@@ -9,14 +9,14 @@
 @use '../functions.scss' as *;
 
 // NoticeBox
-$color-background: #bb9b68 !default;
+$background-color: #bb9b68 !default;
 $color-stripes: rgba(0, 0, 0, 0.1) !default;
 $color-border: #272727 !default;
 $bg-map: colors.$bg-map !default;
 
 .NoticeBox {
   // Adapt text color to background luminance to ensure high contast
-  $luminance: luminance($color-background);
+  $luminance: luminance($background-color);
   $text-color: if($luminance > 0.35,
     rgba(0, 0, 0, 1),
     rgba(255, 255, 255, 1));
@@ -27,7 +27,7 @@ $bg-map: colors.$bg-map !default;
   font-weight: bold;
   font-style: italic;
   color: $text-color;
-  background-color: $color-background;
+  background-color: $background-color;
   background-image: repeating-linear-gradient(
     -45deg,
     transparent,
