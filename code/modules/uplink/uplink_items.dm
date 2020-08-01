@@ -1708,8 +1708,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
-	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
-	item = /obj/item/clothing/under/color/grey/glorf
+	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you."
+	item = /obj/item/clothing/under/color/grey/ancient
 	cost = 20
 	restricted_roles = list("Assistant")
 	surplus = 0
@@ -1931,7 +1931,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	limited_stock = 1
 	item = /obj/item/devices/ocd_device
 	restricted_roles = list("Head of Personnel", "Quartermaster")
-	
+
 /datum/uplink_item/role_restricted/meathook
 	name = "Butcher's Meat Hook"
 	desc = "A brutal cleaver on a long chain, it allows you to pull people to your location."
@@ -1966,7 +1966,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Clown Costume"
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
 	item = /obj/item/storage/backpack/duffelbag/clown/syndie
-	
+
 /datum/uplink_item/badass/costumes/tactical_naptime
 	name = "Sleepy Time Pajama Bundle"
 	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."

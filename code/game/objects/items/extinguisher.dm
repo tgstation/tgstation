@@ -42,6 +42,8 @@
 	dog_fashion = null
 
 /obj/item/extinguisher/proc/refill()
+	if(!chem)
+		return
 	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 

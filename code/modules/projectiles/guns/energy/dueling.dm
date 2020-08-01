@@ -124,7 +124,7 @@
 	if(get_dist(A,B) != required_distance)
 		return FALSE
 	for(var/turf/T in getline(get_turf(A),get_turf(B)))
-		if(is_blocked_turf(T,TRUE))
+		if(T.is_blocked_turf(TRUE))
 			return FALSE
 	return TRUE
 

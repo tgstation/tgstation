@@ -105,7 +105,7 @@
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 
-	var beakerContents[0]
+	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...

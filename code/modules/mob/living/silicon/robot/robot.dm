@@ -453,11 +453,10 @@
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
-		if(mmi)
-			qdel(mmi)
-		explosion(src.loc,1,2,4,flame_range = 2)
+		QDEL_NULL(mmi)
+		explosion(loc,1,2,4,flame_range = 2)
 	else
-		explosion(src.loc,-1,0,2)
+		explosion(loc,-1,0,2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
@@ -983,6 +982,8 @@
 	mainframe.diag_hud_set_deployed()
 	if(mainframe.laws)
 		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
+	if(mainframe.eyeobj)
+		mainframe.eyeobj.setLoc(loc)
 	mainframe = null
 
 /mob/living/silicon/robot/attack_ai(mob/user)
@@ -995,7 +996,7 @@
 	cell = null
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
-	if(can_buckle && istype(M) && !(M in buckled_mobs) && ((user!=src)||(a_intent != INTENT_HARM)))
+	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (a_intent != INTENT_HARM)))
 		if(buckle_mob(M))
 			return TRUE
 

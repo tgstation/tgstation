@@ -302,6 +302,7 @@
 	display_name = "Neural Programming"
 	description = "Study into networks of processing units that mimic our brains."
 	prereq_ids = list("biotech", "datatheory")
+	design_ids = list("skill_station")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -1079,23 +1080,12 @@
 	hidden = TRUE
 	experimental = TRUE
 
-/datum/techweb_node/rolling_table
-	id = "rolling_table"
-	display_name = "Advanced Wheel Applications"
-	description = "Adding wheels to things can lead to extremely beneficial outcomes."
+/datum/techweb_node/extreme_office
+	id = "extreme_office"
+	display_name = "Advanced Office Applications"
+	description = "Some of our smartest lab guys got together on a Friday and improved our office efficiency by 350%. Here's how."
 	prereq_ids = list("base")
-	design_ids = list("rolling_table")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 2500
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/mauna_mug
-	id = "mauna_mug"
-	display_name = "Mauna Mug"
-	description = "A bored scientist was thinking to himself for very long...and then realized his coffee got cold! He made this invention to solve this extreme problem."
-	prereq_ids = list("base")
-	design_ids = list("mauna_mug")
+	design_ids = list("rolling_table", "mauna_mug")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 2500
 	hidden = TRUE

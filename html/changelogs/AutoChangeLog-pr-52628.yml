@@ -1,0 +1,4 @@
+author: "KathyRyals"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a runtime caused by an improperly affected variable in space cleaner code."
