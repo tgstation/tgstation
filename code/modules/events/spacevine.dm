@@ -138,7 +138,7 @@
 
 /datum/spacevine_mutation/vine_eating/on_spread(obj/structure/spacevine/holder, turf/target)
 	var/obj/structure/spacevine/prey
-	for(prey in target) // Destroys any vine on target tile. The checks for if this should be done are in the spread() proc.
+	for(prey in target) // Destroys any vine on target tile. The checks for this are in the spread() proc.
 		qdel(prey)
 
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
