@@ -125,6 +125,8 @@
 
 	if(!istype(my_computer))
 		return
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/list/access = card_slot?.GetAccess()
 
 	var/list/data = get_header_data()
 
@@ -146,7 +148,7 @@
 	for(var/A in main_repo)
 		var/datum/computer_file/program/P = A
 		// Only those programs our user can run will show in the list
-		if(!P.can_run(user,transfer = 1) || hard_drive.find_file_by_name(P.filename))
+		if(!P.can_run(user,transfer = 1, access = access) || hard_drive.find_file_by_name(P.filename))
 			continue
 		all_entries.Add(list(list(
 			"filename" = P.filename,

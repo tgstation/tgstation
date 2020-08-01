@@ -5,6 +5,7 @@
 	icon_state = "card_mini"
 	w_class = WEIGHT_CLASS_SMALL
 	device_type = MC_AI
+	expansion_hw = TRUE
 
 	var/obj/item/aicard/stored_card = null
 	var/locked = FALSE

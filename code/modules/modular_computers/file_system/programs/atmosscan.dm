@@ -7,11 +7,20 @@
 	size = 4
 	tgui_id = "NtosAtmos"
 
+/datum/computer_file/program/atmosscan/run_program(mob/living/user)
+	if (!..())
+		return FALSE
+	if(!computer?.get_modular_computer_part(MC_SENSORS)) //Giving a clue to users why the program is spitting out zeros.
+		to_chat(user, "<span class='warning'>\The [computer] flashes an error: \"hardware\\sensorpackage\\startup.bin -- file not found\".</span>")
+	return TRUE
+
+
 /datum/computer_file/program/atmosscan/ui_data(mob/user)
 	var/list/data = get_header_data()
 	var/list/airlist = list()
 	var/turf/T = get_turf(ui_host())
-	if(T)
+	var/obj/item/computer_hardware/sensorpackage/sensors = computer?.get_modular_computer_part(MC_SENSORS)
+	if(T && sensors?.check_functionality())
 		var/datum/gas_mixture/environment = T.return_air()
 		var/list/env_gases = environment.gases
 		var/pressure = environment.return_pressure()
