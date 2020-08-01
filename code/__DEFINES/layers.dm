@@ -123,7 +123,6 @@
 
 #define ATMOS_GROUP_PLANE 20
 #define ATMOS_GROUP_LAYER 20
-#define ATMOS_GROUP_RENDER_TARGET "ATMOS_GROUP_PLANE" //I'll be honest I don't understand what this is used for, but eh
 
 //HUD layer defines
 

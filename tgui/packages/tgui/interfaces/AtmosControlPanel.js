@@ -50,6 +50,13 @@ export const AtmosControlPanel = (props, context) => {
           </Flex.Item>
           <Flex.Item>
             <Button.Checkbox
+              checked={data.showing_user}
+              onClick={() => act('toggle_user_display')}>
+              Toggle Personal View
+            </Button.Checkbox>
+          </Flex.Item>
+          <Flex.Item>
+            <Button.Checkbox
               checked={data.show_all}
               onClick={() => act('toggle_show_all')}>
               Display all

@@ -58,7 +58,7 @@
 	icon_state = "atmos_top"
 	anchored = TRUE  // should only appear in vis_contents, but to be safe
 	appearance_flags = RESET_TRANSFORM | TILE_BOUND
-	invisibility = SEE_INVISIBLE_OBSERVER
+	invisibility = INVISIBILITY_ABSTRACT
 
 	layer = ATMOS_GROUP_LAYER
 	plane = ATMOS_GROUP_PLANE

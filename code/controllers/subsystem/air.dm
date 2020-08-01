@@ -389,11 +389,16 @@ SUBSYSTEM_DEF(air)
 		CHECK_TICK
 
 GLOBAL_LIST_EMPTY(colored_turfs)
+GLOBAL_LIST_EMPTY(colored_images)
 /datum/controller/subsystem/air/proc/setup_turf_visuals()
 	for(var/sharp_color in GLOB.contrast_colors)
 		var/obj/effect/overlay/atmos_excited/suger_high = new()
 		suger_high.color = sharp_color
 		GLOB.colored_turfs += suger_high
+		var/image/shiny = new("icons/effects/effects.dmi", suger_high, "atmos_top", ATMOS_GROUP_LAYER)
+		shiny.plane = ATMOS_GROUP_PLANE
+		shiny.color = sharp_color
+		GLOB.colored_images += shiny
 		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
@@ -451,7 +456,8 @@ GLOBAL_LIST_EMPTY(colored_turfs)
 		var/area/target = get_area(T)
 		var/max = 0
 		#ifdef TRACK_MAX_SHARE
-		for(var/turf/open/lad in group.turf_list)
+		for(var/who in group.turf_list)
+			var/turf/open/lad = who
 			max = max(lad.max_share, max)
 		#endif
 		data["excited_groups"] += list(list(
@@ -476,6 +482,8 @@ GLOBAL_LIST_EMPTY(colored_turfs)
 	#else
 	data["display_max"] = FALSE
 	#endif
+	var/obj/screen/plane_master/plane = user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
+	data["showing_user"] = (plane.alpha == 255)
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -511,5 +519,14 @@ GLOBAL_LIST_EMPTY(colored_turfs)
 				else if(!group.should_display) //Don't flicker yeah?
 					group.hide_turfs()
 			return TRUE
-
-
+		if("toggle_user_display")
+			var/obj/screen/plane_master/plane = ui.user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
+			if(!plane.alpha)
+				if(ui.user.client)
+					ui.user.client.images += GLOB.colored_images
+				plane.alpha = 255
+			else
+				if(ui.user.client)
+					ui.user.client.images -= GLOB.colored_images
+				plane.alpha = 0
+			return TRUE
