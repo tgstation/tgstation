@@ -98,7 +98,7 @@
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
-	chamber_round(TRUE)
+	chamber_round(replace_new_round = TRUE)
 	update_icon()
 
 /obj/item/gun/ballistic/vv_edit_var(vname, vval)
@@ -168,13 +168,15 @@
 		chamber_round()
 
 ///Used to chamber a new round and eject the old one
-/obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE)
+/obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
 	if (chambered || !magazine)
 		return
 	if (magazine.ammo_count())
 		chambered = magazine.get_round(keep_bullet || bolt_type == BOLT_TYPE_NO_BOLT)
 		if (bolt_type != BOLT_TYPE_OPEN)
 			chambered.forceMove(src)
+		if(replace_new_round)
+			magazine.give_round(new chambered.type)
 
 ///updates a bunch of racking related stuff and also handles the sound effects and the like
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
