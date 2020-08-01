@@ -403,6 +403,9 @@
 		owner.remove_status_effect(STATUS_EFFECT_CONFUSION)
 		return
 
+/datum/status_effect/confusion/proc/set_strength(new_strength)
+	strength = new_strength
+
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6
