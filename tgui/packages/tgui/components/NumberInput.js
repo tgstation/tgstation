@@ -10,6 +10,8 @@ import { Component, createRef } from 'inferno';
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
 
+const DEFAULT_UPDATE_RATE = 400;
+
 export class NumberInput extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +66,7 @@ export class NumberInput extends Component {
         if (dragging && onDrag) {
           onDrag(e, value);
         }
-      }, 500);
+      }, this.props.updateRate || DEFAULT_UPDATE_RATE);
       document.addEventListener('mousemove', this.handleDragMove);
       document.addEventListener('mouseup', this.handleDragEnd);
     };

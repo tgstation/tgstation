@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { subscribeToLossOfFocus } from './focus';
 import { createLogger } from './logging';
 
 const logger = createLogger('hotkeys');
@@ -200,6 +201,7 @@ const handlePassthrough = (e, eventType) => {
   if (byondKeyCode) {
     const macro = BYOND_MACROS[byondKeyCode];
     if (macro) {
+      Byond.winset('map', { focus: true });
       return macro();
     }
     if (eventType === 'keydown' && !keyState[keyCode]) {
@@ -222,7 +224,7 @@ export const releaseHeldKeys = () => {
     const byondKeyCode = keyCodeToByond(keyCode);
     if (byondKeyCode && keyState[keyCode]) {
       keyState[keyCode] = false;
-      logger.debug(`KeyUp "${byondKeyCode}"`);
+      logger.debug(`releasing keys "${byondKeyCode}"`);
       Byond.command(`KeyUp "${byondKeyCode}"`);
     }
   }
@@ -263,22 +265,6 @@ const handleHotKey = (e, eventType, store) => {
       subscriberFn(store, keyData);
     }
   }
-};
-
-/**
- * Subscribe to an event when browser window has been completely
- * unfocused. Conveniently fires events when the browser window
- * is closed from the outside.
- */
-const subscribeToLossOfFocus = listenerFn => {
-  let timeout;
-  document.addEventListener('focusout', () => {
-    timeout = setTimeout(listenerFn);
-  });
-  document.addEventListener('focusin', () => {
-    clearTimeout(timeout);
-  });
-  window.addEventListener('beforeunload', listenerFn);
 };
 
 /**

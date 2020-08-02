@@ -123,10 +123,10 @@ export const createAction = (type, prepare) => {
     if (!prepared) {
       throw new Error('prepare function did not return an object');
     }
-    const action = {
-      type,
-      payload: prepared.payload,
-    };
+    const action = { type };
+    if ('payload' in prepared) {
+      action.payload = prepared.payload;
+    }
     if ('meta' in prepared) {
       action.meta = prepared.meta;
     }

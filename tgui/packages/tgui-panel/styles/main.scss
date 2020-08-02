@@ -4,10 +4,12 @@
  */
 
 @use 'sass:meta';
+@use 'sass:color';
 
 @use '~tgui/styles/colors.scss';
 @use '~tgui/styles/base.scss' with (
   $color-bg: #202020,
+  $color-bg-section: color.adjust(#202020, $lightness: -5%),
   $color-bg-grad-spread: 0%,
 );
 
@@ -45,11 +47,12 @@
 @include meta.load-css('~tgui/styles/components/Tooltip.scss');
 
 // Components specific to tgui-panel
-@include meta.load-css('./components/chat.scss');
+@include meta.load-css('./components/Chat.scss');
+@include meta.load-css('./components/Ping.scss');
 
 // Layouts
 @include meta.load-css('~tgui/styles/layouts/Layout.scss');
-@include meta.load-css('~tgui/styles/layouts/TitleBar.scss');
+// @include meta.load-css('~tgui/styles/layouts/TitleBar.scss');
 @include meta.load-css('~tgui/styles/layouts/Window.scss');
 
 // Goonchat styles

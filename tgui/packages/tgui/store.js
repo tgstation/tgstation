@@ -8,7 +8,7 @@ import { applyMiddleware, combineReducers, createStore } from 'common/redux';
 import { Component } from 'inferno';
 import { assetMiddleware } from './assets';
 import { backendMiddleware, backendReducer } from './backend';
-import { debugReducer } from './debug';
+import { debugReducer, relayMiddleware } from './debug';
 import { hotKeyMiddleware } from './hotkeys';
 import { createLogger } from './logging';
 import { flow } from 'common/fp';
@@ -32,6 +32,7 @@ export const configureStore = (options = {}) => {
   ];
   if (process.env.NODE_ENV !== 'production') {
     middleware.unshift(loggingMiddleware);
+    middleware.unshift(relayMiddleware);
   }
   const enhancer = applyMiddleware(...middleware);
   const store = createStore(reducer, enhancer);

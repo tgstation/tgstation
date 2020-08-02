@@ -4,15 +4,13 @@
  * @license MIT
  */
 
+import { createAction } from 'common/redux';
 import { subscribeToHotKey } from '../hotkeys';
 
-export const toggleKitchenSink = () => ({
-  type: 'debug/toggleKitchenSink',
-});
+export { KitchenSink } from './KitchenSink';
 
-export const toggleDebugLayout = () => ({
-  type: 'debug/toggleDebugLayout',
-});
+export const toggleKitchenSink = createAction('debug/toggleKitchenSink');
+export const toggleDebugLayout = createAction('debug/toggleDebugLayout');
 
 subscribeToHotKey('F11', () => toggleDebugLayout());
 subscribeToHotKey('F12', () => toggleKitchenSink());
@@ -47,3 +45,5 @@ export const debugReducer = (state = {}, action) => {
   }
   return state;
 };
+
+export { relayMiddleware } from './relay';

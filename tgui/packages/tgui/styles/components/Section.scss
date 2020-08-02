@@ -19,12 +19,12 @@ $shadow-offset: 0 0 !default;
   position: relative;
   margin-bottom: 0.5em;
   background-color: $background-color;
-  @if $shadow-type == inset {
-    box-shadow: $shadow-offset $shadow-size $shadow-color inset;
-  }
-  @else {
-    box-shadow: $shadow-offset $shadow-size $shadow-color;
-  }
+  // @if $shadow-type == inset {
+  //   box-shadow: $shadow-offset $shadow-size $shadow-color inset;
+  // }
+  // @else {
+  //   box-shadow: $shadow-offset $shadow-size $shadow-color;
+  // }
   box-sizing: border-box;
 
   &:last-child {

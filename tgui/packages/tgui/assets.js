@@ -10,7 +10,7 @@ import { createLogger } from './logging';
 const logger = createLogger('assets');
 
 const EXCLUDED_PATTERNS = [/v4shim/i];
-const RETRY_ATTEMPTS = 3;
+const RETRY_ATTEMPTS = 5;
 const RETRY_INTERVAL = 3000;
 
 const loadedStyleSheetByUrl = {};
@@ -38,9 +38,6 @@ export const loadStyleSheet = (url, attempt = 1) => {
       }
       setTimeout(() => loadStyleSheet(url, attempt + 1), RETRY_INTERVAL);
       return;
-    }
-    if (attempt > 1) {
-      logger.info(`loaded stylesheet '${url}' on attempt #${attempt}`);
     }
   });
 };

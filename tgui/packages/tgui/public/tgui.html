@@ -9,8 +9,6 @@
 
 <!-- Early setup -->
 <script type="text/javascript">
-// Mark the beginning of initialization
-window.__inception__ = new Date().getTime();
 // Read window id into a global
 window.__windowId__ = document
   .getElementById('tgui:windowId')
@@ -46,7 +44,8 @@ window.Byond = (function () {
   // Basic checks to detect whether this page runs in BYOND
   var isByond = tridentVersion !== null
     && location.hostname === '127.0.0.1'
-    && location.pathname.indexOf('/tmp') === 0;
+    && location.pathname.indexOf('/tmp') === 0
+    && location.search !== '?external';
 
   // Version constants
   Byond.IS_BYOND = isByond;

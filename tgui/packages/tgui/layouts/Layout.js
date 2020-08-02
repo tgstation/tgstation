@@ -5,23 +5,9 @@
  */
 
 import { classes } from 'common/react';
-import { computeBoxProps, computeBoxClassName } from '../components/Box';
-
-/**
- * Brings Layout__content DOM element back to focus.
- *
- * Commonly used to keep the content scrollable in IE.
- */
-export const refocusLayout = () => {
-  // IE8: Focus method is seemingly fucked.
-  if (Byond.IS_LTE_IE8) {
-    return;
-  }
-  const element = document.getElementById('Layout__content');
-  if (element) {
-    element.focus();
-  }
-};
+import { Component, createRef } from 'inferno';
+import { computeBoxClassName, computeBoxProps } from '../components/Box';
+import { focusNodeOnMouseOver } from '../focus';
 
 export const Layout = props => {
   const {
@@ -45,30 +31,41 @@ export const Layout = props => {
   );
 };
 
-const LayoutContent = props => {
-  const {
-    className,
-    scrollable,
-    children,
-    ...rest
-  } = props;
-  return (
-    <div
-      id="Layout__content"
-      className={classes([
-        'Layout__content',
-        scrollable && 'Layout__content--scrollable',
-        className,
-        ...computeBoxClassName(rest),
-      ])}
-      {...computeBoxProps(rest)}>
-      {children}
-    </div>
-  );
-};
+class LayoutContent extends Component {
+  constructor() {
+    super();
+    this.ref = createRef();
+  }
 
-LayoutContent.defaultHooks = {
-  onComponentDidMount: () => refocusLayout(),
-};
+  componentDidMount() {
+    this.unsubscribe = focusNodeOnMouseOver(this.ref.current);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  render() {
+    const {
+      className,
+      scrollable,
+      children,
+      ...rest
+    } = this.props;
+    return (
+      <div
+        ref={this.ref}
+        className={classes([
+          'Layout__content',
+          scrollable && 'Layout__content--scrollable',
+          className,
+          ...computeBoxClassName(rest),
+        ])}
+        {...computeBoxProps(rest)}>
+        {children}
+      </div>
+    );
+  }
+}
 
 Layout.Content = LayoutContent;

@@ -9,8 +9,9 @@ import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 
 export const toInputValue = value => (
-  typeof value !== 'number' && typeof value !== 'string' && ''
-    || String(value)
+  typeof value !== 'number' && typeof value !== 'string'
+    ? ''
+    : String(value)
 );
 
 export class Input extends Component {

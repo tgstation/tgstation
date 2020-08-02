@@ -15,8 +15,7 @@ export const Panel = (props, context) => {
   const [settingsOpen, setSettingsOpen] = useLocalState(
     context, 'settingsOpen', false);
   if (process.env.NODE_ENV !== 'production') {
-    const { selectDebug } = require('tgui/debug');
-    const { KitchenSink } = require('tgui/debug/KitchenSink');
+    const { selectDebug, KitchenSink } = require('tgui/debug');
     const debug = useSelector(context, selectDebug);
     if (debug.kitchenSink) {
       return (
@@ -27,27 +26,27 @@ export const Panel = (props, context) => {
   return (
     <Pane
       theme={settings.theme}
-      fontSize={settings.fontSize + 'pt'}>
+      fontSize={settings.fontSize + 'px'}>
       <Flex
         direction="column"
         height="100%">
         <Flex.Item>
           <Section fitted>
-            <Flex align="center">
-              <Flex.Item mx={1} grow={1}>
+            <Flex mx={0.5} align="center">
+              <Flex.Item mx={0.5} grow={1}>
                 <ChatTabs />
               </Flex.Item>
-              <Flex.Item mx={1}>
+              <Flex.Item mx={0.5}>
                 <PingIndicator />
               </Flex.Item>
-              <Flex.Item mx={1}>
+              <Flex.Item mx={0.5}>
                 <Button
                   color="grey"
                   selected={audioOpen || audio.playing}
                   icon="music"
                   onClick={() => setAudioOpen(!audioOpen)} />
               </Flex.Item>
-              <Flex.Item mx={1}>
+              <Flex.Item mx={0.5}>
                 <Button
                   icon="cog"
                   selected={settingsOpen}
@@ -64,21 +63,18 @@ export const Panel = (props, context) => {
           </Flex.Item>
         )}
         {settingsOpen && (
-          <Flex.Item position="relative" grow={1}>
-            <Pane.Content scrollable>
-              <SettingsPanel />
-            </Pane.Content>
-          </Flex.Item>
-        ) || (
-          <Flex.Item mt={1} grow={1}>
-            <Section fill fitted position="relative">
-              <Pane.Content scrollable>
-                <ChatPanel
-                  lineHeight={settings.lineHeight} />
-              </Pane.Content>
-            </Section>
+          <Flex.Item mt={1}>
+            <SettingsPanel />
           </Flex.Item>
         )}
+        <Flex.Item mt={1} grow={1}>
+          <Section fill fitted position="relative">
+            <Pane.Content scrollable>
+              <ChatPanel
+                lineHeight={settings.lineHeight} />
+            </Pane.Content>
+          </Section>
+        </Flex.Item>
       </Flex>
     </Pane>
   );

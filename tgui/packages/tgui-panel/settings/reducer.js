@@ -1,9 +1,11 @@
+import { SETTINGS_VERSION } from './constants';
+
 const initialState = {
-  visible: false,
-  fontSize: 9,
-  lineHeight: 1.4,
-  theme: 'dark',
-  adminMusicVolume: 1,
+  version: SETTINGS_VERSION,
+  fontSize: 13,
+  lineHeight: 1.2,
+  theme: 'light',
+  adminMusicVolume: 0.5,
 };
 
 export const settingsReducer = (state = initialState, action) => {

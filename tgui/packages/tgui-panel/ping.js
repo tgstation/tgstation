@@ -1,16 +1,15 @@
 import { Color } from 'common/color';
-import { clamp01, scale } from 'common/math';
+import { clamp01, scale, toFixed } from 'common/math';
 import { sendMessage } from 'tgui/backend';
 import { Box } from 'tgui/components';
-import { logger } from 'tgui/logging';
 import { useSelector } from 'tgui/store';
 
 const PING_INTERVAL = 2500;
 const PING_TIMEOUT = 2000;
 const PING_MAX_FAILS = 3;
 const PING_QUEUE_SIZE = 8;
-const PING_ROUNDTRIP_BEST = 40;
-const PING_ROUNDTRIP_WORST = 120;
+const PING_ROUNDTRIP_BEST = 50;
+const PING_ROUNDTRIP_WORST = 200;
 
 export const selectPing = state => state?.ping || {};
 
@@ -92,8 +91,8 @@ export const pingMiddleware = store => {
     if (type === 'pingReply') {
       const { index } = payload;
       const ping = pings[index];
+      // Received a timed out ping
       if (!ping) {
-        logger.log('Received a timed out ping.');
         return;
       }
       pings[index] = null;
@@ -105,19 +104,20 @@ export const pingMiddleware = store => {
 
 export const PingIndicator = (props, context) => {
   const ping = useSelector(context, selectPing);
+  const color = Color.lookup(ping.networkQuality, [
+    new Color(220, 40, 40),
+    new Color(220, 200, 40),
+    new Color(60, 220, 40),
+  ]);
+  const roundtrip = ping.roundtrip
+    ? toFixed(ping.roundtrip)
+    : '--';
   return (
-    <Box
-      px={1} py={0.5}
-      style={{
-        'border-radius': '0.25em',
-      }}
-      backgroundColor="black"
-      textColor={Color.lookup(ping.networkQuality, [
-        new Color(240, 60, 60),
-        new Color(240, 220, 40),
-        new Color(40, 240, 80),
-      ])}>
-      {ping.roundtripAvg || '--'} ms
-    </Box>
+    <div className="Ping">
+      <Box
+        className="Ping__indicator"
+        backgroundColor={color} />
+      {roundtrip}
+    </div>
   );
 };

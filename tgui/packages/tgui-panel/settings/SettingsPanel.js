@@ -29,10 +29,10 @@ export const SettingsPanel = (props, context) => {
             width="4em"
             step={1}
             stepPixelSize={10}
-            minValue={8}
-            maxValue={36}
+            minValue={12}
+            maxValue={48}
             value={fontSize}
-            unit="pt"
+            unit="px"
             format={value => toFixed(value)}
             onChange={(e, value) => dispatch(updateSettings({
               fontSize: value,
@@ -43,11 +43,11 @@ export const SettingsPanel = (props, context) => {
             width="4em"
             step={0.01}
             stepPixelSize={2}
-            minValue={1}
-            maxValue={4}
+            minValue={0.8}
+            maxValue={5}
             value={lineHeight}
             format={value => toFixed(value, 2)}
-            onChange={(e, value) => dispatch(updateSettings({
+            onDrag={(e, value) => dispatch(updateSettings({
               lineHeight: value,
             }))} />
         </LabeledList.Item>

@@ -32,7 +32,7 @@ import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
 import { setupExternalLinkCapturing } from 'tgui/external-links';
 
-perf.mark('inception', window.__inception__);
+perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
 
 const store = configureStore({

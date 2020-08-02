@@ -15,6 +15,7 @@ import './polyfills/ie8';
 import './polyfills/dom4';
 import './polyfills/css-om';
 import './polyfills/inferno';
+import './focus';
 
 // Themes
 import './styles/main.scss';
@@ -33,7 +34,7 @@ import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { createRenderer } from './renderer';
 import { configureStore, StoreProvider } from './store';
 
-perf.mark('inception', window.__inception__);
+perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
 
 const store = configureStore();

@@ -46,7 +46,7 @@
   @include meta.load-css('~tgui/styles/components/Button.scss', $with: (
     'color-default': #bbbbbb,
     'color-disabled': #363636,
-    'color-selected': #085a9d,
+    'color-selected': #0668b8,
     'color-caution': #be6209,
     'color-danger': #9a9d00,
     'text-color-transparent': rgba(0, 0, 0, 0.5),
@@ -61,7 +61,7 @@
   @include meta.load-css('~tgui/styles/components/ProgressBar.scss');
 
   // Components specific to tgui-panel
-  @include meta.load-css('../components/chat.scss', $with: (
+  @include meta.load-css('../components/Chat.scss', $with: (
     'text-color': #000000,
   ));
 
@@ -78,20 +78,4 @@
 
   // Goonchat styles
   @include meta.load-css('../goon/chat-light.scss');
-
-  .Input,
-  .NumberInput {
-    box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.1);
-  }
-
-  .Chat__scrollButton {
-    background-color: #fff !important;
-    box-shadow: 0 0.1em 1em rgba(0, 0, 0, 0.25);
-    transition: box-shadow 100ms;
-
-    &:hover {
-      box-shadow: 0 0em 0.75em rgba(0, 119, 255, 0.75);
-      transition: box-shadow 80ms;
-    }
-  }
 }

@@ -43,7 +43,7 @@ export const getRoutedComponent = store => {
     const debug = selectDebug(state);
     // Show a kitchen sink
     if (debug.kitchenSink) {
-      return require('./debug/KitchenSink').KitchenSink;
+      return require('./debug').KitchenSink;
     }
   }
   const name = config?.interface;

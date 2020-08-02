@@ -1,4 +1,6 @@
-import { logger } from 'tgui/logging';
+import { createLogger } from 'tgui/logging';
+
+const logger = createLogger('AudioPlayer');
 
 export class AudioPlayer {
   constructor() {

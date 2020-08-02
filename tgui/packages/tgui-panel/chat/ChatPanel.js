@@ -27,18 +27,21 @@ export class ChatPanel extends Component {
       this.handleScrollTrackingChange);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowDiffers(this.props, nextProps)
-      || shallowDiffers(this.state, nextState);
-  }
-
-  componentDidUpdate() {
-    chatRenderer.assignStyle({
-      width: '100%',
-      whiteSpace: 'pre-wrap',
-      fontSize: this.props.fontSize,
-      lineHeight: this.props.lineHeight,
+  componentDidUpdate(prevProps) {
+    requestAnimationFrame(() => {
+      chatRenderer.ensureScrollTracking();
     });
+    const shouldUpdateStyle = (
+      !prevProps || shallowDiffers(this.props, prevProps)
+    );
+    if (shouldUpdateStyle) {
+      chatRenderer.assignStyle({
+        width: '100%',
+        whiteSpace: 'pre-wrap',
+        fontSize: this.props.fontSize,
+        lineHeight: this.props.lineHeight,
+      });
+    }
   }
 
   render() {

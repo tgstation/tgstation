@@ -1,6 +1,6 @@
 import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
-import { Button, Flex, Slider } from 'tgui/components';
+import { Button, Flex, Slider, Knob } from 'tgui/components';
 import { useDispatch, useSelector } from 'tgui/store';
 import { useSettings } from '../settings';
 import { selectAudio } from './selectors';
@@ -46,21 +46,17 @@ export const NowPlayingWidget = (props, context) => {
             })} />
         </Flex.Item>
       )}
-      <Flex.Item fontSize="0.9em">
-        <Slider
-          width="8em"
+      <Flex.Item mx={0.5} fontSize="0.9em">
+        <Knob
           minValue={0}
           maxValue={1}
           value={settings.adminMusicVolume}
-          size={0.85}
           step={0.0025}
           stepPixelSize={1}
           format={value => toFixed(value * 100) + '%'}
           onDrag={(e, value) => settings.update({
             adminMusicVolume: value,
-          })}>
-          {'Volume'}
-        </Slider>
+          })} />
       </Flex.Item>
     </Flex>
   );
