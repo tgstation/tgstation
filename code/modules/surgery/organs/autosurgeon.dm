@@ -156,9 +156,8 @@
 	// The below check should never return FALSE, but we're checking it for sanity.
 	// If stored_skillchip.has_mob_incompatibility(user) returns FALSE, there should be abosolutely no reason for this to fail, ever.
 	if(!user.implant_skillchip(stored_skillchip))
-		stack_trace("Autosurgeon failed to implant [stored_skillchip] into [user] for an unknown reason.")
 		to_chat(user,"<span class='notice'>Operation failed!</span>")
-		return
+		CRASH("Autosurgeon failed to implant [stored_skillchip] into [user] for an unknown reason.")
 
 	to_chat(user,"<span class='notice'>Operation complete!</span>")
 

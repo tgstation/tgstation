@@ -99,7 +99,7 @@
 		while(dt < 0)
 			var/obj/item/skillchip/skillchip = brain.skillchips[length(brain.skillchips)]
 			skillchip.on_deactivate(src, FALSE)
-			dt += chip.slot_cost
+			dt += skillchip.slot_cost
 	// We have skillchips to reactivate
 	else if (dt > 1)
 		while(dt > 1 && length(inactive_skillchips))
