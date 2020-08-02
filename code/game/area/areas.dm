@@ -92,6 +92,9 @@
 
 	var/list/power_usage
 
+	/// Wire assignment for airlocks in this area
+	var/airlock_wires = /datum/wires/airlock
+
 
 /**
   * A list of teleport locations

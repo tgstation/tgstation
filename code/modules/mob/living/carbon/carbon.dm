@@ -1206,6 +1206,26 @@
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
 
+/// Returns whether or not the carbon should be able to be shocked
+/mob/living/carbon/proc/should_electrocute(power_source)
+	if (ismecha(loc))
+		return FALSE
+
+	if (wearing_shock_proof_gloves())
+		return FALSE
+
+	if(!get_powernet_info_from_source(power_source))
+		return FALSE
+
+	if (HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+		return FALSE
+
+	return TRUE
+
+/// Returns if the carbon is wearing shock proof gloves
+/mob/living/carbon/proc/wearing_shock_proof_gloves()
+	return gloves?.siemens_coefficient == 0
+
 /// Modifies max_skillchip_count and updates active skillchips
 /mob/living/carbon/proc/adjust_max_skillchip_count(delta)
 	max_skillchip_slots += delta

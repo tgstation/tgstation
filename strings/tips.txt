@@ -110,7 +110,7 @@ As an Engineer, your RCD can be reloaded with metal, glass or plasteel sheets in
 As an Engineer, the Supermatter Monitoring Program on modular computers give you a detailed report on the Supermatter's condition, and the contents of the air inside of the chamber, allowing you to both diagnose and monitor programs from afar!
 As an Atmospheric Technician, you can unwrench a pipe regardless of the pressures of the gases inside, but if they're too high they can burst out and injure you!
 As an Atmospheric Technician, look into replacing your gas pumps with volumetric gas pumps, as those move air in flat numerical amounts, rather than percentages which leave trace gases.
-As an Atmospheric Technician, you are better suited to fighting fires than anyone else. As such, you have access to better firesuits, backpack firefighter tanks, and a completely heat and fire proof rigsuit.
+As an Atmospheric Technician, you are better suited to fighting fires than anyone else. As such, you have access to better firesuits, backpack firefighter tanks, and a completely heat and fire proof hardsuit.
 As an Atmospheric Technician, your backpack firefighter tank can launch resin. This resin will extinguish fires and replace any gases with a safe, room-temperature airmix.
 As an Atmospheric Technician, your ATMOS holofan projector blocks gases while allowing objects to pass through. With it, you can quickly contain gas spills, fires and hull breaches. Or, use it to seal a plasmaman cloning room.
 As an Atmospheric Technician, burning a plasma/oxygen mix inside the incinerator will not only produce power, but also gases such as tritium, water vapor and carbon dioxide.
