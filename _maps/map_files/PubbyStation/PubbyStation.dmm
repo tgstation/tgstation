@@ -26710,7 +26710,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/area/maintenance/department/science)
 "bhq" = (
 /obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
 /turf/open/floor/plating,
@@ -27181,6 +27181,22 @@
 /obj/item/stock_parts/cell,
 /turf/open/floor/plating,
 /area/maintenance/department/shipyard)
+"biA" = (
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/department/science)
+"biB" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/department/science)
 "biC" = (
 /obj/structure/closet,
 /obj/item/weldingtool,
@@ -27589,6 +27605,39 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"bjD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
+"bjE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
+"bjF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/science)
+"bjG" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
+	dir = 2
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/science)
 "bjH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -27600,6 +27649,9 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
+/area/maintenance/department/science)
+"bjJ" = (
+/turf/closed/wall/r_wall,
 /area/maintenance/department/science)
 "bjK" = (
 /turf/closed/wall,
@@ -27619,6 +27671,14 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/freezer,
 /area/storage/emergency/port)
+"bjO" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/department/science)
 "bjP" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -27807,6 +27867,29 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"bkj" = (
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/maintenance/department/science)
+"bkk" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "9;55"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/maintenance/department/science)
+"bkl" = (
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "12; 55"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/department/science)
 "bkm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sink{
@@ -28823,14 +28906,6 @@
 "bnj" = (
 /turf/closed/wall,
 /area/science/xenobiology)
-"bnn" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/department/cargo)
 "bno" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -29185,14 +29260,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/explab)
-"bom" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 2
-	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/department/cargo)
 "bon" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -29631,11 +29698,6 @@
 /obj/item/wrench,
 /turf/open/floor/engine,
 /area/science/explab)
-"bpq" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/closet/crate,
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "bpr" = (
 /obj/structure/disposaloutlet{
 	dir = 1
@@ -30199,15 +30261,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/explab)
-"bqA" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "9;55"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "bqC" = (
 /obj/machinery/monkey_recycler,
 /obj/structure/window/reinforced,
@@ -30294,15 +30347,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"bqO" = (
-/obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12; 55"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "bqS" = (
 /obj/machinery/power/apc{
 	areastring = "/area/hallway/secondary/entry";
@@ -53540,11 +53584,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
-"fwI" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "fyO" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
@@ -55183,9 +55222,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/execution/transfer)
-"iSi" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/cargo)
 "iSz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -55205,15 +55241,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
-"iWV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "iYO" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
@@ -59028,14 +59055,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
-"qJB" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/department/cargo)
 "qMi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
@@ -61273,11 +61292,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"vzP" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "vAZ" = (
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plating,
@@ -61720,15 +61734,6 @@
 /obj/structure/chair,
 /turf/open/floor/wood,
 /area/maintenance/department/engine)
-"wAI" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "wBb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -61913,14 +61918,6 @@
 	},
 /turf/closed/wall/mineral/iron,
 /area/library/artgallery)
-"wQU" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/department/cargo)
 "wRk" = (
 /obj/structure/rack,
 /obj/item/wrench,
@@ -62016,13 +62013,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
-"xah" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/department/cargo)
 "xan" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -106208,10 +106198,10 @@ bwm
 bwm
 biU
 bjH
-vzP
-iWV
-aFi
-bpq
+bjH
+bjD
+lWy
+bkj
 bnj
 brT
 bxF
@@ -106465,11 +106455,11 @@ bhr
 bhr
 biV
 hXt
-aEj
-wAI
-vzP
-vzP
-bqA
+bwm
+bjE
+bjH
+bjH
+bkk
 brU
 roa
 buK
@@ -111862,11 +111852,11 @@ lWy
 bia
 bjy
 bjy
-wQU
-xah
-fwI
-fwI
-bqO
+biA
+bjF
+rgn
+rgn
+bkl
 btB
 btF
 gIC
@@ -112119,10 +112109,10 @@ bhv
 bia
 lWy
 bjI
-bnn
-bom
-qJB
-aFi
+biB
+bjG
+bjO
+lWy
 bkF
 pYj
 faA
@@ -112376,8 +112366,8 @@ lWy
 bia
 lWy
 bwm
-aEl
-iSi
+rNB
+bjJ
 bkF
 bkF
 bkF
