@@ -854,18 +854,16 @@
 	owner.overlays += mob_overlay
 	owner.update_icon()
 	ADD_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
-	owner.update_icon()
 	return TRUE
 
 /datum/status_effect/cloudstruck/on_remove()
 	. = ..()
+	if(QDELETED(owner))
+		return
 	REMOVE_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
 	if(owner)
 		owner.overlays -= mob_overlay
 		owner.update_icon()
-
-/datum/status_effect/cloudstruck/proc/update_owner_overlay(atom/source, list/overlays)
-	overlays += mob_overlay
 
 /datum/status_effect/cloudstruck/Destroy()
 	. = ..()
