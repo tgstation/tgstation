@@ -72,7 +72,7 @@
 			<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-				<link rel='stylesheet' type='text/css' href='common.css'>
+				<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url("common.css")]'>
 				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.full.min.js"></script>
 				<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css">

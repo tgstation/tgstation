@@ -30,21 +30,25 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple
 	_abstract = /datum/asset/simple
 	var/assets = list()
+	var/legacy = FALSE //! set to true to have this asset also be sent via browse_rsc when cdn asset transports are enabled
 
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
-		assets[asset_name] = register_asset(asset_name, assets[asset_name])
+		var/datum/asset_cache_item/ACI = SSassets.transport.register_asset(asset_name, assets[asset_name])
+		if (!ACI)
+			log_asset("ERROR: Invalid asset: [type]:[asset_name]:[ACI]")
+			continue
+		if (legacy)
+			ACI.legacy = TRUE
+		assets[asset_name] = ACI
 
 /datum/asset/simple/send(client)
-	. = send_asset_list(client, assets)
+	. = SSassets.transport.send_assets(client, assets)
 
 /datum/asset/simple/get_url_mappings()
 	. = list()
 	for (var/asset_name in assets)
-		var/datum/asset_cache_item/ACI = assets[asset_name]
-		if (!ACI)
-			continue
-		.[asset_name] = ACI.url
+		.[asset_name] = SSassets.transport.get_asset_url(asset_name, assets[asset_name])
 
 
 // For registering or sending multiple others at once
@@ -88,12 +92,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	ensure_stripped()
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
-		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
+		SSassets.transport.register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
 	fdel(fname)
 	text2file(generate_css(), fname)
-	register_asset(res_name, fcopy_rsc(fname))
+	SSassets.transport.register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
 
 /datum/asset/spritesheet/send(client/C)
@@ -102,14 +106,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/all = list("spritesheet_[name].css")
 	for(var/size_id in sizes)
 		all += "[name]_[size_id].png"
-	. = send_asset_list(C, all)
+	. = SSassets.transport.send_assets(C, all)
 
 /datum/asset/spritesheet/get_url_mappings()
 	if (!name)
 		return
-	. = list("spritesheet_[name].css" = get_asset_url("spritesheet_[name].css"))
+	. = list("spritesheet_[name].css" = SSassets.transport.get_asset_url("spritesheet_[name].css"))
 	for(var/size_id in sizes)
-		.["[name]_[size_id].png"] = get_asset_url("[name]_[size_id].png")
+		.["[name]_[size_id].png"] = SSassets.transport.get_asset_url("[name]_[size_id].png")
 
 
 
@@ -134,7 +138,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for (var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/icon/tiny = size[SPRSZ_ICON]
-		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[get_asset_url("[name]_[size_id].png")]') no-repeat;}"
+		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[SSassets.transport.get_asset_url("[name]_[size_id].png")]') no-repeat;}"
 
 	for (var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]
@@ -188,7 +192,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	return {"<link rel="stylesheet" href="[css_filename()]" />"}
 
 /datum/asset/spritesheet/proc/css_filename()
-	return get_asset_url("spritesheet_[name].css")
+	return SSassets.transport.get_asset_url("spritesheet_[name].css")
 
 /datum/asset/spritesheet/proc/icon_tag(sprite_name)
 	var/sprite = sprites[sprite_name]
@@ -243,7 +247,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			if (generic_icon_names)
 				asset_name = "[generate_asset_name(asset)].png"
 
-			register_asset(asset_name, asset)
+			SSassets.transport.register_asset(asset_name, asset)
 
 /datum/asset/simple/icon_states/multiple_icons
 	_abstract = /datum/asset/simple/icon_states/multiple_icons
@@ -253,4 +257,31 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/i in icons)
 		..(i)
 
+/// Namespace'ed assets (for static css files)
+/// When sent over a cdn transport, all assets in the same asset datum will exist in the same folder, as their plain names.
+/// Used to ensure css files can reference files by url() without having to generate the css at runtime, both the css file and the files it depends on must exist in the same namespace asset datum.
+/datum/asset/simple/namespaced
+	_abstract = /datum/asset/simple/namespaced
 
+/datum/asset/simple/namespaced/register()
+	..()
+	var/list/hashlist = list()
+	var/list/sorted_assets = sortList(assets)
+	for (var/thing in sorted_assets)
+		var/datum/asset_cache_item/ACI = sorted_assets[thing]
+		if (!ACI?.hash)
+			log_asset("ERROR: Invalid asset: [type]:[thing]:[ACI]")
+			continue
+		hashlist += ACI.hash
+	var/namespace = md5(hashlist.Join())
+	for (var/thing in sorted_assets)
+		var/datum/asset_cache_item/ACI = sorted_assets[thing]
+		if (!ACI?.hash)
+			log_asset("ERROR: Invalid asset: [type]:[thing]:[ACI]")
+			continue
+		ACI.namespace = namespace
+		assets[thing] = ACI.resource
+	
+	//re-register them in namespace form. (don't judge me!)
+	// this (second) call to parent is needed because I didn't want to manually create the asset_cache_item datums that register creates (for fear of code duplication), but cdn transports need this info during register for saving the files to disk
+	..()

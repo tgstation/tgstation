@@ -85,7 +85,7 @@
 		))
 	else
 		window.send_message("ping")
-	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
+	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/fontawesome))
 	for(var/datum/asset/asset in src_object.ui_assets(user))
 		window.send_asset(asset)
 	window.send_message("update", get_payload(

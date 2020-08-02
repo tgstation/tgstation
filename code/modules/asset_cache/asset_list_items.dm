@@ -111,6 +111,7 @@
 	)
 
 /datum/asset/simple/changelog
+	legacy = TRUE
 	assets = list(
 		"88x31.png" = 'html/88x31.png',
 		"bug-minus.png" = 'html/bug-minus.png',
@@ -132,21 +133,24 @@
 		"chrome-wrench.png" = 'html/chrome-wrench.png',
 		"changelog.css" = 'html/changelog.css'
 	)
+	
 
 /datum/asset/group/goonchat
 	children = list(
 		/datum/asset/simple/jquery,
-		/datum/asset/simple/goonchat,
+		/datum/asset/simple/namespaced/goonchat,
 		/datum/asset/spritesheet/goonchat,
-		/datum/asset/simple/fontawesome
+		/datum/asset/simple/namespaced/fontawesome
 	)
 
 /datum/asset/simple/jquery
+	legacy = TRUE
 	assets = list(
 		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 	)
 
-/datum/asset/simple/goonchat
+/datum/asset/simple/namespaced/goonchat
+	legacy = TRUE
 	assets = list(
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
@@ -154,7 +158,7 @@
 		"browserOutput_white.css"  = 'code/modules/goonchat/browserassets/css/browserOutput_white.css',
 	)
 
-/datum/asset/simple/fontawesome
+/datum/asset/simple/namespaced/fontawesome
 	assets = list(
 		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
 		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
@@ -182,9 +186,27 @@
 
 	..()
 
+/datum/asset/simple/lobby
+	assets = list(
+		"playeroptions.css" = 'html/browser/playeroptions.css'
+	)
+
+/datum/asset/simple/namespaced/common
+	assets = list(
+		"common.css" = 'html/browser/common.css',
+		"padlock.png"	= 'html/padlock.png'
+	)
+
 /datum/asset/simple/permissions
 	assets = list(
-		"padlock.png"	= 'html/padlock.png'
+		"search.js" = 'html/admin/search.js',
+		"panels.css" = 'html/admin/panels.css'
+	)
+
+/datum/asset/group/permissions
+	children = list(
+		/datum/asset/simple/permissions,
+		/datum/asset/simple/namespaced/common
 	)
 
 /datum/asset/simple/notes

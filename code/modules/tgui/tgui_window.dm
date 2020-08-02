@@ -69,7 +69,7 @@
 				inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
 			else if(copytext(name, -3) == ".js")
 				inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
-		asset.send()
+		asset.send(client)
 	html = replacetextEx(html, "<!-- tgui:styles -->\n", inline_styles)
 	html = replacetextEx(html, "<!-- tgui:scripts -->\n", inline_scripts)
 	// Open the window
