@@ -106,6 +106,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/locker
 	icon_state = "locker"
 	inhand_icon_state = "locker"
+	worn_icon_state = "lockerstaff"
 	max_charges = 6
 	recharge_rate = 4
 
@@ -118,6 +119,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/flying
 	icon_state = "staffofflight"
 	inhand_icon_state = "staffofflight"
+	worn_icon_state = "flightstaff"
 
 /obj/item/gun/magic/staff/sapping
 	name = "staff of sapping"
@@ -126,6 +128,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/sapping
 	icon_state = "staffofsapping"
 	inhand_icon_state = "staffofsapping"
+	worn_icon_state = "sapstaff"
 
 /obj/item/gun/magic/staff/necropotence
 	name = "staff of necropotence"
@@ -134,6 +137,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/necropotence
 	icon_state = "staffofnecropotence"
 	inhand_icon_state = "staffofnecropotence"
+	worn_icon_state = "necrostaff"
 
 /obj/item/gun/magic/staff/wipe
 	name = "staff of possession"
@@ -142,3 +146,4 @@
 	ammo_type = /obj/item/ammo_casing/magic/wipe
 	icon_state = "staffofwipe"
 	inhand_icon_state = "staffofwipe"
+	worn_icon_state = "wipestaff"
