@@ -202,27 +202,27 @@
 	name = "Select Airlock Type"
 	button_icon_state = "airlock_select"
 
-datum/action/innate/aux_base/airlock_type/Activate()
+/datum/action/innate/aux_base/airlock_type/Activate()
 	if(..())
 		return
 
 	B.RCD.change_airlock_setting()
 
 
-datum/action/innate/aux_base/window_type
+/datum/action/innate/aux_base/window_type
 	name = "Select Window Type"
 	button_icon_state = "window_select"
 
-datum/action/innate/aux_base/window_type/Activate()
+/datum/action/innate/aux_base/window_type/Activate()
 	if(..())
 		return
 	B.RCD.toggle_window_type()
 
-datum/action/innate/aux_base/place_fan
+/datum/action/innate/aux_base/place_fan
 	name = "Place Tiny Fan"
 	button_icon_state = "build_fan"
 
-datum/action/innate/aux_base/place_fan/Activate()
+/datum/action/innate/aux_base/place_fan/Activate()
 	if(..())
 		return
 
@@ -244,11 +244,11 @@ datum/action/innate/aux_base/place_fan/Activate()
 	to_chat(owner, "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>")
 	playsound(fan_turf, 'sound/machines/click.ogg', 50, TRUE)
 
-datum/action/innate/aux_base/install_turret
+/datum/action/innate/aux_base/install_turret
 	name = "Install Plasma Anti-Wildlife Turret"
 	button_icon_state = "build_turret"
 
-datum/action/innate/aux_base/install_turret/Activate()
+/datum/action/innate/aux_base/install_turret/Activate()
 	if(..())
 		return
 
@@ -261,7 +261,7 @@ datum/action/innate/aux_base/install_turret/Activate()
 
 	var/turf/turret_turf = get_turf(remote_eye)
 
-	if(is_blocked_turf(turret_turf))
+	if(turret_turf.is_blocked_turf())
 		to_chat(owner, "<span class='warning'>Location is obstructed by something. Please clear the location and try again.</span>")
 		return
 

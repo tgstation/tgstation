@@ -19,7 +19,7 @@
 		/obj/structure/falsewall/reinforced,
 		/turf/closed/wall/rust,
 		/turf/closed/wall/r_wall/rust)
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
@@ -63,15 +63,15 @@
 	if(opening)
 		if(density)
 			icon_state = "fwall_opening"
-			smooth = SMOOTH_FALSE
+			smoothing_flags = NONE
 			clear_smooth_overlays()
 		else
 			icon_state = "fwall_closing"
 	else
 		if(density)
 			icon_state = initial(icon_state)
-			smooth = SMOOTH_TRUE
-			queue_smooth(src)
+			smoothing_flags = SMOOTH_TRUE
+			QUEUE_SMOOTH(src)
 		else
 			icon_state = "fwall_open"
 
@@ -300,7 +300,7 @@
 	icon_state = "shuttle"
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	walltype = /turf/closed/wall/mineral/titanium
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater)
 
 /obj/structure/falsewall/plastitanium
@@ -310,5 +310,5 @@
 	icon_state = "shuttle"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater)

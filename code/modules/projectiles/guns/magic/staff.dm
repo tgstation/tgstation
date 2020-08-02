@@ -87,7 +87,7 @@
 	force = 20
 	armour_penetration = 75
 	block_chance = 50
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	max_charges = 4
 
 /obj/item/gun/magic/staff/spellblade/Initialize()

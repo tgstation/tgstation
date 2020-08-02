@@ -244,8 +244,7 @@
 
 			if(AI_READY_CORE)
 				if(istype(P, /obj/item/aicard))
-					P.transfer_ai("INACTIVE", "AICARD", src, user)
-					return
+					return //handled by /obj/structure/ai_core/transfer_ai()
 
 				if(P.tool_behaviour == TOOL_SCREWDRIVER)
 					P.play_tool_sound(src)

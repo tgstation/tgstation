@@ -6,7 +6,7 @@
 	var/brightness_on = 4 //luminosity when on
 	var/on = FALSE
 	var/hat_type = "yellow" //Determines used sprites: hardhat[on]_[hat_type] and hardhat[on]_[hat_type]2 (lying down sprite)
-	armor = list("melee" = 15, "bullet" = 5, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 20, "fire" = 100, "acid" = 50)
+	armor = list("melee" = 15, "bullet" = 5, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 20, "fire" = 100, "acid" = 50, "wound" = 10) // surprisingly robust against head trauma
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	clothing_flags = SNUG_FIT

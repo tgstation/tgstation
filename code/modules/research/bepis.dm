@@ -4,8 +4,8 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
-#define MAJOR_THRESHOLD 5500
-#define MINOR_THRESHOLD 3500
+#define MAJOR_THRESHOLD 3000
+#define MINOR_THRESHOLD 2000
 #define STANDARD_DEVIATION 1000
 
 /obj/machinery/rnd/bepis
@@ -94,7 +94,7 @@
 		update_icon_state()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
-	deposit_value = clamp(round(deposit_value, 1), 1, 15000)
+	deposit_value = clamp(round(deposit_value, 1), 1, 10000)
 	if(!account)
 		say("Cannot find user account. Please swipe a valid ID.")
 		return
@@ -130,7 +130,7 @@
 	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))		//NO MORE DISCS IN WINDOWS
 	while(length(turfs))
 		var/turf/T = pick_n_take(turfs)
-		if(is_blocked_turf(T, exclude_mobs=TRUE))
+		if(T.is_blocked_turf(TRUE))
 			continue
 		else
 			dropturf = T

@@ -35,7 +35,7 @@
 		var/mob/living/silicon/S = user
 		if(S.hack_software)
 			data["can_hack"] = TRUE
-	else if(IsAdminGhost(user))
+	else if(isAdminGhostAI(user))
 		data["can_hack"] = TRUE
 
 	data["cyborgs"] = list()
@@ -102,9 +102,9 @@
 				to_chat(usr, "<span class='danger'>Access Denied.</span>")
 		if("magbot")
 			var/mob/living/silicon/S = usr
-			if((istype(S) && S.hack_software) || IsAdminGhost(usr))
+			if((istype(S) && S.hack_software) || isAdminGhostAI(usr))
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
-				if(istype(R) && !R.emagged && (R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
+				if(istype(R) && !R.emagged && (R.connected_ai == usr || isAdminGhostAI(usr)) && !R.scrambledcodes && can_control(usr, R))
 					log_game("[key_name(usr)] emagged [key_name(R)] using robotic console!")
 					message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 					R.SetEmagged(TRUE)

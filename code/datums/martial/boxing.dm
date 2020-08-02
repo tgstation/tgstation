@@ -45,10 +45,7 @@
 			to_chat(A, "<span class='danger'>You knock [D] out with a haymaker!</span>")
 			D.apply_effect(200,EFFECT_KNOCKDOWN,armor_block)
 			D.SetSleeping(100)
-			D.forcesay(GLOB.hit_appends)
 			log_combat(A, D, "knocked out (boxing) ")
-		else if(!(D.mobility_flags & MOBILITY_STAND))
-			D.forcesay(GLOB.hit_appends)
 	return 1
 
 /obj/item/clothing/gloves/boxing

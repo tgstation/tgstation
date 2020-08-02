@@ -41,7 +41,7 @@
 		if(use_alpha)
 			source.alpha = ALPHA_UNDERTILE
 		if(use_anchor)
-			source.anchored = TRUE
+			source.set_anchored(TRUE)
 
 	else
 		if(invisibility_trait)
@@ -51,7 +51,7 @@
 		if(use_alpha)
 			source.alpha = 255
 		if(use_anchor)
-			source.anchored = FALSE
+			source.set_anchored(FALSE)
 
 /datum/element/undertile/Detach(atom/movable/AM, visibility_trait, invisibility_level = INVISIBILITY_MAXIMUM)
 	. = ..()

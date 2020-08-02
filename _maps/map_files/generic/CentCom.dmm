@@ -633,7 +633,7 @@
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "bS" = (
-/obj/item/storage/bag/easterbasket{
+/obj/item/storage/basket/easter{
 	name = "picnic basket";
 	pixel_y = 6
 	},
@@ -4799,7 +4799,7 @@
 "lS" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/holofloor/hyperspace,
-/area/centcom/supplypod/fly_me_to_the_moon)
+/area/centcom/supplypod/supplypod_temp_holding)
 "lT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -6853,11 +6853,7 @@
 /area/centcom/ferry)
 "py" = (
 /obj/machinery/smartfridge,
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "pz" = (
 /turf/open/space/basic,
@@ -12257,11 +12253,7 @@
 /area/wizard_station)
 "BV" = (
 /obj/machinery/chem_dispenser/drinks/beer,
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "BY" = (
 /obj/item/toy/figure/syndie,
@@ -13597,11 +13589,7 @@
 /area/wizard_station)
 "ED" = (
 /obj/machinery/vending/boozeomat,
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "EE" = (
 /obj/structure/closet/crate/bin,
@@ -17074,11 +17062,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Nd" = (
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "Nh" = (
 /obj/structure/table/wood,
@@ -17422,9 +17406,9 @@
 /obj/machinery/iv_drip,
 /obj/item/roller,
 /obj/item/storage/firstaid/regular,
-/obj/item/reagent_containers/medigel/instabitaluri,
-/obj/item/reagent_containers/medigel/instabitaluri,
-/obj/item/reagent_containers/medigel/instabitaluri,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Qj" = (
@@ -17503,11 +17487,7 @@
 /area/centcom/supplypod)
 "QT" = (
 /obj/machinery/chem_dispenser/drinks,
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "QW" = (
 /obj/structure/closet/secure_closet/freezer/kitchen{

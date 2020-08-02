@@ -379,7 +379,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 
 	var/turf/target = get_turf(actual_selected_rune)
-	if(is_blocked_turf(target, TRUE))
+	if(target.is_blocked_turf(TRUE))
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		fail_invoke()
 		return
@@ -792,7 +792,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src, header = "Manifest rune")
 		var/list/ghosts_on_rune = list()
 		for(var/mob/dead/observer/O in T)
-			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !(IsAdminGhost(O) && (O.client.prefs.toggles & ADMIN_IGNORE_CULT_GHOST)) && !QDELETED(O))
+			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !(isAdminObserver(O) && (O.client.prefs.toggles & ADMIN_IGNORE_CULT_GHOST)) && !QDELETED(O))
 				ghosts_on_rune += O
 		if(!ghosts_on_rune.len)
 			to_chat(user, "<span class='cultitalic'>There are no spirits near [src]!</span>")

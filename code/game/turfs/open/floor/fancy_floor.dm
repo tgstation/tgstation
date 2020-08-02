@@ -177,7 +177,7 @@
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/floor/carpet/airless)
 	flags_1 = NONE
 	bullet_bounce_sound = null
@@ -199,12 +199,12 @@
 	if(!..())
 		return 0
 	if(!broken && !burnt)
-		if(smooth)
-			queue_smooth(src)
+		if(smoothing_flags)
+			QUEUE_SMOOTH(src)
 	else
 		make_plating()
-		if(smooth)
-			queue_smooth_neighbors(src)
+		if(smoothing_flags)
+			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'
@@ -305,7 +305,7 @@
 
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
+	smoothing_flags = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/fakepit)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"

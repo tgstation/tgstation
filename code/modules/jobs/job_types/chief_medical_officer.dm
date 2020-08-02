@@ -1,8 +1,6 @@
 /datum/job/cmo
 	title = "Chief Medical Officer"
-	flag = CMO_JF
 	department_head = list("Captain")
-	department_flag = MEDSCI
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = list(RADIO_CHANNEL_MEDICAL)
 	faction = "Station"
@@ -28,6 +26,7 @@
 	paycheck_department = ACCOUNT_MED
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
+	bounty_types = CIV_JOB_MED
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
