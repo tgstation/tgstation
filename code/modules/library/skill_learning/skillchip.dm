@@ -55,6 +55,7 @@
 		on_activate(user, silent)
 
 	user.used_skillchip_slots += slot_cost
+	COOLDOWN_START(src, extract_cooldown, cooldown)
 
 /**
   * Called when a skillchip is activated.
@@ -71,7 +72,6 @@
 		ADD_TRAIT(user, auto_trait, SKILLCHIP_TRAIT)
 
 	active = TRUE
-	COOLDOWN_START(src, extract_cooldown, cooldown)
 
 /**
   * Called when a skillchip is removed from the user's brain or the brain is removed from the user's body.
@@ -82,9 +82,11 @@
   * * silent - Boolean. Whether or not a deactivation message should be shown to the user.
   */
 /obj/item/skillchip/proc/on_removal(mob/living/carbon/user, silent=TRUE)
-	on_deactivate(user, silent)
+	if(active)
+		on_deactivate(user, silent)
 
 	user.used_skillchip_slots -= slot_cost
+	COOLDOWN_RESET(src, extract_cooldown)
 
 /**
   * Called when a skillchip is deactivated.
@@ -101,7 +103,6 @@
 		REMOVE_TRAIT(user, auto_trait, SKILLCHIP_TRAIT)
 
 	active = FALSE
-	COOLDOWN_RESET(src, extract_cooldown)
 
 /**
   * Checks for skillchip incompatibility with another chip.

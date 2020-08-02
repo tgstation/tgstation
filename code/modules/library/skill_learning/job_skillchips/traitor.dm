@@ -36,6 +36,13 @@
 	// Apply the extra skillchip slots before calling the parent proc.
 	user.max_skillchip_slots++
 	user.used_skillchip_slots++
+
+	// If there's already a mimic'd skillchip available, run the implant code alongside this
+	// chameleon chip but don't activate it. If activate = TRUE then the mimic'd chip will
+	// get activated down in skillchip/chameleon/on_activate
+	if(chameleon_action.skillchip_mimic)
+		chameleon_action.skillchip_mimic.on_implant(user, silent, FALSE)
+
 	return ..()
 
 /obj/item/skillchip/chameleon/on_activate(mob/living/carbon/user, silent = FALSE)
@@ -43,12 +50,17 @@
 
 	// If there's already a mimic'd skillchip available, activate it.
 	if(chameleon_action.skillchip_mimic)
-		chameleon_action.skillchip_mimic.on_activate(user, FALSE)
+		chameleon_action.skillchip_mimic.on_activate(user, silent)
 
 	chameleon_action.Grant(user);
 
 /obj/item/skillchip/chameleon/on_removal(mob/living/carbon/user, silent = FALSE)
 	. = ..()
+
+	// Also call the on_removal of the mimic'd skillchip.
+	if(chameleon_action.skillchip_mimic)
+		chameleon_action.skillchip_mimic.on_removal(user, silent)
+
 	// Remove the extra skillchip slots after calling the parent proc.
 	user.max_skillchip_slots--
 	user.used_skillchip_slots--
@@ -58,7 +70,7 @@
 
 	// If we have an active mimic'd skillchip, deactivate it.
 	if(chameleon_action.skillchip_mimic?.active)
-		chameleon_action.skillchip_mimic.on_deactivate(user, FALSE)
+		chameleon_action.skillchip_mimic.on_deactivate(user, silent)
 
 /obj/item/skillchip/chameleon/has_skillchip_incompatibility(obj/item/skillchip/skillchip)
 	// If we've selected a skillchip to mimic, we'll want to intercept this proc and forward it to the mimic chip.
