@@ -326,6 +326,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	var/list/A_gases = A.gases
 	var/list/turf_list = src.turf_list
 	var/turflen = turf_list.len
+	var/space_in_group = FALSE
 	var/energy = 0
 	var/heat_cap = 0
 
@@ -334,6 +335,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		//Cache?
 		var/datum/gas_mixture/turf/mix = T.air
 		if (space_is_all_consuming && istype(T.air, /datum/gas_mixture/immutable/space))
+			space_in_group = TRUE
 			qdel(A)
 			A = new /datum/gas_mixture/immutable/space()
 			A_gases = A.gases //update the cache
@@ -349,7 +351,8 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 			ASSERT_GAS(giver_id, A)
 			A_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
-	A.temperature = energy / heat_cap
+	if(!space_in_group)
+		A.temperature = energy / heat_cap
 	for(var/id in A_gases)
 		A_gases[id][MOLES] /= turflen
 
