@@ -21,7 +21,7 @@
 
 	// Implant and call on_apply proc if successful.
 	if(brain.implant_skillchip(skillchip))
-		skillchip.on_apply(src, silent)
+		skillchip.on_implant(src, silent, TRUE)
 		skillchip.forceMove(brain)
 		return TRUE
 
@@ -76,3 +76,35 @@
 	brain.destroy_all_skillchips(silent)
 
 	return TRUE
+
+/// Disables or re-enables any extra skillchips after skillchip limit changes.
+/mob/living/carbon/proc/update_skillchips()
+	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
+
+	if(!brain)
+		return
+
+	var/limit = max_skillchip_slots
+	var/dt = limit - used_skillchip_slots
+	var/list/inactive_skillchips = list()
+
+	for(var/chip in brain.skillchips)
+		var/obj/item/skillchip/skillchip = chip
+		if(!skillchip.active)
+			inactive_skillchips += skillchip
+
+	// We have skillchips to deactivate
+	if(dt < 0)
+		//Might deactivate more than necessary but not worth sorting this
+		while(dt < 0)
+			var/obj/item/skillchip/skillchip = brain.skillchips[length(brain.skillchips)]
+			skillchip.on_deactivate(src, FALSE)
+			dt += chip.slot_cost
+	// We have skillchips to reactivate
+	else if (dt > 1)
+		while(dt > 1 && length(inactive_skillchips))
+			var/obj/item/skillchip/skillchip = inactive_skillchips[length(inactive_skillchips)]
+			if(skillchip.slot_cost <= dt)
+				skillchip.on_activate(src, FALSE)
+				dt -= skillchip.slot_cost
+			inactive_skillchips -= skillchip

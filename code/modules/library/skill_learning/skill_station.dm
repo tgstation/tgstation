@@ -107,8 +107,7 @@
 	var/mob/living/carbon/carbon_occupant = occupant
 
 	if(inserted_skillchip.has_mob_incompatibility(carbon_occupant))
-		stack_trace("Unusual error - [usr] attempted to start implanting of [inserted_skillchip] when the interface state should not have allowed it.")
-		return
+		CRASH("Unusual error - [usr] attempted to start implanting of [inserted_skillchip] when the interface state should not have allowed it.")
 
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/implant),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
@@ -134,8 +133,7 @@
 
 	if(!to_be_removed.can_remove_safely())
 		to_chat(occupant, "<span class='notice'>DANGER! Operation cannot be completed, removal is unsafe.</span>")
-		stack_trace("Unusual error - [usr] attempted to start removal of [to_be_removed] when the interface state should not have allowed it.")
-		return
+		CRASH("Unusual error - [usr] attempted to start removal of [to_be_removed] when the interface state should not have allowed it.")
 
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/remove_skillchip,to_be_removed),SKILLCHIP_REMOVAL_TIME,TIMER_STOPPABLE)
@@ -215,7 +213,7 @@
 
 	// If we got here, we have both an occupant and it has a brain, so we can check for skillchips.
 	var/list/current_skills = list()
-	for(var/obj/item/skillchip/skill_chip in occupant_brain.skillchips)
+	for(var/obj/item/skillchip/skill_chip in occupant_brain)
 		current_skills += list(skill_chip.get_chip_data())
 	.["current"] = current_skills
 	.["slots_used"] = carbon_occupant.used_skillchip_slots

@@ -57,16 +57,27 @@
 		BT.owner = owner
 		BT.on_gain()
 
-	for(var/obj/item/skillchip/skill_chip in skillchips)
-		skill_chip.on_apply(owner)
+	// Act as if a set of new skillchips have been implanted into the new body.
+	// This is because some skillchip info, such as slots, is stored in the body as it can be affected by mutations and similar.
+	// If this is a special type of organ insertion, like an organ replacement, we probably don't want to give in-chat messages
+	// about the chip activation effects.
+	for(var/chip in skillchips)
+		var/obj/item/skillchip/skillchip = chip
+		skillchip.on_implant(C, special, TRUE)
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
-	for(var/obj/item/skillchip/skill_chip in skillchips)
-		skill_chip.on_removal(owner)
 	..()
+
+	// Act as if all skillchips are being removed from the old body.
+	// This is because some skillchip info, such as slots, is stored in the body as it can be affected by mutations and similar.
+	if(!QDELETED(C))
+		for(var/chip in skillchips)
+			var/obj/item/skillchip/skillchip = chip
+			skillchip.on_removal(C, special)
+
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
 		BT.on_lose(TRUE)
@@ -261,13 +272,19 @@
 	var/obj/item/organ/brain/replacement_brain = replacement
 	if(!istype(replacement_brain))
 		return
-	for(var/obj/item/skillchip/skill_chip in src)
-		if(skill_chip in skillchips)
-			if(owner)
-				skill_chip.on_removal(owner)
-			LAZYREMOVE(skillchips, skill_chip)
-			LAZYADD(replacement_brain.skillchips, skill_chip) //No need to call on_apply here, since it will be inserted in organ replacement soon.
-		skill_chip.forceMove(replacement)
+
+	// Check through all our skillchips, remove them from this brain, add them to the replacement brain.
+	for(var/chip in skillchips)
+		var/obj/item/skillchip/skillchip = chip
+
+		// Do a full removal affect from the owner. We're technically yanking all these chips out of the old brain,
+		// so we should do full removal affects silently.
+		if(owner)
+			skillchip.on_removal(owner, TRUE)
+		remove_skillchip(skillchip)
+		// Insert the skillchips into the new brain. The new brain will then activate the chips when it is Insert()ed.
+		replacement_brain.implant_skillchip(skillchip)
+		skillchip.forceMove(replacement_brain)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"

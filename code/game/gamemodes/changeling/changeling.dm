@@ -117,8 +117,8 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	user.destroy_all_skillchips(silent = FALSE)
 
 	// Add new set of skillchips.
-	for(var/S in chosen_prof.skillchips)
-		var/obj/item/skillchip/skillchip = new S(src, FALSE)
+	for(var/chip in chosen_prof.skillchips)
+		var/obj/item/skillchip/skillchip = new chip(src, FALSE)
 		user.implant_skillchip(skillchip, silent = FALSE, force = TRUE)
 
 	//vars hackery. not pretty, but better than the alternative.

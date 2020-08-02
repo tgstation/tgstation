@@ -19,10 +19,10 @@
 	var/list/incompatibility_list
 	/// Fontawesome icon show on UI, list of possible icons https://fontawesome.com/icons?d=gallery&m=free
 	var/skill_icon = "brain"
-	/// Message shown when implanting the chip
-	var/implanting_message
-	/// Message shown when extracting the chip
-	var/removal_message
+	/// Message shown when activating the chip
+	var/activate_message
+	/// Message shown when deactivating the chip
+	var/deactivate_message
 	//If set to FALSE, trying to extract the chip will destroy it instead
 	var/removable = TRUE
 	/// How many skillslots this one takes
@@ -42,24 +42,63 @@
 	. = ..()
 	removable = is_removable
 
-/// Called after implantation and/or brain entering new body
-/obj/item/skillchip/proc/on_apply(mob/living/carbon/user,silent=TRUE)
-	if(!silent && implanting_message)
-		to_chat(user,implanting_message)
-	if(auto_trait)
-		ADD_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
+/**
+  * Called when a skillchip is inserted in the user's brain.
+  *
+  * Arguments:
+  * * user - The user to apply skillchip effects to.
+  * * silent - Boolean. Whether or not an activation message should be shown to the user.
+  * * activate - Boolean. Whether or not to activate the skillchip's effects.
+  */
+/obj/item/skillchip/proc/on_implant(mob/living/carbon/user, silent=TRUE, activate=TRUE)
+	if(activate)
+		on_activate(user, silent)
+
 	user.used_skillchip_slots += slot_cost
+
+/**
+  * Called when a skillchip is activated.
+  *
+  * Arguments:
+  * * user - The user to apply skillchip effects to.
+  * * silent - Boolean. Whether or not an activation message should be shown to the user.
+  */
+/obj/item/skillchip/proc/on_activate(mob/living/carbon/user, silent=TRUE)
+	if(!silent && activate_message)
+		to_chat(user, activate_message)
+
+	if(auto_trait)
+		ADD_TRAIT(user, auto_trait, SKILLCHIP_TRAIT)
 
 	active = TRUE
 	COOLDOWN_START(src, extract_cooldown, cooldown)
 
-/// Called after removal and/or brain exiting the body
-/obj/item/skillchip/proc/on_removal(mob/living/carbon/user,silent=TRUE)
-	if(!silent && removal_message)
-		to_chat(user,removal_message)
-	if(auto_trait)
-		REMOVE_TRAIT(user,auto_trait,SKILLCHIP_TRAIT)
+/**
+  * Called when a skillchip is removed from the user's brain or the brain is removed from the user's body.
+  *
+  * Always deactivates the skillchip.
+  * Arguments:
+  * * user - The user to remove skillchip effects from.
+  * * silent - Boolean. Whether or not a deactivation message should be shown to the user.
+  */
+/obj/item/skillchip/proc/on_removal(mob/living/carbon/user, silent=TRUE)
+	on_deactivate(user, silent)
+
 	user.used_skillchip_slots -= slot_cost
+
+/**
+  * Called when a skillchip is deactivated.
+  *
+  * Arguments:
+  * * user - The user to remove skillchip effects from.
+  * * silent - Boolean. Whether or not a deactivation message should be shown to the user.
+  */
+/obj/item/skillchip/proc/on_deactivate(mob/living/carbon/user, silent=TRUE)
+	if(!silent && deactivate_message)
+		to_chat(user, deactivate_message)
+
+	if(auto_trait)
+		REMOVE_TRAIT(user, auto_trait, SKILLCHIP_TRAIT)
 
 	active = FALSE
 	COOLDOWN_RESET(src, extract_cooldown)
@@ -131,7 +170,7 @@
 	var/chip_message
 
 	// Check if this chip is incompatible with any other chips in the brain.
-	for(var/obj/item/skillchip/skillchip in brain.skillchips)
+	for(var/skillchip in brain.skillchips)
 		chip_message = has_skillchip_incompatibility(skillchip)
 		if(chip_message)
 			return chip_message
@@ -172,8 +211,8 @@
 	skill_name = "Underwater Basketweaving"
 	skill_description = "Master intricate art of using twine to create perfect baskets while submerged."
 	skill_icon = "shopping-basket"
-	implanting_message = "<span class='notice'>You're one with the twine and the sea.</span>"
-	removal_message = "<span class='notice'>Higher mysteries of underwater basketweaving leave your mind.</span>"
+	activate_message = "<span class='notice'>You're one with the twine and the sea.</span>"
+	deactivate_message = "<span class='notice'>Higher mysteries of underwater basketweaving leave your mind.</span>"
 
 /obj/item/skillchip/wine_taster
 	name = "WINE skillchip"
@@ -182,8 +221,8 @@
 	skill_name = "Wine Tasting"
 	skill_description = "Recognize wine vintage from taste alone. Never again lack an opinion when presented with an unknown drink."
 	skill_icon = "wine-bottle"
-	implanting_message = "<span class='notice'>You recall wine taste.</span>"
-	removal_message = "<span class='notice'>Your memories of wine evaporate.</span>"
+	activate_message = "<span class='notice'>You recall wine taste.</span>"
+	deactivate_message = "<span class='notice'>Your memories of wine evaporate.</span>"
 
 /obj/item/skillchip/bonsai
 	name = "Hedge 3 skillchip"
@@ -191,20 +230,20 @@
 	skill_name = "Hedgetrimming"
 	skill_description = "Trim hedges and potted plants into marvelous new shapes with any old knife. Not applicable to plastic plants."
 	skill_icon = "spa"
-	implanting_message = "<span class='notice'>Your mind is filled with plant arrangments.</span>"
-	removal_message = "<span class='notice'>Your can't remember how a hedge looks like anymore.</span>"
+	activate_message = "<span class='notice'>Your mind is filled with plant arrangments.</span>"
+	deactivate_message = "<span class='notice'>Your can't remember how a hedge looks like anymore.</span>"
 
 /obj/item/skillchip/useless_adapter
 	name = "Skillchip adapter"
 	skill_name = "Useless adapter"
 	skill_description = "Allows you to insert another identical skillchip into this adapter, but the adapter also takes a slot ..."
 	skill_icon = "plug"
-	implanting_message = "<span class='notice'>You can now implant another chip into this adapter, but the adapter also took up an existing slot ...</span>"
-	removal_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
+	activate_message = "<span class='notice'>You can now implant another chip into this adapter, but the adapter also took up an existing slot ...</span>"
+	deactivate_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
 	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE | SKILLCHIP_CHAMELEON_INCOMPATIBLE
 	slot_cost = 0
 
-/obj/item/skillchip/useless_adapter/on_apply(mob/living/carbon/user, silent)
+/obj/item/skillchip/useless_adapter/on_implant(mob/living/carbon/user, silent, activate)
 	. = ..()
 	user.max_skillchip_slots++
 	user.used_skillchip_slots++

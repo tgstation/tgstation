@@ -694,21 +694,15 @@
 	var/cooldown = 5 MINUTES
 
 /datum/action/item_action/chameleon/change/skillchip/Grant(mob/M)
-	if(skillchip_mimic)
-		skillchip_mimic.on_apply(M, silent = FALSE)
+	. = ..()
 
 	if(!COOLDOWN_FINISHED(src, usable_cooldown))
 		START_PROCESSING(SSfastprocess, src)
 
-	..()
-
 /datum/action/item_action/chameleon/change/skillchip/Remove(mob/M)
-	if(skillchip_mimic)
-		skillchip_mimic.on_removal(M, silent = FALSE)
-
 	STOP_PROCESSING(SSfastprocess, src)
 
-	..()
+	return ..()
 
 /// Completely override the functionality of the initialize_disguises() proc. No longer uses chameleon_blacklist and uses skillchip flags and vars instead.
 /datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
@@ -716,15 +710,14 @@
 		button.name = "Change [chameleon_name] Function"
 
 	if(!ispath(chameleon_type, /obj/item/skillchip))
-		stack_trace("Attempted to initialise [src] disguise list with incompatible item path [chameleon_type].")
-		return
+		CRASH("Attempted to initialise [src] disguise list with incompatible item path [chameleon_type].")
 
 	for(var/chip_type in typesof(chameleon_type))
-		var/obj/item/skillchip/SC = chip_type
-		if((chip_type == initial(SC.abstract_parent_type)) || (initial(SC.skillchip_flags) & SKILLCHIP_CHAMELEON_INCOMPATIBLE) || (initial(SC.item_flags) & ABSTRACT) || !initial(SC.icon_state))
+		var/obj/item/skillchip/skillchip = chip_type
+		if((chip_type == initial(skillchip.abstract_parent_type)) || (initial(skillchip.skillchip_flags) & SKILLCHIP_CHAMELEON_INCOMPATIBLE) || (initial(skillchip.item_flags) & ABSTRACT) || !initial(skillchip.icon_state))
 			continue
-		var/chameleon_item_name = "[initial(SC.name)] ([initial(SC.icon_state)])"
-		chameleon_list[chameleon_item_name] = SC
+		var/chameleon_item_name = "[initial(skillchip.name)] ([initial(skillchip.icon_state)])"
+		chameleon_list[chameleon_item_name] = skillchip
 
 /datum/action/item_action/chameleon/change/skillchip/update_item(obj/item/skillchip/picked_item)
 	if(istype(picked_item))
@@ -743,10 +736,11 @@
 	if(!istype(new_chip))
 		stack_trace("Chameleon skillchip [src] attempted to change into non-skillchip item [picked_item].")
 		QDEL_NULL(new_chip)
+		return ..()
 
 	// Remove the existing chip first, if it exists.
 	if(skillchip_mimic)
-		skillchip_mimic.on_removal(user, silent = FALSE)
+		skillchip_mimic.on_removal(user, FALSE)
 		QDEL_NULL(skillchip_mimic)
 
 	var/incompatibility_msg = new_chip.has_mob_incompatibility(user)
@@ -758,7 +752,7 @@
 	skillchip_mimic = new_chip
 	COOLDOWN_START(src, usable_cooldown, cooldown)
 	START_PROCESSING(SSfastprocess, src)
-	skillchip_mimic.on_apply(user, silent = FALSE)
+	skillchip_mimic.on_implant(user, FALSE, TRUE)
 	to_chat(user, "<span class='notice'>The chameleon skillchip is recharging. It will be unable to change for another [cooldown * 0.1] seconds.</span>")
 
 	return ..()
@@ -773,10 +767,12 @@
 	if(!owner)
 		button.maptext = ""
 		STOP_PROCESSING(SSfastprocess, src)
+		return
 
 	if(COOLDOWN_FINISHED(src, usable_cooldown))
 		button.maptext = ""
 		UpdateButtonIcon()
 		STOP_PROCESSING(SSfastprocess, src)
-	else
-		button.maptext = "<b>[COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1]</b>"
+		return
+
+	button.maptext = "<b>[COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1]</b>"

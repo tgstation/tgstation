@@ -3,6 +3,8 @@
 	desc = "A highly advanced Syndicate skillchip that does nothing on its own. It is loaded with the data of every skillchip."
 	skill_name = "Imitate Skillchip"
 	skill_description = "Reacts to the user's thoughts, selecting a skill from a wide database of choices."
+	activate_message = "<span class='notice'>You feel at one with the skillchip.</span>"
+	deactivate_message = "<span class='notice'>The infinite mysteries of the skillchip escape your mind.</span>"
 	skill_icon = "microchip"
 	slot_cost = 0
 	removable = FALSE
@@ -30,17 +32,33 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/skillchip/chameleon/on_apply(mob/living/carbon/user, silent = TRUE)
-	. = ..()
-	chameleon_action.Grant(user);
+/obj/item/skillchip/chameleon/on_implant(mob/living/carbon/user, silent = FALSE, activate = TRUE)
+	// Apply the extra skillchip slots before calling the parent proc.
 	user.max_skillchip_slots++
 	user.used_skillchip_slots++
+	return ..()
 
-/obj/item/skillchip/chameleon/on_removal(mob/living/carbon/user, silent = TRUE)
-	chameleon_action.Remove(user)
+/obj/item/skillchip/chameleon/on_activate(mob/living/carbon/user, silent = FALSE)
+	. = ..()
+
+	// If there's already a mimic'd skillchip available, activate it.
+	if(chameleon_action.skillchip_mimic)
+		chameleon_action.skillchip_mimic.on_activate(user, FALSE)
+
+	chameleon_action.Grant(user);
+
+/obj/item/skillchip/chameleon/on_removal(mob/living/carbon/user, silent = FALSE)
+	. = ..()
+	// Remove the extra skillchip slots after calling the parent proc.
 	user.max_skillchip_slots--
 	user.used_skillchip_slots--
-	. = ..()
+
+/obj/item/skillchip/chameleon/on_deactivate(mob/living/carbon/user, silent = FALSE)
+	chameleon_action.Remove(user)
+
+	// If we have an active mimic'd skillchip, deactivate it.
+	if(chameleon_action.skillchip_mimic?.active)
+		chameleon_action.skillchip_mimic.on_deactivate(user, FALSE)
 
 /obj/item/skillchip/chameleon/has_skillchip_incompatibility(obj/item/skillchip/skillchip)
 	// If we've selected a skillchip to mimic, we'll want to intercept this proc and forward it to the mimic chip.

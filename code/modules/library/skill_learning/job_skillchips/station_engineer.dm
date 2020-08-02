@@ -5,5 +5,5 @@
 	skill_name = "Engineering Circuitry"
 	skill_description = "Recognise airlock and APC wire layouts and understand their functionality at a glance."
 	skill_icon = "sitemap"
-	implanting_message = "<span class='notice'>You suddenly comprehend the secrets behind airlock and APC circuitry.</span>"
-	removal_message = "<span class='notice'>Airlock and APC circuitry stops making sense as images of coloured wires fade from your mind.</span>"
+	activate_message = "<span class='notice'>You suddenly comprehend the secrets behind airlock and APC circuitry.</span>"
+	deactivate_message = "<span class='notice'>Airlock and APC circuitry stops making sense as images of coloured wires fade from your mind.</span>"
