@@ -629,7 +629,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"
-	desc = "Spews forth a disorienting plume that causes enemies to strike each other, slur and inverts their movement. Also spreads rust in the path of the plume."
+	desc = "Spews forth a disorienting plume that causes enemies to strike each other, briefly blinds them(increasing with range) and poisons them(decreasing with range). Also spreads rust in the path of the plume."
 	school = "illusion"
 	invocation = "'NTR'P'C PL'M'"
 	invocation_type = INVOCATION_WHISPER

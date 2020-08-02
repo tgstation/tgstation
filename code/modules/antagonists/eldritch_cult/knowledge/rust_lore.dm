@@ -91,7 +91,7 @@
 
 /datum/eldritch_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
-	desc = "You can now send a befuddling plume that inverts the afflicted's movement as well as makes them strike each other and slur. Also converts the area into rust."
+	desc = "You can now send a befuddling plume that blinds, poisons and makes enemies strike each other. Also converts the area into rust."
 	gain_text = "Messenger's of hope fear the rustbringer!"
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
