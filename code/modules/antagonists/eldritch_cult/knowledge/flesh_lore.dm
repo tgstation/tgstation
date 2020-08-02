@@ -200,7 +200,7 @@
 
 /datum/eldritch_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
-	gain_text = "Our blood is all the same after all, the Colonel told me."
+	gain_text = "Our blood is all the same after all, the Marshal told me."
 	desc = "You gain a spell that drains enemies health and restores yours."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/blood_siphon
