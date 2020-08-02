@@ -699,12 +699,13 @@
 	glass_desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/M)
+	var/static/list/has_medical_license = list("Medical Doctor", "Chief Medical Officer", "Paramedic", "Psychologist", "Virologist")
 	M.adjustBruteLoss(-0.5, 0)
 	M.adjustFireLoss(-0.5, 0)
 	M.adjustToxLoss(-0.5, 0)
 	M.adjustOxyLoss(-0.5, 0)
 	if(M.nutrition && (M.nutrition - 2 > 0))
-		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
+		if(!(M.mind && (M.mind.assigned_role in has_medical_license))) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			M.adjust_nutrition(-2)
 	..()
 	. = 1
