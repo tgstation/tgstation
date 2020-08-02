@@ -84,6 +84,12 @@ export const AiRestorerContent = (props, context) => {
             disabled={restoring}
             mt={1}
             onClick={() => act('PRG_beginReconstruction')} />
+          <Button
+            fluid
+            icon="plus"
+            content="Remove Law Zero"
+            onClick={() => act('PRG_clearZeroth')}
+          />
           <Section title="Laws" level={2}>
             {laws.map(law => (
               <Box key={law} className="candystripe">

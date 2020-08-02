@@ -50,6 +50,16 @@
 				if(ai_slot && ai_slot.stored_card)
 					ai_slot.try_eject(0,usr)
 					return TRUE
+		if("PRG_clearZeroth")
+			A.laws.clear_zeroth_law(1)
+			var/time = time2text(world.realtime,"hh:mm:ss")
+			var/ainame = A ? A.name : "empty Intellicard"
+			var/aikey = A ? A.ckey : "null"
+			GLOB.lawchanges.Add("[time] <B>:</B> [usr.name]([usr.key]) removed the zeroth law of [ainame]([aikey])")
+			log_law("[usr.key]/[usr.name] removed the zeroth law of [aikey]/([ainame]) from [AREACOORD(usr)]")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] removed the zeroth law of [ADMIN_LOOKUPFLW(A)] from [AREACOORD(usr)]")
+			if(A)
+				deadchat_broadcast("<b> changed <span class='name'>[ainame]</span>'s laws at [get_area_name(usr, TRUE)].</b>", "<span class='name'>[usr]</span>", follow_target=usr, message_type=DEADCHAT_LAWCHANGE)
 
 /datum/computer_file/program/aidiag/process_tick()
 	. = ..()
@@ -94,7 +104,7 @@
 /datum/computer_file/program/aidiag/ui_data(mob/user)
 	var/list/data = get_header_data()
 	var/mob/living/silicon/ai/AI = get_ai()
-
+	var/datum/ai_laws/AIlaws = AI.laws
 	var/obj/item/aicard/aicard = get_ai(2)
 
 	data["ejectable"] = TRUE
