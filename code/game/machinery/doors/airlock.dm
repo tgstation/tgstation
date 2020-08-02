@@ -1485,8 +1485,8 @@
   * of the area the airlock is in.
   */
 /obj/machinery/door/airlock/proc/set_wires()
-	var/area/A = get_area(src)
-	return new A.airlock_wires(src)
+	var/area/source_area = get_area(src)
+	return new source_area.airlock_wires(src)
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING

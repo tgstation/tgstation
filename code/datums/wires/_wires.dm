@@ -39,7 +39,7 @@
 	var/list/assemblies = list()
 
 	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
-	var/randomize = 0
+	var/randomize = FALSE
 
 /datum/wires/New(atom/holder)
 	..()
@@ -49,18 +49,18 @@
 	src.holder = holder
 
 	// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
-	var/K = dictionary_key ? dictionary_key : holder_type
+	var/key = dictionary_key ? dictionary_key : holder_type
 
 	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdel)
 	if(randomize)
 		randomize()
 	else
-		if(!GLOB.wire_color_directory[K])
+		if(!GLOB.wire_color_directory[key])
 			randomize()
-			GLOB.wire_color_directory[K] = colors
-			GLOB.wire_name_directory[K] = proper_name
+			GLOB.wire_color_directory[key] = colors
+			GLOB.wire_name_directory[key] = proper_name
 		else
-			colors = GLOB.wire_color_directory[K]
+			colors = GLOB.wire_color_directory[key]
 
 /datum/wires/Destroy()
 	holder = null
