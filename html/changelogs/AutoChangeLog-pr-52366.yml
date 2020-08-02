@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "When 2 plants are crossbreeding, if they share a reagent, one plant can now accept and upgrade their production % from the other."
+  - bugfix: "Cabbage no longer wild-mutates into producing humans as a byproduct"
