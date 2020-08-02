@@ -62,7 +62,7 @@
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"
 	desc = "Your eldritch blade now applies a rust mark. Rust mark has a chance to deal between 0 to 200 damage to 75% of enemies items. To Detonate the mark use your mansus grasp on it."
-	gain_text = "Lords of the depths help those in dire need at a cost."
+	gain_text = "Rusted Hills help those in dire need at a cost."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/area_conversion)
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/flesh_mark)
@@ -101,7 +101,7 @@
 /datum/eldritch_knowledge/armor
 	name = "Armorer's ritual"
 	desc = "You can now create eldritch armor using a table and a gas mask."
-	gain_text = "For I am the heir to the throne of doom."
+	gain_text = "Rusted Hills have welcomed Blacksmith with their generosity."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/flesh_ghoul)
 	required_atoms = list(/obj/structure/table,/obj/item/clothing/mask/gas)
@@ -110,7 +110,7 @@
 /datum/eldritch_knowledge/essence
 	name = "Priest's ritual"
 	desc = "You can now transmute a tank of water into a bottle of eldritch water."
-	gain_text = "This is an old recipe, i got it from an owl."
+	gain_text = "Old recipe, the Owl has whispered it to me."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/spell/ashen_shift)
 	required_atoms = list(/obj/structure/reagent_dispensers/watertank)
@@ -119,7 +119,7 @@
 /datum/eldritch_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
 	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resillient overall."
-	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come!"
+	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come! Rusted Hills YELL MY NAME!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_RUST
@@ -166,20 +166,21 @@
 	var/turf/turf_loc = get_turf(loc)
 	turf_loc.rust_heretic_act()
 	turfs += turf_loc
+	compile_turfs()
 	START_PROCESSING(SSprocessing,src)
-
 
 /datum/rust_spread/Destroy(force, ...)
 	STOP_PROCESSING(SSprocessing,src)
 	return ..()
 
 /datum/rust_spread/process()
-	compile_turfs()
+
 	var/turf/T
 	for(var/i in 0 to spread_per_tick)
 		T = pick(edge_turfs)
 		T.rust_heretic_act()
 		turfs += get_turf(T)
+		CHECK_TICK
 
 /**
   * Compile turfs
@@ -198,3 +199,5 @@
 			if(is_type_in_typecache(T,blacklisted_turfs))
 				continue
 			edge_turfs += T
+			CHECK_TICK
+	addtimer(CALLBACK(src, .proc/compile_turfs), round(edge_turfs.len/spread_per_tick))
