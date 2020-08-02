@@ -265,3 +265,33 @@
 /obj/item/reagent_containers/food/snacks/grown/aloe/microwave_act(obj/machinery/microwave/M)
 	new /obj/item/stack/medical/aloe(drop_location(), 2)
 	qdel(src)
+
+
+/obj/item/seeds/lettuce
+	name = "pack of lettuce seeds"
+	desc = "These seeds grow into lettuce."
+	icon_state = "seed-cabbage"
+	species = "lettuce"
+	plantname = "Lettuce"
+	product = /obj/item/reagent_containers/food/snacks/grown/lettuce
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	instability = 10
+	growthstages = 1
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	mutatelist = list(/obj/item/seeds/replicapod)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+
+/obj/item/reagent_containers/food/snacks/grown/lettuce
+	seed = /obj/item/seeds/cabbage
+	name = "lettuce"
+	desc = "Crunchy!"
+	icon_state = "lettuce"
+	filling_color = "#90EE90"
+	bitesize_mod = 2
+	foodtype = VEGETABLES
+	wine_power = 20

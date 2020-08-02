@@ -900,3 +900,12 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("pastry" = 1, "dark_chocolate" = 1, "cream cheese" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
+
+/obj/item/reagent_containers/food/snacks/oreo
+	name = "oreo"
+	desc = "A tasty cookie with cream filling! Normal Stuf."
+	icon_state = "oreo"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	tastes = list("cookies" = 1, "cream" = 1)
+	foodtype = SUGAR | JUNKFOOD
+

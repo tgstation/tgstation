@@ -585,6 +585,17 @@
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 	return MANUAL_SUICIDE
 
+/obj/item/toy/plush/moth/conversion
+	name = "suspicious moth plushie"
+	desc = "Its eyes are completely black & bloodshot, which you didn't think was possible for a moth. Creepy."
+	icon_state = "moffplushevil"
+
+/obj/item/toy/plush/moth/conversion/attack_self(mob/user)
+	for(var/mob/living/carbon/human/H in view(10,loc))
+		H.set_species(/datum/species/moth)
+		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 100, TRUE)
+		to_chat(H, "<span class='notice'>Your body contorts into a nefariously adorable form!</span.?>")
+
 /obj/item/toy/plush/pkplush
 	name = "peacekeeper plushie"
 	desc = "A plushie depicting a peacekeeper cyborg. Only you can prevent human harm!"

@@ -808,3 +808,43 @@
 	icon_state = "comfy_jacket"
 	inhand_icon_state = "comfy_jacket"
 	cold_protection = CHEST|ARMS
+
+/obj/item/clothing/suit/gambler_jacket
+	name = "Gambler Jacket"
+	desc = "100% more pain but 200% less dead"
+	icon_state = "gambler_jacket"
+
+/obj/item/clothing/suit/silver_knight
+	name = "Silver Knight's Armor"
+	desc = "Belonging to the most loyal knight of all. His silver arm shines no matter how dark it may be."
+	icon_state = "silver_knight"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
+/obj/item/clothing/suit/king_of_knights
+	name = "King of Knight's Armor"
+	desc = "A certain king chosen by the sword lead a country and a round table of knights wore this."
+	icon_state = "king_of_knights"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
+/obj/item/clothing/suit/king_of_heroes
+	name = "King of Heroes Armor"
+	desc = "An ancient king who was said to be the first hero wore this. Its meant to be more flashy than protective."
+	icon_state = "king_of_heroes"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
+/obj/item/clothing/suit/dlanor
+	name = "Inquisitor's Dress"
+	desc = "Desu."
+	icon_state = "dlanor"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
+/obj/item/clothing/suit/beato
+	name = "Dress of the Golden Witch"
+	desc = "A ballgown-like dress adorned with gold"
+	icon_state = "beato"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+

@@ -23,3 +23,10 @@
 	new /obj/item/hand_labeler(src)
 	new /obj/item/storage/box/lights/mixed(src)
 	new /obj/item/toy/plush/goatplushieharmless(src)
+	new /obj/item/clothing/under/costume/frenchmaid(src)
+	new /obj/item/clothing/shoes/frenchmaid(src)
+	new /obj/item/clothing/head/frenchmaid(src)
+	new /obj/item/clothing/gloves/frenchmaid(src)
+	new /obj/item/clothing/head/rabbitears(src)
+	new /obj/item/clothing/under/costume/servicesuit(src)
+

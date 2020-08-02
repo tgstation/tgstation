@@ -53,3 +53,8 @@
 	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox"
+
+/obj/item/clothing/suit/toggle/labcoat/trenchcoat_brown
+	name = "Brown Trenchcoat"
+	desc = "A drab trenchcoat. Wearing it makes you feel very comfortable."
+	icon_state = "trenchcoat_brown"
