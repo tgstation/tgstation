@@ -83,7 +83,7 @@
 			for(var/movable_content in open_turf)
 				if(isobj(movable_content))
 					do_obj_cone_effect(movable_content, level)
-				else if(ismob(movable_content))
+				else if(isliving(movable_content))
 					do_mob_cone_effect(movable_content, level)
 
 ///This proc deterimines how the spell will affect turfs.
@@ -95,7 +95,7 @@
 	return
 
 ///This proc deterimines how the spell will affect mobs.
-/obj/effect/proc_holder/spell/cone/proc/do_mob_cone_effect(mob/target_mob, level)
+/obj/effect/proc_holder/spell/cone/proc/do_mob_cone_effect(mob/living/target_mob, level)
 	return
 
 ///This proc adjusts the cones width depending on the level.

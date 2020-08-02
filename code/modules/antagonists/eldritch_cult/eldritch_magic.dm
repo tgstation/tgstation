@@ -649,17 +649,15 @@
 	. = ..()
 	target_turf.rust_heretic_act()
 
-/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/target_mob, level)
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, level)
 	. = ..()
-	if(isliving(target_mob))
-		var/mob/living/victim = target_mob
-		if(victim.anti_magic_check() || IS_HERETIC(victim) || victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
-			return
-		victim.apply_status_effect(STATUS_EFFECT_AMOK)
-		victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))
-		if(iscarbon(victim))
-			var/mob/living/carbon/carbon_victim = victim
-			carbon_victim.reagents.add_reagent(/datum/reagent/eldritch, min(1, 6-level))
+	if(victim.anti_magic_check() || IS_HERETIC(victim) || victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+		return
+	victim.apply_status_effect(STATUS_EFFECT_AMOK)
+	victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))
+	if(iscarbon(victim))
+		var/mob/living/carbon/carbon_victim = victim
+		carbon_victim.reagents.add_reagent(/datum/reagent/eldritch, min(1, 6-level))
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
 	if(current_level == cone_levels)

@@ -817,7 +817,7 @@
 	duration = 10 SECONDS
 	tick_interval = 1 SECONDS
 
-/datum/status_effect/amok/on_creation(mob/living/afflicted)
+/datum/status_effect/amok/on_apply(mob/living/afflicted)
 	. = ..()
 	to_chat(owner, "<span class='boldwarning'>Your feel filled with a rage that is not your own!</span>")
 
@@ -827,9 +827,10 @@
 	owner.a_intent = INTENT_HARM
 
 	var/list/mob/living/targets = list()
-	for(var/mob/M in oview(owner, 1))
-		if(isliving(M) && !IS_HERETIC(M) && !M.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
-			targets += M
+	for(var/mob/living/potential_target in oview(owner, 1))
+		if(IS_HERETIC(potential_target) || potential_target.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+			continue
+		targets += potential_target
 	if(LAZYLEN(targets))
 		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
 		owner.ClickOn(pick(targets))
