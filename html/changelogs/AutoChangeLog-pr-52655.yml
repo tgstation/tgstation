@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a runtime causing NPC AI processing to briefly break if one was deleted in the middle of the subsystem's processing."
