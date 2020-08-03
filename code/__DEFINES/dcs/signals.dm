@@ -574,6 +574,9 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
 
+///Sent when bloodcrawl requests the phase mode holder be deleted
+#define COMSIG_BLOODCRAWL_DELETE "delete_bloodcrawl"
+
 // /obj/mecha signals
 
 ///sent from mecha action buttons to the mecha they're linked to

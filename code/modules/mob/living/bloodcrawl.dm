@@ -20,6 +20,10 @@
 /obj/effect/dummy/phased_mob/slaughter/singularity_act()
 	return
 
+/obj/effect/dummy/phased_mob/slaughter/proc/deleteself()
+	qdel(src)
+
+
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -117,6 +121,7 @@
 				victim.visible_message("<span class='warning'>[target] violently expels [victim]!</span>")
 				victim.exit_blood_effect(target)
 				found_bloodpool = TRUE
+				break
 
 		if(!found_bloodpool)
 			// Fuck it, just eject them, thanks to some split second cleaning
@@ -175,5 +180,5 @@
 		for(var/obj/item/bloodcrawl/BC in C)
 			BC.flags_1 = null
 			qdel(BC)
-	QDEL_NULL(holder)
+	SEND_SIGNAL(src, COMSIG_BLOODCRAWL_DELETE)
 	return TRUE
