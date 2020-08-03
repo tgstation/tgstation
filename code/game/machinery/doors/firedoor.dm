@@ -123,7 +123,7 @@
 	if(!W.tool_start_check(user, amount=0))
 		return
 	user.visible_message("<span class='notice'>[user] starts [welded ? "unwelding" : "welding"] [src].</span>", "<span class='notice'>You start welding [src].</span>")
-	if(W.use_tool(src, user, 40, volume=50))
+	if(W.use_tool(src, user, DEFAULT_STEP_TIME, volume=50))
 		welded = !welded
 		to_chat(user, "<span class='danger'>[user] [welded?"welds":"unwelds"] [src].</span>", "<span class='notice'>You [welded ? "weld" : "unweld"] [src].</span>")
 		update_icon()
@@ -268,7 +268,7 @@
 	icon_state = "frame1"
 	anchored = FALSE
 	density = TRUE
-	var/constructionStep = CONSTRUCTION_NOCIRCUIT
+	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
 
 /obj/structure/firelock_frame/examine(mob/user)
@@ -388,7 +388,7 @@
 /obj/structure/firelock_frame/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
 		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
-	else if((constructionStep == CONSTRUCTION_NOCIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	else if((constructionStep == CONSTRUCTION_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 	return FALSE
 
@@ -397,7 +397,7 @@
 		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
 			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 			"<span class='notice'>You adapt a firelock circuit and slot it into the assembly.</span>")
-			constructionStep = CONSTRUCTION_GUTTED
+			constructionStep = CONSTRUCTION_PANEL_OPEN
 			update_icon()
 			return TRUE
 		if(RCD_DECONSTRUCT)
