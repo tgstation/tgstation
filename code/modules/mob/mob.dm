@@ -1357,14 +1357,18 @@
 		if("harm")
 			wuv(-1,M)
 
+/**
+*This is a proc used to make a pettable mob give a happy or sad emote, depending on if they were help or harm intent clicked.
+*
+*/
 /mob/proc/wuv(change, mob/M)
 	if(!change)
 		return
 	if(change > 0)
 		if(M && stat != DEAD) 
 			new /obj/effect/temp_visual/heart(loc)
-			emote("me", 1, "[helppet]")
+			manual_emote("[helppet]")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 			return
 	if(M && stat != DEAD) 
-		emote("me", 1, "[harmpet]")
+		manual_emote("[harmpet]")

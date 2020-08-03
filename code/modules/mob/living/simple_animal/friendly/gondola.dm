@@ -28,6 +28,9 @@
 	maxHealth = 200
 	health = 200
 	del_on_death = TRUE
+	pettable = TRUE
+	helppet = "smiles!"
+	harmpet = "frowns!"
 
 	//Gondolas don't make footstep sounds
 
