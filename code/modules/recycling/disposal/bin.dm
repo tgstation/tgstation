@@ -11,8 +11,6 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT | USES_TGUI
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
-	ui_x = 300
-	ui_y = 180
 
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
@@ -230,7 +228,7 @@
 		if(stored)
 			stored.forceMove(T)
 			src.transfer_fingerprints_to(stored)
-			stored.anchored = FALSE
+			stored.set_anchored(FALSE)
 			stored.density = TRUE
 			stored.update_icon()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
@@ -279,13 +277,15 @@
 
 // handle machine interaction
 
-/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
+/obj/machinery/disposal/bin/ui_state(mob/user)
+	return GLOB.notcontained_state
+
+/obj/machinery/disposal/bin/ui_interact(mob/user, datum/tgui/ui)
 	if(machine_stat & BROKEN)
 		return
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "DisposalUnit", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "DisposalUnit", name)
 		ui.open()
 
 /obj/machinery/disposal/bin/ui_data(mob/user)

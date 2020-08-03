@@ -24,8 +24,6 @@
 	icon_screen = "holocontrol"
 	idle_power_usage = 10
 	active_power_usage = 50
-	ui_x = 400
-	ui_y = 500
 
 	var/area/holodeck/linked
 	var/area/holodeck/program
@@ -87,10 +85,10 @@
 	. = ..()
 	toggle_power(!machine_stat)
 
-/obj/machinery/computer/holodeck/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Holodeck", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Holodeck", name)
 		ui.open()
 
 /obj/machinery/computer/holodeck/ui_data(mob/user)
@@ -101,7 +99,7 @@
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
-	data["can_toggle_safety"] = issilicon(user) || IsAdminGhost(user)
+	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
 
 	return data
 

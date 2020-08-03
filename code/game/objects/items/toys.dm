@@ -168,6 +168,14 @@
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
+	
+	
+/obj/item/toy/balloon/arrest
+	name = "arreyst balloon"
+	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
+	icon_state = "arrestballoon"
+	inhand_icon_state = "arrestballoon"
+	random_color = FALSE
 
 /*
  * Fake singularity
@@ -1418,7 +1426,7 @@
 	to_chat(user, "<span class='notice'>You name the dummy as \"[doll_name]\".</span>")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)
+/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language, list/message_mods)
 	var/mob/M = A
 	if (istype(M))
 		M.log_talk(message, LOG_SAY, tag="dummy toy")

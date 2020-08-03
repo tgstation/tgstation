@@ -86,7 +86,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/carbon_target = target
 			var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-			var/datum/wound/brute/cut/severe/crit_wound = new
+			var/datum/wound/slash/severe/crit_wound = new
 			crit_wound.apply_wound(bodypart)
 
 	if(QDELETED(human_target) || human_target.stat != DEAD)
@@ -157,7 +157,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-		var/datum/wound/brute/cut/severe/crit_wound = new
+		var/datum/wound/slash/severe/crit_wound = new
 		crit_wound.apply_wound(bodypart)
 
 /datum/eldritch_knowledge/summon/raw_prophet
@@ -187,7 +187,7 @@
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/ash,/obj/item/bodypart/head,/obj/item/book)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/ash_spirit
-	next_knowledge = list(/datum/eldritch_knowledge/summon/stalker,/datum/eldritch_knowledge/spell/rust_wave)
+	next_knowledge = list(/datum/eldritch_knowledge/summon/stalker,/datum/eldritch_knowledge/spell/flame_birth)
 
 /datum/eldritch_knowledge/summon/rusty
 	name = "Rusted Ritual"
@@ -196,7 +196,7 @@
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/vomit,/obj/item/bodypart/head,/obj/item/book)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/rust_spirit
-	next_knowledge = list(/datum/eldritch_knowledge/summon/stalker,/datum/eldritch_knowledge/spell/flame_birth)
+	next_knowledge = list(/datum/eldritch_knowledge/summon/stalker,/datum/eldritch_knowledge/spell/entropic_plume)
 
 /datum/eldritch_knowledge/spell/blood_siphon
 	name = "Blood Siphon"

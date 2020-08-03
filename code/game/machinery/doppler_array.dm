@@ -7,8 +7,6 @@
 	icon_state = "tdoppler"
 	density = TRUE
 	verb_say = "states coldly"
-	ui_x = 500
-	ui_y = 225
 	var/cooldown = 10
 	var/next_announce = 0
 	var/max_dist = 150
@@ -22,6 +20,7 @@
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
+	RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/power_change)
 	printer_ready = world.time + PRINTER_TIMEOUT
 
 /obj/machinery/doppler_array/ComponentInitialize()
@@ -36,11 +35,10 @@
 	var/factual_radius = list()
 	var/theory_radius = list()
 
-/obj/machinery/doppler_array/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/doppler_array/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "TachyonArray", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "TachyonArray", name)
 		ui.open()
 
 /obj/machinery/doppler_array/ui_data(mob/user)
@@ -117,12 +115,10 @@
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)
 		if(!anchored && !isinspace())
-			anchored = TRUE
-			power_change()
+			set_anchored(TRUE)
 			to_chat(user, "<span class='notice'>You fasten [src].</span>")
 		else if(anchored)
-			anchored = FALSE
-			power_change()
+			set_anchored(FALSE)
 			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
 		I.play_tool_sound(src)
 		return

@@ -76,6 +76,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/reagent_removal_skip_list = list()
 
 /datum/reagent/New()
+	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 
 	if(!addiction_type)
@@ -209,6 +210,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!mytray)
 		return
+
+/// Should return a associative list where keys are taste descriptions and values are strength ratios
+/datum/reagent/proc/get_taste_description(mob/living/taster)
+	return list("[taste_description]" = 1)
+
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc

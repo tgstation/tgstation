@@ -491,11 +491,11 @@
 				var/list/cached_required_catalysts = C.required_catalysts
 				var/total_required_catalysts = cached_required_catalysts.len
 				var/total_matching_catalysts= 0
-				var/matching_container = 0
-				var/matching_other = 0
+				var/matching_container = FALSE
+				var/matching_other = FALSE
 				var/required_temp = C.required_temp
 				var/is_cold_recipe = C.is_cold_recipe
-				var/meets_temp_requirement = 0
+				var/meets_temp_requirement = FALSE
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
@@ -507,29 +507,28 @@
 					total_matching_catalysts++
 				if(cached_my_atom)
 					if(!C.required_container)
-						matching_container = 1
-
+						matching_container = TRUE
 					else
 						if(cached_my_atom.type == C.required_container)
-							matching_container = 1
+							matching_container = TRUE
 					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
-						return
+						matching_container = FALSE
 					if(!C.required_other)
-						matching_other = 1
+						matching_other = TRUE
 
 					else if(istype(cached_my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/M = cached_my_atom
 
 						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-							matching_other = 1
+							matching_other = TRUE
 				else
 					if(!C.required_container)
-						matching_container = 1
+						matching_container = TRUE
 					if(!C.required_other)
-						matching_other = 1
+						matching_other = TRUE
 
 				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
-					meets_temp_requirement = 1
+					meets_temp_requirement = TRUE
 
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
 					possible_reactions  += C
@@ -923,7 +922,7 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
   * Arguments:
   * * minimum_percent - the lower the minimum percent, the more sensitive the message is.
   */
-/datum/reagents/proc/generate_taste_message(minimum_percent=15)
+/datum/reagents/proc/generate_taste_message(minimum_percent=15,mob/living/taster)
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
 	if(minimum_percent <= 100)
@@ -931,22 +930,12 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
 			if(!R.taste_mult)
 				continue
 
-			if(istype(R, /datum/reagent/consumable/nutriment))
-				var/list/taste_data = R.data
-				for(var/taste in taste_data)
-					var/ratio = taste_data[taste]
-					var/amount = ratio * R.taste_mult * R.volume
-					if(taste in tastes)
-						tastes[taste] += amount
-					else
-						tastes[taste] = amount
-			else
-				var/taste_desc = R.taste_description
-				var/taste_amount = R.volume * R.taste_mult
-				if(taste_desc in tastes)
-					tastes[taste_desc] += taste_amount
+			var/list/taste_data = R.get_taste_description(taster)
+			for(var/taste in taste_data)
+				if(taste in tastes)
+					tastes[taste] += taste_data[taste] * R.volume * R.taste_mult
 				else
-					tastes[taste_desc] = taste_amount
+					tastes[taste] = taste_data[taste] * R.volume * R.taste_mult
 		//deal with percentages
 		// TODO it would be great if we could sort these from strong to weak
 		var/total_taste = counterlist_sum(tastes)

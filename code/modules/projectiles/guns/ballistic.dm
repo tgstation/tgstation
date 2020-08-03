@@ -63,6 +63,7 @@
 	var/bolt_type = BOLT_TYPE_STANDARD
  	///Used for locking bolt and open bolt guns. Set a bit differently for the two but prevents firing when true for both.
 	var/bolt_locked = FALSE
+	var/show_bolt_icon = TRUE ///Hides the bolt icon.
 	///Whether the gun has to be racked each shot or not.
 	var/semi_auto = TRUE
 	///Actual magazine currently contained within the gun
@@ -86,6 +87,8 @@
 	///Whether the gun can be sawn off by sawing tools
 	var/can_be_sawn_off  = FALSE
 	var/flip_cooldown = 0
+	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
+	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -95,8 +98,13 @@
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
-	chamber_round(TRUE)
+	chamber_round(replace_new_round = TRUE)
 	update_icon()
+
+/obj/item/gun/ballistic/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname in list(NAMEOF(src, suppressor_x_offset), NAMEOF(src, suppressor_y_offset), NAMEOF(src, internal_magazine), NAMEOF(src, magazine), NAMEOF(src, chambered), NAMEOF(src, empty_indicator), NAMEOF(src, sawn_off), NAMEOF(src, bolt_locked), NAMEOF(src, bolt_type)))
+		update_icon()
 
 /obj/item/gun/ballistic/update_icon_state()
 	if(current_skin)
@@ -106,21 +114,29 @@
 
 /obj/item/gun/ballistic/update_overlays()
 	. = ..()
-	if (bolt_type == BOLT_TYPE_LOCKING)
-		. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
-	if (bolt_type == BOLT_TYPE_OPEN && bolt_locked)
-		. += "[icon_state]_bolt"
+	if(show_bolt_icon)
+		if (bolt_type == BOLT_TYPE_LOCKING)
+			. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
+		if (bolt_type == BOLT_TYPE_OPEN && bolt_locked)
+			. += "[icon_state]_bolt"
 	if (suppressed)
-		. += "[icon_state]_suppressor"
-	if(!chambered && empty_indicator)
+		var/mutable_appearance/MA = mutable_appearance(icon, "[icon_state]_suppressor")
+		if(suppressor_x_offset)
+			MA.pixel_x = suppressor_x_offset
+		if(suppressor_y_offset)
+			MA.pixel_y = suppressor_y_offset
+		. += MA
+	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
 		. += "[icon_state]_empty"
-	if (magazine)
+	if (magazine && !internal_magazine)
 		if (special_mags)
 			. += "[icon_state]_mag_[initial(magazine.icon_state)]"
-			if (!magazine.ammo_count())
+			if (mag_display_ammo && !magazine.ammo_count())
 				. += "[icon_state]_mag_empty"
 		else
 			. += "[icon_state]_mag"
+			if(!mag_display_ammo)
+				return
 			var/capacity_number
 			switch(get_ammo() / magazine.max_ammo)
 				if(1 to INFINITY) //cause we can have one in the chamber.
@@ -152,13 +168,15 @@
 		chamber_round()
 
 ///Used to chamber a new round and eject the old one
-/obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE)
+/obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
 	if (chambered || !magazine)
 		return
 	if (magazine.ammo_count())
 		chambered = magazine.get_round(keep_bullet || bolt_type == BOLT_TYPE_NO_BOLT)
 		if (bolt_type != BOLT_TYPE_OPEN)
 			chambered.forceMove(src)
+		if(replace_new_round)
+			magazine.give_round(new chambered.type)
 
 ///updates a bunch of racking related stuff and also handles the sound effects and the like
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
@@ -293,6 +311,14 @@
 	w_class += S.w_class //so pistols do not fit in pockets when suppressed
 	update_icon()
 
+/obj/item/gun/ballistic/clear_suppressor()
+	if(!can_unsuppress)
+		return
+	if(isitem(suppressed))
+		var/obj/item/I = suppressed
+		w_class -= I.w_class
+	return ..()
+
 /obj/item/gun/ballistic/AltClick(mob/user)
 	if (unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
@@ -302,12 +328,9 @@
 			var/obj/item/suppressor/S = suppressed
 			if(!user.is_holding(src))
 				return ..()
-			to_chat(user, "<span class='notice'>You unscrew \the [suppressed] from \the [src].</span>")
-			user.put_in_hands(suppressed)
-			w_class -= S.w_class
-			suppressed = null
-			update_icon()
-			return
+			to_chat(user, "<span class='notice'>You unscrew \the [S] from \the [src].</span>")
+			user.put_in_hands(S)
+			clear_suppressor()
 
 ///Prefire empty checks for the bolt drop
 /obj/item/gun/ballistic/proc/prefire_empty_checks()

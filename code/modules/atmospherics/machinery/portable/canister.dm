@@ -10,8 +10,6 @@
 	desc = "A canister for the storage of gas."
 	icon_state = "yellow"
 	density = TRUE
-	ui_x = 300
-	ui_y = 232
 
 	///The base iconstate, used to make dealing with breaking the canister less hellish
 	var/base_icon_state = "yellow"
@@ -80,7 +78,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is [mode].</span>"
+		. += "<span class='notice'>This canister is [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit(pressure_limit, "Pa", 0)]</b>.</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
@@ -249,13 +247,11 @@
 	release_pressure = ONE_ATMOSPHERE*2
 
 /obj/machinery/portable_atmospherics/canister/tier_1
-	name = "Tier 1 canister"
 	heat_limit = 5000
 	pressure_limit = 50000
 	mode = CANISTER_TIER_1
 
 /obj/machinery/portable_atmospherics/canister/tier_2
-	name = "Tier 2 canister"
 	heat_limit = 500000
 	pressure_limit = 5e6
 	volume = 3000
@@ -265,7 +261,6 @@
 	mode = CANISTER_TIER_2
 
 /obj/machinery/portable_atmospherics/canister/tier_3
-	name = "Tier 3 canister"
 	heat_limit = 1e12
 	pressure_limit = 1e14
 	volume = 5000
@@ -355,11 +350,12 @@
 		return TRUE
 	var/pressure = air_contents.return_pressure()
 	if(pressure > 300)
-		to_chat(user, "<span class='alert'>The [src] meter shows high pressure inside!</span>")
+		to_chat(user, "<span class='alert'>The pressure gauge on \the [src] indicates a high pressure inside... maybe you want to reconsider?</span>")
 		message_admins("[src] deconstructed by [ADMIN_LOOKUPFLW(user)]")
 		log_game("[src] deconstructed by [key_name(user)]")
-	to_chat(user, "<span class='notice'>You begin cutting the[src] apart...</span>")
-	if(I.use_tool(src, user, 30, volume=50))
+	to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
+	if(I.use_tool(src, user, 3 SECONDS, volume=50))
+		to_chat(user, "<span class='notice'>You cut \the [src] apart.</span>")
 		deconstruct(TRUE)
 
 	return TRUE
@@ -420,11 +416,13 @@
 		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Canister", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Canister", name)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data()

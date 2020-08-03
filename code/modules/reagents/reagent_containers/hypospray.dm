@@ -40,13 +40,14 @@
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.expose(M, INJECT, fraction)
+
 
 		if(M.reagents)
 			var/trans = 0
 			if(!infinite)
-				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
+				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, method = INJECT)
 			else
+				reagents.expose(M, INJECT, fraction)
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src].</span>")
 			log_combat(user, M, "injected", src, "([contained])")
@@ -277,7 +278,14 @@
 
 /obj/item/reagent_containers/hypospray/medipen/ekit
 	name = "emergency first-aid autoinjector"
-	desc = "An epinephrine medipen with trace amounts of coagulants and antibiotics to help stabilize bad cuts and burns."
+	desc = "An epinephrine medipen with extra coagulant and antibiotics to help stabilize bad cuts and burns."
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/medicine/spaceacillin = 0.5)
+
+/obj/item/reagent_containers/hypospray/medipen/blood_loss
+	name = "hypovolemic-response autoinjector"
+	desc = "A medipen designed to stabilize and rapidly reverse severe bloodloss."
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)

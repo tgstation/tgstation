@@ -34,9 +34,9 @@
 	if(!isitem(target) && !isprojectile(target))
 		return ELEMENT_INCOMPATIBLE
 
+	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
 	if(isitem(target))
 		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbed)
-		RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
 		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, .proc/tryForceEmbed)
 		RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, .proc/detachFromWeapon)
@@ -63,7 +63,7 @@
 	if(isitem(target))
 		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE, COMSIG_EMBED_TRY_FORCE, COMSIG_ITEM_DISABLE_EMBED))
 	else
-		UnregisterSignal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT))
+		UnregisterSignal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_ELEMENT_ATTACH))
 
 
 /// Checking to see if we're gonna embed into a human
@@ -74,13 +74,13 @@
 	var/actual_chance = embed_chance
 
 	if(!weapon.isEmbedHarmless()) // all the armor in the world won't save you from a kick me sign
-		var/armor = max(victim.run_armor_check(hit_zone, "bullet", silent=TRUE), victim.run_armor_check(hit_zone, "bomb", silent=TRUE)) // we'll be nice and take the better of bullet and bomb armor
+		var/armor = max(victim.run_armor_check(hit_zone, "bullet", silent=TRUE), victim.run_armor_check(hit_zone, "bomb", silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
 
 		if(armor) // we only care about armor penetration if there's actually armor to penetrate
 			var/pen_mod = -armor + weapon.armour_penetration // even a little bit of armor can make a big difference for shrapnel with large negative armor pen
 			actual_chance += pen_mod // doing the armor pen as a separate calc just in case this ever gets expanded on
 			if(actual_chance <= 0)
-				victim.visible_message("<span class='danger'>[weapon] bounces off [victim]'s armor!</span>", "<span class='notice'>[weapon] bounces off your armor!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+				victim.visible_message("<span class='danger'>[weapon] bounces off [victim]'s armor, unable to embed!</span>", "<span class='notice'>[weapon] bounces off your armor, unable to embed!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 				return
 
 	var/roll_embed = prob(actual_chance)
@@ -107,7 +107,7 @@
 	return TRUE
 
 ///A different embed element has been attached, so we'll detach and let them handle things
-/datum/element/embed/proc/severancePackage(obj/item/weapon, datum/element/E)
+/datum/element/embed/proc/severancePackage(obj/weapon, datum/element/E)
 	if(istype(E, /datum/element/embed))
 		Detach(weapon)
 
@@ -134,13 +134,16 @@
 		return // we don't care
 
 	var/obj/item/payload = new payload_type(get_turf(hit))
+	if(istype(payload, /obj/item/shrapnel/bullet))
+		payload.name = P.name
+	payload.embedding = P.embedding
+	payload.updateEmbedding()
 	var/mob/living/carbon/C = hit
 	var/obj/item/bodypart/limb = C.get_bodypart(hit_zone)
 	if(!limb)
 		limb = C.get_bodypart()
 
-	if(!payload.tryEmbed(limb))
-		payload.failedEmbed()
+	payload.tryEmbed(limb)
 	Detach(P)
 
 /**
@@ -172,4 +175,5 @@
 		hit_zone = limb.body_zone
 		C = limb.owner
 
-	return checkEmbed(I, C, hit_zone, forced=TRUE)
+	checkEmbed(I, C, hit_zone, forced=TRUE)
+	return TRUE

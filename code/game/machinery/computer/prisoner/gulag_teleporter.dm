@@ -6,8 +6,6 @@
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_ARMORY)
 	circuit = /obj/item/circuitboard/computer/gulag_teleporter_console
-	ui_x = 350
-	ui_y = 295
 
 	var/default_goal = 200
 	var/obj/machinery/gulag_teleporter/teleporter = null
@@ -21,11 +19,10 @@
 	. = ..()
 	scan_machinery()
 
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "GulagTeleporterConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "GulagTeleporterConsole", name)
 		ui.open()
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_data(mob/user)

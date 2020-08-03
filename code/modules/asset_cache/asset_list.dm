@@ -16,6 +16,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	GLOB.asset_datums[type] = src
 	register()
 
+/datum/asset/proc/get_url_mappings()
+	return list()
+
 /datum/asset/proc/register()
 	return
 
@@ -30,10 +33,18 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
-		register_asset(asset_name, assets[asset_name])
+		assets[asset_name] = register_asset(asset_name, assets[asset_name])
 
 /datum/asset/simple/send(client)
 	. = send_asset_list(client, assets)
+
+/datum/asset/simple/get_url_mappings()
+	. = list()
+	for (var/asset_name in assets)
+		var/datum/asset_cache_item/ACI = assets[asset_name]
+		if (!ACI)
+			continue
+		.[asset_name] = ACI.url
 
 
 // For registering or sending multiple others at once
@@ -50,6 +61,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		var/datum/asset/A = get_asset_datum(type)
 		. = A.send(C) || .
 
+/datum/asset/group/get_url_mappings()
+	. = list()
+	for(var/type in children)
+		var/datum/asset/A = get_asset_datum(type)
+		. += A.get_url_mappings()
 
 // spritesheet implementation - coalesces various icons into a single .png file
 // and uses CSS to select icons out of that file - saves on transferring some
@@ -70,17 +86,15 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	if (!name)
 		CRASH("spritesheet [type] cannot register without a name")
 	ensure_stripped()
-
+	for(var/size_id in sizes)
+		var/size = sizes[size_id]
+		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
 	fdel(fname)
 	text2file(generate_css(), fname)
 	register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
-
-	for(var/size_id in sizes)
-		var/size = sizes[size_id]
-		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 
 /datum/asset/spritesheet/send(client/C)
 	if (!name)
@@ -89,6 +103,15 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/size_id in sizes)
 		all += "[name]_[size_id].png"
 	. = send_asset_list(C, all)
+
+/datum/asset/spritesheet/get_url_mappings()
+	if (!name)
+		return
+	. = list("spritesheet_[name].css" = get_asset_url("spritesheet_[name].css"))
+	for(var/size_id in sizes)
+		.["[name]_[size_id].png"] = get_asset_url("[name]_[size_id].png")
+
+
 
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)
@@ -111,7 +134,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for (var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/icon/tiny = size[SPRSZ_ICON]
-		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[name]_[size_id].png') no-repeat;}"
+		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[get_asset_url("[name]_[size_id].png")]') no-repeat;}"
 
 	for (var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]
@@ -162,7 +185,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			Insert("[prefix][prefix2][icon_state_name]", I, icon_state=icon_state_name, dir=direction)
 
 /datum/asset/spritesheet/proc/css_tag()
-	return {"<link rel="stylesheet" href="spritesheet_[name].css" />"}
+	return {"<link rel="stylesheet" href="[css_filename()]" />"}
+
+/datum/asset/spritesheet/proc/css_filename()
+	return get_asset_url("spritesheet_[name].css")
 
 /datum/asset/spritesheet/proc/icon_tag(sprite_name)
 	var/sprite = sprites[sprite_name]
