@@ -565,7 +565,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))
 		return
-	SSair.ui_interact(src.mob)
+	SSair.ui_interact(mob)
 
 /client/proc/reload_cards()
 	set name = "Reload Cards"

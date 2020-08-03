@@ -398,7 +398,6 @@ GLOBAL_LIST_EMPTY(colored_images)
 		shiny.plane = ATMOS_GROUP_PLANE
 		shiny.color = sharp_color
 		GLOB.colored_images += shiny
-		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)

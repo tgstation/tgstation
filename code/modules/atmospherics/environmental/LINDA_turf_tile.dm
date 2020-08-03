@@ -385,7 +385,7 @@
 	garbage_collect()
 
 /datum/excited_group/proc/garbage_collect()
-	if(should_display || SSair.display_all_groups)
+	if(display_id) //If we ever did make those changes
 		hide_turfs()
 	for(var/t in turf_list)
 		var/turf/open/T = t
