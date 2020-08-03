@@ -110992,6 +110992,7 @@
 	name = "Prison Wing Cells APC";
 	pixel_x = -24
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "epU" = (
