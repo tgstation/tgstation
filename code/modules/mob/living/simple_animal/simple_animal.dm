@@ -154,6 +154,12 @@
 	///Generic flags
 	var/simple_mob_flags = NONE
 
+	/// Used for making mobs show a heart emoji and give a mood boost when pet.
+	var/wuvable = FALSE
+	/// A string for an emoting when the above is true for the mob being pet.
+	var/wuvemote = ""
+
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src

@@ -49,8 +49,8 @@
 	icon_prefix = "rabbit"
 	feedMessages = list("It nibbles happily.","It noms happily.")
 	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
-	pettable = TRUE
-	petemote = "hops around happily!"
+	wuvable = TRUE
+	wuvemote = "hops around happily!"
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"

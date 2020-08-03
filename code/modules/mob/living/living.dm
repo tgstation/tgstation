@@ -1636,21 +1636,3 @@
 /// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
 /mob/living/proc/is_face_visible()
 	return TRUE
-
-/mob/living/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	if (!pettable)
-		return
-	if(M.a_intent == "help")
-		wuv(M)
-
-/**
-*This is used to make a pettable mob emote when pet, make a heart emoji at their location, and give the petter a moodlet.
-*
-*/
-/mob/living/proc/wuv(mob/M)
-	if(stat != DEAD)
-		new /obj/effect/temp_visual/heart(loc)
-		if(prob(33))
-			manual_emote("[petemote]")
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)

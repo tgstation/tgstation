@@ -17,8 +17,8 @@
 	speak_chance = 1
 	turns_per_move = 10
 	can_be_held = TRUE
-	pettable = TRUE
-	petemote = "woofs happily!"
+	wuvable = TRUE
+	wuvemote = "woofs happily!"
 	var/turns_since_scan = 0
 	var/obj/movement_target
 

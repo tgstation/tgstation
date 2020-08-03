@@ -38,8 +38,8 @@
 	collar_type = "cat"
 	can_be_held = TRUE
 	held_state = "cat2"
-	pettable = TRUE
-	petemote = "purrs!"
+	wuvable = TRUE
+	wuvemote = "purrs!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
