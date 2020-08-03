@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Made the notification for the malf AI overload ability a little less vague about what was destroyed."
