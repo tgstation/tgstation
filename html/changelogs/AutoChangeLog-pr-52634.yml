@@ -1,0 +1,12 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the Saber SMG and Tommygun's empty chamber indicators not appearing."
+  - rscadd: "Added support to pixel offset suppressors, allowing you to have ones that extend outside of the gun's 32x32 icon."
+  - refactor: "Removed a number of unused overlays being added to ballistic guns."
+  - bugfix: "The C20r's empty indicator is no longer covered up by the fire select indicator."
+  - bugfix: "Fixed admin deleted suppressors not properly updating a gun's weight."
+  - bugfix: "Varediting a ballistic weapon's vars which have icons associated with them will now make the gun update it's icons."
+  - spellcheck: "Setting your firemode to burst will now say \"3-round burst\" instead of \"3-rnd burst\"."
+  - spellcheck: "C20r's description now correctly says 3 round burst instead of 2 round burst."
+  - bugfix: "Ballistic weapons with non-open bolts will now correctly spawn with a full magazine."
