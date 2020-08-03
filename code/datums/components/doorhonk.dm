@@ -6,7 +6,7 @@
 	var/infinite = FALSE
 
 /datum/component/doorhonk/Initialize(volume_override = 30, infinite_honking = FALSE)
-	if(!istype(parent, /obj/machinery/door/airlock)) //This component only works for doors.
+	if(!ismachinery(parent)) //This component only works for machines.
 		return COMPONENT_INCOMPATIBLE
 
 	honkLeft = (rand(15,20)) //This component works for an amount of honk between 15 and 20
@@ -15,8 +15,11 @@
 
 	if(infinite_honking)
 		infinite = TRUE
+	if(istype(parent, /obj/machinery/door/airlock))
+		RegisterSignal(parent, list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE), .proc/play_sound)
+		return
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/play_sound)
 
-	RegisterSignal(parent, list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE), .proc/play_sound)
 
 /datum/component/doorhonk/proc/play_sound()
 	playsound(parent, honkSound, volume, TRUE)

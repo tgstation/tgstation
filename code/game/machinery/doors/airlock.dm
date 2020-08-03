@@ -1029,6 +1029,7 @@
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked )
 		return FALSE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	if(!forced)
 		if(!hasPower() || wires.is_cut(WIRE_OPEN))
 			return FALSE
@@ -1037,8 +1038,7 @@
 			return FALSE
 		use_power(50)
 		playsound(src, doorOpen, 30, TRUE)
-		//TODO SEND_SIGNAL
-		SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, )
+
 		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
 			closeOther.close()
 	else
@@ -1071,6 +1071,7 @@
 /obj/machinery/door/airlock/close(forced=0)
 	if(operating || welded || locked)
 		return
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	if(density)
 		return TRUE
 	if(!forced)
@@ -1081,13 +1082,12 @@
 			if(M.density && M != src) //something is blocking the door
 				autoclose_in(DOOR_CLOSE_WAIT)
 				return
-
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
 			return
 		use_power(50)
 		playsound(src, doorClose, 30, TRUE)
-		SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
+
 	else
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 

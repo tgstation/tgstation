@@ -904,6 +904,23 @@ GLOBAL_LIST_EMPTY(PDAs)
 			old_id.forceMove(get_turf(src))
 
 
+/obj/item/pda/pre_attack(obj/target, mob/living/user, params)
+	if(ismachinery(target))
+		var/obj/machinery/target_machine = target
+		if(!target_machine.panel_open && !istype(target, /obj/machinery/computer))
+			return ..()
+		if(!istype(cartridge, /obj/item/cartridge/virus/clown))
+			return ..()
+		var/obj/item/cartridge/virus/installed_cartridge = cartridge
+
+		if(installed_cartridge.charges <=0)
+			to_chat(user, "<span class='notice'>Out of charges.</span>")
+			return ..()
+		to_chat(user, "<span class='notice'>You upload the virus to the airlock controller!</span>")
+		target.AddComponent(/datum/component/doorhonk)
+		installed_cartridge.charges --
+
+
 // access to status display signals
 /obj/item/pda/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/cartridge))
@@ -979,22 +996,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(A,/obj/machinery/door/airlock))
-		if(!istype(cartridge, /obj/item/cartridge/virus/clown))
-			return
-		var/obj/machinery/panel = A
-		if(!panel.panel_open)
-			return ..()
-		var/obj/machinery/door/airlock/door = A
-		var/obj/item/cartridge/virus/cart = cartridge
-		if(cart.charges <=0)
-			to_chat(user, "<span class='notice'>Out of charges.</span>")
-			return
-		to_chat(user, "<span class='notice'>You upload the virus to the airlock controller!</span>")
-		door.AddComponent(/datum/component/doorhonk)
-		cart.charges --
-		return
-
 	switch(scanmode)
 		if(PDA_SCANNER_REAGENT)
 			if(!isnull(A.reagents))
