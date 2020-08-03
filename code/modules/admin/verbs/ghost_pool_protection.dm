@@ -70,4 +70,5 @@
 		if("no_roles")
 			new_role_flags = NONE
 		if("apply_settings")
+			to_chat(usr, "Settings Applied!")
 			GLOB.ghost_role_flags = new_role_flags
