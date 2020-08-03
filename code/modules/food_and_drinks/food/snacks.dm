@@ -317,13 +317,13 @@ All foods are distributed among various categories. Use common sense.
 		if(isdog(M))
 			var/mob/living/L = M
 			if(bitecount == 0 || prob(50))
-				M.emote("me", 1, "nibbles away at \the [src]")
+				M.manual_emote("nibbles away at \the [src]")
 			bitecount++
 			L.taste(reagents) // why should carbons get all the fun?
 			if(bitecount >= 5)
 				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
 				if(sattisfaction_text)
-					M.emote("me", 1, "[sattisfaction_text]")
+					M.emote(sattisfaction_text)
 				qdel(src)
 
 

@@ -258,23 +258,23 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote("me [pick(emote_see)]", 1)
+							manual_emote(pick(emote_see))
 						else
-							emote("me [pick(emote_hear)]", 2)
+							manual_emote(pick(emote_hear))
 				else
 					say(pick(speak), forced = "poly")
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote("me", 1, pick(emote_see))
+					manual_emote(pick(emote_see))
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote("me", 2, pick(emote_hear))
+					manual_emote(pick(emote_hear))
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
-						emote("me", 1, pick(emote_see))
+						manual_emote(pick(emote_see))
 					else
-						emote("me", 2, pick(emote_hear))
+						manual_emote(pick(emote_hear))
 
 /mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE
