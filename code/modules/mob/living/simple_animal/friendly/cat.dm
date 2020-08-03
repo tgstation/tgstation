@@ -77,7 +77,10 @@
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 	held_state = "cat2"
-	speak = list("EDF!", "I might be stupid.", "Bigger.", "BIGGER.", "Fuck you.", "I am NOTHING like you fuckers.", "Where is my buff tomboy GF?", ":catbuff:")
+	speak = list("EDF!", "I might be stupid.", "Bigger.", "BIGGER.", "Fuck you.",
+	"I am NOTHING like you fuckers.", "Where is my buff tomboy GF?", ":catbuff:", "I come from a world you will NEVER understand.",
+	"People have asked me what I would do if I was sucked into the cold, airless vacuum of space. I simply would not die.", "I am the reason ambulances can't be called anymore!!",
+	"Have you seen a rabbit around here? I've got some bullshit to sort out with the fucker.", "Dame Da Ne...")
 	response_harm_continuous = "punts"
 	response_harm_simple = "punt"
 

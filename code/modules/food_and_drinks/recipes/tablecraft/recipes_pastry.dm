@@ -609,3 +609,14 @@ datum/crafting_recipe/food/donut/meat
 	)
 	result = /obj/item/reagent_containers/food/snacks/cannoli
 	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/oreo
+	name = "Oreos"
+	reqs = list(
+		/datum/reagent/consumable/flour = 1,
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/datum/reagent/consumable/cream = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/oreo
+	subcategory = CAT_PASTRY
+

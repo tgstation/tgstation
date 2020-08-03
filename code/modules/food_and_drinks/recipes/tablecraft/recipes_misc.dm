@@ -376,3 +376,4 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/jiggdinner
 	subcategory = CAT_MISCFOOD
+

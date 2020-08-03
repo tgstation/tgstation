@@ -285,7 +285,8 @@ Key procs
 
 /datum/language_holder/slime
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-								/datum/language/slime = list(LANGUAGE_ATOM))
+								/datum/language/slime = list(LANGUAGE_ATOM),
+								/datum/language/goflish = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))
 
 /datum/language_holder/swarmer
@@ -371,6 +372,12 @@ Key procs
 								/datum/language/shadowtongue = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/shadowtongue = list(LANGUAGE_ATOM))
+
+/datum/language_holder/goflish
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/slime = list(LANGUAGE_ATOM),
+								/datum/language/goflish = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/goflish = list(LANGUAGE_ATOM))
 
 /datum/language_holder/empty
 	understood_languages = list()

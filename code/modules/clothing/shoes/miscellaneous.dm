@@ -498,3 +498,9 @@
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
 	inhand_icon_state = "JackFrostShoes_worn"
+
+/obj/item/clothing/shoes/practical_boots
+	name = "Practical Boots"
+	desc = "Sturdy boots made for everyday use."
+	icon_state = "practical_boots"
+	can_be_tied = FALSE

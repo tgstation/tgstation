@@ -156,6 +156,7 @@
 	desc = "An excellent light colored suit, experts in the field stress that it should not to be confused with the inferior tan suit."
 	icon_state = "beige_suit"
 	inhand_icon_state = "beige_suit"
+
 /obj/item/clothing/under/suit/henchmen
 	name = "henchmen jumpsuit"
 	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
@@ -164,31 +165,37 @@
 	icon_state = "henchmen"
 	inhand_icon_state = "henchmen"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACE
+
 
 //Reshia
-/obj/item/clothing/under/suit/test
-    name = "reshia test"
-    desc = "i'm going to fucking piss myself."
-    icon = 'icons/obj/clothing/under/suits.dmi'
-    icon_state = "white_suit"
-    inhand_icon_state = "white_suit"
-    body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
-    flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACE
-    var/handled = FALSE
+//Reshia
+/obj/item/clothing/under/suit/reshia
+	name = "Red Ribbon"
+	desc = "A red ribbon that uncomfortably constricts your neck."
+	icon = 'icons/obj/clothing/under/suits.dmi'
+	icon_state = "reshia"
+	inhand_icon_state = "reshia"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACE|HIDEFACIALHAIR
+	var/handled = FALSE
 
-/obj/item/clothing/under/suit/test/equipped(mob/user, slot)
+/obj/item/clothing/under/suit/reshia/examine(mob/user)
+	. = ..()
+	if(in_range(src, user) || isobserver(user))
+		. += "<span class='notice'>OOC: This item is only for Reshia, don't be cringe.</span.?>"
+
+/obj/item/clothing/under/suit/reshia/equipped(mob/user, slot)
 	if(slot != ITEM_SLOT_ICLOTHING)
 		return
 	if(ismoth(user))
 		handled = TRUE
 		user.set_species(/datum/species/human)
-		to_chat(user, "<span class='notice'>If you read this you're gay.</span.?>")
+		to_chat(user, "<span class='notice'>Your body is overtaken by a dark force!</span.?>")
 
-/obj/item/clothing/under/suit/test/dropped(mob/user)
+/obj/item/clothing/under/suit/reshia/dropped(mob/user)
 	if(handled)
-		if(ishumanbasic(user))
+		if(ishuman(user)) //same as above
 			user.set_species(/datum/species/moth)
 			handled = FALSE
-			to_chat(user, "<span class='notice'>If you read this I'm gay.</span.?>")
-
+			to_chat(user, "<span class='notice'>You feel a wave of light wash over you!</span.?>")

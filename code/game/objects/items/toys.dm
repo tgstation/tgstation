@@ -1170,24 +1170,6 @@
 		to_chat(user, "<span class='alert'>Nothing happens.</span>")
 
 /*
- * Fucked up and true
- */
-
-/obj/item/toy/wrathvar
-	name = "God's wrath"
-	desc = "oh he MAD mad."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "wrath"
-	w_class = WEIGHT_CLASS_SMALL
-
-
-/obj/item/toy/wrathvar/attack_self(mob/user)
-	if (!..())
-		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
-		for(var/mob/M in range(10, src))
-			shake_camera(M, 3, 2)
-
-/*
  * Snowballs
  */
 
@@ -1217,6 +1199,23 @@
 	name = "beach ball"
 	inhand_icon_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
+
+/*
+ * Homosexuality
+ */
+
+/obj/item/toy/bouquet
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "bouquet"
+	name = "bouquet"
+	desc = "A gorgeous arrangement of flowers, freshly picked."
+	inhand_icon_state = "bouquet"
+	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
+
+/obj/item/toy/bouquet/attack_self(mob/user)
+	to_chat(user, "<span class='nicegreen'>You take a whiff of the perfume-like flowers. You feel all bubbly inside!</span>")
+	var/mob/living/carbon/H = user
+	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "bouquet", /datum/mood_event/bouquet)
 
 /*
  * Clockwork Watch

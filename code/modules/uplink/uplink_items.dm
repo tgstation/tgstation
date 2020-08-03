@@ -1700,6 +1700,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/flashlight/lantern/syndicate
 	restricted_species = list("moth")
 
+/datum/uplink_item/race_restricted/shrink_ray
+	name = "Shrink Ray"
+	desc = "Thanks to some private deals, Shrink Rays are now available to any abductor willing to work for the syndicate!"
+	cost = 10
+	item = /obj/item/gun/energy/shrink_ray
+	restricted_species = list("abductor")
+
 // Role-specific items
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted"
