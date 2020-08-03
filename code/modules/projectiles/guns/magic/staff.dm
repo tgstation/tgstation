@@ -118,7 +118,7 @@
 	fire_sound = 'sound/magic/staff_healing.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/flying
 	icon_state = "staffofflight"
-	inhand_icon_state = "staffofflight"
+	inhand_icon_state = "staffofchange"
 	worn_icon_state = "flightstaff"
 
 /obj/item/gun/magic/staff/sapping
@@ -127,7 +127,7 @@
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/sapping
 	icon_state = "staffofsapping"
-	inhand_icon_state = "staffofsapping"
+	inhand_icon_state = "staffofdoor"
 	worn_icon_state = "sapstaff"
 
 /obj/item/gun/magic/staff/necropotence
@@ -136,7 +136,7 @@
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/necropotence
 	icon_state = "staffofnecropotence"
-	inhand_icon_state = "staffofnecropotence"
+	inhand_icon_state = "staffofchaos"
 	worn_icon_state = "necrostaff"
 
 /obj/item/gun/magic/staff/wipe
@@ -145,5 +145,5 @@
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/wipe
 	icon_state = "staffofwipe"
-	inhand_icon_state = "staffofwipe"
+	inhand_icon_state = "pharoah_sceptre"
 	worn_icon_state = "wipestaff"
