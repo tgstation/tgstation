@@ -24,7 +24,7 @@
 		if(id_insert(user, I, inserted_scan_id))
 			inserted_scan_id = I
 			return TRUE
-	. = ..()
+	return ..()
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))
