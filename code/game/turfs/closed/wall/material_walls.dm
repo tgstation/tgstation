@@ -4,7 +4,7 @@
 	icon = 'icons/turf/walls/materialwall.dmi'
 	icon_state = "wall"
 	canSmoothWith = list(/turf/closed/wall/material)
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /turf/closed/wall/material/break_wall()

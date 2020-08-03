@@ -8,7 +8,7 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
-	targetable_wound = /datum/wound/brute/bone/severe
+	targetable_wound = /datum/wound/blunt/severe
 
 /datum/surgery/repair_bone_hairline/can_start(mob/living/user, mob/living/carbon/target)
 	if(..())
@@ -23,7 +23,7 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
-	targetable_wound = /datum/wound/brute/bone/critical
+	targetable_wound = /datum/wound/blunt/critical
 
 /datum/surgery/repair_bone_compound/can_start(mob/living/user, mob/living/carbon/target)
 	if(..())

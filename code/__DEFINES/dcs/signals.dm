@@ -269,6 +269,8 @@
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
+///called when the movable sucessfully has it's anchored var changed, from base atom/movable/set_anchored(): (value)
+#define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"
 
 // /mob signals
 
@@ -413,8 +415,6 @@
 
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
-///called in /obj/structure/setAnchored(): (value)
-#define COMSIG_OBJ_SETANCHORED "obj_setanchored"
 ///from base of code/game/machinery
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
@@ -482,13 +482,20 @@
 ///from [/obj/structure/closet/supplypod/proc/endlaunch]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
+// /obj signals for economy
+///called when the payment component tries to charge an account.
+#define COMSIG_OBJ_ATTEMPT_CHARGE "obj_attempt_simple_charge"
+	#define COMPONENT_OBJ_CANCEL_CHARGE  (1<<0)
+///Called when a payment component changes value
+#define COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE "obj_attempt_simple_charge_change"
+
 // /obj/item signals for economy
 ///called when an item is sold by the exports subsystem
 #define COMSIG_ITEM_SOLD "item_sold"
 ///called when a wrapped up structure is opened by hand
 #define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
-#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
 ///called when a wrapped up item is opened by hand
+#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
 	#define COMSIG_ITEM_SPLIT_VALUE  (1<<0)
 ///called when getting the item's exact ratio for cargo's profit.
 #define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"
@@ -549,7 +556,7 @@
 
 // /obj/projectile signals (sent to the firer)
 
-///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
+///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
 ///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
@@ -606,7 +613,8 @@
 #define COMSIG_TURF_IS_WET "check_turf_wet"
 ///(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"
-///called on an object to clean it of cleanables. Usualy with soap: (num/strength)
+
+///Called on an object to "clean it", such as removing blood decals/overlays, etc. The clean types bitfield is sent with it. Return TRUE if any cleaning was necessary and thus performed.
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"
 
 //Creamed
@@ -619,6 +627,12 @@
 ///from base of obj/item/reagent_containers/food/snacks/attack(): (mob/living/eater, mob/feeder)
 #define COMSIG_FOOD_EATEN "food_eaten"
 
+//Drink
+
+///from base of obj/item/reagent_containers/food/drinks/attack(): (mob/living/M, mob/user)
+#define COMSIG_DRINK_DRANK "drink_drank"
+///from base of obj/item/reagent_containers/glass/attack(): (mob/M, mob/user)
+#define COMSIG_GLASS_DRANK "glass_drank"
 //Gibs
 
 ///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)

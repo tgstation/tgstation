@@ -331,7 +331,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
 			spell.icon_state = overlay_icon_state
-			spell.anchored = TRUE
+			spell.set_anchored(TRUE)
 			spell.density = FALSE
 			QDEL_IN(spell, overlay_lifespan)
 

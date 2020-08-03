@@ -1160,6 +1160,21 @@
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
+/datum/supply_pack/medical/medipen_variety
+	name = "Medipen Variety-Pak"
+	desc = "Contains eight different medipens in three different varieties, to assist in quickly treating seriously injured patients."
+	cost = 2000
+	contains = list(/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss
+)
+	crate_name = "medipen crate"
+
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
 	desc = "Contains thirteen different chemicals, for all the fun experiments you can make."
@@ -2267,15 +2282,14 @@
 	crate_name = "toy crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/costumes_toys/randomised/toys/generate()
-	. = ..()
+/datum/supply_pack/costumes_toys/randomised/toys/fill(obj/structure/closet/crate/C)
 	var/the_toy
 	for(var/i in 1 to num_contained)
 		if(prob(50))
 			the_toy = pickweight(GLOB.arcade_prize_pool)
 		else
 			the_toy = pick(subtypesof(/obj/item/toy/plush))
-		new the_toy(.)
+		new the_toy(C)
 
 /datum/supply_pack/costumes_toys/wizard
 	name = "Wizard Costume Crate"
@@ -2383,12 +2397,11 @@
 	contains = list()
 	crate_name = "booster pack pack"
 
-/datum/supply_pack/costumes_toys/randomised/tcg/generate()
-	. = ..()
+/datum/supply_pack/costumes_toys/randomised/tcg/fill(obj/structure/closet/crate/C)
 	var/cardpacktype
 	for(var/i in 1 to 10)
 		cardpacktype = pick(subtypesof(/obj/item/cardpack))
-		new cardpacktype(.)
+		new cardpacktype(C)
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////

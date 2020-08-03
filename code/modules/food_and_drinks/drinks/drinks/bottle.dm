@@ -146,7 +146,7 @@
 	inhand_icon_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	var/static/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
 /obj/item/broken_bottle/Initialize()
@@ -261,6 +261,27 @@
 	icon_state = "winebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 100)
 	foodtype = FRUIT | ALCOHOL
+
+/obj/item/reagent_containers/food/drinks/bottle/wine/add_initial_reagents()
+	. = ..()
+	var/wine_info = generate_vintage()
+	var/datum/reagent/consumable/ethanol/wine/W = locate() in reagents.reagent_list
+	if(W)
+		LAZYSET(W.data,"vintage",wine_info)
+
+/obj/item/reagent_containers/food/drinks/bottle/wine/proc/generate_vintage()
+	return "[GLOB.year_integer + 540] Nanotrasen Light Red"
+
+/obj/item/reagent_containers/food/drinks/bottle/wine/unlabeled
+	name = "unlabeled wine bottle"
+	desc = "There's no label on this wine bottle."
+
+/obj/item/reagent_containers/food/drinks/bottle/wine/unlabeled/generate_vintage()
+	var/current_year = GLOB.year_integer + 540
+	var/year = rand(current_year-50,current_year)
+	var/type = pick("Sparkling","Dry White","Sweet White","Rich White","Rose","Light Red","Medium Red","Bold Red","Dessert")
+	var/origin = pick("Nanotrasen","Syndicate","Local")
+	return "[year] [origin] [type]"
 
 /obj/item/reagent_containers/food/drinks/bottle/absinthe
 	name = "extra-strong absinthe"

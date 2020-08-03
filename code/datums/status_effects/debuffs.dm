@@ -350,7 +350,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		var/obj/item/bodypart/bodypart = pick(H.bodyparts)
-		var/datum/wound/brute/cut/severe/crit_wound = new
+		var/datum/wound/slash/severe/crit_wound = new
 		crit_wound.apply_wound(bodypart)
 	return ..()
 
@@ -434,7 +434,7 @@
 	var/still_bleeding = FALSE
 	for(var/thing in throat.wounds)
 		var/datum/wound/W = thing
-		if(W.wound_type == WOUND_LIST_CUT && W.severity > WOUND_SEVERITY_MODERATE)
+		if(W.wound_type == WOUND_SLASH && W.severity > WOUND_SEVERITY_MODERATE)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)
@@ -809,3 +809,62 @@
 			H.adjustOrganLoss(ORGAN_SLOT_TONGUE,10)
 		if(100)
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN,20)
+
+/datum/status_effect/amok
+	id = "amok"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 10 SECONDS
+	tick_interval = 1 SECONDS
+
+/datum/status_effect/amok/on_apply(mob/living/afflicted)
+	. = ..()
+	to_chat(owner, "<span class='boldwarning'>Your feel filled with a rage that is not your own!</span>")
+
+/datum/status_effect/amok/tick()
+	. = ..()
+	var/prev_intent = owner.a_intent
+	owner.a_intent = INTENT_HARM
+
+	var/list/mob/living/targets = list()
+	for(var/mob/living/potential_target in oview(owner, 1))
+		if(IS_HERETIC(potential_target) || potential_target.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+			continue
+		targets += potential_target
+	if(LAZYLEN(targets))
+		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
+		owner.ClickOn(pick(targets))
+	owner.a_intent = prev_intent
+
+/datum/status_effect/cloudstruck
+	id = "cloudstruck"
+	status_type = STATUS_EFFECT_REPLACE
+	duration = 3 SECONDS
+	on_remove_on_mob_delete = TRUE
+	///This overlay is applied to the owner for the duration of the effect.
+	var/mutable_appearance/mob_overlay
+
+/datum/status_effect/cloudstruck/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/cloudstruck/on_apply()
+	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
+	owner.overlays += mob_overlay
+	owner.update_icon()
+	ADD_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	return TRUE
+
+/datum/status_effect/cloudstruck/on_remove()
+	. = ..()
+	if(QDELETED(owner))
+		return
+	REMOVE_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	if(owner)
+		owner.overlays -= mob_overlay
+		owner.update_icon()
+
+/datum/status_effect/cloudstruck/Destroy()
+	. = ..()
+	QDEL_NULL(mob_overlay)

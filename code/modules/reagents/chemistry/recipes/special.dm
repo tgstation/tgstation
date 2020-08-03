@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	var/list/possible_results = list()
 
 /datum/chemical_reaction/randomized/proc/GenerateRecipe()
-	created = world.time
+	created = world.realtime
 	if(randomize_container)
 		required_container = pick(possible_containers)
 	if(randomize_req_temperature)

@@ -608,7 +608,7 @@
 	else
 		toLaunch.reverse_dropoff_turf = bay //Bay is currently a nonstatic expression, so it cant go into toLaunch using DuplicateObject
 	toLaunch.update_icon()//we update_icon() here so that the door doesnt "flicker on" right after it lands
-	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/fly_me_to_the_moon]
+	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding]
 	toLaunch.forceMove(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
 		if(launchRandomItem)

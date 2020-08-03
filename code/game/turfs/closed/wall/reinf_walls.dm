@@ -47,8 +47,8 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
 
-/turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm)
-	arm.receive_damage(brute=41, wound_bonus = CANT_WOUND)
+/turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 41)
+	return ..()
 
 /turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user, turf/T)
 	//DECONSTRUCTION
@@ -196,12 +196,12 @@
 /turf/closed/wall/r_wall/update_icon()
 	. = ..()
 	if(d_state != INTACT)
-		smooth = SMOOTH_FALSE
+		smoothing_flags = NONE
 		clear_smooth_overlays()
 	else
-		smooth = SMOOTH_TRUE
-		queue_smooth_neighbors(src)
-		queue_smooth(src)
+		smoothing_flags = SMOOTH_TRUE
+		QUEUE_SMOOTH_NEIGHBORS(src)
+		QUEUE_SMOOTH(src)
 
 /turf/closed/wall/r_wall/update_icon_state()
 	if(d_state != INTACT)
@@ -226,6 +226,8 @@
 /turf/closed/wall/r_wall/rust_heretic_act()
 	if(prob(50))
 		return
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
 	ChangeTurf(/turf/closed/wall/r_wall/rust)
 
 /turf/closed/wall/r_wall/syndicate
@@ -235,20 +237,20 @@
 	icon_state = "map-shuttle"
 	explosion_block = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate, /turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plasma/reinforced/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
 
 /turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
 /turf/closed/wall/r_wall/syndicate/nodiagonal
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/r_wall/syndicate/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
 
 /turf/closed/wall/r_wall/syndicate/overspace
 	icon_state = "map-overspace"

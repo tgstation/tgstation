@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "tgui: Fixed a very rare case of exceptions thrown due to bugged localStorage. No more NTOS bluescreens."

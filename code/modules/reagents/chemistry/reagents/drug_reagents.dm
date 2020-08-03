@@ -418,7 +418,7 @@
 
 /datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.setSanity(min(mood.sanity, SANITY_DISTURBED))
+	mood?.setSanity(min(mood.sanity, SANITY_DISTURBED))
 	M.Jitter(5)
 	if(prob(20))
 		M.emote(pick("twitch","laugh","frown"))
@@ -426,7 +426,7 @@
 
 /datum/reagent/drug/happiness/addiction_act_stage2(mob/living/M)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
+	mood?.setSanity(min(mood.sanity, SANITY_UNSTABLE))
 	M.Jitter(10)
 	if(prob(30))
 		M.emote(pick("twitch","laugh","frown"))
@@ -434,7 +434,7 @@
 
 /datum/reagent/drug/happiness/addiction_act_stage3(mob/living/M)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.setSanity(min(mood.sanity, SANITY_CRAZY))
+	mood?.setSanity(min(mood.sanity, SANITY_CRAZY))
 	M.Jitter(15)
 	if(prob(40))
 		M.emote(pick("twitch","laugh","frown"))
@@ -442,7 +442,7 @@
 
 /datum/reagent/drug/happiness/addiction_act_stage4(mob/living/carbon/human/M)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.setSanity(SANITY_INSANE)
+	mood?.setSanity(SANITY_INSANE)
 	M.Jitter(20)
 	if(prob(50))
 		M.emote(pick("twitch","laugh","frown"))
@@ -565,7 +565,7 @@
 /datum/reagent/drug/maint/sludge/on_mob_metabolize(mob/living/L)
 
 	. = ..()
-	ADD_TRAIT(L,TRAIT_HARDLIMBDISABLE,type)
+	ADD_TRAIT(L,TRAIT_HARDLIMBWOUND,type)
 
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -573,7 +573,7 @@
 
 /datum/reagent/drug/maint/sludge/on_mob_end_metabolize(mob/living/M)
 	. = ..()
-	REMOVE_TRAIT(M,TRAIT_HARDLIMBDISABLE,type)
+	REMOVE_TRAIT(M,TRAIT_HARDLIMBWOUND,type)
 
 /datum/reagent/drug/maint/sludge/overdose_process(mob/living/M)
 	. = ..()
