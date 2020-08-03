@@ -34,11 +34,11 @@
 *This is used to make certain mobs (wuvable == TRUE) emote when pet, make a heart emoji at their location, and give the petter a moodlet.
 *
 */
-/mob/living/simple_animal/proc/wuv(mob/M)
+/mob/living/simple_animal/proc/wuv(mob/wuver)
 	new /obj/effect/temp_visual/heart(loc)
 	if(prob(33))
 		manual_emote("[wuvemote]")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
+	SEND_SIGNAL(wuver, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
