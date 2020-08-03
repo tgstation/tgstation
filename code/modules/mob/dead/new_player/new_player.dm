@@ -447,8 +447,6 @@
 
 	H.name = real_name
 
-	H.load_persistent_scars()
-
 	. = H
 	new_character = .
 	if(transfer_after)
