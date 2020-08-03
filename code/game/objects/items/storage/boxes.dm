@@ -1368,8 +1368,8 @@
 /obj/item/storage/box/skillchips/PopulateContents()
 	var/list/skillchips = subtypesof(/obj/item/skillchip)
 
-	for(var/S in skillchips)
-		new S(src)
+	for(var/skillchip in skillchips)
+		new skillchip(src)
 
 /obj/item/storage/box/skillchips/science
 	name = "box of science job skillchips"
