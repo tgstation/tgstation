@@ -672,23 +672,6 @@
 					/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp)
 	crate_name= "APLU MK-I kit"
 
-/datum/supply_pack/engineering/clarke
-	name = "APLU MK-I Crate"
-	desc = "A do-it-yourself kit for building a Clarke Exosuit, designed for exploration and mining, and other station tasks. Batteries not included."
-	cost = 3500
-	contains = list(/obj/item/mecha_parts/chassis/clarke,
-					/obj/item/mecha_parts/part/clarke_torso,
-					/obj/item/mecha_parts/part/clarke_right_arm,
-					/obj/item/mecha_parts/part/clarke_left_arm,
-					/obj/item/stock_parts/capacitor,
-					/obj/item/stock_parts/scanning_module,
-					/obj/item/circuitboard/mecha/clarke/main,
-					/obj/item/circuitboard/mecha/clarke/peripherals,
-					/obj/item/mecha_parts/mecha_equipment/drill,
-					/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
-					/obj/item/mecha_parts/mecha_equipment/orebox_manager)
-	crate_name= "Clarke kit"
-
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
 	desc = "Keep production moving along with thirty conveyor belts. Conveyor switch included. If you have any questions, check out the enclosed instruction book."
@@ -1196,7 +1179,7 @@
 	name = "Chemical Starter Kit Crate"
 	desc = "Contains all the chemicals you'd ever need, for all the fun experiments you can make."
 	cost = 1900			//now in chem dispenser order
-	contains = list(/obj/item/reagent_containers/glass/bottle/aluminum,
+	contains = list(/obj/item/reagent_containers/glass/bottle/aluminium,
 					/obj/item/reagent_containers/glass/bottle/bromine,
 					/obj/item/reagent_containers/glass/bottle/carbon,
 					/obj/item/reagent_containers/glass/bottle/chlorine,
@@ -1204,13 +1187,13 @@
 					/obj/item/reagent_containers/glass/bottle/ethanol,
 					/obj/item/reagent_containers/glass/bottle/fluorine,
 					/obj/item/reagent_containers/glass/bottle/hydrogen,
-					/obj/item/reagent_containers/glass/bottle/idodine,
+					/obj/item/reagent_containers/glass/bottle/iodine,
 					/obj/item/reagent_containers/glass/bottle/iron,
 					/obj/item/reagent_containers/glass/bottle/lithium,
 					/obj/item/reagent_containers/glass/bottle/mercury,
 					/obj/item/reagent_containers/glass/bottle/nitrogen,
 					/obj/item/reagent_containers/glass/bottle/oxygen,
-					/obj/item/reagent_containers/glass/bottle/phosphorous,
+					/obj/item/reagent_containers/glass/bottle/phosphorus,
 					/obj/item/reagent_containers/glass/bottle/potassium,
 					/obj/item/reagent_containers/glass/bottle/radium,
 					/obj/item/reagent_containers/glass/bottle/silicon,
@@ -1221,7 +1204,7 @@
 					/obj/item/reagent_containers/glass/bottle/sulfur,
 					/obj/item/reagent_containers/glass/bottle/sacid,
 					/obj/item/reagent_containers/glass/bottle/water,
-					/obj/item/reagent_containers/glass/bottle/fuel,
+					/obj/item/reagent_containers/glass/bottle/welding_fuel,
 					/obj/item/clothing/glasses/science,
 					/obj/item/reagent_containers/dropper,
 					/obj/item/storage/box/beakers)
@@ -1430,7 +1413,7 @@
 	name = "Advanced RPED crate"
 	desc = "Upgraded parts for upgraded price. Contains less parts than the regular one."
 	cost = 2000
-	contains = list(/obj/item/storage/part_replacer/cargo/advanced)
+	contains = list(/obj/item/storage/part_replacer/cargo/tier2)
 	crate_name = "\improper Advanced RPED crate"
 
 /datum/supply_pack/science/shieldwalls
@@ -1613,6 +1596,23 @@
 	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/service/clarke //miner kit is here put the mech here :)
+	name = "Clarke Crate"
+	desc = "A do-it-yourself kit for building a Clarke Exosuit, designed for exploration and mining, and other station tasks. Batteries not included."
+	cost = 3500
+	access = ACCESS_QM
+	contains = list(/obj/item/mecha_parts/chassis/clarke,
+					/obj/item/mecha_parts/part/clarke_torso,
+					/obj/item/mecha_parts/part/clarke_right_arm,
+					/obj/item/mecha_parts/part/clarke_left_arm,
+					/obj/item/stock_parts/capacitor,
+					/obj/item/stock_parts/scanning_module,
+					/obj/item/circuitboard/mecha/clarke/main,
+					/obj/item/circuitboard/mecha/clarke/peripherals,
+					/obj/item/mecha_parts/mecha_equipment/drill,
+					/obj/item/mecha_parts/mecha_equipment/orebox_manager)
+	crate_name= "Clarke kit"
 
 /datum/supply_pack/service/vending/bartending
 	name = "Booze-o-mat and Coffee Supply Crate"
