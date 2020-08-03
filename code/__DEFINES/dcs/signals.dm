@@ -431,9 +431,9 @@
 
 // /obj/machinery/door/airlock signals
 
-//from /obj/machinery/door/airlock/open(forced=0)
+//from /obj/machinery/door/airlock/open(): (forced)
 #define COMSIG_AIRLOCK_OPEN "airlock_open"
-//from /obj/machinery/door/airlock/close(forced=0)
+//from /obj/machinery/door/airlock/close(): (forced)
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
 
 // /obj/item signals
