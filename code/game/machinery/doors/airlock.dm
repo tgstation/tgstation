@@ -305,14 +305,10 @@
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
-		if(isElectrified())
-			if(!justzap)
-				if(shock(user, 100))
-					justzap = TRUE
-					addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
-					return
-			else
-				return
+		if(isElectrified() && !justzap && shock(user, 100))
+			justzap = TRUE
+			addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
+			return
 		else if(user.hallucinating() && ishuman(user) && prob(1) && !operating)
 			var/mob/living/carbon/human/H = user
 			if(H.gloves)
@@ -721,9 +717,9 @@
 			attack_ai(user)
 
 /obj/machinery/door/airlock/attack_animal(mob/user)
-	. = ..()
-	if(isElectrified())
-		shock(user, 100)
+	if(isElectrified() && shock(user, 100))
+		return
+	return ..()
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return attack_hand(user)
@@ -733,9 +729,8 @@
 	if(.)
 		return
 	if(!(issilicon(user) || isAdminGhostAI(user)))
-		if(isElectrified())
-			if(shock(user, 100))
-				return
+		if(isElectrified() && shock(user, 100))
+			return
 
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
@@ -791,9 +786,8 @@
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
 	if(!issilicon(user) && !isAdminGhostAI(user))
-		if(isElectrified())
-			if(shock(user, 75))
-				return
+		if(isElectrified() && shock(user, 75))
+			return
 	add_fingerprint(user)
 
 	if(panel_open)
@@ -997,9 +991,8 @@
 		return
 	if(hasPower())
 		if(forced)
-			if(isElectrified())
-				shock(user,100)//it's like sticking a forck in a power socket
-				return
+			if(isElectrified() && shock(user,100))
+				return //it's like sticking a fork in a power socket
 
 			if(!density)//already open
 				return
@@ -1177,9 +1170,8 @@
 		loseBackupPower()
 
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(isElectrified())
+	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
 		add_fingerprint(user)
-		shock(user, 100) //Mmm, fried xeno!
 		return
 	if(!density) //Already open
 		return ..()
