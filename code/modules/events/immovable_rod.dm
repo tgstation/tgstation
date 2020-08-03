@@ -161,11 +161,12 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
 	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
 
-	num_mobs_hit++
-	if(smeared_mob.client)
-		num_sentient_mobs_hit++
-		if(iscarbon(smeared_mob))
-			num_sentient_people_hit++
+	if(smeared_mob.stat != DEAD)
+		num_mobs_hit++
+		if(smeared_mob.client)
+			num_sentient_mobs_hit++
+			if(iscarbon(smeared_mob))
+				num_sentient_people_hit++
 
 	if(iscarbon(smeared_mob))
 		var/mob/living/carbon/smeared_carbon = smeared_mob
