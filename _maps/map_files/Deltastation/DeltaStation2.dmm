@@ -11235,13 +11235,15 @@
 	pixel_y = -26
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/structure/cable,
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/white,
 /area/janitor)
 "azd" = (
