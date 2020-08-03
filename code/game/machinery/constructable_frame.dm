@@ -183,11 +183,9 @@
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/machinery/new_machine = new circuit.build_path(loc)
-					if(!istype(new_machine, /obj/machinery))
-						qdel(src)
-						return
+					var/obj/potential_machine = new circuit.build_path(loc)
 					if(ismachinery(new_machine))
+						var/obj/machinery/new_machine = potential_machine
 						if(new_machine.circuit)
 							QDEL_NULL(new_machine.circuit)
 						new_machine.circuit = circuit
