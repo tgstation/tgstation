@@ -351,6 +351,9 @@
 
 	if(humanc && CONFIG_GET(flag/roundstart_traits))
 		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
+	if(humanc)
+		addtimer(CALLBACK(humanc, /mob/living/carbon/human/proc/increment_scar_slot), 1 SECONDS)
+		addtimer(CALLBACK(humanc, /mob/living/carbon/human/proc/load_persistent_scars), 1.5 SECONDS)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
@@ -444,7 +447,6 @@
 
 	H.name = real_name
 
-	H.increment_scar_slot()
 	H.load_persistent_scars()
 
 	. = H

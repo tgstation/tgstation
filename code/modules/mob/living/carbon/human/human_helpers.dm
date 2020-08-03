@@ -184,9 +184,12 @@
 
 	var/path = "data/player_saves/[check_ckey[1]]/[check_ckey]/scars.sav"
 	var/index = mind.current_scar_slot
-	if (!index && fexists(path))
-		var/savefile/F = new /savefile(path)
-		index = F["current_index"]
+	if (!index)
+		if(fexists(path))
+			var/savefile/F = new /savefile(path)
+			index = F["current_index"] || 1
+		else
+			index = 1
 
 	mind.current_scar_slot = (index % PERSISTENT_SCAR_SLOTS) + 1 || 1
 
