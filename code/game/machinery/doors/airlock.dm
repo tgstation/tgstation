@@ -309,13 +309,11 @@
 			justzap = TRUE
 			addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
 			return
-		else if(user.hallucinating() && ishuman(user) && prob(1) && !operating)
-			var/mob/living/carbon/human/H = user
-			if(H.gloves)
-				var/obj/item/clothing/gloves/G = H.gloves
-				if(G.siemens_coefficient)//not insulated
-					new /datum/hallucination/shock(H)
-					return
+		else if(user.hallucinating() && iscarbon(user) && prob(1) && !operating)
+			var/mob/living/carbon/C = user
+			if(!C.wearing_shock_proof_gloves())
+				new /datum/hallucination/shock(C)
+				return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
 			if(cyclelinkedairlock.operating)
