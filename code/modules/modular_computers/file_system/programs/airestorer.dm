@@ -51,7 +51,10 @@
 					ai_slot.try_eject(0,usr)
 					return TRUE
 		if("PRG_clearZeroth")
-			A.laws.clear_zeroth_law(1)
+			var/datum/ai_laws/AIlaws = A.laws
+			if(!AIlaws.zeroth)
+				return
+			AIlaws.clear_zeroth_law(1)
 			var/time = time2text(world.realtime,"hh:mm:ss")
 			var/ainame = A ? A.name : "empty Intellicard"
 			var/aikey = A ? A.ckey : "null"
@@ -126,6 +129,7 @@
 				data["health"] = (AI.health + 100) / 2
 				data["isDead"] = AI.stat == DEAD
 				data["laws"] = AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
+				data["zeroth"] = AIlaws.zeroth
 
 	return data
 

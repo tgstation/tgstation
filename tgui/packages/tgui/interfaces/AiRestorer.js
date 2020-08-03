@@ -27,6 +27,7 @@ export const AiRestorerContent = (props, context) => {
     restoring,
     health,
     ejectable,
+    zeroth,
   } = data;
   return (
     <Fragment>
@@ -87,6 +88,7 @@ export const AiRestorerContent = (props, context) => {
           <Button
             fluid
             icon="plus"
+            disabled={!zeroth}
             content="Remove Law Zero"
             onClick={() => act('PRG_clearZeroth')}
           />
