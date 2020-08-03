@@ -180,7 +180,6 @@
 		CRASH("Someone passed nothing to manual_emote(), fix it")
 
 	log_message(text, LOG_EMOTE)
-	text = "<b>[src]</b> " + text
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
