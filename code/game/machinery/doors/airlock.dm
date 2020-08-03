@@ -66,7 +66,6 @@
 	var/aiHacking = FALSE
 	var/closeOtherId //Cyclelinking for airlocks that aren't on the same x or y coord as the target.
 	var/obj/machinery/door/airlock/closeOther
-	var/justzap = FALSE
 	var/obj/item/electronics/airlock/electronics
 	COOLDOWN_DECLARE(shockCooldown)
 	var/obj/item/note //Any papers pinned to the airlock
@@ -305,9 +304,7 @@
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
-		if(isElectrified() && !justzap && shock(user, 100))
-			justzap = TRUE
-			addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
+		if(isElectrified() && shock(user, 100))
 			return
 		else if(user.hallucinating() && iscarbon(user) && prob(1) && !operating)
 			var/mob/living/carbon/C = user
