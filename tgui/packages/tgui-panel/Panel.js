@@ -1,15 +1,18 @@
+import { useLocalState } from 'tgui/backend';
 import { Button, Flex, Section, Box } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
+import { useSelector } from 'tgui/store';
 import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
+import { useGameState } from './game';
 import { PingIndicator } from './ping';
 import { SettingsPanel, useSettings } from './settings';
-import { useLocalState } from 'tgui/backend';
-import { useSelector } from 'tgui/store';
+import { Notifications } from './Notifications';
 
 export const Panel = (props, context) => {
   const audio = useAudio(context);
   const settings = useSettings(context);
+  const game = useGameState(context);
   const [audioOpen, setAudioOpen] = useLocalState(
     context, 'audioOpen', audio.playing);
   const [settingsOpen, setSettingsOpen] = useLocalState(
@@ -73,6 +76,27 @@ export const Panel = (props, context) => {
               <ChatPanel
                 lineHeight={settings.lineHeight} />
             </Pane.Content>
+            <Notifications>
+              {game.connectionLostAt && (
+                <Notifications.Item
+                  rightSlot={(
+                    <Button
+                      color="white"
+                      onClick={() => Byond.command('.reconnect')}>
+                      Reconnect
+                    </Button>
+                  )}>
+                  You are either AFK, experiencing lag or the connection
+                  has closed.
+                </Notifications.Item>
+              )}
+              {game.roundRestartedAt && (
+                <Notifications.Item>
+                  The connection has been closed because the server is
+                  restarting. Please wait while you automatically reconnect.
+                </Notifications.Item>
+              )}
+            </Notifications>
           </Section>
         </Flex.Item>
       </Flex>
