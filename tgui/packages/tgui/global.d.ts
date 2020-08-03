@@ -82,6 +82,11 @@ interface ByondType {
   winget(id: string, propNames: string[]): Promise<object>;
 
   /**
+   * Assigns properties to BYOND skin elements.
+   */
+  winset(props: object): void;
+
+  /**
    * Assigns properties to the BYOND skin element.
    */
   winset(id: string, props: object): void;

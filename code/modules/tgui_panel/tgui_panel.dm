@@ -86,12 +86,6 @@
 			),
 		))
 		return TRUE
-	if(type == "changeTheme")
-		if(payload["name"] == "dark")
-			client.force_dark_theme()
-		if(payload["name"] == "light")
-			client.force_white_theme()
-		return TRUE
 	if(type == "audio/setAdminMusicVolume")
 		client.admin_music_volume = payload["volume"]
 		return TRUE

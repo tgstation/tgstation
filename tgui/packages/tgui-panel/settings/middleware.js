@@ -5,14 +5,9 @@
  */
 
 import { storage } from 'common/storage';
-import { sendMessage } from 'tgui/backend';
+import { setClientTheme } from '../theme';
 import { loadSettings } from './actions';
 import { selectSettings } from './selectors';
-
-export const sendChangeTheme = name => sendMessage({
-  type: 'changeTheme',
-  payload: { name },
-});
 
 export const settingsMiddleware = store => {
   let initialized = false;
@@ -32,7 +27,7 @@ export const settingsMiddleware = store => {
         // Set client theme
         const { theme } = settings;
         if (theme) {
-          sendChangeTheme(theme);
+          setClientTheme(theme);
         }
         store.dispatch(loadSettings(settings));
       });
@@ -42,7 +37,7 @@ export const settingsMiddleware = store => {
       // Set client theme
       const { theme } = payload;
       if (theme) {
-        sendChangeTheme(theme);
+        setClientTheme(theme);
       }
       // Pass action to get an updated state
       next(action);

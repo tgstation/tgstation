@@ -147,8 +147,11 @@ window.Byond = (function () {
   };
 
   Byond.winset = function (id, propName, propValue) {
+    if (typeof id === 'object' && id !== null) {
+      return Byond.call('winset', id);
+    }
     var props = {};
-    if (propName === 'string') {
+    if (typeof propName === 'string') {
       props[propName] = propValue;
     }
     else {
