@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { Color } from 'common/color';
 import { toFixed } from 'common/math';
 import { Box } from 'tgui/components';

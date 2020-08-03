@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { useDispatch, useSelector } from 'tgui/store';
 import { updateSettings } from './actions';
 import { selectSettings } from './selectors';

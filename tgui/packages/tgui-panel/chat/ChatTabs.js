@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { Box, Tabs } from 'tgui/components';
 import { useDispatch, useSelector } from 'tgui/store';
 import { changeChatPage } from './actions';

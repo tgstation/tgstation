@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { Button, Flex, Slider, Knob } from 'tgui/components';

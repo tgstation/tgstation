@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 export const PING_INTERVAL = 2500;
 export const PING_TIMEOUT = 2000;
 export const PING_MAX_FAILS = 3;

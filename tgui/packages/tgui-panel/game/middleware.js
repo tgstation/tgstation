@@ -1,5 +1,11 @@
-import { connectionLost, roundRestarted, connectionRestored } from './actions';
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { pingSuccess } from '../ping/actions';
+import { connectionLost, connectionRestored, roundRestarted } from './actions';
 import { selectGameState } from './selectors';
 
 const withTimestamp = action => ({

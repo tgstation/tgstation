@@ -1,7 +1,7 @@
 /**
  * Ghetto performance measurement tools.
  *
- * Uses NODE_ENV to redact itself from production bundles.
+ * Uses NODE_ENV to remove itself from production builds.
  *
  * @file
  * @copyright 2020 Aleksej Komarov

@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { AudioPlayer } from './player';
 
 export const audioMiddleware = store => {

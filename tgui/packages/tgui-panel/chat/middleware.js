@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { storage } from 'common/storage';
 import { createLogger } from 'tgui/logging';
 import { changeChatPage, loadChat, updateMessageCount } from './actions';

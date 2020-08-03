@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { toFixed } from 'common/math';
 import { Dropdown, LabeledList, NumberInput, Section, Knob } from 'tgui/components';
 import { useDispatch, useSelector } from 'tgui/store';

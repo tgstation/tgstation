@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { useLocalState } from 'tgui/backend';
 import { Button, Flex, Section, Box } from 'tgui/components';
 import { Pane } from 'tgui/layouts';

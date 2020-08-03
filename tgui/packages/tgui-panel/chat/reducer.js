@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { toArray } from 'common/collections';
 import { changeChatPage, updateMessageCount } from './actions';
 import { DEFAULT_PAGE } from './constants';

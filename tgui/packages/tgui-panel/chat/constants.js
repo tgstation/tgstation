@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { createUuid } from 'common/uuid';
 
 export const MAX_VISIBLE_MESSAGES = 2500;

@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { toArray } from 'common/collections';
 
 export const selectChat = state => state.chat;
