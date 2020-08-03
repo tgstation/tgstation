@@ -270,7 +270,7 @@
 		return FALSE
 	return TRUE
 
-/mob/runechat_prefs_check(mob/target, message, visible_message_flags = NONE)
+/mob/runechat_prefs_check(mob/target, visible_message_flags = NONE)
 	if(!target.client?.prefs.chat_on_map)
 		return FALSE
 	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.see_rc_emotes)
@@ -287,7 +287,7 @@
 	return
 
 ///Is the mob incapacitated
-/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
+/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
 	return
 
 /**
@@ -629,8 +629,9 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (CONFIG_GET(flag/norespawn))
+	if (CONFIG_GET(flag/norespawn) && (!check_rights_for(usr.client, R_ADMIN) || alert(usr, "Respawn configs disabled. Do you want to use your permissions to circumvent it?", "Respawn", "Yes", "No") != "Yes"))
 		return
+
 	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
@@ -655,8 +656,6 @@
 		return
 
 	M.key = key
-//	M.Login()	//wat
-	return
 
 
 /**

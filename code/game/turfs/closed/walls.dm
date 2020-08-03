@@ -28,7 +28,7 @@
 	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust)
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 
 	var/list/dent_decals
 
@@ -316,6 +316,8 @@
 	add_overlay(dent_decals)
 
 /turf/closed/wall/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
 	ChangeTurf(/turf/closed/wall/rust)
 
 

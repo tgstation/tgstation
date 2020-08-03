@@ -15,7 +15,7 @@
 	/turf/open/floor,
 	/turf/closed/wall,
 	/obj/structure/falsewall)
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 	//	flags = CONDUCT_1
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
@@ -76,7 +76,7 @@
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk"
 	number_of_mats = 2
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 	canSmoothWith = null
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
@@ -102,7 +102,7 @@
 	icon_state = "catwalk"
 	number_of_mats = 1
 	color = "#5286b9ff"
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 	canSmoothWith = null
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
