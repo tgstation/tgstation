@@ -211,10 +211,3 @@
 	var/list/emotes_used
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
-
-	/// Used for making mobs show a heart emoji and give a mood boost when pet.
-	var/pettable = FALSE
-	/// A string for a happy pettable animal emoting when pet.
-	var/helppet = ""
-	/// A string for a sad/mad pettable animal emoting when hit harmfully.
-	var/harmpet = ""

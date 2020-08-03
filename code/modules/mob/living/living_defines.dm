@@ -138,3 +138,8 @@
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
 	var/icon/head_icon = 'icons/mob/pets_held.dmi'//what it looks like on your head
 	var/held_state = ""//icon state for the above
+
+	/// Used for making mobs show a heart emoji and give a mood boost when pet.
+	var/pettable = FALSE
+	/// A string for a pettable animal emoting when pet.
+	var/petemote = ""

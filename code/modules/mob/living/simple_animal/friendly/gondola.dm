@@ -29,8 +29,7 @@
 	health = 200
 	del_on_death = TRUE
 	pettable = TRUE
-	helppet = "smiles!"
-	harmpet = "frowns!"
+	petemote = "smiles!"
 
 	//Gondolas don't make footstep sounds
 

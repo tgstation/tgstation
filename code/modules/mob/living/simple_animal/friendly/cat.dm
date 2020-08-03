@@ -39,8 +39,7 @@
 	can_be_held = TRUE
 	held_state = "cat2"
 	pettable = TRUE
-	helppet = "purrs!"
-	harmpet = "hisses!"
+	petemote = "purrs!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

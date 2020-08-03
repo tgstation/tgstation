@@ -189,4 +189,4 @@
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
 			M.show_message(text)
 
-	visible_message(text)
+	visible_message(text, visible_message_flags = EMOTE_MESSAGE)

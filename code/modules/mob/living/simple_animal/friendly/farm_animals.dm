@@ -145,8 +145,7 @@
 	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
 	pettable = TRUE
-	helppet = "moos happily!"
-	harmpet = "moos in pain!"
+	petemote = "moos happily!"
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
@@ -267,8 +266,7 @@
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
 	pettable = TRUE
-	helppet = "chirps!"
-	harmpet = "cries and tries to fly away!"
+	petemote = "chirps!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

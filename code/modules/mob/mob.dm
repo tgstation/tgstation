@@ -1346,29 +1346,3 @@
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat)
 	. = stat
 	stat = new_stat
-
-/mob/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	if (!pettable)
-		return
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/**
-*This is a proc used to make a pettable mob give a happy or sad emote, depending on if they were help or harm intent clicked.
-*
-*/
-/mob/proc/wuv(change, mob/M)
-	if(!change)
-		return
-	if(change > 0)
-		if(M && stat != DEAD) 
-			new /obj/effect/temp_visual/heart(loc)
-			manual_emote("[helppet]")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-			return
-	if(M && stat != DEAD) 
-		manual_emote("[harmpet]")

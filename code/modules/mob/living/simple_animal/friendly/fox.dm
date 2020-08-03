@@ -24,8 +24,7 @@
 	can_be_held = TRUE
 	held_state = "fox"
 	pettable = TRUE
-	helppet = "pants and yaps happily!"
-	harmpet = "howls!"
+	petemote = "pants and yaps happily!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

@@ -27,8 +27,7 @@
 	glide_size = 2
 	held_state = "sloth"
 	pettable = TRUE
-	helppet = "slowly smiles!"
-	harmpet = "slowly frowns!"
+	petemote = "slowly smiles!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

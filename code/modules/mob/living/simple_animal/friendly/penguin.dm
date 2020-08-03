@@ -19,8 +19,7 @@
 	icon = 'icons/mob/penguins.dmi'
 	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/reagent_containers/food/snacks/meat/slab/penguin = 3)
 	pettable = TRUE
-	helppet = "honks happily!"
-	harmpet = "cries and flaps its wings!"
+	petemote = "honks happily!"
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
