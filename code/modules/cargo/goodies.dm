@@ -135,3 +135,9 @@
 	desc = "Contains one standard epinephrine medipen and one standard emergency first-aid kit medipen. For when you want to prepare for the worst."
 	cost = 500
 	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+
+/datum/supply_pack/goody/bluespace_shelter
+	name = "Bluespace Shelter Capsule"
+	desc = "A single bluespace shelter capsule. In case you need one but aren't a miner."
+	cost = 1250
+	contains = list(/obj/item/survivalcapsule)
