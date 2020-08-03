@@ -362,6 +362,10 @@
 	name = "water bottle"
 	list_reagents = list(/datum/reagent/water = 30)
 
+/obj/item/reagent_containers/glass/bottle/stable_plasma
+	name = "stable plasma bottle"
+	list_reagents = list(/datum/reagent/stable_plasma = 30)
+
 /obj/item/reagent_containers/glass/bottle/ethanol
 	name = "ethanol bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol = 30)
