@@ -667,14 +667,14 @@
 	return TRUE
 
 
-//Armor: Gives the target a basic cultist combat loadout
+//Armor: Gives the target (cultist) a basic cultist combat loadout
 /obj/item/melee/blood_magic/armor
 	name = "Arming Aura"
 	desc = "Will equipt cult combat gear onto a cultist on contact."
 	color = "#33cc33" // green
 
 /obj/item/melee/blood_magic/armor/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(iscarbon(target) && proximity)
+	if(iscarbon(target) && iscultist(target) && proximity)
 		uses--
 		var/mob/living/carbon/C = target
 		C.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [C]!</span>")
