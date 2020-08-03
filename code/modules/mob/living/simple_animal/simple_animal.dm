@@ -156,7 +156,7 @@
 
 	/// Used for making mobs show a heart emoji and give a mood boost when pet.
 	var/wuvable = FALSE
-	/// A string for an emoting when the above is true for the mob being pet.
+	/// A string for an emote used when var/wuvable == true for the mob being pet.
 	var/wuvemote = ""
 
 
