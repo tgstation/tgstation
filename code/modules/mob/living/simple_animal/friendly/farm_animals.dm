@@ -230,6 +230,32 @@
 		return
 	return ..()
 
+//big milkies
+/mob/living/simple_animal/cow/milker
+	name = "Massive Milker"
+	desc = "It seems to jiggle from side to side. Strange."
+	emote_see = list("jiggles.", "bounces in place.", "vibrates!")
+	initial_language_holder = /datum/language_holder/goflish
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3, /obj/item/slime_extract/grey = 3)
+	icon_state = "cow_jelly"
+	icon_living = "cow_jelly"
+	icon_dead = "cow_dead_jelly"
+	pass_flags = PASSTABLE | PASSGRILLE
+	ventcrawler = VENTCRAWLER_ALWAYS
+	faction = list("slime","neutral")
+	speak_emote = list("blorbles")
+	verb_say = "blorbles"
+	verb_ask = "inquisitively blorbles"
+	verb_exclaim = "loudly blorbles"
+	verb_yell = "loudly blorbles"
+	speak = list("Jiggle.","Sandwich?","The Salami-Lid", "*Misses*")
+	gold_core_spawnable = FRIENDLY_SPAWN
+	speak_chance = 10
+
+/mob/living/simple_animal/cow/Life()
+	. = ..()
+	if(stat == CONSCIOUS)
+		udder.generateJelly()
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"
@@ -394,6 +420,10 @@
 	if(prob(5))
 		reagents.add_reagent(/datum/reagent/consumable/milk, rand(5, 10))
 
+/obj/item/udder/proc/generateJelly()
+	if(prob(10))
+		reagents.add_reagent(/datum/reagent/toxin/slimejelly, rand(5, 10))
+
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/reagent_containers/glass/G = O
 	if(G.reagents.total_volume >= G.volume)
@@ -404,6 +434,7 @@
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
 		to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
+
 
 /mob/living/simple_animal/deer
 	name = "doe"

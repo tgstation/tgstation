@@ -62,14 +62,14 @@
 	desc = "Turns out Syndicate agents find these things valuable for some reason. Unlike the Syndicate, we don't know that reason, so buy 'em from us instead!"
 	item = /obj/item/stack/telecrystal
 
-	price_min = 1000
-	price_max = 1500
+	price_min = 2000
+	price_max = 3500
 	stock_min = 2
 	stock_max = 5
 	availability_prob = 75
 
 /datum/blackmarket_item/misc/telecrystal/spawn_item(loc)
-	if (prob(10))
+	if (prob(1))
 		return new /obj/item/stack/telecrystal/twenty(loc)
 	return ..()
 
@@ -77,7 +77,7 @@
 	name = "Random Item"
 	desc = "Picking this will purchase a random item from our fourty seven packed warehouses! Most of these items aren't even on our main stock list, so roll the dice if you dare!"
 	item = /obj/effect/gibspawner/generic
-	price_min = 1000
+	price_min = 3000
 	price_max = 6000
 	availability_prob = 100
 	stock_min = 3
@@ -94,7 +94,7 @@
 	/obj/item/grenade/chem_grenade/glitter/blue,
 	/obj/item/pen/edagger,
 	/obj/item/pen/sleepy,
-//	/mob/living/simple_animal/pet/fox/Rose,
+	/mob/living/simple_animal/pet/fox/Rose,
 	/obj/item/storage/box/syndicate/bundle_a,
 	/obj/item/storage/box/syndicate/bundle_b,
 	/obj/item/storage/box/syndie_kit/plushies,
@@ -149,8 +149,8 @@
 	/obj/item/ammo_casing/a40mm,
 	/obj/item/storage/backpack/duffelbag/syndie/ammo/smg,
 	/obj/item/ammo_box/magazine/smgm45/incen,
-//	/mob/living/simple_animal/hostile/gorilla,
-//	/mob/living/simple_animal/hostile/asteroid/goliath,
+	/mob/living/simple_animal/hostile/gorilla,
+	/mob/living/simple_animal/hostile/asteroid/goliath,
 	/obj/item/onetankbomb,
 	/obj/item/clothing/under/costume/yakuza,
 	/obj/item/clothing/under/rank/prisoner,
@@ -173,7 +173,13 @@
 	/obj/item/toy/sword,
 	/obj/item/toy/foamblade,
 	/obj/item/dualsaber/toy,
-	/obj/item/toy/snappop/phoenix)
+	/obj/item/toy/snappop/phoenix,
+	/obj/machinery/computer/arcade/amputation,
+	/mob/living/simple_animal/bot/vibebot,
+	/mob/living/simple_animal/bot/honkbot,
+	/obj/item/card/id/syndicate,
+	/mob/living/simple_animal/cow/milker,
+	)
 	var/marketrandom = pick(gamers)
 	return new marketrandom(loc)
 	return ..()
@@ -189,19 +195,26 @@
 	stock_max = 1
 	availability_prob = 50
 
-/datum/blackmarket_item/misc/gorrilla
+/datum/blackmarket_item/misc/cat/spawn_item(loc)
+	if (prob(1))
+		return new /mob/living/simple_animal/pet/cat/bolty(loc)
+	return ..()
+
+
+/datum/blackmarket_item/misc/gorilla
 	name = "Primate"
 	desc = "Perfect for any xenobiologist or geneticist who needs to get their science on! Not Quality Tested."
 	item = /mob/living/simple_animal/hostile/gorilla
 
 
-	price_min = 100
-	price_max = 500
+	price_min = 1000
+	price_max = 1500
 	stock_min = 1
-	stock_max = 10
+	stock_max = 3
 	availability_prob = 100
 
 /datum/blackmarket_item/misc/gorilla/spawn_item(loc)
-	if (prob(50))
+	if (prob(95))
 		return new /mob/living/carbon/monkey(loc)
 	return ..()
+
