@@ -39,7 +39,7 @@
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
-/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, hardcoded = FALSE)
+/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
 	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
@@ -157,40 +157,36 @@
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_EMOTEMUTE))
 			return FALSE
-
-/datum/emote/coders_screech //This is a shorthand to allow for custom emotes on our side while ignoring any player only checks that come with "me"
-	key = "code"
-
-/datum/emote/coders_screech/run_emote(mob/user, params, type_override, intentional = FALSE, hardcoded = FALSE) //Just override the song and dance
+/**
+* Allows the intrepid coder to send a basic emote
+* Takes text as input, sends it out to those who need to know after some light parsing
+* If you need something more complex, make it into a datum emote
+* Arguments:
+* * text - The text to send out
+*/
+/mob/proc/manual_emote(text) //Just override the song and dance
 	. = TRUE
-	if(!can_run_emote(user, TRUE, intentional) || !hardcoded)
-		return FALSE
-	var/msg = params
-	msg = replace_pronoun(user, msg)
+	if(findtext(text, "their"))
+		text = replacetext(text, "their", p_their())
+	if(findtext(text, "them"))
+		text = replacetext(text, "them", p_them())
+	if(findtext(text, "%s"))
+		text = replacetext(text, "%s", p_s())
 
-	if(isliving(user))
-		var/mob/living/L = user
-		for(var/obj/item/implant/I in L.implants)
-			I.trigger(key, L)
-
-	if(!msg)
+	if(stat != CONSCIOUS)
 		return
 
-	user.log_message(msg, LOG_EMOTE)
-	msg = "<b>[user]</b> " + msg
+	if(!text)
+		CRASH("Someone passed nothing to manual_emote(), fix it")
 
-	var/tmp_sound = get_sound(user)
-	if(tmp_sound && (!only_forced_audio || !intentional))
-		playsound(user, tmp_sound, 50, vary)
+	log_message(text, LOG_EMOTE)
+	text = "<b>[src]</b> " + text
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
-		var/T = get_turf(user)
+		var/T = get_turf(src)
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message(msg)
+			M.show_message(text)
 
-	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(msg)
-	else
-		user.visible_message(msg)
+	visible_message(text)

@@ -97,7 +97,7 @@
 	key_third_person = "wags"
 	message = "wags their tail."
 
-/datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional, hardcoded)
+/datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
 		return
@@ -128,7 +128,7 @@
 	key_third_person = "wings"
 	message = "their wings."
 
-/datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional, hardcoded)
+/datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(.)
 		var/mob/living/carbon/human/H = user

@@ -1,5 +1,5 @@
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, hardcoded = FALSE)
+/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE)
 	act = lowertext(act)
 	var/param = message
 	var/custom_param = findchar(act, " ")
@@ -18,7 +18,7 @@
 		if(!P.check_cooldown(src, intentional))
 			silenced = TRUE
 			continue
-		if(P.run_emote(src, param, m_type, intentional, hardcoded))
+		if(P.run_emote(src, param, m_type, intentional))
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			return TRUE
 	if(intentional && !silenced)
@@ -32,7 +32,7 @@
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
 
-/datum/emote/flip/run_emote(mob/user, params , type_override, intentional, hardcoded)
+/datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
 	if(.)
 		user.SpinAnimation(7,1)
@@ -66,7 +66,7 @@
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
 
-/datum/emote/spin/run_emote(mob/user, params ,  type_override, intentional, hardcoded)
+/datum/emote/spin/run_emote(mob/user, params ,  type_override, intentional)
 	. = ..()
 	if(.)
 		user.spin(20, 1)

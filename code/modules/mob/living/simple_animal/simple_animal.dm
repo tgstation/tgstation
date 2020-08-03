@@ -258,23 +258,23 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote("code", 1, "[pick(emote_see)]", hardcoded = TRUE)
+							manual_emote(pick(emote_see))
 						else
-							emote("code", 2, "[pick(emote_hear)]", hardcoded = TRUE)
+							manual_emote(pick(emote_hear))
 				else
 					say(pick(speak), forced = "poly")
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote("code", 1, pick(emote_see), hardcoded = TRUE)
+					manual_emote(pick(emote_see))
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote("code", 2, pick(emote_hear), hardcoded = TRUE)
+					manual_emote(pick(emote_hear))
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
-						emote("code", 1, pick(emote_see), hardcoded = TRUE)
+						manual_emote(pick(emote_see))
 					else
-						emote("code", 2, pick(emote_hear), hardcoded = TRUE)
+						manual_emote(pick(emote_hear))
 
 /mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE
@@ -383,7 +383,7 @@
 		verb_say = pick(speak_emote)
 	. = ..()
 
-/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE, hardcoded = FALSE)
+/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
 	if(stat)
 		return FALSE
 	return ..()
