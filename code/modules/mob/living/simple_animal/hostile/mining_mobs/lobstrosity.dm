@@ -1,3 +1,7 @@
+/**
+  *	Lobstrosities, the poster boy of charging AI mobs. Drops crab meat and bones.
+  * Outside of charging, it's intended behavior is that it is generally slow moving, but makes up for that with a knockdown attack to score additional hits.
+  */
 /mob/living/simple_animal/hostile/asteroid/lobstrosity
 	name = "lobstrosity"
 	desc = "A marvel of evolution gone wrong, the frosty ice produces underground lakes where these ill tempered seafood gather. Beware its charge."
@@ -10,8 +14,8 @@
 	friendly_verb_continuous = "chitters at"
 	friendly_verb_simple = "chits at"
 	speak_emote = list("clatters")
-	speed = 6
-	move_to_delay = 6
+	speed = 3
+	move_to_delay = 20
 	maxHealth = 100
 	health = 100
 	obj_damage = 15
@@ -23,10 +27,8 @@
 	vision_range = 5
 	aggro_vision_range = 7
 	charger = TRUE
-	charger_speed = 2
-
+	charge_distance = 4
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/crab = 2, /obj/item/stack/sheet/bone = 2)
-	loot = list()
-	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
+	gold_core_spawnable = HOSTILE_SPAWN
