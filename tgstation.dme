@@ -2966,6 +2966,7 @@
 #include "code\modules\spells\spell_types\area_teleport.dm"
 #include "code\modules\spells\spell_types\bloodcrawl.dm"
 #include "code\modules\spells\spell_types\charge.dm"
+#include "code\modules\spells\spell_types\cone_spells.dm"
 #include "code\modules\spells\spell_types\conjure.dm"
 #include "code\modules\spells\spell_types\construct_spells.dm"
 #include "code\modules\spells\spell_types\curse.dm"
