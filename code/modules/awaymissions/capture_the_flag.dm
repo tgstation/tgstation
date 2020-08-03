@@ -217,7 +217,7 @@
 
 
 		if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
-			to_chat(user, "<span class='warning'>CTF has been disabled by admins.</span>")
+			to_chat(user, "<span class='warning'>CTF has been temporarily disabled by admins.</span>")
 			return
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len

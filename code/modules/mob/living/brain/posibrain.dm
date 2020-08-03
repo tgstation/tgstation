@@ -49,7 +49,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(!brainmob)
 		brainmob = new(src)
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		to_chat(user, "<span class='warning'>Central Command has outlawed posibrain sentience in this sector...</span>")
+		to_chat(user, "<span class='warning'>Central Command has temporarily outlawed posibrain sentience in this sector...</span>")
 	if(is_occupied())
 		to_chat(user, "<span class='warning'>This [name] is already active!</span>")
 		return

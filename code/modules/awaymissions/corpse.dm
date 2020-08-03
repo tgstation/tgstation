@@ -38,7 +38,7 @@
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
-		to_chat(user, "<span class='warning'>An admin has disabled non-admin ghost roles!</span>")
+		to_chat(user, "<span class='warning'>An admin has temporarily disabled non-admin ghost roles!</span>")
 		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
