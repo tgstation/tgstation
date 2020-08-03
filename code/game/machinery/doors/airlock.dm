@@ -320,9 +320,7 @@
 	..()
 
 /obj/machinery/door/airlock/proc/isElectrified()
-	if(secondsElectrified != MACHINE_NOT_ELECTRIFIED)
-		return TRUE
-	return FALSE
+	return (secondsElectrified != MACHINE_NOT_ELECTRIFIED)
 
 /obj/machinery/door/airlock/proc/canAIControl(mob/user)
 	return ((aiControlDisabled != 1) && !isAllPowerCut())
