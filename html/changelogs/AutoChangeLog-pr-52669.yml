@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Pets will no longer breed with their children."
+  - bugfix: "Pets will no longer breed infinitely despite having a ton of children around."
