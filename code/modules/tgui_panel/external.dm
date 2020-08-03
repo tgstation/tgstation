@@ -5,10 +5,6 @@
 
 /client/var/datum/tgui_panel/tgui_panel
 
-/proc/tgui_panel_setup(client/client)
-	client.tgui_panel = new(client)
-	client.tgui_panel.initialize()
-
 /**
  * Calls sync_chat_regexes on all currently owned tgui_panel datums
  */
@@ -33,10 +29,11 @@
 		action = alert(src, "tgui panel was not initialized!\nSet it up again?", "", "OK", "Cancel")
 		if(action != "OK")
 			return
-		tgui_panel_setup(src)
+		tgui_panel = new(src)
+		tgui_panel.initialize()
 		action = alert(src, "Wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
 		if(action == "Fixed")
-			log_tgui(src, "tgui_panel: Fixed by 'tgui_panel_setup'")
+			log_tgui(src, "tgui_panel: Fixed by calling 'new' + 'initialize'")
 			return
 	// Not ready
 	if(!tgui_panel?.is_ready())

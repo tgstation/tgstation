@@ -33,10 +33,13 @@ const loadChatFromStorage = async store => {
   });
   storage.get('chat-messages').then(messages => {
     if (messages) {
-      chatRenderer.processBatch([
+      const batch = [
         ...messages,
         createReconnectedMessage(),
-      ]);
+      ];
+      chatRenderer.processBatch(batch, {
+        prepend: true,
+      });
     }
   });
 };

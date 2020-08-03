@@ -190,11 +190,17 @@ class ChatRenderer {
     return null;
   }
 
-  processBatch(batch) {
+  processBatch(batch, options = {}) {
+    const { prepend } = options;
     // Queue up messages until chat is mounted
     if (!this.rootNode) {
       for (let payload of batch) {
-        this.queue.push(payload);
+        if (prepend) {
+          this.queue.unshift(payload);
+        }
+        else {
+          this.queue.push(payload);
+        }
       }
       return;
     }
@@ -242,7 +248,13 @@ class ChatRenderer {
       }
     }
     if (node) {
-      this.rootNode.appendChild(fragment);
+      const firstChild = this.rootNode.childNodes[0];
+      if (prepend && firstChild) {
+        this.rootNode.insertBefore(fragment, firstChild);
+      }
+      else {
+        this.rootNode.appendChild(fragment);
+      }
       if (this.scrollTracking) {
         setImmediate(() => this.scrollToBottom());
       }

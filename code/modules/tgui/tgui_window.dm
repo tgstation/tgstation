@@ -49,7 +49,6 @@
 		return
 	status = TGUI_WINDOW_LOADING
 	fatally_errored = FALSE
-	message_queue = null
 	// Build window options
 	var/options = "file=[id].html;can_minimize=0;auto_format=0;"
 	// Remove titlebar and resize handles for a fancy window
