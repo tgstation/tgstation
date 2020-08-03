@@ -1029,7 +1029,6 @@
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked )
 		return FALSE
-	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	if(!forced)
 		if(!hasPower() || wires.is_cut(WIRE_OPEN))
 			return FALSE
@@ -1049,6 +1048,7 @@
 
 	if(!density)
 		return TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_OPENING, 1)
 	sleep(1)
@@ -1071,7 +1071,6 @@
 /obj/machinery/door/airlock/close(forced=0)
 	if(operating || welded || locked)
 		return
-	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	if(density)
 		return TRUE
 	if(!forced)
@@ -1094,7 +1093,7 @@
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
 		SSexplosions.medobj += killthis
-
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER
