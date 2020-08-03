@@ -58,7 +58,7 @@
 	scan_for_target()
 
 /obj/item/pinpointer/nuke/syndicate // Syndicate pinpointers automatically point towards the infiltrator once the nuke is active.
-	name = "nuclear disk pinpointer"
+	name = "nuclear authentication disk pinpointer"
 	desc = "A handheld tracking device that locks onto certain signals. It's configured to switch tracking modes once it detects the activation signal of a nuclear device, but normally, it will point towards the nuclear authentication disk."
 	icon_state = "pinpointer_syndicate"
 
