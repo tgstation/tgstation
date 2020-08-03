@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a runtime caused by singularities pulling turf without plating."
-  - bugfix: "Singularities will now strip away mineral plated turf."
-  - bugfix: "Fixed singularities creating new tiles for turf that had destroyed plating."

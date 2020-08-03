@@ -1,7 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - rscadd: "A new heretic node to replace rust wave: entropic plume."
-  - rscadd: "A small rune visual effects appears 70% of the time when a tile is rusted."
-  - rscdel: "Removed the rust wave node."
-  - bugfix: "The ash man and rust walker nodes now link to the correct nodes."

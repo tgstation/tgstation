@@ -1,4 +1,0 @@
-author: "SomeguyManperson"
-delete-after: True
-changes: 
-  - bugfix: "hypersensitive and apathetic apply their modifiers after moodlets are accounted for rather than multiplying total mood per moodlet"

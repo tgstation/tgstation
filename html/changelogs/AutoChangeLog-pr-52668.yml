@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - tweak: "The armored bounty hunter now spawns with a backpack like the rest of them."
-  - bugfix: "Hook Bounter Hunters now correctly spawn their outfit."
-  - imageadd: "Plasma Tank Suit sprites."

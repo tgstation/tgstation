@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "The ammo boxes in the comms agent base now use the same ammo type as the magazines that are literally in the same crate as them. In other words, they're compatible with stetchkins now."

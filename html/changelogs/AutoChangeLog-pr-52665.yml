@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Getting your paycheck will no longer cause vending machines and other machines to mass-open the UI."
-  - bugfix: "Bounty Pads no longer spontaneously combust when sending bonfires."

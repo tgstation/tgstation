@@ -1,4 +1,0 @@
-author: "LemonInTheDark, Stylemistake"
-delete-after: True
-changes: 
-  - admin: "Added an atmos subsystem control panel to the debug menu, don't press buttons if you don't want to freeze atmos/show a bunch of colored tiles. It shows excited groups, not active turfs. Fair warning, displaying shit will cause a mite slowdown, so don't just leave it on in the background all the time."
