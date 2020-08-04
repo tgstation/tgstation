@@ -30,7 +30,7 @@
 
 /obj/item/skillchip/chameleon/Destroy()
 	QDEL_NULL(chameleon_action)
-	. = ..()
+	return ..()
 
 /// We don't want this to grant the item_action automatically.
 /obj/item/skillchip/chameleon/item_action_slot_check(slot, mob/user)
@@ -154,9 +154,9 @@
 
 	return metadata
 
-/obj/item/skillchip/chameleon/set_metadata(var/list/metadata)
+/obj/item/skillchip/chameleon/set_metadata(list/metadata)
 	// Set base metadata first.
-	..()
+	. = ..()
 
 	// Get rid of the old mimic chip regardless, we're setting metadata here. If the metadata doesn't
 	// contain new mimic chip info, then assume we want to delete it.

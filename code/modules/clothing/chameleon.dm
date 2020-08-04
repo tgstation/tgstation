@@ -674,7 +674,7 @@
 
 /obj/item/clothing/neck/chameleon/Destroy()
 	qdel(chameleon_action)
-	. = ..()
+	return ..()
 
 /obj/item/clothing/neck/chameleon/emp_act(severity)
 	. = ..()
