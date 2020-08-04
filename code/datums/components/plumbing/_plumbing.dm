@@ -126,7 +126,7 @@
 			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = AM.layer - 1)
 
 		else
-			I = image('icons/obj/plumbing/plumbers.dmi', color,layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
+			I = image('icons/obj/plumbing/plumbers.dmi', "north-[color]", layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
 			I.dir = D
 		overlays += I
 
