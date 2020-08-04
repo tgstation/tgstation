@@ -258,3 +258,4 @@ Epipens contain a powerful coagulant that drastically reduces bleeding on all op
 If a patient has an absurd amount of wounds, putting them in cryo will slowly treat all of their wounds simultaneously.
 Anything you can light a cigarette with, you can use to cauterize a bleeding wound. Technically, that includes the supermatter.
 Moderate and Severe cuts will slowly clot by themselves and don't require immediate attention on their own. Critical cuts will actively get worse with time, and are an immediate threat to the patient's life.
+If you're bleeding, you can apply pressure to the limb by grabbing yourself while targeting the bleeding limb. This will slow you down and take up a hand, but it'll slow down how fast you lose blood. Note this won't help the bleeding clot any faster.
