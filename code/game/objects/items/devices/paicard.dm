@@ -157,6 +157,7 @@
 	audible_message("\The [src] plays a cheerful startup noise!")
 
 /obj/item/paicard/proc/alertUpdate()
+	flick("[initial(icon_state)]-alert", src)
 	audible_message("<span class='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] vibrates with an alert.</span>")
 
 /obj/item/paicard/emp_act(severity)
