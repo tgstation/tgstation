@@ -216,3 +216,10 @@
 /obj/item/virgin_mary/proc/manual_suicide(mob/living/user)
 	user.adjustOxyLoss(200)
 	user.death(0)
+
+// Bouquet
+/obj/item/bouquet
+	name = "bouquet"
+	desc = "A bouquet of sunflowers, lilies, and geraniums. How delightful."
+	icon = "icons/obj/items_and_weapons.dmi"
+	icon_state = "bouquet"

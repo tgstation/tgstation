@@ -133,3 +133,9 @@
 	inhand_icon_state = "henchmen"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
+
+/obj/item/clothing/under/suit/tuxedo
+	name = "tuxedo"
+	desc = "A formal black tuxedo. It exudes classiness."
+	icon_state = "tuxedo"
+	inhand_icon_state = "tuxedo"
