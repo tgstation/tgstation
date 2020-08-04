@@ -166,3 +166,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	M.mineralAmt = 0
 	M.gets_drilled()
 
+/turf/open/transparent/openspace/icemoon/lavaland
+	name = "crater chasm"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	replacement_turf = /turf/open/floor/plating/asteroid/snow/icemoon

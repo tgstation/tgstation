@@ -53,7 +53,7 @@
 	if(teleport_distance <= 0)
 		return ..()
 	var/list/possible_ends = list()
-	for(var/turf/T in view(teleport_distance, target.loc) - view(teleport_distance - 1, target.loc))
+	for(var/turf/T in view(teleport_distance, target.loc) - range(teleport_distance - 1, target.loc))
 		if(isclosedturf(T))
 			continue
 		possible_ends |= T

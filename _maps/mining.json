@@ -1,0 +1,29 @@
+{
+   "map_name":"Lavaland",
+   "map_path":"map_files/Mining",
+   "map_file":[
+      "Lavaland_Underground_1.dmm",
+      "Lavaland.dmm"
+   ],
+   "traits":[
+      {
+         "Up":1,
+         "Mining":true,
+		 "Station":false,
+         "Linkage":"Cross",
+		 "Gravity":true,
+		 "Weather_Ashstorm":true,
+         "Lava Ruins":true
+      },
+      {
+         "Down":-1,
+		 "Mining":true,
+		 "Station":false,
+         "Linkage":"Cross",
+         "Gravity":true,
+         "Weather_Ashstorm":true,
+         "Baseturf":"/turf/open/transparent/openspace"
+      }
+   ],
+   "minetype" : "lavaland"
+}

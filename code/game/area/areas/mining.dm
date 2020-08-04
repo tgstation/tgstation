@@ -102,6 +102,15 @@
 	requires_power = TRUE
 	ambientsounds = MINING
 
+/area/lavaland/surface/outdoors/unexplored //monsters and ruins spawn here
+	icon_state = "unexplored"
+	tunnel_allowed = TRUE
+	mob_spawn_allowed = TRUE
+
+/area/lavaland/surface/outdoors/explored
+	name = "Lavaland Labor Camp"
+	flora_allowed = FALSE
+
 /area/lavaland/underground
 	name = "Lavaland Caves"
 	icon_state = "unexplored"
@@ -113,25 +122,18 @@
 	power_light = FALSE
 	ambientsounds = MINING
 
-
-/area/lavaland/surface/outdoors
-	name = "Lavaland Wastes"
-	outdoors = TRUE
-
-/area/lavaland/surface/outdoors/unexplored //monsters and ruins spawn here
+/area/lavaland/underground/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
 	tunnel_allowed = TRUE
 	mob_spawn_allowed = TRUE
 
-/area/lavaland/surface/outdoors/unexplored/danger //megafauna will also spawn here
+/area/lavaland/underground/unexplored/danger //megafauna will also spawn here
 	icon_state = "danger"
 	megafauna_spawn_allowed = TRUE
 
-/area/lavaland/surface/outdoors/explored
-	name = "Lavaland Labor Camp"
+/area/lavaland/underground/explored
+	name = "Lavaland Crater"
 	flora_allowed = FALSE
-
-
 
 /**********************Ice Moon Areas**************************/
 

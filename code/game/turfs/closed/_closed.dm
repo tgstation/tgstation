@@ -101,6 +101,12 @@
 	icon_state = "wood"
 	smoothing_flags = SMOOTH_TRUE
 
+/turf/closed/indestructible/ash_rock
+	name = "Bedrock"
+	desc = "Primoridal rock, too dense to be broken by any tools..."
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "rock2"
+
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"
 

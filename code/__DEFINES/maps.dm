@@ -72,11 +72,22 @@ require only minor tweaks.
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 #define ZTRAITS_LAVALAND list(\
+	ZTRAITS_LAVALAND_LOWER, \
+  	ZTRAITS_LAVALAND_UPPER)
+#define ZTRAITS_LAVALAND_LOWER list(\
+	ZTRAIT_UP = 1,\
     ZTRAIT_MINING = TRUE, \
     ZTRAIT_ASHSTORM = TRUE, \
     ZTRAIT_LAVA_RUINS = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
     ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+#define ZTRAITS_LAVALAND_UPPER list(\
+	ZTRAIT_DOWN = -1,\
+    ZTRAIT_MINING = TRUE, \
+    ZTRAIT_ASHSTORM = TRUE, \
+    ZTRAIT_LAVA_RUINS = FALSE, \
+    ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+    ZTRAIT_BASETURF = /turf/open/transparent/openspace/icemoon/lavaland)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"
