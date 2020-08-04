@@ -331,6 +331,9 @@
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
+		humanc.increment_scar_slot()
+		humanc.load_persistent_scars()
+
 		if(GLOB.summon_guns_triggered)
 			give_guns(humanc)
 		if(GLOB.summon_magic_triggered)
@@ -351,9 +354,6 @@
 
 	if(humanc && CONFIG_GET(flag/roundstart_traits))
 		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
-	if(humanc)
-		addtimer(CALLBACK(humanc, /mob/living/carbon/human/proc/increment_scar_slot), 1 SECONDS) // having troubles with starting early or maybe first wave joiners not having their ckey in time? must investigate more..
-		addtimer(CALLBACK(humanc, /mob/living/carbon/human/proc/load_persistent_scars), 1.5 SECONDS)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
