@@ -74,4 +74,3 @@
 			log_asset("ERROR: [type]: Invalid Config: ASSET_CDN_WEBROOT")
 		return FALSE
 	return TRUE
-	
