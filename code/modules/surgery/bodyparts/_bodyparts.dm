@@ -87,6 +87,8 @@
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
 	var/obj/item/stack/current_gauze
+	/// If something is currently grasping this bodypart and trying to staunch bleeding
+	var/obj/item/grip_self/grasped_by
 
 
 /obj/item/bodypart/examine(mob/user)
