@@ -246,10 +246,30 @@
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face."
 	anchored = TRUE
-	var/busy = FALSE 	//Something's being washed at the moment
-	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
+	///Something's being washed at the moment
+	var/busy = FALSE
+	///What kind of reagent is produced by this sink? (Still waiting on full scale plumbing, 2020)
+	var/dispensedreagent = /datum/reagent/water
+	///Material to drop when broken or deconstructed.
 	var/buildstacktype = /obj/item/stack/sheet/metal
+	///Number of sheets of material to drop when broken or deconstructed.
 	var/buildstackamount = 1
+	///Does the sink have a water recycler to recollect it's water supply?
+	var/has_water_reclaimer = TRUE
+	///Variable to reference the water recycler part inside the sink.
+	var/water_recycler
+
+/obj/structure/sink/Initialize(mapload, bolt)
+	. = ..()
+	if(has_water_reclaimer)
+		water_recycler = new /obj/item/stock_parts/water_recycler(src)
+		create_reagents(100, NO_REACT)
+	START_PROCESSING(SSfluids, src)
+	AddComponent(/datum/component/plumbing/simple_demand, FALSE, FALSE)
+
+/obj/structure/sink/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.</span>"
 
 /obj/structure/sink/attack_hand(mob/living/user)
 	. = ..()
@@ -300,9 +320,12 @@
 
 	if(istype(O, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RG = O
+		if(reagents.total_volume <= 0)
+			to_chat(user, "<span class='notice'>\The [src] is dry.</span>")
+			return FALSE
 		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())
-				RG.reagents.add_reagent(dispensedreagent, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+				reagents.trans_to(RG, RG.amount_per_transfer_from_this, transfered_by = user)
 				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
 				return TRUE
 			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
@@ -321,7 +344,10 @@
 			return
 
 	if(istype(O, /obj/item/mop))
-		O.reagents.add_reagent(dispensedreagent, 5)
+		if(reagents.total_volume <= 0)
+			to_chat(user, "<span class='notice'>\The [src] is dry.</span>")
+			return FALSE
+		reagents.trans_to(O, 5, transfered_by = user)
 		to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
@@ -358,8 +384,6 @@
 		busy = FALSE
 		O.wash(CLEAN_WASH)
 		O.acid_level = 0
-		create_reagents(5)
-		reagents.add_reagent(dispensedreagent, 5)
 		reagents.expose(O, TOUCH)
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
@@ -379,6 +403,22 @@
 		for(var/i in custom_materials)
 			var/datum/material/M = i
 			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+
+///Here, we enable the sink to passively refill with it's chosen reagent.
+/obj/structure/sink/process()
+	. = ..()
+	if(!water_recycler)
+		return
+	reagents.add_reagent(dispensedreagent, 10)
+
+/**
+  * Adjusts the offset of the sink to adjust it's actual direction so it doesn't sit in the middle of the tile for some godawful reason.
+  */
+/obj/structure/sink/proc/adjust_position()
+	if(!dir)
+		return FALSE
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? -12 : 12)
+	pixel_y = (dir & 3)? (dir ==1 ? 0 : 14) : 0
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
@@ -409,6 +449,25 @@
 	icon_state = "sink_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
+
+/obj/structure/sinkframe
+	name = "sink frame"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "sink_frame"
+	desc = "A sink frame, that needs a water recycler to finish construction."
+	anchored = FALSE
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/obj/structure/sinkframe/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/stock_parts/water_recycler))
+		qdel(I)
+		var/obj/structure/sink/greyscale/new_sink = new /obj/structure/sink/greyscale(loc)
+		new_sink.has_water_reclaimer = TRUE
+		new_sink.set_custom_materials(custom_materials)
+		new_sink.setDir(dir)
+		new_sink.adjust_position()
+		qdel(src)
+	return ..()
 
 //Shower Curtains//
 //Defines used are pre-existing in layers.dm//
