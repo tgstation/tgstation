@@ -291,7 +291,7 @@
 	prof.undershirt = H.undershirt
 	prof.socks = H.socks
 
-	prof.skillchips = H.get_skillchip_type_list()
+	prof.skillchips = H.clone_skillchip_list(TRUE)
 
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)

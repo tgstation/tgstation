@@ -1226,6 +1226,12 @@
 	return gloves?.siemens_coefficient == 0
 
 /// Modifies max_skillchip_count and updates active skillchips
-/mob/living/carbon/proc/adjust_max_skillchip_count(delta)
-	max_skillchip_slots += delta
-	update_skillchips()
+/mob/living/carbon/proc/adjust_skillchip_complexity_modifier(delta)
+	skillchip_complexity_modifier += delta
+
+	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
+
+	if(!brain)
+		return
+
+	brain.update_skillchips()

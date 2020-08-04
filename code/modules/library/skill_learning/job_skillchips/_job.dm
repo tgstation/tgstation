@@ -3,3 +3,4 @@
 	chip_category = "job"
 	incompatibility_list = list("job")
 	abstract_parent_type = /obj/item/skillchip/job
+	slot_use = 2

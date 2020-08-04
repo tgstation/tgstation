@@ -148,29 +148,35 @@
 		to_chat(user, "<span class='alert'>[user]'s brain cannot accept skillchip implants.</span>")
 		return
 
-	var/fail_message = stored_skillchip.has_mob_incompatibility(user)
-	if(fail_message)
-		to_chat(user, "<span class='alert'>[stored_skillchip] cannot be implanted. [fail_message]</span>")
+	// Try implanting.
+	var/implant_msg = user.implant_skillchip(stored_skillchip)
+	if(implant_msg)
+		user.visible_message("<span class='notice'>[user] presses a button on [src], but nothing happens.</span>", "<span class='notice'>The [src] quietly beeps at you, indicating some sort of error.</span>")
+		to_chat(user, "<span class='alert'>[stored_skillchip] cannot be implanted. [implant_msg]</span>")
 		return
 
-	// The below check should never return FALSE, but we're checking it for sanity.
-	// If stored_skillchip.has_mob_incompatibility(user) returns FALSE, there should be abosolutely no reason for this to fail, ever.
-	if(!user.implant_skillchip(stored_skillchip))
-		to_chat(user,"<span class='notice'>Operation failed!</span>")
-		CRASH("Autosurgeon failed to implant [stored_skillchip] into [user] for an unknown reason.")
-
-	to_chat(user,"<span class='notice'>Operation complete!</span>")
+	// Clear the stored skillchip, it's technically not in this machine anymore.
+	var/obj/item/skillchip/implanted_chip = stored_skillchip
+	stored_skillchip = null
 
 	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your brain.</span>")
 	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
-	stored_skillchip = null
+
+	to_chat(user,"<span class='notice'>Operation complete! [implanted_chip] successfully implanted. Attempting auto-activation...</span>")
+
+	// If implanting succeeded, try activating - Although activating isn't required, so don't early return if it fails.
+	// The user can always go activate it at a skill station.
+	var/activate_msg = implanted_chip.try_activate_skillchip(FALSE, FALSE)
+	if(activate_msg)
+		to_chat(user, "<span class='alert'>[implanted_chip] cannot be activated. [activate_msg]</span>")
+
 	name = initial(name)
 
 	if(uses != INFINITE)
 		uses--
 
 	if(!uses)
-		desc = "[initial(desc)] Looks like it's been used up."
+		desc = "[initial(desc)] The surgical tools look too blunt and worn to pierce a skull. Looks like it's all used up."
 
 /obj/item/autosurgeon/skillchip/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, skillchip_type))

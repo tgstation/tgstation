@@ -262,12 +262,18 @@
 	if(H.client?.prefs.playtime_reward_cloak)
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
-	// Insert any skillchips associated with this job into the target's brain.
+	// Insert the skillchip associated with this job into the target.
 	if(skillchip && istype(H))
 		var/obj/item/skillchip/skill_chip = new skillchip()
-		if(!H.implant_skillchip(skill_chip))
-			stack_trace("Failed to implant [H] with [skill_chip], on job [src].")
+		var/implant_msg = H.implant_skillchip(skill_chip)
+		if(implant_msg)
+			stack_trace("Failed to implant [H] with [skill_chip], on job [src]. Failure message: [implant_msg]")
 			qdel(skill_chip)
+			return
+
+		var/activate_msg = skillchip.try_activate_skillchip(TRUE, TRUE)
+		if(activate_msg)
+			CRASH("Failed to activate [H]'s [skill_chip], on job [src]. Failure message: [activate_msg]")
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()

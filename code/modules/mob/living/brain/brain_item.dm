@@ -28,6 +28,10 @@
 
 	/// List of skillchip items, their location should be this brain.
 	var/list/obj/item/skillchip/skillchips
+	/// Maximum skillchip complexity we can support before they stop working. Do not reference this var directly and instead call get_max_skillchip_complexity()
+	var/max_skillchip_complexity = 3
+	/// Maximum skillchip slots available. Do not reference this var directly and instead call get_max_skillchip_slots()
+	var/max_skillchip_slots = 5
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
@@ -57,26 +61,19 @@
 		BT.owner = owner
 		BT.on_gain()
 
-	// Act as if a set of new skillchips have been implanted into the new body.
-	// This is because some skillchip info, such as slots, is stored in the body as it can be affected by mutations and similar.
-	// If this is a special type of organ insertion, like an organ replacement, we probably don't want to give in-chat messages
-	// about the chip activation effects.
-	for(var/chip in skillchips)
-		var/obj/item/skillchip/skillchip = chip
-		skillchip.on_implant(C, special, TRUE)
-
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
-	..()
-
-	// Act as if all skillchips are being removed from the old body.
-	// This is because some skillchip info, such as slots, is stored in the body as it can be affected by mutations and similar.
-	if(!QDELETED(C))
+	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
+	if(!QDELETED(C) && length(skillchips))
+		to_chat(C, "<span class='notice'>You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body...</span>")
 		for(var/chip in skillchips)
 			var/obj/item/skillchip/skillchip = chip
-			skillchip.on_removal(C, special)
+			// Run the try_ proc with force = TRUE.
+			skillchip.try_deactivate_skillchip(FALSE, TRUE)
+
+	..()
 
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
@@ -199,7 +196,7 @@
 		to_chat(user, "<span class='warning'>You're going to need to remove [C.p_their()] head cover first!</span>")
 		return
 
-//since these people will be dead M != usr
+	//since these people will be dead M != usr
 
 	if(!target_has_brain)
 		if(!C.get_bodypart(BODY_ZONE_HEAD) || !user.temporarilyRemoveItemFromInventory(src))
@@ -277,14 +274,18 @@
 	for(var/chip in skillchips)
 		var/obj/item/skillchip/skillchip = chip
 
-		// Do a full removal affect from the owner. We're technically yanking all these chips out of the old brain,
-		// so we should do full removal affects silently.
-		if(owner)
-			skillchip.on_removal(owner, TRUE)
-		remove_skillchip(skillchip)
-		// Insert the skillchips into the new brain. The new brain will then activate the chips when it is Insert()ed.
-		replacement_brain.implant_skillchip(skillchip)
-		skillchip.forceMove(replacement_brain)
+		// We're technically doing a little hackery here by bypassing the procs, but I'm the one who wrote them
+		// and when you know the rules, you can break the rules.
+
+		// Technically the owning mob is the same. We don't need to activate or deactivate the skillchips.
+		// All the skillchips themselves care about is what brain they're in.
+		// Because the new brain will ultimately be owned by the same body, we can safely leave skillchip logic alone.
+
+		// Directly change the new holding_brain.
+		skillchip.holding_brain = replacement_brain
+
+		// Directly add them to the skillchip list in the new brain.
+		LAZYADD(replacement_brain.skillchips, skillchip)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"

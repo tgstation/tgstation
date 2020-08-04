@@ -5,27 +5,26 @@
   * Arguments:
   * * skillchip - The skillchip you want to insert.
   * * silent - Whether or not to display the implanting message.
-  * * force - Whether to force the implant to happen. Skips checking if the chip can actually be implanted. Used by changelings.
+  * * force - Whether to force the implant to happen, including forcing activating if activate = TRUE. Ignores incompatibility checks. Used by changelings.
   */
-/mob/living/carbon/proc/implant_skillchip(obj/item/skillchip/skillchip, silent = FALSE, force = FALSE)
+/mob/living/carbon/proc/implant_skillchip(obj/item/skillchip/skillchip, force = FALSE)
 	// Grab the brain.
 	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
 
 	// Check for the brain. No brain = no implant.
 	if(QDELETED(brain))
-		return FALSE
+		return "Brain not found."
+
+	if(force)
+		return brain.implant_skillchip(skillchip, force)
 
 	// Check the chip can actually be implanted.
-	if(!force && skillchip.has_mob_incompatibility(src))
-		return FALSE
+	var/mob_incompat_msg = skillchip.has_mob_incompatibility(src)
+	if(mob_incompat_msg)
+		return mob_incompat_msg
 
-	// Implant and call on_apply proc if successful.
-	if(brain.implant_skillchip(skillchip))
-		skillchip.on_implant(src, silent, TRUE)
-		skillchip.forceMove(brain)
-		return TRUE
-
-	return FALSE
+	// Implant in the brain.
+	return brain.implant_skillchip(skillchip, force)
 
 /**
   * Attempts to remove this skillchip from the target carbon's brain.
@@ -43,28 +42,31 @@
 		return FALSE
 
 	// Remove and call on_removal proc
-	if(!brain.remove_skillchip(skillchip))
+	if(!brain.remove_skillchip(skillchip, silent))
 		stack_trace("Failed to remove skillchip [skillchip] from [src].")
 		return FALSE
 
-	skillchip.on_removal(src, silent)
 	return TRUE
 
 /**
-  * Creates a list of type paths of skillchips in the mob's brain.
+  * Creates a list of new skillchips cloned from old skillchips in the mob's brain.
   *
-  * Returns a simple list of typepaths.
+  * Returns a complete list of new skillchips cloned from the mob's brain's existing skillchip stock.
+  * Rumour has it that Changelings just LOVE this proc.
+  * Arguments:
+  * * cloned_chip_holder - The new holder for the cloned chips. Please don't be null.
+  * * not_removable - Special override, whether or not to force cloned chips to be non-removable, i.e. to delete on removal.
   */
-/mob/living/carbon/proc/get_skillchip_type_list()
+/mob/living/carbon/proc/clone_skillchip_list(not_removable = FALSE)
 	// Check the target's brain, making sure the target exists and has a brain.
 	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return list()
 
-	return brain.get_skillchip_type_list()
+	return brain.clone_skillchip_list(not_removable)
 
 /**
-  * Destroys all skillchips in the brain, calling on_removal if the brain has an owner mob.
+  * Destroys all skillchips in the brain, handling appropriate cleanup and event calls.
   */
 /mob/living/carbon/proc/destroy_all_skillchips(silent = FALSE)
 	// Check the target's brain, making sure the target exists and has a brain.
@@ -76,35 +78,3 @@
 	brain.destroy_all_skillchips(silent)
 
 	return TRUE
-
-/// Disables or re-enables any extra skillchips after skillchip limit changes.
-/mob/living/carbon/proc/update_skillchips()
-	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
-
-	if(!brain)
-		return
-
-	var/limit = max_skillchip_slots
-	var/dt = limit - used_skillchip_slots
-	var/list/inactive_skillchips = list()
-
-	for(var/chip in brain.skillchips)
-		var/obj/item/skillchip/skillchip = chip
-		if(!skillchip.active)
-			inactive_skillchips += skillchip
-
-	// We have skillchips to deactivate
-	if(dt < 0)
-		//Might deactivate more than necessary but not worth sorting this
-		while(dt < 0)
-			var/obj/item/skillchip/skillchip = brain.skillchips[length(brain.skillchips)]
-			skillchip.on_deactivate(src, FALSE)
-			dt += skillchip.slot_cost
-	// We have skillchips to reactivate
-	else if (dt > 1)
-		while(dt > 1 && length(inactive_skillchips))
-			var/obj/item/skillchip/skillchip = inactive_skillchips[length(inactive_skillchips)]
-			if(skillchip.slot_cost <= dt)
-				skillchip.on_activate(src, FALSE)
-				dt -= skillchip.slot_cost
-			inactive_skillchips -= skillchip
