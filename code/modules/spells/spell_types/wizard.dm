@@ -37,6 +37,8 @@
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
 
+
+
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
 	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
@@ -228,6 +230,18 @@
 	clothes_req = TRUE
 	charge_max = 5000
 	summon_amt = 2
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
+	name = "Lesser summon bees"
+	desc = "This spell magically kicks a transdimensional beehive, instantly summoning a swarm of bees to your location."
+	charge_max = 500
+	clothes_req = TRUE
+	invocation = "NOT THE BEES"
+	summon_amt = 9
+	action_icon_state = "bee"
+
+	summon_type = /mob/living/simple_animal/hostile/poison/bees/toxin
+	cast_sound = 'sound/voice/moth/scream_moth.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
