@@ -9816,6 +9816,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /turf/open/floor/plating,
 /area/janitor)
 "awE" = (
@@ -31244,7 +31245,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "bkz" = (
-/obj/structure/bed/dogbed/cayenne,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
@@ -31261,6 +31261,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/bed/dogbed/lia,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
 "bkA" = (
@@ -47894,19 +47895,9 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "bNo" = (
-/obj/structure/rack,
-/obj/item/storage/box/handcuffs,
-/obj/item/storage/box/flashbangs{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/radio/intercom{
 	pixel_x = 26
 	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/flashlight/seclite,
-/obj/item/flashlight/seclite,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -47914,6 +47905,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/obj/structure/bed/dogbed/mcgriff,
 /turf/open/floor/plasteel,
 /area/security/warden)
 "bNp" = (
@@ -56503,6 +56496,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/handcuffs,
 /turf/open/floor/plasteel,
 /area/security/warden)
 "cbG" = (

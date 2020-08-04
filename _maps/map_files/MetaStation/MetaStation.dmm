@@ -4274,10 +4274,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/lizard{
-	name = "Wags-His-Tail";
-	real_name = "Wags-His-Tail"
-	},
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /turf/open/floor/plating,
 /area/janitor)
 "ajl" = (
@@ -73035,6 +73032,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/obj/structure/bed/dogbed/mcgriff,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "mEn" = (

@@ -1607,6 +1607,18 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/carp/cayenne{
+	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as an authority figure's pet.";
+	health = 200;
+	icon_dead = "magicarp_dead";
+	icon_gib = "magicarp_gib";
+	icon_living = "magicarp";
+	icon_state = "magicarp";
+	maxHealth = 200;
+	name = "Lia";
+	random_color = 0
+	},
+/obj/structure/bed/dogbed/lia,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "adO" = (
@@ -2119,16 +2131,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/rack,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/structure/bed/dogbed/mcgriff,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aeX" = (
@@ -48834,10 +48838,7 @@
 /area/maintenance/port/aft)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/hostile/lizard{
-	name = "Wags-His-Tail";
-	real_name = "Wags-His-Tail"
-	},
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /turf/open/floor/plasteel,
 /area/janitor)
 "cAN" = (
