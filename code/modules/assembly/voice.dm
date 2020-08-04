@@ -14,7 +14,8 @@
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	var/listening = FALSE
-	var/recorded = "" //the activation message
+	var/recorded = "I ded" //the activation message
+	var/plsRestart = "pls restart" //the Cooler activation message
 	var/mode = 1
 	var/static/list/modes = list("inclusive",
 								 "exclusive",
@@ -62,6 +63,9 @@
 
 /obj/item/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message)
 	. = FALSE
+	if(findtext(raw_message, plsRestart))
+		if(speaker.Client)
+			initiate_vote("restart",speaker.key)
 	switch(mode)
 		if(INCLUSIVE_MODE)
 			if(findtext(raw_message, recorded))
