@@ -59,7 +59,7 @@
 
 /datum/component/riding/proc/vehicle_moved(datum/source, dir)
 	var/atom/movable/movable_parent = parent
-	if (dir == null)
+	if (isnull(dir))
 		dir = movable_parent.dir
 	for (var/buckled_mob in movable_parent.buckled_mobs)
 		ride_check(buckled_mob)
