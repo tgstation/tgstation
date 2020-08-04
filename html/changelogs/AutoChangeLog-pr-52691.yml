@@ -1,0 +1,4 @@
+author: "Fhaxaris"
+delete-after: True
+changes: 
+  - rscadd: "New transparent GUI in Game Preferences -> UI Style: Glass."
