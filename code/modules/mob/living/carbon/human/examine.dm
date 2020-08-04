@@ -253,11 +253,14 @@
 		msg += "[t_He] [t_is] embued with a power that defies bleeding.\n" // only statues and highlander sword can cause this so whatever
 	else if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
+		var/list/obj/item/bodypart/grasped_limbs = list()
 
 		for(var/i in bodyparts)
 			var/obj/item/bodypart/BP = i
 			if(BP.get_bleed_rate())
 				bleeding_limbs += BP
+			if(BP.grasped_by)
+				grasped_limbs += BP
 
 		var/num_bleeds = LAZYLEN(bleeding_limbs)
 
@@ -283,6 +286,12 @@
 				bleed_text += " incredibly quickly"
 
 			bleed_text += "!</B>\n"
+
+		for(var/i in bodyparts)
+			var/obj/item/bodypart/grasped_part = i
+			if(grasped_part.grasped_by)
+				bleed_text += "[t_He] [t_is] holding [t_his] [grasped_part.name] to slow the bleeding!\n"
+
 		msg += bleed_text.Join()
 
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
