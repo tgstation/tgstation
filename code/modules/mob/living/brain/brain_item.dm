@@ -126,7 +126,7 @@
 		return
 
 	// Cutting out skill chips.
-	if(length(skillchips) && O.sharpness == SHARP_EDGED)
+	if(length(skillchips) && O.get_sharpness())
 		to_chat(user,"<span class='notice'>You begin to excise skillchips from [src].</span>")
 		if(do_after(user, 15 SECONDS, target = src))
 			for(var/obj/item/skillchip/skill_chip in skillchips)
