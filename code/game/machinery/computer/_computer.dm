@@ -24,7 +24,6 @@
 		C.moveToNullspace()
 
 /obj/machinery/computer/Destroy()
-	QDEL_NULL(circuit)
 	return ..()
 
 /obj/machinery/computer/process()
