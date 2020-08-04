@@ -20,16 +20,26 @@
 	return WIRE_INTERACTION_BLOCK
 
 /datum/wires
-	var/atom/holder = null // The holder (atom that contains these wires).
-	var/holder_type = null // The holder's typepath (used to make wire colors common to all holders).
-	var/proper_name = "Unknown" // The display name for the wire set shown in station blueprints. Not used if randomize is true or it's an item NT wouldn't know about (Explosives/Nuke)
+	/// The holder (atom that contains these wires).
+	var/atom/holder = null
+	/// The holder's typepath (used for sanity checks to make sure the holder is the appropriate type for these wire sets).
+	var/holder_type = null
+	/// Key that enables wire assignments to be common across different holders. If null, will use the holder_type as a key.
+	var/dictionary_key = null
+	/// The display name for the wire set shown in station blueprints. Not shown in blueprints if randomize is TRUE or it's an item NT wouldn't know about (Explosives/Nuke). Also used in the hacking interface.
+	var/proper_name = "Unknown"
 
-	var/list/wires = list() // List of wires.
+	/// List of all wires.
+	var/list/wires = list()
+	/// List of cut wires.
 	var/list/cut_wires = list() // List of wires that have been cut.
-	var/list/colors = list() // Dictionary of colors to wire.
-	var/list/assemblies = list() // List of attached assemblies.
-	var/randomize = 0 // If every instance of these wires should be random.
-					  // Prevents wires from showing up in station blueprints
+	/// Dictionary of colours to wire.
+	var/list/colors = list()
+	/// List of attached assemblies.
+	var/list/assemblies = list()
+
+	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
+	var/randomize = FALSE
 
 /datum/wires/New(atom/holder)
 	..()
@@ -37,15 +47,20 @@
 		CRASH("Wire holder is not of the expected type!")
 
 	src.holder = holder
+
+	// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
+	var/key = dictionary_key ? dictionary_key : holder_type
+
+	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdel)
 	if(randomize)
 		randomize()
 	else
-		if(!GLOB.wire_color_directory[holder_type])
+		if(!GLOB.wire_color_directory[key])
 			randomize()
-			GLOB.wire_color_directory[holder_type] = colors
-			GLOB.wire_name_directory[holder_type] = proper_name
+			GLOB.wire_color_directory[key] = colors
+			GLOB.wire_name_directory[key] = proper_name
 		else
-			colors = GLOB.wire_color_directory[holder_type]
+			colors = GLOB.wire_color_directory[key]
 
 /datum/wires/Destroy()
 	holder = null
@@ -58,6 +73,12 @@
 		if(dud in wires)
 			continue
 		wires += dud
+
+
+///Called when holder is qdeleted for us to clean ourselves as not to leave any unlawful references.
+/datum/wires/proc/on_holder_qdel(atom/source, force)
+	qdel(src)
+
 
 /datum/wires/proc/randomize()
 	var/static/list/possible_colors = list(
@@ -250,6 +271,7 @@
 		)))
 	data["wires"] = payload
 	data["status"] = get_status()
+	data["proper_name"] = (proper_name != "Unknown") ? proper_name : null
 	return data
 
 /datum/wires/ui_act(action, params)

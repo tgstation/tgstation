@@ -77,6 +77,20 @@
 	foodtype = JUNKFOOD | FRIED
 	value = FOOD_JUNK
 
+/obj/item/reagent_containers/food/snacks/chips/Crossed(atom/movable/AM, oldloc)
+	. = ..()
+	if(!isliving(AM) || bitecount) // can't pop opened chips
+		return
+
+	var/mob/living/popper = AM
+	if(popper.mob_size < MOB_SIZE_HUMAN)
+		return
+
+	playsound(src, 'sound/effects/chipbagpop.ogg', 100)
+	popper.visible_message("<span class='danger'>[popper] steps on \the [src], popping the bag!</span>", "<span class='danger'>You step on \the [src], popping the bag!</span>", "<span class='danger'>You hear a sharp crack!</span>", COMBAT_MESSAGE_RANGE)
+	generate_trash(loc)
+	qdel(src)
+
 /obj/item/reagent_containers/food/snacks/no_raisin
 	name = "4no raisins"
 	icon_state = "4no_raisins"

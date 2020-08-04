@@ -246,10 +246,11 @@
 					break
 
 /**
-  * Unequips the active held item.
+  * Unequips the active held item, if there is one.
   */
 /mob/living/silicon/robot/proc/uneq_active()
-	unequip_module_from_slot(module_active, get_selected_module())
+	if(module_active)
+		unequip_module_from_slot(module_active, get_selected_module())
 
 /**
   * Unequips all held items.
@@ -312,7 +313,7 @@
   * * module_num - the slot number being selected
   */
 /mob/living/silicon/robot/proc/select_module(module_num)
-	if(!held_items[module_num])
+	if(is_invalid_module_number(module_num) || !held_items[module_num]) //If the slot number is invalid, or there's nothing there, we have nothing to equip
 		return FALSE
 
 	switch(module_num)
@@ -326,6 +327,7 @@
 			if(module_active != held_items[module_num])
 				inv3.icon_state = "[initial(inv3.icon_state)] +a"
 	module_active = held_items[module_num]
+	return TRUE
 
 /**
   * Deselects the module in the slot module_num.
@@ -344,6 +346,7 @@
 			if(module_active == held_items[module_num])
 				inv3.icon_state = initial(inv3.icon_state)
 	module_active = null
+	return TRUE
 
 /**
   * Toggles selection of the module in the slot module_num.

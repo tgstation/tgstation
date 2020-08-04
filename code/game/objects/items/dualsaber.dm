@@ -13,11 +13,9 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	var/w_class_on = WEIGHT_CLASS_BULKY
 	hitsound = "swing_hit"
 	armour_penetration = 35
-	var/saber_color = "green"
-	light_color = "#00ff00"//green
+	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
 	block_chance = 75
 	max_integrity = 200
@@ -25,6 +23,8 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -110
 	bare_wound_bonus = 20
+	var/w_class_on = WEIGHT_CLASS_BULKY
+	var/saber_color = "green"
 	var/two_hand_force = 34
 	var/hacked = FALSE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
@@ -43,7 +43,7 @@
 			to_chat(user, "<span class='warning'>You lack the grace to wield this!</span>")
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
 	wielded = TRUE
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = w_class_on
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
@@ -97,13 +97,13 @@
 		saber_color = pick(possible_colors)
 		switch(saber_color)
 			if("red")
-				light_color = LIGHT_COLOR_RED
+				set_light_color(COLOR_SOFT_RED)
 			if("green")
-				light_color = LIGHT_COLOR_GREEN
+				set_light_color(LIGHT_COLOR_GREEN)
 			if("blue")
-				light_color = LIGHT_COLOR_LIGHT_CYAN
+				set_light_color(LIGHT_COLOR_LIGHT_CYAN)
 			if("purple")
-				light_color = LIGHT_COLOR_LAVENDER
+				set_light_color(LIGHT_COLOR_LAVENDER)
 
 /obj/item/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -141,7 +141,7 @@
 /obj/item/dualsaber/process()
 	if(wielded)
 		if(hacked)
-			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
+			set_light_color(pick(COLOR_SOFT_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER))
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)

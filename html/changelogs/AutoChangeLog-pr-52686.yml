@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "You will keep your angle when you drift through space now. Oh and immovable rods do the same, so things might get a bit more messy then usual."

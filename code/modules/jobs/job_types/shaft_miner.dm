@@ -1,8 +1,6 @@
 /datum/job/mining
 	title = "Shaft Miner"
-	flag = MINER
 	department_head = list("Head of Personnel")
-	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 3

@@ -59,6 +59,8 @@
 	var/grafted = FALSE
 	///Type-path of trait to be applied when grafting a plant.
 	var/graft_gene
+	///Determines if the plant should be allowed to mutate early at 30+ instability.
+	var/seed_flags = MUTATE_EARLY
 
 /obj/item/seeds/Initialize(mapload, nogenes = 0)
 	. = ..()
@@ -209,12 +211,21 @@
 		product_count = clamp(round(product_count/2),0,5)
 	while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod
-		if(instability >= 30 && prob(instability/3) && mutatelist.len)
+		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))
 			var/obj/item/seeds/new_prod = pick(mutatelist)
 			t_prod = initial(new_prod.product)
-			if(t_prod)
-				t_prod = new t_prod(output_loc, src)
-				t_prod.seed.instability = instability/2
+			if(!t_prod)
+				continue
+			t_prod = new t_prod(output_loc, src)
+			t_prod.seed = new new_prod
+			t_prod.seed.name = initial(new_prod.name)
+			t_prod.seed.desc = initial(new_prod.desc)
+			t_prod.seed.plantname = initial(new_prod.plantname)
+			t_amount++
+			if(t_prod.seed)
+				//t_prod.seed = new new_prod
+				t_prod.seed.instability = round(instability * 0.5)
+			continue
 		else
 			t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))

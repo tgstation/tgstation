@@ -1262,7 +1262,13 @@
 
 		//Job + antagonist
 		if(M.mind)
-			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>"
+			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>"
+			var/i = 0
+			for(var/datum/antagonist/A in M.mind.antag_datums)
+				special_role_description += "[A.name]"
+				if(++i != length(M.mind.antag_datums))
+					special_role_description += ", "
+			special_role_description += "</b></font>"
 		else
 			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>"
 
