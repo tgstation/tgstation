@@ -79,8 +79,8 @@
 
 	if(drops_core)
 		aSignal.forceMove(drop_location())
-	else
-		QDEL_NULL(aSignal)
+		aSignal = null
+	// else, anomaly core gets deleted by qdel(src).
 
 	qdel(src)
 
