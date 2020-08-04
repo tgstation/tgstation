@@ -702,8 +702,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.Jitter(2)
 	if(M.mind != null && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.adjustStaminaLoss(-10, FALSE)
-    . = TRUE
-    if(prob(20))
+		. = TRUE
+		if(prob(20))
 			new /datum/hallucination/items_other(M)
 		if(prob(10))
 			new /datum/hallucination/stray_bullet(M)
@@ -1749,7 +1749,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(L.IsSleeping())
 		if(L.getBruteLoss() && L.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
 			if(prob(50))
-				L.adjustBruteLoss(-0.25), FALSE
+				L.adjustBruteLoss(-0.25, FALSE)
 			else
 				L.adjustFireLoss(-0.25, FALSE)
 		else if(L.getBruteLoss()) //If you have only one, it still heals but not as well.
