@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	var/mob/living/silicon/pai/pai
+	var/emotion_icon = "off" ///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 /obj/item/paicard/suicide_act(mob/living/user)
@@ -17,13 +18,31 @@
 
 /obj/item/paicard/Initialize()
 	SSpai.pai_card_list += src
-	add_overlay("pai-off")
+	. = ..()
+	update_icon()
+
+/obj/item/paicard/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, emotion_icon))
+		update_icon()
+
+/obj/item/paicard/handle_atom_del(atom/A)
+	if(A == pai) //double check /mob/living/silicon/pai/Destroy() if you change these.
+		pai = null
+		emotion_icon = initial(emotion_icon)
+		update_icon()
 	return ..()
+
+/obj/item/paicard/update_overlays()
+	. = ..()
+	. += "pai-[emotion_icon]"
+	if(pai?.hacking_cable)
+		. += "[initial(icon_state)]-connector"
 
 /obj/item/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	SSpai.pai_card_list -= src
-	if (!QDELETED(pai))
+	if(!QDELETED(pai))
 		QDEL_NULL(pai)
 	return ..()
 
@@ -130,38 +149,12 @@
 //		WIRE_TRANSMIT = 4
 
 /obj/item/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
-	src.pai = personality
-	src.add_overlay("pai-null")
+	pai = personality
+	emotion_icon = "null"
+	update_icon()
 
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
-
-/obj/item/paicard/proc/setEmotion(emotion)
-	if(pai)
-		src.cut_overlays()
-		switch(emotion)
-			if(1)
-				src.add_overlay("pai-happy")
-			if(2)
-				src.add_overlay("pai-cat")
-			if(3)
-				src.add_overlay("pai-extremely-happy")
-			if(4)
-				src.add_overlay("pai-face")
-			if(5)
-				src.add_overlay("pai-laugh")
-			if(6)
-				src.add_overlay("pai-off")
-			if(7)
-				src.add_overlay("pai-sad")
-			if(8)
-				src.add_overlay("pai-angry")
-			if(9)
-				src.add_overlay("pai-what")
-			if(10)
-				src.add_overlay("pai-null")
-			if(11)
-				src.add_overlay("pai-sunglasses")
 
 /obj/item/paicard/proc/alertUpdate()
 	audible_message("<span class='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] vibrates with an alert.</span>")

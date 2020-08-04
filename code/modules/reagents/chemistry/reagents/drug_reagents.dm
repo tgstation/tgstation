@@ -565,7 +565,7 @@
 /datum/reagent/drug/maint/sludge/on_mob_metabolize(mob/living/L)
 
 	. = ..()
-	ADD_TRAIT(L,TRAIT_HARDLIMBDISABLE,type)
+	ADD_TRAIT(L,TRAIT_HARDLIMBWOUND,type)
 
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -573,7 +573,7 @@
 
 /datum/reagent/drug/maint/sludge/on_mob_end_metabolize(mob/living/M)
 	. = ..()
-	REMOVE_TRAIT(M,TRAIT_HARDLIMBDISABLE,type)
+	REMOVE_TRAIT(M,TRAIT_HARDLIMBWOUND,type)
 
 /datum/reagent/drug/maint/sludge/overdose_process(mob/living/M)
 	. = ..()

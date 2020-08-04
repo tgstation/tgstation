@@ -313,7 +313,7 @@
   * * module_num - the slot number being selected
   */
 /mob/living/silicon/robot/proc/select_module(module_num)
-	if(!held_items[module_num])
+	if(is_invalid_module_number(module_num) || !held_items[module_num]) //If the slot number is invalid, or there's nothing there, we have nothing to equip
 		return FALSE
 
 	switch(module_num)

@@ -46,7 +46,7 @@
 	var/obj/item/paper/P = new(get_turf(src))
 
 	//This could be a global count like sec and med record printouts. See GLOB.data_core.medicalPrintCount AKA datacore.dm
-	var frNum = ++forensicPrintCount
+	var/frNum = ++forensicPrintCount
 
 	P.name = text("FR-[] 'Forensic Record'", frNum)
 	P.info = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)

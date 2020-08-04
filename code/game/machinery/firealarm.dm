@@ -28,7 +28,7 @@
 
 	light_power = 0
 	light_range = 7
-	light_color = "#ff3232"
+	light_color = COLOR_VIVID_RED
 
 	//Trick to get the glowing overlay visible from a distance
 	luminosity = 1

@@ -374,6 +374,19 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A very classy looking drink."
 	shot_glass_icon_state = "shotglassred"
 
+/datum/reagent/consumable/ethanol/wine/on_merge(data)
+	. = ..()
+	if(src.data && data && data["vintage"] != src.data["vintage"])
+		src.data["vintage"] = "mixed wine"
+
+/datum/reagent/consumable/ethanol/wine/get_taste_description(mob/living/taster)
+	if(HAS_TRAIT(taster,TRAIT_WINE_TASTER))
+		if(data && data["vintage"])
+			return list("[data["vintage"]]" = 1)
+		else
+			return list("synthetic wine"=1)
+	return ..()
+
 /datum/reagent/consumable/ethanol/lizardwine
 	name = "Lizard wine"
 	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol."
@@ -2130,6 +2143,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "rubberneck"
 	glass_name = "Rubberneck"
 	glass_desc = "A popular drink amongst those adhering to an all synthetic diet."
+
+/datum/reagent/consumable/ethanol/rubberneck/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
+
+/datum/reagent/consumable/ethanol/rubberneck/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
+	return ..()
 
 /datum/reagent/consumable/ethanol/duplex
 	name = "Duplex"

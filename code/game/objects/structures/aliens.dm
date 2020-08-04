@@ -59,7 +59,7 @@
 	anchored = TRUE
 	canSmoothWith = list(/obj/structure/alien/resin)
 	max_integrity = 200
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 	var/resintype = null
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
@@ -114,7 +114,7 @@
 	icon_state = "weeds"
 	max_integrity = 15
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 	var/last_expand = 0 //last world.time this weed expanded
 	var/growth_cooldown_low = 150
 	var/growth_cooldown_high = 200

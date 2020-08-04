@@ -3,6 +3,7 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
+	light_color = COLOR_SOFT_RED
 	var/list/z_lock = list() // Lock use to these z levels
 	var/lock_override = NONE
 	var/mob/camera/ai_eye/remote/eyeobj
@@ -13,7 +14,6 @@
 	var/list/actions = list()
 	///Should we supress any view changes?
 	var/should_supress_view_changes  = TRUE
-	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
