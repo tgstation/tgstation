@@ -489,7 +489,7 @@
 		if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune || !proximity)
 			return
 		var/turf/dest = get_turf(actual_selected_rune)
-		if(is_blocked_turf(dest, TRUE))
+		if(dest.is_blocked_turf(TRUE))
 			to_chat(user, "<span class='warning'>The target rune is blocked. You cannot teleport there.</span>")
 			return
 		uses--

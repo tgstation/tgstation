@@ -6,7 +6,7 @@
 	circuit = /obj/item/circuitboard/computer/syndicate_shuttle
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "syndicate"
 	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_custom"

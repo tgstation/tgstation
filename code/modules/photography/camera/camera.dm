@@ -9,7 +9,7 @@
 	inhand_icon_state = "camera"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	light_color = LIGHT_COLOR_WHITE
+	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1

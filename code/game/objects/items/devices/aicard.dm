@@ -40,20 +40,20 @@
 			log_combat(user, AI, "carded", src)
 	update_icon() //Whatever happened, update the card's state (icon, name) to match.
 
-/obj/item/aicard/update_icon()
-	cut_overlays()
-	if(AI)
-		name = "[initial(name)] - [AI.name]"
-		if(AI.stat == DEAD)
-			icon_state = "[initial(icon_state)]-404"
-		else
-			icon_state = "[initial(icon_state)]-full"
-		if(!AI.control_disabled)
-			add_overlay("[initial(icon_state)]-on")
-		AI.cancel_camera()
-	else
+/obj/item/aicard/update_icon_state()
+	if(!AI)
 		name = initial(name)
 		icon_state = initial(icon_state)
+		return
+	name = "[initial(name)] - [AI.name]"
+	icon_state = "[initial(icon_state)][AI.stat == DEAD ? "-404" : "-full"]"
+	AI.cancel_camera()
+
+/obj/item/aicard/update_overlays()
+	. = ..()
+	if(!AI || AI.control_disabled)
+		return
+	. += "[initial(icon_state)]-on"
 
 /obj/item/aicard/ui_state(mob/user)
 	return GLOB.hands_state

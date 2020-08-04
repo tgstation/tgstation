@@ -8,7 +8,7 @@
 	name = "Trash Bag of Holding"
 	description = "Nanotrasen would make good use of high-capacity trash bags. If you have any, please ship them."
 	reward = 10000
-	wanted_types = list(/obj/item/storage/backpack/holding)
+	wanted_types = list(/obj/item/storage/bag/trash/bluespace)
 
 /datum/bounty/item/science/bluespace_syringe
 	name = "Bluespace Syringe"

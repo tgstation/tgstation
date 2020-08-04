@@ -168,7 +168,7 @@
 	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
 	light_range = 1.5
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	var/heal_delay = 25

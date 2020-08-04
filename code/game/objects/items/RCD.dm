@@ -190,6 +190,7 @@ RLD
 	name = "rapid-construction-device (RCD)"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_premium_price = 1700
@@ -635,6 +636,7 @@ RLD
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
+	worn_icon_state = "RPD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 200
@@ -749,7 +751,7 @@ RLD
 						var/obj/machinery/light/L = new /obj/machinery/light(light)
 						L.setDir(align)
 						L.color = color_choice
-						L.light_color = L.color
+						L.set_light_color(L.color)
 						return TRUE
 				return FALSE
 
@@ -769,7 +771,7 @@ RLD
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)
 						FL.color = color_choice
-						FL.light_color = FL.color
+						FL.set_light_color(FL.color)
 						return TRUE
 				return FALSE
 
@@ -779,7 +781,7 @@ RLD
 				to_chat(user, "<span class='notice'>You fire a glowstick!</span>")
 				var/obj/item/flashlight/glowstick/G  = new /obj/item/flashlight/glowstick(start)
 				G.color = color_choice
-				G.light_color = G.color
+				G.set_light_color(G.color)
 				G.throw_at(A, 9, 3, user)
 				G.on = TRUE
 				G.update_brightness()

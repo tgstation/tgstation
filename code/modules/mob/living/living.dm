@@ -936,6 +936,8 @@
 
 /mob/living/singularity_pull(S, current_size)
 	..()
+	if(move_resist == INFINITY)
+		return
 	if(current_size >= STAGE_SIX) //your puny magboots/wings/whatever will not save you against supermatter singularity
 		throw_at(S, 14, 3, src, TRUE)
 	else if(!src.mob_negates_gravity())
@@ -1159,11 +1161,6 @@
 
 //Mobs on Fire end
 
-//Washing
-/mob/living/washed(var/atom/washer)
-	. = ..()
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(var/mob/living/carbon/C)
 	if(C.key) //save us from monkey hordes
@@ -1303,13 +1300,23 @@
 			SSmobs.clients_by_zlevel[registered_z] -= src
 		if (client)
 			if (new_z)
+				//Figure out how many clients were here before
+				var/oldlen = SSmobs.clients_by_zlevel[new_z].len
 				SSmobs.clients_by_zlevel[new_z] += src
 				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
 					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
-					if (SA && get_dist(get_turf(src), get_turf(SA)) < MAX_SIMPLEMOB_WAKEUP_RANGE)
-						SA.consider_wakeup() // Ask the mob if it wants to turn on it's AI
+					if (SA)
+						if(oldlen == 0)
+							//Start AI idle if nobody else was on this z level before (mobs will switch off when this is the case)
+							SA.toggle_ai(AI_IDLE)
+
+						//If they are also within a close distance ask the AI if it wants to wake up
+						if(get_dist(get_turf(src), get_turf(SA)) < MAX_SIMPLEMOB_WAKEUP_RANGE)
+							SA.consider_wakeup() // Ask the mob if it wants to turn on it's AI
+					//They should clean up in destroy, but often don't so we get them here
 					else
 						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
+
 
 			registered_z = new_z
 		else
