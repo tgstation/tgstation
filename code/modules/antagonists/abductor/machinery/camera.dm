@@ -76,7 +76,6 @@
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
-	var/ppp = get_area(remote_eye)
 
 	if(istype(get_area(remote_eye), /area/ai_monitored/turret_protected/ai))
 		to_chat(owner, "<span class='warning'>This area is too heavily shielded to safely transport to.</span>")
