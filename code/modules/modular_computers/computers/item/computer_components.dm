@@ -43,6 +43,7 @@
 	if(enabled && !use_power())
 		shutdown_computer()
 	update_icon()
+	return TRUE
 
 
 // Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null

@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - tweak: "When hacking wires, all interfaces will now show a notice box at the top telling you which wire configuration you're attempting to hack."

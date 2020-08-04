@@ -171,7 +171,14 @@
 #define COMSIG_ATOM_EXPOSE_REAGENTS "atom_expose_reagents"
 	/// Prevents the atom from being exposed to reagents if returned on [COMPONENT_ATOM_EXPOSE_REAGENTS]
 	#define COMPONENT_NO_EXPOSE_REAGENTS (1<<0)
-
+///Called right before the atom changes the value of light_range to a different one, from base atom/set_light_range(): (new_range)
+#define COMSIG_ATOM_SET_LIGHT_RANGE "atom_set_light_range"
+///Called right before the atom changes the value of light_power to a different one, from base atom/set_light_power(): (new_power)
+#define COMSIG_ATOM_SET_LIGHT_POWER "atom_set_light_power"
+///Called right before the atom changes the value of light_color to a different one, from base atom/set_light_color(): (new_color)
+#define COMSIG_ATOM_SET_LIGHT_COLOR "atom_set_light_color"
+///Called right before the atom changes the value of light_on to a different one, from base atom/set_light_on(): (new_value)
+#define COMSIG_ATOM_SET_LIGHT_ON "atom_set_light_on"
 ///called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"
 ///called on a movable (NOT living) when someone starts pulling it (atom/movable/puller, state, force)
@@ -627,6 +634,12 @@
 ///from base of obj/item/reagent_containers/food/snacks/attack(): (mob/living/eater, mob/feeder)
 #define COMSIG_FOOD_EATEN "food_eaten"
 
+//Drink
+
+///from base of obj/item/reagent_containers/food/drinks/attack(): (mob/living/M, mob/user)
+#define COMSIG_DRINK_DRANK "drink_drank"
+///from base of obj/item/reagent_containers/glass/attack(): (mob/M, mob/user)
+#define COMSIG_GLASS_DRANK "glass_drank"
 //Gibs
 
 ///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)

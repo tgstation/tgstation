@@ -136,6 +136,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 
+///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi.
+/turf/proc/is_blocked_turf(exclude_mobs)
+	if(density)
+		return TRUE
+	for(var/i in contents)
+		var/atom/thing = i
+		if(thing.density && (!exclude_mobs || !ismob(thing)))
+			return TRUE
+	return FALSE
+
 //zPassIn doesn't necessarily pass an atom!
 //direction is direction of travel of air
 /turf/proc/zPassIn(atom/movable/A, direction, turf/source)

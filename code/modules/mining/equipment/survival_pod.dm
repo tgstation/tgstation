@@ -148,16 +148,7 @@
 //Lifeform Stasis Unit
 /obj/machinery/stasis/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
-	icon_state = "sleeper"
-	mattress_state = null
 	buckle_lying = 270
-
-/obj/machinery/stasis/survival_pod/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
-
-/obj/machinery/stasis/survival_pod/play_power_sound()
-	return
 
 //Computer
 /obj/item/gps/computer
@@ -200,7 +191,7 @@
 	base_build_path = /obj/machinery/smartfridge/survival_pod
 	light_range = 5
 	light_power = 1.2
-	light_color = "#DDFFD3"
+	light_color = COLOR_VERY_PALE_LIME_GREEN
 	max_n_of_items = 10
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
@@ -265,7 +256,7 @@
 	. = ..()
 	air_update_turf(1)
 
-//Inivisible, indestructible fans
+//Invisible, indestructible fans
 /obj/structure/fans/tiny/invisible
 	name = "air flow blocker"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

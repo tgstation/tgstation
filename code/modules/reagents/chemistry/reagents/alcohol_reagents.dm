@@ -2144,6 +2144,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Rubberneck"
 	glass_desc = "A popular drink amongst those adhering to an all synthetic diet."
 
+/datum/reagent/consumable/ethanol/rubberneck/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
+
+/datum/reagent/consumable/ethanol/rubberneck/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
+	return ..()
+
 /datum/reagent/consumable/ethanol/duplex
 	name = "Duplex"
 	description = "An inseparable combination of two fruity drinks."

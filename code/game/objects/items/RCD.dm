@@ -751,7 +751,7 @@ RLD
 						var/obj/machinery/light/L = new /obj/machinery/light(light)
 						L.setDir(align)
 						L.color = color_choice
-						L.light_color = L.color
+						L.set_light_color(L.color)
 						return TRUE
 				return FALSE
 
@@ -771,7 +771,7 @@ RLD
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)
 						FL.color = color_choice
-						FL.light_color = FL.color
+						FL.set_light_color(FL.color)
 						return TRUE
 				return FALSE
 
@@ -781,7 +781,7 @@ RLD
 				to_chat(user, "<span class='notice'>You fire a glowstick!</span>")
 				var/obj/item/flashlight/glowstick/G  = new /obj/item/flashlight/glowstick(start)
 				G.color = color_choice
-				G.light_color = G.color
+				G.set_light_color(G.color)
 				G.throw_at(A, 9, 3, user)
 				G.on = TRUE
 				G.update_brightness()

@@ -1,9 +1,42 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
-	proper_name = "Airlock"
+	proper_name = "Generic Airlock"
 
 /datum/wires/airlock/secure
+	proper_name = "High Security Airlock"
 	randomize = TRUE
+
+/datum/wires/airlock/maint
+	dictionary_key = /datum/wires/airlock/maint
+	proper_name = "Maintenance Airlock"
+
+/datum/wires/airlock/command
+	dictionary_key = /datum/wires/airlock/command
+	proper_name = "Command Airlock"
+
+/datum/wires/airlock/service
+	dictionary_key = /datum/wires/airlock/service
+	proper_name = "Service Airlock"
+
+/datum/wires/airlock/security
+	dictionary_key = /datum/wires/airlock/security
+	proper_name = "Security Airlock"
+
+/datum/wires/airlock/engineering
+	dictionary_key = /datum/wires/airlock/engineering
+	proper_name = "Engineering Airlock"
+
+/datum/wires/airlock/medbay
+	dictionary_key = /datum/wires/airlock/medbay
+	proper_name = "Medbay Airlock"
+
+/datum/wires/airlock/science
+	dictionary_key = /datum/wires/airlock/science
+	proper_name = "Science Airlock"
+
+/datum/wires/airlock/ai
+	dictionary_key = /datum/wires/airlock/ai
+	proper_name = "AI Airlock"
 
 /datum/wires/airlock/New(atom/holder)
 	wires = list(
@@ -16,10 +49,20 @@
 	add_duds(2)
 	..()
 
+/datum/wires/airlock/interact(mob/user)
+	var/obj/machinery/door/airlock/airlock_holder = holder
+	if (!issilicon(user) && airlock_holder.isElectrified() && airlock_holder.shock(user, 100))
+		return
+
+	return ..()
+
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
-	if(!issilicon(user) && A.isElectrified() && A.shock(user, 100))
-		return FALSE
+	if(!issilicon(user) && A.isElectrified())
+		var/mob/living/carbon/carbon_user = user
+		if (!istype(carbon_user) || carbon_user.should_electrocute(src))
+			return FALSE
+
 	if(A.panel_open)
 		return TRUE
 
@@ -78,6 +121,7 @@
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
 				A.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, usr)
+			A.shock(usr, 100)
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
 			if(!A.density)
@@ -126,6 +170,7 @@
 			else
 				if(A.secondsElectrified != MACHINE_ELECTRIFIED_PERMANENT)
 					A.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
+				A.shock(usr, 100)
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.

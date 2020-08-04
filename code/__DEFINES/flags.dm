@@ -153,3 +153,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define RELIGION_TOOL_INVOKE (1<<0)
 #define RELIGION_TOOL_SACRIFICE (1<<1)
 #define RELIGION_TOOL_SECTSELECT (1<<2)
+
+//skillchip flags
+//Skillchip type can be implanted multiple times
+#define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)

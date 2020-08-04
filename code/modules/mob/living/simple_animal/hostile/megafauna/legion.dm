@@ -146,7 +146,7 @@
 	playsound(src, 'sound/magic/RATTLEMEBONES.ogg', 100, TRUE)
 	var/list/possiblelocations = list()
 	for(var/turf/T in oview(src, 4)) //Only place the turrets on open turfs
-		if(is_blocked_turf(T))
+		if(T.is_blocked_turf())
 			continue
 		possiblelocations += T
 	for(var/i in 1 to min(rand(minimum, maximum), LAZYLEN(possiblelocations))) //Makes sure aren't spawning in nullspace.
@@ -376,7 +376,7 @@
 	damage = 19
 	range = 6
 	eyeblur = 0
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
 	tracer_type = /obj/effect/projectile/tracer/legion
 	muzzle_type = /obj/effect/projectile/tracer/legion

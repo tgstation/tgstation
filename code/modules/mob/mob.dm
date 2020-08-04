@@ -211,7 +211,7 @@
 		if(!msg)
 			continue
 
-		if(visible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, visible_message_flags))
+		if(visible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, visible_message_flags) && !M.is_blind())
 			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = visible_message_flags)
 
 		M.show_message(msg, MSG_VISUAL, blind_message, MSG_AUDIBLE)
@@ -241,7 +241,7 @@
 	if(audible_message_flags & EMOTE_MESSAGE)
 		message = "<b>[src]</b> [message]"
 	for(var/mob/M in hearers)
-		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags))
+		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags) && M.can_hear())
 			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
 		M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
@@ -629,8 +629,9 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (CONFIG_GET(flag/norespawn))
+	if (CONFIG_GET(flag/norespawn) && (!check_rights_for(usr.client, R_ADMIN) || alert(usr, "Respawn configs disabled. Do you want to use your permissions to circumvent it?", "Respawn", "Yes", "No") != "Yes"))
 		return
+
 	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
@@ -655,8 +656,6 @@
 		return
 
 	M.key = key
-//	M.Login()	//wat
-	return
 
 
 /**

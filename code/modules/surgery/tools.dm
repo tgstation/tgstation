@@ -174,9 +174,10 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("slapped")
 
-/obj/item/surgical_drapes/attack(mob/living/M, mob/user)
-	if(!attempt_initiate_surgery(src, M, user))
-		..()
+/obj/item/surgical_drapes/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/surgery_initiator, null)
+
 
 /obj/item/organ_storage //allows medical cyborgs to manipulate organs without hands
 	name = "organ storage bag"
@@ -313,7 +314,7 @@
 	icon_state = "surgicaldrill_a"
 	hitsound = 'sound/items/welder.ogg'
 	toolspeed = 0.7
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 
 /obj/item/surgicaldrill/advanced/Initialize()
 	. = ..()
