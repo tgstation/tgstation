@@ -155,9 +155,9 @@
 	var/simple_mob_flags = NONE
 
 	/// Used for making mobs show a heart emoji and give a mood boost when pet.
-	var/wuvable = FALSE
-	/// A string for an emote used when var/wuvable == true for the mob being pet.
-	var/wuvemote = ""
+	var/funtopet = FALSE
+	/// A string for an emote used when var/funtopet == true for the mob being pet.
+	var/funpetemote = ""
 
 
 /mob/living/simple_animal/Initialize()

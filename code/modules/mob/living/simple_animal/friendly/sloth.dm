@@ -26,8 +26,8 @@
 	speed = 10
 	glide_size = 2
 	held_state = "sloth"
-	wuvable = TRUE
-	wuvemote = "slowly smiles!"
+	funtopet = TRUE
+	funpetemote = "slowly smiles!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

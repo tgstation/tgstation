@@ -27,8 +27,8 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	var/static/list/edibles = typecacheof(list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/hostile/cockroach)) //list of atoms, however turfs won't affect AI, but will affect consumption.
-	wuvable = TRUE
-	wuvemote = "sticks its tongue out contentedly!"
+	funtopet = TRUE
+	funpetemote = "sticks its tongue out contentedly!"
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
