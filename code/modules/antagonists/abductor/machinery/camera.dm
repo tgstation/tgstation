@@ -78,6 +78,10 @@
 	var/obj/machinery/abductor/pad/P = target
 	use_delay = (world.time + abductor_pad_cooldown)
 
+	if(get_area(remote_eye.loc) == /area/ai_monitored/turret_protected/ai)
+		to_chat(owner, "<span class='warning'>debug message")
+		return
+
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		P.PadToLoc(remote_eye.loc)
 
