@@ -30,6 +30,18 @@
 	results = list(/datum/reagent/medicine/salglu_solution = 3)
 	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
 
+/datum/chemical_reaction/baked_banana_peel
+	results = list(/datum/reagent/consumable/baked_banana_peel = 1)
+	required_temp = 413.15 // if it's good enough for caramel it's good enough for this
+	required_reagents = list(/datum/reagent/consumable/banana_peel = 1)
+	mix_message = "The pulp dries up and takes on a powdery state!"
+	mob_react = FALSE
+
+/datum/chemical_reaction/coagulant_weak
+	results = list(/datum/reagent/medicine/coagulant/weak = 3)
+	required_reagents = list(/datum/reagent/medicine/salglu_solution = 2, /datum/reagent/consumable/baked_banana_peel = 1)
+	mob_react = FALSE
+
 /datum/chemical_reaction/mine_salve
 	results = list(/datum/reagent/medicine/mine_salve = 3)
 	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/water = 1, /datum/reagent/iron = 1)
@@ -38,8 +50,8 @@
 	results = list(/datum/reagent/medicine/mine_salve = 15)
 	required_reagents = list(/datum/reagent/toxin/plasma = 5, /datum/reagent/iron = 5, /datum/reagent/consumable/sugar = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
 
-/datum/chemical_reaction/instabitaluri
-	results = list(/datum/reagent/medicine/c2/instabitaluri = 3)
+/datum/chemical_reaction/synthflesh
+	results = list(/datum/reagent/medicine/c2/synthflesh = 3)
 	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/c2/libital = 1)
 
 /datum/chemical_reaction/calomel

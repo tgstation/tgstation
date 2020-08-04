@@ -40,6 +40,10 @@
 			handle_liver()
 
 		dna.species.spec_life(src) // for mutantraces
+	else
+		for(var/i in all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_stasis()
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()

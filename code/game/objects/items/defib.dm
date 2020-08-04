@@ -334,7 +334,6 @@
 	. = ..()
 	check_range()
 
-
 /obj/item/shockpaddles/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if((req_defib && defib) && loc != defib)
@@ -344,9 +343,9 @@
 	if(!req_defib || !defib)
 		return
 	if(!in_range(src,defib))
-		var/mob/living/L = loc
-		if(istype(L))
-			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
+		if(isliving(loc))
+			var/mob/living/user = loc
+			to_chat(user, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
 		else
 			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
 		snap_back()
@@ -390,14 +389,13 @@
 		icon_state = "[base_icon_state][wielded]_cooldown"
 
 /obj/item/shockpaddles/dropped(mob/user)
-	if(!req_defib)
-		return ..()
+	. = ..()
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		if(user != loc)
+	if(req_defib)
+		if(user)
 			to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
-			snap_back()
-	return
+		snap_back()
 
 /obj/item/shockpaddles/proc/snap_back()
 	if(!defib)
@@ -437,7 +435,6 @@
 			to_chat(user, "<span class='warning'>You aren't sure how to revive that...</span>")
 		return
 	var/mob/living/carbon/H = M
-
 
 	if(user.zone_selected != BODY_ZONE_CHEST)
 		to_chat(user, "<span class='warning'>You need to target your patient's chest with [src]!</span>")

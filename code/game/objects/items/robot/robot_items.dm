@@ -349,11 +349,8 @@
 
 	var/firedelay = 0
 	var/hitspeed = 2
-	var/hitdamage = 0
-	var/emaggedhitdamage = 3
 
 /obj/item/borg/lollipop/clown
-	emaggedhitdamage = 0
 
 /obj/item/borg/lollipop/equipped()
 	. = ..()
@@ -418,11 +415,14 @@
 		to_chat(user, "<span class='warning'>Not enough lollipops left!</span>")
 		return FALSE
 	candy--
-	var/obj/item/ammo_casing/caseless/lollipop/A = new /obj/item/ammo_casing/caseless/lollipop(src)
-	A.BB.damage = hitdamage
-	if(hitdamage)
-		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+
+	var/obj/item/ammo_casing/caseless/lollipop/A
+	var/mob/living/silicon/robot/R = user
+	if(istype(R) && R.emagged)
+		A = new /obj/item/ammo_casing/caseless/lollipop/harmful(src)
+	else
+		A = new /obj/item/ammo_casing/caseless/lollipop(src)
+
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
@@ -433,11 +433,13 @@
 		to_chat(user, "<span class='warning'>Not enough gumballs left!</span>")
 		return FALSE
 	candy--
-	var/obj/item/ammo_casing/caseless/gumball/A = new /obj/item/ammo_casing/caseless/gumball(src)
-	A.BB.damage = hitdamage
-	if(hitdamage)
-		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+	var/obj/item/ammo_casing/caseless/gumball/A
+	var/mob/living/silicon/robot/R = user
+	if(istype(R) && R.emagged)
+		A = new /obj/item/ammo_casing/caseless/gumball/harmful(src)
+	else
+		A = new /obj/item/ammo_casing/caseless/gumball(src)
+
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
@@ -452,8 +454,6 @@
 		if(!R.cell.use(12))
 			to_chat(user, "<span class='warning'>Not enough power.</span>")
 			return FALSE
-		if(R.emagged)
-			hitdamage = emaggedhitdamage
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE, DISPENSE_ICECREAM_MODE)
 			if(!proximity)
@@ -463,7 +463,6 @@
 			shootL(target, user, click_params)
 		if(THROW_GUMBALL_MODE)
 			shootG(target, user, click_params)
-	hitdamage = initial(hitdamage)
 
 /obj/item/borg/lollipop/attack_self(mob/living/user)
 	switch(mode)
@@ -492,6 +491,8 @@
 	projectile_type = /obj/projectile/bullet/reusable/gumball
 	click_cooldown_override = 2
 
+/obj/item/ammo_casing/caseless/gumball/harmful
+	projectile_type = /obj/projectile/bullet/reusable/gumball/harmful
 
 /obj/projectile/bullet/reusable/gumball
 	name = "gumball"
@@ -499,6 +500,13 @@
 	icon_state = "gumball"
 	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
 	nodamage = TRUE
+	damage = 0
+	speed = 0.5
+
+/obj/projectile/bullet/reusable/gumball/harmful
+	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
+	nodamage = FALSE
+	damage = 3
 
 /obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
@@ -513,13 +521,26 @@
 	projectile_type = /obj/projectile/bullet/reusable/lollipop
 	click_cooldown_override = 2
 
+// rejected name: DumDum lollipop (get it, cause it embeds?)
+/obj/item/ammo_casing/caseless/lollipop/harmful
+	projectile_type = /obj/projectile/bullet/reusable/lollipop/harmful
+
 /obj/projectile/bullet/reusable/lollipop
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
 	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg
-	var/color2 = rgb(0, 0, 0)
+	embedding = null
 	nodamage = TRUE
+	damage = 0
+	speed = 0.5
+	var/color2 = rgb(0, 0, 0)
+
+/obj/projectile/bullet/reusable/lollipop/harmful
+	embedding = list(embed_chance=35, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
+	damage = 3
+	nodamage = FALSE
+	embed_falloff_tile = 0
 
 /obj/projectile/bullet/reusable/lollipop/Initialize()
 	. = ..()

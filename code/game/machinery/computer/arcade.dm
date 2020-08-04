@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/fakesyndiesuit = 2,
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/balloon/arrest = 2,
 		/obj/item/toy/prize/ripley = 1,
 		/obj/item/toy/prize/fireripley = 1,
 		/obj/item/toy/prize/deathripley = 1,
@@ -61,8 +62,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	icon_keyboard = "no_keyboard"
 	icon_screen = "invaders"
-	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
+	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()
 	return

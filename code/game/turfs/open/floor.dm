@@ -189,7 +189,7 @@
 	I.play_tool_sound(src, 80)
 	return remove_tile(user, silent)
 
-/turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
+/turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE, force_plating)
 	if(broken || burnt)
 		broken = 0
 		burnt = 0
@@ -198,11 +198,16 @@
 	else
 		if(user && !silent)
 			to_chat(user, "<span class='notice'>You remove the floor tile.</span>")
-		if(floor_tile && make_tile)
+		if(make_tile)
 			spawn_tile()
-	return make_plating()
+	return make_plating(force_plating)
+
+/turf/open/floor/proc/has_tile()
+	return floor_tile
 
 /turf/open/floor/proc/spawn_tile()
+	if(!has_tile())
+		return
 	new floor_tile(src)
 
 /turf/open/floor/singularity_pull(S, current_size)
@@ -221,9 +226,8 @@
 			else if(prob(50) && (/turf/open/space in baseturfs))
 				ReplaceWithLattice()
 	if(sheer)
-		if(floor_tile)
-			make_plating(TRUE)
-			new floor_tile(src)
+		if(has_tile())
+			remove_tile(null, TRUE, TRUE, TRUE)
 
 
 /turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
@@ -313,6 +317,9 @@
 	name = "floor"
 	icon_state = "materialfloor"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/open/floor/material/has_tile()
+	return custom_materials.len
 
 /turf/open/floor/material/spawn_tile()
 	for(var/i in custom_materials)

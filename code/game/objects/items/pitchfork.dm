@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("attacked", "impaled", "pierced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
@@ -43,7 +43,7 @@
 
 /obj/item/pitchfork/demonic/Initialize()
 	. = ..()
-	set_light(3,6,LIGHT_COLOR_RED)
+	set_light(3,6,COLOR_SOFT_RED)
 
 /obj/item/pitchfork/demonic/ComponentInitialize()
 	. = ..()

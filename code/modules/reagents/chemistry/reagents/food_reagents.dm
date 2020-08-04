@@ -95,6 +95,9 @@
 
 	data = taste_amounts
 
+/datum/reagent/consumable/nutriment/get_taste_description(mob/living/taster)
+	return data
+
 /datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
@@ -798,3 +801,25 @@
 	color = "#78280A" // rgb: 120 40, 10
 	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
 	taste_description = "smokey sweetness"
+
+/datum/reagent/consumable/chocolatepudding
+	name = "Chocolate Pudding"
+	description = "A great dessert for chocolate lovers."
+	color = "#800000"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+	taste_description = "sweet chocolate"
+	glass_icon_state = "chocolatepudding"
+	glass_name = "chocolate pudding"
+	glass_desc = "Tasty."
+
+/datum/reagent/consumable/vanillapudding
+	name = "Vanilla Pudding"
+	description = "A great dessert for vanilla lovers."
+	color = "#FAFAD2"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+	taste_description = "sweet vanilla"
+	glass_icon_state = "vanillapudding"
+	glass_name = "vanilla pudding"
+	glass_desc = "Tasty."

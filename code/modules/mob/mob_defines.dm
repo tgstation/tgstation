@@ -205,8 +205,6 @@
 
 	var/datum/h_sandbox/sandbox = null
 
-	var/bloody_hands = 0
-
 	var/datum/focus //What receives our keyboard inputs. src by default
 
 	/// Used for tracking last uses of emotes for cooldown purposes
