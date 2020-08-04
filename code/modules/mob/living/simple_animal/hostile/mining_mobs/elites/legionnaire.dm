@@ -97,7 +97,7 @@
 			bonfire_teleport()
 		if(SPEW_SMOKE)
 			spew_smoke()
-			
+
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/Move()
 	if(charging)
 		return FALSE
@@ -111,7 +111,7 @@
 	if(T)
 		myhead.LoseTarget()
 		myhead.Goto(T, myhead.move_to_delay)
-		
+
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge(target)
 	ranged_cooldown = world.time + 3.5 SECONDS
 	charging = TRUE
@@ -274,7 +274,7 @@
 	anchored = TRUE
 	density = FALSE
 	light_range = 4
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/myowner = null
 
 
@@ -321,7 +321,7 @@
 	A.GiveTarget(target)
 	A.friends += user
 	A.faction = user.faction.Copy()
-	
+
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	if(!isliving(user))
 		return
