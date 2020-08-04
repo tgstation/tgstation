@@ -1,6 +1,6 @@
-//////////////////The Monster
+//////////////////Imp
 
-/mob/living/simple_animal/imp
+/mob/living/simple_animal/hostile/imp
 	name = "imp"
 	real_name = "imp"
 	unique_name = TRUE
@@ -40,17 +40,9 @@
 	del_on_death = TRUE
 	deathmessage = "screams in agony as it sublimates into a sulfurous smoke."
 	deathsound = 'sound/magic/demon_dies.ogg'
-	var/boost = 0
-	var/list/consumed_mobs = list()
 	var/playstyle_string = "<span class='big bold'>You are an imp,</span><B> a mischievous creature from hell. You are the lowest rank on the hellish totem pole \
 							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion. However, you are incapable	\
 							of intentionally harming a fellow devil.</B>"
-
-/mob/living/simple_animal/imp/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_BLOODCRAWL_EAT, "innate")
-	set_varspeed(1)
-	addtimer(CALLBACK(src, /mob/living/simple_animal/proc/set_varspeed, 0), 30)
 
 /datum/antagonist/imp
 	name = "Imp"

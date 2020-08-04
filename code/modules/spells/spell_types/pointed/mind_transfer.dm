@@ -40,7 +40,7 @@
 			victim = stand.summoner
 
 	//You should not be able to enter one of the most powerful side-antags as a fucking wizard.
-	if(istype(victim,/mob/living/simple_animal/slaughter))
+	if(istype(victim,/mob/living/simple_animal/hostile/imp/slaughter))
 		to_chat(user, "<span class='warning'>The devilish contract doesn't include the 'mind swappable' package, please try again another lifetime.</span>")
 		return
 
