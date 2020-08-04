@@ -221,5 +221,5 @@
 /obj/item/bouquet
 	name = "bouquet"
 	desc = "A bouquet of sunflowers, lilies, and geraniums. How delightful."
-	icon = "icons/obj/items_and_weapons.dmi"
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bouquet"
