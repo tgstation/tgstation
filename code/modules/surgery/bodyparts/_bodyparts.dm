@@ -775,7 +775,7 @@
 		bleed_rate *= 0.75
 
 	if(grasped_by)
-		bleed_rate *= 0.5
+		bleed_rate *= 0.7
 
 	if(!bleed_rate)
 		QDEL_NULL(grasped_by)

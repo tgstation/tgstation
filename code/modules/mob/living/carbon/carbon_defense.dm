@@ -517,7 +517,7 @@
 	inhand_icon_state = "nothing"
 	force = 0
 	throwforce = 0
-	slowdown = 0.75
+	slowdown = 1
 	item_flags = DROPDEL | ABSTRACT | NOBLUDGEON | SLOWS_WHILE_IN_HAND
 	var/obj/item/bodypart/grasped_part
 	var/mob/living/carbon/user
@@ -525,6 +525,7 @@
 /obj/item/grip_self/Destroy()
 	if(user)
 		to_chat(user, "<span class='warning'>You stop holding onto your[grasped_part ? " [grasped_part.name]" : "self"].</span>")
+		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
 	if(grasped_part)
 		UnregisterSignal(grasped_part, COMSIG_PARENT_QDELETING)
 		grasped_part.grasped_by = null
@@ -532,8 +533,8 @@
 	user = null
 	return ..()
 
-/// The limb we were grasping got deleted, so we don't care anymore
-/obj/item/grip_self/proc/destroyed_limb()
+/// The limb or the whole damn person we were grasping got deleted, so we don't care anymore
+/obj/item/grip_self/proc/qdel_void()
 	qdel(src)
 
 /// We're trying to grasp, but we can only do so if we have a bodypart on the zone we're targeting, and said bodypart is bleeding
@@ -547,10 +548,16 @@
 		qdel()
 		return
 
+	to_chat(attempted_grasper, "<span class='warning'>You try grasping at your [grasped_part.name], trying to stop the bleeding...</span>")
+	if(!do_after(attempted_grasper, 1.5 SECONDS))
+		qdel()
+		return
+
 	user = attempted_grasper // if we have a user, we know we were successful
 	grasped_part.grasped_by = src
-	RegisterSignal(grasped_part, COMSIG_PARENT_QDELETING, .proc/destroyed_limb)
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/qdel_void)
+	RegisterSignal(grasped_part, COMSIG_PARENT_QDELETING, .proc/qdel_void)
 
-	user.visible_message("<span class='danger'>[user] grasps at [user.p_their()] [grasped_part.name], trying to stop the bleeding.</span>", "<span class='warning'>You grab hold of your [grasped_part.name], trying to stop the bleeding.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	user.visible_message("<span class='danger'>[user] grasps at [user.p_their()] [grasped_part.name], trying to stop the bleeding.</span>", "<span class='notice'>You grab hold of your [grasped_part.name] tightly.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
