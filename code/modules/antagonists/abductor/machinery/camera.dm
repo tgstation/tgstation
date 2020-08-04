@@ -68,20 +68,18 @@
 	button_icon_state = "beam_down"
 
 /datum/action/innate/teleport_in/Activate()
-	if(!target || !iscarbon(owner))
-		return
-	if(world.time < use_delay)
-		to_chat(owner, "<span class='warning'>You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!</span>")
-		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 	use_delay = (world.time + abductor_pad_cooldown)
-
+	if(!target || !iscarbon(owner))
+		return
 	if(get_area(remote_eye.loc) == /area/ai_monitored/turret_protected/ai)
 		to_chat(owner, "<span class='warning'>debug message")
 		return
-
+	if(world.time < use_delay)
+		to_chat(owner, "<span class='warning'>You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!</span>")
+		return
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		P.PadToLoc(remote_eye.loc)
 
