@@ -64,8 +64,7 @@
 /obj/item/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message)
 	. = FALSE
 	if(findtext(raw_message, plsRestart))
-		if(speaker.Client)
-			initiate_vote("restart",speaker.key)
+		SSvote.initiate_vote("restart", "Death Distress Detection Device")
 	switch(mode)
 		if(INCLUSIVE_MODE)
 			if(findtext(raw_message, recorded))
