@@ -7,7 +7,7 @@
 	var/name
 	var/hash
 	var/resource
-	var/ext
+	var/ext = ""
 	var/legacy = FALSE //! Should this file also be sent via the legacy browse_rsc system when cdn transports are enabled?
 	var/namespace = null //! used by the cdn system to keep legacy css assets with their parent css file. (css files resolve urls relative to the css file, so the legacy system can't be used if the css file itself could go out over the cdn)
 
@@ -21,7 +21,9 @@
 			CRASH("invalid asset sent to asset cache")
 		debug_world_log("asset cache unexpected success of second fcopy_rsc")
 	src.name = name
-	ext = copytext(name, findlasttext(name, ".")+1)
+	var/extstart = findlasttext(name, ".")
+	if (extstart)
+		ext = ".[copytext(name, extstart+1)]"
 	resource = file
 
 /*

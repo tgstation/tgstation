@@ -4,15 +4,19 @@
 /// Base browse_rsc asset transport
 /datum/asset_transport
 	var/name = "Simple browse_rsc asset transport"
+	var/list/preload
 
 /// Called when the transport is loaded, not called on the default transport unless it gets loaded by a config change
-/datum/asset_transport/proc/Load(list/assets)
+/datum/asset_transport/proc/Load()
 	return
 
 /// Initialize - Called when SSassets initializes. 
 /datum/asset_transport/proc/Initialize(list/assets)
+	preload = assets.Copy()
+	if (!CONFIG_GET(flag/asset_simple_preload))
+		return
 	for(var/client/C in GLOB.clients)
-		addtimer(CALLBACK(src, .proc/send_assets_slow, C), 1 SECONDS)
+		addtimer(CALLBACK(src, .proc/send_assets_slow, C, preload), 1 SECONDS)
 
 
 /// Register a browser asset with the asset cache system
@@ -41,11 +45,12 @@
 /datum/asset_transport/proc/get_asset_url(asset_name, datum/asset_cache_item/asset_cache_item)
 	if (!istype(asset_cache_item))
 		asset_cache_item = SSassets.cache[asset_name]
-	return url_encode(asset_cache_item.name)
+	if (asset_cache_item.legacy)
+		return url_encode(asset_cache_item.name)
+	return url_encode("asset.[asset_cache_item.hash][asset_cache_item.ext]")
 
 
 /// Sends a list of browser assets to a client
-/// This proc will no longer block, use client.asset_flush() if you to need know when the client has all assets (such as for output()). (This is not required for browse() calls as they use the same message queue as asset sends)
 /// client - a client or mob
 /// asset_list - A list of asset filenames to be sent to the client.
 /// Returns TRUE if any assets were sent.
@@ -88,7 +93,10 @@
 			var/datum/asset_cache_item/ACI
 			if ((ACI = SSassets.cache[asset]))
 				log_asset("Sending asset [asset] to client [client]")
-				client << browse_rsc(ACI.resource, asset)
+				var/asset_name = asset
+				if (!ACI.legacy)
+					asset_name = "asset.[ACI.hash][ACI.ext]"
+				client << browse_rsc(ACI.resource, asset_name)
 			else
 				var/logmsg = "WTF: can't send asset `[asset]`: unexpected failure to fetch asset_cache_item datum (we already checked this!)"
 				log_asset(logmsg)

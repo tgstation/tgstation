@@ -2,6 +2,7 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
+/datum/config_entry/flag/asset_simple_preload
 
 /datum/config_entry/string/asset_transport
 /datum/config_entry/string/asset_transport/ValidateAndSet(str_val)
