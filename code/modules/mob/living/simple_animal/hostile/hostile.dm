@@ -56,12 +56,12 @@
 	var/charge_state = FALSE
 	///In a charge, how many tiles will the charger travel?
 	var/charge_distance = 3
-	///When can the charging mob charge again, with charge_frequency added to the world timer.
-	var/charge_cooldown = 0
-	///How often can the charging mob actually charge?
+	///How often can the charging mob actually charge? Effects the cooldown between charges.
 	var/charge_frequency = 6 SECONDS
 	///If the mob is charging, how long will it stun it's target on success, and itself on failure?
 	var/knockdown_time = 3 SECONDS
+	///Declares a cooldown for potential charges right off the bat.
+	COOLDOWN_DECLARE(charge_cooldown)
 
 /mob/living/simple_animal/hostile/Initialize()
 	. = ..()
@@ -600,18 +600,17 @@
 	if((mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || charge_state)
 		return FALSE
 
-	if((charge_cooldown > world.time) || !has_gravity() || !target.has_gravity())
+	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
 		return FALSE
 	Shake(15, 15, 1 SECONDS)
 	sleep(1.5 SECONDS) //Provides a visable wind up and tell for all charging mobs, with consistant visuals each time.
 	charge_state = TRUE
-	weather_immunities += "lava"
 	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
+	COOLDOWN_START(src, charge_cooldown, charge_frequency)
 	return TRUE
 
 /mob/living/simple_animal/hostile/proc/charge_end()
 	charge_state = FALSE
-	weather_immunities -= "lava"
 
 /**
   * Proc that handles the charge impact of the charging mob.
@@ -620,7 +619,6 @@
 	if(!charge_state)
 		return ..()
 
-	charge_cooldown = world.time + charge_frequency
 	if(hit_atom)
 		if(isliving(hit_atom))
 			var/mob/living/L = hit_atom
