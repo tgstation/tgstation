@@ -231,6 +231,7 @@
 		if(do_mob(user, M ,10 SECONDS))
 			amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5
 			return ..()
+		return
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 	return ..()
 
