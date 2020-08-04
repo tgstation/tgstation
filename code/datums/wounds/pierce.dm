@@ -95,6 +95,7 @@
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult * 0.5
 	blood_flow -= blood_sutured
 	limb.heal_damage(I.heal_brute, I.heal_burn)
+	I.use(1)
 
 	if(blood_flow > 0)
 		try_treating(I, user)

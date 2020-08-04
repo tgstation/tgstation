@@ -1349,7 +1349,7 @@
 	/// How much base clotting we do per bleeding wound, multiplied by the below number for each bleeding wound
 	var/clot_rate = 0.25
 	/// If we have multiple bleeding wounds, we count the number of bleeding wounds, then multiply the clot rate by this^(n) before applying it to each cut, so more cuts = less clotting per cut (though still more total clotting)
-	var/clot_coeff_per_wound = 0.9
+	var/clot_coeff_per_wound = 0.75
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -1379,6 +1379,7 @@
 			to_chat(M, "<span class='danger'>You can feel your blood clotting up in your veins!</span>")
 		else if(prob(10))
 			to_chat(M, "<span class='userdanger'>You feel like your blood has stopped moving!</span>")
+			M.adjustOxyLoss(rand(3,4))
 
 		if(prob(50))
 			var/obj/item/organ/lungs/our_lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
@@ -1387,8 +1388,13 @@
 			var/obj/item/organ/heart/our_heart = M.getorganslot(ORGAN_SLOT_HEART)
 			our_heart.applyOrganDamage(1)
 
-// can be synthesized on station rather than bought. made by grinding a banana peel, heating it up, then mixing the banana peel powder with salglu
-/datum/reagent/medicine/coagulant/weak
-	name = "Synthi-Sanguirite"
-	description = "A synthetic coagulant used to help bleeding wounds clot faster. Not quite as effective as name brand Sanguirite, especially on patients with lots of cuts."
-	clot_coeff_per_wound = 0.8
+// i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
+/datum/reagent/medicine/coagulant/banana_peel
+	name = "Pulped Banana Peel"
+	description = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"
+	color = "#863333" // rgb: 175, 175, 0
+	taste_description = "horribly stringy, bitter pulp"
+	glass_name = "glass of banana peel pulp"
+	glass_desc = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"
+	metabolization_rate = REAGENTS_METABOLISM
+	clot_coeff_per_wound = 0.6

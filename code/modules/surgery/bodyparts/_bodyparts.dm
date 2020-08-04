@@ -159,12 +159,15 @@
 ///since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have
 /obj/item/bodypart/proc/get_organs()
 	if(!owner)
-		return
-	. = list()
+		return FALSE
+
+	var/list/bodypart_organs
 	for(var/i in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
 		var/obj/item/organ/organ_check = i
 		if(check_zone(organ_check.zone) == body_zone)
-			. += organ_check
+			LAZYADD(bodypart_organs, organ_check) // this way if we don't have any, it'll just return null
+
+	return bodypart_organs
 
 /obj/item/bodypart/proc/consider_processing()
 	if(stamina_dam > DAMAGE_PRECISION)
@@ -768,6 +771,13 @@
 
 	if(owner.mobility_flags & ~MOBILITY_STAND)
 		bleed_rate *= 0.75
+
+	if(grasped_by)
+		bleed_rate *= 0.5
+
+	if(!bleed_rate)
+		QDEL_NULL(grasped_by)
+
 	return bleed_rate
 
 /**

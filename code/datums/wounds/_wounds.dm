@@ -245,9 +245,12 @@
 	if(!allowed)
 		return FALSE
 
-	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient
+	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
 	if(INTERACTING_WITH(user, victim))
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
+		return TRUE
+
+	if(!victim.can_inject(user, TRUE))
 		return TRUE
 
 	// lastly, treat them
@@ -258,7 +261,7 @@
 /datum/wound/proc/check_grab_treatments(obj/item/I, mob/user)
 	return FALSE
 
-/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example.
+/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example. Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures
 /datum/wound/proc/try_handling(mob/living/carbon/human/user)
 	return FALSE
 
