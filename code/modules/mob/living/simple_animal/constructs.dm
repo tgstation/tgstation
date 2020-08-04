@@ -413,7 +413,7 @@
 	var/mob/living/simple_animal/hostile/construct/the_construct
 
 
-/datum/action/innate/seek_master/Grant(var/mob/living/C)
+/datum/action/innate/seek_master/Grant(mob/living/C)
 	the_construct = C
 	..()
 
@@ -450,7 +450,7 @@
 	button_icon_state = "cult_mark"
 	var/mob/living/simple_animal/hostile/construct/harvester/the_construct
 
-/datum/action/innate/seek_prey/Grant(var/mob/living/C)
+/datum/action/innate/seek_prey/Grant(mob/living/C)
 	the_construct = C
 	..()
 
