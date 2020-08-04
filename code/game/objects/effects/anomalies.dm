@@ -59,8 +59,8 @@
 	GLOB.poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
-	if(asignal)
-		QDEL_NULL(asignal)
+	if(aSignal)
+		QDEL_NULL(aSignal)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
@@ -78,9 +78,9 @@
 	new /obj/effect/particle_effect/smoke/bad(loc)
 
 	if(drops_core)
-		asignal.forceMove(drop_location())
+		aSignal.forceMove(drop_location())
 	else
-		QDEL_NULL(asignal)
+		QDEL_NULL(aSignal)
 
 	qdel(src)
 
