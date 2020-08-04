@@ -2959,6 +2959,7 @@
 /area/awaymission/academy/academyengine)
 "lL" = (
 /mob/living/simple_animal/hostile/imp/slaughter{
+	faction = list("hell", "neutral");
 	name = "engine demon"
 	},
 /turf/open/floor/plating,
