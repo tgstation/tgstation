@@ -39,18 +39,6 @@
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 
-	var/area/vent_area = get_area(src)
-	var/ids_len = vent_area.air_vent_ids.len + 1
-	var/vent_name = "\improper [vent_area.name] vent pump #"
-	for(var/i=1, i<ids_len, i++)
-		if(!vent_area.air_vent_ids[i])
-			vent_area.air_vent_ids[i] = id_tag
-			vent_area.air_vent_names[id_tag] = "[vent_name][i]"
-			break
-	if(!vent_area.air_vent_names[id_tag])
-		vent_area.air_vent_ids += id_tag
-		vent_area.air_vent_names[id_tag] = "[vent_name][ids_len]"
-
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/vent_area = get_area(src)
 	if(vent_area)
@@ -174,6 +162,20 @@
 	))
 
 	var/area/vent_area = get_area(src)
+	if(!vent_area.air_vent_names[id_tag])
+		var/ids_len = vent_area.air_vent_ids.len + 1
+		var/selected_id
+		for(var/i=1, i<ids_len, i++)
+			if(!vent_area.air_vent_ids[i])
+				vent_area.air_vent_ids[i] = id_tag
+				selected_id = i
+				break
+		if(!selected_id)
+			vent_area.air_vent_ids += id_tag
+			selected_id = ids_len
+		name = "\improper [vent_area.name] vent pump #[selected_id]"
+		vent_area.air_vent_names[id_tag] = name
+
 	vent_area.air_vent_info[id_tag] = signal.data
 
 	radio_connection.post_signal(src, signal, radio_filter_out)

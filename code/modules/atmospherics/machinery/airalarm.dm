@@ -298,7 +298,9 @@
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
-		for(var/id_tag in A.air_vent_names)
+		for(var/id_tag in A.air_vent_ids)
+			if(!id_tag)
+				continue
 			var/long_name = A.air_vent_names[id_tag]
 			var/list/info = A.air_vent_info[id_tag]
 			if(!info || info["frequency"] != frequency)
@@ -317,7 +319,9 @@
 					"intdefault"= (info["internal"] == 0)
 				))
 		data["scrubbers"] = list()
-		for(var/id_tag in A.air_scrub_names)
+		for(var/id_tag in A.air_scrub_ids)
+			if(!id_tag)
+				continue
 			var/long_name = A.air_scrub_names[id_tag]
 			var/list/info = A.air_scrub_info[id_tag]
 			if(!info || info["frequency"] != frequency)

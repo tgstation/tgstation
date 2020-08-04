@@ -34,18 +34,6 @@
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 
-	var/area/scrub_area = get_area(src)
-	var/ids_len = scrub_area.air_scrub_ids.len + 1
-	var/scrub_name = "\improper [scrub_area.name] air scrubber #"
-	for(var/i=1, i<ids_len, i++)
-		if(!scrub_area.air_scrub_ids[i])
-			scrub_area.air_scrub_ids[i] = id_tag
-			scrub_area.air_scrub_names[id_tag] = "[scrub_name][i]"
-			break
-	if(!scrub_area.air_scrub_names[id_tag])
-		scrub_area.air_scrub_ids += id_tag
-		scrub_area.air_scrub_names[id_tag] = "[scrub_name][ids_len]"
-
 	for(var/f in filter_types)
 		if(istext(f))
 			filter_types -= f
@@ -131,6 +119,20 @@
 	))
 
 	var/area/scrub_area = get_area(src)
+	if(!scrub_area.air_scrub_names[id_tag])
+		var/ids_len = scrub_area.air_scrub_ids.len + 1
+		var/selected_id
+		for(var/i=1, i<ids_len, i++)
+			if(!scrub_area.air_scrub_ids[i])
+				scrub_area.air_scrub_ids[i] = id_tag
+				selected_id = i
+				break
+		if(!selected_id)
+			scrub_area.air_scrub_ids += id_tag
+			selected_id = ids_len
+		name = "\improper [scrub_area.name] air scrubber #[selected_id]"
+		scrub_area.air_scrub_names[id_tag] = name
+
 	scrub_area.air_scrub_info[id_tag] = signal.data
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
