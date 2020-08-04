@@ -446,9 +446,31 @@
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind())
-		to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
-		return
+	if(is_blind()) //blind people see things differently (through touch)
+		//need to be next to something, awake, on help intent, and have an empty hand
+		if(!in_range(A, src) || incapacitated() || a_intent != INTENT_HELP || LAZYLEN(do_afters) >= get_num_arms() || get_active_held_item())
+			to_chat(src, "<span class='warning'>Something is there, but you can't see it!</span>")
+			return
+		if(A in do_afters)
+			return
+
+		to_chat(src, "<span class='notice'>You start feeling around for something...</span>")
+		visible_message("<span class='notice'> [name] begins feeling around for \the [A.name]...</span>")
+
+		/// how long it takes for the blind person to find the thing they're examining
+		var/examine_delay_length = rand(1 SECONDS, 2 SECONDS)
+		if(client?.recent_examines && client?.recent_examines[A]) //easier to find things we just touched
+			examine_delay_length = 0.5 SECONDS
+		else if(isobj(A))
+			examine_delay_length *= 1.5
+		else if(ismob(A) && A != src)
+			examine_delay_length *= 2
+
+		if(examine_delay_length > 0 && !do_after(src, examine_delay_length, target = A))
+			to_chat(src, "<span class='notice'>You can't get a good feel for what is there.</span>")
+			return
+		//now we go ahead and touch it with our hand
+		A.attack_hand(src)
 
 	face_atom(A)
 	var/list/result
