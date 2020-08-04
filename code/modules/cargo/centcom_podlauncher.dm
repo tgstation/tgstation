@@ -650,7 +650,7 @@
 	qdel(selector) //Delete the selector effect
 	. = ..()
 
-/datum/centcom_podlauncher/proc/supplypod_punish_log(var/list/whoDyin)
+/datum/centcom_podlauncher/proc/supplypod_punish_log(list/whoDyin)
 	var/podString = effectBurst ? "5 pods" : "a pod"
 	var/whomString = ""
 	if (LAZYLEN(whoDyin))
