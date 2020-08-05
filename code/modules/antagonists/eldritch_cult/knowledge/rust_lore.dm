@@ -199,8 +199,7 @@
 	edge_turfs = list()
 	var/max_dist = 1
 	for(var/X in turfs)
-		if(get_dist(X,centre)+1 > max_dist)
-			max_dist = get_dist(X,centre)+1
+		max_dist = max(max_dist,get_dist(X,centre)+1)
 
 	for(var/X in spiral_range_turfs(max_dist,centre,FALSE))
 		if(X in turfs)
