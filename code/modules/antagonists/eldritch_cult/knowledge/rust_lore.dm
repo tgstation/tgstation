@@ -157,6 +157,7 @@
 /datum/rust_spread
 	var/list/edge_turfs = list()
 	var/list/turfs = list()
+	var/list/prev_edge_turfs = list()
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/indestructible,/turf/closed/indestructible,/turf/open/space,/turf/open/lava,/turf/open/chasm))
 	var/spread_per_tick = 6
 
@@ -178,9 +179,13 @@
 	var/turf/T
 	for(var/i in 0 to spread_per_tick)
 		T = pick(edge_turfs)
+		edge_turfs -= T
 		T.rust_heretic_act()
 		turfs += get_turf(T)
-		CHECK_TICK
+		prev_edge_turfs += get_turf(T)
+
+	if(edge_turfs.len < spread_per_tick)
+		compile_turfs()
 
 /**
   * Compile turfs
@@ -189,7 +194,7 @@
   */
 /datum/rust_spread/proc/compile_turfs()
 	edge_turfs = list()
-	for(var/X in turfs)
+	for(var/X in prev_edge_turfs)
 		if(!istype(X,/turf/closed/wall/rust) && !istype(X,/turf/closed/wall/r_wall/rust) && !istype(X,/turf/open/floor/plating/rust))
 			turfs -=X
 			continue
@@ -199,5 +204,5 @@
 			if(is_type_in_typecache(T,blacklisted_turfs))
 				continue
 			edge_turfs += T
-			CHECK_TICK
-	addtimer(CALLBACK(src, .proc/compile_turfs), round(edge_turfs.len/spread_per_tick))
+		CHECK_TICK
+	prev_edge_turfs = list()
