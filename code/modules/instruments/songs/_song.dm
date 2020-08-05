@@ -234,7 +234,6 @@
 	SEND_SIGNAL(parent, COMSIG_SONG_END)
 	terminate_all_sounds(TRUE)
 	hearing_mobs.len = 0
-	updateDialog(user_playing)
 	user_playing = null
 
 /**
@@ -254,7 +253,6 @@
 			if(repeat)
 				repeat--
 				current_chord = 1
-				updateDialog(user_playing)
 				return
 			else
 				stop_playing()
