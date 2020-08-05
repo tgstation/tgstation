@@ -40,10 +40,13 @@
 /mob/dead/new_player/prepare_huds()
 	return
 
+/**
+  * This proc generates the panel that opens to all newly joining players, allowing them to join, observe, view polls, view the current crew manifest, and open the character customization menu.
+  */
 /mob/dead/new_player/proc/new_player_panel()
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
 	asset_datum.send(client)
-	var/output = "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
+	var/list/output = list("<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>")
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
@@ -59,44 +62,49 @@
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 
 	if(!IsGuestKey(src.key))
-		if (SSdbcore.Connect())
-			var/isadmin = FALSE
-			if(client?.holder)
-				isadmin = TRUE
-			var/datum/db_query/query_get_new_polls = SSdbcore.NewQuery({"
-				SELECT id FROM [format_table_name("poll_question")]
-				WHERE (adminonly = 0 OR :isadmin = 1)
-				AND Now() BETWEEN starttime AND endtime
-				AND deleted = 0
-				AND id NOT IN (
-					SELECT pollid FROM [format_table_name("poll_vote")]
-					WHERE ckey = :ckey
-					AND deleted = 0
-				)
-				AND id NOT IN (
-					SELECT pollid FROM [format_table_name("poll_textreply")]
-					WHERE ckey = :ckey
-					AND deleted = 0
-				)
-			"}, list("isadmin" = isadmin, "ckey" = ckey))
-			var/rs = REF(src)
-			if(!query_get_new_polls.Execute())
-				qdel(query_get_new_polls)
-				return
-			if(query_get_new_polls.NextRow())
-				output += "<p><b><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
-			else
-				output += "<p><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A></p>"
-			qdel(query_get_new_polls)
-			if(QDELETED(src))
-				return
+		output += playerpolls()
 
 	output += "</center>"
 
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
 	popup.set_window_options("can_close=0")
-	popup.set_content(output)
+	popup.set_content(output.Join())
 	popup.open(FALSE)
+
+/mob/dead/new_player/proc/playerpolls()
+	var/list/output = list()
+	if (SSdbcore.Connect())
+		var/isadmin = FALSE
+		if(client?.holder)
+			isadmin = TRUE
+		var/datum/db_query/query_get_new_polls = SSdbcore.NewQuery({"
+			SELECT id FROM [format_table_name("poll_question")]
+			WHERE (adminonly = 0 OR :isadmin = 1)
+			AND Now() BETWEEN starttime AND endtime
+			AND deleted = 0
+			AND id NOT IN (
+				SELECT pollid FROM [format_table_name("poll_vote")]
+				WHERE ckey = :ckey
+				AND deleted = 0
+			)
+			AND id NOT IN (
+				SELECT pollid FROM [format_table_name("poll_textreply")]
+				WHERE ckey = :ckey
+				AND deleted = 0
+			)
+		"}, list("isadmin" = isadmin, "ckey" = ckey))
+		var/rs = REF(src)
+		if(!query_get_new_polls.Execute())
+			qdel(query_get_new_polls)
+			return
+		if(query_get_new_polls.NextRow())
+			output += "<p><b><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
+		else
+			output += "<p><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A></p>"
+		qdel(query_get_new_polls)
+		if(QDELETED(src))
+			return
+		return output
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
