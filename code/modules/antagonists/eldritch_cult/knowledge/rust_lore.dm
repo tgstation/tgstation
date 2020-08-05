@@ -167,6 +167,7 @@
 	var/turf/turf_loc = get_turf(loc)
 	turf_loc.rust_heretic_act()
 	turfs += turf_loc
+	prev_edge_turfs += turf_loc
 	START_PROCESSING(SSprocessing,src)
 
 /datum/rust_spread/Destroy(force, ...)
