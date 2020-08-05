@@ -184,8 +184,8 @@
 		T = pick(edge_turfs)
 		edge_turfs -= T
 		T.rust_heretic_act()
-		turfs += get_turf(T)
-		prev_edge_turfs += get_turf(T)
+		turfs += T
+		prev_edge_turfs += T
 
 
 
