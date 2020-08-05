@@ -48,7 +48,7 @@
 		to_chat(user, "<span class='warning'>The [name] needs to be unbolted to do that!</span")
 	if(I.tool_start_check(user, amount=0))
 		to_chat(user, "<span class='notice'>You start slicing the [name] apart.</span")
-		if(I.use_tool(src, user, 15, volume=50))
+		if(I.use_tool(src, user, (1.5 SECONDS), volume=50))
 			deconstruct(TRUE)
 			to_chat(user, "<span class='notice'>You slice the [name] apart.</span")
 			return TRUE
