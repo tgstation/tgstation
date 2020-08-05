@@ -59,7 +59,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	min_oxy = 5
-	movement_type = 1
+	movement_type = GROUND
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	turns_per_move = 10

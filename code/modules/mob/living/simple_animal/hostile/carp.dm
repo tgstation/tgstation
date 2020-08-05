@@ -245,6 +245,6 @@
 	icon_living = "magicarp"
 	icon_state = "magicarp"
 	maxHealth = 200
-	random_color = 0
+	random_color = FALSE
 
 #undef REGENERATION_DELAY
