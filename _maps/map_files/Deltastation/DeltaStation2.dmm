@@ -70282,6 +70282,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEu" = (
+/obj/structure/filingcabinet,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -70289,7 +70290,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
-/obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEv" = (
