@@ -303,6 +303,8 @@
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
+	AddComponent(/datum/component/spraycan_paintable) //so that you can spraypaint lights to create mood lighting
+	
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
