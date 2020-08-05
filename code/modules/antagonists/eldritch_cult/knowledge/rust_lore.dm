@@ -199,13 +199,15 @@
 	edge_turfs = list()
 	var/max_dist = 1
 	for(var/X in turfs)
+		if(!istype(X,/turf/closed/wall/rust) && !istype(X,/turf/closed/wall/r_wall/rust) && !istype(X,/turf/open/floor/plating/rust))
+			turfs -=X
 		max_dist = max(max_dist,get_dist(X,centre)+1)
 
 	for(var/X in spiral_range_turfs(max_dist,centre,FALSE))
 		if(X in turfs)
 			continue
 		for(var/T in getline(X,centre))
-			if(!(T in turfs))
+			if(!(T in turfs) || is_type_in_typecache(T,blacklisted_turfs))
 				continue
 			if(get_dist(X,T) <= 1)
 				edge_turfs += X
