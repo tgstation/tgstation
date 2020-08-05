@@ -917,7 +917,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 			to_chat(user, "<span class='notice'>Out of charges.</span>")
 			return ..()
 		to_chat(user, "<span class='notice'>You upload the virus to the airlock controller!</span>")
-		target.AddComponent(/datum/component/doorhonk)
+		var/sig_list
+		if(istype(target,/obj/machinery/door/airlock))
+			sig_list += list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE)
+		else
+			sig_list += list(COMSIG_ATOM_ATTACK_HAND)
+			//TODO : Add more signals for specific cases like panel open, printing, dispensing etc
+		target.AddComponent(/datum/component/sound_player, amount = (rand(15,20)), signal_or_sig_list = sig_list)
 		installed_cartridge.charges --
 
 
