@@ -26,6 +26,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	if(src in user.mob_spell_list)
+		LAZYREMOVE(user.mob_spell_list, src)
 		user.mob_spell_list.Remove(src)
 		user.mind.AddSpell(src)
 	if(user.buckled)

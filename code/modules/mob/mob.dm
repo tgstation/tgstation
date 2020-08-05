@@ -968,7 +968,7 @@
 
 ///Add a spell to the mobs spell list
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
-	mob_spell_list += S
+	LAZYADD(mob_spell_list, S)
 	S.action.Grant(src)
 
 ///Remove a spell from the mobs spell list
@@ -978,7 +978,7 @@
 	for(var/X in mob_spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		if(istype(S, spell))
-			mob_spell_list -= S
+			LAZYREMOVE(mob_spell_list, S)
 			qdel(S)
 
 ///Return any anti magic atom on this mob that matches the magic type

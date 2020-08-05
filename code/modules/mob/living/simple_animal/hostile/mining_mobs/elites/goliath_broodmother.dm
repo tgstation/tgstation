@@ -246,7 +246,7 @@
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
 	if(rand(1, 100) <= bonus_value && target.stat != DEAD)
 		new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(get_turf(target), user)
-		
+
 /obj/item/crusher_trophy/broodmother_tongue/attack_self(mob/user)
 	if(!isliving(user))
 		return
@@ -257,10 +257,10 @@
 	else if("lava" in living_user.weather_immunities)
 		to_chat(living_user, "<b>You stare at the tongue. You don't think this is any use to you.</b>")
 		return
-	living_user.weather_immunities |= "lava"
+	LAZYOR(living_user.weather_immunities, "lava")
 	to_chat(living_user, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
 	addtimer(CALLBACK(src, .proc/remove_lavaproofing, living_user), 10 SECONDS)
 	use_time = world.time + 60 SECONDS
-	
+
 /obj/item/crusher_trophy/broodmother_tongue/proc/remove_lavaproofing(mob/living/user)
-	user.weather_immunities -= "lava"
+	LAZYREMOVE(user.weather_immunities, "lava")
