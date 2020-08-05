@@ -1,7 +1,7 @@
 /obj/item/gun/syringe
 	name = "syringe gun"
 	desc = "A spring loaded rifle designed to fit syringes, used to incapacitate unruly patients from a distance."
-	icon_state = "syringegun"
+	icon_state = "syringegun_empty"
 	inhand_icon_state = "syringegun"
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
@@ -10,6 +10,7 @@
 	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
+	var/load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	var/list/syringes = list()
 	var/max_syringes = 1
 
@@ -33,6 +34,7 @@
 /obj/item/gun/syringe/process_chamber()
 	if(chambered && !chambered.BB) //we just fired
 		recharge_newshot()
+	update_icon_state()
 
 /obj/item/gun/syringe/examine(mob/user)
 	. = ..()
@@ -51,6 +53,7 @@
 
 	syringes.Remove(S)
 	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")
+	update_icon_state()
 
 	return 1
 
@@ -62,10 +65,16 @@
 			to_chat(user, "<span class='notice'>You load [A] into \the [src].</span>")
 			syringes += A
 			recharge_newshot()
+			update_icon_state()
+			playsound(src, load_sound, 40)
 			return TRUE
 		else
 			to_chat(user, "<span class='warning'>[src] cannot hold more syringes!</span>")
 	return FALSE
+
+/obj/item/gun/syringe/update_icon_state()
+	if (max_syringes == 1)
+		icon_state = "syringegun[syringes.len > 0 ? "" : "_empty"]"
 
 /obj/item/gun/syringe/rapidsyringe
 	name = "rapid syringe gun"
