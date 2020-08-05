@@ -109,6 +109,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 
+/obj/item/stack/sheet/metal/get_matter_amount()
+	return 4
+
 /obj/item/stack/sheet/metal/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
 	qdel(src)
@@ -167,6 +170,9 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	point_value = 23
 	tableVariant = /obj/structure/table/reinforced
 	material_flags = MATERIAL_NO_EFFECTS
+
+/obj/item/stack/sheet/plasteel/get_matter_amount()
+	return 12
 
 /obj/item/stack/sheet/plasteel/get_main_recipes()
 	. = ..()

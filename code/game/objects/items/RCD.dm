@@ -29,17 +29,13 @@ RLD
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 100
-	var/sheetmultiplier	= 4 //Controls the amount of matter added for each glass/metal sheet, triple for plasteel
-	var/plasteelmultiplier = 3 //Plasteel is worth 3 times more than glass or metal
-	var/plasmarglassmultiplier = 2 //50% less plasma than in plasteel
-	var/rglassmultiplier = 1.5 //One metal sheet, half a glass sheet
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
 	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
 	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	/// Bitflags for upgrades
-	var/upgrade = 0
+	var/upgrade = NONE
 	/// Bitflags for banned upgrades
-	var/banned_upgrades = 0
+	var/banned_upgrades = NONE
 	var/datum/component/remote_materials/silo_mats //remote connection to the silo
 	var/silo_link = FALSE //switch to use internal or remote storage
 
@@ -64,20 +60,20 @@ RLD
 	silo_mats = null
 	return ..()
 
-/obj/item/construction/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/construction/pre_attack(atom/target, mob/user, params)
 	if(istype(target, /obj/item/rcd_upgrade))
 		install_upgrade(target, user)
-		return
+		return TRUE
 	if(insert_matter(target, user))
-		return
+		return TRUE
 	return ..()
 
 /obj/item/construction/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rcd_upgrade))
 		install_upgrade(W, user)
-		return
+		return TRUE
 	if(insert_matter(W, user))
-		return
+		return TRUE
 	return ..()
 
 /// Installs an upgrade into the RCD checking if it is already installed, or if it is a banned upgrade
@@ -111,24 +107,18 @@ RLD
 		matter += load
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		loaded = TRUE
-	else if(istype(O, /obj/item/stack/sheet/metal) || istype(O, /obj/item/stack/sheet/glass))
-		loaded = loadwithsheets(O, sheetmultiplier, user)
-	else if(istype(O, /obj/item/stack/sheet/plasteel))
-		loaded = loadwithsheets(O, plasteelmultiplier*sheetmultiplier, user) //12 matter for 1 plasteel sheet
-	else if(istype(O, /obj/item/stack/sheet/plasmarglass))
-		loaded = loadwithsheets(O, plasmarglassmultiplier*sheetmultiplier, user) //8 matter for one plasma rglass sheet
-	else if(istype(O, /obj/item/stack/sheet/rglass))
-		loaded = loadwithsheets(O, rglassmultiplier*sheetmultiplier, user) //6 matter for one rglass sheet
-	else if(istype(O, /obj/item/stack/rods))
-		loaded = loadwithsheets(O, sheetmultiplier * 0.5, user) // 2 matter for 1 rod, as 2 rods are produced from 1 metal
-	else if(istype(O, /obj/item/stack/tile/plasteel))
-		loaded = loadwithsheets(O, sheetmultiplier * 0.25, user) // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
+	else if(istype(O, /obj/item/stack))
+		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 		update_icon()	//ensures that ammo counters (if present) get updated
 	return loaded
 
-/obj/item/construction/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
+/obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
+	var/value = S.get_matter_amount()
+	if(value <= 0)
+		to_chat(user, "<span class='notice'>You can't insert [S.name] into [src]!</span>")
+		return FALSE
 	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
 	if(maxsheets > 0)
 		var/amount_to_use = min(S.amount, maxsheets)
@@ -136,9 +126,9 @@ RLD
 		matter += value*amount_to_use
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into [src]. </span>")
-		return 1
+		return TRUE
 	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into [src]!</span>")
-	return 0
+	return FALSE
 
 /obj/item/construction/proc/activate()
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -479,7 +469,7 @@ RLD
 /obj/item/construction/rcd/proc/change_furnishing_type(mob/user)
 	if(!user)
 		return
-	var/list/choices = list(
+	var/static/list/choices = list(
 		"Chair" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair"),
 		"Stool" = image(icon = 'icons/mob/radial.dmi', icon_state = "stool"),
 		"Table" = image(icon = 'icons/mob/radial.dmi', icon_state = "table"),

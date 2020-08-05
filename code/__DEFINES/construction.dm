@@ -100,18 +100,18 @@
 #define CAT_DRINK "Drinks"
 
 // these aren't even used as bitflags so who even knows why they are treated like them
-#define RCD_FLOORWALL 1
-#define RCD_AIRLOCK 2
-#define RCD_DECONSTRUCT 3
-#define RCD_WINDOWGRILLE 4
-#define RCD_MACHINE 8
-#define RCD_COMPUTER 16
-#define RCD_FURNISHING 32
+#define RCD_FLOORWALL (1<<0)
+#define RCD_AIRLOCK (1<<1)
+#define RCD_DECONSTRUCT (1<<2)
+#define RCD_WINDOWGRILLE (1<<3)
+#define RCD_MACHINE (1<<4)
+#define RCD_COMPUTER (1<<5)
+#define RCD_FURNISHING (1<<6)
 
-#define RCD_UPGRADE_FRAMES 1
-#define RCD_UPGRADE_SIMPLE_CIRCUITS	2
-#define RCD_UPGRADE_SILO_LINK 4
-#define RCD_UPGRADE_FURNISHING 8
+#define RCD_UPGRADE_FRAMES (1<<0)
+#define RCD_UPGRADE_SIMPLE_CIRCUITS	(1<<1)
+#define RCD_UPGRADE_SILO_LINK (1<<2)
+#define RCD_UPGRADE_FURNISHING (1<<3)
 
 #define RCD_WINDOW_FULLTILE "full tile"
 #define RCD_WINDOW_DIRECTIONAL "directional"

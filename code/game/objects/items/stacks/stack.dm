@@ -475,6 +475,9 @@
 	if(istype(M) && M.dirty < 100)
 		M.dirty += amount
 
+/obj/item/stack/proc/get_matter_amount()
+	return 0
+
 /*
  * Recipe datum
  */
