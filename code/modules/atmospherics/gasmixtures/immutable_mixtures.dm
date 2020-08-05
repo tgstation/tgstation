@@ -62,6 +62,7 @@
 
 /datum/gas_mixture/immutable/planetary/garbage_collect()
 	..()
+	gases = list()
 	for(var/id in initial_gas) //Gotta grab those internal lists
 		var/list/gas = initial_gas[id]
 		gases[id] = gas.Copy()

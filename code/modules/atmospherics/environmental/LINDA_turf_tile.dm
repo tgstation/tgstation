@@ -49,7 +49,6 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 				GLOB.planetary[src.initial_gas_mix] = mix
 			air = GLOB.planetary[src.initial_gas_mix]
 			update_visuals()
-			return
 	. = ..()
 
 /turf/open/Destroy()
