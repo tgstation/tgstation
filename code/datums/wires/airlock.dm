@@ -1,9 +1,42 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
-	proper_name = "Airlock"
+	proper_name = "Generic Airlock"
 
 /datum/wires/airlock/secure
+	proper_name = "High Security Airlock"
 	randomize = TRUE
+
+/datum/wires/airlock/maint
+	dictionary_key = /datum/wires/airlock/maint
+	proper_name = "Maintenance Airlock"
+
+/datum/wires/airlock/command
+	dictionary_key = /datum/wires/airlock/command
+	proper_name = "Command Airlock"
+
+/datum/wires/airlock/service
+	dictionary_key = /datum/wires/airlock/service
+	proper_name = "Service Airlock"
+
+/datum/wires/airlock/security
+	dictionary_key = /datum/wires/airlock/security
+	proper_name = "Security Airlock"
+
+/datum/wires/airlock/engineering
+	dictionary_key = /datum/wires/airlock/engineering
+	proper_name = "Engineering Airlock"
+
+/datum/wires/airlock/medbay
+	dictionary_key = /datum/wires/airlock/medbay
+	proper_name = "Medbay Airlock"
+
+/datum/wires/airlock/science
+	dictionary_key = /datum/wires/airlock/science
+	proper_name = "Science Airlock"
+
+/datum/wires/airlock/ai
+	dictionary_key = /datum/wires/airlock/ai
+	proper_name = "AI Airlock"
 
 /datum/wires/airlock/New(atom/holder)
 	wires = list(

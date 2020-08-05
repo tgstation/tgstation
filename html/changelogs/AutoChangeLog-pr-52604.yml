@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "survival pod stasis beds no longer become invisible when you screwdriver them"
