@@ -270,6 +270,10 @@
 	if(!istype(replacement_brain))
 		return
 
+	// If we have some sort of brain type or subtype change and have skillchips, engage the failsafe procedure!
+	if(owner && length(skillchips) && (replacement_brain.type != type))
+		activate_skillchip_failsafe(FALSE)
+
 	// Check through all our skillchips, remove them from this brain, add them to the replacement brain.
 	for(var/chip in skillchips)
 		var/obj/item/skillchip/skillchip = chip
@@ -286,6 +290,9 @@
 
 		// Directly add them to the skillchip list in the new brain.
 		LAZYADD(replacement_brain.skillchips, skillchip)
+
+	// Any skillchips has been transferred over, time to empty the list.
+	skillchips.Cut()
 
 /obj/item/organ/brain/alien
 	name = "alien brain"

@@ -127,6 +127,32 @@
 
 	return slot_tally
 
+/**
+  * Deactivates all chips currently in the brain.
+  */
+/obj/item/organ/brain/proc/activate_skillchip_failsafe(silent = TRUE)
+	if(QDELETED(owner))
+		return
+
+	var/chip_tally = 0
+
+	for(var/chip in skillchips)
+		var/obj/item/skillchip/skillchip = chip
+
+		// If the chip isn't activated, skip.
+		if(!skillchip.active)
+			continue
+
+		// Try force-deactivate it.
+		skillchip.try_deactivate_skillchip(silent, TRUE)
+
+		// If it's now no longer active, up the tally.
+		if(!skillchip.active)
+			chip_tally++
+
+	if(chip_tally && !silent)
+		to_chat(owner, "<span class='warning'>Unusual brain biology detected during regeneration. Failsafe procedure engaged. [chip_tally] skillchips have been deactivated.</span>")
+
 /// Disables or re-enables any extra skillchips after skillchip limit changes.
 /obj/item/organ/brain/proc/update_skillchips()
 	var/limit = get_max_skillchip_complexity()
