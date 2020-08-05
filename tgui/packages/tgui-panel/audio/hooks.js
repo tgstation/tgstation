@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useSelector } from 'tgui/store';
+import { useSelector } from 'common/redux';
 import { selectAudio } from './selectors';
 
 export const useAudio = context => {

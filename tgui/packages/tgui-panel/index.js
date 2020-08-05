@@ -23,11 +23,13 @@ import './styles/themes/light.scss';
 import { perf } from 'common/perf';
 import { combineReducers } from 'common/redux';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-import { setupExternalLinkCapturing } from 'tgui/external-links';
+import { setupGlobalEvents } from 'tgui/events';
+import { captureExternalLinks } from 'tgui/links';
 import { createRenderer } from 'tgui/renderer';
 import { configureStore, StoreProvider } from 'tgui/store';
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
+import { setupPanelFocusHacks } from './focus-hacks';
 import { gameMiddleware, gameReducer } from './game';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
@@ -72,11 +74,14 @@ const setupApp = () => {
     return;
   }
 
+  setupGlobalEvents({
+    ignoreWindowFocus: true,
+  });
+  setupPanelFocusHacks();
+  captureExternalLinks();
+
   // Subscribe for Redux state updates
   store.subscribe(renderApp);
-
-  // Capture external links
-  setupExternalLinkCapturing();
 
   // Subscribe for bankend updates
   window.update = msg => store.dispatch(Byond.parseJson(msg));

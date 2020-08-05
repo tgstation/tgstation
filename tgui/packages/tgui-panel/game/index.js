@@ -4,6 +4,6 @@
  * @license MIT
  */
 
-export { useGameState } from './hooks';
+export { useGame } from './hooks';
 export { gameMiddleware } from './middleware';
 export { gameReducer } from './reducer';

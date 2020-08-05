@@ -6,8 +6,8 @@
 
 import { Color } from 'common/color';
 import { toFixed } from 'common/math';
+import { useSelector } from 'common/redux';
 import { Box } from 'tgui/components';
-import { useSelector } from 'tgui/store';
 import { selectPing } from './selectors';
 
 export const PingIndicator = (props, context) => {

@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { Component } from 'inferno';
 import { compose } from './fp';
 
 /**
@@ -136,4 +137,16 @@ export const createAction = (type, prepare) => {
   actionCreator.type = type;
   actionCreator.match = action => action.type === type;
   return actionCreator;
+};
+
+
+// Implementation specific
+// --------------------------------------------------------
+
+export const useDispatch = context => {
+  return context.store.dispatch;
+};
+
+export const useSelector = (context, selector) => {
+  return selector(context.store.getState());
 };

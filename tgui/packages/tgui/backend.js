@@ -12,8 +12,9 @@
  */
 
 import { perf } from 'common/perf';
+import { setImmediate } from 'core-js';
 import { setupDrag } from './drag';
-import { releaseHeldKeys } from './hotkeys';
+import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
 
@@ -164,10 +165,10 @@ export const backendMiddleware = store => {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
-      releaseHeldKeys();
       Byond.winset(window.__windowId__, {
         'is-visible': false,
       });
+      setImmediate(() => focusMap());
     }
 
     if (type === 'backend/update') {

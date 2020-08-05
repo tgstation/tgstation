@@ -4,12 +4,10 @@
  * @license MIT
  */
 
-import { sendMessage } from './backend';
-
 /**
  * Prevents baby jailing the user when he clicks an external link.
  */
-export const setupExternalLinkCapturing = () => {
+export const captureExternalLinks = () => {
   // Click handler
   const listenerFn = e => {
     const tagName = String(e.target.tagName).toLowerCase();
@@ -27,8 +25,10 @@ export const setupExternalLinkCapturing = () => {
     }
     // Prevent default action
     e.preventDefault();
-    // Send a message to open this external link in default system browser.
-    sendMessage({
+    // Open the link
+    Byond.topic({
+      tgui: 1,
+      window_id: window.__windowId__,
       type: 'openLink',
       payload: {
         url: href,

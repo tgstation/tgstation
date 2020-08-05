@@ -5,8 +5,8 @@
  */
 
 import { toFixed } from 'common/math';
-import { Dropdown, LabeledList, NumberInput, Section, Knob } from 'tgui/components';
-import { useDispatch, useSelector } from 'tgui/store';
+import { useDispatch, useSelector } from 'common/redux';
+import { Dropdown, LabeledList, NumberInput, Section } from 'tgui/components';
 import { updateSettings } from './actions';
 import { selectSettings } from './selectors';
 
@@ -35,7 +35,7 @@ export const SettingsPanel = (props, context) => {
             width="4em"
             step={1}
             stepPixelSize={10}
-            minValue={12}
+            minValue={8}
             maxValue={48}
             value={fontSize}
             unit="px"

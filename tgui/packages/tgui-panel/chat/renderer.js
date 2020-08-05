@@ -14,7 +14,7 @@ const logger = createLogger('chatRenderer');
 
 // We consider this as the smallest possible scroll offset
 // that is still trackable.
-const SCROLL_EPSILON_PX = 32;
+const SCROLL_TRACKING_TOLERANCE = 24;
 
 const findNearestScrollableParent = startingNode => {
   const body = document.body;
@@ -100,7 +100,7 @@ class ChatRenderer {
       const height = node.scrollHeight;
       const bottom = node.scrollTop + node.offsetHeight;
       const scrollTracking = (
-        Math.abs(height - bottom) < SCROLL_EPSILON_PX
+        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE
       );
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;

@@ -4,14 +4,13 @@
  * @license MIT
  */
 
+import { flow } from 'common/fp';
 import { applyMiddleware, combineReducers, createStore } from 'common/redux';
 import { Component } from 'inferno';
 import { assetMiddleware } from './assets';
 import { backendMiddleware, backendReducer } from './backend';
-import { debugReducer, relayMiddleware } from './debug';
-import { hotKeyMiddleware } from './hotkeys';
+import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
 import { createLogger } from './logging';
-import { flow } from 'common/fp';
 
 const logger = createLogger('store');
 
@@ -26,16 +25,18 @@ export const configureStore = (options = {}) => {
   const middleware = [
     ...(options.middleware?.pre || []),
     assetMiddleware,
-    hotKeyMiddleware,
     backendMiddleware,
     ...(options.middleware?.post || []),
   ];
   if (process.env.NODE_ENV !== 'production') {
-    middleware.unshift(loggingMiddleware);
-    middleware.unshift(relayMiddleware);
+    middleware.unshift(
+      loggingMiddleware,
+      debugMiddleware,
+      relayMiddleware);
   }
   const enhancer = applyMiddleware(...middleware);
   const store = createStore(reducer, enhancer);
+  // Globals
   window.__store__ = store;
   window.__augmentStack__ = createStackAugmentor(store);
   return store;
@@ -72,6 +73,9 @@ const createStackAugmentor = store => (stack, error) => {
   return augmentedStack;
 };
 
+/**
+ * Store provider for Inferno apps.
+ */
 export class StoreProvider extends Component {
   getChildContext() {
     const { store } = this.props;
@@ -82,11 +86,3 @@ export class StoreProvider extends Component {
     return this.props.children;
   }
 }
-
-export const useDispatch = context => {
-  return context.store.dispatch;
-};
-
-export const useSelector = (context, selector) => {
-  return selector(context.store.getState());
-};

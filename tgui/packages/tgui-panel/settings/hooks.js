@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/store';
+import { useDispatch, useSelector } from 'common/redux';
 import { updateSettings } from './actions';
 import { selectSettings } from './selectors';
 

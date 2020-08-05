@@ -15,7 +15,6 @@ import './polyfills/ie8';
 import './polyfills/dom4';
 import './polyfills/css-om';
 import './polyfills/inferno';
-import './focus';
 
 // Themes
 import './styles/main.scss';
@@ -31,8 +30,11 @@ import './styles/themes/syndicate.scss';
 
 import { perf } from 'common/perf';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { setupHotKeys } from './hotkeys';
+import { captureExternalLinks } from './links';
 import { createRenderer } from './renderer';
 import { configureStore, StoreProvider } from './store';
+import { setupGlobalEvents } from './events';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -55,6 +57,10 @@ const setupApp = () => {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
+
+  setupGlobalEvents();
+  setupHotKeys();
+  captureExternalLinks();
 
   // Subscribe for state updates
   store.subscribe(renderApp);

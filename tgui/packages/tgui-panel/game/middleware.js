@@ -6,7 +6,7 @@
 
 import { pingSuccess } from '../ping/actions';
 import { connectionLost, connectionRestored, roundRestarted } from './actions';
-import { selectGameState } from './selectors';
+import { selectGame } from './selectors';
 import { CONNECTION_LOST_AFTER } from './constants';
 
 const withTimestamp = action => ({
@@ -24,7 +24,7 @@ export const gameMiddleware = store => {
     if (!state) {
       return;
     }
-    const game = selectGameState(state);
+    const game = selectGame(state);
     const pingsAreFailing = lastPingedAt
       && Date.now() >= lastPingedAt + CONNECTION_LOST_AFTER;
     if (!game.connectionLostAt && pingsAreFailing) {

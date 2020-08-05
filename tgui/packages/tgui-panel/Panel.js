@@ -4,28 +4,28 @@
  * @license MIT
  */
 
+import { useSelector } from 'common/redux';
 import { useLocalState } from 'tgui/backend';
-import { Button, Flex, Section, Box } from 'tgui/components';
+import { Button, Flex, Section } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
-import { useSelector } from 'tgui/store';
 import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
-import { useGameState } from './game';
+import { useGame } from './game';
+import { Notifications } from './Notifications';
 import { PingIndicator } from './ping';
 import { SettingsPanel, useSettings } from './settings';
-import { Notifications } from './Notifications';
 
 export const Panel = (props, context) => {
   const audio = useAudio(context);
   const settings = useSettings(context);
-  const game = useGameState(context);
+  const game = useGame(context);
   const [audioOpen, setAudioOpen] = useLocalState(
     context, 'audioOpen', audio.playing);
   const [settingsOpen, setSettingsOpen] = useLocalState(
     context, 'settingsOpen', false);
   if (process.env.NODE_ENV !== 'production') {
-    const { selectDebug, KitchenSink } = require('tgui/debug');
-    const debug = useSelector(context, selectDebug);
+    const { useDebug, KitchenSink } = require('tgui/debug');
+    const debug = useDebug(context);
     if (debug.kitchenSink) {
       return (
         <KitchenSink panel />

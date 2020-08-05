@@ -4,8 +4,8 @@
  * @license MIT
  */
 
+import { useDispatch, useSelector } from 'common/redux';
 import { Box, Tabs } from 'tgui/components';
-import { useDispatch, useSelector } from 'tgui/store';
 import { changeChatPage } from './actions';
 import { selectChatPages, selectCurrentChatPage } from './selectors';
 

@@ -5,7 +5,7 @@
  */
 
 import { selectBackend } from './backend';
-import { selectDebug } from './debug';
+import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces', false, /\.js$/);
