@@ -174,6 +174,8 @@
 	. = ..()
 
 /mob/living/simple_animal/proc/check_barstaff_godmode()
+	SIGNAL_HANDLER
+
 	if(istype(get_area(loc), /area/shuttle/escape))
 		status_flags |= GODMODE
 	else

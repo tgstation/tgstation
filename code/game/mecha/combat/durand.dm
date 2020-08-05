@@ -160,6 +160,8 @@ and relayed by the mech itself. The "forced" variabe, signal_args[1], will skip 
 the shield is disabled by means other than the action button (like running out of power)*/
 
 /obj/durand_shield/proc/activate(datum/source, datum/action/innate/mecha/mech_defense_mode/button, list/signal_args)
+	SIGNAL_HANDLER
+
 	if(!chassis || !chassis.occupant)
 		return
 	if(switching && !signal_args[1])
