@@ -741,10 +741,12 @@
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
+	SEND_SIGNAL(src, CONSIG_STORAGE_EXITED)
 	return
 
 /// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
+	SEND_SIGNAL(src, COMISG_STORAGE_ENTERED)
 	return
 
 /atom/movable/proc/get_spacemove_backup()
