@@ -385,12 +385,24 @@
 				/obj/item/organ/ears/cat = 1)
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/bouquet
-	name = "Bouquet"
+/datum/crafting_recipe/mixedbouquet
+	name = "Mixed bouquet"
 	result = /obj/item/bouquet
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/poppy/lily =2,
 				/obj/item/grown/sunflower = 2,
 				/obj/item/reagent_containers/food/snacks/grown/poppy/geranium = 2)
+	category = CAT_MISC
+
+/datum/crafting_recipe/sunbouquet
+	name = "Sunflower bouquet"
+	result = /obj/item/bouquet/sunflower
+	reqs = list(/obj/item/grown/sunflower = 6)
+	category = CAT_MISC
+
+/datum/crafting_recipe/poppybouquet
+	name = "Poppy bouquet"
+	result = /obj/item/bouquet/poppy
+	reqs = list (/obj/item/reagent_containers/food/snacks/grown/poppy = 6)
 	category = CAT_MISC
 
 /datum/crafting_recipe/spooky_camera
