@@ -1,10 +1,14 @@
 #define SHOWER_FREEZING "freezing"
+#define SHOWER_FREEZING_TEMP 100
 #define SHOWER_NORMAL "normal"
+#define SHOWER_NORMAL_TEMP 300
 #define SHOWER_BOILING "boiling"
+#define SHOWER_BOILING_TEMP 400
+
 
 /obj/machinery/shower
 	name = "shower"
-	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
+	desc = "The HS-452. Installed in the 2550s by the Nanotrasen Hygiene Division, now with 2560 lead compliance!"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
@@ -19,8 +23,12 @@
 	. = ..()
 	create_reagents(reaction_volume)
 	reagents.add_reagent(reagent_id, reaction_volume)
-
 	soundloop = new(list(src), FALSE)
+	AddComponent(/datum/component/plumbing/simple_demand)
+
+/obj/machinery/shower/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.</span>"
 
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
@@ -28,6 +36,9 @@
 	return ..()
 
 /obj/machinery/shower/interact(mob/M)
+	if(reagents.total_volume < 5)
+		to_chat(M,"<span class='notice'>\The [src] is dry.</span>")
+		return FALSE
 	on = !on
 	update_icon()
 	handle_mist()
@@ -101,19 +112,25 @@
 	A.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
 	A.wash(CLEAN_WASH)
 	SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
-	reagents.expose(A, TOUCH, reaction_volume)
+	reagents.expose(A, TOUCH)
 
 	if(isliving(A))
 		check_heat(A)
 
 /obj/machinery/shower/process()
-	if(on)
+	if(on && reagents.total_volume >= 5)
+		reagents.remove_any(5)
 		wash_atom(loc)
 		for(var/am in loc)
 			var/atom/movable/movable_content = am
+			reagents.expose(movable_content, TOUCH, reaction_volume)
 			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
 				wash_atom(movable_content)
 	else
+		on = FALSE
+		soundloop.stop()
+		handle_mist()
+		update_icon()
 		return PROCESS_KILL
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
@@ -133,6 +150,31 @@
 		L.adjustFireLoss(5)
 		to_chat(L, "<span class='danger'>[src] is searing!</span>")
 
+
+/obj/structure/showerframe
+	name = "shower frame"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "shower_frame"
+	desc = "A shower frame, that needs a water recycler to finish construction."
+	anchored = FALSE
+
+/obj/structure/showerframe/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/stock_parts/water_recycler))
+		qdel(I)
+		var/obj/machinery/shower/new_shower = new /obj/machinery/shower(loc)
+		new_shower.setDir(dir)
+		qdel(src)
+		return
+	return ..()
+
+/obj/structure/showerframe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+
+/obj/structure/showerframe/proc/can_be_rotated(mob/user, rotation_type)
+	if(anchored)
+		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+	return !anchored
 
 /obj/effect/mist
 	name = "mist"

@@ -248,7 +248,7 @@
 	anchored = TRUE
 	///Something's being washed at the moment
 	var/busy = FALSE
-	///What kind of reagent is produced by this sink? (Still waiting on full scale plumbing, 2020)
+	///What kind of reagent is produced by this sink by default? (We now have actual plumbing, Arcane, August 2020)
 	var/dispensedreagent = /datum/reagent/water
 	///Material to drop when broken or deconstructed.
 	var/buildstacktype = /obj/item/stack/sheet/metal
@@ -264,8 +264,9 @@
 	if(has_water_reclaimer)
 		water_recycler = new /obj/item/stock_parts/water_recycler(src)
 		create_reagents(100, NO_REACT)
+		reagents.add_reagent(dispensedreagent, 100)
 	START_PROCESSING(SSfluids, src)
-	AddComponent(/datum/component/plumbing/simple_demand, FALSE, FALSE)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()
@@ -281,7 +282,9 @@
 		return
 	if(!Adjacent(user))
 		return
-
+	if(reagents.total_volume < 5)
+		to_chat(user, "<span class='warning'>The sink has no more contents left!</span>")
+		return
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return
@@ -298,6 +301,9 @@
 		return
 
 	busy = FALSE
+	reagents.remove_any(4)
+	reagents.expose(user, TOUCH)
+	reagents.trans_to(user, 1)
 
 	if(washing_face)
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
@@ -404,22 +410,6 @@
 			var/datum/material/M = i
 			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
-///Here, we enable the sink to passively refill with it's chosen reagent.
-/obj/structure/sink/process()
-	. = ..()
-	if(!water_recycler)
-		return
-	reagents.add_reagent(dispensedreagent, 10)
-
-/**
-  * Adjusts the offset of the sink to adjust it's actual direction so it doesn't sit in the middle of the tile for some godawful reason.
-  */
-/obj/structure/sink/proc/adjust_position()
-	if(!dir)
-		return FALSE
-	pixel_x = (dir & 3)? 0 : (dir == 4 ? -12 : 12)
-	pixel_y = (dir & 3)? (dir ==1 ? 0 : 14) : 0
-
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
 	icon_state = "sink_alt"
@@ -458,6 +448,15 @@
 	anchored = FALSE
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
+/obj/structure/sinkframe/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+
+/obj/structure/sinkframe/proc/can_be_rotated(mob/user, rotation_type)
+	if(anchored)
+		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+	return !anchored
+
 /obj/structure/sinkframe/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/water_recycler))
 		qdel(I)
@@ -465,8 +464,8 @@
 		new_sink.has_water_reclaimer = TRUE
 		new_sink.set_custom_materials(custom_materials)
 		new_sink.setDir(dir)
-		new_sink.adjust_position()
 		qdel(src)
+		return
 	return ..()
 
 //Shower Curtains//
