@@ -224,6 +224,8 @@
 
 /// Something deleted or moved our weapon while it was embedded, how rude!
 /datum/component/embedded/proc/weaponDeleted()
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
 

@@ -41,6 +41,8 @@
 		use_delay = use_delay_override
 
 /datum/component/squeak/proc/play_squeak()
+	SIGNAL_HANDLER
+
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
 			playsound(parent, pickweight(default_squeak_sounds), volume, TRUE, -1)

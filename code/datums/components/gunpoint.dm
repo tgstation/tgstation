@@ -65,6 +65,8 @@
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 
 /datum/component/gunpoint/proc/check_bump(atom/B, atom/A)
+	SIGNAL_HANDLER
+
 	var/mob/living/T = A
 	if(T && T == target)
 		var/mob/living/shooter = parent
@@ -102,6 +104,8 @@
 		cancel()
 
 /datum/component/gunpoint/proc/trigger_reaction()
+	SIGNAL_HANDLER
+
 	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	if(point_of_no_return)
 		return
@@ -126,6 +130,8 @@
 	qdel(src)
 
 /datum/component/gunpoint/proc/cancel()
+	SIGNAL_HANDLER
+
 	var/mob/living/shooter = parent
 	shooter.visible_message("<span class='danger'>[shooter] breaks [shooter.p_their()] aim on [target]!</span>", \
 		"<span class='danger'>You are no longer aiming [weapon] at [target].</span>", target)

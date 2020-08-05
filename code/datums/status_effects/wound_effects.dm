@@ -68,6 +68,8 @@
 		next_leg = left
 
 /datum/status_effect/limp/proc/update_limp()
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/C = owner
 	left = C.get_bodypart(BODY_ZONE_L_LEG)
 	right = C.get_bodypart(BODY_ZONE_R_LEG)

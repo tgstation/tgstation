@@ -15,6 +15,8 @@
 	RegisterSignal(parent, COMSIG_ITEM_WEARERCROSSED, .proc/Slip_on_wearer)
 
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	var/mob/victim = AM
 	if(istype(victim) && !victim.is_flying() && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
 		callback.Invoke(victim)

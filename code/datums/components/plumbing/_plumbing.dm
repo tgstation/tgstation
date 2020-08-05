@@ -134,6 +134,8 @@
 
 ///we stop acting like a plumbing thing and disconnect if we are, so we can safely be moved and stuff
 /datum/component/plumbing/proc/disable()
+	SIGNAL_HANDLER
+
 	if(!active)
 		return
 
