@@ -56,6 +56,8 @@
 
 ///Relays the signal from the action button to the shield, and creates a new shield if the old one is MIA.
 /obj/mecha/combat/durand/proc/relay(datum/source, list/signal_args)
+	SIGNAL_HANDLER
+
 	if(!shield) //if the shield somehow got deleted
 		shield = new/obj/durand_shield
 		shield.chassis = src
@@ -66,6 +68,8 @@
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
 /obj/mecha/combat/durand/proc/prehit(obj/projectile/source, list/signal_args)
+	SIGNAL_HANDLER
+
 	if(defense_check(source.loc) && shield)
 		signal_args[2] = shield
 

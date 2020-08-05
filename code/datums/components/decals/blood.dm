@@ -33,6 +33,8 @@
 	return TRUE
 
 /datum/component/decal/blood/proc/get_examine_name(datum/source, mob/user, list/override)
+	SIGNAL_HANDLER
+
 	var/atom/A = parent
 	override[EXAMINE_POSITION_ARTICLE] = A.gender == PLURAL? "some" : "a"
 	override[EXAMINE_POSITION_BEFORE] = " blood-stained "

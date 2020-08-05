@@ -31,6 +31,8 @@
 	return ..()
 
 /datum/component/deadchat_control/proc/deadchat_react(mob/source, message)
+	SIGNAL_HANDLER
+
 	message = lowertext(message)
 	if(!inputs[message])
 		return 
@@ -97,10 +99,14 @@
 		deltimer(timerid)
 
 /datum/component/deadchat_control/proc/orbit_begin(atom/source, atom/orbiter)
+	SIGNAL_HANDLER
+
 	RegisterSignal(orbiter, COMSIG_MOB_DEADSAY, .proc/deadchat_react)
 	orbiters |= orbiter
 
 /datum/component/deadchat_control/proc/orbit_stop(atom/source, atom/orbiter)
+	SIGNAL_HANDLER
+
 	if(orbiter in orbiters)
 		UnregisterSignal(orbiter, COMSIG_MOB_DEADSAY)
 		orbiters -= orbiter

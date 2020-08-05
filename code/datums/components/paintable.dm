@@ -13,6 +13,8 @@
 	A.remove_atom_colour(FIXED_COLOUR_PRIORITY, current_paint)
 
 /datum/component/spraycan_paintable/proc/Repaint(datum/source, obj/item/toy/crayon/spraycan/spraycan, mob/living/user)
+	SIGNAL_HANDLER
+
 	if(!istype(spraycan) || user.a_intent == INTENT_HARM)
 		return
 	. = COMPONENT_NO_AFTERATTACK

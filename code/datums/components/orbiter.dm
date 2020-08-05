@@ -118,6 +118,8 @@
 
 
 /datum/component/orbiter/proc/orbiter_move_react(atom/movable/orbiter, atom/oldloc, direction)
+	SIGNAL_HANDLER
+
 	if(orbiter.loc == get_turf(parent))
 		return
 	end_orbit(orbiter)

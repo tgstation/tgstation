@@ -140,6 +140,8 @@
 	current_investigation = target
 
 /datum/mafia_role/detective/proc/investigate(datum/mafia_controller/game)
+	SIGNAL_HANDLER
+
 	var/datum/mafia_role/target = current_investigation
 	if(target)
 		if(target.detect_immune)
@@ -188,6 +190,8 @@
 	current_target = target
 
 /datum/mafia_role/psychologist/proc/therapy_reveal(datum/mafia_controller/game)
+	SIGNAL_HANDLER
+
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"reveal",current_target) & MAFIA_PREVENT_ACTION || game_status != MAFIA_ALIVE) //Got lynched or roleblocked by a lawyer.
 		current_target = null
 	if(current_target)
@@ -264,6 +268,8 @@
 		add_note("N[game.turn] - Protected [current_protected.body.real_name]")
 
 /datum/mafia_role/md/proc/prevent_kill(datum/source)
+	SIGNAL_HANDLER
+
 	to_chat(body,"<span class='warning'>The person you protected tonight was attacked!</span>")
 	to_chat(current_protected.body,"<span class='userdanger'>You were attacked last night, but someone nursed you back to life!</span>")
 	return MAFIA_PREVENT_KILL
@@ -325,6 +331,8 @@
 		current_target = null
 
 /datum/mafia_role/lawyer/proc/prevent_action(datum/source)
+	SIGNAL_HANDLER
+
 	if(game_status == MAFIA_ALIVE) //in case we got killed while imprisoning sk - bad luck edge
 		return MAFIA_PREVENT_ACTION
 

@@ -298,6 +298,8 @@
 		. += mutable_appearance(icon, "id[job]")
 
 /obj/item/card/id/proc/update_in_wallet()
+	SIGNAL_HANDLER
+
 	if(istype(loc, /obj/item/storage/wallet))
 		var/obj/item/storage/wallet/powergaming = loc
 		if(powergaming.front_id == src)

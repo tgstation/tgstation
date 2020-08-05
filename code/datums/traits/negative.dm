@@ -514,6 +514,8 @@
 
 // small chance to make eye contact with inanimate objects/mindless mobs because of nerves
 /datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
+	SIGNAL_HANDLER
+
 	var/mob/living/mind_check = A
 	if(prob(85) || (istype(mind_check) && mind_check.mind))
 		return
@@ -521,6 +523,8 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
 
 /datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
+	SIGNAL_HANDLER
+
 	if(prob(75))
 		return
 	var/msg

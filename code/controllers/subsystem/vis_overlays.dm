@@ -82,6 +82,8 @@ SUBSYSTEM_DEF(vis_overlays)
 		UnregisterSignal(thing, COMSIG_ATOM_DIR_CHANGE)
 
 /datum/controller/subsystem/vis_overlays/proc/rotate_vis_overlay(atom/thing, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if(old_dir == new_dir)
 		return
 	var/rotation = dir2angle(old_dir) - dir2angle(new_dir)

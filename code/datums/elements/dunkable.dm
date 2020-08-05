@@ -17,6 +17,8 @@
 	UnregisterSignal(target, COMSIG_ITEM_AFTERATTACK)
 
 /datum/element/dunkable/proc/get_dunked(datum/source, atom/target, mob/user, proximity_flag)
+	SIGNAL_HANDLER
+
 	if(!proximity_flag) // if the user is not adjacent to the container
 		return
 	var/obj/item/reagent_containers/container = target // the container we're trying to dunk into

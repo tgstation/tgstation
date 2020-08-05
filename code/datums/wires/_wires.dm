@@ -77,6 +77,8 @@
 
 ///Called when holder is qdeleted for us to clean ourselves as not to leave any unlawful references.
 /datum/wires/proc/on_holder_qdel(atom/source, force)
+	SIGNAL_HANDLER
+
 	qdel(src)
 
 

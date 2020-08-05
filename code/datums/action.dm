@@ -144,6 +144,8 @@
 		current_button.button_icon_state = button_icon_state
 
 /datum/action/proc/OnUpdatedIcon()
+	SIGNAL_HANDLER
+
 	UpdateButtonIcon()
 
 //Presets for item actions
@@ -293,6 +295,8 @@
 
 /// Toggle the action icon for the space suit thermal regulator
 /datum/action/item_action/toggle_spacesuit/proc/toggle(obj/item/clothing/suit/space/suit)
+	SIGNAL_HANDLER
+
 	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
 	UpdateButtonIcon()
 

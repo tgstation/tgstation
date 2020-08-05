@@ -74,6 +74,8 @@
 		qdel(src)
 
 /datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T)
+	SIGNAL_HANDLER
+
 	if(T == target && (shooter.a_intent == INTENT_DISARM || shooter.a_intent == INTENT_GRAB))
 		shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
 			"<span class='danger'>You bump into [target] and fumble your aim!</span>", target)
@@ -94,6 +96,8 @@
 		damage_mult = GUNPOINT_MULT_STAGE_3
 
 /datum/component/gunpoint/proc/check_deescalate()
+	SIGNAL_HANDLER
+
 	if(!can_see(parent, target, GUNPOINT_SHOOTER_STRAY_RANGE - 1))
 		cancel()
 
@@ -130,6 +134,8 @@
 	qdel(src)
 
 /datum/component/gunpoint/proc/flinch(attacker, damage, damagetype, def_zone)
+	SIGNAL_HANDLER
+
 	var/mob/living/shooter = parent
 
 	var/flinch_chance = 50

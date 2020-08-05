@@ -282,6 +282,8 @@ the new instance inside the host to be updated to the template's stats.
 		set_following(hosts[index])
 
 /mob/camera/disease/proc/follow_mob(datum/source, newloc, dir)
+	SIGNAL_HANDLER
+
 	var/turf/T = get_turf(following_host)
 	if(T)
 		forceMove(T)

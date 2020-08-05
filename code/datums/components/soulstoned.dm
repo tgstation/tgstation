@@ -19,6 +19,8 @@
 	RegisterSignal(S, COMSIG_MOVABLE_MOVED, .proc/free_prisoner)
 
 /datum/component/soulstoned/proc/free_prisoner()
+	SIGNAL_HANDLER
+
 	var/mob/living/simple_animal/S = parent
 	if(S.loc != container)
 		qdel(src)

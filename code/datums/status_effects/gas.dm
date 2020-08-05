@@ -26,6 +26,8 @@
 		qdel(src)
 
 /datum/status_effect/freon/proc/owner_resist()
+	SIGNAL_HANDLER
+
 	to_chat(owner, "<span class='notice'>You start breaking out of the ice cube...</span>")
 	if(do_mob(owner, owner, 40))
 		if(!QDELETED(src))

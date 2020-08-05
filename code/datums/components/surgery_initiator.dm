@@ -31,6 +31,8 @@
 	  *
 	  */
 /datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
+	SIGNAL_HANDLER
+
 	if(!isliving(target))
 		return
 	var/mob/living/livingtarget = target

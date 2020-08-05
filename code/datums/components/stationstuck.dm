@@ -24,6 +24,8 @@
 		message = _message
 
 /datum/component/stationstuck/proc/punish()
+	SIGNAL_HANDLER
+
 	var/mob/living/L = parent
 	if(message)
 		var/span = murder ? "userdanger" : "danger"
