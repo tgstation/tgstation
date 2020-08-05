@@ -157,17 +157,16 @@
 /datum/rust_spread
 	var/list/edge_turfs = list()
 	var/list/turfs = list()
-	var/list/prev_edge_turfs = list()
+	var/turf/centre
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/indestructible,/turf/closed/indestructible,/turf/open/space,/turf/open/lava,/turf/open/chasm))
 	var/spread_per_tick = 6
 
 
 /datum/rust_spread/New(loc)
 	. = ..()
-	var/turf/turf_loc = get_turf(loc)
-	turf_loc.rust_heretic_act()
-	turfs += turf_loc
-	prev_edge_turfs += turf_loc
+	centre = get_turf(loc)
+	centre.rust_heretic_act()
+	turfs += centre
 	START_PROCESSING(SSprocessing,src)
 
 /datum/rust_spread/Destroy(force, ...)
@@ -181,11 +180,12 @@
 
 	var/turf/T
 	for(var/i in 0 to spread_per_tick)
+		if(!edge_turfs.len)
+			continue
 		T = pick(edge_turfs)
 		edge_turfs -= T
 		T.rust_heretic_act()
 		turfs += T
-		prev_edge_turfs += T
 
 
 
@@ -196,15 +196,16 @@
   */
 /datum/rust_spread/proc/compile_turfs()
 	edge_turfs = list()
-	for(var/X in prev_edge_turfs)
-		if(!istype(X,/turf/closed/wall/rust) && !istype(X,/turf/closed/wall/r_wall/rust) && !istype(X,/turf/open/floor/plating/rust))
-			turfs -=X
+	var/max_dist = 1
+	for(var/X in turfs)
+		if(get_dist(X,centre)+1 > max_dist)
+			max_dist = get_dist(X,centre)+1
+
+	for(var/X in spiral_range_turfs(max_dist,centre,FALSE))
+		if(X in turfs)
 			continue
-		for(var/turf/T in range(1,X))
-			if(T in turfs)
+		for(var/T in getline(X,centre))
+			if(!(T in turfs))
 				continue
-			if(is_type_in_typecache(T,blacklisted_turfs))
-				continue
-			edge_turfs += T
-		CHECK_TICK
-	prev_edge_turfs = list()
+			if(get_dist(X,T) <= 1)
+				edge_turfs += X
