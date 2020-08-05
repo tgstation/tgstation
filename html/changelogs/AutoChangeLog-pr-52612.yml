@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Riders will now correctly turn with their vehicles."
