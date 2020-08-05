@@ -1651,6 +1651,8 @@
 	desc = "Everything you need to host a wedding! Now you just need an officiant."
 	cost = 2000
 	contains = list(/obj/item/clothing/under/dress/wedding_dress,
+					/obj/item/clothing/under/dress/wedding_dress,
+					/obj/item/clothing/under/suit/tuxedo,
 					/obj/item/clothing/under/suit/tuxedo,
 					/obj/item/storage/belt/cummerbund,
 					/obj/item/bouquet,
