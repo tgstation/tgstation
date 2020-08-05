@@ -112,11 +112,11 @@
 	if(!iscarbon(M))
 		return
 	var/mob/living/carbon/target = M
-	to_chat(target, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
 	log_combat(user, target, "attacked", src)
 
 	target.adjust_blurriness(force/7)
 	if(prob(20))
+		to_chat(target, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
 		target.Unconscious(force / 0.3)
 		target.Paralyze(force / 0.75)
 		target.drop_all_held_items()
