@@ -98,7 +98,8 @@
 
 ///Notify all senders to forget us
 /obj/machinery/plumbing/receiver/proc/lose_senders()
-	for(var/obj/machinery/plumbing/sender/S in senders)
+	for(var/A in senders)
+		var/obj/machinery/plumbing/sender/S = A
 		if(S == null)
 			continue
 		S.lose_teleport_target()
