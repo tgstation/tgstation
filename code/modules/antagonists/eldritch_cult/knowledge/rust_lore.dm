@@ -167,7 +167,6 @@
 	var/turf/turf_loc = get_turf(loc)
 	turf_loc.rust_heretic_act()
 	turfs += turf_loc
-	compile_turfs()
 	START_PROCESSING(SSprocessing,src)
 
 /datum/rust_spread/Destroy(force, ...)
@@ -175,6 +174,9 @@
 	return ..()
 
 /datum/rust_spread/process()
+
+	if(edge_turfs.len < spread_per_tick)
+		compile_turfs()
 
 	var/turf/T
 	for(var/i in 0 to spread_per_tick)
@@ -184,8 +186,7 @@
 		turfs += get_turf(T)
 		prev_edge_turfs += get_turf(T)
 
-	if(edge_turfs.len < spread_per_tick)
-		compile_turfs()
+
 
 /**
   * Compile turfs
