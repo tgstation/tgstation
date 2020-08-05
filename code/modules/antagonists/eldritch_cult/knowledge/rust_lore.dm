@@ -204,10 +204,8 @@
 		max_dist = max(max_dist,get_dist(X,centre)+1)
 
 	for(var/X in spiral_range_turfs(max_dist,centre,FALSE))
-		if(X in turfs)
+		if(X in turfs || is_type_in_typecache(X,blacklisted_turfs))
 			continue
-		if(!(X in turfs) || is_type_in_typecache(X,blacklisted_turfs))
-				continue
 		for(var/T in getline(X,centre))
 			if(get_dist(X,T) <= 1)
 				edge_turfs += X
