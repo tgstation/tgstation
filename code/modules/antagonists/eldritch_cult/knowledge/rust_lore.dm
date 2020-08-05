@@ -210,3 +210,4 @@
 				continue
 			if(get_dist(X,T) <= 1)
 				edge_turfs += X
+		CHECK_TICK
