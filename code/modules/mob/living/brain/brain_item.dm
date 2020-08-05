@@ -292,7 +292,7 @@
 		LAZYADD(replacement_brain.skillchips, skillchip)
 
 	// Any skillchips has been transferred over, time to empty the list.
-	skillchips.Cut()
+	LAZYCLEARLIST(skillchips)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
