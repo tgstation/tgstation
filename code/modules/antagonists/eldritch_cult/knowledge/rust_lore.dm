@@ -137,14 +137,15 @@
 
 /datum/eldritch_knowledge/final/rust_final/on_life(mob/user)
 	. = ..()
-	if(!finished)
+	var/turf/user_loc_turf = get_turf(user)
+	if(!istype(user_loc_turf, /turf/open/floor/plating/rust) || !isliving(user) || !finished)
 		return
 	var/mob/living/carbon/human/human_user = user
-	human_user.adjustBruteLoss(-3, FALSE)
-	human_user.adjustFireLoss(-3, FALSE)
-	human_user.adjustToxLoss(-3, FALSE)
-	human_user.adjustOxyLoss(-1, FALSE)
-	human_user.adjustStaminaLoss(-10)
+	human_user.adjustBruteLoss(-4, FALSE)
+	human_user.adjustFireLoss(-4, FALSE)
+	human_user.adjustToxLoss(-4, FALSE)
+	human_user.adjustOxyLoss(-2, FALSE)
+	human_user.adjustStaminaLoss(-20)
 
 
 /**
