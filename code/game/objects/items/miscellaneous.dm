@@ -232,4 +232,4 @@
 /obj/item/bouquet/poppy
 	name = "poppy bouquet"
 	desc = "A bouquet of poppies. You feel loved just looking at it."
-	icon_state = "poppy"
+	icon_state = "poppybouquet"
