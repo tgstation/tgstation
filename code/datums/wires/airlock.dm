@@ -3,6 +3,7 @@
 	proper_name = "Generic Airlock"
 
 /datum/wires/airlock/secure
+	proper_name = "High Security Airlock"
 	randomize = TRUE
 
 /datum/wires/airlock/maint

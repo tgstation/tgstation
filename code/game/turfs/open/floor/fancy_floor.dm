@@ -102,7 +102,7 @@
 	floor_tile = /obj/item/stack/tile/fairygrass
 	light_range = 2
 	light_power = 0.80
-	light_color = "#33CCFF"
+	light_color = COLOR_BLUE_LIGHT
 
 /turf/open/floor/grass/snow
 	gender = PLURAL
