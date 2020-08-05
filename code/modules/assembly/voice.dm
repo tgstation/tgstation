@@ -22,6 +22,7 @@
 								 "voice sensor")
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	var/volume = 40
 
 /obj/item/assembly/voice/examine(mob/user)
 	. = ..()
@@ -29,6 +30,8 @@
 
 /obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
+	if(message_mods[WHISPER_MODE]) //Too quiet lad
+		return
 	if(speaker == src)
 		return
 
@@ -40,7 +43,7 @@
 		record_speech(speaker, raw_message, message_language)
 	else
 		if(check_activation(speaker, raw_message))
-			addtimer(CALLBACK(src, .proc/pulse, 0), 10)
+			send_pulse()
 
 /obj/item/assembly/voice/proc/record_speech(atom/movable/speaker, raw_message, datum/language/message_language)
 	switch(mode)
@@ -58,7 +61,7 @@
 			say("Your voice pattern is saved.", message_language)
 		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
-				addtimer(CALLBACK(src, .proc/pulse, 0), 10)
+				send_pulse()
 
 /obj/item/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message)
 	. = FALSE
@@ -75,6 +78,11 @@
 		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
 				. = TRUE
+
+/obj/item/assembly/voice/proc/send_pulse()
+	say("Reconfiguring transistors....")
+	playsound(src, 'licensed_sound/Sampling-Plus-1.0/whirthunk.ogg', 30)
+	addtimer(CALLBACK(src, .proc/pulse, 0), 20)
 
 /obj/item/assembly/voice/multitool_act(mob/living/user, obj/item/I)
 	..()
