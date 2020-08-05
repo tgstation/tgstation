@@ -6,6 +6,10 @@
 
 #define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
+/// Signifies that this proc is used to handle signals.
+/// Every proc you pass to RegisterSignal must have this.
+#define SIGNAL_HANDLER SHOULD_NOT_SLEEP(TRUE)
+
 /// A wrapper for _AddElement that allows us to pretend we're using normal named arguments
 #define AddElement(arguments...) _AddElement(list(##arguments))
 /// A wrapper for _RemoveElement that allows us to pretend we're using normal named arguments
