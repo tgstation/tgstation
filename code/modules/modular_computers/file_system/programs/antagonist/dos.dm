@@ -7,9 +7,7 @@
 	requires_ntnet = TRUE
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
-	tgui_id = "ntos_net_dos"
-	ui_x = 400
-	ui_y = 250
+	tgui_id = "NtosNetDos"
 
 	var/obj/machinery/ntnet_relay/target = null
 	var/dos_speed = 0

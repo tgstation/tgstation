@@ -1,8 +1,13 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { map, zipWith } from 'common/collections';
+import { pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
-import { pureComponentHooks } from 'common/react';
-import { tridentVersion } from '../byond';
 
 const normalizeData = (data, scale, rangeX, rangeY) => {
   if (data.length === 0) {
@@ -117,5 +122,5 @@ const Stub = props => null;
 
 // IE8: No inline svg support
 export const Chart = {
-  Line: tridentVersion <= 4 ? Stub : LineChart,
+  Line: Byond.IS_LTE_IE8 ? Stub : LineChart,
 };

@@ -1,57 +1,95 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+// Polyfills
 import 'core-js/es';
 import 'core-js/web/immediate';
 import 'core-js/web/queue-microtask';
 import 'core-js/web/timers';
 import 'regenerator-runtime/runtime';
-import './polyfills';
+import './polyfills/html5shiv';
+import './polyfills/ie8';
+import './polyfills/dom4';
+import './polyfills/css-om';
+import './polyfills/inferno';
 
-import { loadCSS } from 'fg-loadcss';
+// Themes
+import './styles/main.scss';
+import './styles/themes/abductor.scss';
+import './styles/themes/cardtable.scss';
+import './styles/themes/hackerman.scss';
+import './styles/themes/malfunction.scss';
+import './styles/themes/ntos.scss';
+import './styles/themes/paper.scss';
+import './styles/themes/retro.scss';
+import './styles/themes/syndicate.scss';
+
+import { perf } from 'common/perf';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-import { backendUpdate } from './backend';
-import { tridentVersion } from './byond';
+import { backendUpdate, backendSuspendSuccess, selectBackend, sendMessage } from './backend';
 import { setupDrag } from './drag';
-import { createLogger } from './logging';
-import { createStore } from './store';
+import { logger } from './logging';
+import { createStore, StoreProvider } from './store';
 
-const logger = createLogger();
+perf.mark('inception', window.__inception__);
+perf.mark('init');
+
 const store = createStore();
-const reactRoot = document.getElementById('react-root');
-
+let reactRoot;
 let initialRender = true;
 
 const renderLayout = () => {
-  // Mark the beginning of the render
-  let startedAt;
-  if (process.env.NODE_ENV !== 'production') {
-    startedAt = Date.now();
-  }
-  try {
-    const state = store.getState();
-    // Initial render setup
-    if (initialRender) {
-      logger.log('initial render', state);
-      // Setup dragging
-      setupDrag(state);
+  perf.mark('render/start');
+  const state = store.getState();
+  const { suspended, assets } = selectBackend(state);
+  // Initial render setup
+  if (initialRender) {
+    logger.log('initial render', state);
+    // Setup dragging
+    if (initialRender !== 'recycled') {
+      setupDrag();
     }
-    // Start rendering
-    const { Layout } = require('./layout');
-    const element = <Layout state={state} dispatch={store.dispatch} />;
-    render(element, reactRoot);
   }
-  catch (err) {
-    logger.error('rendering error', err);
+  // Start rendering
+  const { getRoutedComponent } = require('./routes');
+  const Component = getRoutedComponent(state);
+  const element = (
+    <StoreProvider store={store}>
+      <Component />
+    </StoreProvider>
+  );
+  if (!reactRoot) {
+    reactRoot = document.getElementById('react-root');
   }
+  render(element, reactRoot);
+  if (suspended) {
+    return;
+  }
+  perf.mark('render/finish');
   // Report rendering time
   if (process.env.NODE_ENV !== 'production') {
-    const finishedAt = Date.now();
-    const diff = finishedAt - startedAt;
-    const diffFrames = (diff / 16.6667).toFixed(2);
-    logger.debug(`rendered in ${diff}ms (${diffFrames} frames)`);
-    if (initialRender) {
-      const diff = finishedAt - window.__inception__;
-      const diffFrames = (diff / 16.6667).toFixed(2);
-      logger.log(`fully loaded in ${diff}ms (${diffFrames} frames)`);
+    if (initialRender === 'recycled') {
+      logger.log('rendered in',
+        perf.measure('render/start', 'render/finish'));
+    }
+    else if (initialRender) {
+      logger.debug('serving from:', location.href);
+      logger.debug('bundle entered in',
+        perf.measure('inception', 'init'));
+      logger.debug('initialized in',
+        perf.measure('init', 'render/start'));
+      logger.log('rendered in',
+        perf.measure('render/start', 'render/finish'));
+      logger.log('fully loaded in',
+        perf.measure('inception', 'render/finish'));
+    }
+    else {
+      logger.debug('rendered in',
+        perf.measure('render/start', 'render/finish'));
     }
   }
   if (initialRender) {
@@ -71,7 +109,7 @@ const parseStateJson = json => {
   };
   // IE8: No reviver for you!
   // See: https://stackoverflow.com/questions/1288962
-  if (tridentVersion <= 4) {
+  if (Byond.IS_LTE_IE8) {
     reviver = undefined;
   }
   try {
@@ -92,16 +130,46 @@ const setupApp = () => {
   });
 
   // Subscribe for bankend updates
-  window.update = window.initialize = stateJson => {
-    const state = parseStateJson(stateJson);
-    // Backend update dispatches a store action
-    store.dispatch(backendUpdate(state));
+  window.update = messageJson => {
+    const { suspended } = selectBackend(store.getState());
+    // NOTE: messageJson can be an object only if called manually from console.
+    // This is useful for debugging tgui in external browsers, like Chrome.
+    const message = typeof messageJson === 'string'
+      ? parseStateJson(messageJson)
+      : messageJson;
+    logger.debug(`received message '${message?.type}'`);
+    const { type, payload } = message;
+    if (type === 'update') {
+      if (suspended) {
+        logger.log('resuming');
+        initialRender = 'recycled';
+      }
+      // Backend update dispatches a store action
+      store.dispatch(backendUpdate(payload));
+      return;
+    }
+    if (type === 'suspend') {
+      store.dispatch(backendSuspendSuccess());
+      return;
+    }
+    if (type === 'ping') {
+      sendMessage({
+        type: 'pingReply',
+      });
+      return;
+    }
+    // Pass the message directly to the store
+    store.dispatch(message);
   };
 
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    module.hot.accept(['./layout', './routes'], () => {
+    module.hot.accept([
+      './components',
+      './layouts',
+      './routes',
+    ], () => {
       renderLayout();
     });
   }
@@ -114,13 +182,29 @@ const setupApp = () => {
     }
     window.update(stateJson);
   }
-
-  // Dynamically load font-awesome from browser's cache
-  loadCSS('font-awesome.css');
 };
 
-// IE8: Wait for DOM to properly load
-if (tridentVersion <= 4 && document.readyState === 'loading') {
+// Setup a fatal error reporter
+window.__logger__ = {
+  fatal: (error, stack) => {
+    // Get last state for debugging purposes
+    const backendState = selectBackend(store.getState());
+    const reportedState = {
+      config: backendState.config,
+      suspended: backendState.suspended,
+      suspending: backendState.suspending,
+    };
+    // Send to development server
+    logger.log('FatalError:', error || stack);
+    logger.log('State:', reportedState);
+    // Append this data to the stack
+    stack += '\nState: ' + JSON.stringify(reportedState);
+    // Return an updated stack
+    return stack;
+  },
+};
+
+if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', setupApp);
 }
 else {

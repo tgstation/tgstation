@@ -4,7 +4,8 @@
 	custom_price = 100
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
-	item_state = "flashlight"
+	inhand_icon_state = "flashlight"
+	worn_icon_state = "flashlight"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -165,7 +166,8 @@
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
 	icon_state = "penlight"
-	item_state = ""
+	inhand_icon_state = ""
+	worn_icon_state = "pen"
 	flags_1 = CONDUCT_1
 	brightness_on = 2
 	var/holo_cooldown = 0
@@ -179,8 +181,20 @@
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
 			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
-			holo_cooldown = world.time + 100
+			holo_cooldown = world.time + 10 SECONDS
 			return
+
+// see: [/datum/wound/burn/proc/uv()]
+/obj/item/flashlight/pen/paramedic
+	name = "paramedic penlight"
+	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."
+	icon_state = "penlight_surgical"
+	/// Our current UV cooldown
+	COOLDOWN_DECLARE(uv_cooldown)
+	/// How long between UV fryings
+	var/uv_cooldown_length = 1 MINUTES
+	/// How much sanitization to apply to the burn wound
+	var/uv_power = 1
 
 /obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
@@ -199,7 +213,7 @@
 	name = "seclite"
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
-	item_state = "seclite"
+	inhand_icon_state = "seclite"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
@@ -211,7 +225,7 @@
 	name = "desk lamp"
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
-	item_state = "lamp"
+	inhand_icon_state = "lamp"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
@@ -226,7 +240,7 @@
 /obj/item/flashlight/lamp/green
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
-	item_state = "lampgreen"
+	inhand_icon_state = "lampgreen"
 
 
 
@@ -243,7 +257,7 @@
 	name = "banana lamp"
 	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
 	icon_state = "bananalamp"
-	item_state = "bananalamp"
+	inhand_icon_state = "bananalamp"
 
 // FLARES
 
@@ -253,7 +267,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
-	item_state = "flare"
+	inhand_icon_state = "flare"
+	worn_icon_state = "flare"
 	actions_types = list()
 	var/fuel = 0
 	var/on_damage = 7
@@ -291,9 +306,9 @@
 /obj/item/flashlight/flare/update_brightness(mob/user = null)
 	..()
 	if(on)
-		item_state = "[initial(item_state)]-on"
+		inhand_icon_state = "[initial(inhand_icon_state)]-on"
 	else
-		item_state = "[initial(item_state)]"
+		inhand_icon_state = "[initial(inhand_icon_state)]"
 
 /obj/item/flashlight/flare/attack_self(mob/user)
 
@@ -322,7 +337,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	brightness_on = 4
 	icon_state = "torch"
-	item_state = "torch"
+	inhand_icon_state = "torch"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	light_color = LIGHT_COLOR_ORANGE
@@ -332,7 +347,7 @@
 /obj/item/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
-	item_state = "lantern"
+	inhand_icon_state = "lantern"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
@@ -347,8 +362,14 @@
 	name = "suspicious lantern"
 	desc = "A suspicious looking lantern."
 	icon_state = "syndilantern"
-	item_state = "syndilantern"
+	inhand_icon_state = "syndilantern"
 	brightness_on = 10
+
+/obj/item/flashlight/lantern/jade
+	name = "jade lantern"
+	desc = "An ornate, green lantern."
+	color = LIGHT_COLOR_GREEN
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/flashlight/slime
 	gender = PLURAL
@@ -356,7 +377,7 @@
 	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "slime"
-	item_state = "slime"
+	inhand_icon_state = "slime"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
@@ -424,13 +445,14 @@
 	brightness_on = 4
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
-	item_state = "glowstick"
+	inhand_icon_state = "glowstick"
+	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	var/fuel = 0
 
 /obj/item/flashlight/glowstick/Initialize()
 	fuel = rand(1600, 2000)
-	light_color = color
+	set_light_color(color)
 	. = ..()
 
 /obj/item/flashlight/glowstick/Destroy()
@@ -449,7 +471,7 @@
 	update_icon()
 
 /obj/item/flashlight/glowstick/update_icon()
-	item_state = "glowstick"
+	inhand_icon_state = "glowstick"
 	cut_overlays()
 	if(!fuel)
 		icon_state = "glowstick-empty"
@@ -459,7 +481,7 @@
 		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
 		glowstick_overlay.color = color
 		add_overlay(glowstick_overlay)
-		item_state = "glowstick-on"
+		inhand_icon_state = "glowstick-on"
 		set_light(brightness_on)
 	else
 		icon_state = "glowstick"
@@ -492,7 +514,7 @@
 
 /obj/item/flashlight/glowstick/red
 	name = "red glowstick"
-	color = LIGHT_COLOR_RED
+	color = COLOR_SOFT_RED
 
 /obj/item/flashlight/glowstick/blue
 	name = "blue glowstick"
@@ -527,7 +549,7 @@
 	name = "disco light"
 	desc = "Groovy..."
 	icon_state = null
-	light_color = null
+	light_color = COLOR_WHITE
 	brightness_on = 0
 	light_range = 0
 	light_power = 10
@@ -542,7 +564,7 @@
 	name = "flashdark"
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
 	icon_state = "flashdark"
-	item_state = "flashdark"
+	inhand_icon_state = "flashdark"
 	brightness_on = 2.5
 	flashlight_power = -3
 

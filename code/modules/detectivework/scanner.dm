@@ -8,7 +8,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "forensicnew"
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -19,12 +20,12 @@
 	var/range = 8
 	var/view_check = TRUE
 	var/forensicPrintCount = 0
-	actions_types = list(/datum/action/item_action/displayDetectiveScanResults)
+	actions_types = list(/datum/action/item_action/display_detective_scan_results)
 
-/datum/action/item_action/displayDetectiveScanResults
+/datum/action/item_action/display_detective_scan_results
 	name = "Display Forensic Scanner Results"
 
-/datum/action/item_action/displayDetectiveScanResults/Trigger()
+/datum/action/item_action/display_detective_scan_results/Trigger()
 	var/obj/item/detective_scanner/scanner = target
 	if(istype(scanner))
 		scanner.displayDetectiveScanResults(usr)
@@ -45,14 +46,12 @@
 	var/obj/item/paper/P = new(get_turf(src))
 
 	//This could be a global count like sec and med record printouts. See GLOB.data_core.medicalPrintCount AKA datacore.dm
-	var frNum = ++forensicPrintCount
+	var/frNum = ++forensicPrintCount
 
 	P.name = text("FR-[] 'Forensic Record'", frNum)
 	P.info = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
 	P.info += jointext(log, "<BR>")
 	P.info += "<HR><B>Notes:</B><BR>"
-	P.info_links = P.info
-	P.updateinfolinks()
 	P.update_icon()
 
 	if(ismob(loc))

@@ -7,8 +7,6 @@
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_heater
-	ui_x = 275
-	ui_y = 320
 
 	var/obj/item/reagent_containers/beaker = null
 	var/target_temperature = 300
@@ -91,11 +89,10 @@
 	replace_beaker()
 	return ..()
 
-/obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_heater", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ChemHeater", name)
 		ui.open()
 
 /obj/machinery/chem_heater/ui_data()
@@ -108,7 +105,7 @@
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 
-	var beakerContents[0]
+	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
@@ -124,14 +121,7 @@
 			. = TRUE
 		if("temperature")
 			var/target = params["target"]
-			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New target temperature:", name, target_temperature) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(adjust)
-				target = target_temperature + adjust
-			else if(text2num(target) != null)
+			if(text2num(target) != null)
 				target = text2num(target)
 				. = TRUE
 			if(.)

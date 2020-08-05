@@ -58,7 +58,7 @@
 		return
 
 	user.log_message(msg, LOG_EMOTE)
-	msg = "<b>[user]</b> " + msg
+	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && (!only_forced_audio || !intentional))
@@ -69,12 +69,12 @@
 			continue
 		var/T = get_turf(user)
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message(msg)
+			M.show_message("[FOLLOW_LINK(M, user)] [dchatmsg]")
 
 	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(msg)
+		user.audible_message(msg, audible_message_flags = EMOTE_MESSAGE)
 	else
-		user.visible_message(msg)
+		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
 
 /// For handling emote cooldown, return true to allow the emote to happen
 /datum/emote/proc/check_cooldown(mob/user, intentional)
@@ -157,3 +157,36 @@
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_EMOTEMUTE))
 			return FALSE
+/**
+* Allows the intrepid coder to send a basic emote
+* Takes text as input, sends it out to those who need to know after some light parsing
+* If you need something more complex, make it into a datum emote
+* Arguments:
+* * text - The text to send out
+*/
+/mob/proc/manual_emote(text) //Just override the song and dance
+	. = TRUE
+	if(findtext(text, "their"))
+		text = replacetext(text, "their", p_their())
+	if(findtext(text, "them"))
+		text = replacetext(text, "them", p_them())
+	if(findtext(text, "%s"))
+		text = replacetext(text, "%s", p_s())
+
+	if(stat != CONSCIOUS)
+		return
+
+	if(!text)
+		CRASH("Someone passed nothing to manual_emote(), fix it")
+
+	log_message(text, LOG_EMOTE)
+	text = "<b>[src]</b> " + text
+
+	for(var/mob/M in GLOB.dead_mob_list)
+		if(!M.client || isnewplayer(M))
+			continue
+		var/T = get_turf(src)
+		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
+			M.show_message(text)
+
+	visible_message(text)

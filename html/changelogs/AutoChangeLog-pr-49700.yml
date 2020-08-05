@@ -1,8 +1,0 @@
-author: "SteelSlayer"
-delete-after: True
-changes: 
-  - code_imp: "Adds the label component, which gets added to objects you label with the hand labeler. It is used to keep track of the label that was applied to it can be removed later on."
-  - soundadd: "Adds a sound for labeling an object with the hand labeler"
-  - soundadd: "Adds a sound for removing a label from an object with the hand labeler"
-  - tweak: "Limits the amount of labels an object can have to one."
-  - tweak: "You can now remove labels from objects, by hitting it with the hand labeler, while it's off."

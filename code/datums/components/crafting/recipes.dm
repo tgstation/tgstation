@@ -11,6 +11,8 @@
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
 	var/always_availible = TRUE //Set to FALSE if it needs to be learned first.
+	/// Additonal requirements text shown in UI
+	var/additional_req_text
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))
@@ -25,7 +27,7 @@
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
 	return TRUE
 
-/datum/crafting_recipe/IED
+/datum/crafting_recipe/improv_explosive
 	name = "IED"
 	result = /obj/item/grenade/iedcasing
 	reqs = list(/datum/reagent/fuel = 50,
@@ -207,7 +209,7 @@
 	time = 40
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/Firebot
+/datum/crafting_recipe/firebot
 	name = "Firebot"
 	result = /mob/living/simple_animal/bot/firebot
 	reqs = list(/obj/item/extinguisher = 1,
@@ -217,7 +219,7 @@
 	time = 40
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/Vibebot
+/datum/crafting_recipe/vibebot
 	name = "Vibebot"
 	result = /mob/living/simple_animal/bot/vibebot
 	reqs = list(/obj/item/light/bulb = 2,
@@ -232,7 +234,7 @@
 	result = /obj/item/pneumatic_cannon/ghetto
 	tools = list(TOOL_WELDER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/metal = 4,
-				/obj/item/stack/packageWrap = 8,
+				/obj/item/stack/package_wrap = 8,
 				/obj/item/pipe = 2)
 	time = 50
 	category = CAT_WEAPONRY
@@ -333,7 +335,7 @@
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
-				/obj/item/stack/packageWrap = 5)
+				/obj/item/stack/package_wrap = 5)
 	tools = list(TOOL_SCREWDRIVER)
 	time = 100
 	category = CAT_WEAPONRY
@@ -375,14 +377,14 @@
 	result = /obj/item/clothing/head/lizard
 	time = 10
 	reqs = list(/obj/item/organ/tail/lizard = 1)
-	category = CAT_MISC
+	category = CAT_CLOTHING
 
 /datum/crafting_recipe/lizardhat_alternate
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 10
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
-	category = CAT_MISC
+	category = CAT_CLOTHING
 
 /datum/crafting_recipe/kittyears
 	name = "Kitty Ears"
@@ -390,7 +392,7 @@
 	time = 10
 	reqs = list(/obj/item/organ/tail/cat = 1,
 				/obj/item/organ/ears/cat = 1)
-	category = CAT_MISC
+	category = CAT_CLOTHING
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
@@ -480,6 +482,12 @@
 	name = "Black Carpet"
 	reqs = list(/obj/item/stack/tile/carpet = 50, /obj/item/toy/crayon/black = 1)
 	result = /obj/item/stack/tile/carpet/black/fifty
+	category = CAT_MISC
+
+/datum/crafting_recipe/curtain
+	name = "Curtains"
+	reqs = 	list(/obj/item/stack/sheet/cloth = 4, /obj/item/stack/rods = 1)
+	result = /obj/structure/curtain/cloth
 	category = CAT_MISC
 
 /datum/crafting_recipe/showercurtain
@@ -812,3 +820,47 @@
             /obj/item/stack/sticky_tape = 1)
 	result = /obj/item/clothing/gloves/tackler/offbrand
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/boh
+	name = "Bag of Holding"
+	reqs = list(
+            /obj/item/bag_of_holding_inert = 1,
+            /obj/item/assembly/signaler/anomaly/bluespace = 1)
+	result = /obj/item/storage/backpack/holding
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/ipickaxe
+	name = "Improvised Pickaxe"
+	reqs = list(
+           /obj/item/crowbar = 1,
+           /obj/item/kitchen/knife = 1,
+           /obj/item/stack/sticky_tape = 1)
+	result = /obj/item/pickaxe/improvised
+	category = CAT_MISC
+
+/datum/crafting_recipe/underwater_basket
+	name = "Underwater Basket (Bamboo)"
+	reqs = list(
+		/obj/item/stack/sheet/mineral/bamboo = 20
+	)
+	result = /obj/item/storage/basket
+	category = CAT_MISC
+	additional_req_text = " being underwater, underwater basketweaving mastery"
+
+/datum/crafting_recipe/underwater_basket/check_requirements(mob/user, list/collected_requirements)
+	. = ..()
+	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
+		return FALSE
+	var/turf/T = get_turf(user)
+	if(istype(T,/turf/open/water) || istype(T,/turf/open/floor/plating/beach/water))
+		return TRUE
+	var/obj/machinery/shower/S = locate() in T
+	if(S?.on)
+		return TRUE
+
+//Same but with wheat
+/datum/crafting_recipe/underwater_basket/wheat
+	name = "Underwater Basket (Wheat)"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/grown/wheat = 50
+	)

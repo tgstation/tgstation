@@ -49,7 +49,7 @@
 	. = ..()
 	to_chat(C, "[info_text]")
 
-	C.fully_replace_character_name("[pick(GLOB.nightmare_names)]")
+	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
 
 /datum/species/shadow/nightmare/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
@@ -154,20 +154,27 @@
 		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 		respawn_progress = 0
 
+/obj/item/organ/heart/nightmare/get_availability(datum/species/S)
+	if(istype(S,/datum/species/shadow/nightmare))
+		return TRUE
+	return ..()
+
 //Weapon
 
 /obj/item/light_eater
 	name = "light eater" //as opposed to heavy eater
 	icon = 'icons/obj/changeling_items.dmi'
 	icon_state = "arm_blade"
-	item_state = "arm_blade"
+	inhand_icon_state = "arm_blade"
 	force = 25
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
+	wound_bonus = -60
+	bare_wound_bonus = 20
 
 /obj/item/light_eater/Initialize()
 	. = ..()
@@ -180,37 +187,63 @@
 		return
 	if(isopenturf(AM)) //So you can actually melee with it
 		return
+
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(isethereal(AM))
 			AM.emp_act(EMP_LIGHT)
 
-		if(iscyborg(AM))
+		else if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			if(borg.lamp_intensity)
 				borg.update_headlamp(TRUE, INFINITY)
 				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
-		else
-			for(var/obj/item/O in AM)
+		else if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			for(var/obj/item/O in H.get_all_gear()) //less expensive than getallcontents
 				if(O.light_range && O.light_power)
-					disintegrate(O)
+					disintegrate(O, AM)
+		else
+			for(var/obj/item/O in AM.GetAllContents())
+				if(O.light_range && O.light_power)
+					disintegrate(O, AM)
 		if(L.pulling && L.pulling.light_range && isitem(L.pulling))
-			disintegrate(L.pulling)
+			disintegrate(L.pulling, L.pulling)
+
 	else if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.light_range && I.light_power)
-			disintegrate(I)
+			disintegrate(I, I)
 
-/obj/item/light_eater/proc/disintegrate(obj/item/O)
+	else if(ismecha(AM))
+		var/obj/mecha/M = AM
+		if(M.haslights)
+			M.visible_message("<span class='danger'>[M]'s lights burn out!</span>")
+			M.haslights = FALSE
+		M.set_light(-M.lights_power)
+		if(M.occupant)
+			M.lights_action.Remove(M.occupant)
+		for(var/obj/item/O in AM.GetAllContents())
+			if(O.light_range && O.light_power)
+				disintegrate(O, M)
+
+	else if(istype(AM, /obj/machinery/light))
+		var/obj/machinery/light/L = AM
+		if(L.status == 1)
+			return
+		disintegrate(L.drop_light_tube(), AM)
+
+
+/obj/item/light_eater/proc/disintegrate(obj/item/O, atom/A)
 	if(istype(O, /obj/item/pda))
 		var/obj/item/pda/PDA = O
 		PDA.set_light(0)
 		PDA.fon = FALSE
 		PDA.f_lum = 0
 		PDA.update_icon()
-		visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
+		A.visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
 	else
-		visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
+		A.visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
 		O.burn()
 	playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 

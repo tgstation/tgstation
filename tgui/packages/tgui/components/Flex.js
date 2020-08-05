@@ -1,5 +1,11 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { classes, pureComponentHooks } from 'common/react';
-import { Box } from './Box';
+import { Box, unit } from './Box';
 
 export const computeFlexProps = props => {
   const {
@@ -8,12 +14,19 @@ export const computeFlexProps = props => {
     wrap,
     align,
     justify,
+    inline,
     spacing = 0,
     ...rest
   } = props;
   return {
     className: classes([
       'Flex',
+      Byond.IS_LTE_IE10 && (
+        direction === 'column'
+          ? 'Flex--iefix--column'
+          : 'Flex--iefix'
+      ),
+      inline && 'Flex--inline',
       spacing > 0 && 'Flex--spacing--' + spacing,
       className,
     ]),
@@ -39,17 +52,24 @@ export const computeFlexItemProps = props => {
     className,
     grow,
     order,
+    shrink,
+    // IE11: Always set basis to specified width, which fixes certain
+    // bugs when rendering tables inside the flex.
+    basis = props.width,
     align,
     ...rest
   } = props;
   return {
     className: classes([
       'Flex__item',
+      Byond.IS_LTE_IE10 && 'Flex__item--iefix',
       className,
     ]),
     style: {
       ...rest.style,
       'flex-grow': grow,
+      'flex-shrink': shrink,
+      'flex-basis': unit(basis),
       'order': order,
       'align-self': align,
     },

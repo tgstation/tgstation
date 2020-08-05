@@ -27,9 +27,6 @@
 	var/dev_printer = 0						// 0: None, 1: Standard
 	var/dev_card = 0						// 0: None, 1: Standard
 
-	ui_x = 500
-	ui_y = 400
-
 // Removes all traces of old order and allows you to begin configuration from scratch.
 /obj/machinery/lapvend/proc/reset_order()
 	state = 0
@@ -102,7 +99,7 @@
 		if(dev_apc_recharger)
 			total_price += 399
 			if(fabricate)
-				fabricated_laptop.install_component(new /obj/item/computer_hardware/recharger/APC)
+				fabricated_laptop.install_component(new /obj/item/computer_hardware/recharger/apc_recharger)
 		if(dev_printer)
 			total_price += 99
 			if(fabricate)
@@ -224,15 +221,15 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/lapvend/ui_interact(mob/user, datum/tgui/ui)
 	if(machine_stat & (BROKEN | NOPOWER | MAINT))
 		if(ui)
 			ui.close()
 		return FALSE
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, ui_key, "computer_fabricator", "Personal Computer Vendor", ui_x, ui_y, state = state)
+		ui = new(user, src, "ComputerFabricator")
 		ui.open()
 
 /obj/machinery/lapvend/attackby(obj/item/I, mob/user)
@@ -260,7 +257,7 @@
 			say("Insufficient credits on card to purchase!")
 			return
 		credits += target_credits
-		say("[target_credits] cr has been desposited from your account.")
+		say("[target_credits] cr has been deposited from your account.")
 		return
 	return ..()
 

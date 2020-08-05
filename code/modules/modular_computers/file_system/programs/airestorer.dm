@@ -5,13 +5,11 @@
 	extended_desc = "This program is capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = FALSE
-	usage_flags = PROGRAM_CONSOLE
+	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	transfer_access = ACCESS_HEADS
 	available_on_ntnet = TRUE
-	tgui_id = "ntos_ai_restorer"
-	ui_x = 370
-	ui_y = 400
-
+	tgui_id = "NtosAiRestorer"
+	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
 /datum/computer_file/program/aidiag/proc/get_ai(cardcheck)
@@ -73,14 +71,18 @@
 		ai_slot.locked = FALSE
 		restoring = FALSE
 		return
-	ai_slot.locked =TRUE
-	A.adjustOxyLoss(-5, 0)
-	A.adjustFireLoss(-5, 0)
-	A.adjustToxLoss(-5, 0)
-	A.adjustBruteLoss(-5, 0)
+	ai_slot.locked = TRUE
+	A.adjustOxyLoss(-5, FALSE)
+	A.adjustFireLoss(-5, FALSE)
+	A.adjustBruteLoss(-5, FALSE)
+
+	// Please don't forget to update health, otherwise the below if statements will probably always fail.
 	A.updatehealth()
+
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive(full_heal = FALSE, admin_revive = FALSE)
+		cardhold.update_icon()
+
 	// Finished restoring
 	if(A.health >= 100)
 		ai_slot.locked = FALSE
@@ -95,8 +97,10 @@
 
 	var/obj/item/aicard/aicard = get_ai(2)
 
+	data["ejectable"] = TRUE
+	data["AI_present"] = FALSE
+	data["error"] = null
 	if(!aicard)
-		data["nocard"] = TRUE
 		data["error"] = "Please insert an intelliCard."
 	else
 		if(!AI)
@@ -106,12 +110,12 @@
 			if(cardhold.flush)
 				data["error"] = "Flush in progress"
 			else
+				data["AI_present"] = TRUE
 				data["name"] = AI.name
 				data["restoring"] = restoring
-				data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
 				data["health"] = (AI.health + 100) / 2
 				data["isDead"] = AI.stat == DEAD
-				data["ai_laws"] = AI.laws.get_law_list(include_zeroth = 1)
+				data["laws"] = AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 
 	return data
 

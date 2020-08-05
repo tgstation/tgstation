@@ -1,4 +1,0 @@
-author: "Luduk"
-delete-after: True
-changes: 
-  - bugfix: "Bookmanagement console shows the correct amount of popups(precisely one)"

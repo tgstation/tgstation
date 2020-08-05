@@ -22,7 +22,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new /datum/spacevine_controller(T, list(pick(subtypesof(/datum/spacevine_mutation))), rand(10,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
+		new /datum/spacevine_controller(T, list(pick(subtypesof(/datum/spacevine_mutation))), rand(10,100), rand(1,6), src) //spawn a controller at turf with randomized stats and a single random mutation
 
 
 /datum/spacevine_mutation
@@ -146,7 +146,13 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/structure/spacevine/holder, turf/target)
-	target.ex_act(severity, null, src) // vine immunity handled at /mob/ex_act
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.highturf += target
+		if(EXPLODE_HEAVY)
+			SSexplosions.medturf += target
+		if(EXPLODE_LIGHT)
+			SSexplosions.lowturf += target
 
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
 	buckled.ex_act(severity, null, src)
@@ -227,13 +233,13 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(prob(severity) && istype(crosser) && !isvineimmune(holder))
+	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(prob(severity) && istype(hitter) && !isvineimmune(holder))
+	if(prob(severity) && istype(hitter) && !isvineimmune(hitter))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
@@ -251,7 +257,7 @@
 	holder.obj_integrity = holder.max_integrity
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(I && I.get_sharpness())
+	if(I?.get_sharpness())
 		. = expected_damage * 0.5
 	else
 		. = expected_damage
@@ -391,9 +397,9 @@
 	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
 	if(potency != null)
 		mutativeness = potency / 10
-	if(production != null)
-		spread_cap *= production / 5
-		spread_multiplier /= production / 5
+	if(production != null && production <= 10) //Prevents runtime in case production is set to 11.
+		spread_cap *= (11 - production) / 5 //Best production speed of 1 doubles spread_cap to 60 while worst speed of 10 lowers it to 6. Even distribution.
+		spread_multiplier /= (11 - production) / 5
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
@@ -441,7 +447,7 @@
 		var/obj/item/seeds/kudzu/KZ = new(S.loc)
 		KZ.mutations |= S.mutations
 		KZ.set_potency(mutativeness * 10)
-		KZ.set_production((spread_cap / initial(spread_cap)) * 5)
+		KZ.set_production(11 - (spread_cap / initial(spread_cap)) * 5) //Reverts spread_cap formula so resulting seed gets original production stat or equivalent back.
 		qdel(src)
 
 /datum/spacevine_controller/process()
@@ -540,8 +546,8 @@
 		return TRUE
 
 /proc/isvineimmune(atom/A)
-	. = FALSE
 	if(isliving(A))
 		var/mob/living/M = A
 		if(("vines" in M.faction) || ("plants" in M.faction))
-			. = TRUE
+			return TRUE
+	return FALSE

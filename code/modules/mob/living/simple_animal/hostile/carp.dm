@@ -21,7 +21,9 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
-	spacewalk = TRUE
+	food_type = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_chance = 10
+	bonus_tame_chance = 5
 	search_objects = 1
 	wanted_objects = list(/obj/item/storage/cans)
 
@@ -69,6 +71,7 @@
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	carp_randomify(rarechance)
 	update_icons()
 
@@ -100,14 +103,14 @@
 	add_overlay(base_dead_overlay)
 
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
-	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in oview(src, 9)
-	if(tasty_plastic)
-		snack_distance = get_dist(src.loc,tasty_plastic.loc)
-		if(snack_distance <= 1)
-			src.visible_message("<span class='notice'>[src] gets its head stuck in [tasty_plastic], and gets cut breaking free from it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... Ow! It cuts the inside of your mouth!</span>")
-			new /obj/effect/decal/cleanable/plastic(src.loc)
-			adjustBruteLoss(5)
-			qdel(tasty_plastic)
+	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
+	if(tasty_plastic && Adjacent(tasty_plastic))
+		visible_message("<span class='notice'>[src] gets its head stuck in [tasty_plastic], and gets cut breaking free from it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... Ow! It cuts the inside of your mouth!</span>")
+
+		new /obj/effect/decal/cleanable/plastic(loc)
+
+		adjustBruteLoss(5)
+		qdel(tasty_plastic)
 
 /mob/living/simple_animal/hostile/carp/Life()
 	. = ..()
@@ -136,6 +139,19 @@
 		add_dead_carp_overlay()
 	..()
 
+/mob/living/simple_animal/hostile/carp/tamed()
+	. = ..()
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 13), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-2, 12), TEXT_WEST = list(2, 12)))
+	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	D.drive_verb = "ride"
+	D.override_allow_spacemove = TRUE
+
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
@@ -143,6 +159,9 @@
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
 	random_color = FALSE
+	food_type = list()
+	tame_chance = 0
+	bonus_tame_chance = 0
 
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/broadMobs.dmi'
@@ -158,6 +177,9 @@
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 	random_color = FALSE
+	food_type = list()
+	tame_chance = 0
+	bonus_tame_chance = 0
 
 	obj_damage = 80
 	melee_damage_lower = 20
@@ -207,5 +229,8 @@
 	faction = list(ROLE_SYNDICATE)
 	AIStatus = AI_OFF
 	rarechance = 10
+	food_type = list()
+	tame_chance = 0
+	bonus_tame_chance = 0
 
 #undef REGENERATION_DELAY

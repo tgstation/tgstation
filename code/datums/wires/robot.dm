@@ -1,5 +1,6 @@
 /datum/wires/robot
 	holder_type = /mob/living/silicon/robot
+	proper_name = "Cyborg"
 	randomize = TRUE
 
 /datum/wires/robot/New(atom/holder)
@@ -33,9 +34,9 @@
 			if(!R.emagged)
 				var/new_ai
 				if(user)
-					new_ai = select_active_ai(user)
+					new_ai = select_active_ai(user, R.z)
 				else
-					new_ai = select_active_ai(R)
+					new_ai = select_active_ai(R, R.z)
 				R.notify_ai(DISCONNECT)
 				if(new_ai && (new_ai != R.connected_ai))
 					R.connected_ai = new_ai
@@ -84,3 +85,9 @@
 		if(WIRE_RESET_MODULE)
 			if(R.has_module() && !mend)
 				R.ResetModule()
+
+/datum/wires/robot/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_CYBORG_WIRES))
+		return TRUE
+
+	return ..()

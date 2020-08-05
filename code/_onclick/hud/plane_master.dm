@@ -24,8 +24,8 @@
 	blend_mode = BLEND_MULTIPLY
 	alpha = 255
 
-/obj/screen/plane_master/openspace/backdrop(mob/mymob)
-	filters = list()
+/obj/screen/plane_master/openspace/Initialize()
+	. = ..()
 	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -10)
 	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -15)
 	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -20)
@@ -72,6 +72,10 @@
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/screen/plane_master/lighting/backdrop(mob/mymob)
+	mymob.overlay_fullscreen("lighting_backdrop_lit", /obj/screen/fullscreen/lighting_backdrop/lit)
+	mymob.overlay_fullscreen("lighting_backdrop_unlit", /obj/screen/fullscreen/lighting_backdrop/unlit)
 
 /obj/screen/plane_master/lighting/Initialize()
 	. = ..()
@@ -129,12 +133,15 @@
 	name = "parallax whitifier plane master"
 	plane = PLANE_SPACE
 
-/obj/screen/plane_master/lighting/backdrop(mob/mymob)
-	mymob.overlay_fullscreen("lighting_backdrop_lit", /obj/screen/fullscreen/lighting_backdrop/lit)
-	mymob.overlay_fullscreen("lighting_backdrop_unlit", /obj/screen/fullscreen/lighting_backdrop/unlit)
-
 /obj/screen/plane_master/camera_static
 	name = "camera static plane master"
 	plane = CAMERA_STATIC_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
+
+/obj/screen/plane_master/excited_turfs
+	name = "atmos excited turfs"
+	plane = ATMOS_GROUP_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	alpha = 0

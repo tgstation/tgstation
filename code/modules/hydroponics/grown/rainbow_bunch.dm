@@ -12,6 +12,7 @@
 	production = 3
 	yield = 5
 	potency = 20
+	instability = 25
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_dead = "rainbowbunch-dead"

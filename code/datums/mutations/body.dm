@@ -192,6 +192,7 @@
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
 	var/glow = 2.5
 	var/range = 2.5
+	var/glow_color
 	power_coeff = 1
 	conflicts = list(/datum/mutation/human/glow/anti)
 
@@ -199,6 +200,7 @@
 	. = ..()
 	if(.)
 		return
+	glow_color = glow_color()
 	glowth = new(owner)
 	modify()
 
@@ -206,7 +208,12 @@
 	if(!glowth)
 		return
 	var/power = GET_MUTATION_POWER(src)
-	glowth.set_light(range * power, glow * power, "#[dna.features["mcolor"]]")
+
+	glowth.set_light(range * power, glow, glow_color)
+
+/// Returns the color for the glow effect
+/datum/mutation/human/glow/proc/glow_color()
+	return pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
@@ -218,9 +225,12 @@
 	name = "Anti-Glow"
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
 	text_gain_indication = "<span class='notice'>Your light around you seems to disappear.</span>"
-	glow = -3.5 //Slightly stronger, since negating light tends to be harder than making it.
+	glow = -1.5
 	conflicts = list(/datum/mutation/human/glow)
 	locked = TRUE
+
+/datum/mutation/human/glow/anti/glow_color()
+	return COLOR_VERY_LIGHT_GRAY
 
 /datum/mutation/human/strong
 	name = "Strength"
@@ -394,7 +404,7 @@
 /datum/mutation/human/extrastun/proc/on_move()
 	if(prob(99.5)) //The brawl mutation
 		return
-	if(owner.buckled || owner.lying || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
+	if(owner.buckled || !(owner.mobility_flags & MOBILITY_STAND) || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
 		return //remove the 'edge' cases
 	to_chat(owner, "<span class='danger'>You trip over your own feet.</span>")
 	owner.Knockdown(30)
@@ -437,7 +447,7 @@
 		H.Stun(20)
 		H.blur_eyes(20)
 		eyes?.applyOrganDamage(5)
-		H.confused += 3
+		H.add_confusion(3)
 	for(var/mob/living/silicon/S in view(2,owner))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Paralyze(60)
@@ -467,13 +477,13 @@
 		head.drop_organs()
 		qdel(head)
 		owner.regenerate_icons()
-	RegisterSignal(owner, COMSIG_LIVING_ATTACH_LIMB, .proc/abortattachment)
+	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, .proc/abortattachment)
 
 /datum/mutation/human/headless/on_losing()
 	. = ..()
 	if(.)
 		return TRUE
-	UnregisterSignal(owner, COMSIG_LIVING_ATTACH_LIMB)
+	UnregisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
 	if(!successful)
 		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")

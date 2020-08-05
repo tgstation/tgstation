@@ -52,6 +52,7 @@ task-dev-server() {
 task-eslint() {
   cd "${base_dir}"
   eslint ./packages "${@}"
+  echo "tgui: eslint check passed"
 }
 
 ## Mr. Proper
@@ -60,6 +61,19 @@ task-clean() {
   rm -rf packages/tgui/public/.tmp
   rm -rf **/node_modules
   rm -f **/package-lock.json
+}
+
+## Validates current build against the build stored in git
+task-validate-build() {
+  cd "${base_dir}"
+  local diff
+  diff="$(git diff packages/tgui/public/tgui.bundle.*)"
+  if [[ -n ${diff} ]]; then
+    echo "Error: our build differs from the build committed into git."
+    echo "Please rebuild tgui."
+    exit 1
+  fi
+  echo "tgui: build is ok"
 }
 
 ## Installs merge drivers and git hooks
@@ -110,6 +124,7 @@ if [[ ${1} == "--ci" ]]; then
   task-install
   task-eslint
   task-webpack --mode=production
+  task-validate-build
   exit 0
 fi
 
@@ -136,6 +151,13 @@ if [[ ${1} == '--lint-harder' ]]; then
   shift 1
   task-install
   task-eslint -c .eslintrc-harder.yml "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--fix' ]]; then
+  shift 1
+  task-install
+  task-eslint --fix "${@}"
   exit 0
 fi
 

@@ -11,8 +11,6 @@
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
-	ui_x = 520
-	ui_y = 550
 
 	var/wait
 	var/datum/symptom/selected_symptom
@@ -145,10 +143,10 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/computer/pandemic/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open = FALSE, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "pandemic", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Pandemic", name)
 		ui.open()
 
 /obj/machinery/computer/pandemic/ui_data(mob/user)
@@ -160,9 +158,9 @@
 		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 		if(B)
 			data["has_blood"] = TRUE
-			data[/datum/reagent/blood] = list()
-			data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
-			data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
+			data["blood"] = list()
+			data["blood"]["dna"] = B.data["blood_DNA"] || "none"
+			data["blood"]["type"] = B.data["blood_type"] || "none"
 			data["viruses"] = get_viruses_data(B)
 			data["resistances"] = get_resistance_data(B)
 		else
@@ -195,7 +193,7 @@
 			if(!A.mutable)
 				return
 			if(A)
-				var/new_name = sanitize_name(html_encode(params["name"]))
+				var/new_name = sanitize_name(html_encode(params["name"]), allow_numbers = TRUE)
 				if(!new_name || ..())
 					return
 				A.AssignName(new_name)

@@ -66,7 +66,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
-	var/cost = 100					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
+	var/cost = 1					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
 	var/k_elasticity = 1/30			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
@@ -82,7 +82,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	..()
 	SSprocessing.processing += src
 	init_cost = cost
-	export_types = typecacheof(export_types)
+	export_types = typecacheof(export_types, FALSE, !include_subtypes)
 	exclude_types = typecacheof(exclude_types)
 
 /datum/export/Destroy()
@@ -115,9 +115,9 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export/proc/applies_to(obj/O, allowed_categories = NONE, apply_elastic = TRUE)
 	if((allowed_categories & export_category) != export_category)
 		return FALSE
-	if(!include_subtypes && !(O.type in export_types))
+	if(!is_type_in_typecache(O, export_types))
 		return FALSE
-	if(include_subtypes && (!is_type_in_typecache(O, export_types) || is_type_in_typecache(O, exclude_types)))
+	if(include_subtypes && is_type_in_typecache(O, exclude_types))
 		return FALSE
 	if(!get_cost(O, allowed_categories , apply_elastic))
 		return FALSE
@@ -125,22 +125,31 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	return TRUE
 
-// Called only once, when the object is actually sold by the datum.
-// Adds item's cost and amount to the current export cycle.
-// get_cost, get_amount and applies_to do not neccesary mean a successful sale.
+/**
+  * Calculates the exact export value of the object, while factoring in all the relivant variables.
+  *
+  * Called only once, when the object is actually sold by the datum.
+  * Adds item's cost and amount to the current export cycle.
+  * get_cost, get_amount and applies_to do not neccesary mean a successful sale.
+  *
+  */
 /datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE)
+	///This is the value of the object, as derived from export datums.
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
+	///Quantity of the object in question.
 	var/amount = get_amount(O)
+	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
 	var/profit_ratio = 0
+
 	if(amount <=0 || the_cost <=0)
 		return FALSE
 	if(dry_run == FALSE)
 		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, allowed_categories , apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
-			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
-			the_cost = the_cost*((100-profit_ratio)/100)
+			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT_DRY)
+			the_cost = the_cost * ((100 - profit_ratio) * 0.01)
 	else
 		profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
-		the_cost = the_cost*((100-profit_ratio)/100)
+		the_cost = the_cost * ((100 - profit_ratio) * 0.01)
 	report.total_value[src] += the_cost
 
 	if(istype(O, /datum/export/material))

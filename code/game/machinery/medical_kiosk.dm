@@ -29,35 +29,23 @@
 
 /obj/machinery/medical_kiosk/Initialize() //loaded subtype for mapping use
 	. = ..()
+	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
 	scanner_wand = new/obj/item/scanner_wand(src)
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
-	if (pandemonium == TRUE)
-		active_price += (rand(10,30)) //The wheel of capitalism says health care ain't cheap.
-	if(!istype(C))
-		say("No ID card detected.") // No unidentified crew.
-		return
-	if(C.registered_account)
+	if(C?.registered_account)
 		account = C.registered_account
-	else
-		say("No account detected.")  //No homeless crew.
-		return
 	if(account?.account_job?.paycheck_department == payment_department)
 		use_power(20)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
 		return
-	if(!account.has_money(active_price))
-		say("You do not possess the funds to purchase this.")  //No jobless crew, either.
+	var/bonus_fee = pandemonium ? rand(10,30) : 0
+	if(attempt_charge(src, H, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
-	else
-		account.adjust_money(-active_price)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_MED)
-		if(D)
-			D.adjust_money(active_price)
-		use_power(20)
-		paying_customer = TRUE
+	use_power(20)
+	paying_customer = TRUE
 	icon_state = "kiosk_active"
 	say("Thank you for your patronage!")
 	RefreshParts()
@@ -153,7 +141,7 @@
 	else
 		. += "<span class='notice'>\The [src] has its scanner clipped to the side. Alt-Click to remove.</span>"
 
-/obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/medical_kiosk/ui_interact(mob/user, datum/tgui/ui)
 	var/patient_distance = 0
 	if(!ishuman(user))
 		to_chat(user, "<span class='warning'>[src] is unable to interface with non-humanoids!</span>")
@@ -169,10 +157,9 @@
 		say("Patient out of range. Resetting biometrics.")
 		clearScans()
 		return
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "medical_kiosk", name, 625, 550, master_ui, state)
+		ui = new(user, src, "MedicalKiosk", name)
 		ui.open()
 		icon_state = "kiosk_off"
 		RefreshParts()
@@ -207,7 +194,7 @@
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
 	if(altPatient.has_dna()) //Blood levels Information
-		if(altPatient.bleed_rate)
+		if(altPatient.is_bleeding())
 			bleed_status = "Patient is currently bleeding!"
 		if(blood_percent <= 80)
 			blood_warning = " Patient has low blood levels. Seek a large meal, or iron supplements."
@@ -215,8 +202,11 @@
 			blood_warning = " Patient has DANGEROUSLY low blood levels. Seek a blood transfusion, iron supplements, or saline glucose immedietly. Ignoring treatment may lead to death!"
 		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
 
-	var/rad_value = altPatient.radiation
-	var/rad_status = "Target within normal-low radiation levels."
+	var/rad_sickness_value = altPatient.radiation
+	var/rad_sickness_status = "Target within normal-low radiation levels."
+	var/rad_contamination_value = get_rad_contamination(altPatient)
+	var/rad_contamination_status = "Target clothes and person not radioactive"
+
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/clone_loss = altPatient.getCloneLoss()
 	var/brain_loss = altPatient.getOrganLoss(ORGAN_SLOT_BRAIN)
@@ -236,29 +226,18 @@
 			trauma_text += trauma_desc
 		trauma_status = "Cerebral traumas detected: patient appears to be suffering from [english_list(trauma_text)]."
 
-	var/chem_status = FALSE
-	var/chemical_list= list()
-	var/overdose_status = FALSE
+	var/chemical_list = list()
 	var/overdose_list = list()
-	var/addict_status = FALSE
 	var/addict_list = list()
 	var/hallucination_status = "Patient is not hallucinating."
 
-	for(var/datum/reagent/R in altPatient.reagents.reagent_list)
-		if(R.overdosed)
-			overdose_status = TRUE
-
 	if(altPatient.reagents.reagent_list.len)	//Chemical Analysis details.
-		chem_status = TRUE
 		for(var/datum/reagent/R in altPatient.reagents.reagent_list)
 			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
 			if(R.overdosed == 1)
 				overdose_list += list(list("name" = R.name))
-	else
-		chemical_list = "Patient contains no reagents"
 
 	if(altPatient.reagents.addiction_list.len)
-		addict_status = TRUE
 		for(var/datum/reagent/R in altPatient.reagents.addiction_list)
 			addict_list += list(list("name" = R.name))
 	if (altPatient.hallucinating())
@@ -284,18 +263,25 @@
 	else if((brain_loss) >= 1)
 		brain_status = "Mild brain damage detected."  //You may have a miiiild case of severe brain damage.
 
-	if(altPatient.radiation >=1000)  //
-		rad_status = "Patient is suffering from extreme radiation poisoning. Suggested treatment: Isolation of patient, followed by repeated dosages of Pentetic Acid."
-	else if(altPatient.radiation >= 500)
-		rad_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Heavy use of showers and decontamination of clothing. Take Pentetic Acid or Potassium Iodine."
-	else if(altPatient.radiation >= 100)
-		rad_status = "Patient has moderate radioactive signatures. Keep under showers until symptoms subside."
+	if(rad_sickness_value >= 1000)  //
+		rad_sickness_status = "Patient is suffering from extreme radiation poisoning, high toxen damage expected. Suggested treatment: Repeated dosages of Pentetic Acid or high amounts of Cold Seiver and anti-toxen"
+	else if(rad_sickness_value >= 300)
+		rad_sickness_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Take Cold Seiver or Potassium Iodine, watch the toxen levels."
+	else if(rad_sickness_value >= 100)
+		rad_sickness_status = "Patient has moderate radioactive signatures. Symptoms will subside in a few minutes"
+
+	if(rad_contamination_value >= 400)  //
+		rad_contamination_status = "Patient is wearing extremely radioactive clothing.  Suggested treatment: Isolation of patient and shower, remove all clothing and objects immediatly and place in a washing machine"
+	else if(rad_contamination_value >= 150)
+		rad_contamination_status = "Patient is wearing alarming radioactive clothing. Suggested treatment: Scan for contaminated objects and wash them with soap and water"
+	else if(rad_contamination_value >= 50)
+		rad_contamination_status = "Patient has moderate radioactive clothing.  Maintain a social distance for a few minutes"
+
 
 	if(pandemonium == TRUE)
 		chaos_modifier = 1
 	else if (user.hallucinating())
 		chaos_modifier = 0.3
-
 
 	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))
 	data["patient_name"] = patient_name
@@ -308,26 +294,25 @@
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss+(chaos_modifier * (rand(1,30)))
 	data["patient_status"] = patient_status
-	data["rad_value"] = rad_value+(chaos_modifier * (rand(1,500)))
-	data["rad_status"] = rad_status
+	data["rad_sickness_value"] = rad_sickness_value+(chaos_modifier * (rand(1,500)))
+	data["rad_sickness_status"] = rad_sickness_status
+	data["rad_contamination_value"] = rad_contamination_value+(chaos_modifier * (rand(1,500)))
+	data["rad_contamination_status"] = rad_contamination_status
 	data["trauma_status"] = trauma_status
 	data["patient_illness"] = sickness
 	data["illness_info"] = sickness_data
 	data["bleed_status"] = bleed_status
 	data["blood_levels"] = blood_percent - (chaos_modifier * (rand(1,35)))
 	data["blood_status"] = blood_status
-	data["are_chems_present"] = chem_status ? TRUE : FALSE
 	data["chemical_list"] = chemical_list
-	data["are_overdoses_present"] = overdose_status ? TRUE : FALSE
-	data["overdose_status"] = overdose_list
-	data["are_addictions_present"] = addict_status ? TRUE : FALSE
-	data["addiction_status"] = addict_list
+	data["overdose_list"] = overdose_list
+	data["addict_list"] = addict_list
 	data["hallucinating_status"] = hallucination_status
 
-	data["active_status_1"] = scan_active_1 ? FALSE : TRUE //General Scan Check
-	data["active_status_2"] = scan_active_2 ? FALSE : TRUE	//Symptom Scan Check
-	data["active_status_3"] = scan_active_3 ? FALSE : TRUE	//Radio-Neuro Scan Check
-	data["active_status_4"] = scan_active_4 ? FALSE : TRUE	//Radio-Neuro Scan Check
+	data["active_status_1"] = scan_active_1 // General Scan Check
+	data["active_status_2"] = scan_active_2	// Symptom Scan Check
+	data["active_status_3"] = scan_active_3	// Radio-Neuro Scan Check
+	data["active_status_4"] = scan_active_4	// Radio-Neuro Scan Check
 	return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)
@@ -335,22 +320,26 @@
 		return
 	switch(action)
 		if("beginScan_1")
-			inuse()
+			if(!scan_active_1)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_1 = TRUE
 				paying_customer = FALSE
 		if("beginScan_2")
-			inuse()
+			if(!scan_active_2)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_2 = TRUE
 				paying_customer = FALSE
 		if("beginScan_3")
-			inuse()
+			if(!scan_active_3)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_3 = TRUE
 				paying_customer = FALSE
 		if("beginScan_4")
-			inuse()
+			if(!scan_active_4)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_4 = TRUE
 				paying_customer = FALSE

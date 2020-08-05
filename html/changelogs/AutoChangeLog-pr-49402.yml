@@ -1,8 +1,0 @@
-author: "qustinnus & 4Dplanner"
-delete-after: True
-changes: 
-  - rscadd: "meat material. yes."
-  - rscadd: "materials can now be used to build walls/floors. meat house"
-  - bugfix: "edible component now does not try to attack if you eat something with it"
-  - rscadd: "Texture support for mat datums with thanks to 4DPlanner!"
-  - bugfix: "you no longer hit yourself with organs when eating"

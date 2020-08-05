@@ -2,11 +2,11 @@
 	name = "hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
-	item_state = "hardhat0_yellow"
+	inhand_icon_state = "hardhat0_yellow"
 	var/brightness_on = 4 //luminosity when on
 	var/on = FALSE
 	var/hat_type = "yellow" //Determines used sprites: hardhat[on]_[hat_type] and hardhat[on]_[hat_type]2 (lying down sprite)
-	armor = list("melee" = 15, "bullet" = 5, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 20, "fire" = 100, "acid" = 50)
+	armor = list("melee" = 15, "bullet" = 5, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 20, "fire" = 100, "acid" = 50, "wound" = 10) // surprisingly robust against head trauma
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	clothing_flags = SNUG_FIT
@@ -31,7 +31,7 @@
 	update_icon()
 
 /obj/item/clothing/head/hardhat/update_icon_state()
-	icon_state = item_state = "hardhat[on]_[hat_type]"
+	icon_state = inhand_icon_state = "hardhat[on]_[hat_type]"
 
 /obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
 	set_light(brightness_on)
@@ -41,13 +41,13 @@
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"
-	item_state = "hardhat0_orange"
+	inhand_icon_state = "hardhat0_orange"
 	hat_type = "orange"
 	dog_fashion = null
 
 /obj/item/clothing/head/hardhat/red
 	icon_state = "hardhat0_red"
-	item_state = "hardhat0_red"
+	inhand_icon_state = "hardhat0_red"
 	hat_type = "red"
 	dog_fashion = null
 	name = "firefighter helmet"
@@ -61,7 +61,7 @@
 	name = "workplace-ready firefighter helmet"
 	desc = "By applying state of the art lighting technology to a fire helmet, and using photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
 	icon_state = "hardhat0_purple"
-	item_state = "hardhat0_purple"
+	inhand_icon_state = "hardhat0_purple"
 	brightness_on = 5
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
@@ -69,7 +69,7 @@
 
 /obj/item/clothing/head/hardhat/white
 	icon_state = "hardhat0_white"
-	item_state = "hardhat0_white"
+	inhand_icon_state = "hardhat0_white"
 	hat_type = "white"
 	clothing_flags = STOPSPRESSUREDAMAGE
 	heat_protection = HEAD
@@ -80,13 +80,13 @@
 
 /obj/item/clothing/head/hardhat/dblue
 	icon_state = "hardhat0_dblue"
-	item_state = "hardhat0_dblue"
+	inhand_icon_state = "hardhat0_dblue"
 	hat_type = "dblue"
 	dog_fashion = null
 
 /obj/item/clothing/head/hardhat/atmos
 	icon_state = "hardhat0_atmos"
-	item_state = "hardhat0_atmos"
+	inhand_icon_state = "hardhat0_atmos"
 	hat_type = "atmos"
 	dog_fashion = null
 	name = "atmospheric technician's firefighting helmet"
@@ -143,13 +143,13 @@
 
 /obj/item/clothing/head/hardhat/weldhat/orange
 	icon_state = "hardhat0_orange"
-	item_state = "hardhat0_orange"
+	inhand_icon_state = "hardhat0_orange"
 	hat_type = "orange"
 
 /obj/item/clothing/head/hardhat/weldhat/white
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield!" //This bulb is not smaller
 	icon_state = "hardhat0_white"
-	item_state = "hardhat0_white"
+	inhand_icon_state = "hardhat0_white"
 	brightness_on = 4 //Boss always takes the best stuff
 	hat_type = "white"
 	clothing_flags = STOPSPRESSUREDAMAGE
@@ -160,5 +160,5 @@
 
 /obj/item/clothing/head/hardhat/weldhat/dblue
 	icon_state = "hardhat0_dblue"
-	item_state = "hardhat0_dblue"
+	inhand_icon_state = "hardhat0_dblue"
 	hat_type = "dblue"

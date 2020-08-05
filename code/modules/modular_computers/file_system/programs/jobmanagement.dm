@@ -6,9 +6,7 @@
 	transfer_access = ACCESS_HEADS
 	requires_ntnet = 0
 	size = 4
-	tgui_id = "ntos_job_manager"
-	ui_x = 400
-	ui_y = 620
+	tgui_id = "NtosJobManager"
 
 	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for

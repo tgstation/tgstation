@@ -15,8 +15,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 /// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
 #define HEAR_1						(1<<3)
-/// Projectiels will check ricochet on things impacted that have this.
-#define CHECK_RICOCHET_1			(1<<4)
 /// conducts electricity (metal etc.)
 #define CONDUCT_1					(1<<5)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
@@ -36,7 +34,16 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ADMIN_SPAWNED_1			    (1<<15)
 /// should not get harmed if this gets caught by an explosion?
 #define PREVENT_CONTENTS_EXPLOSION_1 (1<<16)
+/// should the contents of this atom be acted upon
+#define RAD_PROTECT_CONTENTS_1 (1 << 17)
+/// should this object be allowed to be contaminated
+#define RAD_NO_CONTAMINATE_1 (1 << 18)
 
+
+/// If the thing can reflect light (lasers/energy)
+#define RICOCHET_SHINY			(1<<0)
+/// If the thing can reflect matter (bullets/bomb shrapnel)
+#define RICOCHET_HARD			(1<<1)
 
 //turf-only flags
 #define NOJAUNT_1					(1<<0)
@@ -62,6 +69,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSMOB			(1<<4)
 #define PASSCLOSEDTURF	(1<<5)
 #define LETPASSTHROW	(1<<6)
+#define	PASSMACHINE		(1<<7)
+#define PASSSTRUCTURE	(1<<8)
 
 //Movement Types
 #define GROUND			(1<<0)
@@ -121,10 +130,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
 #define MOBILITY_FLAGS_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
 
-// radiation
-#define RAD_PROTECT_CONTENTS (1<<0)
-#define RAD_NO_CONTAMINATE (1<<1)
-
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)
@@ -143,3 +148,18 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 		REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL);\
 	else if(!HAS_TRAIT(x, TRAIT_KEEP_TOGETHER))\
 	 	x.appearance_flags &= ~KEEP_TOGETHER
+
+//religious_tool flags
+#define RELIGION_TOOL_INVOKE (1<<0)
+#define RELIGION_TOOL_SACRIFICE (1<<1)
+#define RELIGION_TOOL_SECTSELECT (1<<2)
+
+// ---- Skillchip incompatability flags ---- //
+// These flags control which skill chips are compatible with eachother.
+// By default, skillchips are incompatible with themselves and multiple of the same istype() cannot be implanted together. Set this flag to disable that check.
+#define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)
+// This skillchip is incompatible with other skillchips from the incompatible_category list.
+#define SKILLCHIP_RESTRICTED_CATEGORIES (1<<1)
+// This skillchip is incompatible with the Chameleon skillchip and cannot be copied.
+// If you want to blacklist an abstract path such a /obj/item/skillchip/job then look at the blacklist in /datum/action/item_action/chameleon/change/skillchip
+#define SKILLCHIP_CHAMELEON_INCOMPATIBLE (1<<2)

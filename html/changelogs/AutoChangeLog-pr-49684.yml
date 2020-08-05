@@ -1,6 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - rscadd: "Drones and pAI holoforms are now suitable borg hats (though they require a humanoid's help to get there)."
-  - bugfix: "Fixed drones not being equip-able as hats."
-  - bugfix: "Fixed pAIs returning to card form when being held or on someone's head leaving a phantom chassis behind."

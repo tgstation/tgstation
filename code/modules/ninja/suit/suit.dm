@@ -7,36 +7,31 @@ Contents:
 
 */
 
-
-// /obj/item/clothing/suit/space/space_ninja
-
-
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
 	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
-	item_state = "s-ninja_suit"
+	inhand_icon_state = "s-ninja_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
-	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
 	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 100, "acid" = 100)
 	strip_delay = 12
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
 
-		//Important parts of the suit.
+	//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/techweb/stored_research
 	var/obj/item/disk/tech_disk/t_disk//To copy design onto disk.
 	var/obj/item/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
 
-		//Other articles of ninja gear worn together, used to easily reference them after initializing.
+	//Other articles of ninja gear worn together, used to easily reference them after initializing.
 	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
 	var/obj/item/clothing/shoes/space_ninja/n_shoes
 	var/obj/item/clothing/gloves/space_ninja/n_gloves
 
-		//Main function variables.
+	//Main function variables.
 	var/s_initialized = 0//Suit starts off.
 	var/s_coold = 0//If the suit is on cooldown. Can be used to attach different cooldowns to abilities. Ticks down every second based on suit ntick().
 	var/s_cost = 5//Base energy cost each ntick.
@@ -46,11 +41,11 @@ Contents:
 	var/a_maxamount = 7//Maximum number of adrenaline boosts.
 	var/s_maxamount = 20//Maximum number of smoke bombs.
 
-		//Support function variables.
+	//Support function variables.
 	var/stealth = FALSE//Stealth off.
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
-		//Ability function variables.
+	//Ability function variables.
 	var/s_bombs = 10//Number of smoke bombs.
 	var/a_boost = 3//Number of adrenaline boosters.
 
@@ -84,6 +79,21 @@ Contents:
 	var/mob/living/carbon/human/user = src.loc
 	if(!user || !ishuman(user) || !(user.wear_suit == src))
 		return
+
+	// Check for energy usage
+	if(s_initialized)
+		if(!affecting)
+			terminate() // Kills the suit and attached objects.
+		else if(cell.charge > 0)
+			if(s_coold)
+				s_coold-- // Checks for ability s_cooldown first.
+			cell.charge -= s_cost // s_cost is the default energy cost each ntick, usually 5.
+			if(stealth) // If stealth is active.
+				cell.charge -= s_acost
+		else
+			cell.charge = 0
+			cancel_stealth()
+
 	user.adjust_bodytemperature(BODYTEMP_NORMAL - user.bodytemperature)
 
 //Simply deletes all the attachments and self, killing all related procs.
@@ -122,7 +132,6 @@ Contents:
 		return FALSE
 	affecting = H
 	ADD_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	slowdown = 0
 	n_hood = H.head
 	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = H.shoes
@@ -135,14 +144,13 @@ Contents:
 /obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/H)
 	icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 	H.gloves.icon_state = "s-ninjan"
-	H.gloves.item_state = "s-ninjan"
+	H.gloves.inhand_icon_state = "s-ninjan"
 
 
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
 	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
 		REMOVE_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
@@ -151,7 +159,7 @@ Contents:
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
-		n_gloves.item_state = "s-ninja"
+		n_gloves.inhand_icon_state = "s-ninja"
 		REMOVE_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_gloves.candrain = FALSE
 		n_gloves.draining = FALSE

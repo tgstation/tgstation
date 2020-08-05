@@ -2,7 +2,7 @@
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
 
-/datum/design/RPED
+/datum/design/rped
 	name = "Rapid Part Exchange Device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	id = "rped"
@@ -12,7 +12,7 @@
 	category = list("Stock Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/BS_RPED
+/datum/design/bs_rped
 	name = "Bluespace RPED"
 	desc = "Powered by bluespace technology, this RPED variant can upgrade buildings from a distance, without needing to remove the panel first."
 	id = "bs_rped"
@@ -246,6 +246,51 @@
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+//electrolite
+/datum/design/basic_electrolite
+	name = "Basic Electrolite"
+	desc = "A stock part used in the construction of various devices."
+	id = "basic_electrolite"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	build_path = /obj/item/stock_parts/electrolite
+	category = list("Stock Parts","Machinery","initial")
+	lathe_time_factor = 0.2
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/adv_electrolite
+	name = "Advanced Electrolite"
+	desc = "A stock part used in the construction of various devices."
+	id = "adv_electrolite"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
+	build_path = /obj/item/stock_parts/electrolite/adv
+	category = list("Stock Parts")
+	lathe_time_factor = 0.2
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/super_electrolite
+	name = "Super Electrolite"
+	desc = "A stock part used in the construction of various devices."
+	id = "super_electrolite"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/gold = 100, /datum/material/silver = 100)
+	build_path = /obj/item/stock_parts/electrolite/super
+	category = list("Stock Parts")
+	lathe_time_factor = 0.2
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/bluespace_electrolite
+	name = "Bluespace Electrolite"
+	desc = "A stock part used in the construction of various devices."
+	id = "bluespace_electrolite"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/gold = 100, /datum/material/silver = 100, /datum/material/diamond = 100)
+	build_path = /obj/item/stock_parts/electrolite/bluespace
+	category = list("Stock Parts")
+	lathe_time_factor = 0.2
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
 //T-Comms devices
 /datum/design/subspace_ansible
 	name = "Subspace Ansible"
@@ -325,4 +370,3 @@
 	materials = list(/datum/material/iron=50, /datum/material/glass=10)
 	build_path = /obj/item/stock_parts/card_reader
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL

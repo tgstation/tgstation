@@ -1,21 +1,21 @@
 import { useBackend } from '../backend';
-import { Section, LabeledList, ProgressBar, Button, BlockQuote, Grid, Box } from '../components';
+import { Section, LabeledList, Button, Box } from '../components';
+import { Window } from '../layouts';
 
-export const BodyEntry = props => {
+const statusMap = {
+  Dead: "bad",
+  Unconscious: "average",
+  Conscious: "good",
+};
+
+const occupiedMap = {
+  owner: "You Are Here",
+  stranger: "Occupied",
+  available: "Swap",
+};
+
+export const BodyEntry = (props, context) => {
   const { body, swapFunc } = props;
-
-  const statusMap = {
-    Dead: "bad",
-    Unconscious: "average",
-    Conscious: "good",
-  };
-
-  const occupiedMap = {
-    owner: "You Are Here",
-    stranger: "Occupied",
-    available: "Swap",
-  };
-
   return (
     <Section
       title={(
@@ -50,21 +50,25 @@ export const BodyEntry = props => {
   );
 };
 
-export const SlimeBodySwapper = props => {
-  const { act, data } = useBackend(props);
-
+export const SlimeBodySwapper = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     bodies = [],
   } = data;
-
   return (
-    <Section>
-      {bodies.map(body => (
-        <BodyEntry
-          key={body.name}
-          body={body}
-          swapFunc={() => act('swap', { ref: body.ref })} />
-      ))}
-    </Section>
+    <Window
+      width={400}
+      height={400}>
+      <Window.Content scrollable>
+        <Section>
+          {bodies.map(body => (
+            <BodyEntry
+              key={body.name}
+              body={body}
+              swapFunc={() => act('swap', { ref: body.ref })} />
+          ))}
+        </Section>
+      </Window.Content>
+    </Window>
   );
 };

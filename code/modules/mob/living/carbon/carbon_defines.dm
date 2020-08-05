@@ -24,7 +24,7 @@
 	var/obj/item/clothing/head = null
 
 	var/obj/item/clothing/gloves = null ///only used by humans
-	var/obj/item/clothing/shoes = null ///only used by humans.
+	var/obj/item/clothing/shoes/shoes = null ///only used by humans.
 	var/obj/item/clothing/glasses/glasses = null ///only used by humans.
 	var/obj/item/clothing/ears = null ///only used by humans.
 
@@ -69,3 +69,14 @@
 	var/heat_protection = 0 // No heat protection
 	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
 	var/cold_protection = 0 // No cold protection
+
+	/// Timer id of any transformation
+	var/transformation_timer
+
+	/// All of the wounds a carbon has afflicted throughout their limbs
+	var/list/all_wounds
+	/// All of the scars a carbon has afflicted throughout their limbs
+	var/list/all_scars
+
+	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.
+	var/skillchip_complexity_modifier = 0

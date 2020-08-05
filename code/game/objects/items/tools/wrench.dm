@@ -52,7 +52,7 @@
 /obj/item/wrench/medical/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
-	user.light_color = "#FAE48E"
+	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
 	user.set_light(2)
 	user.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 	playsound(loc, 'sound/effects/pray.ogg', 50, TRUE, -1)
@@ -79,7 +79,7 @@
 	name = "combat wrench"
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
 	icon_state = "wrench_combat"
-	item_state = "wrench_combat"
+	inhand_icon_state = "wrench_combat"
 	attack_verb = list("devastated", "brutalized", "committed a war crime against", "obliterated", "humiliated")
 	tool_behaviour = null
 	toolspeed = null
@@ -113,7 +113,7 @@
 /obj/item/wrench/combat/update_icon_state()
 	if(on)
 		icon_state = "[initial(icon_state)]_on"
-		item_state = "[initial(item_state)]1"
+		inhand_icon_state = "[initial(inhand_icon_state)]1"
 	else
 		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
+		inhand_icon_state = "[initial(inhand_icon_state)]"

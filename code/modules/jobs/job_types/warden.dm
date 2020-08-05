@@ -1,9 +1,7 @@
 /datum/job/warden
 	title = "Warden"
-	flag = WARDEN
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
-	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -22,6 +20,7 @@
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_WARDEN
+	bounty_types = CIV_JOB_SEC
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -51,6 +50,4 @@
 	box = /obj/item/storage/box/survival/security
 
 	implants = list(/obj/item/implant/mindshield)
-
-	chameleon_extras = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 

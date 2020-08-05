@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - rscadd: "hivelord stands are replaced with new mining ones, they spin!"
-  - bugfix: "fixed being able to change your stand name/color on every reconnect"
-  - imagedel: "removed most of the old holopara/guardian spirit sprites except for 2 example ones since they aren't used anymore"

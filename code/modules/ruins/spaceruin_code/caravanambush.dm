@@ -68,7 +68,7 @@
 	lock_override = NONE
 	shuttlePortId = "caravantrade1_custom"
 	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "caravantrade1_ambush" = 1)
-	view_range = 14
+	view_range = 6.5
 	x_offset = -5
 	y_offset = -5
 	designate_time = 100
@@ -78,7 +78,7 @@
 	desc = "Used to control the Pirate Cutter."
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	circuit = /obj/item/circuitboard/computer/caravan/pirate
 	shuttleId = "caravanpirate"
 	possible_destinations = "caravanpirate_custom;caravanpirate_ambush"
@@ -92,7 +92,7 @@
 	lock_override = NONE
 	shuttlePortId = "caravanpirate_custom"
 	jumpto_ports = list("caravanpirate_ambush" = 1)
-	view_range = 14
+	view_range = 6.5
 	x_offset = 3
 	y_offset = -6
 
@@ -101,7 +101,7 @@
 	desc = "Used to control the Syndicate Fighter."
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	req_access = list(ACCESS_SYNDICATE)
 	circuit = /obj/item/circuitboard/computer/caravan/syndicate1
 	shuttleId = "caravansyndicate1"
@@ -116,7 +116,7 @@
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate1_custom"
 	jumpto_ports = list("caravansyndicate1_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
-	view_range = 7
+	view_range = 0
 	x_offset = 2
 	y_offset = 0
 
@@ -126,7 +126,7 @@
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	req_access = list(ACCESS_SYNDICATE)
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	circuit = /obj/item/circuitboard/computer/caravan/syndicate2
 	shuttleId = "caravansyndicate2"
 	possible_destinations = "caravansyndicate2_custom;caravansyndicate2_ambush;caravansyndicate1_listeningpost"
@@ -140,7 +140,7 @@
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate2_custom"
 	jumpto_ports = list("caravansyndicate2_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
-	view_range = 7
+	view_range = 0
 	x_offset = 0
 	y_offset = 2
 
@@ -150,7 +150,7 @@
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	req_access = list(ACCESS_SYNDICATE)
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	circuit = /obj/item/circuitboard/computer/caravan/syndicate3
 	shuttleId = "caravansyndicate3"
 	possible_destinations = "caravansyndicate3_custom;caravansyndicate3_ambush;caravansyndicate3_listeningpost"
@@ -164,6 +164,6 @@
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate3_custom"
 	jumpto_ports = list("caravansyndicate3_ambush" = 1, "caravansyndicate3_listeningpost" = 1)
-	view_range = 10
+	view_range = 2.5
 	x_offset = -1
 	y_offset = -3

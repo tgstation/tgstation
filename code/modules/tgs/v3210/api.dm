@@ -39,7 +39,7 @@
 	var/warned_custom_commands = FALSE
 
 /datum/tgs_api/v3210/ApiVersion()
-	return "3.2.1.0"
+	return new /datum/tgs_version("3.2.1.0")
 
 /datum/tgs_api/v3210/proc/trim_left(text)
 	for (var/i = 1 to length(text))
@@ -56,7 +56,7 @@
 /datum/tgs_api/v3210/proc/file2list(filename)
 	return splittext(trim_left(trim_right(file2text(filename))), "\n")
 
-/datum/tgs_api/v3210/OnWorldNew(datum/tgs_event_handler/event_handler, minimum_required_security_level)	//don't use event handling in this version
+/datum/tgs_api/v3210/OnWorldNew(minimum_required_security_level)
 	. = FALSE
 
 	comms_key = world.params[SERVICE_WORLD_PARAM]
@@ -76,7 +76,8 @@
 		TGS_ERROR_LOG("This API version is only supported on Windows. Not running on Windows. Aborting initialization!")
 		return
 	ListServiceCustomCommands(TRUE)
-	ExportService("[SERVICE_REQUEST_API_VERSION] [ApiVersion()]", TRUE)
+	var/datum/tgs_version/api_version = ApiVersion()
+	ExportService("[SERVICE_REQUEST_API_VERSION] [api_version.deprefixed_parameter]", TRUE)
 	return TRUE
 
 //nothing to do for v3
@@ -166,7 +167,8 @@
 
 /datum/tgs_api/v3210/Revision()
 	if(!warned_revison)
-		TGS_ERROR_LOG("Use of TgsRevision on [ApiVersion()] origin_commit only points to master!")
+		var/datum/tgs_version/api_version = ApiVersion()
+		TGS_ERROR_LOG("Use of TgsRevision on [api_version.deprefixed_parameter] origin_commit only points to master!")
 		warned_revison = TRUE
 	var/datum/tgs_revision_information/ri = new
 	ri.commit = commit
@@ -178,7 +180,7 @@
 	ExportService(SERVICE_REQUEST_KILL_PROCESS)
 
 /datum/tgs_api/v3210/ChatChannelInfo()
-	return list()
+	return list() // :omegalul:
 
 /datum/tgs_api/v3210/ChatBroadcast(message, list/channels)
 	if(channels)
@@ -224,30 +226,3 @@
 #undef SERVICE_REQUEST_API_VERSION
 
 #undef SERVICE_RETURN_SUCCESS
-
-/*
-The MIT License
-
-Copyright (c) 2017 Jordan Brown
-
-Permission is hereby granted, free of charge,
-to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to
-deal in the Software without restriction, including
-without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom
-the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice
-shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/

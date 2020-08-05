@@ -6,9 +6,7 @@
 	transfer_access = ACCESS_HEADS
 	requires_ntnet = FALSE
 	size = 4
-	tgui_id = "ntos_crew_manifest"
-	ui_x = 400
-	ui_y = 480
+	tgui_id = "NtosCrewManifest"
 
 /datum/computer_file/program/crew_manifest/ui_static_data(mob/user)
 	var/list/data = list()

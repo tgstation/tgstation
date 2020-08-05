@@ -1,4 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - balance: "TW gives less XP and scales with amount healed instead of repeated iterations."

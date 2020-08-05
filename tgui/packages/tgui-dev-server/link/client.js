@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 let socket;
 const queue = [];
 const subscribers = [];
@@ -38,8 +44,24 @@ const subscribe = fn => subscribers.push(fn);
  */
 const serializeObject = obj => {
   let refs = [];
-  const json = JSON.stringify(obj, (key, value) => {
-    if (typeof value === 'object' && value !== null) {
+  const primitiveReviver = value => {
+    if (typeof value === 'number' && !Number.isFinite(value)) {
+      return {
+        __number__: String(value),
+      };
+    }
+    if (typeof value === 'undefined') {
+      return {
+        __undefined__: true,
+      };
+    }
+    return value;
+  };
+  const objectReviver = (key, value) => {
+    if (typeof value === 'object') {
+      if (value === null) {
+        return value;
+      }
       // Circular reference
       if (refs.includes(value)) {
         return '[circular ref]';
@@ -53,15 +75,15 @@ const serializeObject = obj => {
           stack: value.stack,
         };
       }
+      // Array
+      if (Array.isArray(value)) {
+        return value.map(primitiveReviver);
+      }
       return value;
     }
-    if (typeof value === 'number' && !Number.isFinite(value)) {
-      return {
-        __number__: String(value),
-      };
-    }
-    return value;
-  });
+    return primitiveReviver(value);
+  };
+  const json = JSON.stringify(obj, objectReviver);
   refs = null;
   return json;
 };
@@ -76,8 +98,8 @@ const sendRawMessage = msg => {
         socket.send(json);
       }
       else {
-        // Keep only 10 latest messages in the queue
-        if (queue.length > 10) {
+        // Keep only 100 latest messages in the queue
+        if (queue.length > 100) {
           queue.shift();
         }
         queue.push(json);

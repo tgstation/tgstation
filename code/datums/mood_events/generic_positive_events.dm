@@ -79,7 +79,7 @@
 	hidden = TRUE
 
 /datum/mood_event/badass_antag
-	description = "<span class='greentext'>I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around.</span>\n"
+	description = "<span class='greentext'>I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of having me around.</span>\n"
 	mood_change = 7
 	hidden = TRUE
 	special_screen_obj = "badass_sun"
@@ -98,6 +98,11 @@
 
 /datum/mood_event/cult
 	description = "<span class='nicegreen'>I have seen the truth, praise the almighty one!</span>\n"
+	mood_change = 10 //maybe being a cultist isn't that bad after all
+	hidden = TRUE
+
+/datum/mood_event/heretics
+	description = "<span class='nicegreen'>THE HIGHER I RISE , THE MORE I SEE.</span>\n"
 	mood_change = 10 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
@@ -162,7 +167,7 @@
 	timeout = 5 MINUTES
 
 /datum/mood_event/pet_borg
-	description = "<span class='nicegreen'>I just love my robotical friends!</span>\n"
+	description = "<span class='nicegreen'>I just love my robotic friends!</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
 
@@ -173,7 +178,7 @@
 
 /datum/mood_event/hope_lavaland
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
-	mood_change = 5
+	mood_change = 10
 
 /datum/mood_event/nanite_happiness
 	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
@@ -189,3 +194,12 @@
 /datum/mood_event/area/add_effects(_mood_change, _description)
 	mood_change = _mood_change
 	description = _description
+
+/datum/mood_event/confident_mane
+	description = "<span class='nicegreen'>I'm feeling confident with a head full of hair.</span>\n"
+	mood_change = 2
+
+/datum/mood_event/holy_consumption
+	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
+	mood_change = 5
+	timeout = 3 MINUTES

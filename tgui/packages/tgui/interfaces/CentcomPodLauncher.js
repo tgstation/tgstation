@@ -2,11 +2,26 @@ import { multiline } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from '../components';
+import { Window } from '../layouts';
+
+export const CentcomPodLauncher = () => {
+  return (
+    <Window
+      title="Config/Launch Supply Pod"
+      width={700}
+      height={700}
+      resizable>
+      <Window.Content scrollable>
+        <CentcomPodLauncherContent />
+      </Window.Content>
+    </Window>
+  );
+};
 
 // This is more or less a direct port from old tgui, with some slight
 // text cleanup. But yes, it actually worked like this.
-export const CentcomPodLauncher = props => {
-  const { act, data } = useBackend(props);
+export const CentcomPodLauncherContent = (props, context) => {
+  const { act, data } = useBackend(context);
   return (
     <Fragment>
       <NoticeBox>
@@ -46,6 +61,42 @@ export const CentcomPodLauncher = props => {
               `}
               onClick={() => act('bay5')} />
           </LabeledList.Item>
+          {!!data.effectReverse && (
+            <LabeledList.Item label="Reverse Drop">
+              <Button
+                content="Pick Dropoff Location"
+                selected={data.picking_dropoff_turf}
+                disabled={!data.effectReverse}
+                tooltip={multiline`
+                  [NOTE: ONLY WORKS WHEN REVERSE MODE IS ACTIVE]
+                  This will allow you to select a dropoff turf. After
+                  selecting a turf, any pod in 'Reverse Mode' will drop off
+                  it's newly gotten cargo on this turf. Can be used to
+                  transport things or people around the station in a neat,
+                  IC way. Try doing this with the 'Seethrough Pod' style
+                  enabled for extra fun!
+                `}
+                onClick={() => act('pickDropoffTurf')} />
+              <Button
+                content="Clear Dropoff Location"
+                disabled={!data.dropoff_turf}
+                tooltip={multiline`
+                  Clears the selected dropoff turf for reverse mode.
+                `}
+                onClick={() => act('clearDropoffTurf')} />
+              <p>
+                Reverse Drop-off Location: 
+                {data.dropoff_turf ? data.dropoff_turf : 'None'}
+              </p>
+            </LabeledList.Item>
+          )}
+          {!data.effectReverse && (
+            <LabeledList.Item label="Reverse Drop">
+              <p>
+                [Enable Reverse Mode for this feature]
+              </p>
+            </LabeledList.Item>
+          )} 
           <LabeledList.Item label="Teleport to">
             <Button
               content={data.bay}
@@ -55,7 +106,7 @@ export const CentcomPodLauncher = props => {
               disabled={!data.oldArea}
               onClick={() => act('teleportBack')} />
           </LabeledList.Item>
-          <LabeledList.Item label="Item Mode" >
+          <LabeledList.Item label="Item Mode">
             <Button
               content="Clone Items"
               selected={data.launchClone}
@@ -136,6 +187,14 @@ export const CentcomPodLauncher = props => {
               onClick={() => act('damageGib')} />
           </LabeledList.Item>
           <LabeledList.Item label="Effects">
+            <Button
+              content="Projectile Cloud"
+              selected={data.effectShrapnel}
+              tooltip={multiline`
+                This will create a cloud of shrapnel on landing, 
+                of any projectile you'd like!
+              `}
+              onClick={() => act('effectShrapnel')} />
             <Button
               content="Stun"
               selected={data.effectStun}
@@ -408,7 +467,7 @@ export const CentcomPodLauncher = props => {
                 This gondola can control when he wants to deliver his supplies
                 if he has a smart enough mind, so offer up his body to ghosts
                 for maximum enjoyment. (Make sure to turn off bluespace and
-                set a arbitrarily high open-time if you do!
+                set an arbitrarily high open-time if you do!
               `}
               onClick={() => act('styleGondola')} />
             <Button
@@ -431,7 +490,7 @@ export const CentcomPodLauncher = props => {
             buttons={(
               <Fragment>
                 <Button
-                  content="undo Pody Bay"
+                  content="undo Pod Bay"
                   tooltip={multiline`
                     Manually undoes the possible things to launch in the
                     pod bay.

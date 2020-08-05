@@ -90,6 +90,22 @@
 	make_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 30)
 	category = list("initial","Botany Chemicals")
 
+/datum/design/end_gro
+	name = "30u Enduro Grow"
+	id = "end_gro"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 30)
+	make_reagents = list(/datum/reagent/plantnutriment/endurogrow = 30)
+	category = list("initial","Botany Chemicals")
+
+/datum/design/liq_earth
+	name = "30u Liquid Earthquake"
+	id = "liq_earth"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 30)
+	make_reagents = list(/datum/reagent/plantnutriment/liquidearthquake = 30)
+	category = list("initial","Botany Chemicals")
+
 /datum/design/weed_killer
 	name = "30u Weed Killer"
 	id = "weed_killer"
@@ -104,6 +120,14 @@
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass= 50)
 	make_reagents = list(/datum/reagent/toxin/pestkiller = 30)
+	category = list("initial","Botany Chemicals")
+
+/datum/design/org_pest_spray
+	name = "30u Organic Pest Killer"
+	id = "org_pest_spray"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 80)
+	make_reagents = list(/datum/reagent/toxin/pestkiller/organic = 30)
 	category = list("initial","Botany Chemicals")
 
 /datum/design/cloth
@@ -152,6 +176,14 @@
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass= 300)
 	build_path = /obj/item/storage/belt/janitor
+	category = list("initial","Organic Materials")
+
+/datum/design/plantbelt
+	name = "Botanical Belt"
+	id = "plantbelt"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 300)
+	build_path = /obj/item/storage/belt/plant
 	category = list("initial","Organic Materials")
 
 /datum/design/s_holster

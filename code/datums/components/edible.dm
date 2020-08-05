@@ -66,7 +66,7 @@ Behavior that's still missing from this component that original food items had t
 				owner.reagents.add_reagent(rid, amount)
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
-	if(!food_flags & FOOD_IN_CONTAINER)
+	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch (bitecount)
 			if (0)
 				return
@@ -236,12 +236,12 @@ Behavior that's still missing from this component that original food items had t
 		return
 	var/mob/living/L = user
 	if(bitecount == 0 || prob(50))
-		L.emote("me", 1, "nibbles away at \the [parent]")
+		L.manual_emote("nibbles away at \the [parent]")
 	bitecount++
 	. = COMPONENT_ITEM_NO_ATTACK
 	L.taste(owner.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [parent] was")
 		if(sattisfaction_text)
-			L.emote("me", 1, "[sattisfaction_text]")
+			L.manual_emote(sattisfaction_text)
 		qdel(parent)

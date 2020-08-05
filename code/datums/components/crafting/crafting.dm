@@ -196,9 +196,9 @@
 	Set var amt to the value current cycle req is pointing to, its amount of type we need to delete
 	Get var/surroundings list of things accessable to crafting by get_environment()
 	Check the type of the current cycle req
-		If its reagent then do a while loop, inside it try to locate() reagent containers, inside such containers try to locate needed reagent, if there isnt remove thing from surroundings
+		If its reagent then do a while loop, inside it try to locate() reagent containers, inside such containers try to locate needed reagent, if there isn't remove thing from surroundings
 			If there is enough reagent in the search result then delete the needed amount, create the same type of reagent with the same data var and put it into deletion list
-			If there isnt enough take all of that reagent from the container, put into deletion list, substract the amt var by the volume of reagent, remove the container from surroundings list and keep searching
+			If there isn't enough take all of that reagent from the container, put into deletion list, substract the amt var by the volume of reagent, remove the container from surroundings list and keep searching
 			While doing above stuff check deletion list if it already has such reagnet, if yes merge instead of adding second one
 		If its stack check if it has enough amount
 			If yes create new stack with the needed amount and put in into deletion list, substract taken amount from the stack
@@ -209,7 +209,7 @@
 	Then do a loop over parts var of the recipe
 		Do similar stuff to what we have done above, but now in deletion list, until the parts conditions are satisfied keep taking from the deletion list and putting it into parts list for return
 
-	After its done loop over deletion list and delete all the shit that wasnt taken by parts loop
+	After its done loop over deletion list and delete all the shit that wasn't taken by parts loop
 
 	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
 */
@@ -316,9 +316,12 @@
 	if(user == parent)
 		ui_interact(user)
 
+/datum/component/personal_crafting/ui_state(mob/user)
+	return GLOB.not_incapacitated_turf_state
+
 //For the UI related things we're going to assume the user is a mob rather than typesetting it to an atom as the UI isn't generated if the parent is an atom
-/datum/component/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/component/personal_crafting/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		cur_category = categories[1]
 		if(islist(categories[cur_category]))
@@ -326,7 +329,7 @@
 			cur_subcategory = subcats[1]
 		else
 			cur_subcategory = CAT_NONE
-		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
+		ui = new(user, src, "PersonalCrafting")
 		ui.open()
 
 /datum/component/personal_crafting/ui_data(mob/user)
@@ -406,13 +409,8 @@
 			display_compact = !display_compact
 			. = TRUE
 		if("set_category")
-			if(!isnull(params["category"]))
-				cur_category = params["category"]
-			if(!isnull(params["subcategory"]))
-				if(params["subcategory"] == "0")
-					cur_subcategory = ""
-				else
-					cur_subcategory = params["subcategory"]
+			cur_category = params["category"]
+			cur_subcategory = params["subcategory"] || ""
 			. = TRUE
 
 /datum/component/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
@@ -428,6 +426,8 @@
 		//Also these are typepaths so sadly we can't just do "[a]"
 		var/atom/A = a
 		req_text += " [R.reqs[A]] [initial(A.name)],"
+	if(R.additional_req_text)
+		req_text += R.additional_req_text
 	req_text = replacetext(req_text,",","",-1)
 	data["req_text"] = req_text
 

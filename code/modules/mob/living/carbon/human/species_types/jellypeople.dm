@@ -15,6 +15,7 @@
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
+	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	inherent_factions = list("slime")
 	species_language_holder = /datum/language_holder/jelly
@@ -263,11 +264,16 @@
 	else
 		ui_interact(owner)
 
-/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+/datum/action/innate/swap_body/ui_host(mob/user)
+	return owner
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/action/innate/swap_body/ui_state(mob/user)
+	return GLOB.not_incapacitated_state
+
+/datum/action/innate/swap_body/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "slime_swap_body", name, 400, 400, master_ui, state)
+		ui = new(user, src, "SlimeBodySwapper", name)
 		ui.open()
 
 /datum/action/innate/swap_body/ui_data(mob/user)
@@ -443,8 +449,8 @@
 	name = "luminescent glow"
 	desc = "Tell a coder if you're seeing this."
 	icon_state = "nothing"
-	light_color = "#FFFFFF"
 	light_range = LUMINESCENT_DEFAULT_GLOW
+	light_color = COLOR_WHITE
 
 /obj/effect/dummy/luminescent_glow/Initialize()
 	. = ..()
@@ -635,6 +641,8 @@
 
 /datum/action/innate/linked_speech/Activate()
 	var/mob/living/carbon/human/H = owner
+	if(H.stat == DEAD)
+		return
 	if(!species || !(H in species.linked_mobs))
 		to_chat(H, "<span class='warning'>The link seems to have been severed...</span>")
 		Remove(H)

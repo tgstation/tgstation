@@ -131,7 +131,7 @@
 		/datum/reagent/medicine/leporazine,\
 		/datum/reagent/medicine/clonexadone,\
 		/datum/reagent/medicine/mine_salve,\
-		/datum/reagent/medicine/C2/convermol,\
+		/datum/reagent/medicine/c2/convermol,\
 		/datum/reagent/medicine/ephedrine,\
 		/datum/reagent/medicine/diphenhydramine,\
 		/datum/reagent/drug/space_drugs,\
@@ -233,13 +233,13 @@
 	//reagent that are possible to be chem factory'd
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/spaceacillin,\
-		/datum/reagent/medicine/C2/instabitaluri,\
+		/datum/reagent/medicine/c2/synthflesh,\
 		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/atropine,\
 		/datum/reagent/medicine/cryoxadone,\
 		/datum/reagent/medicine/salbutamol,\
-		/datum/reagent/medicine/C2/hercuri,\
-		/datum/reagent/medicine/C2/probital,\
+		/datum/reagent/medicine/c2/hercuri,\
+		/datum/reagent/medicine/c2/probital,\
 		/datum/reagent/drug/methamphetamine,\
 		/datum/reagent/drug/crank,\
 		/datum/reagent/nitrous_oxide,\

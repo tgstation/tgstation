@@ -955,11 +955,11 @@
 /area/ruin/space/has_grav/listeningstation)
 "bs" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/OMinus{
+/obj/item/reagent_containers/blood/o_minus{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4;
@@ -1101,7 +1101,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "bD" = (
 /obj/structure/table/wood,
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m9mm,
 /obj/item/paper/fluff/ruins/listeningstation/briefing,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/listeningstation)

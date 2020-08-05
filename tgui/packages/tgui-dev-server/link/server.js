@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { createLogger, directLog } from 'common/logging.js';
 import http from 'http';
 import { inspect } from 'util';
@@ -40,6 +46,13 @@ const deserializeObject = str => {
       }
       if (value.__number__) {
         return parseFloat(value.__number__);
+      }
+      if (value.__undefined__) {
+        // NOTE: You should not rely on deserialized object's undefined,
+        // this is purely for inspection purposes.
+        return {
+          [inspect.custom]: () => undefined,
+        };
       }
       return value;
     }

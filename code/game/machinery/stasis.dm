@@ -21,8 +21,8 @@
 
 /obj/machinery/stasis/Initialize()
 	. = ..()
-	for(var/direction in GLOB.cardinals)
-		op_computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
+	for(var/direction in GLOB.alldirs)
+		op_computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)
 		if(op_computer)
 			op_computer.sbed = src
 			break
@@ -110,11 +110,13 @@
 	var/freq = rand(24750, 26550)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
 	target.apply_status_effect(STATUS_EFFECT_STASIS, STASIS_MACHINE_EFFECT)
+	ADD_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 	target.ExtinguishMob()
 	use_power = ACTIVE_POWER_USE
 
 /obj/machinery/stasis/proc/thaw_them(mob/living/target)
 	target.remove_status_effect(STATUS_EFFECT_STASIS, STASIS_MACHINE_EFFECT)
+	REMOVE_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 	if(target == occupant)
 		use_power = IDLE_POWER_USE
 
@@ -125,12 +127,6 @@
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
 	update_icon()
-
-/obj/machinery/stasis/proc/check_patient()
-	if(occupant)
-		return TRUE
-	else
-		return FALSE
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
@@ -161,9 +157,4 @@
 /obj/machinery/stasis/nap_violation(mob/violator)
 	unbuckle_mob(violator, TRUE)
 
-/obj/machinery/stasis/attack_robot(mob/user)
-	if(Adjacent(user) && occupant)
-		unbuckle_mob(occupant)
-	else
-		..()
 #undef STASIS_TOGGLE_COOLDOWN

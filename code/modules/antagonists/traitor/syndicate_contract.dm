@@ -18,7 +18,10 @@
 /datum/syndicate_contract/proc/generate(blacklist)
 	contract.find_target(null, blacklist)
 
-	var/datum/data/record/record = find_record("name", contract.target.name, GLOB.data_core.general)
+	var/datum/data/record/record
+	if (contract.target)
+		record = find_record("name", contract.target.name, GLOB.data_core.general)
+
 	if (record)
 		target_rank = record.fields["rank"]
 	else
@@ -65,7 +68,7 @@
 	empty_pod.explosionSize = list(0,0,0,1)
 	empty_pod.leavingSound = 'sound/effects/podwoosh.ogg'
 
-	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
+	new /obj/effect/pod_landingzone(empty_pod_turf, empty_pod)
 
 /datum/syndicate_contract/proc/enter_check(datum/source, sent_mob)
 	if (istype(source, /obj/structure/closet/supplypod/extractionpod))
@@ -108,7 +111,7 @@
 			var/obj/structure/closet/supplypod/extractionpod/pod = source
 
 			// Handle the pod returning
-			pod.send_up(pod)
+			pod.startExitSequence(pod)
 
 			if (ishuman(M))
 				var/mob/living/carbon/human/target = M
@@ -161,7 +164,7 @@
 		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 20)
 
 		M.flash_act()
-		M.confused += 10
+		M.add_confusion(10)
 		M.blur_eyes(5)
 		to_chat(M, "<span class='warning'>You feel strange...</span>")
 		sleep(60)
@@ -170,7 +173,7 @@
 		sleep(65)
 		to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
 		M.flash_act()
-		M.confused += 20
+		M.add_confusion(20)
 		M.blur_eyes(3)
 		sleep(30)
 		to_chat(M, "<span class='warning'>Your head pounds...</span>")
@@ -182,7 +185,7 @@
 					so it's only a matter of time before we ship you back...\"</i></span>")
 		M.blur_eyes(10)
 		M.Dizzy(15)
-		M.confused += 20
+		M.add_confusion(20)
 
 // We're returning the victim
 /datum/syndicate_contract/proc/returnVictim(var/mob/living/M)
@@ -190,7 +193,7 @@
 
 	for (var/turf/possible_drop in contract.dropoff.contents)
 		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
-			if (!is_blocked_turf(possible_drop))
+			if (!possible_drop.is_blocked_turf())
 				possible_drop_loc.Add(possible_drop)
 
 	if (possible_drop_loc.len > 0)
@@ -221,9 +224,9 @@
 		M.flash_act()
 		M.blur_eyes(30)
 		M.Dizzy(35)
-		M.confused += 20
+		M.add_confusion(20)
 
-		new /obj/effect/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
+		new /obj/effect/pod_landingzone(possible_drop_loc[pod_rand_loc], return_pod)
 	else
 		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
 					be able to handle our pod... You will die here instead.\"</i></span>")
@@ -231,4 +234,3 @@
 			var/mob/living/carbon/C = M
 			if (C.can_heartattack())
 				C.set_heartattack(TRUE)
-

@@ -29,10 +29,10 @@ SUBSYSTEM_DEF(minor_mapping)
 
 	while(turfs.len && amount > 0)
 		var/turf/T = pick_n_take(turfs)
-		var/obj/item/storage/backpack/satchel/flat/S = new(T)
-		S.hide(intact=TRUE)
-		amount--
+		var/obj/item/storage/backpack/satchel/flat/F = new(T)
 
+		SEND_SIGNAL(F, COMSIG_OBJ_HIDE, T.intact)
+		amount--
 
 /proc/find_exposed_wires()
 	var/list/exposed_wires = list()
@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		all_turfs += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
 	for(var/turf/open/floor/plating/T in all_turfs)
-		if(is_blocked_turf(T))
+		if(T.is_blocked_turf())
 			continue
 		if(locate(/obj/structure/cable) in T)
 			exposed_wires += T

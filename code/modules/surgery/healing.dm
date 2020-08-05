@@ -1,5 +1,3 @@
-#define PER_ITERATION_XP_CAP	MEDICAL_SKILL_MEDIUM //TW XP gain scales with repeated iterations so we cap it.
-
 /datum/surgery/healing
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
@@ -8,13 +6,22 @@
 				/datum/surgery_step/heal,
 				/datum/surgery_step/close)
 
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = FALSE
 	replaced_by = /datum/surgery
 	ignore_clothes = TRUE
 	var/healing_step_type
 	var/antispam = FALSE
+
+/datum/surgery/healing/can_start(mob/user, mob/living/patient)
+	. = ..()
+	if(isanimal(patient))
+		var/mob/living/simple_animal/critter = patient
+		if(!critter.healable)
+			return FALSE
+	if(!(patient.mob_biotypes & (MOB_ORGANIC|MOB_HUMANOID)))
+		return FALSE
 
 /datum/surgery/healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
@@ -71,7 +78,7 @@
 		urhealedamt_burn *= 0.55
 		umsg += " as best as you can while they have clothing on"
 		tmsg += " as best as they can while [target] has clothing on"
-	experience_given = CEILING((target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)/5),1)
+	target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",
 		"[tmsg].")
@@ -90,7 +97,7 @@
 		urdamageamt_brute += round((target.getBruteLoss()/ (missinghpbonus*2)),0.1)
 		urdamageamt_burn += round((target.getFireLoss()/ (missinghpbonus*2)),0.1)
 
-	target.take_bodypart_damage(urdamageamt_brute, urdamageamt_burn)
+	target.take_bodypart_damage(urdamageamt_brute, urdamageamt_burn, wound_bonus=CANT_WOUND)
 	return FALSE
 
 /***************************BRUTE***************************/
@@ -216,5 +223,3 @@
 		"<span class='warning'>[user] screws up!</span>",
 		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>", TRUE)
 	target.take_bodypart_damage(5,5)
-
-#undef PER_ITERATION_XP_CAP

@@ -56,8 +56,6 @@
 	/// Requirements are the threat level requirements per pop range.
 	/// With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
 	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
-	/// An alternative, static requirement used instead when pop is over mode's high_pop_limit.
-	var/high_population_requirement = 10
 	/// Reference to the mode, use this instead of SSticker.mode.
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
@@ -82,11 +80,6 @@
 
 /datum/dynamic_ruleset/New()
 	..()
-	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		restricted_roles += protected_roles
-	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		restricted_roles += "Assistant"
-
 	if (istype(SSticker.mode, /datum/game_mode/dynamic))
 		mode = SSticker.mode
 	else if (GLOB.master_mode != "dynamic") // This is here to make roundstart forced ruleset function.
@@ -102,38 +95,39 @@
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
+	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
+	if(antag_cap.len && requirements.len != antag_cap.len)
+		message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
+		log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
+	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+
 	if(minimum_players > population)
 		return FALSE
 	if(maximum_players > 0 && population > maximum_players)
 		return FALSE
-	if (population >= GLOB.dynamic_high_pop_limit)
-		indice_pop = 10
-		return (threat_level >= high_population_requirement)
-	else
-		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-		if(antag_cap.len && requirements.len != antag_cap.len)
-			message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
-			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
-		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
-		return (threat_level >= requirements[indice_pop])
+	return (threat_level >= requirements[indice_pop])
 
-/// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
+/// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the additional threat from scaling up.
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
 	remaining_threat_level -= cost
 	if(scaling_cost && scaling_cost <= remaining_threat_level) // Only attempts to scale the modes with a scaling cost explicitly set.
-		var/new_prob
-		var/pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * (scaled_times + 1))) / mode.roundstart_pop_ready
+		var/antag_fraction = 0
+		var/new_prob = 0
+		for(var/R in (mode.executed_rules + list(src))) // we care about the antags we *will* assign, too
+			var/datum/dynamic_ruleset/ruleset = R
+			antag_fraction += ((1 + ruleset.scaled_times) * ruleset.antag_cap[indice_pop]) / mode.roundstart_pop_ready
+
 		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
 		for(var/i in 1 to 3) //Can scale a max of 3 times
-			if(remaining_threat_level >= scaling_cost && pop_to_antags < 0.25)
-				new_prob = base_prob + (remaining_threat_level) - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) - (pop_to_antags * POP_SCALING_PENALTY)
+			if(remaining_threat_level >= scaling_cost && antag_fraction < 0.25)
+				new_prob = base_prob + (remaining_threat_level) - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) - (antag_fraction * POP_SCALING_PENALTY)
 				if (!prob(new_prob))
 					break
 				remaining_threat_level -= scaling_cost
 				scaled_times++
-				pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * (scaled_times + 1))) / mode.roundstart_pop_ready
-		log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob ? new_prob : 0]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining, antag to crew ratio: [pop_to_antags*100]%.")
-		mode.antags_rolled += (1 + scaled_times) * antag_cap[indice_pop]
+				antag_fraction += antag_cap[indice_pop] / mode.roundstart_pop_ready // we added new antags, gotta update the %
+
+		log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining, % of players that are antags: [antag_fraction*100]%.")
 		return scaled_times * scaling_cost
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
@@ -204,21 +198,16 @@
 	for(var/mob/dead/new_player/P in candidates)
 		if (!P.client || !P.mind) // Are they connected?
 			candidates.Remove(P)
-			continue
-		if(!mode.check_age(P.client, minimum_required_age))
+		else if(!mode.check_age(P.client, minimum_required_age))
 			candidates.Remove(P)
-			continue
-		if(P.mind.special_role) // We really don't want to give antag to an antag.
+		else if(P.mind.special_role) // We really don't want to give antag to an antag.
 			candidates.Remove(P)
-			continue
-		if(antag_flag_override)
+		else if(antag_flag_override)
 			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
 				candidates.Remove(P)
-				continue
 		else
 			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				candidates.Remove(P)
-				continue
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE

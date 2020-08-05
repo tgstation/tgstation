@@ -1,6 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - tweak: "Now spacemans don't try push things around to propel yourself, when use jetpack."
-  - bugfix: "Now jetpacks don't use air in gravity area or when you just inertia flying in space."
-  - tweak: "Now jetpacks generate trails only on air use."

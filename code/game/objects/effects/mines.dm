@@ -5,20 +5,25 @@
 	anchored = TRUE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "uglymine"
-	var/triggered = 0
+	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
+	var/triggered = FALSE
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
 	to_chat(victim, "<span class='danger'>*click*</span>")
 
-/obj/effect/mine/Crossed(AM as mob|obj)
+/obj/effect/mine/Crossed(atom/movable/AM)
+	if(triggered || !isturf(loc))
+		return
 	. = ..()
-	if(isturf(loc))
-		if(ismob(AM))
-			var/mob/MM = AM
-			if(!(MM.movement_type & FLYING))
-				triggermine(AM)
-		else
-			triggermine(AM)
+
+	if(AM.movement_type & FLYING)
+		return
+
+	triggermine(AM)
+
+/obj/effect/mine/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	triggermine()
 
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
@@ -28,9 +33,9 @@
 	s.set_up(3, 1, src)
 	s.start()
 	mineEffect(victim)
-	triggered = 1
+	triggered = TRUE
+	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED)
 	qdel(src)
-
 
 /obj/effect/mine/explosive
 	name = "explosive mine"
@@ -42,10 +47,21 @@
 /obj/effect/mine/explosive/mineEffect(mob/victim)
 	explosion(loc, range_devastation, range_heavy, range_light, range_flash)
 
-
 /obj/effect/mine/stun
 	name = "stun mine"
 	var/stun_time = 80
+
+/obj/effect/mine/shrapnel
+	name = "shrapnel mine"
+	var/shrapnel_type = /obj/projectile/bullet/shrapnel
+	var/shrapnel_magnitude = 3
+
+/obj/effect/mine/shrapnel/mineEffect(mob/victim)
+	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+
+/obj/effect/mine/shrapnel/sting
+	name = "stinger mine"
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
@@ -177,7 +193,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel fast!</span>")
-	victim.add_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+	victim.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	sleep(duration)
-	victim.remove_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB)
+	victim.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	to_chat(victim, "<span class='notice'>You slow down.</span>")

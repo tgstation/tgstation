@@ -4,7 +4,7 @@
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
 	canSmoothWith = null
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_MORE
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
@@ -56,11 +56,19 @@
 	icon = 'icons/turf/walls/rusty_wall.dmi'
 	hardness = 45
 
+/turf/closed/wall/rust/rust_heretic_act()
+	ScrapeAway()
+
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	hardness = 15
+
+/turf/closed/wall/r_wall/rust/rust_heretic_act()
+	if(prob(50))
+		return
+	ScrapeAway()
 
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"

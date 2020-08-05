@@ -4,6 +4,7 @@
 	desc = "All the tools you need to create your own robot army."
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
+	light_mask = "robotics-light-mask"
 	req_access = list(ACCESS_ROBOTICS)
 	products = list(/obj/item/clothing/suit/toggle/labcoat = 4,
 					/obj/item/clothing/under/rank/rnd/roboticist = 4,
@@ -15,6 +16,7 @@
 					/obj/item/healthanalyzer = 3,
 					/obj/item/scalpel = 2,
 					/obj/item/circular_saw = 2,
+					/obj/item/bonesetter = 2,
 					/obj/item/tank/internals/anesthetic = 2,
 					/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/screwdriver = 5,

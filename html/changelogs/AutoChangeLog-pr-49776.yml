@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Pacifists trained in CQC will no longer automatically upgrade their aggressive grab to a neck grab when putting someone into a chokehold"

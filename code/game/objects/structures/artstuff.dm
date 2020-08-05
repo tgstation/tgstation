@@ -45,8 +45,6 @@
 	var/height = 11
 	var/list/grid
 	var/canvas_color = "#ffffff" //empty canvas color
-	var/ui_x = 400
-	var/ui_y = 400
 	var/used = FALSE
 	var/painting_name //Painting name, this is set after framing.
 	var/finalized = FALSE //Blocks edits
@@ -75,12 +73,16 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/canvas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/canvas/ui_state(mob/user)
+	if(finalized)
+		return GLOB.physical_obscured_state
+	else
+		return GLOB.default_state
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/canvas/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "canvas", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Canvas", name)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
@@ -186,34 +188,28 @@
 		painting_name = new_name
 		SStgui.update_uis(src)
 
-/obj/item/canvas/nineteenXnineteen
+/obj/item/canvas/nineteen_nineteen
 	icon_state = "19x19"
 	width = 19
 	height = 19
-	ui_x = 600
-	ui_y = 600
 	pixel_x = 6
 	pixel_y = 9
 	framed_offset_x = 8
 	framed_offset_y = 9
 
-/obj/item/canvas/twentythreeXnineteen
+/obj/item/canvas/twentythree_nineteen
 	icon_state = "23x19"
 	width = 23
 	height = 19
-	ui_x = 800
-	ui_y = 600
 	pixel_x = 4
 	pixel_y = 10
 	framed_offset_x = 6
 	framed_offset_y = 8
 
-/obj/item/canvas/twentythreeXtwentythree
+/obj/item/canvas/twentythree_twentythree
 	icon_state = "23x23"
 	width = 23
 	height = 23
-	ui_x = 800
-	ui_y = 800
 	pixel_x = 5
 	pixel_y = 9
 	framed_offset_x = 5
@@ -223,7 +219,7 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = 0
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
@@ -233,6 +229,7 @@
 	desc = "Art or \"Art\"? You decide."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
+	custom_materials = list(/datum/material/wood = 2000)
 	buildable_sign = FALSE
 	var/obj/item/canvas/C
 	var/persistence_id
@@ -262,7 +259,7 @@
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
 	if(C)
-		C.ui_interact(user,state = GLOB.physical_obscured_state)
+		C.ui_interact(user)
 
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -288,7 +285,7 @@
 /obj/structure/sign/painting/update_icon_state()
 	. = ..()
 	if(C && C.generated_icon)
-		icon_state = null
+		icon_state = "frame-overlay"
 	else
 		icon_state = "frame-empty"
 
@@ -342,7 +339,7 @@
 		stack_trace("Invalid persistence_id - [persistence_id]")
 		return
 	var/data = C.get_data_string()
-	var/md5 = md5(data)
+	var/md5 = md5(lowertext(data))
 	var/list/current = SSpersistence.paintings[persistence_id]
 	if(!current)
 		current = list()
@@ -386,7 +383,7 @@
 		if(!persistence_id || !C)
 			to_chat(user,"<span class='warning'>This is not a persistent painting.</span>")
 			return
-		var/md5 = md5(C.get_data_string())
+		var/md5 = md5(lowertext(C.get_data_string()))
 		var/author = C.author_ckey
 		var/list/current = SSpersistence.paintings[persistence_id]
 		if(current)

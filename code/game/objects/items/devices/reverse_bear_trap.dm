@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	obj_integrity = 300
 	max_integrity = 300
-	item_state = "rack_parts"
+	inhand_icon_state = "rack_parts"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 

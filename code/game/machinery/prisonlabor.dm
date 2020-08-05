@@ -1,6 +1,6 @@
 /obj/machinery/plate_press
 	name = "license plate press"
-	desc = "You know, we're making a lot of license plates for a station with literaly no cars in it."
+	desc = "You know, we're making a lot of license plates for a station with literally no cars in it."
 	icon = 'icons/obj/machines/prison.dmi'
 	icon_state = "offline"
 	use_power = IDLE_POWER_USE
@@ -28,7 +28,7 @@
 	if(!is_operational())
 		to_chat(user, "<span class='warning'>[src] has to be on to do this!</span>")
 		return FALSE
-	if(pressing)
+	if(current_plate)
 		to_chat(user, "<span class='warning'>[src] already has a plate in it!</span>")
 		return FALSE
 	if(istype(I, /obj/item/stack/license_plates/empty))

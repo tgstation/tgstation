@@ -90,7 +90,7 @@
 	collar_type = "kitten"
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
-/mob/living/simple_animal/pet/cat/Runtime
+/mob/living/simple_animal/pet/cat/runtime
 	name = "Runtime"
 	desc = "GCAT"
 	icon_state = "cat"
@@ -105,7 +105,7 @@
 	var/memory_saved = FALSE
 	held_state = "cat"
 
-/mob/living/simple_animal/pet/cat/Runtime/Initialize()
+/mob/living/simple_animal/pet/cat/runtime/Initialize()
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"
@@ -113,7 +113,7 @@
 	Read_Memory()
 	. = ..()
 
-/mob/living/simple_animal/pet/cat/Runtime/Life()
+/mob/living/simple_animal/pet/cat/runtime/Life()
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -121,18 +121,18 @@
 		memory_saved = TRUE
 	..()
 
-/mob/living/simple_animal/pet/cat/Runtime/make_babies()
+/mob/living/simple_animal/pet/cat/runtime/make_babies()
 	var/mob/baby = ..()
 	if(baby)
 		children += baby
 		return baby
 
-/mob/living/simple_animal/pet/cat/Runtime/death()
+/mob/living/simple_animal/pet/cat/runtime/death()
 	if(!memory_saved)
 		Write_Memory(TRUE)
 	..()
 
-/mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
+/mob/living/simple_animal/pet/cat/runtime/proc/Read_Memory()
 	if(fexists("data/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 		S["family"] >> family
@@ -146,7 +146,7 @@
 	if(isnull(family))
 		family = list()
 
-/mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
+/mob/living/simple_animal/pet/cat/runtime/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Runtime.json")
 	var/list/file_data = list()
 	family = list()
@@ -162,14 +162,14 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
+/mob/living/simple_animal/pet/cat/runtime/proc/Deploy_The_Cats()
 	cats_deployed = 1
 	for(var/cat_type in family)
 		if(family[cat_type] > 0)
 			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
 				new cat_type(loc)
 
-/mob/living/simple_animal/pet/cat/Proc
+/mob/living/simple_animal/pet/cat/_proc
 	name = "Proc"
 	gender = MALE
 	gold_core_spawnable = NO_SPAWN
@@ -178,43 +178,43 @@
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
 		if(prob(1))
-			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
+			manual_emote(pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
 			collar_type = "[initial(collar_type)]_rest"
 			set_resting(TRUE)
 		else if (prob(1))
-			emote("me", 1, pick("sits down.", "crouches on its hind legs.", "looks alert."))
+			manual_emote(pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
 			collar_type = "[initial(collar_type)]_sit"
 			set_resting(TRUE)
 		else if (prob(1))
 			if (resting)
-				emote("me", 1, pick("gets up and meows.", "walks around.", "stops resting."))
+				manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
 				collar_type = "[initial(collar_type)]"
 				set_resting(FALSE)
 			else
-				emote("me", 1, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
+				manual_emote(pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/Tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
+				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
 					if (emote_cooldown < (world.time - 600))
 						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
 						step(M, pick(GLOB.cardinals))
 						emote_cooldown = world.time
 					break
 				if(!M.stat && Adjacent(M))
-					emote("me", 1, "splats \the [M]!")
+					manual_emote("splats \the [M]!")
 					M.splat()
 					movement_target = null
 					stop_automated_movement = 0
 					break
 			for(var/obj/item/toy/cattoy/T in view(1,src))
 				if (T.cooldown < (world.time - 400))
-					emote("me", 1, "bats \the [T] around with its paw!")
+					manual_emote("bats \the [T] around with its paw!")
 					T.cooldown = world.time
 
 	..()
@@ -253,13 +253,13 @@
 		if(change > 0)
 			if(M && stat != DEAD)
 				new /obj/effect/temp_visual/heart(loc)
-				emote("me", 1, "purrs!")
+				manual_emote("purrs!")
 				if(flags_1 & HOLOGRAM_1)
 					return
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		else
 			if(M && stat != DEAD)
-				emote("me", 1, "hisses!")
+				manual_emote("hisses!")
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"

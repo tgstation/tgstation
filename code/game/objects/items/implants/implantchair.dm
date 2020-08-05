@@ -5,8 +5,6 @@
 	icon_state = "implantchair"
 	density = TRUE
 	opacity = 0
-	ui_x = 375
-	ui_y = 280
 
 	var/ready = TRUE
 	var/replenishing = FALSE
@@ -28,13 +26,14 @@
 	open_machine()
 	update_icon()
 
+/obj/machinery/implantchair/ui_state(mob/user)
+	return GLOB.notcontained_state
 
-/obj/machinery/implantchair/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/implantchair/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "implantchair", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ImplantChair", name)
 		ui.open()
-
 
 /obj/machinery/implantchair/ui_data()
 	var/list/data = list()
@@ -90,12 +89,12 @@
 	if(istype(I, /obj/item/implant))
 		var/obj/item/implant/P = I
 		if(P.implant(M))
-			visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
+			visible_message("<span class='warning'>[M] is implanted by [src].</span>")
 			return TRUE
 	else if(istype(I, /obj/item/organ))
 		var/obj/item/organ/P = I
 		P.Insert(M, FALSE, FALSE)
-		visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
+		visible_message("<span class='warning'>[M] is implanted by [src].</span>")
 		return TRUE
 
 /obj/machinery/implantchair/update_icon_state()

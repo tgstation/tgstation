@@ -298,7 +298,7 @@
 /area/ruin/space/has_grav/hellfactoryoffice)
 "aS" = (
 /obj/structure/closet/crate,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "aT" = (
@@ -510,7 +510,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "bA" = (
 /obj/structure/closet/crate,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "bB" = (
@@ -969,11 +969,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/hellfactory)
-"lv" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/hellfactory)
 "lR" = (
 /obj/machinery/light/floor,
 /obj/effect/turf_decal/bot_white/right,
@@ -986,7 +981,7 @@
 "nT" = (
 /obj/structure/rack,
 /obj/item/stack/wrapping_paper,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
@@ -1036,10 +1031,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/holofloor/wood,
 /area/ruin/space/has_grav/hellfactory)
-"zI" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall/rust,
-/area/ruin/space/has_grav/hellfactory)
 "BC" = (
 /obj/machinery/light/floor,
 /obj/effect/turf_decal/bot_white/left,
@@ -1056,7 +1047,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "Gs" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/closed/wall/r_wall/rust,
 /area/ruin/space/has_grav/hellfactory)
@@ -1476,8 +1466,8 @@ aJ
 aX
 fj
 EP
-zI
-lv
+Gs
+EP
 by
 by
 bK
@@ -1504,7 +1494,7 @@ Yd
 ah
 aA
 bn
-zI
+Gs
 by
 Wh
 Fs
@@ -1561,12 +1551,12 @@ aB
 Gs
 EP
 EP
-zI
+Gs
 EP
-zI
+Gs
 EP
-zI
-lv
+Gs
+EP
 Zh
 cA
 by
