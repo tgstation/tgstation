@@ -1318,7 +1318,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.confused = max(M.confused+2,0)
+		M.set_confusion(max(M.get_confusion()+2,0))
 		M.Dizzy(10)
 	if (!M.slurring)
 		M.slurring = 1
@@ -1353,7 +1353,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			M.slurring += 3
 		if(45 to 55)
 			if(prob(50))
-				M.confused = max(M.confused+3,0)
+				M.set_confusion(max(M.get_confusion()+3,0))
 		if(55 to 200)
 			M.set_drugginess(55)
 		if(200 to INFINITY)

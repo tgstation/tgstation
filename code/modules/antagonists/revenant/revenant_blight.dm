@@ -31,7 +31,7 @@
 			return
 		if(prob(stage*3))
 			to_chat(affected_mob, "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>")
-			affected_mob.confused += 8
+			affected_mob.add_confusion(8)
 			affected_mob.adjustStaminaLoss(20)
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(stagedamage < stage)

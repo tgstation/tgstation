@@ -817,7 +817,7 @@
 				M.show_message("<span class='narsiesmall'>GONG!</span>", MSG_AUDIBLE)
 				M.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
 				M.soundbang_act(1, 0, 30, 3)
-				M.confused += 10
+				M.add_confusion(10)
 				M.jitteriness += 4
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
 			if(2 to 3)
