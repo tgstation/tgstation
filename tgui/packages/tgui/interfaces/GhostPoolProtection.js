@@ -17,7 +17,7 @@ export const GhostPoolProtection = (props, context) => {
       height={250}>
       <Window.Content>
         <Flex grow={1} height="100%">
-          <Section bold
+          <Section
             title="Options"
             buttons={
               <Fragment>
