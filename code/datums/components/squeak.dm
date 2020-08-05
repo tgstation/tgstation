@@ -61,8 +61,6 @@
 /datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.item_flags & ABSTRACT)
@@ -100,8 +98,6 @@
 
 // Disposal pipes related shit
 /datum/component/squeak/proc/disposing_react(datum/source, obj/structure/disposalholder/holder, obj/machinery/disposal/source)
-	SIGNAL_HANDLER
-
 	SIGNAL_HANDLER
 
 	//We don't need to worry about unregistering this signal as it will happen for us automaticaly when the holder is qdeleted

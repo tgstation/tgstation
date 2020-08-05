@@ -42,8 +42,6 @@
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	for(var/disease in diseases)
 		drinker.ForceContractDisease(disease)
 	var/appendage_zone = feeder.held_items.Find(source)
@@ -79,8 +77,6 @@
 	try_infect(target, hit_zone)
 
 /datum/component/infective/proc/try_infect_attack_zone(datum/source, mob/living/carbon/target, mob/living/user, hit_zone)
-	SIGNAL_HANDLER
-
 	SIGNAL_HANDLER
 
 	try_infect(user, BODY_ZONE_L_ARM)

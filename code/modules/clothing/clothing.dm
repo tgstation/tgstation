@@ -460,8 +460,6 @@ BLIND     // can't see anything
 /obj/item/clothing/proc/bristle(mob/living/L)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	if(!istype(L))
 		return
 	if(prob(0.2))

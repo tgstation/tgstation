@@ -44,8 +44,6 @@
 /datum/component/anti_magic/proc/protect(datum/source, mob/user, _magic, _holy, _psychic, chargecost, self, list/protection_sources)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	if(((_magic && magic) || (_holy && holy) || (_psychic && psychic)) && (!self || blocks_self))
 		protection_sources += parent
 		reaction?.Invoke(user, chargecost)

@@ -43,10 +43,4 @@
 /datum/component/magnetic_catch/proc/throw_react(datum/source, list/arguments)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
-	SIGNAL_HANDLER
-
-	SIGNAL_HANDLER
-
 	return COMPONENT_CANCEL_THROW

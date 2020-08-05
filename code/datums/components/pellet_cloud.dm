@@ -129,10 +129,6 @@
 /datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/lanced_by)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
-	SIGNAL_HANDLER
-
 	var/atom/A = parent
 
 	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
@@ -338,10 +334,6 @@
 
 /// Someone who was originally "under" the grenade has moved off the tile and is now eligible for being a martyr and "covering" it
 /datum/component/pellet_cloud/proc/on_target_qdel(atom/target)
-	SIGNAL_HANDLER
-
-	SIGNAL_HANDLER
-
 	SIGNAL_HANDLER
 
 	UnregisterSignal(target, COMSIG_PARENT_QDELETING)

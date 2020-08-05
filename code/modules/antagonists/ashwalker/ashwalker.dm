@@ -38,7 +38,5 @@
 /datum/antagonist/ashwalker/proc/on_examinate(datum/source, atom/A)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	if(istype(A, /obj/structure/headpike))
 		SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)

@@ -18,7 +18,7 @@
 	untrack()
 	tracked = target
 	src.listener = listener
-	
+
 	while(ismovable(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react)
 		target = target.loc
@@ -39,10 +39,8 @@
 /datum/movement_detector/proc/move_react(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	var/turf/newturf = get_turf(tracked)
-	
+
 	if(oldloc && !isturf(oldloc))
 		var/atom/target = oldloc
 		while(ismovable(target))

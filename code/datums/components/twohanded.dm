@@ -100,8 +100,6 @@
 /datum/component/two_handed/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	if(require_twohands)
 		unwield(user, show_message=TRUE)
 	if(wielded)
@@ -111,8 +109,6 @@
 
 /// Triggered on attack self of the item containing the component
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
-	SIGNAL_HANDLER
-
 	SIGNAL_HANDLER
 
 	if(wielded)

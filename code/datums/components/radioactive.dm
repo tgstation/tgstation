@@ -89,8 +89,6 @@
 /datum/component/radioactive/proc/rad_attack(datum/source, atom/movable/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	radiation_pulse(parent, strength/20)
 	target.rad_act(strength/2)
 	if(!hl3_release_date)

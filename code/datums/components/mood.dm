@@ -241,8 +241,6 @@
 /datum/component/mood/proc/add_event(datum/source, category, type, ...) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	var/datum/mood_event/the_event
 	if(!istext(category))
 		category = REF(category)

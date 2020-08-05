@@ -422,8 +422,6 @@
 /datum/component/storage/proc/close_all()
 	SIGNAL_HANDLER
 
-	SIGNAL_HANDLER
-
 	. = FALSE
 	for(var/mob/M in can_see_contents())
 		close(M)
@@ -777,8 +775,6 @@
 	return TRUE
 
 /datum/component/storage/proc/on_attack_hand(datum/source, mob/user)
-	SIGNAL_HANDLER
-
 	SIGNAL_HANDLER
 
 	var/atom/A = parent
