@@ -843,7 +843,7 @@ RLD
 		return FALSE
 
 	if(checkResource(machinery_data["cost"][blueprint], user) && blueprint)
-		//"cost" is also used as delay here, because honestly everyone always made cost and delay the same and its a lot easier to handle this way
+		//"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
 		if(do_after(user, machinery_data["cost"][blueprint], target = A))
 			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(A))
 				useResource(machinery_data["cost"][blueprint], user)
