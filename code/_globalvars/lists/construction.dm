@@ -1,4 +1,4 @@
-///A cache with all the objects craftable with a plumbing constructor and their cost/delay
+///A cache with all the objects craftable with a plumbing constructor and their delay (doubles as their cost, 1sec/10 matter)
 GLOBAL_LIST_INIT(plumbing_constructables, list(
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
