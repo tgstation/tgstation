@@ -23,8 +23,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	can_be_held = TRUE
 	held_state = "fox"
-	funtopet = TRUE
-	funpetemote = "pants and yaps happily!"
+	pet_bonus = TRUE
+	pet_bonus_emote = "pants and yaps happily!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
