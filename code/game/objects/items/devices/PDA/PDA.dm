@@ -925,6 +925,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			//TODO : Add more signals for specific cases like panel open, printing, dispensing etc
 		target.AddComponent(/datum/component/sound_player, amount = (rand(15,20)), signal_or_sig_list = sig_list)
 		installed_cartridge.charges --
+		return TRUE
 
 
 // access to status display signals
