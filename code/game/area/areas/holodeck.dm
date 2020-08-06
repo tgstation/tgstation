@@ -2,8 +2,8 @@
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	flags_1 = 0
-	hidden = TRUE
+	flags_1 = NONE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA
 
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = 0 // if true, program goes on emag list
@@ -15,11 +15,11 @@
 
 /area/holodeck/powered(var/chan)
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	if(!linked)
-		return 0
+		return FALSE
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
 	return A.powered(chan)

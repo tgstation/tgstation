@@ -323,7 +323,7 @@
 /obj/item/warp_cube/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = current_location.loc
-	if(!linked || current_area.noteleport)
+	if(!linked || CHECK_BITFIELD(current_area.area_flags, NOTELEPORT))
 		to_chat(user, "<span class='warning'>[src] fizzles uselessly.</span>")
 		return
 	if(teleporting)
