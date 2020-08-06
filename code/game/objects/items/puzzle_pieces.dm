@@ -18,8 +18,8 @@
 /obj/item/keycard/cheese
 	name = "cheese keycard"
 	desc = "Look, I still don't understand the reference. What the heck is a keyzza?"
-	color = "#f0da12"
 	puzzle_id = "cheese"
+	custom_materials = list(/datum/material/pizza = 500)
 
 /obj/item/keycard/swordfish
 	name = "titanic keycard"
