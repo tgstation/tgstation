@@ -124,9 +124,15 @@
 			return TRUE
 
 		var/list/visible_turfs = list()
-		for(var/turf/T in (C.isXRay() \
-				? range(C.view_range, C) \
-				: view(C.view_range, C)))
+
+		var/cam_location = C.loc
+
+		if(isliving(cam_location))
+			cam_location = C.loc
+
+		var/list/things = C.isXRay() ? range(C.view_range, cam_location) : view(C.view_range, cam_location)
+
+		for(var/turf/T in things)
 			visible_turfs += T
 
 		var/list/bbox = get_bbox_of_atoms(visible_turfs)
