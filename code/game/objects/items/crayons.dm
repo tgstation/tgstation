@@ -427,8 +427,7 @@
 	if(affected_turfs.len)
 		fraction /= affected_turfs.len
 	for(var/t in affected_turfs)
-		reagents.expose(t, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(t, ., volume_multiplier, transfered_by = user)
+		reagents.trans_to(t, ., volume_multiplier, transfered_by = user, method = TOUCH)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
@@ -447,9 +446,7 @@
 		var/eaten = use_charges(user, 5, FALSE)
 		if(check_empty(user)) //Prevents divsion by zero
 			return
-		var/fraction = min(eaten / reagents.total_volume, 1)
-		reagents.expose(M, INGEST, fraction * volume_multiplier)
-		reagents.trans_to(M, eaten, volume_multiplier, transfered_by = user)
+		reagents.trans_to(M, eaten, volume_multiplier, transfered_by = user, method = INGEST)
 		// check_empty() is called during afterattack
 	else
 		..()
@@ -673,9 +670,7 @@
 			H.lip_color = paint_color
 			H.update_body()
 		var/used = use_charges(user, 10, FALSE)
-		var/fraction = min(1, used / reagents.maximum_volume)
-		reagents.expose(user, VAPOR, fraction * volume_multiplier)
-		reagents.trans_to(user, used, volume_multiplier, transfered_by = user)
+		reagents.trans_to(user, used, volume_multiplier, transfered_by = user, method = VAPOR)
 
 		return (OXYLOSS)
 
@@ -742,9 +737,7 @@
 			else
 				target.set_opacity(initial(target.opacity))
 		. = use_charges(user, 2)
-		var/fraction = min(1, . / reagents.maximum_volume)
-		reagents.expose(target, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(target, ., volume_multiplier, transfered_by = user)
+		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, method = VAPOR)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)

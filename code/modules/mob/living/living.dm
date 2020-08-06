@@ -618,7 +618,7 @@
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
 	fire_stacks = 0
-	confused = 0
+	set_confusion(0)
 	dizziness = 0
 	drowsyness = 0
 	stuttering = 0
