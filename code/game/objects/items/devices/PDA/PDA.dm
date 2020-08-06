@@ -909,10 +909,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return ..()
 	var/obj/machinery/target_machine = target
 	if(!target_machine.panel_open && !istype(target, /obj/machinery/computer))
-		to_chat(world, "this happened 1")
 		return ..()
 	if(!istype(cartridge, /obj/item/cartridge/virus/clown))
-		to_chat(world, "this happened 2")
 		return ..()
 	var/obj/item/cartridge/virus/installed_cartridge = cartridge
 
@@ -928,7 +926,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		//TODO : Add more signals for specific cases like panel open, printing, dispensing etc
 	target.AddComponent(/datum/component/sound_player, amount = (rand(15,20)), signal_or_sig_list = sig_list)
 	installed_cartridge.charges --
-	to_chat(world, "this happened 3")
 	return ..()
 
 
