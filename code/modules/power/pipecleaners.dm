@@ -203,7 +203,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	grind_results = list("copper" = 2) //2 copper per pipe_cleaner in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 	/// Currently set cable color
-	var/pipe_cleaner_color = "red"
+	var/pipe_cleaner_color = COLOR_RED
 
 /obj/item/stack/pipe_cleaner_coil/cyborg
 	is_cyborg = 1
@@ -211,7 +211,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	cost = 1
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
-	var/selected_color = input(user, "Pick a pipe cleaner color.", "Cable Color") in sortList(list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white"))
+	var/selected_color = input(user, "Pick a pipe cleaner color.", "Cable Color") in list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
 	pipe_cleaner_color = GLOB.pipe_cleaner_colors[selected_color]
 	update_icon()
 
