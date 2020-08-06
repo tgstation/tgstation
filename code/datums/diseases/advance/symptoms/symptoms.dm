@@ -30,13 +30,37 @@
 	var/list/thresholds
 	var/naturally_occuring = TRUE //if this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 
+	var/gain_limit = 4
+	var/current_gain = 0
+
+
 /datum/symptom/New()
+
+	randomize_stats()
 	var/list/S = SSdisease.list_symptoms
 	for(var/i = 1; i <= S.len; i++)
 		if(type == S[i])
 			id = "[i]"
 			return
 	CRASH("We couldn't assign an ID!")
+
+/datum/symptom/proc/randomize_stats()
+
+	stealth += randomize_gain()
+	resistance += randomize_gain()
+	stage_speed += randomize_gain()
+	transmittable += randomize_gain()
+
+/*Calculate a random gain between -2 and 2.
+	If the gain is positive, it will check if the maximum gain (gain_limit) has been reached and cut the gain to zero if yes.
+*/
+/datum/symptom/proc/randomize_gain()
+	var/gain = rand(-2,2)
+	if(current_gain >= gain_limit && gain > 0)
+		gain = 0
+		return gain
+	current_gain += gain
+	return gain
 
 // Called when processing of the advance disease that holds this symptom infects a host and upon each Refresh() of that advance disease.
 /datum/symptom/proc/Start(datum/disease/advance/A)
