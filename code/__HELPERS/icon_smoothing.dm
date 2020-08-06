@@ -2,7 +2,7 @@
 //generic (by snowflake) tile smoothing code; smooth your icons with this!
 /*
 	Each tile is divided in 4 corners, each corner has an appearance associated to it; the tile is then overlayed by these 4 appearances
-	To use this, just set your atom's 'smooth' var to 1. If your atom can be moved/unanchored, set its 'can_be_unanchored' var to 1.
+	To use this, just set your atom's 'smoothing_flags' var to 1. If your atom can be moved/unanchored, set its 'can_be_unanchored' var to 1.
 	If you don't want your atom's icon to smooth with anything but atoms of the same type, set the list 'canSmoothWith' to null;
 	Otherwise, put all types you want the atom icon to smooth with in 'canSmoothWith' INCLUDING THE TYPE OF THE ATOM ITSELF.
 
@@ -10,7 +10,7 @@
 
 	DIAGONAL SMOOTHING INSTRUCTIONS
 	To make your atom smooth diagonally you need all the proper icon states (see 'smooth_wall.dmi' for a template) and
-	to add the 'SMOOTH_DIAGONAL' flag to the atom's smooth var (in addition to either SMOOTH_TRUE or SMOOTH_MORE).
+	to add the 'SMOOTH_DIAGONAL' flag to the atom's smoothing_flags var (in addition to either SMOOTH_TRUE or SMOOTH_MORE).
 
 	For turfs, what appears under the diagonal corners depends on the turf that was in the same position previously: if you make a wall on
 	a plating floor, you will see plating under the diagonal wall corner, if it was space, you will see space.
@@ -33,10 +33,9 @@
 #define N_SOUTHEAST	(1<<6)
 #define N_SOUTHWEST	(1<<10)
 
-#define SMOOTH_FALSE	0				//not smooth
 #define SMOOTH_TRUE		(1<<0)	//smooths with exact specified types or just itself
 #define SMOOTH_MORE		(1<<1)	//smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
-#define SMOOTH_DIAGONAL	(1<<2)	//if atom should smooth diagonally, this should be present in 'smooth' var
+#define SMOOTH_DIAGONAL	(1<<2)	//if atom should smooth diagonally, this should be present in 'smoothing_flags' var
 #define SMOOTH_BORDER	(1<<3)	//atom will smooth with the borders of the map
 #define SMOOTH_QUEUED	(1<<4)	//atom is currently queued to smooth.
 
@@ -45,14 +44,11 @@
 #define DEFAULT_UNDERLAY_ICON 			'icons/turf/floors.dmi'
 #define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
 
-/atom/var/smooth = SMOOTH_FALSE
-/atom/var/top_left_corner
-/atom/var/top_right_corner
-/atom/var/bottom_left_corner
-/atom/var/bottom_right_corner
-/atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-/atom/movable/var/can_be_unanchored = FALSE
-/turf/var/list/fixed_underlay = null
+
+#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags) {SSicon_smooth.add_to_queue(thing_to_queue)}
+
+#define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/neighbor in orange(1, thing_to_queue)) {var/atom/atom_neighbor = neighbor; QUEUE_SMOOTH(atom_neighbor)}
+
 
 /proc/calculate_adjacencies(atom/A)
 	if(!A.loc)
@@ -69,7 +65,7 @@
 	for(var/direction in GLOB.cardinals)
 		AM = find_type_in_direction(A, direction)
 		if(AM == NULLTURF_BORDER)
-			if((A.smooth & SMOOTH_BORDER))
+			if((A.smoothing_flags & SMOOTH_BORDER))
 				adjacencies |= 1 << direction
 		else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 			adjacencies |= 1 << direction
@@ -78,14 +74,14 @@
 		if(adjacencies & N_WEST)
 			AM = find_type_in_direction(A, NORTHWEST)
 			if(AM == NULLTURF_BORDER)
-				if((A.smooth & SMOOTH_BORDER))
+				if((A.smoothing_flags & SMOOTH_BORDER))
 					adjacencies |= N_NORTHWEST
 			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_NORTHWEST
 		if(adjacencies & N_EAST)
 			AM = find_type_in_direction(A, NORTHEAST)
 			if(AM == NULLTURF_BORDER)
-				if((A.smooth & SMOOTH_BORDER))
+				if((A.smoothing_flags & SMOOTH_BORDER))
 					adjacencies |= N_NORTHEAST
 			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_NORTHEAST
@@ -94,33 +90,33 @@
 		if(adjacencies & N_WEST)
 			AM = find_type_in_direction(A, SOUTHWEST)
 			if(AM == NULLTURF_BORDER)
-				if((A.smooth & SMOOTH_BORDER))
+				if((A.smoothing_flags & SMOOTH_BORDER))
 					adjacencies |= N_SOUTHWEST
 			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_SOUTHWEST
 		if(adjacencies & N_EAST)
 			AM = find_type_in_direction(A, SOUTHEAST)
 			if(AM == NULLTURF_BORDER)
-				if((A.smooth & SMOOTH_BORDER))
+				if((A.smoothing_flags & SMOOTH_BORDER))
 					adjacencies |= N_SOUTHEAST
 			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 				adjacencies |= N_SOUTHEAST
 
 	return adjacencies
 
-//do not use, use queue_smooth(atom)
+//do not use, use QUEUE_SMOOTH(atom)
 /proc/smooth_icon(atom/A)
-	if(!A || !A.smooth)
+	if(!A || !A.smoothing_flags)
 		return
-	A.smooth &= ~SMOOTH_QUEUED
+	A.smoothing_flags &= ~SMOOTH_QUEUED
 	if (!A.z)
 		return
 	if(QDELETED(A))
 		return
-	if(A.smooth & (SMOOTH_TRUE | SMOOTH_MORE))
+	if(A.smoothing_flags & (SMOOTH_TRUE | SMOOTH_MORE))
 		var/adjacencies = calculate_adjacencies(A)
 
-		if(A.smooth & SMOOTH_DIAGONAL)
+		if(A.smoothing_flags & SMOOTH_DIAGONAL)
 			A.diagonal_smooth(adjacencies)
 		else
 			cardinal_smooth(A, adjacencies)
@@ -269,14 +265,12 @@
 
 	var/area/target_area = get_area(target_turf)
 	var/area/source_area = get_area(source)
-	if(source_area.canSmoothWithAreas && !is_type_in_typecache(target_area, source_area.canSmoothWithAreas))
-		return null
-	if(target_area.canSmoothWithAreas && !is_type_in_typecache(source_area, target_area.canSmoothWithAreas))
+	if((source_area.area_limited_icon_smoothing || target_area.area_limited_icon_smoothing) && !istype(source_area, target_area.type) && !istype(target_area, source_area.type))
 		return null
 
 	if(source.canSmoothWith)
 		var/atom/A
-		if(source.smooth & SMOOTH_MORE)
+		if(source.smoothing_flags & SMOOTH_MORE)
 			for(var/a_type in source.canSmoothWith)
 				if( istype(target_turf, a_type) )
 					return target_turf
@@ -303,18 +297,18 @@
 	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
 	for(var/V in away_turfs)
 		var/turf/T = V
-		if(T.smooth)
+		if(T.smoothing_flags)
 			if(now)
 				smooth_icon(T)
 			else
-				queue_smooth(T)
+				QUEUE_SMOOTH(T)
 		for(var/R in T)
 			var/atom/A = R
-			if(A.smooth)
+			if(A.smoothing_flags)
 				if(now)
 					smooth_icon(A)
 				else
-					queue_smooth(A)
+					QUEUE_SMOOTH(A)
 
 /atom/proc/clear_smooth_overlays()
 	cut_overlay(top_left_corner)
@@ -376,27 +370,11 @@
 		else
 			return 0
 
-//SSicon_smooth
-/proc/queue_smooth_neighbors(atom/A)
-	for(var/V in orange(1,A))
-		var/atom/T = V
-		if(T.smooth)
-			queue_smooth(T)
-
-//SSicon_smooth
-/proc/queue_smooth(atom/A)
-	if(!A.smooth || A.smooth & SMOOTH_QUEUED)
-		return
-
-	SSicon_smooth.smooth_queue += A
-	SSicon_smooth.can_fire = 1
-	A.smooth |= SMOOTH_QUEUED
-
 
 //Example smooth wall
 /turf/closed/wall/smooth
 	name = "smooth wall"
 	icon = 'icons/turf/smooth_wall.dmi'
 	icon_state = "smooth"
-	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
+	smoothing_flags = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
 	canSmoothWith = null

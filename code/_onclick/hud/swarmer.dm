@@ -1,37 +1,35 @@
-
-
 /obj/screen/swarmer
 	icon = 'icons/mob/swarmer.dmi'
 
 /obj/screen/swarmer/fabricate_trap
 	icon_state = "ui_trap"
-	name = "Create trap (Costs 5 Resources)"
-	desc = "Creates a trap that will nonlethally shock any non-swarmer that attempts to cross it. (Costs 5 resources)"
+	name = "Create trap (Costs 4 Resources)"
+	desc = "Creates a trap that will nonlethally shock any non-swarmer that attempts to cross it. (Costs 4 resources)"
 
 /obj/screen/swarmer/fabricate_trap/Click()
 	if(isswarmer(usr))
 		var/mob/living/simple_animal/hostile/swarmer/S = usr
-		S.CreateTrap()
+		S.create_trap()
 
 /obj/screen/swarmer/barricade
 	icon_state = "ui_barricade"
-	name = "Create barricade (Costs 5 Resources)"
-	desc = "Creates a destructible barricade that will stop any non swarmer from passing it. Also allows disabler beams to pass through. (Costs 5 resources)"
+	name = "Create barricade (Costs 4 Resources)"
+	desc = "Creates a destructible barricade that will stop any non swarmer from passing it. Also allows disabler beams to pass through. (Costs 4 resources)"
 
 /obj/screen/swarmer/barricade/Click()
 	if(isswarmer(usr))
 		var/mob/living/simple_animal/hostile/swarmer/S = usr
-		S.CreateBarricade()
+		S.create_barricade()
 
 /obj/screen/swarmer/replicate
 	icon_state = "ui_replicate"
-	name = "Replicate (Costs 50 Resources)"
-	desc = "Creates another of our kind."
+	name = "Replicate (Costs 20 Resources)"
+	desc = "Creates a drone."
 
 /obj/screen/swarmer/replicate/Click()
 	if(isswarmer(usr))
 		var/mob/living/simple_animal/hostile/swarmer/S = usr
-		S.CreateSwarmer()
+		S.create_swarmer()
 
 /obj/screen/swarmer/repair_self
 	icon_state = "ui_self_repair"
@@ -41,7 +39,7 @@
 /obj/screen/swarmer/repair_self/Click()
 	if(isswarmer(usr))
 		var/mob/living/simple_animal/hostile/swarmer/S = usr
-		S.RepairSelf()
+		S.repair_self()
 
 /obj/screen/swarmer/toggle_light
 	icon_state = "ui_light"
@@ -51,7 +49,7 @@
 /obj/screen/swarmer/toggle_light/Click()
 	if(isswarmer(usr))
 		var/mob/living/simple_animal/hostile/swarmer/S = usr
-		S.ToggleLight()
+		S.toggle_light()
 
 /obj/screen/swarmer/contact_swarmers
 	icon_state = "ui_contact_swarmers"
@@ -61,7 +59,7 @@
 /obj/screen/swarmer/contact_swarmers/Click()
 	if(isswarmer(usr))
 		var/mob/living/simple_animal/hostile/swarmer/S = usr
-		S.ContactSwarmers()
+		S.contact_swarmers()
 
 /datum/hud/swarmer/New(mob/owner)
 	..()

@@ -456,8 +456,16 @@
 /datum/holiday/moth
 	name = "Moth Week"
 
-/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July
-	return mm == JULY && (ww == 4 || (ww == 5 && ddd == SUNDAY))
+/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July, including the saturday and sunday before. See http://nationalmothweek.org/ for precise tracking.
+	if(mm == JULY)
+		var/week
+		if(first_day_of_month() >= 5)	//Friday or later start of the month means week 5 is a full week.
+			week = 5
+		else
+			week = 4
+
+		return (ww == week-1 && (ddd == SATURDAY || ddd == SUNDAY)) || ww == week
+
 
 /datum/holiday/moth/getStationPrefix()
 	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
@@ -587,7 +595,7 @@
 	GLOB.maintenance_loot += list(
 		list(
 			/obj/item/reagent_containers/food/snacks/egg/loaded = 15,
-			/obj/item/storage/bag/easterbasket = 15
+			/obj/item/storage/basket/easter = 15
 		) = maint_holiday_weight,
 	)
 

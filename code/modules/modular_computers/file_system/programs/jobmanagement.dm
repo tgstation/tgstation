@@ -7,8 +7,6 @@
 	requires_ntnet = 0
 	size = 4
 	tgui_id = "NtosJobManager"
-	ui_x = 400
-	ui_y = 620
 
 	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for

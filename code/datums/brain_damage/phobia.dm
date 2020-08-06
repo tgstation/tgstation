@@ -118,7 +118,7 @@
 			owner.blind_eyes(10)
 		if(4)
 			owner.dizziness += 10
-			owner.confused += 10
+			owner.add_confusion(10)
 			owner.Jitter(10)
 			owner.stuttering += 10
 
@@ -194,4 +194,8 @@
 
 /datum/brain_trauma/mild/phobia/conspiracies
 	phobia_type = "conspiracies"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/insects
+	phobia_type = "insects"
 	random_gain = FALSE

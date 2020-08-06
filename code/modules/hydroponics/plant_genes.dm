@@ -155,9 +155,23 @@
 	if(!..())
 		return FALSE
 	for(var/datum/plant_gene/reagent/R in S.genes)
-		if(R.reagent_id == reagent_id)
+		if(R.reagent_id == reagent_id && R.rate <= rate)
 			return FALSE
 	return TRUE
+
+/**
+  * Intends to compare a reagent gene with a set of seeds, and if the seeds contain the same gene, with more production rate, upgrades the rate to the highest of the two.
+  *
+  * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
+  */
+
+/datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/seed)
+	for(var/datum/plant_gene/reagent/reagent in seed.genes)
+		if(reagent.reagent_id != reagent_id || reagent.rate <= rate)
+			continue
+		rate = reagent.rate
+		return TRUE
+	return FALSE
 
 /datum/plant_gene/reagent/polypyr
 	name = "Polypyrylium Oligomers"
@@ -219,6 +233,11 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
+
+/datum/plant_gene/trait/squash/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/sticky))
+		return FALSE
+	. = ..()
 
 /datum/plant_gene/trait/squash/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	// Squash the plant on slip.
@@ -437,9 +456,7 @@
 		var/mob/living/L = target
 		if(L.reagents && L.can_inject(null, 0))
 			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
-			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
-			G.reagents.expose(L, INJECT, fraction)
-			G.reagents.trans_to(L, injecting_amount)
+			G.reagents.trans_to(L, injecting_amount, method = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
 
@@ -513,6 +530,23 @@
 	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
 	googly.appearance_flags = RESET_COLOR
 	G.add_overlay(googly)
+
+/datum/plant_gene/trait/sticky
+	name = "Prickly Adhesion"
+
+/datum/plant_gene/trait/sticky/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+	. = ..()
+	if(G.seed.get_gene(/datum/plant_gene/trait/stinging))
+		G.embedding = EMBED_POINTY
+	else
+		G.embedding = EMBED_HARMLESS
+	G.updateEmbedding()
+	G.throwforce = (G.seed.potency/20)
+
+/datum/plant_gene/trait/sticky/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/squash))
+		return FALSE
+	. = ..()
 
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"

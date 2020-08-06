@@ -323,7 +323,7 @@
 	if(owner.can_hear())
 		owner.dizziness = max(0, owner.dizziness - 2)
 		owner.jitteriness = max(0, owner.jitteriness - 2)
-		owner.confused = max(0, owner.confused - 1)
+		owner.set_confusion(max(0, owner.get_confusion() - 1))
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 
 /obj/screen/alert/status_effect/regenerative_core

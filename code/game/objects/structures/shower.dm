@@ -98,7 +98,9 @@
 		wash_atom(AM)
 
 /obj/machinery/shower/proc/wash_atom(atom/A)
-	A.washed(src)
+	A.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
+	A.wash(CLEAN_WASH)
+	SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	reagents.expose(A, TOUCH, reaction_volume)
 
 	if(isliving(A))
@@ -107,8 +109,10 @@
 /obj/machinery/shower/process()
 	if(on)
 		wash_atom(loc)
-		for(var/AM in loc)
-			wash_atom(AM)
+		for(var/am in loc)
+			var/atom/movable/movable_content = am
+			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
+				wash_atom(movable_content)
 	else
 		return PROCESS_KILL
 

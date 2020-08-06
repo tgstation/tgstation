@@ -6,7 +6,6 @@
 
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
-import { IS_IE8 } from '../byond';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
 import { refocusLayout } from '../layouts';
 import { createLogger } from '../logging';
@@ -61,7 +60,7 @@ export const Button = props => {
         className,
       ])}
       tabIndex={!disabled && '0'}
-      unselectable={IS_IE8}
+      unselectable={Byond.IS_LTE_IE8}
       onclick={e => {
         refocusLayout();
         if (!disabled && onClick) {
@@ -87,7 +86,10 @@ export const Button = props => {
       }}
       {...rest}>
       {icon && (
-        <Icon name={icon} rotation={iconRotation} spin={iconSpin} />
+        <Icon
+          name={icon}
+          rotation={iconRotation}
+          spin={iconSpin} />
       )}
       {content}
       {children}

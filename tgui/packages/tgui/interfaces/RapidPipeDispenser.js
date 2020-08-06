@@ -72,7 +72,10 @@ export const RapidPipeDispenser = (props, context) => {
     .find(category => category.cat_name === categoryName)
     || categories[0];
   return (
-    <Window resizable>
+    <Window
+      width={425}
+      height={515}
+      resizable>
       <Window.Content scrollable>
         <Section>
           <LabeledList>
