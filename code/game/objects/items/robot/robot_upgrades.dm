@@ -267,7 +267,7 @@
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		LAZYADD(R.weather_immunities,"lava")
+		LAZYADD(R.weather_immunities, "lava")
 
 /obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
