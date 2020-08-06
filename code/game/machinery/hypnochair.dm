@@ -148,17 +148,17 @@
 		var/time_diff = world.time - start_time
 		switch(time_diff)
 			if(0 to 100)
-				victim.confused += 10
+				victim.add_confusion(10)
 				victim.Dizzy(100)
 				victim.blur_eyes(5)
 			if(101 to 200)
-				victim.confused += 15
+				victim.add_confusion(15)
 				victim.Dizzy(200)
 				victim.blur_eyes(10)
 				if(prob(25))
 					victim.apply_status_effect(/datum/status_effect/trance, rand(50,150), FALSE)
 			if(201 to INFINITY)
-				victim.confused += 20
+				victim.add_confusion(20)
 				victim.Dizzy(300)
 				victim.blur_eyes(15)
 				if(prob(65))

@@ -37,7 +37,7 @@
 		M.dizziness = max(0, M.dizziness - 2)
 		M.drowsyness = max(0, M.drowsyness - 2)
 		M.slurring = max(0, M.slurring - 2)
-		M.confused = max(0, M.confused - 2)
+		M.set_confusion(max(0, M.get_confusion() - 2))
 		if(purge_alcohol)
 			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
 			if(ishuman(M))
