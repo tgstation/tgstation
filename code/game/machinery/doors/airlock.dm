@@ -1020,12 +1020,18 @@
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weldingtool/W, mob/user)
 	return !operating && density
 
+/**
+  * Used when attempting to remove a seal from an airlock
+  *
+  * Called when attacking an airlock with an empty hand, returns TRUE (there was a seal and we removed it, or failed to remove it)
+  * or FALSE (there was no seal)
+  */
 /obj/machinery/door/airlock/try_remove_seal(mob/living/user)
 	if(seal)
 		var/obj/item/door_seal/D = seal
 		if(!ishuman(user))
 			to_chat(user, text("<span class='warning'>You don't have the dexterity to remove the seal!</span>"))
-			return FALSE
+			return TRUE
 		user.visible_message("<span class='notice'>[user] begins removing the seal from [src].</span>", "<span class='notice'>You begin removing [src]'s pneumatic seal.</span>")
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 		if(do_after(user, D.unseal_time, target = src) && seal)
