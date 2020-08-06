@@ -80,7 +80,7 @@
 				. = TRUE
 
 /obj/item/assembly/voice/proc/send_pulse()
-	say("Processing signal...")
+	visible_message("clicks", visible_message_flags = EMOTE_MESSAGE)
 	playsound(src, 'licensed_sound/Sampling-Plus-1.0/whirthunk.ogg', 30)
 	addtimer(CALLBACK(src, .proc/pulse, 0), 20)
 
