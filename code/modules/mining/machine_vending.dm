@@ -165,12 +165,26 @@
 		return
 	return ..()
 
+/**
+  * RedeemVoucher: Allows user to redeem a mining voucher for one piece of mining equipment from a menu
+  *
+  * Arguments:
+  * * redeemer The mob redeeming an equipment
+  * * voucher The mining voucher that is being used to redeem a piece of equipment
+  */
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
-
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in sortList(items)
-	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
+	var/items = list(
+		"Crusher Kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "crusher"),
+		"Extraction and Rescue Kit" = image(icon = 'icons/obj/fulton.dmi', icon_state = "extraction_pack"),
+		"Resonator Kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
+		"Survival Capsule and Explorer's Webbing" = image(icon = 'icons/obj/clothing/belts.dmi', icon_state = "explorer1"),
+		"Minebot Kit" = image(icon = 'icons/mob/aibots.dmi', icon_state = "mining_drone"),
+		"Mining Conscription Kit" = image(icon = 'icons/obj/storage.dmi', icon_state = "duffel")
+		)
+	var/selection = show_radial_menu(redeemer, src, items, custom_check = CALLBACK(src, .proc/check_menu, voucher, redeemer), radius = 38, require_near = TRUE, tooltips = TRUE)
+	if(!selection)
 		return
+
 	var/drop_location = drop_location()
 	switch(selection)
 		if("Survival Capsule and Explorer's Webbing")
@@ -192,9 +206,29 @@
 			new /obj/item/kinetic_crusher(drop_location)
 		if("Mining Conscription Kit")
 			new /obj/item/storage/backpack/duffelbag/mining_conscript(drop_location)
+		else
+			return
 
 	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
 	qdel(voucher)
+
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * redeemer The mob interacting with a menu
+  * * voucher The mining voucher that is being used to redeem an equipment
+  */
+/obj/machinery/mineral/equipment_vendor/proc/check_menu(obj/item/mining_voucher/voucher, mob/living/redeemer)
+	if(!istype(redeemer))
+		return FALSE
+	if(redeemer.incapacitated())
+		return FALSE
+	if(QDELETED(voucher))
+		return FALSE
+	if(!redeemer.is_holding(voucher))
+		return FALSE
+	return TRUE
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
