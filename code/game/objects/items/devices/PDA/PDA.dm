@@ -925,7 +925,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		sig_list += list(COMSIG_ATOM_ATTACK_HAND)
 	target.AddComponent(/datum/component/sound_player, amount = (rand(15,20)), signal_or_sig_list = sig_list)
 	installed_cartridge.charges --
-	return ..()
+	return TRUE
 
 
 // access to status display signals
