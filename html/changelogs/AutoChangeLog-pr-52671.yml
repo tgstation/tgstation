@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Observers can examine immovable rods to see how many mobs/sentient mobs/sentient carbons it has penetrated"
+  - tweak: "Immovable rods can now cause piercing wounds to the chest"
