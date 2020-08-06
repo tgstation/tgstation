@@ -128,7 +128,7 @@
 	if(starting_skillchip)
 		insert_skillchip(new starting_skillchip(src))
 
-/obj/item/autosurgeon/skillchip/proc/insert_skillchip(var/obj/item/skillchip/skillchip)
+/obj/item/autosurgeon/skillchip/proc/insert_skillchip(obj/item/skillchip/skillchip)
 	if(!istype(skillchip))
 		return
 	stored_skillchip = skillchip

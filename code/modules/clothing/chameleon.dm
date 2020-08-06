@@ -745,7 +745,7 @@
 		target.desc = initial(picked_item.skill_description)
 		target.icon_state = initial(picked_item.skill_icon)
 
-/datum/action/item_action/chameleon/change/skillchip/update_look(mob/user, var/picked_item)
+/datum/action/item_action/chameleon/change/skillchip/update_look(mob/user, picked_item)
 	if(!COOLDOWN_FINISHED(src, usable_cooldown))
 		to_chat(user, "<span class='notice'>Chameleon skillchip is still recharging for another [COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1] seconds!</span>")
 		return ..()
