@@ -1036,6 +1036,7 @@
 			modify_max_integrity(max_integrity / AIRLOCK_SEAL_MULTIPLIER)
 			update_icon()
 			return TRUE
+	return FALSE
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user, forced = FALSE)
 	if(I)
