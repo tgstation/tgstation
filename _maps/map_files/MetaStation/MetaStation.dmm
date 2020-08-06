@@ -16249,6 +16249,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/light_switch{
+	pixel_x = -28
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "aLE" = (
@@ -17415,9 +17418,6 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aOr" = (
-/obj/machinery/light_switch{
-	pixel_y = -28
-	},
 /obj/machinery/vending/wardrobe/law_wardrobe,
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -18373,6 +18373,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/structure/sign/departments/lawyer{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQP" = (

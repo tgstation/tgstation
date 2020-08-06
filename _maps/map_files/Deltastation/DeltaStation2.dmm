@@ -57274,11 +57274,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/machinery/button/door{
-	id = "lawyerprivacy";
-	name = "Lawyer's Privacy Control";
-	pixel_y = 24
-	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "cdh" = (
@@ -57298,6 +57293,12 @@
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/button/door{
+	id = "lawyerprivacy";
+	name = "Lawyer's Privacy Control";
+	pixel_x = 38;
+	pixel_y = 25
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "cdk" = (
@@ -112588,6 +112589,19 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
+"joU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/departments/lawyer{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "jpo" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -165522,7 +165536,7 @@ bRk
 bSZ
 bVd
 bXn
-bZs
+joU
 cbp
 cdg
 ceW
