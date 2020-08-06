@@ -154,7 +154,7 @@
 				to_chat(usr, "<span class='warning'>You already have an incomplete civilian bounty, try again in [curr_time] minutes to replace it!</span>")
 				return FALSE
 			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types) //It's a good scene from War Dogs (2016).
-			if(SSeconomy.inflation_value() > 1
+			if(SSeconomy.inflation_value() > 1)
 				if(istype(crumbs, /datum/bounty/item))
 					var/datum/bounty/item/items = crumbs
 					items.required_count = max(round((items.required_count)/(SSeconomy.inflation_value()*2)), 1)
