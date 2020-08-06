@@ -587,7 +587,6 @@
 		/obj/item/stock_parts/micro_laser = 1
 	)
 
-
 //Medical
 
 /obj/item/circuitboard/machine/chem_dispenser
