@@ -40,7 +40,7 @@
 	apply_moodlet(M, impressiveness *(O.obj_integrity/O.max_integrity))
 
 /datum/component/art/proc/on_attack_hand(datum/source, mob/M)
-	SIGNAL_HANDLER
+	BLOCKING_SIGNAL_HANDLER
 
 	to_chat(M, "<span class='notice'>You start examining [parent]...</span>")
 	if(!do_after(M, 20, target = parent))

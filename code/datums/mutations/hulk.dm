@@ -27,7 +27,7 @@
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity)
-	SIGNAL_HANDLER
+	BLOCKING_SIGNAL_HANDLER
 
 	if(!proximity)
 		return

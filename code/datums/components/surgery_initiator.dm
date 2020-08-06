@@ -31,7 +31,7 @@
 	  *
 	  */
 /datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
-	SIGNAL_HANDLER
+	BLOCKING_SIGNAL_HANDLER
 
 	if(!isliving(target))
 		return

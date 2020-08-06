@@ -41,7 +41,7 @@
   * We do the prob() at the beginning to A. add some tension for /when/ it will strike, and B. (more importantly) ameliorate the fact that we're checking up to 5 turfs's contents each time
   */
 /datum/component/omen/proc/check_accident(atom/movable/our_guy)
-	SIGNAL_HANDLER
+	BLOCKING_SIGNAL_HANDLER
 
 	if(!prob(15))
 		return

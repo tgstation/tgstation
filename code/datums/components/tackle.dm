@@ -144,7 +144,7 @@
  * Finally, we return a bitflag to [COMSIG_MOVABLE_IMPACT] that forces the hitpush to false so that we don't knock them away.
 */
 /datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
-	SIGNAL_HANDLER
+	BLOCKING_SIGNAL_HANDLER
 
 	if(!tackling || !tackle)
 		return
