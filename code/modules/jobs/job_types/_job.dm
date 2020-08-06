@@ -271,7 +271,7 @@
 			qdel(skill_chip)
 			return
 
-		var/activate_msg = skillchip.try_activate_skillchip(TRUE, TRUE)
+		var/activate_msg = skill_chip.try_activate_skillchip(TRUE, TRUE)
 		if(activate_msg)
 			CRASH("Failed to activate [H]'s [skill_chip], on job [src]. Failure message: [activate_msg]")
 
