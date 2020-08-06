@@ -42,7 +42,6 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "GhostPoolProtection")
-		//ui.set_autoupdate(TRUE)
 		ui.open()
 
 /datum/ghost_pool_menu/ui_data(mob/user)
@@ -74,4 +73,10 @@
 			new_role_flags = NONE
 		if("apply_settings")
 			to_chat(usr, "Settings Applied!")
+			var/msg = "modified"
+			if(new_role_flags == ALL)
+				msg = "enabled all of"
+			if(new_role_flags == NONE)
+				msg = "disabled all of"
+			message_admins("[key_name_admin(holder)] has [msg] this round's allowed ghost roles.")
 			GLOB.ghost_role_flags = new_role_flags

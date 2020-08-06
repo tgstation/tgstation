@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Fragment, Section, NoticeBox } from '../components';
+import { Button, Flex, Fragment, Section, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 export const GhostPoolProtection = (props, context) => {
@@ -15,19 +15,19 @@ export const GhostPoolProtection = (props, context) => {
     <Window
       title="Ghost Pool Protection"
       width={400}
-      height={250}>
+      height={270}>
       <Window.Content>
         <Flex grow={1} height="100%">
           <Section
             title="Options"
             buttons={
               <Fragment>
-                <Button.Confirm
+                <Button
                   color="good"
                   icon="plus-circle"
                   content="Enable Everything"
                   onClick={() => act("all_roles")} />
-                <Button.Confirm
+                <Button
                   color="bad"
                   icon="minus-circle"
                   content="Disable Everything"
