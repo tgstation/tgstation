@@ -38,6 +38,8 @@
 	var/absorption_capacity
 	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in ticks is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
 	var/absorption_rate
+	/// Amount of matter for RCD
+	var/matter_amount = 0
 
 
 /obj/item/stack/on_grind()
@@ -474,9 +476,6 @@
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
 	if(istype(M) && M.dirty < 100)
 		M.dirty += amount
-
-/obj/item/stack/proc/get_matter_amount()
-	return 0
 
 /*
  * Recipe datum

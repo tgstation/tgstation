@@ -115,7 +115,7 @@ RLD
 	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
-	var/value = S.get_matter_amount()
+	var/value = S.matter_amount
 	if(value <= 0)
 		to_chat(user, "<span class='notice'>You can't insert [S.name] into [src]!</span>")
 		return FALSE
