@@ -211,6 +211,6 @@
 		victim.exit_blood_effect()
 		victim.visible_message("<span class='warning'>[victim] falls out of the air, covered in blood, looking highly confused. And dead.</span>")
 
-/mob/living/simple_animal/hostile/imp/slaughter/demon_in_an_unaccessible_part_behind_unbreakable_windows_and_walls_of_a_disabled_away_mission_with_2_vars_changed
+/mob/living/simple_animal/hostile/imp/slaughter/engine_demon
 	name = "engine demon"
 	faction = list("hell", "neutral")
