@@ -722,9 +722,12 @@
 	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
 		if(iscyborg(L))
 			visible_message("<span class='danger'>[src] bumps into [L]!</span>")
-		else if(L.Knockdown(8 SECONDS))
-			log_combat(src, L, "knocked down")
-			visible_message("<span class='danger'>[src] knocks over [L]!</span>")
+		else
+			L.Knockdown(4 SECONDS)
+			src.turn_off()
+			addtimer(CALLBACK(src, .proc/turn_on), 80)
+			log_combat(src, L, "collided with")
+			visible_message("<span class='danger'>[src] collides with [L]!</span>")
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
