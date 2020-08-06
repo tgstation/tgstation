@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "lightbulb removing skillchip"
