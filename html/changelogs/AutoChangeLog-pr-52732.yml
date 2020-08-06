@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - balance: "Supermatter anomalies no longer drop usable cores."
