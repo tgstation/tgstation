@@ -1519,7 +1519,6 @@
 #include "code\modules\antagonists\nukeop\clownop.dm"
 #include "code\modules\antagonists\nukeop\nukeop.dm"
 #include "code\modules\antagonists\nukeop\equipment\borgchameleon.dm"
-#include "code\modules\antagonists\nukeop\equipment\nuclear_challenge.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclearbomb.dm"
 #include "code\modules\antagonists\nukeop\equipment\pinpointer.dm"
 #include "code\modules\antagonists\official\official.dm"

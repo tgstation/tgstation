@@ -55,10 +55,8 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/Initialize()
 	. = ..()
-	GLOB.jam_on_wardec += src
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/Destroy()
-	GLOB.jam_on_wardec -= src
 	return ..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/trade1
