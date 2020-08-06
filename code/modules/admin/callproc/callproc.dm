@@ -99,7 +99,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		CRASH("WrapAdminProcCall with no ckey: [target] [procname] [english_list(arguments)]")
 
 	if(current_caller && current_caller != ckey)
-		to_chat(usr, "<span class='adminnotice'>Another set of admin called procs are still running. Try again later</span>", confidential = TRUE)
+		to_chat(usr, "<span class='adminnotice'>Another set of admin called procs are still running. Try again later.</span>", confidential = TRUE)
 		return
 
 	GLOB.LastAdminCalledProc = procname

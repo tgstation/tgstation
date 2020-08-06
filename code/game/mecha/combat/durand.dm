@@ -184,16 +184,20 @@ the shield is disabled by means other than the action button (like running out o
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
 		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE	, l_power = 5, l_color = "#00FFFF")
-		sleep(3)
-		icon_state = "shield"
+		addtimer(CALLBACK(src, .proc/shield_icon_enable), 3)
 	else
 		flick("shield_drop", src)
 		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
-		sleep(5)
-		set_light(0)
-		icon_state = "shield_null"
-		invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
+		addtimer(CALLBACK(src, .proc/shield_icon_reset), 5)
 	switching = FALSE
+
+/obj/durand_shield/proc/shield_icon_enable()
+	icon_state = "shield"
+
+/obj/durand_shield/proc/shield_icon_reset()
+	set_light(0)
+	icon_state = "shield_null"
+	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 
 /obj/durand_shield/take_damage()
 	if(!chassis)
