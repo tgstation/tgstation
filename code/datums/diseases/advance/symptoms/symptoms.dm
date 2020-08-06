@@ -37,7 +37,7 @@
 /datum/symptom/New()
 
 	randomize_stats()
-	var/list/S = SSdisease.list_symptoms
+	var/list/S = SSdisease.list_symptoms_type
 	for(var/i = 1; i <= S.len; i++)
 		if(type == S[i])
 			id = "[i]"

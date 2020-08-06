@@ -182,7 +182,7 @@
 
 	// Generate symptoms. By default, we only choose non-deadly symptoms.
 	var/list/possible_symptoms = list()
-	for(var/symp in SSdisease.list_symptoms)
+	for(var/datum/symptom/symp in SSdisease.symp_list)
 		var/datum/symptom/S = symp
 		if(S.naturally_occuring && S.level >= level_min && S.level <= level_max)
 			if(!HasSymptom(S))
@@ -430,8 +430,9 @@
 		if(preserve.len)
 			R.data["viruses"] = preserve
 
+/
 /proc/AdminCreateVirus(client/user)
-
+/*
 	if(!user)
 		return
 
@@ -494,7 +495,7 @@
 
 		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()] in [ADMIN_LOOKUPFLW(H)]")
 		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()] in [H]!")
-
+*/
 
 /datum/disease/advance/proc/totalStageSpeed()
 	return properties["stage_rate"]
