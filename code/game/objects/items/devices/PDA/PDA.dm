@@ -905,27 +905,31 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/pda/pre_attack(obj/target, mob/living/user, params)
-	if(ismachinery(target))
-		var/obj/machinery/target_machine = target
-		if(!target_machine.panel_open && !istype(target, /obj/machinery/computer))
-			return ..()
-		if(!istype(cartridge, /obj/item/cartridge/virus/clown))
-			return ..()
-		var/obj/item/cartridge/virus/installed_cartridge = cartridge
+	if(!ismachinery(target))
+		return ..()
+	var/obj/machinery/target_machine = target
+	if(!target_machine.panel_open && !istype(target, /obj/machinery/computer))
+		to_chat(world, "this happened 1")
+		return ..()
+	if(!istype(cartridge, /obj/item/cartridge/virus/clown))
+		to_chat(world, "this happened 2")
+		return ..()
+	var/obj/item/cartridge/virus/installed_cartridge = cartridge
 
-		if(installed_cartridge.charges <=0)
-			to_chat(user, "<span class='notice'>Out of charges.</span>")
-			return ..()
-		to_chat(user, "<span class='notice'>You upload the virus to the airlock controller!</span>")
-		var/sig_list
-		if(istype(target,/obj/machinery/door/airlock))
-			sig_list += list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE)
-		else
-			sig_list += list(COMSIG_ATOM_ATTACK_HAND)
-			//TODO : Add more signals for specific cases like panel open, printing, dispensing etc
-		target.AddComponent(/datum/component/sound_player, amount = (rand(15,20)), signal_or_sig_list = sig_list)
-		installed_cartridge.charges --
-		return TRUE
+	if(installed_cartridge.charges <=0)
+		to_chat(user, "<span class='notice'>Out of charges.</span>")
+		return ..()
+	to_chat(user, "<span class='notice'>You upload the virus to the airlock controller!</span>")
+	var/sig_list
+	if(istype(target,/obj/machinery/door/airlock))
+		sig_list += list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE)
+	else
+		sig_list += list(COMSIG_ATOM_ATTACK_HAND)
+		//TODO : Add more signals for specific cases like panel open, printing, dispensing etc
+	target.AddComponent(/datum/component/sound_player, amount = (rand(15,20)), signal_or_sig_list = sig_list)
+	installed_cartridge.charges --
+	to_chat(world, "this happened 3")
+	return ..()
 
 
 // access to status display signals
