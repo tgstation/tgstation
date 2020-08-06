@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Fix skillchip runtime. Fixing this means skillchips as part of jobs will now appropriately activate when the player spawns in with a job."
