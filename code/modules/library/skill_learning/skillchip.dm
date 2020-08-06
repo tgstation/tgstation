@@ -392,8 +392,8 @@
 	skill_name = "Hedgetrimming"
 	skill_description = "Trim hedges and potted plants into marvelous new shapes with any old knife. Not applicable to plastic plants."
 	skill_icon = "spa"
-	implanting_message = "<span class='notice'>Your mind is filled with plant arrangments.</span>"
-	removal_message = "<span class='notice'>You can't remember what a hedge looks like anymore.</span>"
+	activate_message = "<span class='notice'>Your mind is filled with plant arrangments.</span>"
+	deactivate_message = "<span class='notice'>You can't remember what a hedge looks like anymore.</span>"
 
 /obj/item/skillchip/useless_adapter
 	name = "Skillchip adapter"
@@ -423,5 +423,5 @@
 	skill_name = "Lightbulb Removing"
 	skill_description = "Stop failing taking out lightbulbs today, no gloves needed!"
 	skill_icon = "lightbulb"
-	implanting_message = "<span class='notice'>Your feel like your pain receptors are less sensitive to hot objects.</span>"
-	removal_message = "<span class='notice'>You feel like hot objects could stop you again...</span>"
+	activate_message = "<span class='notice'>Your feel like your pain receptors are less sensitive to hot objects.</span>"
+	deactivate_message = "<span class='notice'>You feel like hot objects could stop you again...</span>"
