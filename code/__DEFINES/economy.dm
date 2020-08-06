@@ -10,7 +10,7 @@
 #define PAYCHECK_HARD 100
 #define PAYCHECK_COMMAND 200
 
-#define STATION_TARGET_INCREMENT 150
+#define STATION_TARGET_INCREMENT 200
 
 #define MAX_GRANT_CIV 2500
 #define MAX_GRANT_ENG 3000
@@ -47,9 +47,6 @@
 #define CIV_JOB_MINE 10
 #define CIV_JOB_MED 11
 #define CIV_JOB_GROW 12
-
-//By how much should the station's inflation value be multiplied by when dividing the civilian bounty's reward?
-#define BOUNTY_MULTIPLIER 10
 
 //These defines are to be used to with the payment component, determines which lines will be used during a transaction. If in doubt, go with clinical.
 #define PAYMENT_CLINICAL "clinical"
