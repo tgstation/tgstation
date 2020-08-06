@@ -587,14 +587,6 @@
 		/obj/item/stock_parts/micro_laser = 1
 	)
 
-/obj/item/circuitboard/machine/accounting
-	name = "Account Registration Device (Machine Board)"
-	icon_state = "command"
-	build_path = /obj/item/circuitboard/machine/accounting
-	req_components = list(
-		/obj/item/stock_parts/card_reader = 1,
-		/obj/item/stock_parts/scanning_module = 1
-	)
 
 //Medical
 
