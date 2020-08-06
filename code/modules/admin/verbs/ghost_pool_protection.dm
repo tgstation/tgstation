@@ -23,13 +23,13 @@
 	var/misc = TRUE //oddities like split personality and any animal ones like spiders, xenos
 	*/
 
-/datum/ghost_pool_menu/New(H)//H can either be a client or a mob due to byondcode(tm)
-	if (istype(H,/client))
-		var/client/C = H
-		holder = C //if its a client, assign it to holder
+/datum/ghost_pool_menu/New(user)//user can either be a client or a mob due to byondcode(tm)
+	if (istype(user, /client))
+		var/client/user_client = user
+		holder = user_client //if its a client, assign it to holder
 	else
-		var/mob/M = H
-		holder = M.client //if its a mob, assign the mob's client to holder
+		var/mob/user_mob = user
+		holder = user_mob.client //if its a mob, assign the mob's client to holder
 	new_role_flags = GLOB.ghost_role_flags
 
 /datum/ghost_pool_menu/ui_state(mob/user)
@@ -54,7 +54,8 @@
 	return data
 
 /datum/ghost_pool_menu/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("toggle_events_or_midrounds")
@@ -73,10 +74,13 @@
 			new_role_flags = NONE
 		if("apply_settings")
 			to_chat(usr, "Settings Applied!")
-			var/msg = "modified"
-			if(new_role_flags == ALL)
-				msg = "enabled all of"
-			if(new_role_flags == NONE)
-				msg = "disabled all of"
+			var/msg
+			switch(new_role_flags)
+				if(ALL)
+					msg = "enabled all of"
+				if(NONE)
+					msg = "disabled all of"
+				else
+					msg = "modified"
 			message_admins("[key_name_admin(holder)] has [msg] this round's allowed ghost roles.")
 			GLOB.ghost_role_flags = new_role_flags
