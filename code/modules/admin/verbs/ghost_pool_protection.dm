@@ -42,7 +42,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "GhostPoolProtection")
-		ui.set_autoupdate(TRUE)
+		//ui.set_autoupdate(TRUE)
 		ui.open()
 
 /datum/ghost_pool_menu/ui_data(mob/user)
@@ -50,6 +50,7 @@
 	data["events_or_midrounds"] = (new_role_flags & GHOSTROLE_MIDROUND_EVENT)
 	data["spawners"] = (new_role_flags & GHOSTROLE_SPAWNER)
 	data["station_sentience"] = (new_role_flags & GHOSTROLE_STATION_SENTIENCE)
+	data["silicons"] = (new_role_flags & GHOSTROLE_SILICONS)
 	data["minigames"] = (new_role_flags & GHOSTROLE_MINIGAME)
 	return data
 
@@ -63,6 +64,8 @@
 			new_role_flags ^= GHOSTROLE_SPAWNER
 		if("toggle_station_sentience")
 			new_role_flags ^= GHOSTROLE_STATION_SENTIENCE
+		if("toggle_silicons")
+			new_role_flags ^= GHOSTROLE_SILICONS
 		if("toggle_minigames")
 			new_role_flags ^= GHOSTROLE_MINIGAME
 		if("all_roles")

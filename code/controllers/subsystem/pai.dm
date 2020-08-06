@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(pai)
 	return FALSE
 
 /datum/controller/subsystem/pai/proc/findPAI(obj/item/paicard/p, mob/user)
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
 		to_chat(user, "<span class='warning'>Due to growing incidents of SELF corrupted independent artificial intelligences, freeform personality devices have been temporarily banned in this sector.</span>")
 		return
 	if(!ghost_spam)

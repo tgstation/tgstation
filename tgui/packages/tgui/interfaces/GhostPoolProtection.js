@@ -8,6 +8,7 @@ export const GhostPoolProtection = (props, context) => {
     events_or_midrounds,
     spawners,
     station_sentience,
+    silicons,
     minigames,
   } = data;
   return (
@@ -65,6 +66,15 @@ export const GhostPoolProtection = (props, context) => {
                 icon="user-astronaut"
                 content="Station Created Sentience"
                 onClick={() => act("toggle_station_sentience")} />
+            </Flex.Item>
+            <Flex.Item>
+              <Button
+                fluid
+                textAlign="center"
+                color={silicons ? "good" : "bad"}
+                icon="robot"
+                content="Silicons"
+                onClick={() => act("toggle_silicons")} />
             </Flex.Item>
             <Flex.Item>
               <Button

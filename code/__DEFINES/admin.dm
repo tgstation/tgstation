@@ -151,7 +151,9 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 #define GHOSTROLE_MIDROUND_EVENT	(1<<0)
 //ie ashwalkers, free golems, beach bums
 #define GHOSTROLE_SPAWNER			(1<<1)
-//ie posibrains, mind monkeys, sentience potion, etc.
+//ie mind monkeys, sentience potion
 #define GHOSTROLE_STATION_SENTIENCE	(1<<2)
+//ie pais, posibrains
+#define GHOSTROLE_SILICONS			(1<<3)
 //ie mafia, ctf
-#define GHOSTROLE_MINIGAME			(1<<3)
+#define GHOSTROLE_MINIGAME			(1<<4)
