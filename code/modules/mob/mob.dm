@@ -447,10 +447,15 @@
 		return
 
 	if(is_blind()) //blind people see things differently (through touch)
-		//need to be next to something, awake, on help intent, and have an empty hand
-		if(!in_range(A, src) || incapacitated() || a_intent != INTENT_HELP || LAZYLEN(do_afters) >= get_num_arms() || get_active_held_item())
+		//need to be next to something and awake
+		if(!in_range(A, src) || incapacitated())
 			to_chat(src, "<span class='warning'>Something is there, but you can't see it!</span>")
 			return
+		//also neeed an empty hand, and you can only initiate as many examines as you have hands
+		if(LAZYLEN(do_afters) >= get_num_arms() || get_active_held_item())
+			to_chat(src, "<span class='warning'>You don't have a free hand to examine this!</span>")
+			return
+		//can only queue up one examine on something at a time
 		if(A in do_afters)
 			return
 
@@ -469,8 +474,13 @@
 		if(examine_delay_length > 0 && !do_after(src, examine_delay_length, target = A))
 			to_chat(src, "<span class='notice'>You can't get a good feel for what is there.</span>")
 			return
-		//now we go ahead and touch it with our hand
+
+		//now we touch the thing we're examining
+		/// our current intent, so we can go back to it after touching
+		var/previous_intent = a_intent
+		a_intent = INTENT_HELP
 		A.attack_hand(src)
+		a_intent = previous_intent
 
 	face_atom(A)
 	var/list/result
