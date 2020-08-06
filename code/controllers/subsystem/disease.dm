@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(disease)
 /datum/controller/subsystem/disease/PreInit()
 	if(!diseases)
 		diseases = subtypesof(/datum/disease)
+	for(var/symp in SSdisease.list_symptoms)
 
 /datum/controller/subsystem/disease/Initialize(timeofday)
 	var/list/all_common_diseases = diseases - typesof(/datum/disease/advance)
