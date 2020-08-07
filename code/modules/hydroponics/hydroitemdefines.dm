@@ -104,7 +104,7 @@
 		return
 	var/mob/living/carbon/human/H = AM
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
-		H.confused = max(H.confused, 10)
+		H.set_confusion(max(H.get_confusion(), 10))
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message("<span class='warning'>[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!</span>", \
@@ -127,7 +127,7 @@
 	custom_materials = list(/datum/material/iron = 15000)
 	attack_verb = list("chopped", "tore", "lacerated", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/hatchet/Initialize()
 	. = ..()

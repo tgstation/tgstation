@@ -14,7 +14,7 @@
 	consume_range = 6 //How many tiles out do we eat
 	light_power = 0.7
 	light_range = 15
-	light_color = rgb(255, 0, 0)
+	light_color = COLOR_RED
 	gender = FEMALE
 
 /obj/singularity/narsie/large

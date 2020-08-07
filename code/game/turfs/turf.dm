@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	assemble_baseturfs()
 
 	levelupdate()
-	if(smooth)
+	if(smoothing_flags)
 		QUEUE_SMOOTH(src)
 	visibilityChanged()
 
@@ -135,6 +135,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/multiz_turf_del(turf/T, dir)
 
 /turf/proc/multiz_turf_new(turf/T, dir)
+
+///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi.
+/turf/proc/is_blocked_turf(exclude_mobs)
+	if(density)
+		return TRUE
+	for(var/i in contents)
+		var/atom/thing = i
+		if(thing.density && (!exclude_mobs || !ismob(thing)))
+			return TRUE
+	return FALSE
 
 //zPassIn doesn't necessarily pass an atom!
 //direction is direction of travel of air
@@ -559,3 +569,17 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_turf(src, reagents[R])
+
+/**
+  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
+  */
+/turf/wash(clean_types)
+	. = ..()
+
+	for(var/am in src)
+		if(am == src)
+			continue
+		var/atom/movable/movable_content = am
+		if(!ismopable(movable_content))
+			continue
+		movable_content.wash(clean_types)

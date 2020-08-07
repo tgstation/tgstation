@@ -1,6 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "More roles added for mafia!"
-  - balance: "Should have (outside of adminbus) way more balanced role lists in mafia now."
-  - bugfix: "general improvements to the game have been made as well :)"

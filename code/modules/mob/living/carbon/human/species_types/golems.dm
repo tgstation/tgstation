@@ -223,11 +223,11 @@
 
 /datum/species/golem/titanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.weather_immunities |= "ash"
+	LAZYOR(C.weather_immunities, "ash")
 
 /datum/species/golem/titanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities -= "ash"
+	LAZYREMOVE(C.weather_immunities, "ash")
 
 //Immune to ash storms and lava
 /datum/species/golem/plastitanium
@@ -242,13 +242,13 @@
 
 /datum/species/golem/plastitanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.weather_immunities |= "lava"
-	C.weather_immunities |= "ash"
+	LAZYOR(C.weather_immunities, "lava")
+	LAZYOR(C.weather_immunities, "ash")
 
 /datum/species/golem/plastitanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities -= "ash"
-	C.weather_immunities -= "lava"
+	LAZYREMOVE(C.weather_immunities, "ash")
+	LAZYREMOVE(C.weather_immunities, "lava")
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
@@ -817,7 +817,7 @@
 				M.show_message("<span class='narsiesmall'>GONG!</span>", MSG_AUDIBLE)
 				M.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
 				M.soundbang_act(1, 0, 30, 3)
-				M.confused += 10
+				M.add_confusion(10)
 				M.jitteriness += 4
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
 			if(2 to 3)
@@ -914,7 +914,7 @@
 	special_names = list("Head", "Broth", "Fracture", "Rattler", "Appetit")
 	liked_food = GROSS | MEAT | RAW
 	toxic_food = null
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,HAS_BONE)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
 	sexes = FALSE
@@ -942,8 +942,10 @@
 			H.reagents.remove_reagent(chem.type, chem.volume - 10)
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		H.heal_bodypart_damage(1.5,0, 0)
+		for(var/i in H.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_xadone(2)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
-		return TRUE
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
 		H.adjustStaminaLoss(7.5, 0)
 		H.adjustBruteLoss(0.5, 0)
@@ -952,7 +954,7 @@
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 				if(2)
-					H.emote("me", 1, pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+					H.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
 				if(3)
 					to_chat(H, "<span class='warning'>Your bones hurt!</span>")
 		if(chem.overdosed)
@@ -1032,7 +1034,7 @@
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.weather_immunities |= "snow"
+	LAZYOR(C.weather_immunities, "snow")
 	ball = new
 	ball.charge_counter = 0
 	C.AddSpell(ball)
@@ -1042,7 +1044,7 @@
 
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities -= "snow"
+	LAZYREMOVE(C.weather_immunities, "snow")
 	if(ball)
 		C.RemoveSpell(ball)
 	if(cryo)

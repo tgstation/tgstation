@@ -10,8 +10,10 @@
 	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
+	var/load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	var/list/syringes = list()
-	var/max_syringes = 1
+	var/max_syringes = 1 ///The number of syringes it can store.
+	var/has_syringe_overlay = TRUE ///If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.
 
 /obj/item/gun/syringe/Initialize()
 	. = ..()
@@ -33,6 +35,7 @@
 /obj/item/gun/syringe/process_chamber()
 	if(chambered && !chambered.BB) //we just fired
 		recharge_newshot()
+	update_icon()
 
 /obj/item/gun/syringe/examine(mob/user)
 	. = ..()
@@ -46,13 +49,14 @@
 	var/obj/item/reagent_containers/syringe/S = syringes[syringes.len]
 
 	if(!S)
-		return 0
+		return FALSE
 	user.put_in_hands(S)
 
 	syringes.Remove(S)
 	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")
+	update_icon()
 
-	return 1
+	return TRUE
 
 /obj/item/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
 	if(istype(A, /obj/item/reagent_containers/syringe))
@@ -62,10 +66,19 @@
 			to_chat(user, "<span class='notice'>You load [A] into \the [src].</span>")
 			syringes += A
 			recharge_newshot()
+			update_icon()
+			playsound(loc, load_sound, 40)
 			return TRUE
 		else
 			to_chat(user, "<span class='warning'>[src] cannot hold more syringes!</span>")
 	return FALSE
+
+/obj/item/gun/syringe/update_overlays()
+	. = ..()
+	if(!has_syringe_overlay)
+		return
+	var/syringe_count = syringes.len
+	. += "[initial(icon_state)]_[syringe_count ? clamp(syringe_count, 1, initial(max_syringes)) : "empty"]"
 
 /obj/item/gun/syringe/rapidsyringe
 	name = "rapid syringe gun"
@@ -113,6 +126,7 @@
 	desc = "Fire syringes at a short distance."
 	icon_state = "blowgun"
 	inhand_icon_state = "blowgun"
+	has_syringe_overlay = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
@@ -120,4 +134,4 @@
 	if(do_after(user, 25, target = src))
 		user.adjustStaminaLoss(20)
 		user.adjustOxyLoss(20)
-		..()
+		return ..()

@@ -520,7 +520,7 @@ Difficulty: Medium
 	else
 		animate(src, pixel_x = -16, pixel_z = 0, time = 5)
 
-obj/effect/temp_visual/fireball
+/obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	name = "fireball"

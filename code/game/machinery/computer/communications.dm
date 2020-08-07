@@ -18,6 +18,7 @@
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_HEADS)
 	circuit = /obj/item/circuitboard/computer/communications
+	light_color = LIGHT_COLOR_BLUE
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/datum/comm_message/messages = list()
 	var/datum/comm_message/currmsg
@@ -31,7 +32,6 @@
 	var/stat_msg1
 	var/stat_msg2
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/communications/proc/checkCCcooldown()
 	var/obj/item/circuitboard/computer/communications/CM = circuit

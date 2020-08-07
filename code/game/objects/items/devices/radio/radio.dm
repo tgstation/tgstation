@@ -5,6 +5,7 @@
 	name = "station bounced radio"
 	icon_state = "walkietalkie"
 	inhand_icon_state = "walkietalkie"
+	worn_icon_state = "radio"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
 

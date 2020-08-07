@@ -1,8 +1,8 @@
 /datum/computer_file/program/aidiag
 	filename = "aidiag"
-	filedesc = "AI Integrity Restorer"
+	filedesc = "NT FRK"
 	program_icon_state = "generic"
-	extended_desc = "This program is capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
+	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = FALSE
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
@@ -71,12 +71,18 @@
 		ai_slot.locked = FALSE
 		restoring = FALSE
 		return
-	ai_slot.locked =TRUE
-	A.adjustOxyLoss(-5, 0, FALSE)
-	A.adjustFireLoss(-5, 0, FALSE)
-	A.adjustBruteLoss(-5, 0)
+	ai_slot.locked = TRUE
+	A.adjustOxyLoss(-5, FALSE)
+	A.adjustFireLoss(-5, FALSE)
+	A.adjustBruteLoss(-5, FALSE)
+
+	// Please don't forget to update health, otherwise the below if statements will probably always fail.
+	A.updatehealth()
+
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive(full_heal = FALSE, admin_revive = FALSE)
+		cardhold.update_icon()
+
 	// Finished restoring
 	if(A.health >= 100)
 		ai_slot.locked = FALSE

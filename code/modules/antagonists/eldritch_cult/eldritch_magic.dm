@@ -140,14 +140,15 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C1 = target
 		for(var/obj/item/bodypart/bodypart in C2.bodyparts)
-			for(var/datum/wound/wound in bodypart.wounds)
+			for(var/i in bodypart.wounds)
+				var/datum/wound/iter_wound = i
 				if(prob(50))
 					continue
 				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in C1.bodyparts
 				if(!target_bodypart)
 					continue
-				wound.remove_wound()
-				wound.apply_wound(target_bodypart)
+				iter_wound.remove_wound()
+				iter_wound.apply_wound(target_bodypart)
 
 		C1.blood_volume -= 20
 		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
@@ -241,7 +242,7 @@
 		target.visible_message("<span class='danger'>[target]'s veins are shredded from within as an unholy blaze erupts from their blood!</span>", \
 							"<span class='danger'>Your veins burst from within and unholy flame erupts from your blood!</span>")
 		var/obj/item/bodypart/bodypart = pick(target.bodyparts)
-		var/datum/wound/brute/cut/critical/crit_wound = new
+		var/datum/wound/slash/critical/crit_wound = new
 		crit_wound.apply_wound(bodypart)
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/cleave(target.drop_location())
@@ -406,7 +407,7 @@
 		for(var/turf/T in spiral_range_turfs(_range,centre))
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
-			for(var/mob/living/livies in T.contents)
+			for(var/mob/living/livies in T.contents - centre)
 				livies.adjustFireLoss(10)
 		_range++
 		sleep(3)
@@ -455,7 +456,7 @@
 	for(var/turf/T in range(1,current_user))
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
-		for(var/mob/living/livies in T.contents)
+		for(var/mob/living/livies in T.contents - current_user)
 			livies.adjustFireLoss(5)
 
 
@@ -519,3 +520,149 @@
 		human_user.adjustStaminaLoss(-10, FALSE)
 		human_user.adjustToxLoss(-10, FALSE)
 		human_user.adjustOxyLoss(-10)
+
+/obj/effect/proc_holder/spell/pointed/manse_link
+	name = "Mansus Link"
+	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a mansus net, allowing them to communicate with eachother"
+	school = "transmutation"
+	charge_max = 300
+	clothes_req = FALSE
+	invocation = "PI'RC' TH' M'ND"
+	invocation_type = "whisper"
+	range = 10
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "mansus_link"
+	action_background_icon_state = "bg_ecult"
+
+/obj/effect/proc_holder/spell/pointed/manse_link/can_target(atom/target, mob/user, silent)
+	if(!isliving(target))
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/pointed/manse_link/cast(list/targets, mob/user)
+	var/mob/living/simple_animal/hostile/eldritch/raw_prophet/originator = user
+
+	var/mob/living/target = targets[1]
+
+	to_chat(originator, "<span class='notice'>You begin linking [target]'s mind to yours...</span>")
+	to_chat(target, "<span class='warning'>You feel your mind being pulled... connected... intertwined with the very fabric of reality...</span>")
+	if(!do_after(originator, 6 SECONDS, target))
+		return
+	if(!originator.link_mob(target))
+		to_chat(originator, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
+		to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
+		return
+	to_chat(originator, "<span class='notice'>You connect [target]'s mind to your mansus link!</span>")
+
+
+/datum/action/innate/mansus_speech
+	name = "Mansus Link"
+	desc = "Send a psychic message to everyone connected to your mansus link."
+	button_icon_state = "link_speech"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_ecult"
+	var/mob/living/simple_animal/hostile/eldritch/raw_prophet/originator
+
+/datum/action/innate/mansus_speech/New(_originator)
+	. = ..()
+	originator = _originator
+
+/datum/action/innate/mansus_speech/Activate()
+	var/mob/living/living_owner = owner
+	if(!originator?.linked_mobs[living_owner])
+		CRASH("Uh oh the mansus link got somehow activated without it being linked to a raw prophet or the mob not being in a list of mobs that should be able to do it.")
+
+	var/message = sanitize(input("Message:", "Telepathy from the Manse") as text|null)
+
+	if(QDELETED(living_owner))
+		return
+
+	if(!originator?.linked_mobs[living_owner])
+		to_chat(living_owner, "<span class='warning'>The link seems to have been severed...</span>")
+		Remove(living_owner)
+		return
+	if(message)
+		var/msg = "<i><font color=#568b00>\[Mansus Link\] <b>[living_owner]:</b> [message]</font></i>"
+		log_directed_talk(living_owner, originator, msg, LOG_SAY, "Mansus Link")
+		to_chat(originator.linked_mobs, msg)
+
+		for(var/dead_mob in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(dead_mob, living_owner)
+			to_chat(dead_mob, "[link] [msg]")
+
+/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch
+	range = 10
+	invocation = "E'E'S"
+	action_background_icon_state = "bg_ecult"
+
+/obj/effect/temp_visual/dir_setting/entropic
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "entropic_plume"
+	duration = 3 SECONDS
+
+/obj/effect/temp_visual/dir_setting/entropic/setDir(dir)
+	. = ..()
+	switch(dir)
+		if(NORTH)
+			pixel_x = -64
+		if(SOUTH)
+			pixel_x = -64
+			pixel_y = -128
+		if(EAST)
+			pixel_y = -64
+		if(WEST)
+			pixel_y = -64
+			pixel_x = -128
+
+/obj/effect/temp_visual/glowing_rune
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "small_rune_1"
+	duration = 1 MINUTES
+	layer = LOW_SIGIL_LAYER
+
+/obj/effect/temp_visual/glowing_rune/Initialize()
+	. = ..()
+	pixel_y = rand(-6,6)
+	pixel_x = rand(-6,6)
+	icon_state = "small_rune_[rand(12)]"
+	update_icon()
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume
+	name = "Entropic Plume"
+	desc = "Spews forth a disorienting plume that causes enemies to strike each other, briefly blinds them(increasing with range) and poisons them(decreasing with range). Also spreads rust in the path of the plume."
+	school = "illusion"
+	invocation = "'NTR'P'C PL'M'"
+	invocation_type = INVOCATION_WHISPER
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "entropic_plume"
+	charge_max = 300
+	cone_levels = 5
+	respect_density = TRUE
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/cast(list/targets,mob/user = usr)
+	. = ..()
+	new /obj/effect/temp_visual/dir_setting/entropic(get_step(user,user.dir), user.dir)
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_turf_cone_effect(turf/target_turf, level)
+	. = ..()
+	target_turf.rust_heretic_act()
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, level)
+	. = ..()
+	if(victim.anti_magic_check() || IS_HERETIC(victim) || victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+		return
+	victim.apply_status_effect(STATUS_EFFECT_AMOK)
+	victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))
+	if(iscarbon(victim))
+		var/mob/living/carbon/carbon_victim = victim
+		carbon_victim.reagents.add_reagent(/datum/reagent/eldritch, min(1, 6-level))
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
+	if(current_level == cone_levels)
+		return 5
+	else if(current_level == cone_levels-1)
+		return 3
+	else
+		return 2

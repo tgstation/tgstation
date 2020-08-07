@@ -139,13 +139,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 	///Does it embed and if yes, what kind of embed
-	var/list/embedding = NONE
+	var/list/embedding
 
 	///for flags such as [GLASSESCOVERSEYES]
 	var/flags_cover = 0
 	var/heat = 0
-	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
-	var/sharpness = IS_BLUNT
+	///All items with sharpness of SHARP_EDGED or higher will automatically get the butchering component.
+	var/sharpness = SHARP_NONE
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
 	var/tool_behaviour = NONE
@@ -241,7 +241,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(GLOB.rpg_loot_items)
 		AddComponent(/datum/component/fantasy)
 
-	if(sharpness) //give sharp objects butchering functionality, for consistency
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
@@ -720,11 +720,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/get_sharpness()
 	return sharpness
 
-/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
-	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= WEIGHT_CLASS_NORMAL && force >= 10)
-			. = force * (affecting.get_damage() / affecting.max_damage)
-
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
 		. = 'sound/weapons/sear.ogg'
@@ -995,7 +990,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 ///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
 /obj/item/proc/updateEmbedding()
-	if(!islist(embedding) || !LAZYLEN(embedding))
+	if(!LAZYLEN(embedding))
 		return
 
 	AddElement(/datum/element/embed,\
@@ -1114,3 +1109,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return discover_after
 
 #undef MAX_BONUS_MATS_PER_BITE
+
+// Update icons if this is being carried by a mob
+/obj/item/wash(clean_types)
+	. = ..()
+
+	if(ismob(loc))
+		var/mob/mob_loc = loc
+		mob_loc.regenerate_icons()
