@@ -125,10 +125,8 @@
 
 		var/list/visible_turfs = list()
 
-		var/cam_location = C.loc
-
-		if(isliving(cam_location))
-			cam_location = C.loc
+		// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
+		var/cam_location = isliving(C.loc) ? C.loc : C
 
 		var/list/things = C.isXRay() ? range(C.view_range, cam_location) : view(C.view_range, cam_location)
 
