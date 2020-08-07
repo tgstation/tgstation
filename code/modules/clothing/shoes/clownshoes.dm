@@ -163,7 +163,7 @@
 	AddComponent(/datum/component/squeak, list('sound/effects/clownstepthicc.ogg'=1), 50)
 
 /obj/item/clothing/shoes/clown_shoes/galoshes
-	desc = "Clown shoes for when the joke has gone terribly wrong.  Ctrl-click to toggle waddle dampeners."
+	desc = "Clown shoes for when the joke has gone terribly wrong. This particular pair is designed to prevent slipping on wet surfaces."
 	name = "clown galoshes"
 	icon_state = "clown_galoshes"
 	inhand_icon_state = "clown_shoes_galoshes"
