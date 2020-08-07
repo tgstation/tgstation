@@ -39,7 +39,6 @@ const setWindowFocus = (value, delayed) => {
     return;
   }
   if (windowFocused !== value) {
-    // logger.log(window.__windowId__ + '/setWindowFocus', value);
     windowFocused = value;
     globalEvents.emit(value ? 'window-focus' : 'window-blur');
     globalEvents.emit('window-focus-change', value);
@@ -100,7 +99,6 @@ const focusNearestTrackedParent = node => {
       if (node.contains(focusedNode)) {
         return;
       }
-      logger.log('focused tracked', node.className);
       focusedNode = node;
       node.focus();
       return;
@@ -122,7 +120,6 @@ window.addEventListener('mousemove', e => {
 // --------------------------------------------------------
 
 window.addEventListener('focusin', e => {
-  // logger.log('window/focusin', e.target.tagName, e.target.className);
   lastVisitedNode = null;
   focusedNode = e.target;
   setWindowFocus(true);
@@ -133,19 +130,16 @@ window.addEventListener('focusin', e => {
 });
 
 window.addEventListener('focusout', e => {
-  // logger.log('window/focusout', e.target.tagName, e.target.className);
   lastVisitedNode = null;
   setWindowFocus(false, true);
 });
 
 window.addEventListener('blur', e => {
-  // logger.log('window/blur');
   lastVisitedNode = null;
   setWindowFocus(false, true);
 });
 
 window.addEventListener('beforeunload', e => {
-  // logger.log('window/beforeunload');
   setWindowFocus(false);
 });
 

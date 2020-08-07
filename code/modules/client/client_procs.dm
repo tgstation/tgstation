@@ -444,24 +444,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	fit_viewport()
 	Master.UpdateTickRate()
 
-/client/proc/benchmark_chat_queued(iter = 200)
-	var/started_at
-	var/finished_at
-	started_at = world.tick_usage
-	for(var/i in 1 to iter)
-		to_chat(src, "Testing the chat [i]", TRUE, TRUE, FALSE)
-	finished_at = world.tick_usage
-	to_chat(src, "Finished in [finished_at - started_at] ds")
-
-/client/proc/benchmark_chat_immediate(iter = 200)
-	var/started_at
-	var/finished_at
-	started_at = world.tick_usage
-	for(var/i in 1 to iter)
-		to_chat_immediate(src, "Testing the chat [i]", TRUE, TRUE, FALSE)
-	finished_at = world.tick_usage
-	to_chat(src, "Finished in [finished_at - started_at] ds")
-
 //////////////
 //DISCONNECT//
 //////////////

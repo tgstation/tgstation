@@ -4,10 +4,9 @@
  * @license MIT
  */
 
-import { KEY_CTRL, KEY_ENTER, KEY_ESCAPE, KEY_SHIFT, KEY_SPACE, KEY_TAB, KEY_F5, KEY_R } from 'common/keycodes';
+import { KEY_CTRL, KEY_ENTER, KEY_ESCAPE, KEY_F5, KEY_R, KEY_SHIFT, KEY_SPACE, KEY_TAB } from 'common/keycodes';
 import { globalEvents } from './events';
 import { createLogger } from './logging';
-import { focusMap } from './focus';
 
 const logger = createLogger('hotkeys');
 
@@ -83,21 +82,21 @@ const handlePassthrough = key => {
   // Macro
   const macro = byondMacros[byondKeyCode];
   if (macro) {
-    logger.log('macro', macro);
+    logger.debug('macro', macro);
     return Byond.command(macro);
   }
   // KeyDown
   if (key.isDown() && !keyState[byondKeyCode]) {
     keyState[byondKeyCode] = true;
     const command = `KeyDown "${byondKeyCode}"`;
-    logger.log(command);
+    logger.debug(command);
     return Byond.command(command);
   }
   // KeyUp
   if (key.isUp() && keyState[byondKeyCode]) {
     keyState[byondKeyCode] = false;
     const command = `KeyUp "${byondKeyCode}"`;
-    logger.log(command);
+    logger.debug(command);
     return Byond.command(command);
   }
 };
