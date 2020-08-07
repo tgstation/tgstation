@@ -86,8 +86,8 @@
 	icon_screen = "recharge_comp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/mech_bay_power_console
-	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	light_color = LIGHT_COLOR_PINK
+	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
 /obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

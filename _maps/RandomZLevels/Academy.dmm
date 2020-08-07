@@ -2958,9 +2958,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lL" = (
-/mob/living/simple_animal/slaughter{
-	name = "engine demon"
-	},
+/mob/living/simple_animal/hostile/imp/slaughter/engine_demon,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lM" = (

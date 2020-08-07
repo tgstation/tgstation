@@ -11166,6 +11166,8 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/white,
 /area/janitor)
 "azd" = (
@@ -71620,11 +71622,11 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEu" = (
-/obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/manifold/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEv" = (
@@ -110992,6 +110994,7 @@
 	name = "Prison Wing Cells APC";
 	pixel_x = -24
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "epU" = (

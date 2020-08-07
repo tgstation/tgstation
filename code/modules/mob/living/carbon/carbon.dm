@@ -921,7 +921,7 @@
 		I.extinguish() //extinguishes our clothes
 	..()
 
-/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
+/mob/living/carbon/fakefire(fire_icon = "Generic_mob_burning")
 	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 	new_fire_overlay.appearance_flags = RESET_COLOR
 	overlays_standing[FIRE_LAYER] = new_fire_overlay
@@ -1110,8 +1110,7 @@
 	. = ..()
 
 	// Wash equipped stuff that cannot be covered
-	for(var/i in held_items)
-		var/obj/item/held_thing = i
+	for(var/obj/item/held_thing in held_items)
 		if(held_thing.wash(clean_types))
 			. = TRUE
 
@@ -1206,36 +1205,33 @@
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
 
+/// Returns whether or not the carbon should be able to be shocked
+/mob/living/carbon/proc/should_electrocute(power_source)
+	if (ismecha(loc))
+		return FALSE
+
+	if (wearing_shock_proof_gloves())
+		return FALSE
+
+	if(!get_powernet_info_from_source(power_source))
+		return FALSE
+
+	if (HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+		return FALSE
+
+	return TRUE
+
+/// Returns if the carbon is wearing shock proof gloves
+/mob/living/carbon/proc/wearing_shock_proof_gloves()
+	return gloves?.siemens_coefficient == 0
+
 /// Modifies max_skillchip_count and updates active skillchips
-/mob/living/carbon/proc/adjust_max_skillchip_count(delta)
-	max_skillchip_slots += delta
-	update_skillchips()
+/mob/living/carbon/proc/adjust_skillchip_complexity_modifier(delta)
+	skillchip_complexity_modifier += delta
 
-/// Disables or re-enables any extra skillchips after skillchip limit changes. Inactive chips keep brain as loc but do not appear in skillchips list.
-/mob/living/carbon/proc/update_skillchips()
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
+
+	if(!brain)
 		return
-	var/limit = max_skillchip_slots
-	var/dt = limit - used_skillchip_slots
-	var/list/inactive_skillchips = list()
-	for(var/obj/item/skillchip/S in B)
-		inactive_skillchips += S
 
-	// We have skillchips to deactivate
-	if(dt < 0)
-		//Might deactivate more than necessary but not worth sorting this
-		while(dt < 0)
-			var/obj/item/skillchip/chip = B.skillchips[length(B.skillchips)]
-			chip.on_removal(src)
-			B.skillchips -= chip
-			dt += chip.slot_cost
-	// We have skillchips to reactivate
-	else if (dt > 1)
-		while(dt > 1 && length(inactive_skillchips))
-			var/obj/item/skillchip/chip = inactive_skillchips[length(inactive_skillchips)]
-			if(chip.slot_cost <= dt)
-				chip.on_apply(src)
-				B.skillchips += chip
-				dt -= chip.slot_cost
-			inactive_skillchips -= chip
+	brain.update_skillchips()

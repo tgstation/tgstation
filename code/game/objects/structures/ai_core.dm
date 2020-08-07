@@ -37,6 +37,16 @@
 		brain = null
 	return ..()
 
+/obj/structure/ai_core/deactivated
+	name = "inactive AI"
+	icon_state = "ai-empty"
+	anchored = TRUE
+	state = AI_READY_CORE
+
+/obj/structure/ai_core/deactivated/Initialize()
+	. = ..()
+	circuit = new(src)
+
 /obj/structure/ai_core/latejoin_inactive
 	name = "networked AI core"
 	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
@@ -47,6 +57,15 @@
 	var/available = TRUE
 	var/safety_checks = TRUE
 	var/active = TRUE
+
+/obj/structure/ai_core/latejoin_inactive/Initialize()
+	. = ..()
+	circuit = new(src)
+	GLOB.latejoin_ai_cores += src
+
+/obj/structure/ai_core/latejoin_inactive/Destroy()
+	GLOB.latejoin_ai_cores -= src
+	return ..()
 
 /obj/structure/ai_core/latejoin_inactive/examine(mob/user)
 	. = ..()
@@ -77,14 +96,6 @@
 		active = !active
 		to_chat(user, "<span class='notice'>You [active? "activate" : "deactivate"] \the [src]'s transmitters.</span>")
 		return
-	return ..()
-
-/obj/structure/ai_core/latejoin_inactive/Initialize()
-	. = ..()
-	GLOB.latejoin_ai_cores += src
-
-/obj/structure/ai_core/latejoin_inactive/Destroy()
-	GLOB.latejoin_ai_cores -= src
 	return ..()
 
 /obj/structure/ai_core/attackby(obj/item/P, mob/user, params)
@@ -244,8 +255,7 @@
 
 			if(AI_READY_CORE)
 				if(istype(P, /obj/item/aicard))
-					P.transfer_ai("INACTIVE", "AICARD", src, user)
-					return
+					return //handled by /obj/structure/ai_core/transfer_ai()
 
 				if(P.tool_behaviour == TOOL_SCREWDRIVER)
 					P.play_tool_sound(src)
@@ -283,17 +293,6 @@
 		circuit = null
 	new /obj/item/stack/sheet/plasteel(loc, 4)
 	qdel(src)
-
-/obj/structure/ai_core/deactivated
-	name = "inactive AI"
-	icon_state = "ai-empty"
-	anchored = TRUE
-	state = AI_READY_CORE
-
-/obj/structure/ai_core/deactivated/Initialize()
-	. = ..()
-	circuit = new(src)
-
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.

@@ -17,7 +17,7 @@
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE 
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	density = FALSE
 
 	//*****NOTE*****: Many of these comments are similarly described in centcom_podlauncher.dm. If you change them here, please consider doing so in the centcom podlauncher code as well!
@@ -80,7 +80,7 @@
 	landingDelay = 20 //Very speedy!
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/structure/closet/supplypod/Initialize(var/turf/spawn_location)
+/obj/structure/closet/supplypod/Initialize(turf/spawn_location)
 	. = ..()
 	if (!spawn_location)
 		var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding] //temporary holder for supplypods mid-transit
@@ -110,7 +110,7 @@
 	fin_mask = "bottomfin"
 	if (POD_STYLES[style][POD_SHAPE] == POD_SHAPE_NORML)
 		icon_state = POD_STYLES[style][POD_BASE] + "_reverse"
-	pixel_x = initial(pixel_x) 
+	pixel_x = initial(pixel_x)
 	transform = matrix()
 	update_icon()
 
@@ -118,7 +118,7 @@
 	fin_mask = initial(fin_mask)
 	if (POD_STYLES[style][POD_SHAPE] == POD_SHAPE_NORML)
 		icon_state = POD_STYLES[style][POD_BASE]
-	pixel_x = initial(pixel_x) 
+	pixel_x = initial(pixel_x)
 	transform = matrix()
 	update_icon()
 
@@ -154,7 +154,7 @@
 		else
 			var/icon/masked_door = new(icon, door) //The door we want to apply
 			var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
-			fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1) 
+			fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
 			fin_masker.SwapColor("#ffffffff", null)
 			fin_masker.Blend("#000000", ICON_SUBTRACT)
 			masked_door.Blend(fin_masker, ICON_ADD)
@@ -204,7 +204,7 @@
 	if (landingSound)
 		playsound(get_turf(src), landingSound, soundVolume, FALSE, FALSE)
 	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
-	if(effectShrapnel)	
+	if(effectShrapnel)
 		SEND_SIGNAL(src, COMSIG_SUPPLYPOD_LANDED)
 	for (var/mob/living/M in T)
 		if (effectLimb && iscarbon(M)) //If effectLimb is true (which means we pop limbs off when we hit people):
@@ -338,9 +338,9 @@
 	if (leavingSound)
 		playsound(get_turf(holder), leavingSound, soundVolume, FALSE, FALSE)
 	deleteRubble()
-	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) 
+	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(holder, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising pod
-	
+
 	addtimer(CALLBACK(src, .proc/handleReturnAfterDeparting, holder), 15) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
@@ -440,7 +440,7 @@
 /obj/effect/supplypod_rubble/proc/getForeground(obj/structure/closet/supplypod/pod)
 	var/mutable_appearance/rubble_overlay = mutable_appearance('icons/obj/supplypods.dmi', foreground)
 	rubble_overlay.appearance_flags = KEEP_APART|RESET_TRANSFORM
-	rubble_overlay.transform = matrix().Translate(SUPPLYPOD_X_OFFSET - pod.pixel_x, verticle_offset)  
+	rubble_overlay.transform = matrix().Translate(SUPPLYPOD_X_OFFSET - pod.pixel_x, verticle_offset)
 	return rubble_overlay
 
 /obj/effect/supplypod_rubble/proc/fadeAway()

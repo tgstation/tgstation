@@ -44,6 +44,30 @@
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["device_theme"] = device_theme
+
+	data["login"] = list()
+	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
+	if(cardholder)
+		var/obj/item/card/id/stored_card = cardholder.GetID()
+		if(stored_card)
+			var/stored_name = stored_card.registered_name
+			var/stored_title = stored_card.assignment
+			if(!stored_name)
+				stored_name = "Unknown"
+			if(!stored_title)
+				stored_title = "Unknown"
+			data["login"] = list(
+				IDName = stored_name,
+				IDJob = stored_title,
+			)
+
+	data["removable_media"] = list()
+	if(all_components[MC_SDD])
+		data["removable_media"] += "removable storage disk"
+	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
+	if(intelliholder?.stored_card)
+		data["removable_media"] += "intelliCard"
+
 	data["programs"] = list()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
@@ -136,7 +160,7 @@
 			return 1
 
 		if("PC_toggle_light")
-			light_on = !light_on
+			set_light_on(!light_on)
 			if(light_on)
 				set_light(comp_light_luminosity, 1, comp_light_color)
 			else
@@ -154,9 +178,33 @@
 					to_chat(user, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
 					new_color = null
 			comp_light_color = new_color
-			light_color = new_color
+			set_light_color(new_color)
 			update_light()
 			return TRUE
+
+		if("PC_Eject_Disk")
+			var/param = params["name"]
+			var/mob/user = usr
+			switch(param)
+				if("removable storage disk")
+					var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
+					if(!portable_drive)
+						return
+					if(uninstall_component(portable_drive, usr))
+						user.put_in_hands(portable_drive)
+						playsound(src, 'sound/machines/card_slide.ogg', 50)
+				if("intelliCard")
+					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
+					if(!intelliholder)
+						return
+					if(intelliholder.try_eject(0,user))
+						playsound(src, 'sound/machines/card_slide.ogg', 50)
+				if("ID")
+					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
+					if(!cardholder)
+						return
+					cardholder.try_eject(0, user)
+
 		else
 			return
 
