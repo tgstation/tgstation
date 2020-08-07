@@ -127,7 +127,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/dutch
-	desc = "Why are dutch clowns not tall? All the big one bounced out the ceiling! TURN ON YOUR WADDLE DAMPENERS WITH CTRL-CLICK FOR GODS SAKE!!"
+	desc = "Why are dutch clowns not tall? All the big ones bounced out the ceiling! TURN ON YOUR WADDLE DAMPENERS WITH CTRL-CLICK FOR GODS SAKE!!"
 	name = "dutch clown clogs"
 	icon_state = "clown_dutch"
 	inhand_icon_state = "clown_shoes_dutch"
