@@ -13,6 +13,8 @@
 	var/reagent_id = /datum/reagent/water
 	///Can you turn this into a plumbing tank?
 	var/can_be_tanked = TRUE
+	///Is this source self-replenishing?
+	var/refilling = FALSE
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	. = ..()

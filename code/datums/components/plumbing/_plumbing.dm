@@ -231,13 +231,26 @@
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand
-	demand_connects = NORTH
+	demand_connects = SOUTH
+
+/datum/component/plumbing/simple_demand/hydroponics
+	var/datum/reagent/filtered_chem = /datum/reagent/water
+
+/datum/component/plumbing/simple_demand/hydroponics/process_request(amount, reagent, dir)
+	if(istype(parent, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/parent_tray = parent
+		if(reagent == filtered_chem && parent_tray.waterlevel <= parent_tray.maxwater)
+			parent_tray.adjustWater(round(amount))
+			reagents.remove_reagent(reagent, amount)
+	. = ..()
+
 
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
-	supply_connects = NORTH
+	supply_connects = SOUTH
 
 ///input and output, like a holding tank
 /datum/component/plumbing/tank
 	demand_connects = WEST
 	supply_connects = EAST
+

@@ -80,7 +80,9 @@
 /obj/machinery/shower/update_overlays()
 	. = ..()
 	if(on)
-		. += mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+		var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+		water_falling.color = mix_color_from_reagents(reagents.reagent_list)
+		. += water_falling
 
 /obj/machinery/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
@@ -95,7 +97,8 @@
 /obj/machinery/shower/proc/make_mist()
 	var/obj/effect/mist/mist = locate() in loc
 	if(!mist && on && current_temperature != SHOWER_FREEZING)
-		new /obj/effect/mist(loc)
+		var/obj/effect/mist/new_mist = new /obj/effect/mist(loc)
+		new_mist.color = mix_color_from_reagents(reagents.reagent_list)
 
 /obj/machinery/shower/proc/clear_mist()
 	var/obj/effect/mist/mist = locate() in loc
@@ -113,7 +116,7 @@
 	A.wash(CLEAN_WASH)
 	SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	reagents.expose(A, TOUCH)
-
+	reagents.expose(A, VAPOR)
 	if(isliving(A))
 		check_heat(A)
 

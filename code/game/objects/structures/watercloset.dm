@@ -256,13 +256,10 @@
 	var/buildstackamount = 1
 	///Does the sink have a water recycler to recollect it's water supply?
 	var/has_water_reclaimer = TRUE
-	///Variable to reference the water recycler part inside the sink.
-	var/water_recycler
 
 /obj/structure/sink/Initialize(mapload, bolt)
 	. = ..()
 	if(has_water_reclaimer)
-		water_recycler = new /obj/item/stock_parts/water_recycler(src)
 		create_reagents(100, NO_REACT)
 		reagents.add_reagent(dispensedreagent, 100)
 	START_PROCESSING(SSfluids, src)
