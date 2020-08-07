@@ -32,7 +32,7 @@ export const gameReducer = (state = initialState, action) => {
   if (type === connectionRestored.type) {
     return {
       ...state,
-      connectionLostAt: meta.now,
+      connectionLostAt: null,
     };
   }
   return state;
