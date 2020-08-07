@@ -889,6 +889,9 @@
 	if(HAS_TRAIT(user, TRAIT_PRIMITIVE)) //no lavalizards either.
 		to_chat(user, "<span class='warning'>The knowledge to use this device eludes you!</span>")
 		return
+	if(HAS_TRAIT(user, TRAIT_DUMB)) //braindead idiots don't get in the mech
+		to_chat(user, "<span class='warning'>You stare blankly at the cool metal person. What were you doing again?</span>")
+		return
 	log_message("[user] tries to move in.", LOG_MECHA)
 	if (occupant)
 		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
