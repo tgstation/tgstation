@@ -33,15 +33,17 @@
 	pass_flags = PASSTABLE
 	loot = list(/obj/item/organ/regenerative_core)
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
+	var/difficulty = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
-		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
+		for(var/i in 0 to difficulty)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
 
-		A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
-		A.GiveTarget(target)
-		A.friends = friends
-		A.faction = faction.Copy()
+			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
+			A.GiveTarget(target)
+			A.friends = friends
+			A.faction = faction.Copy()
 		ranged_cooldown = world.time + ranged_cooldown_time
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
@@ -403,3 +405,22 @@
 	icon_living = "snowlegion_head"
 	icon_aggro = "snowlegion_head"
 	icon_dead = "snowlegion_head"
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/crystal
+	name = "disfigured legion"
+	desc = "Disfifured, contorted, corrupted. This thing was once part of the legion, now it has a diffrent vile and twisted allegiance."
+	icon_state = "disfigured_legion"
+	icon_living = "disfigured_legion"
+	icon_aggro = "disfigured_legion"
+	icon_dead = "disfigured_legion"
+	difficulty = 2
+	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/crystal
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/crystal
+	name = "disfigured legion"
+	desc = "Once of none."
+	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon_state = "disfigured_legion_head"
+	icon_living = "disfigured_legion_head"
+	icon_aggro = "disfigured_legion_head"
+	icon_dead = "disfigured_legion_head"
