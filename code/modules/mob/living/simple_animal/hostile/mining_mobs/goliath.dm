@@ -161,6 +161,8 @@
 	. = ..()
 	if(!.) // dead
 		return
+	if(AIStatus != AI_ON)
+		return
 	if(isturf(loc))
 		if(!LAZYLEN(cached_tentacle_turfs) || loc != last_location || tentacle_recheck_cooldown <= world.time)
 			LAZYCLEARLIST(cached_tentacle_turfs)
@@ -271,12 +273,13 @@
 	pre_attack_icon = "crystal_goliath2"
 	tentacle_type = /obj/effect/temp_visual/goliath_tentacle/crystal
 	tentacle_recheck_cooldown = 50
+	speed = 2
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/crystal/OpenFire()
 	. = ..()
 	var/list/turfslist = spiral_range_turfs(5,src,TRUE)
 	visible_message("<span class='warning'>[src] Expunges it's matter releasing a spray of crystalline shards!</span>")
-	for(var/i in 0 to 5)
+	for(var/i in 0 to 9)
 		var/turf/current_turf = get_turf(src)
 		var/obj/projectile/P = new /obj/projectile/goliath(current_turf)
 		var/turf/chosen_turf = pick(turfslist)
