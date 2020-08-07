@@ -76,7 +76,7 @@
 	M.drowsyness = 0
 	M.stuttering = 0
 	M.slurring = 0
-	M.confused = 0
+	M.set_confusion(0)
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -848,7 +848,7 @@
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.slurring = 0
-	M.confused = 0
+	M.set_confusion(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3*REM, 0, 1)
 	M.adjustToxLoss(-0.2*REM, 0)
 	if(ishuman(M))
@@ -1215,7 +1215,7 @@
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = max(0, M.jitteriness-6)
 	M.dizziness = max(0, M.dizziness-6)
-	M.confused = max(0, M.confused-6)
+	M.set_confusion(max(0, M.get_confusion()-6))
 	M.disgust = max(0, M.disgust-6)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	if(mood != null && mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...

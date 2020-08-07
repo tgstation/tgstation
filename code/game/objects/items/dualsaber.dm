@@ -12,6 +12,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
+	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = "swing_hit"
 	armour_penetration = 35
@@ -43,7 +44,6 @@
 			to_chat(user, "<span class='warning'>You lack the grace to wield this!</span>")
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
 	wielded = TRUE
-	sharpness = SHARP_EDGED
 	w_class = w_class_on
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
@@ -53,11 +53,13 @@
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	wielded = FALSE
-	sharpness = initial(sharpness)
 	w_class = initial(w_class)
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
 	set_light(0)
+
+/obj/item/dualsaber/get_sharpness()
+	return wielded * sharpness
 
 /obj/item/dualsaber/update_icon_state()
 	if(wielded)
