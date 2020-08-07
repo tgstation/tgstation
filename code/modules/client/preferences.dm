@@ -1917,6 +1917,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"
+	if("spines" in pref_species.default_features)
+		character.dna.species.mutant_bodyparts |= "spines"
 
 	if(icon_updates)
 		character.update_body()
