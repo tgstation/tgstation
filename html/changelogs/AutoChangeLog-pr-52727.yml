@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "NanoTrasen has added braille support to literally everything. If a blind person has an empty hand, they can now shift-click examine (or right click -> examine) nearby things via touch after a short timer."

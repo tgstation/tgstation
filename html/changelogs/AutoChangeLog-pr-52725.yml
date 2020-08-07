@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed pAI doorjacking cable not spawning."
-  - imageadd: "pAI cards will now actually flash when new personalities are available!"
