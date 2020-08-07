@@ -50,7 +50,6 @@
 	name = "clown jacks"
 	icon_state = "clown_sec"
 	inhand_icon_state = "clown_shoes_sec"
-	slowdown = SHOES_SLOWDOWN
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
 /obj/item/clothing/shoes/clown_shoes/sec/Initialize()
