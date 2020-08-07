@@ -7,7 +7,7 @@
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
-import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, DEFAULT_PAGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES } from './constants';
+import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, DEFAULT_PAGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE } from './constants';
 import { highlightNode } from './highlight';
 import { canPageAcceptType } from './selectors';
 
@@ -33,8 +33,8 @@ const findNearestScrollableParent = startingNode => {
 };
 
 export const createMessage = payload => ({
-  ...payload,
   createdAt: Date.now(),
+  ...payload,
 });
 
 export const serializeMessage = message => ({
@@ -62,6 +62,22 @@ const createReconnectedNode = () => {
   const node = document.createElement('div');
   node.className = 'Chat__reconnected';
   return node;
+};
+
+const handleImageError = e => {
+  setTimeout(() => {
+    /** @type {HTMLImageElement} */
+    const node = e.target;
+    const attempts = parseInt(node.getAttribute('data-reload-n'), 10) || 0;
+    if (attempts >= IMAGE_RETRY_LIMIT) {
+      logger.error(`failed to load an image after ${attempts} attempts`);
+      return;
+    }
+    const src = node.src;
+    node.src = null;
+    node.src = src + '#' + attempts;
+    node.setAttribute('data-reload-n', attempts + 1);
+  }, IMAGE_RETRY_DELAY);
 };
 
 /**
@@ -216,6 +232,7 @@ class ChatRenderer {
       prepend,
       notifyListeners = true,
     } = options;
+    const now = Date.now();
     // Queue up messages until chat is mounted
     if (!this.rootNode) {
       for (let payload of batch) {
@@ -253,6 +270,7 @@ class ChatRenderer {
       else {
         node = createMessageNode();
         node.innerHTML = message.text;
+        // Highlight text
         if (this.highlightRegex) {
           const highlighted = highlightNode(node,
             this.highlightRegex,
@@ -261,6 +279,12 @@ class ChatRenderer {
             ));
           if (highlighted) {
             node.className += ' ChatMessage--highlighted';
+          }
+        }
+        // Assign an image error handler
+        if (now < message.createdAt + IMAGE_RETRY_MESSAGE_AGE) {
+          for (let imgNode of node.querySelectorAll('img')) {
+            imgNode.addEventListener('error', handleImageError);
           }
         }
         // Store the node in the message
@@ -314,7 +338,9 @@ class ChatRenderer {
       const message = messages[i];
       this.rootNode.removeChild(message.node);
     }
-    logger.log(`pruned ${fromIndex} messages`);
+    if (fromIndex > 0) {
+      logger.log(`pruned ${fromIndex} messages`);
+    }
   }
 
   rebuildChat() {
