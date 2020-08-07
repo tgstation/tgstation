@@ -724,7 +724,7 @@
 			visible_message("<span class='danger'>[src] bumps into [L]!</span>")
 		else
 			L.Knockdown(4 SECONDS)
-			src.turn_off()
+			turn_off()
 			addtimer(CALLBACK(src, .proc/turn_on), 80)
 			log_combat(src, L, "collided with")
 			visible_message("<span class='danger'>[src] collides with [L]!</span>")
