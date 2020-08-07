@@ -18,15 +18,18 @@
 
 	already_scarred = TRUE // so we don't scar a limb we don't have. If I add different levels of amputation desc, do it here
 
-	switch(wounding_type)
-		if(WOUND_BLUNT)
-			occur_text = "is shattered through the last bone holding it together, severing it completely!"
-		if(WOUND_SLASH)
-			occur_text = "is slashed through the last tissue holding it together, severing it completely!"
-		if(WOUND_PIERCE)
-			occur_text = "is pierced through the last tissue holding it together, severing it completely!"
-		if(WOUND_BURN)
-			occur_text = "is completely incinerated, falling to dust!"
+	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
+		occur_text = "is split open, causing [victim.p_their()] internals organs to spill out!"
+	else
+		switch(wounding_type)
+			if(WOUND_BLUNT)
+				occur_text = "is shattered through the last bone holding it together, severing it completely!"
+			if(WOUND_SLASH)
+				occur_text = "is slashed through the last tissue holding it together, severing it completely!"
+			if(WOUND_PIERCE)
+				occur_text = "is pierced through the last tissue holding it together, severing it completely!"
+			if(WOUND_BURN)
+				occur_text = "is completely incinerated, falling to dust!"
 
 	victim = dismembered_part.owner
 
