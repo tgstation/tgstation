@@ -288,10 +288,6 @@
 		P.starting = current_turf
 		P.firer = src
 		P.fired_from = src
-		P.yo = chosen_turf.y - current_turf.y
-		P.xo = chosen_turf.x - current_turf.x
-		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
-			newtonian_move(get_dir(chosen_turf, targets_from))
 		P.original = chosen_turf
 		P.preparePixelProjectile(chosen_turf, src)
 		P.fire()

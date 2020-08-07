@@ -419,8 +419,15 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/crystal
 	name = "disfigured legion"
 	desc = "Once of none."
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
 	icon_state = "disfigured_legion_head"
 	icon_living = "disfigured_legion_head"
 	icon_aggro = "disfigured_legion_head"
 	icon_dead = "disfigured_legion_head"
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/crystal/death(gibbed)
+	for(var/i in 0 to 5)
+		var/obj/projectile/P = new /obj/projectile/goliath(get_turf(src))
+		P.preparePixelProjectile(get_step(src, pick(GLOB.alldirs)), get_turf(src))
+		P.firer = src
+		P.fire(i*(360/5))
+	return ..()
