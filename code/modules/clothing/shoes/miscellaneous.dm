@@ -1,3 +1,6 @@
+/obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
+	SEND_SIGNAL(src, COMSIG_SHOES_STEP_ACTION)
+
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
 	icon_state = "mime"
