@@ -184,15 +184,16 @@
 /obj/effect/temp_visual/goliath_tentacle
 	name = "goliath tentacle"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "Goliath_tentacle_spawn"
+	icon_state = "Goliath_tentacle_wiggle"
 	layer = BELOW_MOB_LAYER
 	var/mob/living/spawner
-	var/wiggle = "Goliath_tentacle_wiggle"
+	var/wiggle = "Goliath_tentacle_spawn"
 	var/retract = "Goliath_tentacle_retract"
 	var/difficulty = 3
 
 /obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner,recursive = FALSE)
 	. = ..()
+	flick(wiggle,src)
 	for(var/obj/effect/temp_visual/goliath_tentacle/T in loc)
 		if(T != src)
 			return INITIALIZE_HINT_QDEL
@@ -216,7 +217,6 @@
 	return GLOB.cardinals.Copy()
 
 /obj/effect/temp_visual/goliath_tentacle/proc/tripanim()
-	icon_state = wiggle
 	deltimer(timerid)
 	timerid = addtimer(CALLBACK(src, .proc/trip), 3, TIMER_STOPPABLE)
 
@@ -240,7 +240,8 @@
 
 
 /obj/effect/temp_visual/goliath_tentacle/proc/retract()
-	icon_state = retract
+	icon_state = "marker"
+	flick(retract,src)
 	deltimer(timerid)
 	timerid = QDEL_IN(src, 7)
 
@@ -253,8 +254,8 @@
 /obj/effect/temp_visual/goliath_tentacle/crystal
 	name = "crystalline spire"
 	icon = 'icons/effects/32x64.dmi'
-	icon_state = "crystal_growth"
-	wiggle = "crystal"
+	icon_state = "crystal"
+	wiggle = "crystal_growth"
 	retract = "crystal_reduction"
 	difficulty = 5
 
