@@ -32,9 +32,10 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
-	gender = MALE//lavaland elite goliath says that i'''' 't s female and i ''t s stronger because of sexual dimorphism, so normal goliaths should be male
+	gender = MALE//lavaland elite goliath says that it s female and i s stronger because of sexual dimorphism, so normal goliaths should be male
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
+	var/tentacle_type = /obj/effect/temp_visual/goliath_tentacle
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
@@ -69,7 +70,7 @@
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>[src] digs its tentacles under [target]!</span>")
-		new /obj/effect/temp_visual/goliath_tentacle/original(tturf, src)
+		new tentacle_type(tturf, src ,TRUE)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
 		pre_attack = 0
@@ -170,7 +171,7 @@
 		for(var/t in cached_tentacle_turfs)
 			if(isopenturf(t))
 				if(prob(10))
-					new /obj/effect/temp_visual/goliath_tentacle(t, src)
+					new tentacle_type(t, src)
 			else
 				cached_tentacle_turfs -= t
 
@@ -184,8 +185,11 @@
 	icon_state = "Goliath_tentacle_spawn"
 	layer = BELOW_MOB_LAYER
 	var/mob/living/spawner
+	var/wiggle = "Goliath_tentacle_wiggle"
+	var/retract = "Goliath_tentacle_retract"
+	var/difficulty = 3
 
-/obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner)
+/obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner,recursive = FALSE)
 	. = ..()
 	for(var/obj/effect/temp_visual/goliath_tentacle/T in loc)
 		if(T != src)
@@ -197,18 +201,20 @@
 		M.gets_drilled()
 	deltimer(timerid)
 	timerid = addtimer(CALLBACK(src, .proc/tripanim), 7, TIMER_STOPPABLE)
-
-/obj/effect/temp_visual/goliath_tentacle/original/Initialize(mapload, new_spawner)
-	. = ..()
-	var/list/directions = GLOB.cardinals.Copy()
-	for(var/i in 1 to 3)
+	if(!recursive)
+		return
+	var/list/directions = get_directions()
+	for(var/i in 1 to difficulty)
 		var/spawndir = pick_n_take(directions)
 		var/turf/T = get_step(src, spawndir)
 		if(T)
-			new /obj/effect/temp_visual/goliath_tentacle(T, spawner)
+			new type(T, spawner)
+
+/obj/effect/temp_visual/goliath_tentacle/proc/get_directions()
+	return GLOB.cardinals.Copy()
 
 /obj/effect/temp_visual/goliath_tentacle/proc/tripanim()
-	icon_state = "Goliath_tentacle_wiggle"
+	icon_state = wiggle
 	deltimer(timerid)
 	timerid = addtimer(CALLBACK(src, .proc/trip), 3, TIMER_STOPPABLE)
 
@@ -218,8 +224,7 @@
 		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
-		L.Stun(100)
-		L.adjustBruteLoss(rand(10,15))
+		on_hit(L)
 		latched = TRUE
 	if(!latched)
 		retract()
@@ -227,8 +232,13 @@
 		deltimer(timerid)
 		timerid = addtimer(CALLBACK(src, .proc/retract), 10, TIMER_STOPPABLE)
 
+/obj/effect/temp_visual/goliath_tentacle/proc/on_hit(mob/living/L)
+	L.Stun(100)
+	L.adjustBruteLoss(rand(10,15))
+
+
 /obj/effect/temp_visual/goliath_tentacle/proc/retract()
-	icon_state = "Goliath_tentacle_retract"
+	icon_state = retract
 	deltimer(timerid)
 	timerid = QDEL_IN(src, 7)
 
@@ -237,3 +247,59 @@
 	desc = "This saddle will solve all your problems with being killed by lava beasts!"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
+
+/obj/effect/temp_visual/goliath_tentacle/crystal
+	name = "crystalline spire"
+	icon = 'icons/effects/32x64.dmi'
+	icon_state = "crystal_growth"
+	wiggle = "crystal"
+	retract = "crystal_reduction"
+	difficulty = 5
+
+/obj/effect/temp_visual/goliath_tentacle/crystal/get_directions()
+	return GLOB.cardinals.Copy() + GLOB.diagonals.Copy()
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/crystal
+	name = "crystal goliath"
+	desc = "Deformed, twisted, misshaped. Once it was a goliath now it is an abomination composed of dead goliath flesh and crystals that sprouted throught it's decomposing body."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "crystal_goliath"
+	icon_living = "crystal_goliath"
+	icon_aggro = "crystal_goliath"
+	icon_dead = "crystal_goliath_dead"
+	throw_message = "does nothing to the tough hide of the"
+	pre_attack_icon = "crystal_goliath2"
+	tentacle_type = /obj/effect/temp_visual/goliath_tentacle/crystal
+	tentacle_recheck_cooldown = 50
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/crystal/OpenFire()
+	. = ..()
+	var/list/turfslist = spiral_range_turfs(5,src,TRUE)
+	visible_message("<span class='warning'>[src] Expunges it's matter releasing a spray of crystalline shards!</span>")
+	for(var/i in 0 to 5)
+		var/turf/current_turf = get_turf(src)
+		var/obj/projectile/P = new /obj/projectile/goliath(current_turf)
+		var/turf/chosen_turf = pick(turfslist)
+		playsound(src, projectilesound, 100, TRUE)
+		P.starting = current_turf
+		P.firer = src
+		P.fired_from = src
+		P.yo = chosen_turf.y - current_turf.y
+		P.xo = chosen_turf.x - current_turf.x
+		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
+			newtonian_move(get_dir(chosen_turf, targets_from))
+		P.original = chosen_turf
+		P.preparePixelProjectile(chosen_turf, src)
+		P.fire()
+
+/obj/projectile/goliath
+	name = "Crystalline Shard"
+	icon_state = "crystal_shard"
+	damage = 25
+	damage_type = BRUTE
+	speed = 3
+
+/obj/projectile/goliath/on_hit(atom/target, blocked)
+	. = ..()
+	var/turf/turf_hit = get_turf(target)
+	new /obj/effect/temp_visual/goliath_tentacle/crystal(turf_hit,firer)
