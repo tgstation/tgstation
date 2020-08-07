@@ -112,7 +112,7 @@
 		if(c.can_use())
 			cameras += c
 
-	for(var/mob/living/silicon/robot/borgo in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
+	for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
 		if(borgo.builtInCamera?.can_use())
 			cameras += borgo.builtInCamera
 
