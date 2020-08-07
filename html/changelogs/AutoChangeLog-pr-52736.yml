@@ -1,0 +1,5 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - imageadd: "Syringe guns will now show if they are loaded or not."
+  - soundadd: "Syringe guns now play a sound when giving them a syringe."
