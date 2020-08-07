@@ -28,10 +28,12 @@
 	name = "Infectious Zombie"
 	id = "memezombies"
 	limbs_id = "zombie"
-	mutanthands = /obj/item/zombie_hand
-	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6
+	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASYLIMBWOUND,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS, TRAIT_CLUMSY, TRAIT_NOGUNS, TRAIT_DUMB, TRAIT_MONKEYLIKE)
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
+	punchdamagelow = 15
+	punchdamagehigh = 25
+	punchstunthreshold = 20 //extremely high chance of hitting the stun threshold
 	var/heal_rate = 1
 	var/regen_cooldown = 0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
@@ -89,6 +91,34 @@
 	if(!infection)
 		infection = new()
 		infection.Insert(C)
+
+datum/species/zombie/infectious/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	var/obj/item/bodypart/affecting = target.get_bodypart(BODY_ZONE_CHEST)
+	var/bite_block = target.run_armor_check(affecting, "bio")
+	var/armor_block = target.run_armor_check(affecting, "melee")
+	if(user.pulling == target && user.grab_state == GRAB_AGGRESSIVE)
+		playsound(get_turf(user), 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1)
+		target.apply_damage(15, BRUTE, affecting, armor_block)
+		target.visible_message("<span class='warning'>[user] bites [target]!</span>", \
+					"<span class='userdanger'>You are bitten by [user]!</span>", "<span class='hear'>You hear the sound of something wet tearing apart!</span>", null, user)
+		to_chat(user, "<span class='danger'>You bite [target]!</span>")
+		if(bite_block < 50 && target.stat != DEAD)
+			try_to_zombie_infect(target)
+
+/datum/species/zombie/infectious/proc/try_to_zombie_infect(mob/living/carbon/human/target)
+	CHECK_DNA_AND_SPECIES(target)
+
+	if(NOZOMBIE in target.dna.species.species_traits)
+		// cannot infect any NOZOMBIE subspecies (such as high functioning
+		// zombies)
+		return
+
+	var/obj/item/organ/zombie_infection/infection
+	infection = target.getorganslot(ORGAN_SLOT_ZOMBIE)
+	if(!infection)
+		infection = new()
+		infection.Insert(target)
 
 // Your skin falls off
 /datum/species/krokodil_addict
