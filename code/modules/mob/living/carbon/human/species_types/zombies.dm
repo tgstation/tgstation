@@ -7,7 +7,7 @@
 	say_mod = "moans"
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	species_traits = list(NOBLOOD,NOZOMBIE,NOTRANSSTING, HAS_FLESH, HAS_BONE)
+	species_traits = list(HAIR,FACEHAIR,NOBLOOD,NOZOMBIE,NOTRANSSTING, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASYLIMBWOUND,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/zombie
@@ -37,6 +37,7 @@
 	var/heal_rate = 1
 	var/regen_cooldown = 0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
+	COOLDOWN_DECLARE(bite_cooldown)
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
 /datum/species/zombie/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
@@ -97,12 +98,18 @@ datum/species/zombie/infectious/spec_unarmedattacked(mob/living/carbon/human/use
 	var/obj/item/bodypart/affecting = target.get_bodypart(BODY_ZONE_CHEST)
 	var/bite_block = target.run_armor_check(affecting, "bio")
 	var/armor_block = target.run_armor_check(affecting, "melee")
+	
+	if(!COOLDOWN_FINISHED(src, bite_cooldown))
+		return
+	
 	if(user.pulling == target && user.grab_state == GRAB_AGGRESSIVE)
+		COOLDOWN_START(src, bite_cooldown, 5 SECONDS)
 		playsound(get_turf(user), 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1)
 		target.apply_damage(15, BRUTE, affecting, armor_block)
 		target.visible_message("<span class='warning'>[user] bites [target]!</span>", \
 					"<span class='userdanger'>You are bitten by [user]!</span>", "<span class='hear'>You hear the sound of something wet tearing apart!</span>", null, user)
 		to_chat(user, "<span class='danger'>You bite [target]!</span>")
+		target.emote("scream")
 		if(bite_block < 50 && target.stat != DEAD)
 			try_to_zombie_infect(target)
 
