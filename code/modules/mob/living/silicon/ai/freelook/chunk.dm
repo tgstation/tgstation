@@ -113,8 +113,8 @@
 			cameras += c
 
 	for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
-		if(borgo.builtInCamera?.can_use())
-			cameras += borgo.builtInCamera
+		if(sillycone.builtInCamera?.can_use())
+			cameras += sillycone.builtInCamera
 
 	for(var/turf/t in block(locate(max(x, 1), max(y, 1), z), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z)))
 		turfs[t] = t
