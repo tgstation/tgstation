@@ -6,7 +6,7 @@
 
 	for(var/i in GLOB.joined_player_list)
 		var/mob/check_mob = get_mob_by_ckey(i)
-		if(!check_mob?.mind || !check_mob.client) continue
+		if(!check_mob?.mind || !check_mob.client)
 			continue
 		// maybe some other filters like bans or whatever
 		INVOKE_ASYNC(check_mob, /mob.proc/query_heart, 1)
