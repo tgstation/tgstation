@@ -538,17 +538,18 @@
 /// We're trying to grasp, but we can only do so if we have a bodypart on the zone we're targeting, and said bodypart is bleeding
 /obj/item/grip_self/proc/try_grasp(mob/living/carbon/attempted_grasper)
 	if(!istype(attempted_grasper))
-		qdel()
+		stack_trace("[src] attempted to try_grasp() with [istype(attempted_grasper, /datum) ? attempted_grasper.type : isnull(attempted_grasper) ? "null" : attempted_grasper] attempted_grasper")
+		qdel(src)
 		return
 
 	grasped_part = attempted_grasper.get_bodypart(attempted_grasper.zone_selected)
 	if(!grasped_part?.get_bleed_rate() || !attempted_grasper.put_in_active_hand(src))
-		qdel()
+		qdel(src)
 		return
 
 	to_chat(attempted_grasper, "<span class='warning'>You try grasping at your [grasped_part.name], trying to stop the bleeding...</span>")
 	if(!do_after(attempted_grasper, 1.5 SECONDS))
-		qdel()
+		qdel(src)
 		return
 
 	user = attempted_grasper // if we have a user, we know we were successful
@@ -557,5 +558,5 @@
 	RegisterSignal(grasped_part, COMSIG_PARENT_QDELETING, .proc/qdel_void)
 
 	user.visible_message("<span class='danger'>[user] grasps at [user.p_their()] [grasped_part.name], trying to stop the bleeding.</span>", "<span class='notice'>You grab hold of your [grasped_part.name] tightly.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
-	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
