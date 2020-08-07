@@ -7,7 +7,7 @@
 		return FALSE
 
 	if(H.expansion_hw)
-		if(length(expansion_bays) >= max_bays)
+		if(LAZYLEN(expansion_bays) >= max_bays)
 			to_chat(user, "<span class='warning'>All of the computer's expansion bays are filled.</span>")
 			return FALSE
 		if(LAZYACCESS(expansion_bays, H.device_type))
