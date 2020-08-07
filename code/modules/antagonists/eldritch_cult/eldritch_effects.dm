@@ -183,7 +183,7 @@
 		RS.RemoveMind(M)
 
 /obj/effect/broken_illusion
-	name = "Pierced reality"
+	name = "pierced reality"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
 	anchored = TRUE
@@ -198,7 +198,7 @@
 	else
 		var/obj/item/bodypart/arm = human_user.get_active_hand()
 		if(prob(25))
-			to_chat(human_user,"<span class='userdanger'>Otherwordly presence tears your arm aparts into atoms as you try to touch the hole in the very fabric of reality!</span>")
+			to_chat(human_user,"<span class='userdanger'>An otherwordly presence tears and atomizes your arm as you try to touch the hole in the very fabric of reality!</span>")
 			arm.dismember()
 			qdel(arm)
 		else
