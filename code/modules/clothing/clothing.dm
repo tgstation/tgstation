@@ -81,9 +81,6 @@
 
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent != INTENT_HARM && ismoth(M))
-		if(damaged_clothes == CLOTHING_SHREDDED)
-			to_chat(user, "<span class='notice'>[src] seem[p_s()] pretty torn apart... [p_they(TRUE)] probably wouldn't be too tasty.</span>")
-			return
 		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
 		clothing_as_food.name = name
 		if(clothing_as_food.attack(M, user, def_zone))
