@@ -702,6 +702,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/_try_interact(mob/user)
+	if(HAS_TRAIT(user, TRAIT_DUMB))
+		to_chat(user, "<span class='danger'>You headbutt the [src]!</span>")
+		playsound(user, 'sound/effects/bang.ogg', 40, TRUE)
+		if(prob(5))
+			tilt(user)
+		return
+		
 	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
