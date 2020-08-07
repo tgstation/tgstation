@@ -1347,6 +1347,7 @@
 #include "code\modules\admin\verbs\fix_air.dm"
 #include "code\modules\admin\verbs\fps.dm"
 #include "code\modules\admin\verbs\getlogs.dm"
+#include "code\modules\admin\verbs\ghost_pool_protection.dm"
 #include "code\modules\admin\verbs\individual_logging.dm"
 #include "code\modules\admin\verbs\machine_upgrade.dm"
 #include "code\modules\admin\verbs\manipulate_organs.dm"

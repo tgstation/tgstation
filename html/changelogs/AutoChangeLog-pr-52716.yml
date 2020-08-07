@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - tweak: "the demonic hierarchy now shares the same factions"
-  - tweak: "slaughter demons and imps spawned by admins or other sources that arent player controlled will attack people"
-  - code_imp: "slaughter demons and imps were repathed"

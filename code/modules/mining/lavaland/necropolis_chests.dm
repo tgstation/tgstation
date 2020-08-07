@@ -191,6 +191,7 @@
 	desc = "A mysterious pendant. An inscription on it says: \"Certain death tomorrow means certain life today.\""
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "memento_mori"
+	worn_icon_state = "memento"
 	actions_types = list(/datum/action/item_action/hands_free/memento_mori)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/human/active_owner

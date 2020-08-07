@@ -446,9 +446,41 @@
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind())
-		to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
-		return
+	if(is_blind()) //blind people see things differently (through touch)
+		//need to be next to something and awake
+		if(!in_range(A, src) || incapacitated())
+			to_chat(src, "<span class='warning'>Something is there, but you can't see it!</span>")
+			return
+		//also neeed an empty hand, and you can only initiate as many examines as you have hands
+		if(LAZYLEN(do_afters) >= get_num_arms() || get_active_held_item())
+			to_chat(src, "<span class='warning'>You don't have a free hand to examine this!</span>")
+			return
+		//can only queue up one examine on something at a time
+		if(A in do_afters)
+			return
+
+		to_chat(src, "<span class='notice'>You start feeling around for something...</span>")
+		visible_message("<span class='notice'> [name] begins feeling around for \the [A.name]...</span>")
+
+		/// how long it takes for the blind person to find the thing they're examining
+		var/examine_delay_length = rand(1 SECONDS, 2 SECONDS)
+		if(client?.recent_examines && client?.recent_examines[A]) //easier to find things we just touched
+			examine_delay_length = 0.5 SECONDS
+		else if(isobj(A))
+			examine_delay_length *= 1.5
+		else if(ismob(A) && A != src)
+			examine_delay_length *= 2
+
+		if(examine_delay_length > 0 && !do_after(src, examine_delay_length, target = A))
+			to_chat(src, "<span class='notice'>You can't get a good feel for what is there.</span>")
+			return
+
+		//now we touch the thing we're examining
+		/// our current intent, so we can go back to it after touching
+		var/previous_intent = a_intent
+		a_intent = INTENT_HELP
+		A.attack_hand(src)
+		a_intent = previous_intent
 
 	face_atom(A)
 	var/list/result

@@ -559,7 +559,7 @@
 	dat += "Cable status : "
 	if(!hacking_cable)
 		dat += "<font color=#FF5555>Retracted</font> <br>"
-		dat += "<a href='byond://?src=[REF(src)];software=doorjack;hacking_cable=1;sub=0'>Extend Cable</a> <br>"
+		dat += "<a href='byond://?src=[REF(src)];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
 		return dat
 	if(!hacking_cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
