@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - imageadd: "Tweaked the opacity of the glass HUD to make it a little easier to see the icons / text."
