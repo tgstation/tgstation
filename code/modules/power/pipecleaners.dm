@@ -211,7 +211,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	cost = 1
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
-	var/selected_color = input(user, "Pick a pipe cleaner color.", "Cable Color") in list("red", "yellow", "green", "blue", "pink", "orange", "cyan", "white")
+	var/selected_color = input(user, "Pick a pipe cleaner color.", "Cable Color") as null|anything in list("blue", "cyan", "green", "orange", "pink", "red", "white", "yellow")
+	if(!selected_color)
+		return
 	pipe_cleaner_color = GLOB.pipe_cleaner_colors[selected_color]
 	update_icon()
 
