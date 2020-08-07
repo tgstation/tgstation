@@ -142,6 +142,7 @@
 	name = "medical clown crocks"
 	icon_state = "clown_med"
 	inhand_icon_state = "clown_shoes_med"
+	permeability_coefficient = 0.01
 
 /obj/item/clothing/shoes/clown_shoes/med/Initialize()
 	. = ..()
@@ -168,7 +169,6 @@
 	inhand_icon_state = "clown_shoes_galoshes"
 	permeability_coefficient = 0.01
 	clothing_flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
