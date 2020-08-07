@@ -15,6 +15,7 @@
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
 #include "component_tests.dm"
+#include "confusion.dm"
 #include "keybinding_init.dm"
 #include "medical_wounds.dm"
 #include "metabolizing.dm"

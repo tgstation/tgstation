@@ -44718,7 +44718,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
 "ckW" = (
-/obj/structure/bookcase/random/nonfiction,
+/obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "ckX" = (
