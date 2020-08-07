@@ -224,16 +224,21 @@
 	list_reagents = list( /datum/reagent/medicine/epinephrine = 8, /datum/reagent/medicine/c2/aiuri = 8, /datum/reagent/medicine/c2/libital = 8 ,/datum/reagent/medicine/leporazine = 6)
 
 /obj/item/reagent_containers/hypospray/medipen/survival/inject(mob/living/M, mob/user)
-	if(!lavaland_equipment_pressure_check(get_turf(user)))
-		if(M in user.do_afters)
-			to_chat(user,"<span class='notice'>You are too busy to use \the [src]!</span>")
-			return
-		to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
-		if(do_mob(user, M ,10 SECONDS))
-			amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5
-			return ..()
-	amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
+	if(lavaland_equipment_pressure_check(get_turf(user)))
+		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
+		return ..()
+
+	if(M in user.do_afters)
+		to_chat(user,"<span class='notice'>You are too busy to use \the [src]!</span>")
+		return
+
+	to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
+	if(!do_mob(user, M, 10 SECONDS))
+		return
+
+	amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5
 	return ..()
+
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	name = "luxury medipen"
