@@ -1,5 +1,6 @@
 /datum/wires/rnd
 	holder_type = /obj/machinery/rnd
+	proper_name = "R&D Machinery"
 	randomize = TRUE
 
 /datum/wires/rnd/New(atom/holder)

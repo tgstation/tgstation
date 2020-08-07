@@ -26,7 +26,7 @@
 	var/holder_type = null
 	/// Key that enables wire assignments to be common across different holders. If null, will use the holder_type as a key.
 	var/dictionary_key = null
-	/// The display name for the wire set shown in station blueprints. Not used if randomize is true or it's an item NT wouldn't know about (Explosives/Nuke)
+	/// The display name for the wire set shown in station blueprints. Not shown in blueprints if randomize is TRUE or it's an item NT wouldn't know about (Explosives/Nuke). Also used in the hacking interface.
 	var/proper_name = "Unknown"
 
 	/// List of all wires.
@@ -228,6 +228,29 @@
 		if(istype(I) && I.on_found(user))
 			return
 
+/**
+  * Checks whether wire assignments should be revealed.
+  *
+  * Returns TRUE if the wires should be revealed, FALSE otherwise.
+  * Currently checks for admin ghost AI, abductor multitool and blueprints.
+  * Arguments:
+  * * user - The mob to check when deciding whether to reveal wires.
+  */
+/datum/wires/proc/can_reveal_wires(mob/user)
+	// Admin ghost can see a purpose of each wire.
+	if(isAdminGhostAI(user))
+		return TRUE
+
+	// Same for anyone with an abductor multitool.
+	if(user.is_holding_item_of_type(/obj/item/multitool/abductor))
+		return TRUE
+
+	// Station blueprints do that too, but only if the wires are not randomized.
+	if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
+		return TRUE
+
+	return FALSE
+
 /datum/wires/ui_host()
 	return holder
 
@@ -248,19 +271,7 @@
 /datum/wires/ui_data(mob/user)
 	var/list/data = list()
 	var/list/payload = list()
-	var/reveal_wires = FALSE
-
-	// Admin ghost can see a purpose of each wire.
-	if(isAdminGhostAI(user))
-		reveal_wires = TRUE
-
-	// Same for anyone with an abductor multitool.
-	else if(user.is_holding_item_of_type(/obj/item/multitool/abductor))
-		reveal_wires = TRUE
-
-	// Station blueprints do that too, but only if the wires are not randomized.
-	else if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
-		reveal_wires = TRUE
+	var/reveal_wires = can_reveal_wires(user)
 
 	for(var/color in colors)
 		payload.Add(list(list(

@@ -390,6 +390,22 @@
 			I.take_damage(100)
 	return ..()
 
+/// A status effect used for specifying confusion on a living mob.
+/// Created automatically with /mob/living/set_confusion.
+/datum/status_effect/confusion
+	id = "confusion"
+	alert_type = null
+	var/strength
+
+/datum/status_effect/confusion/tick()
+	strength -= 1
+	if (strength <= 0)
+		owner.remove_status_effect(STATUS_EFFECT_CONFUSION)
+		return
+
+/datum/status_effect/confusion/proc/set_strength(new_strength)
+	strength = new_strength
+
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6

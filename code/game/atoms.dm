@@ -1473,5 +1473,5 @@
   *
   * Use this if an atom needs to attempt to charge another atom.
   */
-/atom/proc/attempt_charge(var/atom/sender, var/atom/target, var/extra_fees = 0)
+/atom/proc/attempt_charge(atom/sender, atom/target, extra_fees = 0)
 	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)

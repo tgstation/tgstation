@@ -140,6 +140,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		SSair.remove_from_active(src)
 		var/datum/gas_mixture/stashed_air = new()
 		stashed_air.copy_from(air)
+		air = null
 		. = ..()
 		if (!.) // changeturf failed or didn't do anything
 			QDEL_NULL(stashed_air)
