@@ -96,10 +96,11 @@ const focusNearestTrackedParent = node => {
   const body = document.body;
   while (node && node !== body) {
     if (trackedNodes.includes(node)) {
-      if (focusedNode === node) {
+      // NOTE: Contains is a DOM4 method
+      if (node.contains(focusedNode)) {
         return;
       }
-      // logger.log('focused tracked', node.className);
+      logger.log('focused tracked', node.className);
       focusedNode = node;
       node.focus();
       return;

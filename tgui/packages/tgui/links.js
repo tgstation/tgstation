@@ -30,9 +30,7 @@ export const captureExternalLinks = () => {
       tgui: 1,
       window_id: window.__windowId__,
       type: 'openLink',
-      payload: {
-        url: href,
-      },
+      url: href,
     });
   };
   // Subscribe to all document clicks

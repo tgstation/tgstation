@@ -8,7 +8,7 @@ import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
 import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, DEFAULT_PAGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE } from './constants';
-import { highlightNode } from './highlight';
+import { highlightNode, linkifyNode } from './node-utils';
 import { canPageAcceptType } from './selectors';
 
 const logger = createLogger('chatRenderer');
@@ -281,6 +281,8 @@ class ChatRenderer {
             node.className += ' ChatMessage--highlighted';
           }
         }
+        // Linkify text
+        linkifyNode(node);
         // Assign an image error handler
         if (now < message.createdAt + IMAGE_RETRY_MESSAGE_AGE) {
           for (let imgNode of node.querySelectorAll('img')) {
