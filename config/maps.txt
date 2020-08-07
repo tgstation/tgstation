@@ -29,6 +29,11 @@ map deltastation
 	votable
 endmap
 
+map omegastation
+	maxplayers 25
+	votable
+endmap
+
 map icebox
 	minplayers 25
 	votable
