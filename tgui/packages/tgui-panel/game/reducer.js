@@ -5,6 +5,7 @@
  */
 
 import { connectionLost } from './actions';
+import { connectionRestored } from './actions';
 
 const initialState = {
   // TODO: This is where round info should be.
@@ -23,6 +24,12 @@ export const gameReducer = (state = initialState, action) => {
     };
   }
   if (type === connectionLost.type) {
+    return {
+      ...state,
+      connectionLostAt: meta.now,
+    };
+  }
+  if (type === connectionRestored.type) {
     return {
       ...state,
       connectionLostAt: meta.now,

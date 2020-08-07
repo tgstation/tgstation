@@ -62,3 +62,7 @@ $border-radius: base.$border-radius !default;
     color: rgba(255, 255, 255, 0.45);
   }
 }
+
+.Input--monospace .Input__input {
+  font-family: 'Consolas', monospace;
+}

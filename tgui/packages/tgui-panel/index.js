@@ -112,6 +112,8 @@ const setupApp = () => {
     module.hot.accept([
       './audio',
       './chat',
+      './game',
+      './Notifications',
       './Panel',
       './ping',
       './settings',

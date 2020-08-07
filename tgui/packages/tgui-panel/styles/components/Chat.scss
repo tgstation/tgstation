@@ -65,3 +65,30 @@ $color-bg-section: base.$color-bg-section !default;
     border-bottom: (1em / 6) solid colors.$red;
   }
 }
+
+.Chat__highlight {
+  color: #000;
+}
+
+.Chat__highlight--restricted {
+  color: #fff;
+  background-color: #a00;
+  font-weight: bold;
+}
+
+.ChatMessage--highlighted {
+  position: relative;
+
+  border-left: (1em / 6) solid rgba(255, 221, 68);
+  padding-left: 0.5em;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 221, 68, 0.1);
+  }
+}

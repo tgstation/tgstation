@@ -104,7 +104,7 @@ const focusNearestTrackedParent = node => {
       node.focus();
       return;
     }
-    node = node.parentElement;
+    node = node.parentNode;
   }
 };
 

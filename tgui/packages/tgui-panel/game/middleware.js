@@ -28,10 +28,10 @@ export const gameMiddleware = store => {
     const pingsAreFailing = lastPingedAt
       && Date.now() >= lastPingedAt + CONNECTION_LOST_AFTER;
     if (!game.connectionLostAt && pingsAreFailing) {
-      store.dispatch(connectionLost());
+      store.dispatch(withTimestamp(connectionLost()));
     }
     if (game.connectionLostAt && !pingsAreFailing) {
-      store.dispatch(connectionRestored());
+      store.dispatch(withTimestamp(connectionRestored()));
     }
   }, 1000);
   return next => action => {
@@ -41,9 +41,6 @@ export const gameMiddleware = store => {
       return next(action);
     }
     if (type === roundRestarted.type) {
-      return next(withTimestamp(action));
-    }
-    if (type === connectionLost.type) {
       return next(withTimestamp(action));
     }
     return next(action);

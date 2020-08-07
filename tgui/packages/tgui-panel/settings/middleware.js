@@ -6,7 +6,7 @@
 
 import { storage } from 'common/storage';
 import { setClientTheme } from '../theme';
-import { loadSettings } from './actions';
+import { loadSettings, updateSettings } from './actions';
 import { selectSettings } from './selectors';
 
 export const settingsMiddleware = store => {
@@ -24,16 +24,11 @@ export const settingsMiddleware = store => {
           storage.clear();
           return;
         }
-        // Set client theme
-        const { theme } = settings;
-        if (theme) {
-          setClientTheme(theme);
-        }
         store.dispatch(loadSettings(settings));
       });
       return next(action);
     }
-    if (type === 'settings/update') {
+    if (type === updateSettings.type || type === loadSettings.type) {
       // Set client theme
       const { theme } = payload;
       if (theme) {

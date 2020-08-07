@@ -6,9 +6,11 @@
 
 import { storage } from 'common/storage';
 import { createLogger } from 'tgui/logging';
-import { changeChatPage, loadChat, updateMessageCount } from './actions';
+import { loadSettings, updateSettings } from '../settings/actions';
+import { selectSettings } from '../settings/selectors';
+import { changeChatPage, loadChat, rebuildChat, updateMessageCount } from './actions';
 import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
-import { chatRenderer, createReconnectedMessage, serializeMessage } from './renderer';
+import { chatRenderer, createMessage, serializeMessage } from './renderer';
 import { selectChat } from './selectors';
 
 const logger = createLogger('chat/middleware');
@@ -35,7 +37,9 @@ const loadChatFromStorage = async store => {
     if (messages) {
       const batch = [
         ...messages,
-        createReconnectedMessage(),
+        createMessage({
+          type: 'internal/reconnected',
+        }),
       ];
       chatRenderer.processBatch(batch, {
         prepend: true,
@@ -67,6 +71,18 @@ export const chatMiddleware = store => {
       const page = payload;
       chatRenderer.changePage(page);
       return next(action);
+    }
+    if (type === rebuildChat.type) {
+      chatRenderer.rebuildChat();
+      return next(action);
+    }
+    if (type === updateSettings.type || type === loadSettings.type) {
+      next(action);
+      const settings = selectSettings(store.getState());
+      chatRenderer.setHighlight(
+        settings.highlightText,
+        settings.highlightColor);
+      return;
     }
     if (type === 'roundrestart') {
       // Save chat as soon as possible

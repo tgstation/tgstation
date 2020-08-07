@@ -21,5 +21,5 @@ export const selectChatPageById = id => state => (
 );
 
 export const canPageAcceptType = (page, type) => (
-  page.acceptedTypes[type]
+  type.startsWith('internal') || page.acceptedTypes[type]
 );

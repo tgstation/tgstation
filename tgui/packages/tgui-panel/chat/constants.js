@@ -16,12 +16,6 @@ export const COMBINE_MAX_TIME_WINDOW = 5000;
 export const MESSAGE_TYPES = [
   // Always-on types
   {
-    type: 'internal',
-    name: 'Internal Messages',
-    description: 'Internal tgchat messages.',
-    important: true,
-  },
-  {
     type: 'system',
     name: 'System Messages',
     description: 'Messages from your client, always enabled',

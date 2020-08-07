@@ -12,6 +12,8 @@ const initialState = {
   lineHeight: 1.2,
   theme: 'light',
   adminMusicVolume: 0.5,
+  highlightText: '',
+  highlightColor: '#ffdd44',
 };
 
 export const settingsReducer = (state = initialState, action) => {
@@ -30,6 +32,8 @@ export const settingsReducer = (state = initialState, action) => {
       lineHeight: settings.lineHeight,
       theme: settings.theme,
       adminMusicVolume: settings.adminMusicVolume,
+      highlightText: settings.highlightText,
+      highlightColor: settings.highlightColor,
     };
   }
   return state;

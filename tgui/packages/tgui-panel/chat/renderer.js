@@ -7,7 +7,8 @@
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
-import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, DEFAULT_PAGE, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES } from './constants';
+import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, DEFAULT_PAGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES } from './constants';
+import { highlightNode } from './highlight';
 import { canPageAcceptType } from './selectors';
 
 const logger = createLogger('chatRenderer');
@@ -26,7 +27,7 @@ const findNearestScrollableParent = startingNode => {
     if (node.scrollWidth < node.offsetWidth) {
       return node;
     }
-    node = node.parentElement;
+    node = node.parentNode;
   }
   return window;
 };
@@ -43,14 +44,24 @@ export const serializeMessage = message => ({
   createdAt: message.createdAt,
 });
 
-export const createReconnectedMessage = () => {
+const createHighlightNode = (text, color) => {
+  const node = document.createElement('span');
+  node.className = 'Chat__highlight';
+  node.setAttribute('style', 'background-color:' + color);
+  node.textContent = text;
+  return node;
+};
+
+const createMessageNode = () => {
+  const node = document.createElement('div');
+  node.className = 'ChatMessage';
+  return node;
+};
+
+const createReconnectedNode = () => {
   const node = document.createElement('div');
   node.className = 'Chat__reconnected';
-  return createMessage({
-    type: 'internal',
-    text: 'Reconnected',
-    node,
-  });
+  return node;
 };
 
 /**
@@ -86,11 +97,6 @@ class ChatRenderer {
     this.visibleMessages = [];
     this.page = DEFAULT_PAGE;
     this.events = new EventEmitter();
-    // Event subscribers
-    this.subscribers = {
-      batchProcessed: [],
-      scrollTrackingChanged: [],
-    };
     // Scroll handler
     /** @type {HTMLElement} */
     this.scrollNode = null;
@@ -143,6 +149,19 @@ class ChatRenderer {
     Object.assign(this.rootNode.style, style);
   }
 
+  setHighlight(text, color) {
+    if (!text || !color) {
+      this.highlightRegex = null;
+      this.highlightColor = null;
+      return;
+    }
+    const lines = String(text)
+      .split(',')
+      .map(str => str.trim());
+    this.highlightRegex = new RegExp('(' + lines.join('|') + ')', 'gi');
+    this.highlightColor = color;
+  }
+
   scrollToBottom() {
     // scrollHeight is always bigger than scrollTop and is
     // automatically clamped to the valid range.
@@ -178,8 +197,10 @@ class ChatRenderer {
     for (let i = from; i >= to; i--) {
       const message = this.visibleMessages[i];
       const matches = (
+        // Is not an internal message
+        !message.type.startsWith('internal')
         // Text payload must fully match
-        message.text === predicate.text
+        && message.text === predicate.text
         // Must land within the specified time window
         && now < message.createdAt + COMBINE_MAX_TIME_WINDOW
       );
@@ -191,7 +212,10 @@ class ChatRenderer {
   }
 
   processBatch(batch, options = {}) {
-    const { prepend } = options;
+    const {
+      prepend,
+      notifyListeners = true,
+    } = options;
     // Queue up messages until chat is mounted
     if (!this.rootNode) {
       for (let payload of batch) {
@@ -221,10 +245,24 @@ class ChatRenderer {
       if (message.node) {
         node = message.node;
       }
+      // Reconnected
+      else if (message.type === 'internal/reconnected') {
+        node = createReconnectedNode();
+      }
       // Create message node
       else {
-        node = document.createElement('div');
+        node = createMessageNode();
         node.innerHTML = message.text;
+        if (this.highlightRegex) {
+          const highlighted = highlightNode(node,
+            this.highlightRegex,
+            text => (
+              createHighlightNode(text, this.highlightColor)
+            ));
+          if (highlighted) {
+            node.className += ' ChatMessage--highlighted';
+          }
+        }
         // Store the node in the message
         message.node = node;
       }
@@ -259,8 +297,10 @@ class ChatRenderer {
         setImmediate(() => this.scrollToBottom());
       }
     }
-    // Notify subscribers that we have processed the batch
-    this.events.emit('batchProcessed', countByType);
+    // Notify listeners that we have processed the batch
+    if (notifyListeners) {
+      this.events.emit('batchProcessed', countByType);
+    }
   }
 
   pruneMessages() {
@@ -275,6 +315,28 @@ class ChatRenderer {
       this.rootNode.removeChild(message.node);
     }
     logger.log(`pruned ${fromIndex} messages`);
+  }
+
+  rebuildChat() {
+    if (!this.rootNode) {
+      return;
+    }
+    // Make a copy of messages
+    const fromIndex = Math.max(0,
+      this.messages.length - MAX_PERSISTED_MESSAGES);
+    const messages = this.messages.slice(fromIndex);
+    // Remove existing nodes
+    for (let message of messages) {
+      message.node = undefined;
+    }
+    // Fast clear of the root node
+    this.rootNode.textContent = '';
+    this.messages = [];
+    this.visibleMessages = [];
+    // Repopulate the chat log
+    this.processBatch(messages, {
+      notifyListeners: false,
+    });
   }
 }
 

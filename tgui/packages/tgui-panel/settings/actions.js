@@ -4,12 +4,7 @@
  * @license MIT
  */
 
-export const updateSettings = (settings = {}) => ({
-  type: 'settings/update',
-  payload: settings,
-});
+import { createAction } from 'common/redux';
 
-export const loadSettings = (settings = {}) => ({
-  type: 'settings/load',
-  payload: settings,
-});
+export const updateSettings = createAction('settings/update');
+export const loadSettings = createAction('settings/load');
