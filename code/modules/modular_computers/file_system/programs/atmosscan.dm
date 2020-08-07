@@ -8,11 +8,11 @@
 	tgui_id = "NtosAtmos"
 
 /datum/computer_file/program/atmosscan/run_program(mob/living/user)
-	if (!..())
-		return FALSE
+	. = ..()
+	if (!.)
+		return
 	if(!computer?.get_modular_computer_part(MC_SENSORS)) //Giving a clue to users why the program is spitting out zeros.
 		to_chat(user, "<span class='warning'>\The [computer] flashes an error: \"hardware\\sensorpackage\\startup.bin -- file not found\".</span>")
-	return TRUE
 
 
 /datum/computer_file/program/atmosscan/ui_data(mob/user)
@@ -33,6 +33,10 @@
 				if(gas_level > 0)
 					airlist += list(list("name" = "[env_gases[id][GAS_META][META_GAS_NAME]]", "percentage" = round(gas_level*100, 0.01)))
 		data["AirData"] = airlist
+	else
+		data["AirPressure"] = 0
+		data["AirTemp"] = 0
+		data["AirData"] = list(list())
 	return data
 
 /datum/computer_file/program/atmosscan/ui_act(action, list/params)

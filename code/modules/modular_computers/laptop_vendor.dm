@@ -156,7 +156,7 @@
 		if(dev_printer)
 			total_price += 99
 			if(fabricate)
-				fabricated_tablet.install_component(new/obj/item/computer_hardware/printer)
+				fabricated_tablet.install_component(new/obj/item/computer_hardware/printer/mini)
 		if(dev_card)
 			total_price += 199
 			if(fabricate)

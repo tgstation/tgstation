@@ -200,7 +200,7 @@
 					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
 					if(!intelliholder)
 						return
-					if(intelliholder.try_eject(0,user))
+					if(intelliholder.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("ID")
 					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]

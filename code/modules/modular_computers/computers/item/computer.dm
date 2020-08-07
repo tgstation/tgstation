@@ -40,7 +40,7 @@
 	// Optional hardware (improves functionality, but is not critical for computer to work)
 
 	var/list/all_components = list()						// List of "connection ports" in this computer and the components with which they are plugged
-	var/list/expansion_bays = list()						// List of extra hardware slots that can be used modularly
+	var/list/expansion_bays									// Lazy List of extra hardware slots that can be used modularly
 	var/max_bays = 0										// Number of total expansion bays this computer has available.
 
 	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.

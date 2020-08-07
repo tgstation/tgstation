@@ -63,7 +63,7 @@
 	return TRUE
 
 
-/obj/item/computer_hardware/card_slot/try_eject(mob/living/user = null, forced = 0)
+/obj/item/computer_hardware/card_slot/try_eject(mob/living/user = null, forced = FALSE)
 	if(!stored_card)
 		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
 		return FALSE
@@ -78,12 +78,12 @@
 		if(holder.active_program)
 			holder.active_program.event_idremoved(0)
 
-		for(var/I in holder.idle_threads)
-			var/datum/computer_file/program/P = I
-			P.event_idremoved(1)
+		for(var/p in holder.idle_threads)
+			var/datum/computer_file/program/computer_program = p
+			computer_program.event_idremoved(1)
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.sec_hud_set_ID()
+		var/mob/living/carbon/human/human_user = user
+		human_user.sec_hud_set_ID()
 	to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	return TRUE
@@ -94,7 +94,7 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stored_card)
 			to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
-			try_eject(0,user)
+			try_eject(user)
 			return
 		swap_slot()
 		to_chat(user, "<span class='notice'>You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"].</span>")

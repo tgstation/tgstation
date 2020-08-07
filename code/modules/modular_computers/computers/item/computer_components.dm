@@ -7,10 +7,10 @@
 		return FALSE
 
 	if(H.expansion_hw)
-		if(expansion_bays.len >= max_bays)
+		if(length(expansion_bays) >= max_bays)
 			to_chat(user, "<span class='warning'>All of the computer's expansion bays are filled.</span>")
 			return FALSE
-		if(expansion_bays[H.device_type])
+		if(LAZYACCESS(expansion_bays, H.device_type))
 			to_chat(user, "<span class='warning'>The computer immediately ejects /the [H] and flashes an error: \"Hardware Address Conflict\".</span>")
 			return FALSE
 
@@ -29,7 +29,7 @@
 		return FALSE
 
 	if(H.expansion_hw)
-		expansion_bays[H.device_type] = H
+		LAZYSET(expansion_bays, H.device_type, H)
 	all_components[H.device_type] = H
 
 	to_chat(user, "<span class='notice'>You install \the [H] into \the [src].</span>")
@@ -42,9 +42,9 @@
 /obj/item/modular_computer/proc/uninstall_component(obj/item/computer_hardware/H, mob/living/user = null)
 	if(H.holder != src) // Not our component at all.
 		return FALSE
-
 	if(H.expansion_hw)
-		expansion_bays.Remove(H.device_type)
+
+		LAZYREMOVE(expansion_bays, H.device_type)
 	all_components.Remove(H.device_type)
 
 	to_chat(user, "<span class='notice'>You remove \the [H] from \the [src].</span>")
