@@ -723,8 +723,8 @@
 		if(iscyborg(L))
 			visible_message("<span class='danger'>[src] bumps into [L]!</span>")
 		else if(L.Knockdown(4 SECONDS))
-			log_combat(src, L, "collided with")
-			visible_message("<span class='danger'>[src] collides with [L]!</span>")
+			log_combat(src, L, "knocked down")
+			visible_message("<span class='danger'>[src] knocks over [L]!</span>")
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
