@@ -32,6 +32,7 @@
 	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASYLIMBWOUND,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS, TRAIT_CLUMSY, TRAIT_NOGUNS, TRAIT_DUMB, TRAIT_MONKEYLIKE, TRAIT_STRONG_PUNCHER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 	attack_verb = "slash"
+	no_equip = list(ITEM_SLOT_GLOVES)
 	punchdamagelow = 10
 	punchdamagehigh = 20
 	punchstunthreshold = 16 //extremely high chance of hitting the stun threshold
@@ -103,6 +104,15 @@ datum/species/zombie/infectious/spec_unarmedattacked(mob/living/carbon/human/use
 	if(!COOLDOWN_FINISHED(src, bite_cooldown))
 		return
 	
+	var/covered = ""
+	if(user.is_mouth_covered(head_only = 1))
+		covered = "headgear"
+	else if(user.is_mouth_covered(mask_only = 1))
+		covered = "mask"
+	if(covered)
+		to_chat(user, "<span class='warning'>You have to remove your [covered] before you can bite!</span>")
+		return
+
 	if(user.pulling == target && user.grab_state == GRAB_AGGRESSIVE)
 		COOLDOWN_START(src, bite_cooldown, 5 SECONDS)
 		playsound(get_turf(user), 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1)
