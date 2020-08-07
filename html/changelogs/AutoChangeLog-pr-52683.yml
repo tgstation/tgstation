@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - admin: "New admin button: Ghost Pool Protection! It lets you enable and disable which sources ghosts can rejoin the round, minus their physical bodies getting revived."

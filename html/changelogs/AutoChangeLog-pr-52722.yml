@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Shapeshift spell now uses a radial menu for choosing transformations."

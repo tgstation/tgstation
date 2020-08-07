@@ -1,6 +1,0 @@
-author: "Whoneedspacee"
-delete-after: True
-changes: 
-  - rscadd: "The RCD's functionality for directional windows has been enabled."
-  - rscadd: "Cyborgs can now install RCD upgrades."
-  - rscadd: "The RCD's functionality for windowed doors has been enabled."

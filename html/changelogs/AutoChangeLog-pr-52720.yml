@@ -1,7 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer sharpen dual energy swords."
-  - bugfix: "Skill chips can no longer be removed with edaggers and eswords while they're turned off."
-  - bugfix: "Guns can now be sawn-off with dual eswords."
-  - bugfix: "Sawing-down a gun will now require an item actually be a saw / esword / plasmacutters, instead of just any sharp item that doesn't have a tool type."
