@@ -122,6 +122,10 @@
 				for(var/datum/action/item_action/hands_free/activate_pill/AP in M.actions)
 					pill_count++
 
+				var/sig_count = 0
+				for(var/datum/action/item_action/hands_free/activate_signaler/AS in M.actions)
+					sig_count++
+
 				if(M == user)
 					var/can_use_mirror = FALSE
 					if(isturf(user.loc))
@@ -148,6 +152,8 @@
 						to_chat(user, "<span class='notice'>There's nothing inside your mouth.</span>")
 					if(pill_count)
 						to_chat(user, "<span class='notice'>You have [pill_count] implanted pill[pill_count > 1 ? "s" : ""].</span>")
+					if(sig_count)
+						to_chat(user, "<span class='notice'>You have [sig_count] implanted signaling device[sig_count > 1 ? "s" : ""].</span>")
 
 				else
 					user.visible_message("<span class='notice'>[user] directs [src] to [M]'s mouth.</span>",\
@@ -158,6 +164,8 @@
 						to_chat(user, "<span class='notice'>[M] doesn't have any organs in [their] mouth.</span>")
 					if(pill_count)
 						to_chat(user, "<span class='notice'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [their] teeth.</span>")
+					if(sig_count)
+						to_chat(user, "<span class='notice'>[M] has [sig_count] signaling device[sig_count > 1 ? "s" : ""] implanted in [their] teeth.</span>")
 
 	else
 		return ..()

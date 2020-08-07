@@ -307,6 +307,11 @@
 		var/obj/pill = AP.target
 		if(pill)
 			pill.forceMove(src)
+	for(var/datum/action/item_action/hands_free/activate_signaler/AS in owner.actions)
+		AS.Remove(owner)
+		var/obj/sig = AS.target
+		if(sig)
+			sig.forceMove(src)
 
 	//Make sure de-zombification happens before organ removal instead of during it
 	var/obj/item/organ/zombie_infection/ooze = owner.getorganslot(ORGAN_SLOT_ZOMBIE)
@@ -423,6 +428,11 @@
 		for(var/datum/action/item_action/hands_free/activate_pill/AP in P.actions)
 			P.forceMove(C)
 			AP.Grant(C)
+			break
+	for(var/obj/item/assembly/signaler/S in src)
+		for(var/datum/action/item_action/hands_free/activate_signaler/AS in S.actions)
+			S.forceMove(C)
+			AS.Grant(C)
 			break
 
 	C.updatehealth()

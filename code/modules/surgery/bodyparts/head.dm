@@ -117,11 +117,13 @@
 			brain.forceMove(T)
 			brain = null
 			update_icon_dropped()
-		else
-			if(istype(I, /obj/item/reagent_containers/pill))
-				for(var/datum/action/item_action/hands_free/activate_pill/AP in I.actions)
-					qdel(AP)
-			I.forceMove(T)
+		else if(istype(I, /obj/item/reagent_containers/pill))
+			for(var/datum/action/item_action/hands_free/activate_pill/AP in I.actions)
+				qdel(AP)
+		else if(istype(I, /obj/item/assembly/signaler))
+			for(var/datum/action/item_action/hands_free/activate_signaler/AS in I.actions)
+				qdel(AS)
+		I.forceMove(T)
 	eyes = null
 	ears = null
 	tongue = null
