@@ -722,10 +722,7 @@
 	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
 		if(iscyborg(L))
 			visible_message("<span class='danger'>[src] bumps into [L]!</span>")
-		else
-			L.Knockdown(4 SECONDS)
-			src.turn_off()
-			addtimer(CALLBACK(src, .proc/turn_on), 80)
+		else if(L.Knockdown(4 SECONDS))
 			log_combat(src, L, "collided with")
 			visible_message("<span class='danger'>[src] collides with [L]!</span>")
 	return ..()
@@ -738,9 +735,9 @@
 					"<span class='userdanger'>[src] drives over you!</span>")
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
-	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, "melee"))
-	H.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST, run_armor_check(BODY_ZONE_CHEST, "melee"))
+	var/damage = rand(4,8)
+	H.apply_damage(1.5*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, "melee"))
+	H.apply_damage(1.5*damage, BRUTE, BODY_ZONE_CHEST, run_armor_check(BODY_ZONE_CHEST, "melee"))
 	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG, run_armor_check(BODY_ZONE_L_LEG, "melee"))
 	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG, run_armor_check(BODY_ZONE_R_LEG, "melee"))
 	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM, run_armor_check(BODY_ZONE_L_ARM, "melee"))
