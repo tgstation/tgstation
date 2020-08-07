@@ -82,4 +82,7 @@
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
 		ADD_GAS(path, mix)
 		mix[path][MOLES] = text2num(gas[id])
+		mix[path][ARCHIVE] = mix[path][MOLES]
+	temperature_archived = temperature
+
 
