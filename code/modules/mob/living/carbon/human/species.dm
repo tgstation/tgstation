@@ -1345,6 +1345,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(user.dna.species.punchdamagelow)
 			if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
+			else if(HAS_TRAIT(user, TRAIT_STRONG_PUNCHER)) ///strong punchers have a much more consistent chance of landing a hit
+				miss_chance = 10
 			else
 				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
 

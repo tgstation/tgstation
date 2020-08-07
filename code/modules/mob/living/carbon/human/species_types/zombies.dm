@@ -29,11 +29,12 @@
 	id = "memezombies"
 	limbs_id = "zombie"
 	speedmod = 1.6
-	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASYLIMBWOUND,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS, TRAIT_CLUMSY, TRAIT_NOGUNS, TRAIT_DUMB, TRAIT_MONKEYLIKE)
+	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASYLIMBWOUND,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS, TRAIT_CLUMSY, TRAIT_NOGUNS, TRAIT_DUMB, TRAIT_MONKEYLIKE, TRAIT_STRONG_PUNCHER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
-	punchdamagelow = 15
-	punchdamagehigh = 25
-	punchstunthreshold = 20 //extremely high chance of hitting the stun threshold
+	attack_verb = "slash"
+	punchdamagelow = 10
+	punchdamagehigh = 20
+	punchstunthreshold = 16 //extremely high chance of hitting the stun threshold
 	var/heal_rate = 1
 	var/regen_cooldown = 0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
