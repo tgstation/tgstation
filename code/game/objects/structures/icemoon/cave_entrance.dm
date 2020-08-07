@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 	icon_state = "nether"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_demon)
 	light_range = 1
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 
 /obj/structure/spawner/ice_moon/demonic_portal/clear_rock()
 	for(var/turf/F in RANGE_TURFS(3, src))

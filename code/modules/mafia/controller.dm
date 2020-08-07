@@ -834,7 +834,7 @@
   * Only checks if everyone is actually valid to start (still connected and an observer) if there are enough players (basic_setup)
   */
 /datum/mafia_controller/proc/try_autostart()
-	if(phase != MAFIA_PHASE_SETUP)
+	if(phase != MAFIA_PHASE_SETUP || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
 		return
 	if(GLOB.mafia_signup.len >= MAFIA_MAX_PLAYER_COUNT || custom_setup.len)//enough people to try and make something (or debug mode)
 		basic_setup()

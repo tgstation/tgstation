@@ -23801,7 +23801,7 @@
 /obj/structure/cable,
 /obj/item/trash/chips,
 /turf/open/floor/plasteel,
-/area/space)
+/area/vacant_room/commissary)
 "biM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -44718,7 +44718,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
 "ckW" = (
-/obj/structure/bookcase/random/nonfiction,
+/obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "ckX" = (

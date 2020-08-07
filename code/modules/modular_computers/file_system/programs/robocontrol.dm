@@ -1,12 +1,11 @@
 
 /datum/computer_file/program/robocontrol
-	filename = "robocontrol"
-	filedesc = "Bot Remote Controller"
+	filename = "botkeeper"
+	filedesc = "Botkeeper"
 	program_icon_state = "robot"
 	extended_desc = "A remote controller used for giving basic commands to non-sentient robots."
 	transfer_access = ACCESS_ROBOTICS
 	requires_ntnet = TRUE
-	network_destination = "robotics control network"
 	size = 12
 	tgui_id = "NtosRoboControl"
 	///Number of simple robots on-station.
