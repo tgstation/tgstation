@@ -169,7 +169,7 @@
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
 
 /// Adds points to the points var.
-/datum/team/gang/proc/adjust_points(var/points_to_adjust)
+/datum/team/gang/proc/adjust_points(points_to_adjust)
 	points += points_to_adjust
 
 /datum/action/cooldown/spawn_induction_package

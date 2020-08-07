@@ -45,7 +45,7 @@
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
 
-/datum/antagonist/obsessed/proc/forge_objectives(var/datum/mind/obsessionmind)
+/datum/antagonist/obsessed/proc/forge_objectives(datum/mind/obsessionmind)
 	var/list/objectives_left = list("spendtime", "polaroid", "hug")
 	var/datum/objective/assassinate/obsessed/kill = new
 	kill.owner = owner

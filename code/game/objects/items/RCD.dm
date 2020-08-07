@@ -788,7 +788,7 @@ RLD
 			to_chat(user, "<span class='notice'>You change RLD's mode to 'Deconstruct'.</span>")
 
 
-/obj/item/construction/rld/proc/checkdupes(var/target)
+/obj/item/construction/rld/proc/checkdupes(target)
 	. = list()
 	var/turf/checking = get_turf(target)
 	for(var/obj/machinery/light/dupe in checking)
