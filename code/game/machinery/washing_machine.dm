@@ -270,7 +270,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	..()
 	
 /obj/item/clothing/shoes/clown_shoes/machine_wash(obj/machinery/washing_machine/WM)
-	if(slowdown == 15) //I assure you this hack check works.
+	if(istype(src, /obj/item/clothing/shoes/clown_shoes/prison))
 		new /obj/item/restraints/handcuffs(loc)
 	new /obj/item/clothing/shoes/clown_shoes(loc)
 	qdel(src)
