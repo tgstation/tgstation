@@ -141,29 +141,29 @@
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/disabled = list()
 	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(BP.disabled)
-			disabled += BP
-		missing -= BP.body_zone
-		for(var/obj/item/I in BP.embedded_objects)
+		var/obj/item/bodypart/body_part = X
+		if(body_part.disabled)
+			disabled += body_part
+		missing -= body_part.body_zone
+		for(var/obj/item/I in body_part.embedded_objects)
 			if(I.isEmbedHarmless())
-				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] stuck to [t_his] [BP.name]!</B>\n"
+				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] stuck to [t_his] [body_part.name]!</B>\n"
 			else
-				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
+				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [body_part.name]!</B>\n"
 
-		for(var/i in BP.wounds)
+		for(var/i in body_part.wounds)
 			var/datum/wound/iter_wound = i
 			msg += "[iter_wound.get_examine_description(user)]\n"
 
 	for(var/X in disabled)
-		var/obj/item/bodypart/BP = X
+		var/obj/item/bodypart/body_part = X
 		var/damage_text
-		if(BP.is_disabled() != BODYPART_DISABLED_WOUND) // skip if it's disabled by a wound (cuz we'll be able to see the bone sticking out!)
-			if(!(BP.get_damage(include_stamina = FALSE) >= BP.max_damage)) //we don't care if it's stamcritted
+		if(body_part.is_disabled() != BODYPART_DISABLED_WOUND) // skip if it's disabled by a wound (cuz we'll be able to see the bone sticking out!)
+			if(!(body_part.get_damage(include_stamina = FALSE) >= body_part.max_damage)) //we don't care if it's stamcritted
 				damage_text = "limp and lifeless"
 			else
-				damage_text = (BP.brute_dam >= BP.burn_dam) ? BP.heavy_brute_msg : BP.heavy_burn_msg
-			msg += "<B>[capitalize(t_his)] [BP.name] is [damage_text]!</B>\n"
+				damage_text = (body_part.brute_dam >= body_part.burn_dam) ? body_part.heavy_brute_msg : body_part.heavy_burn_msg
+			msg += "<B>[capitalize(t_his)] [body_part.name] is [damage_text]!</B>\n"
 
 	//stores missing limbs
 	var/l_limbs_missing = 0
@@ -256,11 +256,11 @@
 		var/list/obj/item/bodypart/grasped_limbs = list()
 
 		for(var/i in bodyparts)
-			var/obj/item/bodypart/BP = i
-			if(BP.get_bleed_rate())
-				bleeding_limbs += BP
-			if(BP.grasped_by)
-				grasped_limbs += BP
+			var/obj/item/bodypart/body_part = i
+			if(body_part.get_bleed_rate())
+				bleeding_limbs += body_part
+			if(body_part.grasped_by)
+				grasped_limbs += body_part
 
 		var/num_bleeds = LAZYLEN(bleeding_limbs)
 
@@ -275,8 +275,8 @@
 				bleed_text += " [bleeding_limbs[1].name][num_bleeds == 2 ? " and [bleeding_limbs[2].name]" : ""]"
 			if(3 to INFINITY)
 				for(var/i in 1 to (num_bleeds - 1))
-					var/obj/item/bodypart/BP = bleeding_limbs[i]
-					bleed_text += " [BP.name],"
+					var/obj/item/bodypart/body_part = bleeding_limbs[i]
+					bleed_text += " [body_part.name],"
 				bleed_text += " and [bleeding_limbs[num_bleeds].name]"
 
 		if(appears_dead)
@@ -287,10 +287,9 @@
 
 			bleed_text += "!</B>\n"
 
-		for(var/i in bodyparts)
+		for(var/i in grasped_limbs)
 			var/obj/item/bodypart/grasped_part = i
-			if(grasped_part.grasped_by)
-				bleed_text += "[t_He] [t_is] holding [t_his] [grasped_part.name] to slow the bleeding!\n"
+			bleed_text += "[t_He] [t_is] holding [t_his] [grasped_part.name] to slow the bleeding!\n"
 
 		msg += bleed_text.Join()
 
