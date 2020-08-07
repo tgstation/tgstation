@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - rscadd: "A special interaction for trying to put a mushroom on an Arnold pizza has been added."
+  - rscadd: "Arnold pizza references its source material more accurately/often now."
