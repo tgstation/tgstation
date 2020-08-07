@@ -722,8 +722,7 @@
 	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
 		if(iscyborg(L))
 			visible_message("<span class='danger'>[src] bumps into [L]!</span>")
-		else
-			L.Knockdown(4 SECONDS)
+		else if(L.Knockdown(4 SECONDS))
 			turn_off()
 			addtimer(CALLBACK(src, .proc/turn_on), 80)
 			log_combat(src, L, "collided with")
