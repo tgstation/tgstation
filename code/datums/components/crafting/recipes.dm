@@ -864,3 +864,74 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/grown/wheat = 50
 	)
+/datum/crafting_recipe/clownshoes_sec
+	name = "Clown Jackboots"
+	reqs = list(
+           /obj/item/clothing/shoes/clown_shoes = 1,
+           /obj/item/clothing/shoes/jackboots = 1)
+	result = /obj/item/clothing/shoes/clown_shoes/sec
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/clownshoes_hydro
+	name = "Clown Nature Shoes"
+	reqs = list(
+           /obj/item/clothing/shoes/clown_shoes = 1,
+           /obj/item/reagent_containers/food/snacks/grown = 1)
+	result = /obj/item/clothing/shoes/clown_shoes/hydro
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/clownshoes_clogs
+	name = "Clown Clogs"
+	reqs = list(
+           /obj/item/clothing/shoes/clown_shoes/hydro = 1,
+           /obj/item/stack/sheet/mineral/wood = 5)
+	result = /obj/item/clothing/shoes/clown_shoes/clogs
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/clownshoes_med
+	name = "Clown Medical Crocks"
+	reqs = list(
+           /obj/item/clothing/shoes/clown_shoes = 1,
+           /obj/item/clothing/gloves/color/latex = 1)
+	result = /obj/item/clothing/shoes/clown_shoes/med
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/clownshoes_engi
+	name = "Clown Workboots"
+	reqs = list(
+           /obj/item/clothing/shoes/clown_shoes = 1,
+           /obj/item/clothing/shoes/workboots = 1)
+	result = /obj/item/clothing/shoes/clown_shoes/engi
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/clownshoes_law
+	name = "Clown Laceup Shoes"
+	reqs = list(
+           /obj/item/clothing/shoes/clown_shoes = 1,
+           /obj/item/clothing/shoes/laceup = 1)
+	result = /obj/item/clothing/shoes/clown_shoes/law
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/clownshoes_janny
+	name = "Clown Rubberboots"
+	reqs = list(
+           /obj/item/clothing/shoes/clown_shoes = 1,
+           /obj/item/clothing/head/soft/purple = 1)
+	result = /obj/item/clothing/shoes/clown_shoes/janny
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/clownshoes_galoshes
+	name = "Clown Galoshes"
+	reqs = list(
+           /obj/item/clothing/shoes/clown_shoes = 1,
+           /obj/item/clothing/shoes/galoshes = 1)
+	result = /obj/item/clothing/shoes/clown_shoes/galoshes
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/clownshoes_prison
+	name = "Clown Orange Shoes"
+	reqs = list(
+           /obj/item/clothing/shoes/clown_shoes = 1,
+           /obj/item/restraints/handcuffs = 1)
+	result = /obj/item/clothing/shoes/clown_shoes/prison
+	category = CAT_CLOTHING
