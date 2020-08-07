@@ -100,20 +100,3 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
-
-/**
- * public
- *
- * Used to dynamically add regexes to the browser output.
- * Currently only used by the IC filter.
- */
-/datum/tgui_panel/proc/sync_chat_regexes()
-	var/list/regexes = list()
-	if (config.ic_filter_regex)
-		regexes["show_filtered_ic_chat"] = list(
-			config.ic_filter_regex.name,
-			"ig",
-			"<span class='boldwarning'>$1</span>"
-		)
-	if (regexes.len)
-		window.send_message("syncRegex", regexes)

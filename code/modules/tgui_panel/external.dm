@@ -6,16 +6,6 @@
 /client/var/datum/tgui_panel/tgui_panel
 
 /**
- * Calls sync_chat_regexes on all currently owned tgui_panel datums
- */
-/proc/sync_chat_regexes()
-	for(var/_client in GLOB.clients)
-		var/client/client = _client
-		var/datum/tgui_panel/panel = client.tgui_panel
-		if(panel?.is_ready())
-			panel.sync_chat_regexes()
-
-/**
  * tgui panel / chat troubleshooting verb
  */
 /client/verb/fix_chat()

@@ -59,7 +59,6 @@ export const chatMiddleware = store => {
     if (!initialized) {
       initialized = true;
       loadChatFromStorage(store);
-      return next(action);
     }
     if (type === 'chat/message') {
       // Normalize the payload

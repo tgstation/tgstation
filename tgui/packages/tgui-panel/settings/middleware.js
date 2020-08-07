@@ -26,7 +26,6 @@ export const settingsMiddleware = store => {
         }
         store.dispatch(loadSettings(settings));
       });
-      return next(action);
     }
     if (type === updateSettings.type || type === loadSettings.type) {
       // Set client theme
