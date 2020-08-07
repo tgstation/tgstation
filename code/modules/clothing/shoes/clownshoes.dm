@@ -1,5 +1,5 @@
 /obj/item/clothing/shoes/clown_shoes
-	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge! Ctrl-click to toggle waddle dampeners."
+	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!
 	name = "clown shoes"
 	icon_state = "clown"
 	inhand_icon_state = "clown_shoes"
@@ -42,7 +42,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/sec
-	desc = "The law *IS* a joking matter! Ctrl-click to toggle waddle dampeners."
+	desc = "The law *IS* a joking matter!"
 	name = "clown jacks"
 	icon_state = "clown_sec"
 	inhand_icon_state = "clown_shoes_sec"
@@ -55,7 +55,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/prison
-	desc = "That trial was a joke! A kangaroo court!  Ctrl-click to toggle waddle dampeners."
+	desc = "That trial was a joke! A kangaroo court!"
 	name = "orange clown shoes"
 	icon_state = "clown_prison"
 	inhand_icon_state = "clown_shoes_prison"
@@ -85,7 +85,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/engi
-	desc = "These boots were made for working, but that's not what we're gonna do.  Ctrl-click to toggle waddle dampeners."
+	desc = "These boots were made for working, but that's not what we're gonna do."
 	name = "clown boots"
 	icon_state = "clown_engi"
 	inhand_icon_state = "clown_shoes_engi"
@@ -96,7 +96,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/hydro
-	desc = "A bit prickly, and somewhat loose. Perhaps you can get a new sole? Ctrl-click to toggle waddle dampeners."
+	desc = "A bit prickly, and somewhat loose. Perhaps you can get a new sole?"
 	name = "clown grass shoes"
 	icon_state = "clown_hydro"
 	inhand_icon_state = "clown_shoes_hydro"
@@ -107,7 +107,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/clogs
-	desc = "Great sole support, but shouldn't these bee yellow? Ctrl-click to toggle waddle dampeners."
+	desc = "Great sole support, but shouldn't these bee yellow?"
 	name = "clown clogs"
 	icon_state = "clown_clogs"
 	inhand_icon_state = "clown_shoes_clogs"
@@ -127,7 +127,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/dutch
-	desc = "Why are dutch clowns not tall? All the big ones bounced out the ceiling! TURN ON YOUR WADDLE DAMPENERS WITH CTRL-CLICK FOR GODS SAKE!!"
+	desc = "Why are dutch clowns not tall? All the big ones bounced out the ceiling!"
 	name = "dutch clown clogs"
 	icon_state = "clown_dutch"
 	inhand_icon_state = "clown_shoes_dutch"
@@ -138,7 +138,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/med
-	desc = "A more sanitary version of the clown shoes.  Ctrl-click to toggle waddle dampeners."
+	desc = "A more sanitary version of the clown shoes."
 	name = "medical clown crocks"
 	icon_state = "clown_med"
 	inhand_icon_state = "clown_shoes_med"
@@ -150,7 +150,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/janny
-	desc = "Clown shoes for when the joke has gone wrong.  Ctrl-click to toggle waddle dampeners."
+	desc = "Clown shoes for when the joke has gone wrong."
 	name = "clown rubberboots"
 	icon_state = "clown_janny"
 	inhand_icon_state = "clown_shoes_janny"
@@ -182,7 +182,7 @@
 
 
 /obj/item/clothing/shoes/clown_shoes/law
-	desc = "For use in the court of miracles. Ctrl-click to toggle waddle dampeners."
+	desc = "For use in the court of miracles."
 	name = "laceup clown shoes"
 	icon_state = "clown_law"
 	inhand_icon_state = "clown_shoes_law"
