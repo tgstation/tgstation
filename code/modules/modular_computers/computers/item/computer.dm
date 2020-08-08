@@ -4,6 +4,12 @@
 /obj/item/modular_computer
 	name = "modular microcomputer"
 	desc = "A small portable microcomputer."
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "laptop-open"
+	light_on = FALSE
+	integrity_failure = 0.5
+	max_integrity = 100
+	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 
 	var/enabled = 0											// Whether the computer is turned on.
 	var/screen_on = 1										// Whether the computer is active/opened/it's screen is on.
@@ -22,18 +28,12 @@
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "laptop-open"
 	var/icon_state_unpowered = null							// Icon state when the computer is turned off.
 	var/icon_state_powered = null							// Icon state when the computer is turned on.
 	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
 	var/display_overlays = TRUE								// If FALSE, don't draw overlays on this device at all
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
-
-	integrity_failure = 0.5
-	max_integrity = 100
-	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 
 	// Important hardware (must be installed for computer to work)
 
@@ -44,7 +44,6 @@
 	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
 	var/has_light = FALSE						//If the computer has a flashlight/LED light/what-have-you installed
-	var/light_on = FALSE						//If that light is enabled
 	var/comp_light_luminosity = 3				//The brightness of that light
 	var/comp_light_color			//The color of that light
 

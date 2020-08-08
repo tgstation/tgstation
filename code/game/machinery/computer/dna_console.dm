@@ -340,7 +340,7 @@
 
 	return data
 
-/obj/machinery/computer/scan_consolenew/ui_act(action, var/list/params)
+/obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
 	if(..())
 		return TRUE
 

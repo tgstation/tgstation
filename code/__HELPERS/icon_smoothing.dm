@@ -265,9 +265,7 @@
 
 	var/area/target_area = get_area(target_turf)
 	var/area/source_area = get_area(source)
-	if(source_area.canSmoothWithAreas && !is_type_in_typecache(target_area, source_area.canSmoothWithAreas))
-		return null
-	if(target_area.canSmoothWithAreas && !is_type_in_typecache(source_area, target_area.canSmoothWithAreas))
+	if((source_area.area_limited_icon_smoothing || target_area.area_limited_icon_smoothing) && !istype(source_area, target_area.type) && !istype(target_area, source_area.type))
 		return null
 
 	if(source.canSmoothWith)
@@ -295,7 +293,7 @@
 		return A && A.type == source.type ? A : null
 
 //Icon smoothing helpers
-/proc/smooth_zlevel(var/zlevel, now = FALSE)
+/proc/smooth_zlevel(zlevel, now = FALSE)
 	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
 	for(var/V in away_turfs)
 		var/turf/T = V

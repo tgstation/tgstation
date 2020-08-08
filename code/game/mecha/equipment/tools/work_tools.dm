@@ -328,7 +328,7 @@
 
 
 
-/obj/item/mecha_parts/mecha_equipment/rcd/do_after_cooldown(var/atom/target)
+/obj/item/mecha_parts/mecha_equipment/rcd/do_after_cooldown(atom/target)
 	. = ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Topic(href,href_list)

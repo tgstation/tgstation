@@ -1592,7 +1592,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						if(H.stat == CONSCIOUS)
 							H.visible_message("<span class='danger'>[H] is knocked senseless!</span>", \
 											"<span class='userdanger'>You're knocked senseless!</span>")
-							H.confused = max(H.confused, 20)
+							H.set_confusion(max(H.get_confusion(), 20))
 							H.adjust_blurriness(10)
 						if(prob(10))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
