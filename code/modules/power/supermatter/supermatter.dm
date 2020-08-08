@@ -422,7 +422,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.player_list)
-		if(T.z == z)
+		var/turf/mob_turf = get_turf(M)
+		if(T.z == mob_turf.z)
 			SEND_SOUND(M, 'sound/magic/charge.ogg')
 
 			if (M.z == z)
