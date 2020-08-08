@@ -95,7 +95,7 @@
 		infection = new()
 		infection.Insert(C)
 
-datum/species/zombie/infectious/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/species/zombie/infectious/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	. = ..()
 	var/obj/item/bodypart/affecting = target.get_bodypart(BODY_ZONE_CHEST)
 	var/bite_block = target.run_armor_check(affecting, "bio")
