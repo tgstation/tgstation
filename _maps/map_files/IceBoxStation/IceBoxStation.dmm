@@ -4071,9 +4071,6 @@
 	},
 /obj/structure/closet/secure_closet/courtroom,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/warning/securearea{
-	pixel_x = -32
-	},
 /obj/item/gavelhammer,
 /turf/open/floor/plasteel,
 /area/security/courtroom)
@@ -53167,6 +53164,9 @@
 /obj/machinery/computer/warrant{
 	dir = 8
 	},
+/obj/structure/sign/departments/court{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "keQ" = (
@@ -55839,6 +55839,9 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/structure/sign/departments/court{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
