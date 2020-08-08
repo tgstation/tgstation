@@ -462,6 +462,9 @@
 /obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
 	if(possessed)
 		return
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		to_chat(user, "<span class='notice'>Anomalous otherworldly energies block you from awakening the blade!</span>")
+		return
 
 	to_chat(user, "<span class='notice'>You attempt to wake the spirit of the blade...</span>")
 

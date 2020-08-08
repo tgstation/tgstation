@@ -43,7 +43,7 @@
 
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).
-/atom/proc/set_opacity(var/new_opacity)
+/atom/proc/set_opacity(new_opacity)
 	if (new_opacity == opacity)
 		return
 
