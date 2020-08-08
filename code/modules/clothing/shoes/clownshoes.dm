@@ -12,7 +12,7 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
 	
-/obj/item/clothing/shoes/clown_shoes/Examine()
+/obj/item/clothing/shoes/clown_shoes/examine()
 	. = ..()
 	. += "<span class='notice'>Ctrl-click to toggle waddle dampeners.</span>"
 	
