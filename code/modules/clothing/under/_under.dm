@@ -49,6 +49,8 @@
 		M.update_inv_w_uniform()
 	if(damaged_state == CLOTHING_SHREDDED && has_sensor > NO_SENSORS)
 		has_sensor = BROKEN_SENSORS
+	else if(damaged_State == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
+		has_sensor = HAS_SENSORS
 
 /obj/item/clothing/under/Initialize()
 	. = ..()
