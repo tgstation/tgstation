@@ -404,8 +404,6 @@ Class Procs:
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
-				if(I == circuit)
-					circuit = null
 			component_parts.Cut()
 	return ..()
 
@@ -437,7 +435,7 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
-	else if(A == circuit)
+	if(A == circuit)
 		circuit = null
 	return ..()
 
@@ -595,6 +593,8 @@ Class Procs:
 	. = ..()
 	if (AM == occupant)
 		occupant = null
+	if(AM == circuit)
+		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
