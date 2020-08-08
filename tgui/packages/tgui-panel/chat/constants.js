@@ -4,8 +4,6 @@
  * @license MIT
  */
 
-import { createUuid } from 'common/uuid';
-
 export const MAX_VISIBLE_MESSAGES = 2500;
 export const MAX_PERSISTED_MESSAGES = 1000;
 export const MESSAGE_SAVE_INTERVAL = 10000;
@@ -23,12 +21,6 @@ export const MESSAGE_TYPES = [
     name: 'System Messages',
     description: 'Messages from your client, always enabled',
     selector: '.boldannounce, .filter_system',
-    important: true,
-  },
-  {
-    type: 'unknown',
-    name: 'Unsorted Messages',
-    description: 'Everything we could not sort, always enabled',
     important: true,
   },
   // Basic types
@@ -66,7 +58,7 @@ export const MESSAGE_TYPES = [
     type: 'ooc',
     name: 'OOC',
     description: 'The bluewall of global OOC messages',
-    selector: '.filter_ooc, .ooc',
+    selector: '.filter_ooc, .ooc, .adminooc',
   },
   {
     type: 'adminpm',
@@ -79,6 +71,11 @@ export const MESSAGE_TYPES = [
     name: 'Combat Log',
     description: 'Urist McTraitor has stabbed you with a knife!',
     selector: '.filter_combat, .danger',
+  },
+  {
+    type: 'unknown',
+    name: 'Unsorted',
+    description: 'Everything we could not sort, always enabled',
   },
   // Admin stuff
   {
@@ -124,16 +121,3 @@ export const MESSAGE_TYPES = [
     admin: true,
   },
 ];
-
-export const DEFAULT_PAGE = {
-  id: createUuid(),
-  name: 'Chat',
-  acceptedTypes: (() => {
-    const obj = {};
-    for (let typeDef of MESSAGE_TYPES) {
-      obj[typeDef.type] = true;
-    }
-    return obj;
-  })(),
-  count: 0,
-};

@@ -7,9 +7,9 @@
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
-import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, DEFAULT_PAGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE } from './constants';
-import { highlightNode, linkifyNode } from './node-utils';
-import { canPageAcceptType } from './selectors';
+import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES, PAGE_TEMPLATE } from './constants';
+import { canPageAcceptType, createMessage } from './model';
+import { highlightNode, linkifyNode } from './replaceInTextNode';
 
 const logger = createLogger('chatRenderer');
 
@@ -31,18 +31,6 @@ const findNearestScrollableParent = startingNode => {
   }
   return window;
 };
-
-export const createMessage = payload => ({
-  createdAt: Date.now(),
-  ...payload,
-});
-
-export const serializeMessage = message => ({
-  type: message.type,
-  text: message.text,
-  times: message.times,
-  createdAt: message.createdAt,
-});
 
 const createHighlightNode = (text, color) => {
   const node = document.createElement('span');
@@ -107,11 +95,12 @@ const updateMessageBadge = message => {
 class ChatRenderer {
   constructor() {
     /** @type {HTMLElement} */
+    this.loaded = false;
     this.rootNode = null;
     this.queue = [];
     this.messages = [];
     this.visibleMessages = [];
-    this.page = DEFAULT_PAGE;
+    this.page = null;
     this.events = new EventEmitter();
     // Scroll handler
     /** @type {HTMLElement} */
@@ -139,6 +128,10 @@ class ChatRenderer {
     setInterval(() => this.pruneMessages(), MESSAGE_PRUNE_INTERVAL);
   }
 
+  isReady() {
+    return this.loaded && this.rootNode && this.page;
+  }
+
   mount(node) {
     // Mount existing root node on top of the new node
     if (this.rootNode) {
@@ -155,7 +148,16 @@ class ChatRenderer {
       this.scrollToBottom();
     });
     // Flush the queue
-    if (this.queue.length > 0) {
+    this.tryFlushQueue();
+  }
+
+  onStateLoaded() {
+    this.loaded = true;
+    this.tryFlushQueue();
+  }
+
+  tryFlushQueue() {
+    if (this.isReady() && this.queue.length > 0) {
       this.processBatch(this.queue);
       this.queue = [];
     }
@@ -185,6 +187,11 @@ class ChatRenderer {
   }
 
   changePage(page) {
+    if (!this.isReady()) {
+      this.page = page;
+      this.tryFlushQueue();
+      return;
+    }
     this.page = page;
     // Fast clear of the root node
     this.rootNode.textContent = '';
@@ -233,15 +240,13 @@ class ChatRenderer {
       notifyListeners = true,
     } = options;
     const now = Date.now();
-    // Queue up messages until chat is mounted
-    if (!this.rootNode) {
-      for (let payload of batch) {
-        if (prepend) {
-          this.queue.unshift(payload);
-        }
-        else {
-          this.queue.push(payload);
-        }
+    // Queue up messages until chat is ready
+    if (!this.isReady()) {
+      if (prepend) {
+        this.queue = [...batch, ...this.queue];
+      }
+      else {
+        this.queue = [...this.queue, ...batch];
       }
       return;
     }
@@ -289,9 +294,9 @@ class ChatRenderer {
             imgNode.addEventListener('error', handleImageError);
           }
         }
-        // Store the node in the message
-        message.node = node;
       }
+      // Store the node in the message
+      message.node = node;
       // Query all possible selectors to find out the message type
       if (!message.type) {
         const typeDef = MESSAGE_TYPES.find(typeDef => (
@@ -330,23 +335,42 @@ class ChatRenderer {
   }
 
   pruneMessages() {
-    if (!this.rootNode) {
+    if (!this.isReady()) {
       return;
     }
-    const messages = this.visibleMessages;
-    const fromIndex = Math.max(0, messages.length - MAX_VISIBLE_MESSAGES);
-    this.visibleMessages = messages.slice(fromIndex);
-    for (let i = 0; i < fromIndex; i++) {
-      const message = messages[i];
-      this.rootNode.removeChild(message.node);
+    // Visible messages
+    {
+      const messages = this.visibleMessages;
+      const fromIndex = Math.max(0,
+        messages.length - MAX_VISIBLE_MESSAGES);
+      if (fromIndex > 0) {
+        this.visibleMessages = messages.slice(fromIndex);
+        for (let i = 0; i < fromIndex; i++) {
+          const message = messages[i];
+          this.rootNode.removeChild(message.node);
+          // Mark this message as pruned
+          message.node = 'pruned';
+        }
+        // Remove pruned messages from the message array
+        this.messages = this.messages.filter(message => (
+          message.node !== 'pruned'
+        ));
+        logger.log(`pruned ${fromIndex} visible messages`);
+      }
     }
-    if (fromIndex > 0) {
-      logger.log(`pruned ${fromIndex} messages`);
+    // All messages
+    {
+      const fromIndex = Math.max(0,
+        this.messages.length - MAX_PERSISTED_MESSAGES);
+      if (fromIndex > 0) {
+        this.messages = this.messages.slice(fromIndex);
+        logger.log(`pruned ${fromIndex} stored messages`);
+      }
     }
   }
 
   rebuildChat() {
-    if (!this.rootNode) {
+    if (!this.isReady()) {
       return;
     }
     // Make a copy of messages

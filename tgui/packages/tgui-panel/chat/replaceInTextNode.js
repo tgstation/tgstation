@@ -79,6 +79,7 @@ export const highlightNode = (
   let n = 0;
   const childNodes = node.childNodes;
   for (let node of childNodes) {
+    // Is a text node
     if (node.nodeType === 3) {
       n += replaceInTextNode(regex, createNode)(node);
     }
@@ -106,6 +107,7 @@ export const linkifyNode = node => {
   const childNodes = node.childNodes;
   for (let node of childNodes) {
     const tag = String(node.nodeName).toLowerCase();
+    // Is a text node
     if (node.nodeType === 3) {
       n += linkifyTextNode(node);
     }

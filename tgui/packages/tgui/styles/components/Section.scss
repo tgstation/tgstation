@@ -61,6 +61,11 @@ $shadow-offset: 0 0 !default;
   height: 100%;
 }
 
+.Section--scrollable {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
 .Section--fill .Section__content {
   flex-grow: 1;
 }

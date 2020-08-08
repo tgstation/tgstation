@@ -5,15 +5,14 @@
  */
 
 import { storage } from 'common/storage';
-import { createLogger } from 'tgui/logging';
 import { loadSettings, updateSettings } from '../settings/actions';
 import { selectSettings } from '../settings/selectors';
-import { changeChatPage, loadChat, rebuildChat, updateMessageCount } from './actions';
+import { addChatPage, changeChatPage, changeScrollTracking, loadChat, rebuildChat, toggleAcceptedType, updateMessageCount, removeChatPage } from './actions';
 import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
-import { chatRenderer, createMessage, serializeMessage } from './renderer';
-import { selectChat } from './selectors';
-
-const logger = createLogger('chat/middleware');
+import { createMessage, serializeMessage } from './model';
+import { chatRenderer } from './renderer';
+import { selectChat, selectCurrentChatPage } from './selectors';
+import { logger } from 'tgui/logging';
 
 const saveChatToStorage = async store => {
   const state = selectChat(store.getState());
@@ -21,37 +20,43 @@ const saveChatToStorage = async store => {
     chatRenderer.messages.length - MAX_PERSISTED_MESSAGES);
   const messages = chatRenderer.messages
     .slice(fromIndex)
-    .filter(message => message.type !== 'internal')
     .map(message => serializeMessage(message));
   storage.set('chat-state', state);
   storage.set('chat-messages', messages);
 };
 
 const loadChatFromStorage = async store => {
-  storage.get('chat-state').then(state => {
-    if (state) {
-      store.dispatch(loadChat(state));
-    }
-  });
-  storage.get('chat-messages').then(messages => {
-    if (messages) {
-      const batch = [
-        ...messages,
-        createMessage({
-          type: 'internal/reconnected',
-        }),
-      ];
-      chatRenderer.processBatch(batch, {
-        prepend: true,
-      });
-    }
-  });
+  const [state, messages] = await Promise.all([
+    storage.get('chat-state'),
+    storage.get('chat-messages'),
+  ]);
+  if (messages) {
+    const batch = [
+      ...messages,
+      createMessage({
+        type: 'internal/reconnected',
+      }),
+    ];
+    chatRenderer.processBatch(batch, {
+      prepend: true,
+    });
+  }
+  store.dispatch(loadChat(state));
 };
 
 export const chatMiddleware = store => {
   let initialized = false;
+  let loaded = false;
   chatRenderer.events.on('batchProcessed', countByType => {
-    store.dispatch(updateMessageCount(countByType));
+    // Use this flag to workaround unread messages caused by
+    // loading them from storage. Side effect of that, is that
+    // message count can not be trusted, only unread count.
+    if (loaded) {
+      store.dispatch(updateMessageCount(countByType));
+    }
+  });
+  chatRenderer.events.on('scrollTrackingChanged', scrollTracking => {
+    store.dispatch(changeScrollTracking(scrollTracking));
   });
   setInterval(() => saveChatToStorage(store), MESSAGE_SAVE_INTERVAL);
   return next => action => {
@@ -66,10 +71,22 @@ export const chatMiddleware = store => {
       chatRenderer.processBatch(batch);
       return;
     }
-    if (type === changeChatPage.type) {
-      const page = payload;
+    if (type === loadChat.type) {
+      next(action);
+      const page = selectCurrentChatPage(store.getState());
       chatRenderer.changePage(page);
-      return next(action);
+      chatRenderer.onStateLoaded();
+      loaded = true;
+      return;
+    }
+    if (type === changeChatPage.type
+        || type === addChatPage.type
+        || type === removeChatPage.type
+        || type === toggleAcceptedType.type) {
+      next(action);
+      const page = selectCurrentChatPage(store.getState());
+      chatRenderer.changePage(page);
+      return;
     }
     if (type === rebuildChat.type) {
       chatRenderer.rebuildChat();

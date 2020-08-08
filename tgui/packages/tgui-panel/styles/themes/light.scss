@@ -49,7 +49,7 @@
     'color-selected': #0668b8,
     'color-caution': #be6209,
     'color-danger': #9a9d00,
-    'text-color-transparent': rgba(0, 0, 0, 0.5),
+    'color-transparent-text': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('~tgui/styles/components/Input.scss', $with: (
     'border-color': colors.fg(colors.$label),

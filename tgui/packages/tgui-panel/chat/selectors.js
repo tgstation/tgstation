@@ -4,12 +4,12 @@
  * @license MIT
  */
 
-import { toArray } from 'common/collections';
+import { map } from 'common/collections';
 
 export const selectChat = state => state.chat;
 
 export const selectChatPages = state => (
-  toArray(state.chat.pageById)
+  map(id => state.chat.pageById[id])(state.chat.pages)
 );
 
 export const selectCurrentChatPage = state => (
@@ -18,8 +18,4 @@ export const selectCurrentChatPage = state => (
 
 export const selectChatPageById = id => state => (
   state.chat.pageById[id]
-);
-
-export const canPageAcceptType = (page, type) => (
-  type.startsWith('internal') || page.acceptedTypes[type]
 );

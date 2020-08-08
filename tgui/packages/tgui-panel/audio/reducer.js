@@ -5,6 +5,7 @@
  */
 
 const initialState = {
+  visible: false,
   playing: false,
   track: null,
 };
@@ -14,12 +15,14 @@ export const audioReducer = (state = initialState, action) => {
   if (type === 'audio/playing') {
     return {
       ...state,
+      visible: true,
       playing: true,
     };
   }
   if (type === 'audio/stopped') {
     return {
       ...state,
+      visible: false,
       playing: false,
     };
   }
@@ -32,8 +35,15 @@ export const audioReducer = (state = initialState, action) => {
   if (type === 'audio/stopMusic') {
     return {
       ...state,
+      visible: false,
       playing: false,
       meta: null,
+    };
+  }
+  if (type === 'audio/toggle') {
+    return {
+      ...state,
+      visible: !state.visible,
     };
   }
   return state;

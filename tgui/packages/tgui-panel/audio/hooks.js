@@ -4,9 +4,14 @@
  * @license MIT
  */
 
-import { useSelector } from 'common/redux';
+import { useSelector, useDispatch } from 'common/redux';
 import { selectAudio } from './selectors';
 
 export const useAudio = context => {
-  return useSelector(context, selectAudio);
+  const state = useSelector(context, selectAudio);
+  const dispatch = useDispatch(context);
+  return {
+    ...state,
+    toggle: () => dispatch({ type: 'audio/toggle' }),
+  };
 };

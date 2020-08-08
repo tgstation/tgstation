@@ -4,4 +4,13 @@
  * @license MIT
  */
 
-export const SETTINGS_VERSION = 1;
+export const SETTINGS_TABS = [
+  {
+    id: 'general',
+    name: 'General',
+  },
+  {
+    id: 'chat',
+    name: 'Chat Tabs',
+  },
+];

@@ -6,41 +6,29 @@
 
 import { toFixed } from 'common/math';
 import { useDispatch, useSelector } from 'common/redux';
-import { useLocalState } from 'tgui/backend';
 import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, NumberInput, Section, Tabs, TextArea } from 'tgui/components';
+import { ChatSettings } from '../chat';
 import { rebuildChat } from '../chat/actions';
-import { updateSettings } from './actions';
-import { selectSettings } from './selectors';
-
-const THEMES = ['light', 'dark'];
-
-const TABS = [
-  {
-    name: 'General',
-    component: () => SettingsGeneral,
-  },
-  {
-    name: 'Chat Tabs',
-    component: () => SettingsChatTabs,
-  },
-];
+import { THEMES } from '../themes';
+import { changeSettingsTab, updateSettings } from './actions';
+import { SETTINGS_TABS } from './constants';
+import { selectActiveTab, selectSettings } from './selectors';
 
 export const SettingsPanel = (props, context) => {
-  const [tabName, setTabName] = useLocalState(
-    context, 'settingsTab', TABS[0].name);
-  const TabContent = TABS
-    .find(tab => tab.name === tabName)
-    ?.component();
+  const activeTab = useSelector(context, selectActiveTab);
+  const dispatch = useDispatch(context);
   return (
     <Flex>
       <Flex.Item mr={1}>
         <Section fitted fill minHeight="8em">
           <Tabs vertical>
-            {TABS.map(tab => (
+            {SETTINGS_TABS.map(tab => (
               <Tabs.Tab
-                key={tab.name}
-                selected={tab.name === tabName}
-                onClick={() => setTabName(tab.name)}>
+                key={tab.id}
+                selected={tab.id === activeTab}
+                onClick={() => dispatch(changeSettingsTab({
+                  tabId: tab.id,
+                }))}>
                 {tab.name}
               </Tabs.Tab>
             ))}
@@ -48,7 +36,12 @@ export const SettingsPanel = (props, context) => {
         </Section>
       </Flex.Item>
       <Flex.Item grow={1} basis={0}>
-        <TabContent />
+        {activeTab === 'general' && (
+          <SettingsGeneral />
+        )}
+        {activeTab === 'chat' && (
+          <ChatSettings />
+        )}
       </Flex.Item>
     </Flex>
   );
@@ -80,7 +73,7 @@ export const SettingsGeneral = (props, context) => {
             step={1}
             stepPixelSize={10}
             minValue={8}
-            maxValue={48}
+            maxValue={32}
             value={fontSize}
             unit="px"
             format={value => toFixed(value)}
@@ -138,14 +131,6 @@ export const SettingsGeneral = (props, context) => {
           Can freeze the chat for a while.
         </Box>
       </Box>
-    </Section>
-  );
-};
-
-const SettingsChatTabs = (props, context) => {
-  return (
-    <Section fill>
-      {'COMING SOON™'}
     </Section>
   );
 };

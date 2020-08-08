@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+export { ChatSettings } from './ChatSettings';
 export { ChatPanel } from './ChatPanel';
 export { ChatTabs } from './ChatTabs';
 export { chatMiddleware } from './middleware';

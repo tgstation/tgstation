@@ -1,4 +1,16 @@
 /**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+export const THEMES = ['light', 'dark'];
+
+const COLOR_DARK_BG = '#202020';
+const COLOR_DARK_BG_DARKER = '#171717';
+const COLOR_DARK_TEXT = '#a4bad6';
+
+/**
  * Darkmode preference, originally by Kmc2000.
  *
  * This lets you switch client themes by using winset.
@@ -7,16 +19,7 @@
  *
  * There's no way round it. We're essentially changing the skin by hand.
  * It's painful but it works, and is the way Lummox suggested.
- *
- * @file
- * @copyright 2020 Aleksej Komarov
- * @license MIT
  */
-
-const COLOR_DARK_BG = '#202020';
-const COLOR_DARK_BG_DARKER = '#171717';
-const COLOR_DARK_TEXT = '#a4bad6';
-
 export const setClientTheme = name => {
   if (name === 'light') {
     return Byond.winset({

@@ -5,9 +5,16 @@
  */
 
 import { storage } from 'common/storage';
-import { setClientTheme } from '../theme';
+import { setClientTheme } from '../themes';
 import { loadSettings, updateSettings } from './actions';
 import { selectSettings } from './selectors';
+
+const setGlobalFontSize = fontSize => {
+  document.documentElement.style
+    .setProperty('font-size', fontSize + 'px');
+  document.body.style
+    .setProperty('font-size', fontSize + 'px');
+};
 
 export const settingsMiddleware = store => {
   let initialized = false;
@@ -16,14 +23,6 @@ export const settingsMiddleware = store => {
     if (!initialized) {
       initialized = true;
       storage.get('panel-settings').then(settings => {
-        if (!settings) {
-          return;
-        }
-        if (!settings.version) {
-          // Ignore previous settings, start clean.
-          storage.clear();
-          return;
-        }
         store.dispatch(loadSettings(settings));
       });
     }
@@ -35,8 +34,11 @@ export const settingsMiddleware = store => {
       }
       // Pass action to get an updated state
       next(action);
+      const settings = selectSettings(store.getState());
+      // Update global UI font size
+      setGlobalFontSize(settings.fontSize);
       // Save settings to the web storage
-      storage.set('panel-settings', selectSettings(store.getState()));
+      storage.set('panel-settings', settings);
       return;
     }
     return next(action);

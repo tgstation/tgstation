@@ -17,7 +17,7 @@ export const NowPlayingWidget = (props, context) => {
   const settings = useSettings(context);
   const title = audio.meta?.title;
   return (
-    <Flex mx={-0.5} align="center">
+    <Flex align="center">
       {audio.playing && (
         <Fragment>
           <Flex.Item

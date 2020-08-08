@@ -4,36 +4,69 @@
  * @license MIT
  */
 
-import { SETTINGS_VERSION } from './constants';
+import { changeSettingsTab, loadSettings, openChatSettings, toggleSettings, updateSettings } from './actions';
+import { SETTINGS_TABS } from './constants';
 
 const initialState = {
-  version: SETTINGS_VERSION,
+  version: 1,
   fontSize: 13,
   lineHeight: 1.2,
   theme: 'light',
   adminMusicVolume: 0.5,
   highlightText: '',
   highlightColor: '#ffdd44',
+  view: {
+    visible: false,
+    activeTab: SETTINGS_TABS[0].id,
+  },
 };
 
 export const settingsReducer = (state = initialState, action) => {
   const { type, payload } = action;
-  if (type === 'settings/update') {
+  if (type === updateSettings.type) {
     return {
       ...state,
       ...payload,
     };
   }
-  if (type === 'settings/load') {
-    const settings = payload;
+  if (type === loadSettings.type) {
+    // Validate version and/or migrate state
+    if (!payload?.version) {
+      return state;
+    }
+    delete payload.view;
     return {
       ...state,
-      fontSize: settings.fontSize,
-      lineHeight: settings.lineHeight,
-      theme: settings.theme,
-      adminMusicVolume: settings.adminMusicVolume,
-      highlightText: settings.highlightText,
-      highlightColor: settings.highlightColor,
+      ...payload,
+    };
+  }
+  if (type === toggleSettings.type) {
+    return {
+      ...state,
+      view: {
+        ...state.view,
+        visible: !state.view.visible,
+      },
+    };
+  }
+  if (type === openChatSettings.type) {
+    return {
+      ...state,
+      view: {
+        ...state.view,
+        visible: true,
+        activeTab: 'chat',
+      },
+    };
+  }
+  if (type === changeSettingsTab.type) {
+    const { tabId } = payload;
+    return {
+      ...state,
+      view: {
+        ...state.view,
+        activeTab: tabId,
+      },
     };
   }
   return state;

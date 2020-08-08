@@ -4,8 +4,6 @@
  * @license MIT
  */
 
-import { useSelector } from 'common/redux';
-import { useLocalState } from 'tgui/backend';
 import { Button, Flex, Section } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
 import { NowPlayingWidget, useAudio } from './audio';
@@ -19,10 +17,6 @@ export const Panel = (props, context) => {
   const audio = useAudio(context);
   const settings = useSettings(context);
   const game = useGame(context);
-  const [audioOpen, setAudioOpen] = useLocalState(
-    context, 'audioOpen', audio.playing);
-  const [settingsOpen, setSettingsOpen] = useLocalState(
-    context, 'settingsOpen', false);
   if (process.env.NODE_ENV !== 'production') {
     const { useDebug, KitchenSink } = require('tgui/debug');
     const debug = useDebug(context);
@@ -33,16 +27,14 @@ export const Panel = (props, context) => {
     }
   }
   return (
-    <Pane
-      theme={settings.theme}
-      fontSize={settings.fontSize + 'px'}>
+    <Pane theme={settings.theme}>
       <Flex
         direction="column"
         height="100%">
         <Flex.Item>
           <Section fitted>
             <Flex mx={0.5} align="center">
-              <Flex.Item mx={0.5} grow={1}>
+              <Flex.Item mx={0.5} grow={1} overflowX="auto">
                 <ChatTabs />
               </Flex.Item>
               <Flex.Item mx={0.5}>
@@ -51,27 +43,33 @@ export const Panel = (props, context) => {
               <Flex.Item mx={0.5}>
                 <Button
                   color="grey"
-                  selected={audioOpen || audio.playing}
+                  selected={audio.visible}
                   icon="music"
-                  onClick={() => setAudioOpen(!audioOpen)} />
+                  tooltip="Music player"
+                  tooltipPosition="bottom-left"
+                  onClick={() => audio.toggle()} />
               </Flex.Item>
               <Flex.Item mx={0.5}>
                 <Button
-                  icon="cog"
-                  selected={settingsOpen}
-                  onClick={() => setSettingsOpen(!settingsOpen)} />
+                  icon={settings.visible ? 'times' : 'cog'}
+                  selected={settings.visible}
+                  tooltip={settings.visible
+                    ? 'Close settings'
+                    : 'Open settings'}
+                  tooltipPosition="bottom-left"
+                  onClick={() => settings.toggle()} />
               </Flex.Item>
             </Flex>
           </Section>
         </Flex.Item>
-        {audioOpen && (
+        {audio.visible && (
           <Flex.Item mt={1}>
             <Section>
               <NowPlayingWidget />
             </Section>
           </Flex.Item>
         )}
-        {settingsOpen && (
+        {settings.visible && (
           <Flex.Item mt={1}>
             <SettingsPanel />
           </Flex.Item>
@@ -79,8 +77,7 @@ export const Panel = (props, context) => {
         <Flex.Item mt={1} grow={1}>
           <Section fill fitted position="relative">
             <Pane.Content scrollable>
-              <ChatPanel
-                lineHeight={settings.lineHeight} />
+              <ChatPanel lineHeight={settings.lineHeight} />
             </Pane.Content>
             <Notifications>
               {game.connectionLostAt && (
