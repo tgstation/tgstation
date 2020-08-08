@@ -89781,9 +89781,6 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dnf" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -89791,6 +89788,9 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/mechpad{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dng" = (
@@ -90809,9 +90809,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dpd" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/machinery/mechpad,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dpe" = (

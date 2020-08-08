@@ -30087,6 +30087,9 @@
 	dir = 1;
 	network = list("ss13","rd")
 	},
+/obj/machinery/computer/mechpad{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bsT" = (
@@ -52997,6 +53000,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"jFl" = (
+/obj/machinery/mechpad,
+/turf/open/floor/plasteel/white,
+/area/science/robotics/lab)
 "jHt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -102444,7 +102451,7 @@ blG
 biL
 cHV
 cIa
-biL
+jFl
 box
 buo
 bvc
