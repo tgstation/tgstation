@@ -2,7 +2,7 @@
 	title = "Cyborg"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = "Station"
-	total_positions = 0
+	total_positions = 1
 	spawn_positions = 1
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
