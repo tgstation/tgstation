@@ -404,6 +404,8 @@ Class Procs:
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
+				if(I == circuit)
+					circuit = null
 			component_parts.Cut()
 	return ..()
 
@@ -435,6 +437,8 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+	else if(A == circuit)
+		circuit = null
 	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
