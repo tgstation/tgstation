@@ -62,7 +62,7 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
-	if(!CHECK_BITFIELD(A.area_flags, BLOBS_ALLOWED))
+	if(!(A.area_flags & BLOBS_ALLOWED))
 		return FALSE
 	if(!A.power_equip)
 		return FALSE
