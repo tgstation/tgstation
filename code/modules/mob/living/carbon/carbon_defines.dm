@@ -78,7 +78,5 @@
 	/// All of the scars a carbon has afflicted throughout their limbs
 	var/list/all_scars
 
-	/// Maximum number of skillchips slots we can support before they stop working
-	var/max_skillchip_slots = 2
-	/// Currently used skillchip slots
-	var/used_skillchip_slots = 0
+	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.
+	var/skillchip_complexity_modifier = 0

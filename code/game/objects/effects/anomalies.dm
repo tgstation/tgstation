@@ -17,7 +17,10 @@
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
 
-/obj/effect/anomaly/Initialize(mapload, new_lifespan)
+	/// Do we drop a core when we're neutralized?
+	var/drops_core = TRUE
+
+/obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
 	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
@@ -25,6 +28,8 @@
 
 	if (!impact_area)
 		return INITIALIZE_HINT_QDEL
+
+	src.drops_core = drops_core
 
 	aSignal = new aSignal(src)
 	aSignal.code = rand(1,100)
@@ -54,6 +59,8 @@
 	GLOB.poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
+	if(aSignal)
+		QDEL_NULL(aSignal)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
@@ -70,8 +77,10 @@
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/smoke/bad(loc)
 
-	for(var/atom/movable/O in src)
-		O.forceMove(drop_location())
+	if(drops_core)
+		aSignal.forceMove(drop_location())
+		aSignal = null
+	// else, anomaly core gets deleted by qdel(src).
 
 	qdel(src)
 

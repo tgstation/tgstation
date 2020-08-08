@@ -456,9 +456,7 @@
 		var/mob/living/L = target
 		if(L.reagents && L.can_inject(null, 0))
 			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
-			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
-			G.reagents.expose(L, INJECT, fraction)
-			G.reagents.trans_to(L, injecting_amount)
+			G.reagents.trans_to(L, injecting_amount, method = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
 

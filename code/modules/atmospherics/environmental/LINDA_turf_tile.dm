@@ -33,6 +33,9 @@
 	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
+	#ifdef TRACK_MAX_SHARE
+	var/max_share = 0
+	#endif
 
 /turf/open/Initialize()
 	if(!blocks_air)
@@ -144,7 +147,18 @@
 			.[gastype] = TRUE
 
 /////////////////////////////SIMULATION///////////////////////////////////
-
+#ifdef TRACK_MAX_SHARE
+#define LAST_SHARE_CHECK \
+	var/last_share = our_air.last_share;\
+	max_share = max(last_share, max_share);\
+	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
+		our_excited_group.reset_cooldowns();\
+		cached_atmos_cooldown = 0;\
+	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
+		our_excited_group.dismantle_cooldown = 0;\
+		cached_atmos_cooldown = 0;\
+	}
+#else
 #define LAST_SHARE_CHECK \
 	var/last_share = our_air.last_share;\
 	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
@@ -154,6 +168,7 @@
 		our_excited_group.dismantle_cooldown = 0;\
 		cached_atmos_cooldown = 0;\
 	}
+#endif
 
 /turf/proc/process_cell(fire_count)
 	SSair.remove_from_active(src)
@@ -175,6 +190,10 @@
 		adjacent_turfs_length++
 
 	var/datum/gas_mixture/our_air = air
+
+	#ifdef TRACK_MAX_SHARE
+	max_share = 0 //Gotta reset our tracker
+	#endif
 
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t
@@ -281,6 +300,9 @@
 	var/list/turf_list = list()
 	var/breakdown_cooldown = 0
 	var/dismantle_cooldown = 0
+	var/should_display = FALSE
+	var/display_id = 0
+	var/static/wrapping_id = 0
 
 /datum/excited_group/New()
 	SSair.excited_groups += src
@@ -289,6 +311,8 @@
 	turf_list += T
 	T.excited_group = src
 	reset_cooldowns()
+	if(should_display || SSair.display_all_groups)
+		display_turf(T)
 
 /datum/excited_group/proc/merge_groups(datum/excited_group/E)
 	if(turf_list.len > E.turf_list.len)
@@ -297,6 +321,10 @@
 			var/turf/open/T = t
 			T.excited_group = src
 			turf_list += T
+		should_display = E.should_display | should_display
+		if(should_display || SSair.display_all_groups)
+			E.hide_turfs()
+			display_turfs()
 		reset_cooldowns()
 	else
 		SSair.excited_groups -= src
@@ -305,6 +333,10 @@
 			T.excited_group = E
 			E.turf_list += T
 		E.reset_cooldowns()
+		E.should_display = E.should_display | should_display
+		if(E.should_display || SSair.display_all_groups)
+			hide_turfs()
+			E.display_turfs()
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
@@ -347,14 +379,41 @@
 		T.excited = FALSE
 		T.excited_group = null
 		SSair.active_turfs -= T
+		#ifdef VISUALIZE_ACTIVE_TURFS //Use this when you want details about how the turfs are moving, display_all_groups should work for normal operation
+		T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
+		#endif
 	garbage_collect()
 
 /datum/excited_group/proc/garbage_collect()
+	if(display_id) //If we ever did make those changes
+		hide_turfs()
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.excited_group = null
 	turf_list.Cut()
 	SSair.excited_groups -= src
+
+/datum/excited_group/proc/display_turfs()
+	if(display_id == 0) //Hasn't been shown before
+		wrapping_id = wrapping_id % GLOB.colored_turfs.len
+		wrapping_id++ //We do this after because lists index at 1
+		display_id = wrapping_id
+	for(var/thing in turf_list)
+		var/turf/display = thing
+		display.vis_contents += GLOB.colored_turfs[display_id]
+
+/datum/excited_group/proc/hide_turfs()
+	for(var/thing in turf_list)
+		var/turf/display = thing
+		display.vis_contents -= GLOB.colored_turfs[display_id]
+	display_id = 0
+
+/datum/excited_group/proc/display_turf(turf/thing)
+	if(display_id == 0) //Hasn't been shown before
+		wrapping_id = wrapping_id % GLOB.colored_turfs.len
+		wrapping_id++ //We do this after because lists index at 1
+		display_id = wrapping_id
+	thing.vis_contents += GLOB.colored_turfs[display_id]
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 /turf/proc/conductivity_directions()

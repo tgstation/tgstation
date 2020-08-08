@@ -43,7 +43,7 @@
 
 /obj/item/pitchfork/demonic/Initialize()
 	. = ..()
-	set_light(3,6,LIGHT_COLOR_RED)
+	set_light(3,6,COLOR_SOFT_RED)
 
 /obj/item/pitchfork/demonic/ComponentInitialize()
 	. = ..()
