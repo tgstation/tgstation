@@ -37,7 +37,7 @@
 	usr.emote("me",1,message,TRUE)
 
 ///Speak as a dead person (ghost etc)
-/mob/proc/say_dead(var/message)
+/mob/proc/say_dead(message)
 	var/name = real_name
 	var/alt_name = ""
 

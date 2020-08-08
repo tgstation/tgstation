@@ -754,7 +754,7 @@
 	target_mind.traitor_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/show_skill_panel(var/target)
+/datum/admins/proc/show_skill_panel(target)
 	set category = "Admin - Game"
 	set desc = "Edit mobs's experience and skill levels"
 	set name = "Show Skill Panel"
