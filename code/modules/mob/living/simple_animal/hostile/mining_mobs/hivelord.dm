@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
-		for(var/i in 0 to difficulty)
+		for(var/i in 1 to difficulty)
 			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
 
 			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
