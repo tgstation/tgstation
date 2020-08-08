@@ -22,7 +22,6 @@
 								 "voice sensor")
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
-	var/volume = 40
 
 /obj/item/assembly/voice/examine(mob/user)
 	. = ..()
@@ -82,7 +81,7 @@
 /obj/item/assembly/voice/proc/send_pulse()
 	visible_message("clicks", visible_message_flags = EMOTE_MESSAGE)
 	playsound(src, 'licensed_sound/Sampling-Plus-1.0/whirthunk.ogg', 30)
-	addtimer(CALLBACK(src, .proc/pulse, 0), 20)
+	addtimer(CALLBACK(src, .proc/pulse), 20)
 
 /obj/item/assembly/voice/multitool_act(mob/living/user, obj/item/I)
 	..()
