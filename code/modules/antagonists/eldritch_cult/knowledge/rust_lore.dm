@@ -197,12 +197,13 @@
   */
 /datum/rust_spread/proc/compile_turfs()
 	edge_turfs = list()
+	var/list/removal_list = list()
 	var/max_dist = 1
 	for(var/X in turfs)
 		if(!istype(X,/turf/closed/wall/rust) && !istype(X,/turf/closed/wall/r_wall/rust) && !istype(X,/turf/open/floor/plating/rust))
-			turfs -=X
+			removal_list +=X
 		max_dist = max(max_dist,get_dist(X,centre)+1)
-
+	turfs -= removal_list
 	for(var/X in spiral_range_turfs(max_dist,centre,FALSE))
 		if(X in turfs || is_type_in_typecache(X,blacklisted_turfs))
 			continue
