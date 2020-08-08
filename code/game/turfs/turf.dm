@@ -1,6 +1,8 @@
 GLOBAL_LIST_EMPTY(station_turfs)
 /turf
 	icon = 'icons/turf/floors.dmi'
+	flags_1 = CAN_BE_DIRTY_1
+	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE // Important for interaction with and visualization of openspace.
 
 	var/intact = 1
 
@@ -17,8 +19,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/blocks_air = FALSE
 
-	flags_1 = CAN_BE_DIRTY_1
-
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
 	var/explosion_level = 0	//for preventing explosion dodging
@@ -34,7 +34,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/tiled_dirt = FALSE // use smooth tiled dirt decal
 
-	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE	// Important for interaction with and visualization of openspace.
+	///Icon-smoothing variable to map a diagonal wall corner with a fixed underlay.
+	var/list/fixed_underlay = null
+
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -59,8 +61,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	assemble_baseturfs()
 
 	levelupdate()
-	if(smooth)
-		queue_smooth(src)
+	if(smoothing_flags)
+		QUEUE_SMOOTH(src)
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
@@ -133,6 +135,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/multiz_turf_del(turf/T, dir)
 
 /turf/proc/multiz_turf_new(turf/T, dir)
+
+///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi.
+/turf/proc/is_blocked_turf(exclude_mobs)
+	if(density)
+		return TRUE
+	for(var/i in contents)
+		var/atom/thing = i
+		if(thing.density && (!exclude_mobs || !ismob(thing)))
+			return TRUE
+	return FALSE
 
 //zPassIn doesn't necessarily pass an atom!
 //direction is direction of travel of air
@@ -373,7 +385,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 //////////////////////////////
 
 //Distance associates with all directions movement
-/turf/proc/Distance(var/turf/T)
+/turf/proc/Distance(turf/T)
 	return get_dist(src,T)
 
 //  This Distance proc assumes that only cardinal movement is
@@ -389,7 +401,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/singularity_act()
 	if(intact)
 		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
-			if(O.invisibility == INVISIBILITY_MAXIMUM)
+			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 				O.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
@@ -447,7 +459,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	underlay_appearance.dir = adjacency_dir
 	return TRUE
 
-/turf/proc/add_blueprints(var/atom/movable/AM)
+/turf/proc/add_blueprints(atom/movable/AM)
 	var/image/I = new
 	I.appearance = AM.appearance
 	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
@@ -473,6 +485,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		acid_type = /obj/effect/acid/alien
 	var/has_acid_effect = FALSE
 	for(var/obj/O in src)
+		if(intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+			return
 		if(istype(O, acid_type))
 			var/obj/effect/acid/A = O
 			A.acid_level = min(acid_volume * acidpwr, 12000)//capping acid level to limit power of the acid
@@ -549,10 +563,23 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Handles exposing a turf to reagents.
 /turf/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
-	. = ..()
-	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
+	if((. = ..()) & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
-		. |= R.expose_turf(src, reagents[R] || (R.volume * volume_modifier))
+		. |= R.expose_turf(src, reagents[R])
+
+/**
+  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
+  */
+/turf/wash(clean_types)
+	. = ..()
+
+	for(var/am in src)
+		if(am == src)
+			continue
+		var/atom/movable/movable_content = am
+		if(!ismopable(movable_content))
+			continue
+		movable_content.wash(clean_types)

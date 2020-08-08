@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "DNA Console will no longer bluescreen in certain scenarios when disks are ejected."

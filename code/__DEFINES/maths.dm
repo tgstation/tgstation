@@ -23,7 +23,8 @@
 #define REALTIMEOFDAY (world.timeofday + (MIDNIGHT_ROLLOVER * MIDNIGHT_ROLLOVER_CHECK))
 #define MIDNIGHT_ROLLOVER_CHECK ( GLOB.rollovercheck_last_timeofday != world.timeofday ? update_midnight_rollover() : GLOB.midnight_rollovers )
 
-#define SIGN(x) ( (x)!=0 ? (x) / abs(x) : 0 )
+/// Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive
+#define SIGN(x) ( ((x) > 0) - ((x) < 0) )
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 

@@ -1,4 +1,0 @@
-author: "tmtmtl30"
-delete-after: True
-changes: 
-  - bugfix: "stopped midround dynamic families ruleset from picking mindshielded starting family members"

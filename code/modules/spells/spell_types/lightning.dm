@@ -5,7 +5,7 @@
 	charge_max	= 300
 	clothes_req = TRUE
 	invocation = "UN'LTD P'WAH!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 7
 	cooldown_min = 30
 	selection_type = "view"

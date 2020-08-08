@@ -3,6 +3,7 @@
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
 	inhand_icon_state = null	//so the human update icon uses the icon_state instead.
+	worn_icon_state = null
 	shaded_charge = TRUE
 	can_flashlight = TRUE
 	w_class = WEIGHT_CLASS_HUGE
@@ -19,7 +20,6 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
-	worn_icon_state = "ioncarbine"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	pin = null
@@ -128,7 +128,7 @@
 	flags_1 = CONDUCT_1
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	can_charge = FALSE
 
 	heat = 3800

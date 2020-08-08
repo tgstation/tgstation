@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paint sprayer"
 	inhand_icon_state = "paint sprayer"
-
+	worn_icon_state = "painter"
 	w_class = WEIGHT_CLASS_SMALL
 
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
@@ -150,7 +150,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
 	inhand_icon_state = "decalsprayer"
-	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	var/stored_dir = 2
 	var/stored_color = ""
 	var/stored_decal = "warningline"
@@ -174,13 +174,7 @@
 		to_chat(user, "<span class='notice'>You need to get closer!</span>")
 		return
 	if(use_paint(user) && isturf(F))
-		F.AddComponent(/datum/component/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_STRONG, color, null, null, alpha)
-
-/obj/item/airlock_painter/decal/attack_self(mob/user)
-	if((ink) && (ink.charges >= 1))
-		to_chat(user, "<span class='notice'>[src] beeps to prevent you from removing the toner until out of charges.</span>")
-		return
-	. = ..()
+		F.AddComponent(/datum/component/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_TYPE_PAINT, color, null, null, alpha)
 
 /obj/item/airlock_painter/decal/AltClick(mob/user)
 	. = ..()
@@ -197,10 +191,10 @@
 	stored_decal_total = "[stored_decal][yellow_fix][stored_color]"
 	return
 
-/obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/airlock_painter/decal/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "DecalPainter", name, 500, 400, master_ui, state)
+		ui = new(user, src, "DecalPainter", name)
 		ui.open()
 
 /obj/item/airlock_painter/decal/ui_data(mob/user)

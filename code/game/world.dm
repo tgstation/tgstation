@@ -23,6 +23,9 @@ GLOBAL_VAR(restart_counter)
 	if (fexists(extools))
 		call(extools, "maptick_initialize")()
 	enable_debugger()
+#ifdef REFERENCE_TRACKING
+	enable_reference_tracking()
+#endif
 
 	//Early profile for auto-profiler - will be stopped on profiler init if necessary.
 #if DM_BUILD >= 1506
@@ -74,8 +77,9 @@ GLOBAL_VAR(restart_counter)
 
 	Master.Initialize(10, FALSE, TRUE)
 
-	if(TEST_RUN_PARAMETER in params)
-		HandleTestRun()
+	#ifdef UNIT_TESTS
+	HandleTestRun()
+	#endif
 
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
@@ -92,7 +96,7 @@ GLOBAL_VAR(restart_counter)
 #else
 	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
 #endif
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/addtimer, cb, 10 SECONDS))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/_addtimer, cb, 10 SECONDS))
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
@@ -250,9 +254,10 @@ GLOBAL_VAR(restart_counter)
 
 	TgsReboot()
 
-	if(TEST_RUN_PARAMETER in params)
-		FinishTestRun()
-		return
+	#ifdef UNIT_TESTS
+	FinishTestRun()
+	return
+	#endif
 
 	if(TgsAvailable())
 		var/do_hard_reboot

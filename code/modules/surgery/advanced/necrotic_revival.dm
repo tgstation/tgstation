@@ -22,7 +22,6 @@
 	time = 50
 	chems_needed = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 	require_all_chems = FALSE
-	experience_given = MEDICAL_SKILL_ADVANCED
 
 /datum/surgery_step/bionecrosis/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to grow a romerol tumor on [target]'s brain...</span>",

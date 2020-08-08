@@ -30,6 +30,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
+	/client/proc/ghost_pool_protection,	/*opens a menu for toggling ghost roles*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
@@ -165,11 +166,17 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
 	/client/proc/reload_configuration,
+	/client/proc/atmos_control,
 	/client/proc/reload_cards,
 	/client/proc/validate_cards,
 	/client/proc/test_cardpack_distribution,
 	/client/proc/print_cards,
 	/datum/admins/proc/create_or_modify_area,
+#ifdef REFERENCE_TRACKING
+	/datum/admins/proc/view_refs,
+	/datum/admins/proc/view_del_failures,
+#endif
+	/client/proc/check_timer_sources
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -554,6 +561,13 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
+/client/proc/atmos_control()
+	set name = "Atmos Control Panel"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	SSair.ui_interact(mob)
+
 /client/proc/reload_cards()
 	set name = "Reload Cards"
 	set category = "Debug"
@@ -758,7 +772,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
-	if(mob && IsAdminGhost(mob))
+	if(mob && isAdminGhostAI(mob))
 		mob.has_unlimited_silicon_privilege = AI_Interact
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")

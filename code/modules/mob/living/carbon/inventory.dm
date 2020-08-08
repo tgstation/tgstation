@@ -170,10 +170,10 @@
 					"<span class='notice'>You offer [receiving]</span>", null, 2)
 	for(var/mob/living/carbon/C in orange(1, src))
 		if(!CanReach(C))
-			return
+			continue
 		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
 		if(!G)
-			return
+			continue
 		G.setup(C, src, receiving)
 
 /**
@@ -197,7 +197,8 @@
 		to_chat(src, "<span class='warning'>You have no empty hands!</span>")
 		return
 	if(!giver.temporarilyRemoveItemFromInventory(I))
-		visible_message("<span class='notice'>[src] tries to hand over [I] but it's stuck to them....", \
-						"<span class'notice'> You make a fool of yourself trying to give away an item stuck to your hands")
+		visible_message("<span class='notice'>[giver] tries to hand over [I] but it's stuck to them....</span>")
 		return
+	visible_message("<span class='notice'>[src] takes [I] from [giver]</span>", \
+					"<span class='notice'>You take [I] from [giver]</span>")
 	put_in_hands(I)

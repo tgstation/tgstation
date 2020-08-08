@@ -51,7 +51,7 @@
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	var/on_hit_state = P.on_hit(src, armor)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
-		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness=P.sharpness)
+		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness)
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
@@ -80,14 +80,16 @@
 
 		dtype = I.damtype
 		if(!blocked)
-			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
-							"<span class='userdanger'>You're hit by [I]!</span>")
-			if(!I.throwforce)
-				return
-			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-			apply_damage(I.throwforce, dtype, zone, armor, sharpness=I.sharpness)
 			if(I.thrownby)
 				log_combat(I.thrownby, src, "threw and hit", I)
+			if(!nosell_hit)
+				visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
+								"<span class='userdanger'>You're hit by [I]!</span>")
+				if(!I.throwforce)
+					return
+				var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
+				apply_damage(I.throwforce, dtype, zone, armor, sharpness=I.get_sharpness(), wound_bonus=(nosell_hit * CANT_WOUND))
+
 		else
 			return 1
 	else
@@ -441,8 +443,7 @@
   * If the method is VAPOR it incorporates permiability protection.
   */
 /mob/living/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
-	. = ..()
-	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
+	if((. = ..()) & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
 	if(method == INGEST)
@@ -451,4 +452,4 @@
 	var/touch_protection = (method == VAPOR) ? get_permeability_protection() : 0
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
-		. |= R.expose_mob(src, method, reagents[R] || (R.volume * volume_modifier), show_message, touch_protection)
+		. |= R.expose_mob(src, method, reagents[R], show_message, touch_protection)

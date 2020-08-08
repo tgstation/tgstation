@@ -41,7 +41,7 @@
 /datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
 		return
-	if(!M.has_dna() || (HAS_TRAIT(M, TRAIT_RADIMMUNE) || HAS_TRAIT(M, TRAIT_BADDNA)))
+	if(!M.has_dna() || HAS_TRAIT(M, TRAIT_GENELESS) || HAS_TRAIT(M, TRAIT_BADDNA))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
@@ -107,6 +107,23 @@
 		M.adjust_fire_stacks(reac_volume / 5)
 		return
 	..()
+
+/datum/reagent/toxin/hot_ice
+	name = "Hot Ice Slush"
+	description = "Frozen plasma, worth its weight in gold, to the right people"
+	reagent_state = SOLID
+	color = "#724cb8" // rgb: 114, 76, 184
+	taste_description = "thick and smokey"
+	specific_heat = SPECIFIC_HEAT_PLASMA
+	toxpwr = 3
+	material = /datum/material/hot_ice
+
+/datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/M)
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+	M.adjustPlasma(20)
+	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
+	return ..()
 
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
@@ -204,7 +221,7 @@
 		return TRUE
 	switch(current_cycle)
 		if(1 to 5)
-			M.confused += 1
+			M.add_confusion(1)
 			M.drowsyness += 1
 			M.slurring += 3
 		if(5 to 8)
@@ -361,7 +378,7 @@
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
 		if(1 to 10)
-			M.confused += 2
+			M.add_confusion(2)
 			M.drowsyness += 2
 		if(10 to 50)
 			M.Sleeping(40, 0)
@@ -872,7 +889,7 @@
 	name = "Nitric acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
-	toxpwr = 2
+	toxpwr = 3
 	acidpwr = 5.0
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
@@ -932,7 +949,7 @@
 			if(1)
 				M.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 			if(2)
-				M.emote("me", 1, pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+				M.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
 			if(3)
 				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
 	return ..()
@@ -945,7 +962,7 @@
 			playsound(M, get_sfx("desecration"), 50, TRUE, -1)
 			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
 			M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
-			bp.receive_damage(0, 0, 200)
+			bp.receive_damage(20, 0, 200, wound_bonus = rand(30, 130))
 		else //SUCH A LUST FOR REVENGE!!!
 			to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
 			M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
@@ -962,7 +979,7 @@
 
 /datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3)
-	M.confused = M.dizziness //add a tertiary effect here if this is isn't an effective poison.
+	M.set_confusion(M.dizziness) //add a tertiary effect here if this is isn't an effective poison.
 	if(current_cycle >= 12 && prob(8))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
 		to_chat(M, "<span class='notice'>[tox_message]</span>")
@@ -983,5 +1000,5 @@
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN,1)
 	if(prob(1))
 		to_chat(M, "<span class='notice'>Ah, what was that? You thought you heard something...</span>")
-		M.confused += 5
+		M.add_confusion(5)
 	return ..()

@@ -1,13 +1,10 @@
 /datum/computer_file/program/shipping
 	filename = "shipping"
-	filedesc = "Nanotrasen Shipping Scanner"
+	filedesc = "GrandArk Exporter"
 	program_icon_state = "shipping"
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
-	network_destination = "ship scanner"
 	size = 6
 	tgui_id = "NtosShipping"
-	ui_x = 450
-	ui_y = 350
 	///Account used for creating barcodes.
 	var/datum/bank_account/payments_acc
 	///The amount which the tagger will receive for the sale.

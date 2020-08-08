@@ -1,8 +1,6 @@
 /datum/job/cook
 	title = "Cook"
-	flag = COOK
 	department_head = list("Head of Personnel")
-	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 1
@@ -18,6 +16,7 @@
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_COOK
+	bounty_types = CIV_JOB_CHEF
 
 /datum/outfit/job/cook
 	name = "Cook"

@@ -1,3 +1,6 @@
+/// Max number of atoms a broom can sweep at once
+#define BROOM_PUSH_LIMIT 20
+
 /obj/item/pushbroom
 	name = "push broom"
 	desc = "This is my BROOMSTICK! It can be used manually or braced with two hands to sweep items as you move. It has a telescopic handle for compact storage."
@@ -25,12 +28,24 @@
 /obj/item/pushbroom/update_icon_state()
 	icon_state = "broom0"
 
-/// triggered on wield of two handed item
+/**
+  * Handles registering the sweep proc when the broom is wielded
+  *
+  * Arguments:
+  * * source - The source of the on_wield proc call
+  * * user - The user which is wielding the broom
+  */
 /obj/item/pushbroom/proc/on_wield(obj/item/source, mob/user)
 	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/sweep)
 
-/// triggered on unwield of two handed item
+/**
+  * Handles unregistering the sweep proc when the broom is unwielded
+  *
+  * Arguments:
+  * * source - The source of the on_unwield proc call
+  * * user - The user which is unwielding the broom
+  */
 /obj/item/pushbroom/proc/on_unwield(obj/item/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
@@ -40,20 +55,21 @@
 		return
 	sweep(user, A, FALSE)
 
+/**
+  * Attempts to push up to BROOM_PUSH_LIMIT atoms from a given location the user's faced direction
+  *
+  * Arguments:
+  * * user - The user of the pushbroom
+  * * A - The atom which is located at the location to push atoms from
+  * * moving - Boolean argument declaring if the sweep is from generated from movement or not
+  */
 /obj/item/pushbroom/proc/sweep(mob/user, atom/A, moving = TRUE)
-	var/turf/target
-	if (!moving)
-		if (isturf(A))
-			target = A
-		else
-			target = A.loc
-	else
-		target = user.loc
+	var/turf/target = moving ? user.loc : (isturf(A) ? A : A.loc)
 	if (!isturf(target))
 		return
 	if (locate(/obj/structure/table) in target.contents)
 		return
-	var/i = 0
+	var/i = 1
 	var/turf/target_turf = get_step(target, user.dir)
 	var/obj/machinery/disposal/bin/target_bin = locate(/obj/machinery/disposal/bin) in target_turf.contents
 	for(var/obj/item/garbage in target.contents)
@@ -63,15 +79,29 @@
 			else
 				garbage.Move(target_turf, user.dir)
 			i++
-		if(i > 19)
+		if(i > BROOM_PUSH_LIMIT)
 			break
-	if(i > 0)
+	if(i > 1)
 		if (target_bin)
 			target_bin.update_icon()
 			to_chat(user, "<span class='notice'>You sweep the pile of garbage into [target_bin].</span>")
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
+/**
+  * Attempts to insert the push broom into a janicart
+  *
+  * Arguments:
+  * * user - The user of the push broom
+  * * J - The janicart to insert into
+  */
 /obj/item/pushbroom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta
 	J.put_in_cart(src, user)
 	J.mybroom=src
 	J.update_icon()
+
+/obj/item/pushbroom/cyborg
+	name = "robotic push broom"
+
+/obj/item/pushbroom/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	to_chat(user, "<span class='notice'>You cannot place your [src] into the [J]</span>")
+	return FALSE

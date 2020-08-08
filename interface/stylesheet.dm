@@ -61,7 +61,10 @@ h1.alert, h2.alert		{color: #000000;}
 .emote					{					font-style: italic;}
 
 .userdanger				{color: #ff0000;	font-weight: bold;	font-size: 3;}
+.danger					{color: #ff0000;	font-weight: bold;}
 .danger					{color: #ff0000;}
+.tinydanger				{color: #ff0000; font-size: 85%;}
+.smalldanger			{color: #ff0000; font-size: 90%;}
 .warning				{color: #ff0000;	font-style: italic;}
 .boldwarning			{color: #ff0000;	font-style: italic;	font-weight: bold}
 .announce				{color: #228b22;	font-weight: bold;}
@@ -70,6 +73,9 @@ h1.alert, h2.alert		{color: #000000;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
+.tinynotice				{color: #000099; font-size: 85%;}
+.smallnotice			{color: #000099; font-size: 90%;}
+.smallnoticeital		{color: #000099; font-style: italic;	font-size: 90%;}
 .boldnotice				{color: #000099;	font-weight: bold;}
 .hear					{color: #000099;	font-style: italic;}
 .adminnotice			{color: #0000ff;}
@@ -87,6 +93,7 @@ h1.alert, h2.alert		{color: #000000;}
 .hierophant_warning		{color: #660099;	font-style: italic;}
 .purple					{color: #5e2d79;}
 .holoparasite			{color: #35333a;}
+.bounty					{color: #ab6613;	font-style: italic;}
 
 .revennotice			{color: #1d2953;}
 .revenboldnotice		{color: #1d2953;	font-weight: bold;}

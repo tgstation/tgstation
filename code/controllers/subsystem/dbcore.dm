@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(dbcore)
 	flags = SS_BACKGROUND
 	wait = 1 MINUTES
 	init_order = INIT_ORDER_DBCORE
-	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
 	var/failed_connection_timeout = 0
 
 	var/schema_mismatch = 0
@@ -68,7 +67,7 @@ SUBSYSTEM_DEF(dbcore)
 	if(failed_connection_timeout <= world.time) //it's been more than 5 seconds since we failed to connect, reset the counter
 		failed_connections = 0
 
-	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect for 5 seconds.
+	if(failed_connections > 5)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect for 5 seconds.
 		failed_connection_timeout = world.time + 50
 		return FALSE
 
@@ -89,7 +88,6 @@ SUBSYSTEM_DEF(dbcore)
 		"user" = user,
 		"pass" = pass,
 		"db_name" = db,
-		"max_threads" = 5,
 		"read_timeout" = timeout,
 		"write_timeout" = timeout,
 		"max_threads" = thread_limit,
@@ -339,7 +337,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	. = run_query(async)
 	var/timed_out = !. && findtext(last_error, "Operation timed out")
 	if(!. && log_error)
-		log_sql("[last_error] | Query used: [sql]")
+		log_sql("[last_error] | Query used: [sql] | Arguments: [json_encode(arguments)]")
 	if(!async && timed_out)
 		log_query_debug("Query execution started at [start_time]")
 		log_query_debug("Query execution ended at [REALTIMEOFDAY]")

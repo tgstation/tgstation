@@ -7,7 +7,9 @@ export const AtmosFilter = (props, context) => {
   const { act, data } = useBackend(context);
   const filterTypes = data.filter_types || [];
   return (
-    <Window>
+    <Window
+      width={390}
+      height={187}>
       <Window.Content>
         <Section>
           <LabeledList>

@@ -56,12 +56,10 @@
 		. += "[head.icon_state]+o"
 
 /obj/item/robot_suit/proc/check_completion()
-	if(src.l_arm && src.r_arm)
-		if(src.l_leg && src.r_leg)
-			if(src.chest && src.head)
-				SSblackbox.record_feedback("amount", "cyborg_frames_built", 1)
-				return 1
-	return 0
+	if(l_arm && r_arm && l_leg && r_leg && head && head.flash1 && head.flash2 && chest && chest.wired && chest.cell)
+		SSblackbox.record_feedback("amount", "cyborg_frames_built", 1)
+		return TRUE
+	return FALSE
 
 /obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
 	. = ..()

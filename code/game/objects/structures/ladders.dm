@@ -5,6 +5,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
 	anchored = TRUE
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	var/obj/structure/ladder/down   //the ladder below this one
 	var/obj/structure/ladder/up     //the ladder above this one
 	/// Optional travel time for ladder in deciseconds

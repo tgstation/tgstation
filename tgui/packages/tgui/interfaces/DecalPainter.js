@@ -8,7 +8,9 @@ export const DecalPainter = (props, context) => {
   const color_list = data.color_list || [];
   const dir_list = data.dir_list || [];
   return (
-    <Window>
+    <Window
+      width={500}
+      height={400}>
       <Window.Content>
         <Section title="Decal Type">
           {decal_list.map(decal => (
