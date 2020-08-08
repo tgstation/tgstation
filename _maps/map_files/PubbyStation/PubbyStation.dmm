@@ -59053,6 +59053,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
+"xkU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/crew_quarters/fitness/recreation";
+	dir = 8;
+	name = "Recreation Area APC";
+	pixel_x = -25
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
 "xlA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/purple{
@@ -104326,8 +104337,8 @@ aaa
 aiT
 akn
 ato
-aiS
-aiS
+ale
+xkU
 atn
 pMt
 qLz

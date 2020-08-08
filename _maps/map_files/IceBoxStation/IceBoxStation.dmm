@@ -8879,10 +8879,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
-"auC" = (
-/obj/machinery/light/small,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "auD" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -57617,7 +57613,7 @@
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/starboard/fore)
 "wSn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -98251,7 +98247,7 @@ cxW
 anf
 aqv
 anf
-auC
+anf
 anf
 anf
 anf
