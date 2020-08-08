@@ -44850,6 +44850,11 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
+"clK" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/mob/living/simple_animal/mouse/brown/tom,
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "clL" = (
 /turf/closed/wall,
 /area/tcommsat/computer)
@@ -80086,7 +80091,7 @@ aeF
 aeV
 afq
 afF
-agb
+clK
 agb
 agA
 agA

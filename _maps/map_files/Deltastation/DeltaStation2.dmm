@@ -112658,7 +112658,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
 "jwH" = (
-/mob/living/simple_animal/mouse/brown,
+/mob/living/simple_animal/mouse/brown/tom,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "jAK" = (
