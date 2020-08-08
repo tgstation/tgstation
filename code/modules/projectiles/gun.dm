@@ -93,6 +93,8 @@
 		QDEL_NULL(chambered)
 	if(azoom)
 		QDEL_NULL(azoom)
+	if(suppressed)
+		QDEL_NULL(suppressed)
 	return ..()
 
 /obj/item/gun/handle_atom_del(atom/A)
@@ -105,7 +107,16 @@
 		clear_bayonet()
 	if(A == gun_light)
 		clear_gunlight()
+	if(A == suppressed)
+		clear_suppressor()
 	return ..()
+
+///Clears var and updates icon. In the case of ballistic weapons, also updates the gun's weight.
+/obj/item/gun/proc/clear_suppressor()
+	if(!can_unsuppress)
+		return
+	suppressed = null
+	update_icon()
 
 /obj/item/gun/examine(mob/user)
 	. = ..()

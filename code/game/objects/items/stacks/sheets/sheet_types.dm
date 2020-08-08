@@ -108,6 +108,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	point_value = 2
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
+	matter_amount = 4
 
 /obj/item/stack/sheet/metal/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -167,6 +168,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	point_value = 23
 	tableVariant = /obj/structure/table/reinforced
 	material_flags = MATERIAL_NO_EFFECTS
+	matter_amount = 12
 
 /obj/item/stack/sheet/plasteel/get_main_recipes()
 	. = ..()

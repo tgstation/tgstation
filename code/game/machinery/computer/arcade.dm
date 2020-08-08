@@ -62,8 +62,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	icon_keyboard = "no_keyboard"
 	icon_screen = "invaders"
-	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
+	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()
 	return
@@ -1424,7 +1424,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 
 //Add Random/Specific crewmember
-/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(var/specific = "")
+/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(specific = "")
 	var/newcrew = ""
 	if(specific)
 		newcrew = specific

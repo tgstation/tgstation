@@ -15,7 +15,7 @@
 	grav_pull = 5 //How many tiles out do we pull?
 	light_power = 0.7
 	light_range = 15
-	light_color = rgb(255, 0, 0)
+	light_color = COLOR_RED
 	gender = FEMALE
 
 /obj/singularity/narsie/large
@@ -126,7 +126,7 @@
 /proc/ending_helper()
 	SSticker.force_ending = 1
 
-/proc/cult_ending_helper(var/ending_type = 0)
+/proc/cult_ending_helper(ending_type = 0)
 	if(ending_type == 2) //narsie fukkin died
 		Cinematic(CINEMATIC_CULT_FAIL,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
 	else if(ending_type) //no explosion

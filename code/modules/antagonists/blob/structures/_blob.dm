@@ -52,7 +52,7 @@
 /obj/structure/blob/blob_act()
 	return
 
-/obj/structure/blob/Adjacent(var/atom/neighbour)
+/obj/structure/blob/Adjacent(atom/neighbour)
 	. = ..()
 	if(.)
 		var/result = 0

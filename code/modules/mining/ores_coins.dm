@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
-	C.confused += 5
+	C.add_confusion(5)
 	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
 	qdel(src)
 
@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(loc)
 		forceMove(loc, rand(0,16)-8, rand(0,8)-8)
 
-/obj/item/coin/set_custom_materials(var/list/materials, multiplier = 1)
+/obj/item/coin/set_custom_materials(list/materials, multiplier = 1)
 	. = ..()
 	value = 0
 	for(var/i in custom_materials)

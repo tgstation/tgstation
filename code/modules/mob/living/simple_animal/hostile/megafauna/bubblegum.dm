@@ -74,6 +74,7 @@ Difficulty: Hard
 							   /datum/action/innate/megafauna_attack/hallucination_surround,
 							   /datum/action/innate/megafauna_attack/blood_warp)
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
+	faction = list("mining", "boss", "hell")
 
 /datum/action/innate/megafauna_attack/triple_charge
 	name = "Triple Charge"
@@ -335,12 +336,12 @@ Difficulty: Hard
 	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
 	addtimer(cb, enrage_time)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(var/newcolor = rgb(149, 10, 10))
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(newcolor = rgb(149, 10, 10))
 	update_approach()
 	change_move_delay()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/change_move_delay(var/newmove = initial(move_to_delay))
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/change_move_delay(newmove = initial(move_to_delay))
 	move_to_delay = newmove
 	set_varspeed(move_to_delay)
 	handle_automated_action() // need to recheck movement otherwise move_to_delay won't update until the next checking aka will be wrong speed for a bit

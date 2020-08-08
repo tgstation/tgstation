@@ -393,7 +393,7 @@
 
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = 0
-	M.confused = 0
+	M.set_confusion(0)
 	M.disgust = 0
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 	..()

@@ -183,20 +183,22 @@
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/machinery/new_machine = new circuit.build_path(loc)
-					if(new_machine.circuit)
-						QDEL_NULL(new_machine.circuit)
-					new_machine.circuit = circuit
-					new_machine.set_anchored(anchored)
-					new_machine.on_construction()
-					for(var/obj/O in new_machine.component_parts)
-						qdel(O)
-					new_machine.component_parts = list()
-					for(var/obj/O in src)
-						O.moveToNullspace()
-						new_machine.component_parts += O
-					circuit.moveToNullspace()
-					new_machine.RefreshParts()
+					var/obj/potential_machine = new circuit.build_path(loc)
+					if(ismachinery(potential_machine))
+						var/obj/machinery/new_machine = potential_machine
+						if(new_machine.circuit)
+							QDEL_NULL(new_machine.circuit)
+						new_machine.circuit = circuit
+						new_machine.set_anchored(anchored)
+						new_machine.on_construction()
+						for(var/obj/O in new_machine.component_parts)
+							qdel(O)
+						new_machine.component_parts = list()
+						for(var/obj/O in src)
+							O.moveToNullspace()
+							new_machine.component_parts += O
+						circuit.moveToNullspace()
+						new_machine.RefreshParts()
 					qdel(src)
 				return
 

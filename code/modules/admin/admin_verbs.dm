@@ -30,6 +30,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
+	/client/proc/ghost_pool_protection,	/*opens a menu for toggling ghost roles*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
@@ -166,6 +167,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
 	/client/proc/reload_configuration,
+	/client/proc/atmos_control,
 	/client/proc/reload_cards,
 	/client/proc/validate_cards,
 	/client/proc/test_cardpack_distribution,
@@ -559,6 +561,13 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	GLOB.DYN_EX_SCALE = ex_scale
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
+
+/client/proc/atmos_control()
+	set name = "Atmos Control Panel"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	SSair.ui_interact(mob)
 
 /client/proc/reload_cards()
 	set name = "Reload Cards"

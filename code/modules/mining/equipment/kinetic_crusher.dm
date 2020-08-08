@@ -20,12 +20,12 @@
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
+	light_on = FALSE
 	var/list/trophies = list()
 	var/charged = TRUE
 	var/charge_time = 15
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
-	var/light_on = FALSE
 	var/brightness_on = 5
 	var/wielded = FALSE // track wielded status on item
 
@@ -147,7 +147,7 @@
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, TRUE)
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
-	light_on = !light_on
+	set_light_on(!light_on)
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_brightness(user)
 	update_icon()

@@ -92,6 +92,19 @@
 	/// Last appearance of the atom for demo saving purposes
 	var/image/demo_last_appearance
 
+	///Range of the light in tiles. Zero means no light.
+	var/light_range = 0
+	///Intensity of the light. The stronger, the less shadows you will see on the lit area.
+	var/light_power = 1
+	///Hexadecimal RGB string representing the colour of the light. White by default.
+	var/light_color = COLOR_WHITE
+	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
+	var/light_on = TRUE
+	///Our light source. Don't fuck with this directly unless you have a good reason!
+	var/tmp/datum/light_source/light
+	///Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
+	var/tmp/list/light_sources
+
 	/// Last name used to calculate a color for the chatmessage overlays
 	var/chat_color_name
 	/// Last color calculated for the the chatmessage overlays
@@ -1476,5 +1489,5 @@
   *
   * Use this if an atom needs to attempt to charge another atom.
   */
-/atom/proc/attempt_charge(var/atom/sender, var/atom/target, var/extra_fees = 0)
+/atom/proc/attempt_charge(atom/sender, atom/target, extra_fees = 0)
 	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)

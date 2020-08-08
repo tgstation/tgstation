@@ -176,7 +176,7 @@
 /mob/living/simple_animal/hostile/morph/LoseAggro()
 	vision_range = initial(vision_range)
 
-/mob/living/simple_animal/hostile/morph/AIShouldSleep(var/list/possible_targets)
+/mob/living/simple_animal/hostile/morph/AIShouldSleep(list/possible_targets)
 	. = ..()
 	if(.)
 		var/list/things = list()

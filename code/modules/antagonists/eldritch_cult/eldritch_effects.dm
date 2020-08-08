@@ -162,7 +162,7 @@
   *
   * Use this whenever you want to add someone to the list
   */
-/datum/reality_smash_tracker/proc/AddMind(var/datum/mind/M)
+/datum/reality_smash_tracker/proc/AddMind(datum/mind/M)
 	RegisterSignal(M.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
 	targets |= M
 	_Generate()
@@ -176,14 +176,14 @@
   *
   * Use this whenever you want to remove someone from the list
   */
-/datum/reality_smash_tracker/proc/RemoveMind(var/datum/mind/M)
+/datum/reality_smash_tracker/proc/RemoveMind(datum/mind/M)
 	UnregisterSignal(M.current,COMSIG_MOB_LOGIN)
 	targets -= M
 	for(var/obj/effect/reality_smash/RS in smashes)
 		RS.RemoveMind(M)
 
 /obj/effect/broken_illusion
-	name = "Pierced reality"
+	name = "pierced reality"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
 	anchored = TRUE
@@ -198,7 +198,7 @@
 	else
 		var/obj/item/bodypart/arm = human_user.get_active_hand()
 		if(prob(25))
-			to_chat(human_user,"<span class='userdanger'>Otherwordly presence tears your arm aparts into atoms as you try to touch the hole in the very fabric of reality!</span>")
+			to_chat(human_user,"<span class='userdanger'>An otherwordly presence tears and atomizes your arm as you try to touch the hole in the very fabric of reality!</span>")
 			arm.dismember()
 			qdel(arm)
 		else
@@ -266,7 +266,7 @@
 	new /obj/effect/broken_illusion(drop_location()[1])
 
 ///Makes the mind able to see this effect
-/obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)
+/obj/effect/reality_smash/proc/AddMind(datum/mind/cultie)
 	minds |= cultie
 	if(cultie.current.client)
 		cultie.current.client.images |= img
@@ -274,7 +274,7 @@
 
 
 ///Makes the mind not able to see this effect
-/obj/effect/reality_smash/proc/RemoveMind(var/datum/mind/cultie)
+/obj/effect/reality_smash/proc/RemoveMind(datum/mind/cultie)
 	minds -= cultie
 	if(cultie.current.client)
 		cultie.current.client.images -= img

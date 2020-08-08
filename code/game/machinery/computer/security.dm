@@ -5,6 +5,7 @@
 	icon_keyboard = "security_key"
 	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/secure_data
+	light_color = COLOR_SOFT_RED
 	var/rank = null
 	var/screen = null
 	var/datum/data/record/active1 = null
@@ -18,7 +19,6 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
-	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"

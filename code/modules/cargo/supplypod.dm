@@ -80,7 +80,7 @@
 	landingDelay = 20 //Very speedy!
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/structure/closet/supplypod/Initialize(var/turf/spawn_location)
+/obj/structure/closet/supplypod/Initialize(turf/spawn_location)
 	. = ..()
 	if (!spawn_location)
 		var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding] //temporary holder for supplypods mid-transit

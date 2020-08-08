@@ -170,6 +170,7 @@ Class Procs:
 		for(var/atom/A in component_parts)
 			qdel(A)
 		component_parts.Cut()
+	QDEL_NULL(circuit)
 	return ..()
 
 /obj/machinery/proc/locate_machinery()

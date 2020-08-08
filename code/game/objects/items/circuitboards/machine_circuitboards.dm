@@ -1149,7 +1149,7 @@
 
 /obj/item/circuitboard/machine/bepis
 	name = "BEPIS Chamber (Machine Board)"
-	icon_state = "cargo"
+	icon_state = "supply"
 	build_path = /obj/machinery/rnd/bepis
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,

@@ -171,7 +171,7 @@
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = dna.unique_enzymes
-		if(disease_resistances && disease_resistances.len)
+		if(LAZYLEN(disease_resistances))
 			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()
 		for(var/datum/reagent/R in reagents.reagent_list)

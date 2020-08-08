@@ -339,7 +339,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 //////////////////////////////
 
 //Distance associates with all directions movement
-/turf/proc/Distance(var/turf/T)
+/turf/proc/Distance(turf/T)
 	return get_dist(src,T)
 
 //  This Distance proc assumes that only cardinal movement is
@@ -413,7 +413,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	underlay_appearance.dir = adjacency_dir
 	return TRUE
 
-/turf/proc/add_blueprints(var/atom/movable/AM)
+/turf/proc/add_blueprints(atom/movable/AM)
 	var/image/I = new
 	I.appearance = AM.appearance
 	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM

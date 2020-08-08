@@ -380,7 +380,7 @@
 	return 1
 
 //used for projectile initilisation (priming flashbang) and additional logging
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proc/proj_init(var/obj/O)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proc/proj_init(obj/O)
 	return
 
 
@@ -398,7 +398,7 @@
 	var/det_time = 20
 	ammo_type = "flashbang"
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/grenade/flashbang/F)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(obj/item/grenade/flashbang/F)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
@@ -451,7 +451,7 @@
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/assembly/mousetrap/armed/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
 
 

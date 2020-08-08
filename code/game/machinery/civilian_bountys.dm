@@ -3,6 +3,7 @@
 	name = "civilian bounty pad"
 	desc = "A machine designed to send civilian bounty targets to centcom."
 	layer = TABLE_LAYER
+	resistance_flags = FIRE_PROOF
 
 ///Computer for assigning new civilian bounties, and sending bounties for collection.
 /obj/machinery/computer/piratepad_control/civilian
@@ -19,11 +20,11 @@
 	pad = /obj/machinery/piratepad/civilian
 
 /obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
 	if(isidcard(I))
 		if(id_insert(user, I, inserted_scan_id))
 			inserted_scan_id = I
 			return TRUE
+	return ..()
 
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))

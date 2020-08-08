@@ -139,7 +139,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap/attack_ghost(mob/user)
 	. = ..()
-	if(.)
+	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
 	humanize_plant(user)
 

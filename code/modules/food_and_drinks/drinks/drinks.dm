@@ -47,8 +47,7 @@
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	checkLiked(fraction, M)
-	reagents.expose(M, INGEST, fraction)
-	reagents.trans_to(M, gulp_size, transfered_by = user)
+	reagents.trans_to(M, gulp_size, transfered_by = user, method = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	if(iscarbon(M))
 		var/mob/living/carbon/carbon_drinker = M

@@ -69,7 +69,7 @@
 		var/turf/T = get_turf(src)
 		scrub(T.return_air())
 
-/obj/machinery/portable_atmospherics/scrubber/proc/scrub(var/datum/gas_mixture/mixture)
+/obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/mixture)
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
 		return
 
