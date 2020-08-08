@@ -133,10 +133,10 @@ Difficulty: Hard
 	var/turf/orgin = get_turf(src)
 	var/list/all_turfs = RANGE_TURFS(range, orgin)
 	for(var/i = 0 to range)
+		playsound(T,'sound/effects/bamf.ogg', 600, TRUE, 10)
 		for(var/turf/T in all_turfs)
 			if(get_dist(orgin, T) > i)
 				continue
-			playsound(T,'sound/effects/bamf.ogg', 600, TRUE, 10)
 			new /obj/effect/temp_visual/small_smoke/halfsecond(T)
 			for(var/mob/living/L in T)
 				if(L == src || L.throwing)
@@ -153,7 +153,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/heavy_stomp()
 	can_move = FALSE
 	ground_slam(5, 2)
-	SetRecoveryTime(0, 0)
+	SetRecoveryTime(0)
 	can_move = TRUE
 
 /// Teleports to a location 4 turfs away from the enemy in view
@@ -171,12 +171,14 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/shockwave_scream()
 	can_move = FALSE
 	last_scream = world.time
+	SLEEP_CHECK_DEATH(5)
 	playsound(src, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
-	animate(src, pixel_z = rand(5, 15), time = 1, loop = 6)
+	animate(src, pixel_z = rand(5, 15), time = 1, loop = 12)
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
 		L.Dizzy(6)
 		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
+	SLEEP_CHECK_DEATH(5)
 	spiral_attack()
 	SetRecoveryTime(60)
 	SLEEP_CHECK_DEATH(30)
@@ -195,17 +197,18 @@ Difficulty: Hard
 					var/obj/projectile/wendigo_shockwave/P = new /obj/projectile/wendigo_shockwave(src.loc)
 					P.firer = src
 					P.fire(angle)
-				SLEEP_CHECK_DEATH(8)
+				SLEEP_CHECK_DEATH(4)
 		if("Spiral")
-			for(var/shot in 1 to 30)
-				var/angle = shot * 22.5
-				var/obj/projectile/wendigo_shockwave/P = new /obj/projectile/wendigo_shockwave(src.loc)
-				P.firer = src
-				P.fire(angle)
-				P = new /obj/projectile/wendigo_shockwave(src.loc)
-				P.firer = src
-				P.fire(angle + 180)
-				SLEEP_CHECK_DEATH(3)
+			var/shots_spiral = 30
+			for(var/shot in 1 to shots_spiral)
+				var/angle = shot * 11.25
+				var/shots_per_tick = 4
+				for(var/count in 1 to shots_per_tick)
+					angle += count * 360 / shots_per_tick
+					var/obj/projectile/wendigo_shockwave/P = new /obj/projectile/wendigo_shockwave(src.loc)
+					P.firer = src
+					P.fire(angle % 360)
+				SLEEP_CHECK_DEATH(1)
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
 	if(health > 0)

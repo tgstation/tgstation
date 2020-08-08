@@ -2,8 +2,10 @@
 "a" = (
 /turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
-"c" = (
-/obj/structure/ladder,
+"b" = (
+/obj/structure/ladder{
+	travel_time = 40
+	},
 /turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "d" = (
@@ -28,12 +30,17 @@
 /obj/item/kitchen/knife/combat/survival,
 /turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
+"l" = (
+/turf/closed/indestructible/rock/snow/ice/ore,
+/area/icemoon/underground/explored)
 "T" = (
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
 /turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"
+d
+d
 d
 d
 d
@@ -68,17 +75,19 @@ d
 d
 d
 d
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
 d
 d
 d
@@ -93,6 +102,9 @@ d
 d
 d
 d
+l
+l
+l
 a
 a
 a
@@ -104,9 +116,8 @@ a
 a
 a
 a
-a
-a
-a
+l
+l
 d
 d
 d
@@ -119,6 +130,8 @@ d
 d
 d
 d
+l
+l
 a
 a
 a
@@ -133,8 +146,8 @@ a
 a
 a
 a
-a
-a
+l
+l
 d
 d
 d
@@ -145,6 +158,8 @@ d
 d
 d
 d
+l
+l
 a
 a
 a
@@ -161,8 +176,8 @@ a
 a
 a
 a
-a
-a
+l
+l
 d
 d
 d
@@ -171,6 +186,8 @@ d
 (6,1,1) = {"
 d
 d
+l
+l
 a
 a
 a
@@ -189,8 +206,8 @@ a
 a
 a
 a
-a
-a
+l
+l
 d
 d
 d
@@ -198,6 +215,7 @@ d
 (7,1,1) = {"
 d
 d
+l
 a
 a
 a
@@ -218,12 +236,15 @@ a
 a
 a
 a
-a
+l
+l
 d
 d
 "}
 (8,1,1) = {"
 d
+l
+l
 a
 a
 a
@@ -245,12 +266,13 @@ a
 a
 a
 a
-a
+l
 d
 d
 "}
 (9,1,1) = {"
 d
+l
 a
 a
 a
@@ -273,11 +295,13 @@ a
 a
 a
 a
-a
+l
+l
 d
 "}
 (10,1,1) = {"
 d
+l
 a
 a
 a
@@ -301,10 +325,12 @@ a
 a
 a
 a
+l
 d
 "}
 (11,1,1) = {"
 d
+l
 a
 a
 a
@@ -328,10 +354,12 @@ a
 a
 a
 a
+l
 d
 "}
 (12,1,1) = {"
 d
+l
 a
 a
 a
@@ -355,10 +383,12 @@ a
 a
 a
 a
+l
 d
 "}
 (13,1,1) = {"
 d
+l
 a
 a
 a
@@ -382,10 +412,41 @@ a
 a
 a
 a
+l
 d
 "}
 (14,1,1) = {"
 d
+l
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+l
+d
+"}
+(15,1,1) = {"
+d
+l
 a
 a
 a
@@ -409,37 +470,12 @@ a
 a
 a
 a
-d
-"}
-(15,1,1) = {"
-d
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+l
 d
 "}
 (16,1,1) = {"
 d
+l
 a
 a
 a
@@ -463,10 +499,12 @@ a
 a
 a
 a
+l
 d
 "}
 (17,1,1) = {"
 d
+l
 a
 a
 a
@@ -490,10 +528,12 @@ a
 a
 a
 a
+l
 d
 "}
 (18,1,1) = {"
 d
+l
 a
 a
 a
@@ -507,7 +547,6 @@ a
 a
 a
 a
-c
 a
 a
 a
@@ -517,10 +556,13 @@ a
 a
 a
 a
+a
+l
 d
 "}
 (19,1,1) = {"
 d
+l
 a
 a
 a
@@ -534,6 +576,7 @@ a
 a
 a
 a
+b
 a
 a
 a
@@ -543,11 +586,12 @@ a
 a
 a
 a
-a
+l
 d
 "}
 (20,1,1) = {"
 d
+l
 a
 a
 a
@@ -571,10 +615,12 @@ a
 a
 a
 a
+l
 d
 "}
 (21,1,1) = {"
 d
+l
 a
 a
 a
@@ -598,10 +644,12 @@ a
 a
 a
 a
+l
 d
 "}
 (22,1,1) = {"
 d
+l
 a
 a
 a
@@ -625,10 +673,12 @@ a
 a
 a
 a
+l
 d
 "}
 (23,1,1) = {"
 d
+l
 a
 a
 a
@@ -651,12 +701,43 @@ a
 a
 a
 a
-d
+a
+l
 d
 "}
 (24,1,1) = {"
 d
+l
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+l
+l
 d
+"}
+(25,1,1) = {"
+d
+l
+l
 a
 a
 a
@@ -677,14 +758,16 @@ a
 a
 a
 a
-d
+l
+l
 d
 d
 "}
-(25,1,1) = {"
+(26,1,1) = {"
 d
 d
-d
+l
+l
 a
 a
 a
@@ -703,16 +786,18 @@ a
 a
 a
 a
-d
+l
+l
 d
 d
 d
 "}
-(26,1,1) = {"
+(27,1,1) = {"
 d
 d
 d
-d
+l
+l
 a
 a
 a
@@ -729,34 +814,8 @@ a
 a
 a
 a
-d
-d
-d
-d
-d
-"}
-(27,1,1) = {"
-d
-d
-d
-d
-d
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-d
-d
+l
+l
 d
 d
 d
@@ -767,9 +826,39 @@ d
 d
 d
 d
+l
+l
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+l
+l
 d
 d
 d
+d
+d
+"}
+(29,1,1) = {"
+d
+d
+d
+d
+d
+l
+l
+l
 a
 a
 a
@@ -781,6 +870,36 @@ a
 a
 a
 a
+l
+l
+d
+d
+d
+d
+d
+d
+"}
+(30,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
+l
 d
 d
 d
@@ -789,7 +908,9 @@ d
 d
 d
 "}
-(29,1,1) = {"
+(31,1,1) = {"
+d
+d
 d
 d
 d
