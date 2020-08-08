@@ -296,6 +296,7 @@
 				recycler.use_power(500)
 				X.monkeys += recycler.cube_production
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+				M.moveToNullspace()						// Prevents monkey staying there giving unlimited monkeys if the gc is busy
 				qdel(M)
 				to_chat(owner, "<span class='notice'>[X] now has [X.monkeys] monkeys available.</span>")
 	else
