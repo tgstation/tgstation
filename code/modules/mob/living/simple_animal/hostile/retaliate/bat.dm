@@ -63,3 +63,5 @@
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	turns_per_move = 10
+	pet_bonus = TRUE
+	pet_bonus_emote = "chitters proudly!"

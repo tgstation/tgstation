@@ -232,6 +232,8 @@
 	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
+	pet_bonus = TRUE
+	pet_bonus_emote = "bloops happily!"
 
 /mob/living/simple_animal/hostile/carp/cayenne/lia
 	name = "Lia"
