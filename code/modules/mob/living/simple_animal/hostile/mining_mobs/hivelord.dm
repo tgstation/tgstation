@@ -38,7 +38,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
 		for(var/i in 1 to difficulty)
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(get_turf(src),src)
 
 			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 			A.GiveTarget(target)
@@ -89,9 +89,11 @@
 	pass_flags = PASSTABLE | PASSMOB
 	density = FALSE
 	del_on_death = 1
+	var/mob/source
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize(_source)
 	. = ..()
+	source = source
 	addtimer(CALLBACK(src, .proc/death), 100)
 	AddComponent(/datum/component/swarming)
 
@@ -424,10 +426,11 @@
 	icon_aggro = "disfigured_legion_head"
 	icon_dead = "disfigured_legion_head"
 
+
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/crystal/death(gibbed)
 	for(var/i in 0 to 5)
 		var/obj/projectile/P = new /obj/projectile/goliath(get_turf(src))
 		P.preparePixelProjectile(get_step(src, pick(GLOB.alldirs)), get_turf(src))
-		P.firer = src
+		P.firer = source
 		P.fire(i*(360/5))
 	return ..()

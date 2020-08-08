@@ -278,19 +278,22 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/crystal/OpenFire()
 	. = ..()
-	var/list/turfslist = spiral_range_turfs(5,src,TRUE)
 	visible_message("<span class='warning'>[src] Expunges it's matter releasing a spray of crystalline shards!</span>")
+	INVOKE_ASYNC(src,.proc/spray_of_crystals)
+	shoot_projectile(Get_Angle(src,target) + 10)
+	shoot_projectile(Get_Angle(src,target))
+	shoot_projectile(Get_Angle(src,target) - 10)
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/crystal/proc/spray_of_crystals()
 	for(var/i in 0 to 9)
-		var/turf/current_turf = get_turf(src)
-		var/obj/projectile/P = new /obj/projectile/goliath(current_turf)
-		var/turf/chosen_turf = pick(turfslist)
-		playsound(src, projectilesound, 100, TRUE)
-		P.starting = current_turf
-		P.firer = src
-		P.fired_from = src
-		P.original = chosen_turf
-		P.preparePixelProjectile(chosen_turf, src)
-		P.fire()
+		shoot_projectile(i*(180/NUM_E))
+		sleep(3)
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/crystal/proc/shoot_projectile(angle)
+	var/obj/projectile/P = new /obj/projectile/goliath(get_turf(src))
+	P.preparePixelProjectile(get_step(src, pick(GLOB.alldirs)), get_turf(src))
+	P.firer = src
+	P.fire(angle)
 
 /obj/projectile/goliath
 	name = "Crystalline Shard"
@@ -303,3 +306,8 @@
 	. = ..()
 	var/turf/turf_hit = get_turf(target)
 	new /obj/effect/temp_visual/goliath_tentacle/crystal(turf_hit,firer)
+
+/obj/projectile/goliath/can_hit_target(atom/target, list/passthrough, direct_target, ignore_loc)
+	if(istype(target,/mob/living/simple_animal/hostile/asteroid))
+		return FALSE
+	return ..()

@@ -45,6 +45,15 @@
 	flag = "energy"
 	temperature = -50 // Cools you down! per hit!
 
+/obj/projectile/temp/basilisk/super
+	temperature = -100
+
+/obj/projectile/temp/basilisk/super/on_hit(atom/target, blocked)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/living_target = target
+		living_target.Jitter(5)
+
 /obj/projectile/temp/basilisk/heated
 	name = "energy blast"
 	icon_state= "chronobolt"
@@ -211,3 +220,20 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
 	fromtendril = TRUE
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/forgotten
+	name = "forgotten watcher"
+	desc = "Corrupted, twisted, slaughtered, this watcher has seen the comet in it's full glory forever scarring it and deforming it into this twisted form."
+	icon_state = "forgotten"
+	icon_living = "forgotten"
+	icon_aggro = "forgotten"
+	icon_dead = "forgotten_dead"
+	aggro_vision_range = 10
+	vision_range = 5
+	maxHealth = 250
+	health = 250
+	melee_damage_lower = 25
+	melee_damage_upper = 25
+	speed = 1
+	projectiletype = /obj/projectile/temp/basilisk/super
+	ranged_cooldown_time = 10
