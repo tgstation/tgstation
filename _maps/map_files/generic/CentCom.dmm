@@ -12214,6 +12214,12 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"Cn" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/holodeck/rec_center/firingrange)
 "Co" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -14015,6 +14021,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/machinery/recharger,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "Gb" = (
@@ -16982,6 +16989,15 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+"MN" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/holodeck/rec_center/firingrange)
 "MP" = (
 /turf/open/floor/plasteel,
 /area/holodeck/rec_center/basketball)
@@ -17286,6 +17302,10 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"OI" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/firingrange)
 "OP" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -17580,6 +17600,14 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"QC" = (
+/obj/structure/foamedmetal,
+/obj/structure/window{
+	dir = 4
+	},
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/holofloor/asteroid,
+/area/holodeck/rec_center/bunker)
 "QH" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
@@ -17749,6 +17777,13 @@
 	icon_state = "wood"
 	},
 /area/holodeck/rec_center/lounge)
+"RJ" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/firingrange)
 "RM" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -17883,6 +17918,12 @@
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+"SI" = (
+/obj/structure/chair{
+	pixel_y = -2
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/school)
 "SN" = (
 /obj/structure/mopbucket,
 /obj/item/mop,
@@ -18169,6 +18210,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
+"Ut" = (
+/obj/structure/foamedmetal,
+/turf/open/floor/holofloor/asteroid,
+/area/holodeck/rec_center/bunker)
 "Uw" = (
 /obj/machinery/light{
 	dir = 8
@@ -18384,6 +18429,15 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
+"WO" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/firingrange)
 "WQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -69192,14 +69246,14 @@ cO
 bH
 cZ
 bj
-PG
-PG
-PG
-PG
-PG
-PG
-PG
-PG
+dC
+ea
+er
+eE
+eE
+eE
+eE
+fg
 PG
 PG
 bj
@@ -69449,14 +69503,14 @@ cO
 bH
 cZ
 bj
-dB
-dB
-dB
-dB
-dB
-dB
-dB
-dB
+dD
+eb
+es
+eF
+eF
+eF
+eF
+fh
 dB
 Zh
 bj
@@ -69706,14 +69760,14 @@ cO
 bH
 cZ
 bj
-dC
-ea
-er
-eE
-eE
-eE
-eE
-fg
+dD
+es
+es
+RJ
+RJ
+RJ
+RJ
+fi
 fp
 fu
 bj
@@ -69963,14 +70017,14 @@ cQ
 cX
 db
 bj
-dD
-eb
-es
-eF
-eF
-eF
-eF
-fh
+MN
+Cn
+Cn
+OI
+OI
+OI
+OI
+OI
 fp
 fv
 bj
@@ -70220,14 +70274,14 @@ bH
 bH
 dc
 bj
-dE
-ec
-et
-eG
-eG
-eG
-eG
-fi
+dD
+es
+es
+WO
+WO
+WO
+WO
+fg
 fp
 fw
 bj
@@ -70477,14 +70531,14 @@ bH
 bH
 dd
 bj
-dF
-dF
-dF
-dF
-dF
-dF
-dF
-dF
+dD
+eb
+es
+eF
+eF
+eF
+eF
+fh
 dF
 xE
 bj
@@ -70734,16 +70788,16 @@ bH
 bH
 dc
 bj
+dE
+ec
+et
+eG
+eG
+eG
+eG
+fi
 dB
 dB
-dB
-dB
-dB
-dB
-dB
-dB
-dB
-Zh
 bj
 dt
 dt
@@ -77673,7 +77727,7 @@ aE
 aE
 bh
 bj
-dA
+SI
 dY
 dA
 dA
@@ -79205,9 +79259,9 @@ aa
 (236,1,1) = {"
 bj
 Fk
+dL
 eg
 ey
-eH
 eH
 eH
 eH
@@ -79462,9 +79516,9 @@ aa
 (237,1,1) = {"
 bj
 dL
+dL
 eg
 ez
-eH
 eH
 eH
 eH
@@ -79473,7 +79527,7 @@ dL
 fq
 bj
 ai
-ai
+QC
 ai
 ai
 ai
@@ -79719,9 +79773,9 @@ aa
 (238,1,1) = {"
 bj
 Pn
+dL
 ef
 ex
-eH
 eH
 eH
 eH
@@ -79729,16 +79783,16 @@ eY
 dL
 fq
 bj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
 bj
 bw
 bw
@@ -79976,9 +80030,9 @@ aa
 (239,1,1) = {"
 bj
 dp
+dL
 eg
 ey
-eH
 eH
 eH
 eH
@@ -80233,9 +80287,9 @@ aa
 (240,1,1) = {"
 bj
 dq
+dL
 eg
 ez
-eH
 eH
 eH
 eH
@@ -80490,9 +80544,9 @@ aa
 (241,1,1) = {"
 bj
 dp
+dL
 eg
 eA
-eH
 eH
 eH
 eH
@@ -80747,9 +80801,9 @@ aa
 (242,1,1) = {"
 bj
 Pn
+dL
 eh
 ex
-eH
 eH
 eH
 eH
@@ -81004,9 +81058,9 @@ aa
 (243,1,1) = {"
 bj
 dL
+dL
 eg
 ey
-eH
 eH
 eH
 eH
@@ -81261,9 +81315,9 @@ aa
 (244,1,1) = {"
 bj
 Fk
+dL
 eg
 eA
-eH
 eH
 eH
 eH
