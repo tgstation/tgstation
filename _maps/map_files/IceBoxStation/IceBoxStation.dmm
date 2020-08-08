@@ -57612,6 +57612,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"wRP" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/space)
 "wSn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -97990,7 +97996,7 @@ alO
 alP
 alP
 alP
-alP
+wRP
 alP
 alP
 alP
