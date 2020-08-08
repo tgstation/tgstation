@@ -79,7 +79,7 @@
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
-/obj/machinery/proc/powered(var/chan = -1) // defaults to power_channel
+/obj/machinery/proc/powered(chan = -1) // defaults to power_channel
 	if(!loc)
 		return FALSE
 	if(!use_power)
@@ -214,7 +214,7 @@
 		. += C
 	return .
 
-/proc/update_cable_icons_on_turf(var/turf/T)
+/proc/update_cable_icons_on_turf(turf/T)
 	for(var/obj/structure/cable/C in T.contents)
 		C.update_icon()
 
@@ -322,7 +322,7 @@
 
 	if(victim.wearing_shock_proof_gloves())
 		SEND_SIGNAL(victim, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
-		return FALSE //to avoid spamming with insulated glvoes on
+		return FALSE //to avoid spamming with insulated gloves on
 
 	var/list/powernet_info = get_powernet_info_from_source(power_source)
 	if (!powernet_info)

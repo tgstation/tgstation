@@ -94,8 +94,8 @@
 	to_chat(src, "<span class='danger'>You begin to feast on [victim]... You can not move while you are doing this.</span>")
 
 	var/sound
-	if(istype(src, /mob/living/simple_animal/slaughter))
-		var/mob/living/simple_animal/slaughter/SD = src
+	if(istype(src, /mob/living/simple_animal/hostile/imp/slaughter))
+		var/mob/living/simple_animal/hostile/imp/slaughter/SD = src
 		sound = SD.feast_sound
 	else
 		sound = 'sound/magic/demon_consume.ogg'

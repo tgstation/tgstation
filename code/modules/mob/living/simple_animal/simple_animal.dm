@@ -154,6 +154,12 @@
 	///Generic flags
 	var/simple_mob_flags = NONE
 
+	/// Used for making mobs show a heart emoji and give a mood boost when pet.
+	var/pet_bonus = FALSE
+	/// A string for an emote used when pet_bonus == true for the mob being pet.
+	var/pet_bonus_emote = ""
+
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -241,7 +247,7 @@
 						turns_since_move = 0
 			return 1
 
-/mob/living/simple_animal/proc/handle_automated_speech(var/override)
+/mob/living/simple_animal/proc/handle_automated_speech(override)
 	set waitfor = FALSE
 	if(speak_chance)
 		if(prob(speak_chance) || override)

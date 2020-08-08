@@ -116,9 +116,9 @@
 		to_chat(M, "<span class='danger'>[src] emits a blinding light!</span>")
 	if(targeted)
 		if(M.flash_act(1, 1))
-			if(M.confused < power)
-				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
-				M.confused += min(power, diff)
+			if(M.get_confusion() < power)
+				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
+				M.add_confusion(min(power, diff))
 			if(user)
 				terrible_conversion_proc(M, user)
 				visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>")
@@ -135,8 +135,8 @@
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 	else
 		if(M.flash_act())
-			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
-			M.confused += min(power, diff)
+			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
+			M.add_confusion(min(power, diff))
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -149,8 +149,8 @@
 		log_combat(user, R, "flashed", src)
 		update_icon(1)
 		R.Paralyze(rand(80,120))
-		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
-		R.confused += min(5, diff)
+		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
+		R.add_confusion(min(5, diff))
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='warning'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return TRUE
@@ -279,7 +279,7 @@
 
 			if(!hypnosis)
 				to_chat(M, "<span class='hypnophrase'>The light makes you feel oddly relaxed...</span>")
-				M.confused += min(M.confused + 10, 20)
+				M.add_confusion(min(M.get_confusion() + 10, 20))
 				M.dizziness += min(M.dizziness + 10, 20)
 				M.drowsyness += min(M.drowsyness + 10, 20)
 				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)
@@ -293,7 +293,7 @@
 
 	else if(M.flash_act())
 		to_chat(M, "<span class='notice'>Such a pretty light...</span>")
-		M.confused += min(M.confused + 4, 20)
+		M.add_confusion(min(M.get_confusion() + 4, 20))
 		M.dizziness += min(M.dizziness + 4, 20)
 		M.drowsyness += min(M.drowsyness + 4, 20)
 		M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
