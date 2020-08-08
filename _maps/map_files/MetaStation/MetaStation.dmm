@@ -2002,13 +2002,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
-"aeE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
 "aeF" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/structure/lattice/catwalk,
@@ -5431,17 +5424,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"all" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "alm" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Door"
@@ -6106,28 +6089,20 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "amD" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "amE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/crew_quarters/fitness/recreation)
-"amG" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "amH" = (
 /obj/machinery/door/airlock/external{
 	req_one_access_txt = "13,8"
@@ -6692,12 +6667,6 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"anN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "anO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -7255,13 +7224,6 @@
 "aoZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"apa" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
@@ -64986,13 +64948,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
-"dht" = (
-/obj/item/cigbutt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "dhu" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/sign/poster/contraband/random{
@@ -66672,12 +66627,6 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
-"dCi" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/starboard/fore)
 "dCk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -72919,6 +72868,12 @@
 /obj/item/stack/sheet/cloth/five,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"mrJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/closed/wall,
+/area/crew_quarters/fitness/recreation)
 "msD" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -117947,10 +117902,10 @@ ahn
 aia
 aiY
 aiY
-all
+ahh
 amC
 amC
-apa
+aoZ
 aqm
 arB
 atc
@@ -118198,15 +118153,15 @@ aaa
 aaa
 aaa
 aeB
-afC
+aho
 afC
 afC
 aib
 acQ
 acQ
 alm
-amD
-amD
+acQ
+acQ
 amD
 aqn
 arB
@@ -119739,22 +119694,22 @@ aaa
 aaa
 aai
 aaa
-aeE
-afC
-afC
-aho
-aic
-acQ
-acQ
-aln
-amE
-amE
-amE
-aqp
-dnh
-dnR
-aus
-dnS
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
+arI
+atd
+atd
+atd
 dnh
 aAm
 oeK
@@ -119996,22 +119951,22 @@ aaa
 aaa
 aaf
 aaa
-aaa
-aaf
-aaa
-acP
-aid
-aiZ
-ajX
-alo
-acP
-dnz
-dnR
-dht
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
 dnh
-dnh
-dnh
-dnh
+atd
+atd
+atd
 dnh
 axQ
 ayR
@@ -120253,23 +120208,23 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaf
-aaa
-acP
-aie
-aja
-ajY
-alp
-dtE
-anN
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
+dnh
+dnR
+aus
 dnS
-doh
-dnS
-dnS
-dCi
-dnS
-dnS
+dnh
 axO
 dnS
 axY
@@ -120510,18 +120465,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaa
-acP
-acQ
-acQ
-acQ
-acP
-acP
-dnh
-dnh
-dnh
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
 dnh
 dnh
 dnh
@@ -120767,18 +120722,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaa
-aaa
-aaa
-aaa
-aaf
-dni
-amG
-amH
-anN
-dnS
+mrJ
+aho
+aho
+aho
+aic
+acQ
+acQ
+aln
+amE
+amE
+amE
+aqp
 arJ
 arI
 dnh
@@ -121027,15 +120982,15 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-dnh
-amH
+acP
+aid
+aiZ
+ajX
+alo
+acP
 dnh
 apd
-dnS
+ape
 arK
 dnS
 dnh
@@ -121284,14 +121239,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaa
-aaf
-aaa
-ack
-dnh
-ape
+acP
+aie
+aja
+ajY
+alp
+dtE
+bcO
+bcO
 dnS
 arL
 ate
@@ -121541,13 +121496,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaf
-aaf
-aaf
-ack
-dni
+acP
+acP
+acP
+acP
+acP
+acP
+dnh
 bcO
 dnS
 dnS
@@ -121799,12 +121754,12 @@ aaa
 aaa
 aaa
 aaa
-aaf
 aaa
-aaf
-aaa
-aaf
-dnh
+amH
+dnS
+amH
+dnS
+dnS
 apg
 aqs
 arM

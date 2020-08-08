@@ -92,6 +92,13 @@
 /area/holodeck/rec_center/photobooth
 	name = "Holodeck - Photobooth"
 
+/area/holodeck/rec_center/spacecheckers
+	name = "Holodeck - Space Checkers"
+
+/area/holodeck/rec_center/skatepark
+	name = "Holodeck - Skate Park"
+
+
 // Bad programs
 
 /area/holodeck/rec_center/medical
