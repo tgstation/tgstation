@@ -126,6 +126,12 @@
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/court)
+"av" = (
+/obj/structure/table/wood,
+/obj/item/camera,
+/obj/item/camera,
+/turf/open/floor/white,
+/area/holodeck/rec_center/photobooth)
 "aw" = (
 /obj/structure/flora/bush,
 /turf/open/floor/holofloor/snow,
@@ -257,15 +263,6 @@
 /obj/structure/chair/wood/wings,
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
-"aP" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "aQ" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/holofloor{
@@ -342,6 +339,7 @@
 /obj/item/stack/medical/bruise_pack{
 	heal_brute = 10
 	},
+/obj/item/soap,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/bunker)
 "bd" = (
@@ -535,6 +533,13 @@
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
+"bG" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "wood"
+	},
+/area/holodeck/rec_center/lounge)
 "bH" = (
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -9877,6 +9882,10 @@
 /obj/item/clothing/head/helmet/space/plasmaman,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"wi" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/lounge)
 "wk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
@@ -12631,6 +12640,11 @@
 "CT" = (
 /turf/open/floor/wood,
 /area/centcom/holding)
+"CU" = (
+/obj/structure/table/wood,
+/obj/item/instrument/guitar,
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/lounge)
 "CV" = (
 /obj/structure/chair/stool,
 /turf/open/floor/wood,
@@ -15974,6 +15988,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeadmin)
+"JW" = (
+/obj/structure/table/wood,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/open/floor/white,
+/area/holodeck/rec_center/photobooth)
 "JX" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -17313,6 +17339,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/four)
+"Pn" = (
+/obj/structure/table/wood/fancy,
+/obj/item/clothing/suit/armor/riot/knight/blue,
+/obj/item/clothing/head/helmet/knight/blue,
+/turf/open/floor/holofloor/grass,
+/area/holodeck/rec_center/thunderdome1218)
 "Po" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -17355,6 +17387,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/four)
+"Py" = (
+/obj/structure/table/wood,
+/obj/item/paint/anycolor{
+	pixel_x = 7
+	},
+/obj/item/paint/anycolor{
+	pixel_x = -5
+	},
+/turf/open/floor/white,
+/area/holodeck/rec_center/photobooth)
 "Pz" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/pamphlet/centcom/visitor_info,
@@ -17372,6 +17414,13 @@
 	icon_state = "white"
 	},
 /area/holodeck/rec_center/medical)
+"PC" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "wood"
+	},
+/area/holodeck/rec_center/lounge)
 "PE" = (
 /obj/structure/table,
 /obj/item/storage/box/cups,
@@ -17689,6 +17738,17 @@
 /obj/effect/spawner/xmastree,
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
+"RE" = (
+/obj/structure/chair/stool/bar,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "wood"
+	},
+/area/holodeck/rec_center/lounge)
 "RM" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -63724,13 +63784,13 @@ aa
 "}
 (176,1,1) = {"
 bj
+aA
 an
 an
 an
 an
 an
-an
-an
+bG
 NC
 an
 Nt
@@ -63981,13 +64041,13 @@ aa
 "}
 (177,1,1) = {"
 bj
-aA
+al
 an
 an
 an
 an
 an
-an
+bG
 NC
 an
 TA
@@ -64238,15 +64298,15 @@ aa
 "}
 (178,1,1) = {"
 bj
-al
 az
 an
+aI
+aI
 an
 an
-an
-an
-NC
-an
+RE
+Sl
+TF
 Tm
 bj
 XO
@@ -64496,15 +64556,15 @@ aa
 (179,1,1) = {"
 bj
 am
-an
-aI
-aI
-an
-an
-aP
-Sl
-TF
-Sl
+aA
+PC
+PC
+aN
+aQ
+aT
+QZ
+aZ
+bd
 bj
 XO
 PF
@@ -64754,14 +64814,14 @@ aa
 bj
 an
 aA
-aJ
-aJ
+PC
+PC
 aN
-aQ
-aT
-QZ
+an
+aU
 aZ
-bd
+aZ
+CU
 bj
 XO
 Pp
@@ -65015,7 +65075,7 @@ aK
 aJ
 aN
 an
-aU
+aV
 aZ
 aZ
 be
@@ -65271,8 +65331,8 @@ an
 aL
 aL
 an
-an
-aV
+aQ
+wi
 aZ
 aZ
 be
@@ -68349,7 +68409,7 @@ aa
 aa
 "}
 (194,1,1) = {"
-ab
+bj
 aq
 aq
 aq
@@ -71979,7 +72039,7 @@ tb
 tb
 tb
 tb
-tb
+Py
 bj
 aa
 aa
@@ -72236,7 +72296,7 @@ tb
 tb
 tb
 tb
-tb
+Py
 bj
 ab
 ab
@@ -72493,7 +72553,7 @@ tb
 tb
 tb
 tb
-tb
+av
 bj
 ab
 fB
@@ -72750,7 +72810,7 @@ tb
 tb
 tb
 tb
-tb
+JW
 bj
 ab
 fC
@@ -73007,7 +73067,7 @@ tb
 tb
 tb
 tb
-tb
+JW
 bj
 ab
 ab
@@ -74036,7 +74096,7 @@ Pd
 Pd
 Pd
 MP
-ab
+bj
 ab
 ab
 ab
@@ -76349,7 +76409,7 @@ ag
 ag
 ag
 ag
-bj
+ab
 fz
 fH
 fH
@@ -76606,7 +76666,7 @@ af
 af
 af
 af
-ab
+bj
 fz
 fH
 fH
@@ -79658,7 +79718,7 @@ aa
 "}
 (238,1,1) = {"
 bj
-dp
+Pn
 ef
 ex
 eH
@@ -80686,7 +80746,7 @@ aa
 "}
 (242,1,1) = {"
 bj
-dp
+Pn
 eh
 ex
 eH
