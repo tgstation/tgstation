@@ -330,9 +330,8 @@
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self, swap))
 		if(qdel_on_fail)
 			qdel(W)
-		else
-			if(!disable_warning)
-				to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
+		else if(!disable_warning)
+			to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
 		return FALSE
 	equip_to_slot(W, slot, initial, redraw_mob, swap) //This proc should not ever fail.
 	return TRUE
