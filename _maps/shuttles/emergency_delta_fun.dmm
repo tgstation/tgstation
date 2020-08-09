@@ -1,0 +1,94 @@
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/obj/structure/shuttle/engine/propulsion{dir = 1},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"ac" = (/turf/closed/wall/mineral/plastitanium,/area/shuttle/escape)
+"ad" = (/obj/structure/window/reinforced,/obj/structure/shuttle/engine/heater{dir = 1},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plating/airless,/area/shuttle/escape)
+"ae" = (/turf/closed/wall/mineral/uranium,/area/shuttle/escape)
+"af" = (/obj/effect/spawner/structure/window/shuttle,/turf/closed/wall/mineral/uranium,/area/shuttle/escape)
+"ag" = (/obj/machinery/atmospherics/miner/bz,/obj/structure/window/plasma/reinforced,/obj/structure/window/plasma/reinforced{dir = 4},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"ah" = (/obj/structure/chair/wood,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"ai" = (/obj/structure/cable,/obj/machinery/power/apc/auto_name/north,/obj/structure/chair/wood,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aj" = (/obj/machinery/atmospherics/miner/bz,/obj/structure/window/plasma/reinforced{dir = 8},/obj/structure/window/plasma/reinforced,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"ak" = (/obj/structure/chair/wood{dir = 4},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"al" = (/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"am" = (/obj/machinery/power/rad_collector/anchored,/obj/structure/cable,/obj/structure/cable,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"an" = (/obj/machinery/power/rad_collector/anchored,/obj/structure/cable,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"ao" = (/obj/effect/spawner/structure/window/shuttle,/obj/structure/disposalpipe/segment{dir = 4},/turf/closed/wall/mineral/uranium,/area/shuttle/escape)
+"ap" = (/obj/structure/chair/wood{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aq" = (/obj/structure/cable,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"ar" = (/obj/machinery/power/emitter/welded,/obj/structure/cable,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"as" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/structure/fans/tiny/invisible,/obj/machinery/door/airlock/uranium/glass,/turf/closed/wall/mineral/uranium,/area/shuttle/escape)
+"at" = (/obj/item/coin/uranium,/obj/machinery/power/emitter/welded,/obj/structure/cable,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"au" = (/obj/structure/sign/nanotrasen,/turf/closed/wall/mineral/uranium,/area/shuttle/escape)
+"av" = (/obj/docking_port/mobile/emergency{dwidth = 11; height = 18; name = "Delta emergency shuttle"; port_direction = 4; preferred_direction = 2; width = 30},/obj/structure/fans/tiny/invisible,/obj/machinery/door/airlock/uranium/glass,/turf/closed/wall/mineral/uranium,/area/shuttle/escape)
+"aw" = (/obj/machinery/power/emitter/welded,/obj/machinery/power/emitter/welded,/obj/structure/cable,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"ax" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/closed/wall/mineral/uranium,/area/shuttle/escape)
+"ay" = (/obj/structure/window/plasma/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/holosign/barrier/atmos,/turf/closed/wall/mineral/uranium,/area/shuttle/escape)
+"az" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/structure/fans/tiny/invisible,/obj/structure/mineral_door/uranium,/turf/closed/wall/mineral/uranium,/area/shuttle/escape)
+"aA" = (/obj/structure/table/bronze,/obj/structure/fans/tiny/invisible,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aB" = (/obj/structure/table/reinforced,/obj/machinery/recharger,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aC" = (/obj/item/kirbyplants{icon_state = "plant-21"; pixel_x = -3; pixel_y = 3},/obj/machinery/light{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aD" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aE" = (/obj/structure/table/reinforced,/obj/item/storage/fancy/donut_box,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aF" = (/obj/machinery/computer/security{dir = 4},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aG" = (/obj/structure/chair/office{dir = 8},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aH" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/item/toy/plush/talking/rushia,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aI" = (/obj/item/radio/intercom{name = "Station Intercom"; pixel_x = 26; pixel_y = 58},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aJ" = (/obj/structure/chair/office{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aK" = (/obj/machinery/computer/station_alert{dir = 8},/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aL" = (/obj/machinery/computer/secure_data{dir = 4},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aM" = (/obj/structure/chair/office,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aN" = (/obj/structure/table/reinforced,/obj/item/storage/firstaid/regular,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aO" = (/obj/structure/table/reinforced,/obj/item/folder/blue,/obj/item/pen,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aP" = (/obj/machinery/computer/atmos_alert{dir = 8},/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aQ" = (/obj/structure/table/reinforced,/obj/item/paper_bin,/obj/item/pen,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aR" = (/obj/structure/table/reinforced,/obj/item/folder/red,/obj/item/restraints/handcuffs,/obj/item/assembly/flash/handheld,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aS" = (/obj/machinery/computer/crew{dir = 1},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aT" = (/obj/machinery/computer/med_data{dir = 1},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aU" = (/obj/machinery/computer/emergency_shuttle{dir = 1},/obj/effect/turf_decal/tile/blue{dir = 1},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aV" = (/obj/machinery/computer/communications{dir = 1},/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aW" = (/obj/structure/table/reinforced,/obj/item/storage/toolbox/mechanical,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aX" = (/obj/structure/table/reinforced,/obj/machinery/cell_charger,/obj/item/stock_parts/cell/high,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aY" = (/obj/item/stack/ore/uranium,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"aZ" = (/obj/item/stack/ore/uranium,/obj/item/stack/sheet/mineral/uranium,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"ba" = (/obj/item/stack/sheet/mineral/uranium,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"bb" = (/obj/structure/statue/uranium/eng,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"bc" = (/obj/item/coin/uranium,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"bd" = (/obj/structure/reflector/box/anchored{dir = 4},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"be" = (/obj/machinery/power/supermatter_crystal,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"bf" = (/obj/item/stack/ore/uranium,/obj/item/stack/ore/uranium,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"bg" = (/obj/item/coin/uranium,/obj/structure/reflector/single/anchored{dir = 9},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"bh" = (/obj/structure/reflector/single/anchored{dir = 9},/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"bi" = (/obj/machinery/power/emitter/welded{dir = 1},/obj/structure/cable,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+"bj" = (/obj/machinery/power/emitter/welded{dir = 1},/obj/machinery/power/emitter/welded{dir = 1},/obj/structure/cable,/turf/open/floor/mineral/uranium,/area/shuttle/escape)
+
+(1,1,1) = {"
+aaabababacababacababacababacabababaa
+acadadadacadadacadadacadadacadadadac
+aeaeafafaeaeafaeafafaeafaeaeafafaeae
+aeagahahahahahahahahaiahahahahahajae
+aeakalamananananananananananamalapaf
+afakalaqaratararawawararararaqalapaf
+afakalaqaYalalalalalalalalalaqalapaf
+aeakalaqaYalalalalalalalalalaqalapao
+aeakalanaZbaalbbalalbbbcalalanalapae
+asalalanalalalalalalalalalalanalalae
+aualalanbdbdbdalbebealalalalanalalau
+avalalanalalalalalalalalalbfanalalae
+aealalanalalalbbalalbbbgalalanalalaf
+axalalaqalalalalalalalalbhalaqalalaf
+afalalaqalbcalalalalalalalbhaqalalaf
+afalalaqbibibibibjbjbibibibiaqalalaf
+axalalamananananananananananamalalaf
+asalalalalalalalalalalalalalalalalay
+aealbcalalalbabaalalalalalbcalalalae
+asalalalbabcalalalalaYaYalalalalalaf
+aealalalalalalalalalaYbfaYaYalalalaz
+aealalalalalalalalalalaYaYaYalalalaz
+aealbaalalalalalalalalalalalalalalaf
+aeaeafaeaeaeaeaAaAaAaAaeaeaeaeafaeae
+aaaaaaaaaeaBaCaDaDaDaDaCaEaeaaaaaaaa
+aaaaaaaaauaFaGaDaDaHaIaJaKauaaaaaaaa
+aaaaaaaaafaLaGaMaNaOaMaJaPafaaaaaaaa
+aaaaaaaaaeaQaRaSaTaUaVaWaXaeaaaaaaaa
+aaaaaaaaaeaeafafafafafafaeaeaaaaaaaa
+"}

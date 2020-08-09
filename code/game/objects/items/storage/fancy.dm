@@ -416,3 +416,41 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/nugget))
+
+
+/obj/item/storage/fancy/bigmacbox
+	name = "big mac box"
+	desc = "A cardboard box used for holding a big mac."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "bigmacbox"
+	icon_type = "bigmac"
+	spawn_type = /obj/item/reagent_containers/food/snacks/burger/bigmac
+
+/obj/item/storage/fancy/bigmacbox/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 1
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/burger/bigmac))
+
+
+/*
+ * Oreos
+ */
+
+
+/obj/item/storage/fancy/oreobox
+	name = "oreo box"
+	desc = "A cardboard box used for holding lots of oreos."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "oreobox"
+	icon_type = "oreo"
+	spawn_type = /obj/item/reagent_containers/food/snacks/oreo
+
+/obj/item/storage/fancy/oreobox/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 10
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/oreo))
+
+
+

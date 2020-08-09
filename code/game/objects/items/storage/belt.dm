@@ -22,6 +22,8 @@
 	if(content_overlays)
 		for(var/obj/item/I in contents)
 			. += I.get_belt_overlay()
+		for(var/obj/item/melee/classic_baton/telescopic/P in contents)
+			. += P.get_belt_overlay()
 
 /obj/item/storage/belt/Initialize()
 	. = ..()
@@ -705,6 +707,113 @@
 /obj/item/storage/belt/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)
 	update_icon()
+
+//Baseball Belt
+
+/obj/item/storage/belt/baseball
+	name = "Bat Sheath"
+	desc = "A modified archery quiver meant to make offhand carrying of bats quick and easy."
+	icon_state = "baseball_pack"
+	inhand_icon_state = "baseball_pack"
+	worn_icon_state = "baseball_pack"
+	w_class = WEIGHT_CLASS_BULKY
+	content_overlays = TRUE
+
+/obj/item/storage/belt/baseball/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 1
+	STR.rustle_sound = FALSE
+	STR.max_w_class = WEIGHT_CLASS_HUGE
+	STR.set_holdable(list(
+		/obj/item/melee/baseball_bat,
+		/obj/item/melee/baseball_bat/homerun,
+		/obj/item/melee/baseball_bat/burn,
+		/obj/item/melee/baseball_bat/barbed,
+		/obj/item/melee/baseball_bat/buzz,
+		/obj/item/melee/baseball_bat/bluespace,
+		/obj/item/melee/baseball_bat/knife,
+		/obj/item/melee/baseball_bat/magic,
+		/obj/item/melee/baseball_bat/kitty,
+		/obj/item/melee/baton/baseball,
+		/obj/item/melee/baseball_bat/ablative,
+		/obj/item/fireaxe/baseball
+		))
+
+/obj/item/storage/belt/baseball/examine(mob/user)
+	. = ..()
+	if(length(contents))
+		. += "<span class='notice'>Alt-click it to quickly draw the bat.</span>"
+
+//obj/item/storage/belt/baseball/update_overlays()
+//	if(content_overlays)
+//		for(var/obj/item/melee/baseball_bat/K in contents)
+//			. += K.get_belt_overlay()
+//			overlay += K
+//		for(var/obj/item/fireaxe/baseball in contents)
+//			. += exec.get_belt_overlay()
+//		for(var/obj/item/melee/baton/baseball in contents)
+//			. += stunbat.get_belt_overlay()
+//		for(var/obj/item/melee/baseball_bat in contents)
+//			. += basic.get_belt_overlay()
+
+//Wrong overlay, keeping this here just in case I need it
+
+//Wallem
+/obj/item/storage/belt/baseball/update_icon_state()
+//	. = list()
+	worn_icon_state = initial(worn_icon_state)
+	for(var/obj/item/melee/baseball_bat/B in contents)
+		worn_icon_state += "-basic"
+	for(var/obj/item/melee/baseball_bat/bluespace/BLSP in contents)
+		worn_icon_state += "-bluespace"
+	for(var/obj/item/melee/baseball_bat/barbed/BARB in contents)
+		worn_icon_state += "-barbed"
+	for(var/obj/item/melee/baseball_bat/homerun/HMRN in contents)
+		worn_icon_state += "-home"
+	for(var/obj/item/melee/baseball_bat/buzz/BZZ in contents)
+		worn_icon_state += "-buzz"
+	for(var/obj/item/melee/baseball_bat/knife/KN in contents)
+		worn_icon_state += "-knife"
+	for(var/obj/item/melee/baseball_bat/magic/MAG in contents)
+		worn_icon_state += "-magic"
+	for(var/obj/item/melee/baseball_bat/kitty/KIT in contents)
+		worn_icon_state += "-kitty"
+	for(var/obj/item/melee/baton/baseball/STUN in contents)
+		worn_icon_state += "-baton"
+	for(var/obj/item/fireaxe/baseball/EXEC in contents)
+		worn_icon_state += "-exec"
+	for(var/obj/item/melee/baseball_bat/burn/BRN in contents)
+		worn_icon_state += "-burn"
+	for(var/obj/item/melee/baseball_bat/ablative/MET in contents)
+		worn_icon_state += "-metal"
+
+
+//		worn_icon_state += -B
+//			to_chat(world, "debug -- B.worn_icon_state = [B.worn_icon_state]" )
+//			. += mutable_appearance('icons/mob/clothing/belt.dmi', B.worn_icon_state)
+//		if(locate(/obj/item/melee/baseball_bat) in contents))
+//			. += mutable_appearance('icons/obj/clothing/belts.dmi', "basic")
+//			worn_icon_state += "-basic"
+//		if(locate(/obj/item/melee/baseball_bat/barbed in contents))
+//			. += mutable_appearance('icons/obj/clothing/belts.dmi', "barbed")
+//			worn_icon_state += "-barbed"
+//		if(locate(/obj/item/melee/baseball_bat/bluespace in contents))
+//			worn_icon_state += "-bluespace"
+
+/obj/item/storage/belt/baseball/AltClick(mob/user)
+	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(length(contents))
+		var/obj/item/I = contents[1]
+		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>")
+		user.put_in_hands(I)
+		update_icon()
+	else
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+
+//End of bat belt
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"

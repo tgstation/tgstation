@@ -68,3 +68,55 @@
 
 /obj/item/fireaxe/boneaxe/update_icon_state()
 	icon_state = "bone_axe0"
+
+
+// Baseball Bat
+
+/obj/item/fireaxe/baseball
+	name = "Executioner's Bat"
+	desc = "Die the Death."
+	icon_state = "baseball_bat_exec0"
+	throwforce = 8
+	w_class = WEIGHT_CLASS_HUGE
+
+/obj/item/fireaxe/baseball/ComponentInitialize()
+	AddComponent(/datum/component/two_handed, force_unwielded=2, force_wielded=13, icon_wielded="baseball_bat_exec1", dismemberment_unwielded = 0, dismemberment_wielded = 100)
+
+
+/obj/item/fireaxe/baseball/update_icon_state()
+	icon_state = "baseball_bat_exec0"
+	if(wielded)
+		icon_state = "baseball_bat_exec1"
+	else
+		icon_state = "baseball_bat_exec0"
+
+/obj/item/fireaxe/baseball/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+			return
+		var/list/parts = list()
+		for(var/X in C.bodyparts)
+			var/obj/item/bodypart/bodypart = X
+			if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)
+				if(bodypart.dismemberable)
+					parts += bodypart
+		if(length(parts) && prob(30))
+			var/obj/item/bodypart/bodypart = pick(parts)
+			bodypart.dismember()
+	if(wielded)
+		force = 13
+	else
+		force = 2
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
+	if(!target.anchored && wielded)
+		var/whack_speed = (prob(60) ? 1 : 4)
+		target.throw_at(throw_target, rand(1, 2), whack_speed, user)
+
+/obj/item/fireaxe/baseball/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)
+		return
+	if(wielded) //destroys windows and grilles in one hit
+		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
+			return

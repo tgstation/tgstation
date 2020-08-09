@@ -130,6 +130,7 @@
 	name = "A Giant Ball of Paper in Space"
 	description = "Sightings of a giant wad of paper hurling through the depths of space have been recently reported by multiple outposts near this sector. \
 	A giant wad of paper, really? Damn prank callers."
+	always_place = TRUE
 
 /datum/map_template/ruin/space/mech_transport
 	id = "mech-transport"

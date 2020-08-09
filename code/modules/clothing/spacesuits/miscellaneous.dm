@@ -14,6 +14,7 @@ Contains:
  - Carp hardsuit
  - Bounty hunter hardsuit
  - Blackmarket combat medic hardsuit
+ - Bubbleman Suit
 */
 
 	//Death squad armored space suits, not hardsuits!
@@ -459,3 +460,39 @@ Contains:
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
 	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/circular_saw, /obj/item/tank/internals, /obj/item/storage/box/pillbottles,\
 	/obj/item/storage/firstaid, /obj/item/stack/medical/gauze, /obj/item/stack/medical/suture, /obj/item/stack/medical/mesh, /obj/item/storage/bag/chemistry)
+
+	//Bubbleman Suit
+obj/item/clothing/head/helmet/space/bubbleman
+	name = "bubble helmet"
+	desc = "A familiar looking helmet, worn by a hero."
+	armor = list("melee" = 30, "bullet" = 20, "laser" = 25, "energy" = 25, "bomb" = 20, "bio" = 10, "rad" = 10, "fire" = 100, "acid" = 10)
+	icon_state = "bubbleman"
+	inhand_icon_state = "bubbleman"
+
+/obj/item/clothing/suit/space/bubbleman
+	name = "heroic bubble-suit"
+	icon_state = "bubbleman"
+	inhand_icon_state = "bubbleman"
+	desc = "An exaggerated blue suit, worn by a hero."
+	armor = list("melee" = 30, "bullet" = 20, "laser" = 25, "energy" = 25, "bomb" = 20, "bio" = 10, "rad" = 10, "fire" = 100, "acid" = 10)
+	slowdown = 0
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool, /obj/item/gun, /obj/item/melee/baton)
+
+	//PARADIGM
+/obj/item/clothing/head/helmet/space/paradigm
+	name = "Paradigm Helmet"
+	icon_state = "helmet-paradigm"
+	desc = "A modified helmet, made to look similar to clockwork cultist helmets"
+	armor = list("melee" = 45, "bullet" = 25, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 100, "rad" = 50, "fire" = 95, "acid" = 95)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+
+/obj/item/clothing/suit/space/paradigm
+	name = "Paradigm Suit"
+	desc = "A specialized, highly advanced suit designed by a god and a magus. This armor symbolizes the trust placed between both parties, its white and brass motif shows the unity and fath both parties have placed on one another."
+	icon_state = "hardsuit-paradigm"
+	armor = list("melee" = 45, "bullet" = 25, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 100, "rad" = 50, "fire" = 95, "acid" = 95)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT

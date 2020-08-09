@@ -7,6 +7,14 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7
 
+/obj/item/grenade/hypnotic/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+
+/obj/item/grenade/hypnotic/Initialize()
+	. = ..()
+	wires = new /datum/wires/explosive/hypnotic(src)
+
 /obj/item/grenade/hypnotic/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
@@ -65,3 +73,27 @@
 				C.confused += min(C.confused + 10, 20)
 				C.dizziness += min(C.dizziness + 10, 20)
 				C.drowsyness += min(C.drowsyness + 10, 20)
+
+obj/item/grenade/hypnotic/attackby(obj/item/I, mob/user, params)
+	if(istype(I,/obj/item/assembly))
+		wires.interact(user)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+
+
+	else if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = I
+		if (C.use(1))
+			det_time = 50 // In case the cable_coil was removed and readded.
+			to_chat(user, "<span class='notice'>You rig the [initial(name)] assembly.</span>")
+		else
+			to_chat(user, "<span class='warning'>You need one length of coil to wire the assembly!</span>")
+			return
+
+	else if(I.tool_behaviour == TOOL_WIRECUTTER && !active)
+
+	else if(I.tool_behaviour == TOOL_WRENCH)
+		wires.detach_assembly(wires.get_wire(1))
+		new /obj/item/stack/cable_coil(get_turf(src),1)
+		to_chat(user, "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>")
+	else
+		return ..()

@@ -15,6 +15,8 @@
 /datum/wires/explosive/proc/explode()
 	return
 
+// Chem Grenade
+
 /datum/wires/explosive/chem_grenade
 	duds_number = 1
 	holder_type = /obj/item/grenade/chem_grenade
@@ -118,3 +120,39 @@
 /datum/wires/explosive/gibtonite/explode()
 	var/obj/item/gibtonite/P = holder
 	P.GibtoniteReaction(null, 2)
+
+//Hypno
+
+/datum/wires/explosive/hypnotic
+	duds_number = 1
+	holder_type = /obj/item/grenade/hypnotic
+	var/fingerprint
+
+/datum/wires/explosive/hypnotic/interactable(mob/user)
+		return TRUE
+
+/datum/wires/explosive/hypnotic/attach_assembly(color, obj/item/assembly/S)
+	if(istype(S,/obj/item/assembly/timer))
+		var/obj/item/grenade/hypnotic/G = holder
+		var/obj/item/assembly/timer/T = S
+		G.det_time = T.saved_time*10
+	fingerprint = S.fingerprintslast
+	return ..()
+
+/datum/wires/explosive/hypnotic/explode()
+	var/obj/item/grenade/hypnotic/G = holder
+	var/obj/item/assembly/assembly = get_attached(get_wire(1))
+	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
+	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
+	var/mob/M = get_mob_by_ckey(fingerprint)
+	var/turf/T = get_turf(M)
+	G.log_grenade(M, T)
+	G.prime()
+
+/datum/wires/explosive/hypnotic/detach_assembly(color)
+	var/obj/item/assembly/S = get_attached(color)
+	if(S && istype(S))
+		assemblies -= color
+		S.connected = null
+		S.forceMove(holder.drop_location())
+		return S

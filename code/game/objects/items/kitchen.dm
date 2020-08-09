@@ -199,6 +199,16 @@
 	throwforce = 15
 	bayonet = TRUE
 
+
+/obj/item/kitchen/knife/combat/ezel //right here
+	name = "Ezel's Knife"
+	icon_state = "ezelknife"
+	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
+	desc = "An unusually high quality knife. The handle has the initials 'E.M.' carved on it."
+	force = 16
+	throwforce = 16
+
+
 /obj/item/kitchen/knife/combat/bone
 	name = "bone dagger"
 	inhand_icon_state = "bone_dagger"

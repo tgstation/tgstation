@@ -476,6 +476,7 @@
 	new /obj/item/stamp/chameleon(src)
 	new /obj/item/pda/chameleon(src)
 
+
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
 /obj/item/storage/box/syndie_kit/throwing_weapons/PopulateContents()
@@ -565,3 +566,18 @@
 /obj/item/storage/box/syndie_kit/signaler/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/assembly/signaler(src)
+
+/obj/item/storage/box/syndie_kit/plushies
+	name = "plushie kit"
+	desc = "A sturdy box, containing a number of cute plushes. Malice among crewmembers sold seperately."
+
+/obj/item/storage/box/syndie_kit/plushies/PopulateContents()
+	new /obj/item/toy/plush/talking/eugene(src)
+	new /obj/item/toy/plush/talking/ulyssa(src)
+	new /obj/item/toy/plush/talking/tay(src)
+	new /obj/item/toy/plush/talking/rushia(src)
+	new /obj/item/toy/plush/talking/chef(src)
+	new /obj/item/toy/plush/talking/guirec(src)
+	new /obj/item/toy/plush/moth(src)
+
+

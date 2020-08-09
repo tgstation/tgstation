@@ -39,7 +39,7 @@
 	price_min = 1500
 	price_max = 4000
 	stock_max = 3
-	availability_prob = 30
+	availability_prob = 35
 
 /datum/blackmarket_item/clothing/full_spacesuit_set/spawn_item(loc)
 	var/obj/item/storage/box/B = ..()
@@ -51,8 +51,8 @@
 
 /datum/blackmarket_item/clothing/chameleon_hat
 	name = "Chameleon Hat"
-	desc = "Pick any hat you want with this Handy device. Not Quality Tested."
-	item = /obj/item/clothing/head/chameleon/broken
+	desc = "Pick any hat you want with this Handy device."
+	item = /obj/item/clothing/head/chameleon
 
 	price_min = 100
 	price_max = 200
@@ -66,5 +66,35 @@
 
 	price_min = 5500
 	price_max = 7000
+	stock_max = 1
+	availability_prob = 25
+
+/datum/blackmarket_item/clothing/chameleon_under
+	name = "Chameleon Jumpsuit"
+	desc = "Great for any prankster's 'prank kit'."
+	item = /obj/item/clothing/under/chameleon
+
+	price_min = 1500
+	price_max = 3000
+	stock_max = 2
+	availability_prob = 50
+
+/datum/blackmarket_item/clothing/chameleon_mask
+	name = "Chameleon Mask"
+	desc = "Comes with a built-in voice changer, perfect for pretending you're good at celebrity impressions."
+	item = /obj/item/clothing/mask/chameleon
+
+	price_min = 2000
+	price_max = 3500
+	stock_max = 1
+	availability_prob = 50
+
+/datum/blackmarket_item/clothing/chameleon_kit
+	name = "Chameleon Kit"
+	desc = "It turns out Bill from accounting was one of those Syndicate types, so after dispatching him we were able to get this neat kit! Get it while it's hot!"
+	item = /obj/item/clothing/mask/chameleon
+
+	price_min = 4500
+	price_max = 5000
 	stock_max = 1
 	availability_prob = 10

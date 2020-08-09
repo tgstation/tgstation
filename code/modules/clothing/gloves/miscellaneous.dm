@@ -161,3 +161,8 @@
 	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
 	icon_state = "wizard"
 	inhand_icon_state = "purplegloves"
+
+/obj/item/clothing/gloves/reshia
+	name = "shadowy hands"
+	icon_state = "reshia"
+	inhand_icon_state = "reshia"

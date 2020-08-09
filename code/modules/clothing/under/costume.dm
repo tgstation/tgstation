@@ -281,3 +281,81 @@
 	icon_state = "DutchUniform"
 	inhand_icon_state = "DutchUniform"
 	can_adjust = FALSE
+
+obj/item/clothing/under/costume/servicesuit
+	name = "Service Suit"
+	desc = "A gift from Guirec, you'd probably die of embarassment if anyone but him saw you in this."
+	icon_state = "servicesuit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/lambda
+	name = "Dress of Certainty"
+	desc = "Smells like Candy."
+	icon_state = "lambda"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/erika
+	name = "Detective's Dress"
+	desc = "-50% intelligence, +200% Ego."
+	icon_state = "erika"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|FEET
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/bern
+	name = "Fragmented Witch Dress"
+	desc = "You now hate boredom and people who never learn."
+	icon_state = "bern"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|FEET
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/madoka
+	name = "Pink Magical Girl Uniform"
+	desc = "Very pink. Very nice."
+	icon_state = "madoka"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/homura
+	name = "Dark Magical Girl Uniform"
+	desc = "For some reason, you feel a heavy burden weigh on your shoulders."
+	icon_state = "homura"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/kyoko
+	name = "Red Apple Magical Girl Uniform"
+	desc = "You're a Crackhead"
+	icon_state = "kyoko"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/mami
+	name = "Golden Magical Girl Uniform"
+	desc = "Suddenly you have an urge to start gunslinging."
+	icon_state = "mami"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/nagisa
+	name = "Peculiar Magical Girl Uniform"
+	desc = "Chomp."
+	icon_state = "nagisa"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/masterpiece
+	name = "Idol Costume"
+	desc = "For some reason, you feel like you should have a stuffed bunny with you."
+	icon_state = "masterpiece"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/riamu
+	name = "Cinderella Girl Costume"
+	desc = "You can't help but say 'WEH!' while wearing this."
+	icon_state = "riamu"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	can_adjust = FALSE
+

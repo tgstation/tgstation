@@ -9,7 +9,7 @@
 
 	price_min = 400
 	price_max = 800
-	availability_prob = 20
+	availability_prob = 30
 
 /datum/blackmarket_item/tool/caravan_wirecutters
 	name = "Experimental Wirecutters"
@@ -19,7 +19,7 @@
 
 	price_min = 400
 	price_max = 800
-	availability_prob = 20
+	availability_prob = 30
 
 /datum/blackmarket_item/tool/caravan_screwdriver
 	name = "Experimental Screwdriver"
@@ -29,7 +29,7 @@
 
 	price_min = 400
 	price_max = 800
-	availability_prob = 20
+	availability_prob = 30
 
 /datum/blackmarket_item/tool/caravan_crowbar
 	name = "Experimental Crowbar"
@@ -39,7 +39,7 @@
 
 	price_min = 400
 	price_max = 800
-	availability_prob = 20
+	availability_prob = 30
 
 /datum/blackmarket_item/tool/binoculars
 	name = "Binoculars"
@@ -80,3 +80,13 @@
 	price_max = 200
 	stock_max = 3
 	availability_prob = 50
+
+/datum/blackmarket_item/tool/agent_card
+	name = "Agent Card"
+	desc = "Plucked from the dead body of a syndicate agent unfortunate enough for his ship to crash."
+	item = /obj/item/card/id/syndicate
+
+	price_min = 500
+	price_max = 3000
+	stock_max = 1
+	availability_prob = 30

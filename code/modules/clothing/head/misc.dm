@@ -497,3 +497,21 @@
 	desc = "Hee-ho!"
 	icon_state = "JackFrostHat"
 	inhand_icon_state = "JackFrostHat"
+
+/obj/item/clothing/head/mami_hat
+	name = "Golden Magical Hat"
+	desc = "Not meant for bullet or gun storage."
+	icon_state = "mami_hat"
+
+/obj/item/clothing/head/nagisa_hat
+	name = "Peculiar Magical Hat"
+	desc = "Cute!"
+	icon_state = "nagisa_hat"
+
+/obj/item/clothing/head/medjed
+	name = "Medjed Cloak"
+	desc = "Looks eerily similar to an ancient god. You can't help but laugh at how goofy it looks."
+	icon_state = "medjed"
+	body_parts_covered = CHEST|GROIN|LEGS|HEAD|ARMS|HANDS
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
