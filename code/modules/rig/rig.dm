@@ -91,6 +91,18 @@
 /obj/item/rig/control/Destroy()
 	..()
 	QDEL_NULL(wires)
+	if(helmet)
+		helmet.rig = null
+		QDEL_NULL(helmet)
+	if(chestplate)
+		chestplate.rig = null
+		QDEL_NULL(chestplate)
+	if(gauntlets)
+		gauntlets.rig = null
+		QDEL_NULL(gauntlets)
+	if(boots)
+		boots.rig = null
+		QDEL_NULL(boots)
 
 /obj/item/rig/control/process()
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
@@ -131,15 +143,24 @@
 	complexity += thingy_unleashed.complexity
 	thingy_unleashed.rig = src
 
-/obj/item/rig/control/proc/deploy(piece)
-	var/obj/item/mastapiece = piece
-	if(wearer.equip_to_slot_if_possible(mastapiece,mastapiece.slot_flags,0,0,1))
-		to_chat(wearer, "<span class='notice'>[mastapiece] deploys with a mechanical hiss.</span>")
+/obj/item/rig/control/proc/deploy(part)
+	var/obj/item/piece = part
+	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags,0,0,1))
+		to_chat(wearer, "<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>")
 		playsound(loc, 'sound/mecha/mechmove03.ogg', 25, TRUE)
-	else if(mastapiece.loc != src)
-		to_chat(wearer, "<span class='warning'>[mastapiece] [mastapiece.p_are()] already deployed!</span>")
+		wearer.update_inv_wear_suit()
+		ADD_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
+	else if(piece.loc != src)
+		to_chat(wearer, "<span class='warning'>[piece] [piece.p_are()] already deployed!</span>")
 	else
-		to_chat(wearer, "<span class='warning'>You are already wearing something where [mastapiece] would go!</span>")
+		to_chat(wearer, "<span class='warning'>You are already wearing something where [piece] would go!</span>")
+
+/obj/item/rig/control/proc/conceal(part)
+	var/obj/item/piece = part
+	REMOVE_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
+	wearer.transferItemToLoc(piece, src, TRUE)
+	to_chat(wearer, "<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>")
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/head/helmet/space/rig
 	icon = 'icons/obj/rig.dmi'
@@ -147,20 +168,6 @@
 	worn_icon = 'icons/mob/rig.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/obj/item/rig/control/rig
-
-/obj/item/clothing/head/helmet/space/rig/equipped(mob/user, slot)
-	. = ..()
-	if(slot != ITEM_SLOT_HEAD)
-		detach(user)
-
-/obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
-	. = ..()
-	detach(user)
-
-/obj/item/clothing/head/helmet/space/rig/proc/detach(mob/user)
-	forceMove(rig)
-	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
-	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/suit/armor/rig
 	icon = 'icons/obj/rig.dmi'
@@ -176,20 +183,6 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	var/obj/item/rig/control/rig
 
-/obj/item/clothing/suit/armor/rig/equipped(mob/user, slot)
-	. = ..()
-	if(slot != ITEM_SLOT_OCLOTHING)
-		detach(user)
-
-/obj/item/clothing/suit/armor/rig/dropped(mob/user)
-	. = ..()
-	detach(user)
-
-/obj/item/clothing/suit/armor/rig/proc/detach(mob/user)
-	forceMove(rig)
-	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
-	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-
 /obj/item/clothing/gloves/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-gauntlets"
@@ -197,37 +190,9 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/obj/item/rig/control/rig
 
-/obj/item/clothing/gloves/rig/equipped(mob/user, slot)
-	. = ..()
-	if(slot != ITEM_SLOT_GLOVES)
-		detach(user)
-
-/obj/item/clothing/gloves/rig/dropped(mob/user)
-	. = ..()
-	detach(user)
-
-/obj/item/clothing/gloves/rig/proc/detach(mob/user)
-	forceMove(rig)
-	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
-	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-
 /obj/item/clothing/shoes/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-boots"
 	worn_icon = 'icons/mob/rig.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/obj/item/rig/control/rig
-
-/obj/item/clothing/shoes/rig/equipped(mob/user, slot)
-	. = ..()
-	if(slot != ITEM_SLOT_FEET)
-		detach(user)
-
-/obj/item/clothing/shoes/rig/dropped(mob/user)
-	. = ..()
-	detach(user)
-
-/obj/item/clothing/shoes/rig/proc/detach(mob/user)
-	forceMove(rig)
-	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
-	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
