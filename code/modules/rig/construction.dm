@@ -29,11 +29,12 @@
 
 /obj/item/rig/armor
 	name = "RIG external armor"
-	icon_state = "coder-armor"
-	item_state = "armor"
+	icon_state = "engi-armor"
+	inhand_icon_state = "armor"
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
-	var/theme = "coder"
+	var/theme = "engi"
 
 /obj/item/rig/armor/Initialize()
+	. = ..()
 	icon_state  = "[theme]-armor"

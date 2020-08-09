@@ -4,6 +4,7 @@
 	desc = "You should not see this, yell at a coder!"
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig_shell"
+	worn_icon = 'icons/mob/rig.dmi'
 
 /obj/item/rig/control
 	name = "RIG control module"
@@ -32,32 +33,24 @@
 	var/interface_break = FALSE
 	///How much modules can this RIG carry without malfunctioning
 	var/complexity_max = 15
+	///How much modules this RIG is carrying
+	var/complexity = 0
 	///Can the RIG swap out modules/parts
 	var/no_customization = FALSE
 	///How much battery power the RIG uses per tick
 	var/cell_usage = 0
 	///RIG cell
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	///RIG helmet
-	var/obj/item/clothing/head/helmet/space/rig/helmet
+	var/obj/item/clothing/head/helmet/space/rig/helmet = /obj/item/clothing/head/helmet/space/rig
 	///RIG chestplate
-	var/obj/item/clothing/suit/space/rig/chestplate
+	var/obj/item/clothing/suit/armor/rig/chestplate = /obj/item/clothing/suit/armor/rig
 	///RIG gauntlets
-	var/obj/item/clothing/gloves/rig/gauntlets
+	var/obj/item/clothing/gloves/rig/gauntlets = /obj/item/clothing/gloves/rig
 	///RIG boots
-	var/obj/item/clothing/shoes/rig/boots
+	var/obj/item/clothing/shoes/rig/boots = /obj/item/clothing/shoes/rig
 	///Modules the RIG should spawn with
 	var/list/initial_modules = list()
-	///Path for the RIG cell
-	var/cell_path = /obj/item/stock_parts/cell/high
-	///Path for the RIG helmet
-	var/helmet_path = /obj/item/clothing/head/helmet/space/rig
-	///Path for the RIG chestplate
-	var/chestplate_path = /obj/item/clothing/gloves/rig
-	///Path for the RIG gauntlets
-	var/gauntlets_path = /obj/item/clothing/gloves/rig
-	///Path for the RIG boots
-	var/boots_path = /obj/item/clothing/shoes/rig
 	///Person wearing the RIGsuit
 	var/mob/living/carbon/human/wearer
 
@@ -68,32 +61,31 @@
 	wires = new /datum/wires/rig(src)
 	if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
 		locked = FALSE
-	if(cell_path)
-		cell = cell_path
-		new cell(src)
-	if(helmet_path)
-		helmet = helmet_path
+	if(ispath(cell))
+		cell = new cell(src)
+	if(ispath(helmet))
+		helmet = new helmet(src)
 		helmet.rig = src
 		helmet.icon_state = "[theme]-helmet-unsealed"
-		new helmet(src)
-	if(chestplate_path)
-		chestplate = chestplate_path
+		helmet.worn_icon_state = "[theme]-helmet-unsealed"
+	if(ispath(chestplate))
+		chestplate = new chestplate(src)
 		chestplate.rig = src
 		chestplate.icon_state = "[theme]-chestplate-unsealed"
-		new chestplate(src)
-	if(gauntlets_path)
-		gauntlets = gauntlets_path
+		chestplate.worn_icon_state = "[theme]-chestplate-unsealed"
+	if(ispath(gauntlets))
+		gauntlets = new gauntlets(src)
 		gauntlets.rig = src
 		gauntlets.icon_state = "[theme]-gauntlets-unsealed"
-		new gauntlets(src)
-	if(boots_path)
-		boots = boots_path
+		gauntlets.worn_icon_state = "[theme]-gauntlets-unsealed"
+	if(ispath(boots))
+		boots = new boots(src)
 		boots.rig = src
 		boots.icon_state = "[theme]-boots-unsealed"
-		new boots(src)
+		boots.worn_icon_state = "[theme]-boots-unsealed"
 	if(initial_modules)
 		for(var/path in initial_modules)
-			var/obj/item/rig/module/module = new path(src)
+			var/obj/item/rig/module/module = path
 			install(module)
 
 /obj/item/rig/control/Destroy()
@@ -128,35 +120,72 @@
 	else
 		return FALSE
 
-/obj/item/rig/control/proc/install()
-	return
+/obj/item/rig/control/proc/install(module)
+	var/obj/item/rig/module/thingy = module
+	var/complexity_with_thingy = complexity
+	complexity_with_thingy += thingy.complexity
+	if(complexity_with_thingy > complexity_max)
+		to_chat(wearer, "<span class='warning'>This would make the RIG too complex!</span>")
+		return
+	var/obj/item/rig/module/thingy_unleashed = new thingy(src)
+	complexity += thingy_unleashed.complexity
+	thingy_unleashed.rig = src
 
 /obj/item/rig/control/proc/deploy(piece)
 	var/obj/item/mastapiece = piece
 	if(wearer.equip_to_slot_if_possible(mastapiece,mastapiece.slot_flags,0,0,1))
-		to_chat(wearer, "<span class='notice'>[piece] deploys with a mechanical hiss.</span>")
+		to_chat(wearer, "<span class='notice'>[mastapiece] deploys with a mechanical hiss.</span>")
 		playsound(loc, 'sound/mecha/mechmove03.ogg', 25, TRUE)
+	else if(mastapiece.loc != src)
+		to_chat(wearer, "<span class='warning'>[mastapiece] [mastapiece.p_are()] already deployed!</span>")
 	else
-		to_chat(wearer, "<span class='warning'>You are already wearing something there! Remove it and try again.</span>")
+		to_chat(wearer, "<span class='warning'>You are already wearing something where [mastapiece] would go!</span>")
 
 /obj/item/clothing/head/helmet/space/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-helmet"
-	mob_overlay_icon = 'icons/mob/rig.dmi'
+	worn_icon = 'icons/mob/rig.dmi'
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/obj/item/rig/control/rig
 
+/obj/item/clothing/head/helmet/space/rig/equipped(mob/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_HEAD)
+		detach(user)
+
 /obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
+	. = ..()
+	detach(user)
+
+/obj/item/clothing/head/helmet/space/rig/proc/detach(mob/user)
 	forceMove(rig)
 	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
 	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/clothing/suit/space/rig
+/obj/item/clothing/suit/armor/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-chestplate"
-	mob_overlay_icon = 'icons/mob/rig.dmi'
+	worn_icon = 'icons/mob/rig.dmi'
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	var/obj/item/rig/control/rig
 
-/obj/item/clothing/suit/space/rig/dropped(mob/user)
+/obj/item/clothing/suit/armor/rig/equipped(mob/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_OCLOTHING)
+		detach(user)
+
+/obj/item/clothing/suit/armor/rig/dropped(mob/user)
+	. = ..()
+	detach(user)
+
+/obj/item/clothing/suit/armor/rig/proc/detach(mob/user)
 	forceMove(rig)
 	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
 	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
@@ -164,10 +193,20 @@
 /obj/item/clothing/gloves/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-gauntlets"
-	mob_overlay_icon = 'icons/mob/rig.dmi'
+	worn_icon = 'icons/mob/rig.dmi'
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/obj/item/rig/control/rig
 
+/obj/item/clothing/gloves/rig/equipped(mob/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_GLOVES)
+		detach(user)
+
 /obj/item/clothing/gloves/rig/dropped(mob/user)
+	. = ..()
+	detach(user)
+
+/obj/item/clothing/gloves/rig/proc/detach(mob/user)
 	forceMove(rig)
 	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
 	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
@@ -175,10 +214,20 @@
 /obj/item/clothing/shoes/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-boots"
-	mob_overlay_icon = 'icons/mob/rig.dmi'
+	worn_icon = 'icons/mob/rig.dmi'
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/obj/item/rig/control/rig
 
+/obj/item/clothing/shoes/rig/equipped(mob/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_FEET)
+		detach(user)
+
 /obj/item/clothing/shoes/rig/dropped(mob/user)
+	. = ..()
+	detach(user)
+
+/obj/item/clothing/shoes/rig/proc/detach(mob/user)
 	forceMove(rig)
 	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
 	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
