@@ -25,21 +25,14 @@
 	var/ntnet_status = 1
 	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
 	var/usage_flags = PROGRAM_ALL
-	/// Optional string that describes what NTNet server/system this program connects to. Used in default logging.
-	var/network_destination = null
 	/// Whether the program can be downloaded from NTNet. Set to 0 to disable.
 	var/available_on_ntnet = 1
 	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
 	var/available_on_syndinet = 0
-	/// ID of TGUI interface
+	/// Name of the tgui interface
 	var/tgui_id
-	/// Default size of TGUI window, in pixels
-	var/ui_x = 575
-	var/ui_y = 700
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 	var/ui_header = null
-	///Assets specific to programs
-	var/list/special_assets = list()
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -103,7 +96,7 @@
 	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
 		return TRUE
 
-	if(IsAdminGhost(user))
+	if(isAdminGhostAI(user))
 		return TRUE
 
 	if(issilicon(user))
@@ -144,8 +137,12 @@
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
-		if(requires_ntnet && network_destination)
-			generate_network_log("Connection opened to [network_destination].")
+		if(requires_ntnet)
+			var/obj/item/card/id/ID
+			var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+			if(card_holder)
+				ID = card_holder.GetID()
+			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return 1
 	return 0
@@ -167,22 +164,20 @@
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
-	if(network_destination)
-		generate_network_log("Connection to [network_destination] closed.")
+	if(requires_ntnet)
+		var/obj/item/card/id/ID
+		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+		if(card_holder)
+			ID = card_holder.GetID()
+		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 	return 1
 
-
-/datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui && tgui_id)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-		for(var/i in special_assets)
-			assets = get_asset_datum(i)
-			assets.send(user)
-
-		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y, state = state)
+		ui = new(user, src, tgui_id, filedesc)
 		ui.open()
+		ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
 // CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:
 // Topic calls are automagically forwarded from NanoModule this program contains.

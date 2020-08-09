@@ -130,6 +130,7 @@
 	reward = 4000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/poppy/geranium)
+	include_subtypes = FALSE
 
 /datum/bounty/item/assistant/poppy
 	name = "Poppies"
@@ -152,31 +153,12 @@
 	required_count = 8
 	wanted_types = list(/obj/item/kirbyplants)
 
-/datum/bounty/item/assistant/earmuffs
-	name = "Earmuffs"
-	description = "Central Command is getting tired of your station's messages. They've ordered that you ship some earmuffs to lessen the annoyance."
-	reward = 1000
-	wanted_types = list(/obj/item/clothing/ears/earmuffs)
-
-/datum/bounty/item/assistant/handcuffs
-	name = "Handcuffs"
-	description = "A large influx of escaped convicts have arrived at Central Command. Now is the perfect time to ship out spare handcuffs (or restraints)."
-	reward = 1000
-	required_count = 5
-	wanted_types = list(/obj/item/restraints/handcuffs)
-
 /datum/bounty/item/assistant/monkey_cubes
 	name = "Monkey Cubes"
 	description = "Due to a recent genetics accident, Central Command is in serious need of monkeys. Your mission is to ship monkey cubes."
 	reward = 2000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/monkeycube)
-
-/datum/bounty/item/assistant/chainsaw
-	name = "Chainsaw"
-	description = "The chef at CentCom is having trouble butchering her animals. She requests one chainsaw, please."
-	reward = 2500
-	wanted_types = list(/obj/item/chainsaw)
 
 /datum/bounty/item/assistant/ied
 	name = "IED"
@@ -185,30 +167,11 @@
 	required_count = 3
 	wanted_types = list(/obj/item/grenade/iedcasing)
 
-/datum/bounty/item/assistant/bonfire
-	name = "Lit Bonfire"
-	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel cold. Ship a lit bonfire to warm them up."
-	reward = 5000
-	wanted_types = list(/obj/structure/bonfire)
-
-/datum/bounty/item/assistant/bonfire/applies_to(obj/O)
-	if(!..())
-		return FALSE
-	var/obj/structure/bonfire/B = O
-	return !!B.burning
-
 /datum/bounty/item/assistant/corgimeat
 	name = "Raw Corgi Meat"
 	description = "The Syndicate recently stole all of CentCom's Corgi meat. Ship out a replacement immediately."
 	reward = 3000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi)
-
-/datum/bounty/item/assistant/corgifarming
-	name = "Corgi Hides"
-	description = "Admiral Weinstein's space yacht needs new upholstery. A dozen Corgi furs should do just fine."
-	reward = 30000 //that's a lot of dead dogs
-	required_count = 12
-	wanted_types = list(/obj/item/stack/sheet/animalhide/corgi)
 
 /datum/bounty/item/assistant/action_figures
 	name = "Action Figures"
@@ -216,12 +179,6 @@
 	reward = 4000
 	required_count = 5
 	wanted_types = list(/obj/item/toy/figure)
-
-/datum/bounty/item/assistant/tail_whip
-	name = "Nine Tails whip"
-	description = "Commander Jackson is looking for a fine addition to her exotic weapons collection. She will reward you handsomely for either a Cat or Liz o' Nine Tails."
-	reward = 4000
-	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip)
 
 /datum/bounty/item/assistant/dead_mice
 	name = "Dead Mice"

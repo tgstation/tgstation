@@ -6,8 +6,6 @@
 	is_position_sensitive = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
-	var/ui_x = 225
-	var/ui_y = 110
 	var/on = FALSE
 	var/visible = FALSE
 	var/maxlength = 8
@@ -188,11 +186,10 @@
 		return ..()
 	return UI_CLOSE
 
-/obj/item/assembly/infra/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/assembly/infra/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "InfraredEmitter", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "InfraredEmitter", name)
 		ui.open()
 
 /obj/item/assembly/infra/ui_data(mob/user)

@@ -20,7 +20,6 @@
 	maxHealth = 50000
 	health = 50000
 	healable = 0
-
 	harm_intent_damage = 10
 	obj_damage = 100
 	melee_damage_lower = 68
@@ -61,6 +60,7 @@
 /mob/living/simple_animal/hostile/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
 	// Give spells
+	LAZYINITLIST(mob_spell_list)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
@@ -108,6 +108,9 @@
 /mob/living/simple_animal/hostile/statue/face_atom()
 	if(!can_be_seen(get_turf(loc)))
 		..()
+
+/mob/living/simple_animal/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
+	return FALSE
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
 	if(!cannot_be_seen)

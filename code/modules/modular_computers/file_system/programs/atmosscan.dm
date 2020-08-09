@@ -1,13 +1,10 @@
 /datum/computer_file/program/atmosscan
 	filename = "atmosscan"
-	filedesc = "Atmospheric Scanner"
+	filedesc = "AtmoZphere"
 	program_icon_state = "air"
 	extended_desc = "A small built-in sensor reads out the atmospheric conditions around the device."
-	network_destination = "atmos scan"
 	size = 4
 	tgui_id = "NtosAtmos"
-	ui_x = 300
-	ui_y = 350
 
 /datum/computer_file/program/atmosscan/ui_data(mob/user)
 	var/list/data = get_header_data()

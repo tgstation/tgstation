@@ -59,6 +59,10 @@ field_generator power level display
 	fields = list()
 	connected_gens = list()
 
+/obj/machinery/field/generator/anchored/Initialize()
+	. = ..()
+	set_anchored(TRUE)
+
 /obj/machinery/field/generator/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
@@ -84,6 +88,14 @@ field_generator power level display
 	else
 		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 
+/obj/machinery/field/generator/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	if(active)
+		turn_off()
+	state = anchorvalue ? FG_SECURED : FG_UNSECURED
+
 /obj/machinery/field/generator/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
 		if(!silent)
@@ -96,14 +108,6 @@ field_generator power level display
 		return FAILED_UNFASTEN
 
 	return ..()
-
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
-	. = ..()
-	if(. == SUCCESSFUL_UNFASTEN)
-		if(anchored)
-			state = FG_SECURED
-		else
-			state = FG_UNSECURED
 
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -145,8 +149,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
-		state = FG_UNSECURED
-		anchored = FALSE
+		set_anchored(FALSE)
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
 	else
 		..()
