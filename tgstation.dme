@@ -91,6 +91,7 @@
 #include "code\__DEFINES\reagents.dm"
 #include "code\__DEFINES\reagents_specific_heat.dm"
 #include "code\__DEFINES\research.dm"
+#include "code\__DEFINES\rig.dm"
 #include "code\__DEFINES\robots.dm"
 #include "code\__DEFINES\role_preferences.dm"
 #include "code\__DEFINES\rust_g.dm"

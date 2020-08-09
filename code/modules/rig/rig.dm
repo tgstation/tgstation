@@ -1,4 +1,4 @@
-//epic rig
+/// RIGsuits, trade-off between armor and utility
 /obj/item/rig
 	name = "Base RIG"
 	desc = "You should not see this, yell at a coder!"
@@ -8,15 +8,16 @@
 
 /obj/item/rig/control
 	name = "RIG control module"
-	desc = "A special powered suit that protects against various environments. Wear it on your back, deploy it and turn it on to use its' power. This one has pink socks! Yell at a coder if you see this."
-	icon_state = "engi-module"
+	desc = "A special powered suit that protects against various environments. Wear it on your back, deploy it and turn it on to use its' power."
+	icon_state = "engi-module-unsealed"
+	worn_icon_state = "engi-module-unsealed"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
 	actions_types = list(/datum/action/item_action/rig/deploy)
 	///How the RIG and things connected to it look
-	var/theme = "coder"
+	var/theme = "engi"
 	///If the suit is deployed and turned on
 	var/active = FALSE
 	///If the suit wire/module hatch is open
@@ -31,12 +32,12 @@
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	///If the suit interface is broken
 	var/interface_break = FALSE
-	///How much modules can this RIG carry without malfunctioning
-	var/complexity_max = 15
-	///How much modules this RIG is carrying
-	var/complexity = 0
 	///Can the RIG swap out modules/parts
 	var/no_customization = FALSE
+	///How much modules can this RIG carry without malfunctioning
+	var/complexity_max = DEFAULT_MAX_COMPLEXITY
+	///How much modules this RIG is carrying
+	var/complexity = 0
 	///How much battery power the RIG uses per tick
 	var/cell_usage = 0
 	///RIG cell
@@ -57,7 +58,8 @@
 /obj/item/rig/control/Initialize()
 	..()
 	START_PROCESSING(SSobj,src)
-	icon_state = "[theme]-module"
+	icon_state = "[theme]-module-unsealed"
+	worn_icon_state = "[theme]-module-unsealed"
 	wires = new /datum/wires/rig(src)
 	if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
 		locked = FALSE
@@ -66,21 +68,25 @@
 	if(ispath(helmet))
 		helmet = new helmet(src)
 		helmet.rig = src
+		helmet.armor = armor
 		helmet.icon_state = "[theme]-helmet-unsealed"
 		helmet.worn_icon_state = "[theme]-helmet-unsealed"
 	if(ispath(chestplate))
 		chestplate = new chestplate(src)
 		chestplate.rig = src
+		chestplate.armor = armor
 		chestplate.icon_state = "[theme]-chestplate-unsealed"
 		chestplate.worn_icon_state = "[theme]-chestplate-unsealed"
 	if(ispath(gauntlets))
 		gauntlets = new gauntlets(src)
 		gauntlets.rig = src
+		gauntlets.armor = armor
 		gauntlets.icon_state = "[theme]-gauntlets-unsealed"
 		gauntlets.worn_icon_state = "[theme]-gauntlets-unsealed"
 	if(ispath(boots))
 		boots = new boots(src)
 		boots.rig = src
+		boots.armor = armor
 		boots.icon_state = "[theme]-boots-unsealed"
 		boots.worn_icon_state = "[theme]-boots-unsealed"
 	if(initial_modules)
@@ -122,6 +128,32 @@
 	..()
 	wearer = null
 
+/obj/item/rig/control/item_action_slot_check(slot)
+	if(slot == ITEM_SLOT_BACK)
+		return TRUE
+
+/obj/item/rig/control/attack_hand(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/guy = user
+		if(src == guy.back)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+			return
+	return ..()
+
+/obj/item/rig/control/MouseDrop(atom/over_object)
+	. = ..()
+	if(src == wearer.back)
+		for(var/h in list(helmet,chestplate,gauntlets,boots))
+			var/obj/item/part = h
+			if(part.loc != src)
+				to_chat(wearer, "<span class='warning'>At least one of the parts are still on your body, please retract them and try again.</span>")
+				playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
+				return
+		if(!wearer.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
+			var/obj/screen/inventory/hand/H = over_object
+			if(wearer.putItemFromInventoryInHandIfPossible(src, H.held_index))
+				add_fingerprint(usr)
+
 /obj/item/rig/control/proc/shock(mob/living/user)
 	if(!istype(wearer) || cell.charge < 1)
 		return FALSE
@@ -138,6 +170,7 @@
 	complexity_with_thingy += thingy.complexity
 	if(complexity_with_thingy > complexity_max)
 		to_chat(wearer, "<span class='warning'>This would make the RIG too complex!</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	var/obj/item/rig/module/thingy_unleashed = new thingy(src)
 	complexity += thingy_unleashed.complexity
@@ -147,26 +180,29 @@
 	var/obj/item/piece = part
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags,0,0,1))
 		to_chat(wearer, "<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>")
-		playsound(loc, 'sound/mecha/mechmove03.ogg', 25, TRUE)
+		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 		wearer.update_inv_wear_suit()
 		ADD_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
 	else if(piece.loc != src)
 		to_chat(wearer, "<span class='warning'>[piece] [piece.p_are()] already deployed!</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 	else
 		to_chat(wearer, "<span class='warning'>You are already wearing something where [piece] would go!</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 
 /obj/item/rig/control/proc/conceal(part)
 	var/obj/item/piece = part
 	REMOVE_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
 	wearer.transferItemToLoc(piece, src, TRUE)
 	to_chat(wearer, "<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>")
-	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/head/helmet/space/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-helmet"
 	worn_icon = 'icons/mob/rig.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
+	flash_protect = FLASH_PROTECTION_NONE
 	var/obj/item/rig/control/rig
 
 /obj/item/clothing/suit/armor/rig
