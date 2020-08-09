@@ -270,6 +270,22 @@
 	moduleselect_icon = "standard"
 	hat_offset = -3
 
+/obj/item/robot_module/standard/be_transformed_to(obj/item/robot_module/old_module)
+	var/mob/living/silicon/robot/R = loc
+	var/list/icons = sortList(list(
+		"Standard Robot" = image(icon = 'icons/mob/robots.dmi', icon_state = "robot"),
+		"Arachno Standard" = image(icon = 'icons/mob/robots.dmi', icon_state = "arachnostandard")
+		))
+	var/robot_icon = show_radial_menu(R, R , icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
+	switch(robot_icon)
+		if("Standard Robot")
+			cyborg_base_icon = "robot"
+		if("Arachno Standard")
+			cyborg_base_icon = "arachnostandard"
+		else
+			return FALSE
+	return ..()
+
 /obj/item/robot_module/medical
 	name = "Medical"
 	basic_modules = list(
@@ -300,6 +316,22 @@
 	moduleselect_icon = "medical"
 	can_be_pushed = FALSE
 	hat_offset = 3
+
+/obj/item/robot_module/medical/be_transformed_to(obj/item/robot_module/old_module)
+	var/mob/living/silicon/robot/R = loc
+	var/list/icons = sortList(list(
+		"Standard Medical" = image(icon = 'icons/mob/robots.dmi', icon_state = "medical"),
+		"Arachno Medical" = image(icon = 'icons/mob/robots.dmi', icon_state = "arachnomed"),
+		))
+	var/robot_icon = show_radial_menu(R, R , icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
+	switch(robot_icon)
+		if("Standard Medical")
+			cyborg_base_icon = "medical"
+		if("Arachno Medical")
+			cyborg_base_icon = "arachnomed"
+		else
+			return FALSE
+	return ..()
 
 /obj/item/robot_module/engineering
 	name = "Engineering"
@@ -333,6 +365,25 @@
 	moduleselect_icon = "engineer"
 	magpulsing = TRUE
 	hat_offset = -4
+
+/obj/item/robot_module/engineering/be_transformed_to(obj/item/robot_module/old_module)
+	var/mob/living/silicon/robot/R = loc
+	var/list/icons = sortList(list(
+		"Engi Drone" = image(icon = 'icons/mob/robots.dmi', icon_state = "engineer"),
+		"Arachno Engineering" = image(icon = 'icons/mob/robots.dmi', icon_state = "arachnoengi"),
+		"Engi Treads" = image(icon = 'icons/mob/robots.dmi', icon_state = "engi_tread")
+		))
+	var/robot_icon = show_radial_menu(R, R , icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
+	switch(robot_icon)
+		if("Engi Drone")
+			cyborg_base_icon = "engineer"
+		if("Arachno Engineering")
+			cyborg_base_icon = "arachnoengi"
+		if("Engi Treads")
+			cyborg_base_icon = "engi_tread"
+		else
+			return FALSE
+	return ..()
 
 /obj/item/robot_module/security
 	name = "Security"
@@ -411,6 +462,22 @@
 	moduleselect_icon = "janitor"
 	hat_offset = -5
 	clean_on_move = TRUE
+
+/obj/item/robot_module/janitor/be_transformed_to(obj/item/robot_module/old_module)
+	var/mob/living/silicon/robot/R = loc
+	var/list/icons = sortList(list(
+		"Sweep Janitor" = image(icon = 'icons/mob/robots.dmi', icon_state = "janitor"),
+		"Arachno Janitor" = image(icon = 'icons/mob/robots.dmi', icon_state = "arachnojani")
+		))
+	var/robot_icon = show_radial_menu(R, R , icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
+	switch(robot_icon)
+		if("Sweep Janitor")
+			cyborg_base_icon = "janitor"
+		if("Arachno Janitor")
+			cyborg_base_icon = "arachnojani"
+		else
+			return FALSE
+	return ..()
 
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
@@ -552,7 +619,8 @@
 	var/list/miner_icons = sortList(list(
 		"Lavaland Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "miner"),
 		"Asteroid Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "minerOLD"),
-		"Spider Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "spidermin")
+		"Spider Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "spidermin"),
+		"Arachno Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "arachnomin")
 		))
 	var/miner_robot_icon = show_radial_menu(R, R , miner_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(miner_robot_icon)
@@ -563,6 +631,9 @@
 			special_light_key = "miner"
 		if("Spider Miner")
 			cyborg_base_icon = "spidermin"
+		if("Arachno Miner")
+			cyborg_base_icon = "arachnomin"
+			special_light_key = "arachnoengi"
 		else
 			return FALSE
 	return ..()
