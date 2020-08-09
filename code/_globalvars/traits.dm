@@ -107,7 +107,8 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_DWARF" = TRAIT_DWARF,
 		"TRAIT_GIANT" = TRAIT_GIANT,
 		"TRAIT_SILENT_FOOTSTEPS" = TRAIT_SILENT_FOOTSTEPS,
-		"TRAIT_NICE_SHOT" = TRAIT_NICE_SHOT
+		"TRAIT_NICE_SHOT" = TRAIT_NICE_SHOT,
+		"TRAIT_SIGN_LANG" = TRAIT_SIGN_LANG
 	),
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS
@@ -128,3 +129,4 @@ GLOBAL_LIST(trait_name_map)
 		for(var/tname in GLOB.traits_by_type[key])
 			var/val = GLOB.traits_by_type[key][tname]
 			.[val] = tname
+

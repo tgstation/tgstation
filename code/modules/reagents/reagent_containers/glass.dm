@@ -113,6 +113,7 @@
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
 	icon = 'icons/obj/chemical.dmi'
+	worn_icon_state = "beaker"
 	icon_state = "beaker"
 	inhand_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=500)

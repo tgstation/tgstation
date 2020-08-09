@@ -375,7 +375,7 @@
 		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 2,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
+		/obj/item/reagent_containers/food/snacks/grown/lettuce = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/bigmac
 	subcategory = CAT_BURGER

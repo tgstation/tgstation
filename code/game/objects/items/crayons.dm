@@ -625,6 +625,7 @@
 
 	icon_capped = "spraycan_cap"
 	icon_uncapped = "spraycan"
+	worn_icon_state = "spraycan"
 	use_overlays = TRUE
 	paint_color = null
 

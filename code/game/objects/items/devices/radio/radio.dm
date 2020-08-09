@@ -4,6 +4,7 @@
 	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
 	icon_state = "walkietalkie"
+	worn_icon_state = "walkietalkie"
 	inhand_icon_state = "walkietalkie"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
@@ -189,12 +190,26 @@
 				. = TRUE
 
 /obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
-	if(!spans)
-		spans = list(M.speech_span)
-	if(!language)
-		language = M.get_selected_language()
-	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
-	return ITALICS | REDUCE_RANGE
+	if(HAS_TRAIT(M, TRAIT_SIGN_LANG))
+		var/mob/mute = M
+		if(istype(mute))
+			var/obj/item/clothing/gloves/radio/G = mute.get_item_by_slot(ITEM_SLOT_GLOVES)
+			if(!istype(G))
+				return FALSE
+			else
+				if(!spans)
+					spans = list(M.speech_span)
+				if(!language)
+					language = M.get_selected_language()
+				INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
+				return ITALICS | REDUCE_RANGE
+	else
+		if(!spans)
+			spans = list(M.speech_span)
+		if(!language)
+			language = M.get_selected_language()
+		INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
+		return ITALICS | REDUCE_RANGE
 
 /obj/item/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!on)
@@ -424,3 +439,4 @@
 /obj/item/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.
 	dog_fashion = /datum/dog_fashion/back
+

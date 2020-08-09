@@ -310,3 +310,9 @@
 /obj/item/organ/tongue/ethereal/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_ethereal
+
+//GCSL tongue - yep, that's how you speak sign language.
+/obj/item/organ/tongue/tied
+	name = "tied tongue"
+	desc = "Cat's got your tounge?"
+	say_mod = "signs"

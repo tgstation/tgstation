@@ -2,6 +2,7 @@
 	name = "spray bottle"
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
+	worn_icon_state = "spraybottle"
 	icon_state = "sprayer_large"
 	inhand_icon_state = "cleaner"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
