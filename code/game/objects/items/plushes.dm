@@ -591,7 +591,7 @@
 	icon_state = "moffplushevil"
 
 /obj/item/toy/plush/moth/conversion/attack_self(mob/user)
-	for(var/mob/living/carbon/human/H in view(10,loc))
+	for(var/mob/living/carbon/human/H in view(7,loc))
 		H.set_species(/datum/species/moth)
 		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 100, TRUE)
 		to_chat(H, "<span class='notice'>Your body contorts into a nefariously adorable form!</span.?>")

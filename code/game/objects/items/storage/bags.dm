@@ -105,6 +105,8 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
 	component_type = /datum/component/storage/concrete/stack
+	worn_icon_state = "satchel"
+
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/mob/listeningTo
 
@@ -188,6 +190,7 @@
 	name = "plant bag"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
+	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/plants/ComponentInitialize()
@@ -230,6 +233,7 @@
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sheetsnatcher"
+	worn_icon_state = "satchel"
 
 	var/capacity = 300; //the number of sheets it can carry.
 	component_type = /datum/component/storage/concrete/stack
@@ -272,6 +276,7 @@
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
+	worn_icon_state = "book_bag"
 
 /obj/item/storage/bag/books/ComponentInitialize()
 	. = ..()
@@ -361,6 +366,7 @@
 	name = "chemistry bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bag"
+	worn_icon_state = "chembag"
 	desc = "A bag for storing pills, patches, and bottles."
 	resistance_flags = FLAMMABLE
 
@@ -389,6 +395,7 @@
 	name = "bio bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "biobag"
+	worn_icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
 	resistance_flags = FLAMMABLE
 
@@ -420,6 +427,7 @@
 	name = "construction bag"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "construction_bag"
+	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
 	resistance_flags = FLAMMABLE
 

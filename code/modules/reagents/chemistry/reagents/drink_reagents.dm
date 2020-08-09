@@ -245,6 +245,76 @@
 		. = 1
 	..()
 
+//Funny wallem additions
+
+/datum/reagent/consumable/whipcream
+	name = "Whipped Cream"
+	description = "Cream and Sugar, mixed together to create stiff peaks. Peaks not to be confused for other similarly stiff peaks."
+	color = "#FAF7EF" // rgb: 223, 215, 175
+	taste_description = "sugary and creamy milk"
+	glass_icon_state  = "glass_white"
+	glass_name = "glass of whipped cream"
+	glass_desc = "Full of delicious whipped cream!"
+
+/datum/reagent/consumable/whipcream/on_mob_life(mob/living/carbon/M)
+	if(M.getBruteLoss() && prob(20))
+		M.heal_bodypart_damage(1,0, 0)
+		. = 1
+	..()
+
+/datum/reagent/consumable/naenaecream
+	name = "Nae Nae Cream"
+	description = "Cream and Sugar, mixed along with a little neurotoxin. Don't take too much!"
+	color = "#F6B6A9" // rgb: 223, 215, 175
+	taste_description = "awestruck dancers"
+	glass_icon_state  = "glass_naenae"
+	glass_name = "glass of nae nae cream"
+	glass_desc = "Now watch me..."
+	overdose_threshold = 50
+
+/datum/reagent/consumable/naenaecream/on_mob_life(mob/living/carbon/M)
+	if(prob(25))
+		M.visible_message("<span class='danger'>[M] nae naes!</span>", "<span class='userdanger'>You can't help yourself but to nae nae!</span>")
+		M.Stun(2)
+	..()
+
+/datum/reagent/consumable/naenaecream/proc/pickt()
+	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
+
+/datum/reagent/consumable/naenaecream/overdose_process(mob/living/carbon/M)
+	M.set_drugginess(50)
+	M.dizziness +=2
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 150)
+	if(prob(35))
+		M.adjustStaminaLoss(20)
+		M.drop_all_held_items()
+		to_chat(M, "<span class='notice'>Your hands can't hold anything while you're nae naeing!</span>")
+	if(current_cycle > 5)
+		if(prob(35))
+			var/t = pickt()
+			ADD_TRAIT(M, t, type)
+			M.adjustStaminaLoss(10)
+		if(current_cycle > 30)
+			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
+			if(current_cycle > 50 && prob(15))
+				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
+					M.set_heartattack(TRUE)
+					if(M.stat == CONSCIOUS)
+						M.visible_message("<span class='userdanger'>[M] holds [M.p_their()] hand above [M.p_their()] head, ready for one last nae nae!</span>")
+						if(HAS_TRAIT(M, TRAIT_NODISMEMBER))
+							return
+						var/list/parts = list()
+						for(var/X in M.bodyparts)
+							var/obj/item/bodypart/bodypart = X
+							if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)
+								if(bodypart.dismemberable)
+									parts += bodypart
+						if(length(parts))
+							var/obj/item/bodypart/bodypart = pick(parts)
+							bodypart.dismember()
+	. = 1
+	..()
+
 /datum/reagent/consumable/coffee
 	name = "Coffee"
 	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
@@ -271,15 +341,71 @@
 	..()
 	. = 1
 
+/datum/reagent/consumable/cappuccino
+	name = "Cappuccino"
+	description = "The stronger big brother of the cafe latte, cappuccino contains more espresso in proportion to milk."
+	color = "#482000" // rgb: 72, 32, 0
+	nutriment_factor = 0
+	overdose_threshold = 80
+	taste_description = "bitterness"
+	glass_icon_state = "glass_brown"
+	glass_name = "glass of cappuccino"
+	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
+
+/datum/reagent/consumable/cappuccino/overdose_process(mob/living/M)
+	M.Jitter(4)
+	..()
+
+/datum/reagent/consumable/cappuccino/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-5)
+	M.drowsyness = max(0,M.drowsyness-3)
+	M.AdjustSleeping(-40, FALSE)
+	//310.15 is the normal bodytemp.
+	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
+	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
+		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5)
+	if(M.getBruteLoss() && prob(20))
+		M.heal_bodypart_damage(1,0, 0)
+		. = 1
+	..()
+	. = 1
+
+/datum/reagent/consumable/espresso
+	name = "Espresso"
+	description = "A thick blend of coffee made by forcing near-boiling pressurized water through finely ground coffee beans."
+	color = "#482000" // rgb: 72, 32, 0
+	nutriment_factor = 0
+	overdose_threshold = 80
+	taste_description = "bitterness"
+	glass_icon_state = "glass_brown"
+	glass_name = "glass of espresso"
+	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
+
+/datum/reagent/consumable/espresso/overdose_process(mob/living/M)
+	M.Jitter(8)
+	..()
+
+/datum/reagent/consumable/espresso/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-8)
+	M.drowsyness = max(0,M.drowsyness-5)
+	M.AdjustSleeping(-50, FALSE)
+	//310.15 is the normal bodytemp.
+	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
+	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
+		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5)
+	..()
+	. = 1
+
+
 /datum/reagent/consumable/tea
-	name = "Tea"
+	name = "Black Tea"
 	description = "Tasty black tea, it has antioxidants, it's good for you!"
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	taste_description = "tart black tea"
 	glass_icon_state = "teaglass"
-	glass_name = "glass of tea"
-	glass_desc = "Drinking it from here would not seem right."
+	glass_name = "black tea"
+	glass_desc = "A warm mug of black tea."
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-2)
@@ -291,6 +417,92 @@
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
 	..()
 	. = 1
+
+/datum/reagent/consumable/greentea
+	name = "Green Tea"
+	description = "You fucking weeaboo."
+	color = "#2D7C36"
+	nutriment_factor = 0
+	taste_description = "soothing green tea"
+	glass_icon_state = "greentea"
+	glass_name = "green tea"
+	glass_desc = "Green Tea served in a traditional Japanese tea cup, just like in your Chinese cartoons!"
+
+/datum/reagent/consumable/greentea/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-2)
+	M.drowsyness = max(0,M.drowsyness-1)
+	M.jitteriness = max(0,M.jitteriness-3)
+	M.AdjustSleeping(-20, FALSE)
+	if(M.getToxLoss() && prob(20))
+		M.adjustToxLoss(-1, 0)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
+	..()
+	. = 1
+
+/datum/reagent/consumable/redtea
+	name = "Red Tea"
+	description = "THIS SHIT'S RED!"
+	color = "#A01818"
+	nutriment_factor = 0
+	taste_description = "sweet red tea"
+	glass_icon_state = "redtea"
+	glass_name = "redtea"
+	glass_desc = "Red Tea served in a traditional Chinese tea cup, just like in your Malaysian movies!"
+
+/datum/reagent/consumable/redtea/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-2)
+	M.drowsyness = max(0,M.drowsyness-1)
+	M.jitteriness = max(0,M.jitteriness-3)
+	M.AdjustSleeping(-20, FALSE)
+	if(M.getToxLoss() && prob(20))
+		M.adjustToxLoss(-1, 0)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
+	..()
+	. = 1
+
+
+/datum/reagent/consumable/chifir
+	name = "Chifir"
+	description = "For when you're indecisive!"
+	nutriment_factor = 0
+	color = "#432208"
+	taste_description = "bitter chifir"
+	glass_icon_state = "chifir"
+	glass_name = "chifir"
+	glass_desc = "A Russian kind of tea. Not for those with weak stomachs."
+
+/datum/reagent/consumable/chifir/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-2)
+	M.drowsyness = max(0,M.drowsyness-1)
+	M.jitteriness = max(0,M.jitteriness-3)
+	M.AdjustSleeping(-20, FALSE)
+	if(M.getToxLoss() && prob(20))
+		M.adjustToxLoss(-1, 0)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
+	..()
+	. = 1
+
+/datum/reagent/consumable/chamomile
+	name = "Chamomile"
+	description = "this shits FLOWERS"
+	nutriment_factor = 0
+	color = "#D09A28"
+	taste_description = "floral chamomile"
+	glass_icon_state = "chamomile"
+	glass_name = "chamomile"
+	glass_desc = "A smooth, herbal tea. Refreshing!"
+
+/datum/reagent/consumable/chifir/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-2)
+	M.drowsyness = max(0,M.drowsyness-1)
+	M.jitteriness = max(0,M.jitteriness-3)
+	M.AdjustSleeping(-20, FALSE)
+	if(M.getToxLoss() && prob(20))
+		M.adjustToxLoss(-1, 0)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
+	..()
+	. = 1
+
 
 /datum/reagent/consumable/lemonade
 	name = "Lemonade"

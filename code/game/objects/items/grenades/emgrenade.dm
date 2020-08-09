@@ -3,6 +3,7 @@
 	desc = "It is designed to wreak havoc on electronic systems."
 	icon_state = "emp"
 	inhand_icon_state = "emp"
+	worn_icon_state = "grenade"
 
 /obj/item/grenade/empgrenade/prime(mob/living/lanced_by)
 	. = ..()

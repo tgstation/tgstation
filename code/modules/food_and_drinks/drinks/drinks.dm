@@ -244,6 +244,29 @@
 	resistance_flags = FREEZE_PROOF
 	custom_price = 120
 
+/obj/item/reagent_containers/food/drinks/mug/latte
+	name = "latte"
+	desc = "A true classic: steamed milk, some espresso, and foamed milk to top it all off."
+	icon_state = "latte"
+	inhand_icon_state = "coffee"
+	spillable = TRUE
+	foodtype = BREAKFAST
+
+/obj/item/reagent_containers/food/drinks/mug/cappuccino
+	name = "cappuccino"
+	desc = "The stronger big brother of the cafe latte, cappuccino contains more espresso in proportion to milk."
+	icon_state = "cappuccino"
+	inhand_icon_state = "coffee"
+	spillable = TRUE
+	foodtype = BREAKFAST
+
+/obj/item/reagent_containers/food/drinks/mug/espresso
+	name = "espresso"
+	desc = "A thick blend of coffee made by forcing near-boiling pressurized water through finely ground coffee beans."
+	icon_state = "espresso"
+	inhand_icon_state = "coffee"
+	spillable = TRUE
+	foodtype = BREAKFAST
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"

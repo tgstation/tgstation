@@ -190,6 +190,7 @@ RLD
 	name = "rapid-construction-device (RCD)"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_premium_price = 1700

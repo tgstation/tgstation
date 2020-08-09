@@ -608,6 +608,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "The zippo."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "zippo"
+	worn_icon_state = "lighter"
 	inhand_icon_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1

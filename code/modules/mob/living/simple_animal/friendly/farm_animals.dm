@@ -250,12 +250,92 @@
 	verb_yell = "loudly blorbles"
 	speak = list("Jiggle.","Sandwich?","The Salami-Lid", "*Misses*")
 	gold_core_spawnable = FRIENDLY_SPAWN
-	speak_chance = 10
+	speak_chance = 25
+	see_in_dark = 8
 
-/mob/living/simple_animal/cow/Life()
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+
+
+/mob/living/simple_animal/cow/milker/Life()
 	. = ..()
 	if(stat == CONSCIOUS)
 		udder.generateJelly()
+
+/mob/living/simple_animal/cow/milker/updatehealth()
+	. = ..()
+	var/mod = 0
+	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
+		var/health_deficiency = (maxHealth - health)
+		if(health_deficiency >= 45)
+			mod += (health_deficiency / 25)
+		if(health <= 0)
+			mod += 2
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod, multiplicative_slowdown = mod)
+
+/mob/living/simple_animal/cow/milker/adjust_bodytemperature()
+	. = ..()
+	var/mod = 0
+	if(bodytemperature >= 330.23) // 135 F or 57.08 C
+		mod = -1	// slimes become supercharged at high temperatures
+	else if(bodytemperature < 283.222)
+		mod = ((283.222 - bodytemperature) / 10) * 1.75
+	if(mod)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_tempmod, multiplicative_slowdown = mod)
+
+/mob/living/simple_animal/cow/milker/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced)
+		amount = -abs(amount)
+	return ..() //Heals them
+
+/mob/living/simple_animal/cow/milker/bullet_act(obj/projectile/Proj)
+	if((Proj.damage_type == BURN))
+		adjustBruteLoss(-abs(Proj.damage)) //fire projectiles heals slimes.
+		Proj.on_hit(src)
+	else
+		. = ..(Proj)
+	. = . || BULLET_ACT_BLOCK
+
+/mob/living/simple_animal/cow/milker/handle_environment(datum/gas_mixture/environment)
+	var/loc_temp = get_temperature(environment)
+	var/divisor = 10 /// The divisor controls how fast body temperature changes, lower causes faster changes
+
+	if(abs(loc_temp - bodytemperature) > 50) // If the difference is great, reduce the divisor for faster stabilization
+		divisor = 5
+
+	if(loc_temp < bodytemperature) // It is cold here
+		if(!on_fire) // Do not reduce body temp when on fire
+			adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
+	else // This is a hot place
+		adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
+
+	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
+		if(bodytemperature <= (T0C - 50)) // hurt temperature
+			if(bodytemperature <= 50) // sqrting negative numbers is bad
+				adjustBruteLoss(200)
+			else
+				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
+
+	if(stat != DEAD)
+		var/bz_percentage =0
+		if(environment.gases[/datum/gas/bz])
+			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
+		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100))
+
+		if(stat == CONSCIOUS && stasis)
+			to_chat(src, "<span class='danger'>Nerve gas in the air has put you in stasis!</span>")
+			set_stat(UNCONSCIOUS)
+			update_mobility()
+			regenerate_icons()
+		else if(stat == UNCONSCIOUS && !stasis)
+			to_chat(src, "<span class='notice'>You wake up from the stasis.</span>")
+			set_stat(CONSCIOUS)
+			update_mobility()
+			regenerate_icons()
+
+	updatehealth()
+
+	return //TODO: DEFERRED
+
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"

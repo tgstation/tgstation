@@ -76,13 +76,33 @@
 	unsuitable_atmos_damage = 0
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
+	gold_core_spawnable = FALSE
 	held_state = "cat2"
 	speak = list("EDF!", "I might be stupid.", "Bigger.", "BIGGER.", "Fuck you.",
 	"I am NOTHING like you fuckers.", "Where is my buff tomboy GF?", ":catbuff:", "I come from a world you will NEVER understand.",
 	"People have asked me what I would do if I was sucked into the cold, airless vacuum of space. I simply would not die.", "I am the reason ambulances can't be called anymore!!",
-	"Have you seen a rabbit around here? I've got some bullshit to sort out with the fucker.", "Dame Da Ne...")
+	"Fuck Big Chungus, asshole owes me $5.")
 	response_harm_continuous = "punts"
 	response_harm_simple = "punt"
+	speak_chance = 25
+
+/mob/living/simple_animal/pet/cat/clockwork
+	name = "Hairspring"
+	desc = "A fully mechanical cat. It would be fully indestringuishable from a cat if it weren't for its bronze coat."
+	icon_state = "clockcat"
+	icon_living = "clockcat"
+	icon_dead = "clockcat_dead"
+	speak_emote = list("purrs", "meows", "ticks")
+	emote_hear = list("meows.", "mews.", "chimes.")
+	mob_biotypes = MOB_ROBOTIC|MOB_BEAST
+	unsuitable_atmos_damage = 0
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 40
+	held_state = "clockcat"
+	speech_span = SPAN_ROBOT
+	speak = list("Meow!", "Purr...", "Tick. Tick. Tick.", "Mrrrow!", "Mrrrp!!", "YOWWWWW", "CUCKOO! CUCKOO!", "Mew?")
+	emote_see = list("shakes its head.", "shivers.", "rolls over and shows its belly.", "rubs against the nearest object.", "kneads the floor.", "plays with its tail.")
+
 
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"

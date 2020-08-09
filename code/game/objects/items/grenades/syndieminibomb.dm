@@ -3,6 +3,7 @@
 	name = "syndicate minibomb"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "syndicate"
+	worn_icon_state = "minibomb"
 	inhand_icon_state = "flashbang"
 	ex_dev = 1
 	ex_heavy = 2
