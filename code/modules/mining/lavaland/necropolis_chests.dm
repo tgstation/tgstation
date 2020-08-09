@@ -932,7 +932,7 @@
 				user.mind.AddSpell(D)
 		if(4)
 			to_chat(user, "<span class='danger'>You feel like you could walk straight through lava now.</span>")
-			H.weather_immunities |= "lava"
+			LAZYOR(H.weather_immunities, "lava")
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)

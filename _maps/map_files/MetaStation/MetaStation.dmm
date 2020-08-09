@@ -52765,11 +52765,8 @@
 /turf/closed/wall,
 /area/maintenance/aft)
 "ctJ" = (
-/obj/item/storage/toolbox/emergency,
-/obj/structure/closet/firecloset,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/department/science/central)
+/turf/open/floor/circuit/green,
+/area/science/robotics/mechbay)
 "ctK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -53128,31 +53125,28 @@
 /area/hallway/primary/aft)
 "cuB" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
 /area/maintenance/department/science/central)
 "cuC" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/item/wrench,
+/obj/machinery/mech_bay_recharge_port,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/science/central)
 "cuD" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/storage/box/lights/mixed,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
+/obj/structure/sign/warning/electricshock{
+	pixel_y = 31
+	},
+/obj/structure/cable,
+/turf/open/floor/mech_bay_recharge_floor,
 /area/maintenance/department/science/central)
 "cuE" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
+/obj/machinery/computer/mech_bay_power_console,
+/obj/item/radio/intercom{
+	pixel_y = 20
+	},
+/obj/structure/cable,
+/turf/open/floor/circuit/green,
 /area/maintenance/department/science/central)
 "cuF" = (
 /obj/machinery/computer/nanite_cloud_controller,
@@ -53397,12 +53391,8 @@
 /turf/closed/wall,
 /area/science/robotics/mechbay)
 "cvI" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Mech Bay Maintenance";
-	req_access_txt = "29"
-	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/maintenance/department/science/central)
 "cvJ" = (
 /obj/machinery/power/apc/auto_name/west,
@@ -53641,24 +53631,23 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "cwH" = (
-/obj/machinery/mech_bay_recharge_port,
-/obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/circuit,
 /area/science/robotics/mechbay)
 "cwI" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_y = 31
-	},
+/obj/effect/landmark/event_spawn,
 /obj/structure/cable,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/circuit,
 /area/science/robotics/mechbay)
 "cwJ" = (
-/obj/machinery/computer/mech_bay_power_console,
-/obj/item/radio/intercom{
-	pixel_y = 20
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
 	},
-/obj/structure/cable,
-/turf/open/floor/circuit/green,
+/obj/effect/landmark/start/roboticist,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/circuit,
 /area/science/robotics/mechbay)
 "cwK" = (
 /obj/machinery/nanite_program_hub,
@@ -53978,28 +53967,24 @@
 /area/science/robotics/mechbay)
 "cxD" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "cxE" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/open/floor/circuit/green,
+/obj/machinery/mech_bay_recharge_port,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "cxF" = (
 /obj/structure/cable,
-/turf/open/floor/circuit/green,
+/turf/open/floor/mech_bay_recharge_floor,
 /area/science/robotics/mechbay)
 "cxG" = (
-/obj/machinery/camera{
-	c_tag = "Mech Bay";
-	dir = 8;
-	network = list("ss13","rd")
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
 	},
-/turf/open/floor/circuit/green,
+/obj/structure/cable,
+/turf/open/floor/circuit,
 /area/science/robotics/mechbay)
 "cxH" = (
 /obj/machinery/airalarm/directional/west,
@@ -54164,18 +54149,11 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "cyr" = (
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "cys" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/effect/landmark/start/roboticist,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/circuit,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "cyt" = (
 /obj/machinery/disposal/bin,
@@ -54413,16 +54391,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
-"czj" = (
-/obj/structure/cable,
-/turf/open/floor/mech_bay_recharge_floor,
-/area/science/robotics/mechbay)
 "czk" = (
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/circuit,
+/obj/machinery/mechpad,
+/turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "czl" = (
 /obj/structure/table,
@@ -54761,6 +54732,9 @@
 	pixel_x = 24
 	},
 /obj/structure/cable,
+/obj/machinery/computer/mechpad{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "cAp" = (
@@ -58805,9 +58779,12 @@
 /area/maintenance/disposal/incinerator)
 "cLD" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/research{
+	name = "Mech Bay";
+	req_access_txt = "29"
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
 /area/maintenance/department/science/central)
 "cLE" = (
 /obj/structure/disposalpipe/segment{
@@ -65543,17 +65520,9 @@
 	},
 /area/maintenance/port/aft)
 "diL" = (
-/obj/item/tank/internals/oxygen,
-/obj/item/tank/internals/oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/machinery/space_heater,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/science/central)
+/obj/structure/cable,
+/turf/open/floor/circuit/green,
+/area/science/robotics/mechbay)
 "diP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -67053,9 +67022,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "dDz" = (
-/obj/effect/landmark/event_spawn,
 /obj/structure/cable,
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dDA" = (
 /obj/effect/landmark/event_spawn,
@@ -68312,6 +68280,14 @@
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"frY" = (
+/obj/machinery/camera{
+	c_tag = "Mech Bay";
+	dir = 8;
+	network = list("ss13","rd")
+	},
+/turf/open/floor/circuit/green,
+/area/science/robotics/mechbay)
 "ftu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -108774,13 +108750,13 @@ cpd
 cqx
 cgd
 cLh
-ctJ
+gnd
 cuC
-cvH
+ctJ
 cwH
 cxE
 cyr
-cwH
+cyr
 cAm
 cBg
 cCo
@@ -109031,13 +109007,13 @@ cpe
 cqy
 cgd
 csO
-diL
+gnd
 cuD
-cvH
+diL
 cwI
 cxF
 dDz
-czj
+dDz
 cAn
 cBh
 cCp
@@ -109290,7 +109266,7 @@ cgd
 csP
 gnd
 cuE
-cvH
+frY
 cwJ
 cxG
 cys

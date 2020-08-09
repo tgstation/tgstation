@@ -22550,23 +22550,20 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "bfv" = (
-/obj/structure/table,
-/obj/item/crowbar/large,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
-/obj/item/clothing/head/welding,
+/obj/machinery/computer/mechpad,
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "bfw" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mech Bay APC";
 	pixel_y = 23
 	},
 /obj/structure/cable,
+/obj/machinery/mechpad,
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "bfx" = (
@@ -22584,15 +22581,15 @@
 	pixel_y = 30
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "bfz" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/mech_bay_recharge_floor,
 /area/science/robotics/mechbay)
 "bfA" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bfB" = (
 /obj/structure/table,
@@ -23517,13 +23514,13 @@
 /area/science/robotics/mechbay)
 "bhU" = (
 /obj/machinery/mech_bay_recharge_port,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "bhV" = (
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bib" = (
 /obj/effect/turf_decal/tile/brown{
