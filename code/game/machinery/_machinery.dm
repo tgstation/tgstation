@@ -166,10 +166,7 @@ Class Procs:
 	GLOB.machines.Remove(src)
 	end_processing()
 	dropContents()
-	if(length(component_parts))
-		for(var/atom/A in component_parts)
-			qdel(A)
-		component_parts.Cut()
+	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
 	return ..()
 
