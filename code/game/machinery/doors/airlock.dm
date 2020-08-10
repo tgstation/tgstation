@@ -951,7 +951,7 @@
 			to_chat(user, "<span class='warning'>[src] must be closed before you can seal it!</span>")
 			return
 		if(seal)
-			to_chat(user, "<span class='warning'>This airlock has already been sealed!</span>")
+			to_chat(user, "<span class='warning'>[src] has already been sealed!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] begins sealing [src].</span>", "<span class='notice'>You begin sealing [src].</span>")
 		playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
