@@ -1537,10 +1537,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						preferred_map = maplist[pickedmap]
 
 				if ("clientfps")
-					var/desiredfps = input(user, "Choose your desired fps. (0 = defaults to recommened value (currently:[RECOMMENDED_FPS]))", "Character Preference", clientfps)  as null|num
+					var/desiredfps = input(user, "Choose your desired fps.\n-1 means recommended value (currently:[RECOMMENDED_FPS])\n0 means world fps (currently:[world.fps])", "Character Preference", clientfps)  as null|num
 					if (!isnull(desiredfps))
-						clientfps = desiredfps
-						parent.fps = desiredfps ? desiredfps : RECOMMENDED_FPS
+						clientfps = sanitize_integer(desiredfps, -1, 1000, clientfps)
+						parent.fps = (desiredfps < 0) ? RECOMMENDED_FPS : desiredfps
 				if("ui")
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
 					if(pickedui)
