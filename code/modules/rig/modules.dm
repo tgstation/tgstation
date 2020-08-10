@@ -1,6 +1,8 @@
 /obj/item/rig/module
 	name = "RIG module"
 	icon_state = "module"
+	/// If it can be removed
+	var/removable = TRUE
 	/// How much space it takes up in the RIG
 	var/complexity = 0
 	/// Power use when idle
@@ -13,15 +15,12 @@
 /obj/item/rig/module/Destroy()
 	..()
 	if(rig)
-		rig = null
-		rig.complexity -= complexity
-		LAZYREMOVE(rig.modules, src)
-		on_removal()
+		rig.uninstall(src)
 
 /obj/item/rig/module/proc/on_install()
 	return
 
-/obj/item/rig/module/proc/on_removal()
+/obj/item/rig/module/proc/on_uninstall()
 	return
 
 /obj/item/rig/module/storage
@@ -54,6 +53,6 @@
 	rigstorage.max_combined_w_class = max_combined_w_class
 	rigstorage.max_items = max_items
 
-/obj/item/rig/module/storage/on_removal()
+/obj/item/rig/module/storage/on_uninstall()
 	var/datum/component/storage/rigstorage = rig.GetComponent(/datum/component/storage)
 	rigstorage.RemoveComponent()

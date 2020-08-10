@@ -108,14 +108,15 @@
 		boots.worn_icon_state = "[theme]-boots"
 		LAZYADD(rig_parts, boots)
 	if(initial_modules)
-		for(var/path in initial_modules)
-			var/obj/item/rig/module/module = path
+		for(var/obj/item/rig/module/module in initial_modules)
 			module = new module(src)
 			install(module, TRUE)
 
 /obj/item/rig/control/Destroy()
 	..()
 	QDEL_NULL(wires)
+	if(cell)
+		QDEL_NULL(cell)
 	if(helmet)
 		helmet.rig = null
 		QDEL_NULL(helmet)
@@ -128,15 +129,14 @@
 	if(boots)
 		boots.rig = null
 		QDEL_NULL(boots)
-	for(var/h in modules)
-		var/obj/item/rig/module/thingy = h
+	for(var/obj/item/rig/module/thingy in modules)
 		thingy.rig = null
 		QDEL_NULL(thingy)
 
 /obj/item/rig/control/process()
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
-	if(cell.charge > 0 && active)
+	if(cell && cell.charge > 0 && active)
 		if((cell.charge -= cell_usage) < 0)
 			cell.charge = 0
 		else
@@ -161,8 +161,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/guy = user
 		if(src == guy.back)
-			for(var/h in rig_parts)
-				var/obj/item/part = h
+			for(var/obj/item/part in rig_parts)
 				if(part.loc != src)
 					to_chat(guy, "<span class='warning'>At least one of the parts are still on your body, please retract them and try again.</span>")
 					playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
@@ -171,8 +170,7 @@
 
 /obj/item/rig/control/MouseDrop(atom/over_object)
 	if(src == wearer.back && istype(over_object, /obj/screen/inventory/hand))
-		for(var/h in rig_parts)
-			var/obj/item/part = h
+		for(var/obj/item/part in rig_parts)
 			if(part.loc != src)
 				to_chat(wearer, "<span class='warning'>At least one of the parts are still on your body, please retract them and try again.</span>")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
@@ -183,28 +181,74 @@
 				add_fingerprint(usr)
 	return ..()
 
+/obj/item/rig/control/attack_hand(mob/user)
+	if(seconds_electrified && cell.charge)
+		if(shock(user, 100))
+			return
+	if(open && cell && loc == user)
+		to_chat(user, "<span class='notice'>You start removing [cell].</span>")
+		if(do_after(user, 50, target = src))
+			to_chat(user, "<span class='notice'>You remove [cell].</span>")
+			user.put_in_hands(cell)
+			cell = null
+		return
+	..()
+
 /obj/item/rig/control/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
 	if(active || activating)
-		to_chat(wearer, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
+		to_chat(user, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return FALSE
 	to_chat(user, "<span class='notice'>You start to [open ? "screw the panel back on" : "unscrew the panel"]...</span>")
+	I.play_tool_sound(src, 100)
 	if(I.use_tool(src, user, 20))
-		user.visible_message("<span class='notice'>[user] [open ? "screws the panel back on" : "unscrews the panel"]!</span>",
-			"<span class='notice'>You [open ? "screw the panel back on" : "unscrew the panel"]!</span>",
+		I.play_tool_sound(src, 100)
+		user.visible_message("<span class='notice'>[user] [open ? "screws the panel back on" : "unscrews the panel"].</span>",
+			"<span class='notice'>You [open ? "screw the panel back on" : "unscrew the panel"].</span>",
 			"<span class='hear'>You hear metal noises.</span>")
 		open = !open
 	return TRUE
 
+/obj/item/rig/control/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(!open)
+		to_chat(user, "<span class='warning'>ERROR: Suit panel not open.</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return FALSE
+	if(modules.len)
+		for(var/obj/item/rig/module/thingy in modules)
+			if(thingy.removable)
+				uninstall(thingy)
+				I.play_tool_sound(src, 100)
+		return TRUE
+	to_chat(user, "<span class='warning'>There's no modules on [src]!</span>")
+	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+	return FALSE
+
 /obj/item/rig/control/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/rig/module))
-		if(open && !active && !activating)
+		if(open && !active && !activating && !no_customization)
 			install(I, FALSE)
 			return TRUE
 		else
-			visible_message("<span class='warning'>[src] indicates that something prevents installing the module.</span>")
+			audible_message("<span class='warning'>[src] indicates that something prevents installing [I].</span>")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
+	else if(istype(I, /obj/item/stock_parts/cell))
+		if(open && !active && !activating && !cell)
+			I.forceMove(src)
+			cell = I
+			audible_message("<span class='notice'>[src] indicates that [cell] has been succesfully installed.</span>")
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			return TRUE
+		else
+			audible_message("<span class='warning'>[src] indicates that something prevents installing [I].</span>")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+			return FALSE
+	else if(is_wire_tool(I) && open)
+		wires.interact(user)
 	..()
 
 /obj/item/rig/control/proc/shock(mob/living/user)
@@ -218,12 +262,16 @@
 		return FALSE
 
 /obj/item/rig/control/proc/install(module, starting_module = FALSE)
+	if(!starting_module && no_customization)
+		audible_message("<span class='warning'>[src] indicates that it cannot be modified.</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return
 	var/obj/item/rig/module/thingy = module
 	var/complexity_with_thingy = complexity
 	complexity_with_thingy += thingy.complexity
 	if(complexity_with_thingy > complexity_max)
 		if(!starting_module)
-			visible_message("<span class='warning'>[src] indicates that the module would make it too complex.</span>")
+			audible_message("<span class='warning'>[src] indicates that the module would make it too complex.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	thingy.forceMove(src)
@@ -232,8 +280,24 @@
 	thingy.rig = src
 	thingy.on_install()
 	if(!starting_module)
-		visible_message("<span class='notice'>[src] indicates that the module has been installed successfully.</span>")
+		audible_message("<span class='notice'>[src] indicates that the module has been installed successfully.</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+
+/obj/item/rig/control/proc/uninstall(module)
+	if(no_customization)
+		audible_message("<span class='warning'>[src] indicates that it cannot be modified.</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return
+	var/obj/item/rig/module/thingy = module
+	if(!thingy.removable)
+		audible_message("<span class='warning'>[src] indicates that the module cannot be removed.</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return
+	thingy.forceMove(get_turf(src))
+	LAZYREMOVE(modules, thingy)
+	complexity -= thingy.complexity
+	thingy.on_uninstall()
+	thingy.rig = null
 
 /obj/item/clothing/head/helmet/space/rig
 	name = "RIG helmet"

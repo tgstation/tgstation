@@ -29,11 +29,14 @@
 		to_chat(wearer, "<span class='warning'>ERROR: Access level insufficient.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
+	if(open)
+		to_chat(wearer, "<span class='warning'>ERROR: Suit panel open. Close before continuing</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return
 	if(activating)
 		to_chat(wearer, "<span class='warning'>ERROR: Suit already [active ? "shutting down" : "staring up"].</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
-	wearer.Immobilize(105)
 	activating = TRUE
 	to_chat(wearer, "<span class='notice'>RIGsuit [active ? "shutting down" : "starting up"]. Please stand still.</span>")
 	if(do_after(wearer,20,target = wearer)) //We make the wearer the target so that we can see the bar
@@ -87,4 +90,4 @@
 			cell_usage = 0
 			slowdown = initial(slowdown)
 		wearer.update_equipment_speed_mods()
-		activating = FALSE
+	activating = FALSE
