@@ -200,11 +200,18 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 				continue
 		. += amt
 	step_size = round(max(1, initial(step_size) / .))
-	glide_size = step_size
 	if(pulling) // update the thing we're pulling too while we're at it
 		pulling.step_size = step_size
+		pulling.glide_size = step_size
 	if(pulledby)
 		step_size = pulledby.step_size
+	if(buckled)
+		step_size = buckled.step_size
+	if(buckled_mobs)
+		for(var/mob/m in buckled_mobs)
+			m.step_size = step_size
+			m.glide_size = step_size
+	glide_size = step_size
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()

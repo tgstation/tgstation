@@ -18,6 +18,9 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
+	bound_height = 16
+	bound_width = 28
+	brotation = NONE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
 	var/bolts = TRUE
@@ -52,6 +55,7 @@
 	icon_state = "down"
 	anchored = FALSE
 	resistance_flags = NONE
+	COOLDOWN_DECLARE(last_roll)
 	var/foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
@@ -94,7 +98,8 @@
 
 /obj/structure/bed/roller/Moved()
 	. = ..()
-	if(has_gravity())
+	if(has_gravity() && COOLDOWN_FINISHED(src, last_roll))
+		COOLDOWN_START(src, last_roll, 0.25 SECONDS)
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)

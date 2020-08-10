@@ -207,8 +207,7 @@
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
-		for(var/i in 1 to 4)
-			walk_for(M, pick(GLOB.alldirs), until=0.25 SECONDS)
+		walk_for(M, pick(GLOB.alldirs), until=0.25 SECONDS)
 	if(prob(20))
 		M.emote("laugh")
 	if(prob(33))

@@ -15,6 +15,11 @@
 	///whether we are already sidestepping or not
 	var/sidestep = FALSE
 
+	///whether or not we can sidestep
+	var/can_sidestep = FALSE
+
+	/// collider object
+	var/atom/movable/collider/slider/slider
 	//Misc
 	var/last_move = null
 	var/last_move_time = 0
@@ -66,6 +71,7 @@
 
 /atom/movable/Initialize(mapload)
 	. = ..()
+	set_sidestep(can_sidestep) // creates slider if there isn't one already
 	update_bounds(olddir=NORTH, newdir=dir) // bounds assume north but some things arent north by default for some god knows reason
 	if(opacity) // makes opaque objects not block entire tiles
 		appearance_flags &= ~TILE_BOUND
@@ -129,6 +135,14 @@
 				SSvis_overlays.remove_vis_overlay(src, list(vs))
 				break
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE, dir)
+
+/atom/movable/proc/set_sidestep(val = 0)
+	can_sidestep = val
+	if(can_sidestep && !slider)
+		slider = new()
+	else if(!can_sidestep && slider)
+		qdel(slider)
+	return can_sidestep
 
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
 	if(!direction)
@@ -233,7 +247,7 @@
 	pulling = AM
 	AM.pulledby = src
 	setGrabState(state)
-	AM.step_size = step_size
+	pulling.set_sidestep(TRUE)
 	if(ismob(AM))
 		var/mob/M = AM
 		M.update_movespeed() // set the proper step_size
@@ -247,10 +261,10 @@
 	if(!pulling)
 		return
 	pulling.pulledby = null
+	pulling.set_sidestep(initial(pulling.can_sidestep))
 	var/atom/movable/ex_pulled = pulling
 	pulling = null
 	setGrabState(0)
-	ex_pulled.step_size = initial(ex_pulled.step_size)
 	if(isliving(ex_pulled))
 		var/mob/living/L = ex_pulled
 		L.update_mobility()// mob gets up if it was lyng down in a chokehold
@@ -262,7 +276,8 @@
 	if(!Adjacent(A))
 		to_chat(src, "<span class='warning'>You can't move [pulling] that far!</span>")
 		return
-	pulling.Move(get_turf(A), get_dir(pulling.loc, A))
+	pulling.step_size = 1 + pulling.Move(get_turf(A), get_dir(pulling.loc, A)) // 1 + pixels moved
+	pulling.step_size = step_size
 	return TRUE
 
 /mob/living/Move_Pulled(atom/A, params)
@@ -351,7 +366,17 @@
 	var/atom/oldloc = loc
 
 	. = ..()
-
+	if(!. && can_sidestep && !sidestep)
+		//if this mob is able to slide when colliding, and is currently not attempting to slide
+		//mark that we are sliding
+		sidestep = TRUE
+		//call to the global slider object to determine what direction our slide will happen in (if any)
+		. = slider.slide(src, direct, _step_x, _step_y)
+		if(.)
+			//if slider was able to slide, step us in the direction indicated
+			. = step(src,.)
+		//mark that we are no longer sliding
+		sidestep = FALSE
 	last_move = direct
 	setDir(direct)
 	if(.)
@@ -400,7 +425,6 @@
 
 /atom/movable/Bump(atom/A)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
-	handle_sidestep(A)
 	. = ..()
 	if(!QDELETED(throwing))
 		throwing.hit_atom(A)
@@ -555,6 +579,7 @@
 		return
 	. = anchored
 	anchored = anchorvalue
+	set_sidestep(!anchored)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /atom/movable/proc/forceMove(atom/destination, _step_x=0, _step_y=0)

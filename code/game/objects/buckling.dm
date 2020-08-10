@@ -69,7 +69,7 @@
 	if(!istype(M))
 		return FALSE
 
-	if(check_loc && M.loc != loc)
+	if(check_loc && !(M in obounds()))
 		return FALSE
 
 	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
@@ -100,6 +100,7 @@
 	buckled_mobs |= M
 	M.update_mobility()
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
+	M.update_movespeed()
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
@@ -120,6 +121,7 @@
 		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")
 		buckled_mobs -= buckled_mob
+		buckled_mob.update_movespeed()
 		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
 		post_unbuckle_mob(.)

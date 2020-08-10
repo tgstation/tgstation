@@ -11,7 +11,7 @@
 	. = ..()
 
 /mob/camera/ai_eye/remote/xenobio/setLoc(atom/T, force_update, _pixel_x, _pixel_y)
-	var/area/new_area = get_area(t)
+	var/area/new_area = get_area(T)
 	if(new_area && new_area.name == allowed_area || new_area && (new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
 		return ..()
 	else
@@ -19,7 +19,7 @@
 
 /mob/camera/ai_eye/remote/xenobio/relaymove(mob/user, direct)
 	var/area/new_area = get_area(get_step(src, direct))
-	if(new_area && new_area.name == allowed_area || new_area && new_area.xenobiology_compatible)
+	if(new_area && new_area.name == allowed_area || new_area && (new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
 		return ..()
 	else
 		return

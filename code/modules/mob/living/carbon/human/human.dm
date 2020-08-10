@@ -1,6 +1,7 @@
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/proc/ToggleSidestep
 
 	icon_state = ""		//Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
@@ -1098,10 +1099,8 @@
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE) && !target.buckled)
 				if(!(target in obounds()))
-					var/old_density = density
-					density = FALSE
-					step_towards(target, loc, bounds_dist(target, src))
-					density = old_density
+					target.forceMove(loc)
+					target.forceStep(src)
 					buckle_mob(target, TRUE, TRUE, 90, 1, 0)
 					return
 				else
@@ -1119,6 +1118,8 @@
 				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 					return
+				target.forceMove(loc)
+				target.forceStep(src)
 				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
 		else
 			visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")

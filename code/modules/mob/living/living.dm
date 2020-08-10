@@ -209,6 +209,7 @@
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
+	AM.set_sidestep(TRUE)
 	AM.pulledby = src
 
 	SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM, state, force)
@@ -257,6 +258,7 @@
 			update_pull_movespeed()
 
 		set_pull_offsets(M, state)
+	update_movespeed()
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
 	if(M.buckled)
@@ -306,6 +308,7 @@
 	if(ismob(pulling))
 		reset_pull_offsets(pulling)
 	..()
+	update_movespeed()
 	update_pull_movespeed()
 	update_pull_hud_icon()
 
@@ -366,6 +369,13 @@
 	return health
 
 // MOB PROCS //END
+/mob/living/proc/ToggleSidestep()
+	set name = "Toggle Edge Sliding"
+	set category = "OOC"
+	set desc = "Less control over precise movements, less frustration with corners. You decide"
+
+	set_sidestep(!can_sidestep)
+	to_chat(src, "Edge sliding is now [can_sidestep ? "ON" : "OFF"]")
 
 /mob/living/proc/mob_sleep()
 	set name = "Sleep"

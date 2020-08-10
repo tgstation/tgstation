@@ -58,6 +58,7 @@
 
 	var/diagonal_step = (direct & (NORTH|SOUTH)) && (direct & (EAST|WEST))
 	var/step_size
+	var/old_glide = mob.glide_size
 	if(mob.control_object)
 		step_size = mob.control_object.step_size
 		if(diagonal_step)
@@ -67,6 +68,7 @@
 		step_size = mob.step_size
 		if(diagonal_step)
 			step_size *= 0.7
+			mob.glide_size *= 0.7
 
 	if(!isliving(mob))
 		return step(mob, direct, step_size)
@@ -133,10 +135,10 @@
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
-
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
 		mob.setDir(get_dir(mob, P))
+	mob.glide_size = old_glide // glide back glide back you don't know me like that
 
 /**
   * Checks to see if you're being grabbed and if so attempts to break it

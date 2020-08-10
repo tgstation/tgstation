@@ -670,6 +670,7 @@
 #include "code\game\alternate_appearance.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"
+#include "code\game\collider.dm"
 #include "code\game\communications.dm"
 #include "code\game\data_huds.dm"
 #include "code\game\say.dm"
