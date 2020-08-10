@@ -3,6 +3,7 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
+	light_color = COLOR_BRIGHT_ORANGE
 
 	var/requestonly = FALSE
 	var/contraband = FALSE
@@ -17,7 +18,6 @@
 	var/message_cooldown
 	var/list/loaded_coupons
 
-	light_color = "#E2853D"//orange
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"

@@ -1,0 +1,5 @@
+author: "WarlockD"
+delete-after: True
+changes: 
+  - bugfix: "Blackmarket uplink is now buildable again"
+  - bugfix: "Other crafting items should also work now"

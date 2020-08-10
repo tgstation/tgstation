@@ -160,7 +160,7 @@
 			return 1
 
 		if("PC_toggle_light")
-			light_on = !light_on
+			set_light_on(!light_on)
 			if(light_on)
 				set_light(comp_light_luminosity, 1, comp_light_color)
 			else
@@ -178,7 +178,7 @@
 					to_chat(user, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
 					new_color = null
 			comp_light_color = new_color
-			light_color = new_color
+			set_light_color(new_color)
 			update_light()
 			return TRUE
 

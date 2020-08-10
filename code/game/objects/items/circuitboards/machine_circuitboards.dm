@@ -921,6 +921,12 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 2)
 
+/obj/item/circuitboard/machine/mechpad
+	name = "Mecha Orbital Pad (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/mechpad
+	req_components = list()
+
 //Security
 
 /obj/item/circuitboard/machine/protolathe/department/security

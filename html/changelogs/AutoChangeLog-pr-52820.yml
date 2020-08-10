@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Pacifists can no longer harm people with baseball bats, powerfists, hierophant clubs, flamethrowers, pneumatic cannons, or syringe guns mounted on mechs."

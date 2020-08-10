@@ -30087,6 +30087,9 @@
 	dir = 1;
 	network = list("ss13","rd")
 	},
+/obj/machinery/computer/mechpad{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bsT" = (
@@ -41285,7 +41288,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVX" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVY" = (
@@ -44765,7 +44768,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "cic" = (
@@ -52997,6 +53000,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"jFl" = (
+/obj/machinery/mechpad,
+/turf/open/floor/plasteel/white,
+/area/science/robotics/lab)
 "jHt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -102444,7 +102451,7 @@ blG
 biL
 cHV
 cIa
-biL
+jFl
 box
 buo
 bvc

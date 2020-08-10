@@ -255,6 +255,8 @@
 			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
 		if(RCD_COMPUTER)
 			return list("mode" = RCD_COMPUTER, "delay" = 20, "cost" = 25)
+		if(RCD_FURNISHING)
+			return list("mode" = RCD_FURNISHING, "delay" = the_rcd.furnish_delay, "cost" = the_rcd.furnish_cost)
 	return FALSE
 
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -264,23 +266,33 @@
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
 		if(RCD_AIRLOCK)
-			if(locate(/obj/machinery/door/airlock) in src)
+			if(locate(/obj/machinery/door) in src)
 				return FALSE
+			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
+				to_chat(user, "<span class='notice'>You build a windoor.</span>")
+				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir)
+				if(the_rcd.airlock_electronics)
+					new_window.req_access = the_rcd.airlock_electronics.accesses.Copy()
+					new_window.req_one_access = the_rcd.airlock_electronics.one_access
+					new_window.unres_sides = the_rcd.airlock_electronics.unres_sides
+				new_window.autoclose = TRUE
+				new_window.update_icon()
+				return TRUE
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
-			var/obj/machinery/door/airlock/A = new the_rcd.airlock_type(src)
-			A.electronics = new /obj/item/electronics/airlock(A)
+			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
+			new_airlock.electronics = new /obj/item/electronics/airlock(new_airlock)
 			if(the_rcd.airlock_electronics)
-				A.electronics.accesses = the_rcd.airlock_electronics.accesses.Copy()
-				A.electronics.one_access = the_rcd.airlock_electronics.one_access
-				A.electronics.unres_sides = the_rcd.airlock_electronics.unres_sides
-			if(A.electronics.one_access)
-				A.req_one_access = A.electronics.accesses
+				new_airlock.electronics.accesses = the_rcd.airlock_electronics.accesses.Copy()
+				new_airlock.electronics.one_access = the_rcd.airlock_electronics.one_access
+				new_airlock.electronics.unres_sides = the_rcd.airlock_electronics.unres_sides
+			if(new_airlock.electronics.one_access)
+				new_airlock.req_one_access = new_airlock.electronics.accesses
 			else
-				A.req_access = A.electronics.accesses
-			if(A.electronics.unres_sides)
-				A.unres_sides = A.electronics.unres_sides
-			A.autoclose = TRUE
-			A.update_icon()
+				new_airlock.req_access = new_airlock.electronics.accesses
+			if(new_airlock.electronics.unres_sides)
+				new_airlock.unres_sides = new_airlock.electronics.unres_sides
+			new_airlock.autoclose = TRUE
+			new_airlock.update_icon()
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
@@ -291,26 +303,31 @@
 			if(locate(/obj/structure/grille) in src)
 				return FALSE
 			to_chat(user, "<span class='notice'>You construct the grille.</span>")
-			var/obj/structure/grille/G = new(src)
-			G.set_anchored(TRUE)
+			var/obj/structure/grille/new_grille = new(src)
+			new_grille.set_anchored(TRUE)
 			return TRUE
 		if(RCD_MACHINE)
 			if(locate(/obj/structure/frame/machine) in src)
 				return FALSE
-			var/obj/structure/frame/machine/M = new(src)
-			M.state = 2
-			M.icon_state = "box_1"
-			M.set_anchored(TRUE)
+			var/obj/structure/frame/machine/new_machine = new(src)
+			new_machine.state = 2
+			new_machine.icon_state = "box_1"
+			new_machine.set_anchored(TRUE)
 			return TRUE
 		if(RCD_COMPUTER)
 			if(locate(/obj/structure/frame/computer) in src)
 				return FALSE
-			var/obj/structure/frame/computer/C = new(src)
-			C.set_anchored(TRUE)
-			C.state = 1
-			C.setDir(the_rcd.computer_dir)
+			var/obj/structure/frame/computer/new_computer = new(src)
+			new_computer.set_anchored(TRUE)
+			new_computer.state = 1
+			new_computer.setDir(the_rcd.computer_dir)
 			return TRUE
-
+		if(RCD_FURNISHING)
+			if(locate(the_rcd.furnish_type) in src)
+				return FALSE
+			var/atom/new_furnish = new the_rcd.furnish_type(src)
+			new_furnish.setDir(user.dir)
+			return TRUE
 	return FALSE
 
 /turf/open/floor/material

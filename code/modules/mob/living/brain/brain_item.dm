@@ -28,6 +28,10 @@
 
 	/// List of skillchip items, their location should be this brain.
 	var/list/obj/item/skillchip/skillchips
+	/// Maximum skillchip complexity we can support before they stop working. Do not reference this var directly and instead call get_max_skillchip_complexity()
+	var/max_skillchip_complexity = 3
+	/// Maximum skillchip slots available. Do not reference this var directly and instead call get_max_skillchip_slots()
+	var/max_skillchip_slots = 5
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
@@ -57,16 +61,20 @@
 		BT.owner = owner
 		BT.on_gain()
 
-	for(var/obj/item/skillchip/skill_chip in skillchips)
-		skill_chip.on_apply(owner)
-
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
-	for(var/obj/item/skillchip/skill_chip in skillchips)
-		skill_chip.on_removal(owner)
+	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
+	if(!QDELETED(C) && length(skillchips))
+		to_chat(C, "<span class='notice'>You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body...</span>")
+		for(var/chip in skillchips)
+			var/obj/item/skillchip/skillchip = chip
+			// Run the try_ proc with force = TRUE.
+			skillchip.try_deactivate_skillchip(FALSE, TRUE)
+
 	..()
+
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
 		BT.on_lose(TRUE)
@@ -126,14 +134,25 @@
 		return
 
 	// Cutting out skill chips.
-	if(length(skillchips) && O.sharpness == SHARP_EDGED)
+	if(length(skillchips) && O.get_sharpness() == SHARP_EDGED)
 		to_chat(user,"<span class='notice'>You begin to excise skillchips from [src].</span>")
 		if(do_after(user, 15 SECONDS, target = src))
-			for(var/obj/item/skillchip/skill_chip in skillchips)
-				if(skill_chip.removable)
-					skill_chip.forceMove(drop_location())
-				else
-					qdel(skill_chip)
+			for(var/chip in skillchips)
+				var/obj/item/skillchip/skillchip = chip
+
+				if(!istype(skillchip))
+					stack_trace("Item of type [skillchip.type] qdel'd from [src] skillchip list.")
+					qdel(skillchip)
+					continue
+
+				remove_skillchip(skillchip)
+
+				if(skillchip.removable)
+					skillchip.forceMove(drop_location())
+					continue
+
+				qdel(skillchip)
+
 			skillchips = null
 		return
 
@@ -177,7 +196,7 @@
 		to_chat(user, "<span class='warning'>You're going to need to remove [C.p_their()] head cover first!</span>")
 		return
 
-//since these people will be dead M != usr
+	//since these people will be dead M != usr
 
 	if(!target_has_brain)
 		if(!C.get_bodypart(BODY_ZONE_HEAD) || !user.temporarilyRemoveItemFromInventory(src))
@@ -203,7 +222,8 @@
 	if(brainmob)
 		QDEL_NULL(brainmob)
 	QDEL_LIST(traumas)
-	QDEL_LIST(skillchips)
+
+	destroy_all_skillchips()
 	return ..()
 
 /obj/item/organ/brain/on_life()
@@ -249,13 +269,30 @@
 	var/obj/item/organ/brain/replacement_brain = replacement
 	if(!istype(replacement_brain))
 		return
-	for(var/obj/item/skillchip/skill_chip in src)
-		if(skill_chip in skillchips)
-			if(owner)
-				skill_chip.on_removal(owner)
-			LAZYREMOVE(skillchips, skill_chip)
-			LAZYADD(replacement_brain.skillchips, skill_chip) //No need to call on_apply here, since it will be inserted in organ replacement soon.
-		skill_chip.forceMove(replacement)
+
+	// If we have some sort of brain type or subtype change and have skillchips, engage the failsafe procedure!
+	if(owner && length(skillchips) && (replacement_brain.type != type))
+		activate_skillchip_failsafe(FALSE)
+
+	// Check through all our skillchips, remove them from this brain, add them to the replacement brain.
+	for(var/chip in skillchips)
+		var/obj/item/skillchip/skillchip = chip
+
+		// We're technically doing a little hackery here by bypassing the procs, but I'm the one who wrote them
+		// and when you know the rules, you can break the rules.
+
+		// Technically the owning mob is the same. We don't need to activate or deactivate the skillchips.
+		// All the skillchips themselves care about is what brain they're in.
+		// Because the new brain will ultimately be owned by the same body, we can safely leave skillchip logic alone.
+
+		// Directly change the new holding_brain.
+		skillchip.holding_brain = replacement_brain
+
+		// Directly add them to the skillchip list in the new brain.
+		LAZYADD(replacement_brain.skillchips, skillchip)
+
+	// Any skillchips has been transferred over, time to empty the list.
+	LAZYCLEARLIST(skillchips)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
