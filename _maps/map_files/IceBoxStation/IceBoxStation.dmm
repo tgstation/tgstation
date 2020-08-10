@@ -8267,9 +8267,7 @@
 /area/crew_quarters/fitness)
 "asY" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
 "asZ" = (
@@ -10725,20 +10723,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"azf" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
-"azh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
 "azi" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Garden Maintenance";
@@ -51061,6 +51045,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"dsZ" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "dtc" = (
 /obj/machinery/photocopier,
 /turf/open/floor/wood,
@@ -93883,7 +93877,7 @@ auu
 att
 att
 att
-azf
+auu
 aAo
 gSp
 aBB
@@ -94140,7 +94134,7 @@ aua
 aua
 awB
 axY
-azh
+axY
 gsz
 mWf
 cVb
@@ -94392,7 +94386,7 @@ lkY
 arm
 arm
 asY
-atZ
+dsZ
 auB
 auB
 atZ
