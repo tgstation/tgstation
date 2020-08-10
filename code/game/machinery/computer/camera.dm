@@ -63,11 +63,8 @@
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
 
-	// Update the camera, showing static if we can't use it and updating data if the location has moved.
-	if(active_camera)
-		update_active_camera_screen()
-	else
-		show_camera_static()
+	// Update the camera, showing static if necessary and updating data if the location has moved.
+	update_active_camera_screen()
 
 	if(!ui)
 		var/user_ref = REF(user)
@@ -134,7 +131,7 @@
 
 /obj/machinery/computer/security/proc/update_active_camera_screen()
 	// Show static if can't use the camera
-	if(!active_camera.can_use())
+	if(!active_camera?.can_use())
 		show_camera_static()
 		return
 
@@ -146,7 +143,6 @@
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
 	// Most security cameras will end here as they're not moving.
-	var/last_turf = last_camera_turf
 	var/newturf = get_turf(cam_location)
 	if(last_camera_turf == newturf)
 		return
