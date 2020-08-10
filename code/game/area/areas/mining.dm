@@ -107,12 +107,11 @@
 
 /area/lavaland/surface/outdoors/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
-	tunnel_allowed = TRUE
-	mob_spawn_allowed = TRUE
+	area_flags = UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
-	flora_allowed = FALSE
+	area_flags = FLORA_ALLOWED
 
 /area/lavaland/underground
 	name = "Lavaland Caves"
@@ -127,19 +126,19 @@
 
 /area/lavaland/underground/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	area_flags = UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 
 /area/lavaland/underground/unexplored/danger //megafauna will also spawn here
 	icon_state = "danger"
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+	area_flags = UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
 /area/lavaland/underground/explored
 	name = "Lavaland Crater"
-	flora_allowed = FALSE
+	area_flags = FLORA_ALLOWED
 
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
-	area_flags = VALID_TERRITORY | UNIQUE_AREA
+	area_flags = UNIQUE_AREA
 
 /**********************Ice Moon Areas**************************/
 
