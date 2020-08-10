@@ -664,7 +664,7 @@
 	invisibility = 101
 	},
 /turf/open/indestructible{
-	icon_state = "light_on"
+	icon_state = "light_on-1"
 	},
 /area/ruin/powered/clownplanet)
 "bk" = (
@@ -681,7 +681,7 @@
 /area/ruin/powered/clownplanet)
 "bl" = (
 /turf/open/indestructible{
-	icon_state = "light_on"
+	icon_state = "light_on-1"
 	},
 /area/ruin/powered/clownplanet)
 "bm" = (
