@@ -3,12 +3,12 @@
   * Outside of charging, it's intended behavior is that it is generally slow moving, but makes up for that with a knockdown attack to score additional hits.
   */
 /mob/living/simple_animal/hostile/asteroid/lobstrosity
-	name = "lobstrosity"
+	name = "arctic_lobstrosity"
 	desc = "A marvel of evolution gone wrong, the frosty ice produces underground lakes where these ill tempered seafood gather. Beware its charge."
 	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
-	icon_state = "lobstrosity"
-	icon_living = "lobstrosity"
-	icon_dead = "lobstrosity_dead"
+	icon_state = "arctic_lobstrosity"
+	icon_living = "arctic_lobstrosity"
+	icon_dead = "arctic_lobstrosity_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	friendly_verb_continuous = "chitters at"
@@ -33,3 +33,10 @@
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	gold_core_spawnable = HOSTILE_SPAWN
+
+/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava
+	name = "tropical_lobstrosity"
+	desc = "A marvel of evolution gone wrong, the sulfur lakes of lavaland have given them a vibrant, red hued shell. Beware its charge."
+	icon_state = "lobstrosity"
+	icon_living = "lobstrosity"
+	icon_dead = "lobstrosity_dead"
