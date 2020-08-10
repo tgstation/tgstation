@@ -80,10 +80,13 @@
 		var/datum/nanite_program/relay/N = X
 		N.relay_signal(code, relay_code, source)
 
-/obj/item/nanite_remote/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/nanite_remote/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/nanite_remote/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "NaniteRemote", name, 420, 500, master_ui, state)
+		ui = new(user, src, "NaniteRemote", name)
 		ui.open()
 
 /obj/item/nanite_remote/ui_data()
@@ -94,7 +97,6 @@
 	data["locked"] = locked
 	data["saved_settings"] = saved_settings
 	data["program_name"] = current_program_name
-
 	return data
 
 /obj/item/nanite_remote/ui_act(action, params)

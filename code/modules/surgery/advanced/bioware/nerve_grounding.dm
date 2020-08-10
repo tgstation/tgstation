@@ -15,7 +15,6 @@
 	name = "ground nerves"
 	accept_hand = TRUE
 	time = 155
-	experience_given = MEDICAL_SKILL_ADVANCED
 
 /datum/surgery_step/ground_nerves/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You start rerouting [target]'s nerves.</span>",

@@ -23,7 +23,7 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/chaos
 
-datum/crafting_recipe/food/donut/meat
+/datum/crafting_recipe/food/donut/meat
 	time = 15
 	name = "Meat donut"
 	reqs = list(

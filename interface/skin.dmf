@@ -46,11 +46,10 @@ menu "menu"
 		category = "&Help"
 		saved-params = "is-checked"
 
-
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
-		pos = 293,0
+		pos = 0,0
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
@@ -271,6 +270,7 @@ window "popupwindow"
 		size = 120x120
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false

@@ -93,9 +93,7 @@
 	timeout = 10 MINUTES
 
 //Homosexuality
-
 /datum/mood_event/bouquet
 	description = "<span class='nicegreen'>The flowers smell amazing. You can't help but smile.</span>\n"
 	mood_change = 5
 	timeout = 4 MINUTES
-

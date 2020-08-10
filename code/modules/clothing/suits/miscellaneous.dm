@@ -820,13 +820,11 @@
 	icon_state = "silver_knight"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-
 /obj/item/clothing/suit/king_of_knights
 	name = "King of Knight's Armor"
 	desc = "A certain king chosen by the sword lead a country and a round table of knights wore this."
 	icon_state = "king_of_knights"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-
 
 /obj/item/clothing/suit/king_of_heroes
 	name = "King of Heroes Armor"
@@ -834,17 +832,14 @@
 	icon_state = "king_of_heroes"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-
 /obj/item/clothing/suit/dlanor
 	name = "Inquisitor's Dress"
 	desc = "Desu."
 	icon_state = "dlanor"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-
 /obj/item/clothing/suit/beato
 	name = "Dress of the Golden Witch"
 	desc = "A ballgown-like dress adorned with gold"
 	icon_state = "beato"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-

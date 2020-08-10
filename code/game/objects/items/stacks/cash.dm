@@ -20,7 +20,7 @@
 
 /obj/item/stack/spacecash/proc/update_desc()
 	var/total_worth = get_item_credit_value()
-	desc = "It's worth [total_worth] credit[( total_worth > 1 ) ? "s" : ""]"
+	desc = "It's worth [total_worth] credit[( total_worth > 1 ) ? "s" : ""] in total."
 
 /obj/item/stack/spacecash/get_item_credit_value()
 	return (amount*value)
@@ -32,6 +32,28 @@
 /obj/item/stack/spacecash/use(used, transfer = FALSE)
 	. = ..()
 	update_desc()
+
+/obj/item/stack/spacecash/update_icon_state()
+	var/cash_value = get_item_credit_value()
+	switch(cash_value)
+		if(1 to 9)
+			icon_state = "spacecash"
+		if(10 to 19)
+			icon_state = "spacecash10"
+		if(20 to 49)
+			icon_state = "spacecash20"
+		if(50 to 99)
+			icon_state = "spacecash50"
+		if(100 to 199)
+			icon_state = "spacecash100"
+		if(200 to 499)
+			icon_state = "spacecash200"
+		if(500 to 999)
+			icon_state = "spacecash500"
+		if(1000 to 9999)
+			icon_state = "spacecash1000"
+		if(10000 to INFINITY)
+			icon_state = "spacecash10000"
 
 /obj/item/stack/spacecash/c1
 	icon_state = "spacecash"

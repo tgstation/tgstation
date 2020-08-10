@@ -14,7 +14,6 @@
 @use '../base.scss' with (
   $color-bg: #121b12,
   $color-bg-grad-spread: 0%,
-  $border-radius: 2px,
 );
 
 .theme-hackerman {
@@ -46,10 +45,10 @@
 
   .Button {
     font-family: monospace;
-    border-width: 2px;
+    border-width: base.em(2px);
     border-style: outset;
     border-color: #00AA00;
-    outline: 1px solid rgb(0, 122, 0);
+    outline: base.em(1px) solid rgb(0, 122, 0);
   }
 
   .candystripe:nth-child(odd) {

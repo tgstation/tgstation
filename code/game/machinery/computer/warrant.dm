@@ -4,7 +4,7 @@
 	icon_screen = "security"
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/warrant
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	var/screen = null
 	var/datum/data/record/current = null
 

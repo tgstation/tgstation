@@ -1,4 +1,4 @@
-hit_punch.ogg and hit_kick.ogg are made by Taira Komori
+﻿hit_punch.ogg and hit_kick.ogg are made by Taira Komori
 (https://taira-komori.jpn.org/freesounden.html)
 
 cartoon_pop.ogg by Tobiasz 'unfa' Karoń

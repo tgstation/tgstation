@@ -30,7 +30,7 @@ Difficulty: Medium
 	icon = 'icons/mob/broadMobs.dmi'
 	health_doll_icon = "miner"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	light_color = "#E4C7C5"
+	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 3
@@ -209,7 +209,7 @@ Difficulty: Medium
 		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !islava(O) && !ischasm(O))
 			var/valid = TRUE
 			for(var/turf/T in getline(own_turf, O))
-				if(is_blocked_turf(T, TRUE))
+				if(T.is_blocked_turf(TRUE))
 					valid = FALSE
 					continue
 			if(valid)

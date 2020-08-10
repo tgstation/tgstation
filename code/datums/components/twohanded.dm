@@ -203,23 +203,25 @@
 
 	// Update icons
 	parent_item.update_icon()
-	if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent)
-		user.update_inv_back()
-	else
-		user.update_inv_hands()
 
-	// if the item requires two handed drop the item on unwield
-	if(require_twohands)
-		user.dropItemToGround(parent, force=TRUE)
-
-	// Show message if requested
-	if(show_message)
-		if(iscyborg(user))
-			to_chat(user, "<span class='notice'>You free up your module.</span>")
-		else if(require_twohands)
-			to_chat(user, "<span class='notice'>You drop [parent].</span>")
+	if(istype(user)) // tk showed that we might not have a mob here
+		if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent)
+			user.update_inv_back()
 		else
-			to_chat(user, "<span class='notice'>You are now carrying [parent] with one hand.</span>")
+			user.update_inv_hands()
+
+		// if the item requires two handed drop the item on unwield
+		if(require_twohands)
+			user.dropItemToGround(parent, force=TRUE)
+
+		// Show message if requested
+		if(show_message)
+			if(iscyborg(user))
+				to_chat(user, "<span class='notice'>You free up your module.</span>")
+			else if(require_twohands)
+				to_chat(user, "<span class='notice'>You drop [parent].</span>")
+			else
+				to_chat(user, "<span class='notice'>You are now carrying [parent] with one hand.</span>")
 
 	// Play sound if set
 	if(unwieldsound)
