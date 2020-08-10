@@ -16249,6 +16249,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/light_switch{
+	pixel_x = -28
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "aLE" = (
@@ -17415,9 +17418,6 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aOr" = (
-/obj/machinery/light_switch{
-	pixel_y = -28
-	},
 /obj/machinery/vending/wardrobe/law_wardrobe,
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -18286,12 +18286,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aQF" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted/fulltile,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/security/courtroom)
 "aQG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -18373,6 +18371,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/structure/sign/departments/lawyer{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQP" = (
@@ -72097,6 +72098,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"lfy" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/sign/departments/court{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "lfR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -75875,6 +75888,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"rky" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/departments/court{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "rli" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/westleft{
@@ -78525,6 +78548,17 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
+"vKG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/structure/sign/departments/court{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "vLs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -107925,7 +107959,7 @@ aIK
 aHB
 aHB
 aPA
-aJV
+vKG
 aHB
 aHB
 aUE
@@ -110227,7 +110261,7 @@ axq
 aiq
 azP
 aBj
-aCr
+rky
 ajm
 hdb
 avk
@@ -110242,8 +110276,8 @@ aSa
 aSa
 aTp
 tru
-aTk
-aXS
+aHD
+lfy
 dCE
 baV
 bcj

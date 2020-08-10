@@ -4071,9 +4071,6 @@
 	},
 /obj/structure/closet/secure_closet/courtroom,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/warning/securearea{
-	pixel_x = -32
-	},
 /obj/item/gavelhammer,
 /turf/open/floor/plasteel,
 /area/security/courtroom)
@@ -7832,9 +7829,6 @@
 "arT" = (
 /obj/structure/rack,
 /obj/item/storage/briefcase,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "arU" = (
@@ -51052,6 +51046,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
+"daG" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/sign/departments/lawyer{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "dbw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -53168,6 +53171,9 @@
 /obj/machinery/computer/warrant{
 	dir = 8
 	},
+/obj/structure/sign/departments/court{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "keQ" = (
@@ -54903,6 +54909,13 @@
 "oRP" = (
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
+"oSg" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/wood,
+/area/lawoffice)
 "oUq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 8
@@ -55833,6 +55846,9 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/structure/sign/departments/court{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -84160,7 +84176,7 @@ ahr
 aih
 aiX
 anz
-aov
+daG
 aph
 arT
 ata
@@ -84679,7 +84695,7 @@ ard
 gpE
 arX
 asl
-ata
+oSg
 dtc
 aph
 awe
