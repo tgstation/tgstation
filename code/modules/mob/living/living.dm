@@ -178,7 +178,10 @@
 		current_dir = AM.dir
 	if(current_dir)
 		AM.setDir(current_dir)
-	degstep(AM, dir2angle(t), step_size)
+	var/accelrate = vx
+	if(t & SOUTH || t & NORTH)
+		accelrate = vy
+	AM.add_velocity(t, abs(accelrate), TRUE)
 	now_pushing = FALSE
 
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
@@ -366,6 +369,13 @@
 	return health
 
 // MOB PROCS //END
+/mob/living/proc/ToggleSidestep()
+	set name = "Toggle Edge Sliding"
+	set category = "OOC"
+	set desc = "Less control over precise movements, less frustration with corners. You decide"
+
+	set_sidestep(!can_sidestep)
+	to_chat(src, "Edge sliding is now [can_sidestep ? "ON" : "OFF"]")
 
 /mob/living/proc/mob_sleep()
 	set name = "Sleep"

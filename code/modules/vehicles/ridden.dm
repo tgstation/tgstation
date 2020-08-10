@@ -106,6 +106,9 @@
 		return FALSE
 	return ..()
 
+/obj/vehicle/ridden/handle_sidestep(atom/A)
+	return // hope you have your drivers license!
+
 /obj/vehicle/ridden/zap_act(zap_str, zap_flags, shocked_targets)
 	zap_buckle_check(zap_str)
 	. = ..()

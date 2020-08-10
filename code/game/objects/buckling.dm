@@ -100,6 +100,7 @@
 	buckled_mobs |= M
 	M.update_mobility()
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
+	M.update_movespeed()
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
@@ -119,6 +120,7 @@
 		buckled_mob.set_anchored(initial(buckled_mob.anchored))
 		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")
+		buckled_mob.update_movespeed()
 		buckled_mobs -= buckled_mob
 		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 

@@ -135,7 +135,7 @@
 		return did_move
 	else
 		after_move(direction)
-		return step(src, direction)
+		return add_velocity(direction, maxspeed)
 
 /obj/vehicle/proc/after_move(direction)
 	return

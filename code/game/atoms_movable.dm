@@ -8,6 +8,23 @@
 	var/fx
 	/// stores fractional pixel movement in the y
 	var/fy
+	/// velocity in x
+	var/vx = 0
+	/// velocity in y
+	var/vy = 0
+	/// acceleration
+	var/accel = 1
+	/// deceleration
+	var/decel = 1
+	/// maxspeed
+	var/maxspeed = 6
+	/// velocity dir
+	var/vdir = NONE
+	/// sidestepper?
+	var/can_sidestep = FALSE
+	/// collider for sidestepping
+	var/atom/movable/collider/slider/slider
+
 	var/walking = NONE
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
@@ -66,6 +83,7 @@
 
 /atom/movable/Initialize(mapload)
 	. = ..()
+	set_sidestep(can_sidestep) // creates slider if there isn't one already
 	update_bounds(olddir=NORTH, newdir=dir) // bounds assume north but some things arent north by default for some god knows reason
 	if(opacity) // makes opaque objects not block entire tiles
 		appearance_flags &= ~TILE_BOUND
@@ -234,6 +252,7 @@
 	AM.pulledby = src
 	setGrabState(state)
 	AM.step_size = step_size
+	AM.set_sidestep(TRUE)
 	if(ismob(AM))
 		var/mob/M = AM
 		M.update_movespeed() // set the proper step_size
@@ -243,6 +262,15 @@
 				"<span class='danger'>[src] grabs you passively.</span>")
 	return TRUE
 
+
+/atom/movable/proc/set_sidestep(val = 0)
+	can_sidestep = val
+	if(can_sidestep && !slider)
+		slider = new()
+	else if(!can_sidestep && slider)
+		qdel(slider)
+	return can_sidestep
+
 /atom/movable/proc/stop_pulling()
 	if(!pulling)
 		return
@@ -251,6 +279,7 @@
 	pulling = null
 	setGrabState(0)
 	ex_pulled.step_size = initial(ex_pulled.step_size)
+	ex_pulled.set_sidestep(initial(ex_pulled.can_sidestep))
 	if(isliving(ex_pulled))
 		var/mob/living/L = ex_pulled
 		L.update_mobility()// mob gets up if it was lyng down in a chokehold
@@ -262,7 +291,9 @@
 	if(!Adjacent(A))
 		to_chat(src, "<span class='warning'>You can't move [pulling] that far!</span>")
 		return
-	pulling.Move(get_turf(A), get_dir(pulling.loc, A))
+	pulling.step_size = 1#INF
+	. = pulling.Move(get_turf(A), get_dir(pulling.loc, A))
+	pulling.step_size = 1 + .
 	return TRUE
 
 /mob/living/Move_Pulled(atom/A, params)
@@ -320,11 +351,15 @@
 			angle -= min(ANGLE_ADJUST, tempA)
 	angle = SIMPLIFY_DEGREES(angle)
 	var/direct = angle2dir(angle)
-	if(!degstep(pulling, angle, distance-6))
+	var/mspeed = vx
+	if(direct & NORTH || direct & SOUTH)
+		mspeed = vy
+	pulling.add_velocity(direct, abs(mspeed))
+/* 	if(!degstep(pulling, angle, distance-6))
 		for(var/i in GLOB.cardinals)
 			if(direct & i)
 				if(step(pulling, i))
-					return TRUE
+					return TRUE */
 	return FALSE
 
 #undef ANGLE_ADJUST
@@ -336,7 +371,7 @@
   * Returns TRUE and allows movement if the object we're pulling is in range.
   */
 /atom/movable/proc/handle_pulled_premove(atom/newloc, direct, _step_x, _step_y)
-	if((bounds_dist(src, pulling) > 16 + step_size) && !(direct & GET_PIXELDIR(src, pulling)))
+	if((bounds_dist(src, pulling) > 8 + step_size) && !(direct & GET_PIXELDIR(src, pulling)))
 		return FALSE
 	return TRUE
 
@@ -351,7 +386,13 @@
 	var/atom/oldloc = loc
 
 	. = ..()
-
+	if(!. && can_sidestep && !sidestep)
+		sidestep = TRUE
+		. = slider.slide(src, direct, step_x, step_y)
+		if(.)
+			direct = .
+			. = step(src, .)
+		sidestep = FALSE
 	last_move = direct
 	setDir(direct)
 	if(.)
@@ -361,6 +402,140 @@
 			check_pulling()
 		if(has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, step_x, step_y))
 			return FALSE
+
+/atom/movable/proc/add_velocity(direct = 0, acceleration = null, force = 0)
+	if(vx == 0 && vy == 0)
+		START_PROCESSING(SSmovement, src)
+	var/accelu = accel
+	if(!isnull(acceleration)) // acceleration override
+		accelu = acceleration
+	var/limit_speed = 0
+	if(vx * vx + vy * vy <= maxspeed * maxspeed + 1)
+		limit_speed = 1
+	if(direct & EAST)
+		if(vx < maxspeed || force)
+			vx += accelu
+	else if(direct & WEST)
+		if(vx > -maxspeed || force)
+			vx -= accelu
+	if(direct & NORTH)
+		if(vy < maxspeed || force)
+			vy += accelu
+	else if(direct & SOUTH)
+		if(vy > -maxspeed || force)
+			vy -= accelu
+	if(limit_speed)
+		var/len = sqrt(vx * vx + vy * vy)
+		if(len > maxspeed)
+			vx = round(maxspeed * vx / len, 0.1)
+			vy = round(maxspeed * vy / len, 0.1)
+	if(vx != 0 || vy != 0) // we have velocity
+		vdir = direct
+		return TRUE // test the waters
+
+/atom/movable/proc/handle_inertia()
+	var/move_x = vx
+	var/move_y = vy
+	// find the integer part of your move
+	var/ipx = round(abs(vx)) * ((vx < 0) ? -1 : 1)
+	var/ipy = round(abs(vy)) * ((vy < 0) ? -1 : 1)
+
+	// accumulate the fractional parts of the move
+	fx += (move_x - ipx)
+	fy += (move_y - ipy)
+
+	// ignore the fractional parts
+	move_x = ipx
+	move_y = ipy
+
+	// increment the move if the fractions have added up
+	while(fx > 0.5)
+		fx -= 0.5
+		move_x += 1
+	while(fx < -0.5)
+		fx += 0.5
+		move_x -= 1
+
+	while(fy > 0.5)
+		fy -= 0.5
+		move_y += 1
+	while(fy < -0.5)
+		fy += 0.5
+		move_y -= 1
+
+	// Enable sliding to anywhere in the world.
+	step_size = 1#INF
+
+	// Move without changing dir and return the result.
+	. = Move(loc, dir, step_x + move_x, step_y + move_y)
+
+	// Set step_size to the amount actually moved.
+	// This tells clients to smoothly interpolate this when using client.fps.
+	step_size = 1 + .
+
+	if(vx > maxspeed)
+		vx -= decel
+	else if(vx < -maxspeed)
+		vx += decel
+	if(vy > maxspeed)
+		vy -= decel
+	else if(vy < -maxspeed)
+		vy += decel
+	// begin decelerating if movement keys aren't held
+	if(ismob(src))
+		var/mob/M = src
+		if(M.client)
+			var/client/user = M.client
+			var/movement_dir = NONE
+			for(var/_key in user.keys_held)
+				movement_dir = movement_dir | user.movement_keys[_key]
+			if(!(movement_dir & EAST || movement_dir & WEST))
+				if(vx > decel)
+					vx -= decel
+				else if(vx < -decel)
+					vx += decel
+				else
+					vx = 0
+			if(!(movement_dir & NORTH || movement_dir & SOUTH))
+				if(vy > decel)
+					vy -= decel
+				else if(vy < -decel)
+					vy += decel
+				else
+					vy = 0
+		else if(vdir) // copy pasta for mobs without clients
+			if((vdir & EAST) || (vdir & WEST))
+				if(vx > decel)
+					vx -= decel
+				else if(vx < -decel)
+					vx += decel
+				else
+					vx = 0
+
+			if((vdir & SOUTH) || (vdir & NORTH))
+				if(vy > decel)
+					vy -= decel
+				else if(vy < -decel)
+					vy += decel
+				else
+					vy = 0
+	else if(vdir)
+		if(vx > decel)
+			vx -= decel
+		else if(vx < -decel)
+			vx += decel
+		else
+			vx = 0
+
+		if(vy > decel)
+			vy -= decel
+		else if(vy < -decel)
+			vy += decel
+		else
+			vy = 0
+	if(vx == 0 && vy == 0) // vx and vy is 0 we have no inertia
+		vdir = NONE
+		return FALSE
 
 /// Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
@@ -400,7 +575,6 @@
 
 /atom/movable/Bump(atom/A)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
-	handle_sidestep(A)
 	. = ..()
 	if(!QDELETED(throwing))
 		throwing.hit_atom(A)
@@ -420,7 +594,7 @@
   * * A - atom that we're going to try and sidestep
   */
 /atom/movable/proc/handle_sidestep(atom/A)
-	if(sidestep || ismob(A) || (length(client_mobs_in_contents) && !ismecha(src))) // already sidestepping or bumped into a mob or a player
+	if(sidestep || ismob(A)) // already sidestepping or bumped into a mob or a player
 		return
 	if(ismovable(A)) // additional checks for movables
 		var/atom/movable/AM = A
@@ -431,9 +605,9 @@
 	if(pulledby && pulledby.step_size > slide_dist) // we're getting pulled by someone so let's slide over at their speed
 		slide_dist = pulledby.step_size
 	if(check_left(slide_dist)) // There is an opening on the left side of src
-		slide_left(slide_dist)
+		slide_left(maxspeed)
 	else if(check_right(slide_dist))
-		slide_right(slide_dist)
+		slide_right(maxspeed)
 	sidestep = FALSE
 
 
@@ -463,13 +637,13 @@
 ///slides src to the left
 /atom/movable/proc/slide_left(slide_dist)
 	if(dir == EAST)
-		step(src, NORTH, slide_dist)
+		add_velocity(NORTH, slide_dist)
 	else if(dir == WEST)
-		step(src, SOUTH, slide_dist)
+		add_velocity(SOUTH, slide_dist)
 	else if(dir == NORTH)
-		step(src, WEST, slide_dist)
+		add_velocity(WEST, slide_dist)
 	else if(dir == SOUTH)
-		step(src, EAST, slide_dist)
+		add_velocity(EAST, slide_dist)
 
 ///checks if the right side of src is clear
 /atom/movable/proc/check_right(slide_dist)
@@ -497,13 +671,13 @@
 ///slides src to the right
 /atom/movable/proc/slide_right(slide_dist)
 	if(dir == EAST)
-		step(src, SOUTH, slide_dist)
+		add_velocity(SOUTH, slide_dist)
 	else if(dir == WEST)
-		step(src, NORTH, slide_dist)
+		add_velocity(NORTH, slide_dist)
 	else if(dir == NORTH)
-		step(src, EAST, slide_dist)
+		add_velocity(EAST, slide_dist)
 	else if(dir == SOUTH)
-		step(src, WEST, slide_dist)
+		add_velocity(WEST, slide_dist)
 
 
 /atom/movable/setDir(direct)
@@ -554,6 +728,7 @@
 	if(anchored == anchorvalue)
 		return
 	. = anchored
+	set_sidestep(!anchored) // can't sidestep when anchored, can sidestep when not anchored
 	anchored = anchorvalue
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
@@ -814,7 +989,7 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
 		if(!buckled_mob.Move(newloc, direct, _step_x, _step_y))
-			forceMove(buckled_mob.loc, buckled_mob.step_x, buckled_mob.step_y)
+			forceMove(loc, step_x, step_y)
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
 			buckled_mob.inertia_dir = last_move

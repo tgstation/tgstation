@@ -110,7 +110,7 @@
 		chosen_dir = pick(cardinal_sidestep_directions)
 	if(chosen_dir)
 		chosen_dir = turn(target_dir,chosen_dir)
-		Move(get_step(src,chosen_dir))
+		step(src, get_step(src,chosen_dir))
 		face_atom(target) //Looks better if they keep looking at you when dodging
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)

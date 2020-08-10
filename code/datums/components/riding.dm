@@ -36,6 +36,7 @@
 /datum/component/riding/proc/update_movespeed()
 	var/atom/movable/AM = parent
 	AM.step_size = CEILING(initial(AM.step_size) / max(1, vehicle_move_delay), 1)
+	AM.maxspeed = AM.step_size
 
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	var/atom/movable/AM = parent
@@ -191,13 +192,9 @@
 			var/mob/living/M = AM
 			if(!(M.mobility_flags & MOBILITY_MOVE))
 				return
-		step(AM, direction)
-
-		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
-			last_move_diagonal = TRUE
-		else
-			last_move_diagonal = FALSE
-
+		AM.setDir(direction)
+		AM.add_velocity(direction, AM.step_size)
+		user.step_size = AM.step_size
 		handle_vehicle_layer(AM.dir)
 		handle_vehicle_offsets(AM.dir)
 	else
