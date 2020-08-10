@@ -393,7 +393,7 @@
 	attack_verb = list("rent")
 	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
 
-/obj/item/toy/plush/plushvar
+/obj/item/toy/plush/ratplush
 	name = "\improper Ratvar plushie"
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
@@ -401,7 +401,7 @@
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE	//he's a boy, right?
 
-/obj/item/toy/plush/plushvar/Moved()
+/obj/item/toy/plush/ratplush/Moved()
 	. = ..()
 	if(clash_target)
 		return
@@ -409,7 +409,7 @@
 	if(P && istype(P.loc, /turf/open) && !P.clashing)
 		clash_of_the_plushies(P)
 
-/obj/item/toy/plush/plushvar/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
+/obj/item/toy/plush/ratplush/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
 	clash_target = P
 	P.clashing = TRUE
 	say("YOU.")
@@ -490,7 +490,7 @@
 
 /obj/item/toy/plush/narplush/Moved()
 	. = ..()
-	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
+	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 

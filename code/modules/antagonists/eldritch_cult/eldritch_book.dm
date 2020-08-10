@@ -3,6 +3,7 @@
 	desc = "Book describing the secrets of the veil."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "book"
+	worn_icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
 	///Last person that touched this
 	var/mob/living/last_user
@@ -40,7 +41,7 @@
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target
 	to_chat(target, "<span class='danger'>You start drawing power from influence...</span>")
-	if(do_after(user,10 SECONDS,FALSE,RS))
+	if(do_after(user,10 SECONDS,TRUE,RS))
 		qdel(RS)
 		charge += 1
 
@@ -52,7 +53,7 @@
 			to_chat(target, "<span class='warning'>The terrain doesn't support runes!</span>")
 			return
 	var/A = get_turf(target)
-	to_chat(target, "<span class='danger'>You start drawing a rune...</span>")
+	to_chat(user, "<span class='danger'>You start drawing a rune...</span>")
 
 	if(do_after(user,30 SECONDS,A))
 
@@ -61,17 +62,19 @@
 ///Removes runes from the selected turf
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
 
-	to_chat(target, "<span class='danger'>You start removing a rune...</span>")
+	to_chat(user, "<span class='danger'>You start removing a rune...</span>")
 	if(do_after(user,2 SECONDS,user))
 		qdel(target)
 
-/obj/item/forbidden_book/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+/obj/item/forbidden_book/ui_interact(mob/user, datum/tgui/ui = null)
 	if(!IS_HERETIC(user))
 		return FALSE
 	last_user = user
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ForbiddenLore", name, 500, 900, master_ui, state)
+		icon_state = "book_open"
+		flick("book_opening", src)
+		ui = new(user, src, "ForbiddenLore", name)
 		ui.open()
 
 /obj/item/forbidden_book/ui_data(mob/user)
@@ -132,6 +135,11 @@
 					return TRUE
 
 	update_icon() // Not applicable to all objects.
+
+/obj/item/forbidden_book/ui_close(mob/user)
+	flick("book_closing",src)
+	icon_state = initial(icon_state)
+	return ..()
 
 /obj/item/forbidden_book/debug
 	charge = 100

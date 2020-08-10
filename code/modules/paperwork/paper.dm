@@ -1,4 +1,4 @@
-/*
+/**
  * Paper
  * also scraps of paper
  *
@@ -11,12 +11,11 @@
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
 
-
 /**
- ** This is a custom ui state.  All it really does is keep track of pen
- ** being used and if they are editing it or not.  This way we can keep
- ** the data with the ui rather than on the paper
- **/
+ * This is a custom ui state.  All it really does is keep track of pen
+ * being used and if they are editing it or not.  This way we can keep
+ * the data with the ui rather than on the paper
+ */
 /datum/ui_state/default/paper_state
 	/// What edit mode we are in and who is
 	/// writing on it right now
@@ -33,7 +32,6 @@
 	var/stamp_name = ""
 	var/stamp_class = ""
 
-
 /datum/ui_state/default/paper_state/proc/copy_from(datum/ui_state/default/paper_state/from)
 	switch(from.edit_mode)
 		if(MODE_READING)
@@ -49,18 +47,19 @@
 			stamp_class = from.stamp_class
 			stamp_name = from.stamp_name
 
-
 /**
- ** Paper is now using markdown (like in github pull notes) for ALL rendering
- ** so we do loose a bit of functionality but we gain in easy of use of
- ** paper and getting rid of that crashing bug
- **/
+ * Paper is now using markdown (like in github pull notes) for ALL rendering
+ * so we do loose a bit of functionality but we gain in easy of use of
+ * paper and getting rid of that crashing bug
+ */
 /obj/item/paper
 	name = "paper"
 	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	inhand_icon_state = "paper"
+	worn_icon_state = "paper"
+	custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
@@ -77,6 +76,7 @@
 	color = "white"
 	/// What's actually written on the paper.
 	var/info = ""
+	var/show_written_words = TRUE
 
 	/// The (text for the) stamps on the paper.
 	var/list/stamps			/// Positioning for the stamp in tgui
@@ -90,9 +90,6 @@
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
 
-	// ui stuff
-	var/ui_x = 600
-	var/ui_y = 800
 	// Ok, so WHY are we caching the ui's?
 	// Since we are not using autoupdate we
 	// need some way to update the ui's of
@@ -103,7 +100,6 @@
 	// live updates and have multipule
 	// people look at it
 	var/list/viewing_ui = list()
-
 
 	/// When the sheet can be "filled out"
 	/// This is an associated list
@@ -117,10 +113,10 @@
 	. = ..()
 
 /**
- ** This proc copies this sheet of paper to a new
- ** sheet,  Makes it nice and easy for carbon and
- ** the copyer machine
- **/
+ * This proc copies this sheet of paper to a new
+ * sheet,  Makes it nice and easy for carbon and
+ * the copyer machine
+ */
 /obj/item/paper/proc/copy()
 	var/obj/item/paper/N = new(arglist(args))
 	N.info = info
@@ -134,10 +130,10 @@
 	return N
 
 /**
- ** This proc sets the text of the paper and updates the
- ** icons.  You can modify the pen_color after if need
- ** be.
- **/
+ * This proc sets the text of the paper and updates the
+ * icons.  You can modify the pen_color after if need
+ * be.
+ */
 /obj/item/paper/proc/setText(text)
 	info = text
 	form_fields = null
@@ -153,28 +149,15 @@
 			contact_poison = null
 	. = ..()
 
-
 /obj/item/paper/Initialize()
 	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	update_icon_state()
-
+	update_icon()
 
 /obj/item/paper/update_icon_state()
-	if(resistance_flags & ON_FIRE)
-		icon_state = "paper_onfire"
-		return
-	if(info)
-		icon_state = "paper_words"
-		return
-	icon_state = "paper"
-
-/obj/item/paper/ui_base_html(html)
-	/// This might change in a future PR
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
-
+	if(info && show_written_words)
+		icon_state = "[initial(icon_state)]_words"
 
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
@@ -195,16 +178,13 @@
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
-
 /obj/item/paper/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
 
-
 /// ONLY USED FOR APRIL FOOLS
 /obj/item/paper/proc/reset_spamflag()
 	spam_flag = FALSE
-
 
 /obj/item/paper/attack_self(mob/user)
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
@@ -214,7 +194,6 @@
 			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
 	. = ..()
 
-
 /obj/item/paper/proc/clearpaper()
 	info = ""
 	stamps = null
@@ -222,31 +201,54 @@
 	cut_overlays()
 	update_icon_state()
 
-
 /obj/item/paper/examine_more(mob/user)
 	ui_interact(user)
-
+	return list("<span class='notice'><i>You try to read [src]...</i></span>")
 
 /obj/item/paper/can_interact(mob/user)
 	if(!..())
 		return FALSE
-	if(resistance_flags & ON_FIRE)		// Are we on fire?  Hard ot read if so
+	// Are we on fire?  Hard ot read if so
+	if(resistance_flags & ON_FIRE)
 		return FALSE
-	if(user.is_blind())					// Even harder to read if your blind...braile? humm
+	// Even harder to read if your blind...braile? humm
+	if(user.is_blind())
 		return FALSE
-	return user.can_read(src)			// checks if the user can read.
-
+	// checks if the user can read.
+	return user.can_read(src)
 
 /**
- ** This creates the ui, since we are using a custom state but not much else
- ** just makes it easyer to make it.  Also we make a custom ui_key as I am
- ** not sure how tgui handles many producers?
-**/
+ * This creates the ui, since we are using a custom state but not much else
+ * just makes it easyer to make it.
+ */
 /obj/item/paper/proc/create_ui(mob/user, datum/ui_state/default/paper_state/state)
-	ui_interact(user, "main", null, FALSE, null, state)
+	ui_interact(user, state = state)
 
+/obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
+	var/ignition_message = I.ignition_effect(src, user)
+	if(!ignition_message)
+		return
+	. = TRUE
+	if(!bypass_clumsy && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
+		user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
+							"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
+		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
+			user.dropItemToGround(I)
+		user.adjust_fire_stacks(1)
+		user.IgniteMob()
+		return
 
-/obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
+	if(user.is_holding(src)) //no TK shit here.
+		user.dropItemToGround(src)
+	user.visible_message(ignition_message)
+	add_fingerprint(user)
+	fire_act(I.get_temperature())
+
+/obj/item/paper/attackby(obj/item/P, mob/living/user, params)
+	if(burn_paper_product_attackby_check(P, user))
+		close_all_ui()
+		return
+
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
 			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
@@ -281,57 +283,41 @@
 
 		create_ui(user, state)
 		return /// Normaly you just stamp, you don't need to read the thing
-	else if(P.get_temperature())
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
-			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
-								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
-			user.dropItemToGround(P)
-			user.adjust_fire_stacks(1)
-			user.IgniteMob()
-			return
-
-		user.dropItemToGround(src)
-		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-		close_all_ui()
-		fire_act()
 	else
 		// cut paper?  the sky is the limit!
 		var/datum/ui_state/default/paper_state/state = new
 		state.edit_mode = MODE_READING
 		create_ui(user, state)	// The other ui will be created with just read mode outside of this
 
-	. = ..()
+	return ..()
 
 
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
-	..()
-	if(!(resistance_flags & FIRE_PROOF))
-		add_overlay("paper_onfire_overlay")
+	. = ..()
+	if(.)
 		info = "[stars(info)]"
 
+/obj/item/paper/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/simple/paper),
+	)
 
-/obj/item/paper/extinguish()
-	..()
-	cut_overlay("paper_onfire_overlay")
-
-/obj/item/paper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/default/paper_state/state = new)
-	ui_key = "main-[REF(user)]"
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/paper/ui_interact(mob/user, datum/tgui/ui,
+		datum/ui_state/default/paper_state/state)
+	// Update the state
+	ui = ui || SStgui.get_open_ui(user, src)
+	if(ui && state)
+		var/datum/ui_state/default/paper_state/current_state = ui.state
+		current_state.copy_from(state)
+	// Update the UI
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-		assets.send(user)
-		// The x size is because we double the width for the editor
-		ui = new(user, src, ui_key, "PaperSheet", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "PaperSheet", name)
+		state = new
+		ui.set_state(state)
 		ui.set_autoupdate(FALSE)
 		viewing_ui[user] = ui
 		ui.open()
-	else
-		var/datum/ui_state/default/paper_state/last_state = ui.state
-		if(last_state)
-			last_state.copy_from(state)
-		else
-			ui.state = state
-
 
 /obj/item/paper/ui_close(mob/user)
 	/// close the editing window and change the mode
@@ -341,7 +327,7 @@
 // Again, we have to do this as autoupdate is off
 /obj/item/paper/proc/update_all_ui()
 	for(var/datum/tgui/ui in viewing_ui)
-		ui.update()
+		ui.process(force = TRUE)
 
 // Again, we have to do this as autoupdate is off
 /obj/item/paper/proc/close_all_ui()
@@ -376,7 +362,6 @@
 	data["form_fields"] = form_fields
 
 	return data
-
 
 /obj/item/paper/ui_act(action, params, datum/tgui/ui, datum/ui_state/default/paper_state/state)
 	if(..())
@@ -439,21 +424,18 @@
 
 			. = TRUE
 
-
-/*
+/**
  * Construction paper
  */
-
 /obj/item/paper/construction
 
 /obj/item/paper/construction/Initialize()
 	. = ..()
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
-/*
+/**
  * Natural paper
  */
-
 /obj/item/paper/natural/Initialize()
 	. = ..()
 	color = "#FFF5ED"
@@ -462,6 +444,7 @@
 	name = "paper scrap"
 	icon_state = "scrap"
 	slot_flags = null
+	show_written_words = FALSE
 
 /obj/item/paper/crumpled/update_icon_state()
 	return

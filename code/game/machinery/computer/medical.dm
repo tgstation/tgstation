@@ -7,6 +7,7 @@
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/med_data
+	light_color = LIGHT_COLOR_BLUE
 	var/rank = null
 	var/screen = null
 	var/datum/data/record/active1
@@ -17,7 +18,6 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
@@ -184,7 +184,7 @@
 	if(!(active2 in GLOB.data_core.medical))
 		active2 = null
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			temp = null
@@ -216,7 +216,7 @@
 				authenticated = 1
 				rank = "AI"
 				screen = 1
-			else if(IsAdminGhost(M))
+			else if(isAdminGhostAI(M))
 				active1 = null
 				active2 = null
 				authenticated = 1

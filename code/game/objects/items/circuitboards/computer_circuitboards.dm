@@ -266,6 +266,10 @@
 	name = "Salvage Pod Recall (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
 
+/obj/item/circuitboard/computer/bountypad
+	name = "Bounty Pad (Computer Board)"
+	build_path = /obj/machinery/computer/piratepad_control/civilian
+
 //Medical
 
 /obj/item/circuitboard/computer/crew
@@ -358,6 +362,11 @@
 	name = "DNA Console (Computer Board)"
 	icon_state = "science"
 	build_path = /obj/machinery/computer/scan_consolenew
+
+/obj/item/circuitboard/computer/mechpad
+	name = "Mecha Orbital Pad Console (Computer Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/mechpad
 
 //Security
 

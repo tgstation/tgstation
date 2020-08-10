@@ -144,6 +144,8 @@
 	tame_chance = 25
 	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
+	pet_bonus = TRUE
+	pet_bonus_emote = "moos happily!"
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
@@ -289,6 +291,8 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
+	pet_bonus = TRUE
+	pet_bonus_emote = "chirps!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
@@ -434,7 +438,6 @@
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
 		to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
-
 
 /mob/living/simple_animal/deer
 	name = "doe"
