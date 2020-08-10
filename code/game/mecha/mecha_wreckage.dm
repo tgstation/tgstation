@@ -154,6 +154,16 @@
 				/obj/item/mecha_parts/part/ripley_left_leg,
 				/obj/item/mecha_parts/part/ripley_right_leg)
 
+/obj/structure/mecha_wreckage/jerry
+	name = "\improper Jerry wreckage"
+	icon_state = "jerry-broken"
+	parts = list(
+				/obj/item/mecha_parts/part/jerry_torso,
+				/obj/item/mecha_parts/part/jerry_left_arm,
+				/obj/item/mecha_parts/part/jerry_right_arm,
+				/obj/item/mecha_parts/part/jerry_left_leg,
+				/obj/item/mecha_parts/part/jerry_right_leg)
+
 /obj/structure/mecha_wreckage/ripley/mkii
 	name = "\improper Ripley MK-II wreckage"
 	icon_state = "ripleymkii-broken"

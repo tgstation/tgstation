@@ -316,6 +316,13 @@
 	name = "Ripley Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
+/obj/item/circuitboard/mecha/jerry/peripherals
+	name = "Jerry Peripherals Control module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/jerry/main
+	name = "Jerry Central Control module (Exosuit Board)"
+	icon_state = "mainboard"
 
 /obj/item/circuitboard/mecha/gygax/peripherals
 	name = "Gygax Peripherals Control module (Exosuit Board)"
@@ -379,3 +386,34 @@
 /obj/item/circuitboard/mecha/clarke/main
 	name = "Clarke Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
+
+/////////// Jerry
+
+/obj/item/mecha_parts/chassis/jerry
+	name = "\improper Jerry chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/jerry
+
+/obj/item/mecha_parts/part/jerry_torso
+	name = "\improper Jerry torso"
+	desc = "A torso part of Jerry APLU. Contains power unit, processing core and life support systems."
+	icon_state = "jerry_harness"
+
+/obj/item/mecha_parts/part/jerry_left_arm
+	name = "\improper Jerry left arm"
+	desc = "A Jerry APLU left arm. Data and power sockets are compatible with most exosuit tools."
+	icon_state = "jerry_l_arm"
+
+/obj/item/mecha_parts/part/jerry_right_arm
+	name = "\improper Jerry right arm"
+	desc = "A Jerry APLU right arm. Data and power sockets are compatible with most exosuit tools."
+	icon_state = "jerry_r_arm"
+
+/obj/item/mecha_parts/part/jerry_left_leg
+	name = "\improper Jerry left leg"
+	desc = "A Jerry APLU left leg. Contains somewhat complex servodrives and balance maintaining systems."
+	icon_state = "jerry_l_leg"
+
+/obj/item/mecha_parts/part/jerry_right_leg
+	name = "\improper Jerry right leg"
+	desc = "A Jerry APLU right leg. Contains somewhat complex servodrives and balance maintaining systems."
+	icon_state = "jerry_r_leg"
