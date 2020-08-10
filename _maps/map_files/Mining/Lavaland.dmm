@@ -250,7 +250,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/structure/tank_dispenser/oxygen,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "aW" = (
@@ -388,24 +390,6 @@
 /turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
 "bn" = (
-/turf/closed/wall,
-/area/mine/mechbay)
-"bo" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/mechbay)
-"bp" = (
-/obj/machinery/mech_bay_recharge_port,
-/turf/open/floor/plating,
-/area/mine/mechbay)
-"bq" = (
-/turf/closed/wall,
-/area/mine/production)
-"br" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/production)
-"bs" = (
 /obj/structure/table,
 /obj/item/pickaxe,
 /obj/item/gps/mining,
@@ -421,20 +405,63 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"bo" = (
+/obj/machinery/suit_storage_unit/mining,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
-"bt" = (
+"bp" = (
 /obj/machinery/suit_storage_unit/mining,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"bq" = (
+/turf/closed/wall,
+/area/mine/production)
+"br" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/mine/production)
+"bs" = (
+/obj/machinery/camera{
+	c_tag = "EVA";
+	dir = 4;
+	network = list("mine")
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"bt" = (
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "bu" = (
@@ -444,10 +471,6 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
-	},
-/obj/machinery/suit_storage_unit/mining,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
@@ -505,11 +528,16 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "bD" = (
-/obj/machinery/light/small{
+/obj/structure/closet/crate,
+/obj/item/dice/d4,
+/obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/turf/open/floor/mech_bay_recharge_floor,
-/area/mine/mechbay)
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
 "bE" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/tile/purple,
@@ -520,19 +548,11 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "bG" = (
-/obj/machinery/camera{
-	c_tag = "EVA";
-	dir = 4;
-	network = list("mine")
-	},
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
-	},
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -543,6 +563,7 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "bI" = (
+/obj/structure/tank_dispenser/oxygen,
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel,
 /area/mine/eva)
@@ -784,30 +805,20 @@
 	pixel_x = 1;
 	pixel_y = -23
 	},
+/obj/machinery/recharge_station,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/table,
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "cp" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel,
+/obj/machinery/mech_bay_recharge_port,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/mine/eva)
 "cq" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)
 "cs" = (
 /obj/structure/closet/emcloset,
@@ -1002,10 +1013,12 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "db" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
+/obj/machinery/light/small{
+	dir = 1
 	},
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dc" = (
@@ -1014,7 +1027,6 @@
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/reagent_containers/food/snacks/mint,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dd" = (
@@ -1157,9 +1169,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "du" = (
-/obj/structure/closet/crate,
-/obj/effect/turf_decal/bot,
-/obj/item/coin/gold,
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dv" = (
@@ -1307,6 +1317,13 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"dL" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dM" = (
@@ -2626,9 +2643,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"jj" = (
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "jk" = (
 /obj/structure/stone_tile/center,
 /obj/structure/stone_tile/surrounding_tile,
@@ -3581,16 +3595,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"nA" = (
-/obj/machinery/computer/mech_bay_power_console,
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station Mech Bay APC";
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "nF" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
@@ -3697,29 +3701,6 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/laborcamp)
-"ps" = (
-/obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 3
-	},
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high{
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/machinery/camera{
-	c_tag = "Mech Bay";
-	dir = 1;
-	network = list("mine")
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "pR" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -3824,10 +3805,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"rR" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "sa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4000,15 +3977,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"vy" = (
-/obj/machinery/computer/mechpad{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "vH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -4042,23 +4010,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
-"wk" = (
-/obj/structure/closet/secure_closet/engineering_welding{
-	req_access = list(54)
-	},
-/obj/structure/cable,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "wE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bucket,
@@ -4173,13 +4124,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
-"zT" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "zX" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -4423,15 +4367,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"Gh" = (
-/obj/structure/table,
-/obj/item/mecha_parts/mecha_equipment/drill,
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp{
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "Gn" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
@@ -4638,16 +4573,12 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "LL" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "Na" = (
 /turf/closed/wall/r_wall,
 /area/lavaland/surface/outdoors/explored)
-"Nb" = (
-/obj/machinery/mechpad,
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "Nj" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -4677,14 +4608,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"NS" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/structure/closet/crate,
-/obj/item/dice/d4,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "Om" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -4808,14 +4731,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "PL" = (
-/obj/machinery/suit_storage_unit/mining,
-/obj/machinery/suit_storage_unit/mining,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "Qg" = (
@@ -5034,14 +4950,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/living_quarters)
-"UC" = (
-/obj/machinery/door/airlock/research/glass{
-	name = "Mining Station Mech Bay";
-	req_access_txt = "54"
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "UH" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
@@ -5316,14 +5224,6 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
-"Zh" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "Zk" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -19706,7 +19606,6 @@ am
 ai
 ab
 ab
-<<<<<<< HEAD
 aj
 aj
 aj
@@ -19714,13 +19613,6 @@ aj
 aj
 aj
 ab
-=======
-bn
-bo
-bo
-bn
-bn
->>>>>>> master
 br
 bP
 br
@@ -19971,7 +19863,6 @@ am
 am
 ai
 ab
-<<<<<<< HEAD
 aj
 aj
 aj
@@ -19979,17 +19870,6 @@ aj
 aj
 aj
 br
-=======
-bn
-bp
-rR
-ps
-bn
-br
-bO
-ck
-NS
->>>>>>> master
 br
 WE
 br
@@ -20073,254 +19953,6 @@ am
 am
 am
 am
-<<<<<<< HEAD
-=======
-ai
-bn
-bD
-jj
-Gh
-bn
-bC
-Lu
-bP
-cl
-cH
-cO
-cX
-ax
-dJ
-ia
-cn
-ez
-bP
-eS
-bq
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-"}
-(60,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-ab
-aj
-aj
-ab
-ab
-aj
-ab
-aj
-ab
-ab
-ab
-ab
-ab
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
->>>>>>> master
 am
 am
 am
@@ -20332,7 +19964,6 @@ am
 am
 am
 am
-<<<<<<< HEAD
 am
 am
 am
@@ -20478,254 +20109,6 @@ am
 am
 am
 am
-=======
-ai
-aj
-bn
-nA
-zT
-Zh
-UC
-Rx
-bQ
-cm
-cE
-Uh
-Uh
-Uh
-Uh
-Uh
-kI
-Be
-eC
-eP
-eT
-bq
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-"}
-(61,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
->>>>>>> master
 am
 am
 am
@@ -20741,7 +20124,6 @@ ai
 ai
 aj
 aj
-<<<<<<< HEAD
 aj
 bq
 br
@@ -20749,27 +20131,6 @@ bO
 ck
 cD
 br
-=======
-bn
-wk
-Nb
-vy
-bo
-bE
-bR
-cn
-cF
-cI
-cP
-cn
-Rx
-bP
-ia
-gd
-eD
-bP
-eU
->>>>>>> master
 bq
 bq
 bq
@@ -21018,23 +20379,9 @@ am
 am
 ai
 aj
-<<<<<<< HEAD
 aj
 aj
 ab
-=======
-ab
-bn
-bo
-bn
-bf
-bf
-bF
-bS
-bF
-bf
-cJ
->>>>>>> master
 bq
 bC
 Lu
@@ -21274,255 +20621,6 @@ am
 am
 am
 am
-<<<<<<< HEAD
-=======
-ai
-ab
-ab
-ab
-ab
-bf
-bs
-bG
-bT
-co
-bf
-cK
-bq
-bq
-ia
-bq
-ia
-bP
-eE
-bP
-sj
-sH
-lO
-sj
-zn
-ab
-ab
-ai
-ai
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-"}
-(64,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
->>>>>>> master
 am
 am
 am
@@ -21535,38 +20633,12 @@ am
 am
 am
 am
-<<<<<<< HEAD
 ai
 aj
 aj
 aj
 aj
 ab
-=======
-ab
-ab
-ab
-ab
-bg
-PL
-LL
-bU
-cp
-bf
-cL
-bq
-du
-bP
-bP
-cH
-dT
-eE
-bP
-cH
-br
-jV
-RE
->>>>>>> master
 br
 bD
 bQ
@@ -21819,7 +20891,6 @@ am
 am
 ai
 aj
-<<<<<<< HEAD
 aj
 aj
 aj
@@ -21834,22 +20905,6 @@ cI
 cP
 cn
 Rx
-=======
-ab
-ab
-ab
-bg
-bt
-bH
-bV
-cq
-bf
-bq
-bq
-db
-bP
-bP
->>>>>>> master
 bP
 ia
 gd
@@ -21929,7 +20984,6 @@ am
 am
 am
 am
-<<<<<<< HEAD
 am
 am
 am
@@ -22076,271 +21130,28 @@ am
 am
 am
 am
-=======
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
 ai
 aj
 aj
-ab
+ai
 ab
 bf
-bu
-bI
-bW
-aV
-bf
-ad
-bq
-dc
-bP
-dM
-dW
-AB
-eI
-bq
-eX
-bq
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-aj
-aj
-aj
-aj
-aj
-"}
-(67,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-ab
-ab
-ab
-aj
-aj
-aj
-aj
-aj
-aj
-ab
-ab
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
->>>>>>> master
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-ai
-aj
-aj
-ai
-ab
-ab
 bf
 bf
 bF
