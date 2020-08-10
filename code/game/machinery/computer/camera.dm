@@ -66,6 +66,8 @@
 	// Update the camera, showing static if we can't use it and updating data if the location has moved.
 	if(active_camera)
 		update_active_camera_screen()
+	else
+		show_camera_static()
 
 	if(!ui)
 		var/user_ref = REF(user)
