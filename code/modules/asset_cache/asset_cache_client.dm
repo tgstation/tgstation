@@ -22,14 +22,12 @@
 	sent_assets |= preloaded_assets
 
 
-/// Updates the client side stored html/json combo file used to keep track of what assets the client has between restarts/reconnects.
-/client/proc/asset_cache_update_json(verify = FALSE, list/new_assets = list())
+/// Updates the client side stored json file used to keep track of what assets the client has between restarts/reconnects.
+/client/proc/asset_cache_update_json()
 	if (world.time - connection_time < 10 SECONDS) //don't override the existing data file on a new connection
 		return
-	if (!islist(new_assets))
-		new_assets = list("[new_assets]" = md5(SSassets.cache[new_assets]))
 
-	src << browse(json_encode(new_assets|sent_assets), "file=asset_data.json&display=0")
+	src << browse(json_encode(sent_assets), "file=asset_data.json&display=0")
 
 /// Blocks until all currently sending browse and browse_rsc assets have been sent.
 /// Due to byond limitations, this proc will sleep for 1 client round trip even if the client has no pending asset sends.

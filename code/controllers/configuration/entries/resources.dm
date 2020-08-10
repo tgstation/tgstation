@@ -9,7 +9,7 @@
 	return (lowertext(str_val) in list("simple", "webroot")) && ..(lowertext(str_val))
 
 /datum/config_entry/string/asset_cdn_webroot
-	//protection = CONFIG_ENTRY_LOCKED
+	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/asset_cdn_webroot/ValidateAndSet(str_var)
 	if (!str_var || trim(str_var) == "")
@@ -19,7 +19,7 @@
 	return ..(str_var)
 
 /datum/config_entry/string/asset_cdn_url
-	//protection = CONFIG_ENTRY_LOCKED
+	protection = CONFIG_ENTRY_LOCKED
 	default = null
 
 /datum/config_entry/string/asset_cdn_url/ValidateAndSet(str_var)

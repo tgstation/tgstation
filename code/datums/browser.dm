@@ -100,6 +100,8 @@
 	if (width && height)
 		window_size = "size=[width]x[height];"
 	if (stylesheets.len)
+		var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/namespaced/common)
+		asset_datum.send(user)
 		SSassets.transport.send_assets(user, stylesheets)
 	if (scripts.len)
 		SSassets.transport.send_assets(user, scripts)

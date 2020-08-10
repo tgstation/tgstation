@@ -79,3 +79,26 @@
 	load_admins()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reload All Admins") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("[key_name_admin(usr)] manually reloaded admins")
+
+/client/proc/toggle_cdn()
+	set name = "Toggle CDN"
+	set category = "Server"
+	var/static/admin_disabled_cdn_transport = null
+	if (alert(usr, "Are you sure you want to toggle the CDN asset transport?", "Confirm", "Yes", "No") != "Yes")
+		return
+	var/current_transport = CONFIG_GET(string/asset_transport)
+	if (!current_transport || current_transport == "simple")
+		if (admin_disabled_cdn_transport)
+			CONFIG_SET(string/asset_transport, admin_disabled_cdn_transport)
+			admin_disabled_cdn_transport = null
+			SSassets.OnConfigLoad()
+			message_admins("[key_name_admin(usr)] re-enabled the CDN asset transport")
+			log_admin("[key_name(usr)] re-enabled the CDN asset transport")
+		else
+			to_chat(usr, "<span class='adminnotice'>The CDN is not enabled!</span>")
+	else
+		admin_disabled_cdn_transport = current_transport
+		CONFIG_SET(string/asset_transport, "simple")
+		SSassets.OnConfigLoad()
+		message_admins("[key_name_admin(usr)] disabled the CDN asset transport")
+		log_admin("[key_name(usr)] disabled the CDN asset transport")
