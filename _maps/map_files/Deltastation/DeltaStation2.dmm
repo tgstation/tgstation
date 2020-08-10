@@ -15923,9 +15923,9 @@
 	pixel_x = 24;
 	pixel_y = 24
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aIz" = (
@@ -73151,12 +73151,12 @@
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHt" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/ai{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHu" = (

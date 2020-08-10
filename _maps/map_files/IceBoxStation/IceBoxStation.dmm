@@ -41288,7 +41288,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVX" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVY" = (
@@ -44768,7 +44768,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "cic" = (

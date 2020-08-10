@@ -12986,13 +12986,13 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aCN" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/item/radio/intercom{
 	pixel_x = -30
 	},
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -38304,7 +38304,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMe" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/item/radio/intercom{
 	pixel_y = -26
 	},
@@ -38313,6 +38312,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMf" = (
