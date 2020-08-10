@@ -271,7 +271,9 @@
 	var/list/total_town = list()
 	var/list/total_mafia = list()
 
-	var/alive_town = 0
+	//voting power of town + solos (since they don't want mafia to overpower)
+	var/anti_mafia_power = 0
+	//voting power of mafia (greater than anti mafia power + team end not blocked = mafia victory)
 	var/alive_mafia = 0
 	var/list/solos_to_ask = list() //need to ask after because first round is counting team sizes
 	var/list/total_victors = list() //if this list gets filled with anyone, they win. list because side antags can with with people
@@ -284,15 +286,14 @@
 			if(MAFIA_TEAM_MAFIA)
 				total_mafia += R
 				if(R.game_status == MAFIA_ALIVE)
-					alive_mafia += R.vote_power
+					alive_mafia += R.vote_potential
 			if(MAFIA_TEAM_TOWN)
 				total_town += R
 				if(R.game_status == MAFIA_ALIVE)
-					alive_town += R.vote_power
+					anti_mafia_power += R.vote_potential
 			if(MAFIA_TEAM_SOLO)
 				if(R.game_status == MAFIA_ALIVE)
-					if(R.solo_counts_as_town)
-						alive_town += R.vote_power
+					anti_mafia_power += R.vote_potential
 					solos_to_ask += R
 
 	///PHASE TWO: SEND STATS TO SOLO ANTAGS, SEE IF THEY WON OR TEAMS CANNOT WIN

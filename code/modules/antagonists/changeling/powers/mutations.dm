@@ -557,3 +557,8 @@
 /obj/item/clothing/head/helmet/changeling/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/obj/item/clothing/head/helmet/changeling/thoughtfeeder
+	name = "brainy mass"
+	desc = "A mostly tough, hard cover of black chitin with an exposed brain."
+	icon_state = "lingarmorhelmetbrain"

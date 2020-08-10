@@ -34,6 +34,12 @@
 	database_id = MAFIA_MEDAL_MD
 	icon = "md"
 
+/datum/award/achievement/mafia/officer
+	name = "Security Officer Victory"
+	desc = "Unlike the real game, you're only winning if you're dead as a Sec Officer."
+	database_id = MAFIA_MEDAL_OFFICER
+	icon = "lawyer"
+
 /datum/award/achievement/mafia/lawyer
 	name = "Lawyer Victory"
 	desc = "Oh don't mind me, i'm just the worst rol- Oops, I just instantly ended the game."
@@ -44,6 +50,12 @@
 	name = "Head of Personnel Victory"
 	desc = "King of Assistants, waster of a single mafia's night, thrower of games."
 	database_id = MAFIA_MEDAL_HOP
+	icon = "hop"
+
+/datum/award/achievement/mafia/hos
+	name = "Head of Security Victory"
+	desc = "Certified not shitcurity."
+	database_id = MAFIA_MEDAL_HOS
 	icon = "hop"
 
 /datum/award/achievement/mafia/changeling

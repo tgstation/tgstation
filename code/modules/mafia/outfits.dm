@@ -30,6 +30,11 @@
 	uniform = /obj/item/clothing/under/suit/black
 	shoes = /obj/item/clothing/shoes/laceup
 
+/datum/outfit/mafia/chaplain
+	name = "Mafia Chaplain"
+
+	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+
 /datum/outfit/mafia/md
 	name = "Mafia Medical Doctor"
 
@@ -37,10 +42,14 @@
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 
-/datum/outfit/mafia/chaplain
-	name = "Mafia Chaplain"
+/datum/outfit/mafia/security
+	name = "Mafia Security Officer"
 
-	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+	uniform = /obj/item/clothing/under/rank/security/officer
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/helmet/sec
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	shoes = /obj/item/clothing/shoes/jackboots
 
 /datum/outfit/mafia/lawyer
 	name = "Mafia Lawyer"
@@ -65,6 +74,18 @@
 
 	head = /obj/item/clothing/head/helmet/changeling
 	suit = /obj/item/clothing/suit/armor/changeling
+
+/datum/outfit/mafia/changeling
+	name = "Mafia Thoughtfeeder"
+
+	head = /obj/item/clothing/head/helmet/changeling/thoughtfeeder
+	suit = /obj/item/clothing/suit/armor/changeling
+
+/datum/outfit/mafia/changeling
+	name = "Mafia Parastingling"
+
+	head = /obj/item/clothing/head/helmet/changeling
+	suit = /obj/item/clothing/suit/armor/changeling/parastingling
 
 //solo
 
