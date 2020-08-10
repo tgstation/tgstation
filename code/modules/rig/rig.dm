@@ -8,58 +8,66 @@
 
 /obj/item/rig/control
 	name = "RIG control module"
-	desc = "A special powered suit that protects against various environments. Wear it on your back, deploy it and turn it on to use its' power."
-	icon_state = "engi-module-unsealed"
-	worn_icon_state = "engi-module-unsealed"
+	desc = "A special powered suit that protects against various environments. Wear it on your back, deploy it and activate it."
+	icon_state = "engi-module"
+	worn_icon_state = "engi-module"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	slowdown = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
-	actions_types = list(/datum/action/item_action/rig/deploy)
-	///How the RIG and things connected to it look
+	slowdown = 2
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
+	actions_types = list(/datum/action/item_action/rig/deploy, /datum/action/item_action/rig/activate)
+	resistance_flags = ACID_PROOF
+	permeability_coefficient = 0.01
+	/// How the RIG and things connected to it look
 	var/theme = "engi"
-	///If the suit is deployed and turned on
+	/// If the suit is deployed and turned on
 	var/active = FALSE
-	///If the suit wire/module hatch is open
+	/// If the suit wire/module hatch is open
 	var/open = FALSE
-	///If the suit is ID locked
+	/// If the suit is ID locked
 	var/locked = TRUE
-	///If the suit is malfunctioning
+	/// If the suit is malfunctioning
 	var/malfunctioning = FALSE
-	///If the suit has EMP protection
+	/// If the suit has EMP protection
 	var/emp_protection = FALSE
-	///How long the RIG is electrified for
+	/// If the suit is currently activating/deactivating
+	var/activating = FALSE
+	/// How long the RIG is electrified for
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
-	///If the suit interface is broken
+	/// If the suit interface is broken
 	var/interface_break = FALSE
-	///Can the RIG swap out modules/parts
+	/// Can the RIG swap out modules/parts
 	var/no_customization = FALSE
-	///How much modules can this RIG carry without malfunctioning
+	/// How much modules can this RIG carry without malfunctioning
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
-	///How much modules this RIG is carrying
+	/// How much modules this RIG is carrying
 	var/complexity = 0
-	///How much battery power the RIG uses per tick
+	/// How much battery power the RIG uses per tick
 	var/cell_usage = 0
-	///RIG cell
+	/// RIG cell
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
-	///RIG helmet
+	/// RIG helmet
 	var/obj/item/clothing/head/helmet/space/rig/helmet = /obj/item/clothing/head/helmet/space/rig
-	///RIG chestplate
+	/// RIG chestplate
 	var/obj/item/clothing/suit/armor/rig/chestplate = /obj/item/clothing/suit/armor/rig
-	///RIG gauntlets
+	/// RIG gauntlets
 	var/obj/item/clothing/gloves/rig/gauntlets = /obj/item/clothing/gloves/rig
-	///RIG boots
+	/// RIG boots
 	var/obj/item/clothing/shoes/rig/boots = /obj/item/clothing/shoes/rig
-	///Modules the RIG should spawn with
+	/// List of parts
+	var/list/rig_parts
+	/// Modules the RIG should spawn with
 	var/list/initial_modules = list()
-	///Person wearing the RIGsuit
+	/// Modules the RIG currently possesses
+	var/list/modules
+	/// Person wearing the RIGsuit
 	var/mob/living/carbon/human/wearer
 
 /obj/item/rig/control/Initialize()
 	..()
 	START_PROCESSING(SSobj,src)
-	icon_state = "[theme]-module-unsealed"
-	worn_icon_state = "[theme]-module-unsealed"
+	icon_state = "[theme]-module"
+	worn_icon_state = "[theme]-module"
 	wires = new /datum/wires/rig(src)
 	if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
 		locked = FALSE
@@ -69,26 +77,34 @@
 		helmet = new helmet(src)
 		helmet.rig = src
 		helmet.armor = armor
-		helmet.icon_state = "[theme]-helmet-unsealed"
-		helmet.worn_icon_state = "[theme]-helmet-unsealed"
+		helmet.resistance_flags = resistance_flags
+		helmet.icon_state = "[theme]-helmet"
+		helmet.worn_icon_state = "[theme]-helmet"
+		LAZYADD(rig_parts, helmet)
 	if(ispath(chestplate))
 		chestplate = new chestplate(src)
 		chestplate.rig = src
 		chestplate.armor = armor
-		chestplate.icon_state = "[theme]-chestplate-unsealed"
-		chestplate.worn_icon_state = "[theme]-chestplate-unsealed"
+		chestplate.resistance_flags = resistance_flags
+		chestplate.icon_state = "[theme]-chestplate"
+		chestplate.worn_icon_state = "[theme]-chestplate"
+		LAZYADD(rig_parts, chestplate)
 	if(ispath(gauntlets))
 		gauntlets = new gauntlets(src)
 		gauntlets.rig = src
 		gauntlets.armor = armor
-		gauntlets.icon_state = "[theme]-gauntlets-unsealed"
-		gauntlets.worn_icon_state = "[theme]-gauntlets-unsealed"
+		gauntlets.resistance_flags = resistance_flags
+		gauntlets.icon_state = "[theme]-gauntlets"
+		gauntlets.worn_icon_state = "[theme]-gauntlets"
+		LAZYADD(rig_parts, gauntlets)
 	if(ispath(boots))
 		boots = new boots(src)
 		boots.rig = src
 		boots.armor = armor
-		boots.icon_state = "[theme]-boots-unsealed"
-		boots.worn_icon_state = "[theme]-boots-unsealed"
+		boots.resistance_flags = resistance_flags
+		boots.icon_state = "[theme]-boots"
+		boots.worn_icon_state = "[theme]-boots"
+		LAZYADD(rig_parts, boots)
 	if(initial_modules)
 		for(var/path in initial_modules)
 			var/obj/item/rig/module/module = path
@@ -143,7 +159,7 @@
 /obj/item/rig/control/MouseDrop(atom/over_object)
 	. = ..()
 	if(src == wearer.back)
-		for(var/h in list(helmet,chestplate,gauntlets,boots))
+		for(var/h in rig_parts)
 			var/obj/item/part = h
 			if(part.loc != src)
 				to_chat(wearer, "<span class='warning'>At least one of the parts are still on your body, please retract them and try again.</span>")
@@ -172,63 +188,76 @@
 		to_chat(wearer, "<span class='warning'>This would make the RIG too complex!</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
-	var/obj/item/rig/module/thingy_unleashed = new thingy(src)
-	complexity += thingy_unleashed.complexity
-	thingy_unleashed.rig = src
-
-/obj/item/rig/control/proc/deploy(part)
-	var/obj/item/piece = part
-	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags,0,0,1))
-		to_chat(wearer, "<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>")
-		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
-		wearer.update_inv_wear_suit()
-		ADD_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
-	else if(piece.loc != src)
-		to_chat(wearer, "<span class='warning'>[piece] [piece.p_are()] already deployed!</span>")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-	else
-		to_chat(wearer, "<span class='warning'>You are already wearing something where [piece] would go!</span>")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-
-/obj/item/rig/control/proc/conceal(part)
-	var/obj/item/piece = part
-	REMOVE_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
-	wearer.transferItemToLoc(piece, src, TRUE)
-	to_chat(wearer, "<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>")
-	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	thingy.forceMove(src)
+	LAZYADD(modules, thingy)
+	complexity += thingy.complexity
+	thingy.rig = src
 
 /obj/item/clothing/head/helmet/space/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-helmet"
 	worn_icon = 'icons/mob/rig.dmi'
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	flash_protect = FLASH_PROTECTION_NONE
+	clothing_flags = THICKMATERIAL | SNUG_FIT
+	resistance_flags = ACID_PROOF
+	permeability_coefficient = 0.01
 	var/obj/item/rig/control/rig
+
+/obj/item/clothing/head/helmet/space/rig/Destroy()
+	..()
+	if(rig)
+		rig.helmet = null
+		QDEL_NULL(rig)
 
 /obj/item/clothing/suit/armor/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-chestplate"
 	worn_icon = 'icons/mob/rig.dmi'
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	clothing_flags = THICKMATERIAL
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
+	resistance_flags = ACID_PROOF
+	permeability_coefficient = 0.01
 	var/obj/item/rig/control/rig
+
+/obj/item/clothing/suit/armor/rig/Destroy()
+	..()
+	if(rig)
+		rig.chestplate = null
+		QDEL_NULL(rig)
 
 /obj/item/clothing/gloves/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-gauntlets"
 	worn_icon = 'icons/mob/rig.dmi'
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
+	resistance_flags = ACID_PROOF
+	permeability_coefficient = 0.01
 	var/obj/item/rig/control/rig
+
+/obj/item/clothing/gloves/rig/Destroy()
+	..()
+	if(rig)
+		rig.gauntlets = null
+		QDEL_NULL(rig)
 
 /obj/item/clothing/shoes/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-boots"
 	worn_icon = 'icons/mob/rig.dmi'
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
+	resistance_flags = ACID_PROOF
+	permeability_coefficient = 0.01
 	var/obj/item/rig/control/rig
+
+/obj/item/clothing/shoes/rig/Destroy()
+	..()
+	if(rig)
+		rig.boots = null
+		QDEL_NULL(rig)

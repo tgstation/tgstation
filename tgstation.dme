@@ -2921,6 +2921,7 @@
 #include "code\modules\research\xenobiology\crossbreeding\reproductive.dm"
 #include "code\modules\research\xenobiology\crossbreeding\selfsustaining.dm"
 #include "code\modules\research\xenobiology\crossbreeding\stabilized.dm"
+#include "code\modules\rig\activation.dm"
 #include "code\modules\rig\construction.dm"
 #include "code\modules\rig\modules.dm"
 #include "code\modules\rig\rig.dm"
