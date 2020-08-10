@@ -86,6 +86,23 @@
 	response_harm_continuous = "punts"
 	response_harm_simple = "punt"
 
+/mob/living/simple_animal/pet/cat/clockwork
+	name = "Hairspring"
+	desc = "A fully mechanical cat. It would be fully indestringuishable from a cat if it weren't for its bronze coat."
+	icon_state = "clockcat"
+	icon_living = "clockcat"
+	icon_dead = "clockcat_dead"
+	speak_emote = list("purrs", "meows", "ticks")
+	emote_hear = list("meows.", "mews.", "chimes.")
+	mob_biotypes = MOB_ROBOTIC|MOB_BEAST
+	unsuitable_atmos_damage = 0
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 40
+	held_state = "clockcat"
+	speech_span = SPAN_ROBOT
+	speak = list("Meow!", "Purr...", "Tick. Tick. Tick.", "Mrrrow!", "Mrrrp!!", "YOWWWWW", "CUCKOO! CUCKOO!", "Mew?")
+	emote_see = list("shakes its head.", "shivers.", "rolls over and shows its belly.", "rubs against the nearest object.", "kneads the floor.", "plays with its tail.")
+
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."

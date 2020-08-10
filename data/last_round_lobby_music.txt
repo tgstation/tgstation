@@ -76,3 +76,5 @@ config/title_music/sounds/Time to do Something.ogg
 config/title_music/sounds/Staring at my spaceship.ogg
 config/title_music/sounds/The artichoke king.ogg
 config/title_music/sounds/The Stand.ogg
+config/title_music/sounds/The artichoke king.ogg
+config/title_music/sounds/Staring at my spaceship.ogg

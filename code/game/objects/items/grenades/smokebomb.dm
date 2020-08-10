@@ -7,6 +7,7 @@
 	name = "smoke grenade"
 	desc = "Real bruh moment if you ever see this. Probably tell a c*der or something."
 	icon = 'icons/obj/grenade.dmi'
+	worn_icon_state = "grenade"
 	icon_state = "smokewhite"
 	inhand_icon_state = "smoke"
 	slot_flags = ITEM_SLOT_BELT

@@ -111,6 +111,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_NICE_SHOT" = TRAIT_NICE_SHOT,
 		"TRAIT_TUMOR_SUPPRESSION" = TRAIT_TUMOR_SUPPRESSED,
 		"TRAIT_PERMANENTLY_ONFIRE" = TRAIT_PERMANENTLY_ONFIRE
+		"TRAIT_SIGN_LANG" = TRAIT_SIGN_LANG
 	),
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS
@@ -131,3 +132,4 @@ GLOBAL_LIST(trait_name_map)
 		for(var/tname in GLOB.traits_by_type[key])
 			var/val = GLOB.traits_by_type[key][tname]
 			.[val] = tname
+

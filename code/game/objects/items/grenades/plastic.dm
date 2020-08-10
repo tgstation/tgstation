@@ -2,6 +2,7 @@
 	name = "C-4 charge"
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
 	icon_state = "plastic-explosive0"
+	worn_icon_state = "c4"
 	inhand_icon_state = "plastic-explosive"
 	worn_icon_state = "c4"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
@@ -160,6 +161,7 @@
 	name = "X-4 charge"
 	desc = "A shaped high-explosive breaching charge. Designed to ensure user safety and wall nonsafety."
 	icon_state = "plasticx40"
+	worn_icon_state = "x4"
 	inhand_icon_state = "plasticx4"
 	worn_icon_state = "x4"
 	directional = TRUE

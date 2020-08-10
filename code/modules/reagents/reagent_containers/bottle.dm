@@ -4,6 +4,7 @@
 	name = "bottle"
 	desc = "A small bottle."
 	icon_state = "bottle"
+	worn_icon_state = "bottle"
 	inhand_icon_state = "atoxinbottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30

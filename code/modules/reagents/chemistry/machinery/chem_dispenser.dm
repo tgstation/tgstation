@@ -454,6 +454,8 @@
 		/datum/reagent/consumable/cream,
 		/datum/reagent/consumable/tea,
 		/datum/reagent/consumable/icetea,
+		/datum/reagent/consumable/greentea,
+		/datum/reagent/consumable/redtea,
 		/datum/reagent/consumable/space_cola,
 		/datum/reagent/consumable/spacemountainwind,
 		/datum/reagent/consumable/dr_gibb,

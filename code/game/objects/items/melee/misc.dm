@@ -398,6 +398,7 @@
 	icon_state = "telebar_0"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	worn_icon_state = "crowbar"
 	inhand_icon_state = null
 	on_icon_state = "telebar_1"
 	off_icon_state = "telebar_0"
@@ -702,6 +703,7 @@
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "mace_greyscale"
+	worn_icon_state = "mace"
 	inhand_icon_state = "mace_greyscale"
 	worn_icon_state = "mace"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'

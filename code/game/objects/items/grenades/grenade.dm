@@ -1,5 +1,6 @@
 /obj/item/grenade
 	name = "grenade"
+	worn_icon_state = "grenade"
 	desc = "It has an adjustable timer."
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/grenade.dmi'

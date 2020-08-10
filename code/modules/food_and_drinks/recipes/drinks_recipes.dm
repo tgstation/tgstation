@@ -259,6 +259,22 @@
 	results = list(/datum/reagent/consumable/cafe_latte = 2)
 	required_reagents = list(/datum/reagent/consumable/coffee = 1, /datum/reagent/consumable/milk = 1)
 
+/datum/chemical_reaction/espresso
+	results = list(/datum/reagent/consumable/espresso = 2)
+	required_reagents = list(/datum/reagent/consumable/coffee = 1, /datum/reagent/water = 1)
+
+/datum/chemical_reaction/chifir
+	results = list(/datum/reagent/consumable/chifir = 3)
+	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/consumable/greentea = 1, /datum/reagent/consumable/redtea = 1)
+
+/datum/chemical_reaction/chamomile
+	results = list(/datum/reagent/consumable/chamomile = 3)
+	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/consumable/lemonjuice = 1)
+
+/datum/chemical_reaction/cappuccino
+	results = list(/datum/reagent/consumable/cappuccino = 2)
+	required_reagents = list(/datum/reagent/consumable/espresso = 1, /datum/reagent/consumable/cream = 1)
+
 /datum/chemical_reaction/acidspit
 	results = list(/datum/reagent/consumable/ethanol/acid_spit = 6)
 	required_reagents = list(/datum/reagent/toxin/acid = 1, /datum/reagent/consumable/ethanol/wine = 5)
@@ -568,3 +584,13 @@
 /datum/chemical_reaction/mauna_loa
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
+
+//Funny wallem additions
+
+/datum/chemical_reaction/whipcream
+	results = list(/datum/reagent/consumable/whipcream = 4)
+	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/cream = 3)
+
+/datum/chemical_reaction/naenaecream
+	results = list(/datum/reagent/consumable/naenaecream = 10)
+	required_reagents = list(/datum/reagent/consumable/whipcream = 4, /datum/reagent/consumable/ethanol/neurotoxin = 8)
