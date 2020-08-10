@@ -44,6 +44,8 @@
 	var/complexity = 0
 	/// How much battery power the RIG uses per tick
 	var/cell_usage = 0
+	/// Slowdown when active
+	var/slowdown_active = 1
 	/// RIG cell
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 	/// RIG helmet

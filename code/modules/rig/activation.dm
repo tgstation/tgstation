@@ -77,7 +77,7 @@
 		if(active)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = 6000)
 			cell_usage += 10
-			slowdown -= 1
+			slowdown = slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
 			for(var/h in modules)
 				var/obj/item/rig/module/thingy = h
