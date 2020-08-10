@@ -1,9 +1,7 @@
 /datum/job/head_of_service
 	title = "Head of Service"
-	flag = HOSER
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
-	department_flag = CIVILIAN
 	head_announce = list(RADIO_CHANNEL_SERVICE)
 	faction = "Station"
 	total_positions = 1

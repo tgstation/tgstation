@@ -1,9 +1,7 @@
 /datum/job/qm
 	title = "Quartermaster"
-	flag = QUARTERMASTER
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
-	department_flag = CIVILIAN
 	head_announce = list(RADIO_CHANNEL_SUPPLY)
 	faction = "Station"
 	total_positions = 1
