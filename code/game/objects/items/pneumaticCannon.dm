@@ -152,6 +152,9 @@
 	if(!tank && checktank)
 		to_chat(user, "<span class='warning'>\The [src] can't fire without a source of gas.</span>")
 		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>" )
+		return
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
