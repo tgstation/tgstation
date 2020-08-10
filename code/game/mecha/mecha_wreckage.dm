@@ -155,7 +155,7 @@
 				/obj/item/mecha_parts/part/ripley_right_leg)
 
 /obj/structure/mecha_wreckage/jerry
-	name = "\improper Jerry wreckage"
+	name = "\improper 10-CNT wreckage"
 	icon_state = "jerry-broken"
 	parts = list(
 				/obj/item/mecha_parts/part/jerry_torso,

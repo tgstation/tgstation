@@ -1,7 +1,7 @@
 ///Cheaper roundstart avaiable version of ripley, is a little bit faster but has less equipment slots and is less tanky
 /obj/mecha/working/jerry
 	desc = "Nanotransen has provided these cheap mass-manufactured ripley knockoffs from space-china. They are a little bit faster than ripley but are much less tough"
-	name = "\improper Jerry"
+	name = "10-CNT"
 	icon_state = "jerry"
 	max_temperature = 6500
 	max_integrity = 150
