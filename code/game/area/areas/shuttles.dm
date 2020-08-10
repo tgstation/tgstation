@@ -8,11 +8,9 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = STANDARD_GRAVITY
 	always_unpowered = FALSE
-	valid_territory = FALSE
-	icon_state = "shuttle"
 	// Loading the same shuttle map at a different time will produce distinct area instances.
-	unique = FALSE
-	blob_allowed = FALSE
+	area_flags = NONE
+	icon_state = "shuttle"
 	flags_1 = CAN_BE_DIRTY_1
 	area_limited_icon_smoothing = TRUE
 
@@ -95,30 +93,25 @@
 	desc = "Weeeeee"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
-/area/shuttle/custom
-	name = "Custom player shuttle"
-	blob_allowed = TRUE
-	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
-
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
-	unique = TRUE  // SSjob refers to this area for latejoiners
+	area_flags = UNIQUE_AREA// SSjob refers to this area for latejoiners
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"
-	blob_allowed = TRUE
+	area_flags = BLOBS_ALLOWED
 
 /area/shuttle/pod_2
 	name = "Escape Pod Two"
-	blob_allowed = TRUE
+	area_flags = BLOBS_ALLOWED
 
 /area/shuttle/pod_3
 	name = "Escape Pod Three"
-	blob_allowed = TRUE
+	area_flags = BLOBS_ALLOWED
 
 /area/shuttle/pod_4
 	name = "Escape Pod Four"
-	blob_allowed = TRUE
+	area_flags = BLOBS_ALLOWED
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
@@ -132,11 +125,11 @@
 
 /area/shuttle/supply
 	name = "Supply Shuttle"
-	noteleport = TRUE
+	area_flags = NOTELEPORT
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
-	blob_allowed = TRUE
+	area_flags = BLOBS_ALLOWED
 	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 /area/shuttle/escape/backup
@@ -144,11 +137,11 @@
 
 /area/shuttle/escape/luxury
 	name = "Luxurious Emergency Shuttle"
-	noteleport = TRUE
+	area_flags = NOTELEPORT
 
 /area/shuttle/escape/arena
 	name = "The Arena"
-	noteleport = TRUE
+	area_flags = NOTELEPORT
 
 /area/shuttle/escape/meteor
 	name = "\proper a meteor with engines strapped to it"

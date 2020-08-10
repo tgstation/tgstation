@@ -17,7 +17,7 @@
 
 	qdel(src) //Once it leaves it's wrapped container, the object in question should lose it's pricetag component.
 
-/datum/component/pricetag/proc/split_profit(var/item_value)
+/datum/component/pricetag/proc/split_profit(item_value)
 	SIGNAL_HANDLER
 
 	var/price = item_value

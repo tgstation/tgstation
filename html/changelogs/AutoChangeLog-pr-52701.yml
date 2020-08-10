@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "the cat crate cat no longer has a 50% chance of not existing"

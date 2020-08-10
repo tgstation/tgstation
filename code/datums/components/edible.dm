@@ -193,7 +193,7 @@ Behavior that's still missing from this component that original food items had t
 	return TRUE
 
 ///Check foodtypes to see if we should send a moodlet
-/datum/component/edible/proc/checkLiked(var/fraction, mob/M)
+/datum/component/edible/proc/checkLiked(fraction, mob/M)
 	if(last_check_time + 50 > world.time)
 		return FALSE
 	if(!ishuman(M))

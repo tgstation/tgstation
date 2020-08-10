@@ -223,11 +223,11 @@
 
 /datum/species/golem/titanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.weather_immunities |= "ash"
+	LAZYOR(C.weather_immunities, "ash")
 
 /datum/species/golem/titanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities -= "ash"
+	LAZYREMOVE(C.weather_immunities, "ash")
 
 //Immune to ash storms and lava
 /datum/species/golem/plastitanium
@@ -242,13 +242,13 @@
 
 /datum/species/golem/plastitanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.weather_immunities |= "lava"
-	C.weather_immunities |= "ash"
+	LAZYOR(C.weather_immunities, "lava")
+	LAZYOR(C.weather_immunities, "ash")
 
 /datum/species/golem/plastitanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities -= "ash"
-	C.weather_immunities -= "lava"
+	LAZYREMOVE(C.weather_immunities, "ash")
+	LAZYREMOVE(C.weather_immunities, "lava")
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
@@ -817,7 +817,7 @@
 				M.show_message("<span class='narsiesmall'>GONG!</span>", MSG_AUDIBLE)
 				M.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
 				M.soundbang_act(1, 0, 30, 3)
-				M.confused += 10
+				M.add_confusion(10)
 				M.jitteriness += 4
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
 			if(2 to 3)
@@ -875,7 +875,7 @@
 			to_chat(H, "<span class='notice'>You create a new cardboard golem shell.</span>")
 			create_brother(H.loc)
 
-/datum/species/golem/cardboard/proc/create_brother(var/location)
+/datum/species/golem/cardboard/proc/create_brother(location)
 	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
 	last_creation = world.time
 
@@ -1034,7 +1034,7 @@
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.weather_immunities |= "snow"
+	LAZYOR(C.weather_immunities, "snow")
 	ball = new
 	ball.charge_counter = 0
 	C.AddSpell(ball)
@@ -1044,7 +1044,7 @@
 
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities -= "snow"
+	LAZYREMOVE(C.weather_immunities, "snow")
 	if(ball)
 		C.RemoveSpell(ball)
 	if(cryo)

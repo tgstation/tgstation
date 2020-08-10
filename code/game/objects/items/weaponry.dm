@@ -613,6 +613,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	. = ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	if(homerun_ready)
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")

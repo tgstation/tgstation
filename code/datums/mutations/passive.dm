@@ -4,10 +4,10 @@
 	quality = POSITIVE
 	instability = 5
 
-/datum/mutation/human/biotechcompat/on_acquiring(mob/living/carbon/human/H)
+/datum/mutation/human/biotechcompat/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	H.adjust_max_skillchip_count(1)
+	owner.adjust_skillchip_complexity_modifier(1)
 
 /datum/mutation/human/biotechcompat/on_losing(mob/living/carbon/human/owner)
-	owner.adjust_max_skillchip_count(-1)
+	owner.adjust_skillchip_complexity_modifier(-1)
 	return ..()

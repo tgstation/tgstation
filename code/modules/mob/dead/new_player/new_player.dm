@@ -331,6 +331,9 @@
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
+		humanc.increment_scar_slot()
+		humanc.load_persistent_scars()
+
 		if(GLOB.summon_guns_triggered)
 			give_guns(humanc)
 		if(GLOB.summon_magic_triggered)
@@ -432,16 +435,6 @@
 		is_antag = TRUE
 
 	client.prefs.copy_to(H, antagonist = is_antag, is_latejoiner = transfer_after)
-	var/cur_scar_index = client.prefs.scars_index
-	if(client.prefs.persistent_scars && client.prefs.scars_list["[cur_scar_index]"])
-		var/scar_string = client.prefs.scars_list["[cur_scar_index]"]
-		var/valid_scars = ""
-		for(var/scar_line in splittext(scar_string, ";"))
-			if(H.load_scar(scar_line))
-				valid_scars += "[scar_line];"
-
-		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
-		client.prefs.save_character()
 
 	client.prefs.copy_to(H, antagonist = is_antag)
 	H.dna.update_dna_identity()

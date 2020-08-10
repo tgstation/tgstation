@@ -61,7 +61,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/cockroach/Crossed(var/atom/movable/AM)
+/mob/living/simple_animal/hostile/cockroach/Crossed(atom/movable/AM)
 	. = ..()
 	if(isliving(AM))
 		var/mob/living/A = AM
@@ -103,7 +103,7 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, 10, 15, 100, (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
 
-/mob/living/simple_animal/hostile/cockroach/hauberoach/Crossed(var/atom/movable/AM)
+/mob/living/simple_animal/hostile/cockroach/hauberoach/Crossed(atom/movable/AM)
 	var/mob/living/A = AM
 	if(istype(A) && A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
 		if(!HAS_TRAIT(A, TRAIT_PIERCEIMMUNE))

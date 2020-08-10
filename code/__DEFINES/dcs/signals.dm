@@ -436,6 +436,13 @@
 ///from base power_change() when power is restored
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"
 
+// /obj/machinery/door/airlock signals
+
+//from /obj/machinery/door/airlock/open(): (forced)
+#define COMSIG_AIRLOCK_OPEN "airlock_open"
+//from /obj/machinery/door/airlock/close(): (forced)
+#define COMSIG_AIRLOCK_CLOSE "airlock_close"
+
 // /obj/item signals
 
 ///from base of obj/item/attack(): (/mob/living/target, /mob/living/user)

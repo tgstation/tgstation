@@ -1,7 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed mobs wearing insulated gloves being unable to open electrified doors by walking into them (they had to click it to open.)"
-  - bugfix: "Fixed aliens being unable to open electrified doors that were unpowered / on cooldown."
-  - bugfix: "Fixed simple animals doing damage to electrified doors even if they were shocked by them."
-  - bugfix: "Fixed being unable to open electrified doors with the jaws of life when the door was unable to shock the user."

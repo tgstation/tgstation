@@ -54,7 +54,14 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/z_original = 0
 	var/destination
 	var/notify = TRUE
+	///We can designate a specific target to aim for, in which case we'll try to snipe them rather than just flying in a random direction
 	var/atom/special_target
+	///How many mobs we've penetrated one way or another
+	var/num_mobs_hit = 0
+	///How many mobs we've hit with clients
+	var/num_sentient_mobs_hit = 0
+	///How many people we've hit with clients
+	var/num_sentient_people_hit = 0
 
 /obj/effect/immovablerod/New(atom/start, atom/end, aimed_at)
 	..()
@@ -73,6 +80,20 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		walk_towards(src, special_target, 1)
 	else if(end && end.z==z_original)
 		walk_towards(src, destination, 1)
+
+/obj/effect/immovablerod/examine(mob/user)
+	. = ..()
+	if(!isobserver(user))
+		return
+
+	if(!num_mobs_hit)
+		. += "<span class='notice'>So far, this rod has not hit any mobs.</span>"
+		return
+
+	. += "\t<span class='notice'>So far, this rod has hit: \n\
+		\t\t[num_mobs_hit] mobs total, \n\
+		\t\t[num_sentient_mobs_hit] of which were sentient, and \n\
+		\t\t[num_sentient_people_hit] of which were sentient people</span>"
 
 /obj/effect/immovablerod/Topic(href, href_list)
 	if(href_list["orbit"])
@@ -137,13 +158,24 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		qdel(src)
 		qdel(other)
 
-/obj/effect/immovablerod/proc/penetrate(mob/living/L)
-	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		H.adjustBruteLoss(160)
-	if(L && (L.density || prob(10)))
-		L.ex_act(EXPLODE_HEAVY)
+/obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
+	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
+
+	if(smeared_mob.stat != DEAD)
+		num_mobs_hit++
+		if(smeared_mob.client)
+			num_sentient_mobs_hit++
+			if(iscarbon(smeared_mob))
+				num_sentient_people_hit++
+
+	if(iscarbon(smeared_mob))
+		var/mob/living/carbon/smeared_carbon = smeared_mob
+		smeared_carbon.adjustBruteLoss(100)
+		var/obj/item/bodypart/penetrated_chest = smeared_carbon.get_bodypart(BODY_ZONE_CHEST)
+		penetrated_chest?.receive_damage(60, wound_bonus = 20, sharpness=SHARP_POINTY)
+
+	if(smeared_mob.density || prob(10))
+		smeared_mob.ex_act(EXPLODE_HEAVY)
 
 /obj/effect/immovablerod/attack_hand(mob/living/user)
 	if(ishuman(user))

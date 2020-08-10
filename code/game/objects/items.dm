@@ -549,7 +549,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	attack_self(user)
 
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-/obj/item/proc/IsReflect(var/def_zone)
+/obj/item/proc/IsReflect(def_zone)
 	return FALSE
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
