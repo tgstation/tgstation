@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "You will now hear the sound and receive a distinct message when the supermatter explodes while you are safe."
