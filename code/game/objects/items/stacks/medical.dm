@@ -195,8 +195,8 @@
 	icon_state = "suture"
 	self_delay = 30
 	other_delay = 10
-	amount = 15
-	max_amount = 15
+	amount = 10
+	max_amount = 10
 	repeating = TRUE
 	heal_brute = 10
 	stop_bleeding = 0.6
