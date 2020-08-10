@@ -60,12 +60,6 @@
 
 //Plasma floor that can't be removed, for disco inferno
 
-/turf/open/floor/mineral/plasma/disco
-	name = "plasma floor"
-	icon_state = "plasma"
-	floor_tile = /obj/item/stack/tile/mineral/plasma
-	icons = list("plasma","plasma_dam")
-
 /turf/open/floor/mineral/plasma/disco/crowbar_act(mob/living/user, obj/item/I)
 	return
 
