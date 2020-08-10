@@ -298,7 +298,7 @@
 		reskin_obj(user)
 
 /**
-  * Reskins object based on a user's skin selection
+  * Reskins object based on a user's choice
   *
   * Arguments:
   * * M The mob choosing a reskin option
@@ -326,7 +326,7 @@
   * Checks if we are allowed to interact with a radial menu for reskins
   *
   * Arguments:
-  * * user The mob interacting with a menu
+  * * user The mob interacting with the menu
   */
 /obj/proc/check_reskin_menu(mob/user)
 	if(QDELETED(src))
