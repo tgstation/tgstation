@@ -99,7 +99,7 @@
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
 /datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
-	BLOCKING_SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	if(source.a_intent != INTENT_HARM)
 		return

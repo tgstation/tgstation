@@ -319,7 +319,7 @@
 		listeningTo = null
 
 /obj/item/multitool/field_debug/proc/on_mob_move()
-	BLOCKING_SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	check_turf(get_turf(src))
 

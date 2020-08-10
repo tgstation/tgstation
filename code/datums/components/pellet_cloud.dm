@@ -98,7 +98,7 @@
   * The arguments really don't matter, this proc is triggered by COMSIG_PELLET_CLOUD_INIT which is only for this really, it's just a big mess of the state vars we need for doing the stuff over here.
   */
 /datum/component/pellet_cloud/proc/create_casing_pellets(obj/item/ammo_casing/shell, atom/target, mob/living/user, fired_from, randomspread, spread, zone_override, params, distro)
-	BLOCKING_SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	shooter = user
 	var/targloc = get_turf(target)
@@ -127,7 +127,7 @@
   * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, while landmines do not (obviously, it's a landmine!). See [/datum/component/pellet_cloud/proc/handle_martyrs]
   */
 /datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/lanced_by)
-	BLOCKING_SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	var/atom/A = parent
 

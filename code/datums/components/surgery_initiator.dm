@@ -31,7 +31,7 @@
 	  *
 	  */
 /datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
-	BLOCKING_SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	if(!isliving(target))
 		return

@@ -32,7 +32,7 @@
 		update_parent(index)
 
 /datum/component/construction/proc/action(datum/source, obj/item/I, mob/living/user)
-	BLOCKING_SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	return check_step(I, user)
 

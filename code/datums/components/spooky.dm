@@ -5,7 +5,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/spectral_attack)
 
 /datum/component/spooky/proc/spectral_attack(datum/source, mob/living/carbon/C, mob/user)
-	BLOCKING_SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	if(ishuman(user)) //this weapon wasn't meant for mortals.
 		var/mob/living/carbon/human/U = user
