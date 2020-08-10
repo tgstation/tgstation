@@ -1,0 +1,5 @@
+author: "Rohesie and Kathy Ryals"
+delete-after: True
+changes: 
+  - rscadd: "The Honkworks 5.0 cartridge's software has been updated to be able to hack machines, computers and airlocks to make them honk for a while."
+  - code_imp: "Added a new sound_player component to be able to play any sound with any signals."
