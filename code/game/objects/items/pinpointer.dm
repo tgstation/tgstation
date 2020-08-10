@@ -92,6 +92,7 @@
 	icon_state = "pinpointer_crew"
 	custom_price = 900
 	custom_premium_price = 900
+	resistance_flags = NONE
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
 	var/ignore_suit_sensor_level = FALSE /// Do we find people even if their suit sensors are turned off
