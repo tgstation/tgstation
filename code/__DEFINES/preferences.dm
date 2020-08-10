@@ -120,4 +120,4 @@
 #define RANDOM_EYE_COLOR "random_eye_color"
 
 //recommened client FPS
-#define RECOMMENED_FPS 40
+#define RECOMMENDED_FPS 40
