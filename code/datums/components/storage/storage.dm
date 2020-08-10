@@ -560,7 +560,6 @@
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
 	SIGNAL_HANDLER_DOES_SLEEP
 
-	set waitfor = FALSE
 	. = COMPONENT_NO_MOUSEDROP
 	if(!ismob(M))
 		return
