@@ -32031,6 +32031,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bxt" = (
@@ -32088,6 +32089,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bxC" = (
@@ -32110,6 +32112,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bxE" = (
@@ -33141,6 +33144,7 @@
 	dir = 4;
 	pixel_x = 27
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bAd" = (
@@ -35095,7 +35099,6 @@
 	dir = 1;
 	id = "incineratorturbine"
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEz" = (
@@ -35115,7 +35118,6 @@
 	dir = 6
 	},
 /obj/machinery/meter,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEC" = (
@@ -35163,7 +35165,6 @@
 	dir = 1;
 	pixel_y = -30
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEI" = (
@@ -35198,7 +35199,6 @@
 	pixel_x = 6;
 	pixel_y = -24
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEL" = (
@@ -58139,6 +58139,17 @@
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
+"xVB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/disposal/incinerator";
+	dir = 1;
+	name = "Incinerator APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/disposal/incinerator)
 "xWd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -95555,7 +95566,7 @@ bzs
 bzs
 bwL
 bxh
-cjr
+xVB
 bzr
 bAP
 bCf
@@ -95812,7 +95823,7 @@ bBR
 caK
 bwO
 bxs
-cjr
+byO
 cjr
 cjr
 bDi
@@ -96583,7 +96594,7 @@ bvP
 bwg
 bxn
 bxE
-byO
+cjr
 bzQ
 byO
 byO
@@ -96841,7 +96852,7 @@ ccM
 juq
 akE
 cjr
-cjr
+byO
 bBl
 bEv
 bEV
