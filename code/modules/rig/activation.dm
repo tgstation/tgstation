@@ -37,19 +37,19 @@
 	activating = TRUE
 	to_chat(wearer, "<span class='notice'>RIGsuit [active ? "shutting down" : "starting up"]. Please stand still.</span>")
 	if(do_after(wearer,20,target = wearer)) //We make the wearer the target so that we can see the bar
-		to_chat(wearer, "<span class='notice'>The [boots] [active ? "relax their grip on your legs" : "seal around your feet"].</span>")
+		to_chat(wearer, "<span class='notice'>The [boots.name] [active ? "relax their grip on your legs" : "seal around your feet"].</span>")
 		boots.icon_state = "[theme]-boots[active ? "" : "-sealed"]"
 		boots.worn_icon_state = "[theme]-boots[active ? "" : "-sealed"]"
 		wearer.update_inv_shoes()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,20,target = wearer))
-		to_chat(wearer, "<span class='notice'>The [gauntlets] [active ? "become loose around your fingers" : "tighten around your fingers and wrists"].</span>")
+		to_chat(wearer, "<span class='notice'>The [gauntlets.name] [active ? "become loose around your fingers" : "tighten around your fingers and wrists"].</span>")
 		gauntlets.icon_state = "[theme]-gauntlets[active ? "" : "-sealed"]"
 		gauntlets.worn_icon_state = "[theme]-gauntlets[active ? "" : "-sealed"]"
 		wearer.update_inv_gloves()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,20,target = wearer))
-		to_chat(wearer, "<span class='notice'>The [boots] [active ? "releases your chest" : "cinches tight again your chest"].</span>")
+		to_chat(wearer, "<span class='notice'>The [chestplate.name] [active ? "releases your chest" : "cinches tight again your chest"].</span>")
 		chestplate.icon_state = "[theme]-chestplate[active ? "" : "-sealed"]"
 		chestplate.worn_icon_state = "[theme]-chestplate[active ? "" : "-sealed"]"
 		if(active)
@@ -59,7 +59,7 @@
 		wearer.update_inv_wear_suit()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,20,target = wearer))
-		to_chat(wearer, "<span class='notice'>The [helmet] hisses [active ? "open" : "closed"].</span>")
+		to_chat(wearer, "<span class='notice'>The [helmet.name] hisses [active ? "open" : "closed"].</span>")
 		helmet.icon_state = "[theme]-helmet[active ? "" : "-sealed"]"
 		helmet.worn_icon_state = "[theme]-helmet[active ? "" : "-sealed"]"
 		if(active)
@@ -69,9 +69,9 @@
 		wearer.update_inv_head()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,20,target = wearer))
-		to_chat(wearer, "<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer].</span>")
-		icon_state = "[theme]-module[active ? "" : "-sealed"]"
-		worn_icon_state = "[theme]-module[active ? "" : "-sealed"]"
+		to_chat(wearer, "<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer.real_name].</span>")
+		icon_state = "[theme]-control[active ? "" : "-sealed"]"
+		worn_icon_state = "[theme]-control[active ? "" : "-sealed"]"
 		wearer.update_inv_back()
 		active = !active
 		if(active)

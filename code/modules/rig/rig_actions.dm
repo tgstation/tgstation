@@ -13,10 +13,6 @@
 	rig = Target
 
 /datum/action/item_action/rig/deploy/Trigger()
-	if(rig.active || rig.activating)
-		to_chat(rig.wearer, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
-		playsound(rig, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-		return
 	if(!LAZYLEN(rig.rig_parts))
 		return
 	var/list/display_names = list()
@@ -32,6 +28,10 @@
 	var/part_reference = display_names[pick]
 	var/obj/item/part = locate(part_reference) in rig.rig_parts
 	if(!istype(part) || rig.wearer.incapacitated() || !rig)
+		return
+	if(rig.active || rig.activating)
+		to_chat(rig.wearer, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
+		playsound(rig, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	if(part.loc == rig)
 		rig.deploy(part)

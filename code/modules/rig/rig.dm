@@ -9,8 +9,8 @@
 /obj/item/rig/control
 	name = "RIG control module"
 	desc = "A special powered suit that protects against various environments. Wear it on your back, deploy it and activate it."
-	icon_state = "engi-module"
-	worn_icon_state = "engi-module"
+	icon_state = "engi-control"
+	worn_icon_state = "engi-control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 2
@@ -68,8 +68,8 @@
 /obj/item/rig/control/Initialize()
 	..()
 	START_PROCESSING(SSobj,src)
-	icon_state = "[theme]-module"
-	worn_icon_state = "[theme]-module"
+	icon_state = "[theme]-control"
+	worn_icon_state = "[theme]-control"
 	wires = new /datum/wires/rig(src)
 	if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
 		locked = FALSE
@@ -110,7 +110,8 @@
 	if(initial_modules)
 		for(var/path in initial_modules)
 			var/obj/item/rig/module/module = path
-			install(module)
+			module = new module(src)
+			install(module, TRUE)
 
 /obj/item/rig/control/Destroy()
 	..()
@@ -127,6 +128,10 @@
 	if(boots)
 		boots.rig = null
 		QDEL_NULL(boots)
+	for(var/h in modules)
+		var/obj/item/rig/module/thingy = h
+		thingy.rig = null
+		QDEL_NULL(thingy)
 
 /obj/item/rig/control/process()
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
@@ -141,6 +146,8 @@
 	..()
 	if(slot == ITEM_SLOT_BACK)
 		wearer = user
+	else
+		wearer = null
 
 /obj/item/rig/control/dropped(mob/user)
 	..()
@@ -150,27 +157,55 @@
 	if(slot == ITEM_SLOT_BACK)
 		return TRUE
 
-/obj/item/rig/control/attack_hand(mob/user)
+/obj/item/rig/control/allow_attack_hand_drop(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/guy = user
 		if(src == guy.back)
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-			return
+			for(var/h in rig_parts)
+				var/obj/item/part = h
+				if(part.loc != src)
+					to_chat(guy, "<span class='warning'>At least one of the parts are still on your body, please retract them and try again.</span>")
+					playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
+					return FALSE
 	return ..()
 
 /obj/item/rig/control/MouseDrop(atom/over_object)
-	. = ..()
-	if(src == wearer.back)
+	if(src == wearer.back && istype(over_object, /obj/screen/inventory/hand))
 		for(var/h in rig_parts)
 			var/obj/item/part = h
 			if(part.loc != src)
 				to_chat(wearer, "<span class='warning'>At least one of the parts are still on your body, please retract them and try again.</span>")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
 				return
-		if(!wearer.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
+		if(!wearer.incapacitated())
 			var/obj/screen/inventory/hand/H = over_object
 			if(wearer.putItemFromInventoryInHandIfPossible(src, H.held_index))
 				add_fingerprint(usr)
+	return ..()
+
+/obj/item/rig/control/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(active || activating)
+		to_chat(wearer, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
+		return FALSE
+	to_chat(user, "<span class='notice'>You start to [open ? "screw the panel back on" : "unscrew the panel"]...</span>")
+	if(I.use_tool(src, user, 20))
+		user.visible_message("<span class='notice'>[user] [open ? "screws the panel back on" : "unscrews the panel"]!</span>",
+			"<span class='notice'>You [open ? "screw the panel back on" : "unscrew the panel"]!</span>",
+			"<span class='hear'>You hear metal noises.</span>")
+		open = !open
+	return TRUE
+
+/obj/item/rig/control/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/rig/module))
+		if(open && !active && !activating)
+			install(I, FALSE)
+			return TRUE
+		else
+			visible_message("<span class='warning'>[src] indicates that something prevents installing the module.</span>")
+			return FALSE
+	..()
 
 /obj/item/rig/control/proc/shock(mob/living/user)
 	if(!istype(wearer) || cell.charge < 1)
@@ -182,20 +217,26 @@
 	else
 		return FALSE
 
-/obj/item/rig/control/proc/install(module)
+/obj/item/rig/control/proc/install(module, starting_module = FALSE)
 	var/obj/item/rig/module/thingy = module
 	var/complexity_with_thingy = complexity
 	complexity_with_thingy += thingy.complexity
 	if(complexity_with_thingy > complexity_max)
-		to_chat(wearer, "<span class='warning'>This would make the RIG too complex!</span>")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		if(!starting_module)
+			visible_message("<span class='warning'>[src] indicates that the module would make it too complex.</span>")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	thingy.forceMove(src)
 	LAZYADD(modules, thingy)
 	complexity += thingy.complexity
 	thingy.rig = src
+	thingy.on_install()
+	if(!starting_module)
+		visible_message("<span class='notice'>[src] indicates that the module has been installed successfully.</span>")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/clothing/head/helmet/space/rig
+	name = "RIG helmet"
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-helmet"
 	worn_icon = 'icons/mob/rig.dmi'
@@ -213,6 +254,7 @@
 		QDEL_NULL(rig)
 
 /obj/item/clothing/suit/armor/rig
+	name = "RIG chestplate"
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-chestplate"
 	worn_icon = 'icons/mob/rig.dmi'
@@ -235,6 +277,7 @@
 		QDEL_NULL(rig)
 
 /obj/item/clothing/gloves/rig
+	name = "RIG gauntlets"
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-gauntlets"
 	worn_icon = 'icons/mob/rig.dmi'
@@ -250,6 +293,7 @@
 		QDEL_NULL(rig)
 
 /obj/item/clothing/shoes/rig
+	name = "RIG boots"
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-boots"
 	worn_icon = 'icons/mob/rig.dmi'
