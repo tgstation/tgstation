@@ -1,0 +1,5 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - rscadd: "subtype of plasma floors that can't be crowbarred"
+  - tweak: "replaced all the floors on disco inferno with these new crowbar proof floors"
