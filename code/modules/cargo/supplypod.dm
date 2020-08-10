@@ -19,6 +19,8 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | TILE_BOUND
 	density = FALSE
+	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
+	var/pod_flags = NONE
 
 	//*****NOTE*****: Many of these comments are similarly described in centcom_podlauncher.dm. If you change them here, please consider doing so in the centcom podlauncher code as well!
 	var/adminNamed = FALSE //Determines whether or not the pod has been named by an admin. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
@@ -183,7 +185,9 @@
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
 	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open_pod() )
 	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
-	audible_message("<span class='notice'>The pod hisses, closing and launching itself away from the station.</span>", "<span class='notice'>The ground vibrates, and you hear the sound of engines firing.</span>")
+	pod_flags |= FIRST_SOUNDS //Make it so we play sounds now
+	if (!effectQuiet && style != STYLE_SEETHROUGH)
+		audible_message("<span class='notice'>The pod hisses, closing and launching itself away from the station.</span>", "<span class='notice'>The ground vibrates, and you hear the sound of engines firing.</span>")
 	stay_after_drop = FALSE
 	holder.pixel_z = initial(holder.pixel_z)
 	holder.alpha = initial(holder.alpha)
@@ -237,7 +241,7 @@
 	var/explosion_sum = B[1] + B[2] + B[3] + B[4]
 	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
 		explosion(get_turf(src), B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod)) //less advanced equipment than bluespace pod, so larger explosion when landing
-	else if (!effectQuiet) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
+	else if (!effectQuiet && (pod_flags & FIRST_SOUNDS)) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, "explosion", landingSound ? 15 : 80, TRUE)
 	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking shit up w explosions, we should delete
 		opened = TRUE //We set opened to TRUE to avoid spending time trying to open (due to being deleted) during the Destroy() proc
@@ -340,7 +344,6 @@
 	deleteRubble()
 	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(holder, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising pod
-
 	addtimer(CALLBACK(src, .proc/handleReturnAfterDeparting, holder), 15) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
@@ -516,7 +519,7 @@
 	var/soundStartTime = pod.landingDelay - pod.fallingSoundLength + pod.fallDuration
 	if (soundStartTime < 0)
 		soundStartTime = 1
-	if (!pod.effectQuiet)
+	if (!pod.effectQuiet && (pod.pod_flags & FIRST_SOUNDS))
 		addtimer(CALLBACK(src, .proc/playFallingSound), soundStartTime)
 	addtimer(CALLBACK(src, .proc/beginLaunch, pod.effectCircle), pod.landingDelay)
 

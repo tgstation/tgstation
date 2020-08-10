@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "Bounties now properly give less profit when completed, but decrease the number of items needed with high inflation."
+  - balance: "The station target rate has been lowered at a base, to improve the impact of inflation."
+  - bugfix: "Civilian bounty beacons take less time to deploy."

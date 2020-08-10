@@ -114,6 +114,15 @@
 		return
 	return ..()
 
+/obj/structure/reagent_dispensers/fueltank/large
+	name = "high capacity fuel tank"
+	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
+	icon_state = "fuel_high"
+	tank_volume = 5000
+
+/obj/structure/reagent_dispensers/fueltank/large/boom()
+	explosion(get_turf(src), 1, 2, 7, flame_range = 12)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "pepper spray refiller"

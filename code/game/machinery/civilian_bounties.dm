@@ -4,6 +4,7 @@
 	desc = "A machine designed to send civilian bounty targets to centcom."
 	layer = TABLE_LAYER
 	resistance_flags = FIRE_PROOF
+	circuit = /obj/item/circuitboard/machine/bountypad
 
 ///Computer for assigning new civilian bounties, and sending bounties for collection.
 /obj/machinery/computer/piratepad_control/civilian
@@ -14,6 +15,7 @@
 	icon_keyboard = "id_key"
 	warmup_time = 3 SECONDS
 	var/obj/item/card/id/inserted_scan_id
+	circuit = /obj/item/circuitboard/computer/bountypad
 
 /obj/machinery/computer/piratepad_control/civilian/Initialize()
 	. = ..()
@@ -145,6 +147,7 @@
 		if("stop")
 			stop_sending()
 		if("bounty")
+			//Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
 			if(!inserted_scan_id || !inserted_scan_id.registered_account)
 				return
 			var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
@@ -153,14 +156,14 @@
 				to_chat(usr, "<span class='warning'>You already have an incomplete civilian bounty, try again in [curr_time] minutes to replace it!</span>")
 				return FALSE
 			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types) //It's a good scene from War Dogs (2016).
-			if(SSeconomy.inflation_value() > 1)
-				if(istype(crumbs, /datum/bounty/item))
-					var/datum/bounty/item/items = crumbs
-					items.required_count = max(round((items.required_count)/(SSeconomy.inflation_value()*2)), 1)
-				if(istype(crumbs, /datum/bounty/reagent))
-					var/datum/bounty/reagent/chems = crumbs
-					chems.required_volume = max(round((chems.required_volume)/SSeconomy.inflation_value()*2), 1)
-				crumbs.reward = round(crumbs.reward/(SSeconomy.inflation_value()*2))
+			var/crumb_floor = (SSeconomy.inflation_value() * BOUNTY_MULTIPLIER)
+			crumbs.reward = round(crumbs.reward/(crumb_floor))
+			if(istype(crumbs, /datum/bounty/item))
+				var/datum/bounty/item/items = crumbs
+				items.required_count = max(round((items.required_count)/(SSeconomy.inflation_value()*2)), 1)
+			if(istype(crumbs, /datum/bounty/reagent))
+				var/datum/bounty/reagent/chems = crumbs
+				chems.required_volume = max(round((chems.required_volume)/SSeconomy.inflation_value()*2), 1)
 			pot_acc.bounty_timer = world.time
 			pot_acc.civilian_bounty = crumbs
 		if("eject")
@@ -218,7 +221,7 @@
 
 /obj/item/civ_bounty_beacon/attack_self()
 	loc.visible_message("<span class='warning'>\The [src] begins to beep loudly!</span>")
-	addtimer(CALLBACK(src, .proc/launch_payload), 4 SECONDS)
+	addtimer(CALLBACK(src, .proc/launch_payload), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
 	playsound(src, "sparks", 80, TRUE)
@@ -228,4 +231,4 @@
 		if(1)
 			new /obj/machinery/computer/piratepad_control/civilian(drop_location()[1])
 			qdel(src)
-	uses = uses - 1
+	uses--

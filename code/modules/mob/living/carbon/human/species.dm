@@ -304,16 +304,26 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(old_species)
 		for(var/mutantorgan in old_species.mutant_organs)
+			// Snowflake check. If our species share this mutant organ, let's not remove it
+			// just yet as we'll be properly replacing it later.
+			if(mutantorgan in mutant_organs)
+				continue
 			var/obj/item/organ/I = C.getorgan(mutantorgan)
 			if(I)
 				I.Remove(C)
 				QDEL_NULL(I)
 
-	for(var/thing in mutant_organs)
-		var/current_organ = C.getorgan(thing)
+	for(var/organ_path in mutant_organs)
+		var/obj/item/organ/current_organ = C.getorgan(organ_path)
 		if(!current_organ || replace_current)
-			var/obj/item/organ/missed = new thing()
-			missed.Insert(C, TRUE, FALSE)
+			var/obj/item/organ/replacement = new organ_path()
+			// If there's an existing mutant organ, we're technically replacing it.
+			// Let's abuse the snowflake proc that skillchips added. Basically retains
+			// feature parity with every other organ too.
+			if(current_organ)
+				current_organ.before_organ_replacement(replacement)
+			// organ.Insert will qdel any current organs in that slot, so we don't need to.
+			replacement.Insert(C, TRUE, FALSE)
 
 /**
   * Proc called when a carbon becomes this species.
@@ -1275,15 +1285,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			log_combat(user, target, "shaken")
 		return 1
 	else
-		var/we_breathe = !HAS_TRAIT(user, TRAIT_NOBREATH)
-		var/we_lung = user.getorganslot(ORGAN_SLOT_LUNGS)
-
-		if(we_breathe && we_lung)
-			user.do_cpr(target)
-		else if(we_breathe && !we_lung)
-			to_chat(user, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
-		else
-			to_chat(user, "<span class='warning'>You do not breathe, so you cannot perform CPR!</span>")
+		user.do_cpr(target)
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())

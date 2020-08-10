@@ -166,10 +166,7 @@ Class Procs:
 	GLOB.machines.Remove(src)
 	end_processing()
 	dropContents()
-	if(length(component_parts))
-		for(var/atom/A in component_parts)
-			qdel(A)
-		component_parts.Cut()
+	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
 	return ..()
 
@@ -435,6 +432,8 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+	if(A == circuit)
+		circuit = null
 	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
@@ -590,6 +589,8 @@ Class Procs:
 	. = ..()
 	if (AM == occupant)
 		occupant = null
+	if(AM == circuit)
+		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.

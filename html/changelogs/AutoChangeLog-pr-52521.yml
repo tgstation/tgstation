@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "CPR will now automatically repeat, but you can no longer do it multiple times at once."
