@@ -9,13 +9,12 @@
 	flags_1 = CONDUCT_1
 	force = 3
 	throwforce = 10
-	var/acti_sound = 'sound/items/welderactivate.ogg'
-	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=500)
 	resistance_flags = FIRE_PROOF
+	trigger_guard = TRIGGER_GUARD_NORMAL
 	var/status = FALSE
 	var/lit = FALSE	//on or off
 	var/operating = FALSE//cooldown
@@ -27,7 +26,8 @@
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
 	var/igniter_type = /obj/item/assembly/igniter
-	trigger_guard = TRIGGER_GUARD_NORMAL
+	var/acti_sound = 'sound/items/welderactivate.ogg'
+	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 
 /obj/item/flamethrower/ComponentInitialize()
 	. = ..()

@@ -91,6 +91,7 @@
 /obj/structure/chair/sofa{
 	dir = 1
 	},
+/obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "s" = (
@@ -167,6 +168,12 @@
 "C" = (
 /turf/open/floor/plasteel,
 /area/mine/eva)
+"H" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/mine/eva)
 "I" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -176,12 +183,35 @@
 "K" = (
 /turf/open/floor/circuit,
 /area/mine/eva)
+"M" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plating,
+/area/mine/eva)
+"N" = (
+/obj/machinery/computer/mechpad{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"P" = (
+/turf/open/floor/mech_bay_recharge_floor,
+/area/mine/eva)
 "Q" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance";
 	req_access_txt = "48"
 	},
 /turf/open/floor/plating,
+/area/mine/eva)
+"R" = (
+/obj/machinery/mechpad,
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"T" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "V" = (
 /turf/open/floor/plating,
@@ -19625,7 +19655,7 @@ a
 a
 a
 y
-V
+M
 V
 V
 Q
@@ -21174,10 +21204,10 @@ X
 C
 C
 C
-y
-y
-y
-y
+k
+C
+R
+N
 y
 a
 a
@@ -21432,9 +21462,9 @@ W
 C
 e
 y
-y
-y
-y
+C
+C
+e
 y
 a
 a
@@ -21689,9 +21719,9 @@ w
 i
 z
 y
-y
-y
-y
+H
+P
+T
 y
 a
 a

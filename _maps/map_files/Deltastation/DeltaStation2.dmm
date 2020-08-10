@@ -11166,6 +11166,8 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/white,
 /area/janitor)
 "azd" = (
@@ -71620,11 +71622,11 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEu" = (
-/obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/manifold/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cEv" = (
@@ -89779,9 +89781,6 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dnf" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -89789,6 +89788,9 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/mechpad{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dng" = (
@@ -90807,9 +90809,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dpd" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/machinery/mechpad,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dpe" = (

@@ -4,12 +4,12 @@
 	circuit = /obj/item/circuitboard/computer/atmos_alert
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
+	light_color = LIGHT_COLOR_CYAN
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
 
-	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/atmos_alert/Initialize()
 	. = ..()
