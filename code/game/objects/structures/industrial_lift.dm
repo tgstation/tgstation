@@ -7,7 +7,7 @@
 		var/obj/structure/industrial_lift/lift_platform = l
 		lift_platform.LMaster = null
 	lift_platforms = null
-	. = ..()
+	return ..()
 
 /datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
 	Rebuild_lift_plaform(lift_platform)
