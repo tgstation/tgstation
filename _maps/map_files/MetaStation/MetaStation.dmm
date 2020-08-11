@@ -69349,11 +69349,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
-"gPO" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
 "gPT" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -69364,10 +69359,6 @@
 "gQV" = (
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
-"gTj" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
 "gWq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -71041,10 +71032,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"jJv" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
 "jKK" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -73015,11 +73002,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"mGQ" = (
-/obj/structure/grille/broken,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
 "mHF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -77270,9 +77252,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"tCV" = (
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "tDM" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -112159,12 +112138,12 @@ aaf
 aaa
 aaf
 aaf
-gTj
-lAu
+aaf
+aaa
 aaf
 aaf
 aai
-gPO
+aag
 aaa
 aaa
 aaa
@@ -112419,10 +112398,10 @@ aaa
 aaa
 aaa
 lAu
-gTj
-lAu
+aaf
+aaa
 aag
-gPO
+aag
 aaa
 aaa
 aaa
@@ -112676,10 +112655,10 @@ dlV
 dlV
 dlV
 dlV
-lxj
+dlV
 aaa
-lAu
-mGQ
+aaa
+aai
 aaa
 aaa
 aaa
@@ -112933,10 +112912,10 @@ cTC
 cTC
 bIx
 ssm
-tCV
+dlV
 aaf
 aaf
-gPO
+aag
 aaa
 aaa
 aaa
@@ -113190,11 +113169,11 @@ cRi
 dlV
 cLE
 cTA
-lxj
+dlV
 aaa
-lAu
+aaa
 aaf
-gPO
+aag
 aaa
 aaa
 aaa
@@ -113449,9 +113428,9 @@ ddz
 cRi
 cRi
 cRi
-lxj
-lAu
-mGQ
+cRi
+aaa
+aai
 aaa
 aaa
 aaa
@@ -113706,9 +113685,9 @@ ddz
 cRi
 cZv
 nay
-tCV
+cRi
 aaf
-gPO
+aag
 aaa
 aaa
 aaa
@@ -113963,7 +113942,7 @@ ddz
 cRi
 ner
 iUc
-jJv
+cRe
 aaa
 aaa
 aaa
@@ -114222,7 +114201,7 @@ dbv
 cTT
 ddC
 eLW
-gTj
+aaf
 aaa
 aaa
 aaa
@@ -114477,9 +114456,9 @@ ner
 cRi
 ner
 ner
-jJv
-lAu
-gTj
+cRe
+aaa
+aaf
 aaa
 aaa
 aaa
@@ -114734,9 +114713,9 @@ ner
 cRi
 dbw
 tjL
-lxj
-lAu
-gPO
+cRi
+aaa
+aag
 aaa
 aaa
 aaa
@@ -114991,9 +114970,9 @@ ner
 cRi
 cRi
 cRi
-tCV
+cRi
 aaf
-gPO
+aag
 aaa
 aaa
 aaa
@@ -115245,12 +115224,12 @@ cRi
 cRi
 dlV
 cTA
-tCV
-gTj
-aaa
-lAu
+dlV
 aaf
-gPO
+aaa
+aaa
+aaf
+aag
 aaa
 aaa
 aaa
@@ -115502,11 +115481,11 @@ cTA
 cTA
 cTA
 cTn
-tCV
+dlV
 aaf
-gTj
-lAu
-mGQ
+aaf
+aaa
+aai
 aaa
 aaa
 aaa
@@ -115759,11 +115738,11 @@ dlV
 dlV
 dlV
 dlV
-tCV
-gTj
+dlV
+aaf
 aaa
-lAu
-gPO
+aaa
+aag
 aaa
 aaa
 aaa
@@ -116015,13 +115994,13 @@ aaf
 aaf
 aaf
 aaf
-gTj
-lAu
+aaf
+aaa
 aaf
 aaf
 aag
 aag
-gTj
+aaf
 aaa
 aaa
 aaa
@@ -116275,8 +116254,8 @@ aaa
 aaa
 aaa
 aaa
-lAu
-mGQ
+aaa
+aai
 aaa
 aaa
 aaa
