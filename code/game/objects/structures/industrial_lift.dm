@@ -66,7 +66,7 @@
 		for(var/x in max_x to min_x step -1)
 			if( going & NORTH )
 				//Go along the Y axis from max to min, from up to down
-				for(var/y = max_y; y >= min_y; y--)
+				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 					lift_platform.travel(going)
 			else
