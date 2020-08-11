@@ -42,10 +42,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/vent_area = get_area(src)
 	if(vent_area)
-		for(var/i=vent_area.air_vent_ids.len, i>0, i--)
-			if(vent_area.air_vent_ids[i] == id_tag)
-				vent_area.air_vent_ids[i] = null
-				break
 		vent_area.air_vent_info -= id_tag
 		vent_area.air_vent_names -= id_tag
 
@@ -163,17 +159,8 @@
 
 	var/area/vent_area = get_area(src)
 	if(!vent_area.air_vent_names[id_tag])
-		var/ids_len = vent_area.air_vent_ids.len + 1
-		var/selected_id
-		for(var/i=1, i<ids_len, i++)
-			if(!vent_area.air_vent_ids[i])
-				vent_area.air_vent_ids[i] = id_tag
-				selected_id = i
-				break
-		if(!selected_id)
-			vent_area.air_vent_ids += id_tag
-			selected_id = ids_len
-		name = "\improper [vent_area.name] vent pump #[selected_id]"
+		// If we do not have a name assign a random tag
+		name = assign_random_name("\improper [vent_area.name] vent pump ")
 		vent_area.air_vent_names[id_tag] = name
 
 	vent_area.air_vent_info[id_tag] = signal.data

@@ -42,10 +42,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/scrub_area = get_area(src)
 	if(scrub_area)
-		for(var/i=scrub_area.air_scrub_ids.len, i>0, i--)
-			if(scrub_area.air_scrub_ids[i] == id_tag)
-				scrub_area.air_scrub_ids[i] = null
-				break
 		scrub_area.air_scrub_info -= id_tag
 		scrub_area.air_scrub_names -= id_tag
 
@@ -120,17 +116,8 @@
 
 	var/area/scrub_area = get_area(src)
 	if(!scrub_area.air_scrub_names[id_tag])
-		var/ids_len = scrub_area.air_scrub_ids.len + 1
-		var/selected_id
-		for(var/i=1, i<ids_len, i++)
-			if(!scrub_area.air_scrub_ids[i])
-				scrub_area.air_scrub_ids[i] = id_tag
-				selected_id = i
-				break
-		if(!selected_id)
-			scrub_area.air_scrub_ids += id_tag
-			selected_id = ids_len
-		name = "\improper [scrub_area.name] air scrubber #[selected_id]"
+		// If we do not have a name assign a random tag
+		name = assign_random_name("\improper [scrub_area.name] air scrubber ")
 		scrub_area.air_scrub_names[id_tag] = name
 
 	scrub_area.air_scrub_info[id_tag] = signal.data
