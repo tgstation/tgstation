@@ -20,7 +20,7 @@
 		for(var/b in possible_expansions)
 			var/obj/structure/industrial_lift/borderline = b
 			var/list/result = borderline.lift_platform_expansion(src)
-			if(result && result.len)
+			if(length(result))
 				for(var/obj/structure/industrial_lift/lift_platform in result)
 					if(!lift_platforms.Find(lift_platform))
 						lift_platform.LMaster = src
