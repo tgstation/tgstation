@@ -1364,3 +1364,6 @@
 			new /obj/item/wisp_lantern(src)
 		if(3)
 			new /obj/item/prisoncube(src)
+
+#undef HIEROPHANT_BLINK_RANGE
+#undef HIEROPHANT_BLINK_COOLDOWN
