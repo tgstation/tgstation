@@ -3,7 +3,8 @@
 	var/list/lift_platforms
 
 /datum/lift_master/Destroy()
-	for(var/obj/structure/industrial_lift/lift_platform in lift_platforms)
+	for(var/l in lift_platforms)
+		var/obj/structure/industrial_lift/lift_platform = l
 		lift_platform.LMaster = null
 	lift_platforms.Cut()
 	. = ..()
