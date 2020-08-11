@@ -53,9 +53,13 @@
 	name = "Activate Signaling Device"
 
 /datum/action/item_action/hands_free/activate_signaler/Trigger()
+	var/mob/living/carbon/C = owner
 	if(!..())
 		return FALSE
 	var/obj/item/assembly/signaler/sig = target
+	if(C.InCritical()) // Presently not needed, since apparently you can't activate pill implants while in crit, but futureproofing
+		to_chat(owner, "<span class='notice'>You slide your jaw weakly...</span>")
+		return FALSE
 	to_chat(owner, "<span class='notice'>You slide your jaw and hear a dull click.</span>")
 	log_combat(owner, null, "activated an implanted signaling device [format_frequency(sig.frequency)]", target)
 	if(sig && sig.next_activate <= world.time)
