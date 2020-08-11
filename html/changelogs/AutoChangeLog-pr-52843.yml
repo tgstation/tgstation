@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Orbital Mech Pad Consoles can now be successfully linked to multiple pads. In particular, this means you can now properly teleport between all pads in Ice Box's multiple mining outposts as well as add new locations to teleport to."

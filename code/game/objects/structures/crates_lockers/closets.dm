@@ -528,11 +528,11 @@
 	step_towards(user, T2)
 	T1 = get_turf(user)
 	if(T1 == T2)
-		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+		user.set_resting(TRUE) //so people can jump into crates without slamming the lid on their head
 		if(!close(user))
 			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-			user.resting = FALSE
+			user.set_resting(FALSE)
 			return
-		user.resting = FALSE
+		user.set_resting(FALSE)
 		togglelock(user)
 		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")
