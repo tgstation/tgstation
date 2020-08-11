@@ -441,13 +441,13 @@
 		density = TRUE
 		open = FALSE
 		if(opaque_closed)
-			opacity = TRUE
+			set_opacity(TRUE)
 	else
 		icon_state = "[icon_type]-open"
 		layer = SIGN_LAYER
 		density = FALSE
 		open = TRUE
-		opacity = FALSE
+		set_opacity(FALSE)
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))

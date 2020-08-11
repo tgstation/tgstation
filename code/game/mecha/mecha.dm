@@ -3,7 +3,6 @@
 	desc = "Exosuit"
 	icon = 'icons/mecha/mecha.dmi'
 	density = TRUE //Dense. To raise the heat.
-	opacity = TRUE //opaque. Menacing.
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = FIRE_PROOF | ACID_PROOF

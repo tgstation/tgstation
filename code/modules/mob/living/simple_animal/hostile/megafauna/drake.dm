@@ -460,7 +460,7 @@ Difficulty: Medium
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	anchored = TRUE
-	opacity = 0
+	opacity = FALSE
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	duration = 82

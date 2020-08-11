@@ -1,7 +1,7 @@
 /obj/effect/particle_effect/expl_particles
 	name = "fire"
 	icon_state = "explosion_particle"
-	opacity = 1
+	opacity = TRUE
 	anchored = TRUE
 
 /obj/effect/particle_effect/expl_particles/Initialize()
@@ -27,7 +27,7 @@
 	name = "fire"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
-	opacity = 1
+	opacity = TRUE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32

@@ -64,7 +64,7 @@
 */
 
 /obj/machinery/door/airlock/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/glass/incinerator
@@ -82,28 +82,28 @@
 	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR
 
 /obj/machinery/door/airlock/command/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/engineering/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/engineering/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
 
 /obj/machinery/door/airlock/security/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/medical/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/research/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/research/glass/incinerator
@@ -121,30 +121,30 @@
 	id_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
 
 /obj/machinery/door/airlock/mining/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/atmos/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/atmos/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
 
 /obj/machinery/door/airlock/science/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/virology/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/maintenance/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/maintenance/external/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 200
 
@@ -159,7 +159,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_gold
 
 /obj/machinery/door/airlock/gold/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/silver
@@ -168,7 +168,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_silver
 
 /obj/machinery/door/airlock/silver/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/diamond
@@ -180,7 +180,7 @@
 
 /obj/machinery/door/airlock/diamond/glass
 	normal_integrity = 950
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/uranium
@@ -201,7 +201,7 @@
 	return
 
 /obj/machinery/door/airlock/uranium/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/plasma
@@ -242,7 +242,7 @@
 		return ..()
 
 /obj/machinery/door/airlock/plasma/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/bananium
@@ -253,7 +253,7 @@
 	doorOpen = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/door/airlock/bananium/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/sandstone
@@ -262,7 +262,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_sandstone
 
 /obj/machinery/door/airlock/sandstone/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/wood
@@ -271,7 +271,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_wood
 
 /obj/machinery/door/airlock/wood/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/titanium
@@ -283,7 +283,7 @@
 
 /obj/machinery/door/airlock/titanium/glass
 	normal_integrity = 350
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/bronze
@@ -294,7 +294,7 @@
 
 /obj/machinery/door/airlock/bronze/seethru
 	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 //////////////////////////////////
 /*
@@ -307,7 +307,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
 
 /obj/machinery/door/airlock/public/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/public/glass/incinerator
@@ -337,7 +337,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
 
 /obj/machinery/door/airlock/external/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 //////////////////////////////////
@@ -418,7 +418,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle
 
 /obj/machinery/door/airlock/shuttle/glass
-	opacity = 0
+	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/abductor
@@ -515,7 +515,7 @@
 
 /obj/machinery/door/airlock/cult/glass
 	glass = TRUE
-	opacity = 0
+	opacity = FALSE
 
 /obj/machinery/door/airlock/cult/glass/friendly
 	friendly = TRUE
@@ -531,7 +531,7 @@
 
 /obj/machinery/door/airlock/cult/unruned/glass
 	glass = TRUE
-	opacity = 0
+	opacity = FALSE
 
 /obj/machinery/door/airlock/cult/unruned/glass/friendly
 	friendly = TRUE
@@ -552,7 +552,7 @@
 	name = "large glass airlock"
 	icon = 'icons/obj/doors/airlocks/glass_large/glass_large.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
-	opacity = 0
+	opacity = FALSE
 	assemblytype = null
 	glass = TRUE
 	bound_width = 64 // 2x1

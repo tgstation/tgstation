@@ -19,7 +19,6 @@
 	enclosed = FALSE //Normal ripley has an open cockpit design
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
-	opacity = FALSE //Ripley has a window
 	/// Amount of Goliath hides attached to the mech
 	var/hides = 0
 	/// List of all things in Ripley's Cargo Compartment

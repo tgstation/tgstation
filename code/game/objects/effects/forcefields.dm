@@ -3,7 +3,7 @@
 	name = "FORCEWALL"
 	icon_state = "m_shield"
 	anchored = TRUE
-	opacity = 0
+	opacity = FALSE
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/timeleft = 300 //Set to 0 for permanent forcefields (ugh)

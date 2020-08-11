@@ -9,7 +9,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	density = TRUE
 	anchored = FALSE
-	opacity = 0
+	opacity = FALSE
 	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/metal, /obj/item/stack/rods)
 	var/salvage_num = 5
 	var/list/crowbar_salvage = list()
