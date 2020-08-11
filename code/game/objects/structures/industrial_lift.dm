@@ -21,11 +21,13 @@
 			var/obj/structure/industrial_lift/borderline = b
 			var/list/result = borderline.lift_platform_expansion(src)
 			if(length(result))
-				for(var/obj/structure/industrial_lift/lift_platform in result)
-					if(!lift_platforms.Find(lift_platform))
-						lift_platform.LMaster = src
-						lift_platforms |= lift_platform
-						possible_expansions |= lift_platform
+				for(var/p in result)
+					if(lift_platforms.Find(p))
+						continue
+				var/obj/structure/industrial_lift/lift_platform = p
+				lift_platform.LMaster = src
+				lift_platforms |= lift_platform
+				possible_expansions |= lift_platform
 			possible_expansions -= borderline
 
 ///Move all platforms together
