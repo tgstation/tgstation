@@ -1,6 +1,6 @@
 ///Collect and command
 /datum/lift_master
-	var/list/lift_platforms = list()
+	var/list/lift_platforms
 
 /datum/lift_master/Destroy()
 	for(var/obj/structure/industrial_lift/lift_platform in lift_platforms)
