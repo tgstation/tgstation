@@ -419,7 +419,7 @@
 /turf/proc/conductivity_directions()
 	if(archived_cycle < SSair.times_fired)
 		archive()
-	return NORTH|SOUTH|EAST|WEST
+	return ALL_CARDINALS
 
 /turf/open/conductivity_directions()
 	if(blocks_air)

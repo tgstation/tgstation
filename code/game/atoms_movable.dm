@@ -63,6 +63,11 @@
 			render_target = ref(src)
 			em_block = new(src, render_target)
 			vis_contents += em_block
+	if(opacity)
+		AddElement(/datum/element/light_blocking)
+		if(isturf(loc))
+			var/turf/turf_loc = loc
+			turf_loc.add_opacity_source(src)
 
 
 /atom/movable/Destroy(force)
@@ -78,14 +83,6 @@
 			CanAtmosPass = ATMOS_PASS_YES
 			air_update_turf(TRUE)
 		loc.handle_atom_del(src)
-
-		// If we have opacity, make sure to tell (potentially) affected light sources.
-		if(opacity && isturf(loc))
-			var/turf/turf_loc = loc
-			var/old_has_opaque_atom = turf_loc.has_opaque_atom
-			turf_loc.recalc_atom_opacity()
-			if(old_has_opaque_atom != turf_loc.has_opaque_atom)
-				turf_loc.reconsider_lights()
 
 	invisibility = INVISIBILITY_ABSTRACT
 

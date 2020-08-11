@@ -60,16 +60,21 @@
 	if(isnull(.) || !isturf(loc))
 		return
 
-	var/turf/T = loc
+	var/turf/turf_loc = loc
 
-	if (new_opacity == TRUE)
-		T.has_opaque_atom = TRUE
-		T.reconsider_lights()
+	if(opacity)
+		AddElement(/datum/element/light_blocking)
+		turf_loc.add_opacity_source(src)
 	else
-		var/old_has_opaque_atom = T.has_opaque_atom
-		T.recalc_atom_opacity()
-		if (old_has_opaque_atom != T.has_opaque_atom)
-			T.reconsider_lights()
+		turf_loc.remove_opacity_source(src)
+		RemoveElement(/datum/element/light_blocking)
+
+
+/turf/set_opacity(new_opacity)
+	. = ..()
+	if(isnull(.))
+		return
+	recalculate_directional_opacity()
 
 
 /atom/movable/Moved(atom/OldLoc, Dir)

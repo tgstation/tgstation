@@ -27,7 +27,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/manifold/SetInitDirections()
-	initialize_directions = NORTH|SOUTH|EAST|WEST
+	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
