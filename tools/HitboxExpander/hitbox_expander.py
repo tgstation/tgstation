@@ -31,7 +31,7 @@ def ProcessFile(path):
   if (ext != ".dmi" and ext != ".png") or os.path.splitext(name)[1] == ".new":
     return
 
-  if 1:
+  try:
     im = Image.open(path)
     print(name + ": " + im.format, im.size, im.mode)
     if im.mode != "RGBA":
@@ -65,8 +65,8 @@ def ProcessFile(path):
       pix[coords] = (0, 0, 0, 1)
 
     PngSave(im, path)
-  #except:
-  #  print("Could not process " + name)
+  except:
+    print("Could not process " + name)
 
 root_dir = os.path.abspath(os.path.join(current_dir, "../../"))
 icons_dir = os.path.join(root_dir, "icons")
