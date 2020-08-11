@@ -40,7 +40,8 @@
 	var/min_x = world.maxx
 	var/min_y = world.maxy
 	
-	for(var/obj/structure/industrial_lift/lift_platform in lift_platforms)
+	for(var/p in lift_platforms)
+		var/obj/structure/industrial_lift/lift_platform = p
 		max_x = max(max_x, lift_platform.x)
 		max_y = max(max_y, lift_platform.y)
 		min_x = min(min_x, lift_platform.x)
