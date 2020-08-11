@@ -1,6 +1,6 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
-#define HIEROPHANT_CLUB_CARDINAL_DAMAGE 30
+#define HIEROPHANT_TELEPORT_RANGE 7
 
 
 /obj/structure/closet/crate/necropolis
@@ -1132,6 +1132,11 @@
 	current_charges = 1
 	max_charges = 1
 	charge_rate = 10 SECONDS
+	recharge_sound = null
+	phasein = /obj/effect/temp_visual/hierophant/blast/visual
+	phaseout = /obj/effect/temp_visual/hierophant/blast/visual
+	// It's a simple purple beam, works well enough for the purple hiero effects.
+	beam_effect = "plasmabeam"
 
 /obj/item/hierophant_club
 	name = "hierophant club"
@@ -1149,13 +1154,20 @@
 	attack_verb_continuous = list("clubs", "beats", "pummels")
 	attack_verb_simple = list("club", "beat", "pummel")
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/innate/dash/hierophant)
+	actions_types = list(/datum/action/item_action/vortex_recall)
+
+	var/datum/action/innate/dash/hierophant/blink
 
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
 
-	COOLDOWN_DECLARE(cooldown)
+	var/blink_toggled = TRUE
+	var/usable = TRUE
+
+/obj/item/hierophant_club/Initialize()
+	. = ..()
+	blink = new(src)
 
 /obj/item/hierophant_club/ComponentInitialize()
 	. = ..()
@@ -1179,16 +1191,21 @@
 	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
 	qdel(user)
 
+/obj/item/hierophant_club/attack_self(mob/user)
+	blink_toggled = !blink_toggled
+	to_chat(user, "<span class='notice'>You [blink_toggled ? "enable" : "disable"] the blink function on [src].</span>")
+
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	// If our target is the beacon and the hierostaff is next to the beacon, we're trying to pick it up.
+	if((target == beacon) && target.Adjacent(src))
+		return
+	if(blink_toggled)
+		blink.Teleport(user, target)
+		return
 
 /obj/item/hierophant_club/update_icon_state()
-	icon_state = inhand_icon_state = "hierophant_club[COOLDOWN_FINISHED(src, cooldown) ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
-
-/obj/item/hierophant_club/proc/prepare_icon_update()
-	update_icon()
-	sleep(COOLDOWN_TIMELEFT(src, cooldown))
-	update_icon()
+	icon_state = inhand_icon_state = "hierophant_club[usable ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if(!user.is_holding(src)) //you need to hold the staff to teleport
@@ -1198,8 +1215,8 @@
 		if(isturf(user.loc))
 			user.visible_message("<span class='hierophant_warning'>[user] starts fiddling with [src]'s pommel...</span>", \
 			"<span class='notice'>You start detaching the hierophant beacon...</span>")
-			COOLDOWN_START(src, cooldown, 51)
-			INVOKE_ASYNC(src, .proc/prepare_icon_update)
+			usable = FALSE
+			update_icon()
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
 				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
@@ -1209,9 +1226,8 @@
 				user.visible_message("<span class='hierophant_warning'>[user] places a strange machine beneath [user.p_their()] feet!</span>", \
 				"<span class='hierophant'>You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!</span>\n\
 				<span class='notice'>You can remove the beacon to place it again by striking it with the club.</span>")
-			else
-				COOLDOWN_RESET(src, cooldown)
-				INVOKE_ASYNC(src, .proc/prepare_icon_update)
+			usable = TRUE
+			update_icon()
 		else
 			to_chat(user, "<span class='warning'>You need to be on solid ground to detach the beacon!</span>")
 		return
@@ -1228,8 +1244,8 @@
 	teleporting = TRUE //start channel
 	user.update_action_buttons_icon()
 	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
-	COOLDOWN_START(src, cooldown, 50)
-	INVOKE_ASYNC(src, .proc/prepare_icon_update)
+	usable = FALSE
+	update_icon()
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE2 = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
@@ -1240,8 +1256,8 @@
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
-			COOLDOWN_RESET(src, cooldown)
-			INVOKE_ASYNC(src, .proc/prepare_icon_update)
+			usable = TRUE
+			update_icon()
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
@@ -1252,8 +1268,8 @@
 			teleporting = FALSE
 			if(user)
 				user.update_action_buttons_icon()
-			COOLDOWN_RESET(src, cooldown)
-			INVOKE_ASYNC(src, .proc/prepare_icon_update)
+			usable = TRUE
+			update_icon()
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
@@ -1261,32 +1277,34 @@
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
-			COOLDOWN_RESET(src, cooldown)
-			INVOKE_ASYNC(src, .proc/prepare_icon_update)
+			usable = TRUE
+			update_icon()
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		user.log_message("teleported self from [AREACOORD(source)] to [beacon]", LOG_GAME)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
-			var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(t, user, TRUE) //blasts produced will not hurt allies
-			B.damage = 30
+			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
 		for(var/t in RANGE_TURFS(1, source))
-			var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(t, user, TRUE) //but absolutely will hurt enemies
-			B.damage = 30
+			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
 		for(var/mob/living/L in range(1, source))
-			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along
+			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user)
 		sleep(6) //at this point the blasts detonate
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
+		usable = TRUE
+		update_icon()
 	else
 		qdel(TE1)
 		qdel(TE2)
-		COOLDOWN_RESET(src, cooldown)
-		INVOKE_ASYNC(src, .proc/prepare_icon_update)
+		usable = TRUE
+		update_icon()
 	if(beacon)
 		beacon.icon_state = "hierophant_tele_off"
 	teleporting = FALSE
+	usable = TRUE
+	update_icon()
 	if(user)
 		user.update_action_buttons_icon()
 
@@ -1314,6 +1332,15 @@
 	if(user != M)
 		log_combat(user, M, "teleported", null, "from [AREACOORD(source)]")
 
+/obj/item/hierophant_club/pickup(mob/living/user)
+	. = ..()
+	blink.Grant(user, src)
+	user.update_icons()
+
+/obj/item/hierophant_club/dropped(mob/user)
+	. = ..()
+	blink.Remove(user)
+	user.update_icons()
 
 //Just some minor stuff
 /obj/structure/closet/crate/necropolis/puzzle
