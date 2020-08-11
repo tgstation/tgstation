@@ -820,7 +820,8 @@
 	. = ..()
 	for(var/i in enticed_cats)
 		var/mob/living/simple_animal/pet/cat/itercat = i
-		itercat.give_up_munchies()
+		if(istype(itercat))
+			itercat.give_up_munchies()
 	LAZYCLEARLIST(enticed_cats)
 
 /obj/item/reagent_containers/food/snacks/canned/catfood/process()
@@ -840,7 +841,7 @@
 
 	var/mob/living/simple_animal/pet/cat/itercat
 	for(itercat in scannables)
-		if(!itercat.stat && (!enticed_cats || !(itercat in enticed_cats)) && itercat.register_munchies(src))
+		if(istype(itercat) && !itercat.stat && (!enticed_cats || !(itercat in enticed_cats)) && itercat.register_munchies(src))
 			LAZYADD(enticed_cats, itercat)
 
 	COOLDOWN_START(src, catscan_cooldown, catscan_delay)
@@ -851,8 +852,8 @@
 	bitecount++
 	On_Consume(user)
 
-#undef CATFOOD_NORMAL_RANGE
-#undef CATFOOD_EXTREME_RANGE
+#undef CATFOOD_RANGE_NORMAL
+#undef CATFOOD_RANGE_EXTREME
 #undef CATFOOD_EXTREME_CHANCE
 
 /obj/item/reagent_containers/food/snacks/crab_rangoon
