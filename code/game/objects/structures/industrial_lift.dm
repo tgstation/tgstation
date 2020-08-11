@@ -155,32 +155,34 @@
 	var/turf/can_move_up = LMaster.Check_lift_move(UP)
 	var/turf/can_move_up_down = LMaster.Check_lift_move(DOWN)
 
-	if (can_move_up || can_move_up_down)
-		var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-		if (!is_ghost && !in_range(src, user))
-			return  // nice try
-		switch(result)
-			if("Up")
-				if(can_move_up)
-					LMaster.MoveLift(UP, user)
-					show_fluff_message(TRUE, user)
-					use(user)
-				else
-					to_chat(user, "<span class='warning'>[src] doesn't seem to able move up!</span>")
-					use(user)
-			if("Down")
-				if(can_move_up_down)
-					LMaster.MoveLift(DOWN, user)
-					show_fluff_message(FALSE, user)
-					use(user)
-				else
-					to_chat(user, "<span class='warning'>[src] doesn't seem to able move down!</span>")
-					use(user)
-			if("Cancel")
-				return
-	else
+	if (!can_move_up && !can_move_up_down)
 		to_chat(user, "<span class='warning'>[src] doesn't seem to able move anywhere!</span>")
+		add_fingerprint(user)
+		return
 
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if (!is_ghost && !in_range(src, user))
+		return  // nice try
+	switch(result)
+		if("Up")
+			if(can_move_up)
+				LMaster.MoveLift(UP, user)
+				show_fluff_message(TRUE, user)
+				use(user)
+			else
+				to_chat(user, "<span class='warning'>[src] doesn't seem to able move up!</span>")
+				use(user)
+		if("Down")
+			if(can_move_up_down)
+				LMaster.MoveLift(DOWN, user)
+				show_fluff_message(FALSE, user)
+				use(user)
+			else
+				to_chat(user, "<span class='warning'>[src] doesn't seem to able move down!</span>")
+				use(user)
+		if("Cancel")
+			return
+	
 	add_fingerprint(user)
 
 /obj/structure/industrial_lift/proc/check_menu(mob/user)
