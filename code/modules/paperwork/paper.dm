@@ -141,13 +141,13 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		if(user.is_literate())
-			ui_interact(user)
-		else
-			. += "<span class='warning'>You cannot read it!</span>"
-	else
+	if(!in_range(user, src) && !isobserver(user))
 		. += "<span class='warning'>You're too far away to read it!</span>"
+		return
+	if(user.is_literate())
+		ui_interact(user)
+		return
+	. += "<span class='warning'>You cannot read it!</span>"
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 		// Are we on fire?  Hard ot read if so
