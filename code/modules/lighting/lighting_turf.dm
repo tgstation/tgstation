@@ -93,11 +93,11 @@
 
 
 ///Calculate on which directions this turfs block view.
-/turf/proc/recalculate_directional_opacity(update_lights = TRUE)
+/turf/proc/recalculate_directional_opacity()
 	. = directional_opacity
 	if(opacity)
 		directional_opacity = ALL_CARDINALS
-		if(update_lights && . != directional_opacity)
+		if(. != directional_opacity)
 			reconsider_lights()
 		return
 	directional_opacity = NONE
@@ -108,7 +108,7 @@
 		else //If fulltile and opaque, then the whole tile blocks view, no need to continue checking.
 			directional_opacity = ALL_CARDINALS
 			break
-	if(update_lights && . != directional_opacity && (. == ALL_CARDINALS || directional_opacity == ALL_CARDINALS))
+	if(. != directional_opacity && (. == ALL_CARDINALS || directional_opacity == ALL_CARDINALS))
 		reconsider_lights() //The lighting system only cares whether the tile is fully concealed from all directions or not.
 
 
