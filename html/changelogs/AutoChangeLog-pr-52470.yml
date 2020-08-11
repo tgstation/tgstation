@@ -1,0 +1,7 @@
+author: "WarlockD"
+delete-after: True
+changes: 
+  - bugfix: "Paper working with stamps again"
+  - bugfix: "Paper works with doors now, become the next Martin Luther!"
+  - bugfix: "Dead people cannot write on it if they have the page up"
+  - bugfix: "Page goes away when you walk around"
