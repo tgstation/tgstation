@@ -716,11 +716,11 @@ Difficulty: Hard
 /obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = I
-		if(H.timer > world.time)
+		if(COOLDOWN_FINISHED(H, cooldown))
 			return
 		if(H.beacon == src)
 			to_chat(user, "<span class='notice'>You start removing your hierophant beacon...</span>")
-			H.timer = world.time + 51
+			COOLDOWN_START(H, cooldown, 51)
 			INVOKE_ASYNC(H, /obj/item/hierophant_club.proc/prepare_icon_update)
 			if(do_after(user, 50, target = src))
 				playsound(src,'sound/magic/blind.ogg', 200, TRUE, -4)
@@ -730,7 +730,7 @@ Difficulty: Hard
 				user.update_action_buttons_icon()
 				qdel(src)
 			else
-				H.timer = world.time
+				COOLDOWN_RESET(H, cooldown)
 				INVOKE_ASYNC(H, /obj/item/hierophant_club.proc/prepare_icon_update)
 		else
 			to_chat(user, "<span class='hierophant_warning'>You touch the beacon with the club, but nothing happens.</span>")

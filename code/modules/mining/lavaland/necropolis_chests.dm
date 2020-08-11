@@ -1130,7 +1130,7 @@
 //Hierophant
 /obj/item/hierophant_club
 	name = "hierophant club"
-	desc = "The strange technology of this large club allows various nigh-magical feats. It used to beat you, but now you can set the beat."
+	desc = "The strange technology of this large club allows various nigh-magical teleportation feats. It used to beat you, but now you can set the beat."
 	icon_state = "hierophant_club_ready_beacon"
 	inhand_icon_state = "hierophant_club_ready_beacon"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
@@ -1144,16 +1144,13 @@
 	attack_verb_continuous = list("clubs", "beats", "pummels")
 	attack_verb_simple = list("club", "beat", "pummel")
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
+	actions_types = list(/datum/action/item_action/vortex_recall)
+
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
-	var/chaser_cooldown = 81 //how long the cooldown between firing chasers at mobs is
-	var/chaser_timer = 0 //what our current chaser cooldown is
-	var/chaser_speed = 0.8 //how fast our chasers are
-	var/timer = 0 //what our current cooldown is
-	var/blast_range = 13 //how long the cardinal blast's walls are
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
-	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
+
+	COOLDOWN_DECLARE(cooldown)
 
 /obj/item/hierophant_club/ComponentInitialize()
 	. = ..()
@@ -1180,65 +1177,16 @@
 
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	var/turf/T = get_turf(target)
-	if(!T || timer > world.time)
-		return
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>")
-		return
-	calculate_anger_mod(user)
-	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
-	if(proximity_flag)
-		INVOKE_ASYNC(src, .proc/aoe_burst, T, user)
-		log_combat(user, target, "fired 3x3 blast at", src)
-	else
-		if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
-			INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user)
-			timer = world.time + cooldown_time
-		else if(target in view(5, get_turf(user))) //if the target is in view, hit it
-			timer = world.time + cooldown_time
-			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
-				chaser_timer = world.time + chaser_cooldown
-				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
-				C.damage = 30
-				C.monster_damage_boost = FALSE
-				log_combat(user, target, "fired a chaser at", src)
-			else
-				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
-				log_combat(user, target, "fired cardinal blast at", src)
-		else
-			to_chat(user, "<span class='warning'>That target is out of range!</span>" )
-			timer = world.time
-	INVOKE_ASYNC(src, .proc/prepare_icon_update)
-
-/obj/item/hierophant_club/proc/calculate_anger_mod(mob/user) //we get stronger as the user loses health
-	chaser_cooldown = initial(chaser_cooldown)
-	cooldown_time = initial(cooldown_time)
-	chaser_speed = initial(chaser_speed)
-	blast_range = initial(blast_range)
-	if(isliving(user))
-		var/mob/living/L = user
-		var/health_percent = L.health / L.maxHealth
-		chaser_cooldown += round(health_percent * 20) //two tenths of a second for each missing 10% of health
-		cooldown_time += round(health_percent * 10) //one tenth of a second for each missing 10% of health
-		chaser_speed = max(chaser_speed + health_percent, 0.5) //one tenth of a second faster for each missing 10% of health
-		blast_range -= round(health_percent * 10) //one additional range for each missing 10% of health
 
 /obj/item/hierophant_club/update_icon_state()
-	icon_state = inhand_icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
+	icon_state = inhand_icon_state = "hierophant_club[COOLDOWN_FINISHED(src, cooldown) ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
 
 /obj/item/hierophant_club/proc/prepare_icon_update()
 	update_icon()
-	sleep(timer - world.time)
+	sleep(COOLDOWN_TIMELEFT(src, cooldown))
 	update_icon()
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/toggle_unfriendly_fire)) //toggle friendly fire...
-		friendly_fire_check = !friendly_fire_check
-		to_chat(user, "<span class='warning'>You toggle friendly fire [friendly_fire_check ? "off":"on"]!</span>")
-		return
-	if(timer > world.time)
-		return
 	if(!user.is_holding(src)) //you need to hold the staff to teleport
 		to_chat(user, "<span class='warning'>You need to hold the club in your hands to [beacon ? "teleport with it":"detach the beacon"]!</span>")
 		return
@@ -1246,7 +1194,7 @@
 		if(isturf(user.loc))
 			user.visible_message("<span class='hierophant_warning'>[user] starts fiddling with [src]'s pommel...</span>", \
 			"<span class='notice'>You start detaching the hierophant beacon...</span>")
-			timer = world.time + 51
+			COOLDOWN_START(src, cooldown, 51)
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
@@ -1258,7 +1206,7 @@
 				"<span class='hierophant'>You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!</span>\n\
 				<span class='notice'>You can remove the beacon to place it again by striking it with the club.</span>")
 			else
-				timer = world.time
+				COOLDOWN_RESET(src, cooldown)
 				INVOKE_ASYNC(src, .proc/prepare_icon_update)
 		else
 			to_chat(user, "<span class='warning'>You need to be on solid ground to detach the beacon!</span>")
@@ -1276,7 +1224,7 @@
 	teleporting = TRUE //start channel
 	user.update_action_buttons_icon()
 	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
-	timer = world.time + 50
+	COOLDOWN_START(src, cooldown, 50)
 	INVOKE_ASYNC(src, .proc/prepare_icon_update)
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
@@ -1288,7 +1236,7 @@
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
-			timer = world.time
+			COOLDOWN_RESET(src, cooldown)
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
@@ -1300,7 +1248,7 @@
 			teleporting = FALSE
 			if(user)
 				user.update_action_buttons_icon()
-			timer = world.time
+			COOLDOWN_RESET(src, cooldown)
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
@@ -1309,7 +1257,7 @@
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
-			timer = world.time
+			COOLDOWN_RESET(src, cooldown)
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
@@ -1330,7 +1278,7 @@
 	else
 		qdel(TE1)
 		qdel(TE2)
-		timer = world.time
+		COOLDOWN_RESET(src, cooldown)
 		INVOKE_ASYNC(src, .proc/prepare_icon_update)
 	if(beacon)
 		beacon.icon_state = "hierophant_tele_off"
@@ -1361,43 +1309,6 @@
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
 	if(user != M)
 		log_combat(user, M, "teleported", null, "from [AREACOORD(source)]")
-
-/obj/item/hierophant_club/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
-	if(!T)
-		return
-	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, user)
-	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
-	sleep(2)
-	var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, friendly_fire_check)
-	B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
-	B.monster_damage_boost = FALSE
-	for(var/d in GLOB.cardinals)
-		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
-
-/obj/item/hierophant_club/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long
-	if(!T)
-		return
-	var/range = blast_range
-	var/turf/previousturf = T
-	var/turf/J = get_step(previousturf, dir)
-	for(var/i in 1 to range)
-		if(!J)
-			return
-		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
-		B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
-		B.monster_damage_boost = FALSE
-		previousturf = J
-		J = get_step(previousturf, dir)
-
-/obj/item/hierophant_club/proc/aoe_burst(turf/T, mob/living/user) //make a 3x3 blast around a target
-	if(!T)
-		return
-	new /obj/effect/temp_visual/hierophant/telegraph(T, user)
-	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
-	sleep(2)
-	for(var/t in RANGE_TURFS(1, T))
-		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
-		B.damage = 15 //keeps monster damage boost due to lower damage
 
 
 //Just some minor stuff
