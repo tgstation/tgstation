@@ -1,7 +1,5 @@
 /* smoothing_flags */
-#define SMOOTH_CORNERS		(1<<0) //Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.
-//#define SMOOTH_TRUE		(1<<0)	//smooths with exact specified types or just itself
-//#define SMOOTH_MORE		(1<<1)	//smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
+#define SMOOTH_CORNERS	(1<<0) //Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.
 #define SMOOTH_DIAGONAL	(1<<2)	//if atom should smooth diagonally, this should be present in 'smoothing_flags' var
 #define SMOOTH_BORDER	(1<<3)	//atom will smooth with the borders of the map
 #define SMOOTH_QUEUED	(1<<4)	//atom is currently queued to smooth.
