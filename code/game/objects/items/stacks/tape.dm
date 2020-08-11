@@ -27,9 +27,6 @@
 		to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
 		return
 
-	if(INTERACTING_WITH(user, I))
-		return
-
 	user.visible_message("<span class='notice'>[user] begins wrapping [I] with [src].</span>", "<span class='notice'>You begin wrapping [I] with [src].</span>")
 
 	if(do_after(user, 30, target=I))
@@ -39,6 +36,10 @@
 			to_chat(user, "<span class='notice'>You turn [I] into [O] with [src].</span>")
 			QDEL_NULL(I)
 			user.put_in_hands(O)
+			return
+
+		if(I.embedding && I.embedding == conferred_embed)
+			to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
 			return
 
 		I.embedding = conferred_embed
