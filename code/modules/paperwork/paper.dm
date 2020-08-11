@@ -47,11 +47,6 @@
 	var/list/stamps			/// Positioning for the stamp in tgui
 	var/list/stamped		/// Overlay info
 
-	/// This REALLY should be a componenet.  Basicly used during, april fools
-	/// to honk at you
-	var/rigged = 0
-	var/spam_flag = 0
-
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
 
@@ -137,18 +132,6 @@
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
 
-/// ONLY USED FOR APRIL FOOLS
-/obj/item/paper/proc/reset_spamflag()
-	spam_flag = FALSE
-
-/obj/item/paper/attack_self(mob/user)
-	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
-		if(!spam_flag)
-			spam_flag = TRUE
-			playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
-	. = ..()
-
 /obj/item/paper/proc/clearpaper()
 	info = ""
 	stamps = null
@@ -158,13 +141,13 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	if(!in_range(user, src) && !isobserver(user))
+	if(in_range(user, src) || isobserver(user))
+		if(user.is_literate())
+			ui_interact(user)
+		else
+			. += "<span class='warning'>You cannot read it!</span>"
+	else
 		. += "<span class='warning'>You're too far away to read it!</span>"
-		return
-	if(user.is_literate())
-		ui_interact(user)
-		return
-	. += "<span class='warning'>You cannot read it!</span>"
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 		// Are we on fire?  Hard ot read if so
@@ -172,11 +155,9 @@
 		return UI_CLOSE
 	if(!in_range(user,src))
 		return UI_CLOSE
-	if(isdead(user))
+	if(user.incapacitated(TRUE, TRUE) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
 	// Even harder to read if your blind...braile? humm
-	if(user.is_blind())
-		return UI_CLOSE
 	// .. or if you cannot read
 	if(!user.can_read(src))
 		return UI_CLOSE
@@ -189,7 +170,7 @@
 /obj/item/paper/can_interact(mob/user)
 	if(in_contents_of(/obj/machinery/door/airlock))
 		return TRUE
-	return ..()
+	. = ..()
 
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
@@ -339,7 +320,6 @@
 		if("save")
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper)
-			// var/list/fields = params["form_fields"]
 			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
 
 			if(paper_len > MAX_PAPER_LENGTH)
