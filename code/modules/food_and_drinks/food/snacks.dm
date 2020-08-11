@@ -313,18 +313,20 @@ All foods are distributed among various categories. Use common sense.
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/attack_animal(mob/M)
-	if(isanimal(M))
-		if(isdog(M))
-			var/mob/living/L = M
-			if(bitecount == 0 || prob(50))
-				M.manual_emote("nibbles away at \the [src]")
-			bitecount++
-			L.taste(reagents) // why should carbons get all the fun?
-			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
-				if(sattisfaction_text)
-					M.emote(sattisfaction_text)
-				qdel(src)
+	if(!isdog(M))
+		return
+	// if it wasn't for the fact that the eat verbs specified woofing, i'd make this possible for all pets, but alas, i am lazy
+
+	var/mob/living/L = M
+	if(bitecount == 0 || prob(50))
+		M.manual_emote("nibbles away at \the [src]")
+	bitecount++
+	L.taste(reagents) // why should carbons get all the fun?
+	if(bitecount >= 5)
+		var/satisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
+		if(satisfaction_text)
+			M.emote(satisfaction_text)
+		qdel(src)
 
 
 // //////////////////////////////////////////////Store////////////////////////////////////////

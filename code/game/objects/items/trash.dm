@@ -99,6 +99,10 @@
 	name = "Maintenance Peaches"
 	icon_state = "peachcanmaint_empty"
 
+/obj/item/trash/can/food/cat_food
+	name = "cat food tin"
+	icon_state = "peachcan_empty"
+
 /obj/item/trash/can/food/beans
 	name = "tin of beans"
 	icon = 'icons/obj/food/food.dmi'

@@ -789,6 +789,63 @@
 	trash = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
 
+///How far a distance cats can usually get enticed by our delicious cat food
+#define CATFOOD_RANGE_NORMAL	6
+///With a rare chance, you'll summon the horde and get cats from all over
+#define CATFOOD_RANGE_EXTREME	20
+///The chance to summon cats from the above extremely high radius
+#define CATFOOD_EXTREME_CHANCE	1
+
+/obj/item/reagent_containers/food/snacks/canned/catfood
+	name = "cat food tin"
+	desc = "Purinya~ brand cat food, approved for both cat cats and people cats."
+	icon_state = "peachcan"
+	trash = /obj/item/trash/can/food/cat_food
+	tastes = list("organic slurry" = 5, "blended space carp" = 3)
+	///which cats are currently following us, lazylist
+	var/list/enticed_cats
+	///Cooldown for how long we're waiting to entice cats
+	COOLDOWN_DECLARE(catscan_cooldown)
+	///How long we wait to scan for the cats
+	var/catscan_delay = 5 SECONDS
+	///If we want to add a bonus to the normal entice range (get ALL the cats)
+	var/catscan_range_bonus = 0
+
+/obj/item/reagent_containers/food/snacks/canned/catfood/open_can(mob/user)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	LAZYINITLIST(enticed_cats)
+
+/obj/item/reagent_containers/food/snacks/canned/catfood/Destroy()
+	. = ..()
+	for(var/i in enticed_cats)
+		var/mob/living/simple_animal/pet/cat/itercat = i
+		itercat.give_up_munchies()
+	LAZYCLEARLIST(enticed_cats)
+
+/obj/item/reagent_containers/food/snacks/canned/catfood/process()
+	if(!spillable || !COOLDOWN_FINISHED(src, catscan_cooldown))
+		return
+
+	var/mob/living/simple_animal/pet/cat/itercat
+	var/catscan_range = (prob(CATFOOD_EXTREME_CHANCE) ? CATFOOD_RANGE_EXTREME : CATFOOD_RANGE_NORMAL) + catscan_range_bonus
+
+	for(itercat in ohearers(catscan_range, get_turf(src)))
+		if(!itercat.stat && (!enticed_cats || !(itercat in enticed_cats)) && itercat.register_munchies(src))
+			LAZYADD(enticed_cats, itercat)
+
+	COOLDOWN_START(src, catscan_cooldown, catscan_delay)
+
+///Fake the cats munching on the food
+/obj/item/reagent_containers/food/snacks/canned/catfood/proc/cat_eat(mob/user)
+	reagents.remove_any(1)
+	bitecount++
+	On_Consume(user)
+
+#undef CATFOOD_NORMAL_RANGE
+#undef CATFOOD_EXTREME_RANGE
+#undef CATFOOD_EXTREME_CHANCE
+
 /obj/item/reagent_containers/food/snacks/crab_rangoon
 	name = "Crab Rangoon"
 	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."

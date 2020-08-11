@@ -1,4 +1,9 @@
 //Cat
+///How long of not seeing the currently hunted food before we give up on finding it :(
+#define CAT_MUNCHY_FRUSTRATE_TIME	1 MINUTES
+///How long we wait after giving up some food (whether we ate it or gave up) before trying again
+#define CAT_MUNCHY_BREAK_TIME	2 MINUTES
+
 /mob/living/simple_animal/pet/cat
 	name = "cat"
 	desc = "Kitty!!"
@@ -40,10 +45,20 @@
 	held_state = "cat2"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	///if there's a can of opened catfood we're hunting after
+	var/obj/item/reagent_containers/food/snacks/canned/catfood/munchies
+	///how long it takes before we give up on ever reaching the promised snack
+	COOLDOWN_DECLARE(munchy_frustration)
+	///if we just gave up on some food (either we ate it or we gave up on it), take a break from searching again
+	COOLDOWN_DECLARE(munchy_break)
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
 	verbs += /mob/living/proc/lay_down
+
+/mob/living/simple_animal/pet/cat/Destroy()
+	. = ..()
+	give_up_munchies()
 
 /mob/living/simple_animal/pet/cat/update_mobility()
 	..()
@@ -176,69 +191,153 @@
 	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/cat/Life()
-	if(!stat && !buckled && !client)
-		if(prob(1))
-			manual_emote(pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
-			icon_state = "[icon_living]_rest"
-			collar_type = "[initial(collar_type)]_rest"
-			set_resting(TRUE)
-		else if (prob(1))
-			manual_emote(pick("sits down.", "crouches on its hind legs.", "looks alert."))
-			icon_state = "[icon_living]_sit"
-			collar_type = "[initial(collar_type)]_sit"
-			set_resting(TRUE)
-		else if (prob(1))
-			if (resting)
-				manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
-				icon_state = "[icon_living]"
-				collar_type = "[initial(collar_type)]"
-				set_resting(FALSE)
-			else
-				manual_emote(pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
+	if(stat || buckled)
+		return ..()
+
+	if(!client)
+		if(munchies)
+			seek_munchies()
+			return ..() // no running away or making babies while you're eating, that'd be gross
+		else
+			auto_emote()
 
 	//MICE!
-	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
-			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
-					if (emote_cooldown < (world.time - 600))
-						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
-						step(M, pick(GLOB.cardinals))
-						emote_cooldown = world.time
-					break
-				if(!M.stat && Adjacent(M))
-					manual_emote("splats \the [M]!")
-					M.splat()
-					movement_target = null
-					stop_automated_movement = 0
-					break
-			for(var/obj/item/toy/cattoy/T in view(1,src))
-				if (T.cooldown < (world.time - 400))
-					manual_emote("bats \the [T] around with its paw!")
-					T.cooldown = world.time
+	if(isturf(loc) && !resting)
+		hunt_mice()
 
 	..()
-
 	make_babies()
 
-	if(!stat && !resting && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			walk_to(src,0)
-			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = 0
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
-				movement_target = null
-				stop_automated_movement = 0
-				for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
-					if(isturf(snack.loc) && !snack.stat)
-						movement_target = snack
-						break
-			if(movement_target)
-				stop_automated_movement = 1
-				walk_to(src,movement_target,0,3)
+	if(resting)
+		return
+
+	turns_since_scan++
+	if(turns_since_scan <= 5)
+		return
+
+	walk_to(src,0)
+	turns_since_scan = 0
+	if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+		movement_target = null
+		stop_automated_movement = FALSE
+	if( !movement_target || !(movement_target.loc in oview(src, 3)) )
+		movement_target = null
+		stop_automated_movement = FALSE
+		for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
+			if(isturf(snack.loc) && !snack.stat)
+				movement_target = snack
+				break
+	if(movement_target)
+		stop_automated_movement = TRUE
+		walk_to(src,movement_target,0,3)
+
+///Called from a can of cat food when the food can scans us and makes us notice it, return TRUE if we acquire new food as a target
+/mob/living/simple_animal/pet/cat/proc/register_munchies(obj/item/reagent_containers/food/snacks/canned/catfood/food)
+	if(!istype(food) || munchies == food || !COOLDOWN_FINISHED(src, munchy_break))
+		return
+	if(!munchies)
+		munchies = food
+		COOLDOWN_START(src, munchy_frustration, CAT_MUNCHY_FRUSTRATE_TIME)
+		return TRUE
+
+	// if we can't see our current target and other munchies are closer, we'll switch priorities
+	if(!can_see(src, get_turf(munchies)) && (get_dist(src, munchies) > get_dist(src, food)))
+		give_up_munchies(munchies)
+		register_munchies(food)
+		return TRUE
+
+///Somehow, whether by our frustration, the can ceasing to exist (including being finished off), or whatever, we have decided we don't want that food anymore, so we scrub references on both sides (as needed)
+/mob/living/simple_animal/pet/cat/proc/give_up_munchies()
+	if(!munchies)
+		return
+	LAZYREMOVE(munchies.enticed_cats, src)
+	munchies = null
+	COOLDOWN_RESET(src, munchy_frustration)
+	COOLDOWN_START(src, munchy_break, CAT_MUNCHY_BREAK_TIME)
+
+/**
+  * This proc handles all the behavior with chasing after canned catfood. Yum!
+  *
+  *	Basically, we run after wherever our food is, then we either meow at/rub up against whoever's holding it if it's a carbon, or we try eating the food. If we don't get near the food after a long delay, we give up and look for other food
+  */
+/mob/living/simple_animal/pet/cat/proc/seek_munchies()
+	if(!munchies)
+		give_up_munchies()
+		return
+
+	//if we're not at our munchies, try running to them
+	if(!Adjacent(get_turf(munchies)))
+		set_resting(FALSE)
+		walk_to(src, get_turf(munchies), 0, 2)
+	else
+		COOLDOWN_START(src, munchy_frustration, CAT_MUNCHY_FRUSTRATE_TIME) // restart
+
+	// check if we've given up on these food
+	if(COOLDOWN_FINISHED(src, munchy_frustration))
+		give_up_munchies()
+		return
+
+	// beg for food
+	if(iscarbon(munchies.loc))
+		var/mob/living/carbon/food_holder = munchies.loc
+		if(!Adjacent(food_holder))
+			visible_message("<b>[src]</b> meows at [food_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
+			playsound(get_turf(src), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE)
+		else
+			switch(rand(1,3))
+				if(1)
+					visible_message("<b>[src]</b> meows [pick("directly", "defiantly", "hungrily", "tiredly")] at [food_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
+					playsound(get_turf(src), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE)
+				if(2)
+					visible_message("<b>[src]</b> rubs up against [food_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
+					new /obj/effect/temp_visual/heart(loc)
+				if(3)
+					visible_message("<b>[src]</b> stares expectantly at [food_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
+					face_atom(food_holder)
+		return
+
+	// eat!!!
+	if(munchies && munchies.reagents?.total_volume && isturf(munchies.loc) && Adjacent(munchies))
+		playsound(get_turf(src), pick('sound/effects/cat_feed1.ogg','sound/effects/cat_feed2.ogg','sound/effects/cat_feed3.ogg'), 60, TRUE)
+		set_resting(TRUE)
+		if(prob(50))
+			visible_message("<b>[src]</b> quietly nibbles away at [munchies].", vision_distance=COMBAT_MESSAGE_RANGE)
+		munchies.cat_eat(src)
+
+///Same mice hunting behavior as before, just sectioned off from [/mob/living/simple_animal/pet/cat/proc/Life]
+/mob/living/simple_animal/pet/cat/proc/hunt_mice()
+	for(var/mob/living/simple_animal/mouse/M in view(1,src))
+		if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
+			if (emote_cooldown < (world.time - 600))
+				visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
+				step(M, pick(GLOB.cardinals))
+				emote_cooldown = world.time
+			break
+		if(!M.stat && Adjacent(M))
+			manual_emote("splats \the [M]!")
+			M.splat()
+			movement_target = null
+			stop_automated_movement = 0
+			break
+	for(var/obj/item/toy/cattoy/T in view(1,src))
+		if (T.cooldown < (world.time - 400))
+			manual_emote("bats \the [T] around with its paw!")
+			T.cooldown = world.time
+
+///Same emote as before, just sectioned off from [/mob/living/simple_animal/pet/cat/proc/Life]
+/mob/living/simple_animal/pet/cat/proc/auto_emote()
+	if(prob(1))
+		manual_emote(pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
+		set_resting(TRUE)
+	else if (prob(1))
+		manual_emote(pick("sits down.", "crouches on its hind legs.", "looks alert."))
+		set_resting(TRUE)
+	else if (prob(1))
+		if (resting)
+			manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
+			set_resting(FALSE)
+		else
+			manual_emote(pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
 /mob/living/simple_animal/pet/cat/attack_hand(mob/living/carbon/human/M)
 	. = ..()
@@ -249,17 +348,16 @@
 			wuv(-1, M)
 
 /mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD)
-				new /obj/effect/temp_visual/heart(loc)
-				manual_emote("purrs!")
-				if(flags_1 & HOLOGRAM_1)
-					return
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-		else
-			if(M && stat != DEAD)
-				manual_emote("hisses!")
+	if(!M || stat == DEAD || !change)
+		return
+	if(change > 0)
+		new /obj/effect/temp_visual/heart(loc)
+		manual_emote("purrs!")
+		if(flags_1 & HOLOGRAM_1)
+			return
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
+	else if(change < 0)
+		manual_emote("hisses!")
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"
@@ -309,3 +407,6 @@
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
+
+#undef CAT_MUNCHY_FRUSTRATE_TIME
+#undef CAT_MUNCHY_BREAK_TIME
