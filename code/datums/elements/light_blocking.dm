@@ -10,11 +10,19 @@
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_target_move)
+	var/atom/movable/movable_target = target
+	if(isturf(movable_target.loc))
+		var/turf/turf_loc = movable_target.loc
+		turf_loc.add_opacity_source(target)
 
 
 /datum/element/light_blocking/Detach(atom/movable/target)
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_MOVABLE_MOVED))
+	var/atom/movable/movable_target = target
+	if(isturf(movable_target.loc))
+		var/turf/turf_loc = movable_target.loc
+		turf_loc.remove_opacity_source(target)
 
 
 ///Updates old and new turf loc opacities.

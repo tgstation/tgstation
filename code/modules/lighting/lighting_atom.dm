@@ -60,13 +60,9 @@
 	if(isnull(.) || !isturf(loc))
 		return
 
-	var/turf/turf_loc = loc
-
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
-		turf_loc.add_opacity_source(src)
 	else
-		turf_loc.remove_opacity_source(src)
 		RemoveElement(/datum/element/light_blocking)
 
 

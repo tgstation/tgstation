@@ -54,6 +54,7 @@
 	///Used for the calculate_adjacencies proc for icon smoothing.
 	var/can_be_unanchored = FALSE
 
+
 /atom/movable/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
@@ -65,9 +66,6 @@
 			vis_contents += em_block
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
-		if(isturf(loc))
-			var/turf/turf_loc = loc
-			turf_loc.add_opacity_source(src)
 
 
 /atom/movable/Destroy(force)
@@ -83,6 +81,9 @@
 			CanAtmosPass = ATMOS_PASS_YES
 			air_update_turf(TRUE)
 		loc.handle_atom_del(src)
+
+	if(opacity)
+		RemoveElement(/datum/element/light_blocking)
 
 	invisibility = INVISIBILITY_ABSTRACT
 
