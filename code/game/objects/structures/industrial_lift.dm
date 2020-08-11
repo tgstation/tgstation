@@ -30,7 +30,8 @@
 
 ///Move all platforms together
 /datum/lift_master/proc/MoveLift(going, mob/user)
-	for(var/obj/structure/industrial_lift/lift_platform in lift_platforms)
+	for(var/p in lift_platforms)
+		var/obj/structure/industrial_lift/lift_platform = p
 		lift_platform.travel(going)
 
 /datum/lift_master/proc/MoveLiftOnZ(going, z)
