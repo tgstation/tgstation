@@ -50,7 +50,7 @@
 	//This must be safe way to border tile to tile move of bordered platforms, that excludes platform overlapping.
 	if( going & WEST )
 		//Go along the X axis from min to max, from left to right
-		for(var/x = min_x; x <= max_x; x++)
+		for(var/x in min_x to max_x)
 			if( going & NORTH )
 				//Go along the Y axis from max to min, from up to down
 				for(var/y = max_y; y >= min_y; y--)
