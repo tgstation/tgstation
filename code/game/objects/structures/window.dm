@@ -213,7 +213,7 @@
 	return check_state(checked_state) && check_anchored(checked_anchored)
 
 /obj/structure/window/mech_melee_attack(obj/mecha/M)
-	if(!can_be_reached())
+	if(!can_be_reached(M))
 		return
 	..()
 
