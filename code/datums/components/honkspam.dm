@@ -17,6 +17,6 @@
 /datum/component/honkspam/proc/interact(mob/user)
 	if(!spam_flag)
 		spam_flag = TRUE
-		var/obj/item/I = parent
-		playsound(I.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
+		var/obj/item/parent_item = parent
+		playsound(parent_item.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 		addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
