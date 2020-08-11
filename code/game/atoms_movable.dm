@@ -247,7 +247,8 @@
 	pulling = AM
 	AM.set_pulledby(src)
 	setGrabState(state)
-	pulling.set_sidestep(TRUE)
+	if(!isliving(pulling))
+		pulling.set_sidestep(TRUE)
 	if(ismob(AM))
 		var/mob/M = AM
 		M.update_movespeed() // set the proper step_size
@@ -260,7 +261,8 @@
 /atom/movable/proc/stop_pulling()
 	if(pulling)
 		pulling.set_pulledby(null)
-		pulling.set_sidestep(initial(pulling.can_sidestep))
+		if(!isliving(pulling))
+			pulling.set_sidestep(initial(pulling.can_sidestep))
 		var/atom/movable/ex_pulled = pulling
 		setGrabState(GRAB_PASSIVE)
 		pulling = null
@@ -330,7 +332,7 @@
 	if(pulling.move_resist > move_force)
 		return FALSE
 	var/distance = bounds_dist(src, pulling)
-	if(distance < 8)
+	if(distance < 6)
 		return FALSE
 	var/angle = GET_DEG(pulling, src)
 	if((angle % 45) > 1) // We arent directly on a cardinal from the thing
@@ -340,7 +342,7 @@
 		else
 			angle -= min(ANGLE_ADJUST, tempA)
 	angle = SIMPLIFY_DEGREES(angle)
-	return degstep(pulling, angle, distance-8)
+	return degstepprojectile(pulling, angle, distance-8)
 
 #undef ANGLE_ADJUST
 /**

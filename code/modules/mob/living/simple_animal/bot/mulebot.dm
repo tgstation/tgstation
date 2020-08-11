@@ -537,8 +537,10 @@
 	B.setDir(direct)
 	bloodiness--
 
-/mob/living/simple_animal/bot/mulebot/Moved() //make sure we always use power after moving.
+/mob/living/simple_animal/bot/mulebot/Moved(atom/OldLoc, Dir) //make sure we always use power after moving.
 	. = ..()
+	if(loc == OldLoc)
+		return
 	if(!cell)
 		return
 	cell.use(cell_move_power_usage)
@@ -572,48 +574,38 @@
 
 		if(BOT_DELIVER, BOT_GO_HOME, BOT_BLOCKED) // navigating to deliver,home, or blocked
 			if(target in locs) // reached target
+				forceMove(target)
 				at_target()
 				return
 
-			else if(path.len > 0 && target) // valid path
-				var/turf/next = path[1]
+			else if(path.len > 0) // valid path
+				var/obj/next = path[1]
 				reached_target = FALSE
-				if(next in locs)
-					if(!Move(next, 0, 0))
-						forceMove(next, 0, 0)
+				walk_to(src, path[1])
+				if(path[1] in obounds()) // successful move
+					blockcount = 0
 					path -= next
+					qdel(next)
+					if(destination == home_destination)
+						mode = BOT_GO_HOME
+					else
+						mode = BOT_DELIVER
 					return
-				if(isturf(next))
-					var/oldloc = loc
-					var/moved = step_towards(src, next)	// attempt to move
-					if(moved && oldloc!=loc)	// successful move
+				else		// failed to move
+
+					blockcount++
+					mode = BOT_BLOCKED
+					step(src, get_dir(src, next)) // try to step into the object that's blocking us
+					if(blockcount == 9)
+						buzz(ANNOYED)
+
+					if(blockcount > 15)	// attempt 15 times before recomputing
+						// find new path excluding blocked turf
+						buzz(SIGH)
+						mode = BOT_WAIT_FOR_NAV
 						blockcount = 0
-						path -= loc
-
-						if(destination == home_destination)
-							mode = BOT_GO_HOME
-						else
-							mode = BOT_DELIVER
-
-					else		// failed to move
-
-						blockcount++
-						mode = BOT_BLOCKED
-						if(blockcount == 3)
-							buzz(ANNOYED)
-
-						if(blockcount > 10)	// attempt 10 times before recomputing
-							// find new path excluding blocked turf
-							buzz(SIGH)
-							mode = BOT_WAIT_FOR_NAV
-							blockcount = 0
-							addtimer(CALLBACK(src, .proc/process_blocked, next), 2 SECONDS)
-							return
+						addtimer(CALLBACK(src, .proc/process_blocked, get_turf(next)), 2 SECONDS)
 						return
-				else
-					buzz(ANNOYED)
-					mode = BOT_NAV
-					return
 			else
 				mode = BOT_NAV
 				return

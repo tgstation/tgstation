@@ -123,6 +123,14 @@
 	else
 		return "[mode_name[mode]]"
 
+// bots don't need sidestepping
+/mob/living/simple_animal/bot/set_sidestep(val)
+	if(client)
+		return ..()
+	if(slider)
+		qdel(slider)
+	can_sidestep = FALSE
+
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
 		return FALSE
