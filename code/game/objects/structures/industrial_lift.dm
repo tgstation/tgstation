@@ -139,8 +139,9 @@
 	else
 		destination = going
 	forceMove(destination)
-	for(var/atom/movable/AM in things2move)
-		AM.forceMove(destination)
+	for(var/am in things2move)
+		var/atom/movable/thing = am
+		thing.forceMove(destination)
 
 /obj/structure/industrial_lift/proc/use(mob/user, is_ghost=FALSE)
 	if (is_ghost && !in_range(src, user))
