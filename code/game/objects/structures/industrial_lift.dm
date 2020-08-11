@@ -214,9 +214,9 @@
 	QDEL_NULL(LMaster)
 	var/list/border_lift_platforms = lift_platform_expansion()
 	moveToNullspace()
-	for(var/obj/structure/industrial_lift/BorderLift in border_lift_platforms)
-		LMaster = new(BorderLift)
-	. = ..()
+	for(var/border_lift in border_lift_platforms)
+		LMaster = new(border_lift)
+	return ..()
 
 /obj/structure/industrial_lift/debug
 	name = "transport platform"
