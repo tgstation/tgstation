@@ -189,7 +189,7 @@
 /obj/item/paper/can_interact(mob/user)
 	if(in_contents_of(/obj/machinery/door/airlock))
 		return TRUE
-	. = ..()
+	return ..()
 
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
