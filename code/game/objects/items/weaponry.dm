@@ -666,7 +666,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/hostile/cockroach,
-					/obj/item/queen_bee
+					/obj/item/queen_bee,
 					/obj/structure/spider/spiderling
 	))
 
