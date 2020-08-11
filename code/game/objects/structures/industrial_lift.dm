@@ -118,7 +118,7 @@
 	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 
 /obj/structure/industrial_lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
-	lift_load -= AM
+	LAZYREMOVE(lift_load, AM)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	LAZYOR(lift_load, AM)
