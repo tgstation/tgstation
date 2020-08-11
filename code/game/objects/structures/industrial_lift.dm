@@ -14,7 +14,7 @@
 
 ///Collect all bordered platforms
 /datum/lift_master/proc/Rebuild_lift_plaform(obj/structure/industrial_lift/base_lift_platform)
-	lift_platforms |= base_lift_platform
+	LAZYOR(lift_platforms, base_lift_platform)
 	var/list/possible_expansions = list(base_lift_platform)
 	while(possible_expansions.len)
 		for(var/obj/structure/industrial_lift/borderline in possible_expansions)
