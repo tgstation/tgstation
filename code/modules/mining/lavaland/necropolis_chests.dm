@@ -1128,6 +1128,11 @@
 	new /obj/item/crusher_trophy/blaster_tubes(src)
 
 //Hierophant
+/datum/action/innate/dash/hierophant
+	current_charges = 1
+	max_charges = 1
+	charge_rate = 10 SECONDS
+
 /obj/item/hierophant_club
 	name = "hierophant club"
 	desc = "The strange technology of this large club allows various nigh-magical teleportation feats. It used to beat you, but now you can set the beat."
@@ -1144,7 +1149,7 @@
 	attack_verb_continuous = list("clubs", "beats", "pummels")
 	attack_verb_simple = list("club", "beat", "pummel")
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	actions_types = list(/datum/action/item_action/vortex_recall)
+	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/innate/dash/hierophant)
 
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
@@ -1170,8 +1175,7 @@
 		if(I != src)
 			user.dropItemToGround(I)
 	for(var/turf/T in RANGE_TURFS(1, user))
-		var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, TRUE)
-		B.damage = 0
+		new /obj/effect/temp_visual/hierophant/blast/visual(T, user, TRUE)
 	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
 	qdel(user)
 
@@ -1265,10 +1269,10 @@
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
-			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
+			var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(t, user, TRUE) //blasts produced will not hurt allies
 			B.damage = 30
 		for(var/t in RANGE_TURFS(1, source))
-			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
+			var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(t, user, TRUE) //but absolutely will hurt enemies
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along

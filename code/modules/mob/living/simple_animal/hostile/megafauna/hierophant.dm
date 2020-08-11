@@ -332,10 +332,10 @@ Difficulty: Hard
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, src)
 	for(var/t in RANGE_TURFS(1, T))
-		var/obj/effect/temp_visual/hierophant/blast/B = new(t, src, FALSE)
+		var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(t, src, FALSE)
 		B.damage = 30
 	for(var/t in RANGE_TURFS(1, source))
-		var/obj/effect/temp_visual/hierophant/blast/B = new(t, src, FALSE)
+		var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(t, src, FALSE)
 		B.damage = 30
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	SLEEP_CHECK_DEATH(1)
@@ -602,7 +602,7 @@ Difficulty: Hard
 				sleep(speed)
 			targetturf = get_turf(target)
 /obj/effect/temp_visual/hierophant/chaser/proc/make_blast()
-	var/obj/effect/temp_visual/hierophant/blast/B = new(loc, caster, friendly_fire_check)
+	var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(loc, caster, friendly_fire_check)
 	B.damage = damage
 	B.monster_damage_boost = monster_damage_boost
 
@@ -634,13 +634,15 @@ Difficulty: Hard
 	light_power = 2
 	desc = "Get out of the way!"
 	duration = 9
+
+/obj/effect/temp_visual/hierophant/blast/damaging
 	var/damage = 10 //how much damage do we do?
 	var/monster_damage_boost = TRUE //do we deal extra damage to monsters? Used by the boss
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
 
-/obj/effect/temp_visual/hierophant/blast/Initialize(mapload, new_caster, friendly_fire)
+/obj/effect/temp_visual/hierophant/blast/damaging/Initialize(mapload, new_caster, friendly_fire)
 	. = ..()
 	friendly_fire_check = friendly_fire
 	if(new_caster)
@@ -650,7 +652,7 @@ Difficulty: Hard
 		M.gets_drilled(caster)
 	INVOKE_ASYNC(src, .proc/blast)
 
-/obj/effect/temp_visual/hierophant/blast/proc/blast()
+/obj/effect/temp_visual/hierophant/blast/damaging/proc/blast()
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
@@ -661,12 +663,12 @@ Difficulty: Hard
 	sleep(1.3) //slightly forgiving; the burst animation is 1.5 deciseconds
 	bursting = FALSE //we no longer damage crossers
 
-/obj/effect/temp_visual/hierophant/blast/Crossed(atom/movable/AM)
+/obj/effect/temp_visual/hierophant/blast/damaging/Crossed(atom/movable/AM)
 	..()
 	if(bursting)
 		do_damage(get_turf(src))
 
-/obj/effect/temp_visual/hierophant/blast/proc/do_damage(turf/T)
+/obj/effect/temp_visual/hierophant/blast/damaging/proc/do_damage(turf/T)
 	if(!damage)
 		return
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
@@ -700,6 +702,19 @@ Difficulty: Hard
 			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 		playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
 		M.take_damage(damage, BURN, 0, 0)
+
+/obj/effect/temp_visual/hierophant/blast/visual
+	icon_state = "hierophant_blast"
+	name = "vortex blast"
+	light_range = 2
+	light_power = 2
+	desc = "Get out of the way!"
+	duration = 9
+
+/obj/effect/temp_visual/hierophant/blast/visual/Initialize(mapload, new_caster)
+	. = ..()
+	var/turf/src_turf = get_turf(src)
+	playsound(src_turf,'sound/magic/blind.ogg', 125, TRUE, -5)
 
 /obj/effect/hierophant
 	name = "hierophant beacon"
