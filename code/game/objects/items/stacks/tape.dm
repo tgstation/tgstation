@@ -27,6 +27,9 @@
 		to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
 		return
 
+	if(INTERACTING_WITH(user, I))
+		return
+
 	user.visible_message("<span class='notice'>[user] begins wrapping [I] with [src].</span>", "<span class='notice'>You begin wrapping [I] with [src].</span>")
 
 	if(do_after(user, 30, target=I))
