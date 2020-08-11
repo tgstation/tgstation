@@ -132,7 +132,7 @@
 		. += neighbor
 
 /obj/structure/industrial_lift/proc/travel(going)
-	var/list/things2move = lift_load.Copy()
+	var/list/things2move = LAZYCOPY(lift_load)
 	var/turf/destination
 	if(!isturf(going))
 		destination = get_step_multiz(src, going)
