@@ -541,7 +541,6 @@
 			if(has_buckled_mobs())
 				break //only capture one mob at a time
 
-
 /obj/structure/spacevine/proc/entangle(mob/living/V)
 	if(!V || isvineimmune(V))
 		return
