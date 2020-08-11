@@ -114,7 +114,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.incapacitated() || !usr.is_literate())
+	if(!usr.can_read(src) || usr.incapacitated(TRUE, TRUE) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -144,7 +144,7 @@
 	if(!in_range(user, src) && !isobserver(user))
 		. += "<span class='warning'>You're too far away to read it!</span>"
 		return
-	if(user.is_literate())
+	if(user.can_read(src))
 		ui_interact(user)
 		return
 	. += "<span class='warning'>You cannot read it!</span>"
