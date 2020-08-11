@@ -245,7 +245,7 @@
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
-	AM.pulledby = src
+	AM.set_pulledby(src)
 	setGrabState(state)
 	pulling.set_sidestep(TRUE)
 	if(ismob(AM))
@@ -258,17 +258,23 @@
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
-	if(!pulling)
-		return
-	pulling.pulledby = null
-	pulling.set_sidestep(initial(pulling.can_sidestep))
-	var/atom/movable/ex_pulled = pulling
-	pulling = null
-	setGrabState(0)
-	if(isliving(ex_pulled))
-		var/mob/living/L = ex_pulled
-		L.update_mobility()// mob gets up if it was lyng down in a chokehold
-		L.update_movespeed() // set their movespeed to the usual
+	if(pulling)
+		pulling.set_pulledby(null)
+		pulling.set_sidestep(initial(pulling.can_sidestep))
+		var/atom/movable/ex_pulled = pulling
+		setGrabState(GRAB_PASSIVE)
+		pulling = null
+		if(isliving(ex_pulled))
+			var/mob/living/L = ex_pulled
+			L.update_mobility()// mob gets up if it was lyng down in a chokehold
+			L.update_movespeed() // set their movespeed to the usual
+
+///Reports the event of the change in value of the pulledby variable.
+/atom/movable/proc/set_pulledby(new_pulledby)
+	if(new_pulledby == pulledby)
+		return FALSE //null signals there was a change, be sure to return FALSE if none happened here.
+	. = pulledby
+	pulledby = new_pulledby
 
 /atom/movable/proc/Move_Pulled(atom/A, params)
 	if(!check_pulling())
@@ -1102,7 +1108,20 @@
   * This exists to act as a hook for behaviour
   */
 /atom/movable/proc/setGrabState(newstate)
+	if(newstate == grab_state)
+		return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
+	. = grab_state
 	grab_state = newstate
+	switch(.) //Previous state.
+		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
+			if(grab_state >= GRAB_NECK)
+				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+	switch(grab_state) //Current state.
+		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
+			if(. >= GRAB_NECK)
+				REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
