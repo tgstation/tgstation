@@ -17,6 +17,8 @@
 	speak_chance = 1
 	turns_per_move = 10
 	can_be_held = TRUE
+	pet_bonus = TRUE
+	pet_bonus_emote = "woofs happily!"
 	var/turns_since_scan = 0
 	var/obj/movement_target
 
@@ -125,6 +127,10 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
 	held_state = "pug"
+
+/mob/living/simple_animal/pet/dog/pug/mcgriff
+	name = "McGriff"
+	desc = "This dog can tell someting smells around here, and that something is CRIME!"
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	name = "Exotic Corgi"

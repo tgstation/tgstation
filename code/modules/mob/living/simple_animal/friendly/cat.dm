@@ -43,6 +43,8 @@
 	collar_type = "cat"
 	can_be_held = TRUE
 	held_state = "cat2"
+	pet_bonus = TRUE
+	pet_bonus_emote = "purrs!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 	///if there's a can of opened catfood we're hunting after
