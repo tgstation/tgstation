@@ -136,9 +136,9 @@
 	hue = "#ff7700"
 	quality = MINOR_NEGATIVE
 
+/// Destroys any vine on spread-target's tile. The checks for if this should be done are in the spread() proc.
 /datum/spacevine_mutation/vine_eating/on_spread(obj/structure/spacevine/holder, turf/target)
-	var/obj/structure/spacevine/prey
-	for(prey in target) // Destroys any vine on target tile. The checks for if this should be done are in the spread() proc.
+	for(var/obj/structure/spacevine/prey in target)
 		qdel(prey)
 
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
@@ -147,15 +147,18 @@
 	severity = 3
 	quality = NEGATIVE
 
+/// Checks mobs on spread-target's turf to see if they should be hit by a damaging proc or not.
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/structure/spacevine/holder, turf/target, mob/living)
-	for(var/mob/living/M in range(0,get_turf(target))) //Targets and checks all mobs on target turf individually.
+	for(var/mob/living/M in target)
 		if(!isvineimmune(M) && M.stat != DEAD) // Don't kill immune creatures. Dead check to prevent log spam when a corpse is trapped between vine eaters.
-			aggrospread_act(holder, M) //aggrospread_act hurts mobs.
+			aggrospread_act(holder, M)
 
+/// What happens if an aggr spreading vine buckles a mob.
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
-	aggrospread_act(holder, buckled) //Hurts mobs every time they get buckled. Immunity check is in the entangle proc. The chance for a throw on buckle is weird but kind of works anyway.
+	aggrospread_act(holder, buckled)
 
-/datum/spacevine_mutation/aggressive_spread/aggrospread_act(obj/structure/spacevine/S, mob/living/M) //Proc to severely punish mobs being in the wrong place at the wrong time.
+/// Hurts mobs. To be used when a vine with aggressive spread mutation spreads into the mob's tile or buckles them.
+/datum/spacevine_mutation/aggressive_spread/aggrospread_act(obj/structure/spacevine/S, mob/living/M)
 	var/mob/living/carbon/C = M //If the mob is carbon then it now also exists as a "C", and not just an M.
 	if(istype(C)) //If the mob (M) is a carbon subtype (C) we move on to pick a more complex damage proc, with damage zones, wounds and armor mitigation.
 		var/obj/item/bodypart/limb = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_CHEST) //Picks a random bodypart. Does not runtime even if it's missing.
@@ -548,13 +551,14 @@
 		to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 		buckle_mob(V, 1)
 
+/// Finds a target tile to spread to. If checks pass it will spread to it and also proc on_spread on target.
 /obj/structure/spacevine/proc/spread()
 	var/direction = pick(GLOB.cardinals)
 	var/turf/stepturf = get_step(src,direction)
 	if(!isspaceturf(stepturf) && stepturf.Enter(src))
 		var/obj/structure/spacevine/spot_taken = locate() in stepturf //Locates any vine on target turf. Calls that vine "spot_taken".
 		var/datum/spacevine_mutation/vine_eating/E = locate() in mutations //Locates the vine eating trait in our own seed and calls it E.
-		if(!spot_taken || (E && (spot_taken && !spot_taken.mutations.Find(E)))) //Proceed if there isn't a vine on the target turf, OR we have vine eater AND the target vine is NOT from our seed.
+		if(!spot_taken || (E && ((spot_taken && !spot_taken.mutations.Find(E))))) //Proceed if there isn't a vine on the target turf, OR we have vine eater AND target vine is from our seed and doesn't. Vines from other seeds are eaten regardless.
 			if(master)
 				for(var/datum/spacevine_mutation/SM in mutations)
 					SM.on_spread(src, stepturf) //Only do the on_spread proc if it actually spreads.
