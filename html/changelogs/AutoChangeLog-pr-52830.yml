@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "The security camera console will now correctly track when viewing moving cyborg cameras."
