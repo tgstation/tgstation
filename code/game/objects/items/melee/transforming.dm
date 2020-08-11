@@ -20,10 +20,10 @@
 	. = ..()
 	if(active)
 		if(attack_verb_on.len)
-			attack_verb = attack_verb_on
+			attack_verb_continuous = attack_verb_on
 	else
 		if(attack_verb_off.len)
-			attack_verb = attack_verb_off
+			attack_verb_continuous = attack_verb_off
 		if(embedding)
 			updateEmbedding()
 	if(sharpness)
@@ -54,7 +54,7 @@
 		hitsound = hitsound_on
 		throw_speed = 4
 		if(attack_verb_on.len)
-			attack_verb = attack_verb_on
+			attack_verb_continuous = attack_verb_on
 		icon_state = icon_state_on
 		w_class = w_class_on
 		if(embedding)
@@ -65,7 +65,7 @@
 		hitsound = initial(hitsound)
 		throw_speed = initial(throw_speed)
 		if(attack_verb_off.len)
-			attack_verb = attack_verb_off
+			attack_verb_continuous = attack_verb_off
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
 		if(embedding)

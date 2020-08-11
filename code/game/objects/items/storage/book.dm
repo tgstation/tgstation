@@ -261,7 +261,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	name = "Syndicate Tome"
-	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
+	attack_verb_continuous = list("attacked", "burned", "blessed", "damned", "scorched")
+	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch")
 	var/uses = 1
 
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
