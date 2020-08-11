@@ -1,4 +1,5 @@
 ///Ter13's edge slide code converted to /tg/ code standards
+/// link: http://www.byond.com/developer/Ter13/EdgeSlideDemo
 /atom/movable/collider/slider
 	density = 1
 	var/atom/movable/proxy
@@ -11,8 +12,9 @@
 
 /atom/movable/collider/slider/proc/slide(atom/movable/self,Dir=0,step_x=0,step_y=0)
 	//might be a depth call, so store old data
+	var/old_bound_width = bound_width
+	var/old_bound_height = bound_height
 	var/old_self = proxy
-	var/old_bounds = bounds
 	var/old_loc = loc
 	var/old_sx = step_x
 	var/old_sy = step_y
@@ -68,10 +70,11 @@
 
 	//restore old data
 	proxy = old_self
-	bounds = old_bounds
 	step_x = old_sx
 	step_y = old_sy
 	loc = old_loc
+	bound_width = old_bound_width
+	bound_height = old_bound_height
 
 //this will position the slider over the calling mob in the correct position
 /atom/movable/collider/slider/proc/locate_corner(atom/movable/self,corner)
