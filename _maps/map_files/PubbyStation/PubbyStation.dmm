@@ -40518,9 +40518,6 @@
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
-"bWh" = (
-/turf/open/floor/plating/asteroid,
-/area/chapel/office)
 "bWi" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
@@ -74051,7 +74048,7 @@ aaa
 tpI
 bNs
 bNs
-bWh
+bOw
 bOw
 bOw
 bOw
