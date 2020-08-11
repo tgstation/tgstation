@@ -279,7 +279,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
 	SLEEP_CHECK_DEATH(2)
-	new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE)
+	new /obj/effect/temp_visual/hierophant/blast/damaging(T, src, FALSE)
 	for(var/d in directions)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
 
@@ -288,7 +288,7 @@ Difficulty: Hard
 	var/turf/previousturf = T
 	var/turf/J = get_step(previousturf, set_dir)
 	for(var/i in 1 to range)
-		new /obj/effect/temp_visual/hierophant/blast(J, src, FALSE)
+		new /obj/effect/temp_visual/hierophant/blast/damaging(J, src, FALSE)
 		previousturf = J
 		J = get_step(previousturf, set_dir)
 
@@ -304,7 +304,7 @@ Difficulty: Hard
 	for(var/t in RANGE_TURFS(11, T))
 		if(t && get_dist(t, T) == 11)
 			new /obj/effect/temp_visual/hierophant/wall(t, src)
-			new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
+			new /obj/effect/temp_visual/hierophant/blast/damaging(t, src, FALSE)
 	if(get_dist(src, T) >= 11) //hey you're out of range I need to get closer to you!
 		INVOKE_ASYNC(src, .proc/blink, T)
 
@@ -361,7 +361,7 @@ Difficulty: Hard
 	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
 	SLEEP_CHECK_DEATH(2)
 	for(var/t in RANGE_TURFS(1, T))
-		new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
+		new /obj/effect/temp_visual/hierophant/blast/damaging(t, src, FALSE)
 
 //expanding square
 /proc/hierophant_burst(mob/caster, turf/original, burst_range, spread_speed = 0.5)
@@ -375,7 +375,7 @@ Difficulty: Hard
 		if(dist > last_dist)
 			last_dist = dist
 			sleep(1 + min(burst_range - last_dist, 12) * spread_speed) //gets faster as it gets further out
-		new /obj/effect/temp_visual/hierophant/blast(T, caster, FALSE)
+		new /obj/effect/temp_visual/hierophant/blast/damaging(T, caster, FALSE)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed)
 	hierophant_burst(src, original, burst_range, spread_speed)
