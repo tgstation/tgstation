@@ -496,9 +496,15 @@
 	result = /obj/structure/curtain
 	category = CAT_MISC
 
-/datum/crafting_recipe/extendohand
-	name = "Extendo-Hand"
+/datum/crafting_recipe/extendohand_r
+	name = "Extendo-Hand (Right Arm)"
 	reqs = list(/obj/item/bodypart/r_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
+	result = /obj/item/extendohand
+	category = CAT_MISC
+
+/datum/crafting_recipe/extendohand_l
+	name = "Extendo-Hand (Left Arm)"
+	reqs = list(/obj/item/bodypart/l_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
 	result = /obj/item/extendohand
 	category = CAT_MISC
 

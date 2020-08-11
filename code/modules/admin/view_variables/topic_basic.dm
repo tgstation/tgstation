@@ -85,8 +85,8 @@
 		else
 			datumname = "element"
 			target._AddElement(lst)
-		log_admin("[key_name(usr)] has added [result] [datumname] to [key_name(src)].")
-		message_admins("<span class='notice'>[key_name_admin(usr)] has added [result] [datumname] to [key_name_admin(src)].</span>")
+		log_admin("[key_name(usr)] has added [result] [datumname] to [key_name(target)].")
+		message_admins("<span class='notice'>[key_name_admin(usr)] has added [result] [datumname] to [key_name_admin(target)].</span>")
 	if(href_list[VV_HK_CALLPROC])
 		usr.client.callproc_datum(target)
 

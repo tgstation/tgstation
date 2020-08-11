@@ -242,13 +242,14 @@ const CfStep2 = (props, context) => {
         </Table.Row>
         <Table.Row>
           <Table.Cell bold position="relative">
-            Card Reader:
+            Secondary Card Reader:
             <Tooltip
               content={multiline`
-                Adds a slot that allows you to manipulate RFID cards.
-                Please note that this is not necessary to allow the device
-                to read your identification, it is just necessary to
-                manipulate other cards.
+                Adds a secondary RFID card reader, for manipulating or
+                reading from a second standard RFID card.
+                Please note that a primary card reader is necessary to
+                allow the device to read your identification, but one
+                is included in the base price.
               `}
               position="right" />
           </Table.Cell>

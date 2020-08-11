@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "The moodlet for giving CPR will now also give to users of defibrillators."
