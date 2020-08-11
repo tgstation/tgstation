@@ -121,7 +121,7 @@
 	lift_load -= AM
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
-	lift_load |= AM
+	LAZYOR(lift_load, AM)
 
 /obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/LMaster)
 	. = list()
