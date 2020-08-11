@@ -336,7 +336,7 @@
 /datum/action/item_action/vortex_recall/IsAvailable()
 	var/turf/current_location = get_turf(target)
 	var/area/current_area = current_location.loc
-	if(current_area.noteleport)
+	if(current_area.area_flags & NOTELEPORT)
 		to_chat(target, "[src] fizzles uselessly.")
 		return
 	if(istype(target, /obj/item/hierophant_club))
