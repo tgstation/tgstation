@@ -17,7 +17,8 @@
 	LAZYOR(lift_platforms, base_lift_platform)
 	var/list/possible_expansions = list(base_lift_platform)
 	while(possible_expansions.len)
-		for(var/obj/structure/industrial_lift/borderline in possible_expansions)
+		for(var/b in possible_expansions)
+			var/obj/structure/industrial_lift/borderline = b
 			var/list/result = borderline.lift_platform_expansion(src)
 			if(result && result.len)
 				for(var/obj/structure/industrial_lift/lift_platform in result)
