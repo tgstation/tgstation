@@ -3,7 +3,7 @@
 	desc = "A banner with Nanotrasen's logo on it."
 	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
-	item_state = "banner"
+	inhand_icon_state = "banner"
 	force = 8
 	attack_verb = list("forcefully inspired", "violently encouraged", "relentlessly galvanized")
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
@@ -44,9 +44,9 @@
 		if(H.stat == DEAD || H == user)
 			continue
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
-			if(has_job_loyalties && H.mind.assigned_role in job_loyalties)
+			if(has_job_loyalties && (H.mind.assigned_role in job_loyalties))
 				inspired += H
-			else if(has_role_loyalties && H.mind.special_role in role_loyalties)
+			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
 				inspired += H
 		else if(check_inspiration(H))
 			inspired += H
@@ -78,11 +78,14 @@
 	name = "securistan banner"
 	desc = "The banner of Securistan, ruling the station with an iron fist."
 	icon_state = "banner_security"
-	item_state = "banner_security"
+	inhand_icon_state = "banner_security"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Security Officer", "Warden", "Detective", "Head of Security")
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
+
+/obj/item/banner/security/Initialize()
+	. = ..()
+	job_loyalties = GLOB.security_positions
 
 /obj/item/banner/security/mundane
 	inspiration_available = FALSE
@@ -99,11 +102,14 @@
 	name = "meditopia banner"
 	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
 	icon_state = "banner_medical"
-	item_state = "banner_medical"
+	inhand_icon_state = "banner_medical"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
 	warcry = "No wounds cannot be healed!"
+
+/obj/item/banner/medical/Initialize()
+	. = ..()
+	job_loyalties = GLOB.medical_positions
 
 /obj/item/banner/medical/mundane
 	inspiration_available = FALSE
@@ -128,11 +134,14 @@
 	name = "sciencia banner"
 	desc = "The banner of Sciencia, bold and daring thaumaturges and researchers that take the path less traveled."
 	icon_state = "banner_science"
-	item_state = "banner_science"
+	inhand_icon_state = "banner_science"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Scientist", "Roboticist", "Research Director")
 	warcry = "For Cuban Pete!"
+
+/obj/item/banner/science/Initialize()
+	. = ..()
+	job_loyalties = GLOB.science_positions
 
 /obj/item/banner/science/mundane
 	inspiration_available = FALSE
@@ -152,11 +161,14 @@
 	name = "cargonia banner"
 	desc = "The banner of the eternal Cargonia, with the mystical power of conjuring any object into existence."
 	icon_state = "banner_cargo"
-	item_state = "banner_cargo"
+	inhand_icon_state = "banner_cargo"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Cargo Technician", "Shaft Miner", "Quartermaster")
 	warcry = "Hail Cargonia!"
+
+/obj/item/banner/cargo/Initialize()
+	. = ..()
+	job_loyalties = GLOB.supply_positions
 
 /obj/item/banner/cargo/mundane
 	inspiration_available = FALSE
@@ -173,11 +185,14 @@
 	name = "engitopia banner"
 	desc = "The banner of Engitopia, wielders of limitless power."
 	icon_state = "banner_engineering"
-	item_state = "banner_engineering"
+	inhand_icon_state = "banner_engineering"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
 	warcry = "All hail lord Singuloth!!"
+
+/obj/item/banner/engineering/Initialize()
+	. = ..()
+	job_loyalties = GLOB.engineering_positions
 
 /obj/item/banner/engineering/mundane
 	inspiration_available = FALSE
@@ -197,8 +212,11 @@
 	name = "command banner"
 	desc = "The banner of Command, a staunch and ancient line of bueraucratic kings and queens."
 	//No icon state here since the default one is the NT banner
-	job_loyalties = list("Captain", "Head of Personnel", "Chief Engineer", "Head of Security", "Research Director", "Chief Medical Officer")
 	warcry = "Hail Nanotrasen!"
+
+/obj/item/banner/command/Initialize()
+	. = ..()
+	job_loyalties = GLOB.command_positions
 
 /obj/item/banner/command/mundane
 	inspiration_available = FALSE
@@ -217,17 +235,17 @@
 /obj/item/banner/red
 	name = "red banner"
 	icon_state = "banner-red"
-	item_state = "banner-red"
+	inhand_icon_state = "banner-red"
 	desc = "A banner with the logo of the red deity."
 
 /obj/item/banner/blue
 	name = "blue banner"
 	icon_state = "banner-blue"
-	item_state = "banner-blue"
+	inhand_icon_state = "banner-blue"
 	desc = "A banner with the logo of the blue deity."
 
 /obj/item/storage/backpack/bannerpack
-	name = "nanotrasen banner backpack"
+	name = "\improper Nanotrasen banner backpack"
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
 	icon_state = "bannerpack"
 
@@ -280,7 +298,7 @@
 /obj/item/clothing/head/helmet/plate/crusader/prophet
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
-	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	flags_1 = 0
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 70, "bio" = 50, "rad" = 50, "fire" = 60, "acid" = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64

@@ -12,7 +12,7 @@
   * - Charges at the target after a telegraph, throwing them across the arena should it connect.
   * - Legionnaire's head detaches, attacking as it's own entity.  Has abilities of it's own later into the fight.  Once dead, regenerates after a brief period.  If the skill is used while the head is off, it will be killed.
   * - Leaves a pile of bones at your location.  Upon using this skill again, you'll swap locations with the bone pile.
-  * - Spews a cloud of smoke from it's maw, wherever said maw is.  
+  * - Spews a cloud of smoke from it's maw, wherever said maw is.
   * A unique fight incorporating the head mechanic of legion into a whole new beast.  Combatants will need to make sure the tag-team of head and body don't lure them into a deadly trap.
   */
 
@@ -24,8 +24,9 @@
 	icon_aggro = "legionnaire"
 	icon_dead = "legionnaire_dead"
 	icon_gib = "syndicate_gib"
-	maxHealth = 800
-	health = 800
+	health_doll_icon = "legionnaire"
+	maxHealth = 1000
+	health = 1000
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attack_verb_continuous = "slashes its arms at"
@@ -43,35 +44,37 @@
 								/datum/action/innate/elite_attack/head_detach,
 								/datum/action/innate/elite_attack/bonfire_teleport,
 								/datum/action/innate/elite_attack/spew_smoke)
-								
+
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/myhead = null
 	var/obj/structure/legionnaire_bonfire/mypile = null
 	var/has_head = TRUE
-	
+	/// Whether or not the legionnaire is currently charging, used to deny movement input if he is
+	var/charging = FALSE
+
 /datum/action/innate/elite_attack/legionnaire_charge
 	name = "Legionnaire Charge"
 	button_icon_state = "legionnaire_charge"
 	chosen_message = "<span class='boldwarning'>You will attempt to grab your opponent and throw them.</span>"
 	chosen_attack_num = LEGIONNAIRE_CHARGE
-	
+
 /datum/action/innate/elite_attack/head_detach
 	name = "Release Head"
 	button_icon_state = "head_detach"
 	chosen_message = "<span class='boldwarning'>You will now detach your head or kill it if it is already released.</span>"
 	chosen_attack_num = HEAD_DETACH
-	
+
 /datum/action/innate/elite_attack/bonfire_teleport
 	name = "Bonfire Teleport"
 	button_icon_state = "bonfire_teleport"
 	chosen_message = "<span class='boldwarning'>You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using this move on the same tile as your active bonfire removes it.</span>"
 	chosen_attack_num = BONFIRE_TELEPORT
-	
+
 /datum/action/innate/elite_attack/spew_smoke
 	name = "Spew Smoke"
 	button_icon_state = "spew_smoke"
 	chosen_message = "<span class='boldwarning'>Your head will spew smoke in an area, wherever it may be.</span>"
 	chosen_attack_num = SPEW_SMOKE
-	
+
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/OpenFire()
 	if(client)
 		switch(chosen_attack)
@@ -94,31 +97,51 @@
 			bonfire_teleport()
 		if(SPEW_SMOKE)
 			spew_smoke()
-	
+
+/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/Move()
+	if(charging)
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/MiddleClickOn(atom/A)
+	. = ..()
+	if(!myhead)
+		return
+	var/turf/T = get_turf(A)
+	if(T)
+		myhead.LoseTarget()
+		myhead.Goto(T, myhead.move_to_delay)
+
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge(target)
-	ranged_cooldown = world.time + 50
+	ranged_cooldown = world.time + 3.5 SECONDS
+	charging = TRUE
 	var/dir_to_target = get_dir(get_turf(src), get_turf(target))
 	var/turf/T = get_step(get_turf(src), dir_to_target)
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 6)
 		new /obj/effect/temp_visual/dragon_swoop/legionnaire(T)
 		T = get_step(T, dir_to_target)
 	playsound(src,'sound/magic/demon_attack1.ogg', 200, 1)
 	visible_message("<span class='boldwarning'>[src] prepares to charge!</span>")
-	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, dir_to_target, 0), 5)
-	
-/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge_2(var/move_dir, var/times_ran)
-	if(times_ran >= 4)
+	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, dir_to_target, 0), 4)
+
+/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge_2(move_dir, times_ran)
+	if(times_ran >= 6)
+		charging = FALSE
 		return
 	var/turf/T = get_step(get_turf(src), move_dir)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
 	if(T.density)
+		charging = FALSE
 		return
 	for(var/obj/structure/window/W in T.contents)
+		charging = FALSE
 		return
 	for(var/obj/machinery/door/D in T.contents)
-		return
+		if(D.density)
+			charging = FALSE
+			return
 	forceMove(T)
 	playsound(src,'sound/effects/bang.ogg', 200, 1)
 	var/list/hit_things = list()
@@ -127,13 +150,13 @@
 		if(faction_check_mob(L))
 			return
 		hit_things += L
-		visible_message("<span class='boldwarning'>[src] attacks [L] with much force!</span>")
-		to_chat(L, "<span class='userdanger'>[src] grabs you and throws you with much force!</span>")
+		visible_message("<span class='boldwarning'>[src] tramples and kicks [L]!</span>")
+		to_chat(L, "<span class='userdanger'>[src] tramples you and kicks you away!</span>")
 		L.safe_throw_at(throwtarget, 10, 1, src)
 		L.Paralyze(20)
 		L.adjustBruteLoss(50)
-	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 2)
-		
+	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 1.5)
+
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/head_detach(target)
 	ranged_cooldown = world.time + 10
 	if(myhead != null)
@@ -146,22 +169,21 @@
 		icon_aggro = "legionnaire_headless"
 		visible_message("<span class='boldwarning'>[src]'s head flies off!</span>")
 		var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/newhead = new /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead(loc)
-		newhead.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 		newhead.GiveTarget(target)
 		newhead.faction = faction.Copy()
 		myhead = newhead
 		myhead.body = src
 		if(health < maxHealth * 0.25)
+			myhead.melee_damage_lower = 40
+			myhead.melee_damage_upper = 40
+		else if(health < maxHealth * 0.5)
 			myhead.melee_damage_lower = 30
 			myhead.melee_damage_upper = 30
-		else if(health < maxHealth * 0.5)
-			myhead.melee_damage_lower = 20
-			myhead.melee_damage_upper = 20
-		
+
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/onHeadDeath()
 	myhead = null
 	addtimer(CALLBACK(src, .proc/regain_head), 50)
-	
+
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/regain_head()
 	has_head = TRUE
 	if(stat == DEAD)
@@ -193,7 +215,7 @@
 		forceMove(pileturf)
 		visible_message("<span class='boldwarning'>[src] forms from the bonfire!</span>")
 		mypile.forceMove(legionturf)
-		
+
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/spew_smoke()
 	ranged_cooldown = world.time + 60
 	var/turf/T = null
@@ -210,7 +232,7 @@
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(2, T)
 	smoke.start()
-	
+
 //The legionnaire's head.  Basically the same as any legion head, but we have to tell our creator when we die so they can generate another head.
 /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead
 	name = "legionnaire head"
@@ -220,10 +242,10 @@
 	icon_aggro = "legionnaire_head"
 	icon_dead = "legionnaire_dead"
 	icon_gib = "syndicate_gib"
-	maxHealth = 80
-	health = 80
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	maxHealth = 200
+	health = 200
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	attack_verb_continuous = "bites at"
 	attack_verb_simple = "bite at"
 	attack_sound = 'sound/effects/curse1.ogg'
@@ -235,12 +257,12 @@
 	faction = list()
 	ranged = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/body = null
-	
+
 /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/death()
 	. = ..()
 	if(body)
 		body.onHeadDeath()
-	
+
 //The legionnaire's bonfire, which can be swapped positions with.  Also sets flammable living beings on fire when they walk over it.
 /obj/structure/legionnaire_bonfire
 	name = "bone pile"
@@ -252,22 +274,22 @@
 	anchored = TRUE
 	density = FALSE
 	light_range = 4
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/myowner = null
-	
-	
-/obj/structure/legionnaire_bonfire/Entered(atom/movable/mover, turf/target)
+
+
+/obj/structure/legionnaire_bonfire/Entered(atom/movable/mover, atom/target)
 	if(isliving(mover))
 		var/mob/living/L = mover
 		L.adjust_fire_stacks(3)
 		L.IgniteMob()
 	. = ..()
-	
+
 /obj/structure/legionnaire_bonfire/Destroy()
 	if(myowner != null)
 		myowner.mypile = null
 	. = ..()
-	
+
 //The visual effect which appears in front of legionnaire when he goes to charge.
 /obj/effect/temp_visual/dragon_swoop/legionnaire
 	duration = 10
@@ -276,16 +298,18 @@
 /obj/effect/temp_visual/dragon_swoop/legionnaire/Initialize()
 	. = ..()
 	transform *= 0.33
-	
+
 // Legionnaire's loot: Legionnaire Spine
 
 /obj/item/crusher_trophy/legionnaire_spine
 	name = "legionnaire spine"
-	desc = "The spine of a legionnaire.  It almost feels like it's moving..."
+	desc = "The spine of a legionnaire. With some creativity, you could use it as a crusher trophy. Alternatively, shaking it might do something as well."
 	icon = 'icons/obj/lavaland/elite_trophies.dmi'
 	icon_state = "legionnaire_spine"
 	denied_type = /obj/item/crusher_trophy/legionnaire_spine
 	bonus_value = 20
+	/// Time at which the item becomes usable again
+	var/next_use_time
 
 /obj/item/crusher_trophy/legionnaire_spine/effect_desc()
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
@@ -294,7 +318,20 @@
 	if(!rand(1, 100) <= bonus_value || target.stat == DEAD)
 		return
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
-	A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	A.GiveTarget(target)
-	A.friends = user
+	A.friends += user
 	A.faction = user.faction.Copy()
+
+/obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
+	if(!isliving(user))
+		return
+	var/mob/living/LivingUser = user
+	if(next_use_time > world.time)
+		LivingUser.visible_message("<span class='warning'>[LivingUser] shakes the [src], but nothing happens...</span>")
+		to_chat(LivingUser, "<b>You need to wait longer to use this again.</b>")
+		return
+	LivingUser.visible_message("<span class='boldwarning'>[LivingUser] shakes the [src] and summons a legion skull!</span>")
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/LegionSkull = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(LivingUser.loc)
+	LegionSkull.friends += LivingUser
+	LegionSkull.faction = LivingUser.faction.Copy()
+	next_use_time = world.time + 4 SECONDS

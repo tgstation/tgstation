@@ -18,12 +18,14 @@
 	turns_per_move = 10
 	icon = 'icons/mob/penguins.dmi'
 	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/reagent_containers/food/snacks/meat/slab/penguin = 3)
+	pet_bonus = TRUE
+	pet_bonus_emote = "honks happily!"
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
 /mob/living/simple_animal/pet/penguin/Initialize()
 	. = ..()
-	AddComponent(/datum/component/waddling)
+	AddElement(/datum/element/waddling)
 
 /mob/living/simple_animal/pet/penguin/emperor
 	name = "Emperor penguin"
@@ -55,3 +57,4 @@
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/reagent_containers/food/snacks/meat/slab/penguin = 1)
+

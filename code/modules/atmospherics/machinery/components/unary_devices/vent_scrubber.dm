@@ -11,8 +11,8 @@
 	active_power_usage = 60
 	can_unwrench = TRUE
 	welded = FALSE
-	level = 1
 	layer = GAS_SCRUBBER_LAYER
+	hide = TRUE
 
 	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
@@ -146,7 +146,7 @@
 			scrub(tile)
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/tile)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(turf/tile)
 	if(!istype(tile))
 		return FALSE
 	var/datum/gas_mixture/environment = tile.return_air()

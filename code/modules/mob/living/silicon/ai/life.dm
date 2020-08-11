@@ -40,8 +40,8 @@
 
 		if(!lacks_power())
 			var/area/home = get_area(src)
-			if(home.powered(EQUIP))
-				home.use_power(1000, EQUIP)
+			if(home.powered(AREA_USAGE_EQUIP))
+				home.use_power(1000, AREA_USAGE_EQUIP)
 
 			if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 				ai_restore_power()
@@ -62,7 +62,7 @@
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss()
+	set_health(maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss())
 	update_stat()
 	diag_hud_set_health()
 	disconnect_shell()
@@ -75,7 +75,7 @@
 			death()
 			return
 		else if(stat == UNCONSCIOUS)
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()
@@ -122,7 +122,7 @@
 		AIarea = get_area(src)
 		if(AIarea)
 			for (var/obj/machinery/power/apc/APC in AIarea)
-				if (!(APC.stat & BROKEN))
+				if (!(APC.machine_stat & BROKEN))
 					theAPC = APC
 					break
 		if (!theAPC)
@@ -150,7 +150,7 @@
 				to_chat(src, "<span class='notice'>Receiving control information from APC.</span>")
 				sleep(2)
 				apc_override = 1
-				theAPC.ui_interact(src, state = GLOB.conscious_state)
+				theAPC.ui_interact(src)
 				apc_override = 0
 				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
 		sleep(50)

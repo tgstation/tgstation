@@ -2,7 +2,7 @@
 	name = "lockbox"
 	desc = "A locked box."
 	icon_state = "lockbox+l"
-	item_state = "syringe_kit"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -54,7 +54,7 @@
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
-			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
+			visible_message("<span class='warning'>\The [src] is broken by [user] with an electromagnetic card!</span>")
 			return
 
 /obj/item/storage/lockbox/Entered()
@@ -88,7 +88,7 @@
 	name = "medal box"
 	desc = "A locked box used to store medals of honor."
 	icon_state = "medalbox+l"
-	item_state = "syringe_kit"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -128,29 +128,34 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/conduct(src)
 
-/obj/item/storage/lockbox/medal/update_icon()
-	cut_overlays()
+/obj/item/storage/lockbox/medal/update_icon_state()
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(locked)
 		icon_state = "medalbox+l"
-		open = FALSE
 	else
 		icon_state = "medalbox"
 		if(open)
 			icon_state += "open"
 		if(broken)
 			icon_state += "+b"
-		if(contents && open)
-			for (var/i in 1 to contents.len)
-				var/obj/item/clothing/accessory/medal/M = contents[i]
-				var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
-				if(i > 1 && i <= 5)
-					medalicon.pixel_x += ((i-1)*3)
-				else if(i > 5)
-					medalicon.pixel_y -= 7
-					medalicon.pixel_x -= 2
-					medalicon.pixel_x += ((i-6)*3)
-				add_overlay(medalicon)
+
+/obj/item/storage/lockbox/medal/update_overlays()
+	. = ..()
+	if(!contents || !open)
+		return
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
+	if(locked)
+		return
+	for(var/i in 1 to contents.len)
+		var/obj/item/clothing/accessory/medal/M = contents[i]
+		var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
+		if(i > 1 && i <= 5)
+			medalicon.pixel_x += ((i-1)*3)
+		else if(i > 5)
+			medalicon.pixel_y -= 7
+			medalicon.pixel_x -= 2
+			medalicon.pixel_x += ((i-6)*3)
+		. += medalicon
 
 /obj/item/storage/lockbox/medal/sec
 	name = "security medal box"
@@ -185,3 +190,37 @@
 /obj/item/storage/lockbox/medal/sci/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+
+/obj/item/storage/lockbox/order
+	name = "order lockbox"
+	desc = "A box used to secure small cargo orders from being looted by those who didn't order it. Yeah, cargo tech, that means you."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "secure"
+	inhand_icon_state = "sec-case"
+	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
+	w_class = WEIGHT_CLASS_HUGE
+	var/datum/bank_account/buyer_account
+	var/privacy_lock = TRUE
+
+/obj/item/storage/lockbox/order/Initialize(datum/bank_account/_buyer_account)
+	. = ..()
+	buyer_account = _buyer_account
+
+/obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
+	if(!istype(W, /obj/item/card/id))
+		return ..()
+
+	var/obj/item/card/id/id_card = W
+	if(iscarbon(user))
+		add_fingerprint(user)
+
+	if(id_card.registered_account != buyer_account)
+		to_chat(user, "<span class='notice'>Bank account does not match with buyer!</span")
+		return
+
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, !privacy_lock)
+	privacy_lock = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
+	user.visible_message("<span class='notice'>[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock.</span>",
+					"<span class='notice'>You [privacy_lock ? "" : "un"]lock [src]'s privacy lock.</span>")
+

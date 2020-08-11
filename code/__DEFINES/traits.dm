@@ -1,3 +1,6 @@
+#define SIGNAL_ADDTRAIT(trait_ref) "addtrait [trait_ref]"
+#define SIGNAL_REMOVETRAIT(trait_ref) "removetrait [trait_ref]"
+
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
 	do { \
@@ -6,12 +9,14 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
+			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
 		} else { \
 			_L = target.status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
+				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
 			} \
 		} \
 	} while (0)
@@ -31,7 +36,8 @@
 				} \
 			};\
 			if (!length(_L[trait])) { \
-				_L -= trait \
+				_L -= trait; \
+				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait)); \
 			}; \
 			if (!length(_L)) { \
 				target.status_traits = null \
@@ -46,21 +52,33 @@
 			for (var/_T in _L) { \
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
-					_L -= _T } \
+					_L -= _T; \
+					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T)); \
+					}; \
 				};\
-				if (!length(_L)) { \
-					target.status_traits = null\
-				};\
+			if (!length(_L)) { \
+				target.status_traits = null\
+			};\
 		}\
 	} while (0)
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
+#define HAS_TRAIT_FROM_ONLY(target, trait, source) (\
+	target.status_traits ?\
+		(target.status_traits[trait] ?\
+			((source in target.status_traits[trait]) && (length(target.status_traits) == 1))\
+			: FALSE)\
+		: FALSE)
+#define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
 */
 
 //mob traits
+#define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
+#define TRAIT_IMMOBILIZED		"immobilized" //Prevents voluntary movement.
+#define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
 #define TRAIT_EMOTEMUTE			"emotemute"
@@ -82,9 +100,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_XENO_HOST			"xeno_host"	//Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_STUNIMMUNE		"stun_immunity"
 #define TRAIT_STUNRESISTANCE    "stun_resistance"
+#define TRAIT_IWASBATONED    	"iwasbatoned" //Anti Dual-baton cooldown bypass exploit.
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
+#define TRAIT_TESLA_SHOCKIMMUNE	"tesla_shock_immunity"
 #define TRAIT_STABLEHEART		"stable_heart"
 #define TRAIT_STABLELIVER		"stable_liver"
 #define TRAIT_RESISTHEAT		"resist_heat"
@@ -92,7 +112,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESISTCOLD		"resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE	"resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE	"resist_low_pressure"
+#define TRAIT_BOMBIMMUNE		"bomb_immunity"
 #define TRAIT_RADIMMUNE			"rad_immunity"
+#define TRAIT_GENELESS  		"geneless"
 #define TRAIT_VIRUSIMMUNE		"virus_immunity"
 #define TRAIT_PIERCEIMMUNE		"pierce_immunity"
 #define TRAIT_NODISMEMBER		"dismember_immunity"
@@ -105,7 +127,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EASYDISMEMBER		"easy_dismember"
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"
 #define TRAIT_NOLIMBDISABLE		"no_limb_disable"
-#define TRAIT_EASYLIMBDISABLE	"easy_limb_disable"
+#define TRAIT_EASYLIMBWOUND		"easy_limb_wound"
+#define TRAIT_HARDLIMBWOUND		"hard_limb_wound"
 #define TRAIT_TOXINLOVER		"toxinlover"
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
@@ -143,22 +166,49 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BOOZE_SLIDER      "booze-slider"
 #define TRAIT_QUICK_CARRY		"quick-carry"
 #define TRAIT_QUICKER_CARRY		"quicker-carry"
+#define TRAIT_QUICK_BUILD		"quick-build"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_UNSTABLE			"unstable"
 #define TRAIT_OIL_FRIED			"oil_fried"
 #define TRAIT_MEDICAL_HUD		"med_hud"
 #define TRAIT_SECURITY_HUD		"sec_hud"
+#define TRAIT_DIAGNOSTIC_HUD	"diag_hud" //for something granting you a diagnostic hud
 #define TRAIT_MEDIBOTCOMINGTHROUGH "medbot" //Is a medbot healing you
 #define TRAIT_PASSTABLE			"passtable"
 #define TRAIT_NOFLASH			"noflash" //Makes you immune to flashes
 #define TRAIT_XENO_IMMUNE		"xeno_immune"//prevents xeno huggies implanting skeletons
+#define TRAIT_NAIVE				"naive"
+#define TRAIT_PRIMITIVE			"primitive"
+#define TRAIT_GUNFLIP			"gunflip"
+#define TRAIT_SPECIAL_TRAUMA_BOOST	"special_trauma_boost" ///Increases chance of getting special traumas, makes them harder to cure
+#define TRAIT_BLOODCRAWL_EAT	"bloodcrawl_eat"
+#define TRAIT_SPACEWALK			"spacewalk"
+#define TRAIT_GAMERGOD			"gamer-god" //double arcade prizes
+#define TRAIT_GIANT				"giant"
+#define TRAIT_DWARF				"dwarf"
+#define TRAIT_SILENT_FOOTSTEPS	"silent_footsteps" //makes your footsteps completely silent
+#define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good....
+#define TRAIT_TUMOR_SUPPRESSED	"brain_tumor_suppressed" //prevents the damage done by a brain tumor
+#define TRAIT_PERMANENTLY_ONFIRE	"permanently_onfire" //overrides the update_fire proc to always add fire (for lava)
+
+//SKILLS
+#define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
+#define TRAIT_WINE_TASTER "wine_taster"
+#define TRAIT_BONSAI "bonsai"
+#define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
+#define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
+#define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 
 //non-mob traits
-#define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+#define TRAIT_PARALYSIS				"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+
+///Used for managing KEEP_TOGETHER in [appearance_flags]
+#define TRAIT_KEEP_TOGETHER 	"keep-together"
 
 // item traits
-#define TRAIT_NODROP            "nodrop"
-#define TRAIT_T_RAY_VISIBLE     "t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
+#define TRAIT_NODROP			"nodrop"
+#define TRAIT_NO_STORAGE_INSERT	"no_storage_insert" //cannot be inserted in a storage.
+#define TRAIT_T_RAY_VISIBLE		"t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 
 //quirk traits
@@ -185,11 +235,20 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_GRABWEAKNESS		"grab_weakness"
 #define TRAIT_SNOB				"snob"
+#define TRAIT_BALD				"bald"
+
+//Medical Categories for quirks
+#define CAT_QUIRK_ALL 0
+#define CAT_QUIRK_NOTES 1
+#define CAT_QUIRK_MINOR_DISABILITY 2
+#define CAT_QUIRK_MAJOR_DISABILITY 3
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
+#define GENERIC_ITEM_TRAIT "generic_item"
 #define UNCONSCIOUS_BLIND "unconscious_blind"
 #define EYE_DAMAGE "eye_damage"
+#define EAR_DAMAGE "ear_damage"
 #define GENETIC_MUTATION "genetic"
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
@@ -208,9 +267,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
+#define MASK_TRAIT "mask" //inherited from the mask
+#define SHOES_TRAIT "shoes" //inherited from your sweet kicks
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
+#define CRIT_HEALTH_TRAIT "crit_health"
+#define OXYLOSS_TRAIT "oxyloss"
+#define TURF_TRAIT "turf"
+#define BUCKLED_TRAIT "buckled" //trait associated to being buckled
+#define CHOKEHOLD_TRAIT "chokehold" //trait associated to being held in a chokehold
+#define RESTING_TRAIT "resting" //trait associated to resting
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
@@ -251,3 +318,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
+#define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
+#define SKILLCHIP_TRAIT "skillchip"
+#define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
+#define LOCKED_BORG_TRAIT "locked-borg"

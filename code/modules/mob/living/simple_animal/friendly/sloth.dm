@@ -25,6 +25,9 @@
 	maxHealth = 50
 	speed = 10
 	glide_size = 2
+	held_state = "sloth"
+	pet_bonus = TRUE
+	pet_bonus_emote = "slowly smiles!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

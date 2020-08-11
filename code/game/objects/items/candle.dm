@@ -5,7 +5,7 @@
 		humankind. The jewelry he kept for himself."
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
-	item_state = "candle1"
+	inhand_icon_state = "candle1"
 	w_class = WEIGHT_CLASS_TINY
 	light_color = LIGHT_COLOR_FIRE
 	heat = 1000
@@ -19,7 +19,7 @@
 	if(start_lit)
 		light()
 
-/obj/item/candle/update_icon()
+/obj/item/candle/update_icon_state()
 	icon_state = "candle[(wax > 400) ? ((wax > 750) ? 1 : 2) : 3][lit ? "_lit" : ""]"
 
 /obj/item/candle/attackby(obj/item/W, mob/user, params)

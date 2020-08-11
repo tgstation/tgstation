@@ -103,12 +103,10 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space)
 "av" = (
-/obj/structure/stairs{
-	dir = 1
-	},
+/obj/structure/stairs/north,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "aw" = (
@@ -417,7 +415,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bF" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/chief_medical,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bG" = (
@@ -910,7 +908,7 @@
 "dO" = (
 /obj/structure/table,
 /obj/machinery/light,
-/obj/item/twohanded/fireaxe,
+/obj/item/fireaxe,
 /obj/item/extinguisher,
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -1025,7 +1023,7 @@
 	},
 /area/hallway/secondary/service)
 "eC" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/maintenance/department/bridge)
 "eD" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1092,7 +1090,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "eQ" = (
-/obj/structure/fluff/railing{
+/obj/structure/railing{
 	icon_state = "railing";
 	dir = 4
 	},
@@ -1170,7 +1168,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "hY" = (
-/obj/structure/fluff/railing/corner,
+/obj/structure/railing/corner,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "ij" = (
@@ -1185,16 +1183,15 @@
 /turf/open/floor/plating,
 /area/space)
 "iq" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/construction)
 "iu" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/hallway/secondary/service)
 "iH" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/structure/fluff/railing/corner{
+/obj/structure/railing/corner{
 	icon_state = "railing_corner";
 	dir = 4
 	},
@@ -1218,8 +1215,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "jD" = (
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
+/obj/structure/railing/corner{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1267,7 +1263,7 @@
 	},
 /area/hallway/secondary/service)
 "nx" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "nz" = (
 /obj/machinery/light{
@@ -1276,8 +1272,7 @@
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "nF" = (
-/obj/structure/cable,
-/obj/machinery/power/deck_relay,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "od" = (
@@ -1312,14 +1307,20 @@
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "qo" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/engine/storage)
+"qx" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/construction)
 "qR" = (
 /obj/effect/turf_decal/stripes/white/line{
 	icon_state = "warningline_white";
 	dir = 9
 	},
-/obj/structure/fluff/railing/corner{
+/obj/structure/railing/corner{
 	icon_state = "railing_corner";
 	dir = 1
 	},
@@ -1329,7 +1330,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/engine/storage)
 "rN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1344,11 +1345,11 @@
 	},
 /area/hallway/secondary/service)
 "sm" = (
-/obj/structure/stairs,
+/obj/structure/stairs/south,
 /turf/open/floor/plating,
 /area/construction)
 "su" = (
-/obj/structure/fluff/railing{
+/obj/structure/railing{
 	icon_state = "railing";
 	dir = 8
 	},
@@ -1359,7 +1360,7 @@
 	icon_state = "warningline_white";
 	dir = 4
 	},
-/obj/structure/fluff/railing{
+/obj/structure/railing{
 	icon_state = "railing";
 	dir = 8
 	},
@@ -1386,12 +1387,6 @@
 	dir = 1
 	},
 /area/hallway/primary/central)
-"va" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/construction)
 "vt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1449,11 +1444,11 @@
 /turf/open/floor/plasteel,
 /area/construction)
 "zd" = (
-/obj/structure/fluff/railing{
+/obj/structure/railing{
 	icon_state = "railing";
 	dir = 4
 	},
-/obj/structure/fluff/railing{
+/obj/structure/railing{
 	icon_state = "railing";
 	dir = 8
 	},
@@ -1477,7 +1472,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "Ai" = (
-/obj/structure/fluff/railing/corner{
+/obj/structure/railing/corner{
 	icon_state = "railing_corner";
 	dir = 8
 	},
@@ -1503,7 +1498,7 @@
 /area/construction)
 "Bk" = (
 /obj/structure/grille,
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "Bm" = (
 /obj/machinery/light{
@@ -1533,8 +1528,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "CP" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1557,7 +1551,7 @@
 /area/engine/storage)
 "Eb" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/structure/fluff/railing{
+/obj/structure/railing{
 	icon_state = "railing";
 	dir = 1
 	},
@@ -1610,8 +1604,7 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "In" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1621,8 +1614,8 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "IL" = (
-/obj/structure/fluff/railing/corner,
-/obj/structure/fluff/railing/corner{
+/obj/structure/railing/corner,
+/obj/structure/railing/corner{
 	icon_state = "railing_corner";
 	dir = 8
 	},
@@ -1670,7 +1663,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "Lu" = (
-/obj/structure/fluff/railing{
+/obj/structure/railing{
 	icon_state = "railing";
 	dir = 4
 	},
@@ -1694,15 +1687,14 @@
 "Ob" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "Og" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/engine/storage)
 "Pm" = (
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
+/obj/structure/railing/corner{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1746,8 +1738,7 @@
 /turf/open/floor/plasteel,
 /area/construction)
 "Tf" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/structure/railing{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1774,8 +1765,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "Vm" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/engine/storage)
 "Vn" = (
@@ -1797,7 +1787,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "XN" = (
-/obj/structure/fluff/railing,
+/obj/structure/railing,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "XQ" = (
@@ -1811,6 +1801,10 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Zv" = (
+/obj/structure/railing/corner,
+/turf/open/floor/plating,
+/area/construction)
 "ZH" = (
 /obj/structure/disposalpipe/trunk/multiz,
 /turf/open/floor/plating,
@@ -2662,7 +2656,7 @@ gY
 bO
 bO
 yt
-va
+vT
 dn
 dn
 dn
@@ -2886,7 +2880,7 @@ dn
 dn
 dn
 dn
-dn
+Zv
 In
 jD
 dL
@@ -2994,7 +2988,7 @@ dn
 dn
 dn
 dn
-dn
+qx
 CP
 Pm
 ij

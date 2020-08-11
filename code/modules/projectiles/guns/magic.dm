@@ -3,7 +3,7 @@
 	desc = "This staff is boring to watch because even though it came first you've seen everything it can do in other staves for years."
 	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "staffofnothing"
-	item_state = "staff"
+	inhand_icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	fire_sound = 'sound/weapons/emitter.ogg'
@@ -63,8 +63,11 @@
 
 
 /obj/item/gun/magic/process()
+	if (charges >= max_charges)
+		charge_tick = 0
+		return
 	charge_tick++
-	if(charge_tick < recharge_rate || charges >= max_charges)
+	if(charge_tick < recharge_rate)
 		return 0
 	charge_tick = 0
 	charges++
@@ -72,8 +75,6 @@
 		recharge_newshot()
 	return 1
 
-/obj/item/gun/magic/update_icon()
-	return
 
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>The [name] whizzles quietly.</span>")
@@ -85,6 +86,6 @@
 
 /obj/item/gun/magic/vv_edit_var(var_name, var_value)
 	. = ..()
-	switch (var_name)
-		if ("charges")
+	switch(var_name)
+		if(NAMEOF(src, charges))
 			recharge_newshot()

@@ -2,7 +2,7 @@
 	var/viewX
 	var/viewY
 	if(isnum(view))
-		var/totalviewrange = 1 + 2 * view
+		var/totalviewrange = (view < 0 ? -1 : 1) + 2 * view
 		viewX = totalviewrange
 		viewY = totalviewrange
 	else

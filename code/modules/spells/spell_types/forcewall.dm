@@ -5,7 +5,7 @@
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "TARCOL MINTI ZHERI"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	sound = 'sound/magic/forcewall.ogg'
 	action_icon_state = "shield"
 	range = -1
@@ -30,11 +30,11 @@
 	. = ..()
 	wizard = summoner
 
-/obj/effect/forcefield/wizard/CanPass(atom/movable/mover, turf/target)
+/obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(mover == wizard)
 		return TRUE
 	if(ismob(mover))
 		var/mob/M = mover
 		if(M.anti_magic_check(chargecost = 0))
 			return TRUE
-	return FALSE

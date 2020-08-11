@@ -22,14 +22,14 @@
 	. = ..()
 	. += "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>"
 
-/obj/item/computer_hardware/hard_drive/diagnostics(var/mob/user)
+/obj/item/computer_hardware/hard_drive/diagnostics(mob/user)
 	..()
 	// 999 is a byond limit that is in place. It's unlikely someone will reach that many files anyway, since you would sooner run out of space.
 	to_chat(user, "NT-NFS File Table Status: [stored_files.len]/999")
 	to_chat(user, "Storage capacity: [used_capacity]/[max_capacity]GQ")
 
 // Use this proc to add file to the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
-/obj/item/computer_hardware/hard_drive/proc/store_file(var/datum/computer_file/F)
+/obj/item/computer_hardware/hard_drive/proc/store_file(datum/computer_file/F)
 	if(!F || !istype(F))
 		return 0
 
@@ -52,7 +52,7 @@
 	return 1
 
 // Use this proc to remove file from the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
-/obj/item/computer_hardware/hard_drive/proc/remove_file(var/datum/computer_file/F)
+/obj/item/computer_hardware/hard_drive/proc/remove_file(datum/computer_file/F)
 	if(!F || !istype(F))
 		return 0
 
@@ -78,7 +78,7 @@
 	used_capacity = total_size
 
 // Checks whether file can be stored on the hard drive. We can only store unique files, so this checks whether we wouldn't get a duplicity by adding a file.
-/obj/item/computer_hardware/hard_drive/proc/can_store_file(var/datum/computer_file/F)
+/obj/item/computer_hardware/hard_drive/proc/can_store_file(datum/computer_file/F)
 	if(!F || !istype(F))
 		return 0
 
@@ -101,7 +101,7 @@
 
 
 // Tries to find the file by filename. Returns null on failure
-/obj/item/computer_hardware/hard_drive/proc/find_file_by_name(var/filename)
+/obj/item/computer_hardware/hard_drive/proc/find_file_by_name(filename)
 	if(!check_functionality())
 		return null
 
@@ -157,7 +157,7 @@
 	max_capacity = 64
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
-	custom_price = 15
+	custom_price = 150
 
 // Syndicate variant - very slight better
 /obj/item/computer_hardware/hard_drive/small/syndicate
@@ -165,6 +165,17 @@
 	power_usage = 8
 	max_capacity = 70
 	var/datum/antagonist/traitor/traitor_data // Syndicate hard drive has the user's data baked directly into it on creation
+
+/// For tablets given to nuke ops
+/obj/item/computer_hardware/hard_drive/small/nukeops
+	power_usage = 8
+	max_capacity = 70
+
+/obj/item/computer_hardware/hard_drive/small/nukeops/install_default_programs()
+	store_file(new/datum/computer_file/program/computerconfig(src))
+	store_file(new/datum/computer_file/program/ntnetdownload/syndicate(src)) // Syndicate version; automatic access to syndicate apps and no NT apps
+	store_file(new/datum/computer_file/program/filemanager(src))
+	store_file(new/datum/computer_file/program/radar/fission360(src)) //I am legitimately afraid if I don't do this, Ops players will think they just don't get a pinpointer anymore.
 
 /obj/item/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"

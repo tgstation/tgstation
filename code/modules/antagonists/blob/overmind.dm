@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
-
+	see_invisible = SEE_INVISIBLE_LIVING
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -39,6 +39,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/blobwincount = 400
 	var/victory_in_progress = FALSE
 	var/rerolling = FALSE
+	var/announcement_size = 75
+	var/announcement_time
+	var/has_announced = FALSE
 
 /mob/camera/blob/Initialize(mapload, starting_points = 60)
 	validate_location()
@@ -56,6 +59,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(blob_core)
 		blob_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
+	announcement_time = world.time + 6000
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -89,7 +93,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
-	if((A && !A.blob_allowed) || !T || !is_station_level(T.z) || isspaceturf(T))
+	if((A && !(A.area_flags & BLOBS_ALLOWED)) || !T || !is_station_level(T.z) || isspaceturf(T))
 		return FALSE
 	return TRUE
 
@@ -118,6 +122,10 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(!victory_in_progress && max_count < blobs_legit.len)
 		max_count = blobs_legit.len
 
+	if((world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
+		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
+		has_announced = TRUE
+
 /mob/camera/blob/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
@@ -132,7 +140,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 		var/area/Ablob = get_area(T)
 
-		if(!Ablob.blob_allowed)
+		if(!(Ablob.area_flags & BLOBS_ALLOWED))
 			continue
 
 		if(!(ROLE_BLOB in L.faction))
@@ -145,7 +153,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		for(var/area/A in GLOB.sortedAreas)
 			if(!(A.type in GLOB.the_station_areas))
 				continue
-			if(!A.blob_allowed)
+			if(!(A.area_flags & BLOBS_ALLOWED))
 				continue
 			A.color = blobstrain.color
 			A.name = "blob"
@@ -182,7 +190,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	return ..()
 
 /mob/camera/blob/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")
 	blob_help()
 	update_health_hud()
@@ -201,7 +211,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.obj_integrity)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
-	blob_points = CLAMP(blob_points + points, 0, max_blob_points)
+	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_points)]</font></div>"
 
 /mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
@@ -222,7 +232,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/blob_talk(message)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)
 		return

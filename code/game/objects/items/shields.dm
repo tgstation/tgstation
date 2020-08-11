@@ -84,7 +84,7 @@
 	name = "\improper Roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
-	item_state = "roman_shield"
+	inhand_icon_state = "roman_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	transparent = FALSE
@@ -105,10 +105,10 @@
 	name = "wooden buckler"
 	desc = "A medieval wooden buckler."
 	icon_state = "buckler"
-	item_state = "buckler"
+	inhand_icon_state = "buckler"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
@@ -123,12 +123,16 @@
 	name = "strobe shield"
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
 	icon_state = "flashshield"
-	item_state = "flashshield"
+	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash
 
 /obj/item/shield/riot/flash/Initialize()
 	. = ..()
 	embedded_flash = new(src)
+
+/obj/item/shield/riot/flash/ComponentInitialize()
+	. = .. ()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
 	. =  embedded_flash.attack(M, user)
@@ -169,13 +173,13 @@
 	embedded_flash.emp_act(severity)
 	update_icon()
 
-/obj/item/shield/riot/flash/update_icon()
+/obj/item/shield/riot/flash/update_icon_state()
 	if(!embedded_flash || embedded_flash.burnt_out)
 		icon_state = "riot"
-		item_state = "riot"
+		inhand_icon_state = "riot"
 	else
 		icon_state = "flashshield"
-		item_state = "flashshield"
+		inhand_icon_state = "flashshield"
 
 /obj/item/shield/riot/flash/examine(mob/user)
 	. = ..()

@@ -100,8 +100,8 @@
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
 	density = FALSE
 	icon_state = "down"
-	M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
-	M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
+	M.pixel_x = M.get_standard_pixel_x_offset(!(M.mobility_flags & MOBILITY_STAND))
+	M.pixel_y = M.get_standard_pixel_y_offset(!(M.mobility_flags & MOBILITY_STAND))
 
 /obj/item/roller
 	name = "roller bed"
@@ -179,11 +179,20 @@
 	desc = "Seems kind of... fishy."
 	name = "Cayenne's bed"
 	anchored = TRUE
+	
+/obj/structure/bed/dogbed/lia
+	desc = "Seems kind of... fishy."
+	name = "Lia's bed"
+	anchored = TRUE
 
 /obj/structure/bed/dogbed/renault
 	desc = "Renault's bed! Looks comfy. A foxy person needs a foxy pet."
 	name = "Renault's bed"
 	anchored = TRUE
+
+/obj/structure/bed/dogbed/mcgriff
+	desc = "McGriff's bed, because even crimefighters sometimes need a nap."
+	name = "McGriff's bed"
 
 /obj/structure/bed/dogbed/runtime
 	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off."

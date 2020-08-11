@@ -1,3 +1,4 @@
+#define DOOR_CLOSE_WAIT 60 ///Default wait until doors autoclose
 /obj/machinery/door
 	name = "door"
 	desc = "It opens and closes."
@@ -7,11 +8,12 @@
 	density = TRUE
 	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	max_integrity = 350
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
+	ricochet_chance_mod = 0.8
 	damage_deflection = 10
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
@@ -37,6 +39,7 @@
 	var/poddoor = FALSE
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
+	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -142,10 +145,13 @@
 	. = ..()
 	move_update_air(T)
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/door/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
+
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
-	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
@@ -165,7 +171,7 @@
 	. = ..()
 	if(.)
 		return
-	if(try_safety_unlock(user))	
+	if(try_safety_unlock(user))
 		return
 	return try_to_activate_door(user)
 
@@ -206,7 +212,7 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/twohanded/fireaxe)))
+	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
 		if(istype(I, /obj/item/crowbar))
 			var/obj/item/crowbar/C = I
@@ -273,7 +279,7 @@
 			else
 				flick("doorc1", src)
 		if("deny")
-			if(!stat)
+			if(!machine_stat)
 				flick("door_deny", src)
 
 
@@ -296,7 +302,7 @@
 	air_update_turf(1)
 	update_freelook_sight()
 	if(autoclose)
-		addtimer(CALLBACK(src, .proc/close), autoclose)
+		autoclose_in(DOOR_CLOSE_WAIT)
 	return 1
 
 /obj/machinery/door/proc/close()
@@ -308,7 +314,7 @@
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
-					autoclose_in(60)
+					autoclose_in(DOOR_CLOSE_WAIT)
 				return
 
 	operating = TRUE
@@ -325,11 +331,15 @@
 	operating = FALSE
 	air_update_turf(1)
 	update_freelook_sight()
+
+	if(!can_crush)
+		return TRUE
+
 	if(safe)
 		CheckForMobs()
 	else
 		crush()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))
@@ -339,6 +349,11 @@
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
 		L.visible_message("<span class='warning'>[src] closes on [L], crushing [L.p_them()]!</span>", "<span class='userdanger'>[src] closes on you and crushes you!</span>")
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			for(var/i in C.all_wounds) // should probably replace with signal
+				var/datum/wound/W = i
+				W.crush(DOOR_CRUSH_DAMAGE)
 		if(isalien(L))  //For xenos
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
 			L.emote("roar")
@@ -370,7 +385,7 @@
 	return 1
 
 /obj/machinery/door/proc/hasPower()
-	return !(stat & NOPOWER)
+	return !(machine_stat & NOPOWER)
 
 /obj/machinery/door/proc/update_freelook_sight()
 	if(!glass && GLOB.cameranet)
@@ -394,11 +409,11 @@
 	return
 
 /obj/machinery/door/proc/hostile_lockdown(mob/origin)
-	if(!stat) //So that only powered doors are closed.
+	if(!machine_stat) //So that only powered doors are closed.
 		close() //Close ALL the doors!
 
 /obj/machinery/door/proc/disable_lockdown()
-	if(!stat) //Opens only powered doors.
+	if(!machine_stat) //Opens only powered doors.
 		open() //Open everything!
 
 /obj/machinery/door/ex_act(severity, target)
@@ -407,3 +422,10 @@
 
 /obj/machinery/door/GetExplosionBlock()
 	return density ? real_explosion_block : 0
+
+/obj/machinery/door/power_change()
+	. = ..()
+	if(. && !(machine_stat & NOPOWER))
+		autoclose_in(DOOR_CLOSE_WAIT)
+
+#undef DOOR_CLOSE_WAIT

@@ -4,13 +4,14 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAS_FLESH,HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
 	mutanttongue = /obj/item/organ/tongue/lizard
-	mutanttail = /obj/item/organ/tail/lizard
+	mutant_organs = list(/obj/item/organ/tail/lizard)
 	coldmod = 1.5
 	heatmod = 0.67
+	payday_modifier = 0.75
 	default_features = list("mcolor" = "0F0", "tail_lizard" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	attack_verb = "slash"
@@ -24,9 +25,14 @@
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
 	wings_icon = "Dragon"
+	species_language_holder = /datum/language_holder/lizard
+	// Lizards are coldblooded and can stand a greater temperature range than humans
+	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
+	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
-/datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.grant_language(/datum/language/draconic)
+/// Lizards are cold blooded and do not stabilize body temperature naturally
+/datum/species/lizard/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
+	return
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -71,6 +77,31 @@
 		mutant_bodyparts |= "spines"
 	H.update_body()
 
+/datum/species/lizard/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	var/real_tail_type = C.dna.features["tail_lizard"]
+	var/real_spines = C.dna.features["spines"]
+
+	. = ..()
+
+	// Special handler for loading preferences. If we're doing it from a preference load, we'll want
+	// to make sure we give the appropriate lizard tail AFTER we call the parent proc, as the parent
+	// proc will overwrite the lizard tail. Species code at its finest.
+	if(pref_load)
+		C.dna.features["tail_lizard"] = real_tail_type
+		C.dna.features["spines"] = real_spines
+
+		var/obj/item/organ/tail/lizard/new_tail = new /obj/item/organ/tail/lizard()
+
+		new_tail.tail_type = C.dna.features["tail_lizard"]
+		C.dna.species.mutant_bodyparts |= "tail_lizard"
+
+		new_tail.spines = C.dna.features["spines"]
+		C.dna.species.mutant_bodyparts |= "spines"
+
+		// organ.Insert will qdel any existing organs in the same slot, so
+		// we don't need to manage that.
+		new_tail.Insert(C, TRUE, FALSE)
+
 /*
  Lizard subspecies: ASHWALKERS
 */
@@ -78,5 +109,6 @@
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
+	species_language_holder = /datum/language_holder/lizard/ash

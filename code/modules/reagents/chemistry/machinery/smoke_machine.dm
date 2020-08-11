@@ -7,8 +7,6 @@
 	icon_state = "smoke0"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
-	ui_x = 350
-	ui_y = 350
 
 	var/efficiency = 10
 	var/on = FALSE
@@ -38,7 +36,7 @@
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
 
-/obj/machinery/smoke_machine/update_icon()
+/obj/machinery/smoke_machine/update_icon_state()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
 		if (panel_open)
 			icon_state = "smoke0-o"
@@ -46,7 +44,6 @@
 			icon_state = "smoke0"
 	else
 		icon_state = "smoke1"
-	return ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
 	var/new_volume = REAGENTS_BASE_VOLUME
@@ -56,7 +53,7 @@
 		create_reagents(new_volume)
 	reagents.maximum_volume = new_volume
 	if(new_volume < reagents.total_volume)
-		reagents.reaction(loc, TOUCH) // if someone manages to downgrade it without deconstructing
+		reagents.expose(loc, TOUCH) // if someone manages to downgrade it without deconstructing
 		reagents.clear_reagents()
 	efficiency = 9
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -100,15 +97,14 @@
 	return ..()
 
 /obj/machinery/smoke_machine/deconstruct()
-	reagents.reaction(loc, TOUCH)
+	reagents.expose(loc, TOUCH)
 	reagents.clear_reagents()
 	return ..()
 
-/obj/machinery/smoke_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/smoke_machine/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "smoke_machine", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "SmokeMachine", name)
 		ui.open()
 
 /obj/machinery/smoke_machine/ui_data(mob/user)

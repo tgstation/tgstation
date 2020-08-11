@@ -6,6 +6,16 @@
 	var/icon/cube
 	var/can_melt = TRUE
 
+/datum/status_effect/freon/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/freon/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 /obj/screen/alert/status_effect/freon
 	name = "Frozen Solid"
 	desc = "You're frozen inside an ice cube, and cannot move! You can still do stuff, like shooting. Resist out of the cube!"
@@ -22,7 +32,7 @@
 
 /datum/status_effect/freon/tick()
 	owner.update_mobility()
-	if(can_melt && owner.bodytemperature >= BODYTEMP_NORMAL)
+	if(can_melt && owner.bodytemperature >= owner.get_body_temp_normal())
 		qdel(src)
 
 /datum/status_effect/freon/proc/owner_resist()

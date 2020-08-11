@@ -30,6 +30,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/count_objects_on_z_level,
 	/client/proc/count_objects_all,
 	/client/proc/cmd_assume_direct_control,	//-errorage
+	/client/proc/cmd_give_direct_control,
 	/client/proc/startSinglo,
 	/client/proc/set_server_fps,	//allows you to set the ticklag.
 	/client/proc/cmd_admin_grantfullaccess,
@@ -134,7 +135,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			if(!(locate(/obj/structure/grille) in T))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
+					if (W.dir == turn(C1.dir,180) || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)) )
 						window_check = 1
 						break
 				if(!window_check)
@@ -190,12 +191,12 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		count++
 
 	if(count)
-		to_chat(usr, "[count] AT markers removed.")
+		to_chat(usr, "[count] AT markers removed.", confidential = TRUE)
 	else
 		for(var/t in GLOB.active_turfs_startlist)
 			new /obj/effect/abstract/marker/at(t)
 			count++
-		to_chat(usr, "[count] AT markers placed.")
+		to_chat(usr, "[count] AT markers placed.", confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turf Markers")
 
@@ -251,7 +252,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 					count++
 					atom_list += A
 
-	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]")
+	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_all()
@@ -271,7 +272,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		if(istype(A,type_path))
 			count++
 
-	to_chat(world, "There are [count] objects of type [type_path] in the game world")
+	to_chat(world, "There are [count] objects of type [type_path] in the game world", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -373,4 +374,4 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
 	messages += "</table>"
 
-	to_chat(src, messages.Join(""))
+	to_chat(src, messages.Join(""), confidential = TRUE)

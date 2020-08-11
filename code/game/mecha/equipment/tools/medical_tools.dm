@@ -1,6 +1,7 @@
 // Sleeper, Medical Beam, and Syringe gun
 
 /obj/item/mecha_parts/mecha_equipment/medical
+	mech_flags = EXOSUIT_MODULE_MEDICAL
 
 /obj/item/mecha_parts/mecha_equipment/medical/Initialize()
 	. = ..()
@@ -104,7 +105,6 @@
 		if(patient)
 			temp = "<br />\[Occupant: [patient] ([patient.stat > 1 ? "*DECEASED*" : "Health: [patient.health]%"])\]<br /><a href='?src=[REF(src)];view_stats=1'>View stats</a>|<a href='?src=[REF(src)];eject=1'>Eject</a>"
 		return "[output] [temp]"
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Topic(href,href_list)
 	..()
@@ -119,13 +119,13 @@
 		var/datum/reagent/R = locate(href_list["inject"]) in SG.reagents.reagent_list
 		if (istype(R))
 			inject_reagent(R, SG)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_stats()
 	if(!patient)
 		return
 	return {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<title>[patient] statistics</title>
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
@@ -263,7 +263,7 @@
 	. = ..()
 	create_reagents(max_volume, NO_REACT)
 	syringes = new
-	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine",/datum/reagent/medicine/C2/multiver="Multiver")
+	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine",/datum/reagent/medicine/c2/multiver="Multiver")
 	processed_reagents = new
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
@@ -284,7 +284,6 @@
 	var/output = ..()
 	if(output)
 		return "[output] \[<a href=\"?src=[REF(src)];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=[REF(src)];show_reagents=1'>Reagents list</a>"
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(atom/movable/target)
 	if(!action_checks(target))
@@ -302,6 +301,9 @@
 		return
 	if(reagents.total_volume<=0)
 		occupant_message("<span class=\"alert\">No available reagents to load syringe with.</span>")
+		return
+	if(HAS_TRAIT(chassis.occupant, TRAIT_PACIFISM))
+		occupant_message("<span class=\"alert\">The [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 		return
 	var/turf/trg = get_turf(target)
 	var/obj/item/reagent_containers/syringe/mechsyringe = syringes[1]
@@ -322,18 +324,17 @@
 				var/list/mobs = new
 				for(var/mob/living/carbon/M in mechsyringe.loc)
 					mobs += M
-				var/mob/living/carbon/M = safepick(mobs)
-				if(M)
+				if(length(mobs))
+					var/mob/living/carbon/M = pick(mobs)
 					var/R
-					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
+					mechsyringe.visible_message("<span class=\"attack\"> [M] is hit by the syringe!</span>")
 					if(M.can_inject(null, 1))
 						if(mechsyringe.reagents)
 							for(var/datum/reagent/A in mechsyringe.reagents.reagent_list)
 								R += "[A.name] ([num2text(A.volume)]"
 						mechsyringe.icon_state = initial(mechsyringe.icon_state)
 						mechsyringe.icon = initial(mechsyringe.icon)
-						mechsyringe.reagents.reaction(M, INJECT)
-						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = originaloccupant)
+						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = originaloccupant, method = INJECT)
 						M.take_bodypart_damage(2)
 						log_combat(originaloccupant, M, "shot", "syringegun")
 					break
@@ -385,12 +386,11 @@
 		return
 	if (href_list["purge_all"])
 		reagents.clear_reagents()
-		return
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
 						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 						<title>Reagent Synthesizer</title>
 						<script language='javascript' type='text/javascript'>
 						[js_byjax]
@@ -481,7 +481,7 @@
 		if(R.can_synth && add_known_reagent(R.type,R.name))
 			occupant_message("<span class='notice'>Reagent analyzed, identified as [R.name] and added to database.</span>")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
-	occupant_message("<span class='notice'>Analyzis complete.</span>")
+	occupant_message("<span class='notice'>Analysis complete.</span>")
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/add_known_reagent(r_id,r_name)
@@ -496,12 +496,10 @@
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents",get_current_reagents())
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 		return 1
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change(changetype)
 	..()
 	update_equip_info()
-	return
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process()

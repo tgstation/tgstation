@@ -69,7 +69,7 @@
 	pixel_y = 16
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -2195,7 +2195,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/apc{
 	name = "Frigate Medbay APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/spider/stickyweb,
 /obj/structure/cable,
@@ -2207,7 +2207,7 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/random,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,

@@ -15,6 +15,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
+	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
@@ -47,7 +48,7 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
@@ -63,7 +64,7 @@
 
 /obj/machinery/power/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
 		return 0
 
@@ -78,7 +79,7 @@
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
-/obj/machinery/proc/powered(var/chan = -1) // defaults to power_channel
+/obj/machinery/proc/powered(chan = -1) // defaults to power_channel
 	if(!loc)
 		return FALSE
 	if(!use_power)
@@ -118,18 +119,18 @@
   */
 /obj/machinery/proc/power_change()
 	SHOULD_CALL_PARENT(1)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	if(powered(power_channel))
-		if(stat & NOPOWER)
+		if(machine_stat & NOPOWER)
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
 			. = TRUE
-		stat &= ~NOPOWER
+		machine_stat &= ~NOPOWER
 	else
-		if(!(stat & NOPOWER))
+		if(!(machine_stat & NOPOWER))
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
-		stat |= NOPOWER
+		machine_stat |= NOPOWER
 	update_icon()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
@@ -138,7 +139,7 @@
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
+	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
 		if(!term || !term.powernet)
@@ -213,7 +214,7 @@
 		. += C
 	return .
 
-/proc/update_cable_icons_on_turf(var/turf/T)
+/proc/update_cable_icons_on_turf(turf/T)
 	for(var/obj/structure/cable/C in T.contents)
 		C.update_icon()
 
@@ -274,53 +275,62 @@
 
 	return net1
 
-//Determines how strong could be shock, deals damage to mob, uses power.
-//M is a mob who touched wire/whatever
-//power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
-//source is an object caused electrocuting (airlock, grille, etc)
-//siemens_coeff - layman's terms, conductivity
-//dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
-//No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
-	if(!istype(M) || ismecha(M.loc))
-		return 0	//feckin mechs are dumb
-	if(dist_check)
-		if(!in_range(source,M))
-			return 0
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.gloves)
-			var/obj/item/clothing/gloves/G = H.gloves
-			if(G.siemens_coefficient == 0)
-				return 0		//to avoid spamming with insulated glvoes on
-
+/// Extracts the powernet and cell of the provided power source
+/proc/get_powernet_info_from_source(power_source)
 	var/area/source_area
-	if(istype(power_source, /area))
+	if (isarea(power_source))
 		source_area = power_source
 		power_source = source_area.get_apc()
-	if(istype(power_source, /obj/structure/cable))
+	else if (istype(power_source, /obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
 	var/obj/item/stock_parts/cell/cell
 
-	if(istype(power_source, /datum/powernet))
+	if (istype(power_source, /datum/powernet))
 		PN = power_source
-	else if(istype(power_source, /obj/item/stock_parts/cell))
+	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell = power_source
-	else if(istype(power_source, /obj/machinery/power/apc))
+	else if (istype(power_source, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = power_source
 		cell = apc.cell
 		if (apc.terminal)
 			PN = apc.terminal.powernet
-	else if (!power_source)
-		return 0
 	else
-		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
-		return 0
+		return FALSE
+
 	if (!cell && !PN)
-		return 0
+		return
+
+	return list("powernet" = PN, "cell" = cell)
+
+//Determines how strong could be shock, deals damage to mob, uses power.
+//M is a mob who touched wire/whatever
+//power_source is a source of electricity, can be power cell, area, apc, cable, powernet or null
+//source is an object caused electrocuting (airlock, grille, etc)
+//siemens_coeff - layman's terms, conductivity
+//dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
+//No animations will be performed by this proc.
+/proc/electrocute_mob(mob/living/carbon/victim, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
+	if(!istype(victim) || ismecha(victim.loc))
+		return FALSE //feckin mechs are dumb
+
+	if(dist_check)
+		if(!in_range(source, victim))
+			return FALSE
+
+	if(victim.wearing_shock_proof_gloves())
+		SEND_SIGNAL(victim, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
+		return FALSE //to avoid spamming with insulated gloves on
+
+	var/list/powernet_info = get_powernet_info_from_source(power_source)
+	if (!powernet_info)
+		return FALSE
+
+	var/datum/powernet/PN = powernet_info["powernet"]
+	var/obj/item/stock_parts/cell/cell = powernet_info["cell"]
+
 	var/PN_damage = 0
 	var/cell_damage = 0
 	if (PN)
@@ -328,18 +338,19 @@
 	if (cell)
 		cell_damage = cell.get_electrocute_damage()
 	var/shock_damage = 0
-	if (PN_damage>=cell_damage)
+	if (PN_damage >= cell_damage)
 		power_source = PN
 		shock_damage = PN_damage
 	else
 		power_source = cell
 		shock_damage = cell_damage
-	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
-	log_combat(source, M, "electrocuted")
+	var/drained_hp = victim.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
+	log_combat(source, victim, "electrocuted")
 
 	var/drained_energy = drained_hp*20
 
-	if (source_area)
+	if (isarea(power_source))
+		var/area/source_area = power_source
 		source_area.use_power(drained_energy/GLOB.CELLRATE)
 	else if (istype(power_source, /datum/powernet))
 		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
@@ -352,13 +363,12 @@
 // Misc.
 ///////////////////////////////////////////////
 
-// return a cable if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node()
+// return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
+/turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
 	if(!can_have_cabling())
 		return null
-	var/obj/structure/cable_bridge/B = locate() in src
 	for(var/obj/structure/cable/C in src)
-		if(C.cable_layer == CABLE_LAYER_2 || B)
+		if(C.machinery_layer & machinery_layer)
 			C.update_icon()
 			return C
 	return null

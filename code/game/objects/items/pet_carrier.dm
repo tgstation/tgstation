@@ -7,7 +7,7 @@
 	desc = "A big white-and-blue pet carrier. Good for carrying <s>meat to the chef</s> cute animals around."
 	icon = 'icons/obj/pet_carrier.dmi'
 	icon_state = "pet_carrier_open"
-	item_state = "pet_carrier"
+	inhand_icon_state = "pet_carrier"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 5
@@ -141,14 +141,16 @@
 		update_icon()
 		remove_occupant(user)
 
-/obj/item/pet_carrier/update_icon()
-	cut_overlay("unlocked")
-	cut_overlay("locked")
+/obj/item/pet_carrier/update_icon_state()
 	if(open)
 		icon_state = initial(icon_state)
 	else
 		icon_state = "pet_carrier_[!occupants.len ? "closed" : "occupied"]"
-		add_overlay("[locked ? "" : "un"]locked")
+
+/obj/item/pet_carrier/update_overlays()
+	. = ..()
+	if(!open)
+		. += "[locked ? "" : "un"]locked"
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
 	. = ..()

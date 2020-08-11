@@ -14,6 +14,7 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
 	material_modifier = 0.01
+	max_integrity = 100
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
@@ -24,11 +25,22 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
-	var/mats_per_stack = 0
+	var/list/mats_per_unit //list that tells you how much is in a single unit.
 	///Datum material type that this stack is made of
 	var/material_type
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
 	var/obj/structure/table/tableVariant // we tables now (stores table variant to be built from this stack)
+
+		// The following are all for medical treatment, they're here instead of /stack/medical because sticky tape can be used as a makeshift bandage or splint
+	/// If set and this used as a splint for a broken bone wound, this is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
+	var/splint_factor
+	/// How much blood flow this stack can absorb if used as a bandage on a cut wound, note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
+	var/absorption_capacity
+	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in ticks is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
+	var/absorption_rate
+	/// Amount of matter for RCD
+	var/matter_amount = 0
+
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
@@ -49,8 +61,11 @@
 	if(!merge_type)
 		merge_type = type
 	if(custom_materials && custom_materials.len)
+		mats_per_unit = list()
+		var/in_process_mat_list = custom_materials.Copy()
 		for(var/i in custom_materials)
-			custom_materials[getmaterialref(i)] = mats_per_stack * amount
+			mats_per_unit[SSmaterials.GetMaterialRef(i)] = in_process_mat_list[i]
+			custom_materials[i] *= amount
 	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
@@ -59,10 +74,10 @@
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
-		var/datum/material/M = getmaterialref(material_type) //First/main material
+		var/datum/material/M = SSmaterials.GetMaterialRef(material_type) //First/main material
 		for(var/i in M.categories)
 			switch(i)
-				if(MAT_CATEGORY_RIGID)
+				if(MAT_CATEGORY_BASE_RECIPES)
 					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
 					recipes += temp
 	update_weight()
@@ -74,23 +89,22 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		w_class = CLAMP(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
 	else if (amount <= (max_amount * (2/3)))
-		w_class = CLAMP(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
 	else
 		w_class = full_w_class
 
 
-/obj/item/stack/update_icon()
+/obj/item/stack/update_icon_state()
 	if(novariants)
-		return ..()
+		return
 	if(amount <= (max_amount * (1/3)))
 		icon_state = initial(icon_state)
 	else if (amount <= (max_amount * (2/3)))
 		icon_state = "[initial(icon_state)]_2"
 	else
 		icon_state = "[initial(icon_state)]_3"
-	..()
 
 
 /obj/item/stack/Destroy()
@@ -206,8 +220,13 @@
 		if(!building_checks(R, multiplier))
 			return
 		if (R.time)
+			var/adjusted_time = 0
 			usr.visible_message("<span class='notice'>[usr] starts building \a [R.title].</span>", "<span class='notice'>You start building \a [R.title]...</span>")
-			if (!do_after(usr, R.time, target = usr))
+			if(HAS_TRAIT(usr, R.trait_booster))
+				adjusted_time = (R.time * R.trait_modifier)
+			else
+				adjusted_time = R.time
+			if (!do_after(usr, adjusted_time, target = usr))
 				return
 			if(!building_checks(R, multiplier))
 				return
@@ -229,7 +248,7 @@
 		if(R.applies_mats && custom_materials && custom_materials.len)
 			var/list/used_materials = list()
 			for(var/i in custom_materials)
-				used_materials[getmaterialref(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
+				used_materials[SSmaterials.GetMaterialRef(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
 			O.set_custom_materials(used_materials)
 
 		//START: oh fuck i'm so sorry
@@ -257,6 +276,17 @@
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
+
+/obj/item/stack/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, amount))
+		add(clamp(vval, 1-amount, max_amount - amount)) //there must always be one.
+		return TRUE
+	else if(vname == NAMEOF(src, max_amount))
+		max_amount = max(vval, 1)
+		add((max_amount < amount) ? (max_amount - amount) : 0) //update icon, weight, ect
+		return TRUE
+	return ..()
+
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (get_amount() < R.req_amount*multiplier)
@@ -313,10 +343,13 @@
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check)
-		zero_amount()
-	for(var/i in custom_materials)
-		custom_materials[i] = amount * mats_per_stack
+	if(check && zero_amount())
+		return TRUE
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
+		for(var/i in mats_per_unit)
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 	return TRUE
@@ -348,10 +381,11 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
-	if(custom_materials && custom_materials.len)
-		for(var/i in custom_materials)
-			custom_materials[getmaterialref(i)] = MINERAL_MATERIAL_AMOUNT * src.amount
-		set_custom_materials() //Refresh
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
+		for(var/i in mats_per_unit)
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 
@@ -370,9 +404,9 @@
 	S.add(transfer)
 	return transfer
 
-/obj/item/stack/Crossed(obj/o)
-	if(istype(o, merge_type) && !o.throwing)
-		merge(o)
+/obj/item/stack/Crossed(atom/movable/AM)
+	if(istype(AM, merge_type) && !AM.throwing)
+		merge(AM)
 	. = ..()
 
 /obj/item/stack/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
@@ -458,8 +492,10 @@
 	var/window_checks = FALSE
 	var/placement_checks = FALSE
 	var/applies_mats = FALSE
+	var/trait_booster = null
+	var/trait_modifier = 1
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
 
 
 	src.title = title
@@ -473,6 +509,8 @@
 	src.window_checks = window_checks
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
+	src.trait_booster = trait_booster
+	src.trait_modifier = trait_modifier
 /*
  * Recipe list datum
  */

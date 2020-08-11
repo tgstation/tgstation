@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - tweak: "you can no longer place force fields on the same tile as yourself to become god for 30 seconds"

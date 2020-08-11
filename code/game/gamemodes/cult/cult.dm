@@ -16,7 +16,7 @@
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
-		if(ishuman(M) && (M.mind.isholy))
+		if(ishuman(M) && (M.mind.holy_role))
 			return FALSE
 		if(specific_cult && specific_cult.is_sacrifice_target(M.mind))
 			return FALSE
@@ -36,7 +36,7 @@
 	report_type = "cult"
 	antag_flag = ROLE_CULTIST
 	false_report_weight = 10
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_jobs = list("Prisoner","Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 29
 	required_enemies = 4

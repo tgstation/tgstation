@@ -2,7 +2,7 @@
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "cargosoft"
-	item_state = "helmet"
+	inhand_icon_state = "helmet"
 	var/soft_type = "cargo"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
@@ -123,9 +123,9 @@
 	strip_delay = 60
 	dog_fashion = null
 
-/obj/item/clothing/head/soft/emt
-	name = "EMT cap"
+/obj/item/clothing/head/soft/paramedic
+	name = "paramedic cap"
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
-	icon_state = "emtsoft"
-	soft_type = "emt"
+	icon_state = "paramedicsoft"
+	soft_type = "paramedic"
 	dog_fashion = null

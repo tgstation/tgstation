@@ -53,6 +53,27 @@
 	for(var/I in adjacent_turfs)
 		. |= get_area(I)
 
+/**
+ * Get a bounding box of a list of atoms.
+ *
+ * Arguments:
+ * - atoms - List of atoms. Can accept output of view() and range() procs.
+ *
+ * Returns: list(x1, y1, x2, y2)
+ */
+/proc/get_bbox_of_atoms(list/atoms)
+	var/list/list_x = list()
+	var/list/list_y = list()
+	for(var/_a in atoms)
+		var/atom/a = _a
+		list_x += a.x
+		list_y += a.y
+	return list(
+		min(list_x),
+		min(list_y),
+		max(list_x),
+		max(list_y))
+
 // Like view but bypasses luminosity check
 
 /proc/get_hear(range, atom/source)
@@ -152,11 +173,11 @@
 /proc/recursive_hear_check(O)
 	var/list/processing_list = list(O)
 	. = list()
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
+	var/i = 0
+	while(i < length(processing_list))
+		var/atom/A = processing_list[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
-		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
 /** recursive_organ_check
@@ -196,56 +217,12 @@
 
 	return
 
-// Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
-//No need for a recursive limit either
-/proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
-
-	var/list/processing_list = list(O)
-	var/list/processed_list = list()
-	var/list/found_mobs = list()
-
-	while(processing_list.len)
-
-		var/atom/A = processing_list[1]
-		var/passed = 0
-
-		if(ismob(A))
-			var/mob/A_tmp = A
-			passed=1
-
-			if(client_check && !A_tmp.client)
-				passed=0
-
-			if(sight_check && !isInSight(A_tmp, O))
-				passed=0
-
-		else if(include_radio && istype(A, /obj/item/radio))
-			passed=1
-
-			if(sight_check && !isInSight(A, O))
-				passed=0
-
-		if(passed)
-			found_mobs |= A
-
-		for(var/atom/B in A)
-			if(!processed_list[B])
-				processing_list |= B
-
-		processing_list.Cut(1, 2)
-		processed_list[A] = A
-
-	return found_mobs
-
-
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	. = list()
-
 	if(!T)
 		return
-
 	var/list/processing_list = list()
 	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
 		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
@@ -258,11 +235,12 @@
 			processing_list += O
 		T.luminosity = lum
 
-	while(processing_list.len) // recursive_hear_check inlined here
-		var/atom/A = processing_list[1]
+	var/i = 0
+	while(i < length(processing_list)) // recursive_hear_check inlined here
+		var/atom/A = processing_list[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
-		processing_list.Cut(1, 2)
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
 		processing_list += A.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
@@ -271,7 +249,6 @@
 	for(var/obj/item/radio/R in radios)
 		if(R)
 			. |= get_hearers_in_view(R.canhear_range, R)
-
 
 #define SIGNV(X) ((X<0)?-1:1)
 
@@ -320,12 +297,15 @@
 	else
 		return 0
 
-
-/proc/try_move_adjacent(atom/movable/AM)
+/proc/try_move_adjacent(atom/movable/AM, trydir)
 	var/turf/T = get_turf(AM)
-	for(var/direction in GLOB.cardinals)
+	if(trydir)
+		if(AM.Move(get_step(T, trydir)))
+			return TRUE
+	for(var/direction in (GLOB.cardinals-trydir))
 		if(AM.Move(get_step(T, direction)))
-			break
+			return TRUE
+	return FALSE
 
 /proc/get_mob_by_key(key)
 	var/ckey = ckey(key)
@@ -439,6 +419,8 @@
 
 /proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
 	var/list/candidates = list()
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		return candidates
 
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		candidates += G
@@ -452,7 +434,7 @@
 	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
-		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
+		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (M.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)
 			if(!(M.client.prefs) || !(be_special_flag in M.client.prefs.be_special))
@@ -538,7 +520,7 @@
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/A = get_area(character)
-	deadchat_broadcast(" has arrived at the station at <span class='name'>[A.name]</span>.", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[A.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if((!GLOB.announcement_systems.len) || (!character.mind))
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
@@ -546,15 +528,6 @@
 
 	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
-
-/proc/GetRedPart(const/hexa)
-	return hex2num(copytext(hexa, 2, 4))
-
-/proc/GetGreenPart(const/hexa)
-	return hex2num(copytext(hexa, 4, 6))
-
-/proc/GetBluePart(const/hexa)
-	return hex2num(copytext(hexa, 6, 8))
 
 /proc/lavaland_equipment_pressure_check(turf/T)
 	. = FALSE
@@ -575,7 +548,7 @@
 	)
 	return (is_type_in_list(item, pire_wire))
 
-// Find a obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
+// Find an obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
 /proc/find_obstruction_free_location(range, atom/center, area/specific_area)
 	var/list/turfs = RANGE_TURFS(range, center)
 	var/list/possible_loc = list()
@@ -590,7 +563,7 @@
 				continue
 
 		if (!isspaceturf(found_turf))
-			if (!is_blocked_turf(found_turf))
+			if (!found_turf.is_blocked_turf())
 				possible_loc.Add(found_turf)
 
 	// Need at least one free location.

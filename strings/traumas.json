@@ -3,7 +3,7 @@
         "@pick(semicolon)IM A PONY NEEEEEEIIIIIIIIIGH",
         "without oxigen blob don't evoluate?",
         "@pick(semicolon)CAPTAINS A COMDOM",
-        "@pick(semicolon)@pick(faggot_traitor) @pick(george) @pick(mellens) is grifing me HALP!!!",
+        "@pick(semicolon) @pick(george) @pick(mellens) is grifing me HALP!!!",
         "can u give me @pick(mutations)?",
         "THe saiyans screwed",
         "Bi is THE BEST OF BOTH WORLDS>",
@@ -28,7 +28,7 @@
         "luv can bloooom",
         "PACKETS!!!",
         "port ba@pick(y_replacements) med!!!!",
-        "REVIRT GON CHEM!!!!!!!!",
+        "REVIRT COBY CHEM!!!!!!!!",
         "youed call her a toeugh bithc",
         "closd for merbegging",
         "@pick(semicolon)pray can u @pick(create_verbs) @pick(create_nouns)???",
@@ -91,12 +91,6 @@
         "melons",
         "mwrlins"
     ],
-
-    "faggot_traitor": [
-        "",
-        "that faggot traitor"
-    ],
-
     "random_gibberish": [
         "g",
         "squid",
@@ -116,14 +110,17 @@
         "mrs sybil",
         "mr basil",
         "mr terry",
-        "berry"
+        "berry",
+        "vent hell",
+        "colonel hall"
     ],
 
     "create_verbs": [
         "spawn",
         "MAke me",
         "creat",
-        "tc trade me"
+        "tc trade me",
+        "gib"
     ],
 
     "create_nouns": [
@@ -135,16 +132,18 @@
         "revinent",
         "deval",
         "deth squads",
-        "bleb"
+        "bleb",
+        "cock cult",
+        "anteg"
     ],
-	
+
     "bug": [
         "",
         "IS TIS A BUG??",
         "SI IST A BUGG/",
         "BUG!!!"
     ],
-	
+
     "semicolon": [
         "",
         ";",

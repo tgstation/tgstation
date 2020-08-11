@@ -74,9 +74,9 @@
 
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		[head_content]
 	</head>
 	<body scroll=auto>
@@ -108,9 +108,9 @@
 	if (width && height)
 		window_size = "size=[width]x[height];"
 	if (stylesheets.len)
-		send_asset_list(user, stylesheets, verify=FALSE)
+		send_asset_list(user, stylesheets)
 	if (scripts.len)
-		send_asset_list(user, scripts, verify=FALSE)
+		send_asset_list(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
 		setup_onclose()
@@ -159,7 +159,7 @@
 	close()
 
 //designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
-/proc/tgalert(var/mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/proc/tgalert(mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!User)
 		User = usr
 	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
@@ -171,7 +171,7 @@
 			return Button3
 
 //Same shit, but it returns the button number, could at some point support unlimited button amounts.
-/proc/askuser(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/proc/askuser(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User

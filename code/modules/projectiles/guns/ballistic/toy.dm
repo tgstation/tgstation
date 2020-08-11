@@ -2,7 +2,8 @@
 	name = "foam force SMG"
 	desc = "A prototype three-round burst toy submachine gun. Ages 8 and up."
 	icon_state = "saber"
-	item_state = "gun"
+	selector_switch_icon = TRUE
+	inhand_icon_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/toy/smg
 	fire_sound = 'sound/items/syringeproj.ogg'
 	force = 0
@@ -13,9 +14,9 @@
 	item_flags = NONE
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/toy/update_icon()
+/obj/item/gun/ballistic/automatic/toy/update_overlays()
 	. = ..()
-	add_overlay("[icon_state]_toy")
+	. += "[icon_state]_toy"
 
 /obj/item/gun/ballistic/automatic/toy/unrestricted
 	pin = /obj/item/firing_pin
@@ -58,9 +59,9 @@
 	can_suppress = FALSE
 	pb_knockback = 0
 
-/obj/item/gun/ballistic/shotgun/toy/update_icon()
+/obj/item/gun/ballistic/shotgun/toy/update_overlays()
 	. = ..()
-	add_overlay("[icon_state]_toy")
+	. += "[icon_state]_toy"
 
 /obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
 	..()
@@ -75,7 +76,9 @@
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamcrossbow"
-	item_state = "crossbow"
+	inhand_icon_state = "crossbow"
+	worn_icon_state = "gun"
+	worn_icon = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/crossbow
 	fire_sound = 'sound/items/syringeproj.ogg'
 	slot_flags = ITEM_SLOT_BELT
@@ -83,7 +86,7 @@
 
 /obj/item/gun/ballistic/automatic/c20r/toy //This is the syndicate variant with syndicate firing pin and riot darts.
 	name = "donksoft SMG"
-	desc = "A bullpup two-round burst toy SMG, designated 'C-20r'. Ages 8 and up."
+	desc = "A bullpup three-round burst toy SMG, designated 'C-20r'. Ages 8 and up."
 	can_suppress = TRUE
 	item_flags = NONE
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45/riot
@@ -97,9 +100,9 @@
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45/riot
 
-/obj/item/gun/ballistic/automatic/c20r/toy/update_icon()
+/obj/item/gun/ballistic/automatic/c20r/toy/update_overlays()
 	. = ..()
-	add_overlay("[icon_state]_toy")
+	. += "[icon_state]_toy"
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy //This is the syndicate variant with syndicate firing pin and riot darts.
 	name = "donksoft LMG"
@@ -118,6 +121,6 @@
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
 
-/obj/item/gun/ballistic/automatic/l6_saw/toy/update_icon()
+/obj/item/gun/ballistic/automatic/l6_saw/toy/update_overlays()
 	. = ..()
-	add_overlay("[icon_state]_toy")
+	. += "[icon_state]_toy"

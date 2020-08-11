@@ -1,7 +1,7 @@
 /client/proc/one_click_antag()
 	set name = "Create Antagonist"
 	set desc = "Auto-create an antagonist of your choice"
-	set category = "Admin"
+	set category = "Admin - Events"
 
 	if(holder)
 		holder.one_click_antag()
@@ -260,7 +260,7 @@
 		var/datum/antagonist/ert/ert = antag
 		mannequin.equipOutfit(initial(ert.outfit), TRUE)
 	else if (ispath(antag, /datum/antagonist/official))
-		mannequin.equipOutfit(/datum/outfit/centcom_official, TRUE)
+		mannequin.equipOutfit(/datum/outfit/centcom/centcom_official, TRUE)
 
 /datum/admins/proc/makeERTPreviewIcon(list/settings)
 	// Set up the dummy for its photoshoot
@@ -303,7 +303,7 @@
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
 	return preview_icon
 
-/datum/admins/proc/makeEmergencyresponseteam(var/datum/ert/ertemplate = null)
+/datum/admins/proc/makeEmergencyresponseteam(datum/ert/ertemplate = null)
 	if (ertemplate)
 		ertemplate = new ertemplate
 	else
@@ -342,7 +342,7 @@
 		ertemplate.enforce_human = prefs["enforce_human"]["value"] == "Yes" ? TRUE : FALSE
 		ertemplate.opendoors = prefs["open_armory"]["value"] == "Yes" ? TRUE : FALSE
 
-		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc] ?", "deathsquad", null)
+		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad", null)
 		var/teamSpawned = FALSE
 
 		if(candidates.len > 0)

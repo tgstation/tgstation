@@ -20,7 +20,7 @@
   *
   * make sure you add an update to the schema_version stable in the db changelog
   */
-#define DB_MINOR_VERSION 6
+#define DB_MINOR_VERSION 9
 
 
 //! ## Timing subsystem
@@ -98,6 +98,7 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
+#define INIT_ORDER_PROFILER			101
 #define INIT_ORDER_TITLE			100
 #define INIT_ORDER_GARBAGE			99
 #define INIT_ORDER_DBCORE			95
@@ -106,12 +107,12 @@
 #define INIT_ORDER_INPUT			85
 #define INIT_ORDER_VIS				80
 #define INIT_ORDER_ACHIEVEMENTS		77
-#define INIT_ORDER_MATERIALS		76
 #define INIT_ORDER_RESEARCH			75
 #define INIT_ORDER_EVENTS			70
 #define INIT_ORDER_JOBS				65
 #define INIT_ORDER_QUIRKS			60
 #define INIT_ORDER_TICKER			55
+#define INIT_ORDER_TCG				55
 #define INIT_ORDER_MAPPING			50
 #define INIT_ORDER_NETWORKS			45
 #define INIT_ORDER_ECONOMY			40
@@ -133,7 +134,9 @@
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
+#define INIT_ORDER_EXPLOSIONS		-69
 #define INIT_ORDER_PERSISTENCE		-95
+#define INIT_ORDER_DEMO				-99  // o avoid a bunch of changes related to initialization being written, do this last
 #define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
 
 // Subsystem fire priority, from lowest to highest priority
@@ -164,8 +167,12 @@
 #define FIRE_PRIORITY_TICKER		200
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
 #define FIRE_PRIORITY_CHAT			400
+#define FIRE_PRIORITY_RUNECHAT		410
 #define FIRE_PRIORITY_OVERLAYS		500
+#define FIRE_PRIORITY_EXPLOSIONS	666
+#define FIRE_PRIORITY_TIMER			700
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
+
 
 // SS runlevels
 
@@ -182,11 +189,11 @@
 //! ## Overlays subsystem
 
 ///Compile all the overlays for an atom from the cache lists
+// |= on overlays is not actually guaranteed to not add same appearances but we're optimistically using it anyway.
 #define COMPILE_OVERLAYS(A)\
 	if (TRUE) {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
-		var/list/po = A.priority_overlays;\
 		if(LAZYLEN(rm)){\
 			A.overlays -= rm;\
 			rm.Cut();\
@@ -194,9 +201,6 @@
 		if(LAZYLEN(ad)){\
 			A.overlays |= ad;\
 			ad.Cut();\
-		}\
-		if(LAZYLEN(po)){\
-			A.overlays |= po;\
 		}\
 		for(var/I in A.alternate_appearances){\
 			var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
@@ -206,3 +210,28 @@
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}
+
+/**
+	Create a new timer and add it to the queue.
+	* Arguments:
+	* * callback the callback to call on timer finish
+	* * wait deciseconds to run the timer for
+	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+*/
+#define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
+
+// Air subsystem subtasks
+#define SSAIR_PIPENETS 1
+#define SSAIR_ATMOSMACHINERY 2
+#define SSAIR_ACTIVETURFS 3
+#define SSAIR_EXCITEDGROUPS 4
+#define SSAIR_HIGHPRESSURE 5
+#define SSAIR_HOTSPOTS 6
+#define SSAIR_SUPERCONDUCTIVITY 7
+#define SSAIR_REBUILD_PIPENETS 8
+
+// Explosion Subsystem subtasks
+#define SSEXPLOSIONS_MOVABLES 1
+#define SSEXPLOSIONS_TURFS 2
+#define SSEXPLOSIONS_THROWS 3
+

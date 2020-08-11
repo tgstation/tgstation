@@ -16,6 +16,7 @@
 	pressure_resistance = 8
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
@@ -23,10 +24,12 @@
 
 	/// List of movement speed modifiers applying to this mob
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
+	/// List of movement speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/movespeed_mod_immunities			//Lazy list, see mob_movespeed.dm
 	/// The calculated mob speed slowdown based on the modifiers list
 	var/cached_multiplicative_slowdown
 	/// List of action hud items the user has
-	var/list/datum/action/actions = list()
+	var/list/datum/action/actions
 	/// A special action? No idea why this lives here
 	var/list/datum/action/chameleon_item_actions
 
@@ -67,9 +70,6 @@
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
-	/// can this mob move freely in space (should be a trait)
-	var/spacewalk = FALSE
-
 	/**
 	  * back up of the real name during admin possession
 	  *
@@ -105,9 +105,9 @@
 	/// The last known IP of the client who was in this mob
 	var/lastKnownIP = null
 
-	/// movable atoms buckled to this mob
-	var/atom/movable/buckled = null//Living
 	/// movable atom we are buckled to
+	var/atom/movable/buckled = null//Living
+	/// movable atoms buckled to this mob
 	var/atom/movable/buckling
 
 	//Hands
@@ -122,7 +122,7 @@
 	  * NB: contains nulls!
 	  *
 	  * held_items[active_hand_index] is the actively held item, but please use
-	  * get_active_held_item() instead, because OOP
+	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
 	var/list/held_items = list()
 
@@ -136,7 +136,7 @@
 	var/research_scanner = FALSE
 
 	/// Is the mob throw intent on
-	var/in_throw_mode = 0
+	var/in_throw_mode = FALSE
 
 	/// What job does this mob have
 	var/job = null//Living
@@ -156,7 +156,7 @@
 	  * Spells that do not transfer from one mob to another and can not be lost in mindswap.
 	  * obviously do not live in the mind
 	  */
-	var/list/mob_spell_list = list()
+	var/list/mob_spell_list
 
 
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
@@ -187,28 +187,27 @@
 	///List of progress bars this mob is currently seeing for actions
 	var/list/progressbars = null	//for stacking do_after bars
 
+	///For storing what do_after's someone has, in case we want to restrict them to only one of a certain do_after at a time
+	var/list/do_afters
+
 	///Allows a datum to intercept all click calls this mob is the source of
 	var/datum/click_intercept
 
-	///The z level this mob is currently registered in
+	///THe z level this mob is currently registered in
 	var/registered_z = null
 
 	var/memory_throttle_time = 0
 
-	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
+	var/list/alerts = list() /// contains [/obj/screen/alert only] // On /mob so clientless mobs will throw alerts properly
 	var/list/screens = list()
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud
 
-	var/datum/hSB/sandbox = null
+	var/datum/h_sandbox/sandbox = null
 
-	var/bloody_hands = 0
-
-	/// What receives our keyboard inputs. src by default
-	var/datum/focus 
+	var/datum/focus //What receives our keyboard inputs. src by default
 
 	/// Used for tracking last uses of emotes for cooldown purposes
 	var/list/emotes_used
 
-	///Whether the mob is updating glide size when movespeed updates or not
-	var/updating_glide_size = TRUE
+	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.

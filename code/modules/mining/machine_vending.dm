@@ -15,6 +15,7 @@
 		new /datum/data/mining_equipment("30 Marker Beacons",			/obj/item/stack/marker_beacon/thirty,								300),
 		new /datum/data/mining_equipment("Whiskey",						/obj/item/reagent_containers/food/drinks/bottle/whiskey,			100),
 		new /datum/data/mining_equipment("Absinthe",					/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium,	100),
+		new /datum/data/mining_equipment("Bubblegum Gum Packet",		/obj/item/storage/box/gum/bubblegum,								100),
 		new /datum/data/mining_equipment("Cigar",						/obj/item/clothing/mask/cigarette/cigar/havana,						150),
 		new /datum/data/mining_equipment("Soap",						/obj/item/soap/nanotrasen,											200),
 		new /datum/data/mining_equipment("Laser Pointer",				/obj/item/laser_pointer,											300),
@@ -29,10 +30,11 @@
 		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									600),
 		new /datum/data/mining_equipment("Tracking Implant Kit", 		/obj/item/storage/box/minertracker,									600),
 		new /datum/data/mining_equipment("Jaunter",						/obj/item/wormhole_jaunter,											750),
-		new /datum/data/mining_equipment("Kinetic Crusher",				/obj/item/twohanded/kinetic_crusher,								750),
+		new /datum/data/mining_equipment("Kinetic Crusher",				/obj/item/kinetic_crusher,											750),
 		new /datum/data/mining_equipment("Kinetic Accelerator",			/obj/item/gun/energy/kinetic_accelerator,							750),
 		new /datum/data/mining_equipment("Advanced Scanner",			/obj/item/t_scanner/adv_mining_scanner,								800),
 		new /datum/data/mining_equipment("Resonator",					/obj/item/resonator,												800),
+		new /datum/data/mining_equipment("Luxury Medipen",				/obj/item/reagent_containers/hypospray/medipen/survival/luxury,		1000),
 		new /datum/data/mining_equipment("Fulton Pack",					/obj/item/extraction_pack,											1000),
 		new /datum/data/mining_equipment("Lazarus Injector",			/obj/item/lazarus_injector,											1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",				/obj/item/pickaxe/silver,											1000),
@@ -59,7 +61,7 @@
 		new /datum/data/mining_equipment("KA Damage Increase",			/obj/item/borg/upgrade/modkit/damage,								1000),
 		new /datum/data/mining_equipment("KA Cooldown Decrease",		/obj/item/borg/upgrade/modkit/cooldown,								1000),
 		new /datum/data/mining_equipment("KA AoE Damage",				/obj/item/borg/upgrade/modkit/aoe/mobs,								2000)
-		)
+	)
 
 /datum/data/mining_equipment
 	var/equipment_name = "generic"
@@ -71,60 +73,93 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/update_icon()
+/obj/machinery/mineral/equipment_vendor/Initialize()
+	. = ..()
+	build_inventory()
+
+/obj/machinery/mineral/equipment_vendor/proc/build_inventory()
+	for(var/p in prize_list)
+		var/datum/data/mining_equipment/M = p
+		GLOB.vending_products[M.equipment_path] = 1
+
+/obj/machinery/mineral/equipment_vendor/update_icon_state()
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
-	. = ..()
-	var/list/dat = list()
-	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='300'>"
+/obj/machinery/mineral/equipment_vendor/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/vending),
+	)
+
+/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MiningVendor", name)
+		ui.open()
+
+/obj/machinery/mineral/equipment_vendor/ui_static_data(mob/user)
+	. = list()
+	.["product_records"] = list()
 	for(var/datum/data/mining_equipment/prize in prize_list)
-		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=[REF(src)];purchase=[REF(prize)]'>Purchase</A></td></tr>"
-	dat += "</table>"
+		var/list/product_data = list(
+			path = replacetext(replacetext("[prize.equipment_path]", "/obj/item/", ""), "/", "-"),
+			name = prize.equipment_name,
+			price = prize.cost,
+			ref = REF(prize)
+		)
+		.["product_records"] += list(product_data)
 
-	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 350)
-	popup.set_content(dat.Join())
-	popup.open()
-	return
+/obj/machinery/mineral/equipment_vendor/ui_data(mob/user)
+	. = list()
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard(TRUE)
+		if(C)
+			.["user"] = list()
+			.["user"]["points"] = C.mining_points
+			if(C.registered_account)
+				.["user"]["name"] = C.registered_account.account_holder
+				if(C.registered_account.account_job)
+					.["user"]["job"] = C.registered_account.account_job.title
+				else
+					.["user"]["job"] = "No Job"
 
-/obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
+/obj/machinery/mineral/equipment_vendor/ui_act(action, params)
 	if(..())
 		return
-	if(href_list["purchase"])
-		var/mob/M = usr
-		var/obj/item/card/id/I = M.get_idcard(TRUE)
-		if(istype(I))
-			var/datum/data/mining_equipment/prize = locate(href_list["purchase"]) in prize_list
-			if (!prize || !(prize in prize_list))
+
+	switch(action)
+		if("purchase")
+			var/mob/M = usr
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			if(!istype(I))
+				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
+				flick(icon_deny, src)
+				return
+			var/datum/data/mining_equipment/prize = locate(params["ref"]) in prize_list
+			if(!prize || !(prize in prize_list))
 				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
 				flick(icon_deny, src)
 				return
 			if(prize.cost > I.mining_points)
 				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
-			else
-				if (I.mining_points -= prize.cost)
-					to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
-					new prize.equipment_path(src.loc)
-					SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
-				else
-					to_chat(usr, "<span class='alert'>Error: Transaction failure, please try again later!</span>")
-					flick(icon_deny, src)
-		else
-			to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
-			flick(icon_deny, src)
-	updateUsrDialog()
-	return
+				return
+			I.mining_points -= prize.cost
+			to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+			new prize.equipment_path(loc)
+			SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
+			. = TRUE
 
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mining_voucher))
 		RedeemVoucher(I, user)
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
-		updateUsrDialog()
 		return
 	if(default_deconstruction_crowbar(I))
 		return
@@ -154,7 +189,7 @@
 			new /obj/item/stack/marker_beacon/thirty(drop_location)
 		if("Crusher Kit")
 			new /obj/item/extinguisher/mini(drop_location)
-			new /obj/item/twohanded/kinetic_crusher(drop_location)
+			new /obj/item/kinetic_crusher(drop_location)
 		if("Mining Conscription Kit")
 			new /obj/item/storage/backpack/duffelbag/mining_conscript(drop_location)
 
@@ -173,7 +208,6 @@
 	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor/golem
 
 /obj/machinery/mineral/equipment_vendor/golem/Initialize()
-	. = ..()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
 		new /datum/data/mining_equipment("Extra Id",       				/obj/item/card/id/mining, 				                   		250),
@@ -185,6 +219,7 @@
 		new /datum/data/mining_equipment("Modification Kit",    		/obj/item/borg/upgrade/modkit/trigger_guard,					1700),
 		new /datum/data/mining_equipment("The Liberator's Legacy",  	/obj/item/storage/box/rndboards,								2000)
 		)
+	return ..()
 
 /**********************Mining Equipment Vendor Items**************************/
 

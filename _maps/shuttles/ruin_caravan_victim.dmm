@@ -230,6 +230,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "lM" = (
@@ -358,7 +359,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/crowbar,
 /obj/item/flashlight{
 	pixel_x = 1;

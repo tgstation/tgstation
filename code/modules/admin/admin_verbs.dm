@@ -7,7 +7,6 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
-	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
@@ -31,6 +30,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
+	/client/proc/ghost_pool_protection,	/*opens a menu for toggling ghost roles*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
@@ -41,8 +41,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
 	/client/proc/getserverlogs,		/*for accessing server logs*/
 	/client/proc/getcurrentlogs,		/*for accessing server logs for the current round*/
-	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
-	/client/proc/cmd_admin_headset_message,	/*send an message to somebody through their headset as CentCom*/
+	/client/proc/cmd_admin_subtle_message,	/*send a message to somebody as a 'voice in their head'*/
+	/client/proc/cmd_admin_headset_message,	/*send a message to somebody through their headset as CentCom*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
@@ -79,7 +79,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
-GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
+GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_direct_mob_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
 GLOBAL_PROTECT(admin_verbs_sounds)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/cmd_admin_dress,
@@ -166,13 +166,23 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
 	/client/proc/reload_configuration,
+	/client/proc/atmos_control,
+	/client/proc/reload_cards,
+	/client/proc/validate_cards,
+	/client/proc/test_cardpack_distribution,
+	/client/proc/print_cards,
 	/datum/admins/proc/create_or_modify_area,
+#ifdef REFERENCE_TRACKING
+	/datum/admins/proc/view_refs,
+	/datum/admins/proc/view_del_failures,
+#endif
+	/client/proc/check_timer_sources
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions))
 GLOBAL_PROTECT(admin_verbs_permissions)
-GLOBAL_LIST_INIT(admin_verbs_poll, list(/client/proc/create_poll))
+GLOBAL_LIST_INIT(admin_verbs_poll, list(/client/proc/poll_panel))
 GLOBAL_PROTECT(admin_verbs_poll)
 
 //verbs which can be hidden - needs work
@@ -181,6 +191,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/reset_ooc,
 	/client/proc/deadmin,
 	/datum/admins/proc/show_traitor_panel,
+	/datum/admins/proc/show_skill_panel,
 	/datum/admins/proc/toggleenter,
 	/datum/admins/proc/toggleguests,
 	/datum/admins/proc/announce,
@@ -296,17 +307,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		/client/proc/readmin
 		)
 
-/client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
-	set name = "Adminverbs - Hide Most"
-	set category = "Admin"
-
-	verbs.Remove(/client/proc/hide_most_verbs, GLOB.admin_verbs_hideable)
-	verbs += /client/proc/show_verbs
-
-	to_chat(src, "<span class='interface'>Most of your adminverbs have been hidden.</span>")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hide Most Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
 /client/proc/hide_verbs()
 	set name = "Adminverbs - Hide All"
 	set category = "Admin"
@@ -314,7 +314,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	remove_admin_verbs()
 	verbs += /client/proc/show_verbs
 
-	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>")
+	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hide All Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -325,14 +325,14 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	verbs -= /client/proc/show_verbs
 	add_admin_verbs()
 
-	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>")
+	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
 
 /client/proc/admin_ghost()
-	set category = "Admin"
+	set category = "Admin - Game"
 	set name = "Aghost"
 	if(!holder)
 		return
@@ -349,7 +349,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		ghost.reenter_corpse()
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Reenter") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(isnewplayer(mob))
-		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
+		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>", confidential = TRUE)
 		return FALSE
 	else
 		//ghostize
@@ -363,19 +363,19 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/invisimin()
 	set name = "Invisimin"
-	set category = "Admin"
+	set category = "Admin - Game"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			to_chat(mob, "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>")
+			to_chat(mob, "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>", confidential = TRUE)
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			to_chat(mob, "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>")
+			to_chat(mob, "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>", confidential = TRUE)
 
 /client/proc/check_antagonists()
 	set name = "Check Antagonists"
-	set category = "Admin"
+	set category = "Admin - Game"
 	if(holder)
 		holder.check_antagonists()
 		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
@@ -401,18 +401,25 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/game_panel()
 	set name = "Game Panel"
-	set category = "Admin"
+	set category = "Admin - Game"
 	if(holder)
 		holder.Game()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Game Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/secrets()
 	set name = "Secrets"
-	set category = "Admin"
+	set category = "Admin - Game"
 	if (holder)
 		holder.Secrets()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/poll_panel()
+	set name = "Server Poll Management"
+	set category = "Admin"
+	if(!check_rights(R_POLL))
+		return
+	holder.poll_list_panel()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Server Poll Management") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/findStealthKey(txt)
 	if(txt)
@@ -442,14 +449,18 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			if(isobserver(mob))
 				mob.invisibility = initial(mob.invisibility)
 				mob.alpha = initial(mob.alpha)
-				mob.name = initial(mob.name)
+				if(mob.mind)
+					if(mob.mind.ghostname)
+						mob.name = mob.mind.ghostname
+					else
+						mob.name = mob.mind.name
+				else
+					mob.name = mob.real_name
 				mob.mouse_opacity = initial(mob.mouse_opacity)
 		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+			var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
 			if(!new_key)
 				return
-			if(length(new_key) >= 26)
-				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
 			createStealthKey()
 			if(isobserver(mob))
@@ -462,7 +473,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_bomb()
-	set category = "Special Verbs"
+	set category = "Fun"
 	set name = "Drop Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
 
@@ -504,7 +515,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_dynex_bomb()
-	set category = "Special Verbs"
+	set category = "Fun"
 	set name = "Drop DynEx Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
 
@@ -525,7 +536,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if (isnull(ex_power))
 		return
 	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
-	to_chat(usr, "Estimated Explosive Range: (Devastation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
+	to_chat(usr, "Estimated Explosive Range: (Devastation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])", confidential = TRUE)
 
 /client/proc/get_dynex_power()
 	set category = "Debug"
@@ -536,7 +547,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if (isnull(ex_range))
 		return
 	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
-	to_chat(usr, "Estimated Explosive Power: [power]")
+	to_chat(usr, "Estimated Explosive Power: [power]", confidential = TRUE)
 
 /client/proc/set_dynex_scale()
 	set category = "Debug"
@@ -550,15 +561,64 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
+/client/proc/atmos_control()
+	set name = "Atmos Control Panel"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	SSair.ui_interact(mob)
+
+/client/proc/reload_cards()
+	set name = "Reload Cards"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SStrading_card_game.loaded)
+		message_admins("The card subsystem is not currently loaded")
+		return
+	reloadAllCardFiles(SStrading_card_game.card_files, SStrading_card_game.card_directory)
+
+/client/proc/validate_cards()
+	set name = "Validate Cards"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SStrading_card_game.loaded)
+		message_admins("The card subsystem is not currently loaded")
+		return
+	var/message = checkCardpacks(SStrading_card_game.card_packs)
+	message += checkCardDatums()
+	if(message)
+		message_admins(message)
+
+/client/proc/test_cardpack_distribution()
+	set name = "Test Cardpack Distribution"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SStrading_card_game.loaded)
+		message_admins("The card subsystem is not currently loaded")
+		return
+	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sortList(SStrading_card_game.card_packs)
+	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as null|num
+	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
+	var/guar = input("Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system") as null|num
+	checkCardDistribution(pack, batchSize, batchCount, guar)
+
+/client/proc/print_cards()
+	set name = "Print Cards"
+	set category = "Debug"
+	printAllCards()
+
 /client/proc/give_spell(mob/T in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 
 	var/list/spell_list = list()
-	var/type_length = length("/obj/effect/proc_holder/spell") + 2
+	var/type_length = length_char("/obj/effect/proc_holder/spell") + 2
 	for(var/A in GLOB.spells)
-		spell_list[copytext("[A]", type_length)] = A
+		spell_list[copytext_char("[A]", type_length)] = A
 	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in sortList(spell_list)
 	if(!S)
 		return
@@ -592,7 +652,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
 	if(!istype(T))
-		to_chat(src, "<span class='notice'>You can only give a disease to a mob of type /mob/living.</span>")
+		to_chat(src, "<span class='notice'>You can only give a disease to a mob of type /mob/living.</span>", confidential = TRUE)
 		return
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sortList(SSdisease.diseases, /proc/cmp_typepaths_asc)
 	if(!D)
@@ -603,7 +663,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name_admin(T)] the disease [D].</span>")
 
 /client/proc/object_say(obj/O in world)
-	set category = "Special Verbs"
+	set category = "Admin - Events"
 	set name = "OSay"
 	set desc = "Makes an object say something."
 	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
@@ -615,7 +675,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Object Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
-	set category = "Special Verbs"
+	set category = "Admin - Events"
 	if (!(holder.rank.rights & R_BUILD))
 		return
 	if(src.mob)
@@ -624,7 +684,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/check_ai_laws()
 	set name = "Check AI Laws"
-	set category = "Admin"
+	set category = "Admin - Game"
 	if(holder)
 		src.holder.output_ai_laws()
 
@@ -641,9 +701,10 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	holder.deactivate()
 
+
 	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
-	log_admin("[src] deadmined themself.")
-	message_admins("[src] deadmined themself.")
+	log_admin("[src] deadminned themselves.")
+	message_admins("[src] deadminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Deadmin")
 
 /client/proc/readmin()
@@ -666,7 +727,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if (!holder)
 		return //This can happen if an admin attempts to vv themself into somebody elses's deadmin datum by getting ref via brute force
 
-	to_chat(src, "<span class='interface'>You are now an admin.</span>")
+	to_chat(src, "<span class='interface'>You are now an admin.</span>", confidential = TRUE)
 	message_admins("[src] re-adminned themselves.")
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")
@@ -707,11 +768,11 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"
-	set category = "Admin"
+	set category = "Admin - Game"
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
-	if(mob && IsAdminGhost(mob))
+	if(mob && isAdminGhostAI(mob))
 		mob.has_unlimited_silicon_privilege = AI_Interact
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")

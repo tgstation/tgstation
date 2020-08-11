@@ -2429,23 +2429,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "fG" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
-"fH" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
-"fI" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
@@ -2793,27 +2776,17 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "gw" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "gx" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
-"gy" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "gz" = (
@@ -2887,7 +2860,7 @@
 /area/awaymission/snowdin/post/hydro)
 "gL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3143,25 +3116,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
-"hl" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
 "hm" = (
-/obj/machinery/gateway,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "hn" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -4200,11 +4161,6 @@
 /obj/item/kitchen/fork,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/snowdin/post/messhall)
-"jA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/plantgenes,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/post/hydro)
 "jB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	piping_layer = 3;
@@ -4212,7 +4168,7 @@
 	pixel_y = 5
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/green,
@@ -4646,7 +4602,7 @@
 /area/awaymission/snowdin/post/dorm)
 "kC" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -5583,7 +5539,7 @@
 /area/awaymission/snowdin/post/hydro)
 "mv" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plating{
@@ -7421,7 +7377,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 6
 	},
-/obj/machinery/doorButtons/airlock_controller{
+/obj/machinery/door_buttons/airlock_controller{
 	idExterior = "snowdin_turbine_exterior";
 	idInterior = "snowdin_turbine_interior";
 	idSelf = "snowdin_turbine_access";
@@ -7744,7 +7700,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	idDoor = "snowdin_turbine_interior";
 	idSelf = "snowdin_turbine_access";
 	layer = 3.1;
@@ -7765,7 +7721,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "Mix To Turbine"
 	},
-/obj/machinery/doorButtons/access_button{
+/obj/machinery/door_buttons/access_button{
 	idDoor = "snowdin_turbine_exterior";
 	idSelf = "snowdin_turbine_access";
 	name = "Turbine airlock control";
@@ -8235,7 +8191,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "tc" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -8901,7 +8857,7 @@
 /area/awaymission/snowdin/post/cavern1)
 "vw" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -12830,7 +12786,7 @@
 /obj/structure/statue/snow/snowman{
 	name = "Snow-Luc Price"
 	},
-/obj/item/clothing/head/HoS{
+/obj/item/clothing/head/hos{
 	pixel_y = 10
 	},
 /turf/open/floor/plating/asteroid/snow,
@@ -25755,7 +25711,7 @@ en
 fh
 fG
 gw
-hl
+gw
 hR
 iA
 ju
@@ -26010,7 +25966,7 @@ bE
 dK
 eo
 fh
-fH
+fG
 gx
 hm
 hS
@@ -26267,8 +26223,8 @@ dk
 dK
 ep
 fh
-fI
-gy
+fG
+fG
 hn
 hT
 iC
@@ -29099,7 +29055,7 @@ gE
 hw
 hX
 iI
-jA
+gJ
 ke
 kQ
 lF

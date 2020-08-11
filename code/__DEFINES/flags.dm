@@ -4,15 +4,6 @@
 #define ALL (~0) //For convenience.
 #define NONE 0
 
-//for convenience
-#define ENABLE_BITFIELD(variable, flag) (variable |= (flag))
-#define DISABLE_BITFIELD(variable, flag) (variable &= ~(flag))
-#define CHECK_BITFIELD(variable, flag) (variable & (flag))
-#define TOGGLE_BITFIELD(variable, flag) (variable ^= (flag))
-
-
-//check if all bitflags specified are present
-#define CHECK_MULTIPLE_BITFIELDS(flagvar, flags) (((flagvar) & (flags)) == (flags))
 
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
@@ -25,8 +16,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 /// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
 #define HEAR_1						(1<<3)
-/// Projectiels will check ricochet on things impacted that have this.
-#define CHECK_RICOCHET_1			(1<<4)
 /// conducts electricity (metal etc.)
 #define CONDUCT_1					(1<<5)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
@@ -38,14 +27,24 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
 #define PREVENT_CLICK_UNDER_1		(1<<11)
 #define HOLOGRAM_1					(1<<12)
-/// TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
-#define TESLA_IGNORE_1				(1<<13)
+/// Prevents mobs from getting chainshocked by teslas and the supermatter
+#define SHOCKED_1 					(1<<13)
 ///Whether /atom/Initialize() has already run for the object
 #define INITIALIZED_1				(1<<14)
 /// was this spawned by an admin? used for stat tracking stuff.
 #define ADMIN_SPAWNED_1			    (1<<15)
 /// should not get harmed if this gets caught by an explosion?
 #define PREVENT_CONTENTS_EXPLOSION_1 (1<<16)
+/// should the contents of this atom be acted upon
+#define RAD_PROTECT_CONTENTS_1 (1 << 17)
+/// should this object be allowed to be contaminated
+#define RAD_NO_CONTAMINATE_1 (1 << 18)
+
+
+/// If the thing can reflect light (lasers/energy)
+#define RICOCHET_SHINY			(1<<0)
+/// If the thing can reflect matter (bullets/bomb shrapnel)
+#define RICOCHET_HARD			(1<<1)
 
 //turf-only flags
 #define NOJAUNT_1					(1<<0)
@@ -59,6 +58,30 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Blocks ruins spawning on the turf
 #define NO_RUINS_1					(1<<10)
 
+////////////////Area flags\\\\\\\\\\\\\\
+/// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
+#define VALID_TERRITORY				(1<<0)
+/// If blobs can spawn there and if it counts towards their score.
+#define BLOBS_ALLOWED				(1<<1)
+/// If mining tunnel generation is allowed in this area
+#define TUNNELS_ALLOWED				(1<<2)
+/// If flora are allowed to spawn in this area randomly through tunnel generation
+#define FLORA_ALLOWED				(1<<3)
+/// If mobs can be spawned by natural random generation
+#define MOB_SPAWN_ALLOWED			(1<<4)
+/// If megafauna can be spawned by natural random generation
+#define MEGAFAUNA_SPAWN_ALLOWED		(1<<5)
+/// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
+#define NOTELEPORT					(1<<6)
+/// Hides area from player Teleport function.
+#define HIDDEN_AREA					(1<<7)
+/// If false, loading multiple maps with this area type will create multiple instances.
+#define UNIQUE_AREA					(1<<8)
+/// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
+#define BLOCK_SUICIDE				(1<<9)
+/// Can the Xenobio management console transverse this area by default?
+#define XENOBIOLOGY_COMPATIBLE		(1<<10)
+
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
@@ -71,6 +94,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSMOB			(1<<4)
 #define PASSCLOSEDTURF	(1<<5)
 #define LETPASSTHROW	(1<<6)
+#define	PASSMACHINE		(1<<7)
+#define PASSSTRUCTURE	(1<<8)
 
 //Movement Types
 #define GROUND			(1<<0)
@@ -96,14 +121,15 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FREEZE_PROOF	(1<<7)
 
 //tesla_zap
-#define TESLA_MACHINE_EXPLOSIVE		(1<<0)
-#define TESLA_ALLOW_DUPLICATES		(1<<1)
-#define TESLA_OBJ_DAMAGE			(1<<2)
-#define TESLA_MOB_DAMAGE			(1<<3)
-#define TESLA_MOB_STUN				(1<<4)
+#define ZAP_MACHINE_EXPLOSIVE		(1<<0)
+#define ZAP_ALLOW_DUPLICATES		(1<<1)
+#define ZAP_OBJ_DAMAGE			(1<<2)
+#define ZAP_MOB_DAMAGE			(1<<3)
+#define ZAP_MOB_STUN			(1<<4)
 
-#define TESLA_DEFAULT_FLAGS ALL
-#define TESLA_FUSION_FLAGS TESLA_OBJ_DAMAGE | TESLA_MOB_DAMAGE | TESLA_MOB_STUN
+#define ZAP_DEFAULT_FLAGS ALL
+#define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
+#define ZAP_SUPERMATTER_FLAGS NONE
 
 //EMP protection
 #define EMP_PROTECT_SELF (1<<0)
@@ -129,10 +155,36 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
 #define MOBILITY_FLAGS_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
 
-// radiation
-#define RAD_PROTECT_CONTENTS (1<<0)
-#define RAD_NO_CONTAMINATE (1<<1)
-
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)
+
+#define KEEP_TOGETHER_ORIGINAL "keep_together_original"
+
+//setter for KEEP_TOGETHER to allow for multiple sources to set and unset it
+#define ADD_KEEP_TOGETHER(x, source)\
+	if ((x.appearance_flags & KEEP_TOGETHER) && !HAS_TRAIT(x, TRAIT_KEEP_TOGETHER)) ADD_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL); \
+	ADD_TRAIT(x, TRAIT_KEEP_TOGETHER, source);\
+	x.appearance_flags |= KEEP_TOGETHER
+
+#define REMOVE_KEEP_TOGETHER(x, source)\
+	REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, source);\
+	if(HAS_TRAIT_FROM_ONLY(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL))\
+		REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL);\
+	else if(!HAS_TRAIT(x, TRAIT_KEEP_TOGETHER))\
+	 	x.appearance_flags &= ~KEEP_TOGETHER
+
+//religious_tool flags
+#define RELIGION_TOOL_INVOKE (1<<0)
+#define RELIGION_TOOL_SACRIFICE (1<<1)
+#define RELIGION_TOOL_SECTSELECT (1<<2)
+
+// ---- Skillchip incompatability flags ---- //
+// These flags control which skill chips are compatible with eachother.
+// By default, skillchips are incompatible with themselves and multiple of the same istype() cannot be implanted together. Set this flag to disable that check.
+#define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)
+// This skillchip is incompatible with other skillchips from the incompatible_category list.
+#define SKILLCHIP_RESTRICTED_CATEGORIES (1<<1)
+// This skillchip is incompatible with the Chameleon skillchip and cannot be copied.
+// If you want to blacklist an abstract path such a /obj/item/skillchip/job then look at the blacklist in /datum/action/item_action/chameleon/change/skillchip
+#define SKILLCHIP_CHAMELEON_INCOMPATIBLE (1<<2)

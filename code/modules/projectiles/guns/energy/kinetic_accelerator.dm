@@ -2,7 +2,7 @@
 	name = "proto-kinetic accelerator"
 	desc = "A self recharging, ranged mining tool that does increased damage in low pressure."
 	icon_state = "kineticgun"
-	item_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = /obj/item/stock_parts/cell/emproof
 	item_flags = NONE
@@ -87,7 +87,7 @@
 	if(!holds_charge)
 		empty()
 
-/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot()
+/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	. = ..()
 	attempt_reload()
 
@@ -134,14 +134,7 @@
 		carried = 1
 
 	deltimer(recharge_timerid)
-	
-	var/skill_modifier = 1
-	if(ishuman(holder))
-		var/mob/living/carbon/human/H = holder
-		if(H.mind)
-			skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
-
-	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried * skill_modifier, TIMER_STOPPABLE)
+	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried, TIMER_STOPPABLE)
 
 /obj/item/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
@@ -155,12 +148,10 @@
 	update_icon()
 	overheat = FALSE
 
-/obj/item/gun/energy/kinetic_accelerator/update_icon()
-	..()
+/obj/item/gun/energy/kinetic_accelerator/update_overlays()
+	. = ..()
 	if(!can_shoot())
-		add_overlay("[icon_state]_empty")
-	else
-		cut_overlays()
+		. += "[icon_state]_empty"
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic
@@ -225,7 +216,11 @@
 			M.projectile_strike(src, target_turf, target, kinetic_gun)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
-		M.gets_drilled(firer)
+		M.gets_drilled(firer, TRUE)
+		if(iscarbon(firer))
+			var/mob/living/carbon/C = firer
+			var/skill_modifier = C?.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
+			kinetic_gun.attempt_reload(kinetic_gun.overheat_time * skill_modifier) //If you hit a mineral, you might get a quicker reload. epic gamer style.
 	var/obj/effect/temp_visual/kinetic_blast/K = new /obj/effect/temp_visual/kinetic_blast(target_turf)
 	K.color = color
 
@@ -239,6 +234,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	require_module = 1
 	module_type = list(/obj/item/robot_module/miner)
+	module_flags = BORG_MODULE_MINER
 	var/denied_type = null
 	var/maximum_of_type = 1
 	var/cost = 30
@@ -398,7 +394,7 @@
 		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
-				M.gets_drilled(K.firer)
+				M.gets_drilled(K.firer, TRUE)
 	if(modifier)
 		for(var/mob/living/L in range(1, target_turf) - K.firer - target)
 			var/armor = L.run_armor_check(K.def_zone, K.flag, "", "", K.armour_penetration)

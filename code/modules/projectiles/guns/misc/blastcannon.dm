@@ -3,7 +3,7 @@
 	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole."
 	icon_state = "empty_blastcannon"
 	var/icon_state_loaded = "loaded_blastcannon"
-	item_state = "blastcannon_empty"
+	inhand_icon_state = "blastcannon_empty"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
@@ -41,18 +41,16 @@
 		user.put_in_hands(bomb)
 		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
 		bomb = null
+		name = initial(name)
+		desc = initial(desc)
 	update_icon()
 	return ..()
 
-/obj/item/gun/blastcannon/update_icon()
+/obj/item/gun/blastcannon/update_icon_state()
 	if(bomb)
 		icon_state = icon_state_loaded
-		name = "blast cannon"
-		desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave."
 	else
 		icon_state = initial(icon_state)
-		name = initial(name)
-		desc = initial(desc)
 
 /obj/item/gun/blastcannon/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/transfer_valve))
@@ -65,6 +63,8 @@
 			return FALSE
 		user.visible_message("<span class='warning'>[user] attaches [T] to [src]!</span>")
 		bomb = T
+		name = "blast cannon"
+		desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave."
 		update_icon()
 		return TRUE
 	return ..()
@@ -108,6 +108,8 @@
 	BW.hugbox = hugbox
 	BW.preparePixelProjectile(target, get_turf(src), params, 0)
 	BW.fire()
+	name = initial(name)
+	desc = initial(desc)
 
 /obj/projectile/blastwave
 	name = "blast wave"
@@ -148,7 +150,13 @@
 				if(prob(wallbreak_chance))
 					W.dismantle_wall(TRUE, TRUE)
 		else
-			loc.ex_act(amount_destruction)
+			switch(amount_destruction)
+				if(EXPLODE_DEVASTATE)
+					SSexplosions.highturf += loc
+				if(EXPLODE_HEAVY)
+					SSexplosions.medturf += loc
+				if(EXPLODE_LIGHT)
+					SSexplosions.lowturf += loc
 	else
 		qdel(src)
 

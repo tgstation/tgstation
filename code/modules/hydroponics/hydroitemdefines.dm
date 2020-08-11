@@ -1,15 +1,36 @@
+
 // Plant analyzer
 /obj/item/plant_analyzer
 	name = "plant analyzer"
-	desc = "A scanner used to evaluate a plant's various areas of growth."
+	desc = "A scanner used to evaluate a plant's various areas of growth, and genetic traits."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
-	item_state = "analyzer"
+	inhand_icon_state = "analyzer"
+	worn_icon_state = "plantanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	var/scan_mode = PLANT_SCANMODE_STATS
+
+/obj/item/plant_analyzer/attack_self(mob/user)
+	. = ..()
+	scan_mode = !scan_mode
+	to_chat(user, "<span class='notice'>You switch [src] to [scan_mode == PLANT_SCANMODE_CHEMICALS ? "scan for chemical reagents and traits" : "scan for plant growth statistics"].</span>")
+
+/obj/item/plant_analyzer/attack(mob/living/M, mob/living/carbon/human/user)
+	//Checks if target is a podman
+	if(ispodperson(M))
+		user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
+							"<span class='notice'>You analyze [M]'s vitals.</span>")
+		if(scan_mode== PLANT_SCANMODE_STATS)
+			healthscan(user, M, advanced = TRUE)
+		else
+			chemscan(user, M)
+		add_fingerprint(user)
+		return
+	return ..()
 
 // *************************************
 // Hydroponics Tools
@@ -20,7 +41,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "weed spray"
 	icon_state = "weedspray"
-	item_state = "spraycan"
+	inhand_icon_state = "spraycan"
+	worn_icon_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
@@ -35,7 +57,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest spray"
 	icon_state = "pestspray"
-	item_state = "plantbgone"
+	inhand_icon_state = "plantbgone"
+	worn_icon_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
@@ -50,7 +73,7 @@
 	desc = "It's used for removing weeds or scratching your back."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "cultivator"
-	item_state = "cultivator"
+	inhand_icon_state = "cultivator"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -71,13 +94,17 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("slashed", "sliced", "bashed", "clawed")
 	hitsound = null
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
 	flags_1 = NONE
 	resistance_flags = FLAMMABLE
 
-/obj/item/cultivator/rake/Crossed(mob/living/carbon/human/H)
-	if(istype(H) && has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
-		H.confused = max(H.confused, 10)
+/obj/item/cultivator/rake/Crossed(atom/movable/AM)
+	. = ..()
+	if(!ishuman(AM))
+		return
+	var/mob/living/carbon/human/H = AM
+	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
+		H.set_confusion(max(H.get_confusion(), 10))
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message("<span class='warning'>[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!</span>", \
@@ -88,7 +115,7 @@
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "hatchet"
-	item_state = "hatchet"
+	inhand_icon_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -98,9 +125,9 @@
 	throw_speed = 3
 	throw_range = 4
 	custom_materials = list(/datum/material/iron = 15000)
-	attack_verb = list("chopped", "torn", "cut")
+	attack_verb = list("chopped", "tore", "lacerated", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/hatchet/Initialize()
 	. = ..()
@@ -146,7 +173,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src, "desceration" ,50, TRUE, -1)
+			playsound(src, "desecration" ,50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
@@ -163,6 +190,42 @@
 				melee_attack_chain(user, V)
 	swiping = FALSE
 	return TRUE
+
+/obj/item/secateurs
+	name = "secateurs"
+	desc = "It's a tool for cutting grafts off plants."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "secateurs"
+	inhand_icon_state = "secateurs"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
+	flags_1 = CONDUCT_1
+	force = 5
+	throwforce = 6
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT
+	custom_materials = list(/datum/material/iron=4000)
+	attack_verb = list("slashed", "sliced", "cut", "clawed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/geneshears
+	name = "Botanogenetic Plant Shears"
+	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "genesheers"
+	inhand_icon_state = "secateurs"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
+	flags_1 = CONDUCT_1
+	force = 10
+	throwforce = 8
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT
+	material_flags = MATERIAL_NO_EFFECTS
+	custom_materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/gold=500)
+	attack_verb = list("slashed", "sliced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
 
 // *************************************
 // Nutrient defines for hydroponics
@@ -183,33 +246,33 @@
 
 /obj/item/reagent_containers/glass/bottle/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
-	desc = "Contains a fertilizer that causes mild mutations with each harvest."
+	desc = "Contains a fertilizer that causes mild mutations and gradual plant growth with each harvest."
 	list_reagents = list(/datum/reagent/plantnutriment/eznutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
-	desc = "Contains a fertilizer that limits plant yields to no more than one and causes significant mutations in plants."
+	desc = "Contains a fertilizer that lightly heals the plant but causes significant mutations in plants over generations."
 	list_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
-	desc = "Contains a fertilizer that increases the yield of a plant by 30% while causing no mutations."
+	desc = "Contains a fertilizer that increases the yield of a plant while gradually preventing mutations."
 	list_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/empty
 	name = "bottle"
 
 /obj/item/reagent_containers/glass/bottle/killer
-	volume = 50
-	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(1,2,5,10,15,25,50)
+	volume = 30
+	amount_per_transfer_from_this = 1
+	possible_transfer_amounts = list(1,2,5)
 
 /obj/item/reagent_containers/glass/bottle/killer/weedkiller
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
-	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 50)
+	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 30)
 
 /obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
-	list_reagents = list(/datum/reagent/toxin/pestkiller = 50)
+	list_reagents = list(/datum/reagent/toxin/pestkiller = 30)

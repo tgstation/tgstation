@@ -5,7 +5,7 @@
 	icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCT_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 	max_integrity = 50
@@ -15,7 +15,6 @@
 	var/rods_broken = TRUE
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))
@@ -32,8 +31,8 @@
 	var/ratio = obj_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 
-	if(smooth)
-		queue_smooth(src)
+	if(smoothing_flags)
+		QUEUE_SMOOTH(src)
 
 	if(ratio > 50)
 		return
@@ -51,10 +50,9 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
-			if(the_rcd.window_type == /obj/structure/window/reinforced/fulltile)
+			if(the_rcd.window_glass == RCD_WINDOW_REINFORCED)
 				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
-			else
-				return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
+			return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -64,11 +62,15 @@
 			qdel(src)
 			return TRUE
 		if(RCD_WINDOWGRILLE)
-			if(locate(/obj/structure/window) in loc)
+			if(!isturf(loc))
+				return FALSE
+			var/turf/T = loc
+			var/window_dir = the_rcd.window_size == RCD_WINDOW_FULLTILE ? FULLTILE_WINDOW_DIR : user.dir
+			if(!valid_window_location(T, window_dir))
 				return FALSE
 			to_chat(user, "<span class='notice'>You construct the window.</span>")
-			var/obj/structure/window/WD = new the_rcd.window_type(drop_location())
-			WD.setAnchored(TRUE)
+			var/obj/structure/window/WD = new the_rcd.window_type(T, window_dir)
+			WD.set_anchored(TRUE)
 			return TRUE
 	return FALSE
 
@@ -82,7 +84,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!shock(user, 70))
+	if(!shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_paw(mob/user)
@@ -114,19 +116,16 @@
 	if(!shock(user, 70))
 		take_damage(20, BRUTE, "melee", 1)
 
-
-/obj/structure/grille/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
+/obj/structure/grille/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(mover.pass_flags & PASSGRILLE)
 		return TRUE
-	else
-		if(istype(mover, /obj/projectile) && density)
-			return prob(30)
-		else
-			return !density
+	else if(!. && istype(mover, /obj/projectile))
+		return prob(30)
 
 /obj/structure/grille/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSGRILLE)
 
@@ -140,7 +139,7 @@
 	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && (isturf(loc) || anchored))
 		if(!shock(user, 90))
 			W.play_tool_sound(src, 100)
-			setAnchored(!anchored)
+			set_anchored(!anchored)
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
 								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
 			return
@@ -189,7 +188,7 @@
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
-				WD.setAnchored(FALSE)
+				WD.set_anchored(FALSE)
 				WD.state = 0
 				ST.use(2)
 				to_chat(user, "<span class='notice'>You place [WD] on [src].</span>")
@@ -264,7 +263,7 @@
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
 					playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-					tesla_zap(src, 3, C.newavail() * 0.01, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN | TESLA_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
+					tesla_zap(src, 3, C.newavail() * 0.01, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 

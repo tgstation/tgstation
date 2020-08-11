@@ -26,7 +26,7 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, beauty), 0)
+	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty))
 
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
@@ -43,7 +43,7 @@
 		return TRUE
 
 /obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
+	if((istype(W, /obj/item/reagent_containers/glass) && !istype(W, /obj/item/reagent_containers/glass/rag)) || istype(W, /obj/item/reagent_containers/food/drinks))
 		if(src.reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)
@@ -85,7 +85,7 @@
 	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
-		if(H.shoes && blood_state && bloodiness && !HAS_TRAIT(H, TRAIT_LIGHT_STEP))
+		if(H.shoes && blood_state && bloodiness)
 			var/obj/item/clothing/shoes/S = H.shoes
 			if(!S.can_be_bloody)
 				return
@@ -100,6 +100,11 @@
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
+
+/obj/effect/decal/cleanable/wash(clean_types)
+	..()
+	qdel(src)
+	return TRUE
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

@@ -12,9 +12,9 @@
 	var/permanent = FALSE
 	var/last_process = 0
 
-/datum/component/wet_floor/InheritComponent(datum/newcomp, orig, argslist)
+/datum/component/wet_floor/InheritComponent(datum/newcomp, orig, strength, duration_minimum, duration_add, duration_maximum, _permanent)
 	if(!newcomp)	//We are getting passed the arguments of a would-be new component, but not a new component
-		add_wet(arglist(argslist))
+		add_wet(arglist(args.Copy(3)))
 	else			//We are being passed in a full blown component
 		var/datum/component/wet_floor/WF = newcomp			//Lets make an assumption
 		if(WF.gc())						//See if it's even valid, still. Also does LAZYLEN and stuff for us.
@@ -69,7 +69,7 @@
 
 /datum/component/wet_floor/proc/AfterSlip(mob/living/L)
 	if(highest_strength == TURF_WET_LUBE)
-		L.confused = max(L.confused, 8)
+		L.set_confusion(max(L.get_confusion(), 8))
 
 /datum/component/wet_floor/proc/update_flags()
 	var/intensity
@@ -177,7 +177,7 @@
 /datum/component/wet_floor/proc/_do_add_wet(type, duration_minimum, duration_add, duration_maximum)
 	var/time = 0
 	if(LAZYACCESS(time_left_list, "[type]"))
-		time = CLAMP(LAZYACCESS(time_left_list, "[type]") + duration_add, duration_minimum, duration_maximum)
+		time = clamp(LAZYACCESS(time_left_list, "[type]") + duration_add, duration_minimum, duration_maximum)
 	else
 		time = min(duration_minimum, duration_maximum)
 	LAZYSET(time_left_list, "[type]", time)

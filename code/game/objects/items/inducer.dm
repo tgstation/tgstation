@@ -3,7 +3,7 @@
 	desc = "A tool for inductively charging internal power cells."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
-	item_state = "inducer-engi"
+	inhand_icon_state = "inducer-engi"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	force = 7
@@ -107,6 +107,9 @@
 	if(istype(A, /obj/item/gun/energy))
 		to_chat(user, "<span class='alert'>Error unable to interface with device.</span>")
 		return FALSE
+	if(istype(A, /obj/item/clothing/suit/space))
+		to_chat(user, "<span class='alert'>Error unable to interface with device.</span>")
+		return FALSE
 	if(istype(A, /obj))
 		O = A
 	if(C)
@@ -162,17 +165,17 @@
 	if(opened)
 		. += "<span class='notice'>Its battery compartment is open.</span>"
 
-/obj/item/inducer/update_icon()
-	cut_overlays()
+/obj/item/inducer/update_overlays()
+	. = ..()
 	if(opened)
 		if(!cell)
-			add_overlay("inducer-nobat")
+			. += "inducer-nobat"
 		else
-			add_overlay("inducer-bat")
+			. += "inducer-bat"
 
 /obj/item/inducer/sci
 	icon_state = "inducer-sci"
-	item_state = "inducer-sci"
+	inhand_icon_state = "inducer-sci"
 	desc = "A tool for inductively charging internal power cells. This one has a science color scheme, and is less potent than its engineering counterpart."
 	cell_type = null
 	powertransfer = 500
@@ -181,3 +184,10 @@
 /obj/item/inducer/sci/Initialize()
 	. = ..()
 	update_icon()
+
+/obj/item/inducer/syndicate
+	icon_state = "inducer-syndi"
+	inhand_icon_state = "inducer-syndi"
+	desc = "A tool for inductively charging internal power cells. This one has a suspicious colour scheme, and seems to be rigged to transfer charge at a much faster rate."
+	powertransfer = 2000
+	cell_type = /obj/item/stock_parts/cell/super

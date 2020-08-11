@@ -28,6 +28,7 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/suit/space/eva/plasmaman,
 		/obj/item/clothing/under/plasmaman,
 		/obj/item/clothing/head/helmet/space/plasmaman,
+		/obj/item/clothing/gloves/color/plasmaman,
 		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/gas))
@@ -67,13 +68,13 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/update_icon_state()
 	icon_state = initial(icon_state) + (state_open ? "_open" : "")
 	//no power or maintenance
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state += "_unpowered"
-		if((stat & MAINT) || panel_open)
+		if((machine_stat & MAINT) || panel_open)
 			icon_state += "_maintenance"
 		return
 
-	if((stat & MAINT) || panel_open)
+	if((machine_stat & MAINT) || panel_open)
 		icon_state += "_maintenance"
 		return
 
@@ -172,6 +173,6 @@ The console is located at computer/gulag_teleporter.dm
 	name = "labor camp bluespace beacon"
 	desc = "A receiving beacon for bluespace teleportations."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "light_on-w"
+	icon_state = "light_on-8"
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE

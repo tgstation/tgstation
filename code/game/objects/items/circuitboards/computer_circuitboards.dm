@@ -103,10 +103,10 @@
 	name = "Carbon Dioxide Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/carbon_tank
 
-/obj/item/circuitboard/computer/auxillary_base
-	name = "Auxillary Base Management Console (Computer Board)"
+/obj/item/circuitboard/computer/auxiliary_base
+	name = "Auxiliary Base Management Console (Computer Board)"
 	icon_state = "engineering"
-	build_path = /obj/machinery/computer/auxillary_base
+	build_path = /obj/machinery/computer/auxiliary_base
 
 /obj/item/circuitboard/computer/base_construction
 	name = "circuit board (Aux Mining Base Construction Console)"
@@ -197,13 +197,13 @@
 
 /obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
+		if(build_path == /obj/machinery/computer/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole
 			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
 		else
 			name = "Book Inventory Management Console (Computer Board)"
-			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+			build_path = /obj/machinery/computer/bookmanagement
 			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
 	else
 		return ..()
@@ -266,12 +266,11 @@
 	name = "Salvage Pod Recall (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
 
-//Medical
+/obj/item/circuitboard/computer/bountypad
+	name = "Bounty Pad (Computer Board)"
+	build_path = /obj/machinery/computer/piratepad_control/civilian
 
-/obj/item/circuitboard/computer/cloning
-	name = "Cloning (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/cloning
+//Medical
 
 /obj/item/circuitboard/computer/crew
 	name = "Crew Monitoring Console (Computer Board)"
@@ -292,16 +291,6 @@
 	name = "PanD.E.M.I.C. 2200 (Computer Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/computer/pandemic
-
-/obj/item/circuitboard/computer/prototype_cloning
-	name = "Prototype Cloning (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/prototype_cloning
-
-/obj/item/circuitboard/computer/scan_consolenew
-	name = "DNA Machine (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/scan_consolenew
 
 //Science
 
@@ -344,20 +333,6 @@
 	name = "R&D Console Production Only (Computer Board)"
 	build_path = /obj/machinery/computer/rdconsole/production
 
-
-/obj/item/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/rdconsole/core)
-			name = "R&D Console - Robotics (Computer Board)"
-			build_path = /obj/machinery/computer/rdconsole/robotics
-			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
-		else
-			name = "R&D Console (Computer Board)"
-			build_path = /obj/machinery/computer/rdconsole/core
-			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
-	else
-		return ..()
-
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control (Computer Board)"
 	icon_state = "science"
@@ -379,9 +354,19 @@
 	build_path = /obj/machinery/computer/teleporter
 
 /obj/item/circuitboard/computer/xenobiology
-	name = "circuit board (Xenobiology Console)"
+	name = "Xenobiology Console (Computer Board)"
 	icon_state = "science"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
+
+/obj/item/circuitboard/computer/scan_consolenew
+	name = "DNA Console (Computer Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/scan_consolenew
+
+/obj/item/circuitboard/computer/mechpad
+	name = "Mecha Orbital Pad Console (Computer Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/mechpad
 
 //Security
 
@@ -430,7 +415,7 @@
 //Supply
 
 /obj/item/circuitboard/computer/bounty
-	name = "Nanotrasen Bounty Console (Computer Board)"
+	name = "\improper Nanotrasen Bounty Console (Computer Board)"
 	icon_state = "supply"
 	build_path = /obj/machinery/computer/bounty
 

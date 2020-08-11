@@ -8,12 +8,12 @@
 	range = -1
 	include_user = TRUE
 	invocation = "RAC'WA NO!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "shapeshift"
 
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
-	var/convert_damage = TRUE //If you want to convert the caster's health to the shift, and vice versa.
+	var/convert_damage = TRUE //If you want to convert the caster's health and blood to the shift, and vice versa.
 	var/convert_damage_type = BRUTE //Since simplemobs don't have advanced damagetypes, what to convert damage back into.
 
 	var/mob/living/shapeshift_type
@@ -22,10 +22,11 @@
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/secbot/ed209,\
 		/mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper,\
-		/mob/living/simple_animal/hostile/construct/armored)
+		/mob/living/simple_animal/hostile/construct/juggernaut)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	if(src in user.mob_spell_list)
+		LAZYREMOVE(user.mob_spell_list, src)
 		user.mob_spell_list.Remove(src)
 		user.mind.AddSpell(src)
 	if(user.buckled)
@@ -33,10 +34,14 @@
 	for(var/mob/living/M in targets)
 		if(!shapeshift_type)
 			var/list/animal_list = list()
+			var/list/display_animals = list()
 			for(var/path in possible_shapes)
-				var/mob/living/simple_animal/A = path
-				animal_list[initial(A.name)] = path
-			var/new_shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in sortList(animal_list)
+				var/mob/living/simple_animal/animal = path
+				animal_list[initial(animal.name)] = path
+				var/image/animal_image = image(icon = initial(animal.icon), icon_state = initial(animal.icon_state))
+				display_animals += list(initial(animal.name) = animal_image)
+			sortList(display_animals)
+			var/new_shapeshift_type = show_radial_menu(M, M, display_animals, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
 			if(shapeshift_type)
 				return
 			shapeshift_type = new_shapeshift_type
@@ -72,6 +77,19 @@
 				qdel(M)
 				return
 
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  */
+/obj/effect/proc_holder/spell/targeted/shapeshift/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
 	var/obj/shapeshift_holder/H = locate() in caster
 	if(H)
@@ -101,7 +119,7 @@
 	desc = "Take on the shape a lesser ash drake."
 	invocation = "RAAAAAAAAWR!"
 	convert_damage = FALSE
-	
+
 
 	shapeshift_type = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
@@ -130,7 +148,8 @@
 		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth;
 		var/damapply = damage_percent * shape.maxHealth;
 
-		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
+		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
+		shape.blood_volume = stored.blood_volume;
 
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
@@ -185,7 +204,9 @@
 		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
 		var/damapply = stored.maxHealth * damage_percent
 
-		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
+		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
+	if(source.convert_damage)
+		stored.blood_volume = shape.blood_volume;
 	qdel(shape)
 	qdel(src)
 

@@ -1,4 +1,4 @@
-/proc/make_types_fancy(var/list/types)
+/proc/make_types_fancy(list/types)
 	if (ispath(types))
 		types = list(types)
 	. = list()
@@ -31,8 +31,8 @@
 			/mob = "M"
 		)
 		for (var/tn in TYPES_SHORTCUTS)
-			if (copytext(typename,1, length("[tn]/")+1)=="[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
-				typename = TYPES_SHORTCUTS[tn]+copytext(typename,length("[tn]/"))
+			if(copytext(typename, 1, length("[tn]/") + 1) == "[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
+				typename = TYPES_SHORTCUTS[tn] + copytext(typename, length("[tn]/"))
 				break
 		.[typename] = type
 
@@ -52,8 +52,14 @@
 
 /proc/filter_fancy_list(list/L, filter as text)
 	var/list/matches = new
+	var/end_len = -1
+	var/list/endcheck = splittext(filter, "!")
+	if(endcheck.len > 1)
+		filter = endcheck[1]
+		end_len = length_char(filter)
+
 	for(var/key in L)
 		var/value = L[key]
-		if(findtext("[key]", filter) || findtext("[value]", filter))
+		if(findtext("[key]", filter, -end_len) || findtext("[value]", filter, -end_len))
 			matches[key] = value
 	return matches

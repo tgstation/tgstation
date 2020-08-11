@@ -117,7 +117,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/engineering)
 "ax" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-20";
 	pixel_y = 3
 	},
@@ -548,27 +548,18 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bA" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bB" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bC" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -718,25 +709,19 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bS" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bT" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bU" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -785,25 +770,18 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/engineering)
 "bY" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bZ" = (
-/obj/machinery/gateway,
 /obj/effect/landmark/awaystart,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "ca" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -1257,7 +1235,7 @@
 /obj/structure/closet/crate,
 /obj/item/disk/data{
 	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off.";
-	fields = list("label" = "Buffer1:Kr-$$@##", "UI" = "f8f603857000f930127c4", "SE" = "414401462231053131010241514651403453121613263463440351136366", "UE" = "340008485c321e542aed4df7032ac04d", "name" = "Krystal Symers", "blood_type" = "A+");
+	genetic_makeup_buffer = list("label" = "Buffer1:Kr-$$@##", "UI" = "f8f603857000f930127c4", "SE" = "414401462231053131010241514651403453121613263463440351136366", "UE" = "340008485c321e542aed4df7032ac04d", "name" = "Krystal Symers", "blood_type" = "A+");
 	name = "dusty genetics data disk";
 	read_only = 1
 	},
@@ -1633,7 +1611,7 @@
 /obj/structure/closet/crate,
 /obj/item/disk/data{
 	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off with the words 'DO NOT CLONE' hastily written over it.";
-	fields = list("label" = "Buffer1:George Melons", "UI" = "3c300f11b5421ca7014d8", "SE" = "430431205660551642142504334461413202111310233445620533134255", "UE" = "6893e6a0b0076a41897776b10cc2b324", "name" = "George Melons", "blood_type" = "B+");
+	genetic_makeup_buffer = list("label" = "Buffer1:George Melons", "UI" = "3c300f11b5421ca7014d8", "SE" = "430431205660551642142504334461413202111310233445620533134255", "UE" = "6893e6a0b0076a41897776b10cc2b324", "name" = "George Melons", "blood_type" = "B+");
 	name = "old genetics data disk"
 	},
 /obj/item/disk/data{
@@ -1662,7 +1640,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dN" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-16"
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -2397,7 +2375,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fv" = (
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/red{
@@ -2891,7 +2869,7 @@
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/medical/geneticist
+	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -3692,7 +3670,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "hV" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -3800,7 +3778,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
 "ii" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	desc = "A potted plant, it doesn't look very healthy...";
 	name = "dead potted plant"
 	},
@@ -3870,7 +3848,7 @@
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/medical/geneticist
+	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -3890,7 +3868,7 @@
 	pixel_x = -32
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -4208,7 +4186,7 @@
 /area/awaymission/research/interior/medbay)
 "jg" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -4238,7 +4216,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jm" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-14"
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -4709,7 +4687,7 @@
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/medical/geneticist
+	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue{
@@ -4880,7 +4858,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "kC" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -5254,7 +5232,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "ly" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-16"
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -5585,7 +5563,7 @@
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/medical/geneticist
+	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/research/exterior)
@@ -5722,7 +5700,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/escapepods)
 "mJ" = (
-/obj/item/twohanded/required/kirbyplants,
+/obj/item/kirbyplants,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -5759,7 +5737,7 @@
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mN" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "applebush"
 	},
 /obj/effect/turf_decal/tile/green,

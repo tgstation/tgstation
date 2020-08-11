@@ -42,7 +42,7 @@
 		thealert.override_alerts = override
 		if(override)
 			thealert.timeout = null
-	thealert.mob_viewer = src
+	thealert.owner = src
 
 	if(new_master)
 		var/old_layer = new_master.layer
@@ -97,7 +97,7 @@
 	var/severity = 0
 	var/alerttooltipstyle = ""
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
-	var/mob/mob_viewer //the mob viewing this alert
+	var/mob/owner //Alert owner
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
@@ -227,9 +227,11 @@ or something covering your eyes."
 
 /obj/screen/alert/mind_control/Click()
 	var/mob/living/L = usr
+	if(L != owner)
+		return
 	to_chat(L, "<span class='mind_control'>[command]</span>")
 
-/obj/screen/alert/drunk //Not implemented
+/obj/screen/alert/drunk
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
 	icon_state = "drunk"
@@ -241,8 +243,8 @@ If you're feeling frisky, examine yourself and click the underlined item to pull
 	icon_state = "embeddedobject"
 
 /obj/screen/alert/embeddedobject/Click()
-	if(isliving(usr))
-		var/mob/living/carbon/human/M = usr
+	if(isliving(usr) && usr == owner)
+		var/mob/living/carbon/M = usr
 		return M.help_shake_act(M)
 
 /obj/screen/alert/weightless
@@ -270,12 +272,46 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/fire/Click()
 	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist())
+	if(!istype(L) || !L.can_resist() || L != owner)
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.mobility_flags & MOBILITY_MOVE)
 		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
+/obj/screen/alert/give // information set when the give alert is made
+	icon_state = "default"
+	var/mob/living/carbon/giver
+	var/obj/item/receiving
+
+/**
+  * Handles assigning most of the variables for the alert that pops up when an item is offered
+  *
+  * Handles setting the name, description and icon of the alert and tracking the person giving
+  * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the giver
+  * Arguments:
+  * * taker - The person receiving the alert
+  * * giver - The person giving the alert and item
+  * * receiving - The item being given by the giver
+  */
+/obj/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
+	name = "[giver] is offering [receiving]"
+	desc = "[giver] is offering [receiving]. Click this alert to take it."
+	icon_state = "template"
+	cut_overlays()
+	add_overlay(receiving)
+	src.receiving = receiving
+	src.giver = giver
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, taker)
+
+/obj/screen/alert/give/proc/check_in_range(atom/taker)
+	if (!giver.CanReach(taker))
+		to_chat(owner, "<span class='warning'>You moved out of range of [giver]!</span>")
+		owner.clear_alert("[giver]")
+
+/obj/screen/alert/give/Click(location, control, params)
+	. = ..()
+	var/mob/living/carbon/C = owner
+	C.take(giver, receiving)
 
 //ALIENS
 
@@ -330,10 +366,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/bloodsense/process()
 	var/atom/blood_target
 
-	if(!mob_viewer.mind)
+	if(!owner.mind)
 		return
 
-	var/datum/antagonist/cult/antag = mob_viewer.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!antag)
 		return
 	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
@@ -370,7 +406,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
-	var/turf/Q = get_turf(mob_viewer)
+	var/turf/Q = get_turf(owner)
 	if(!P || !Q || (P.z != Q.z)) //The target is on a different Z level, we cannot sense that far.
 		icon_state = "runed_sense2"
 		desc = "You can no longer sense your target's presence."
@@ -460,6 +496,11 @@ Recharging stations are available in robotics, the dormitory bathrooms, and the 
 	desc = "Your blood's electric charge is running low, find a source of charge for your blood. Use a recharging station found in robotics or the dormitory bathrooms, or eat some Ethereal-friendly food."
 	icon_state = "etherealcharge"
 
+/obj/screen/alert/ethereal_overcharge
+	name = "Blood Overcharge"
+	desc = "Your blood's electric charge is becoming dangerously high, find an outlet for your energy. Use Grab Intent on an APC to channel your energy into it."
+	icon_state = "ethereal_overcharge"
+
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /obj/screen/alert/hacked
 	name = "Hacked"
@@ -489,7 +530,7 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /obj/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client)
+	if(!usr || !usr.client || usr != owner)
 		return
 	if(!target)
 		return
@@ -515,7 +556,7 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client)
+	if(!usr || !usr.client || usr != owner)
 		return
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
@@ -529,7 +570,7 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /obj/screen/alert/notify_action/Click()
-	if(!usr || !usr.client)
+	if(!usr || !usr.client || usr != owner)
 		return
 	if(!target)
 		return
@@ -563,7 +604,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/Click()
 	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist())
+	if(!istype(L) || !L.can_resist() || L != owner)
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if((L.mobility_flags & MOBILITY_MOVE) && (L.last_special <= world.time))
@@ -571,20 +612,40 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/buckled/Click()
 	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist())
+	if(!istype(L) || !L.can_resist() || L != owner)
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.last_special <= world.time)
 		return L.resist_buckle()
 
+/obj/screen/alert/shoes/untied
+	name = "Untied Shoes"
+	desc = "Your shoes are untied! Click the alert or your shoes to tie them."
+	icon_state = "shoealert"
+
+/obj/screen/alert/shoes/knotted
+	name = "Knotted Shoes"
+	desc = "Someone tied your shoelaces together! Click the alert or your shoes to undo the knot."
+	icon_state = "shoealert"
+
+/obj/screen/alert/shoes/Click()
+	var/mob/living/carbon/C = usr
+	if(!istype(C) || !C.can_resist() || C != owner || !C.shoes)
+		return
+	C.changeNext_move(CLICK_CD_RESIST)
+	C.shoes.handle_tying(C)
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
-/datum/hud/proc/reorganize_alerts()
+/datum/hud/proc/reorganize_alerts(mob/viewmob)
+	var/mob/screenmob = viewmob || mymob
+	if(!screenmob.client)
+		return
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
-			mymob.client.screen -= alerts[alerts[i]]
+			screenmob.client.screen -= alerts[alerts[i]]
 		return 1
 	for(var/i = 1, i <= alerts.len, i++)
 		var/obj/screen/alert/alert = alerts[alerts[i]]
@@ -604,7 +665,10 @@ so as to remain in compliance with the most up-to-date laws."
 			else
 				. = ""
 		alert.screen_loc = .
-		mymob.client.screen |= alert
+		screenmob.client.screen |= alert
+	if(!viewmob)
+		for(var/M in mymob.observers)
+			reorganize_alerts(M)
 	return 1
 
 /obj/screen/alert/Click(location, control, params)
@@ -614,6 +678,8 @@ so as to remain in compliance with the most up-to-date laws."
 	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
 		return
+	if(usr != owner)
+		return
 	if(master)
 		return usr.client.Click(master, location, control, params)
 
@@ -621,5 +687,5 @@ so as to remain in compliance with the most up-to-date laws."
 	. = ..()
 	severity = 0
 	master = null
-	mob_viewer = null
+	owner = null
 	screen_loc = ""

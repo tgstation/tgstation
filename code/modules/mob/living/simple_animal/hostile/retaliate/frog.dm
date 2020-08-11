@@ -42,6 +42,7 @@
 		butcher_results = list(/obj/item/reagent_containers/food/snacks/nugget = 5)
 
 /mob/living/simple_animal/hostile/retaliate/frog/Crossed(AM as mob|obj)
+	. = ..()
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)

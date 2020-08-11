@@ -145,6 +145,21 @@
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
+	///How much wounding power it has
+	var/wound_bonus = CANT_WOUND
+	///How much bare wounding power it has
+	var/bare_wound_bonus = 0
+	///If the attacks from this are sharp
+	var/sharpness = SHARP_NONE
+	///Generic flags
+	var/simple_mob_flags = NONE
+
+	/// Used for making mobs show a heart emoji and give a mood boost when pet.
+	var/pet_bonus = FALSE
+	/// A string for an emote used when pet_bonus == true for the mob being pet.
+	var/pet_bonus_emote = ""
+
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -184,12 +199,12 @@
 			return
 		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
 			tame = TRUE
-			tamed()
+			tamed(user)
 		else
 			tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
-/mob/living/simple_animal/proc/tamed()
+/mob/living/simple_animal/proc/tamed(whomst)
 	return
 
 /mob/living/simple_animal/examine(mob/user)
@@ -197,9 +212,6 @@
 	if(stat == DEAD)
 		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
 
-/mob/living/simple_animal/updatehealth()
-	..()
-	health = CLAMP(health, 0, maxHealth)
 
 /mob/living/simple_animal/update_stat()
 	if(status_flags & GODMODE)
@@ -208,7 +220,7 @@
 		if(health <= 0)
 			death()
 		else
-			stat = CONSCIOUS
+			set_stat(CONSCIOUS)
 	med_hud_set_status()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
@@ -235,7 +247,7 @@
 						turns_since_move = 0
 			return 1
 
-/mob/living/simple_animal/proc/handle_automated_speech(var/override)
+/mob/living/simple_animal/proc/handle_automated_speech(override)
 	set waitfor = FALSE
 	if(speak_chance)
 		if(prob(speak_chance) || override)
@@ -252,33 +264,32 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote("me [pick(emote_see)]", 1)
+							manual_emote(pick(emote_see))
 						else
-							emote("me [pick(emote_hear)]", 2)
+							manual_emote(pick(emote_hear))
 				else
 					say(pick(speak), forced = "poly")
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote("me", 1, pick(emote_see))
+					manual_emote(pick(emote_see))
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote("me", 2, pick(emote_hear))
+					manual_emote(pick(emote_hear))
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
-						emote("me", 1, pick(emote_see))
+						manual_emote(pick(emote_see))
 					else
-						emote("me", 2, pick(emote_hear))
+						manual_emote(pick(emote_hear))
 
-
-/mob/living/simple_animal/proc/environment_is_safe(datum/gas_mixture/environment, check_temp = FALSE)
+/mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE
 
 	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
 		. = FALSE //getting choked
 
-	if(isturf(src.loc) && isopenturf(src.loc))
-		var/turf/open/ST = src.loc
+	if(isturf(loc) && isopenturf(loc))
+		var/turf/open/ST = loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
 			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
@@ -310,29 +321,51 @@
 			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
 				. = FALSE
 
-	if(check_temp)
-		var/areatemp = get_temperature(environment)
-		if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
-			. = FALSE
-
+/mob/living/simple_animal/proc/environment_temperature_is_safe(datum/gas_mixture/environment)
+	. = TRUE
+	var/areatemp = get_temperature(environment)
+	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
+		. = FALSE
 
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
-	var/atom/A = src.loc
+	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
-		if( abs(areatemp - bodytemperature) > 5)
+		if(abs(areatemp - bodytemperature) > 5)
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
 			adjust_bodytemperature(diff)
 
-	if(!environment_is_safe(environment))
+	if(!environment_air_is_safe())
 		adjustHealth(unsuitable_atmos_damage)
+		if(unsuitable_atmos_damage > 0)
+			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+	else
+		clear_alert("not_enough_oxy")
 
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
-	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))
+	if(bodytemperature < minbodytemp)
 		adjustHealth(unsuitable_atmos_damage)
+		switch(unsuitable_atmos_damage)
+			if(1 to 5)
+				throw_alert("temp", /obj/screen/alert/cold, 1)
+			if(5 to 10)
+				throw_alert("temp", /obj/screen/alert/cold, 2)
+			if(10 to INFINITY)
+				throw_alert("temp", /obj/screen/alert/cold, 3)
+	else if(bodytemperature > maxbodytemp)
+		adjustHealth(unsuitable_atmos_damage)
+		switch(unsuitable_atmos_damage)
+			if(1 to 5)
+				throw_alert("temp", /obj/screen/alert/hot, 1)
+			if(5 to 10)
+				throw_alert("temp", /obj/screen/alert/hot, 2)
+			if(10 to INFINITY)
+				throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 /mob/living/simple_animal/gib()
 	if(butcher_results || guaranteed_butcher_results)
@@ -351,7 +384,7 @@
 	if(icon_gib)
 		new /obj/effect/temp_visual/gib_animation/animal(loc, icon_gib)
 
-/mob/living/simple_animal/say_mod(input, message_mode)
+/mob/living/simple_animal/say_mod(input, list/message_mods = list())
 	if(speak_emote && speak_emote.len)
 		verb_say = pick(speak_emote)
 	. = ..()
@@ -367,8 +400,8 @@
 
 /mob/living/simple_animal/proc/update_simplemob_varspeed()
 	if(speed == 0)
-		remove_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE)
-	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE, 100, multiplicative_slowdown = speed, override = TRUE)
+		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -452,12 +485,13 @@
 	for(var/mob/M in view(7, src))
 		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
 			continue
-		else if(istype(M, childtype)) //Check for children SECOND.
+		var/is_child = is_type_in_list(M, childtype)
+		if(is_child) //Check for children SECOND.
 			children++
 		else if(istype(M, animal_species))
 			if(M.ckey)
 				continue
-			else if(!istype(M, childtype) && M.gender == MALE && !(M.flags_1 & HOLOGRAM_1)) //Better safe than sorry ;_;
+			else if(!is_child && M.gender == MALE && !(M.flags_1 & HOLOGRAM_1)) //Better safe than sorry ;_;
 				partner = M
 
 		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
@@ -493,8 +527,17 @@
 	else
 		..()
 
+
+/mob/living/simple_animal/update_resting()
+	if(resting)
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
+	return ..()
+
+
 /mob/living/simple_animal/update_mobility(value_otherwise = TRUE)
-	if(IsUnconscious() || IsParalyzed() || IsStun() || IsKnockdown() || IsParalyzed() || stat || resting)
+	if(HAS_TRAIT_NOT_FROM(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT))
 		drop_all_held_items()
 		mobility_flags = NONE
 	else if(buckled)
@@ -571,17 +614,13 @@
 		mode()
 
 /mob/living/simple_animal/swap_hand(hand_index)
+	. = ..()
+	if(!.)
+		return
 	if(!dextrous)
-		return ..()
+		return
 	if(!hand_index)
 		hand_index = (active_hand_index % held_items.len)+1
-	var/obj/item/held_item = get_active_held_item()
-	if(held_item)
-		if(istype(held_item, /obj/item/twohanded))
-			var/obj/item/twohanded/T = held_item
-			if(T.wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [T].</span>")
-				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
 	if(hud_used)
@@ -599,18 +638,12 @@
 
 /mob/living/simple_animal/update_inv_hands()
 	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-		var/obj/item/l_hand = get_item_for_held_index(1)
-		var/obj/item/r_hand = get_item_for_held_index(2)
-		if(r_hand)
-			r_hand.layer = ABOVE_HUD_LAYER
-			r_hand.plane = ABOVE_HUD_PLANE
-			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
-			client.screen |= r_hand
-		if(l_hand)
-			l_hand.layer = ABOVE_HUD_LAYER
-			l_hand.plane = ABOVE_HUD_PLANE
-			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
-			client.screen |= l_hand
+		for(var/obj/item/I in held_items)
+			var/index = get_held_index_of_item(I)
+			I.layer = ABOVE_HUD_LAYER
+			I.plane = ABOVE_HUD_PLANE
+			I.screen_loc = ui_hand_position(index)
+			client.screen |= I
 
 //ANIMAL RIDING
 

@@ -3,7 +3,8 @@
 	desc = "A small authentication device, to be inserted into a firearm receiver to allow operation. NT safety regulations require all new designs to incorporate one."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "firing_pin"
-	item_state = "pen"
+	inhand_icon_state = "pen"
+	worn_icon_state = "pen"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("poked")
@@ -23,10 +24,14 @@
 	if(proximity_flag)
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
-			if(G.pin && (force_replace || G.pin.pin_removeable))
-				G.pin.forceMove(get_turf(G))
-				G.pin.gun_remove(user)
-				to_chat(user, "<span class='notice'>You remove [G]'s old pin.</span>")
+			var/obj/item/firing_pin/old_pin = G.pin
+			if(old_pin && (force_replace || old_pin.pin_removeable))
+				to_chat(user, "<span class='notice'>You remove [old_pin] from [G].</span>")
+				if(Adjacent(user))
+					user.put_in_hands(old_pin)
+				else
+					old_pin.forceMove(G.drop_location())
+				old_pin.gun_remove(user)
 
 			if(!G.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
@@ -130,11 +135,24 @@
 
 // Ultra-honk pin, clown's deadly joke item.
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
+/obj/item/firing_pin/clown/ultra
+	name = "ultra hilarious firing pin"
+
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
-		return FALSE
-	return TRUE
+	if(QDELETED(user))  //how the hell...?
+		stack_trace("/obj/item/firing_pin/clown/ultra/pin_auth called with a [isnull(user) ? "null" : "invalid"] user.")
+		return TRUE
+	if(HAS_TRAIT(user, TRAIT_CLUMSY)) //clumsy
+		return TRUE
+	if(user.mind)
+		if(user.mind.assigned_role == "Clown") //traitor clowns can use this, even though they're technically not clumsy
+			return TRUE
+		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) //clown ops aren't clumsy by default and technically don't have an assigned role of "Clown", but come on, they're basically clowns
+			return TRUE
+		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/leader/clownop)) //Wanna hear a funny joke?
+			return TRUE //The clown op leader antag datum isn't a subtype of the normal clown op antag datum.
+	return FALSE
 
 /obj/item/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/G)
 	..()
@@ -146,6 +164,7 @@
 
 // Now two times deadlier!
 /obj/item/firing_pin/clown/ultra/selfdestruct
+	name = "super ultra hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object. It has a small nitrobananium charge on it."
 	selfdestruct = TRUE
 
@@ -290,6 +309,21 @@
 					return FALSE
 		to_chat(user, "<span class='warning'>ERROR: User has no valid bank account to substract neccesary funds from!</span>")
 		return FALSE
+
+// Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
+/obj/item/firing_pin/explorer
+	name = "outback firing pin"
+	desc = "A firing pin used by the austrailian defense force, retrofit to prevent weapon discharge on the station."
+	icon_state = "firing_pin_explorer"
+	fail_message = "<span class='warning'>CANNOT FIRE WHILE ON STATION, MATE!</span>"
+
+// This checks that the user isn't on the station Z-level.
+/obj/item/firing_pin/explorer/pin_auth(mob/living/user)
+	var/turf/station_check = get_turf(user)
+	if(!station_check||is_station_level(station_check.z))
+		to_chat(user, "<span class='warning'>You cannot use your weapon while on the station!</span>")
+		return FALSE
+	return TRUE
 
 // Laser tag pins
 /obj/item/firing_pin/tag

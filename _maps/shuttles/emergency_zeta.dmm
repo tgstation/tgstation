@@ -43,7 +43,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "j" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
+/obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -67,8 +67,8 @@
 "n" = (
 /obj/structure/table/abductor,
 /obj/machinery/recharger,
-/obj/item/abductor/baton{
-	desc = "Even aliens can see the use of a good old fashioned beating stick."
+/obj/item/melee/baton/abductor{
+	desc = "Even aliens can see the use of a good old-fashioned beating stick."
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
@@ -95,7 +95,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "s" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
+/obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "t" = (
@@ -139,7 +139,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
+/obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "z" = (
@@ -221,18 +221,6 @@
 /obj/machinery/sleeper/survival_pod,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
-"K" = (
-/obj/machinery/dna_scannernew,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape)
-"L" = (
-/obj/machinery/computer/prototype_cloning,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape)
-"M" = (
-/obj/machinery/clonepod/experimental,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape)
 "N" = (
 /obj/machinery/abductor/pad{
 	desc = "A funky looking disc, built into the floor."
@@ -254,7 +242,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "Q" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
+/obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
@@ -591,7 +579,7 @@ l
 l
 l
 c
-K
+l
 l
 l
 Y
@@ -614,7 +602,7 @@ l
 l
 l
 c
-L
+l
 l
 l
 l
@@ -637,7 +625,7 @@ l
 q
 s
 b
-M
+l
 O
 S
 Z

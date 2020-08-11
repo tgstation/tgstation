@@ -1,3 +1,6 @@
+/// This divisor controls how fast body temperature changes to match the environment
+#define BODYTEMP_DIVISOR 8
+
 /mob/living/proc/Life(seconds, times_fired)
 	set waitfor = FALSE
 	set invisibility = 0
@@ -8,9 +11,7 @@
 	if (client)
 		var/turf/T = get_turf(src)
 		if(!T)
-			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
-				forceMove(E.loc)
-				break
+			move_to_error_room()
 			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
 			send2tgs_adminless_only("Mob", msg, R_ADMIN)
@@ -43,6 +44,8 @@
 			handle_breathing(times_fired)
 
 		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
+		handle_wounds()
 
 		if (QDELETED(src)) // diseases can qdel the mob via transformations
 			return
@@ -80,11 +83,21 @@
 /mob/living/proc/handle_diseases()
 	return
 
+/mob/living/proc/handle_wounds()
+	return
+
 /mob/living/proc/handle_random_events()
 	return
 
+// Base mob environment handler for body temperature
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
-	return
+	var/loc_temp = get_temperature(environment)
+
+	if(loc_temp < bodytemperature) // it is cold here
+		if(!on_fire) // do not reduce body temp when on fire
+			adjust_bodytemperature(max((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX))
+	else // this is a hot place
+		adjust_bodytemperature(min((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX))
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
@@ -105,8 +118,6 @@
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(confused)
-		confused = max(0, confused - 1)
 
 /mob/living/proc/handle_traits()
 	//Eyes
@@ -143,3 +154,5 @@
 	if(gravity >= GRAVITY_DAMAGE_TRESHOLD) //Aka gravity values of 3 or more
 		var/grav_stregth = gravity - GRAVITY_DAMAGE_TRESHOLD
 		adjustBruteLoss(min(grav_stregth,3))
+
+#undef BODYTEMP_DIVISOR

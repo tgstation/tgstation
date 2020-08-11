@@ -3,7 +3,7 @@
 #define MINEDRONE_ATTACK 2
 
 /mob/living/simple_animal/hostile/mining_drone
-	name = "nanotrasen minebot"
+	name = "\improper Nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	gender = NEUTER
 	icon = 'icons/mob/aibots.dmi'
@@ -35,8 +35,8 @@
 	healable = 0
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	del_on_death = TRUE
+	light_on = FALSE
 	var/mode = MINEDRONE_COLLECT
-	var/light_on = 0
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
@@ -132,7 +132,8 @@
 				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
 
-/mob/living/simple_animal/hostile/mining_drone/CanPass(atom/movable/O)
+/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/O)
+	. = ..()
 	if(istype(O, /obj/projectile/kinetic))
 		var/obj/projectile/kinetic/K = O
 		if(K.kinetic_gun)
@@ -142,7 +143,6 @@
 					return TRUE
 	if(istype(O, /obj/projectile/destabilizer))
 		return TRUE
-	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	mode = MINEDRONE_COLLECT

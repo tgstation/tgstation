@@ -1,33 +1,30 @@
+#define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
+
 /****************************************************
 				BLOOD SYSTEM
 ****************************************************/
 
-/mob/living/carbon/human/proc/suppress_bloodloss(amount)
-	if(bleedsuppress)
-		return
-	else
-		bleedsuppress = TRUE
-		addtimer(CALLBACK(src, .proc/resume_bleeding), amount)
-
-/mob/living/carbon/human/proc/resume_bleeding()
-	bleedsuppress = 0
-	if(stat != DEAD && bleed_rate)
-		to_chat(src, "<span class='warning'>The blood soaks through your bandage.</span>")
-
-
 /mob/living/carbon/monkey/handle_blood()
-	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
-		//Blood regeneration if there is some space
-		if(blood_volume < BLOOD_VOLUME_NORMAL)
-			blood_volume += 0.1 // regenerate blood VERY slowly
-			if(blood_volume < BLOOD_VOLUME_OKAY)
-				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
+	if(bodytemperature <= TCRYO || (HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
+		return
+
+	var/temp_bleed = 0
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		temp_bleed += BP.get_bleed_rate()
+		BP.generic_bleedstacks = max(0, BP.generic_bleedstacks - 1)
+	bleed(temp_bleed)
+
+	//Blood regeneration if there is some space
+	if(blood_volume < BLOOD_VOLUME_NORMAL)
+		blood_volume += 0.1 // regenerate blood VERY slowly
+		if(blood_volume < BLOOD_VOLUME_OKAY)
+			adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
 
-	if(NOBLOOD in dna.species.species_traits)
-		bleed_rate = 0
+	if(NOBLOOD in dna.species.species_traits || bleedsuppress || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
@@ -54,6 +51,13 @@
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
 		switch(blood_volume)
+			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+				if(prob(15))
+					to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
+					inflate_gib()
+			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+				if(prob(10))
+					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(prob(5))
 					to_chat(src, "<span class='warning'>You feel [word].</span>")
@@ -76,29 +80,22 @@
 		//Bleeding out
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			var/brutedamage = BP.brute_dam
+			temp_bleed += BP.get_bleed_rate()
+			BP.generic_bleedstacks = max(0, BP.generic_bleedstacks - 1)
 
-			//We want an accurate reading of .len
-			listclearnulls(BP.embedded_objects)
-			temp_bleed += 0.5*BP.embedded_objects.len
-
-			if(brutedamage >= 20)
-				temp_bleed += (brutedamage * 0.013)
-
-		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
-
-		if(bleed_rate && !bleedsuppress && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-			bleed(bleed_rate)
+		if(temp_bleed)
+			bleed(temp_bleed)
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
 	if(blood_volume)
 		blood_volume = max(blood_volume - amt, 0)
-		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
-			if(amt >= 10)
-				add_splatter_floor(src.loc)
-			else
-				add_splatter_floor(src.loc, 1)
+		if (prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
+			if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
+				if(amt >= 10)
+					add_splatter_floor(src.loc)
+				else
+					add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
@@ -110,9 +107,11 @@
 /mob/living/proc/restore_blood()
 	blood_volume = initial(blood_volume)
 
-/mob/living/carbon/human/restore_blood()
+/mob/living/carbon/restore_blood()
 	blood_volume = BLOOD_VOLUME_NORMAL
-	bleed_rate = 0
+	for(var/i in bodyparts)
+		var/obj/item/bodypart/BP = i
+		BP.generic_bleedstacks = 0
 
 /****************************************************
 				BLOOD TRANSFERS
@@ -150,7 +149,7 @@
 					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return 1
 
-			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
+			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAX_LETHAL)
 			return 1
 
 	AM.reagents.add_reagent(blood_id, amount, blood_data, bodytemperature)
@@ -171,8 +170,8 @@
 			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
 
-		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
-		if(disease_resistances && disease_resistances.len)
+		blood_data["blood_DNA"] = dna.unique_enzymes
+		if(LAZYLEN(disease_resistances))
 			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
@@ -189,7 +188,7 @@
 
 		if(!suiciding)
 			blood_data["cloneable"] = 1
-		blood_data["blood_type"] = copytext(dna.blood_type,1,0)
+		blood_data["blood_type"] = dna.blood_type
 		blood_data["gender"] = gender
 		blood_data["real_name"] = real_name
 		blood_data["features"] = dna.features
@@ -215,6 +214,8 @@
 /mob/living/carbon/human/get_blood_id()
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		return
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] && mind && mind.assigned_role == "Clown")
+		return /datum/reagent/colorful_reagent
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits))
@@ -273,8 +274,7 @@
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
-	if (B.bloodiness < MAX_SHOE_BLOODINESS) //add more blood, up to a limit
-		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
+	B.bloodiness = min((B.bloodiness + BLOOD_AMOUNT_PER_DECAL),MAX_SHOE_BLOODINESS)
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		B.add_blood_DNA(temp_blood_DNA)

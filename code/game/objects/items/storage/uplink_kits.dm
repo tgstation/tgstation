@@ -1,16 +1,16 @@
 
 /obj/item/storage/box/syndicate
 
-/obj/item/storage/box/syndicate/bundle_A/PopulateContents()
+/obj/item/storage/box/syndicate/bundle_a/PopulateContents()
 	switch (pickweight(list("recon" = 2, "bloodyspai" = 3, "stealth" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "sniper" = 1, "metaops" = 1)))
 		if("recon")
 			new /obj/item/clothing/glasses/thermal/xray(src) // ~8 tc?
 			new /obj/item/storage/briefcase/launchpad(src) //6 tc
-			new	/obj/item/twohanded/binoculars(src) // 2 tc?
+			new	/obj/item/binoculars(src) // 2 tc?
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/storage/box/syndie_kit/space(src) //4 tc
-			new /obj/item/grenade/syndieminibomb/concussion/frag(src) // ~2 tc each?
-			new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+			new /obj/item/grenade/frag(src) // ~2 tc each?
+			new /obj/item/grenade/frag(src)
 			new /obj/item/flashlight/emp(src)
 
 		if("bloodyspai")
@@ -72,10 +72,10 @@
 			new /obj/item/implanter/storage(src)
 
 		if("hacker")
-			new /obj/item/aiModule/syndicate(src)
+			new /obj/item/ai_module/syndicate(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/encryptionkey/binary(src)
-			new /obj/item/aiModule/toyAI(src)
+			new /obj/item/ai_module/toy_ai(src)
 			new /obj/item/multitool/ai_detect(src)
 			new /obj/item/storage/toolbox/syndicate(src)
 			new /obj/item/camera_bug(src)
@@ -88,6 +88,9 @@
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/storage/toolbox/syndicate(src)
+			new /obj/item/card/mining_access_card(src)
+			new /obj/item/stack/spacecash/c10000(src)
+			new /obj/item/toy/spinningtoy(src) //lol
 
 		if("sabotage")
 			/obj/item/storage/backpack/duffelbag/syndie/sabotage
@@ -114,15 +117,16 @@
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/grenade/c4 (src) // 1 tc
 			new /obj/item/grenade/c4 (src) // 1 tc
-			new /obj/item/card/emag(src) // 6 tc
+			new /obj/item/card/emag(src) // 4 tc
+			new /obj/item/card/emag/doorjack(src) // 3 tc
 
-/obj/item/storage/box/syndicate/bundle_B/PopulateContents()
+/obj/item/storage/box/syndicate/bundle_b/PopulateContents()
 	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 1, "mr_freeze" = 2)))
 		if("bond")
 			new /obj/item/gun/ballistic/automatic/pistol(src)
 			new /obj/item/suppressor(src)
-			new /obj/item/ammo_box/magazine/m10mm(src)
-			new /obj/item/ammo_box/magazine/m10mm(src)
+			new /obj/item/ammo_box/magazine/m9mm(src)
+			new /obj/item/ammo_box/magazine/m9mm(src)
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/card/id/syndicate(src)
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
@@ -138,7 +142,7 @@
 			new /obj/item/chameleon(src) // 7 tc
 
 		if("darklord")
-			new /obj/item/twohanded/dualsaber(src)
+			new /obj/item/dualsaber(src)
 			new /obj/item/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/card/id/syndicate(src)
@@ -165,7 +169,7 @@
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pen/edagger(src)
-			new /obj/item/gun/energy/wormhole_projector(src)
+			new /obj/item/gun/energy/wormhole_projector/core_inserted(src)
 			new /obj/item/gun/energy/decloner/unrestricted(src)
 
 		if("bee")
@@ -226,7 +230,7 @@
 			<ol>
 				<li>Open the Syndicate Contract Uplink program.</li>
 				<li>Here, you can accept a contract, and redeem your TC payments from completed contracts.</li>
-				<li>The payment number shown in brackets is the bonus you'll recieve when bringing your target <b>alive</b>. You recieve the
+				<li>The payment number shown in brackets is the bonus you'll receive when bringing your target <b>alive</b>. You receive the
 				other number regardless of if they were alive or dead.</li>
 				<li>Contracts are completed by bringing the target to designated dropoff, calling for extraction, and putting them
 				inside the pod.</li>
@@ -346,6 +350,13 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/syringe/bioterror(src)
 
+/obj/item/storage/box/syndie_kit/clownpins
+	name = "ultra hilarious firing pin box"
+
+/obj/item/storage/box/syndie_kit/clownpins/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/firing_pin/clown/ultra(src)
+
 /obj/item/storage/box/syndie_kit/imp_adrenal
 	name = "adrenal implant box"
 
@@ -460,6 +471,7 @@
 	new /obj/item/clothing/mask/chameleon(src)
 	new /obj/item/clothing/neck/chameleon(src)
 	new /obj/item/storage/backpack/chameleon(src)
+	new /obj/item/storage/belt/chameleon(src)
 	new /obj/item/radio/headset/chameleon(src)
 	new /obj/item/stamp/chameleon(src)
 	new /obj/item/pda/chameleon(src)
@@ -515,6 +527,7 @@
 	new /obj/item/clothing/mask/chameleon/broken(src)
 	new /obj/item/clothing/neck/chameleon/broken(src)
 	new /obj/item/storage/backpack/chameleon/broken(src)
+	new /obj/item/storage/belt/chameleon/broken(src)
 	new /obj/item/radio/headset/chameleon/broken(src)
 	new /obj/item/stamp/chameleon/broken(src)
 	new /obj/item/pda/chameleon/broken(src)
@@ -527,6 +540,12 @@
 /obj/item/storage/box/syndie_kit/bee_grenades/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
+
+/obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
+	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
+	new /obj/item/reagent_containers/food/drinks/mug/coco(src)
+	new /obj/item/toy/plush/carpplushie(src)
+	new /obj/item/bedsheet/syndie(src)
 
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage

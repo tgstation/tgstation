@@ -2,31 +2,33 @@
 #define ENGINES_START_TIME 100
 #define ENGINES_STARTED (SSshuttle.emergency.mode == SHUTTLE_IGNITING)
 #define IS_DOCKED (SSshuttle.emergency.mode == SHUTTLE_DOCKED || (ENGINES_STARTED))
+#define SHUTTLE_CONSOLE_ACTION_DELAY (5 SECONDS)
 
 /obj/machinery/computer/emergency_shuttle
 	name = "emergency shuttle console"
 	desc = "For shuttle control."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
-	ui_x = 400
-	ui_y = 400
 
 	var/auth_need = 3
 	var/list/authorized = list()
+	var/list/acted_recently = list()
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
 	if(istype(I, /obj/item/card/id))
 		say("Please equip your ID card into your ID slot to authenticate.")
 	. = ..()
 
-/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.human_adjacent_state)
+/obj/machinery/computer/emergency_shuttle/ui_state(mob/user)
+	return GLOB.human_adjacent_state
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "emergency_shuttle_console", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "EmergencyShuttleConsole", name)
 		ui.open()
 
-/obj/machinery/computer/emergency_shuttle/ui_data()
+/obj/machinery/computer/emergency_shuttle/ui_data(user)
 	var/list/data = list()
 
 	data["timer_str"] = SSshuttle.emergency.getTimerStr()
@@ -44,7 +46,7 @@
 		A += list(list("name" = name, "job" = job))
 	data["authorizations"] = A
 
-	data["enabled"] = (IS_DOCKED && !ENGINES_STARTED)
+	data["enabled"] = (IS_DOCKED && !ENGINES_STARTED) && !(user in acted_recently)
 	data["emagged"] = obj_flags & EMAGGED ? 1 : 0
 	return data
 
@@ -69,7 +71,11 @@
 		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
+	if (user in acted_recently)
+		return
+
 	var/old_len = authorized.len
+	addtimer(CALLBACK(src, .proc/clear_recent_action, user), SHUTTLE_CONSOLE_ACTION_DELAY)
 
 	switch(action)
 		if("authorize")
@@ -94,6 +100,9 @@
 		if(repeal)
 			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
 
+	acted_recently += user
+	ui_interact(user)
+
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
 
@@ -107,10 +116,15 @@
 	authorized += ID
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch")
-	log_game("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
+	log_shuttle("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
 	// Now check if we're on our way
 	. = TRUE
 	process()
+
+/obj/machinery/computer/emergency_shuttle/proc/clear_recent_action(mob/user)
+	acted_recently -= user
+	if (!QDELETED(user))
+		ui_interact(user)
 
 /obj/machinery/computer/emergency_shuttle/process()
 	// Launch check is in process in case auth_need changes for some reason
@@ -121,7 +135,7 @@
 
 	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 		authorized.Cut()
-		DISABLE_BITFIELD(obj_flags, EMAGGED)
+		obj_flags &= ~(EMAGGED)
 
 	if(ENGINES_STARTED || (!IS_DOCKED))
 		return .
@@ -140,15 +154,15 @@
 	if(!IS_DOCKED)
 		return
 
-	if(CHECK_BITFIELD(obj_flags, EMAGGED) || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
+	if((obj_flags & EMAGGED) || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
 		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
 		return
 
 	var/time = TIME_LEFT
-	message_admins("[ADMIN_LOOKUPFLW(user.client)] has emagged the emergency shuttle [time] seconds before launch.")
-	log_game("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has emagged the emergency shuttle [time] seconds before launch.")
+	log_shuttle("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
 
-	ENABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags |= EMAGGED
 	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
 	var/datum/species/S = new
 	for(var/i in 1 to 10)
@@ -283,7 +297,9 @@
 	set waitfor = FALSE
 	if(!SSdbcore.Connect())
 		return
-	var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
+	var/datum/db_query/query_round_shuttle_name = SSdbcore.NewQuery({"
+		UPDATE [format_table_name("round")] SET shuttle_name = :name WHERE id = :round_id
+	"}, list("name" = name, "round_id" = GLOB.round_id))
 	query_round_shuttle_name.Execute()
 	qdel(query_round_shuttle_name)
 
@@ -315,8 +331,8 @@
 					return
 				mode = SHUTTLE_DOCKED
 				setTimer(SSshuttle.emergencyDockTime)
-				send2tgs("Server", "The Emergency Shuttle has docked with the station.")
-				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/ai/shuttledock.ogg', "Priority")
+				send2adminchat("Server", "The Emergency Shuttle has docked with the station.")
+				priority_announce("[SSshuttle.emergency] has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/ai/shuttledock.ogg', "Priority")
 				ShuttleDBStuff()
 
 
@@ -368,6 +384,8 @@
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergencyEscapeTime * engine_coeff)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+				INVOKE_ASYNC(SSticker, /datum/controller/subsystem/ticker.proc/poll_hearts)
+				SSmapping.mapvote() //If no map vote has been run yet, start one.
 
 		if(SHUTTLE_STRANDED)
 			SSshuttle.checkHostileEnvironment()
@@ -454,13 +472,14 @@
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
 
-/obj/machinery/computer/shuttle/pod/update_icon()
-	return
+/obj/machinery/computer/shuttle/pod/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	ENABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
@@ -503,12 +522,12 @@
 /obj/item/clothing/head/helmet/space/orange
 	name = "emergency space helmet"
 	icon_state = "syndicate-helm-orange"
-	item_state = "syndicate-helm-orange"
+	inhand_icon_state = "syndicate-helm-orange"
 
 /obj/item/clothing/suit/space/orange
 	name = "emergency space suit"
 	icon_state = "syndicate-orange"
-	item_state = "syndicate-orange"
+	inhand_icon_state = "syndicate-orange"
 	slowdown = 3
 
 /obj/item/pickaxe/emergency
@@ -589,3 +608,4 @@
 #undef ENGINES_START_TIME
 #undef ENGINES_STARTED
 #undef IS_DOCKED
+#undef SHUTTLE_CONSOLE_ACTION_DELAY

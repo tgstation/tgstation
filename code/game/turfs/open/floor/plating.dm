@@ -69,18 +69,22 @@
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
 			for(var/obj/O in src)
-				if(O.level == 1) //ex. pipes laid underneath a tile
-					for(var/M in O.buckled_mobs)
-						to_chat(user, "<span class='warning'>Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way.</span>")
-						return
+				for(var/M in O.buckled_mobs)
+					to_chat(user, "<span class='warning'>Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way.</span>")
+					return
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
-			var/turf/open/floor/T = PlaceOnTop(W.turf_type, flags = CHANGETURF_INHERIT_AIR)
-			if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
-				var/obj/item/stack/tile/light/L = W
-				var/turf/open/floor/light/F = T
-				F.state = L.state
+			if(istype(W, /obj/item/stack/tile/material))
+				var/turf/newturf = PlaceOnTop(/turf/open/floor/material, flags = CHANGETURF_INHERIT_AIR)
+				newturf.set_custom_materials(W.custom_materials)
+			else if(W.turf_type)
+				var/turf/open/floor/T = PlaceOnTop(W.turf_type, flags = CHANGETURF_INHERIT_AIR)
+				if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+					var/obj/item/stack/tile/light/L = W
+					var/turf/open/floor/light/F = T
+					F.state = L.state
+
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
@@ -95,7 +99,12 @@
 
 	return TRUE
 
-/turf/open/floor/plating/make_plating()
+/turf/open/floor/plating/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/open/floor/plating/rust)
+
+/turf/open/floor/plating/make_plating(force = FALSE)
 	return
 
 /turf/open/floor/plating/foam

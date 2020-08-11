@@ -226,7 +226,7 @@
 				return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
 				return FALSE
-			if(P.stat & BROKEN) //Or turrets that are already broken
+			if(P.machine_stat & BROKEN) //Or turrets that are already broken
 				return FALSE
 			return TRUE
 
@@ -335,7 +335,7 @@
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
 	if(target && emote_taunt.len && prob(taunt_chance))
-		emote("me", 1, "[pick(emote_taunt)] at [target].")
+		manual_emote("[pick(emote_taunt)] at [target].")
 		taunt_chance = max(taunt_chance-7,2)
 
 
@@ -379,7 +379,8 @@
 /mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
 	if(CheckFriendlyFire(A))
 		return
-	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
+	if(!(simple_mob_flags & SILENCE_RANGED_MESSAGE))
+		visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 
 	if(rapid > 1)
@@ -465,7 +466,7 @@
 			DestroyObjectsInDirection(direction)
 
 
-mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
+/mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in GLOB.cardinals)
@@ -497,7 +498,7 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 
 
 ////// AI Status ///////
-/mob/living/simple_animal/hostile/proc/AICanContinue(var/list/possible_targets)
+/mob/living/simple_animal/hostile/proc/AICanContinue(list/possible_targets)
 	switch(AIStatus)
 		if(AI_ON)
 			. = 1
@@ -508,7 +509,7 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 			else
 				. = 0
 
-/mob/living/simple_animal/hostile/proc/AIShouldSleep(var/list/possible_targets)
+/mob/living/simple_animal/hostile/proc/AIShouldSleep(list/possible_targets)
 	return !FindTarget(possible_targets, 1)
 
 
@@ -559,7 +560,7 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 			FindTarget()
 		toggle_ai(AI_ON)
 
-/mob/living/simple_animal/hostile/proc/ListTargetsLazy(var/_Z)//Step 1, find out what we can see
+/mob/living/simple_animal/hostile/proc/ListTargetsLazy(_Z)//Step 1, find out what we can see
 	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha))
 	. = list()
 	for (var/I in SSmobs.clients_by_zlevel[_Z])
@@ -569,3 +570,10 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 				. += M
 			else if (M.loc.type in hostile_machines)
 				. += M.loc
+
+/mob/living/simple_animal/hostile/tamed(whomst)
+	if(isliving(whomst))
+		var/mob/living/fren = whomst
+		friends = fren
+		faction = fren.faction.Copy()
+	return ..()

@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/silicon/ai)))
 
 /**
-  * # Creamed component
+  * Creamed component
   *
   * For when you have pie on your face
   */
@@ -53,10 +53,11 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 /datum/component/creamed/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_COMPONENT_CLEAN_ACT, 
+		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT))
-	
+
 ///Callback to remove pieface
-/datum/component/creamed/proc/clean_up(datum/source, strength)
-	if(strength >= CLEAN_WEAK)
+/datum/component/creamed/proc/clean_up(datum/source, clean_types)
+	if(clean_types & CLEAN_TYPE_BLOOD)
 		qdel(src)
+		return TRUE

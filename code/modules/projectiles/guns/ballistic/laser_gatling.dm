@@ -6,7 +6,7 @@
 	desc = "The massive external power source for the laser gatling gun."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "holstered"
-	item_state = "backpack"
+	inhand_icon_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
@@ -30,7 +30,7 @@
 	overheat = max(0, overheat - heat_diffusion)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
+/obj/item/minigunpack/attack_hand(mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
 			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
@@ -74,13 +74,13 @@
 				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 
-/obj/item/minigunpack/update_icon()
+/obj/item/minigunpack/update_icon_state()
 	if(armed)
 		icon_state = "notholstered"
 	else
 		icon_state = "holstered"
 
-/obj/item/minigunpack/proc/attach_gun(var/mob/user)
+/obj/item/minigunpack/proc/attach_gun(mob/user)
 	if(!gun)
 		gun = new(src)
 	gun.forceMove(src)
@@ -98,7 +98,7 @@
 	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
-	item_state = "minigun"
+	inhand_icon_state = "minigun"
 	flags_1 = CONDUCT_1
 	slowdown = 1
 	slot_flags = null

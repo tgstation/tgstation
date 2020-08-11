@@ -52,7 +52,7 @@
 /obj/item/wrench/medical/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
-	user.light_color = "#FAE48E"
+	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
 	user.set_light(2)
 	user.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 	playsound(loc, 'sound/effects/pray.ogg', 50, TRUE, -1)
@@ -74,3 +74,46 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wrench_cyborg"
 	toolspeed = 0.5
+
+/obj/item/wrench/combat
+	name = "combat wrench"
+	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
+	icon_state = "wrench_combat"
+	inhand_icon_state = "wrench_combat"
+	attack_verb = list("devastated", "brutalized", "committed a war crime against", "obliterated", "humiliated")
+	tool_behaviour = null
+	toolspeed = null
+	var/on = FALSE
+
+/obj/item/wrench/combat/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/wrench/combat/attack_self(mob/living/user)
+	if(on)
+		on = FALSE
+		force = initial(force)
+		w_class = initial(w_class)
+		throwforce = initial(throwforce)
+		tool_behaviour = initial(tool_behaviour)
+		toolspeed = initial(toolspeed)
+		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
+		to_chat(user, "<span class='warning'>[src] can now be kept at bay.</span>")
+	else
+		on = TRUE
+		force = 6
+		w_class = WEIGHT_CLASS_NORMAL
+		throwforce = 8
+		tool_behaviour = TOOL_WRENCH
+		toolspeed = 1
+		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
+		to_chat(user, "<span class='warning'>[src] is now active. Woe onto your enemies!</span>")
+	update_icon()
+
+/obj/item/wrench/combat/update_icon_state()
+	if(on)
+		icon_state = "[initial(icon_state)]_on"
+		inhand_icon_state = "[initial(inhand_icon_state)]1"
+	else
+		icon_state = "[initial(icon_state)]"
+		inhand_icon_state = "[initial(inhand_icon_state)]"

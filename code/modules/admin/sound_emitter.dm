@@ -54,7 +54,7 @@
 /obj/effect/sound_emitter/AltClick(mob/user)
 	if(check_rights_for(user.client, R_SOUND))
 		activate(user)
-		to_chat(user, "<span class='notice'>Sound emitter activated.</span>")
+		to_chat(user, "<span class='notice'>Sound emitter activated.</span>", confidential = TRUE)
 
 /obj/effect/sound_emitter/proc/edit_emitter(mob/user)
 	var/dat = ""
@@ -82,20 +82,20 @@
 		if(!new_label)
 			return
 		maptext = new_label
-		to_chat(user, "<span class='notice'>Label set to [maptext].</span>")
+		to_chat(user, "<span class='notice'>Label set to [maptext].</span>", confidential = TRUE)
 	if(href_list["edit_sound_file"])
 		var/new_file = input(user, "Choose a sound file.", "Sound Emitter") as null|sound
 		if(!new_file)
 			return
 		sound_file = new_file
-		to_chat(user, "<span class='notice'>New sound file set to [sound_file].</span>")
+		to_chat(user, "<span class='notice'>New sound file set to [sound_file].</span>", confidential = TRUE)
 	if(href_list["edit_volume"])
 		var/new_volume = input(user, "Choose a volume.", "Sound Emitter", sound_volume) as null|num
 		if(isnull(new_volume))
 			return
-		new_volume = CLAMP(new_volume, 0, 100)
+		new_volume = clamp(new_volume, 0, 100)
 		sound_volume = new_volume
-		to_chat(user, "<span class='notice'>Volume set to [sound_volume]%.</span>")
+		to_chat(user, "<span class='notice'>Volume set to [sound_volume]%.</span>", confidential = TRUE)
 	if(href_list["edit_mode"])
 		var/new_mode
 		var/mode_list = list("Local (normal sound)" = SOUND_EMITTER_LOCAL, "Direct (not affected by environment/location)" = SOUND_EMITTER_DIRECT)
@@ -103,7 +103,7 @@
 		if(!new_mode)
 			return
 		motus_operandi = mode_list[new_mode]
-		to_chat(user, "<span class='notice'>Mode set to [motus_operandi].</span>")
+		to_chat(user, "<span class='notice'>Mode set to [motus_operandi].</span>", confidential = TRUE)
 	if(href_list["edit_range"])
 		var/new_range
 		var/range_list = list("Radius (all mobs within a radius)" = SOUND_EMITTER_RADIUS, "Z-Level (all mobs on the same z)" = SOUND_EMITTER_ZLEVEL, "Global (all players)" = SOUND_EMITTER_GLOBAL)
@@ -111,14 +111,14 @@
 		if(!new_range)
 			return
 		emitter_range = range_list[new_range]
-		to_chat(user, "<span class='notice'>Range set to [emitter_range].</span>")
+		to_chat(user, "<span class='notice'>Range set to [emitter_range].</span>", confidential = TRUE)
 	if(href_list["edit_radius"])
 		var/new_radius = input(user, "Choose a radius.", "Sound Emitter", sound_volume) as null|num
 		if(isnull(new_radius))
 			return
-		new_radius = CLAMP(new_radius, 0, 127)
+		new_radius = clamp(new_radius, 0, 127)
 		play_radius = new_radius
-		to_chat(user, "<span class='notice'>Audible radius set to [play_radius].</span>")
+		to_chat(user, "<span class='notice'>Audible radius set to [play_radius].</span>", confidential = TRUE)
 	if(href_list["play"])
 		activate(user)
 	edit_emitter(user) //Refresh the UI to see our changes

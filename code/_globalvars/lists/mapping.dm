@@ -36,8 +36,7 @@ GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 
-	//away missions
-GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can take you to
+//away missions
 GLOBAL_LIST_EMPTY(vr_spawnpoints)
 
 	//used by jump-to-area etc. Updated by area/updateName()

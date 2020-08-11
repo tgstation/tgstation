@@ -1,17 +1,30 @@
 // channel numbers for power
-#define EQUIP			1
-#define LIGHT			2
-#define ENVIRON			3
-#define TOTAL			4	//for total power used only
-#define STATIC_EQUIP 	5
-#define STATIC_LIGHT	6
-#define STATIC_ENVIRON	7
+// These are indexes in a list, and indexes for "dynamic" and static channels should be kept contiguous
+#define AREA_USAGE_EQUIP			1
+#define AREA_USAGE_LIGHT			2
+#define AREA_USAGE_ENVIRON			3
+#define AREA_USAGE_STATIC_EQUIP 	4
+#define AREA_USAGE_STATIC_LIGHT	5
+#define AREA_USAGE_STATIC_ENVIRON	6
+#define AREA_USAGE_LEN AREA_USAGE_STATIC_ENVIRON // largest idx
+/// Index of the first dynamic usage channel
+#define AREA_USAGE_DYNAMIC_START AREA_USAGE_EQUIP
+/// Index of the last dynamic usage channel
+#define AREA_USAGE_DYNAMIC_END AREA_USAGE_ENVIRON
+/// Index of the first static usage channel
+#define AREA_USAGE_STATIC_START AREA_USAGE_STATIC_EQUIP
+/// Index of the last static usage channel
+#define AREA_USAGE_STATIC_END AREA_USAGE_STATIC_ENVIRON
+
 
 //Power use
 #define NO_POWER_USE 0
 #define IDLE_POWER_USE 1
 #define ACTIVE_POWER_USE 2
 
+/// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.
+#define START_PROCESSING_ON_INIT	(1<<0) /// Indicates the machine will automatically start processing right after it's `Initialize()` is ran.
+#define START_PROCESSING_MANUALLY	(1<<1) /// Machines with this flag will not start processing when it's spawned. Use this if you want to manually control when a machine starts processing.
 
 //bitflags for door switches.
 #define OPEN	(1<<0)
@@ -109,10 +122,6 @@
 #define MACHINE_NOT_ELECTRIFIED 0
 #define MACHINE_ELECTRIFIED_PERMANENT -1
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
-
-//cloning defines. These are flags.
-#define CLONING_SUCCESS (1<<0)
-#define CLONING_DELETE_RECORD (1<<1)
 
 //these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
 #define PLANT_GENE_REMOVABLE	(1<<0)

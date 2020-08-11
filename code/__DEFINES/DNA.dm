@@ -23,7 +23,6 @@
 #define CHAMELEON	/datum/mutation/human/chameleon
 #define WACKY		/datum/mutation/human/wacky
 #define MUT_MUTE	/datum/mutation/human/mute
-#define SMILE		/datum/mutation/human/smile
 #define STONER		/datum/mutation/human/stoner
 #define UNINTELLIGIBLE		/datum/mutation/human/unintelligible
 #define SWEDISH		/datum/mutation/human/swedish
@@ -35,7 +34,10 @@
 #define TELEPATHY	/datum/mutation/human/telepathy
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
+#define TONGUESPIKE	/datum/mutation/human/tonguespike
+#define TONGUESPIKECHEM		/datum/mutation/human/tongue_spike/chem
 #define STRONG    	/datum/mutation/human/strong
+#define STIMMED		/datum/mutation/human/stimmed
 #define FIRESWEAT	/datum/mutation/human/fire
 #define THERMAL		/datum/mutation/human/thermal
 #define ANTENNA		/datum/mutation/human/antenna
@@ -50,6 +52,10 @@
 #define EXTRASTUN	/datum/mutation/human/extrastun
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
+#define SPIDER_WEB	/datum/mutation/human/webbing
+#define MARTYRDOM	/datum/mutation/human/martyrdom
+#define HARS		/datum/mutation/human/headless
+#define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
@@ -98,11 +104,7 @@
 #define TR_KEEPORGANS	(1<<8)
 #define TR_KEEPSTUNS	(1<<9)
 #define TR_KEEPREAGENTS	(1<<10)
-
-
-#define CLONER_FRESH_CLONE "fresh"
-#define CLONER_MATURE_CLONE "mature"
-
+#define TR_KEEPSTAMINADAMAGE (1<<11)
 //species traits for mutantraces
 #define MUTCOLORS		1
 #define HAIR			2
@@ -125,6 +127,13 @@
 #define AGENDER			16
 /// Do not draw eyes or eyeless overlay
 #define NOEYESPRITES	17
+
+/// Used for determining which wounds are applicable to this species.
+/// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
+#define HAS_FLESH	18
+/// if we have bones (can suffer bone wounds)
+#define HAS_BONE	19
+
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"
@@ -163,6 +172,7 @@
 #define CHROMOSOME_NONE 1
 #define CHROMOSOME_USED 2
 
+//used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their body_type for the actual sprites, which is not genetic)
 #define G_MALE 1
 #define G_FEMALE 2
 #define G_PLURAL 3

@@ -393,7 +393,7 @@
 "bV" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/circuit_imprinter,
-/obj/item/aiModule/core/full/drone{
+/obj/item/ai_module/core/full/drone{
 	pixel_x = -4;
 	pixel_y = -2
 	},
@@ -581,7 +581,7 @@
 "cQ" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1158,7 +1158,7 @@
 /obj/structure/table,
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
@@ -1540,7 +1540,7 @@
 "gB" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
@@ -2327,7 +2327,7 @@
 "jz" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/white,
@@ -2549,7 +2549,7 @@
 "kr" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -2670,7 +2670,7 @@
 "la" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
@@ -3911,7 +3911,7 @@
 /turf/template_noop,
 /area/space/nearstation)
 "ZM" = (
-/obj/machinery/droneDispenser/derelict,
+/obj/machinery/drone_dispenser/derelict,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 

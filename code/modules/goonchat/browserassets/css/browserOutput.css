@@ -274,12 +274,12 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #e2c1ff}
-.binarysay				{color: #20c20e;	background-color: #000000;	display: block;}
+.binarysay				{color: #1e90ff;}
 .binarysay a			{color: #00ff00;}
 .binarysay a:active, .binarysay a:visited {color: #88ff88;}
 .radio					{color: #1ecc43;}
 .sciradio				{color: #c68cfa;}
-.comradio				{color: #5177ff;}
+.comradio				{color: #fcdf03;}
 .secradio				{color: #dd3535;}
 .medradio				{color: #57b8f0;}
 .engradio				{color: #f37746;}
@@ -298,7 +298,10 @@ em						{font-style: normal;	font-weight: bold;}
 .emote					{					font-style: italic;}
 
 .userdanger				{color: #c51e1e;	font-weight: bold;	font-size: 185%;}
+.bolddanger				{color: #c51e1e;font-weight: bold;}
 .danger					{color: #c51e1e;}
+.tinydanger				{color: #c51e1e; font-size: 85%;}
+.smalldanger			{color: #c51e1e; font-size: 90%;}
 .warning				{color: #c51e1e;	font-style: italic;}
 .alertwarning			{color: #FF0000;	font-weight: bold}
 .boldwarning			{color: #c51e1e;	font-style: italic;	font-weight: bold}
@@ -306,8 +309,11 @@ em						{font-style: normal;	font-weight: bold;}
 .boldannounce			{color: #c51e1e;	font-weight: bold;}
 .greenannounce			{color: #059223;	font-weight: bold;}
 .rose					{color: #ff5050;}
-.info					{color: #6685f5;}
+.info					{color: #9ab0ff;}
 .notice					{color: #6685f5;}
+.tinynotice				{color: #6685f5;	font-style: italic;	font-size: 85%;}
+.smallnotice			{color: #6685f5; font-size: 90%;}
+.smallnoticeital		{color: #6685f5;	font-style: italic;	font-size: 90%;}
 .boldnotice				{color: #6685f5;	font-weight: bold;}
 .hear					{color: #6685f5;	font-style: italic;}
 .adminnotice			{color: #6685f5;}
@@ -333,9 +339,9 @@ em						{font-style: normal;	font-weight: bold;}
 .purple					{color: #9956d3;}
 .holoparasite			{color: #88809c;}
 
-.revennotice			{color: #1d2953;}
-.revenboldnotice		{color: #1d2953;	font-weight: bold;}
-.revenbignotice			{color: #1d2953;	font-weight: bold;	font-size: 185%;}
+.revennotice			{color: #c099e2;}
+.revenboldnotice		{color: #c099e2;	font-weight: bold;}
+.revenbignotice			{color: #c099e2;	font-weight: bold;	font-size: 185%;}
 .revenminor				{color: #823abb}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold;	font-size: 185%;}
@@ -366,6 +372,7 @@ em						{font-style: normal;	font-weight: bold;}
 .greentext				{color: #059223;	font-size: 185%;}
 .redtext				{color: #c51e1e;	font-size: 185%;}
 .clown					{color: #ff70c1;	font-size: 160%;	font-family: "Comic Sans MS", cursive, sans-serif;	font-weight: bold;}
+.singing				{font-family: "Trebuchet MS", cursive, sans-serif; font-style: italic;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif;	font-style: italic;}
 .hypnophrase			{color: #202020;	font-weight: bold;	animation: hypnocolor 1500ms infinite; animation-direction: alternate;}
 @keyframes hypnocolor {
@@ -405,3 +412,6 @@ em						{font-style: normal;	font-weight: bold;}
 /* HELPER CLASSES */
 .text-normal {font-weight: normal;	font-style: normal;}
 .hidden {display: none;	visibility: hidden;}
+.ml-1 {margin-left: 1em;}
+.ml-2 {margin-left: 2em;}
+.ml-3 {margin-left: 3em;}

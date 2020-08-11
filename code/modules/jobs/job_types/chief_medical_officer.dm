@@ -1,8 +1,6 @@
 /datum/job/cmo
 	title = "Chief Medical Officer"
-	flag = CMO_JF
 	department_head = list("Captain")
-	department_flag = MEDSCI
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = list(RADIO_CHANNEL_MEDICAL)
 	faction = "Station"
@@ -18,16 +16,17 @@
 
 	outfit = /datum/outfit/job/cmo
 
-	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_APOTHECARY, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
+	access = list(ACCESS_MEDICAL, ACCESS_PSYCHOLOGY, ACCESS_MORGUE, ACCESS_PHARMACY, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
 			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE, ACCESS_MECH_MEDICAL,
 			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS)
-	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_APOTHECARY, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_PSYCHOLOGY, ACCESS_MORGUE, ACCESS_PHARMACY, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
 			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE, ACCESS_MECH_MEDICAL,
 			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS)
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_MED
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
+	bounty_types = CIV_JOB_MED
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
@@ -41,20 +40,21 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	l_hand = /obj/item/storage/firstaid/medical
-	suit_store = /obj/item/flashlight/pen
+	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	box = /obj/item/storage/box/survival/medical
 
 	chameleon_extras = list(/obj/item/gun/syringe, /obj/item/stamp/cmo)
 
 /datum/outfit/job/cmo/hardsuit
 	name = "Chief Medical Officer (Hardsuit)"
 
-	mask = /obj/item/clothing/mask/breath
+	mask = /obj/item/clothing/mask/breath/medical
 	suit = /obj/item/clothing/suit/space/hardsuit/medical
 	suit_store = /obj/item/tank/internals/oxygen
-	r_pocket = /obj/item/flashlight/pen
+	r_pocket = /obj/item/flashlight/pen/paramedic
 

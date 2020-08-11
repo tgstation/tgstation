@@ -4,10 +4,11 @@
 	desc = "An industrial unit made to hold and decontaminate irradiated equipment. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/machines/suit_storage.dmi'
 	icon_state = "close"
+	use_power = ACTIVE_POWER_USE
+	active_power_usage = 60
+	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
 	max_integrity = 250
-	ui_x = 400
-	ui_y = 305
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -46,6 +47,8 @@
 	var/message_cooldown
 	/// How long it takes to break out of the SSU.
 	var/breakout_time = 300
+	/// How fast it charges cells in a suit
+	var/charge_rate = 500
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -90,7 +93,8 @@
 
 /obj/machinery/suit_storage_unit/cmo
 	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
-	mask_type = /obj/item/clothing/mask/breath
+	mask_type = /obj/item/clothing/mask/breath/medical
+	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/rd
 	suit_type = /obj/item/clothing/suit/space/hardsuit/rd
@@ -162,7 +166,7 @@
 		else
 			. += "uv"
 	else if(state_open)
-		if(stat & BROKEN)
+		if(machine_stat & BROKEN)
 			. += "broken"
 		else
 			. += "open"
@@ -292,14 +296,24 @@
 			if(occupant)
 				things_to_clear += occupant
 				things_to_clear += occupant.GetAllContents()
-			for(var/atom/movable/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
-				var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
-				if(contamination)
-					qdel(contamination)
+			for(var/am in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
+				var/atom/movable/dirty_movable = am
+				dirty_movable.wash(CLEAN_ALL)
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()
+
+/obj/machinery/suit_storage_unit/process()
+	if(!suit)
+		return
+	if(!istype(suit, /obj/item/clothing/suit/space))
+		return
+	if(!suit.cell)
+		return
+
+	var/obj/item/stock_parts/cell/C = suit.cell
+	use_power(charge_rate)
+	C.give(charge_rate)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
@@ -416,11 +430,13 @@
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 
-/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/suit_storage_unit/ui_state(mob/user)
+	return GLOB.notcontained_state
+
+/obj/machinery/suit_storage_unit/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "suit_storage_unit", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "SuitStorageUnit", name)
 		ui.open()
 
 /obj/machinery/suit_storage_unit/ui_data()

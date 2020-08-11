@@ -1,8 +1,6 @@
 /datum/job/doctor
 	title = "Medical Doctor"
-	flag = DOCTOR
 	department_head = list("Chief Medical Officer")
-	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 3
@@ -11,12 +9,13 @@
 
 	outfit = /datum/outfit/job/doctor
 
-	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_APOTHECARY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_VIROLOGY, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM)
-	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_APOTHECARY)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_PHARMACY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_PHARMACY)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
+	bounty_types = CIV_JOB_MED
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -33,5 +32,6 @@
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	box = /obj/item/storage/box/survival/medical
 
 	chameleon_extras = /obj/item/gun/syringe

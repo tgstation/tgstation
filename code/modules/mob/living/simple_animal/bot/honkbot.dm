@@ -90,7 +90,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += text({"<BR> Auto Patrol: []"},
 
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
@@ -193,7 +193,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	if(spam_flag == 0)
 		if(ishuman(C))
 			C.stuttering = 20
-			C.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
+			var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+			if (ears && !HAS_TRAIT_FROM(C, TRAIT_DEAF, CLOTHING_TRAIT))
+				ears.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
 			C.Jitter(50)
 			C.Paralyze(60)
 			var/mob/living/carbon/human/H = C
@@ -210,8 +212,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 			log_combat(src,C,"honked")
 
-			C.visible_message("<span class='danger'>[src] has honked [C]!</span>",\
-					"<span class='userdanger'>[src] has honked you!</span>")
+			C.visible_message("<span class='danger'>[src] honks [C]!</span>",\
+					"<span class='userdanger'>[src] honks you!</span>")
 		else
 			C.stuttering = 20
 			C.Paralyze(80)
@@ -248,7 +250,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						if(threatlevel >= 6)
 							set waitfor = 0
 							stun_attack(target)
-							anchored = FALSE
+							set_anchored(FALSE)
 							target_lastloc = target.loc
 					return
 
@@ -338,7 +340,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/honkbot/attack_alien(var/mob/living/carbon/alien/user as mob)
+/mob/living/simple_animal/bot/honkbot/attack_alien(mob/living/carbon/alien/user as mob)
 	..()
 	if(!isalien(target))
 		target = user

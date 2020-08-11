@@ -24,13 +24,15 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_categories = list()		//category name = list(node.id = TRUE)
 	var/list/techweb_boost_items = list()		//associative double-layer path = list(id = list(point_type = point_discount))
 	var/list/techweb_nodes_hidden = list()		//Node ids that should be hidden by default.
+	var/list/techweb_nodes_experimental = list()	//Node ids that are exclusive to the BEPIS.
 	var/list/techweb_point_items = list(		//path = list(point type = value)
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
+	var/list/slime_already_researched = list() 	//Slime cores that have already been researched
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 54.3)
+	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
 	var/multiserver_calculation = FALSE
 	var/last_income
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
@@ -38,6 +40,17 @@ SUBSYSTEM_DEF(research)
 	//Aiming for 1.5 hours to max R&D
 	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
 	//Around 450000 points max???
+
+	/// The global list of raw anomaly types that have been refined, for hard limits.
+	var/list/created_anomaly_types = list()
+	/// The hard limits of cores created for each anomaly type. For faster code lookup without switch statements.
+	var/list/anomaly_hard_limit_by_type = list(
+	ANOMALY_CORE_BLUESPACE = MAX_CORES_BLUESPACE,
+	ANOMALY_CORE_PYRO = MAX_CORES_PYRO,
+	ANOMALY_CORE_GRAVITATIONAL = MAX_CORES_GRAVITATIONAL,
+	ANOMALY_CORE_VORTEX = MAX_CORES_VORTEX,
+	ANOMALY_CORE_FLUX = MAX_CORES_FLUX
+	)
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
@@ -248,6 +261,8 @@ SUBSYSTEM_DEF(research)
 			D.unlocked_by += node.id
 		if(node.hidden)
 			techweb_nodes_hidden[node.id] = TRUE
+		if(node.experimental)
+			techweb_nodes_experimental[node.id] = TRUE
 		CHECK_TICK
 	generate_techweb_unlock_linking()
 

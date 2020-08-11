@@ -12,7 +12,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	antag_flag = ROLE_CHANGELING
 	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
@@ -110,6 +110,39 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	user.update_body()
 	user.domutcheck()
 
+	// Do skillchip code after DNA code.
+	// There's a mutation that increases max chip complexity available, even though we force-implant skillchips.
+
+	// Remove existing skillchips.
+	user.destroy_all_skillchips(silent = FALSE)
+
+	// Add new set of skillchips.
+	for(var/chip in chosen_prof.skillchips)
+		var/chip_type = chip["type"]
+		var/obj/item/skillchip/skillchip = new chip_type(user)
+
+		if(!istype(skillchip))
+			stack_trace("Failure to implant changeling from [chosen_prof] with skillchip [skillchip]. Tried to implant with non-skillchip type [chip_type]")
+			qdel(skillchip)
+			continue
+
+		// Try force-implanting and activating. If it doesn't work, there's nothing much we can do. There may be some
+		// incompatibility out of our hands
+		var/implant_msg = user.implant_skillchip(skillchip, TRUE)
+		if(implant_msg)
+			// Hopefully recording the error message will help debug it.
+			stack_trace("Failure to implant changeling from [chosen_prof] with skillchip [skillchip]. Error msg: [implant_msg]")
+			qdel(skillchip)
+			continue
+
+		// Time to set the metadata. This includes trying to activate the chip.
+		var/set_meta_msg = skillchip.set_metadata(chip)
+
+		if(set_meta_msg)
+			// Hopefully recording the error message will help debug it.
+			stack_trace("Failure to activate changeling skillchip from [chosen_prof] with skillchip [skillchip] using [chip] metadata. Error msg: [set_meta_msg]")
+			continue
+
 	//vars hackery. not pretty, but better than the alternative.
 	for(var/slot in GLOB.slots)
 		if(istype(user.vars[slot], GLOB.slot2type[slot]) && !(chosen_prof.exists_list[slot])) //remove unnecessary flesh items
@@ -132,8 +165,11 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		C.appearance = chosen_prof.appearance_list[slot]
 		C.name = chosen_prof.name_list[slot]
 		C.flags_cover = chosen_prof.flags_cover_list[slot]
-		C.item_state = chosen_prof.item_state_list[slot]
-		C.mob_overlay_icon = chosen_prof.mob_overlay_icon_list[slot]
+		C.lefthand_file = chosen_prof.lefthand_file_list[slot]
+		C.righthand_file = chosen_prof.righthand_file_list[slot]
+		C.inhand_icon_state = chosen_prof.inhand_icon_state_list[slot]
+		C.worn_icon = chosen_prof.worn_icon_list[slot]
+		C.worn_icon_state = chosen_prof.worn_icon_state_list[slot]
 		if(equip)
 			user.equip_to_slot_or_del(C, GLOB.slot2slot[slot])
 

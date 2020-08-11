@@ -28,13 +28,15 @@
 	icon_state = "folder_white"
 
 
-/obj/item/folder/update_icon()
-	cut_overlays()
+/obj/item/folder/update_overlays()
+	. = ..()
 	if(contents.len)
-		add_overlay("folder_paper")
+		. += "folder_paper"
 
 
 /obj/item/folder/attackby(obj/item/W, mob/user, params)
+	if(burn_paper_product_attackby_check(W, user))
+		return
 	if(istype(W, /obj/item/paper) || istype(W, /obj/item/photo) || istype(W, /obj/item/documents))
 		if(!user.transferItemToLoc(W, src))
 			return
@@ -45,15 +47,21 @@
 			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
 			return
 
-		var/inputvalue = input(user, "What would you like to label the folder?", "Folder Labelling", null) as text|null
-		
-		if (isnull(inputvalue))
+		var/inputvalue = stripped_input(user, "What would you like to label the folder?", "Folder Labelling", "", MAX_NAME_LEN)
+
+		if(!inputvalue)
 			return
-		
-		var/n_name = copytext(sanitize(inputvalue), 1, MAX_NAME_LEN)
-		
+
 		if(user.canUseTopic(src, BE_CLOSE))
-			name = "folder[(n_name ? " - '[n_name]'" : null)]"
+			name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
+
+
+/obj/item/folder/Destroy()
+	for(var/obj/important_thing in contents)
+		if(!(important_thing.resistance_flags & INDESTRUCTIBLE))
+			continue
+		important_thing.forceMove(drop_location()) //don't destroy round critical content such as objective documents.
+	return ..()
 
 
 /obj/item/folder/attack_self(mob/user)

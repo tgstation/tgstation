@@ -75,7 +75,7 @@
 		new_mob.real_name = new_mob.name
 		qdel(affected_mob)
 
-/datum/disease/transformation/proc/replace_banned_player(var/mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
+/datum/disease/transformation/proc/replace_banned_player(mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
 	set waitfor = FALSE
 
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [affected_mob.name]?", bantype, null, bantype, 50, affected_mob)
@@ -124,8 +124,6 @@
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 		M.ventcrawler = VENTCRAWLER_ALWAYS
-		M.mind?.language_holder = new M.initial_language_holder(M.mind) // make sure they speak normal monkey
-
 
 /datum/disease/transformation/jungle_fever/stage_act()
 	..()
@@ -136,7 +134,7 @@
 		if(3)
 			if(prob(4))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
-				affected_mob.confused += 10
+				affected_mob.add_confusion(10)
 		if(4)
 			if(prob(3))
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")

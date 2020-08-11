@@ -13,7 +13,7 @@ Borg Hypospray
 	name = "cyborg hypospray"
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "hypo"
+	inhand_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "borghypo"
@@ -27,7 +27,7 @@ Borg Hypospray
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list(/datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/C2/libital, /datum/reagent/medicine/C2/multiver, /datum/reagent/medicine/C2/aiuri, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution)
+	var/list/reagent_ids = list(/datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/c2/libital, /datum/reagent/medicine/c2/multiver, /datum/reagent/medicine/c2/aiuri, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution)
 	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
@@ -76,7 +76,7 @@ Borg Hypospray
 
 /obj/item/reagent_containers/borghypo/proc/del_reagent(datum/reagent/reagent)
 	reagent_ids -= reagent
-	if(istype(reagent, /datum/reagent/medicine/C2))
+	if(istype(reagent, /datum/reagent/medicine/c2))
 		reagent_names -= C2NAMEREAGENT
 	else
 		reagent_names -= initial(reagent.name)
@@ -202,21 +202,22 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list(/datum/reagent/consumable/applejuice, /datum/reagent/consumable/banana, /datum/reagent/consumable/coffee, 
-	/datum/reagent/consumable/cream, /datum/reagent/consumable/dr_gibb, /datum/reagent/consumable/grenadine, 
-	/datum/reagent/consumable/ice, /datum/reagent/consumable/lemonjuice, /datum/reagent/consumable/lemon_lime, 
-	/datum/reagent/consumable/limejuice, /datum/reagent/consumable/menthol, /datum/reagent/consumable/milk, 
-	/datum/reagent/consumable/nothing, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/peachjuice, 
-	/datum/reagent/consumable/sodawater, /datum/reagent/consumable/space_cola, /datum/reagent/consumable/spacemountainwind, 
-	/datum/reagent/consumable/pwr_game, /datum/reagent/consumable/shamblers, /datum/reagent/consumable/soymilk, 
-	/datum/reagent/consumable/space_up, /datum/reagent/consumable/tea, /datum/reagent/consumable/tomatojuice, 
-	/datum/reagent/consumable/tonic, /datum/reagent/water, 
-	/datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/ethanol/applejack, /datum/reagent/consumable/ethanol/beer, 
-	/datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_menthe, 
-	/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/gin, /datum/reagent/consumable/ethanol/kahlua, 
-	/datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake, /datum/reagent/consumable/ethanol/tequila, 
-	/datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth, 
-	/datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine)
+	reagent_ids = list(/datum/reagent/consumable/applejuice, /datum/reagent/consumable/banana, /datum/reagent/consumable/coffee,
+	/datum/reagent/consumable/cream, /datum/reagent/consumable/dr_gibb, /datum/reagent/consumable/grenadine,
+	/datum/reagent/consumable/ice, /datum/reagent/consumable/lemonjuice, /datum/reagent/consumable/lemon_lime,
+	/datum/reagent/consumable/limejuice, /datum/reagent/consumable/menthol, /datum/reagent/consumable/milk,
+	/datum/reagent/consumable/nothing, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/peachjuice,
+	/datum/reagent/consumable/sodawater, /datum/reagent/consumable/space_cola, /datum/reagent/consumable/spacemountainwind,
+	/datum/reagent/consumable/pwr_game, /datum/reagent/consumable/shamblers, /datum/reagent/consumable/soymilk,
+	/datum/reagent/consumable/space_up, /datum/reagent/consumable/sugar, /datum/reagent/consumable/tea,
+	/datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/tonic, /datum/reagent/water,
+	/datum/reagent/consumable/pineapplejuice, /datum/reagent/consumable/sol_dry,
+	/datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/ethanol/applejack, /datum/reagent/consumable/ethanol/beer,
+	/datum/reagent/consumable/ethanol/champagne, /datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_menthe,
+	/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/gin, /datum/reagent/consumable/ethanol/kahlua,
+	/datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake, /datum/reagent/consumable/ethanol/tequila,
+	/datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth, /datum/reagent/consumable/ethanol/vodka,
+	/datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine, /datum/reagent/consumable/ethanol/creme_de_coconut)
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude

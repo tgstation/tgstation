@@ -4,15 +4,13 @@
 	icon_state = "prox"
 	custom_materials = list(/datum/material/iron=800, /datum/material/glass=200)
 	attachable = TRUE
-
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 	var/scanning = FALSE
 	var/timing = FALSE
 	var/time = 10
 	var/sensitivity = 1
 	var/hearing_range = 3
-	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
-
 
 /obj/item/assembly/prox_sensor/Initialize()
 	. = ..()
@@ -29,7 +27,7 @@
 
 /obj/item/assembly/prox_sensor/activate()
 	if(!..())
-		return FALSE//Cooldown check
+		return FALSE //Cooldown check
 	if(!scanning)
 		timing = !timing
 	else
@@ -44,7 +42,6 @@
 	else
 		proximity_monitor.SetHost(src,src)
 
-
 /obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
@@ -58,8 +55,6 @@
 		proximity_monitor.SetHost(loc,src)
 	update_icon()
 	return secured
-
-
 
 /obj/item/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/effect/beam))
@@ -77,7 +72,6 @@
 			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	next_activate = world.time + 30
 	return TRUE
-
 
 /obj/item/assembly/prox_sensor/process()
 	if(!timing)
@@ -114,49 +108,46 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/prox_sensor/ui_interact(mob/user)//TODO: Change this to the wires thingy
-	. = ..()
+/obj/item/assembly/prox_sensor/ui_status(mob/user)
 	if(is_secured(user))
-		var/second = time % 60
-		var/minute = (time - second) / 60
-		var/dat = "<TT><B>Proximity Sensor</B></TT>"
-		if(!scanning)
-			dat += "<BR>[(timing ? "<A href='?src=[REF(src)];time=0'>Arming</A>" : "<A href='?src=[REF(src)];time=1'>Not Arming</A>")] [minute]:[second]"
-			dat += "<BR><A href='?src=[REF(src)];tp=-30'>-</A> <A href='?src=[REF(src)];tp=-1'>-</A> <A href='?src=[REF(src)];tp=1'>+</A> <A href='?src=[REF(src)];tp=30'>+</A>"
-		dat += "<BR><A href='?src=[REF(src)];scanning=[scanning?"0'>Armed":"1'>Unarmed (Movement sensor active when armed!)"]</A>"
-		dat += "<BR>Detection range: <A href='?src=[REF(src)];sense=down'>-</A> [sensitivity] <A href='?src=[REF(src)];sense=up'>+</A>"
-		dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
-		dat += "<BR><BR><A href='?src=[REF(src)];close=1'>Close</A>"
-		user << browse(dat, "window=prox")
-		onclose(user, "prox")
+		return ..()
+	return UI_CLOSE
+
+/obj/item/assembly/prox_sensor/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ProximitySensor", name)
+		ui.open()
+
+/obj/item/assembly/prox_sensor/ui_data(mob/user)
+	var/list/data = list()
+	data["seconds"] = round(time % 60)
+	data["minutes"] = round((time - data["seconds"]) / 60)
+	data["timing"] = timing
+	data["scanning"] = scanning
+	data["sensitivity"] = sensitivity
+	return data
+
+/obj/item/assembly/prox_sensor/ui_act(action, params)
+	if(..())
 		return
 
-
-/obj/item/assembly/prox_sensor/Topic(href, href_list)
-	..()
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		usr << browse(null, "window=prox")
-		onclose(usr, "prox")
-		return
-
-	if(href_list["sense"])
-		sensitivity_change(((href_list["sense"] == "up") ? 1 : -1))
-
-	if(href_list["scanning"])
-		toggle_scan(text2num(href_list["scanning"]))
-
-	if(href_list["time"])
-		timing = text2num(href_list["time"])
-		update_icon()
-
-	if(href_list["tp"])
-		var/tp = text2num(href_list["tp"])
-		time += tp
-		time = min(max(round(time), 0), 600)
-
-	if(href_list["close"])
-		usr << browse(null, "window=prox")
-		return
-
-	if(usr)
-		attack_self(usr)
+	switch(action)
+		if("scanning")
+			toggle_scan(!scanning)
+			. = TRUE
+		if("sense")
+			var/value = text2num(params["range"])
+			if(value)
+				sensitivity_change(value)
+				. = TRUE
+		if("time")
+			timing = !timing
+			update_icon()
+			. = TRUE
+		if("input")
+			var/value = text2num(params["adjust"])
+			if(value)
+				value = round(time + value)
+				time = clamp(value, 0, 600)
+				. = TRUE

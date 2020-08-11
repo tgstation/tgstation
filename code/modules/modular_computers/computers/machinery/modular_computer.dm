@@ -48,14 +48,17 @@
 		cpu.attack_ghost(user)
 
 /obj/machinery/modular_computer/emag_act(mob/user)
-	return cpu ? cpu.emag_act(user) : 1
+	if(!cpu)
+		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
+		return FALSE
+	return (cpu.emag_act(user))
 
 /obj/machinery/modular_computer/update_icon()
 	cut_overlays()
 	icon_state = icon_state_powered
 
 	if(!cpu || !cpu.enabled)
-		if (!(stat & NOPOWER) && (cpu && cpu.use_power()))
+		if (!(machine_stat & NOPOWER) && (cpu && cpu.use_power()))
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
@@ -70,30 +73,6 @@
 	if(cpu && cpu.obj_integrity <= cpu.integrity_failure * cpu.max_integrity)
 		add_overlay("bsod")
 		add_overlay("broken")
-
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/proc/eject_id()
-	set name = "Eject ID"
-	set category = "Object"
-
-	if(cpu)
-		cpu.eject_id()
-
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/proc/eject_disk()
-	set name = "Eject Data Disk"
-	set category = "Object"
-
-	if(cpu)
-		cpu.eject_disk()
-
-/obj/machinery/modular_computer/proc/eject_card()
-	set name = "Eject Intellicard"
-	set category = "Object"
-	set src in view(1)
-
-	if(cpu)
-		cpu.eject_card()
 
 /obj/machinery/modular_computer/AltClick(mob/user)
 	if(cpu)
@@ -121,18 +100,18 @@
 		visible_message("<span class='danger'>\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
 			cpu.shutdown_computer(0)
-	stat |= NOPOWER
+	machine_stat |= NOPOWER
 	update_icon()
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
 	if(cpu && cpu.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
-		stat &= ~NOPOWER
+		machine_stat &= ~NOPOWER
 		update_icon()
 		return
 	. = ..()
 
-/obj/machinery/modular_computer/attackby(var/obj/item/W as obj, mob/user)
+/obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/user)
 	if(cpu && !(flags_1 & NODECONSTRUCT_1))
 		return cpu.attackby(W, user)
 	return ..()
@@ -142,7 +121,13 @@
 // Minor explosions are mostly mitigitated by casing.
 /obj/machinery/modular_computer/ex_act(severity)
 	if(cpu)
-		cpu.ex_act(severity)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += cpu
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += cpu
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += cpu
 	..()
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components

@@ -67,7 +67,8 @@
 	description = "Lumbering humanoids, made out of precious metals, move inside this ship. They frequently leave to mine more minerals, which they somehow turn into more of them. \
 	Seem very intent on research and individual liberty, and also geology-based naming?"
 	cost = 20
-	suffix = "lavaland_surface_golem_ship.dmm"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "golem_ship.dmm"
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/gaia
@@ -166,7 +167,8 @@
 	name = "Fountain Hall"
 	id = "fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
-	suffix = "lavaland_surface_fountain_hall.dmm"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "fountain_hall.dmm"
 	cost = 5
 
 /datum/map_template/ruin/lavaland/survivalcapsule

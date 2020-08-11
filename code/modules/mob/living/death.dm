@@ -1,5 +1,5 @@
 /mob/living/gib(no_brain, no_organs, no_bodyparts)
-	var/prev_lying = lying
+	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)
 
@@ -48,7 +48,7 @@
 
 /mob/living/death(gibbed)
 	var/was_dead_before = stat == DEAD
-	stat = DEAD
+	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
 	tod = station_time_timestamp()
@@ -59,9 +59,9 @@
 		deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	GLOB.alive_mob_list -= src
+	remove_from_alive_mob_list()
 	if(!gibbed && !was_dead_before)
-		GLOB.dead_mob_list += src
+		add_to_dead_mob_list()
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)
@@ -73,8 +73,6 @@
 	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
-	if(!gibbed && !QDELETED(src))
-		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()
 
 	. = ..()

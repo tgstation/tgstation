@@ -1,12 +1,10 @@
 /obj/mecha/proc/get_armour_facing(relative_dir)
 	switch(relative_dir)
-		if(0) // BACKSTAB!
+		if(180) // BACKSTAB!
 			return facing_modifiers[MECHA_BACK_ARMOUR]
-		if(45, 90, 270, 315)
-			return facing_modifiers[MECHA_SIDE_ARMOUR]
-		if(225, 180, 135)
+		if(0, 45) // direct or 45 degrees off
 			return facing_modifiers[MECHA_FRONT_ARMOUR]
-	return 1 //always return non-0
+	return facing_modifiers[MECHA_SIDE_ARMOUR] //if its not a front hit or back hit then assume its from the side
 
 /obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -43,7 +41,7 @@
 				break
 
 	if(attack_dir)
-		var/facing_modifier = get_armour_facing(dir2angle(attack_dir) - dir2angle(src))
+		var/facing_modifier = get_armour_facing(abs(dir2angle(dir) - dir2angle(attack_dir)))
 		booster_damage_modifier /= facing_modifier
 		booster_deflection_modifier *= facing_modifier
 	if(prob(deflect_chance * booster_deflection_modifier))
@@ -128,10 +126,22 @@
 	severity++
 	for(var/X in equipment)
 		var/obj/item/mecha_parts/mecha_equipment/ME = X
-		ME.ex_act(severity,target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += ME
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += ME
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += ME
 	for(var/Y in trackers)
 		var/obj/item/mecha_parts/mecha_tracking/MT = Y
-		MT.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += MT
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += MT
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += MT
 	if(occupant)
 		occupant.ex_act(severity,target)
 
@@ -151,7 +161,7 @@
 	log_message("EMP detected", LOG_MECHA, color="red")
 
 	if(istype(src, /obj/mecha/combat))
-		mouse_pointer = 'icons/mecha/mecha_mouse-disable.dmi'
+		mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
 		occupant?.update_mouse_pointer()
 	if(!equipment_disabled && occupant) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupant, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")
@@ -201,7 +211,7 @@
 				to_chat(user, "<span class='notice'>You install the power cell.</span>")
 				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 				cell = C
-				log_message("Powercell installed", LOG_MECHA)
+				log_message("Power cell installed", LOG_MECHA)
 			else
 				to_chat(user, "<span class='warning'>There's already a power cell installed!</span>")
 		return

@@ -33,7 +33,7 @@
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
 	var/oldres	//To prevent setting new cures unless resistance changes.
 
-	// The order goes from easy to cure to hard to cure. Keep in mind that sentient diseases pick two cures from tier 6 and up, ensure they wont react away in bodies.
+	// The order goes from easy to cure to hard to cure. Keep in mind that sentient diseases pick two cures from tier 6 and up, ensure they won't react away in bodies.
 	var/static/list/advance_cures = 	list(
 									list(	// level 1
 										/datum/reagent/copper, /datum/reagent/silver, /datum/reagent/iodine, /datum/reagent/iron, /datum/reagent/carbon
@@ -45,7 +45,7 @@
 										/datum/reagent/consumable/sodiumchloride, /datum/reagent/consumable/sugar, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/milk
 									),
 									list(	//level 4
-										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/C2/multiver
+										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/c2/multiver
 									),
 									list(	//level 5
 										/datum/reagent/fuel/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol, /datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
@@ -85,7 +85,7 @@
 			S.End(src)
 	return ..()
 
-/datum/disease/advance/try_infect(var/mob/living/infectee, make_copy = TRUE)
+/datum/disease/advance/try_infect(mob/living/infectee, make_copy = TRUE)
 	//see if we are more transmittable than enough diseases to replace them
 	//diseases replaced in this way do not confer immunity
 	var/list/advance_diseases = list()
@@ -106,7 +106,7 @@
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
-	if(carrier)
+	if(carrier || QDELETED(src)) // Could be cured in parent call.
 		return
 
 	if(symptoms && symptoms.len)
@@ -178,7 +178,7 @@
 // Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
 /datum/disease/advance/proc/GenerateSymptoms(level_min, level_max, amount_get = 0)
 
-	var/list/generated = list() // Symptoms we generated.
+	. = list() // Symptoms we generated.
 
 	// Generate symptoms. By default, we only choose non-deadly symptoms.
 	var/list/possible_symptoms = list()
@@ -189,7 +189,7 @@
 				possible_symptoms += S
 
 	if(!possible_symptoms.len)
-		return generated
+		return
 
 	// Random chance to get more than one symptom
 	var/number_of = amount_get
@@ -199,9 +199,7 @@
 			number_of += 1
 
 	for(var/i = 1; number_of >= i && possible_symptoms.len; i++)
-		generated += pick_n_take(possible_symptoms)
-
-	return generated
+		. += pick_n_take(possible_symptoms)
 
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
@@ -248,9 +246,9 @@
 			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 		else
 			SetSpread(DISEASE_SPREAD_BLOOD)
-		
+
 		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
-		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
+		cure_chance = 15 - clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -305,7 +303,7 @@
 // Will generate a random cure, the more resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
-		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		var/res = clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		if(res == oldres)
 			return
 		cures = list(pick(advance_cures[res]))
@@ -318,30 +316,30 @@
 /datum/disease/advance/proc/Evolve(min_level, max_level, ignore_mutable = FALSE)
 	if(!mutable && !ignore_mutable)
 		return
-	var/s = safepick(GenerateSymptoms(min_level, max_level, 1))
-	if(s)
-		AddSymptom(s)
+	var/list/generated_symptoms = GenerateSymptoms(min_level, max_level, 1)
+	if(length(generated_symptoms))
+		var/datum/symptom/S = pick(generated_symptoms)
+		AddSymptom(S)
 		Refresh(TRUE)
-	return
 
 // Randomly remove a symptom.
 /datum/disease/advance/proc/Devolve(ignore_mutable = FALSE)
 	if(!mutable && !ignore_mutable)
 		return
-	if(symptoms.len > 1)
-		var/s = safepick(symptoms)
-		if(s)
-			RemoveSymptom(s)
+	if(length(symptoms) > 1)
+		var/datum/symptom/S = pick(symptoms)
+		if(S)
+			RemoveSymptom(S)
 			Refresh(TRUE)
 
 // Randomly neuter a symptom.
 /datum/disease/advance/proc/Neuter(ignore_mutable = FALSE)
 	if(!mutable && !ignore_mutable)
 		return
-	if(symptoms.len)
-		var/s = safepick(symptoms)
-		if(s)
-			NeuterSymptom(s)
+	if(length(symptoms))
+		var/datum/symptom/S = pick(symptoms)
+		if(S)
+			NeuterSymptom(S)
 			Refresh(TRUE)
 
 // Name the disease.
@@ -394,7 +392,7 @@
 */
 
 // Mix a list of advance diseases and return the mixed result.
-/proc/Advance_Mix(var/list/D_list)
+/proc/Advance_Mix(list/D_list)
 	var/list/diseases = list()
 
 	for(var/datum/disease/advance/A in D_list)
@@ -419,7 +417,7 @@
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
 	var/datum/disease/advance/to_return = pick(diseases)
-	to_return.Refresh(1)
+	to_return.Refresh(TRUE)
 	return to_return
 
 /proc/SetViruses(datum/reagent/R, list/data)
@@ -464,8 +462,9 @@
 		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
 		if(!new_name)
 			return
-		D.AssignName(new_name)
 		D.Refresh()
+		D.AssignName(new_name)	//Updates the master copy
+		D.name = new_name //Updates our copy
 
 		var/list/targets = list("Random")
 		targets += sortNames(GLOB.human_list)

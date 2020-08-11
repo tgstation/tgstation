@@ -11,7 +11,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/completed = 0					//currently only used for custom objectives.
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
-/datum/objective/New(var/text)
+/datum/objective/New(text)
 	if(text)
 		explanation_text = text
 
@@ -290,7 +290,11 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	return target
 
 /datum/objective/protect/check_completion()
-	return !target || considered_alive(target, enforce_human = human_check)
+	var/obj/item/organ/brain/brain_target
+	if(human_check)
+		brain_target = target.current.getorganslot(ORGAN_SLOT_BRAIN)
+	//Protect will always suceed when someone suicides
+	return !target || considered_alive(target, enforce_human = human_check) || (human_check == TRUE && brain_target)? !brain_target.suicided : FALSE
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -305,6 +309,42 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect/nonhuman
 	name = "protect nonhuman"
 	human_check = FALSE
+
+/datum/objective/jailbreak
+	name = "jailbreak"
+	martyr_compatible = TRUE //why not?
+	var/target_role_type
+
+/datum/objective/jailbreak/find_target_by_role(role, role_type, invert=FALSE)
+	if(!invert)
+		target_role_type = role_type
+	return ..()
+
+/datum/objective/jailbreak/check_completion()
+	return completed || (considered_escaped(target))
+
+/datum/objective/jailbreak/update_explanation_text()
+	..()
+	if(target?.current)
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role : target.special_role] escapes alive and out of custody."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/jailbreak/admin_edit(mob/admin)
+	admin_simple_target_pick(admin)
+
+/datum/objective/jailbreak/detain
+	name = "detain"
+
+/datum/objective/jailbreak/detain/check_completion()
+	return completed || (!considered_escaped(target) && (considered_alive(target) && target.current.onCentCom()))
+
+/datum/objective/jailbreak/detain/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role : target.special_role] is delivered to nanotrasen alive and in custody."
+	else
+		explanation_text = "Free Objective"
 
 /datum/objective/hijack
 	name = "hijack"
@@ -493,7 +533,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 				if(M.current.mind.assigned_role in possible_item.excludefromjob)
 					continue check_items
 			approved_targets += possible_item
-	return set_target(safepick(approved_targets))
+	if (length(approved_targets))
+		return set_target(pick(approved_targets))
+	return set_target(null)
 
 /datum/objective/steal/proc/set_target(datum/objective_item/item)
 	if(item)
@@ -544,7 +586,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
 					return TRUE
 
-			if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
+			if(targetinfo && (I.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
 				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 					return TRUE
 	return FALSE
@@ -1060,6 +1102,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/maroon,
 		/datum/objective/debrain,
 		/datum/objective/protect,
+		/datum/objective/jailbreak,
+		/datum/objective/jailbreak/detain,
 		/datum/objective/destroy,
 		/datum/objective/hijack,
 		/datum/objective/escape,

@@ -13,15 +13,33 @@
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = (world.view + extrarange)
-	var/z = turf_source.z
-	var/list/listeners = SSmobs.clients_by_zlevel[z]
+	var/source_z = turf_source.z
+	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
+
+	var/turf/above_turf = SSmapping.get_turf_above(turf_source)
+	var/turf/below_turf = SSmapping.get_turf_below(turf_source)
+
 	if(!ignore_walls) //these sounds don't carry through walls
 		listeners = listeners & hearers(maxdistance,turf_source)
+
+		if(istransparentturf(above_turf))
+			listeners += hearers(maxdistance,above_turf)
+
+		if(below_turf && istransparentturf(turf_source))
+			listeners += hearers(maxdistance,below_turf)
+
+	else
+		if(istransparentturf(above_turf))
+			listeners += SSmobs.clients_by_zlevel[above_turf.z]
+
+		if(below_turf && istransparentturf(turf_source))
+			listeners += SSmobs.clients_by_zlevel[below_turf.z]
+
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
 			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
-	for(var/P in SSmobs.dead_players_by_zlevel[z])
+	for(var/P in SSmobs.dead_players_by_zlevel[source_z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
 			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
@@ -77,8 +95,9 @@
 		S.x = dx
 		var/dz = turf_source.y - T.y // Hearing from infront/behind
 		S.z = dz
-		// The y value is for above your head, but there is no ceiling in 2d spessmens.
-		S.y = 1
+		var/dy = (turf_source.z - T.z) * 5 // Hearing from  above / below, multiplied by 5 because we assume height is further along coords.
+		S.y = dy
+
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
 	SEND_SOUND(src, S)
@@ -141,8 +160,8 @@
 				soundin = pick('sound/machines/terminal_button01.ogg', 'sound/machines/terminal_button02.ogg', 'sound/machines/terminal_button03.ogg', \
 								'sound/machines/terminal_button04.ogg', 'sound/machines/terminal_button05.ogg', 'sound/machines/terminal_button06.ogg', \
 								'sound/machines/terminal_button07.ogg', 'sound/machines/terminal_button08.ogg')
-			if ("desceration")
-				soundin = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
+			if ("desecration")
+				soundin = pick('sound/misc/desecration-01.ogg', 'sound/misc/desecration-02.ogg', 'sound/misc/desecration-03.ogg')
 			if ("im_here")
 				soundin = pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
 			if ("can_open")
@@ -158,7 +177,7 @@
 			if("goose")
 				soundin = pick('sound/creatures/goose1.ogg', 'sound/creatures/goose2.ogg', 'sound/creatures/goose3.ogg', 'sound/creatures/goose4.ogg')
 			if("warpspeed")
-				soundin = 'sound/effects/hyperspace_begin.ogg'
+				soundin = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
 			if("smcalm")
 				soundin = pick('sound/machines/sm/accent/normal/1.ogg', 'sound/machines/sm/accent/normal/2.ogg', 'sound/machines/sm/accent/normal/3.ogg', 'sound/machines/sm/accent/normal/4.ogg', 'sound/machines/sm/accent/normal/5.ogg', 'sound/machines/sm/accent/normal/6.ogg', 'sound/machines/sm/accent/normal/7.ogg', 'sound/machines/sm/accent/normal/8.ogg', 'sound/machines/sm/accent/normal/9.ogg', 'sound/machines/sm/accent/normal/10.ogg', 'sound/machines/sm/accent/normal/11.ogg', 'sound/machines/sm/accent/normal/12.ogg', 'sound/machines/sm/accent/normal/13.ogg', 'sound/machines/sm/accent/normal/14.ogg', 'sound/machines/sm/accent/normal/15.ogg', 'sound/machines/sm/accent/normal/16.ogg', 'sound/machines/sm/accent/normal/17.ogg', 'sound/machines/sm/accent/normal/18.ogg', 'sound/machines/sm/accent/normal/19.ogg', 'sound/machines/sm/accent/normal/20.ogg', 'sound/machines/sm/accent/normal/21.ogg', 'sound/machines/sm/accent/normal/22.ogg', 'sound/machines/sm/accent/normal/23.ogg', 'sound/machines/sm/accent/normal/24.ogg', 'sound/machines/sm/accent/normal/25.ogg', 'sound/machines/sm/accent/normal/26.ogg', 'sound/machines/sm/accent/normal/27.ogg', 'sound/machines/sm/accent/normal/28.ogg', 'sound/machines/sm/accent/normal/29.ogg', 'sound/machines/sm/accent/normal/30.ogg', 'sound/machines/sm/accent/normal/31.ogg', 'sound/machines/sm/accent/normal/32.ogg', 'sound/machines/sm/accent/normal/33.ogg')
 			if("smdelam")

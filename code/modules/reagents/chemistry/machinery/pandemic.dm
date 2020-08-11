@@ -11,8 +11,6 @@
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
-	ui_x = 520
-	ui_y = 550
 
 	var/wait
 	var/datum/symptom/selected_symptom
@@ -128,16 +126,16 @@
 	update_icon()
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
-/obj/machinery/computer/pandemic/update_icon()
-	if(stat & BROKEN)
+/obj/machinery/computer/pandemic/update_icon_state()
+	if(machine_stat & BROKEN)
 		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
-		return
-
-	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
-	if(wait)
-		add_overlay("waitlight")
 	else
-		cut_overlays()
+		icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
+
+/obj/machinery/computer/pandemic/update_overlays()
+	. = ..()
+	if(wait)
+		. += "waitlight"
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)
@@ -145,10 +143,10 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/computer/pandemic/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open = FALSE, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "pandemic", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Pandemic", name)
 		ui.open()
 
 /obj/machinery/computer/pandemic/ui_data(mob/user)
@@ -160,9 +158,9 @@
 		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 		if(B)
 			data["has_blood"] = TRUE
-			data[/datum/reagent/blood] = list()
-			data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
-			data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
+			data["blood"] = list()
+			data["blood"]["dna"] = B.data["blood_DNA"] || "none"
+			data["blood"]["type"] = B.data["blood_type"] || "none"
 			data["viruses"] = get_viruses_data(B)
 			data["resistances"] = get_resistance_data(B)
 		else
@@ -195,7 +193,7 @@
 			if(!A.mutable)
 				return
 			if(A)
-				var/new_name = sanitize_name(html_encode(params["name"]))
+				var/new_name = sanitize_name(html_encode(params["name"]), allow_numbers = TRUE)
 				if(!new_name || ..())
 					return
 				A.AssignName(new_name)
@@ -237,7 +235,7 @@
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
-		if(stat & (NOPOWER|BROKEN))
+		if(machine_stat & (NOPOWER|BROKEN))
 			return
 		if(beaker)
 			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")

@@ -14,7 +14,7 @@
 		qdel(src)
 	hypnotic_phrase = phrase
 	try
-		target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
+		target_phrase = new("(\\b[REGEX_QUOTE(hypnotic_phrase)]\\b)","ig")
 	catch(var/exception/e)
 		stack_trace("[e] on [e.file]:[e.line]")
 		qdel(src)
@@ -47,9 +47,9 @@
 	if(prob(2))
 		switch(rand(1,2))
 			if(1)
-				to_chat(owner, "<i>...[lowertext(hypnotic_phrase)]...</i>")
+				to_chat(owner, "<span class='hypnophrase'><i>...[lowertext(hypnotic_phrase)]...</i></span>")
 			if(2)
 				new /datum/hallucination/chat(owner, TRUE, FALSE, "<span class='hypnophrase'>[hypnotic_phrase]</span>")
 
 /datum/brain_trauma/hypnosis/handle_hearing(datum/source, list/hearing_args)
-	hearing_args[HEARING_MESSAGE] = target_phrase.Replace(hearing_args[HEARING_MESSAGE], "<span class='hypnophrase'>$1</span>")
+	hearing_args[HEARING_RAW_MESSAGE] = target_phrase.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='hypnophrase'>$1</span>")

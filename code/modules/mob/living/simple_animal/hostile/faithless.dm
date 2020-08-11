@@ -15,7 +15,6 @@
 	speed = 0
 	maxHealth = 80
 	health = 80
-	spacewalk = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 
@@ -35,6 +34,10 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_SHOE
+
+/mob/living/simple_animal/hostile/faithless/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()

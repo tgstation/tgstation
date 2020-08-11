@@ -32,7 +32,7 @@
 	var/uraction = anchored ? "unscrew [src] from " : "screw [src] to"
 	user.visible_message("<span class='warning'>[user] [action] the floor.</span>", "<span class='notice'>You start to [uraction] the floor...</span>", "<span class='hear'>You hear rustling noises.</span>")
 	if(W.use_tool(src, user, 100, volume=100, extra_checks = CALLBACK(src, .proc/check_anchored_state, anchored)))
-		setAnchored(!anchored)
+		set_anchored(!anchored)
 		to_chat(user, "<span class='notice'>You [anchored ? "unscrew" : "screw"] [src] from the floor.</span>")
 		return TRUE
 	else
@@ -69,7 +69,9 @@
 		return CanAStarPass(ID, to_dir, M.pulling)
 	return TRUE //diseases, stings, etc can pass
 
-/obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
+/obj/structure/plasticflaps/CanAllowThrough(atom/movable/A, turf/T)
+	. = ..()
+
 	if(istype(A) && (A.pass_flags & PASSGLASS))
 		return prob(60)
 
@@ -93,7 +95,6 @@
 			return TRUE
 		if((M.mobility_flags & MOBILITY_STAND) && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return FALSE
-	return ..()
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

@@ -7,10 +7,11 @@
 
 #define REFILLABLE		(1<<2)	// Makes it possible to add reagents through any reagent container.
 #define DRAINABLE		(1<<3)	// Makes it possible to remove reagents through any reagent container.
+#define DUNKABLE		(1<<4)	// Allows items to be dunked into this container for transfering reagents. Used in conjunction with the dunkable component.
 
-#define TRANSPARENT		(1<<4)	// Used on containers which you want to be able to see the reagents off.
-#define AMOUNT_VISIBLE	(1<<5)	// For non-transparent containers that still have the general amount of reagents in them visible.
-#define NO_REACT        (1<<6)  // Applied to a reagent holder, the contents will not react with each other.
+#define TRANSPARENT		(1<<5)	// Used on containers which you want to be able to see the reagents off.
+#define AMOUNT_VISIBLE	(1<<6)	// For non-transparent containers that still have the general amount of reagents in them visible.
+#define NO_REACT		(1<<7)	// Applied to a reagent holder, the contents will not react with each other.
 
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER 	(REFILLABLE | DRAINABLE | TRANSPARENT)
@@ -28,9 +29,12 @@
 #define ADD_REAGENT		2	// reagent added
 #define REM_REAGENT		3	// reagent removed (may still exist)
 #define CLEAR_REAGENTS	4	// all reagents were cleared
-#define REACT_REAGENTS	5	// a reaction occured
 
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
+#define THRESHOLD_UNHUSK 50 //Health treshold for synthflesh and rezadone to unhusk someone
+
 //used by chem masters and pill presses
 #define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
 #define RANDOM_PILL_STYLE 22 //Dont change this one though
+
+#define ALLERGIC_REMOVAL_SKIP "Allergy"

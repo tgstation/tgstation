@@ -1,5 +1,5 @@
 /datum/admins/proc/open_borgopanel(borgo in GLOB.silicon_mobs)
-	set category = "Admin"
+	set category = "Admin - Game"
 	set name = "Show Borg Panel"
 	set desc = "Show borg panel"
 
@@ -9,7 +9,7 @@
 	if (!istype(borgo, /mob/living/silicon/robot))
 		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sortNames(GLOB.silicon_mobs)
 	if (!istype(borgo, /mob/living/silicon/robot))
-		to_chat(usr, "<span class='warning'>Borg is required for borgpanel</span>")
+		to_chat(usr, "<span class='warning'>Borg is required for borgpanel</span>", confidential = TRUE)
 
 	var/datum/borgpanel/borgpanel = new(usr, borgo)
 
@@ -25,18 +25,18 @@
 	if(!istype(to_borg))
 		qdel(src)
 		CRASH("Borg panel is only available for borgs")
-
 	user = CLIENT_FROM_VAR(to_user)
-
 	if (!user)
 		CRASH("Borg panel attempted to open to a mob without a client")
-
 	borg = to_borg
 
-/datum/borgpanel/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/borgpanel/ui_state(mob/user)
+	return GLOB.admin_state
+
+/datum/borgpanel/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "borgopanel", "Borg Panel", 700, 700, master_ui, state)
+		ui = new(user, src, "BorgPanel")
 		ui.open()
 
 /datum/borgpanel/ui_data(mob/user)
@@ -59,7 +59,7 @@
 		if (locate(upgradetype) in borg)
 			installed = TRUE
 		.["upgrades"] += list(list("name" = initial(upgrade.name), "installed" = installed, "type" = upgradetype))
-	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE) : list()
+	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE) : list()
 	.["channels"] = list()
 	for (var/k in GLOB.radiochannels)
 		if (k == RADIO_CHANNEL_COMMON)
@@ -85,7 +85,7 @@
 		if ("set_charge")
 			var/newcharge = input("New charge (0-[borg.cell.maxcharge]):", borg.name, borg.cell.charge) as num|null
 			if (newcharge)
-				borg.cell.charge = CLAMP(newcharge, 0, borg.cell.maxcharge)
+				borg.cell.charge = clamp(newcharge, 0, borg.cell.maxcharge)
 				message_admins("[key_name_admin(user)] set the charge of [ADMIN_LOOKUPFLW(borg)] to [borg.cell.charge].")
 				log_admin("[key_name(user)] set the charge of [key_name(borg)] to [borg.cell.charge].")
 		if ("remove_cell")

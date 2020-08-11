@@ -3,7 +3,7 @@
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
-	species_traits = list(MUTCOLORS,EYECOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(TRAIT_ALWAYS_CLEAN)
 	inherent_factions = list("plants", "vines")
 	attack_verb = "slash"
@@ -11,10 +11,12 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.25
 	heatmod = 1.5
+	payday_modifier = 0.75
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_language_holder = /datum/language_holder/plant
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
@@ -58,3 +60,8 @@
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/projectile/energy/florayield)
 			H.set_nutrition(min(H.nutrition+30, NUTRITION_LEVEL_FULL))
+		if(/obj/projectile/energy/florarevolution)
+			H.show_message("<span class='notice'>The radiation beam leaves you feeling disoriented!</span>")
+			H.Dizzy(15)
+			H.emote("flip")
+			H.emote("spin")

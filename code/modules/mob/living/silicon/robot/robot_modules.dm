@@ -3,7 +3,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	w_class = WEIGHT_CLASS_GIGANTIC
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -13,6 +13,8 @@
 	var/list/modules = list() //holds all the usable modules
 	var/list/added_modules = list() //modules not inherient to the robot module, are kept when the module changes
 	var/list/storages = list()
+
+	var/list/radio_channels = list()
 
 	var/cyborg_base_icon = "robot" //produces the icon for the borg and, if no special_light_key is set, the lights
 	var/special_light_key //if we want specific lights, use this instead of copying lights in the dmi
@@ -70,7 +72,7 @@
 		if(!(m in R.held_items))
 			. += m
 
-/obj/item/robot_module/proc/get_or_create_estorage(var/storage_type)
+/obj/item/robot_module/proc/get_or_create_estorage(storage_type)
 	for(var/datum/robot_energy_storage/S in storages)
 		if(istype(S, storage_type))
 			return S
@@ -83,8 +85,8 @@
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
 			if(S.custom_materials && custom_materials.len)
-				if(S.custom_materials[getmaterialref(/datum/material/iron)])
-					S.cost = S.custom_materials[getmaterialref(/datum/material/iron)] * 0.25
+				if(S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+					S.cost = S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 
 		else if(istype(S, /obj/item/stack/sheet/glass))
@@ -113,7 +115,7 @@
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/pipe_cleaner)
 
 		if(S && S.source)
-			S.custom_materials = null
+			S.set_custom_materials(null)
 			S.is_cyborg = 1
 
 	if(I.loc != src)
@@ -159,7 +161,8 @@
 
 /obj/item/robot_module/proc/rebuild_modules() //builds the usable module list from the modules we have
 	var/mob/living/silicon/robot/R = loc
-	var/held_modules = R.held_items.Copy()
+	var/list/held_modules = R.held_items.Copy()
+	var/active_module = R.module_active
 	R.uneq_all()
 	modules = list()
 	for(var/obj/item/I in basic_modules)
@@ -171,7 +174,9 @@
 		add_module(I, FALSE, FALSE)
 	for(var/i in held_modules)
 		if(i)
-			R.activate_module(i)
+			R.equip_module_to_slot(i, held_modules.Find(i))
+	if(active_module)
+		R.select_module(held_modules.Find(active_module))
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 
@@ -184,6 +189,8 @@
 	R.module = RM
 	R.update_module_innate()
 	RM.rebuild_modules()
+	R.radio.recalculateChannels()
+
 	INVOKE_ASYNC(RM, .proc/do_transform_animation)
 	qdel(src)
 	return RM
@@ -211,7 +218,7 @@
 	flick("[cyborg_base_icon]_transform", R)
 	R.notransform = TRUE
 	R.SetLockdown(1)
-	R.anchored = TRUE
+	R.set_anchored(TRUE)
 	sleep(1)
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
@@ -219,13 +226,27 @@
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.setDir(SOUTH)
-	R.anchored = FALSE
+	R.set_anchored(FALSE)
 	R.notransform = FALSE
-	R.update_headlamp()
+	R.updatehealth()
+	R.update_headlamp(FALSE, BORG_LAMP_CD_RESET)
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 	SSblackbox.record_feedback("tally", "cyborg_modules", 1, R.module)
+
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  */
+/obj/item/robot_module/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
 
 /obj/item/robot_module/standard
 	name = "Standard"
@@ -265,12 +286,15 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
+		/obj/item/bonesetter,
 		/obj/item/extinguisher/mini,
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/stack/medical/bone_gel/cyborg,
 		/obj/item/organ_storage,
 		/obj/item/borg/lollipop)
+	radio_channels = list(RADIO_CHANNEL_MEDICAL)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
@@ -303,6 +327,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/stack/cable_coil/cyborg)
+	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
@@ -318,6 +343,7 @@
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/extinguisher/mini)
+	radio_channels = list(RADIO_CHANNEL_SECURITY)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
@@ -344,7 +370,7 @@
 	name = "Peacekeeper"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/cookiesynth,
+		/obj/item/rsf/cookiesynth,
 		/obj/item/harmalarm,
 		/obj/item/reagent_containers/borghypo/peace,
 		/obj/item/holosign_creator/cyborg,
@@ -379,6 +405,7 @@
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/holosign_creator/janibarrier,
 		/obj/item/reagent_containers/spray/cyborg_drying)
+	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
@@ -457,6 +484,7 @@
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
 		/obj/item/borg/apparatus/beaker/service)
+	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
 	moduleselect_icon = "service"
 	special_light_key = "service"
@@ -470,10 +498,15 @@
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sortList(list("Waitress", "Butler", "Tophat", "Kent", "Bro"))
-	if(!borg_icon)
-		return FALSE
-	switch(borg_icon)
+	var/list/service_icons = sortList(list(
+		"Waitress" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_f"),
+		"Butler" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_m"),
+		"Bro" = image(icon = 'icons/mob/robots.dmi', icon_state = "brobot"),
+		"Kent" = image(icon = 'icons/mob/robots.dmi', icon_state = "kent"),
+		"Tophat" = image(icon = 'icons/mob/robots.dmi', icon_state = "tophat")
+		))
+	var/service_robot_icon = show_radial_menu(R, R , service_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
+	switch(service_robot_icon)
 		if("Waitress")
 			cyborg_base_icon = "service_f"
 		if("Butler")
@@ -488,6 +521,8 @@
 			cyborg_base_icon = "tophat"
 			special_light_key = null
 			hat_offset = INFINITY //He is already wearing a hat
+		else
+			return FALSE
 	return ..()
 
 /obj/item/robot_module/miner
@@ -505,6 +540,7 @@
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
+	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
@@ -513,10 +549,13 @@
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sortList(list("Lavaland Miner", "Asteroid Miner", "Spider Miner"))
-	if(!borg_icon)
-		return FALSE
-	switch(borg_icon)
+	var/list/miner_icons = sortList(list(
+		"Lavaland Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "miner"),
+		"Asteroid Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "minerOLD"),
+		"Spider Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "spidermin")
+		))
+	var/miner_robot_icon = show_radial_menu(R, R , miner_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
+	switch(miner_robot_icon)
 		if("Lavaland Miner")
 			cyborg_base_icon = "miner"
 		if("Asteroid Miner")
@@ -524,6 +563,8 @@
 			special_light_key = "miner"
 		if("Spider Miner")
 			cyborg_base_icon = "spidermin"
+		else
+			return FALSE
 	return ..()
 
 /obj/item/robot_module/miner/rebuild_modules()
@@ -567,7 +608,7 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
-		/obj/item/twohanded/shockpaddles/syndicate/cyborg,
+		/obj/item/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/surgical_drapes,
 		/obj/item/retractor,
@@ -610,7 +651,7 @@
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/destTagger/borg,
+		/obj/item/dest_tagger/borg,
 		/obj/item/stack/cable_coil/cyborg,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
@@ -629,7 +670,7 @@
 	var/recharge_rate = 1000
 	var/energy
 
-/datum/robot_energy_storage/New(var/obj/item/robot_module/R = null)
+/datum/robot_energy_storage/New(obj/item/robot_module/R = null)
 	energy = max_energy
 	if(R)
 		R.storages |= src

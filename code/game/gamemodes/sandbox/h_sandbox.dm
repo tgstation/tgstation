@@ -1,7 +1,7 @@
 GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /mob/proc/CanBuild()
-	sandbox = new/datum/hSB
+	sandbox = new/datum/h_sandbox
 	sandbox.owner = src.ckey
 	if(src.client.holder)
 		sandbox.admin = 1
@@ -11,7 +11,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	if(sandbox)
 		sandbox.update()
 
-/datum/hSB
+/datum/h_sandbox
 	var/owner = null
 	var/admin = 0
 
@@ -24,10 +24,10 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	var/static/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
-		/obj/item/smallDelivery, /obj/projectile,
+		/obj/item/small_delivery, /obj/projectile,
 		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_module)
 
-/datum/hSB/proc/update()
+/datum/h_sandbox/proc/update()
 	var/static/list/hrefs = list(
 			"Space Gear",
 			"Suit Up (Space Travel Gear)"		= "hsbsuit",
@@ -37,6 +37,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			"Standard Tools",
 			"Spawn Flashlight"					= "hsbspawn&path=[/obj/item/flashlight]",
 			"Spawn Toolbox"						= "hsbspawn&path=[/obj/item/storage/toolbox/mechanical]",
+			"Spawn Experimental Welding tool"	= "hsbspawn&path=[/obj/item/weldingtool/experimental]",
 			"Spawn Light Replacer"				= "hsbspawn&path=[/obj/item/lightreplacer]",
 			"Spawn Medical Kit"					= "hsbspawn&path=[/obj/item/storage/firstaid/regular]",
 			"Spawn All-Access ID"				= "hsbaaid",
@@ -47,6 +48,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			"Spawn 50 Plasteel"					= "hsbplasteel",
 			"Spawn 50 Reinforced Glass"         = "hsbrglass",
 			"Spawn 50 Glass"					= "hsbglass",
+			"Spawn Box of Materials"			= "hsbspawn&path=[/obj/item/storage/box/material]",
 			"Spawn Full Cable Coil"				= "hsbspawn&path=[/obj/item/stack/cable_coil]",
 			"Spawn Hyper Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/hyper]",
 			"Spawn Inf. Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/infinite]",
@@ -56,7 +58,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			"Miscellaneous",
 			"Spawn Air Scrubber"				= "hsbscrubber",
-			"Spawn Welding Fuel Tank"			= "hsbspawn&path=[/obj/structure/reagent_dispensers/fueltank]",
+			"Spawn CentCom Technology Disk"		= "hsbspawn&path=[/obj/item/disk/tech_disk/debug]",
+			"Spawn Adminordrazine"				= "hsbspawn&path=[/obj/item/reagent_containers/pill/adminordrazine]",
 			"Spawn Water Tank"					= "hsbspawn&path=[/obj/structure/reagent_dispensers/watertank]",
 
 			"Bots",
@@ -96,7 +99,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 	usr << browse(hsbinfo, "window=hsbpanel")
 
-/datum/hSB/Topic(href, href_list)
+/datum/h_sandbox/Topic(href, href_list)
 	if(!usr || !src || !(src.owner == usr.ckey))
 		if(usr)
 			usr << browse(null,"window=sandbox")

@@ -6,7 +6,7 @@
 	var/power_efficiency = 1
 	var/power_usage = 100
 	var/panel_open = FALSE
-	var/list/required_parts = list(/obj/item/stock_parts/manipulator, 
+	var/list/required_parts = list(/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/capacitor)
 	var/obj/item/stock_parts/cell/power_cell
@@ -23,6 +23,10 @@
 		power_efficiency = C.rating
 	var/datum/component/riding/D = GetComponent(/datum/component/riding)
 	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
+
+
+/obj/vehicle/ridden/wheelchair/motorized/get_cell()
+	return power_cell
 
 /obj/vehicle/ridden/wheelchair/motorized/obj_destruction(damage_flag)
 	var/turf/T = get_turf(src)
@@ -42,7 +46,7 @@
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 			return FALSE
-		if(power_cell.charge < power_usage / max(power_efficiency, 1))			
+		if(power_cell.charge < power_usage / max(power_efficiency, 1))
 			to_chat(user, "<span class='warning'>The display on [src] blinks 'Out of Power'.</span>")
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
@@ -74,7 +78,7 @@
 		to_chat(user, "<span class='notice'>You remove the power cell from [src].</span>")
 		return
 	return ..()
-	
+
 /obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		I.play_tool_sound(src)
@@ -135,32 +139,32 @@
 	. += "Energy efficiency: [power_efficiency]"
 	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
 
-/obj/vehicle/ridden/wheelchair/motorized/Bump(atom/movable/M)
+/obj/vehicle/ridden/wheelchair/motorized/Bump(atom/A)
 	. = ..()
 	// Here is the shitty emag functionality.
-	if(obj_flags & EMAGGED && (istype(M, /turf/closed) || isliving(M)))
+	if(obj_flags & EMAGGED && (istype(A, /turf/closed) || isliving(A)))
 		explosion(src, -1, 1, 3, 2, 0)
 		visible_message("<span class='boldwarning'>[src] explodes!!</span>")
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
-	if(M.density && speed > delay_multiplier && has_buckled_mobs())
+	if(A.density && speed > delay_multiplier && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 2, 3)
 		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
-		if(isliving(M))
-			var/mob/living/D = M
+		if(isliving(A))
+			var/mob/living/D = A
 			throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
 			D.throw_at(throw_target, 2, 3)
 			D.Knockdown(80)
 			D.adjustStaminaLoss(35)
-			visible_message("<span class='danger'>[src] crashes into [M], sending [H] and [D] flying!</span>")
+			visible_message("<span class='danger'>[src] crashes into [A], sending [H] and [D] flying!</span>")
 		else
-			visible_message("<span class='danger'>[src] crashes into [M], sending [H] flying!</span>")
+			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		
+
 /obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user)
 	if((obj_flags & EMAGGED) || !panel_open)
 		return

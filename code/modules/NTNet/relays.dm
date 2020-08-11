@@ -9,8 +9,6 @@
 	icon_state = "bus"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ntnet_relay
-	ui_x = 500
-	ui_y = 300
 
 	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.
 	var/enabled = 1				// Set to 0 if the relay was turned off
@@ -27,7 +25,7 @@
 
 // TODO: Implement more logic here. For now it's only a placeholder.
 /obj/machinery/ntnet_relay/is_operational()
-	if(stat & (BROKEN | NOPOWER | EMPED))
+	if(machine_stat & (BROKEN | NOPOWER | EMPED))
 		return FALSE
 	if(dos_failure)
 		return FALSE
@@ -35,7 +33,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/ntnet_relay/update_icon()
+/obj/machinery/ntnet_relay/update_icon_state()
 	if(is_operational())
 		icon_state = "bus"
 	else
@@ -64,14 +62,11 @@
 		SSnetworks.station_network.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	..()
 
-/obj/machinery/ntnet_relay/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-
+/obj/machinery/ntnet_relay/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ntnet_relay", "NTNet Quantum Relay", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "NtnetRelay")
 		ui.open()
-
 
 /obj/machinery/ntnet_relay/ui_data(mob/user)
 	var/list/data = list()
@@ -80,7 +75,6 @@
 	data["dos_overload"] = dos_overload
 	data["dos_crashed"] = dos_failure
 	return data
-
 
 /obj/machinery/ntnet_relay/ui_act(action, params)
 	if(..())
@@ -91,10 +85,12 @@
 			dos_failure = 0
 			update_icon()
 			SSnetworks.station_network.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
+			return TRUE
 		if("toggle")
 			enabled = !enabled
 			SSnetworks.station_network.add_log("Quantum relay manually [enabled ? "enabled" : "disabled"].")
 			update_icon()
+			return TRUE
 
 /obj/machinery/ntnet_relay/Initialize()
 	uid = gl_uid++

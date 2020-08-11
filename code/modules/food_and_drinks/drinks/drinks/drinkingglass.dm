@@ -3,7 +3,6 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
 	desc = "Your standard drinking glass."
-	custom_price = 5
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
@@ -14,6 +13,7 @@
 	obj_flags = UNIQUE_RENAME
 	drop_sound = 'sound/items/handling/drinkglass_drop.ogg'
 	pickup_sound =  'sound/items/handling/drinkglass_pickup.ogg'
+	custom_price = 25
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(changetype)
 	cut_overlays()
@@ -43,13 +43,13 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
-	custom_price = 5
 	icon_state = "shotglass"
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
 	volume = 15
 	custom_materials = list(/datum/material/glass=100)
+	custom_price = 20
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
 	cut_overlays()
@@ -111,7 +111,7 @@
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 						"<span class='userdanger'>[user] splashes the contents of [src] onto you!</span>")
 		log_combat(user, target, "splashed", src)
-		reagents.reaction(target, TOUCH)
+		reagents.expose(target, TOUCH)
 		reagents.clear_reagents()
 		return
 	..()
@@ -124,6 +124,6 @@
 	else if(reagents.total_volume && user.a_intent == INTENT_HARM)
 		user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 							"<span class='notice'>You splash the contents of [src] onto [target].</span>")
-		reagents.reaction(target, TOUCH)
+		reagents.expose(target, TOUCH)
 		reagents.clear_reagents()
 		return

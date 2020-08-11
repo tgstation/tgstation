@@ -23,6 +23,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/computer/slot_machine
+	light_color = LIGHT_COLOR_BROWN
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = 0
@@ -34,7 +35,6 @@
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
-	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/slot_machine/Initialize()
 	. = ..()
@@ -50,8 +50,9 @@
 	toggle_reel_spin(0)
 
 	for(cointype in typesof(/obj/item/coin))
-		var/obj/item/coin/C = cointype
-		coinvalues["[cointype]"] = initial(C.value)
+		var/obj/item/coin/C = new cointype
+		coinvalues["[cointype]"] = C.get_item_credit_value()
+		qdel(C) //Sigh
 
 /obj/machinery/computer/slot_machine/Destroy()
 	if(balance)
@@ -66,10 +67,10 @@
 	money++ //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon_state()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		icon_state = "slots0"
 
-	else if(stat & BROKEN)
+	else if(machine_stat & BROKEN)
 		icon_state = "slotsb"
 
 	else if(working)
@@ -177,7 +178,7 @@
 
 /obj/machinery/computer/slot_machine/emp_act(severity)
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	if(prob(15 * severity))
 		return
@@ -227,9 +228,9 @@
 	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		to_chat(user, "<span class='warning'>The slot machine has no power!</span>")
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		to_chat(user, "<span class='warning'>The slot machine is broken!</span>")
 	if(working)
 		to_chat(user, "<span class='warning'>You need to wait until the machine stops spinning before you can play again!</span>")
@@ -334,7 +335,8 @@
 			H.throw_at(target, 3, 10)
 	else
 		var/value = coinvalues["[cointype]"]
-
+		if(value <= 0)
+			CRASH("Coin value of zero, refusing to payout in dispenser")
 		while(amount >= value)
 			var/obj/item/coin/C = new cointype(loc) //DOUBLE THE PAIN
 			amount -= value

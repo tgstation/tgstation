@@ -21,6 +21,8 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
+			if(M == src && check_self_for_injuries())
+				return
 			set_resting(FALSE)
 			AdjustStun(-60)
 			AdjustKnockdown(-60)
@@ -107,6 +109,9 @@ In all, this is a lot like the monkey code. /N
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
+	if(QDELETED(src))
+		return
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			gib()
@@ -114,13 +119,15 @@ In all, this is a lot like the monkey code. /N
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
-			adjustEarDamage(30,120)
+			if(ears)
+				ears.adjustEarDamage(30,120)
 
 		if(EXPLODE_LIGHT)
 			take_overall_damage(30,0)
 			if(prob(50))
 				Unconscious(20)
-			adjustEarDamage(15,60)
+			if(ears)
+				ears.adjustEarDamage(15,60)
 
 /mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	return 0

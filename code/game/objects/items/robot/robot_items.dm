@@ -25,8 +25,8 @@
 	M.Paralyze(100)
 	M.apply_effect(EFFECT_STUTTER, 5)
 
-	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
-					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
+	M.visible_message("<span class='danger'>[user] prods [M] with [src]!</span>", \
+					"<span class='userdanger'>[user] prods you with [src]!</span>")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
@@ -70,6 +70,9 @@
 	switch(mode)
 		if(0)
 			if(M.health >= 0)
+				if(isanimal(M))
+					M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+					return
 				if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
 									"<span class='notice'>You playfully boop [M] on the head!</span>")
@@ -154,11 +157,7 @@
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
 
-/obj/item/borg/charger/Initialize()
-	. = ..()
-
-/obj/item/borg/charger/update_icon()
-	..()
+/obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
 
 /obj/item/borg/charger/attack_self(mob/user)
@@ -176,7 +175,7 @@
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
 			var/obj/machinery/M = target
-			if((M.stat & (NOPOWER|BROKEN)) || !M.anchored)
+			if((M.machine_stat & (NOPOWER|BROKEN)) || !M.anchored)
 				to_chat(user, "<span class='warning'>[M] is unpowered!</span>")
 				return
 
@@ -185,7 +184,7 @@
 				if(!user || !user.cell || mode != "draw")
 					return
 
-				if((M.stat & (NOPOWER|BROKEN)) || !M.anchored)
+				if((M.machine_stat & (NOPOWER|BROKEN)) || !M.anchored)
 					break
 
 				if(!user.cell.give(150))
@@ -307,11 +306,11 @@
 			"<span class='danger'>The siren pierces your hearing!</span>")
 		for(var/mob/living/carbon/M in get_hearers_in_view(9, user))
 			if(M.get_ear_protection() == FALSE)
-				M.confused += 6
+				M.add_confusion(6)
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
-		log_game("[key_name(user)] used a Cyborg Harm Alarm in [AREACOORD(user)]")
+		user.log_message("used a Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
 		if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			to_chat(R.connected_ai, "<br><span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span><br>")
@@ -324,17 +323,17 @@
 			var/bang_effect = C.soundbang_act(2, 0, 0, 5)
 			switch(bang_effect)
 				if(1)
-					C.confused += 5
+					C.add_confusion(5)
 					C.stuttering += 10
 					C.Jitter(10)
 				if(2)
 					C.Paralyze(40)
-					C.confused += 10
+					C.add_confusion(10)
 					C.stuttering += 15
 					C.Jitter(25)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
-		log_game("[key_name(user)] used an emagged Cyborg Harm Alarm in [AREACOORD(user)]")
+		user.log_message("used an emagged Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
 
 #define DISPENSE_LOLLIPOP_MODE 1
 #define THROW_LOLLIPOP_MODE 2
@@ -353,11 +352,8 @@
 
 	var/firedelay = 0
 	var/hitspeed = 2
-	var/hitdamage = 0
-	var/emaggedhitdamage = 3
 
 /obj/item/borg/lollipop/clown
-	emaggedhitdamage = 0
 
 /obj/item/borg/lollipop/equipped()
 	. = ..()
@@ -394,7 +390,7 @@
 	var/obj/item/reagent_containers/food/snacks/L
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
-			L = new /obj/item/reagent_containers/food/snacks/lollipop(T)
+			L = new /obj/item/reagent_containers/food/snacks/chewable/lollipop(T)
 		if(DISPENSE_ICECREAM_MODE)
 			L = new /obj/item/reagent_containers/food/snacks/icecream(T)
 			var/obj/item/reagent_containers/food/snacks/icecream/I = L
@@ -422,11 +418,14 @@
 		to_chat(user, "<span class='warning'>Not enough lollipops left!</span>")
 		return FALSE
 	candy--
-	var/obj/item/ammo_casing/caseless/lollipop/A = new /obj/item/ammo_casing/caseless/lollipop(src)
-	A.BB.damage = hitdamage
-	if(hitdamage)
-		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+
+	var/obj/item/ammo_casing/caseless/lollipop/A
+	var/mob/living/silicon/robot/R = user
+	if(istype(R) && R.emagged)
+		A = new /obj/item/ammo_casing/caseless/lollipop/harmful(src)
+	else
+		A = new /obj/item/ammo_casing/caseless/lollipop(src)
+
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
@@ -437,11 +436,13 @@
 		to_chat(user, "<span class='warning'>Not enough gumballs left!</span>")
 		return FALSE
 	candy--
-	var/obj/item/ammo_casing/caseless/gumball/A = new /obj/item/ammo_casing/caseless/gumball(src)
-	A.BB.damage = hitdamage
-	if(hitdamage)
-		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+	var/obj/item/ammo_casing/caseless/gumball/A
+	var/mob/living/silicon/robot/R = user
+	if(istype(R) && R.emagged)
+		A = new /obj/item/ammo_casing/caseless/gumball/harmful(src)
+	else
+		A = new /obj/item/ammo_casing/caseless/gumball(src)
+
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
@@ -456,8 +457,6 @@
 		if(!R.cell.use(12))
 			to_chat(user, "<span class='warning'>Not enough power.</span>")
 			return FALSE
-		if(R.emagged)
-			hitdamage = emaggedhitdamage
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE, DISPENSE_ICECREAM_MODE)
 			if(!proximity)
@@ -467,7 +466,6 @@
 			shootL(target, user, click_params)
 		if(THROW_GUMBALL_MODE)
 			shootG(target, user, click_params)
-	hitdamage = initial(hitdamage)
 
 /obj/item/borg/lollipop/attack_self(mob/living/user)
 	switch(mode)
@@ -496,18 +494,27 @@
 	projectile_type = /obj/projectile/bullet/reusable/gumball
 	click_cooldown_override = 2
 
+/obj/item/ammo_casing/caseless/gumball/harmful
+	projectile_type = /obj/projectile/bullet/reusable/gumball/harmful
 
 /obj/projectile/bullet/reusable/gumball
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/reagent_containers/food/snacks/gumball/cyborg
+	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
 	nodamage = TRUE
+	damage = 0
+	speed = 0.5
+
+/obj/projectile/bullet/reusable/gumball/harmful
+	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
+	nodamage = FALSE
+	damage = 3
 
 /obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
+		var/obj/item/reagent_containers/food/snacks/chewable/gumball/S = new ammo_type(T)
 		S.color = color
 		dropped = TRUE
 
@@ -517,17 +524,30 @@
 	projectile_type = /obj/projectile/bullet/reusable/lollipop
 	click_cooldown_override = 2
 
+// rejected name: DumDum lollipop (get it, cause it embeds?)
+/obj/item/ammo_casing/caseless/lollipop/harmful
+	projectile_type = /obj/projectile/bullet/reusable/lollipop/harmful
+
 /obj/projectile/bullet/reusable/lollipop
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
-	ammo_type = /obj/item/reagent_containers/food/snacks/lollipop/cyborg
-	var/color2 = rgb(0, 0, 0)
+	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg
+	embedding = null
 	nodamage = TRUE
+	damage = 0
+	speed = 0.5
+	var/color2 = rgb(0, 0, 0)
+
+/obj/projectile/bullet/reusable/lollipop/harmful
+	embedding = list(embed_chance=35, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
+	damage = 3
+	nodamage = FALSE
+	embed_falloff_tile = 0
 
 /obj/projectile/bullet/reusable/lollipop/Initialize()
 	. = ..()
-	var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
+	var/obj/item/reagent_containers/food/snacks/chewable/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
 	var/mutable_appearance/head = mutable_appearance('icons/obj/projectiles.dmi', "lollipop_2")
 	head.color = color2
@@ -536,7 +556,7 @@
 /obj/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
+		var/obj/item/reagent_containers/food/snacks/chewable/lollipop/S = new ammo_type(T)
 		S.change_head_color(color2)
 		dropped = TRUE
 
@@ -597,7 +617,7 @@
 	update_icon()
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] [src].</span>")
 
-/obj/item/borg/projectile_dampen/update_icon()
+/obj/item/borg/projectile_dampen/update_icon_state()
 	icon_state = "[initial(icon_state)][active]"
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
@@ -636,6 +656,10 @@
 	. = ..()
 	host = loc
 
+/obj/item/borg/projectile_dampen/cyborg_unequip(mob/user)
+	deactivate_field()
+	. = ..()
+
 /obj/item/borg/projectile_dampen/on_mob_death()
 	deactivate_field()
 	. = ..()
@@ -657,7 +681,7 @@
 			continue
 		usage += projectile_tick_speed_ecost
 		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)
-	energy = CLAMP(energy - usage, 0, maxenergy)
+	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
 		visible_message("<span class='warning'>[src] blinks \"ENERGY DEPLETED\".</span>")
@@ -667,7 +691,7 @@
 		if(iscyborg(host.loc))
 			host = host.loc
 		else
-			energy = CLAMP(energy + energy_recharge, 0, maxenergy)
+			energy = clamp(energy + energy_recharge, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
@@ -853,23 +877,22 @@
 		else
 			. += "Nothing."
 
-/obj/item/borg/apparatus/beaker/update_icon()
-	cut_overlays()
+/obj/item/borg/apparatus/beaker/update_overlays()
+	. = ..()
+	var/mutable_appearance/arm = mutable_appearance(icon = icon, icon_state = "borg_beaker_apparatus_arm")
 	if(stored)
 		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = 0
 		stored.pixel_y = 0
-		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
-		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
 			arm.pixel_y = arm.pixel_y - 3
-		img.plane = FLOAT_PLANE
-		add_overlay(img)
-		add_overlay(arm)
+		stored_copy.layer = FLOAT_LAYER
+		stored_copy.plane = FLOAT_PLANE
+		. += stored_copy
 	else
-		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
 		arm.pixel_y = arm.pixel_y - 5
-		add_overlay(arm)
+	. += arm
 
 /obj/item/borg/apparatus/beaker/attack_self(mob/living/silicon/robot/user)
 	if(stored && !user.client?.keys_held["Alt"] && user.a_intent != "help")
@@ -882,7 +905,7 @@
 /obj/item/borg/apparatus/beaker/extra
 	name = "secondary beaker storage apparatus"
 	desc = "A supplementary beaker storage apparatus."
-	
+
 /obj/item/borg/apparatus/beaker/service
 	name = "beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
@@ -911,24 +934,20 @@
 	. = ..()
 	update_icon()
 
-/obj/item/borg/apparatus/circuit/update_icon()
-	cut_overlays()
+/obj/item/borg/apparatus/circuit/update_overlays()
+	. = ..()
+	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
 		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = -3
 		stored.pixel_y = 0
-		var/image/arm
-		if(istype(stored, /obj/item/circuitboard))
-			arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
-		else
-			arm = image("icon"="borg_hardware_apparatus_arm2", "layer"=FLOAT_LAYER)
-		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
-		img.plane = FLOAT_PLANE
-		add_overlay(arm)
-		add_overlay(img)
-	else
-		var/image/arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
-		add_overlay(arm)
+		if(!istype(stored, /obj/item/circuitboard))
+			arm.icon_state = "borg_hardware_apparatus_arm2"
+		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
+		stored_copy.layer = FLOAT_LAYER
+		stored_copy.plane = FLOAT_PLANE
+		. += stored_copy
+	. += arm
 
 /obj/item/borg/apparatus/circuit/examine()
 	. = ..()
@@ -937,5 +956,5 @@
 
 /obj/item/borg/apparatus/circuit/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	if(istype(A, /obj/item/aiModule) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
+	if(istype(A, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, "<span class='warning'>This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up.</span>")

@@ -420,7 +420,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aM" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/item/radio/intercom{
@@ -446,7 +446,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aP" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/item/radio/intercom{
@@ -948,7 +948,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ca" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
@@ -974,7 +974,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
@@ -1251,23 +1251,23 @@
 /obj/structure/closet/crate/freezer,
 /obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood,
-/obj/item/reagent_containers/blood/AMinus,
-/obj/item/reagent_containers/blood/BMinus{
+/obj/item/reagent_containers/blood/a_minus,
+/obj/item/reagent_containers/blood/b_minus{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/blood/BPlus{
+/obj/item/reagent_containers/blood/b_plus{
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OPlus{
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_plus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/APlus,
+/obj/item/reagent_containers/blood/a_plus,
 /obj/item/reagent_containers/blood/random,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -1499,7 +1499,7 @@
 /area/shuttle/escape)
 "cX" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},

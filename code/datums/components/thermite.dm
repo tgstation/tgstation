@@ -52,13 +52,13 @@
 	master.cut_overlay(overlay)
 	return ..()
 
-/datum/component/thermite/InheritComponent(datum/component/thermite/newC, i_am_original, list/arguments)
+/datum/component/thermite/InheritComponent(datum/component/thermite/newC, i_am_original, _amount)
 	if(!i_am_original)
 		return
 	if(newC)
 		amount += newC.amount
 	else
-		amount += arguments[1]
+		amount += _amount
 
 /datum/component/thermite/proc/thermite_melt(mob/user)
 	var/turf/master = parent
@@ -68,7 +68,7 @@
 	addtimer(CALLBACK(src, .proc/burn_parent, fakefire, user), min(amount * 0.35 SECONDS, 20 SECONDS))
 	UnregisterFromParent()
 
-/datum/component/thermite/proc/burn_parent(var/datum/fakefire, mob/user)
+/datum/component/thermite/proc/burn_parent(datum/fakefire, mob/user)
 	var/turf/master = parent
 	if(!QDELETED(fakefire))
 		qdel(fakefire)
@@ -82,6 +82,7 @@
 /datum/component/thermite/proc/clean_react(datum/source, strength)
 	//Thermite is just some loose powder, you could probably clean it with your hands. << todo?
 	qdel(src)
+	return TRUE
 
 /datum/component/thermite/proc/flame_react(datum/source, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 1922) // This is roughly the real life requirement to ignite thermite

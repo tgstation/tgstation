@@ -25,7 +25,7 @@
 	if(owner_overmind)
 		overmind = owner_overmind
 		var/area/Ablob = get_area(src)
-		if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+		if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
 			overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
@@ -50,7 +50,7 @@
 /obj/structure/blob/blob_act()
 	return
 
-/obj/structure/blob/Adjacent(var/atom/neighbour)
+/obj/structure/blob/Adjacent(atom/neighbour)
 	. = ..()
 	if(.)
 		var/result = 0
@@ -67,17 +67,17 @@
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSBLOB))
-		return 1
-	return 0
+/obj/structure/blob/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(!(mover.pass_flags & PASSBLOB))
+		return FALSE
 
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
 
 /obj/structure/blob/CanAStarPass(ID, dir, caller)
 	. = 0
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSBLOB)
 
@@ -207,8 +207,8 @@
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
-/obj/structure/blob/tesla_act(power)
-	..()
+/obj/structure/blob/zap_act(power)
+	. = ..()
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
 			take_damage(power/400, BURN, "energy")

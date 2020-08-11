@@ -8,8 +8,6 @@ GLOBAL_LIST(labor_sheet_values)
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
-	ui_x = 450
-	ui_y = 475
 
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
@@ -35,11 +33,10 @@ GLOBAL_LIST(labor_sheet_values)
 /proc/cmp_sheet_list(list/a, list/b)
 	return a["value"] - b["value"]
 
-/obj/machinery/mineral/labor_claim_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/mineral/labor_claim_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "labor_claim_console", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "LaborClaimConsole", name)
 		ui.open()
 
 /obj/machinery/mineral/labor_claim_console/ui_data(mob/user)
@@ -50,7 +47,6 @@ GLOBAL_LIST(labor_sheet_values)
 	if(obj_flags & EMAGGED)
 		can_go_home = TRUE
 
-	data["status_info"] = "No Prisoner ID detected."
 	var/obj/item/card/id/I = user.get_idcard(TRUE)
 	if(istype(I, /obj/item/card/id/prisoner))
 		var/obj/item/card/id/prisoner/P = I
@@ -60,6 +56,9 @@ GLOBAL_LIST(labor_sheet_values)
 			data["status_info"] = "Goal met!"
 		else
 			data["status_info"] = "You are [(P.goal - P.points)] points away."
+	else
+		data["status_info"] = "No Prisoner ID detected."
+		data["id_points"] = 0
 
 	if(stacking_machine)
 		data["unclaimed_points"] = stacking_machine.points
@@ -81,6 +80,7 @@ GLOBAL_LIST(labor_sheet_values)
 				P.points += stacking_machine.points
 				stacking_machine.points = 0
 				to_chat(usr, "<span class='notice'>Points transferred.</span>")
+				. = TRUE
 			else
 				to_chat(usr, "<span class='alert'>No valid id for point transfer detected.</span>")
 		if("move_shuttle")
@@ -99,6 +99,7 @@ GLOBAL_LIST(labor_sheet_values)
 							Radio.set_frequency(FREQ_SECURITY)
 							Radio.talk_into(src, "A prisoner has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
 						to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
+						. = TRUE
 
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
 	stacking_machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
@@ -139,7 +140,7 @@ GLOBAL_LIST(labor_sheet_values)
 
 /obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
 	. = ..()
-	if(.)
+	if(. || user.is_blind())
 		return
 	user.examinate(src)
 

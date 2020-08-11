@@ -9,17 +9,22 @@
 	anchored = FALSE
 	density = FALSE
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	level = 2
 	max_integrity = 200
 	var/obj/pipe_type = /obj/structure/disposalpipe/segment
 	var/pipename
+
+/obj/structure/disposalconstruct/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	density = anchorvalue ? initial(pipe_type.density) : FALSE
 
 /obj/structure/disposalconstruct/Initialize(loc, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
 	. = ..()
 	if(make_from)
 		pipe_type = make_from.type
 		setDir(make_from.dir)
-		anchored = TRUE
+		set_anchored(TRUE)
 
 	else
 		if(_pipe_type)
@@ -34,6 +39,8 @@
 
 	update_icon()
 
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+
 /obj/structure/disposalconstruct/Move()
 	var/old_dir = dir
 	..()
@@ -45,10 +52,8 @@
 	if(is_pipe())
 		icon_state = "con[icon_state]"
 		if(anchored)
-			level = initial(pipe_type.level)
 			layer = initial(pipe_type.layer)
 		else
-			level = initial(level)
 			layer = initial(layer)
 
 	else if(ispath(pipe_type, /obj/machinery/disposal/bin))
@@ -57,13 +62,6 @@
 			icon_state = "disposal"
 		else
 			icon_state = "condisposal"
-
-
-// hide called by levelupdate if turf intact status changes
-// change visibility status and force update of icon
-/obj/structure/disposalconstruct/hide(var/intact)
-	invisibility = (intact && level==1) ? INVISIBILITY_MAXIMUM: 0	// hide if floor is intact
-	update_icon()
 
 /obj/structure/disposalconstruct/proc/get_disposal_dir()
 	if(!is_pipe())
@@ -112,8 +110,7 @@
 /obj/structure/disposalconstruct/wrench_act(mob/living/user, obj/item/I)
 	..()
 	if(anchored)
-		anchored = FALSE
-		density = FALSE
+		set_anchored(FALSE)
 		to_chat(user, "<span class='notice'>You detach the [pipename] from the underfloor.</span>")
 	else
 		var/ispipe = is_pipe() // Indicates if we should change the level of this pipe
@@ -148,8 +145,7 @@
 				to_chat(user, "<span class='warning'>The [pipename] requires a trunk underneath it in order to work!</span>")
 				return TRUE
 
-		anchored = TRUE
-		density = initial(pipe_type.density)
+		set_anchored(TRUE)
 		to_chat(user, "<span class='notice'>You attach the [pipename] to the underfloor.</span>")
 	I.play_tool_sound(src, 100)
 	update_icon()

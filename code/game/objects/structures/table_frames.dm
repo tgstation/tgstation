@@ -13,7 +13,7 @@
 	name = "table frame"
 	desc = "Four metal legs with four framing rods for a table. You could easily pass through this."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "table_frame"
+	icon_state = "nu_table_frame"
 	density = FALSE
 	anchored = FALSE
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -31,7 +31,7 @@
 		return
 
 	var/obj/item/stack/material = I
-	if (istype(I, /obj/item/stack))
+	if (istype(material))
 		if(material?.tableVariant)
 			if(material.get_amount() < 1)
 				to_chat(user, "<span class='warning'>You need one [material.name] sheet to do this!</span>")
@@ -39,9 +39,9 @@
 			to_chat(user, "<span class='notice'>You start adding [material] to [src]...</span>")
 			if(do_after(user, 20, target = src) && material.use(1))
 				make_new_table(material.tableVariant)
-		else
+		else if(istype(material, /obj/item/stack/sheet))
 			if(material.get_amount() < 1)
-				to_chat(user, "<span class='warning'>You need one metal sheet to do this!</span>")
+				to_chat(user, "<span class='warning'>You need one sheet to do this!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start adding [material] to [src]...</span>")
 			if(do_after(user, 20, target = src) && material.use(1))
@@ -76,7 +76,7 @@
 /obj/structure/table_frame/wood
 	name = "wooden table frame"
 	desc = "Four wooden legs with four framing wooden rods for a wooden table. You could easily pass through this."
-	icon_state = "wood_frame"
+	icon_state = "nu_wood_frame"
 	framestack = /obj/item/stack/sheet/mineral/wood
 	framestackamount = 2
 	resistance_flags = FLAMMABLE

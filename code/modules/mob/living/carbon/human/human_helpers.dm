@@ -175,3 +175,92 @@
 		return TRUE
 	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
 		return TRUE
+
+/// When we're joining the game in [/mob/dead/new_player/proc/create_character], we increment our scar slot then store the slot in our mind datum.
+/mob/living/carbon/human/proc/increment_scar_slot()
+	var/check_ckey = ckey || client?.ckey
+	if(!check_ckey || !mind || !client?.prefs.persistent_scars)
+		return
+
+	var/path = "data/player_saves/[check_ckey[1]]/[check_ckey]/scars.sav"
+	var/index = mind.current_scar_slot
+	if (!index)
+		if(fexists(path))
+			var/savefile/F = new /savefile(path)
+			index = F["current_index"] || 1
+		else
+			index = 1
+
+	mind.current_scar_slot = (index % PERSISTENT_SCAR_SLOTS) + 1 || 1
+
+/// For use formatting all of the scars this human has for saving for persistent scarring, returns a string with all current scars/missing limb amputation scars for saving or loading purposes
+/mob/living/carbon/human/proc/format_scars()
+	var/list/missing_bodyparts = get_missing_limbs()
+	if(!all_scars && !length(missing_bodyparts))
+		return
+	var/scars = ""
+	for(var/i in missing_bodyparts)
+		var/datum/scar/scaries = new
+		scars += "[scaries.format_amputated(i)]"
+	for(var/i in all_scars)
+		var/datum/scar/scaries = i
+		scars += "[scaries.format()];"
+	return scars
+
+/// Takes a single scar from the persistent scar loader and recreates it from the saved data
+/mob/living/carbon/human/proc/load_scar(scar_line)
+	var/list/scar_data = splittext(scar_line, "|")
+	if(LAZYLEN(scar_data) != SCAR_SAVE_LENGTH)
+		return // invalid, should delete
+	var/version = text2num(scar_data[SCAR_SAVE_VERS])
+	if(!version || version < SCAR_CURRENT_VERSION) // get rid of old scars
+		return
+	var/obj/item/bodypart/the_part = get_bodypart("[scar_data[SCAR_SAVE_ZONE]]")
+	var/datum/scar/scaries = new
+	return scaries.load(the_part, scar_data[SCAR_SAVE_VERS], scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]), text2num(scar_data[SCAR_SAVE_BIOLOGY]))
+
+/// Read all the scars we have at the designated slot, verify they're good (or dump them if they're old/wrong format), create them on the user, and write the scars that passed muster back to the file
+/mob/living/carbon/human/proc/load_persistent_scars()
+	if(!ckey || !mind || !client?.prefs.persistent_scars)
+		return
+
+	var/path = "data/player_saves/[ckey[1]]/[ckey]/scars.sav"
+	if (!fexists(path))
+		return FALSE
+	var/savefile/F = new /savefile(path)
+	if(!F)
+		return
+
+	var/index = mind.current_scar_slot || F["current_index"] || 1
+
+	var/scar_string = F["scar[index]"]
+	var/valid_scars = ""
+	for(var/scar_line in splittext(sanitize_text(scar_string), ";"))
+		if(load_scar(scar_line))
+			valid_scars += "[scar_line];"
+
+	WRITE_FILE(F["scar[index]"], sanitize_text(valid_scars))
+
+/// Save any scars we have to our designated slot, then write our current slot so that the next time we call [/mob/living/carbon/human/proc/increment_scar_slot] (the next round we join), we'll be there
+/mob/living/carbon/human/proc/save_persistent_scars(nuke=FALSE)
+	if(!ckey || !mind || !client?.prefs.persistent_scars)
+		return
+
+	var/path = "data/player_saves/[ckey[1]]/[ckey]/scars.sav"
+	var/savefile/F = new /savefile(path)
+	var/index = mind.current_scar_slot || F["current_index"] || 1
+
+	if(nuke)
+		WRITE_FILE(F["scar[index]"], "")
+		return
+
+	for(var/k in all_wounds)
+		var/datum/wound/iter_wound = k
+		iter_wound.remove_wound() // so we can get the scars for open wounds
+
+	var/valid_scars = format_scars()
+	WRITE_FILE(F["scar[index]"], sanitize_text(valid_scars))
+	WRITE_FILE(F["current_index"], sanitize_integer(index))
+
+/mob/living/carbon/human/get_biological_state()
+	return dna.species.get_biological_state()

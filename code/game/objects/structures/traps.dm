@@ -39,7 +39,7 @@
 	. = ..()
 	if(!isliving(user))
 		return
-	if(user.mind && user.mind in immune_minds)
+	if(user.mind && (user.mind in immune_minds))
 		return
 	if(get_dist(user, src) <= 1)
 		. += "<span class='notice'>You reveal [src]!</span>"
@@ -61,6 +61,7 @@
 		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
 /obj/structure/trap/Crossed(atom/movable/AM)
+	. = ..()
 	if(last_trigger + time_between_triggers > world.time)
 		return
 	// Don't want the traps triggered by sparks, ghosts or projectiles.

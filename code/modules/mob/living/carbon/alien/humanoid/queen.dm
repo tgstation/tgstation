@@ -3,7 +3,6 @@
 	icon = 'icons/mob/alienqueen.dmi'
 	status_flags = 0
 	ventcrawler = VENTCRAWLER_NONE //pull over that ass too fat
-	unique_name = 0
 	pixel_x = -16
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
@@ -66,7 +65,7 @@
 		to_chat(user, "<span class='alertalien'>There's already an egg here.</span>")
 		return FALSE
 
-	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
+	user.visible_message("<span class='alertalien'>[user] lays an egg!</span>")
 	new /obj/structure/alien/egg(user.loc)
 	return TRUE
 

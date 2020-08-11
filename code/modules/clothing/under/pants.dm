@@ -3,9 +3,9 @@
 	body_parts_covered = GROIN|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
-	custom_price = 20
+	custom_price = 60
 	icon = 'icons/obj/clothing/under/shorts_pants.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
+	worn_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
 
 /obj/item/clothing/under/pants/classicjeans
 	name = "classic jeans"
@@ -16,7 +16,7 @@
 	name = "Must Hang jeans"
 	desc = "Made in the finest space jeans factory this side of Alpha Centauri."
 	icon_state = "jeansmustang"
-	custom_price = 75
+	custom_price = 180
 
 /obj/item/clothing/under/pants/blackjeans
 	name = "black jeans"

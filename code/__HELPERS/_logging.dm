@@ -1,10 +1,14 @@
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B
+#define DIRECT_INPUT(A, B) A >> B
 #define SEND_IMAGE(target, image) DIRECT_OUTPUT(target, image)
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
-#define WRITE_LOG(log, text) rustg_log_write(log, text)
+#define READ_FILE(file, text) DIRECT_INPUT(file, text)
+//This is an external call, "true" and "false" are how rust parses out booleans
+#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
@@ -88,6 +92,14 @@
 	if (CONFIG_GET(flag/log_attack))
 		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
 
+/proc/log_wounded(text)
+	if (CONFIG_GET(flag/log_attack))
+		WRITE_LOG(GLOB.world_attack_log, "WOUND: [text]")
+
+/proc/log_econ(text)
+	if (CONFIG_GET(flag/log_econ))
+		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
+
 /proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
 		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
@@ -148,6 +160,9 @@
 	if (CONFIG_GET(flag/log_vote))
 		WRITE_LOG(GLOB.world_game_log, "VOTE: [text]")
 
+/proc/log_shuttle(text)
+	if (CONFIG_GET(flag/log_shuttle))
+		WRITE_LOG(GLOB.world_shuttle_log, "SHUTTLE: [text]")
 
 /proc/log_topic(text)
 	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
@@ -187,10 +202,19 @@
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, text)
 
-/* ui logging */ 
- 
-/proc/log_tgui(text)
-	WRITE_LOG(GLOB.tgui_log, text)
+/* ui logging */
+/proc/log_tgui(user_or_client, text)
+	var/entry = ""
+	if(!user_or_client)
+		entry += "no user"
+	else if(istype(user_or_client, /mob))
+		var/mob/user = user_or_client
+		entry += "[user.ckey] (as [user])"
+	else if(istype(user_or_client, /client))
+		var/client/client = user_or_client
+		entry += "[client.ckey]"
+	entry += ":\n[text]"
+	WRITE_LOG(GLOB.tgui_log, entry)
 
 /* For logging round startup. */
 /proc/start_log(log)

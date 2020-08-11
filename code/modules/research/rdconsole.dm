@@ -28,7 +28,7 @@ Nothing else in the console has ID requirements.
 	var/obj/machinery/rnd/production/protolathe/linked_lathe				//Linked Protolathe
 	var/obj/machinery/rnd/production/circuit_imprinter/linked_imprinter	//Linked Circuit Imprinter
 
-	req_access = list(ACCESS_TOX)	//lA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
+	req_access = list(ACCESS_RND)	//lA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
 
 	//UI VARS
 	var/screen = RDSCREEN_MENU
@@ -674,7 +674,7 @@ Nothing else in the console has ID requirements.
 		for(var/v in stored_research.researched_nodes)
 			res += SSresearch.techweb_node_by_id(v)
 		for(var/v in stored_research.available_nodes)
-			if(stored_research.researched_nodes[v])
+			if(stored_research.researched_nodes[v] || stored_research.hidden_nodes[v])
 				continue
 			avail += SSresearch.techweb_node_by_id(v)
 		for(var/v in stored_research.visible_nodes)
@@ -847,11 +847,12 @@ Nothing else in the console has ID requirements.
 				ui += ui_settings()
 			if(RDSCREEN_DEVICE_LINKING)
 				ui += ui_device_linking()
+
 	for(var/i in 1 to length(ui))
 		if(!findtextEx(ui[i], RDSCREEN_NOBREAK))
 			ui[i] += "<br>"
-		ui[i] = replacetextEx(ui[i], RDSCREEN_NOBREAK, "")
-	return ui.Join("")
+	. = ui.Join("")
+	return replacetextEx(., RDSCREEN_NOBREAK, "")
 
 /obj/machinery/computer/rdconsole/Topic(raw, ls)
 	if(..())

@@ -79,6 +79,7 @@
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
 	message_simple =  "stops moving..."
+	cooldown = (15 SECONDS)
 	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params, type_override, intentional)
@@ -87,6 +88,7 @@
 		message_simple = S.deathmessage
 	. = ..()
 	message_simple = initial(message_simple)
+
 	if(. && user.deathsound)
 		if(isliving(user))
 			var/mob/living/L = user
@@ -400,6 +402,12 @@
 	message = "yawns."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/gurgle
+	key = "gurgle"
+	key_third_person = "gurgles"
+	message = "makes an uncomfortable gurgle."
+	emote_type = EMOTE_AUDIBLE
+
 /datum/emote/living/custom
 	key = "me"
 	key_third_person = "custom"
@@ -409,17 +417,11 @@
 	. = ..() && intentional
 
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
-	. = TRUE
-	if(copytext(input,1,5) == "says")
+	var/static/regex/stop_bad_mime = regex(@"says|exclaims|yells|asks")
+	if(stop_bad_mime.Find(input, 1, 1))
 		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,9) == "exclaims")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,6) == "yells")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,5) == "asks")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else
-		. = FALSE
+		return TRUE
+	return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
 	if(!can_run_emote(user, TRUE, intentional))
@@ -491,35 +493,6 @@
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
 	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
-
-/datum/emote/living/circle
-	key = "circle"
-	key_third_person = "circles"
-	restraint_check = TRUE
-
-/datum/emote/living/circle/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	var/obj/item/circlegame/N = new(user)
-	if(user.put_in_hands(N))
-		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
-	else
-		qdel(N)
-		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
-
-/datum/emote/living/slap
-	key = "slap"
-	key_third_person = "slaps"
-	restraint_check = TRUE
-
-/datum/emote/living/slap/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/slapper/N = new(user)
-	if(user.put_in_hands(N))
-		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
-	else
-		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
 
 /datum/emote/inhale
 	key = "inhale"
