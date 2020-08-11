@@ -29,7 +29,7 @@
 	id = "memezombies"
 	limbs_id = "zombie"
 	speedmod = 1.6
-	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASYLIMBWOUND,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS, TRAIT_CLUMSY, TRAIT_NOGUNS, TRAIT_DUMB, TRAIT_MONKEYLIKE, TRAIT_STRONG_PUNCHER)
+	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASYLIMBWOUND,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS, TRAIT_CLUMSY, TRAIT_NOGUNS, TRAIT_DUMB, TRAIT_MONKEYLIKE, TRAIT_ACCURATE_PUNCHER, TRAIT_STRONG_GRABBER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 	attack_verb = "slash"
 	no_equip = list(ITEM_SLOT_GLOVES)
@@ -121,6 +121,7 @@
 					"<span class='userdanger'>You are bitten by [user]!</span>", "<span class='hear'>You hear the sound of something wet tearing apart!</span>", null, user)
 		to_chat(user, "<span class='danger'>You bite [target]!</span>")
 		target.emote("scream")
+		target.Knockdown(30)
 		if(bite_block < 50 && target.stat != DEAD)
 			try_to_zombie_infect(target)
 

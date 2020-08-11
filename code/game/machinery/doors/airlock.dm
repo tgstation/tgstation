@@ -736,10 +736,17 @@
 				H.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
+			if(HAS_TRAIT(H, TRAIT_NODEATH))
+				take_damage(50, BRUTE, "melee", 1)
+				log_combat(user, src, "hit")
 
 /obj/machinery/door/airlock/attempt_wire_interaction(mob/user)
+	if(HAS_TRAIT(user, TRAIT_DUMB))
+		to_chat(user, "<span class='warning'>You are completely clueless as to how any of this works!</span>")
+		return WIRE_INTERACTION_FAIL
+	
 	if(security_level)
-		to_chat(user, "<span class='warning'>Wires are protected!</span>")
+		to_chat(user, "<span class='warning'>The internal wires are protected!</span>")
 		return WIRE_INTERACTION_FAIL
 	return ..()
 

@@ -52,12 +52,20 @@
 
 /obj/item/grenade/proc/botch_check(mob/living/carbon/human/user)
 	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
-	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
-		if(prob(50))
+	var/dumb = HAS_TRAIT(user, TRAIT_DUMB)
+	var/horrible_accident_probability = 0
+
+	if(clumsy)
+		horrible_accident_probability += 50
+	if(dumb)
+		horrible_accident_probability += 50
+
+	if(horrible_accident_probability && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
+		if(prob(horrible_accident_probability))
 			to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 			preprime(user, 5, FALSE)
 			return TRUE
-	else if(!clumsy && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
+	else if(!horrible_accident_probability && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
 		to_chat(user, "<span class='warning'>You pull the pin on [src]. Attached to it is a pink ribbon that says, \"<span class='clown'>HONK</span>\"</span>")
 		preprime(user, 5, FALSE)
 		return TRUE

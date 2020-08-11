@@ -143,10 +143,26 @@
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
-		"<span class='notice'>You knock on [src].</span>")
+	if(ishuman(user) && density)
+		var/mob/living/carbon/human/H = user
+		if((HAS_TRAIT(H, TRAIT_DUMB)) && Adjacent(user))
+			playsound(src, 'sound/effects/bang.ogg', 25, TRUE)
+			user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+			if(!istype(H.head, /obj/item/clothing/head/helmet))
+				H.visible_message("<span class='danger'>[user] headbutts the [src].</span>", \
+									"<span class='userdanger'>You headbutt the [src]!</span>")
+				H.Paralyze(100)
+				H.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
+			else
+				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
+			if(HAS_TRAIT(H, TRAIT_NODEATH))
+				take_damage(50, BRUTE, "melee", 1)
+				log_combat(user, src, "hit")
+	else
+		user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
+			"<span class='notice'>You knock on [src].</span>")
+		playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)

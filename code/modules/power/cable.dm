@@ -148,6 +148,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(T.intact)
 		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
+		if(HAS_TRAIT(user, TRAIT_DUMB) && prob(50))
+			to_chat(user, "<span class='danger'>Which end are you supposed to use?</span>")
+			return
 		if (shock(user, 50))
 			return
 		user.visible_message("<span class='notice'>[user] cuts the cable.</span>", "<span class='notice'>You cut the cable.</span>")
