@@ -19,4 +19,4 @@
 		spam_flag = TRUE
 		var/obj/item/parent_item = parent
 		playsound(parent_item.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-		addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
+		addtimer(CALLBACK(src, .proc/reset_spamflag), 2 SECONDS)
