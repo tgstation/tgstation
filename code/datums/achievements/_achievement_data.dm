@@ -107,7 +107,7 @@
 
 /datum/achievement_data/ui_data(mob/user)
 	var/ret_data = list() // screw standards (qustinnus you must rename src.data ok)
-	ret_data["categories"] = list("Bosses", "Misc" , "Scores")
+	ret_data["categories"] = list("Bosses", "Misc", "Mafia", "Scores")
 	ret_data["achievements"] = list()
 	ret_data["user_key"] = user.ckey
 

@@ -88,12 +88,12 @@
 	current_skin = "burngel"
 	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 24, /datum/reagent/medicine/granibitaluri = 36)
 
-/obj/item/reagent_containers/medigel/instabitaluri
-	name = "medical gel (instabitaluri)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains instabitaluri, a slightly toxic medicine capable of healing both bruises and burns."
+/obj/item/reagent_containers/medigel/synthflesh
+	name = "medical gel (synthflesh)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, a slightly toxic medicine capable of healing both bruises and burns."
 	icon_state = "synthgel"
 	current_skin = "synthgel"
-	list_reagents = list(/datum/reagent/medicine/c2/instabitaluri = 60)
+	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 60)
 	custom_price = 600
 
 /obj/item/reagent_containers/medigel/sterilizine

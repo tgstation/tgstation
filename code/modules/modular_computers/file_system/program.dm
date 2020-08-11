@@ -25,8 +25,6 @@
 	var/ntnet_status = 1
 	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
 	var/usage_flags = PROGRAM_ALL
-	/// Optional string that describes what NTNet server/system this program connects to. Used in default logging.
-	var/network_destination = null
 	/// Whether the program can be downloaded from NTNet. Set to 0 to disable.
 	var/available_on_ntnet = 1
 	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
@@ -139,8 +137,12 @@
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
-		if(requires_ntnet && network_destination)
-			generate_network_log("Connection opened to [network_destination].")
+		if(requires_ntnet)
+			var/obj/item/card/id/ID
+			var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+			if(card_holder)
+				ID = card_holder.GetID()
+			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return 1
 	return 0
@@ -162,8 +164,12 @@
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
-	if(network_destination)
-		generate_network_log("Connection to [network_destination] closed.")
+	if(requires_ntnet)
+		var/obj/item/card/id/ID
+		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+		if(card_holder)
+			ID = card_holder.GetID()
+		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 	return 1
 
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)

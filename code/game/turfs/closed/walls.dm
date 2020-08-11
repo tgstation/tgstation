@@ -28,7 +28,7 @@
 	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust)
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_TRUE
 
 	var/list/dent_decals
 
@@ -168,7 +168,7 @@
   **arg1 is the arm to deal damage to.
   **arg2 is the hulk
  */
-/turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 20)
+/turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 20)
 	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
 	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
 	if(!smasher || !damage) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky
@@ -316,6 +316,8 @@
 	add_overlay(dent_decals)
 
 /turf/closed/wall/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
 	ChangeTurf(/turf/closed/wall/rust)
 
 

@@ -312,18 +312,14 @@
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
-	if(is_cleanable(A))
+	if(ismopable(A))
 		icon_state = "cleanbot-c"
 		mode = BOT_CLEANING
 
 		var/turf/T = get_turf(A)
 		if(do_after(src, 1, target = T))
-			SEND_SIGNAL(T, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			T.wash(CLEAN_WASH)
 			visible_message("<span class='notice'>[src] cleans \the [T].</span>")
-			for(var/atom/dirtything in T)
-				if(is_cleanable(dirtything))
-					qdel(dirtything)
-
 			target = null
 
 		mode = BOT_IDLE
