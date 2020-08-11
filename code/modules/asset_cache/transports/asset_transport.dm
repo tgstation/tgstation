@@ -5,6 +5,10 @@
 /datum/asset_transport
 	var/name = "Simple browse_rsc asset transport"
 	var/static/list/preload
+	/// Don't mutate the filename of assets when sending via browse_rsc. 
+	/// This is to make it easier to debug issues with assets, and allow server operators to bypass issues that make it to production.
+	/// If turning this on fixes asset issues, something isn't using get_asset_url and the asset isn't marked legacy, fix one of those.
+	var/dont_mutate_filenames = FALSE
 
 /// Called when the transport is loaded by the config controller, not called on the default transport unless it gets loaded by a config change.
 /datum/asset_transport/proc/Load()
@@ -56,7 +60,7 @@
 /datum/asset_transport/proc/get_asset_url(asset_name, datum/asset_cache_item/asset_cache_item)
 	if (!istype(asset_cache_item))
 		asset_cache_item = SSassets.cache[asset_name]
-	if (asset_cache_item.legacy || (asset_cache_item.namespace && !asset_cache_item.namespace_parent)) // to ensure code that breaks on cdns breaks in local testing, we only use the normal filename on legacy assets and name space assets.
+	if (dont_mutate_filenames || asset_cache_item.legacy || (asset_cache_item.namespace && !asset_cache_item.namespace_parent)) // to ensure code that breaks on cdns breaks in local testing, we only use the normal filename on legacy assets and name space assets.
 		return url_encode(asset_cache_item.name)
 	return url_encode("asset.[asset_cache_item.hash][asset_cache_item.ext]")
 
@@ -91,7 +95,7 @@
 		
 		var/asset_hash = ACI.hash
 		var/new_asset_name = asset_name
-		if (!ACI.legacy && (!ACI.namespace || ACI.namespace_parent))
+		if (!dont_mutate_filenames && !ACI.legacy && (!ACI.namespace || ACI.namespace_parent))
 			new_asset_name = "asset.[ACI.hash][ACI.ext]"
 		if (client.sent_assets[new_asset_name] == asset_hash)
 			if (GLOB.Debug2)
@@ -106,7 +110,7 @@
 		for (var/asset_name in unreceived)
 			var/new_asset_name = asset_name
 			var/datum/asset_cache_item/ACI = unreceived[asset_name]
-			if (!ACI.legacy && (!ACI.namespace || ACI.namespace_parent))
+			if (!dont_mutate_filenames && !ACI.legacy && (!ACI.namespace || ACI.namespace_parent))
 				new_asset_name = "asset.[ACI.hash][ACI.ext]"
 			log_asset("Sending asset `[asset_name]` to client `[client]` as `[new_asset_name]`")
 			client << browse_rsc(ACI.resource, new_asset_name)
