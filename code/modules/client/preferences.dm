@@ -104,6 +104,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/clientfps = 0
 
+	var/sidestepper = FALSE
+
 	var/parallax
 
 	var/ambientocclusion = TRUE
@@ -599,6 +601,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br>"
 
 			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+
+			dat += "<b>EDGE SLIDING:</b> <a href='?_src_=prefs;preference=sidestepper'>[sidestepper ? "ON" : "OFF"]</a><br>"
 
 			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
 			switch (parallax)
@@ -1536,6 +1540,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (!isnull(desiredfps))
 						clientfps = desiredfps
 						parent.fps = desiredfps
+
 				if("ui")
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
 					if(pickedui)
@@ -1759,6 +1764,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
+
+				if ("sidestepper")
+					sidestepper = !sidestepper
+					if(isliving(parent.mob))
+						parent.mob.set_sidestep(sidestepper)
 
 				if("parallaxup")
 					parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)

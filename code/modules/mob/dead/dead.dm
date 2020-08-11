@@ -7,6 +7,11 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	move_resist = INFINITY
 	throwforce = 0
 
+
+/mob/dead/set_sidestep(val)
+	val = FALSE
+	. = ..()
+
 /mob/dead/Initialize()
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)

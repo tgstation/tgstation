@@ -69,7 +69,7 @@
 	if(!istype(M))
 		return FALSE
 
-	if(check_loc && !(M in obounds()))
+	if(check_loc && nearest_turf(M) != nearest_turf(src))
 		return FALSE
 
 	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)

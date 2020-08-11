@@ -369,13 +369,6 @@
 	return health
 
 // MOB PROCS //END
-/mob/living/proc/ToggleSidestep()
-	set name = "Toggle Edge Sliding"
-	set category = "OOC"
-	set desc = "Less control over precise movements, less frustration with corners. You decide"
-
-	set_sidestep(!can_sidestep)
-	to_chat(src, "Edge sliding is now [can_sidestep ? "ON" : "OFF"]")
 
 /mob/living/proc/mob_sleep()
 	set name = "Sleep"

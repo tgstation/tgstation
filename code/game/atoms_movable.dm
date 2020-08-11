@@ -324,7 +324,7 @@
 	if(pulling.move_resist > move_force)
 		return FALSE
 	var/distance = bounds_dist(src, pulling)
-	if(distance < 6)
+	if(distance < 8)
 		return FALSE
 	var/angle = GET_DEG(pulling, src)
 	if((angle % 45) > 1) // We arent directly on a cardinal from the thing
@@ -334,13 +334,7 @@
 		else
 			angle -= min(ANGLE_ADJUST, tempA)
 	angle = SIMPLIFY_DEGREES(angle)
-	var/direct = angle2dir(angle)
-	if(!degstep(pulling, angle, distance-6))
-		for(var/i in GLOB.cardinals)
-			if(direct & i)
-				if(step(pulling, i))
-					return TRUE
-	return FALSE
+	return degstep(pulling, angle, distance-8)
 
 #undef ANGLE_ADJUST
 /**
@@ -386,6 +380,8 @@
 			check_pulling()
 		if(has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, step_x, step_y))
 			return FALSE
+	if(!.) // we still didn't move, something is blocking further movement
+		walk(src, 0)
 
 /// Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
@@ -821,10 +817,10 @@
 		pulledby.stop_pulling()
 
 	throwing = TT
-	for(var/atom/movable/A in obounds()) // check if we hit something
-		if(A != thrower && A.density)
-			Bump(A)
-			return
+
+	if(TT.hitcheck())
+		return
+
 	if(spin)
 		SpinAnimation(5, 1)
 
