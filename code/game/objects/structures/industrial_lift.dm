@@ -125,9 +125,11 @@
 
 /obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/LMaster)
 	. = list()
-	for(var/D in GLOB.cardinals)
-		var/turf/T = get_step(src, D)
-		. |= locate(/obj/structure/industrial_lift) in T
+	for(var/direction in GLOB.cardinals)
+		var/obj/structure/industrial_lift/neighbor = locate() in get_step(src, direction)
+		if(!neighbor)
+			continue
+		. += neighbor
 
 /obj/structure/industrial_lift/proc/travel(going)
 	var/list/things2move = lift_load.Copy()
