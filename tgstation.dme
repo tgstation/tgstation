@@ -885,7 +885,6 @@
 #include "code\game\mecha\medical\medical.dm"
 #include "code\game\mecha\medical\odysseus.dm"
 #include "code\game\mecha\working\clarke.dm"
-#include "code\game\mecha\working\jerry.dm"
 #include "code\game\mecha\working\ripley.dm"
 #include "code\game\mecha\working\working.dm"
 #include "code\game\objects\buckling.dm"

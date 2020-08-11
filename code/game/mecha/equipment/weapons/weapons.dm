@@ -85,23 +85,6 @@
 	fire_sound = 'sound/weapons/laser.ogg'
 	harmful = TRUE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/pka
-	equip_cooldown = 9
-	name = "\improper KINOSIS accelerator"
-	desc = "Weapon created for lavaland mining operations"
-	icon_state = "mecha_kinetic"
-	energy_drain = 5
-	projectile = /obj/projectile/kinetic
-	fire_sound = 'sound/weapons/kenetic_accel.ogg'
-	harmful = TRUE
-
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/pka/can_attach(obj/mecha/M)
-	if(..()) //combat mech
-		return TRUE
-	else if(M.equipment.len < M.max_equip && istype(M))
-		return TRUE
-	return FALSE
-
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	equip_cooldown = 8
 	name = "\improper CH-DS \"Peacemaker\" disabler"

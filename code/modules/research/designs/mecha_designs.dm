@@ -428,16 +428,6 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_kinetic_accelerator
-	name = "Exosuit Mining (KINOSIS Accelerator)"
-	desc = "Powerful accelerator, that shoots heated air particles blowing ash apart with ease"
-	id = "mech_kinetic_accelerator"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/pka
-	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
 /datum/design/mech_lmg
 	name = "Exosuit Weapon (\"Ultra AC 2\" LMG)"
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
