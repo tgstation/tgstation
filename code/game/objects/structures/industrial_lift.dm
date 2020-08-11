@@ -77,7 +77,7 @@
 
 ///Check destination turfs
 /datum/lift_master/proc/Check_lift_move(check_dir)
-	for(var/obj/structure/industrial_lift/lift_platform in lift_platforms)
+	for(var/lift_platform in lift_platforms)
 		var/turf/T = get_step_multiz(lift_platform, check_dir)
 		if(!T)// || !isopenturf(T))
 			return FALSE
