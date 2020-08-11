@@ -9,7 +9,18 @@
 /atom/movable/collider/slider/Destroy(force)
 	proxy = null
 	. = ..()
-
+/**
+  * Creates a dummy collider object and checks for an opening on the sides
+  *
+  * Called in Move
+  * Uses bounds to check for an opening on the left or right
+  * Shifts the object over accordingly
+  * Arguments:
+  * * self - the real movable object
+  * * Dir - direction of original move
+  * * step_x - new step_x after move
+  * * step_y - new step_y after move
+  */
 /atom/movable/collider/slider/proc/slide(atom/movable/self,Dir=0,step_x=0,step_y=0)
 	//might be a depth call, so store old data
 	var/old_bound_width = bound_width
