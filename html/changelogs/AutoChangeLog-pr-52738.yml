@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscadd: "If you are \"in\" something, and talk, runechat will be displayed as if the thing you are in talked."
