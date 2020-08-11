@@ -153,8 +153,7 @@
 
 		if("buyshuttle")
 			if(authenticated==2)
-				var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
-				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
+				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in SSshuttle.available_alternative_shuttles
 				if(S && istype(S))
 					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
 						to_chat(usr, "<span class='alert'>It's a bit late to buy a new shuttle, don't you think?</span>")
@@ -571,14 +570,13 @@
 			dat += "<BR>"
 			dat += "<b>Caution: Purchasing dangerous shuttles may lead to mutiny and/or death.</b><br>"
 			dat += "<BR>"
-			for(var/shuttle_id in SSmapping.shuttle_templates)
-				var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
-				if(S.can_be_bought && S.credit_cost < INFINITY)
-					dat += "[S.name] | [S.credit_cost] Credits<BR>"
-					dat += "[S.description]<BR>"
-					if(S.prerequisites)
-						dat += "Prerequisites: [S.prerequisites]<BR>"
-					dat += "<A href='?src=[REF(src)];operation=buyshuttle;chosen_shuttle=[REF(S)]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
+			for(var/_shuttle in SSshuttle.available_alternative_shuttles)
+				var/datum/map_template/shuttle/shuttle = _shuttle
+				dat += "[shuttle.name] | [shuttle.credit_cost] Credits<BR>"
+				dat += "[shuttle.description]<BR>"
+				if(shuttle.prerequisites)
+					dat += "Prerequisites: [shuttle.prerequisites]<BR>"
+				dat += "<A href='?src=[REF(src)];operation=buyshuttle;chosen_shuttle=[REF(shuttle)]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
 
 	dat += "<BR><BR>\[ [(state != STATE_DEFAULT) ? "<A HREF='?src=[REF(src)];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=[REF(user)];mach_close=communications'>Close</A> \]"
 

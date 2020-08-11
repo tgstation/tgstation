@@ -9,6 +9,9 @@
 	var/prerequisites
 	var/admin_notes
 
+	/// Are we always allowed to buy this shuttle?
+	var/always_allowed = FALSE
+
 	var/credit_cost = INFINITY
 	var/can_be_bought = TRUE
 
@@ -24,6 +27,10 @@
 /datum/map_template/shuttle/New()
 	shuttle_id = "[port_id]_[suffix]"
 	mappath = "[prefix][shuttle_id].dmm"
+
+	if (prerequisites)
+		always_allowed = TRUE
+
 	. = ..()
 
 /datum/map_template/shuttle/preload_size(path, cache)
@@ -179,6 +186,7 @@
 	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
 	admin_notes = "No brig, no medical facilities, no shuttle console."
 	credit_cost = 2500
+	always_allowed = TRUE
 
 /datum/map_template/shuttle/emergency/airless/post_load()
 	. = ..()

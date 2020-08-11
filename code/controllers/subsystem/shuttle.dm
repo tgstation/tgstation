@@ -1,3 +1,5 @@
+/// Number of alternative shuttles to offer
+#define AVAILABLE_ALTERNATIVE_SHUTTLES 5
 #define MAX_TRANSIT_REQUEST_RETRIES 10
 
 SUBSYSTEM_DEF(shuttle)
@@ -49,6 +51,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
+	/// A list of the alternative shuttles the crew can purchase
+	var/list/available_alternative_shuttles
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
@@ -71,6 +75,7 @@ SUBSYSTEM_DEF(shuttle)
 		supply_packs[P.type] = P
 
 	initial_load()
+	generate_available_alternative_shuttles()
 
 	if(!arrivals)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
@@ -87,6 +92,23 @@ SUBSYSTEM_DEF(shuttle)
 		var/obj/docking_port/stationary/S = s
 		S.load_roundstart()
 		CHECK_TICK
+
+/datum/controller/subsystem/shuttle/proc/generate_available_alternative_shuttles()
+	var/list/normal_shuttles = list()
+	var/list/always_allowed_shuttles = list()
+
+	for (var/shuttle_id in SSmapping.shuttle_templates)
+		var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
+		if (S.can_be_bought && S.credit_cost < INFINITY)
+			if (S.always_allowed)
+				always_allowed_shuttles += S
+			else
+				normal_shuttles += S
+
+	shuffle_inplace(normal_shuttles)
+	normal_shuttles.Cut(AVAILABLE_ALTERNATIVE_SHUTTLES + 1)
+
+	available_alternative_shuttles = normal_shuttles + always_allowed_shuttles
 
 /datum/controller/subsystem/shuttle/fire()
 	for(var/thing in mobile)
@@ -892,3 +914,4 @@ SUBSYSTEM_DEF(shuttle)
 					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 
+#undef AVAILABLE_ALTERNATIVE_SHUTTLES
