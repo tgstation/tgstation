@@ -827,10 +827,19 @@
 	if(!spillable || !COOLDOWN_FINISHED(src, catscan_cooldown))
 		return
 
-	var/mob/living/simple_animal/pet/cat/itercat
-	var/catscan_range = (prob(CATFOOD_EXTREME_CHANCE) ? CATFOOD_RANGE_EXTREME : CATFOOD_RANGE_NORMAL) + catscan_range_bonus
+	var/catscan_range
+	var/list/scannables
 
-	for(itercat in ohearers(catscan_range, get_turf(src)))
+	//extreme scans don't care about visibility
+	if(prob(CATFOOD_EXTREME_CHANCE))
+		catscan_range = CATFOOD_RANGE_EXTREME
+		scannables = orange(catscan_range, get_turf(src))
+	else
+		catscan_range = CATFOOD_RANGE_NORMAL
+		scannables = ohearers(catscan_range, get_turf(src))
+
+	var/mob/living/simple_animal/pet/cat/itercat
+	for(itercat in scannables)
 		if(!itercat.stat && (!enticed_cats || !(itercat in enticed_cats)) && itercat.register_munchies(src))
 			LAZYADD(enticed_cats, itercat)
 
