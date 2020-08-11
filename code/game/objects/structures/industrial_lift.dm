@@ -99,7 +99,7 @@
 	//	flags = CONDUCT_1
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
-	var/list/lift_load = list() //things to move
+	var/list/lift_load //things to move
 	var/datum/lift_master/LMaster    //control from
 
 /obj/structure/industrial_lift/Initialize(mapload)
