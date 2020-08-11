@@ -1,8 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - rscadd: "Added support for modular PC expansion bays, or hardware bays designed to be used by nonessential hardware. Devices have a limited number of bays (tablets less than others)."
-  - balance: "The AI card slot, printer, and APC-siphoning recharger are now expansion bay hardware."
-  - balance: "AtmoZphere, the modular PC atmos scanner, now requires a new expansion bay hardware item - the sensor package. Certain shift-start tablets have been adjusted to reflect this."
-  - refactor: "Modular PC card readers have been split -- The primary ID card reader, which comes pre-installed on nearly all devices, and a secondary ID card reader which is an expansion bay hardware and will need to be purchased separately. Certain shift-start devices have a secondary reader pre-installed."
-  - bugfix: "Buying a tablet from the Laptop/Tablet vendor, and paying extra for the nano printer, will now attach the correct printer rather than attempt to stuff a laptop printer into a tablet and silently fail but still take your cash."
