@@ -6,7 +6,7 @@
 	for(var/l in lift_platforms)
 		var/obj/structure/industrial_lift/lift_platform = l
 		lift_platform.LMaster = null
-	lift_platforms.Cut()
+	lift_platforms = null
 	. = ..()
 
 /datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
