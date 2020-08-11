@@ -1,7 +1,7 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
-#define HIEROPHANT_TELEPORT_RANGE 7
-
+#define HIEROPHANT_BLINK_RANGE 5
+#define HIEROPHANT_BLINK_COOLDOWN 15 SECONDS
 
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
@@ -1131,12 +1131,39 @@
 /datum/action/innate/dash/hierophant
 	current_charges = 1
 	max_charges = 1
-	charge_rate = 10 SECONDS
+	charge_rate = HIEROPHANT_BLINK_COOLDOWN
 	recharge_sound = null
 	phasein = /obj/effect/temp_visual/hierophant/blast/visual
 	phaseout = /obj/effect/temp_visual/hierophant/blast/visual
 	// It's a simple purple beam, works well enough for the purple hiero effects.
 	beam_effect = "plasmabeam"
+
+/datum/action/innate/dash/hierophant/Teleport(mob/user, atom/target)
+	var/dist = get_dist(user, target)
+	if(dist > HIEROPHANT_BLINK_RANGE)
+		to_chat(user, "<span class='hierophant_warning'>Blink destination out of range.</span>")
+		return
+
+	. = ..()
+
+	if(!current_charges)
+		var/obj/item/hierophant_club/club = src.target
+		if(istype(club))
+			club.charged = FALSE
+			club.update_icon()
+
+/datum/action/innate/dash/hierophant/charge()
+	var/obj/item/hierophant_club/club = target
+	if(istype(club))
+		club.charged = TRUE
+		club.update_icon()
+
+	current_charges = clamp(current_charges + 1, 0, max_charges)
+	holder.update_action_buttons_icon()
+
+	if(recharge_sound)
+		playsound(dashing_item, recharge_sound, 50, TRUE)
+	to_chat(holder, "<span class='notice'>[src] now has [current_charges]/[max_charges] charges.</span>")
 
 /obj/item/hierophant_club
 	name = "hierophant club"
@@ -1163,7 +1190,7 @@
 	var/teleporting = FALSE //if we ARE teleporting
 
 	var/blink_toggled = TRUE
-	var/usable = TRUE
+	var/charged = TRUE
 
 /obj/item/hierophant_club/Initialize()
 	. = ..()
@@ -1205,7 +1232,7 @@
 		return
 
 /obj/item/hierophant_club/update_icon_state()
-	icon_state = inhand_icon_state = "hierophant_club[usable ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
+	icon_state = inhand_icon_state = "hierophant_club[charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if(!user.is_holding(src)) //you need to hold the staff to teleport
@@ -1215,8 +1242,6 @@
 		if(isturf(user.loc))
 			user.visible_message("<span class='hierophant_warning'>[user] starts fiddling with [src]'s pommel...</span>", \
 			"<span class='notice'>You start detaching the hierophant beacon...</span>")
-			usable = FALSE
-			update_icon()
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
 				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
@@ -1226,8 +1251,6 @@
 				user.visible_message("<span class='hierophant_warning'>[user] places a strange machine beneath [user.p_their()] feet!</span>", \
 				"<span class='hierophant'>You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!</span>\n\
 				<span class='notice'>You can remove the beacon to place it again by striking it with the club.</span>")
-			usable = TRUE
-			update_icon()
 		else
 			to_chat(user, "<span class='warning'>You need to be on solid ground to detach the beacon!</span>")
 		return
@@ -1244,8 +1267,6 @@
 	teleporting = TRUE //start channel
 	user.update_action_buttons_icon()
 	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
-	usable = FALSE
-	update_icon()
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE2 = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
@@ -1256,8 +1277,6 @@
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
-			usable = TRUE
-			update_icon()
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
@@ -1268,8 +1287,6 @@
 			teleporting = FALSE
 			if(user)
 				user.update_action_buttons_icon()
-			usable = TRUE
-			update_icon()
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
@@ -1277,8 +1294,6 @@
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
-			usable = TRUE
-			update_icon()
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		user.log_message("teleported self from [AREACOORD(source)] to [beacon]", LOG_GAME)
@@ -1293,18 +1308,12 @@
 		sleep(6) //at this point the blasts detonate
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
-		usable = TRUE
-		update_icon()
 	else
 		qdel(TE1)
 		qdel(TE2)
-		usable = TRUE
-		update_icon()
 	if(beacon)
 		beacon.icon_state = "hierophant_tele_off"
 	teleporting = FALSE
-	usable = TRUE
-	update_icon()
 	if(user)
 		user.update_action_buttons_icon()
 
