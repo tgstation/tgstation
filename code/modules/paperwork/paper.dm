@@ -233,9 +233,6 @@
 		ui.open()
 
 
-/obj/item/paper/ui_state(mob/user)
-	return GLOB.default_state
-
 /obj/item/paper/ui_static_data(mob/user)
 	. = list()
 	.["text"] = info
