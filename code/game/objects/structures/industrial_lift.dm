@@ -63,7 +63,7 @@
 					lift_platform.travel(going)	
 	else
 		//Go along the X axis from max to min, from right to left
-		for(var/x = max_x; x >= min_x; x--)
+		for(var/x in max_x to min_x step -1)
 			if( going & NORTH )
 				//Go along the Y axis from max to min, from up to down
 				for(var/y = max_y; y >= min_y; y--)
