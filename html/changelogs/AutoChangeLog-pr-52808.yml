@@ -1,0 +1,5 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - rscadd: "Large fuel tank, able to be ordered from cargo if you're into that sorta thing"
+  - tweak: "Replaced some fuel tanks in engineering with their larger variants"

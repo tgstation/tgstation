@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "The commendation config option no longer breaks the roundend sequence when enabled"

@@ -222,15 +222,30 @@
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
+	real_name = "Cayenne"
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
 	speak_emote = list("squeaks")
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
-	AIStatus = AI_OFF
 	rarechance = 10
 	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
+	pet_bonus = TRUE
+	pet_bonus_emote = "bloops happily!"
+
+/mob/living/simple_animal/hostile/carp/cayenne/lia
+	name = "Lia"
+	real_name = "Lia"
+	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
+	faction = list("neutral")
+	health = 200
+	icon_dead = "magicarp_dead"
+	icon_gib = "magicarp_gib"
+	icon_living = "magicarp"
+	icon_state = "magicarp"
+	maxHealth = 200
+	random_color = FALSE
 
 #undef REGENERATION_DELAY

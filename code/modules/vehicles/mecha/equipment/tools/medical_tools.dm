@@ -303,6 +303,9 @@
 	if(reagents.total_volume<=0)
 		to_chat(source, "[icon2html(src, source)]<span class=\"alert\">No available reagents to load syringe with.</span>")
 		return
+	if(HAS_TRAIT(chassis.occupant, TRAIT_PACIFISM))
+		occupant_message("<span class=\"alert\">The [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+		return
 	var/turf/trg = get_turf(target)
 	var/obj/item/reagent_containers/syringe/mechsyringe = syringes[1]
 	mechsyringe.forceMove(get_turf(chassis))

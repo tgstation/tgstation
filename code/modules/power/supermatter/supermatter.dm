@@ -422,10 +422,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.player_list)
-		if(M.z == z)
+		var/turf/mob_turf = get_turf(M)
+		if(T.z == mob_turf.z)
 			SEND_SOUND(M, 'sound/magic/charge.ogg')
-			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+
+			if (M.z == z)
+				to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+			else
+				to_chat(M, "<span class='boldannounce'>You hold onto \the [M.loc] as hard as you can, as reality distorts around you. You feel safe.</span>")
+
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
 		if(T) //If something fucks up we blow anyhow. This fix is 4 years old and none ever said why it's here. help.

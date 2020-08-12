@@ -73,6 +73,8 @@
 	var/list/known_skills = list()
 	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
 	var/mob/original_character
+	/// What scar slot we have loaded, so we don't have to constantly check the savefile
+	var/current_scar_slot
 	///Skill multiplier, adjusts how much xp you get/loose from adjust_xp. Dont override it directly, add your reason to experience_multiplier_reasons and use that as a key to put your value in there.
 	var/experience_multiplier = 1
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
