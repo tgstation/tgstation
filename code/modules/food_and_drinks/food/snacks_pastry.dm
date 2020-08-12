@@ -659,6 +659,16 @@
 	foodtype = GRAIN | MEAT | VEGETABLES
 	value = FOOD_RARE
 
+/obj/item/reagent_containers/food/snacks/hotdog/honker
+	name = "'Dog"
+	desc = "Make sure you've got your permit if you want to honk one of these babies."
+	throwforce = 1500
+	throw_speed = 20
+	throw_range = 40
+	bitesize = 40
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/drug/happiness = 100)
+	tastes = list("bun" = 3, "meat" = 2, "friendship" = 1)
+
 /obj/item/reagent_containers/food/snacks/meatbun
 	name = "meat bun"
 	desc = "Has the potential to not be Dog."
