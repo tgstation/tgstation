@@ -1006,7 +1006,7 @@ B --><-- A
 			var/I = rand(1, L.len)
 			var/turf/T = L[I]
 			var/area/X = get_area(T)
-			if(!T.density && X.valid_territory)
+			if(!T.density && (X.area_flags & VALID_TERRITORY))
 				var/clear = TRUE
 				for(var/obj/O in T)
 					if(O.density)

@@ -495,7 +495,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+="<A href='?src=[REF(src)];setScreen=[0]'>Return</A>"
 		var/datum/browser/popup = new(human_or_robot_user, "newscaster_main", "Newscaster Unit #[unit_no]", 400, 600)
 		popup.set_content(dat)
-		popup.set_title_image(human_or_robot_user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 /obj/machinery/newscaster/Topic(href, href_list)

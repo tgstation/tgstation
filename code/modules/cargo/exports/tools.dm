@@ -155,3 +155,24 @@
 	. = ..()
 	if(. && notes)
 		. += " ERROR: Unscheduled energy ball delivery detected."
+
+//artisanal exports for the mom and pops
+/datum/export/soap
+	cost = 75
+	unit_name = "soap"
+	export_types = list(/obj/item/soap)
+
+/datum/export/soap/homemade
+	cost = 30
+	unit_name = "artisanal soap"
+	export_types = list(/obj/item/soap/homemade)
+
+/datum/export/soap/omega
+	cost = 7000
+	unit_name = "omega soap"
+	export_types = list(/obj/item/soap/omega)
+
+/datum/export/candle
+	cost = 25
+	unit_name = "candle"
+	export_types = list(/obj/item/candle)

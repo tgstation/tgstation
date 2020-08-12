@@ -609,6 +609,15 @@
 	category = list ("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/board/plumbing_receiver
+	name = "Machine Design (Chemical Recipient)"
+	desc = "The circuit board for a Chemical Recipient."
+	id = "plumbing_receiver"
+	build_path = /obj/item/circuitboard/machine/plumbing_receiver
+	category = list ("Teleportation Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+
 /datum/design/board/sheetifier
 	name = "Machine Design (Sheet-meister 2000)"
 	desc = "The circuit board for a Sheet-meister 2000."

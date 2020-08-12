@@ -7635,6 +7635,7 @@
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/carp/cayenne,
+/obj/structure/bed/dogbed/cayenne,
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "rh" = (
@@ -36800,11 +36801,11 @@ ll
 pF
 qa
 pZ
+pZ
+sh
+sh
+pZ
 rg
-sh
-sh
-pZ
-pZ
 Qd
 wo
 tZ

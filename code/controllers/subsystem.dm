@@ -208,6 +208,8 @@
 		if(SS_SLEEPING)
 			state = SS_PAUSING
 
+/// Called after the config has been loaded or reloaded.
+/datum/controller/subsystem/proc/OnConfigLoad()
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/controller/subsystem/Initialize(start_timeofday)

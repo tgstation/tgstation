@@ -1,6 +1,7 @@
 GLOBAL_VAR_INIT(hhStorageTurf, null)
 GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
+// Someone for the love of god kill whoever indented this with spaces
 /obj/item/hilbertshotel
     name = "Hilbert's Hotel"
     desc = "A sphere of what appears to be an intricate network of bluespace. Observing it in detail seems to give you a headache as you try to comprehend the infinite amount of infinitesimally distinct points on its surface."
@@ -305,19 +306,17 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     qdel(src)
 
 /area/hilbertshotel
-    name = "Hilbert's Hotel Room"
-    icon_state = "hilbertshotel"
-    requires_power = FALSE
-    has_gravity = TRUE
-    noteleport = TRUE
-    hidden = TRUE
-    unique = FALSE
-    dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-    ambientsounds = list('sound/ambience/servicebell.ogg')
-    var/roomnumber = 0
-    var/obj/item/hilbertshotel/parentSphere
-    var/datum/turf_reservation/reservation
-    var/turf/storageTurf
+	name = "Hilbert's Hotel Room"
+	icon_state = "hilbertshotel"
+	requires_power = FALSE
+	has_gravity = TRUE
+	area_flags = NOTELEPORT | HIDDEN_AREA
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	ambientsounds = list('sound/ambience/servicebell.ogg')
+	var/roomnumber = 0
+	var/obj/item/hilbertshotel/parentSphere
+	var/datum/turf_reservation/reservation
+	var/turf/storageTurf
 
 /area/hilbertshotel/Entered(atom/movable/AM)
     . = ..()
@@ -386,9 +385,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     name = "Hilbert's Hotel Storage Room"
     icon_state = "hilbertshotel"
     requires_power = FALSE
+    area_flags = HIDDEN_AREA | NOTELEPORT | UNIQUE_AREA
     has_gravity = TRUE
-    noteleport = TRUE
-    hidden = TRUE
 
 /obj/item/abstracthotelstorage
     anchored = TRUE
