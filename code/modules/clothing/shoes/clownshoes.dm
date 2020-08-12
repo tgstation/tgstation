@@ -71,8 +71,8 @@
 
 /obj/item/clothing/shoes/clown_shoes/prison/allow_attack_hand_drop(mob/user)
 	if(ishuman(user))
-		var/mob/living/carbon/human/C = user
-		if(C.shoes == src)
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.shoes == src)
 			to_chat(user, "<span class='warning'>You need help taking these off!</span>")
 			return FALSE
 	return ..()
