@@ -1065,43 +1065,20 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	color = "#FF0000"
-	desc = "Mark your target for death."
-	var/used = FALSE
+	desc = "Mark yourself for death."
 
 /obj/item/blood_contract/attack_self(mob/user)
-	if(used)
-		return
-	used = TRUE
-
-	var/list/da_list = list()
-	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
-		var/mob/living/L = I
-		da_list[L.real_name] = L
-
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in sortList(da_list)
-
-	choice = da_list[choice]
-
-	if(!choice)
-		used = FALSE
-		return
-	if(!(isliving(choice)))
-		to_chat(user, "<span class='warning'>[choice] is already dead!</span>")
-		used = FALSE
-		return
-	if(choice == user)
-		to_chat(user, "<span class='warning'>You feel like writing your own name into a cursed death warrant would be unwise.</span>")
-		used = FALSE
+	if(!(askuser(user, "Are you absolutely certain you wish the sign the [src]?", "Sign [src]?", Button1 = "Sign", Button2 = "Maybe not...") == 1))
 		return
 
-	var/mob/living/L = choice
+	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has marked themselves for death using [src]! They are now an antagonist.</span>")
 
-	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(L)] has been marked for death by [ADMIN_LOOKUPFLW(user)]!</span>")
+	var/mob/living/mind_user = user
 
 	var/datum/antagonist/blood_contract/A = new
-	L.mind.add_antag_datum(A)
+	mind_user.mind.add_antag_datum(A)
 
-	log_combat(user, L, "took out a blood contract on", src)
+	log_combat(user, mind_user, "took out a blood contract on", src)
 	qdel(src)
 
 //Colossus
