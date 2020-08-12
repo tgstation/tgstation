@@ -101,8 +101,8 @@
 	//	flags = CONDUCT_1
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
-	var/list/lift_load //things to move
-	var/datum/lift_master/LMaster    //control from
+	var/list/atom/movable/lift_load //things to move
+	var/datum/lift_master/lift_master_datum    //control from
 
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
@@ -120,10 +120,16 @@
 	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 
 /obj/structure/industrial_lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
+	if(!(AM in lift_load))
+		return
 	LAZYREMOVE(lift_load, AM)
+	UnregisterSignal(AM, COMSIG_PARENT_QDELETING)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
-	LAZYOR(lift_load, AM)
+	if(AM in lift_load)
+		return
+	LAZYADD(lift_load, AM)
+	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
 
 /obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/LMaster)
 	. = list()
