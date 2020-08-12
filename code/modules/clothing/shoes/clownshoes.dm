@@ -78,11 +78,10 @@
 	return ..()
 
 /obj/item/clothing/shoes/clown_shoes/prison/MouseDrop(atom/over)
-	var/mob/m = usr
-	if(ishuman(m))
-		var/mob/living/carbon/human/c = m
-		if(c.shoes == src)
-			to_chat(c, "<span class='warning'>You need help taking these off!</span>")
+	if(ishuman(usr))
+		var/mob/living/carbon/human/human_user = usr
+		if(human_user.shoes == src)
+			to_chat(human_user, "<span class='warning'>You need help taking these off!</span>")
 			return
 	return ..()
 
