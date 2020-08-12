@@ -260,10 +260,6 @@
 			W.ini_dir = W.dir
 		//END: oh fuck i'm so sorry
 
-		else if(istype(O, /obj/item/restraints/handcuffs/cable))
-			var/obj/item/cuffs = O
-			cuffs.color = color
-
 		if (QDELETED(O))
 			return //It's a stack and has already been merged
 

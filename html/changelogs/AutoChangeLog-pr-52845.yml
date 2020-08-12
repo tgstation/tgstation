@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - tweak: "Pinpointers are no longer indestructible be default. The Nuke Pinpointers are still indestructible."

@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - bugfix: "spiderlings not getting flattened by a fly swatter in one hit"
