@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscdel: "Removed reinforcement chromosomes, AKA mutadone resistance."
