@@ -114,7 +114,7 @@
 				return
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	if(locked)
 		return
@@ -229,7 +229,7 @@
 // Implant signal responses
 
 /datum/component/uplink/proc/implant_activation()
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	var/obj/item/implant/implant = parent
 	locked = FALSE
@@ -256,7 +256,7 @@
 // PDA signal responses
 
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	var/obj/item/pda/master = parent
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
@@ -279,7 +279,7 @@
 // Radio signal responses
 
 /datum/component/uplink/proc/new_frequency(datum/source, list/arguments)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	var/obj/item/radio/master = parent
 	var/frequency = arguments[1]
@@ -294,7 +294,7 @@
 // Pen signal responses
 
 /datum/component/uplink/proc/pen_rotation(datum/source, degrees, mob/living/carbon/user)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	var/obj/item/pen/master = parent
 	previous_attempts += degrees

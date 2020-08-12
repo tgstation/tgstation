@@ -314,7 +314,7 @@
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/component_ui_interact(obj/screen/craft/image, location, control, params, user)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	if(user == parent)
 		ui_interact(user)
