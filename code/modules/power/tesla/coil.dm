@@ -94,8 +94,7 @@
 		return FALSE
 	last_zap = world.time
 	var/power = (powernet.avail) * 0.2 * input_power_multiplier  //Always always always use more then you output for the love of god
-	if(surplus() - power < 0) //If you are trying to shock, and there's not enough charge, DON'T
-		return
+	power = min(surplus(), power) //Take the smaller of the two
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	tesla_zap(src, 10, power, zap_flags)
