@@ -1,0 +1,5 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - tweak: "Added a new option for clients fps: \"Recommended\". Setting fps in the options to -1 now sets it to the recommended value. Byond version higher or equal to 513.1523 should be used."
+  - tweak: "Due to interal byond workings the recommended value for fps is currently 40. Another good value is 100. 60 is not advised."
