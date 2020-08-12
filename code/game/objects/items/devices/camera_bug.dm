@@ -163,7 +163,7 @@
 			dat += " (Stage [stage])"
 			dat += " <a href='?[REF(src)];track=[REF(S)]'>\[Track\]</a><br>"
 
-		for(var/obj/mecha/M in seen)
+		for(var/obj/vehicle/sealed/mecha/M in seen)
 			if(M.name in names)
 				names[M.name]++
 				dat += "[M.name] ([names[M.name]])"

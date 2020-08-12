@@ -98,10 +98,10 @@
 
 
 
-/mob/living/mech_melee_attack(obj/mecha/M)
-	if(M.occupant.a_intent == INTENT_HARM)
-		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
-			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
+/mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/M, mob/user)
+	if(user.a_intent == INTENT_HARM)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
@@ -122,10 +122,10 @@
 		visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
 						"<span class='userdanger'>[M.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, "<span class='danger'>You hit [src]!</span>")
-		log_combat(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+		log_combat(user, src, "attacked", M, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
-		log_combat(M.occupant, src, "pushed", M)
+		log_combat(user, src, "pushed", M)
 		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>", \
 						"<span class='warning'>[M] pushes you out of the way.</span>", "<span class='hear'>You hear aggressive shuffling!</span>", 5, M)
 		to_chat(M, "<span class='danger'>You push [src] out of the way.</span>")

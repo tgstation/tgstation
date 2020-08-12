@@ -29,7 +29,8 @@
 #define COOLDOWN_BORG_SELF_REPAIR	"borg_self_repair"
 #define COOLDOWN_EXPRESSPOD_CONSOLE "expresspod_console"
 
-
+//Mecha cooldowns
+#define COOLDOWN_MECHA_MESSAGE "mecha_message"
 //TIMER COOLDOWN MACROS
 
 #define COMSIG_CD_STOP(cd_index) "cooldown_[cd_index]"

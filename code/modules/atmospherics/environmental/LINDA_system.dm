@@ -79,7 +79,7 @@
 
 	var/turf/curloc = src
 
-	for (var/direction in GLOB.diagonals_multiz)
+	for(var/direction in GLOB.diagonals_multiz)
 		var/matchingDirections = 0
 		var/turf/S = get_step_multiz(curloc, direction)
 		if(!S)

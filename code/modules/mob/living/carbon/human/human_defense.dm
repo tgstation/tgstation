@@ -348,11 +348,10 @@
 		var/armor_block = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor_block, wound_bonus=wound_mod)
 
-/mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
-
-	if(M.occupant.a_intent == INTENT_HARM)
-		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
-			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
+/mob/living/carbon/human/mech_melee_attack(obj/vehicle/sealed/mecha/M, mob/user)
+	if(user.a_intent == INTENT_HARM)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
@@ -383,8 +382,7 @@
 		visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
 						"<span class='userdanger'>[M.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, "<span class='danger'>You hit [src]!</span>")
-		log_combat(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
-
+		log_combat(user, src, "attacked", M, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		..()
 

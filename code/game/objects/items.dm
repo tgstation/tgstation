@@ -755,7 +755,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return ..()
 	return 0
 
-/obj/item/mech_melee_attack(obj/mecha/M)
+/obj/item/mech_melee_attack(obj/vehicle/sealed/mecha/M)
 	return 0
 
 /obj/item/burn()

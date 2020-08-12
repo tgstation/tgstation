@@ -105,7 +105,7 @@
 	else
 		add_dent(WALL_DENT_HIT)
 
-/turf/closed/wall/mech_melee_attack(obj/mecha/M)
+/turf/closed/wall/mech_melee_attack(obj/vehicle/sealed/mecha/M)
 	M.do_attack_animation(src)
 	switch(M.damtype)
 		if(BRUTE)

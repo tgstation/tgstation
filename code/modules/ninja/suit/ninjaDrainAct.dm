@@ -190,7 +190,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		S.spark_system.start()
 
 //MECH//
-/obj/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
+/obj/vehicle/sealed/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -198,7 +198,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	var/drain = 0 //Drain amount
 	. = 0
 
-	occupant_message("<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
+	to_chat(occupants, "[icon2html(src, occupants)]<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
 	if(get_charge())
 		while(G.candrain && cell.charge > 0 && !maxcapacity)
 			drain = rand(G.mindrain,G.maxdrain)

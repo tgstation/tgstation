@@ -137,7 +137,7 @@
 		return
 	attack_generic(user, rand(10, 15), BRUTE, "melee", 1)
 
-/obj/mech_melee_attack(obj/mecha/M)
+/obj/mech_melee_attack(obj/vehicle/sealed/mecha/M)
 	M.do_attack_animation(src)
 	var/play_soundeffect = 0
 	var/mech_damtype = M.damtype

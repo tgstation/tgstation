@@ -119,7 +119,7 @@ Buildable meters
 
 /obj/item/pipe/trinary/flippable/fixed_dir()
 	. = dir
-	if(dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(dir))
 		. = turn(dir, 45)
 
 /obj/item/pipe/attack_self(mob/user)

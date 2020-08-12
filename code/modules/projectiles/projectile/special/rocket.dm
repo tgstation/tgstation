@@ -24,7 +24,7 @@
 	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
 
 	if(ismecha(target))
-		var/obj/mecha/M = target
+		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(anti_armour_damage)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
@@ -56,7 +56,7 @@
 	embedding = null
 	var/sturdy = list(
 	/turf/closed,
-	/obj/mecha,
+	/obj/vehicle/sealed/mecha,
 	/obj/machinery/door/,
 	/obj/machinery/door/poddoor/shutters
 	)

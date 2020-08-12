@@ -7,3 +7,10 @@
 
 //Car trait flags
 #define CAN_KIDNAP 1
+
+#define ISDIAGONALDIR(d) (d&(d-1))
+#define NSCOMPONENT(d)   (d&(NORTH|SOUTH))
+#define EWCOMPONENT(d)   (d&(EAST|WEST))
+#define NSDIRFLIP(d)     (d^(NORTH|SOUTH))
+#define EWDIRFLIP(d)     (d^(EAST|WEST))
+#define DIRFLIP(d)       turn(d, 180)

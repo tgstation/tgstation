@@ -7,6 +7,7 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	density = TRUE
 	anchored = FALSE
+	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants				//mob = bitflags of their control level.
 	var/max_occupants = 1
 	var/max_drivers = 1
@@ -124,9 +125,9 @@
 	return TRUE
 
 /obj/vehicle/proc/vehicle_move(direction)
-	if(lastmove + movedelay > world.time)
+	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
-	lastmove = world.time
+	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
 		var/did_move = step(src, direction)
