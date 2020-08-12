@@ -65,8 +65,9 @@ def ProcessFile(path):
       pix[coords] = (0, 0, 0, 1)
 
     PngSave(im, path)
-  except:
+  except Exception as e:
     print("Could not process " + name)
+    print(e)
 
 root_dir = os.path.abspath(os.path.join(current_dir, "../../"))
 icons_dir = os.path.join(root_dir, "icons")
