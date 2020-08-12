@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	fps = prefs.clientfps
+	fps = (prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
 
 	if(fexists(roundend_report_file()))
 		verbs += /client/proc/show_previous_roundend_report
