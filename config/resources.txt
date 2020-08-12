@@ -30,10 +30,10 @@ EXTERNAL_RSC_URLS http://tgstation13.download/byond/tgstationv2.zip
 
 # Local folder to save assets to. 
 # Assets will be saved in the format of asset.MD5HASH.EXT or in namespaces/hash/ as ASSET_FILE_NAME or asset.MD5HASH.EXT
-#ASSET_CDN_WEBROOT data/asset-webroot/
+#ASSET_CDN_WEBROOT data/asset-store/
 
 # URL the folder from above can be accessed from.
 # for best results the webserver powering this should return a long cache validity time, as all assets sent via this transport use hash based urls
-# if you want to test this locally, you simpily run `python -m http.server 8000 --bind 127.0.0.1` from within the local asset folder (ie: cd to it first)
-#ASSET_CDN_URL http://localhost:8000/
+# if you want to test this locally, you simpily run the `localhost-asset-webroot-server.py` python3 script to host assets stored in `data/asset-store/` via http://localhost:58715/
+#ASSET_CDN_URL http://localhost:58715/
 
