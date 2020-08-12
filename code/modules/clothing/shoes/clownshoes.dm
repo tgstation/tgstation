@@ -114,14 +114,14 @@
 	icon_state = "clown_clogs"
 	inhand_icon_state = "clown_shoes_clogs"
 
-/obj/item/clothing/shoes/clown_shoes/clogs/attackby(obj/H, mob/user, loc)
-	..()
-	if (H.type == /obj/item/reagent_containers/honeycomb || H.type== /obj/item/grown/sunflower)
+/obj/item/clothing/shoes/clown_shoes/clogs/attackby(obj/item/attacking_item, mob/user, loc)
+	. = ..()
+	if (attacking_item.type == /obj/item/reagent_containers/honeycomb || attacking_item.type== /obj/item/grown/sunflower)
 		var/location = get_turf(user)
 		new /obj/item/clothing/shoes/clown_shoes/dutch(location)
-		qdel(H)
+		qdel(attacking_item)
 		qdel(src)
-	return
+
 
 /obj/item/clothing/shoes/clown_shoes/clogs/Initialize()
 	. = ..()
