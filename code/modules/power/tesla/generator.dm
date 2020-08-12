@@ -8,3 +8,4 @@
 /obj/machinery/the_singularitygen/tesla/zap_act(power, zap_flags)
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		energy += power
+	. = ..(power, zap_flags & ~ZAP_MACHINE_EXPLOSIVE & ~ZAP_OBJ_DAMAGE) // Don't blow yourself up yeah?

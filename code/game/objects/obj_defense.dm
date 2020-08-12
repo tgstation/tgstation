@@ -229,7 +229,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		SSfire_burning.processing -= src
 
 ///Called when the obj is hit by a tesla bolt.
-/obj/zap_act(power, zap_flags, shocked_targets)
+/obj/zap_act(power, zap_flags)
 	if(QDELETED(src))
 		return 0
 	obj_flags |= BEING_SHOCKED

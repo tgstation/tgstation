@@ -745,8 +745,7 @@
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
 		qdel(src)
-	else
-		return ..()
+	. = ..(power, zap_flags & ~ZAP_MACHINE_EXPLOSIVE & ~ZAP_OBJ_DAMAGE)
 
 // called when area power state changes
 /obj/machinery/light/power_change()

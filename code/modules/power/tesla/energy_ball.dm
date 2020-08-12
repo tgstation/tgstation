@@ -328,7 +328,7 @@
 		power /= 1.5
 
 	else
-		power = closest_atom.zap_act(power, zap_flags, shocked_targets)
+		power = closest_atom.zap_act(power, zap_flags)
 	if(prob(20))//I know I know
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets.Copy())//No pass by ref, it's a bad play
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets.Copy())
