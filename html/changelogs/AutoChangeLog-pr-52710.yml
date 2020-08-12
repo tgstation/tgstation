@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - tweak: "If you attach something to a grenade's boom wire it won't instantly trigger on pulse, instead using the same timer used for inhand activations."
-  - rscadd: "The voice analyzer now says something when it triggers, and plays a short whirrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr sound. The time between parse and trigger has been increased to 2 seconds as well. Oh and they can't be used when whispering."
