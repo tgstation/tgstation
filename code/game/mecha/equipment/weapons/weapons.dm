@@ -10,6 +10,7 @@
 	var/projectile_delay = 0
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
+	mech_flags = EXOSUIT_MODULE_COMBAT
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/M)
 	if(!..())
@@ -144,7 +145,7 @@
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
 	harmful = TRUE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/working/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/M)
 	if(..()) //combat mech
 		return 1
 	else if(M.equipment.len < M.max_equip && istype(M))
@@ -169,6 +170,7 @@
 	equip_cooldown = 150
 	range = MECHA_MELEE|MECHA_RANGED
 	kickback = FALSE
+	mech_flags = EXOSUIT_MODULE_HONK
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
 	if(..())
@@ -377,7 +379,7 @@
 	return 1
 
 //used for projectile initilisation (priming flashbang) and additional logging
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proc/proj_init(var/obj/O)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proc/proj_init(obj/O)
 	return
 
 
@@ -395,7 +397,7 @@
 	var/det_time = 20
 	ammo_type = "flashbang"
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/grenade/flashbang/F)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(obj/item/grenade/flashbang/F)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
@@ -422,6 +424,7 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 100
 	equip_cooldown = 20
+	mech_flags = EXOSUIT_MODULE_HONK
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/can_attach(obj/mecha/combat/honker/M)
 	if(..())
@@ -439,6 +442,7 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 100
 	equip_cooldown = 10
+	mech_flags = EXOSUIT_MODULE_HONK
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/can_attach(obj/mecha/combat/honker/M)
 	if(..())
@@ -446,7 +450,7 @@
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/assembly/mousetrap/armed/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
 
 
@@ -466,9 +470,10 @@
 	harmful = TRUE
 	diags_first = TRUE
 	/// Damage done by the glove on contact. Also used to determine throw distance (damage / 5)
-	var/punch_damage = 35 
+	var/punch_damage = 35
 	/// TRUE - Can toggle between lethal and non-lethal || FALSE - Cannot toggle
-	var/can_toggle_lethal = TRUE 
+	var/can_toggle_lethal = TRUE
+	mech_flags = EXOSUIT_MODULE_HONK
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/mecha/combat/honker/M)
 	if(..())

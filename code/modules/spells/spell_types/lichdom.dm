@@ -11,7 +11,7 @@
 	clothes_req = FALSE
 	centcom_cancast = FALSE
 	invocation = "NECREM IMORTIUM!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 10
@@ -80,8 +80,8 @@
 	desc = "Stores souls. Revives liches. Also repels mosquitos."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
-	color = "#003300"
-	light_color = "#003300"
+	color = COLOR_VERY_DARK_LIME_GREEN
+	light_color = COLOR_VERY_DARK_LIME_GREEN
 	var/lon_range = 3
 	var/resurrections = 0
 	var/datum/mind/mind

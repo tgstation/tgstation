@@ -81,7 +81,7 @@
 			projectiletype = /obj/projectile/temp/basilisk/heated
 			addtimer(CALLBACK(src, .proc/cool_down), 3000)
 
-mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
+/mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	visible_message("<span class='warning'>[src] appears to be cooling down...</span>")
 	if(stat != DEAD)
 		icon_state = "Basilisk"

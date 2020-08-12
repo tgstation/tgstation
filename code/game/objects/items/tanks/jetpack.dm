@@ -74,7 +74,7 @@
 /obj/item/tank/jetpack/proc/move_react(mob/user)
 	if(!on)//If jet dont work, it dont work
 		return
-	if(!user)//Don't allow jet self using
+	if(!user || !user.client)//Don't allow jet self using
 		return
 	if(!isturf(user.loc))//You can't use jet in nowhere or from mecha/closet
 		return
@@ -109,7 +109,7 @@
 /obj/item/tank/jetpack/suicide_act(mob/user)
 	if (istype(user, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
-		H.forcesay("WHAT THE FUCK IS CARBON DIOXIDE?")
+		H.say("WHAT THE FUCK IS CARBON DIOXIDE?")
 		H.visible_message("<span class='suicide'>[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!</span>")
 		return (OXYLOSS)
 	else

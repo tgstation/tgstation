@@ -45,7 +45,7 @@
 		shield.forceMove(loc)
 		shield.dir = dir
 
-/obj/mecha/combat/durand/forceMove(var/turf/T)
+/obj/mecha/combat/durand/forceMove(turf/T)
 	. = ..()
 	shield.forceMove(T)
 
@@ -72,7 +72,7 @@
 
 /**Checks if defense mode is enabled, and if the attacker is standing in an area covered by the shield.
 Expects a turf. Returns true if the attack should be blocked, false if not.*/
-/obj/mecha/combat/durand/proc/defense_check(var/turf/aloc)
+/obj/mecha/combat/durand/proc/defense_check(turf/aloc)
 	if (!defense_mode || !shield || shield.switching)
 		return FALSE
 	. = FALSE
@@ -91,7 +91,7 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 				. = TRUE
 	return
 
-obj/mecha/combat/durand/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0)
+/obj/mecha/combat/durand/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0)
 	if(defense_check(user.loc))
 		log_message("Attack absorbed by defense field. Attacker - [user].", LOG_MECHA, color="orange")
 		shield.attack_generic(user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)

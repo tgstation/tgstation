@@ -1,9 +1,7 @@
 /datum/job/hos
 	title = "Head of Security"
-	flag = HOS
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Captain")
-	department_flag = ENGSEC
 	head_announce = list(RADIO_CHANNEL_SECURITY)
 	faction = "Station"
 	total_positions = 1
@@ -31,6 +29,7 @@
 	paycheck_department = ACCOUNT_SEC
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_SECURITY
+	bounty_types = CIV_JOB_SEC
 
 /datum/outfit/job/hos
 	name = "Head of Security"

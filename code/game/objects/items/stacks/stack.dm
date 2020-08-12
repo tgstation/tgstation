@@ -38,6 +38,8 @@
 	var/absorption_capacity
 	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in ticks is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
 	var/absorption_rate
+	/// Amount of matter for RCD
+	var/matter_amount = 0
 
 
 /obj/item/stack/on_grind()
@@ -258,10 +260,6 @@
 			W.ini_dir = W.dir
 		//END: oh fuck i'm so sorry
 
-		else if(istype(O, /obj/item/restraints/handcuffs/cable))
-			var/obj/item/cuffs = O
-			cuffs.color = color
-
 		if (QDELETED(O))
 			return //It's a stack and has already been merged
 
@@ -274,6 +272,17 @@
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
+
+/obj/item/stack/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, amount))
+		add(clamp(vval, 1-amount, max_amount - amount)) //there must always be one.
+		return TRUE
+	else if(vname == NAMEOF(src, max_amount))
+		max_amount = max(vval, 1)
+		add((max_amount < amount) ? (max_amount - amount) : 0) //update icon, weight, ect
+		return TRUE
+	return ..()
+
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (get_amount() < R.req_amount*multiplier)

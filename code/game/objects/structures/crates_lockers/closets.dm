@@ -46,11 +46,6 @@
 	update_icon()
 	PopulateContents()
 
-	RegisterSignal(src, COMSIG_ATOM_CANREACH, .proc/canreach_react)
-
-/obj/structure/closet/proc/canreach_react(datum/source, list/next)
-	return COMPONENT_BLOCK_REACH //closed block, open have nothing inside.
-
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
 	return
@@ -61,6 +56,8 @@
 
 /obj/structure/closet/update_icon()
 	. = ..()
+	if (istype(src, /obj/structure/closet/supplypod))
+		return
 	if(!opened)
 		layer = OBJ_LAYER
 	else
@@ -287,7 +284,7 @@
 	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
 		if(isinspace() && !anchored)
 			return
-		setAnchored(!anchored)
+		set_anchored(!anchored)
 		W.play_tool_sound(src, 75)
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
@@ -337,8 +334,11 @@
 			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Paralyze(40)
-			O.forceMove(T)
-			close()
+			if(istype(src, /obj/structure/closet/supplypod/extractionpod))
+				O.forceMove(src)
+			else
+				O.forceMove(T)
+				close()
 	else
 		O.forceMove(T)
 	return 1
@@ -528,11 +528,11 @@
 	step_towards(user, T2)
 	T1 = get_turf(user)
 	if(T1 == T2)
-		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+		user.set_resting(TRUE) //so people can jump into crates without slamming the lid on their head
 		if(!close(user))
 			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-			user.resting = FALSE
+			user.set_resting(FALSE)
 			return
-		user.resting = FALSE
+		user.set_resting(FALSE)
 		togglelock(user)
 		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")

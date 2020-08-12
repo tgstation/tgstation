@@ -55,6 +55,14 @@
 		return
 	return ..()
 
+/**
+  * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
+  * functionality. What we DON'T want is attack_tk_grab attempting to pick up the
+  * intercom as if it was an ordinary item.
+  */
+/obj/item/radio/intercom/attack_tk_grab(mob/user)
+	interact(user)
+
 /obj/item/radio/intercom/attack_ai(mob/user)
 	interact(user)
 
@@ -64,9 +72,8 @@
 		return
 	interact(user)
 
-/obj/item/radio/intercom/interact(mob/user)
-	..()
-	ui_interact(user, state = GLOB.default_state)
+/obj/item/radio/intercom/ui_state(mob/user)
+	return GLOB.default_state
 
 /obj/item/radio/intercom/can_receive(freq, level)
 	if(!on)
@@ -86,8 +93,8 @@
 	return TRUE
 
 
-/obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
-	if(message_mode == MODE_INTERCOM)
+/obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
+	if(message_mods[RADIO_EXTENSION] == MODE_INTERCOM)
 		return  // Avoid hearing the same thing twice
 	return ..()
 

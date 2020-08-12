@@ -261,10 +261,10 @@
 
 /datum/controller/subsystem/vv_edit_var(var_name, var_value)
 	switch (var_name)
-		if ("can_fire")
+		if (NAMEOF(src, can_fire))
 			//this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
 			if (var_value)
 				next_fire = world.time + wait
-		if ("queued_priority") //editing this breaks things.
-			return 0
+		if (NAMEOF(src, queued_priority)) //editing this breaks things.
+			return FALSE
 	. = ..()

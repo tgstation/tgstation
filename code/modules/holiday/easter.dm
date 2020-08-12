@@ -49,6 +49,8 @@
 	icon_prefix = "rabbit"
 	feedMessages = list("It nibbles happily.","It noms happily.")
 	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
+	pet_bonus = TRUE
+	pet_bonus_emote = "hops around happily!"
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
@@ -61,26 +63,24 @@
 	unsuitable_atmos_damage = 0
 
 //Easter Baskets
-/obj/item/storage/bag/easterbasket
+/obj/item/storage/basket/easter
 	name = "Easter Basket"
-	icon = 'icons/mob/easter.dmi'
-	icon_state = "basket"
 
-/obj/item/storage/bag/easterbasket/Initialize()
+/obj/item/storage/basket/easter/Initialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/egg, /obj/item/reagent_containers/food/snacks/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg))
 
-/obj/item/storage/bag/easterbasket/proc/countEggs()
+/obj/item/storage/basket/easter/proc/countEggs()
 	cut_overlays()
 	add_overlay("basket-grass")
 	add_overlay("basket-egg[min(contents.len, 5)]")
 
-/obj/item/storage/bag/easterbasket/Exited()
+/obj/item/storage/basket/easter/Exited()
 	. = ..()
 	countEggs()
 
-/obj/item/storage/bag/easterbasket/Entered()
+/obj/item/storage/basket/easter/Entered()
 	. = ..()
 	countEggs()
 

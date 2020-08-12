@@ -419,6 +419,8 @@
 
 /proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
 	var/list/candidates = list()
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		return candidates
 
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		candidates += G
@@ -561,7 +563,7 @@
 				continue
 
 		if (!isspaceturf(found_turf))
-			if (!is_blocked_turf(found_turf))
+			if (!found_turf.is_blocked_turf())
 				possible_loc.Add(found_turf)
 
 	// Need at least one free location.

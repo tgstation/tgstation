@@ -24,16 +24,16 @@ AI MODULES
 	var/bypass_law_amt_check = 0
 	custom_materials = list(/datum/material/gold = 50)
 
-/obj/item/ai_module/examine(var/mob/user as mob)
+/obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
 	if(Adjacent(user))
 		show_laws(user)
 
-/obj/item/ai_module/attack_self(var/mob/user as mob)
+/obj/item/ai_module/attack_self(mob/user as mob)
 	..()
 	show_laws(user)
 
-/obj/item/ai_module/proc/show_laws(var/mob/user as mob)
+/obj/item/ai_module/proc/show_laws(mob/user as mob)
 	if(laws.len)
 		to_chat(user, "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B>")
 		for(var/law in laws)
@@ -364,7 +364,7 @@ AI MODULES
 	law_id = "asimov"
 	var/subject = "human being"
 
-/obj/item/ai_module/core/full/asimov/attack_self(var/mob/user as mob)
+/obj/item/ai_module/core/full/asimov/attack_self(mob/user as mob)
 	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject, MAX_NAME_LEN)
 	if(!targName)
 		return

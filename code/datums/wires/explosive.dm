@@ -1,5 +1,6 @@
 /datum/wires/explosive
 	var/duds_number = 2 // All "dud" wires cause an explosion when cut or pulsed
+	proper_name = "Explosive Device"
 	randomize = TRUE // Prevents wires from showing up on blueprints
 
 /datum/wires/explosive/New(atom/holder)
@@ -44,8 +45,8 @@
 	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	var/mob/M = get_mob_by_ckey(fingerprint)
 	var/turf/T = get_turf(M)
-	G.log_grenade(M, T)
-	G.prime()
+	G.log_grenade(M, T) //Used in preprime() too but this one convays where the mob who triggered the bomb is
+	G.preprime() //The one here convays where the bomb was when it went boom
 
 /datum/wires/explosive/chem_grenade/detach_assembly(color)
 	var/obj/item/assembly/S = get_attached(color)

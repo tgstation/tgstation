@@ -64,10 +64,10 @@
 	hitsound = null
 	attack_verb_on = list("slipped")
 	clumsy_check = FALSE
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 	sword_color = "yellow"
 	heat = 0
-	light_color = "#ffff00"
+	light_color = COLOR_YELLOW
 	var/next_trombone_allowed = 0
 
 /obj/item/melee/transforming/energy/sword/bananium/ComponentInitialize()

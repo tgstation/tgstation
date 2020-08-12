@@ -221,7 +221,7 @@
 		user.dropItemToGround(src)
 
 
-/obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
+/obj/item/dice/d20/fate/proc/effect(mob/living/carbon/human/user,roll)
 	var/turf/T = get_turf(src)
 	switch(roll)
 		if(1)
@@ -363,7 +363,7 @@
 	charge_max = 100
 	clothes_req = 0
 	invocation = "JE VES"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 100
