@@ -545,6 +545,8 @@
 		become_husk("burn")
 
 	med_hud_set_health()
+	update_succumb_action()
+
 	if(stat == SOFT_CRIT)
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else

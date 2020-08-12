@@ -383,13 +383,17 @@
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
-	if (InCritical() && !HAS_TRAIT(src, TRAIT_NODEATH))
+	if (can_succumb())
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 		if(!whispered)
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
+
+/// Returns whether or not the mob can succumb
+/mob/living/proc/can_succumb()
+	return InCritical() && !HAS_TRAIT(src, TRAIT_NODEATH)
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
 	if(stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && restrained(ignore_grab)) || (!ignore_stasis && IS_IN_STASIS(src)))
@@ -508,6 +512,7 @@
 	med_hud_set_health()
 	med_hud_set_status()
 	update_health_hud()
+	update_succumb_action()
 
 /mob/living/update_health_hud()
 	var/severity = 0
@@ -542,6 +547,16 @@
 		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
 	else
 		clear_fullscreen("brute")
+
+/// Shows or doesn't show the succumb action button if the mob is eligible
+/mob/living/proc/update_succumb_action()
+	if (can_succumb())
+		if (!succumb_action)
+			succumb_action = new
+		succumb_action.Grant(src)
+	else if (succumb_action)
+		succumb_action.Remove(src)
+		QDEL_NULL(succumb_action)
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, excess_healing = 0)
