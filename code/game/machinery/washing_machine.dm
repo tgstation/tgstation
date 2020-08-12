@@ -273,8 +273,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(istype(src, /obj/item/clothing/shoes/clown_shoes/prison))
 		new /obj/item/restraints/handcuffs(loc)
 	new /obj/item/clothing/shoes/clown_shoes(loc)
+	. = ..()
 	qdel(src)
-	..()
 
 /obj/machinery/washing_machine/relaymove(mob/user)
 	container_resist(user)
