@@ -171,7 +171,7 @@
 	inhand_icon_state = "clown_shoes_galoshes"
 	permeability_coefficient = 0.01
 	clothing_flags = NOSLIP
-	strip_delay = 30
+	strip_delay = 3 SECONDS
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
