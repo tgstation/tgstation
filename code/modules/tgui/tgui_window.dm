@@ -69,7 +69,7 @@
 				inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
 			else if(copytext(name, -3) == ".js")
 				inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
-		asset.send()
+		asset.send(client)
 	html = replacetextEx(html, "<!-- tgui:styles -->\n", inline_styles)
 	html = replacetextEx(html, "<!-- tgui:scripts -->\n", inline_scripts)
 	// Open the window
@@ -185,6 +185,8 @@
  * Makes an asset available to use in tgui.
  *
  * required asset datum/asset
+ *
+ * return bool - TRUE if any assets had to be sent to the client
  */
 /datum/tgui_window/proc/send_asset(datum/asset/asset)
 	if(!client || !asset)
@@ -194,7 +196,7 @@
 		send_message("asset/stylesheet", spritesheet.css_filename())
 	send_message("asset/mappings", asset.get_url_mappings())
 	sent_assets += list(asset)
-	asset.send(client)
+	return asset.send(client)
 
 /**
  * private
