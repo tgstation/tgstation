@@ -106,7 +106,6 @@
 
 	var/list/implants = null
 
-	var/datum/action/succumb/succumb_action
 	var/datum/riding/riding_datum
 
 	var/last_words	///used for database logging

@@ -551,12 +551,9 @@
 /// Shows or doesn't show the succumb action button if the mob is eligible
 /mob/living/proc/update_succumb_action()
 	if (can_succumb())
-		if (!succumb_action)
-			succumb_action = new
-		succumb_action.Grant(src)
-	else if (succumb_action)
-		succumb_action.Remove(src)
-		QDEL_NULL(succumb_action)
+		throw_alert("succumb", /obj/screen/alert/succumb)
+	else
+		clear_alert("succumb")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, excess_healing = 0)

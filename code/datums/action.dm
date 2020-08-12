@@ -772,22 +772,3 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
-
-/datum/action/succumb
-	name = "Succumb"
-	desc = "Shuffle off this mortal coil."
-	icon_icon = 'icons/mob/mob.dmi'
-	button_icon_state = "ghost"
-
-/datum/action/succumb/Trigger()
-	if (!..())
-		return FALSE
-
-	if (isliving(owner))
-		var/mob/living/living = owner
-		var/last_whisper = input("Do you have any last words?", "Final Words") as null | text
-		if (!isnull(last_whisper))
-			if (length(last_whisper))
-				living.say("#[last_whisper]")
-			else
-				living.succumb(whispered = FALSE)
