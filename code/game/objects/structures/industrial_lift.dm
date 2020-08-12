@@ -15,14 +15,14 @@
 /datum/lift_master/proc/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
 	if(new_lift_platform in lift_platforms)
 		return
-	lift_platform.lift_master_datum = src
+	new_lift_platform.lift_master_datum = src
 	LAZYADD(lift_platforms, new_lift_platform)
 	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
 
 /datum/lift_master/proc/remove_lift_platforms(obj/structure/industrial_lift/old_lift_platform)
 	if(!(old_lift_platform in lift_platforms))
 		return
-	lift_platform.lift_master_datum = null
+	old_lift_platform.lift_master_datum = null
 	LAZYREMOVE(lift_platforms, old_lift_platform)
 	UnregisterSignal(old_lift_platform, COMSIG_PARENT_QDELETING)
 
