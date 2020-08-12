@@ -446,22 +446,22 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/is_shielded()
 
-/turf/contents_explosion(severity, target)
 
-	for(var/V in contents)
-		var/atom/A = V
-		if(!QDELETED(A))
-			if(ismovable(A))
-				var/atom/movable/AM = A
-				if(!AM.ex_check(explosion_id))
-					continue
-			switch(severity)
-				if(EXPLODE_DEVASTATE)
-					SSexplosions.highobj += A
-				if(EXPLODE_HEAVY)
-					SSexplosions.medobj += A
-				if(EXPLODE_LIGHT)
-					SSexplosions.lowobj += A
+/turf/contents_explosion(severity, target)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		if(!movable_thing.ex_check(explosion_id))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
+
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
