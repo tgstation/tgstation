@@ -28,7 +28,7 @@
 	shuttle_id = "[port_id]_[suffix]"
 	mappath = "[prefix][shuttle_id].dmm"
 
-	if (prerequisites)
+	if (!prerequisites_met())
 		always_allowed = TRUE
 
 	. = ..()
