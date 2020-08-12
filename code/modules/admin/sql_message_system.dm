@@ -502,7 +502,7 @@
 					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
 			var/list/data = list("<div style='margin:0px;[alphatext]'><p class='severity'>")
 			if(severity)
-				data += "<img src='[severity]_button.png' height='24' width='24'></img> "
+				data += "<img src='[SSassets.transport.get_asset_url("[severity]_button.png")]' height='24' width='24'></img> "
 			data += "<b>[timestamp] | [server] | [admin_key][secret ? " | <i>- Secret</i>" : ""]"
 			if(expire_timestamp)
 				data += " | Expires [expire_timestamp]"

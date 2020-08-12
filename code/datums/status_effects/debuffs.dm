@@ -33,18 +33,32 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
+
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
 	id = "immobilized"
+
+/datum/status_effect/incapacitating/immobilized/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/immobilized/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
@@ -54,9 +68,11 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/paralyzed/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 //UNCONSCIOUS
@@ -163,12 +179,19 @@
 	if(.)
 		update_time_of_death()
 		owner.reagents?.end_metabolization(owner, FALSE)
-		owner.update_mobility()
+
+/datum/status_effect/grouped/stasis/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	owner.update_mobility()
 
 /datum/status_effect/grouped/stasis/tick()
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	owner.update_mobility()
 	update_time_of_death()
 	return ..()
@@ -389,6 +412,22 @@
 		if(!QDELETED(I) && prob(75)) //Just in case
 			I.take_damage(100)
 	return ..()
+
+/// A status effect used for specifying confusion on a living mob.
+/// Created automatically with /mob/living/set_confusion.
+/datum/status_effect/confusion
+	id = "confusion"
+	alert_type = null
+	var/strength
+
+/datum/status_effect/confusion/tick()
+	strength -= 1
+	if (strength <= 0)
+		owner.remove_status_effect(STATUS_EFFECT_CONFUSION)
+		return
+
+/datum/status_effect/confusion/proc/set_strength(new_strength)
+	strength = new_strength
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"

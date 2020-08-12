@@ -41,6 +41,8 @@
 	return
 
 /mob/dead/new_player/proc/new_player_panel()
+	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
+	asset_datum.send(client)
 	var/output = "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
@@ -91,7 +93,6 @@
 
 	output += "</center>"
 
-	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
@@ -331,6 +332,9 @@
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
+		humanc.increment_scar_slot()
+		humanc.load_persistent_scars()
+
 		if(GLOB.summon_guns_triggered)
 			give_guns(humanc)
 		if(GLOB.summon_magic_triggered)
@@ -432,16 +436,6 @@
 		is_antag = TRUE
 
 	client.prefs.copy_to(H, antagonist = is_antag, is_latejoiner = transfer_after)
-	var/cur_scar_index = client.prefs.scars_index
-	if(client.prefs.persistent_scars && client.prefs.scars_list["[cur_scar_index]"])
-		var/scar_string = client.prefs.scars_list["[cur_scar_index]"]
-		var/valid_scars = ""
-		for(var/scar_line in splittext(scar_string, ";"))
-			if(H.load_scar(scar_line))
-				valid_scars += "[scar_line];"
-
-		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
-		client.prefs.save_character()
 
 	client.prefs.copy_to(H, antagonist = is_antag)
 	H.dna.update_dna_identity()

@@ -323,7 +323,7 @@ All foods are distributed among various categories. Use common sense.
 			if(bitecount >= 5)
 				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
 				if(sattisfaction_text)
-					M.emote(sattisfaction_text)
+					M.manual_emote(sattisfaction_text)
 				qdel(src)
 
 

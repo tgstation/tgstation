@@ -406,7 +406,7 @@
 	return sortList(world.GetConfig("ban"))
 
 
-/proc/get_stickyban_from_ckey(var/ckey)
+/proc/get_stickyban_from_ckey(ckey)
 	. = list()
 	if (!ckey)
 		return null

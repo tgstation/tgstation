@@ -87,7 +87,7 @@
 		AM.forceMove(get_turf(src))
 	return ..()
 
-/obj/effect/dummy/phased_mob/spell_jaunt/relaymove(var/mob/user, direction)
+/obj/effect/dummy/phased_mob/spell_jaunt/relaymove(mob/user, direction)
 	if ((movedelay > world.time) || reappearing || !direction)
 		return
 	var/turf/newLoc = get_step(src,direction)

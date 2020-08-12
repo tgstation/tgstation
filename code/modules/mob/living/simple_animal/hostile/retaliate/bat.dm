@@ -33,8 +33,6 @@
 	var/max_co2 = 0 //to be removed once metastation map no longer use those for Sgt Araneus
 	var/min_oxy = 0
 	var/max_tox = 0
-
-
 	//Space bats need no air to fly in.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -42,3 +40,28 @@
 /mob/living/simple_animal/hostile/retaliate/bat/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+
+/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus //Despite being a bat for... reasons, this is now a spider, and is one of the HoS' pets.
+	name = "Sergeant Araneus"
+	real_name = "Sergeant Araneus"
+	desc = "A fierce companion of the Head of Security, this spider has been carefully trained by Nanotrasen specialists. Its beady, staring eyes send shivers down your spine."
+	emote_hear = list("chitters")
+	faction = list("spiders")
+	harm_intent_damage = 3
+	health = 200
+	icon_dead = "guard_dead"
+	icon_gib = "guard_dead"
+	icon_living = "guard"
+	icon_state = "guard"
+	maxHealth = 250
+	max_co2 = 5
+	max_tox = 2
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	min_oxy = 5
+	movement_type = GROUND
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	turns_per_move = 10
+	pet_bonus = TRUE
+	pet_bonus_emote = "chitters proudly!"
