@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - rscadd: "Adds a Chemical Beacon and a Chemical Recipient. They can be used to teleport chemicals over a long distance, altough the Chemical Recipient must be researched and printed in the medical protolathe. Simply use a multitool on the Recipient and then on any subsequent Chemical Beacons."
+  - code_imp: "Reworked plumbing RCD code a bit to support every object, not just subtypes of the abstract plumbing machinery class"

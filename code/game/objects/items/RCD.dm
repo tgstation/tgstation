@@ -906,6 +906,7 @@ RLD
 	max_matter = 100
 	matter_divisor = 20
 
+///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
@@ -922,19 +923,18 @@ RLD
 	var/list/choices = list()
 	///index, used in the attack self to get the type. stored here since it doesnt change
 	var/list/name_to_type = list()
-	///
-	var/list/machinery_data = list("cost" = list(), "delay" = list())
+	///All info for construction
+	var/list/machinery_data = list("cost" = list())
 
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
 	if(!choices.len)
-		for(var/A in subtypesof(/obj/machinery/plumbing))
+		for(var/A in GLOB.plumbing_constructables)
 			var/obj/machinery/plumbing/M = A
-			if(initial(M.rcd_constructable))
-				choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
-				name_to_type[initial(M.name)] = M
-				machinery_data["cost"][A] = initial(M.rcd_cost)
-				machinery_data["delay"][A] = initial(M.rcd_delay)
+
+			choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
+			name_to_type[initial(M.name)] = M
+			machinery_data["cost"][A] = GLOB.plumbing_constructables[A]
 
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -950,7 +950,8 @@ RLD
 		return FALSE
 
 	if(checkResource(machinery_data["cost"][blueprint], user) && blueprint)
-		if(do_after(user, machinery_data["delay"][blueprint], target = A))
+		//"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
+		if(do_after(user, machinery_data["cost"][blueprint], target = A))
 			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(A))
 				useResource(machinery_data["cost"][blueprint], user)
 				activate()

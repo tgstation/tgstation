@@ -6321,7 +6321,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/fore)
 "aog" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 8;
 	id = "pod_lavaland2";
 	name = "lavaland"
@@ -10487,12 +10487,10 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/item/radio/off,
-/obj/item/assembly/timer,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "ayw" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 4;
 	id = "pod_lavaland3";
 	name = "lavaland"
@@ -10631,7 +10629,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/item/clothing/head/welding,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "ayN" = (
@@ -11558,13 +11555,14 @@
 /area/maintenance/port/fore)
 "aAW" = (
 /obj/structure/rack,
-/obj/item/tank/jetpack/carbondioxide,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/radio/off,
+/obj/item/assembly/timer,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aAX" = (
@@ -11659,12 +11657,16 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/tank/jetpack/carbondioxide,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/item/clothing/head/welding,
+/obj/item/clothing/head/welding{
+	pixel_x = -3;
+	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
@@ -11989,10 +11991,6 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aCb" = (
-/obj/item/pen{
-	desc = "Writes upside down!";
-	name = "astronaut pen"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -22309,7 +22307,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "baC" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 8;
 	id = "pod_lavaland1";
 	name = "lavaland"
@@ -31380,7 +31378,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "bvM" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 4;
 	id = "pod_lavaland4";
 	name = "lavaland"
@@ -32031,6 +32029,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bxt" = (
@@ -32088,6 +32087,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bxC" = (
@@ -32110,6 +32110,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bxE" = (
@@ -33141,6 +33142,7 @@
 	dir = 4;
 	pixel_x = 27
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bAd" = (
@@ -35095,7 +35097,6 @@
 	dir = 1;
 	id = "incineratorturbine"
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEz" = (
@@ -35115,7 +35116,6 @@
 	dir = 6
 	},
 /obj/machinery/meter,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEC" = (
@@ -35163,7 +35163,6 @@
 	dir = 1;
 	pixel_y = -30
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEI" = (
@@ -35198,7 +35197,6 @@
 	pixel_x = 6;
 	pixel_y = -24
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEL" = (
@@ -58139,6 +58137,17 @@
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
+"xVB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/disposal/incinerator";
+	dir = 1;
+	name = "Incinerator APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/disposal/incinerator)
 "xWd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -95555,7 +95564,7 @@ bzs
 bzs
 bwL
 bxh
-cjr
+xVB
 bzr
 bAP
 bCf
@@ -95812,7 +95821,7 @@ bBR
 caK
 bwO
 bxs
-cjr
+byO
 cjr
 cjr
 bDi
@@ -96583,7 +96592,7 @@ bvP
 bwg
 bxn
 bxE
-byO
+cjr
 bzQ
 byO
 byO
@@ -96841,7 +96850,7 @@ ccM
 juq
 akE
 cjr
-cjr
+byO
 bBl
 bEv
 bEV

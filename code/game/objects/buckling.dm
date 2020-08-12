@@ -94,7 +94,7 @@
 		M.forceMove(loc)
 
 	M.buckling = null
-	M.buckled = src
+	M.set_buckled(src)
 	M.setDir(dir)
 	buckled_mobs |= M
 	M.update_mobility()
@@ -114,7 +114,7 @@
 /atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
 	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
-		buckled_mob.buckled = null
+		buckled_mob.set_buckled(null)
 		buckled_mob.set_anchored(initial(buckled_mob.anchored))
 		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")

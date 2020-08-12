@@ -277,7 +277,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(user.client) //mainly here to avoid a runtime when the player gets gibbed when losing the emag mode.
 		var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
 		popup.set_content(dat)
-		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 
@@ -844,7 +843,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 	var/datum/browser/popup = new(user, "arcade", "The Orion Trail",400,700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 

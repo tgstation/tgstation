@@ -5,6 +5,7 @@
 	icon_state = "card_mini"
 	w_class = WEIGHT_CLASS_SMALL
 	device_type = MC_AI
+	expansion_hw = TRUE
 
 	var/obj/item/aicard/stored_card = null
 	var/locked = FALSE
@@ -38,7 +39,7 @@
 	return TRUE
 
 
-/obj/item/computer_hardware/ai_slot/try_eject(slot=0,mob/living/user = null,forced = 0)
+/obj/item/computer_hardware/ai_slot/try_eject(mob/living/user = null,forced = FALSE)
 	if(!stored_card)
 		to_chat(user, "<span class='warning'>There is no card in \the [src].</span>")
 		return FALSE
