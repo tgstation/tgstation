@@ -52,11 +52,33 @@
 		-->
 		<div class="commit sansserif">
 			<h2 class="date">12 August 2020</h2>
+			<h3 class="author">Fikou updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixes ice box pods landing 3 tiles away</li>
+				<li class="bugfix">fixes wrong path on ninja pinpointer objective</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Removed reinforcement chromosomes, AKA mutadone resistance.</li>
+				<li class="tweak">You can now craft cable restraints directly from the radial menu.</li>
+			</ul>
 			<h3 class="author">LemonInTheDark updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">If you attach something to a grenade's boom wire it won't instantly trigger on pulse, instead using the same timer used for inhand activations.</li>
 				<li class="rscadd">The voice analyzer now says something when it triggers, and plays a short whirrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr sound. The time between parse and trigger has been increased to 2 seconds as well. Oh and they can't be used when whispering.</li>
 				<li class="rscadd">If you are "in" something, and talk, runechat will be displayed as if the thing you are in talked.</li>
+			</ul>
+			<h3 class="author">MrStonedOne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">Interface assets (js/css/images) can now be managed using an external webserver instead of byond's one at a time file transfer queue.</li>
+				<li class="admin">Adds admin verb `toggle-cdn` that allows admins to disable the external webserver asset transport and revert to the old system. Useful if the webserver backing this goes down (thanks cloudflare).</li>
+				<li class="config">New config file, resources.txt, (must be loaded by an $include statement from the main config)</li>
+				<li class="server">The `external_rsc_urls.txt` config has been moved to the main config system.</li>
+			</ul>
+			<h3 class="author">Paxilmaniac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">pistols missing sprites when loaded no longer do that</li>
+				<li class="bugfix">spiderlings not getting flattened by a fly swatter in one hit</li>
 			</ul>
 			<h3 class="author">WarlockD updated:</h3>
 			<ul class="changes bgimages16">
@@ -64,6 +86,15 @@
 				<li class="bugfix">Paper works with doors now, become the next Martin Luther!</li>
 				<li class="bugfix">Dead people cannot write on it if they have the page up</li>
 				<li class="bugfix">Page goes away when you walk around</li>
+			</ul>
+			<h3 class="author">nemvar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Added a new option for clients fps: "Recommended". Setting fps in the options to -1 now sets it to the recommended value. Byond version higher or equal to 513.1523 should be used.</li>
+				<li class="tweak">Due to interal byond workings the recommended value for fps is currently 40. Another good value is 100. 60 is not advised.</li>
+			</ul>
+			<h3 class="author">tralezab updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">made the admin keycard doors more plain and straightforward in what they do.</li>
 			</ul>
 
 			<h2 class="date">11 August 2020</h2>

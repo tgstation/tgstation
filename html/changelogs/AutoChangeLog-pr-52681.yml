@@ -1,7 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - refactor: "Interface assets (js/css/images) can now be managed using an external webserver instead of byond's one at a time file transfer queue."
-  - admin: "Adds admin verb `toggle-cdn` that allows admins to disable the external webserver asset transport and revert to the old system. Useful if the webserver backing this goes down (thanks cloudflare)."
-  - config: "New config file, resources.txt, (must be loaded by an $include statement from the main config)"
-  - server: "The `external_rsc_urls.txt` config has been moved to the main config system."
