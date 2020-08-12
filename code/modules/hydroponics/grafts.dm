@@ -8,7 +8,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "graft_plant"
 	worn_icon_state = "graft"
-	attack_verb_continuous = list("planted", "vegitized", "cropped", "reaped", "farmed")
+	attack_verb_continuous = list("plants", "vegitizes", "crops", "reaps", "farms")
 	attack_verb_simple = list("plant", "vegitize", "crop", "reap", "farm")
 	///The stored trait taken from the parent plant. Defaults to perenial growth.
 	var/datum/plant_gene/trait/stored_trait

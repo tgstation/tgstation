@@ -254,7 +254,7 @@
 	weapon_weight = WEAPON_MEDIUM
 	can_be_sawn_off = FALSE
 	force = 16 //it has a hook on it
-	attack_verb_continuous = list("slashed", "hooked", "stabbed")
+	attack_verb_continuous = list("slashes", "hooks", "stabs")
 	attack_verb_simple = list("slash", "hook", "stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	//our hook gun!

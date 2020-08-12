@@ -46,7 +46,7 @@
 	wound_bonus = -80
 	bare_wound_bonus = 30
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "rended")
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 
 /obj/item/melee/cultblade/Initialize()
@@ -94,7 +94,7 @@
 	throw_range = 3
 	sharpness = SHARP_EDGED
 	light_color = COLOR_RED
-	attack_verb_continuous = list("cleaved", "slashed", "tore", "lacerated", "hacked", "ripped", "diced", "carved")
+	attack_verb_continuous = list("cleaves", "slashes", "tears", "lacerates", "hacks", "rips", "dices", "carves")
 	attack_verb_simple = list("cleave", "slash", "tear", "lacerate", "hack", "rip", "dice", "carve")
 	icon_state = "cultbastard"
 	inhand_icon_state = "cultbastard"
@@ -628,7 +628,7 @@
 	throw_speed = 2
 	armour_penetration = 30
 	block_chance = 30
-	attack_verb_continuous = list("attacked", "impaled", "stabbed", "tore", "lacerated", "gored")
+	attack_verb_continuous = list("attacks", "impales", "stabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "impale", "stab", "tear", "lacerate", "gore")
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -899,7 +899,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = WEIGHT_CLASS_BULKY
-	attack_verb_continuous = list("bumped", "prodded")
+	attack_verb_continuous = list("bumps", "prods")
 	attack_verb_simple = list("bump", "prod")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/illusions = 2

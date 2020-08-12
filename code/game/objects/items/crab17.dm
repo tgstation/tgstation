@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "suspiciousphone"
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb_continuous = list("dumped")
+	attack_verb_continuous = list("dumps")
 	attack_verb_simple = list("dump")
 	var/dumped = FALSE
 

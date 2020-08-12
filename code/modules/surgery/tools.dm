@@ -30,7 +30,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
-	attack_verb_continuous = list("attacked", "pinched")
+	attack_verb_continuous = list("attacks", "pinches")
 	attack_verb_simple = list("attack", "pinch")
 	tool_behaviour = TOOL_HEMOSTAT
 	toolspeed = 1
@@ -52,7 +52,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
-	attack_verb_continuous = list("burnt")
+	attack_verb_continuous = list("burns")
 	attack_verb_simple = list("burn")
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
@@ -75,7 +75,7 @@
 	item_flags = SURGICAL_TOOL | EYE_STAB
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("drilled")
+	attack_verb_continuous = list("drills")
 	attack_verb_simple = list("drill")
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 1
@@ -111,7 +111,7 @@
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
-	attack_verb_continuous = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
@@ -149,7 +149,7 @@
 	throw_speed = 2
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=1000)
-	attack_verb_continuous = list("attacked", "slashed", "sawed", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "saws", "cuts")
 	attack_verb_simple = list("attack", "slash", "saw", "cut")
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
@@ -177,7 +177,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	inhand_icon_state = "drapes"
 	w_class = WEIGHT_CLASS_TINY
-	attack_verb_continuous = list("slapped")
+	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
 
 /obj/item/surgical_drapes/Initialize(mapload)
@@ -355,7 +355,7 @@
 	throw_speed = 2
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=8000, /datum/material/titanium=6000)
-	attack_verb_continuous = list("sheared", "snipped")
+	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
 	custom_premium_price = 1800
@@ -422,7 +422,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb_continuous = list("corrected", "properly set")
+	attack_verb_continuous = list("corrects", "properly sets")
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
 	toolspeed = 1

@@ -10,7 +10,7 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=60)
 	pressure_resistance = 2
-	attack_verb_continuous = list("stamped")
+	attack_verb_continuous = list("stamps")
 	attack_verb_simple = list("stamp")
 
 /obj/item/stamp/suicide_act(mob/user)

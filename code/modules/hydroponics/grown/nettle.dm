@@ -46,7 +46,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
-	attack_verb_continuous = list("stung")
+	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/suicide_act(mob/user)

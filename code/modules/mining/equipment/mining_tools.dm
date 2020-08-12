@@ -16,7 +16,7 @@
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
-	attack_verb_continuous = list("hit", "pierced", "sliced", "attacked")
+	attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 	attack_verb_simple = list("hit", "pierce", "slice", "attack")
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
@@ -29,7 +29,7 @@
 /obj/item/pickaxe/rusted
 	name = "rusty pickaxe"
 	desc = "A pickaxe that's been left to rust."
-	attack_verb_continuous = list("ineffectively hit")
+	attack_verb_continuous = list("ineffectively hits")
 	attack_verb_simple = list("ineffectively hit")
 	force = 1
 	throwforce = 1
@@ -135,7 +135,7 @@
 	inhand_icon_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=50)
-	attack_verb_continuous = list("bashed", "bludgeoned", "thrashed", "whacked")
+	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	sharpness = SHARP_EDGED
 
@@ -174,6 +174,6 @@
 	throwforce = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
-	attack_verb_continuous = list("slashed", "impaled", "stabbed", "sliced")
+	attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
 	sharpness = SHARP_EDGED

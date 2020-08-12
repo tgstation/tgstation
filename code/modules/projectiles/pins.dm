@@ -7,7 +7,7 @@
 	worn_icon_state = "pen"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	attack_verb_continuous = list("poked")
+	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
 	var/fail_message = "<span class='warning'>INVALID USER.</span>"
 	var/selfdestruct = 0 // Explode when user check is failed.

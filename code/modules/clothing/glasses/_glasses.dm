@@ -86,7 +86,7 @@
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb_continuous = list("sliced")
+	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
@@ -155,7 +155,7 @@
 	force = 10
 	throwforce = 20
 	throw_speed = 4
-	attack_verb_continuous = list("sliced")
+	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
@@ -228,7 +228,7 @@
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb_continuous = list("sliced")
+	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
@@ -249,7 +249,7 @@
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb_continuous = list("sliced")
+	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
