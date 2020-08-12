@@ -52,6 +52,8 @@
 	return FALSE
 
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
+	if(!account_job)
+		return
 	var/money_to_transfer = account_job.paycheck * payday_modifier * amt_of_paychecks
 	if(free)
 		adjust_money(money_to_transfer)
