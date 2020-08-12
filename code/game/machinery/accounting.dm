@@ -17,16 +17,16 @@
 		if(new_id.registered_account)
 			to_chat(user, "<span class='warning'>[src] already has a bank account!</span>")
 			return
-		if(!user.transferItemToLoc(I,src) || !anchored)
+		if(!anchored || !user.transferItemToLoc(I,src))
 			to_chat(user, "<span class='warning'>\the [src] blinks red as you try to insert the ID Card!</span>")
 			return
 		inserted_id = new_id
-		var/datum/bank_account/bank_account = new /datum/bank_account(inserted_id.registered_name, null)
+		var/datum/bank_account/bank_account = new /datum/bank_account(inserted_id.registered_name)
 		inserted_id.registered_account = bank_account
 		playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 		update_icon()
 		return
-	. = ..()
+	return ..()
 
 
 /obj/machinery/accounting/attack_hand(mob/user)
