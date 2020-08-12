@@ -167,7 +167,7 @@
 		if(T && (prob(40))) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
 			C.apply_damage(50, BRUTE, def_zone = limb, wound_bonus = rand(-20,10), sharpness = SHARP_POINTY) //This one gets a bit lower damage because it ignores armor.
 			C.Stun(1 SECONDS) //Stopped in place for a moment.
-			playsound(get_turf(M), 'sound/weapons/pierce.ogg', 50, TRUE, -1)
+			playsound(M, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
 			M.visible_message("<span class='danger'>[M] is nailed by a sharp thorn!</span>", \
 			"<span class='userdanger'>You are nailed by a sharp thorn!</span>")
 			log_combat(S, M, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
@@ -175,7 +175,7 @@
 			if(prob(80))
 				C.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
 				C.Knockdown(2 SECONDS)
-				playsound(get_turf(M), 'sound/weapons/whip.ogg', 50, TRUE, -1)
+				playsound(M, 'sound/weapons/whip.ogg', 50, TRUE, -1)
 				M.visible_message("<span class='danger'>[M] is lacerated by an outburst of vines!</span>", \
 				"<span class='userdanger'>You are lacerated by an outburst of vines!</span>")
 				log_combat(S, M, "aggressively lacerated")
@@ -184,16 +184,16 @@
 				C.Knockdown(3 SECONDS)
 				var/atom/throw_target = get_edge_target_turf(C, get_dir(S, get_step_away(C, S)))
 				C.throw_at(throw_target, 3, 6)
-				playsound(get_turf(M), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+				playsound(M, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 				M.visible_message("<span class='danger'>[M] is smashed by a large vine!</span>", \
 				"<span class='userdanger'>You are smashed by a large vine!</span>")
 				log_combat(S, M, "aggressively smashed")
 	else //Living but not a carbon? Maybe a silicon? Can't be wounded so have a big chunk of simple bruteloss with no special effects. They can be entangled.
 		M.adjustBruteLoss(75)
-		playsound(get_turf(M), 'sound/weapons/whip.ogg', 50, TRUE, -1)
+		playsound(M, 'sound/weapons/whip.ogg', 50, TRUE, -1)
 		M.visible_message("<span class='danger'>[M] is brutally threshed by [S]!</span>", \
 		"<span class='userdanger'>You are brutally threshed by [S]!</span>")
-		log_combat(S, M, "aggressively threshed") //You aren't being attacked by the vines. You just happen to stand in their way.
+		log_combat(S, M, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
 
 /datum/spacevine_mutation/transparency
 	name = "transparent"
