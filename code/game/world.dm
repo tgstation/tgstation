@@ -37,11 +37,6 @@ GLOBAL_VAR(restart_counter)
 	enable_reference_tracking()
 #endif
 
-	//Early profile for auto-profiler - will be stopped on profiler init if necessary.
-#if DM_BUILD >= 1506
-	world.Profile(PROFILE_START)
-#endif
-
 	log_world("World loaded at [time_stamp()]!")
 
 	SetupExternalRSC()
