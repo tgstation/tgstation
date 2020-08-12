@@ -1,0 +1,10 @@
+author: "Angust"
+delete-after: True
+changes: 
+  - bugfix: "Aggressive spreading space vines no longer deal friendly fire."
+  - bugfix: "Aggressive vines now only harm when buckling you or actually spreading to your tile."
+  - balance: "Aggressive vines can no longer deafen/explode you, but will deal heavy damage and wounds instead."
+  - balance: "Most injuries from aggressive spreading vines are now mitigated by melee armor."
+  - tweak: "Aggressive vines will no longer hurt dead people."
+  - tweak: "Aggressive vines now cause sound effects and messages when they hit someone."
+  - tweak: "Getting hit by aggressive vines will now register in the round's attack log."
