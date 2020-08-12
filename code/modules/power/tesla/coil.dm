@@ -77,6 +77,9 @@
 		//please place tesla coils all around the station to maximize effectiveness
 		var/power_produced = powernet ? power * input_power_multiplier : power
 		add_avail(power_produced)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
+		if(D)
+			D.adjust_money(min(power_produced, 1))
 		flick("coilhit", src)
 		zap_buckle_check(power)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
