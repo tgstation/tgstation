@@ -145,7 +145,6 @@
 		if("stop")
 			stop_sending()
 		if("bounty")
-			//Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
 			if(!inserted_scan_id || !inserted_scan_id.registered_account)
 				return
 			var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
