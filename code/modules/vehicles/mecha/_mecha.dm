@@ -13,16 +13,19 @@
 	anchored = TRUE
 	emulate_door_bumps = TRUE
 	COOLDOWN_DECLARE(mecha_bump_smash)
-	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
+	///What direction will the mech face when entered/powered on? Defaults to South.
+	var/dir_in = 2
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
 	var/normal_step_energy_drain = 10
-	///
+	///How much energy the mech will consume each time it moves. this is the current active energy consumed
 	var/step_energy_drain = 10
 	///How much energy we drain each time we mechpunch someone
 	var/melee_energy_drain = 15
-
+	///The minimum amount of energy charge consumed by leg overload
 	var/overload_step_energy_drain_min = 100
-	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
+	///chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
+	var/deflect_chance = 10
+	///Modifiers for directional armor
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
 	///if we cant use our equipment(such as due to EMP)
 	var/equipment_disabled = 0
@@ -34,79 +37,127 @@
 	var/obj/item/stock_parts/capacitor/capacitor
 	///Whether the mechs maintenance protocols are on or off
 	var/construction_state = MECHA_LOCKED
-	var/last_message = 0
-	var/add_req_access = 1
-	var/maint_access = 0
-	var/dna_lock //dna-locking the mech
+	///Whether we can use our ID to upload new access
+	var/add_req_access = TRUE
+	///Whether we can use out ID to alter the required maintenance mode access
+	var/maint_access = FALSE
+	///Stores the DNA enzymes of a carbon so tht only they can access the mech
+	var/dna_lock
+	///Spark effects are handled by this datum
 	var/datum/effect_system/spark_spread/spark_system = new
+	///Whether the lights are on or off
 	var/lights = FALSE
+	///How powerfu our lights are
 	var/lights_power = 6
-	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
-	var/completely_disabled = FALSE //stops the mech from doing anything
+	///Just stop the mech from doing anything
+	var/completely_disabled = FALSE
+	///Whether this mech is allowed to move diagonally
 	var/allow_diagonal_movement = FALSE
+	///Whether or not the mech destroys walls by running into it.
+	var/bumpsmash = FALSE
 
-	var/bumpsmash = FALSE //Whether or not the mech destroys walls by running into it.
-	//inner atmos
-	var/use_internal_tank = 0
+	///////////ATMOS
+	///Whether we are currrently drawing from the internal tank
+	var/use_internal_tank = FALSE
+	///The setting of the valve on the internal tank
 	var/internal_tank_valve = ONE_ATMOSPHERE
+	///The internal air tank obj of the mech
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
+	///Internal air mix datum
 	var/datum/gas_mixture/cabin_air
-	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
+	///The connected air port, if we have one
+	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 
+	///Special version of the radio, which is unsellable
 	var/obj/item/radio/mech/radio
 	var/list/trackers = list()
 
 	var/max_temperature = 25000
-	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
-	var/internal_damage = NONE //contains bitflags
+	///health percentage below which internal damage is possible
+	var/internal_damage_threshold = 50
+	///Bitflags for internal damage
+	var/internal_damage = NONE
 
-	var/list/operation_req_access = list()//required access level for mecha operation
-	var/list/internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE)//REQUIRED ACCESS LEVEL TO OPEN CELL COMPARTMENT
+	///required access level for mecha operation
+	var/list/operation_req_access = list()
+	///required access to change internal components
+	var/list/internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE)
 
+	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
 
 	var/list/equipment = new
+	///Current active equipment
 	var/obj/item/mecha_parts/mecha_equipment/selected
+	///Maximum amount of equipment we can have
 	var/max_equip = 3
 
-	var/step_silent = FALSE //Used for disabling mech step sounds while using thrusters or pushing off lockers
+	///Whether our steps are silent, for example in zero-G
+	var/step_silent = FALSE
+	///Sound played when the mech moves
 	var/stepsound = 'sound/mecha/mechstep.ogg'
+	///Sound played when the mech walks
 	var/turnsound = 'sound/mecha/mechturn.ogg'
 
+	///Cooldown duration between melee punches
 	var/melee_cooldown = 10
-	var/melee_can_hit = 1
 
-	var/silicon_pilot = FALSE //set to true if an AI or MMI is piloting.
+	///Bool for if in AI is driving
+	var/silicon_pilot = FALSE
 
-	var/exit_delay = 20 //Time to exit mech
-	var/destruction_sleep_duration = 20 //Time that mech pilot is put to sleep for if mech is destroyed
-	var/enclosed = TRUE //Set to false for open-cockpit mechs
-	var/silicon_icon_state = null //if the mech has a different icon when piloted by an AI or MMI
-	var/is_currently_ejecting = FALSE //Mech cannot use equiptment when true, set to true if pilot is trying to exit mech
+	///TIme taken to leave the mech
+	var/exit_delay = 2 SECONDS
+	///Time you get slept for if you get forcible ejected by the mech exploding
+	var/destruction_sleep_duration = 2 SECONDS
+	///Whether outside viewers can see the pilot inside
+	var/enclosed = TRUE
+	///In case theres a different iconstate for AI/MMI pilot(currently only used for ripley)
+	var/silicon_icon_state = null
+	///Currently ejecting, and unable to do things
+	var/is_currently_ejecting = FALSE
 
-	//Action datums
-	var/datum/effect_system/smoke_spread/smoke_system = new //not an action, but trigged by one
+	var/datum/effect_system/smoke_spread/smoke_system = new
 
-	//Action vars
+	////Action vars
+	///Ref to any active thrusters we might have
 	var/obj/item/mecha_parts/mecha_equipment/thrusters/active_thrusters
+
+	///Bool for energy shield on/off
 	var/defense_mode = FALSE
+
+	///Bool for leg overload on/off
 	var/leg_overload_mode = FALSE
+	///Energy use modifier for leg overload
 	var/leg_overload_coeff = 100
+
+	//Bool for zoom on/off
 	var/zoom_mode = FALSE
-	var/smoke = 5
-	var/smoke_ready = 1
-	var/smoke_cooldown = 100
+
+	///Remaining smoke charges
+	var/smoke_charges = 5
+	///Cooldown between using smoke
+	var/smoke_cooldown = 10 SECONDS
+
+	///Bool for if the mech is currently phasing
 	var/phasing = FALSE
+	///Power we use every time we phaze through something
 	var/phasing_energy_drain = 200
-	var/phase_state = "" //icon_state when phasing
-	var/strafe = FALSE //If we are strafing
-	var/canstrafe = TRUE //if we can turn on strafing
-	var/haslights = TRUE //if we can turn on lights
+	///icon_state for flick() when phazing
+	var/phase_state = ""
 
-	var/nextsmash = 0
-	var/smashcooldown = 3	//deciseconds
+	///Wether we are strafing
+	var/strafe = FALSE
+	//Can we turn on strafing?
+	var/canstrafe = TRUE
+	///Does this mech have lights we can enable?
+	var/haslights = TRUE
 
-	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
+	///Cooldown length between bumpsmashes
+	var/smashcooldown = 3
+
+	///Bool for whether this mech can only be used on lavaland
+	var/lavaland_only = FALSE
+
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
@@ -458,10 +509,7 @@
 ///// Action processing ////
 ////////////////////////////
 
-
-/obj/vehicle/sealed/mecha/proc/click_action(atom/target,mob/user,params)
-	if(!locate(user) in occupants)
-		return
+/obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, params)
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
 		return
 	if(completely_disabled)
@@ -484,37 +532,33 @@
 	if(dir_to_target && !(dir_to_target & dir))//wrong direction
 		return
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
-		if (!target)
-			return
 		target = pick(view(3,target))
-
+		if(!target)
+			return
 	var/mob/living/L = user
-	if(!Adjacent(target))
-		if(selected && selected.is_ranged())
+	if(selected)
+		if(!Adjacent(target) && (selected.range & MECHA_RANGED))
 			if(HAS_TRAIT(L, TRAIT_PACIFISM) && selected.harmful)
-				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
-			if(selected.do_action(target,user,params))
-				selected.start_cooldown()
-			else
-				to_chat(world, "what")
-	else if(selected && selected.is_melee())
-		if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
-			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			selected.action(user, target, params)
 			return
-		if(selected.do_action(target,user,params))
-			selected.start_cooldown()
-	else
-		if(internal_damage & MECHA_INT_CONTROL_LOST)
-			var/list/possible_targets = oview(1,src)
-			if (!length(possible_targets))
+		if(selected.range & MECHA_MELEE) && Adjacent(target))
+			if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
+				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
-			target = pick(possible_targets)
-		if(!melee_can_hit || !istype(target, /atom))
+			selected.action(user, target, params)
 			return
-		target.mech_melee_attack(src, user)
-		melee_can_hit = FALSE
-		addtimer(VARSET_CALLBACK(src, melee_can_hit, TRUE), melee_cooldown)
+	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK) || !istype(target, /atom) || !Adjacent(target))
+		return
+	if(internal_damage & MECHA_INT_CONTROL_LOST)
+		var/list/possible_targets = oview(1,src)
+		if(!length(possible_targets))
+			return
+		target = pick(possible_targets)
+	target.mech_melee_attack(src, user)
+	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+
 
 //////////////////////////////////
 ////////  Movement procs  ////////
@@ -576,6 +620,8 @@
 		return FALSE
 	if(!scanmod || !capacitor)
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Missing [scanmod? "capacitor" : "scanning module"].</span>")
+		return FALSE
+	if(lavaland_only && is_mining_level(z))
 		return FALSE
 
 	var/olddir = dir
@@ -1021,11 +1067,13 @@
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
 	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/mob_exit)
+	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
 	update_icon()
 	return ..()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
 	UnregisterSignal(M, COMSIG_MOB_DEATH)
+	UnregisterSignal(M, COMSIG_MOB_CLICKON)
 	update_icon()
 	M.clear_alert("charge")
 	M.clear_alert("mech damage")
@@ -1082,11 +1130,6 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		cell.give(amount)
 		return TRUE
 	return FALSE
-
-/obj/vehicle/sealed/mecha/update_remote_sight(mob/living/user)
-	if(occupant_sight_flags)
-		if(locate(user) in occupants)
-			user.sight |= occupant_sight_flags
 
 ///////////////////////
 ////// Ammo stuff /////

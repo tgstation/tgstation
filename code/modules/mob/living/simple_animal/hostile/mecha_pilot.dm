@@ -163,8 +163,7 @@
 		var/list/possible_weapons = get_mecha_equip_by_flag(MECHA_RANGED)
 		if(possible_weapons.len)
 			var/obj/item/mecha_parts/mecha_equipment/ME = pick(possible_weapons) //so we don't favor mecha.equipment[1] forever
-			if(ME.do_action(A))
-				ME.start_cooldown()
+			if(ME.action(src,A))
 				return
 
 	else
@@ -177,11 +176,10 @@
 		if(possible_weapons.len)
 			var/obj/item/mecha_parts/mecha_equipment/ME = pick(possible_weapons)
 			mecha_face_target(target)
-			if(ME.do_action(target))
-				ME.start_cooldown()
+			if(ME.action(src,target))
 				return
 
-		if(mecha.melee_can_hit)
+		if(!TIMER_COOLDOWN_CHECK(mecha, COOLDOWN_MECHA_MELEE_ATTACK))
 			mecha_face_target(target)
 			target.mech_melee_attack(mecha, src)
 	else
@@ -224,7 +222,7 @@
 
 		//Smoke if there's too many targets	- Smoke Power
 		if(threat_count >= threat_use_mecha_smoke && prob(smoke_chance))
-			if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_smoke) && !mecha.smoke)
+			if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_smoke) && !mecha.smoke_charges)
 				var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_smoke]
 				action.Trigger()
 

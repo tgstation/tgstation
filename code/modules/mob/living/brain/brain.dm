@@ -65,13 +65,6 @@
 	if(stored_dna)
 		stored_dna.real_name = real_name
 
-/mob/living/brain/ClickOn(atom/A, params)
-	..()
-	if(container)
-		var/obj/vehicle/sealed/mecha/M = container.mecha
-		if(istype(M))
-			return M.click_action(A,src,params)
-
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
 		return container.forceMove(destination)

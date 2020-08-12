@@ -13,6 +13,7 @@
 	energy_drain = 10
 	force = 15
 	harmful = TRUE
+	range = MECHA_MELEE
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
 	var/drill_delay = 7
@@ -23,7 +24,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
 
-/obj/item/mecha_parts/mecha_equipment/drill/do_action(atom/target, mob/user)
+/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, params)
 	if(!action_checks(target))
 		return
 	if(isspaceturf(target))
@@ -36,48 +37,45 @@
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
 					 "<span class='hear'>You hear drilling.</span>")
 
-	if(do_after_cooldown(target))
-		set_ready_state(FALSE)
+	if(do_after_cooldown(target, source))
 		log_message("Started drilling [target]", LOG_MECHA)
 		if(isturf(target))
 			var/turf/T = target
-			T.drill_act(src, user)
-			set_ready_state(TRUE)
+			T.drill_act(src, source)
 			return
-		while(do_after_mecha(target, drill_delay))
+		while(do_after_mecha(target, source, drill_delay))
 			if(isliving(target))
-				drill_mob(target, user)
+				drill_mob(target, source)
 				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else if(isobj(target))
 				var/obj/O = target
 				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
 				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else
-				set_ready_state(TRUE)
 				return
-		set_ready_state(TRUE)
+	return ..()
 
-/turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+/turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	return
 
-/turf/closed/wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
-	if(drill.do_after_mecha(src, 60 / drill.drill_level))
+/turf/closed/wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
+	if(drill.do_after_mecha(src, user, 60 / drill.drill_level))
 		drill.log_message("Drilled through [src]", LOG_MECHA)
 		dismantle_wall(TRUE, FALSE)
 
-/turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+/turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	if(drill.drill_level >= DRILL_HARDENED)
-		if(drill.do_after_mecha(src, 120 / drill.drill_level))
+		if(drill.do_after_mecha(src, user, 120 / drill.drill_level))
 			drill.log_message("Drilled through [src]", LOG_MECHA)
 			dismantle_wall(TRUE, FALSE)
 	else
-		drill.to_chat(drill.active_user, "[icon2html(src, drill.active_user)]<span class='danger'>[src] is too durable to drill through.</span>")
+		to_chat(user, "[icon2html(src, user)]<span class='danger'>[src] is too durable to drill through.</span>")
 
-/turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+/turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	for(var/turf/closed/mineral/M in range(drill.chassis,1))
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
 			M.gets_drilled()
-	drill.log_message("Drilled through [src]", LOG_MECHA)
+	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
 /turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
@@ -96,8 +94,8 @@
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/vehicle/sealed/mecha/M as obj)
 	if(..())
 		if(istype(M, /obj/vehicle/sealed/mecha/working) || istype(M, /obj/vehicle/sealed/mecha/combat))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/drill/attach(obj/vehicle/sealed/mecha/M)
 	..()

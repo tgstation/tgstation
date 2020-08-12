@@ -22,8 +22,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/process()
 	if(!chassis)
-		STOP_PROCESSING(SSobj, src)
-		return 1
+		return PROCESS_KILL
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/detach()
 	STOP_PROCESSING(SSobj, src)
@@ -49,25 +48,28 @@
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Exit(atom/movable/O)
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/do_action(mob/living/carbon/target, mob/user)
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/source, mob/living/carbon/target, params)
 	if(!action_checks(target))
 		return
 	if(!istype(target))
 		return
 	if(!patient_insertion_check(target))
 		return
-	to_chat(user, "[icon2html(src, user)]<span class='notice'>You start putting [target] into [src]...</span>")
+	to_chat(source, "[icon2html(src, source)]<span class='notice'>You start putting [target] into [src]...</span>")
 	chassis.visible_message("<span class='warning'>[chassis] starts putting [target] into \the [src].</span>")
-	if(do_after_cooldown(target))
-		if(!patient_insertion_check(target, user))
+	if(do_after(source, equip_cooldown, target=target))
+		if(!chassis || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
+			return
+		if(!patient_insertion_check(target, source))
 			return
 		target.forceMove(src)
 		patient = target
 		START_PROCESSING(SSobj, src)
 		update_equip_info()
-		to_chat(user, "[icon2html(src, user)]<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
+		to_chat(source, "[icon2html(src, source)]<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
 		chassis.visible_message("<span class='warning'>[chassis] loads [target] into [src].</span>")
 		log_message("[target] loaded. Life support functions engaged.", LOG_MECHA)
+		return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/patient_insertion_check(mob/living/carbon/target, mob/user)
 	if(target.buckled)
@@ -217,7 +219,6 @@
 	if(..())
 		return
 	if(!chassis.has_charge(energy_drain))
-		set_ready_state(1)
 		log_message("Deactivated.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='warning'>[src] deactivated - no power.</span>")
 		STOP_PROCESSING(SSobj, src)
@@ -285,34 +286,33 @@
 	if(output)
 		return "[output] \[<a href=\"?src=[REF(src)];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=[REF(src)];show_reagents=1'>Reagents list</a>"
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/do_action(atom/movable/target, mob/user)
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(mob/source, atom/movable/target, params)
 	if(!action_checks(target))
 		return
 	if(istype(target, /obj/item/reagent_containers/syringe))
 		return load_syringe(target)
 	if(istype(target, /obj/item/storage))//Loads syringes from boxes
 		for(var/obj/item/reagent_containers/syringe/S in target.contents)
-			load_syringe(S)
+			load_syringe(S, source)
 		return
 	if(mode)
-		return analyze_reagents(target)
+		return analyze_reagents(target, source)
 	if(!syringes.len)
-		to_chat(user, "[icon2html(src, user)]<span class=\"alert\">No syringes loaded.</span>")
+		to_chat(source, "[icon2html(src, source)]<span class=\"alert\">No syringes loaded.</span>")
 		return
 	if(reagents.total_volume<=0)
-		to_chat(user, "[icon2html(src, user)]<span class=\"alert\">No available reagents to load syringe with.</span>")
+		to_chat(source, "[icon2html(src, source)]<span class=\"alert\">No available reagents to load syringe with.</span>")
 		return
 	var/turf/trg = get_turf(target)
 	var/obj/item/reagent_containers/syringe/mechsyringe = syringes[1]
 	mechsyringe.forceMove(get_turf(chassis))
-	reagents.trans_to(mechsyringe, min(mechsyringe.volume, reagents.total_volume), transfered_by = active_user)
+	reagents.trans_to(mechsyringe, min(mechsyringe.volume, reagents.total_volume), transfered_by = source)
 	syringes -= mechsyringe
 	mechsyringe.icon = 'icons/obj/chemical.dmi'
 	mechsyringe.icon_state = "syringeproj"
 	playsound(chassis, 'sound/items/syringeproj.ogg', 50, TRUE)
-	log_message("Launched [mechsyringe] from [src], targeting [target].", LOG_MECHA)
-	spawn(0)
-		src = null //if src is deleted, still process the syringe
+	log_message("Launched [mechsyringe] from [src] by [source], targeting [target].", LOG_MECHA)
+	spawn(0)	//This code is trash and whoever wrote it should feel bad
 		for(var/i=0, i<6, i++)
 			if(!mechsyringe)
 				break
@@ -330,9 +330,9 @@
 								R += "[A.name] ([num2text(A.volume)]"
 						mechsyringe.icon_state = initial(mechsyringe.icon_state)
 						mechsyringe.icon = initial(mechsyringe.icon)
-						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = user, method = INJECT)
+						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = source, method = INJECT)
 						M.take_bodypart_damage(2)
-						log_combat(user, M, "shot", "syringegun")
+						log_combat(source, M, "shot", "syringegun")
 					break
 				else if(mechsyringe.loc == trg)
 					mechsyringe.icon_state = initial(mechsyringe.icon_state)
@@ -345,7 +345,7 @@
 				mechsyringe.update_icon()
 				break
 			sleep(1)
-	return 1
+	return ..()
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Topic(href,href_list)
@@ -443,55 +443,55 @@
 		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=[REF(src)];purge_all=1\">Purge All</a>"
 	return output || "None"
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/load_syringe(obj/item/reagent_containers/syringe/S)
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/load_syringe(obj/item/reagent_containers/syringe/S, mob/user)
 	if(syringes.len<max_syringes)
 		if(get_dist(src,S) >= 2)
-			to_chat(active_user, "[icon2html(src, active_user)]<span class='warning'>The syringe is too far away!</span>")
+			to_chat(user, "[icon2html(src, user)]<span class='warning'>The syringe is too far away!</span>")
 			return 0
 		for(var/obj/structure/D in S.loc)//Basic level check for structures in the way (Like grilles and windows)
 			if(!(D.CanPass(S,src.loc)))
-				to_chat(active_user, "[icon2html(src, active_user)]<span class='warning'>Unable to load syringe!</span>")
+				to_chat(user, "[icon2html(src, user)]<span class='warning'>Unable to load syringe!</span>")
 				return 0
 		for(var/obj/machinery/door/D in S.loc)//Checks for doors
 			if(!(D.CanPass(S,src.loc)))
-				to_chat(active_user, "[icon2html(src, active_user)]<span class='warning'>Unable to load syringe!</span>")
+				to_chat(user, "[icon2html(src, user)]<span class='warning'>Unable to load syringe!</span>")
 				return 0
-		S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = active_user)
+		S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = user)
 		S.forceMove(src)
 		syringes += S
-		to_chat(active_user, "[icon2html(src, active_user)]<span class='notice'>Syringe loaded.</span>")
+		to_chat(user, "[icon2html(src, user)]<span class='notice'>Syringe loaded.</span>")
 		update_equip_info()
 		return 1
-	to_chat(active_user, "[icon2html(src, active_user)]<span class='warning'>[src]'s syringe chamber is full!</span>")
+	to_chat(user, "[icon2html(src, user)]<span class='warning'>[src]'s syringe chamber is full!</span>")
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/analyze_reagents(atom/A)
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/analyze_reagents(atom/A, mob/user)
 	if(get_dist(src,A) >= 4)
-		to_chat(active_user, "[icon2html(src, active_user)]<span class='notice'>The object is too far away!</span>")
-		return 0
+		to_chat(user, "[icon2html(src, user)]<span class='notice'>The object is too far away!</span>")
+		return FALSE
 	if(!A.reagents || ismob(A))
-		to_chat(active_user, "[icon2html(src, active_user)]<span class='warning'>No reagent info gained from [A].</span>")
-		return 0
-	to_chat(active_user, "[icon2html(src, active_user)]<span class='notice'>Analyzing reagents...</span>")
+		to_chat(user, "[icon2html(src, user)]<span class='warning'>No reagent info gained from [A].</span>")
+		return FALSE
+	to_chat(user, "[icon2html(src, user)]<span class='notice'>Analyzing reagents...</span>")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
 		if(R.can_synth && add_known_reagent(R.type,R.name))
-			to_chat(active_user, "[icon2html(src, active_user)]<span class='notice'>Reagent analyzed, identified as [R.name] and added to database.</span>")
+			to_chat(user, "[icon2html(src, user)]<span class='notice'>Reagent analyzed, identified as [R.name] and added to database.</span>")
 			send_byjax(chassis.occupants,"msyringegun.browser","reagents_form",get_reagents_form())
-	to_chat(active_user, "[icon2html(src, active_user)]<span class='notice'>Analysis complete.</span>")
-	return 1
+	to_chat(user, "[icon2html(src, user)]<span class='notice'>Analysis complete.</span>")
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/add_known_reagent(r_id,r_name)
 	if(!(r_id in known_reagents))
 		known_reagents += r_id
 		known_reagents[r_id] = r_name
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/update_equip_info()
 	if(..())
 		send_byjax(chassis.occupants,"msyringegun.browser","reagents",get_current_reagents())
 		send_byjax(chassis.occupants,"msyringegun.browser","reagents_form",get_reagents_form())
-		return 1
+		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change(changetype)
 	..()
@@ -538,7 +538,7 @@
 		return
 	medigun.process()
 
-/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/do_action(atom/target)
+/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/action(mob/source, atom/movable/target, params)
 	medigun.process_fire(target, loc)
 
 

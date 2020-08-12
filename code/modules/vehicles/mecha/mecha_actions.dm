@@ -63,7 +63,6 @@
 	if(!chassis.selected)
 		chassis.selected = available_equipment[1]
 		to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You select [chassis.selected].</span>")
-		chassis.selected.active_user = owner
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		button_icon_state = "mech_cycle_equip_on"
 		UpdateButtonIcon()
@@ -73,13 +72,11 @@
 		number++
 		if(A == chassis.selected)
 			if(available_equipment.len == number)
-				chassis.selected.active_user = null
 				chassis.selected = null
 				to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You switch to no equipment.</span>")
 				button_icon_state = "mech_cycle_equip_off"
 			else
 				chassis.selected = available_equipment[number+1]
-				chassis.selected.active_user = owner
 				to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You switch to [chassis.selected].</span>")
 				button_icon_state = "mech_cycle_equip_on"
 			send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
@@ -185,11 +182,10 @@
 /datum/action/vehicle/sealed/mecha/mech_smoke/Trigger()
 	if(!owner || !chassis || !locate(owner) in chassis.occupants)
 		return
-	if(chassis.smoke_ready && chassis.smoke>0)
+	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_SMOKE) && chassis.smoke_charges>0)
 		chassis.smoke_system.start()
-		chassis.smoke--
-		chassis.smoke_ready = FALSE
-		addtimer(VARSET_CALLBACK(chassis, smoke_ready, TRUE), chassis.smoke_cooldown)
+		chassis.smoke_charges--
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_SMOKE, smoke_cooldown)
 
 
 /datum/action/vehicle/sealed/mecha/mech_zoom

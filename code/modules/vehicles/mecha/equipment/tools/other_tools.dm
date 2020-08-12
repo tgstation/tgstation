@@ -13,13 +13,13 @@
 	range = MECHA_RANGED
 	var/teleport_range = 7
 
-/obj/item/mecha_parts/mecha_equipment/teleporter/do_action(atom/target)
+/obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, params)
 	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/turf/T = get_turf(target)
 	if(T && (loc.z == T.z) && (get_dist(loc, T) <= teleport_range))
 		do_teleport(chassis, T, 4, channel = TELEPORT_CHANNEL_BLUESPACE)
-		return 1
+		return ..()
 
 
 
@@ -34,7 +34,7 @@
 	range = MECHA_RANGED
 
 
-/obj/item/mecha_parts/mecha_equipment/wormhole_generator/do_action(atom/target, mob/user)
+/obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(mob/source, atom/target, params)
 	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/list/theareas = get_areas_in_range(100, chassis)
@@ -59,11 +59,11 @@
 		return
 	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, 300, 1, /obj/effect/portal/anom)
 	var/turf/T = get_turf(target)
-	message_admins("[ADMIN_LOOKUPFLW(user)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(T)]")
-	log_game("[key_name(user)] used a Wormhole Generator in [AREACOORD(T)]")
+	message_admins("[ADMIN_LOOKUPFLW(source)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(T)]")
+	log_game("[key_name(source)] used a Wormhole Generator in [AREACOORD(T)]")
 	src = null
 	QDEL_LIST_IN(created, rand(150,300))
-	return 1
+	return ..()
 
 
 /////////////////////////////////////// GRAVITATIONAL CATAPULT ///////////////////////////////////////////
@@ -79,36 +79,36 @@
 	var/mode = 1 //1 - gravsling 2 - gravpush
 
 
-/obj/item/mecha_parts/mecha_equipment/gravcatapult/do_action(atom/movable/target, mob/user)
+/obj/item/mecha_parts/mecha_equipment/gravcatapult/action(mob/source, atom/movable/target, params)
 	if(!action_checks(target))
 		return
 	switch(mode)
 		if(1)
 			if(!locked)
 				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
-					to_chat(user, "[icon2html(src, user)]<span class='warning'>Unable to lock on [target]!</span>")
+					to_chat(source, "[icon2html(src, source)]<span class='warning'>Unable to lock on [target]!</span>")
 					return
 				if(ismob(target))
 					var/mob/M = target
 					if(M.mob_negates_gravity())
-						to_chat(user, "[icon2html(src, user)]<span class='warning'>Unable to lock on [target]!</span>")
+						to_chat(source, "[icon2html(src, source)]<span class='warning'>Unable to lock on [target]!</span>")
 						return
 				locked = target
-				to_chat(user, "[icon2html(src, user)]<span class='notice'>Locked on [target].</span>")
-				send_byjax(user,"exosuit.browser","[REF(src)]",src.get_equip_info())
+				to_chat(source, "[icon2html(src, source)]<span class='notice'>Locked on [target].</span>")
+				send_byjax(source,"exosuit.browser","[REF(src)]",src.get_equip_info())
 			else if(target!=locked)
 				if(locked in view(chassis))
 					var/turf/targ = get_turf(target)
 					var/turf/orig = get_turf(locked)
 					locked.throw_at(target, 14, 1.5)
 					locked = null
-					send_byjax(user,"exosuit.browser","[REF(src)]",src.get_equip_info())
-					log_game("[key_name(user)] used a Gravitational Catapult to throw [locked] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
-					return TRUE
+					send_byjax(source,"exosuit.browser","[REF(src)]",src.get_equip_info())
+					log_game("[key_name(source)] used a Gravitational Catapult to throw [locked] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
+					return ..()
 				else
 					locked = null
-					to_chat(user, "[icon2html(src, user)]<span class='notice'>Lock on [locked] disengaged.</span>")
-					send_byjax(user,"exosuit.browser","[REF(src)]",src.get_equip_info())
+					to_chat(source, "[icon2html(src, source)]<span class='notice'>Lock on [locked] disengaged.</span>")
+					send_byjax(source,"exosuit.browser","[REF(src)]",src.get_equip_info())
 		if(2)
 			var/list/atoms = list()
 			if(isturf(target))
@@ -125,8 +125,8 @@
 				INVOKE_ASYNC(src, .proc/do_scatter, A, target)
 
 			var/turf/T = get_turf(target)
-			log_game("[key_name(user)] used a Gravitational Catapult repulse wave on [AREACOORD(T)]")
-			return TRUE
+			log_game("[key_name(source)] used a Gravitational Catapult repulse wave on [AREACOORD(T)]")
+			return ..()
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/A, atom/movable/target)
 	var/iter = 5-get_dist(A,target)
@@ -162,9 +162,10 @@
 	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react()
-	if(action_checks(src))
-		start_cooldown()
-		return 1
+	if(energy_drain && !chassis.has_charge(energy_drain))
+		return FALSE
+	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_ARMOR, equip_cooldown)
+	return TRUE
 
 
 
@@ -180,9 +181,10 @@
 	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/projectile_react()
-	if(action_checks(src))
-		start_cooldown()
-		return 1
+	if(energy_drain && !chassis.has_charge(energy_drain))
+		return FALSE
+	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_ARMOR, equip_cooldown)
+	return TRUE
 
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
@@ -229,12 +231,10 @@
 			START_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
 			log_message("Activated.", LOG_MECHA)
-			set_ready_state(0)
 		else
 			STOP_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid")
 			log_message("Deactivated.", LOG_MECHA)
-			set_ready_state(1)
 		chassis.add_overlay(droid_overlay)
 		send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",src.get_equip_info())
 
@@ -242,7 +242,6 @@
 /obj/item/mecha_parts/mecha_equipment/repair_droid/process()
 	if(!chassis)
 		STOP_PROCESSING(SSobj, src)
-		set_ready_state(1)
 		return
 	var/h_boost = health_boost
 	var/repaired = 0
@@ -260,10 +259,8 @@
 	if(repaired)
 		if(!chassis.use_power(energy_drain))
 			STOP_PROCESSING(SSobj, src)
-			set_ready_state(1)
 	else //no repair needed, we turn off
 		STOP_PROCESSING(SSobj, src)
-		set_ready_state(1)
 		chassis.cut_overlay(droid_overlay)
 		droid_overlay = new(src.icon, icon_state = "repair_droid")
 		chassis.add_overlay(droid_overlay)
@@ -315,11 +312,9 @@
 	if(href_list["toggle_relay"])
 		if(equip_ready) //inactive
 			START_PROCESSING(SSobj, src)
-			set_ready_state(0)
 			log_message("Activated.", LOG_MECHA)
 		else
 			STOP_PROCESSING(SSobj, src)
-			set_ready_state(1)
 			log_message("Deactivated.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
@@ -331,12 +326,10 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process()
 	if(!chassis || chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		STOP_PROCESSING(SSobj, src)
-		set_ready_state(1)
 		return
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge) || !chassis.cell)
 		STOP_PROCESSING(SSobj, src)
-		set_ready_state(1)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='notice'>No power cell detected.</span>")
 		return
 	if(cur_charge < chassis.cell.maxcharge)
@@ -389,11 +382,9 @@
 	..()
 	if(href_list["toggle"])
 		if(equip_ready) //inactive
-			set_ready_state(0)
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
 		else
-			set_ready_state(1)
 			STOP_PROCESSING(SSobj, src)
 			log_message("Deactivated.", LOG_MECHA)
 
@@ -402,11 +393,11 @@
 	if(output)
 		return "[output] \[[fuel]: [round(fuel.amount*MINERAL_MATERIAL_AMOUNT,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
-/obj/item/mecha_parts/mecha_equipment/generator/do_action(target, mob/user)
+/obj/item/mecha_parts/mecha_equipment/generator/action(mob/source, atom/movable/target, params)
 	if(chassis)
-		var/result = load_fuel(target, user)
-		if(result)
+		if(load_fuel(target, source))
 			send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",src.get_equip_info())
+			return ..()
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/P, mob/user)
 	if(P.type == fuel.type && P.amount > 0)
@@ -419,7 +410,7 @@
 			return units
 		else
 			to_chat(user, "[icon2html(src, user)]<span class='notice'>Unit is full.</span>")
-			return 0
+			return NONE
 	else
 		to_chat(user, "[icon2html(src, user)]<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
 		return
@@ -430,16 +421,13 @@
 /obj/item/mecha_parts/mecha_equipment/generator/process()
 	if(!chassis)
 		STOP_PROCESSING(SSobj, src)
-		set_ready_state(1)
 		return
 	if(fuel.amount<=0)
 		STOP_PROCESSING(SSobj, src)
 		log_message("Deactivated - no fuel.", LOG_MECHA)
-		set_ready_state(1)
 		return
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
-		set_ready_state(1)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='notice'>No power cell detected.</span>")
 		log_message("Deactivated.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
@@ -450,7 +438,7 @@
 		chassis.give_power(power_per_cycle)
 	fuel.amount -= min(use_fuel/MINERAL_MATERIAL_AMOUNT,fuel.amount)
 	update_equip_info()
-	return 1
+	return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear

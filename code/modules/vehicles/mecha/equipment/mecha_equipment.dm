@@ -7,8 +7,8 @@
 	icon_state = "mecha_equip"
 	force = 5
 	max_integrity = 300
-	var/equip_cooldown = 0 // cooldown after use
-	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
+	var/equip_cooldown = 0
+	var/equip_ready = TRUE //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
 	var/obj/vehicle/sealed/mecha/chassis = null
 	///Bitflag. Determines the range of the equipment.
@@ -20,19 +20,18 @@
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
 	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
 	var/destroy_sound = 'sound/mecha/critdestr.ogg'
-	var/active_user
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		send_byjax(chassis.occupants,"exosuit.browser","equipment_menu",chassis.get_equipment_menu(),"dropdowns")
-		return 1
+		return TRUE
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_equip_info()
 	if(chassis)
 		send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",get_equip_info())
-		return 1
+		return TRUE
 	return
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
@@ -40,10 +39,10 @@
 		LAZYREMOVE(chassis.equipment, src)
 		if(chassis.selected == src)
 			chassis.selected = null
-		src.update_chassis_page()
+		update_chassis_page()
 		log_message("[src] is destroyed.", LOG_MECHA)
-		if(active_user)
-			to_chat(active_user, "[icon2html(src, active_user)]<span class='danger'>[src] is destroyed!</span>")
+		if(chassis.occupants)
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='danger'>[src] is destroyed!</span>")
 			playsound(chassis, destroy_sound, 50)
 		if(!detachable) //If we're a built-in nondetachable equipment, let's lock up the slot that we were in.
 			chassis.max_equip--
@@ -73,13 +72,6 @@
 
 	return txt
 
-/obj/item/mecha_parts/mecha_equipment/proc/is_ranged()//add a distance restricted equipment. Why not?
-	return range&MECHA_RANGED
-
-/obj/item/mecha_parts/mecha_equipment/proc/is_melee()
-	return range&MECHA_MELEE
-
-
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)
 	if(!target)
 		return FALSE
@@ -94,35 +86,32 @@
 	if(chassis.equipment_disabled)
 		to_chat(chassis.occupants, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
 		return FALSE
+	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_EQUIPMENT))
+		return FALSE
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/proc/do_action(atom/target)
-	to_chat(world, "PLEASE")
-	return FALSE
-
-/obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
-	set_ready_state(0)
+/obj/item/mecha_parts/mecha_equipment/proc/action(mob/source, atom/target, params)
+	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT, equip_cooldown)//Cooldown is on the MECH so people dont bypass it by switching equipment
+	send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",src.get_equip_info())
 	chassis.use_power(energy_drain)
-	addtimer(CALLBACK(src, .proc/set_ready_state, 1), equip_cooldown)
+	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target)
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user)
 	if(!chassis)
 		return
 	var/C = chassis.loc
-	set_ready_state(0)
 	chassis.use_power(energy_drain)
-	. = do_after(active_user, equip_cooldown, target=target)
-	set_ready_state(1)
+	. = do_after(user, equip_cooldown, target=target)
 	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
-		return 0
+		return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, delay)
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
 	if(!chassis)
 		return
 	var/C = chassis.loc
-	. = do_after(active_user, delay, target=target)
+	. = do_after(user, delay, target=target)
 	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
-		return 0
+		return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M)
 	if(LAZYLEN(M.equipment)<M.max_equip)
@@ -145,24 +134,12 @@
 		update_chassis_page()
 		log_message("[src] removed from equipment.", LOG_MECHA)
 		chassis = null
-		set_ready_state(1)
 	return
 
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
 	if(href_list["detach"])
 		detach()
-
-/obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
-	equip_ready = state
-	if(chassis)
-		send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",src.get_equip_info())
-	return
-
-/obj/item/mecha_parts/mecha_equipment/proc/to_chat(occupants, message)
-	if(chassis)
-		to_chat(active_user, "[icon2html(src, active_user)] [message]")
-	return
 
 /obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
 	if(chassis)
@@ -173,8 +150,8 @@
 
 //Used for reloading weapons/tools etc. that use some form of resource
 /obj/item/mecha_parts/mecha_equipment/proc/rearm()
-	return 0
+	return FALSE
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
-	return 0
+	return FALSE

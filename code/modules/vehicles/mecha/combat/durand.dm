@@ -15,7 +15,7 @@
 /obj/vehicle/sealed/mecha/combat/durand/Initialize()
 	shield = new/obj/durand_shield
 	shield.chassis = src
-	shield.layer = layer
+	shield.layer = layer + 0.1
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/relay)
 	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
 	. = ..()
@@ -61,7 +61,7 @@
 	if(!shield) //if the shield somehow got deleted
 		shield = new/obj/durand_shield
 		shield.chassis = src
-		shield.layer = layer
+		shield.layer = layer + 0.1 //Make sure it stays on top
 		shield.forceMove(loc)
 	shield.dir = dir
 	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_TRIGGER, owner, signal_args)
