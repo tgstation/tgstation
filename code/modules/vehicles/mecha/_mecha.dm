@@ -1,5 +1,17 @@
 //////////////////WELCOME TO MECHA.DM, ENJOY YOUR STAY\\\\\\\\\\\\\\\\\
-//add guide here
+/** Mechs are now (finally) vehicles, this means you can make them multicrew
+  * They can also grant select ability buttons based on occupant bitflags
+  *
+  * Movement is handled through vehicle_move() which is called by relaymove
+  * Clicking is done by way of signals registering to the entering mob
+  * NOTE: MMIS are NOT mobs but instead contain a brain that is, so you need special checks
+  * AI also has special checks becaus it gets in and out of the mech differently
+  * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
+  *
+  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
+  * Or are used to call action() on equipped gear
+  * Cooldown for gear is on the mech because exploits
+  */
 
 /obj/vehicle/sealed/mecha
 	name = "mecha"
@@ -493,9 +505,9 @@
 				cookedalive.fire_stacks += 1
 				cookedalive.IgniteMob()
 
-/obj/vehicle/sealed/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/obj/vehicle/sealed/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())//todo make this a registersignal proc
 	. = ..()
-	if(!locate(speaker) in occupants)
+	if(locate(speaker) in occupants)
 		if(radio?.broadcasting)
 			radio.talk_into(speaker, text, , spans, message_language, message_mods)
 		//flick speech bubble
@@ -515,6 +527,9 @@
 	if(completely_disabled)
 		return
 	if(is_currently_ejecting)
+		return
+	var/list/mouse_control = params2list(params)
+	if(isAI(user) && !mouse_control["middle"])//AIs use MMB
 		return
 	if(phasing)
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to interact with objects while phasing.</span>")
