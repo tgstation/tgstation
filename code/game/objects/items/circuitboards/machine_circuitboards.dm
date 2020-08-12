@@ -1198,6 +1198,17 @@
 		/obj/item/stock_parts/scanning_module = 2
 	)
 
+/obj/item/circuitboard/machine/plumbing_receiver
+	name = "Chemical Recipient (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/plumbing/receiver
+	req_components = list(
+		/obj/item/stack/ore/bluespace_crystal = 1,
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stack/sheet/glass = 1)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/skill_station
 	name = "Skill Station (Machine Board)"
 	build_path = /obj/machinery/skill_station
@@ -1206,3 +1217,4 @@
 		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/scanning_module = 2
 	)
+
