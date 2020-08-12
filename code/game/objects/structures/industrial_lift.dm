@@ -5,16 +5,30 @@
 /datum/lift_master/Destroy()
 	for(var/l in lift_platforms)
 		var/obj/structure/industrial_lift/lift_platform = l
-		lift_platform.LMaster = null
+		lift_platform.lift_master_datum = null
 	lift_platforms = null
 	return ..()
 
 /datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
 	Rebuild_lift_plaform(lift_platform)
 
+/datum/lift_master/proc/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
+	if(new_lift_platform in lift_platforms)
+		return
+	lift_platform.lift_master_datum = src
+	LAZYADD(lift_platforms, new_lift_platform)
+	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
+
+/datum/lift_master/proc/remove_lift_platforms(obj/structure/industrial_lift/old_lift_platform)
+	if(!(old_lift_platform in lift_platforms))
+		return
+	lift_platform.lift_master_datum = null
+	LAZYREMOVE(lift_platforms, old_lift_platform)
+	UnregisterSignal(old_lift_platform, COMSIG_PARENT_QDELETING)
+
 ///Collect all bordered platforms
 /datum/lift_master/proc/Rebuild_lift_plaform(obj/structure/industrial_lift/base_lift_platform)
-	LAZYOR(lift_platforms, base_lift_platform)
+	add_lift_platforms(base_lift_platform)
 	var/list/possible_expansions = list(base_lift_platform)
 	while(possible_expansions.len)
 		for(var/b in possible_expansions)
@@ -25,8 +39,7 @@
 					if(lift_platforms.Find(p))
 						continue
 					var/obj/structure/industrial_lift/lift_platform = p
-					lift_platform.LMaster = src
-					lift_platforms |= lift_platform
+					add_lift_platforms(lift_platform)
 					possible_expansions |= lift_platform
 			possible_expansions -= borderline
 
@@ -36,7 +49,7 @@
 		var/obj/structure/industrial_lift/lift_platform = p
 		lift_platform.travel(going)
 
-/datum/lift_master/proc/MoveLiftOnZ(going, z)
+/datum/lift_master/proc/MoveLiftHorizontal(going, z)
 	var/max_x = 1
 	var/max_y = 1
 	var/min_x = world.maxx
@@ -111,8 +124,8 @@
 	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, .proc/RemoveItemFromLift)
 
-	if(!LMaster)
-		LMaster = new(src)
+	if(!lift_master_datum)
+		lift_master_datum = new(src)
 
 /obj/structure/industrial_lift/Move(atom/newloc, direct)
 	UnregisterSignal(loc, COMSIG_ATOM_CREATED)
@@ -131,7 +144,7 @@
 	LAZYADD(lift_load, AM)
 	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
 
-/obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/LMaster)
+/obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/lift_master_datum)
 	. = list()
 	for(var/direction in GLOB.cardinals)
 		var/obj/structure/industrial_lift/neighbor = locate() in get_step(src, direction)
@@ -160,8 +173,8 @@
 		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
 		)
 
-	var/turf/can_move_up = LMaster.Check_lift_move(UP)
-	var/turf/can_move_up_down = LMaster.Check_lift_move(DOWN)
+	var/turf/can_move_up = lift_master_datum.Check_lift_move(UP)
+	var/turf/can_move_up_down = lift_master_datum.Check_lift_move(DOWN)
 
 	if (!can_move_up && !can_move_up_down)
 		to_chat(user, "<span class='warning'>[src] doesn't seem to able move anywhere!</span>")
@@ -174,7 +187,7 @@
 	switch(result)
 		if("Up")
 			if(can_move_up)
-				LMaster.MoveLift(UP, user)
+				lift_master_datum.MoveLift(UP, user)
 				show_fluff_message(TRUE, user)
 				use(user)
 			else
@@ -182,7 +195,7 @@
 				use(user)
 		if("Down")
 			if(can_move_up_down)
-				LMaster.MoveLift(DOWN, user)
+				lift_master_datum.MoveLift(DOWN, user)
 				show_fluff_message(FALSE, user)
 				use(user)
 			else
@@ -221,11 +234,11 @@
 		user.visible_message("<span class='notice'>[user] move lift down.</span>", "<span class='notice'>Lift move down.</span>")
 
 /obj/structure/industrial_lift/Destroy()
-	QDEL_NULL(LMaster)
+	QDEL_NULL(lift_master_datum)
 	var/list/border_lift_platforms = lift_platform_expansion()
 	moveToNullspace()
 	for(var/border_lift in border_lift_platforms)
-		LMaster = new(border_lift)
+		lift_master_datum = new(border_lift)
 	return ..()
 
 /obj/structure/industrial_lift/debug
@@ -254,28 +267,28 @@
 
 	switch(result)
 		if("NORTH")
-			LMaster.MoveLiftOnZ(NORTH, z)
+			lift_master_datum.MoveLiftHorizontal(NORTH, z)
 			use(user)
 		if("NORTHEAST")
-			LMaster.MoveLiftOnZ(NORTHEAST, z)
+			lift_master_datum.MoveLiftHorizontal(NORTHEAST, z)
 			use(user)
 		if("EAST")
-			LMaster.MoveLiftOnZ(EAST, z)
+			lift_master_datum.MoveLiftHorizontal(EAST, z)
 			use(user)
 		if("SOUTHEAST")
-			LMaster.MoveLiftOnZ(SOUTHEAST, z)
+			lift_master_datum.MoveLiftHorizontal(SOUTHEAST, z)
 			use(user)
 		if("SOUTH")
-			LMaster.MoveLiftOnZ(SOUTH, z)
+			lift_master_datum.MoveLiftHorizontal(SOUTH, z)
 			use(user)
 		if("SOUTHWEST")
-			LMaster.MoveLiftOnZ(SOUTHWEST, z)
+			lift_master_datum.MoveLiftHorizontal(SOUTHWEST, z)
 			use(user)
 		if("WEST")
-			LMaster.MoveLiftOnZ(WEST, z)
+			lift_master_datum.MoveLiftHorizontal(WEST, z)
 			use(user)
 		if("NORTHWEST")
-			LMaster.MoveLiftOnZ(NORTHWEST, z)
+			lift_master_datum.MoveLiftHorizontal(NORTHWEST, z)
 			use(user)
 		if("Cancel")
 			return
