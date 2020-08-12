@@ -64,7 +64,7 @@ export const Button = props => {
       ])}
       tabIndex={!disabled && '0'}
       unselectable={Byond.IS_LTE_IE8}
-      onclick={e => {
+      onClick={e => {
         if (!disabled && onClick) {
           onClick(e);
         }

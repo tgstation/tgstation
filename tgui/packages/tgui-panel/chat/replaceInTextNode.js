@@ -78,7 +78,8 @@ export const highlightNode = (
   }
   let n = 0;
   const childNodes = node.childNodes;
-  for (let node of childNodes) {
+  for (let i = 0; i < childNodes.length; i++) {
+    const node = childNodes[i];
     // Is a text node
     if (node.nodeType === 3) {
       n += replaceInTextNode(regex, createNode)(node);
@@ -105,7 +106,8 @@ const URL_REGEX = /(?:(?:https?:\/\/)|(?:www\.))(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&
 export const linkifyNode = node => {
   let n = 0;
   const childNodes = node.childNodes;
-  for (let node of childNodes) {
+  for (let i = 0; i < childNodes.length; i++) {
+    const node = childNodes[i];
     const tag = String(node.nodeName).toLowerCase();
     // Is a text node
     if (node.nodeType === 3) {

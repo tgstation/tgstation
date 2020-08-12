@@ -96,6 +96,7 @@ class ChatRenderer {
   constructor() {
     /** @type {HTMLElement} */
     this.loaded = false;
+    /** @type {HTMLElement} */
     this.rootNode = null;
     this.queue = [];
     this.messages = [];
@@ -164,7 +165,9 @@ class ChatRenderer {
   }
 
   assignStyle(style = {}) {
-    Object.assign(this.rootNode.style, style);
+    for (let key of Object.keys(style)) {
+      this.rootNode.style.setProperty(key, style[key]);
+    }
   }
 
   setHighlight(text, color) {
@@ -290,7 +293,9 @@ class ChatRenderer {
         linkifyNode(node);
         // Assign an image error handler
         if (now < message.createdAt + IMAGE_RETRY_MESSAGE_AGE) {
-          for (let imgNode of node.querySelectorAll('img')) {
+          const imgNodes = node.querySelectorAll('img');
+          for (let i = 0; i < imgNodes.length; i++) {
+            const imgNode = imgNodes[i];
             imgNode.addEventListener('error', handleImageError);
           }
         }
@@ -299,9 +304,12 @@ class ChatRenderer {
       message.node = node;
       // Query all possible selectors to find out the message type
       if (!message.type) {
-        const typeDef = MESSAGE_TYPES.find(typeDef => (
-          typeDef.selector && node.querySelector(typeDef.selector)
-        ));
+        // IE8: Does not support querySelector on elements that
+        // are not yet in the document.
+        const typeDef = !Byond.IS_LTE_IE8 && MESSAGE_TYPES
+          .find(typeDef => (
+            typeDef.selector && node.querySelector(typeDef.selector)
+          ));
         message.type = typeDef?.type || 'unknown';
       }
       updateMessageBadge(message);
@@ -336,6 +344,12 @@ class ChatRenderer {
 
   pruneMessages() {
     if (!this.isReady()) {
+      return;
+    }
+    // Delay pruning because user is currently interacting
+    // with chat history
+    if (!this.scrollTracking) {
+      logger.debug('pruning delayed');
       return;
     }
     // Visible messages

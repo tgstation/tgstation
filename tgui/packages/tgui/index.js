@@ -10,11 +10,11 @@ import 'core-js/web/immediate';
 import 'core-js/web/queue-microtask';
 import 'core-js/web/timers';
 import 'regenerator-runtime/runtime';
-import './polyfills/html5shiv';
-import './polyfills/ie8';
-import './polyfills/dom4';
-import './polyfills/css-om';
-import './polyfills/inferno';
+import 'tgui-polyfill/html5shiv';
+import 'tgui-polyfill/ie8';
+import 'tgui-polyfill/dom4';
+import 'tgui-polyfill/css-om';
+import 'tgui-polyfill/inferno';
 
 // Themes
 import './styles/main.scss';

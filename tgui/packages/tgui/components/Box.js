@@ -163,6 +163,11 @@ export const computeBoxProps = props => {
     if (propName === 'style') {
       continue;
     }
+    // IE8: onclick workaround
+    if (Byond.IS_LTE_IE8 && propName === 'onClick') {
+      computedProps.onclick = props[propName];
+      continue;
+    }
     const propValue = props[propName];
     const mapPropToStyle = styleMapperByPropName[propName];
     if (mapPropToStyle) {

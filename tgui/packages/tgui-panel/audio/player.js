@@ -102,10 +102,16 @@ export class AudioPlayer {
   }
 
   onPlay(subscriber) {
+    if (!this.node) {
+      return;
+    }
     this.onPlaySubscribers.push(subscriber);
   }
 
   onStop(subscriber) {
+    if (!this.node) {
+      return;
+    }
     this.onStopSubscribers.push(subscriber);
   }
 }

@@ -48,6 +48,7 @@ export class Section extends Component {
         className={classes([
           'Section',
           'Section--level--' + level,
+          Byond.IS_LTE_IE8 && 'Section--iefix',
           fill && 'Section--fill',
           fitted && 'Section--fitted',
           scrollable && 'Section--scrollable',

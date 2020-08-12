@@ -107,7 +107,6 @@ export const KitchenSink = (props, context) => {
               {PAGES.map((page, i) => (
                 <Tabs.Tab
                   key={i}
-
                   color="transparent"
                   selected={i === pageIndex}
                   onClick={() => setPageIndex(i)}>

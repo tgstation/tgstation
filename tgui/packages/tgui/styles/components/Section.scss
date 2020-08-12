@@ -6,6 +6,7 @@
 @use 'sass:color';
 @use '../base.scss';
 @use '../colors.scss';
+@use '../functions.scss';
 
 $title-text-color: base.$color-fg !default;
 $background-color: base.$color-bg-section !default;
@@ -18,13 +19,8 @@ $shadow-offset: 0 0 !default;
 .Section {
   position: relative;
   margin-bottom: 0.5em;
+  background-color: functions.fake-alpha($background-color, base.$color-bg);
   background-color: $background-color;
-  // @if $shadow-type == inset {
-  //   box-shadow: $shadow-offset $shadow-size $shadow-color inset;
-  // }
-  // @else {
-  //   box-shadow: $shadow-offset $shadow-size $shadow-color;
-  // }
   box-sizing: border-box;
 
   &:last-child {
@@ -61,13 +57,26 @@ $shadow-offset: 0 0 !default;
   height: 100%;
 }
 
+.Section--fill .Section__content {
+  flex-grow: 1;
+}
+
+.Section--iefix.Section--fill {
+  display: table !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  & .Section__content {
+    display: table-row !important;
+    height: 100% !important;
+  }
+}
+
 .Section--scrollable {
   overflow-x: hidden;
   overflow-y: scroll;
-}
-
-.Section--fill .Section__content {
-  flex-grow: 1;
 }
 
 .Section--level--1 .Section__titleText {

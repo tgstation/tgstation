@@ -37,13 +37,6 @@
  * Initializes tgui panel.
  */
 /datum/tgui_panel/proc/initialize(force = FALSE)
-	set waitfor = FALSE
-	// BYOND skin is broken
-	if(!winexists(client, "browseroutput"))
-		broken = TRUE
-		message_admins("Couldn't start chat for [key_name_admin(client)]!")
-		alert(client.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
-		return
 	initialized_at = world.time
 	// Perform a clean initialization
 	window.initialize(inline_assets = list(

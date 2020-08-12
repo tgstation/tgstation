@@ -26,9 +26,9 @@ export const audioMiddleware = store => {
       return next(action);
     }
     if (type === 'settings/update' || type === 'settings/load') {
-      const { adminMusicVolume } = payload;
-      if (typeof adminMusicVolume === 'number') {
-        player.setVolume(adminMusicVolume);
+      const volume = payload?.adminMusicVolume;
+      if (typeof volume === 'number') {
+        player.setVolume(volume);
       }
       return next(action);
     }

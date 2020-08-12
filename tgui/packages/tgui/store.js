@@ -58,17 +58,22 @@ const loggingMiddleware = store => next => action => {
  * to augment reported stack traces with useful data for debugging.
  */
 const createStackAugmentor = store => (stack, error) => {
-  if (error && typeof error === 'object' && !error.stack) {
+  if (!error) {
+    error = new Error(stack.split('\n')[0]);
     error.stack = stack;
   }
-  logger.log('FatalError:', error || stack);
+  else if (typeof error === 'object' && !error.stack) {
+    error.stack = stack;
+  }
+  logger.log('FatalError:', error);
   const state = store.getState();
+  const config = state?.backend?.config;
   let augmentedStack = stack;
   augmentedStack += '\nUser Agent: ' + navigator.userAgent;
   augmentedStack += '\nState: ' + JSON.stringify({
-    config: state?.backend?.config,
-    suspended: state?.backend?.suspended,
-    suspending: state?.backend?.suspending,
+    ckey: config?.client?.ckey,
+    interface: config?.interface,
+    window: config?.window,
   });
   return augmentedStack;
 };

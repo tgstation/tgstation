@@ -8,7 +8,10 @@ const EPSILON = 0.0001;
 
 export class Color {
   constructor(r = 0, g = 0, b = 0, a = 1) {
-    Object.assign(this, { r, g, b, a });
+    this.r = r;
+    this.g = g;
+    this.b = b;
+    this.a = a;
   }
 
   toString() {

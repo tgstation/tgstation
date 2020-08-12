@@ -27,7 +27,9 @@ export const createStore = (reducer, enhancer) => {
 
   const dispatch = action => {
     currentState = reducer(currentState, action);
-    listeners.forEach(fn => fn());
+    for (let i = 0; i < listeners.length; i++) {
+      listeners[i]();
+    }
   };
 
   // This creates the initial store by causing each reducer to be called

@@ -14,6 +14,11 @@ import { PingIndicator } from './ping';
 import { SettingsPanel, useSettings } from './settings';
 
 export const Panel = (props, context) => {
+  if (Byond.IS_LTE_IE8) {
+    return (
+      <HoboIE8Panel />
+    );
+  }
   const audio = useAudio(context);
   const settings = useSettings(context);
   const game = useGame(context);
@@ -103,6 +108,35 @@ export const Panel = (props, context) => {
           </Section>
         </Flex.Item>
       </Flex>
+    </Pane>
+  );
+};
+
+// IE8: Needs special treatment
+const HoboIE8Panel = (props, context) => {
+  const settings = useSettings(context);
+  return (
+    <Pane theme={settings.theme}>
+      <Pane.Content scrollable>
+        <Button
+          style={{
+            position: 'fixed',
+            top: '1em',
+            right: '2em',
+            'z-index': 1000,
+          }}
+          selected={settings.visible}
+          onClick={() => settings.toggle()}>
+          Settings
+        </Button>
+        {settings.visible && (
+          <Flex.Item mt={1}>
+            <SettingsPanel />
+          </Flex.Item>
+        ) || (
+          <ChatPanel lineHeight={settings.lineHeight} />
+        )}
+      </Pane.Content>
     </Pane>
   );
 };

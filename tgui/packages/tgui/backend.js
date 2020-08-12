@@ -12,7 +12,6 @@
  */
 
 import { perf } from 'common/perf';
-import { setImmediate } from 'core-js';
 import { setupDrag } from './drag';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
@@ -262,16 +261,20 @@ export const sendAct = (action, payload = {}) => {
  *     title: string,
  *     status: number,
  *     interface: string,
- *     user: {
- *       name: string,
- *       ckey: string,
- *       observer: number,
- *     },
  *     window: {
  *       key: string,
  *       size: [number, number],
  *       fancy: boolean,
  *       locked: boolean,
+ *     },
+ *     client: {
+ *       ckey: string,
+ *       address: string,
+ *       computer_id: string,
+ *     },
+ *     user: {
+ *       name: string,
+ *       observer: number,
  *     },
  *   },
  *   data: any,

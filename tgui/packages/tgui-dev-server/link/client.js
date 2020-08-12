@@ -112,8 +112,8 @@ export const sendMessage = msg => {
     else {
       const DEV_SERVER_IP = process.env.DEV_SERVER_IP || '127.0.0.1';
       const req = new XMLHttpRequest();
-      req.open('POST', `http://${DEV_SERVER_IP}:3001`);
-      req.timeout = 500;
+      req.open('POST', `http://${DEV_SERVER_IP}:3001`, true);
+      req.timeout = 250;
       req.send(json);
     }
   }
