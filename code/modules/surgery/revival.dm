@@ -29,7 +29,7 @@
 	name = "shock body"
 	implements = list(/obj/item/shockpaddles = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
 	repeatable = TRUE
-	time = 50
+	time = 5 SECONDS
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
 	. = TRUE
