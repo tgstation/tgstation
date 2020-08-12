@@ -6321,7 +6321,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/fore)
 "aog" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 8;
 	id = "pod_lavaland2";
 	name = "lavaland"
@@ -10492,7 +10492,7 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "ayw" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 4;
 	id = "pod_lavaland3";
 	name = "lavaland"
@@ -22309,7 +22309,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "baC" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 8;
 	id = "pod_lavaland1";
 	name = "lavaland"
@@ -31380,7 +31380,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "bvM" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 4;
 	id = "pod_lavaland4";
 	name = "lavaland"
