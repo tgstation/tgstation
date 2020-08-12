@@ -193,7 +193,7 @@
 		playsound(get_turf(M), 'sound/weapons/whip.ogg', 50, TRUE, -1)
 		M.visible_message("<span class='danger'>[M] is brutally threshed by [S]!</span>", \
 		"<span class='userdanger'>You are brutally threshed by [S]!</span>")
-		log_combat(S, M, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
+		log_combat(S, M, "aggressively threshed") //You aren't being attacked by the vines. You just happen to stand in their way.
 
 /datum/spacevine_mutation/transparency
 	name = "transparent"
