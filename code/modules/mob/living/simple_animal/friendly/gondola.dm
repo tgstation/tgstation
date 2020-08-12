@@ -28,6 +28,8 @@
 	maxHealth = 200
 	health = 200
 	del_on_death = TRUE
+	pet_bonus = TRUE
+	pet_bonus_emote = "smiles!"
 
 	//Gondolas don't make footstep sounds
 
@@ -61,6 +63,7 @@
 
 /mob/living/simple_animal/pet/gondola/IsVocal() //Gondolas are the silent walker.
 	return FALSE
+
 
 #undef GONDOLA_HEIGHT
 #undef GONDOLA_COLOR

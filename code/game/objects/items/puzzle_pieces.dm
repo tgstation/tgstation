@@ -15,17 +15,17 @@
 	var/puzzle_id = null
 
 //Two test keys for use alongside the two test doors.
-/obj/item/keycard/cheese
-	name = "cheese keycard"
-	desc = "Look, I still don't understand the reference. What the heck is a keyzza?"
+/obj/item/keycard/yellow
+	name = "yellow keycard"
+	desc = "A yellow keycard. How fantastic. Looks like it belongs to a high security door."
 	color = "#f0da12"
-	puzzle_id = "cheese"
+	puzzle_id = "yellow"
 
-/obj/item/keycard/swordfish
-	name = "titanic keycard"
-	desc = "Smells like it was at the bottom of a harbor."
+/obj/item/keycard/blue
+	name = "blue keycard"
+	desc = "A blue keycard. How terrific. Looks like it belongs to a high security door."
 	color = "#3bbbdb"
-	puzzle_id = "swordfish"
+	puzzle_id = "blue"
 
 //***************
 //*****Doors*****
@@ -78,16 +78,16 @@
 			to_chat(user, "<span class='notice'>This door doesn't appear to close.</span>")
 			return
 
-//Test doors. Gives admins a few doors to use quickly should they so choose.
-/obj/machinery/door/keycard/cheese
+//Test doors. Gives admins a few doors to use quickly should they so choose for events.
+/obj/machinery/door/keycard/yellow_required
 	name = "blue airlock"
-	desc = "Smells like... pizza?"
-	puzzle_id = "cheese"
+	desc = "It looks like it requires a yellow keycard."
+	puzzle_id = "yellow"
 
-/obj/machinery/door/keycard/swordfish
+/obj/machinery/door/keycard/blue_required
 	name = "blue airlock"
-	desc = "If nautical nonsense be something you wish."
-	puzzle_id = "swordfish"
+	desc = "It looks like it requires a blue keycard."
+	puzzle_id = "blue"
 
 //*************************
 //***Box Pushing Puzzles***

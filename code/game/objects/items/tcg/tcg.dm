@@ -22,7 +22,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
-	transform = matrix(0.3,0,0,0,0.3,0)
+	zoom_out()
+	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
 	//If they are passed as null let's replace them with the vars on the card. this also means we can allow for map loaded ccards
 	if(!datum_series)
 		datum_series = series
@@ -57,10 +59,16 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 /obj/item/tcgcard/equipped(mob/user, slot, initial)
 	. = ..()
-	transform = matrix()
+	zoom_in()
 
 /obj/item/tcgcard/dropped(mob/user, silent)
 	. = ..()
+	zoom_out()
+
+/obj/item/tcgcard/proc/zoom_in()
+	transform = matrix()
+
+/obj/item/tcgcard/proc/zoom_out()
 	transform = matrix(0.3,0,0,0,0.3,0)
 
 /obj/item/cardpack
@@ -116,7 +124,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 /obj/item/cardpack/Initialize()
 	. = ..()
-	transform = matrix(0.4,0,0,0,0.4,0)
+	zoom_out()
+	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
 	//Pass by refrance moment
 	//This lets us only have one rarity table per pack, badmins beware
 	if(GLOB.cached_rarity_table[type])
@@ -130,10 +140,16 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 /obj/item/cardpack/equipped(mob/user, slot, initial)
 	. = ..()
-	transform = matrix()
+	zoom_in()
 
 /obj/item/cardpack/dropped(mob/user, silent)
 	. = ..()
+	zoom_out()
+
+/obj/item/cardpack/proc/zoom_in()
+	transform = matrix()
+
+/obj/item/cardpack/proc/zoom_out()
 	transform = matrix(0.4,0,0,0,0.4,0)
 
 /obj/item/cardpack/attack_self(mob/user)

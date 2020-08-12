@@ -85,9 +85,12 @@
 		))
 	else
 		window.send_message("ping")
-	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
+	 
+	var/flushqueue = window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/fontawesome))
 	for(var/datum/asset/asset in src_object.ui_assets(user))
-		window.send_asset(asset)
+		flushqueue |= window.send_asset(asset)
+	if (flushqueue)
+		user.client.browse_queue_flush()
 	window.send_message("update", get_payload(
 		with_data = TRUE,
 		with_static_data = TRUE))
@@ -143,11 +146,13 @@
  * Makes an asset available to use in tgui.
  *
  * required asset datum/asset
+ *
+ * return bool - true if an asset was actually sent
  */
 /datum/tgui/proc/send_asset(datum/asset/asset)
 	if(!window)
 		CRASH("send_asset() can only be called after open().")
-	window.send_asset(asset)
+	return window.send_asset(asset)
 
 /**
  * public
