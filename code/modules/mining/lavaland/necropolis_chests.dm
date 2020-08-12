@@ -1229,7 +1229,6 @@
 		return
 	if(blink_toggled)
 		blink.Teleport(user, target)
-		return
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
