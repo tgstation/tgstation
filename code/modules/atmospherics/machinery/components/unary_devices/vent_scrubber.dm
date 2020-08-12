@@ -116,8 +116,8 @@
 
 	var/area/scrub_area = get_area(src)
 	if(!scrub_area.air_scrub_names[id_tag])
-		// If we do not have a name assign a random tag
-		name = assign_random_name("\improper [scrub_area.name] air scrubber ")
+		// If we do not have a name, assign one
+		name = "[assign_random_name()] [scrub_area.name] air scrubber"
 		scrub_area.air_scrub_names[id_tag] = name
 
 	scrub_area.air_scrub_info[id_tag] = signal.data

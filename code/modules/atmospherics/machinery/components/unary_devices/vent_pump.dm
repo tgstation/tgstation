@@ -159,8 +159,8 @@
 
 	var/area/vent_area = get_area(src)
 	if(!vent_area.air_vent_names[id_tag])
-		// If we do not have a name assign a random tag
-		name = assign_random_name("\improper [vent_area.name] vent pump ")
+		// If we do not have a name, assign one
+		name = "[assign_random_name()] [vent_area.name] vent pump"
 		vent_area.air_vent_names[id_tag] = name
 
 	vent_area.air_vent_info[id_tag] = signal.data
