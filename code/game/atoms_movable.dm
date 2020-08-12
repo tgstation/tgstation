@@ -363,6 +363,7 @@
 
 	if(pulling && !handle_pulled_premove(newloc, direct, _step_x, _step_y))
 		handle_pulled_movement()
+		check_pulling()
 		return FALSE
 
 	var/atom/oldloc = loc
@@ -388,8 +389,8 @@
 			check_pulling()
 		if(has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, step_x, step_y))
 			return FALSE
-	if(!.) // we still didn't move, something is blocking further movement
-		walk(src, 0)
+	else // we still didn't move, something is blocking further movement
+		walk(src, NONE)
 
 /// Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
@@ -553,6 +554,9 @@
 			continue
 		var/atom/thing = i
 		thing.Uncrossed(src)
+
+	if(pulledby || pulling)
+		check_pulling()
 
 	if(!loc) // I hope you know what you're doing
 		return TRUE
