@@ -199,7 +199,7 @@
 	. = ..()
 	. += "<span class='notice'>Its channel ID is '[id]'.</span>"
 
-/obj/item/wallframe/flasher/after_attach(var/obj/O)
+/obj/item/wallframe/flasher/after_attach(obj/O)
 	..()
 	var/obj/machinery/flasher/F = O
 	F.id = id

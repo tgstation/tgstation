@@ -244,7 +244,7 @@
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
 		O.diseases = diseases
-		diseases = list()
+		diseases = null	//null the old diseases, bye bye!
 		for(var/thing in O.diseases)
 			var/datum/disease/D = thing
 			D.affected_mob = O

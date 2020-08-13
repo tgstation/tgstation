@@ -1,15 +1,14 @@
 //normal computer version is located in code\modules\power\monitor.dm, /obj/machinery/computer/monitor
 
 /datum/computer_file/program/power_monitor
-	filename = "powermonitor"
-	filedesc = "Power Monitor"
+	filename = "ampcheck"
+	filedesc = "AmpCheck"
 	program_icon_state = "power_monitor"
 	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
 	ui_header = "power_norm.gif"
 	transfer_access = ACCESS_ENGINE
 	usage_flags = PROGRAM_CONSOLE
 	requires_ntnet = 0
-	network_destination = "power monitoring system"
 	size = 9
 	tgui_id = "NtosPowerMonitor"
 
