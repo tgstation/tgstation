@@ -161,13 +161,16 @@
 	W.update_icon()
 	return W
 
-/turf/open/floor/attackby(obj/item/C, mob/user, params)
-	if(!C || !user)
+/turf/open/floor/attackby(obj/item/object, mob/user, params)
+	if(!object || !user)
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/stack/tile))
-		try_replace_tile(C, user, params)
+	if(intact && istype(object, /obj/item/stack/tile))
+		try_replace_tile(object, user, params)
+	if(istype(object, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/sheets = object
+		return sheets.attacked_by_floor(user, params)
 	return 0
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)

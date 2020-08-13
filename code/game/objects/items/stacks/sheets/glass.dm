@@ -57,7 +57,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		new_tile.add_fingerprint(user)
-	else if(istype(W, /obj/item/stack/rods))
+		return
+	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
@@ -69,11 +70,14 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 				user.put_in_hands(RG)
 		else
 			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
-			return
-	else
-		return ..()
+		return
+	return ..()
 
-
+/obj/item/stack/sheet/glass/attacked_by_floor(mob/user, params)
+	use(1)
+	to_chat(user, "<span class='notice'>You shatter one [name].</span>")
+	var/obj/item/shard/new_shard = new(user.loc)
+	new_shard.add_fingerprint(user)
 
 GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
@@ -95,6 +99,12 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
+
+/obj/item/stack/sheet/plasmaglass/attacked_by_floor(mob/user, params)
+	use(1)
+	to_chat(user, "<span class='notice'>You shatter one [name].</span>")
+	var/obj/item/shard/plasma/new_shard = new(user.loc)
+	new_shard.add_fingerprint(user)
 
 /obj/item/stack/sheet/plasmaglass/get_main_recipes()
 	. = ..()
