@@ -317,15 +317,15 @@ All foods are distributed among various categories. Use common sense.
 		return
 	// if it wasn't for the fact that the eat verbs specified woofing, i'd make this possible for all pets, but alas, i am lazy
 
-	var/mob/living/L = M
+	var/mob/living/our_dog = M
 	if(bitecount == 0 || prob(50))
-		M.manual_emote("nibbles away at \the [src]")
+		our_dog.manual_emote("nibbles away at \the [src]")
 	bitecount++
-	L.taste(reagents) // why should carbons get all the fun?
+	our_dog.taste(reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
 		if(satisfaction_text)
-			M.emote(satisfaction_text)
+			our_dog.emote(satisfaction_text)
 		qdel(src)
 
 

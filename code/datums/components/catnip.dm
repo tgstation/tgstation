@@ -62,6 +62,7 @@
 /datum/component/catnip/process()
 	if(!COOLDOWN_FINISHED(src, catscan_cooldown))
 		return
+	COOLDOWN_START(src, catscan_cooldown, catscan_delay)
 
 	var/list/scannables
 	if(prob(catscan_horde_chance))
@@ -71,12 +72,8 @@
 
 	var/mob/living/simple_animal/pet/cat/itercat
 	for(itercat in scannables)
-		if((itercat in enticed_cats) || !COOLDOWN_FINISHED(itercat, munchy_break))
-			continue
-		if(istype(itercat) && !itercat.stat)
+		if(!(itercat in enticed_cats) && COOLDOWN_FINISHED(itercat, munchy_break) && !itercat.stat)
 			register_cat(itercat)
-
-	COOLDOWN_START(src, catscan_cooldown, catscan_delay)
 
 	for(itercat in enticed_cats)
 		if(itercat.stat || itercat.current_catnip != parent || get_dist(itercat, get_turf(parent)) > CATNIP_MAX_DISTANCE)
