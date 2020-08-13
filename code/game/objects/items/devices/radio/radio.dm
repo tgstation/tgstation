@@ -202,14 +202,14 @@
 					spans = list(M.speech_span)
 				if(!language)
 					language = M.get_selected_language()
-				INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
+				INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language, message_mods)
 				return ITALICS | REDUCE_RANGE
 	else
 		if(!spans)
 			spans = list(M.speech_span)
 		if(!language)
 			language = M.get_selected_language()
-		INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
+		INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language, message_mods)
 		return ITALICS | REDUCE_RANGE
 
 /obj/item/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language, list/message_mods)
