@@ -339,14 +339,14 @@
 /obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
-	var/exclamation_used = 0
-	var/question_mark_used = 0
+	var/exclamation_used = FALSE
+	var/question_mark_used = FALSE
 	var/mob/living/carbon/M = owner
 	for(var/i in 1 to length(message))
 		if(findtext("!", message[i]))
-			exclamation_used = 1
+			exclamation_used = TRUE
 		else if (findtext("?", message[i]))
-			question_mark_used = 1
+			question_mark_used = TRUE
 		else
 			new_message += message[i]
 	if(exclamation_used)

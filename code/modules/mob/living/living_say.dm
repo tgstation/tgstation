@@ -357,23 +357,23 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/mob/living/carbon/human/H = src
 	if(HAS_TRAIT(src, TRAIT_MUTE))
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming) //Makes sure mimes can't speak using sign language
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	if(is_muzzled())
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	if(!IsVocal())
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 
 
