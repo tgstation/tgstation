@@ -35,6 +35,6 @@
 	if(!shards_to)
 		return
 	use(1)
-	to_chat(user, "<span class='notice'>You shatter one [name].</span>")
+	to_chat(user, "<span class='notice'>You shatter one sheet of [name].</span>")
 	var/obj/item/shard/new_shard = new shards_to(user.loc)
 	new_shard.add_fingerprint(user)
