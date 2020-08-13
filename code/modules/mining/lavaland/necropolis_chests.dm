@@ -1149,13 +1149,13 @@
 	if(!current_charges)
 		var/obj/item/hierophant_club/club = src.target
 		if(istype(club))
-			club.charged = FALSE
+			club.blink_charged = FALSE
 			club.update_icon()
 
 /datum/action/innate/dash/hierophant/charge()
 	var/obj/item/hierophant_club/club = target
 	if(istype(club))
-		club.charged = TRUE
+		club.blink_charged = TRUE
 		club.update_icon()
 
 	current_charges = clamp(current_charges + 1, 0, max_charges)
@@ -1183,14 +1183,17 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	actions_types = list(/datum/action/item_action/vortex_recall)
 
-	var/datum/action/innate/dash/hierophant/blink
-
-	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
-	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
+	/// Linked teleport beacon for the group teleport functionality.
+	var/obj/effect/hierophant/beacon
+	/// TRUE if currently doing a teleport to the beacon, FALSE otherwise.
 	var/teleporting = FALSE //if we ARE teleporting
 
-	var/blink_toggled = TRUE
-	var/charged = TRUE
+	/// Action enabling the blink-dash functionality.
+	var/datum/action/innate/dash/hierophant/blink
+	/// Whether the blink ability is activated. IF TRUE, left clicking a location will blink to it. If FALSE, this is disabled.
+	var/blink_activated = TRUE
+	/// Whether the blink is charged. Set by
+	var/blink_charged = TRUE
 
 /obj/item/hierophant_club/Initialize()
 	. = ..()
@@ -1219,19 +1222,19 @@
 	qdel(user)
 
 /obj/item/hierophant_club/attack_self(mob/user)
-	blink_toggled = !blink_toggled
-	to_chat(user, "<span class='notice'>You [blink_toggled ? "enable" : "disable"] the blink function on [src].</span>")
+	blink_activated = !blink_activated
+	to_chat(user, "<span class='notice'>You [blink_activated ? "enable" : "disable"] the blink function on [src].</span>")
 
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	// If our target is the beacon and the hierostaff is next to the beacon, we're trying to pick it up.
 	if((target == beacon) && target.Adjacent(src))
 		return
-	if(blink_toggled)
+	if(blink_activated)
 		blink.Teleport(user, target)
 
 /obj/item/hierophant_club/update_icon_state()
-	icon_state = inhand_icon_state = "hierophant_club[charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
+	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if(!user.is_holding(src)) //you need to hold the staff to teleport
