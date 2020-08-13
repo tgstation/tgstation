@@ -248,7 +248,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			priority = clamp(text2num(href_list["priority"]), REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = reject_bad_text(stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN, html_encode = FALSE))
+		var/new_message = reject_bad_text(stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN))
 		if(new_message)
 			message = new_message
 			priority = clamp(text2num(href_list["priority"]) || REQ_NORMAL_MESSAGE_PRIORITY, REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
@@ -263,7 +263,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		if(isliving(usr))
 			var/mob/living/L = usr
 			message = L.treat_message(message)
-		minor_announce(message, "[department] Announcement:")
+		minor_announce(message, "[department] Announcement:", html_encode = FALSE)
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
 		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
