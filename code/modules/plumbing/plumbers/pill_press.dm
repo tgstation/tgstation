@@ -3,6 +3,7 @@
 	name = "chemical press"
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
+
 	///maximum size of a pill
 	var/max_pill_volume = 50
 	///maximum size of a patch

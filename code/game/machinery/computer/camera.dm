@@ -10,6 +10,8 @@
 
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/active_camera
+	/// The turf where the camera was last updated.
+	var/turf/last_camera_turf
 	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
@@ -60,9 +62,10 @@
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
-	// Show static if can't use the camera
-	if(!active_camera?.can_use())
-		show_camera_static()
+
+	// Update the camera, showing static if necessary and updating data if the location has moved.
+	update_active_camera_screen()
+
 	if(!ui)
 		var/user_ref = REF(user)
 		var/is_living = isliving(user)
@@ -104,6 +107,7 @@
 		data["cameras"] += list(list(
 			name = C.c_tag,
 		))
+
 	return data
 
 /obj/machinery/computer/security/ui_act(action, params)
@@ -118,30 +122,46 @@
 		active_camera = selected_camera
 		playsound(src, get_sfx("terminal_type"), 25, FALSE)
 
-		// Show static if can't use the camera
-		if(!selected_camera?.can_use())
-			show_camera_static()
+		if(!selected_camera)
 			return TRUE
 
-		var/list/visible_turfs = list()
-
-		// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
-		var/cam_location = isliving(selected_camera.loc) ? selected_camera.loc : selected_camera
-
-		var/list/visible_things = selected_camera.isXRay() ? range(selected_camera.view_range, cam_location) : view(selected_camera.view_range, cam_location)
-
-		for(var/turf/visible_turf in visible_things)
-			visible_turfs += visible_turf
-
-		var/list/bbox = get_bbox_of_atoms(visible_turfs)
-		var/size_x = bbox[3] - bbox[1] + 1
-		var/size_y = bbox[4] - bbox[2] + 1
-
-		cam_screen.vis_contents = visible_turfs
-		cam_background.icon_state = "clear"
-		cam_background.fill_rect(1, 1, size_x, size_y)
+		update_active_camera_screen()
 
 		return TRUE
+
+/obj/machinery/computer/security/proc/update_active_camera_screen()
+	// Show static if can't use the camera
+	if(!active_camera?.can_use())
+		show_camera_static()
+		return
+
+	var/list/visible_turfs = list()
+
+	// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
+	var/cam_location = isliving(active_camera.loc) ? active_camera.loc : active_camera
+
+	// If we're not forcing an update for some reason and the cameras are in the same location,
+	// we don't need to update anything.
+	// Most security cameras will end here as they're not moving.
+	var/newturf = get_turf(cam_location)
+	if(last_camera_turf == newturf)
+		return
+
+	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
+	last_camera_turf = get_turf(cam_location)
+
+	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : view(active_camera.view_range, cam_location)
+
+	for(var/turf/visible_turf in visible_things)
+		visible_turfs += visible_turf
+
+	var/list/bbox = get_bbox_of_atoms(visible_turfs)
+	var/size_x = bbox[3] - bbox[1] + 1
+	var/size_y = bbox[4] - bbox[2] + 1
+
+	cam_screen.vis_contents = visible_turfs
+	cam_background.icon_state = "clear"
+	cam_background.fill_rect(1, 1, size_x, size_y)
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	var/user_ref = REF(user)

@@ -190,7 +190,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	max_amount = MAXCOIL
 	amount = MAXCOIL
 	merge_type = /obj/item/stack/pipe_cleaner_coil // This is here to let its children merge between themselves
-	var/pipe_cleaner_color = "red"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -203,6 +202,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list("copper" = 2) //2 copper per pipe_cleaner in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	/// Currently set cable color
+	var/pipe_cleaner_color = COLOR_RED
 
 /obj/item/stack/pipe_cleaner_coil/cyborg
 	is_cyborg = 1
@@ -210,8 +211,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	cost = 1
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
-	var/pipe_cleaner_color = input(user,"Pick a pipe cleaner color.","Cable Color") in sortList(list("red","yellow","green","blue","pink","orange","cyan","white"))
-	pipe_cleaner_color = pipe_cleaner_color
+	var/selected_color = input(user, "Pick a pipe cleaner color.", "Cable Color") as null|anything in list("blue", "cyan", "green", "orange", "pink", "red", "white", "yellow")
+	if(!selected_color)
+		return
+	pipe_cleaner_color = GLOB.pipe_cleaner_colors[selected_color]
 	update_icon()
 
 /obj/item/stack/pipe_cleaner_coil/suicide_act(mob/user)

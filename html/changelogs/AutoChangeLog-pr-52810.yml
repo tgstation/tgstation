@@ -1,4 +1,0 @@
-author: "YPOQ"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an issue that caused diseased mobs to not be deleted properly."
