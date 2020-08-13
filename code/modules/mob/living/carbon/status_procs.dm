@@ -11,13 +11,13 @@
 		return
 	if(absorb_stun(0)) //continuous effect, so we don't want it to increment the stuns absorbed.
 		return
-	var/prev = HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)
-	if(!prev)
-		to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
+		return
+	to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 	ADD_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
 	ADD_TRAIT(src, TRAIT_FLOORED, STAMINA)
-	if(!prev && getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
+	if(getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
 		adjustStaminaLoss(30, FALSE)
 	update_mobility()
 
