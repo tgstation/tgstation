@@ -188,3 +188,11 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // This skillchip is incompatible with the Chameleon skillchip and cannot be copied.
 // If you want to blacklist an abstract path such a /obj/item/skillchip/job then look at the blacklist in /datum/action/item_action/chameleon/change/skillchip
 #define SKILLCHIP_CHAMELEON_INCOMPATIBLE (1<<2)
+
+//dir macros
+#define ISDIAGONALDIR(d) (d&(d-1))
+#define NSCOMPONENT(d)   (d&(NORTH|SOUTH))
+#define EWCOMPONENT(d)   (d&(EAST|WEST))
+#define NSDIRFLIP(d)     (d^(NORTH|SOUTH))
+#define EWDIRFLIP(d)     (d^(EAST|WEST))
+#define DIRFLIP(d)       turn(d, 180)

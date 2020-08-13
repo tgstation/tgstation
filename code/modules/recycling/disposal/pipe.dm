@@ -29,7 +29,7 @@
 	else
 		stored = new /obj/structure/disposalconstruct(src, null , SOUTH , FALSE , src)
 
-	if(dir in GLOB.diagonals) // Bent pipes already have all the dirs set
+	if(ISDIAGONALDIR(dir)) // Bent pipes already have all the dirs set
 		initialize_dirs = NONE
 
 	if(initialize_dirs != DISP_DIR_NONE)

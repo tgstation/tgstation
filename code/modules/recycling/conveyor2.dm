@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor/inverted/Initialize(mapload)
 	. = ..()
-	if(mapload && !(dir in GLOB.diagonals))
+	if(mapload && !(ISDIAGONALDIR(dir)))
 		log_mapping("[src] at [AREACOORD(src)] spawned without using a diagonal dir. Please replace with a normal version.")
 
 // Auto conveyour is always on unless unpowered
