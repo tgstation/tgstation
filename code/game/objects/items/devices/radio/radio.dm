@@ -198,13 +198,6 @@
 					message = stars(message)
 				if(length(empty_indexes) == 0) //Due to the requirement of gloves, the arm check for normal speech would be redundant here.
 					return FALSE
-				if(!spans)
-					spans = list(M.speech_span)
-				if(!language)
-					language = M.get_selected_language()
-				INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language, message_mods)
-				return ITALICS | REDUCE_RANGE
-	else
 		if(!spans)
 			spans = list(M.speech_span)
 		if(!language)
