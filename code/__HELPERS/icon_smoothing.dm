@@ -42,6 +42,43 @@
 #define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
 
 
+#define SET_ADJ_IN_DIR(source, junction, direction) \
+	do { \
+		var/turf/neighbor = get_step(source, direction); \
+		if(!neighbor) { \
+			if(source.smoothing_flags & SMOOTH_BORDER) { \
+				junction |=  direction; \
+			}; \
+		}; \
+		else { \
+			for(var/target in source.canSmoothWith) { \
+				if(!(source.canSmoothWith[target] & neighbor.smoothing_groups[target])) { \
+					continue; \
+				}; \
+				junction |= direction; \
+				break; \
+			}; \
+			if(!(junction & direction) && source.smoothing_flags & SMOOTH_OBJ) { \
+				for(var/obj/thing in neighbor) { \
+					if(!thing.anchored || isnull(thing.smoothing_groups)) { \
+						continue; \
+					}; \
+					for(var/target in source.canSmoothWith) { \
+						if(!(source.canSmoothWith[target] & thing.smoothing_groups[target])) { \
+							continue; \
+						}; \
+						junction |= direction; \
+						break; \
+					}; \
+					if(junction & direction) { \
+						break; \
+					}; \
+				}; \
+			}; \
+		}; \
+	} while(FALSE)
+
+
 ///Scans all adjacent turfs to find targets to smooth with.
 /atom/proc/calculate_adjacencies()
 	. = NONE
@@ -108,6 +145,10 @@
 			corners_diagonal_smooth(calculate_adjacencies())
 		else
 			corners_cardinal_smooth(calculate_adjacencies())
+	else if(smoothing_flags & SMOOTH_BLOB)
+		blob_smooth()
+	else
+		CRASH("smooth_icon called for [src] with smoothing_flags == [smoothing_flags]")
 
 
 /atom/proc/corners_diagonal_smooth(adjacencies)
@@ -289,6 +330,33 @@
 	return NO_ADJ_FOUND
 
 
+/atom/proc/blob_smooth()
+	. = NONE //junction
+
+	for(var/direction in GLOB.cardinals) //Cardinal case first.
+		SET_ADJ_IN_DIR(src, ., direction)
+
+	if(!(smoothing_flags & SMOOTH_DIAGONAL) || !(. & (NORTH|SOUTH)) || !(. & (EAST|WEST)))
+		icon_state = "[base_icon_state]-[.]"
+		return
+
+	if(. & N_NORTH)
+		if(. & N_WEST)
+			SET_ADJ_IN_DIR(src, ., NORTHWEST)
+
+		if(. & N_EAST)
+			SET_ADJ_IN_DIR(src, ., N_NORTHEAST)
+
+	if(. & N_SOUTH)
+		if(. & N_WEST)
+			SET_ADJ_IN_DIR(src, ., SOUTHWEST)
+
+		if(. & N_EAST)
+			SET_ADJ_IN_DIR(src, ., SOUTHEAST)
+
+	icon_state = "[base_icon_state]-[.]"
+
+
 //Icon smoothing helpers
 /proc/smooth_zlevel(zlevel, now = FALSE)
 	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
@@ -395,3 +463,5 @@
 
 #undef DEFAULT_UNDERLAY_ICON
 #undef DEFAULT_UNDERLAY_ICON_STATE
+
+#undef SET_ADJ_IN_DIR

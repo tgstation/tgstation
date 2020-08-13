@@ -1,5 +1,6 @@
 /* smoothing_flags */
 #define SMOOTH_CORNERS	(1<<0) //Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.
+#define SMOOTH_BLOB		(1<<1) //Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by the blob tileset pattern.
 #define SMOOTH_DIAGONAL	(1<<2)	//if atom should smooth diagonally, this should be present in 'smoothing_flags' var
 #define SMOOTH_BORDER	(1<<3)	//atom will smooth with the borders of the map
 #define SMOOTH_QUEUED	(1<<4)	//atom is currently queued to smooth.
