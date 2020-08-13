@@ -30044,7 +30044,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/rack,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/rnd/production/protolathe/department/engineering,
@@ -72986,8 +72985,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/structure/bed/dogbed/mcgriff,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "mEn" = (

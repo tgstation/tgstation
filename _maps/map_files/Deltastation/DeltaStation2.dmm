@@ -15047,7 +15047,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/obj/structure/rack,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
@@ -18449,10 +18448,10 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "aNM" = (
-/mob/living/simple_animal/mouse/white,
 /obj/machinery/light{
 	dir = 4
 	},
+/mob/living/simple_animal/mouse/white,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "aNO" = (
@@ -47895,8 +47894,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/structure/bed/dogbed/mcgriff,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/plasteel,
 /area/security/warden)
 "bNp" = (
