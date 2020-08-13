@@ -179,10 +179,8 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	max_share = max(last_share, max_share);\
 	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
 		our_excited_group.reset_cooldowns();\
-		cached_atmos_cooldown = 0;\
 	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
 		our_excited_group.dismantle_cooldown = 0;\
-		cached_atmos_cooldown = 0;\
 	}
 #else
 #define LAST_SHARE_CHECK \

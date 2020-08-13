@@ -22,6 +22,7 @@
 
 /datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
+	sharer.temperature = initial_temperature
 	garbage_collect()
 
 /datum/gas_mixture/immutable/react()
@@ -83,6 +84,6 @@
 		ADD_GAS(path, mix)
 		mix[path][MOLES] = text2num(gas[id])
 		mix[path][ARCHIVE] = mix[path][MOLES]
-	temperature_archived = temperature
+	temperature_archived = initial_temperature
 
 
