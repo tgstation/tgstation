@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - balance: "Tesla coils max efficiency rate has been dropped from 400% to 85% to help prevent the below"
+  - bugfix: "The tesla coil can no longer make infinite energy"
