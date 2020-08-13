@@ -263,7 +263,6 @@
 	var/atom/catnip_holder = current_catnip.loc
 	// beg for food
 	if(!isturf(catnip_holder))
-		var/soundpath
 		if(!Adjacent(catnip_holder))
 			visible_message("<b>[src]</b> meows at [catnip_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE), rand(0, 10)) // 0-1 seconds, so there's some variation
