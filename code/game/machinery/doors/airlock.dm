@@ -1042,7 +1042,7 @@
 		return TRUE
 	user.visible_message("<span class='notice'>[user] begins removing the seal from [src].</span>", "<span class='notice'>You begin removing [src]'s pneumatic seal.</span>")
 	playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
-	if(!do_after(user, airlockseal.unseal_time, target = src) && seal)
+	if(!do_after(user, airlockseal.unseal_time, target = src) && !seal)
 		return TRUE
 	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
 	airlockseal.forceMove(get_turf(user))
