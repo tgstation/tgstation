@@ -83,6 +83,11 @@
 				release(TRUE, FALSE)
 				return
 
+/obj/item/clothing/head/mob_holder/throw_at()
+	if(HAS_TRAIT(src, TRAIT_NODROP))
+		return
+	release()
+
 /obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
 	. = ..()
 	if(!isdrone(L))
