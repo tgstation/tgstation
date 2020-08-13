@@ -508,7 +508,6 @@
 	med_hud_set_health()
 	med_hud_set_status()
 	update_health_hud()
-	update_succumb_action()
 
 /mob/living/update_health_hud()
 	var/severity = 0
@@ -543,13 +542,6 @@
 		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
 	else
 		clear_fullscreen("brute")
-
-/// Shows or doesn't show the succumb action button if the mob is eligible
-/mob/living/proc/update_succumb_action()
-	if (CAN_SUCCUMB(src))
-		throw_alert("succumb", /obj/screen/alert/succumb)
-	else
-		clear_alert("succumb")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, excess_healing = 0)
@@ -1636,10 +1628,18 @@
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 
-/mob/living/set_stat(new_stat)
+/mob/living/set_stat()
 	. = ..()
 	if(isnull(.))
 		return
+
+	// If our stat changed, update whether or not we can succumb
+	if (. != stat)
+		if (CAN_SUCCUMB(src))
+			throw_alert("succumb", /obj/screen/alert/succumb)
+		else
+			clear_alert("succumb")
+
 	switch(.) //Previous stat.
 		if(CONSCIOUS)
 			if(stat >= UNCONSCIOUS)
