@@ -637,6 +637,7 @@
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Missing [scanmod? "capacitor" : "scanning module"].</span>")
 		return FALSE
 	if(lavaland_only && is_mining_level(z))
+		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Invalid Environment.</span>")
 		return FALSE
 
 	var/olddir = dir
