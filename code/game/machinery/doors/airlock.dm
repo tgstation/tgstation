@@ -296,6 +296,7 @@
 		for(var/obj/machinery/door_buttons/D in GLOB.machines)
 			D.removeMe(src)
 	QDEL_NULL(note)
+	QDEL_NULL(seal)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_from_hud(src)
 	return ..()
@@ -303,6 +304,9 @@
 /obj/machinery/door/airlock/handle_atom_del(atom/A)
 	if(A == note)
 		note = null
+		update_icon()
+	if(A == seal)
+		seal = null
 		update_icon()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
@@ -946,7 +950,7 @@
 	else if(istype(C, /obj/item/airlock_painter))
 		change_paintjob(C, user)
 	else if(istype(C, /obj/item/door_seal)) //adding the seal
-		var/obj/item/door_seal/D = C
+		var/obj/item/door_seal/airlockseal = C
 		if(!density)
 			to_chat(user, "<span class='warning'>[src] must be closed before you can seal it!</span>")
 			return
@@ -955,21 +959,22 @@
 			return
 		user.visible_message("<span class='notice'>[user] begins sealing [src].</span>", "<span class='notice'>You begin sealing [src].</span>")
 		playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
-		if(do_after(user, D.seal_time, target = src))
-			if(!density)
-				to_chat(user, "<span class='warning'>[src] must be closed before you can seal it!</span>")
-				return
-			if(seal)
-				to_chat(user, "<span class='warning'>[src] has already been sealed!</span>")
-				return
-			if(!user.transferItemToLoc(D, src))
-				to_chat(user, "<span class='warning'>For some reason, you can't attach [D]!</span>")
-				return
-			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
-			user.visible_message("<span class='notice'>[user] finishes sealing [src].</span>", "<span class='notice'>You finish sealing [src].</span>")
-			seal = D
-			modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
-			update_icon()
+		if(!do_after(user, airlockseal.seal_time, target = src))
+			return
+		if(!density)
+			to_chat(user, "<span class='warning'>[src] must be closed before you can seal it!</span>")
+			return
+		if(seal)
+			to_chat(user, "<span class='warning'>[src] has already been sealed!</span>")
+			return
+		if(!user.transferItemToLoc(airlockseal, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [airlockseal]!</span>")
+			return
+		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+		user.visible_message("<span class='notice'>[user] finishes sealing [src].</span>", "<span class='notice'>You finish sealing [src].</span>")
+		seal = airlockseal
+		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
+		update_icon()
 
 	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
 		if(note)
@@ -1029,22 +1034,24 @@
   * * user - Whoever is attempting to remove the seal
   */
 /obj/machinery/door/airlock/try_remove_seal(mob/living/user)
-	if(seal)
-		var/obj/item/door_seal/D = seal
-		if(!ishuman(user))
-			to_chat(user, text("<span class='warning'>You don't have the dexterity to remove the seal!</span>"))
-			return TRUE
-		user.visible_message("<span class='notice'>[user] begins removing the seal from [src].</span>", "<span class='notice'>You begin removing [src]'s pneumatic seal.</span>")
-		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
-		if(do_after(user, D.unseal_time, target = src) && seal)
-			playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
-			D.forceMove(get_turf(user))
-			user.visible_message("<span class='notice'>[user] finishes removing the seal from [src].</span>", "<span class='notice'>You finish removing [src]'s pneumatic seal.</span>")
-			seal = null
-			modify_max_integrity(max_integrity / AIRLOCK_SEAL_MULTIPLIER)
-			update_icon()
-			return TRUE
-	return FALSE
+	if(!seal)
+		return FALSE
+	var/obj/item/door_seal/airlockseal = seal
+	if(!ishuman(user))
+		to_chat(user, text("<span class='warning'>You don't have the dexterity to remove the seal!</span>"))
+		return TRUE
+	user.visible_message("<span class='notice'>[user] begins removing the seal from [src].</span>", "<span class='notice'>You begin removing [src]'s pneumatic seal.</span>")
+	playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+	if(!do_after(user, airlockseal.unseal_time, target = src) && seal)
+		return TRUE
+	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+	airlockseal.forceMove(get_turf(user))
+	user.visible_message("<span class='notice'>[user] finishes removing the seal from [src].</span>", "<span class='notice'>You finish removing [src]'s pneumatic seal.</span>")
+	seal = null
+	modify_max_integrity(max_integrity / AIRLOCK_SEAL_MULTIPLIER)
+	update_icon()
+	return TRUE
+
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user, forced = FALSE)
 	if(I)
