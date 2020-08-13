@@ -1192,7 +1192,7 @@
 	var/datum/action/innate/dash/hierophant/blink
 	/// Whether the blink ability is activated. IF TRUE, left clicking a location will blink to it. If FALSE, this is disabled.
 	var/blink_activated = TRUE
-	/// Whether the blink is charged. Set by
+	/// Whether the blink is charged. Set and unset by the blink action. Used as part of setting the appropriate icon states.
 	var/blink_charged = TRUE
 
 /obj/item/hierophant_club/Initialize()
