@@ -229,8 +229,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
-/proc/ionnum()
-	return "[pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
+/proc/ionnum() //! is at the start to prevent us from changing say modes via get_message_mode()
+	return "![pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0)
@@ -419,7 +419,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	Gets all contents of contents and returns them all in a list.
 */
 
-/atom/proc/GetAllContents(var/T, ignore_flag_1)
+/atom/proc/GetAllContents(T, ignore_flag_1)
 	var/list/processing_list = list(src)
 	if(T)
 		. = list()
@@ -472,63 +472,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 			steps++
 
 	return 1
-
-/proc/is_blocked_turf(turf/T, exclude_mobs)
-	if(T.density)
-		return 1
-	for(var/i in T)
-		var/atom/A = i
-		if(A.density && (!exclude_mobs || !ismob(A)))
-			return 1
-	return 0
-
-/proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
-	if(T.density)
-		return 1
-	for(var/i in T)
-		var/atom/movable/A = i
-		if(A.density && A.anchored)
-			return 1
-	return 0
-
-/proc/get_step_towards2(atom/ref , atom/trg)
-	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
-	var/turf/temp = get_step_towards(ref,trg)
-
-	if(is_blocked_turf(temp))
-		var/dir_alt1 = turn(base_dir, 90)
-		var/dir_alt2 = turn(base_dir, -90)
-		var/turf/turf_last1 = temp
-		var/turf/turf_last2 = temp
-		var/free_tile = null
-		var/breakpoint = 0
-
-		while(!free_tile && breakpoint < 10)
-			if(!is_blocked_turf(turf_last1))
-				free_tile = turf_last1
-				break
-			if(!is_blocked_turf(turf_last2))
-				free_tile = turf_last2
-				break
-			turf_last1 = get_step(turf_last1,dir_alt1)
-			turf_last2 = get_step(turf_last2,dir_alt2)
-			breakpoint++
-
-		if(!free_tile)
-			return get_step(ref, base_dir)
-		else
-			return get_step_towards(ref,free_tile)
-
-	else
-		return get_step(ref, base_dir)
-
-//Takes: Anything that could possibly have variables and a varname to check.
-//Returns: 1 if found, 0 if not.
-/proc/hasvar(datum/A, varname)
-	if(A.vars.Find(lowertext(varname)))
-		return 1
-	else
-		return 0
 
 //Repopulates sortedAreas list
 /proc/repopulate_sorted_areas()
@@ -712,7 +655,7 @@ GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment,
-	/obj/structure/sign/picture_frame
+	/obj/structure/sign/picture_frame, /obj/machinery/bounty_board
 	)))
 
 GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
@@ -878,7 +821,7 @@ B --><-- A
 // eg: center_image(I, 32,32)
 // eg2: center_image(I, 96,96)
 
-/proc/center_image(var/image/I, x_dimension = 0, y_dimension = 0)
+/proc/center_image(image/I, x_dimension = 0, y_dimension = 0)
 	if(!I)
 		return
 
@@ -1035,7 +978,7 @@ B --><-- A
 
 	return L
 
-/atom/proc/contains(var/atom/A)
+/atom/proc/contains(atom/A)
 	if(!A)
 		return 0
 	for(var/atom/location = A.loc, location, location = location.loc)
@@ -1094,7 +1037,7 @@ B --><-- A
 	return closest_atom
 
 
-proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
+/proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	if (value == FALSE) //nothing should be calling us with a number, so this is safe
 		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type") as null|text
 		if (isnull(value))
@@ -1198,7 +1141,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
 
-/proc/weightclass2text(var/w_class)
+/proc/weightclass2text(w_class)
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
 			. = "tiny"
@@ -1521,7 +1464,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/i in L)
 		if(condition.Invoke(i))
 			. |= i
-/proc/generate_items_inside(list/items_list,var/where_to)
+/proc/generate_items_inside(list/items_list,where_to)
 	for(var/each_item in items_list)
 		for(var/i in 1 to items_list[each_item])
 			new each_item(where_to)

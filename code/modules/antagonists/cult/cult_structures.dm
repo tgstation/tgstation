@@ -54,14 +54,19 @@
 	else
 		..()
 
+/obj/structure/destructible/cult/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	update_icon()
+
+/obj/structure/destructible/cult/update_icon_state()
+	icon_state = "[initial(icon_state)][anchored ? null : "_off"]"
+
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))
-		anchored = !anchored
+		set_anchored(!anchored)
 		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
-		if(!anchored)
-			icon_state = "[initial(icon_state)]_off"
-		else
-			icon_state = initial(icon_state)
 	else
 		return ..()
 
@@ -163,7 +168,7 @@
 	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
 	light_range = 1.5
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	var/heal_delay = 25

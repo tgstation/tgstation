@@ -294,6 +294,8 @@
 		for(var/obj/structure/destructible/cult/S in range(5,owner))
 			S.conceal()
 		for(var/turf/open/floor/engine/cult/T  in range(5,owner))
+			if(!T.realappearance)
+				continue
 			T.realappearance.alpha = 0
 		for(var/obj/machinery/door/airlock/cult/AL in range(5, owner))
 			AL.conceal()
@@ -311,6 +313,8 @@
 		for(var/obj/structure/destructible/cult/S in range(6,owner))
 			S.reveal()
 		for(var/turf/open/floor/engine/cult/T  in range(6,owner))
+			if(!T.realappearance)
+				continue
 			T.realappearance.alpha = initial(T.realappearance.alpha)
 		for(var/obj/machinery/door/airlock/cult/AL in range(6, owner))
 			AL.reveal()
@@ -485,7 +489,7 @@
 		if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune || !proximity)
 			return
 		var/turf/dest = get_turf(actual_selected_rune)
-		if(is_blocked_turf(dest, TRUE))
+		if(dest.is_blocked_turf(TRUE))
 			to_chat(user, "<span class='warning'>The target rune is blocked. You cannot teleport there.</span>")
 			return
 		uses--

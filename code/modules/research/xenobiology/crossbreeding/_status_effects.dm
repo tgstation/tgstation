@@ -223,7 +223,7 @@
 	duration = -1
 	alert_type = null
 
-datum/status_effect/rebreathing/tick()
+/datum/status_effect/rebreathing/tick()
 	owner.adjustOxyLoss(-6, 0) //Just a bit more than normal breathing.
 
 ///////////////////////////////////////////////////////
@@ -505,7 +505,7 @@ datum/status_effect/rebreathing/tick()
 	ADD_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 	return ..()
 
-datum/status_effect/stabilized/blue/on_remove()
+/datum/status_effect/stabilized/blue/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 
 /datum/status_effect/stabilized/metal

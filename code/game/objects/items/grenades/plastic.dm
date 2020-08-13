@@ -4,6 +4,7 @@
 	icon_state = "plastic-explosive0"
 	worn_icon_state = "c4"
 	inhand_icon_state = "plastic-explosive"
+	worn_icon_state = "c4"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -162,5 +163,6 @@
 	icon_state = "plasticx40"
 	worn_icon_state = "x4"
 	inhand_icon_state = "plasticx4"
+	worn_icon_state = "x4"
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)

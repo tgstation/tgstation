@@ -27,6 +27,12 @@
 		QDEL_NULL(defib)
 	. = ..()
 
+/obj/machinery/defibrillator_mount/handle_atom_del(atom/A)
+	if(A == defib)
+		defib = null
+		end_processing()
+	return ..()
+
 /obj/machinery/defibrillator_mount/examine(mob/user)
 	. = ..()
 	if(defib)
@@ -65,6 +71,9 @@
 		return
 	if(defib.paddles.loc != defib)
 		to_chat(user, "<span class='warning'>[defib.paddles.loc == user ? "You are already" : "Someone else is"] holding [defib]'s paddles!</span>")
+		return
+	if(!in_range(src, user))
+		to_chat(user, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
 		return
 	user.put_in_hands(defib.paddles)
 
@@ -171,6 +180,8 @@
 
 /obj/machinery/defibrillator_mount/charging/process()
 	var/obj/item/stock_parts/cell/C = get_cell()
+	if(!C)
+		return PROCESS_KILL
 	if(C.charge < C.maxcharge && is_operational())
 		use_power(100)
 		C.give(80)
@@ -179,7 +190,7 @@
 //wallframe, for attaching the mounts easily
 /obj/item/wallframe/defib_mount
 	name = "unhooked defibrillator mount"
-	desc = "A frame for a defibrillator mount. It can't be removed once it's placed."
+	desc = "A frame for a defibrillator mount. Once placed, it can be removed with a wrench."
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)

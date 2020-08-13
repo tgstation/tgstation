@@ -183,7 +183,7 @@
   * Arguments:
   * * atom/at - The target
   */
-/mob/living/simple_animal/hostile/space_dragon/proc/fire_stream(var/atom/at = target)
+/mob/living/simple_animal/hostile/space_dragon/proc/fire_stream(atom/at = target)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	var/range = 20
 	var/list/turfs = list()
@@ -209,7 +209,7 @@
   * Arguments:
   * * turf/T - The turf to trigger the effects on.
   */
-mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
+/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	var/list/hit_list = list()
 	hit_list += src
 	new /obj/effect/hotspot(T)

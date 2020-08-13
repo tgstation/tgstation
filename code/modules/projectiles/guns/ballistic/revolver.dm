@@ -16,7 +16,9 @@
 	var/spin_delay = 10
 	var/recent_spin = 0
 
-/obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE)
+/obj/item/gun/ballistic/revolver/chamber_round(keep_bullet, spin_cylinder = TRUE, replace_new_round)
+	if(!magazine) //if it mag was qdel'd somehow.
+		CRASH("revolver tried to chamber a round without a magazine!")
 	if(spin_cylinder)
 		chambered = magazine.get_round(TRUE)
 	else
@@ -24,7 +26,7 @@
 
 /obj/item/gun/ballistic/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	..()
-	chamber_round(TRUE)
+	chamber_round()
 
 /obj/item/gun/ballistic/revolver/AltClick(mob/user)
 	..()
@@ -55,7 +57,7 @@
 	. = istype(C)
 	if(.)
 		C.spin()
-		chamber_round(FALSE)
+		chamber_round(spin_cylinder = FALSE)
 
 /obj/item/gun/ballistic/revolver/get_ammo(countchambered = FALSE, countempties = TRUE)
 	var/boolets = 0 //mature var names for mature people
@@ -91,14 +93,14 @@
 						)
 
 /obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine.caliber != initial(magazine.caliber))
+	if(magazine && magazine.caliber != initial(magazine.caliber))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 			to_chat(user, "<span class='userdanger'>[src] blows up in your face!</span>")
 			user.take_bodypart_damage(0,20)
 			user.dropItemToGround(src)
-			return 0
-	..()
+			return FALSE
+	return ..()
 
 /obj/item/gun/ballistic/revolver/detective/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

@@ -10,8 +10,6 @@
 	active_power_usage = 10000
 	dir = NORTH
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	ui_x = 350
-	ui_y = 185
 	var/strength_upper_limit = 2
 	var/interface_control = TRUE
 	var/list/obj/structure/particle_accelerator/connected_parts
@@ -201,6 +199,14 @@
 		if(PA_CONSTRUCTION_PANEL_OPEN)
 			. += "The panel is open."
 
+/obj/machinery/particle_accelerator/control_box/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	construction_state = anchorvalue ? PA_CONSTRUCTION_UNWIRED : PA_CONSTRUCTION_UNSECURED
+	update_state()
+	update_icon()
+
 /obj/machinery/particle_accelerator/control_box/attackby(obj/item/W, mob/user, params)
 	var/did_something = FALSE
 
@@ -208,19 +214,19 @@
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(W.tool_behaviour == TOOL_WRENCH && !isinspace())
 				W.play_tool_sound(src, 75)
-				anchored = TRUE
+				set_anchored(TRUE)
 				user.visible_message("<span class='notice'>[user.name] secures the [name] to the floor.</span>", \
 					"<span class='notice'>You secure the external bolts.</span>")
-				construction_state = PA_CONSTRUCTION_UNWIRED
-				did_something = TRUE
+				user.changeNext_move(CLICK_CD_MELEE)
+				return //set_anchored handles the rest of the stuff we need to do.
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(W.tool_behaviour == TOOL_WRENCH)
 				W.play_tool_sound(src, 75)
-				anchored = FALSE
+				set_anchored(FALSE)
 				user.visible_message("<span class='notice'>[user.name] detaches the [name] from the floor.</span>", \
 					"<span class='notice'>You remove the external bolts.</span>")
-				construction_state = PA_CONSTRUCTION_UNSECURED
-				did_something = TRUE
+				user.changeNext_move(CLICK_CD_MELEE)
+				return //set_anchored handles the rest of the stuff we need to do.
 			else if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/CC = W
 				if(CC.use(1))
@@ -252,7 +258,7 @@
 		update_icon()
 		return
 
-	..()
+	return ..()
 
 /obj/machinery/particle_accelerator/control_box/blob_act(obj/structure/blob/B)
 	if(prob(50))
@@ -277,11 +283,10 @@
 		return ..()
 	return UI_CLOSE
 
-/obj/machinery/particle_accelerator/control_box/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/particle_accelerator/control_box/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ParticleAccelerator", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ParticleAccelerator", name)
 		ui.open()
 
 /obj/machinery/particle_accelerator/control_box/ui_data(mob/user)

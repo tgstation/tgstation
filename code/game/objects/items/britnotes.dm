@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 0.1
 	var/has_light = TRUE
-	var/light_on = FALSE						//If that light is enabled
+	light_on = FALSE						//If that light is enabled
 	var/comp_light_luminosity = 2.3				//The brightness of that light
 	var/enabled = 0
 	attack_verb = list("tapped", "slapped", "hit")
@@ -56,7 +56,3 @@
 	else
 		to_chat(src, "<span class='danger'>The notes URL is not set in the server configuration.</span>")
 	return
-
-
-
-

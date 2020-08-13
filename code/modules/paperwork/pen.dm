@@ -29,6 +29,7 @@
 	var/degrees = 0
 	var/font = PEN_FONT
 	embedding = list()
+	sharpness = SHARP_POINTY
 
 /obj/item/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
@@ -101,7 +102,7 @@
 	throw_speed = 4
 	colour = "crimson"
 	custom_materials = list(/datum/material/gold = 750)
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
 						"Gold" = "pen-fountain-g",
@@ -180,8 +181,8 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
-				reagents.expose(M, INJECT, reagents.total_volume)
-				reagents.trans_to(M, reagents.total_volume, transfered_by = user)
+
+				reagents.trans_to(M, reagents.total_volume, transfered_by = user, method = INJECT)
 
 
 /obj/item/pen/sleepy/Initialize()
@@ -196,7 +197,7 @@
  */
 /obj/item/pen/edagger
 	attack_verb = list("slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut") //these won't show up if the pen is off
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	var/on = FALSE
 
 /obj/item/pen/edagger/ComponentInitialize()

@@ -14,7 +14,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/bag_holding
-	name = "Bag of Holding"
+	name = "Inert Bag of Holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
 	id = "bag_holding"
 	build_type = PROTOLATHE
@@ -43,7 +43,7 @@
 	build_path = /obj/item/gps
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
-
+	
 /datum/design/desynchronizer
 	name = "Desynchronizer"
 	desc = "A device that can desynchronize the user from spacetime."
@@ -63,7 +63,7 @@
 	build_path = /obj/item/storage/bag/ore/holding
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
-
+	
 /datum/design/swapper
 	name = "Quantum Spin Inverter"
 	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function."

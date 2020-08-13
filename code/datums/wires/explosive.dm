@@ -1,5 +1,6 @@
 /datum/wires/explosive
 	var/duds_number = 2 // All "dud" wires cause an explosion when cut or pulsed
+	proper_name = "Explosive Device"
 	randomize = TRUE // Prevents wires from showing up on blueprints
 
 /datum/wires/explosive/New(atom/holder)
@@ -14,8 +15,6 @@
 
 /datum/wires/explosive/proc/explode()
 	return
-
-// Chem Grenade
 
 /datum/wires/explosive/chem_grenade
 	duds_number = 1

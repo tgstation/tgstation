@@ -60,18 +60,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
-"aah" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/obj/structure/chair/sofa/left,
-/mob/living/simple_animal/chicken/rabbit/normal/chungus,
-/turf/open/floor/carpet/blue,
-/area/medical/psychology)
 "aai" = (
 /turf/closed/wall/r_wall,
 /area/security/prison)
@@ -96,10 +84,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"aal" = (
-/obj/structure/closet/secure_closet/hose,
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/kitchen)
 "aam" = (
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
@@ -112,20 +96,6 @@
 /obj/item/trash/can,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"aao" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/kitchen";
-	name = "Kitchen APC";
-	pixel_y = -23
-	},
-/obj/structure/cable,
-/obj/effect/landmark/start/head_of_service,
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/kitchen)
-"aap" = (
-/mob/living/simple_animal/pet/cat/bolty,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "aaq" = (
 /turf/closed/wall,
 /area/security/prison/safe)
@@ -13474,6 +13444,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"aMF" = (
+/obj/machinery/power/apc{
+	areastring = "/area/crew_quarters/kitchen";
+	name = "Kitchen APC";
+	pixel_y = -23
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/head_of_service,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/kitchen)
 "aMG" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/shovel/spade,
@@ -14152,6 +14132,10 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
+"aOI" = (
+/obj/structure/closet/secure_closet/hose,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/kitchen)
 "aOJ" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -14294,9 +14278,6 @@
 	pixel_y = 7
 	},
 /obj/item/pen/invisible,
-/obj/structure/sign/painting/library_private{
-	pixel_y = 32
-	},
 /turf/open/floor/engine/cult,
 /area/library)
 "aPi" = (
@@ -14627,17 +14608,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/sign/painting/library{
-	pixel_x = -32
-	},
 /turf/open/floor/wood,
 /area/library)
 "aQq" = (
 /obj/machinery/light/small{
 	dir = 4
-	},
-/obj/structure/sign/painting/library{
-	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -18008,9 +17983,6 @@
 "bav" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 4
-	},
-/obj/structure/sign/painting/library_secure{
-	pixel_x = -32
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -23685,6 +23657,18 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
+"bri" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
+/obj/structure/chair/sofa/left,
+/mob/living/simple_animal/chicken/rabbit/normal/chungus,
+/turf/open/floor/carpet/blue,
+/area/medical/psychology)
 "bro" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/white/side{
@@ -37581,15 +37565,6 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
-"ciE" = (
-/obj/structure/sign/painting/library{
-	pixel_x = 32
-	},
-/obj/structure/sign/painting/library_secure{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/heads/captain)
 "ciL" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
@@ -43833,12 +43808,6 @@
 /obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"eSF" = (
-/obj/structure/sign/painting/library_secure{
-	pixel_x = -32
-	},
-/turf/open/floor/wood,
-/area/library)
 "eSG" = (
 /obj/machinery/light{
 	dir = 8
@@ -46232,12 +46201,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
-"ioZ" = (
-/obj/structure/sign/painting/library{
-	pixel_x = -32
-	},
-/turf/open/floor/wood,
-/area/library)
 "ipA" = (
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
@@ -47878,6 +47841,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
+"kNT" = (
+/mob/living/simple_animal/pet/cat/bolty,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "kOw" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
@@ -53027,12 +52994,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
-"tqn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/mob/living/simple_animal/hostile/retaliate/frog/pepe,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "tqp" = (
 /obj/structure/table,
 /obj/machinery/newscaster{
@@ -84649,7 +84610,7 @@ dnF
 xdy
 akT
 aww
-tqn
+alx
 amQ
 anw
 erF
@@ -88282,7 +88243,7 @@ aVv
 siG
 aVv
 aZV
-ciE
+bbw
 bcn
 hec
 ben
@@ -94184,7 +94145,7 @@ aJI
 aKT
 aMD
 aNM
-aal
+aOI
 aJI
 aRy
 aXm
@@ -94477,7 +94438,7 @@ nrR
 trV
 nrR
 bpG
-aah
+bri
 bLW
 odO
 bNd
@@ -94955,7 +94916,7 @@ aJK
 aKV
 tMl
 aMl
-aao
+aMF
 aJI
 aRG
 aSL
@@ -98808,12 +98769,12 @@ aFu
 aIr
 bav
 aLf
-eSF
+aIt
 aNS
 aPb
 aQp
 aRN
-ioZ
+aIt
 aUB
 aFu
 khg
@@ -99828,7 +99789,7 @@ awJ
 anf
 alP
 aAv
-aap
+kNT
 alP
 hcG
 aFu
