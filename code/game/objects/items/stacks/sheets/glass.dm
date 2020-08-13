@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	point_value = 1
 	tableVariant = /obj/structure/table/glass
 	matter_amount = 4
+	shards_to = /obj/item/shard
 
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -73,12 +74,6 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		return
 	return ..()
 
-/obj/item/stack/sheet/glass/attacked_by_floor(mob/user, params)
-	use(1)
-	to_chat(user, "<span class='notice'>You shatter one [name].</span>")
-	var/obj/item/shard/new_shard = new(user.loc)
-	new_shard.add_fingerprint(user)
-
 GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
@@ -96,15 +91,10 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/plasmaglass
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
 	material_flags = MATERIAL_NO_EFFECTS
+	shards_to = /obj/item/shard/plasma
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
-
-/obj/item/stack/sheet/plasmaglass/attacked_by_floor(mob/user, params)
-	use(1)
-	to_chat(user, "<span class='notice'>You shatter one [name].</span>")
-	var/obj/item/shard/plasma/new_shard = new(user.loc)
-	new_shard.add_fingerprint(user)
 
 /obj/item/stack/sheet/plasmaglass/get_main_recipes()
 	. = ..()
@@ -155,6 +145,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
 	point_value = 4
 	matter_amount = 6
+	shards_to = /obj/item/shard
 
 /obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -202,6 +193,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 	point_value = 23
 	matter_amount = 8
+	shards_to = /obj/item/shard/plasma
 
 /obj/item/stack/sheet/plasmarglass/get_main_recipes()
 	. = ..()
@@ -221,6 +213,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/titaniumglass
+	shards_to = /obj/item/shard
 
 /obj/item/stack/sheet/titaniumglass/get_main_recipes()
 	. = ..()
@@ -241,6 +234,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	material_flags = MATERIAL_NO_EFFECTS
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
+	shards_to = /obj/item/shard/plasma
 
 /obj/item/stack/sheet/plastitaniumglass/get_main_recipes()
 	. = ..()

@@ -14,6 +14,8 @@
 	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity.
 	///What type of wall does this sheet spawn
 	var/walltype
+	///What the sheet will shatter to if you slap the floor
+	var/obj/item/shards_to
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge)
 	. = ..()
@@ -30,4 +32,9 @@
  * * params: paramas passed in from attackby
  */
 /obj/item/stack/sheet/proc/attacked_by_floor(mob/user, params)
-	return
+	if(!shards_to)
+		return
+	use(1)
+	to_chat(user, "<span class='notice'>You shatter one [name].</span>")
+	var/obj/item/shard/new_shard = new shards_to(user.loc)
+	new_shard.add_fingerprint(user)
