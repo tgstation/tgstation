@@ -53664,6 +53664,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"log" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "lqJ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
@@ -56877,6 +56882,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"uCB" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "uCO" = (
 /obj/machinery/light,
 /obj/machinery/nanite_program_hub,
@@ -56890,6 +56902,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"uFe" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "uGw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
@@ -97333,7 +97353,7 @@ bWX
 bOP
 bNd
 bNd
-caL
+uFe
 bzs
 bKw
 sbf
@@ -100165,7 +100185,7 @@ cbP
 bHq
 bLT
 bLT
-bLT
+uCB
 bLT
 bLT
 bHq
@@ -100353,7 +100373,7 @@ aty
 arr
 apC
 alP
-arr
+log
 alP
 anf
 vvP
