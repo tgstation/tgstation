@@ -262,7 +262,8 @@
 	var/area/target_area = get_area(target_turf)
 	var/area/source_area = get_area(src)
 	if((source_area.area_limited_icon_smoothing || target_area.area_limited_icon_smoothing) && !istype(source_area, target_area.type) && !istype(target_area, source_area.type))
-		return NO_ADJ_FOUND
+		if(!source_area.area_smoothing_parent || !istype(target_area, source_area.area_smoothing_parent))
+			return NO_ADJ_FOUND
 
 	if(isnull(canSmoothWith)) //special case in which it will only smooth with itself
 		if(isturf(src))

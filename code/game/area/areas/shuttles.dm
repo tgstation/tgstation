@@ -29,6 +29,7 @@
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 	ambientsounds = HIGHSEC
+	area_smoothing_parent=/area/shuttle/syndicate
 
 /area/shuttle/syndicate/bridge
 	name = "Syndicate Infiltrator Control"
@@ -64,6 +65,7 @@
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 	requires_power = TRUE
+	area_smoothing_parent=/area/shuttle/abandoned
 
 /area/shuttle/abandoned/bridge
 	name = "Abandoned Ship Bridge"

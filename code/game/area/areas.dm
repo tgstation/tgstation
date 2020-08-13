@@ -62,6 +62,8 @@
 
 	///Boolean to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
 	var/area_limited_icon_smoothing = FALSE
+	///Parent area can smooth with when using limited area smoothing
+	var/area/area_smoothing_parent
 
 	var/list/power_usage
 
