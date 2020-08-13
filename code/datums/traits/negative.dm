@@ -607,10 +607,9 @@
 /datum/quirk/GCSL
 	name = "Tongue Tied"
 	desc = "Due to a past incident, your ability to speak has been completely removed. Luckily, all nanotrasen employees are taught to understand Galactic Common Sign Language! Too bad they can't understand what they can't see."
-	value = -2
+	value = -1
 	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
-	hardcore_value = 4
-	//mob_trait = TRAIT_SIGN_LANG
+	hardcore_value = 2
 
 /datum/quirk/GCSL/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder

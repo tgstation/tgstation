@@ -336,13 +336,6 @@
 
 //Thank you Jwapplephobia for helping me with this literal hellcode
 
-/obj/item/organ/tongue/tied/say_mod(datum/source, list/speech_args, message_mode)
-	. = ..()
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(copytext_char(message, -2) == "!!")
-		return verb_yell
-
-
 /obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
