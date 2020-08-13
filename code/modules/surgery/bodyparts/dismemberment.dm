@@ -312,6 +312,11 @@
 		var/obj/sig = AS.target
 		if(sig)
 			sig.forceMove(src)
+	for(var/datum/action/item_action/hands_free/showoff/SO in owner.actions)
+		SO.Remove(owner)
+		var/obj/anom = SO.target
+		if(anom)
+			anom.forceMove(src)
 
 	//Make sure de-zombification happens before organ removal instead of during it
 	var/obj/item/organ/zombie_infection/ooze = owner.getorganslot(ORGAN_SLOT_ZOMBIE)

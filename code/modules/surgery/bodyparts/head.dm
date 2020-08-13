@@ -123,6 +123,8 @@
 		else if(istype(I, /obj/item/assembly/signaler))
 			for(var/datum/action/item_action/hands_free/activate_signaler/AS in I.actions)
 				qdel(AS)
+			for(var/datum/action/item_action/hands_free/showoff/SO in I.actions)
+				qdel(SO)
 		I.forceMove(T)
 	eyes = null
 	ears = null

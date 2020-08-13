@@ -9,8 +9,13 @@
 	time = 16
 
 /datum/surgery_step/insert_object/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(tool.type == /obj/item/assembly/signaler/)
+		var/obj/item/assembly/signaler/sig = tool
+		if(!sig.secured)
+			to_chat(user, "<span class='warning'>The [tool] is unsecured!</span>")
+			return -1
 	display_results(user, target, "<span class='notice'>You begin to wedge [tool] in [target]'s [parse_zone(target_zone)]...</span>",
-			"<span class='notice'>[user] begins to wedge \the [tool] in [target]'s [parse_zone(target_zone)].</span>",
+			"<span class='notice'>[user] begins to wedge the [tool] in [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] begins to wedge something in [target]'s [parse_zone(target_zone)].</span>")
 
 /datum/surgery_step/insert_object/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
@@ -28,6 +33,12 @@
 	else if(tool.type == /obj/item/assembly/signaler)
 		var/datum/action/item_action/hands_free/activate_signaler/S = new(tool)
 		S.button.name = "Activate [tool.name]"
+		S.target = tool
+		S.Grant(target)
+
+	else if(istype(tool,/obj/item/assembly/signaler/anomaly))
+		var/datum/action/item_action/hands_free/showoff/S = new(tool)
+		S.button.name = "Show off your [tool.name]"
 		S.target = tool
 		S.Grant(target)
 
@@ -61,3 +72,11 @@
 	if(sig && sig.next_activate <= world.time)
 		sig.pulsed()
 	return TRUE
+
+/datum/action/item_action/hands_free/showoff
+	name = "Show Off Implant"
+
+/datum/action/item_action/hands_free/showoff/Trigger()
+	if(!..())
+		return FALSE
+	owner.visible_message("<span class='notice'>[owner] shows off [owner.p_their()] dental [target.name] with a [pick("cheeky", "cocky", "smug")] grin. [pick("Nice!", "Classy!", "Swanky!")]")

@@ -126,6 +126,10 @@
 				for(var/datum/action/item_action/hands_free/activate_signaler/AS in M.actions)
 					sig_count++
 
+				var/anom_count = 0
+				for(var/datum/action/item_action/hands_free/showoff/SO in M.actions)
+					anom_count++
+
 				if(M == user)
 					var/can_use_mirror = FALSE
 					if(isturf(user.loc))
@@ -154,6 +158,8 @@
 						to_chat(user, "<span class='notice'>You have [pill_count] implanted pill[pill_count > 1 ? "s" : ""].</span>")
 					if(sig_count)
 						to_chat(user, "<span class='notice'>You have [sig_count] implanted signaling device[sig_count > 1 ? "s" : ""].</span>")
+					if(anom_count)
+						to_chat(user, "<span class='notice'>You have [anom_count] anomaly core[anom_count > 1 ? "s" : ""] decorating your smile. Looking good!</span>")
 
 				else
 					user.visible_message("<span class='notice'>[user] directs [src] to [M]'s mouth.</span>",\
@@ -166,6 +172,17 @@
 						to_chat(user, "<span class='notice'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [their] teeth.</span>")
 					if(sig_count)
 						to_chat(user, "<span class='notice'>[M] has [sig_count] signaling device[sig_count > 1 ? "s" : ""] implanted in [their] teeth.</span>")
+					if(anom_count)
+						var/nice = ""
+						if(anom_count < 3)
+							nice = "Nice."
+						else if(anom_count < 5)
+							nice = "Nice!"
+						else if(anom_count < 33)
+							nice = "NICE!!"
+						else
+							nice = "That's more than humans have teeth, HOLY SHIT!!"
+						to_chat(user, "<span class='notice'>[M] has [anom_count] anomaly core[sig_count > 1 ? "s" : ""] decorating their grin. [nice]</span>")
 
 	else
 		return ..()
