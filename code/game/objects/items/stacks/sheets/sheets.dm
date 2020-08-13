@@ -31,10 +31,11 @@
  * * user: The user that did the action
  * * params: paramas passed in from attackby
  */
-/obj/item/stack/sheet/proc/attacked_by_floor(mob/user, params)
+/obj/item/stack/sheet/proc/on_attack_floor(mob/user, params)
 	if(!shards_to)
-		return
+		return FALSE
 	use(1)
 	to_chat(user, "<span class='notice'>You shatter one sheet of [name].</span>")
 	var/obj/item/shard/new_shard = new shards_to(user.loc)
 	new_shard.add_fingerprint(user)
+	return TRUE

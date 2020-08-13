@@ -164,15 +164,15 @@
 /turf/open/floor/attackby(obj/item/object, mob/user, params)
 	if(!object || !user)
 		return TRUE
-	if(..())
+	. = ..()
+	if(.)
 		return TRUE
 	if(intact && istype(object, /obj/item/stack/tile))
 		try_replace_tile(object, user, params)
-		return FALSE
+		return TRUE
 	if(istype(object, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/sheets = object
-		sheets.attacked_by_floor(user, params)
-		return FALSE
+		return sheets.on_attack_floor(user, params)
 	return FALSE
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
