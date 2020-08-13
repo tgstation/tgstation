@@ -322,11 +322,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/succumb/Click()
 	var/mob/living/living_owner = owner
 	var/last_whisper = input("Do you have any last words?", "Final Words") as null | text
-	if (!isnull(last_whisper) && living_owner.can_succumb())
-		if (length(last_whisper))
-			living_owner.say("#[last_whisper]")
-		else
-			living_owner.succumb(whispered = FALSE)
+	if (isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
+		return
+
+	if (length(last_whisper))
+		living_owner.say("#[last_whisper]")
+	else
+		living_owner.succumb(whispered = FALSE)
 
 //ALIENS
 

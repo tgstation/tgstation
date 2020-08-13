@@ -383,17 +383,13 @@
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
-	if (can_succumb())
+	if (CAN_SUCCUMB(src))
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 		if(!whispered)
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
-
-/// Returns whether or not the mob can succumb
-/mob/living/proc/can_succumb()
-	return InCritical() && !HAS_TRAIT(src, TRAIT_NODEATH)
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
 	if(stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && restrained(ignore_grab)) || (!ignore_stasis && IS_IN_STASIS(src)))
@@ -550,7 +546,7 @@
 
 /// Shows or doesn't show the succumb action button if the mob is eligible
 /mob/living/proc/update_succumb_action()
-	if (can_succumb())
+	if (CAN_SUCCUMB(src))
 		throw_alert("succumb", /obj/screen/alert/succumb)
 	else
 		clear_alert("succumb")
