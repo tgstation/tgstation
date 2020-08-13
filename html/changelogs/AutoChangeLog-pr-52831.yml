@@ -1,0 +1,6 @@
+author: "SteelSlayer"
+delete-after: True
+changes: 
+  - refactor: "Photocopiers now use TGUI"
+  - tweak: "You can insert any type of toner cartridge into photocopiers, and regardless of the currently inserted toner's charge level."
+  - tweak: "Toner cartridges can be ejected from photocopiers at any time"
