@@ -7,7 +7,7 @@
 import { storage } from 'common/storage';
 import { loadSettings, updateSettings } from '../settings/actions';
 import { selectSettings } from '../settings/selectors';
-import { addChatPage, changeChatPage, changeScrollTracking, loadChat, rebuildChat, toggleAcceptedType, updateMessageCount, removeChatPage } from './actions';
+import { addChatPage, changeChatPage, changeScrollTracking, loadChat, rebuildChat, toggleAcceptedType, updateMessageCount, removeChatPage, saveChatToDisk } from './actions';
 import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
 import { createMessage, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
@@ -104,6 +104,10 @@ export const chatMiddleware = store => {
       // Save chat as soon as possible
       saveChatToStorage(store);
       return next(action);
+    }
+    if (type === saveChatToDisk.type) {
+      chatRenderer.saveToDisk();
+      return;
     }
     return next(action);
   };

@@ -5,16 +5,16 @@
  */
 
 import { useDispatch, useSelector } from 'common/redux';
-import { Button, Divider, Flex, Input, Section, Collapsible, BlockQuote } from 'tgui/components';
-import { removeChatPage, updateChatPage, toggleAcceptedType } from './actions';
+import { Button, Collapsible, Divider, Flex, Input, Section } from 'tgui/components';
+import { removeChatPage, toggleAcceptedType, updateChatPage } from './actions';
 import { MESSAGE_TYPES } from './constants';
 import { selectCurrentChatPage } from './selectors';
 
-export const ChatSettings = (props, context) => {
+export const ChatPageSettings = (props, context) => {
   const page = useSelector(context, selectCurrentChatPage);
   const dispatch = useDispatch(context);
   return (
-    <Section fill scrollable>
+    <Section fill>
       <Flex mx={-0.5} align="center">
         <Flex.Item mx={0.5} grow={1}>
           <Input

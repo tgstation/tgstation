@@ -7,8 +7,8 @@
 import { toFixed } from 'common/math';
 import { useDispatch, useSelector } from 'common/redux';
 import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, NumberInput, Section, Tabs, TextArea } from 'tgui/components';
-import { ChatSettings } from '../chat';
-import { rebuildChat } from '../chat/actions';
+import { ChatPageSettings } from '../chat';
+import { rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import { changeSettingsTab, updateSettings } from './actions';
 import { SETTINGS_TABS } from './constants';
@@ -39,8 +39,8 @@ export const SettingsPanel = (props, context) => {
         {activeTab === 'general' && (
           <SettingsGeneral />
         )}
-        {activeTab === 'chat' && (
-          <ChatSettings />
+        {activeTab === 'chatPage' && (
+          <ChatPageSettings />
         )}
       </Flex.Item>
     </Flex>
@@ -131,6 +131,12 @@ export const SettingsGeneral = (props, context) => {
           Can freeze the chat for a while.
         </Box>
       </Box>
+      <Divider />
+      <Button
+        icon="save"
+        onClick={() => dispatch(saveChatToDisk())}>
+        Save chat log
+      </Button>
     </Section>
   );
 };

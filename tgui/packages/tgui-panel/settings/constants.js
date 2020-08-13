@@ -10,7 +10,7 @@ export const SETTINGS_TABS = [
     name: 'General',
   },
   {
-    id: 'chat',
+    id: 'chatPage',
     name: 'Chat Tabs',
   },
 ];

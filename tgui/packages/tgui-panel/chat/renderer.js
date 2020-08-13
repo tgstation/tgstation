@@ -404,6 +404,52 @@ class ChatRenderer {
       notifyListeners: false,
     });
   }
+
+  saveToDisk() {
+    // Allow only on IE11
+    if (Byond.IS_LTE_IE10) {
+      return;
+    }
+    // Compile currently loaded stylesheets as CSS text
+    let cssText = '';
+    const styleSheets = document.styleSheets;
+    for (let i = 0; i < styleSheets.length; i++) {
+      const cssRules = styleSheets[i].cssRules;
+      for (let i = 0; i < cssRules.length; i++) {
+        const rule = cssRules[i];
+        cssText += rule.cssText + '\n';
+      }
+    }
+    cssText += 'body, html { background-color: #141414 }\n';
+    // Compile chat log as HTML text
+    let messagesHtml = '';
+    for (let message of this.messages) {
+      if (message.node) {
+        messagesHtml += message.node.outerHTML + '\n';
+      }
+    }
+    // Create a page
+    const pageHtml = '<!doctype html>\n'
+      + '<html>\n'
+      + '<head>\n'
+      + '<title>SS13 Chat Log</title>\n'
+      + '<style>\n' + cssText + '</style>\n'
+      + '</head>\n'
+      + '<body>\n'
+      + '<div class="Chat">\n'
+      + messagesHtml
+      + '</div>\n'
+      + '</body>\n'
+      + '</html>\n';
+    // Create and send a nice blob
+    const blob = new Blob([pageHtml]);
+    const timestamp = new Date()
+      .toISOString()
+      .substring(0, 19)
+      .replace(/[-:]/g, '')
+      .replace('T', '-');
+    window.navigator.msSaveBlob(blob, `ss13-chatlog-${timestamp}.html`);
+  }
 }
 
 // Make chat renderer global so that we can continue using the same
