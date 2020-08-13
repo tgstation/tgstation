@@ -187,7 +187,7 @@
 
 /obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(HAS_TRAIT(M, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
-		var/mob/mute = M
+		var/mob/living/carbon/mute = M
 		if(istype(mute))
 			var/empty_indexes = mute.get_empty_held_indexes() //How many hands the player has empty
 			var/obj/item/clothing/gloves/radio/G = mute.get_item_by_slot(ITEM_SLOT_GLOVES)
@@ -196,8 +196,7 @@
 			else
 				if(length(empty_indexes) == 1)
 					message = stars(message)
-				if(length(empty_indexes) == 0)
-					to_chat(mute, "<span class='notice'>You can't sign with your hands full!</span.?>")
+				if(length(empty_indexes) == 0) //Due to the requirement of gloves, the arm check for normal speech would be redundant here.
 					return FALSE
 				if(!spans)
 					spans = list(M.speech_span)

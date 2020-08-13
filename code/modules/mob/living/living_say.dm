@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 
 		if (client?.prefs.chat_on_map && stat != UNCONSCIOUS && (client.prefs.see_chat_non_mob || ismob(speaker)))
-			create_chat_message(speaker, message_language, raw_message, spans, message_mods)
+			create_chat_message(speaker, message_language, raw_message, spans)
 
 		if(HAS_TRAIT(src, TRAIT_BLIND))
 			return FALSE
@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 		// Create map text prior to modifying message for goonchat
 		if (client?.prefs.chat_on_map && stat != UNCONSCIOUS && (client.prefs.see_chat_non_mob || ismob(speaker)) && can_hear())
-			create_chat_message(speaker, message_language, raw_message, spans, message_mods)
+			create_chat_message(speaker, message_language, raw_message, spans)
 
 		// Recompose message for AI hrefs, language incomprehension.
 		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
@@ -289,12 +289,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
 	if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
-		var/mob/mute = src
+		var/mob/living/carbon/mute = src
 		if(istype(mute))
 			var/empty_indexes = get_empty_held_indexes() //How many hands the player has empty
-			if(length(empty_indexes) == 1)
+			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
 				message = stars(message)
-			if(length(empty_indexes) == 0)
+			if(length(empty_indexes) == 0 || !mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM)) //Can't sign with no arms!
 				to_chat(src, "<span class='notice'>You can't sign with your hands full!</span.?>")
 				return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
