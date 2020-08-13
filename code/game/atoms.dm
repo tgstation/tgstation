@@ -826,7 +826,7 @@
   *
   * Default behaviour is to return, we define here to allow for cleaner code later on
   */
-/atom/proc/zap_act(power, zap_flags, shocked_targets)
+/atom/proc/zap_act(power, zap_flags)
 	return
 
 /**

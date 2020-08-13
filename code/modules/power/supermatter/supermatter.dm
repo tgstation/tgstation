@@ -1148,14 +1148,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					multi = 20
 				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
 					multi = 40
-			target.zap_act(zap_str * multi, zap_flags, list())
+			target.zap_act(zap_str * multi, zap_flags)
 			zap_str /= 3 //Coils should take a lot out of the power of the zap
-
-		else if(target_type == ROD)
-			//We can expect this to do very little, maybe shock the poor soul buckled to it, but that's all.
-			//This is one of our endpoints, if the bolt hits a grounding rod, it stops jumping
-			target.zap_act(zap_str, zap_flags, list())
-			return
 
 		else if(isliving(target))//If we got a fleshbag on our hands
 			var/mob/living/creature = target
@@ -1169,8 +1163,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			zap_str /= 1.5 //Meatsacks are conductive, makes working in pairs more destructive
 
 		else
-			target.zap_act(zap_str, zap_flags, list())
-			zap_str /= 2 // worse then living things, better then coils
+			zap_str = target.zap_act(zap_str, zap_flags)
 		//This gotdamn variable is a boomer and keeps giving me problems
 		var/turf/T = get_turf(target)
 		var/pressure = 1
