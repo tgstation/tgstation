@@ -135,7 +135,10 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		user.put_in_hands(beaker)
+		if(in_range(src, user))
+			user.put_in_hands(beaker)
+		else // if they are not beside the machine do not put things in hand
+			beaker.forceMove(drop_location())
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
