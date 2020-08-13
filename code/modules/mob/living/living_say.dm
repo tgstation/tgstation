@@ -228,47 +228,35 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
-	if(!client)
-		return
+	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
+		SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
+		if(!client)
+			return
 
-	var/deaf_message
-	var/deaf_type
-	if(speaker != src)
-		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
-			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
-			deaf_type = 1
-	else
-		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
-		deaf_type = 2 // Since you should be able to hear yourself without looking
 
-	// Create map text prior to modifying message for goonchat
-	if (client?.prefs.chat_on_map && stat != UNCONSCIOUS && (client.prefs.see_chat_non_mob || ismob(speaker)) && can_hear())
-		create_chat_message(speaker, message_language, raw_message, spans)
-
-	// Recompose message for AI hrefs, language incomprehension.
-	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
-
-	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type)
-	return message
-
-/*if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
-		if(speaker in view(7,loc))
-			SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
-			if(!client)
-				return
-
-			// Create map text prior to modifying message for goonchat
-			if (client?.prefs.chat_on_map && stat != UNCONSCIOUS && (client.prefs.see_chat_non_mob || ismob(speaker)) && can_hear())
-				create_chat_message(speaker, message_language, raw_message, spans, message_mode)
-
-			// Recompose message for AI hrefs, language incomprehension.
-			message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
-
-			show_message(message, MSG_AUDIBLE)
-			return message
+		var/deaf_message
+		var/deaf_type
+		if(speaker != src)
+			if(!radio_freq) //Overrides deafness check
+				deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
+				deaf_type = 1
 		else
+			deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
+			deaf_type = 2
+
+
+		if (client?.prefs.chat_on_map && stat != UNCONSCIOUS && (client.prefs.see_chat_non_mob || ismob(speaker)))
+			create_chat_message(speaker, message_language, raw_message, spans)
+
+		if(HAS_TRAIT(src, TRAIT_BLIND))
 			return FALSE
+
+
+		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
+
+		show_message(message, MSG_AUDIBLE, deaf_message, deaf_type)
+		return message
+
 	else
 		SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 		if(!client)
@@ -286,13 +274,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 		// Create map text prior to modifying message for goonchat
 		if (client?.prefs.chat_on_map && stat != UNCONSCIOUS && (client.prefs.see_chat_non_mob || ismob(speaker)) && can_hear())
-			create_chat_message(speaker, message_language, raw_message, spans, message_mode)
+			create_chat_message(speaker, message_language, raw_message, spans)
 
 		// Recompose message for AI hrefs, language incomprehension.
-		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 		show_message(message, MSG_AUDIBLE, deaf_message, deaf_type)
-		return message */
+		return message
 
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, list/message_mods = list())
 	var/eavesdrop_range = 0
@@ -300,6 +288,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
+	if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+		var/mob/living/carbon/mute = src
+		if(istype(mute))
+			var/empty_indexes = get_empty_held_indexes() //How many hands the player has empty
+			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
+				message = stars(message)
+			if(length(empty_indexes) == 0 || !mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM)) //Can't sign with no arms!
+				to_chat(src, "<span class='notice'>You can't sign with your hands full!</span.?>")
+				return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/_M in GLOB.player_list)
 			var/mob/M = _M
@@ -357,16 +354,26 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return TRUE
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
+	var/mob/living/carbon/human/H = src
 	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return FALSE
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming) //Makes sure mimes can't speak using sign language
+			return 1
+		else
+			return 0
 
 	if(is_muzzled())
-		return FALSE
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
+			return 1
+		else
+			return 0
 
 	if(!IsVocal())
-		return FALSE
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
+			return 1
+		else
+			return 0
 
-	return TRUE
+	return 1
 
 
 

@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize()
 	. = ..()
-	if(prob(1))
+	if(prob(10))
 		name = "rare frog"
 		desc = "It seems a little smug."
 		icon_state = "rare_frog"
@@ -47,3 +47,11 @@
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)
 			playsound(src, stepped_sound, 50, TRUE)
+
+/mob/living/simple_animal/hostile/retaliate/frog/pepe
+	name = "Pepe"
+	desc = "A political symbol."
+	melee_damage_lower = 0
+	melee_damage_upper = 1
+	speak = list("ribbit","croak", "ni-")
+	emote_see = list("hops in a circle.", "shakes.", "smiles.")

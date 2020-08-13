@@ -311,8 +311,47 @@
 	. = ..()
 	languages_possible = languages_possible_ethereal
 
-//GCSL tongue - yep, that's how you speak sign language.
+//GSL tongue - yep, that's how you speak sign language.
 /obj/item/organ/tongue/tied
 	name = "tied tongue"
 	desc = "Cat's got your tounge?"
 	say_mod = "signs"
+	icon_state = "tonguetied"
+	modifies_speech = TRUE
+
+/obj/item/organ/tongue/tied/Insert(mob/living/carbon/M)
+	. = ..()
+	M.verb_ask = "signs"
+	M.verb_exclaim = "signs"
+	M.verb_whisper = "subtly signs"
+	M.verb_sing = "rythmically signs"
+	M.verb_yell = "emphatically signs"
+	ADD_TRAIT(M, TRAIT_SIGN_LANG, "tongue")
+	REMOVE_TRAIT(M, TRAIT_MUTE, "tongue")
+
+/obj/item/organ/tongue/tied/Remove(mob/living/carbon/M, special = 0)
+	..()
+	ADD_TRAIT(M, TRAIT_MUTE, "tongue")
+	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, "tongue")
+
+//Thank you Jwapplephobia for helping me with this literal hellcode
+
+/obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
+	var/new_message
+	var/message = speech_args[SPEECH_MESSAGE]
+	var/exclamation_used = 0
+	var/question_mark_used = 0
+	var/mob/living/carbon/M = owner
+	for(var/i in 1 to length(message))
+		if(findtext("!", message[i]))
+			exclamation_used = 1
+		else if (findtext("?", message[i]))
+			question_mark_used = 1
+		else
+			new_message += message[i]
+	if(exclamation_used)
+		M.visible_message("<span class='notice'>[M] raises [M.p_their()] eyebrows.</span>")
+	if(question_mark_used)
+		M.visible_message("<span class='notice'>[M] lowers [M.p_their()] eyebrows.</span>")
+	speech_args[SPEECH_MESSAGE] = new_message
+
