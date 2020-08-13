@@ -30,6 +30,7 @@
 /obj/item/reagent_containers/food/snacks/carpmeat/Initialize()
 	. = ..()
 	eatverb = pick("bite","chew","gnaw","swallow","chomp")
+	AddComponent(/datum/component/catnip)
 
 /obj/item/reagent_containers/food/snacks/carpmeat/imitation
 	name = "imitation carp fillet"

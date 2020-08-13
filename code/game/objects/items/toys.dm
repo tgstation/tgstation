@@ -168,8 +168,8 @@
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
-	
-	
+
+
 /obj/item/toy/balloon/arrest
 	name = "arreyst balloon"
 	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
@@ -1192,6 +1192,23 @@
 	var/cooldown = 0
 	resistance_flags = FLAMMABLE
 
+	COOLDOWN_DECLARE(catnip_delay)
+	///The catnip component for attracting cats
+	var/datum/component/catnip/cat_attractor // cattractor more like
+	///How long squeezing the cat toy summons the cats, and how long the delay to resqueeze it is afterwards
+	var/catnip_duration = 45 SECONDS
+
+/obj/item/toy/cattoy/attack_self(mob/user)
+	. = ..()
+	if(cat_attractor)
+		to_chat(user, "<span class='warning'>[src] is already emitting a catnip scent!</span>")
+		return
+	if(!COOLDOWN_FINISHED(src, catnip_delay))
+		to_chat(user, "<span class='warning'>[src] is still recharging its catnip banks!</span>")
+		return
+	to_chat(user, "<span class='notice'>You squeeze [src], giving off a burst of catnip!</span>")
+	AddComponent(/datum/component/catnip, scan_interval = 2.5 SECONDS, duration = catnip_duration)
+	COOLDOWN_START(src, catnip_delay, catnip_duration * 2) // x2 so there's an equal duration of downtime after the attraction ends
 
 /*
  * Action Figures

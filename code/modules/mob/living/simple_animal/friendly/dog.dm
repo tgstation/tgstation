@@ -636,21 +636,3 @@
 	..()
 
 	make_babies()
-
-/mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/mob/living/simple_animal/pet/dog/proc/wuv(change, mob/M)
-	if(!M || stat == DEAD || !change)
-		return
-	if(change > 0)
-		new /obj/effect/temp_visual/heart(loc)
-		manual_emote("yaps happily!")
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-	else
-		manual_emote("growls!")

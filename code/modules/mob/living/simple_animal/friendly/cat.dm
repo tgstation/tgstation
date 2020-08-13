@@ -48,7 +48,8 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 	///if there's a can of opened catfood we're hunting after
-	var/obj/item/reagent_containers/food/snacks/canned/catfood/munchies
+	var/atom/current_catnip
+	//var/obj/item/reagent_containers/food/snacks/canned/catfood/current_catnip
 	///how long it takes before we give up on ever reaching the promised snack
 	COOLDOWN_DECLARE(munchy_frustration)
 	///if we just gave up on some food (either we ate it or we gave up on it), take a break from searching again
@@ -60,7 +61,7 @@
 
 /mob/living/simple_animal/pet/cat/Destroy()
 	. = ..()
-	give_up_munchies()
+	current_catnip = null
 
 /mob/living/simple_animal/pet/cat/update_mobility()
 	..()
@@ -197,8 +198,8 @@
 		return ..()
 
 	if(!client)
-		if(munchies)
-			seek_munchies()
+		if(current_catnip)
+			seek_current_catnip()
 			return ..() // no running away or making babies while you're eating, that'd be gross
 		else
 			auto_emote()
@@ -233,27 +234,12 @@
 		stop_automated_movement = TRUE
 		walk_to(src,movement_target,0,3)
 
-///Called from a can of cat food when the food can scans us and makes us notice it, return TRUE if we acquire new food as a target
-/mob/living/simple_animal/pet/cat/proc/register_munchies(obj/item/reagent_containers/food/snacks/canned/catfood/food)
-	if(!istype(food) || munchies == food || !COOLDOWN_FINISHED(src, munchy_break))
-		return
-	if(!munchies)
-		munchies = food
-		COOLDOWN_START(src, munchy_frustration, CAT_MUNCHY_FRUSTRATE_TIME)
-		return TRUE
-
-	// if we can't see our current target and other munchies are closer, we'll switch priorities
-	if(!can_see(src, get_turf(munchies)) && (get_dist(src, munchies) > get_dist(src, food)))
-		give_up_munchies(munchies)
-		register_munchies(food)
-		return TRUE
-
 ///Somehow, whether by our frustration, the can ceasing to exist (including being finished off), or whatever, we have decided we don't want that food anymore, so we scrub references on both sides (as needed)
-/mob/living/simple_animal/pet/cat/proc/give_up_munchies()
-	if(!munchies)
+/mob/living/simple_animal/pet/cat/proc/give_up_current_catnip()
+	testing("gave up current_catnip")
+	if(!current_catnip)
 		return
-	LAZYREMOVE(munchies.enticed_cats, src)
-	munchies = null
+	current_catnip = null
 	COOLDOWN_RESET(src, munchy_frustration)
 	COOLDOWN_START(src, munchy_break, CAT_MUNCHY_BREAK_TIME)
 
@@ -262,49 +248,53 @@
   *
   *	Basically, we run after wherever our food is, then we either meow at/rub up against whoever's holding it if it's a carbon, or we try eating the food. If we don't get near the food after a long delay, we give up and look for other food
   */
-/mob/living/simple_animal/pet/cat/proc/seek_munchies()
-	if(!munchies)
-		give_up_munchies()
-		return
-
-	//if we're not at our munchies, try running to them
-	if(!Adjacent(get_turf(munchies)))
+/mob/living/simple_animal/pet/cat/proc/seek_current_catnip()
+	//if we're not at our current_catnip, try running to them
+	if(!Adjacent(get_turf(current_catnip)))
+		// check if we've given up on these food
+		if(COOLDOWN_FINISHED(src, munchy_frustration))
+			give_up_current_catnip()
+			return
 		set_resting(FALSE)
-		walk_to(src, get_turf(munchies), 0, 2)
+		walk_to(src, get_turf(current_catnip), 0, rand(15,25) * 0.1)
 	else
 		COOLDOWN_START(src, munchy_frustration, CAT_MUNCHY_FRUSTRATE_TIME) // restart
 
-	// check if we've given up on these food
-	if(COOLDOWN_FINISHED(src, munchy_frustration))
-		give_up_munchies()
-		return
-
+	var/atom/catnip_holder = current_catnip.loc
 	// beg for food
-	if(iscarbon(munchies.loc))
-		var/mob/living/carbon/food_holder = munchies.loc
-		if(!Adjacent(food_holder))
-			visible_message("<b>[src]</b> meows at [food_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
-			playsound(get_turf(src), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE)
+	if(!isturf(catnip_holder))
+		var/soundpath
+		if(!Adjacent(catnip_holder))
+			visible_message("<b>[src]</b> meows at [catnip_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE), rand(0, 10)) // 0-1 seconds, so there's some variation
 		else
 			switch(rand(1,3))
 				if(1)
-					visible_message("<b>[src]</b> meows [pick("directly", "defiantly", "hungrily", "tiredly")] at [food_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
-					playsound(get_turf(src), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE)
+					visible_message("<b>[src]</b> meows [pick("directly", "defiantly", "hungrily", "tiredly")] at [catnip_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE), rand(0, 10))
 				if(2)
-					visible_message("<b>[src]</b> rubs up against [food_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
+					visible_message("<b>[src]</b> rubs up against [catnip_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
 					new /obj/effect/temp_visual/heart(loc)
 				if(3)
-					visible_message("<b>[src]</b> stares expectantly at [food_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
-					face_atom(food_holder)
-		return
+					visible_message("<b>[src]</b> stares expectantly at [catnip_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
+					face_atom(catnip_holder)
 
-	// eat!!!
-	if(munchies && munchies.reagents?.total_volume && isturf(munchies.loc) && Adjacent(munchies))
-		playsound(get_turf(src), pick('sound/effects/cat_feed1.ogg','sound/effects/cat_feed2.ogg','sound/effects/cat_feed3.ogg'), 60, TRUE)
+	else if(Adjacent(current_catnip))
+		var/obj/item/reagent_containers/food/snacks/actual_food = current_catnip
 		set_resting(TRUE)
-		if(prob(50))
-			visible_message("<b>[src]</b> quietly nibbles away at [munchies].", vision_distance=COMBAT_MESSAGE_RANGE)
-		munchies.cat_eat(src)
+		// if it's on the ground and is food, eat!!!
+		if(istype(actual_food) && actual_food.reagents?.total_volume)
+			playsound(get_turf(src), pick('sound/effects/cat_feed1.ogg','sound/effects/cat_feed2.ogg','sound/effects/cat_feed3.ogg'), 80, TRUE, -2)
+			if(prob(50))
+				visible_message("<b>[src]</b> quietly nibbles away at [actual_food].", vision_distance=COMBAT_MESSAGE_RANGE)
+			// fake eating the food
+			actual_food.reagents.remove_any(1)
+			actual_food.bitecount++
+			actual_food.On_Consume(src)
+		// else just meow at it
+		else
+			visible_message("<b>[src]</b> meows [pick("directly", "defiantly", "suspiciously", "tiredly")] at [current_catnip]!", vision_distance=COMBAT_MESSAGE_RANGE)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE), rand(0, 10))
 
 ///Same mice hunting behavior as before, just sectioned off from [/mob/living/simple_animal/pet/cat/proc/Life]
 /mob/living/simple_animal/pet/cat/proc/hunt_mice()
@@ -340,26 +330,6 @@
 			set_resting(FALSE)
 		else
 			manual_emote(pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
-
-/mob/living/simple_animal/pet/cat/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1, M)
-		if("harm")
-			wuv(-1, M)
-
-/mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
-	if(!M || stat == DEAD || !change)
-		return
-	if(change > 0)
-		new /obj/effect/temp_visual/heart(loc)
-		manual_emote("purrs!")
-		if(flags_1 & HOLOGRAM_1)
-			return
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-	else if(change < 0)
-		manual_emote("hisses!")
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"
