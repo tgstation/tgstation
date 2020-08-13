@@ -5351,6 +5351,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
 "anT" = (
@@ -5481,16 +5482,14 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aop" = (
-/obj/structure/bed/dogbed,
 /obj/machinery/requests_console{
 	department = "Security";
 	departmentType = 5;
 	pixel_x = -32
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/pet/dog/pug{
-	name = "McGriff"
-	},
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/obj/structure/bed/dogbed/mcgriff,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aoq" = (
@@ -22550,23 +22549,20 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "bfv" = (
-/obj/structure/table,
-/obj/item/crowbar/large,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
-/obj/item/clothing/head/welding,
+/obj/machinery/computer/mechpad,
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "bfw" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mech Bay APC";
 	pixel_y = 23
 	},
 /obj/structure/cable,
+/obj/machinery/mechpad,
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "bfx" = (
@@ -22584,15 +22580,15 @@
 	pixel_y = 30
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "bfz" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/mech_bay_recharge_floor,
 /area/science/robotics/mechbay)
 "bfA" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bfB" = (
 /obj/structure/table,
@@ -23517,13 +23513,13 @@
 /area/science/robotics/mechbay)
 "bhU" = (
 /obj/machinery/mech_bay_recharge_port,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "bhV" = (
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bib" = (
 /obj/effect/turf_decal/tile/brown{
@@ -39531,7 +39527,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/camera{
 	c_tag = "Atmospherics Mixing"
 	},
@@ -39541,6 +39536,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bTR" = (
@@ -44851,6 +44847,11 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
+"clK" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/mob/living/simple_animal/mouse/brown/tom,
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "clL" = (
 /turf/closed/wall,
 /area/tcommsat/computer)
@@ -52649,6 +52650,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
+"kHO" = (
+/mob/living/simple_animal/pet/fox/renault,
+/obj/structure/bed/dogbed/renault,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/heads/captain)
 "kHP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -54687,6 +54693,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"oAk" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
+/turf/open/floor/plasteel,
+/area/janitor)
 "oAw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -55205,6 +55216,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/sign/departments/lawyer{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "pGe" = (
@@ -56507,6 +56521,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"sql" = (
+/mob/living/simple_animal/sloth/paperwork,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "sqQ" = (
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -57896,7 +57914,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "vkd" = (
@@ -80073,7 +80091,7 @@ aeF
 aeV
 afq
 afF
-agb
+clK
 agb
 agA
 agA
@@ -84497,7 +84515,7 @@ aXO
 aYM
 aZP
 baY
-aZP
+oAk
 bdh
 bed
 aVS
@@ -88072,7 +88090,7 @@ aAy
 aBp
 aCC
 aDG
-aBm
+kHO
 aFz
 aGm
 awR
@@ -99912,7 +99930,7 @@ aTn
 aUx
 aVA
 aTm
-aTm
+sql
 aTj
 aZr
 baD

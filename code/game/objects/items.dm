@@ -549,7 +549,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	attack_self(user)
 
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-/obj/item/proc/IsReflect(var/def_zone)
+/obj/item/proc/IsReflect(def_zone)
 	return FALSE
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
@@ -933,7 +933,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/unembedded()
 	if(item_flags & DROPDEL)
-		QDEL_NULL(src)
+		qdel(src)
 		return TRUE
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
@@ -951,7 +951,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 ///In case we want to do something special (like self delete) upon failing to embed in something, return true
 /obj/item/proc/failedEmbed()
 	if(item_flags & DROPDEL)
-		QDEL_NULL(src)
+		qdel(src)
 		return TRUE
 
 ///Called by the carbon throw_item() proc. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.

@@ -252,7 +252,7 @@
   * Individually, the formula for individual amounts of chemicals is Potency * the chemical production %, rounded to the fullest 1.
   * Specific chem handling is also handled here, like bloodtype, food taste within nutriment, and the auto-distilling trait.
   */
-/obj/item/seeds/proc/prepare_result(var/obj/item/T)
+/obj/item/seeds/proc/prepare_result(obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
 	var/reagent_max = 0

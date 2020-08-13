@@ -13,6 +13,10 @@
 	QDEL_LIST(internal_organs)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
+	for(var/wound in all_wounds) // these LAZYREMOVE themselves when deleted so no need to remove the list here
+		qdel(wound)
+	for(var/scar in all_scars)
+		qdel(scar)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
@@ -554,9 +558,10 @@
 	var/stam = getStaminaLoss()
 	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold && !stat)
 		enter_stamcrit()
-	else if(stam_paralyzed)
-		stam_paralyzed = FALSE
-		REMOVE_TRAIT(src,TRAIT_INCAPACITATED, STAMINA)
+	else if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
+		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
+		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	else
 		return
 	update_health_hud()
@@ -921,7 +926,7 @@
 		I.extinguish() //extinguishes our clothes
 	..()
 
-/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
+/mob/living/carbon/fakefire(fire_icon = "Generic_mob_burning")
 	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 	new_fire_overlay.appearance_flags = RESET_COLOR
 	overlays_standing[FIRE_LAYER] = new_fire_overlay

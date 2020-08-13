@@ -88,7 +88,7 @@
 		. += "There are [orbiting_balls.len] mini-balls orbiting it."
 
 
-/obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
+/obj/singularity/energy_ball/proc/move_the_basket_ball(move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/move_bias = pick(GLOB.alldirs)
 	for(var/i in 0 to move_amount)

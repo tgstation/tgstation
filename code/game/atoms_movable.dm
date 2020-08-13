@@ -224,7 +224,7 @@
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
-	AM.pulledby = src
+	AM.set_pulledby(src)
 	setGrabState(state)
 	if(ismob(AM))
 		var/mob/M = AM
@@ -236,13 +236,22 @@
 
 /atom/movable/proc/stop_pulling()
 	if(pulling)
-		pulling.pulledby = null
+		pulling.set_pulledby(null)
 		var/mob/living/ex_pulled = pulling
+		setGrabState(GRAB_PASSIVE)
 		pulling = null
-		setGrabState(0)
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_mobility()// mob gets up if it was lyng down in a chokehold
+
+
+///Reports the event of the change in value of the pulledby variable.
+/atom/movable/proc/set_pulledby(new_pulledby)
+	if(new_pulledby == pulledby)
+		return FALSE //null signals there was a change, be sure to return FALSE if none happened here.
+	. = pulledby
+	pulledby = new_pulledby
+
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
@@ -740,12 +749,12 @@
 	return blocker_opinion
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
-/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
-	return
+/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/master_storage)
+	SEND_SIGNAL(src, CONSIG_STORAGE_EXITED, master_storage)
 
 /// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
-/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
-	return
+/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/master_storage)
+	SEND_SIGNAL(src, COMISG_STORAGE_ENTERED, master_storage)
 
 /atom/movable/proc/get_spacemove_backup()
 	var/atom/movable/dense_object_backup
@@ -779,20 +788,26 @@
 		return //don't do an animation if attacking self
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
+	var/turn_dir = 1
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
 		pixel_y_diff = 8
+		turn_dir = rand(50) ? -1 : 1
 	else if(direction & SOUTH)
 		pixel_y_diff = -8
+		turn_dir = rand(50) ? -1 : 1
 
 	if(direction & EAST)
 		pixel_x_diff = 8
 	else if(direction & WEST)
 		pixel_x_diff = -8
+		turn_dir = -1
 
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+	var/matrix/initial_transform = matrix(transform)
+	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -803,21 +818,21 @@
 		I.plane = GAME_PLANE
 
 		// Scale the icon.
-		I.transform *= 0.75
+		I.transform *= 0.4
 		// The icon should not rotate.
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 		// Set the direction of the icon animation.
 		var/direction = get_dir(src, A)
 		if(direction & NORTH)
-			I.pixel_y = -16
+			I.pixel_y = -12
 		else if(direction & SOUTH)
-			I.pixel_y = 16
+			I.pixel_y = 12
 
 		if(direction & EAST)
-			I.pixel_x = -16
+			I.pixel_x = -14
 		else if(direction & WEST)
-			I.pixel_x = 16
+			I.pixel_x = 14
 
 		if(!direction) // Attacked self?!
 			I.pixel_z = 16
@@ -825,10 +840,12 @@
 	if(!I)
 		return
 
-	flick_overlay(I, GLOB.clients, 5) // 5 ticks/half a second
+	flick_overlay(I, GLOB.clients, 10)
 
 	// And animate the attack!
-	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+	animate(I, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+	animate(time = 1)
+	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
@@ -969,7 +986,22 @@
   * This exists to act as a hook for behaviour
   */
 /atom/movable/proc/setGrabState(newstate)
+	if(newstate == grab_state)
+		return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
+	. = grab_state
 	grab_state = newstate
+	switch(.) //Previous state.
+		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
+			if(grab_state >= GRAB_NECK)
+				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+	switch(grab_state) //Current state.
+		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
+			if(. >= GRAB_NECK)
+				REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE

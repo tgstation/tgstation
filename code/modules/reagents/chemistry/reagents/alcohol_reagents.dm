@@ -674,7 +674,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Whoah, this thing is on FIRE!"
 	shot_glass_icon_state = "toxinsspecialglass"
 
-/datum/reagent/consumable/ethanol/toxins_special/on_mob_life(var/mob/living/M)
+/datum/reagent/consumable/ethanol/toxins_special/on_mob_life(mob/living/M)
 	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
 	return ..()
 
