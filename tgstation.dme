@@ -1718,7 +1718,6 @@
 #include "code\modules\cargo\exports\sheets.dm"
 #include "code\modules\cargo\exports\tools.dm"
 #include "code\modules\cargo\exports\weapons.dm"
-#include "code\modules\cargo\exports\xenobio.dm"
 #include "code\modules\chatter\chatter.dm"
 #include "code\modules\client\client_colour.dm"
 #include "code\modules\client\client_defines.dm"

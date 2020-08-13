@@ -9,4 +9,4 @@
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		energy += power
 	zap_flags &= ~(ZAP_MACHINE_EXPLOSIVE | ZAP_OBJ_DAMAGE) // Don't blow yourself up yeah?
-	. = ..()
+	return ..()
