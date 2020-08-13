@@ -145,3 +145,9 @@
 	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
 	icon_state = "wizard"
 	inhand_icon_state = "purplegloves"
+
+/obj/item/clothing/gloves/radio
+	name = "translation gloves"
+	desc = "A pair of electronic gloves which connect to nearby radios wirelessly. Allows for sign language users to 'speak' over comms."
+	icon_state = "radio_g"
+	inhand_icon_state = "radio_g"
