@@ -233,7 +233,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(QDELETED(src))
 		return 0
 	obj_flags |= BEING_SHOCKED
-	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
+	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 	return power / 2
 
 //The surgeon general warns that being buckled to certain objects receiving powerful shocks is greatly hazardous to your health

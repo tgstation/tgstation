@@ -84,7 +84,7 @@
 		zap_buckle_check(power)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		obj_flags |= BEING_SHOCKED
-		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
+		addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 		return power - power_produced //You get back the amount we didn't use
 	else
 		. = ..()
