@@ -260,7 +260,7 @@
 	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
 
 /obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
-	var/missing_health = user.health - user.maxHealth
+	var/missing_health = user.maxHealth - user.health
 	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
 	if(missing_health > 0)
