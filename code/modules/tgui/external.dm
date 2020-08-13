@@ -131,6 +131,13 @@
 /client/var/list/tgui_windows = list()
 
 /**
+ * global
+ *
+ * TRUE if cache was reloaded by tgui dev server at least once.
+ */
+/client/var/tgui_cache_reloaded = FALSE
+
+/**
  * public
  *
  * Called on a UI's object when the UI is closed, not to be confused with
@@ -169,6 +176,19 @@
 	// Unconditionally collect tgui logs
 	if(type == "log")
 		log_tgui(usr, href_list["message"])
+	// Reload all tgui windows
+	if(type == "cacheReloaded")
+		if(!check_rights(R_ADMIN) || usr.client.tgui_cache_reloaded)
+			return TRUE
+		// Mark as reloaded
+		usr.client.tgui_cache_reloaded = TRUE
+		// Notify windows
+		var/list/windows = usr.client.tgui_windows
+		for(var/window_id in windows)
+			var/datum/tgui_window/window = windows[window_id]
+			if (window.status == TGUI_WINDOW_READY)
+				window.on_message(type, null, href_list)
+		return TRUE
 	// Locate window
 	var/window_id = href_list["window_id"]
 	var/datum/tgui_window/window

@@ -80,17 +80,19 @@
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		window.initialize(inline_assets = list(
-			get_asset_datum(/datum/asset/simple/tgui_common),
-			get_asset_datum(/datum/asset/simple/tgui),
-		))
+		window.initialize(
+			fancy = user.client.prefs.tgui_fancy,
+			inline_assets = list(
+				get_asset_datum(/datum/asset/simple/tgui_common),
+				get_asset_datum(/datum/asset/simple/tgui),
+			))
 	else
 		window.send_message("ping")
-	 
-	var/flushqueue = window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/fontawesome))
+	var/flush_queue = window.send_asset(get_asset_datum(
+		/datum/asset/simple/namespaced/fontawesome))
 	for(var/datum/asset/asset in src_object.ui_assets(user))
-		flushqueue |= window.send_asset(asset)
-	if (flushqueue)
+		flush_queue |= window.send_asset(asset)
+	if (flush_queue)
 		user.client.browse_queue_flush()
 	window.send_message("update", get_payload(
 		with_data = TRUE,

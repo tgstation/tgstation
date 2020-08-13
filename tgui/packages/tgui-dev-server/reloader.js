@@ -11,6 +11,7 @@ import { basename } from 'path';
 import { promisify } from 'util';
 import { resolveGlob, resolvePath } from './util.js';
 import { regQuery } from './winreg.js';
+import { DreamSeeker } from './dreamseeker.js';
 
 const logger = createLogger('reloader');
 
@@ -43,7 +44,7 @@ export const findCacheRoot = async () => {
     const paths = await resolveGlob(pattern);
     if (paths.length > 0) {
       cacheRoot = paths[0];
-      logger.log(`found cache at '${cacheRoot}'`);
+      onCacheRootFound(cacheRoot);
       return cacheRoot;
     }
   }
@@ -58,11 +59,17 @@ export const findCacheRoot = async () => {
         .replace(/\\$/, '')
         .replace(/\\/g, '/')
         + '/cache';
-      logger.log(`found cache at '${cacheRoot}'`);
+      onCacheRootFound(cacheRoot);
       return cacheRoot;
     }
   }
   logger.log('found no cache directories');
+};
+
+const onCacheRootFound = cacheRoot => {
+  logger.log(`found cache at '${cacheRoot}'`);
+  // Plant dummy
+  fs.closeSync(fs.openSync(cacheRoot + '/dummy', 'w'));
 };
 
 export const reloadByondCache = async bundleDir => {
@@ -76,6 +83,12 @@ export const reloadByondCache = async bundleDir => {
     logger.log('found no tmp folder in cache');
     return;
   }
+  // Get dreamseeker instances
+  const pids = cacheDirs.map(cacheDir => (
+    parseInt(cacheDir.split('/cache/tmp').pop(), 10)
+  ));
+  const dssPromise = DreamSeeker.getInstancesByPids(pids);
+  // Copy assets
   const assets = await resolveGlob(bundleDir, './*.+(bundle|chunk|hot-update).*');
   for (let cacheDir of cacheDirs) {
     // Clear garbage
@@ -89,5 +102,16 @@ export const reloadByondCache = async bundleDir => {
       await promisify(fs.copyFile)(asset, destination);
     }
     logger.log(`copied ${assets.length} files to '${cacheDir}'`);
+  }
+  // Notify dreamseeker
+  const dss = await dssPromise;
+  if (dss.length > 0) {
+    logger.log(`notifying dreamseeker`);
+    for (let dreamseeker of dss) {
+      dreamseeker.topic({
+        tgui: 1,
+        type: 'cacheReloaded',
+      });
+    }
   }
 };

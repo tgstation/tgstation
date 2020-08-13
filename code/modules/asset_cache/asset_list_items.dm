@@ -1,17 +1,20 @@
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
 /datum/asset/simple/tgui_common
+	keep_local_name = TRUE
 	assets = list(
 		"tgui-common.chunk.js" = 'tgui/packages/tgui/public/tgui-common.chunk.js',
 	)
 
 /datum/asset/simple/tgui
+	keep_local_name = TRUE
 	assets = list(
 		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
 	)
 
 /datum/asset/simple/tgui_panel
+	keep_local_name = TRUE
 	assets = list(
 		"tgui-panel.bundle.js" = 'tgui/packages/tgui/public/tgui-panel.bundle.js',
 		"tgui-panel.bundle.css" = 'tgui/packages/tgui/public/tgui-panel.bundle.css',
@@ -19,74 +22,74 @@
 
 /datum/asset/simple/headers
 	assets = list(
-		"alarm_green.gif" 			= 'icons/program_icons/alarm_green.gif',
-		"alarm_red.gif" 			= 'icons/program_icons/alarm_red.gif',
-		"batt_5.gif" 				= 'icons/program_icons/batt_5.gif',
-		"batt_20.gif" 				= 'icons/program_icons/batt_20.gif',
-		"batt_40.gif" 				= 'icons/program_icons/batt_40.gif',
-		"batt_60.gif" 				= 'icons/program_icons/batt_60.gif',
-		"batt_80.gif" 				= 'icons/program_icons/batt_80.gif',
-		"batt_100.gif" 				= 'icons/program_icons/batt_100.gif',
-		"charging.gif" 				= 'icons/program_icons/charging.gif',
-		"downloader_finished.gif" 	= 'icons/program_icons/downloader_finished.gif',
-		"downloader_running.gif" 	= 'icons/program_icons/downloader_running.gif',
-		"ntnrc_idle.gif"			= 'icons/program_icons/ntnrc_idle.gif',
-		"ntnrc_new.gif"				= 'icons/program_icons/ntnrc_new.gif',
-		"power_norm.gif"			= 'icons/program_icons/power_norm.gif',
-		"power_warn.gif"			= 'icons/program_icons/power_warn.gif',
-		"sig_high.gif" 				= 'icons/program_icons/sig_high.gif',
-		"sig_low.gif" 				= 'icons/program_icons/sig_low.gif',
-		"sig_lan.gif" 				= 'icons/program_icons/sig_lan.gif',
-		"sig_none.gif" 				= 'icons/program_icons/sig_none.gif',
-		"smmon_0.gif" 				= 'icons/program_icons/smmon_0.gif',
-		"smmon_1.gif" 				= 'icons/program_icons/smmon_1.gif',
-		"smmon_2.gif" 				= 'icons/program_icons/smmon_2.gif',
-		"smmon_3.gif" 				= 'icons/program_icons/smmon_3.gif',
-		"smmon_4.gif" 				= 'icons/program_icons/smmon_4.gif',
-		"smmon_5.gif" 				= 'icons/program_icons/smmon_5.gif',
-		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif',
-		"borg_mon.gif"				= 'icons/program_icons/borg_mon.gif'
+		"alarm_green.gif" = 'icons/program_icons/alarm_green.gif',
+		"alarm_red.gif" = 'icons/program_icons/alarm_red.gif',
+		"batt_5.gif" = 'icons/program_icons/batt_5.gif',
+		"batt_20.gif" = 'icons/program_icons/batt_20.gif',
+		"batt_40.gif" = 'icons/program_icons/batt_40.gif',
+		"batt_60.gif" = 'icons/program_icons/batt_60.gif',
+		"batt_80.gif" = 'icons/program_icons/batt_80.gif',
+		"batt_100.gif" = 'icons/program_icons/batt_100.gif',
+		"charging.gif" = 'icons/program_icons/charging.gif',
+		"downloader_finished.gif" = 'icons/program_icons/downloader_finished.gif',
+		"downloader_running.gif" = 'icons/program_icons/downloader_running.gif',
+		"ntnrc_idle.gif" = 'icons/program_icons/ntnrc_idle.gif',
+		"ntnrc_new.gif" = 'icons/program_icons/ntnrc_new.gif',
+		"power_norm.gif" = 'icons/program_icons/power_norm.gif',
+		"power_warn.gif" = 'icons/program_icons/power_warn.gif',
+		"sig_high.gif" = 'icons/program_icons/sig_high.gif',
+		"sig_low.gif" = 'icons/program_icons/sig_low.gif',
+		"sig_lan.gif" = 'icons/program_icons/sig_lan.gif',
+		"sig_none.gif" = 'icons/program_icons/sig_none.gif',
+		"smmon_0.gif" = 'icons/program_icons/smmon_0.gif',
+		"smmon_1.gif" = 'icons/program_icons/smmon_1.gif',
+		"smmon_2.gif" = 'icons/program_icons/smmon_2.gif',
+		"smmon_3.gif" = 'icons/program_icons/smmon_3.gif',
+		"smmon_4.gif" = 'icons/program_icons/smmon_4.gif',
+		"smmon_5.gif" = 'icons/program_icons/smmon_5.gif',
+		"smmon_6.gif" = 'icons/program_icons/smmon_6.gif',
+		"borg_mon.gif" = 'icons/program_icons/borg_mon.gif'
 	)
 
 /datum/asset/simple/radar_assets
 	assets = list(
-		"ntosradarbackground.png"	= 'icons/UI_Icons/tgui/ntosradar_background.png',
-		"ntosradarpointer.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer.png',
-		"ntosradarpointerS.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer_S.png'
+		"ntosradarbackground.png" = 'icons/UI_Icons/tgui/ntosradar_background.png',
+		"ntosradarpointer.png" = 'icons/UI_Icons/tgui/ntosradar_pointer.png',
+		"ntosradarpointerS.png" = 'icons/UI_Icons/tgui/ntosradar_pointer_S.png'
 	)
 
 /datum/asset/spritesheet/simple/pda
 	name = "pda"
 	assets = list(
-		"atmos"			= 'icons/pda_icons/pda_atmos.png',
-		"back"			= 'icons/pda_icons/pda_back.png',
-		"bell"			= 'icons/pda_icons/pda_bell.png',
-		"blank"			= 'icons/pda_icons/pda_blank.png',
-		"boom"			= 'icons/pda_icons/pda_boom.png',
-		"bucket"		= 'icons/pda_icons/pda_bucket.png',
-		"medbot"		= 'icons/pda_icons/pda_medbot.png',
-		"floorbot"		= 'icons/pda_icons/pda_floorbot.png',
-		"cleanbot"		= 'icons/pda_icons/pda_cleanbot.png',
-		"crate"			= 'icons/pda_icons/pda_crate.png',
-		"cuffs"			= 'icons/pda_icons/pda_cuffs.png',
-		"eject"			= 'icons/pda_icons/pda_eject.png',
-		"flashlight"	= 'icons/pda_icons/pda_flashlight.png',
-		"honk"			= 'icons/pda_icons/pda_honk.png',
-		"mail"			= 'icons/pda_icons/pda_mail.png',
-		"medical"		= 'icons/pda_icons/pda_medical.png',
-		"menu"			= 'icons/pda_icons/pda_menu.png',
-		"mule"			= 'icons/pda_icons/pda_mule.png',
-		"notes"			= 'icons/pda_icons/pda_notes.png',
-		"power"			= 'icons/pda_icons/pda_power.png',
-		"rdoor"			= 'icons/pda_icons/pda_rdoor.png',
-		"reagent"		= 'icons/pda_icons/pda_reagent.png',
-		"refresh"		= 'icons/pda_icons/pda_refresh.png',
-		"scanner"		= 'icons/pda_icons/pda_scanner.png',
-		"signaler"		= 'icons/pda_icons/pda_signaler.png',
-		"skills"		= 'icons/pda_icons/pda_skills.png',
-		"status"		= 'icons/pda_icons/pda_status.png',
-		"dronephone"	= 'icons/pda_icons/pda_dronephone.png',
-		"emoji"			= 'icons/pda_icons/pda_emoji.png'
+		"atmos" = 'icons/pda_icons/pda_atmos.png',
+		"back" = 'icons/pda_icons/pda_back.png',
+		"bell" = 'icons/pda_icons/pda_bell.png',
+		"blank" = 'icons/pda_icons/pda_blank.png',
+		"boom" = 'icons/pda_icons/pda_boom.png',
+		"bucket" = 'icons/pda_icons/pda_bucket.png',
+		"medbot" = 'icons/pda_icons/pda_medbot.png',
+		"floorbot" = 'icons/pda_icons/pda_floorbot.png',
+		"cleanbot" = 'icons/pda_icons/pda_cleanbot.png',
+		"crate" = 'icons/pda_icons/pda_crate.png',
+		"cuffs" = 'icons/pda_icons/pda_cuffs.png',
+		"eject" = 'icons/pda_icons/pda_eject.png',
+		"flashlight" = 'icons/pda_icons/pda_flashlight.png',
+		"honk" = 'icons/pda_icons/pda_honk.png',
+		"mail" = 'icons/pda_icons/pda_mail.png',
+		"medical" = 'icons/pda_icons/pda_medical.png',
+		"menu" = 'icons/pda_icons/pda_menu.png',
+		"mule" = 'icons/pda_icons/pda_mule.png',
+		"notes" = 'icons/pda_icons/pda_notes.png',
+		"power" = 'icons/pda_icons/pda_power.png',
+		"rdoor" = 'icons/pda_icons/pda_rdoor.png',
+		"reagent" = 'icons/pda_icons/pda_reagent.png',
+		"refresh" = 'icons/pda_icons/pda_refresh.png',
+		"scanner" = 'icons/pda_icons/pda_scanner.png',
+		"signaler" = 'icons/pda_icons/pda_signaler.png',
+		"skills" = 'icons/pda_icons/pda_skills.png',
+		"status" = 'icons/pda_icons/pda_status.png',
+		"dronephone" = 'icons/pda_icons/pda_dronephone.png',
+		"emoji" = 'icons/pda_icons/pda_emoji.png'
 	)
 
 /datum/asset/spritesheet/simple/paper
@@ -144,7 +147,7 @@
 		"changelog.css" = 'html/changelog.css'
 	)
 	parents = list("changelog.html" = 'html/changelog.html')
-	
+
 
 /datum/asset/simple/jquery
 	legacy = TRUE
@@ -161,7 +164,7 @@
 		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
 		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css'
 	)
-	parents = list("font-awesome.css"    = 'html/font-awesome/css/all.min.css')
+	parents = list("font-awesome.css" = 'html/font-awesome/css/all.min.css')
 
 /datum/asset/spritesheet/chat
 	name = "chat"
@@ -398,9 +401,9 @@
 
 /datum/asset/simple/genetics
 	assets = list(
-		"dna_discovered.gif"	= 'html/dna_discovered.gif',
-		"dna_undiscovered.gif"	= 'html/dna_undiscovered.gif',
-		"dna_extra.gif" 		= 'html/dna_extra.gif'
+		"dna_discovered.gif" = 'html/dna_discovered.gif',
+		"dna_undiscovered.gif" = 'html/dna_undiscovered.gif',
+		"dna_extra.gif" = 'html/dna_extra.gif'
 	)
 
 /datum/asset/simple/orbit

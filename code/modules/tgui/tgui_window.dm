@@ -17,6 +17,9 @@
 	var/fatally_errored = FALSE
 	var/message_queue
 	var/sent_assets = list()
+	// Vars passed to initialize proc (and saved for later)
+	var/inline_assets
+	var/fancy
 
 /**
  * public
@@ -42,17 +45,24 @@
  * will be put into the queue until the window finishes loading.
  *
  * optional inline_assets list List of assets to inline into the html.
+ * optional inline_html string Custom HTML to inject.
+ * optional fancy bool If TRUE, will hide the window titlebar.
  */
-/datum/tgui_window/proc/initialize(inline_assets = list())
+/datum/tgui_window/proc/initialize(
+		inline_assets = list(),
+		inline_html = "",
+		fancy = FALSE)
 	log_tgui(client, "[id]/initialize")
 	if(!client)
 		return
+	src.inline_assets = inline_assets
+	src.fancy = fancy
 	status = TGUI_WINDOW_LOADING
 	fatally_errored = FALSE
 	// Build window options
 	var/options = "file=[id].html;can_minimize=0;auto_format=0;"
 	// Remove titlebar and resize handles for a fancy window
-	if(client.prefs.tgui_fancy)
+	if(fancy)
 		options += "titlebar=0;can_resize=0;"
 	else
 		options += "titlebar=1;can_resize=1;"
@@ -74,6 +84,8 @@
 		asset.send(client)
 	html = replacetextEx(html, "<!-- tgui:styles -->\n", inline_styles)
 	html = replacetextEx(html, "<!-- tgui:scripts -->\n", inline_scripts)
+	// Inject custom HTML
+	html = replacetextEx(html, "<!-- tgui:html -->\n", inline_html)
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Instruct the client to signal UI when the window is closed.
@@ -235,7 +247,7 @@
 	if(!client || !asset)
 		return
 	sent_assets |= list(asset)
-	asset.send(client)
+	. = asset.send(client)
 	if(istype(asset, /datum/asset/spritesheet))
 		var/datum/asset/spritesheet/spritesheet = asset
 		send_message("asset/stylesheet", spritesheet.css_filename())
@@ -296,3 +308,9 @@
 			close(can_be_suspended = FALSE)
 		if("openLink")
 			client << link(href_list["url"])
+		if("cacheReloaded")
+			// Reinitialize
+			initialize(inline_assets = inline_assets, fancy = fancy)
+			// Resend the assets
+			for(var/asset in sent_assets)
+				send_asset(asset)
