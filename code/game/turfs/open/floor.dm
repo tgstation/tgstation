@@ -166,11 +166,11 @@
 		return TRUE
 	. = ..()
 	if(.)
-		return TRUE
+		return .
 	if(intact && istype(object, /obj/item/stack/tile))
 		try_replace_tile(object, user, params)
 		return TRUE
-	if(istype(object, /obj/item/stack/sheet))
+	if(user.a_intent == INTENT_HARM && istype(object, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/sheets = object
 		return sheets.on_attack_floor(user, params)
 	return FALSE

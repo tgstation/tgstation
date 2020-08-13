@@ -34,8 +34,10 @@
 /obj/item/stack/sheet/proc/on_attack_floor(mob/user, params)
 	if(!shards_to)
 		return FALSE
+	user.do_attack_animation(src, ATTACK_EFFECT_BOOP)
+	playsound(src, "shatter", 70, TRUE)
 	use(1)
-	to_chat(user, "<span class='notice'>You shatter one sheet of [name].</span>")
+	to_chat(user, "<span class='notice'>You shatter one sheet of [name] on the floor.</span>")
 	var/obj/item/shard/new_shard = new shards_to(user.loc)
 	new_shard.add_fingerprint(user)
 	return TRUE
