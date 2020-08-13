@@ -29,8 +29,7 @@
 	max_integrity = 160		//the turret's health
 	integrity_failure = 0.5
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
-	/// Base turret icon state
-	var/base_icon_state = "standard"
+	base_icon_state = "standard"
 	/// Scan range of the turret for locating targets
 	var/scan_range = 7
 	/// For turrets inside other objects

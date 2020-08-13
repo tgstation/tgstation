@@ -112,6 +112,9 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	///Used for changing icon states for different base sprites.
+	var/base_icon_state
+
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///Smoothing variable
