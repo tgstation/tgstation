@@ -214,7 +214,7 @@
 	else
 		take_damage(power * 0.0025, BURN, "energy")
 	power -= power * 0.0025 //You don't get to do it for free
-	return = ..() //You don't get to do it for free
+	return ..() //You don't get to do it for free
 
 /obj/structure/blob/extinguish()
 	..()
