@@ -9912,6 +9912,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /turf/open/floor/plating,
 /area/janitor)
 "awE" = (
@@ -16008,9 +16009,9 @@
 	pixel_x = 24;
 	pixel_y = 24
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aIz" = (
@@ -31322,7 +31323,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "bkz" = (
-/obj/structure/bed/dogbed/cayenne,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
@@ -31339,6 +31339,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/bed/dogbed/lia,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
 "bkA" = (
@@ -32299,17 +32300,7 @@
 /area/crew_quarters/heads/hos)
 "bmu" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/carp/cayenne{
-	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as an authority figure's pet.";
-	health = 200;
-	icon_dead = "magicarp_dead";
-	icon_gib = "magicarp_gib";
-	icon_living = "magicarp";
-	icon_state = "magicarp";
-	maxHealth = 200;
-	name = "Lia";
-	random_color = 0
-	},
+/mob/living/simple_animal/hostile/carp/cayenne/lia,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
 "bmv" = (
@@ -47972,19 +47963,9 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "bNo" = (
-/obj/structure/rack,
-/obj/item/storage/box/handcuffs,
-/obj/item/storage/box/flashbangs{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/radio/intercom{
 	pixel_x = 26
 	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/flashlight/seclite,
-/obj/item/flashlight/seclite,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -47992,6 +47973,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/obj/structure/bed/dogbed/mcgriff,
 /turf/open/floor/plasteel,
 /area/security/warden)
 "bNp" = (
@@ -56581,6 +56564,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/handcuffs,
 /turf/open/floor/plasteel,
 /area/security/warden)
 "cbG" = (
@@ -57246,9 +57231,6 @@
 /obj/machinery/camera{
 	c_tag = "Courtroom - Fore"
 	},
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -57352,11 +57334,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/machinery/button/door{
-	id = "lawyerprivacy";
-	name = "Lawyer's Privacy Control";
-	pixel_y = 24
-	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "cdh" = (
@@ -57376,6 +57353,12 @@
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/button/door{
+	id = "lawyerprivacy";
+	name = "Lawyer's Privacy Control";
+	pixel_x = 38;
+	pixel_y = 25
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "cdk" = (
@@ -65288,6 +65271,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "csL" = (
@@ -65311,21 +65297,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/departments/court{
+	pixel_y = -32
 	},
-/turf/open/floor/plasteel/dark,
-/area/security/courtroom)
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "csN" = (
 /obj/machinery/door/airlock{
 	name = "Jury";
@@ -73215,12 +73195,12 @@
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHt" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/ai{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHu" = (
@@ -89826,9 +89806,6 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dnf" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -89836,6 +89813,9 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/mechpad{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dng" = (
@@ -90854,9 +90834,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dpd" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/machinery/mechpad,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dpe" = (
@@ -112633,6 +112613,19 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
+"joU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/departments/lawyer{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "jpo" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -112718,7 +112711,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
 "jwH" = (
-/mob/living/simple_animal/mouse/brown,
+/mob/living/simple_animal/mouse/brown/tom,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "jAK" = (
@@ -113859,6 +113852,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/security/prison)
+"mPK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/sign/departments/court{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "mPU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment{
@@ -114776,6 +114784,15 @@
 	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
+"pbL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/departments/court{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "pff" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -116368,6 +116385,17 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison/safe)
+"uap" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "ubH" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/paper/guides/jobs/hydroponics,
@@ -161203,7 +161231,7 @@ bvL
 bwY
 bvL
 bvL
-bvL
+uap
 bvL
 cle
 cmP
@@ -161717,7 +161745,7 @@ bvH
 ccT
 bvH
 bvH
-cik
+pbL
 cjR
 clf
 cmQ
@@ -163254,7 +163282,7 @@ bRc
 bMQ
 bUT
 bXn
-bZs
+csM
 cbk
 ccY
 ceO
@@ -163266,9 +163294,9 @@ ceO
 ceO
 ceO
 crj
-csM
+cjT
 cbk
-cvM
+mPK
 cxa
 bsE
 cAm
@@ -165567,7 +165595,7 @@ bRk
 bSZ
 bVd
 bXn
-bZs
+joU
 cbp
 cdg
 ceW

@@ -4,17 +4,11 @@
 
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
-	var/wet
 
 	var/footstep = null
 	var/barefootstep = null
 	var/clawfootstep = null
 	var/heavyfootstep = null
-
-/turf/open/ComponentInitialize()
-	. = ..()
-	if(wet)
-		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
 
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
@@ -62,15 +56,33 @@
 /turf/open/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
-/turf/open/indestructible/sound
-	name = "squeaky floor"
+/turf/open/indestructible/white
+	icon_state = "white"
+
+/turf/open/indestructible/light
+	icon_state = "light_on-1"
+
+/turf/open/indestructible/permalube
+	icon_state = "darkfull"
+
+/turf/open/indestructible/permalube/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wet_floor, TURF_WET_LUBE, INFINITY, 0, INFINITY, TRUE)
+
+/turf/open/indestructible/honk
+	name = "bananium floor"
+	icon_state = "bananium"
 	footstep = null
 	barefootstep = null
 	clawfootstep = null
 	heavyfootstep = null
-	var/sound
+	var/sound = 'sound/effects/clownstep1.ogg'
 
-/turf/open/indestructible/sound/Entered(atom/movable/AM)
+/turf/open/indestructible/honk/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wet_floor, TURF_WET_SUPERLUBE, INFINITY, 0, INFINITY, TRUE)
+
+/turf/open/indestructible/honk/Entered(atom/movable/AM)
 	..()
 	if(ismob(AM))
 		playsound(src,sound,50,TRUE)
@@ -110,7 +122,7 @@
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/hierophant
-	smoothing_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/hierophant/two

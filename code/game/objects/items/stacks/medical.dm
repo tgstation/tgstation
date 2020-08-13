@@ -215,7 +215,7 @@
 	desc = "A suture infused with drugs that speed up wound healing of the treated laceration."
 	heal_brute = 15
 	stop_bleeding = 0.75
-	grind_results = list(/datum/reagent/medicine/polypyr = 2)
+	grind_results = list(/datum/reagent/medicine/polypyr = 1)
 
 /obj/item/stack/medical/suture/heal(mob/living/M, mob/user)
 	. = ..()
@@ -357,12 +357,15 @@
 	name = "aloe cream"
 	desc = "A healing paste you can apply on wounds."
 
+	gender = PLURAL
+	singular_name = "aloe cream"
 	icon_state = "aloe_paste"
 	self_delay = 20
 	other_delay = 10
 	novariants = TRUE
 	amount = 20
 	max_amount = 20
+	repeating = TRUE
 	var/heal = 3
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 

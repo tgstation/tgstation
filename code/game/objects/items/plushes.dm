@@ -132,7 +132,7 @@
 						C.drunkenness = min(C.drunkenness + 20, 50)
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
-				if(current_location && current_area && current_area.noteleport)
+				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
 					to_chat(user, "<span class='notice'>There is no escape. No recall or intervention can work in this place.</span>")
 				else
 					to_chat(user, "<span class='notice'>There is no escape. Although recall or intervention can work in this place, attempting to flee from [src]'s immense power would be futile.</span>")
