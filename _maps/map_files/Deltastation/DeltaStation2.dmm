@@ -9885,6 +9885,7 @@
 "awD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -16097,9 +16098,9 @@
 	pixel_x = 24;
 	pixel_y = 24
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aIz" = (
@@ -31525,7 +31526,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "bkz" = (
-/obj/structure/bed/dogbed/cayenne,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
@@ -31542,6 +31542,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/bed/dogbed/lia,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
 "bkA" = (
@@ -32440,17 +32441,7 @@
 /area/crew_quarters/heads/hos)
 "bmu" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/carp/cayenne{
-	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as an authority figure's pet.";
-	health = 200;
-	icon_dead = "magicarp_dead";
-	icon_gib = "magicarp_gib";
-	icon_living = "magicarp";
-	icon_state = "magicarp";
-	maxHealth = 200;
-	name = "Lia";
-	random_color = 0
-	},
+/mob/living/simple_animal/hostile/carp/cayenne/lia,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
 "bmw" = (
@@ -47985,19 +47976,9 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "bNo" = (
-/obj/structure/rack,
-/obj/item/storage/box/handcuffs,
-/obj/item/storage/box/flashbangs{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/radio/intercom{
 	pixel_x = 26
 	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/flashlight/seclite,
-/obj/item/flashlight/seclite,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -48005,6 +47986,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/obj/structure/bed/dogbed/mcgriff,
 /turf/open/floor/plasteel,
 /area/security/warden)
 "bNp" = (
@@ -56022,6 +56005,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/item/storage/box/flashbangs,
+/obj/item/storage/box/handcuffs,
 /turf/open/floor/plasteel,
 /area/security/warden)
 "cbG" = (
@@ -56652,9 +56637,6 @@
 /obj/machinery/camera{
 	c_tag = "Courtroom - Fore"
 	},
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -56759,11 +56741,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/machinery/button/door{
-	id = "lawyerprivacy";
-	name = "Lawyer's Privacy Control";
-	pixel_y = 24
-	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "cdh" = (
@@ -56782,6 +56759,12 @@
 /obj/machinery/light_switch{
 	pixel_x = 26;
 	pixel_y = 26
+	},
+/obj/machinery/button/door{
+	id = "lawyerprivacy";
+	name = "Lawyer's Privacy Control";
+	pixel_x = 38;
+	pixel_y = 25
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -64271,28 +64254,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "csL" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/courtroom)
-"csM" = (
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -71902,12 +71869,12 @@
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHt" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/ai{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHu" = (
@@ -87596,9 +87563,6 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dnf" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -87606,6 +87570,9 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/mechpad{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dng" = (
@@ -88574,9 +88541,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dpd" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/machinery/mechpad,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dpe" = (
@@ -108411,6 +108378,16 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
+"ftP" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/departments/court{
+	pixel_x = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "fuE" = (
 /obj/machinery/door/airlock/security{
 	name = "Isolation Cell";
@@ -108449,6 +108426,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"fxq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/departments/lawyer{
+	pixel_y = -32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "fAI" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
@@ -109704,7 +109697,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
 "jwH" = (
-/mob/living/simple_animal/mouse/brown,
+/mob/living/simple_animal/mouse/brown/tom,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "jAK" = (
@@ -110585,6 +110578,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/morgue)
+"maH" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "mbO" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -111410,6 +111413,24 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"oxl" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/research)
 "oyx" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -113764,6 +113785,22 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"vrs" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/departments/court{
+	pixel_y = -32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "vwn" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -114670,6 +114707,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"yhz" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/sign/departments/court{
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "yiv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -150358,7 +150413,7 @@ dsd
 dEF
 dFW
 dHt
-dsd
+oxl
 bEP
 dKI
 dMf
@@ -158016,7 +158071,7 @@ qzs
 qzs
 qzs
 qzs
-qzs
+maH
 qzs
 cle
 cmP
@@ -158530,7 +158585,7 @@ cjR
 ccT
 cjR
 cjR
-cik
+ftP
 cjR
 clf
 cmQ
@@ -160067,7 +160122,7 @@ bRc
 bMQ
 bUV
 bXn
-bZu
+vrs
 cbk
 ccY
 ceO
@@ -160079,9 +160134,9 @@ ceO
 ceO
 ceO
 crj
-csM
+csL
 cbk
-cvM
+yhz
 cxa
 cyK
 cAm
@@ -162380,7 +162435,7 @@ bRk
 bSZ
 bVd
 bXn
-bZu
+fxq
 cbp
 cdg
 ceW

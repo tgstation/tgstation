@@ -1562,6 +1562,8 @@
 	pixel_x = -25
 	},
 /obj/structure/cable,
+/obj/structure/bed/dogbed/lia,
+/mob/living/simple_animal/hostile/carp/cayenne/lia,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 5
 	},
@@ -2067,16 +2069,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/rack,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/structure/bed/dogbed/mcgriff,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aeX" = (
@@ -3931,9 +3925,6 @@
 	},
 /obj/structure/closet/secure_closet/courtroom,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/warning/securearea{
-	pixel_x = -32
-	},
 /obj/item/gavelhammer,
 /turf/open/floor/plasteel,
 /area/security/courtroom)
@@ -6215,7 +6206,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/fore)
 "aog" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 8;
 	id = "pod_lavaland2";
 	name = "lavaland"
@@ -6481,7 +6472,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer3,
-/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aoM" = (
@@ -7051,6 +7041,13 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aqp" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/fire/firefighter,
+/obj/item/tank/internals/oxygen,
+/obj/item/clothing/mask/gas,
+/obj/item/extinguisher,
+/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/glasses/meson,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -7060,19 +7057,13 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aqq" = (
+/obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 9
 	},
-/obj/structure/rack,
-/obj/item/tank/internals/oxygen,
-/obj/item/extinguisher,
-/obj/item/clothing/glasses/meson,
-/obj/item/clothing/suit/fire/firefighter,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/head/hardhat/red,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aqr" = (
@@ -7696,9 +7687,6 @@
 "arT" = (
 /obj/structure/rack,
 /obj/item/storage/briefcase,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "arU" = (
@@ -10366,12 +10354,10 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/item/radio/off,
-/obj/item/assembly/timer,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "ayw" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 4;
 	id = "pod_lavaland3";
 	name = "lavaland"
@@ -10520,7 +10506,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/item/clothing/head/welding,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "ayN" = (
@@ -11514,10 +11499,11 @@
 /area/maintenance/port/fore)
 "aAW" = (
 /obj/structure/rack,
-/obj/item/tank/jetpack/carbondioxide,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/radio/off,
+/obj/item/assembly/timer,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aAX" = (
@@ -11613,9 +11599,13 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/tank/jetpack/carbondioxide,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/item/clothing/head/welding,
+/obj/item/clothing/head/welding{
+	pixel_x = -3;
+	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
@@ -11946,10 +11936,6 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aCb" = (
-/obj/item/pen{
-	desc = "Writes upside down!";
-	name = "astronaut pen"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
@@ -18069,6 +18055,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aQj" = (
+/obj/machinery/mechpad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 5
 	},
@@ -22508,7 +22495,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "baC" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 8;
 	id = "pod_lavaland1";
 	name = "lavaland"
@@ -24570,6 +24557,13 @@
 /area/crew_quarters/heads/captain)
 "bfz" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/disposal/incinerator";
+	dir = 1;
+	name = "Incinerator APC";
+	pixel_y = 23
+	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 1
 	},
@@ -24627,6 +24621,7 @@
 /area/medical/medbay/lobby)
 "bfI" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
 	},
@@ -24937,6 +24932,7 @@
 /area/science/test_area)
 "bgy" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	name = "output gas connector port"
 	},
@@ -30383,6 +30379,9 @@
 	dir = 1;
 	network = list("ss13","rd")
 	},
+/obj/machinery/computer/mechpad{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bsT" = (
@@ -31640,7 +31639,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "bvM" = (
-/obj/docking_port/stationary/random{
+/obj/docking_port/stationary/random/icemoon{
 	dir = 4;
 	id = "pod_lavaland4";
 	name = "lavaland"
@@ -32244,6 +32243,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bxt" = (
@@ -32295,6 +32295,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
 	name = "Mix to Incinerator"
@@ -32321,6 +32322,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bxE" = (
@@ -32864,7 +32866,6 @@
 /area/hallway/primary/central)
 "byO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 9
 	},
@@ -33313,6 +33314,7 @@
 	dir = 4;
 	pixel_x = 27
 	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 10
 	},
@@ -35193,7 +35195,6 @@
 	dir = 1;
 	id = "incineratorturbine"
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEz" = (
@@ -35216,7 +35217,6 @@
 "bEB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/meter,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 6
 	},
@@ -35257,7 +35257,6 @@
 	dir = 1;
 	pixel_y = -30
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -35293,7 +35292,6 @@
 	pixel_x = 6;
 	pixel_y = -24
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -40942,7 +40940,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVX" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVY" = (
@@ -44167,7 +44165,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "cic" = (
@@ -47969,10 +47967,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cAL" = (
-/mob/living/simple_animal/hostile/lizard{
-	name = "Wags-His-Tail";
-	real_name = "Wags-His-Tail"
-	},
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel,
@@ -51049,6 +51044,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
+"gnC" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/sign/departments/lawyer{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "gnX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -52128,6 +52132,9 @@
 "kdH" = (
 /obj/machinery/computer/warrant{
 	dir = 8
+	},
+/obj/structure/sign/departments/court{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
@@ -54622,6 +54629,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
+"rwE" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/wood,
+/area/lawoffice)
 "ryM" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -54678,6 +54692,9 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/structure/sign/departments/court{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -82862,7 +82879,7 @@ ahr
 aih
 aiX
 anT
-aov
+gnC
 aph
 arT
 ata
@@ -83381,7 +83398,7 @@ ard
 gpE
 arX
 asl
-ata
+rwE
 dtc
 aph
 axt
