@@ -160,6 +160,8 @@
 	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
+	///Check if the anomaly is spawned from the "ZK_event" event.
+	var/is_from_zk_event = FALSE
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -183,7 +185,9 @@
 		M.electrocute_act(shockdamage, name, flags = SHOCK_NOGLOVES)
 
 /obj/effect/anomaly/flux/detonate()
-	if(explosive)
+	if(is_from_zk_event)
+		explosion(src, 0, 2, 8, 9)
+	else if(explosive)
 		explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
 	else
 		new /obj/effect/particle_effect/sparks(loc)

@@ -1180,6 +1180,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				targets_hit = targets_hit.Copy() //Pass by ref begone
 			supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit)
 
+/obj/machinery/power/supermatter_crystal/proc/destabilize(portal_numbers)
+	var/turf/T = get_turf(src)
+	if(T)
+		qdel(src)
+		new/obj/machinery/destabilized_crystal(T)
+		explosion(T,0,round(portal_numbers/5),round(portal_numbers),1,1,1)
+
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "psy"
