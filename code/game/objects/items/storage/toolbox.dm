@@ -42,11 +42,10 @@
 	return (BRUTELOSS)
 
 /obj/item/storage/toolbox/attack(mob/M, mob/user)
+	..()
 	if(user.zone_selected == BODY_ZONE_HEAD)
 		if(prob(1))
 			playsound(loc, 'sound/items/bonk.ogg')
-		else
-			return
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
