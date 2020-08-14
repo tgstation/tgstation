@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Request console announcements no longer double encode. This means, for example, you can use apostrophes."

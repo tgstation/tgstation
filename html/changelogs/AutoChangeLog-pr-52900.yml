@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a runtime associated with the new ARD."
