@@ -281,3 +281,5 @@ effective or pretty fucking useless.
 		playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
 		new /obj/machinery/porta_turret/syndicate/pod/toolbox(get_turf(src.loc))
 		qdel(src)
+		
+	..()
