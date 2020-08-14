@@ -127,7 +127,6 @@
 /area/holodeck/rec_center/winterwonderland)
 "ax" = (
 /obj/effect/holodeck_effect/mobspawner/penguin,
-/obj/effect/holodeck_effect/mobspawner/penguin,
 /obj/item/toy/snowball{
 	pixel_y = 6
 	},
@@ -144,17 +143,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/bunker)
-"az" = (
-/obj/structure/table/wood,
-/obj/item/storage/box/matches{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "aA" = (
 /obj/structure/chair/wood,
 /turf/open/floor/holofloor{
@@ -394,6 +382,12 @@
 /obj/structure/flora/ausbushes/genericbush,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
+"bo" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/firingrange)
 "bp" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1
@@ -1127,11 +1121,8 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
 "dB" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
+/obj/effect/turf_decal/tile/red{
+	dir = 4
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
@@ -1247,6 +1238,17 @@
 	},
 /turf/open/floor/holofloor/hyperspace,
 /area/holodeck/rec_center/kobayashi)
+"dS" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/holodeck/rec_center/medical)
 "dT" = (
 /turf/open/floor/holofloor{
 	dir = 4;
@@ -1295,15 +1297,6 @@
 /obj/structure/target_stake,
 /obj/machinery/magnetic_module,
 /turf/open/floor/holofloor{
-	icon_state = "white"
-	},
-/area/holodeck/rec_center/firingrange)
-"ec" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/holofloor{
-	dir = 4;
 	icon_state = "white"
 	},
 /area/holodeck/rec_center/firingrange)
@@ -1388,15 +1381,6 @@
 	icon_state = "white"
 	},
 /area/holodeck/rec_center/firingrange)
-"et" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/holofloor{
-	dir = 6;
-	icon_state = "white"
-	},
-/area/holodeck/rec_center/firingrange)
 "eu" = (
 /obj/item/weldingtool,
 /turf/open/floor/holofloor/plating,
@@ -1471,16 +1455,6 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
 "eF" = (
-/turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
-"eG" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
 "eH" = (
@@ -1739,11 +1713,11 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/kobayashi)
 "fp" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
@@ -10517,6 +10491,16 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+"yg" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "wood"
+	},
+/area/holodeck/rec_center/lounge)
 "yj" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -11705,9 +11689,16 @@
 /area/holodeck/rec_center/lounge)
 "Bm" = (
 /obj/structure/table,
-/obj/item/radio/intercom,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
+"Bn" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "wood"
+	},
+/area/holodeck/rec_center/lounge)
 "Bo" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -11724,13 +11715,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
-"Bp" = (
-/obj/structure/table/glass,
-/obj/item/storage/box/beakers,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
-/area/holodeck/rec_center/medical)
 "Bs" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/bookmanagement,
@@ -12184,12 +12168,6 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
-"Cn" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
-/area/holodeck/rec_center/firingrange)
 "Co" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -14201,6 +14179,15 @@
 	},
 /turf/open/lava/airless,
 /area/wizard_station)
+"GB" = (
+/obj/structure/window{
+	dir = 1
+	},
+/obj/machinery/washing_machine,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/holodeck/rec_center/medical)
 "GC" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
@@ -16954,15 +16941,6 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
-"MN" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/spawner/structure/window,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
-/area/holodeck/rec_center/firingrange)
 "MP" = (
 /turf/open/floor/plasteel,
 /area/holodeck/rec_center/basketball)
@@ -16982,17 +16960,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/holodeck/rec_center/basketball)
-"MX" = (
-/obj/structure/noticeboard{
-	pixel_y = 28
-	},
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "Nd" = (
 /turf/closed/indestructible/wood,
 /area/centcom/holding)
@@ -17078,6 +17045,14 @@
 	icon_state = "white"
 	},
 /area/holodeck/rec_center/spacechess)
+"Nt" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/holodeck/rec_center/firingrange)
 "Nv" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/cafeteria,
@@ -17172,16 +17147,6 @@
 	},
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/spacechess)
-"NS" = (
-/obj/structure/closet/crate/wooden,
-/obj/item/storage/pill_bottle/dice,
-/obj/item/storage/pill_bottle/dice,
-/obj/item/storage/fancy/candle_box,
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "NT" = (
 /obj/structure/window/paperframe{
 	CanAtmosPass = 0
@@ -17273,10 +17238,6 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
-"OI" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
 "OP" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -17420,10 +17381,10 @@
 	},
 /area/holodeck/rec_center/spacecheckers)
 "PG" = (
-/obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
-	dir = 4
+	dir = 8
 	},
+/obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
 "PI" = (
@@ -17465,6 +17426,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
+"PP" = (
+/obj/structure/window{
+	dir = 1
+	},
+/obj/structure/closet/wardrobe/white,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/holodeck/rec_center/medical)
 "PQ" = (
 /obj/structure/chair/wood/wings{
 	dir = 4
@@ -17554,12 +17524,6 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
-"Qx" = (
-/obj/machinery/washing_machine,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
-/area/holodeck/rec_center/medical)
 "Qy" = (
 /obj/structure/table/glass,
 /obj/item/surgical_drapes,
@@ -17617,13 +17581,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
-"QK" = (
-/obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
-/area/holodeck/rec_center/medical)
 "QL" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -17817,10 +17774,15 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"RX" = (
+/obj/structure/table/wood,
+/obj/item/instrument/piano_synth/headphones,
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/lounge)
 "Sb" = (
 /obj/vehicle/ridden/scooter/skateboard/pro/holodeck{
-	icon_state = "skateboard2";
-	dir = 8
+	dir = 8;
+	icon_state = "skateboard2"
 	},
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/skatepark)
@@ -17852,6 +17814,15 @@
 /obj/item/camera,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
+"St" = (
+/obj/structure/table/wood,
+/obj/item/scythe,
+/obj/item/spear,
+/obj/item/melee/chainofcommand{
+	name = "chain whip"
+	},
+/turf/open/floor/holofloor/asteroid,
+/area/holodeck/rec_center/thunderdome1218)
 "Su" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
@@ -17945,13 +17916,6 @@
 /obj/item/mop,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
-"SQ" = (
-/obj/structure/table/glass,
-/obj/item/healthanalyzer,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
-/area/holodeck/rec_center/medical)
 "SS" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -18008,6 +17972,13 @@
 	dir = 4
 	},
 /obj/item/surgicaldrill,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/holodeck/rec_center/medical)
+"Tg" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -18190,6 +18161,7 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
+/obj/item/healthanalyzer,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -18423,8 +18395,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/four)
+"Wx" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/firingrange)
 "Wz" = (
-/obj/structure/closet/wardrobe/white,
+/obj/structure/bed/roller,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -18478,6 +18460,11 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"WZ" = (
+/obj/structure/table/wood,
+/obj/item/spear,
+/turf/open/floor/holofloor/asteroid,
+/area/holodeck/rec_center/thunderdome1218)
 "Xd" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -18661,6 +18648,15 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Ys" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/firingrange)
 "Yt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -18685,6 +18681,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+"YC" = (
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/holodeck/rec_center/basketball)
 "YJ" = (
 /obj/item/reagent_containers/food/condiment/enzyme,
 /obj/item/reagent_containers/food/drinks/shaker,
@@ -18769,8 +18769,7 @@
 /area/holodeck/rec_center/basketball)
 "Zn" = (
 /obj/structure/table/wood,
-/obj/item/stack/pipe_cleaner_coil,
-/obj/item/stack/pipe_cleaner_coil,
+/obj/item/storage/crayons,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
 "Zq" = (
@@ -63884,7 +63883,7 @@ aa
 "}
 (176,1,1) = {"
 bj
-aA
+al
 an
 an
 an
@@ -64141,7 +64140,7 @@ aa
 "}
 (177,1,1) = {"
 bj
-al
+ao
 an
 an
 an
@@ -64398,12 +64397,12 @@ aa
 "}
 (178,1,1) = {"
 bj
-az
 an
 aI
 aI
 an
 an
+yg
 RE
 Sl
 TF
@@ -64655,13 +64654,13 @@ aa
 "}
 (179,1,1) = {"
 bj
-am
 aA
 PC
 Bk
 aN
 aQ
 yS
+RX
 QZ
 aZ
 bd
@@ -64912,13 +64911,13 @@ aa
 "}
 (180,1,1) = {"
 bj
-MX
 aA
 PC
 PC
 aN
 an
 aU
+aZ
 aZ
 aZ
 CU
@@ -65169,13 +65168,13 @@ aa
 "}
 (181,1,1) = {"
 bj
-NS
 aA
 aK
 aJ
 aN
 an
 aV
+aZ
 aZ
 aZ
 be
@@ -65426,13 +65425,13 @@ aa
 "}
 (182,1,1) = {"
 bj
-ao
 an
 aL
 aL
 an
 aQ
 wi
+aZ
 aZ
 aZ
 be
@@ -65683,13 +65682,13 @@ aa
 "}
 (183,1,1) = {"
 bj
-aA
-an
+am
 an
 an
 an
 aQ
 aT
+aZ
 aZ
 aZ
 be
@@ -65940,13 +65939,13 @@ aa
 "}
 (184,1,1) = {"
 bj
-an
-an
+Bn
 an
 an
 an
 aQ
 aY
+aZ
 bb
 bb
 bf
@@ -69030,21 +69029,21 @@ bH
 bH
 bH
 bH
-QK
+bH
 cO
 bH
 cZ
 bj
-eF
-eF
-eF
-eF
-eF
-eF
-eF
-eF
-eF
-eF
+Ys
+Ys
+Ys
+Ys
+Ys
+Ys
+Ys
+Ys
+Ys
+Zh
 bj
 dt
 dt
@@ -69287,20 +69286,20 @@ bU
 cd
 bH
 bH
-SQ
+bH
 cO
 bH
 cZ
 bj
-dC
-ea
-er
-eE
-eE
-eE
-eE
-fg
-PG
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
 PG
 bj
 dt
@@ -69544,21 +69543,21 @@ bV
 FA
 bH
 bH
-Qx
+bH
 cO
 bH
 cZ
 bj
-dD
-eb
-es
-eF
-eF
-eF
-eF
-fh
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
 dB
-Zh
+fu
 bj
 dt
 dR
@@ -69806,16 +69805,16 @@ cO
 bH
 cZ
 bj
-dD
-es
-es
-RJ
-RJ
-RJ
-RJ
-fi
+dC
+ea
+er
+eE
+eE
+eE
+eE
+fg
 fp
-fu
+fw
 bj
 du
 dO
@@ -70063,16 +70062,16 @@ cQ
 cX
 db
 bj
-MN
-Cn
-Cn
-OI
-OI
-OI
-OI
-OI
+dD
+eb
+es
+eF
+eF
+eF
+eF
+fh
 fp
-fv
+fw
 bj
 du
 dP
@@ -70312,7 +70311,7 @@ bj
 Yi
 TW
 Td
-cd
+GB
 bH
 bH
 bH
@@ -70320,14 +70319,14 @@ bH
 bH
 dc
 bj
-dD
-es
-es
-WO
-WO
-WO
-WO
-fg
+dE
+Nt
+Nt
+Wx
+Wx
+Wx
+Wx
+fi
 fp
 fw
 bj
@@ -70566,10 +70565,10 @@ aa
 "}
 (202,1,1) = {"
 bj
-Pc
+dS
+Tg
 PB
-PB
-cd
+PP
 bH
 bH
 bH
@@ -70577,16 +70576,16 @@ bH
 bH
 dd
 bj
-dD
-eb
-es
-eF
-eF
-eF
-eF
-fh
-dF
-xE
+WO
+WO
+WO
+WO
+WO
+WO
+WO
+WO
+bo
+fv
 bj
 dt
 dR
@@ -70834,16 +70833,16 @@ bH
 bH
 dc
 bj
-dE
-ec
-et
-eG
-eG
-eG
-eG
-fi
-dB
-dB
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+eF
+PG
 bj
 dt
 dt
@@ -71080,7 +71079,7 @@ aa
 "}
 (204,1,1) = {"
 bj
-Bp
+Pc
 cf
 PB
 cd
@@ -71091,16 +71090,16 @@ bH
 bH
 dd
 bj
-eF
-eF
-eF
-eF
-eF
-eF
-eF
-eF
-eF
-eF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+xE
 bj
 dt
 dt
@@ -76242,7 +76241,7 @@ ar
 ar
 ar
 bj
-MP
+YC
 MU
 MU
 MU
@@ -76251,7 +76250,7 @@ MP
 MU
 MU
 MU
-MP
+YC
 bj
 fz
 fH
@@ -78564,7 +78563,7 @@ aw
 af
 af
 af
-QE
+af
 bj
 ab
 fD
@@ -79306,7 +79305,7 @@ aa
 bj
 Fk
 eg
-ey
+WZ
 eH
 eH
 eH
@@ -79563,7 +79562,7 @@ aa
 bj
 dL
 eg
-ez
+St
 eH
 eH
 eH

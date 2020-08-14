@@ -4746,12 +4746,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"ajY" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "ajZ" = (
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
@@ -5452,7 +5446,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Holodeck";
+	c_tag = "Holodeck Control";
 	dir = 1
 	},
 /obj/item/radio/intercom{
@@ -75460,6 +75454,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"qFS" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck";
+	dir = 1
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "qGP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/blue{
@@ -119447,7 +119450,7 @@ afD
 afD
 afD
 afD
-afD
+qFS
 aqo
 arI
 atd
@@ -121242,7 +121245,7 @@ aaa
 acP
 aie
 aja
-ajY
+ahg
 alp
 dtE
 dnS
