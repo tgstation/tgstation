@@ -387,7 +387,7 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		if(in_range(src, user))
+		if(!issilicon(user) && in_range(src, user))
 			user.put_in_hands(beaker)
 		else // if they are not beside the machine
 			beaker.forceMove(drop_location())
