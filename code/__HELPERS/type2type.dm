@@ -385,6 +385,12 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		else
 			return "#FFFFFF"
 
+/// Converts "#RRGGBB" to list(0xRR, 0xGG, 0xBB)
+/proc/hex2rgb(color)
+	var/r = hex2num(copytext(color, 2, 4))
+	var/g = hex2num(copytext(color, 4, 6))
+	var/b = hex2num(copytext(color, 6, 8))
+	return list(r, g, b)
 
 //This is a weird one:
 //It returns a list of all var names found in the string
@@ -426,10 +432,8 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 /proc/color_hex2num(A)
 	if(!A || length(A) != length_char(A))
 		return 0
-	var/R = hex2num(copytext(A, 2, 4))
-	var/G = hex2num(copytext(A, 4, 6))
-	var/B = hex2num(copytext(A, 6, 8))
-	return R+G+B
+	var/rgb = hex2rgb(A)
+	return rgb[1] + rgb[2] + rgb[3]
 
 //word of warning: using a matrix like this as a color value will simplify it back to a string after being set
 /proc/color_hex2color_matrix(string)
