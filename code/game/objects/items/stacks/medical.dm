@@ -1,7 +1,7 @@
 /obj/item/stack/medical
 	name = "medical pack"
 	singular_name = "medical pack"
-	icon = 'icons/obj/stack_objects.dmi'
+	icon = 'icons/obj/stack_medical.dmi'
 	amount = 6
 	max_amount = 6
 	w_class = WEIGHT_CLASS_TINY
@@ -58,17 +58,19 @@
 	var/obj/item/bodypart/affecting = C.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting) //Missing limb?
 		to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
-		return
+		return 0
 	if(affecting.status != BODYPART_ORGANIC) //Limb must be organic to be healed - RR
 		to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
-		return
+		return 0
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
 		user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
-		if(affecting.heal_damage(brute, burn))
+		var/amount_healed = affecting.heal_damage(brute, burn)
+		if(amount_healed)
 			C.update_damage_overlays()
-		return TRUE
+			return amount_healed
+		return 1
 	to_chat(user, "<span class='warning'>[C]'s [affecting.name] can not be healed with \the [src]!</span>")
-
+	return 0
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
@@ -443,3 +445,22 @@
 	custom_materials = null
 	is_cyborg = 1
 	cost = 250
+
+/obj/item/stack/medical/poultice
+	name = "mourning poultices"
+	singular_name = "mourning poultice"
+	desc = "A type of primitive herbal poultice. While traditionally used to prepare corpses for the mourning feast, it can also treat scrapes and burns on the living, however, it is liable to cause shortness of breath when employed in this manner.\nIt is imbued with ancient wisdom."
+	icon_state = "poultice"
+	amount = 15
+	max_amount = 15
+	self_delay = 40
+	other_delay = 10
+	repeating = TRUE
+
+/obj/item/stack/medical/poultice/heal(mob/living/M, mob/user)
+	. = .. ()
+	if(iscarbon(M))
+		return heal_carbon(M, user, heal_brute, heal_burn)
+
+/obj/item/stack/medical/poultice/heal_carbon(mob/living/carbon/C, mob/user, brute, burn)
+	C.adjustOxyLoss(..())
