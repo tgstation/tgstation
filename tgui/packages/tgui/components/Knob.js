@@ -37,7 +37,7 @@ export const Knob = props => {
     fillValue,
     color,
     ranges = {},
-    size,
+    size = 1,
     bipolar,
     children,
     ...rest
@@ -91,7 +91,7 @@ export const Knob = props => {
             ])}
             {...computeBoxProps({
               style: {
-                'font-size': size + 'rem',
+                'font-size': size + 'em',
                 ...style,
               },
               ...rest,

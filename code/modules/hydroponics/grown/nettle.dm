@@ -46,7 +46,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
-	attack_verb = list("stung")
+	attack_verb_continuous = list("stings")
+	attack_verb_simple = list("sting")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

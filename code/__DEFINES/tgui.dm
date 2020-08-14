@@ -26,3 +26,10 @@
 #define TGUI_WINDOW_ID(index) "tgui-window-[index]"
 /// Get a pool index of the provided window id
 #define TGUI_WINDOW_INDEX(window_id) text2num(copytext(window_id, 13))
+
+/// Creates a message packet for sending via output()
+#define TGUI_CREATE_MESSAGE(type, payload) ( \
+	url_encode(json_encode(list( \
+		"type" = type, \
+		"payload" = payload, \
+	))))

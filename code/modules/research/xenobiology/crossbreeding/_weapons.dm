@@ -33,19 +33,24 @@ Slimecrossing Weapons
 	switch(damtype)
 		if(BRUTE)
 			hitsound = 'sound/weapons/bladeslice.ogg'
-			attack_verb = list("slashed","sliced","cut")
+			attack_verb_continuous = list("slashes", "slices", "cuts")
+			attack_verb_simple = list("slash", "slice", "cut")
 		if(BURN)
 			hitsound = 'sound/weapons/sear.ogg'
-			attack_verb = list("burned","singed","heated")
+			attack_verb_continuous = list("burns", "sings", "heats")
+			attack_verb_simple = list("burn", "sing", "heat")
 		if(TOX)
 			hitsound = 'sound/weapons/pierce.ogg'
-			attack_verb = list("poisoned","dosed","toxified")
+			attack_verb_continuous = list("poisons", "doses", "toxifies")
+			attack_verb_simple = list("poison", "dose", "toxify")
 		if(OXY)
 			hitsound = 'sound/effects/space_wind.ogg'
-			attack_verb = list("suffocated","winded","vacuumed")
+			attack_verb_continuous = list("suffocates", "winds", "vacuums")
+			attack_verb_simple = list("suffocate", "wind", "vacuum")
 		if(CLONE)
 			hitsound = 'sound/items/geiger/ext1.ogg'
-			attack_verb = list("irradiated","mutated","maligned")
+			attack_verb_continuous = list("irradiates", "mutates", "maligns")
+			attack_verb_simple = list("irradiate", "mutate", "malign")
 	return ..()
 
 //Adamantine shield - Chilling Adamantine
@@ -62,7 +67,8 @@ Slimecrossing Weapons
 	force = 0
 	throw_range = 1 //How far do you think you're gonna throw a solid crystalline shield...?
 	throw_speed = 2
-	attack_verb = list("bashed","pounded","slammed")
+	attack_verb_continuous = list("bashes", "pounds", "slams")
+	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/shield/adamantineshield/ComponentInitialize()

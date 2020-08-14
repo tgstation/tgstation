@@ -5,18 +5,28 @@ GLOBAL_VAR(restart_counter)
 /**
   * World creation
   *
-  * Here is where a round itself is actually begun and setup, lots of important config changes happen here
+  * Here is where a round itself is actually begun and setup.
   * * db connection setup
   * * config loaded from files
   * * loads admins
   * * Sets up the dynamic menu system
   * * and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up
   *
-  * Note this happens after the Master subsystem is created (as that is a global datum), this means all the subsystems exist,
-  * but they have not been Initialized at this point, only their New proc has run
   *
   * Nothing happens until something moves. ~Albert Einstein
   *
+  * For clarity, this proc gets triggered later in the initialization pipeline, it is not the first thing to happen, as it might seem.
+  *
+  * Initialization Pipeline:
+  *		Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
+  *		Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
+  *		world/New() (You are here)
+  *		Once world/New() returns, client's can connect.
+  *		1 second sleep
+  *		Master Controller initialization.
+  *		Subsystem initialization.
+  *			Non-compiled-in maps are maploaded, all atoms are new()ed
+  *			All atoms in both compiled and uncompiled maps are initialized()
   */
 /world/New()
 	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
@@ -25,11 +35,6 @@ GLOBAL_VAR(restart_counter)
 	enable_debugger()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
-#endif
-
-	//Early profile for auto-profiler - will be stopped on profiler init if necessary.
-#if DM_BUILD >= 1506
-	world.Profile(PROFILE_START)
 #endif
 
 	log_world("World loaded at [time_stamp()]!")
