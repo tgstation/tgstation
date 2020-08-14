@@ -198,6 +198,10 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/power/port_gen/pacman/super
 
+/obj/item/circuitboard/machine/pacman/mrs
+	name = "MRSPACMAN-type Generator (Machine Board)"
+	build_path = /obj/machinery/power/port_gen/pacman/mrs
+
 /obj/item/circuitboard/machine/power_compressor
 	name = "Power Compressor (Machine Board)"
 	icon_state = "engineering"
