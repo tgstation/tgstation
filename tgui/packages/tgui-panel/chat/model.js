@@ -15,7 +15,6 @@ export const createPage = obj => ({
   id: createUuid(),
   name: 'New Tab',
   acceptedTypes: {},
-  count: 0,
   unreadCount: 0,
   createdAt: Date.now(),
   ...obj,
