@@ -1094,6 +1094,14 @@
 	crate_name = "high-capacity water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/materials/hightankfuel
+	name = "Large Fuel Tank Crate"
+	desc = "Contains a high-capacity fuel tank. Keep contents away from open flame."
+	cost = 2000
+	contains = list(/obj/structure/reagent_dispensers/fueltank/large)
+	crate_name = "high-capacity fuel tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/materials/nitrogen
 	name = "Nitrogen Canister"
 	desc = "Contains a canister of Nitrogen."

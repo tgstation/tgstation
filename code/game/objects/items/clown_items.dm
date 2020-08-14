@@ -173,7 +173,8 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
-	attack_verb = list("HONKED")
+	attack_verb_continuous = list("HONKS")
+	attack_verb_simple = list("HONK")
 
 /obj/item/bikehorn/Initialize()
 	. = ..()

@@ -1027,6 +1027,7 @@
 			return FALSE
 		use_power(50)
 		playsound(src, doorOpen, 30, TRUE)
+
 		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
 			closeOther.close()
 	else
@@ -1037,6 +1038,7 @@
 
 	if(!density)
 		return TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_OPENING, 1)
 	sleep(1)
@@ -1069,19 +1071,19 @@
 			if(M.density && M != src) //something is blocking the door
 				autoclose_in(DOOR_CLOSE_WAIT)
 				return
-
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
 			return
 		use_power(50)
 		playsound(src, doorClose, 30, TRUE)
+
 	else
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
 		SSexplosions.medobj += killthis
-
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER

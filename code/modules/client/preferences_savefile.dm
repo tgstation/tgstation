@@ -172,7 +172,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	windowflashing	= sanitize_integer(windowflashing, FALSE, TRUE, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, (2**24)-1, initial(toggles))
-	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
+	clientfps		= sanitize_integer(clientfps, -1, 1000, 0)
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	ambientocclusion	= sanitize_integer(ambientocclusion, FALSE, TRUE, initial(ambientocclusion))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, FALSE, TRUE, initial(auto_fit_viewport))
@@ -291,7 +291,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
-	scars_index = rand(1,5)
 
 	//Character
 	READ_FILE(S["real_name"], real_name)
@@ -326,11 +325,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["feature_moth_wings"], features["moth_wings"])
 	READ_FILE(S["feature_moth_markings"], features["moth_markings"])
 	READ_FILE(S["persistent_scars"] , persistent_scars)
-	READ_FILE(S["scars1"], scars_list["1"])
-	READ_FILE(S["scars2"], scars_list["2"])
-	READ_FILE(S["scars3"], scars_list["3"])
-	READ_FILE(S["scars4"], scars_list["4"])
-	READ_FILE(S["scars5"], scars_list["5"])
 	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -422,11 +416,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["moth_markings"] 	= sanitize_inlist(features["moth_markings"], GLOB.moth_markings_list, "None")
 
 	persistent_scars = sanitize_integer(persistent_scars)
-	scars_list["1"] = sanitize_text(scars_list["1"])
-	scars_list["2"] = sanitize_text(scars_list["2"])
-	scars_list["3"] = sanitize_text(scars_list["3"])
-	scars_list["4"] = sanitize_text(scars_list["4"])
-	scars_list["5"] = sanitize_text(scars_list["5"])
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -484,12 +473,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_moth_wings"]			, features["moth_wings"])
 	WRITE_FILE(S["feature_moth_markings"]		, features["moth_markings"])
 	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
-	WRITE_FILE(S["scars1"]						, scars_list["1"])
-	WRITE_FILE(S["scars2"]						, scars_list["2"])
-	WRITE_FILE(S["scars3"]						, scars_list["3"])
-	WRITE_FILE(S["scars4"]						, scars_list["4"])
-	WRITE_FILE(S["scars5"]						, scars_list["5"])
-
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

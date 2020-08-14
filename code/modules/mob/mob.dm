@@ -1075,7 +1075,11 @@
 
 ///Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
-	return isAdminGhostAI(src) || Adjacent(A)
+	if(isAdminGhostAI(src) || Adjacent(A))
+		return TRUE
+	var/datum/dna/mob_dna = has_dna()
+	if(mob_dna?.check_mutation(TK) && tkMaxRangeCheck(src, A))
+		return TRUE
 
 ///Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
