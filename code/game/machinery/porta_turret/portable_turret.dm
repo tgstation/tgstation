@@ -751,6 +751,9 @@
 		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
 		return TRUE
 
+/obj/machinery/porta_turret/syndicate/pod/toolbox
+	faction = list(ROLE_TRAITOR)
+
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
