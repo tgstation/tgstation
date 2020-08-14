@@ -99,7 +99,7 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/nitryl, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/freon, datum/gas/hypernoblium)
+	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/nitryl, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/freon, /datum/gas/hypernoblium)
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
