@@ -17078,16 +17078,6 @@
 	icon_state = "white"
 	},
 /area/holodeck/rec_center/spacechess)
-"Nt" = (
-/obj/structure/table/wood/bar,
-/obj/machinery/chem_dispenser/drinks{
-	dir = 1
-	},
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "Nv" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/cafeteria,
@@ -17257,7 +17247,7 @@
 /obj/structure/table,
 /obj/structure/table,
 /turf/open/floor/holofloor/plating,
-/area/space)
+/area/holodeck/rec_center/skatepark)
 "OA" = (
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership/control)
@@ -17827,6 +17817,13 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Sb" = (
+/obj/vehicle/ridden/scooter/skateboard/pro/holodeck{
+	icon_state = "skateboard2";
+	dir = 8
+	},
+/turf/open/floor/holofloor/plating,
+/area/holodeck/rec_center/skatepark)
 "Sd" = (
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
@@ -18026,10 +18023,10 @@
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
 "Tm" = (
-/obj/structure/table/wood/bar,
-/obj/machinery/chem_dispenser/drinks/beer{
-	dir = 1
+/obj/structure/window/reinforced{
+	dir = 4
 	},
+/obj/structure/table/wood/bar,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -18263,7 +18260,7 @@
 /area/centcom/supplypod)
 "UI" = (
 /turf/open/floor/holofloor/plating,
-/area/space)
+/area/holodeck/rec_center/skatepark)
 "UJ" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -18419,10 +18416,6 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
-"Wr" = (
-/obj/item/melee/skateboard/pro,
-/turf/open/floor/holofloor/plating,
-/area/space)
 "Wt" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -18439,7 +18432,7 @@
 "WD" = (
 /obj/structure/table,
 /turf/open/floor/holofloor/plating,
-/area/space)
+/area/holodeck/rec_center/skatepark)
 "WJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Administration";
@@ -18587,14 +18580,6 @@
 	icon_state = "white"
 	},
 /area/holodeck/rec_center/spacechess)
-"XR" = (
-/obj/structure/chair{
-	name = "Witness"
-	},
-/turf/open/floor/holofloor{
-	icon_state = "chapel"
-	},
-/area/holodeck/rec_center/chapelcourt)
 "XT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/space/basic,
@@ -63908,7 +63893,7 @@ an
 bG
 NC
 an
-Nt
+NC
 bj
 XO
 XO
@@ -64187,7 +64172,7 @@ UI
 WD
 WD
 UI
-UI
+Sb
 bj
 aa
 aa
@@ -64444,7 +64429,7 @@ UI
 UI
 WD
 UI
-Wr
+Sb
 bj
 aa
 aa
@@ -64701,7 +64686,7 @@ UI
 WD
 UI
 UI
-Wr
+Sb
 bj
 aa
 aa
@@ -64958,7 +64943,7 @@ WD
 WD
 UI
 UI
-Wr
+Sb
 bj
 aa
 aa
@@ -65215,7 +65200,7 @@ UI
 WD
 WD
 UI
-Wr
+Sb
 bj
 aa
 aa
@@ -65472,7 +65457,7 @@ WD
 WD
 WD
 UI
-UI
+Sb
 bj
 aa
 aa
@@ -66750,7 +66735,7 @@ di
 bj
 xD
 dT
-XR
+en
 eB
 eN
 eS
