@@ -314,7 +314,7 @@
 //Sign Language Tongue - yep, that's how you speak sign language.
 /obj/item/organ/tongue/tied
 	name = "tied tongue"
-	desc = "Cat's got your tounge?"
+	desc = "If only one had a sword so we may finally untie this knot."
 	say_mod = "signs"
 	icon_state = "tonguetied"
 	modifies_speech = TRUE
@@ -329,10 +329,11 @@
 	ADD_TRAIT(M, TRAIT_SIGN_LANG, "tongue")
 	REMOVE_TRAIT(M, TRAIT_MUTE, "tongue")
 
-//Here lies tied/Remove, you will be missed for your simplicity and aheal-breaking properties.
+/obj/item/organ/tongue/tied/Remove(mob/living/carbon/M, special = 0)
+	..()
+	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, "tongue") //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
 
-//Thank you Jwapplephobia for helping me with this literal hellcode
-
+//Thank you Jwapplephobia for helping me with the literal hellcode below
 /obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
