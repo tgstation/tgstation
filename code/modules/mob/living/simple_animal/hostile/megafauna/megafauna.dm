@@ -21,6 +21,7 @@
 	maxbodytemp = INFINITY
 	vision_range = 5
 	aggro_vision_range = 18
+	create_home_turf = FALSE
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING

@@ -87,7 +87,7 @@
 	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timer_id
 	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
-	var/lose_patience_timeout = 30 SEONCDS
+	var/lose_patience_timeout = 30 SECONDS
 	///Will this mob attempt to return to it's spawn turf upon losing it's target?
 	var/create_home_turf = TRUE
 	///When a hostile mob loses it's patience and gives up, it will begin pathing to this turf, typically it's spawn turf unless otherwise overridden.
