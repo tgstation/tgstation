@@ -295,7 +295,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
 				message = stars(message)
 			if(length(empty_indexes) == 0 || !mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM)) //Can't sign with no arms!
-				to_chat(src, "<span class='notice'>You can't sign with your hands full!</span.?>")
+				to_chat(src, "<span class='warning'>You can't sign with your hands full!</span.?>")
+				return FALSE
+			if(mute.handcuffed)//Can't sign when your hands are cuffed, but can at least make a visual effort to
+				mute.visible_message("<span class='warning'>[src] tries to sign, but can't with [src.p_their()] hands cuffed!</span.?>")
 				return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/_M in GLOB.player_list)

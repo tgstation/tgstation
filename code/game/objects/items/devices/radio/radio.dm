@@ -198,6 +198,8 @@
 					message = stars(message)
 				if(length(empty_indexes) == 0) //Due to the requirement of gloves, the arm check for normal speech would be redundant here.
 					return FALSE
+				if(mute.handcuffed)//Would be weird if they couldn't sign but their words still went over the radio
+					return FALSE
 	if(!spans)
 		spans = list(M.speech_span)
 	if(!language)
