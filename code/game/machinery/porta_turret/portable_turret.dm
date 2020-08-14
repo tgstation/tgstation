@@ -752,7 +752,6 @@
 		return TRUE
 
 /obj/machinery/porta_turret/syndicate/pod/toolbox
-	faction = list(ROLE_TRAITOR)
 	max_integrity = 100
 
 /obj/machinery/porta_turret/ai
