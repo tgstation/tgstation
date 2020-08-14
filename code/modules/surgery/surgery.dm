@@ -102,7 +102,11 @@
 	var/try_to_fail = FALSE
 	if(intent == INTENT_DISARM)
 		try_to_fail = TRUE
-
+	
+	if(HAS_TRAIT(user, TRAIT_DUMB))
+		try_to_fail = TRUE
+		to_chat(user, "<span class='warning'>You have absolutely no idea what you're doing!</span>")
+	
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
 		var/obj/item/tool = user.get_active_held_item()
