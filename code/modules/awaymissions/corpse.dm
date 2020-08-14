@@ -2,6 +2,9 @@
 
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
+
+//HEY! LISTEN! anything that is ALIVE and thus GHOSTS CAN TAKE is in ghost_role_spawners.dm!
+
 /obj/effect/mob_spawn
 	name = "Mob Spawner"
 	density = TRUE
@@ -252,6 +255,7 @@
 /obj/effect/mob_spawn/human/corpse/damaged
 	brute_damage = 1000
 
+//i left this here despite being a mob spawner because this is a base type
 /obj/effect/mob_spawn/human/alive
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
@@ -291,23 +295,6 @@
 	O.Die() //call the facehugger's death proc
 	qdel(src)
 
-/obj/effect/mob_spawn/mouse
-	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/mouse
-	death = FALSE
-	roundstart = FALSE
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-
-/obj/effect/mob_spawn/cow
-	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/cow
-	death = FALSE
-	roundstart = FALSE
-	mob_gender = FEMALE
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
 ///////////Civilians//////////////////////
@@ -336,30 +323,10 @@
 	outfit = /datum/outfit/job/cook
 	icon_state = "corpsecook"
 
-
 /obj/effect/mob_spawn/human/doctor
 	name = "Doctor"
 	outfit = /datum/outfit/job/doctor
 	icon_state = "corpsedoctor"
-
-
-/obj/effect/mob_spawn/human/doctor/alive
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
-	name = "sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	short_desc = "You are a space doctor!"
-	assignedrole = "Space Doctor"
-
-/obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
-	..()
-	// Remove radio and PDA so they wouldn't annoy station crew.
-	var/list/del_types = list(/obj/item/pda, /obj/item/radio/headset)
-	for(var/del_type in del_types)
-		var/obj/item/I = locate(del_type) in H
-		qdel(I)
 
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
@@ -390,11 +357,9 @@
 /obj/effect/mob_spawn/human/miner/explorer
 	outfit = /datum/outfit/job/miner/equipped
 
-
 /obj/effect/mob_spawn/human/plasmaman
 	mob_species = /datum/species/plasmaman
 	outfit = /datum/outfit/plasmaman
-
 
 /obj/effect/mob_spawn/human/bartender
 	name = "Space Bartender"
@@ -402,71 +367,8 @@
 	id_access_list = list(ACCESS_BAR)
 	outfit = /datum/outfit/spacebartender
 
-/obj/effect/mob_spawn/human/bartender/alive
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
-	name = "bartender sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	short_desc = "You are a space bartender!"
-	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
-	assignedrole = "Space Bartender"
-	id_job = "Bartender"
-
-/datum/outfit/spacebartender
-	name = "Space Bartender"
-	uniform = /obj/item/clothing/under/rank/civilian/bartender
-	back = /obj/item/storage/backpack
-	shoes = /obj/item/clothing/shoes/sneakers/black
-	suit = /obj/item/clothing/suit/armor/vest
-	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	id = /obj/item/card/id
-
-/datum/outfit/spacebartender/post_equip(mob/living/carbon/human/H, visualsOnly)
-	. = ..()
-
-	var/obj/item/card/id/W = H.wear_id
-	if(H.age < AGE_MINOR)
-		W.registered_age = AGE_MINOR
-		to_chat(H, "<span class='notice'>You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!</span>")
-
 /obj/effect/mob_spawn/human/beach
 	outfit = /datum/outfit/beachbum
-
-/obj/effect/mob_spawn/human/beach/alive
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
-	mob_name = "Beach Bum"
-	name = "beach bum sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	short_desc = "You're, like, totally a dudebro, bruh."
-	flavour_text = "Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?"
-	assignedrole = "Beach Bum"
-
-/obj/effect/mob_spawn/human/beach/alive/lifeguard
-	short_desc = "You're a spunky lifeguard!"
-	flavour_text = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
-	mob_gender = "female"
-	name = "lifeguard sleeper"
-	id_job = "Lifeguard"
-	uniform = /obj/item/clothing/under/shorts/red
-
-/datum/outfit/beachbum
-	name = "Beach Bum"
-	glasses = /obj/item/clothing/glasses/sunglasses
-	r_pocket = /obj/item/storage/wallet/random
-	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
-	uniform = /obj/item/clothing/under/pants/youngfolksjeans
-	id = /obj/item/card/id
-
-/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-	H.dna.add_mutation(STONER)
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 
@@ -484,7 +386,6 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	glasses = /obj/item/clothing/glasses/sunglasses
 	id = /obj/item/card/id
-
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
@@ -505,7 +406,6 @@
 	r_pocket = /obj/item/lighter
 	id = /obj/item/card/id
 
-
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "\improper Nanotrasen Private Security Officer"
 	id_job = "Private Security Force"
@@ -523,28 +423,8 @@
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id
 
-
-/obj/effect/mob_spawn/human/commander/alive
-	death = FALSE
-	roundstart = FALSE
-	mob_name = "\improper Nanotrasen Commander"
-	name = "sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	short_desc = "You are a Nanotrasen Commander!"
-
-/obj/effect/mob_spawn/human/nanotrasensoldier/alive
-	death = FALSE
-	roundstart = FALSE
-	mob_name = "Private Security Officer"
-	name = "sleeper"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	faction = "nanotrasenprivate"
-	short_desc = "You are a Nanotrasen Private Security Officer!"
-
-
 /////////////////Spooky Undead//////////////////////
+//there are living variants of many of these, they're now in ghost_role_spawners.dm
 
 /obj/effect/mob_spawn/human/skeleton
 	name = "skeletal remains"
@@ -552,29 +432,11 @@
 	mob_species = /datum/species/skeleton
 	mob_gender = NEUTER
 
-/obj/effect/mob_spawn/human/skeleton/alive
-	death = FALSE
-	roundstart = FALSE
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "remains"
-	short_desc = "By unknown powers, your skeletal remains have been reanimated!"
-	flavour_text = "Walk this mortal plain and terrorize all living adventurers who dare cross your path."
-	assignedrole = "Skeleton"
-
 /obj/effect/mob_spawn/human/zombie
 	name = "rotting corpse"
 	mob_name = "zombie"
 	mob_species = /datum/species/zombie
 	assignedrole = "Zombie"
-
-/obj/effect/mob_spawn/human/zombie/alive
-	death = FALSE
-	roundstart = FALSE
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "remains"
-	short_desc = "By unknown powers, your rotting remains have been resurrected!"
-	flavour_text = "Walk this mortal plain and terrorize all living adventurers who dare cross your path."
-
 
 /obj/effect/mob_spawn/human/abductor
 	name = "abductor"
@@ -586,30 +448,3 @@
 	name = "Abductor Corpse"
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/combat
-
-
-//For ghost bar.
-/obj/effect/mob_spawn/human/alive/space_bar_patron
-	name = "Bar cryogenics"
-	mob_name = "Bar patron"
-	random = TRUE
-	permanent = TRUE
-	uses = -1
-	outfit = /datum/outfit/spacebartender
-	assignedrole = "Space Bar Patron"
-
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
-	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
-	if(despawn == "No" || !loc || !Adjacent(user))
-		return
-	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
-	qdel(user)
-
-/datum/outfit/cryobartender
-	name = "Cryogenic Bartender"
-	uniform = /obj/item/clothing/under/rank/civilian/bartender
-	back = /obj/item/storage/backpack
-	shoes = /obj/item/clothing/shoes/sneakers/black
-	suit = /obj/item/clothing/suit/armor/vest
-	glasses = /obj/item/clothing/glasses/sunglasses/reagent
