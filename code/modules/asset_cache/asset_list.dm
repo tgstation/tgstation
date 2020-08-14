@@ -26,11 +26,18 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	return
 
 
-//If you don't need anything complicated.
+/// If you don't need anything complicated.
 /datum/asset/simple
 	_abstract = /datum/asset/simple
-	var/assets = list() //! list of assets for this datum in the form of asset_filename = asset_file. At runtime the asset_file will be converted into a asset_cache datum.
-	var/legacy = FALSE //! set to true to have this asset also be sent via browse_rsc when cdn asset transports are enabled.
+	/// list of assets for this datum in the form of:
+	/// asset_filename = asset_file. At runtime the asset_file will be
+	/// converted into a asset_cache datum.
+	var/assets = list()
+	/// Set to true to have this asset also be sent via the legacy browse_rsc
+	/// system when cdn transports are enabled?
+	var/legacy = FALSE
+	/// TRUE for keeping local asset names when browse_rsc backend is used
+	var/keep_local_name = FALSE
 
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
@@ -39,7 +46,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			log_asset("ERROR: Invalid asset: [type]:[asset_name]:[ACI]")
 			continue
 		if (legacy)
-			ACI.legacy = TRUE
+			ACI.legacy = legacy
+		if (keep_local_name)
+			ACI.keep_local_name = keep_local_name
 		assets[asset_name] = ACI
 
 /datum/asset/simple/send(client)
@@ -273,7 +282,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		assets |= parents
 	var/list/hashlist = list()
 	var/list/sorted_assets = sortList(assets)
-	
+
 	for (var/asset_name in sorted_assets)
 		var/datum/asset_cache_item/ACI = new(asset_name, sorted_assets[asset_name])
 		if (!ACI?.hash)
@@ -302,7 +311,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	..()
 
 /// Get a html string that will load a html asset.
-/// Needed because byond doesn't allow you to browse() to a url. 
+/// Needed because byond doesn't allow you to browse() to a url.
 /datum/asset/simple/namespaced/proc/get_htmlloader(filename)
 	return url2htmlloader(SSassets.transport.get_asset_url(filename, assets[filename]))
 
