@@ -54,7 +54,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/sec/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/effects/footstep/wood5.ogg'=1), 100, 100, 0)
+	AddComponent(/datum/component/squeak, list('sound/effects/clownstepboot.ogg'=1), 100)
 
 
 /obj/item/clothing/shoes/clown_shoes/prison
@@ -125,7 +125,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/clogs/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/effects/footstep/woodclaw1.ogg'=1,'sound/effects/footstep/woodclaw3.ogg'=1), 100)
+	AddComponent(/datum/component/squeak, list('sound/effects/clownclog.ogg'=1), 100)
 
 
 /obj/item/clothing/shoes/clown_shoes/dutch
