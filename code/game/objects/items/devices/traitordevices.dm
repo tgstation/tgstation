@@ -264,7 +264,7 @@ effective or pretty fucking useless.
 	update_icon()
 
 /obj/item/storage/toolbox/emergency/turret
-	desc = "You feel the need to hit this one with a wrench"
+	desc = "You feel a strange urge to hit this with a wrench."
 
 /obj/item/storage/toolbox/emergency/turret/PopulateContents()
 	new /obj/item/screwdriver(src)
