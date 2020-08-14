@@ -329,10 +329,7 @@
 	ADD_TRAIT(M, TRAIT_SIGN_LANG, "tongue")
 	REMOVE_TRAIT(M, TRAIT_MUTE, "tongue")
 
-/obj/item/organ/tongue/tied/Remove(mob/living/carbon/M, special = 0)
-	..()
-	ADD_TRAIT(M, TRAIT_MUTE, "tongue") //Forces the user to be mute if the tongue is removed, meaning they can't just swap tongues.
-	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, "tongue")
+//Here lies tied/Remove, you will be missed for your simplicity and aheal-breaking properties.
 
 //Thank you Jwapplephobia for helping me with this literal hellcode
 
