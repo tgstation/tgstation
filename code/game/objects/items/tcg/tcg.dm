@@ -63,10 +63,44 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	. = ..()
 	transform = matrix(0.3,0,0,0,0.3,0)
 
+/obj/item/tcg_cardhand
+	name = "\improper TGC hand"
+	desc = "A collection of TGC cards, ready to enter the battlefield."
+	icon = 'icons/obj/tcgmisc.dmi'
+	icon_state = "none"
+	var/max_hand_size = 7 //set at 7 for Long War gamemode, typical hand size is 5
+	var/list/currenthand = list()
+	var/choice = null
+
+/obj/item/tcg_deck
+	name = "\improper TGC pile"
+	desc = "A pile of TGC cards. May be a deck, may be a discard pile. The only limit is your imagination! (And the rules, naturally)."
+	icon = 'icons/obj/tcgmisc.dmi'
+	icon_state = "none"
+	var/list/card_contents = list()
+
+/obj/item/tcg_deck/attack_hand(mob/user)
+	draw_card(user)
+
+/obj/item/tcg_deck/proc/draw_card(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
+	var/choice = null
+	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
+	choice = cards[1]
+	H.cardname = choice
+	H.pickup(user)
+	user.put_in_hands(H)
+	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
+	update_icon()
+	return H
+
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
 	desc = "Contains six complete fuckups by the coders. Report this on github please!"
-	icon = DEFAULT_TCG_DMI_ICON
+	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "cardback_nt"
 	w_class = WEIGHT_CLASS_TINY
 	///The card series to look in
@@ -95,7 +129,6 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
 	desc = "Contains six cards of varying rarity from the 2560 Core Set. Collect them all!"
-	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "cardpack_series1"
 	series = "coreset2020"
 	contains_coin = 10
@@ -103,7 +136,6 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/cardpack/resin
 	name = "Trading Card Pack: Resin Frontier Booster Pack"
 	desc = "Contains six cards of varying rarity from the Resin Frontier set. Collect them all!"
-	icon = 'icons/runtime/tcg/xenos.dmi'
 	icon_state = "cardpack_resin"
 	series = "resinfront"
 	contains_coin = 0
@@ -151,9 +183,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	qdel(src)
 
 /obj/item/coin/thunderdome
-	name = "Thunderdome Flipper"
-	desc = "A Thunderdome TCG flipper, for deciding who gets to go first. Also conveniently acts as a counter, for various purposes."
-	icon = DEFAULT_TCG_DMI_ICON
+	name = "\improper TGC Flipper"
+	desc = "A TGC flipper, for deciding who gets to go first. Also conveniently acts as a counter, for various purposes."
+	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "coin_nanotrasen"
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
@@ -174,12 +206,12 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/storage/card_binder
 	name = "card binder"
 	desc = "The perfect way to keep your collection of cards safe and valuable."
-	icon = DEFAULT_TCG_DMI_ICON
+	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "binder"
 	inhand_icon_state = "album"
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
-	resistance_flags = FLAMMABLE
+	resistance_flags = FLAMMABLE //burn your enemies' collections, for only you can Collect Them All!
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
