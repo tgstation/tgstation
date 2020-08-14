@@ -112,8 +112,17 @@
 	if(covered)
 		to_chat(user, "<span class='warning'>You have to remove your [covered] before you can bite!</span>")
 		return
-
+	
+	///Are we attempting to bite them?
+	var/bities = FALSE
+	///Are we able to attempt an infection?
+	var/infect_attempt = FALSE
 	if(user.pulling == target && user.grab_state == GRAB_AGGRESSIVE)
+		bities = TRUE
+	if(!(target.mobility_flags & MOBILITY_USE))
+		bities = TRUE
+	
+	if(bities)
 		COOLDOWN_START(src, bite_cooldown, 5 SECONDS)
 		playsound(get_turf(user), 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1)
 		target.apply_damage(15, BRUTE, affecting, armor_block)
@@ -123,7 +132,10 @@
 		target.emote("scream")
 		target.Knockdown(30)
 		if(bite_block < 50 && target.stat != DEAD)
-			try_to_zombie_infect(target)
+			infect_attempt = TRUE
+	
+	if(infect_attempt)
+		try_to_zombie_infect(target)
 
 /datum/species/zombie/infectious/proc/try_to_zombie_infect(mob/living/carbon/human/target)
 	CHECK_DNA_AND_SPECIES(target)
