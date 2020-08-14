@@ -52073,6 +52073,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
+"jHY" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "jMt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -52095,6 +52103,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "jOe" = (
@@ -102795,7 +102804,7 @@ aaa
 aiT
 akn
 atn
-aur
+jHY
 aur
 aur
 aur
@@ -104345,9 +104354,9 @@ qLz
 kDQ
 fvh
 atn
-aEj
 aFf
 hUt
+aFi
 aEk
 aGP
 aEj
@@ -105376,7 +105385,7 @@ aaa
 aaa
 aEl
 aFi
-aEj
+aEl
 aaa
 aaa
 aaa

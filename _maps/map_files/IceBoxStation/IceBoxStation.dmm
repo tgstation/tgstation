@@ -4024,18 +4024,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"ajd" = (
-/obj/item/instrument/violin/golden{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "aje" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/firealarm{
@@ -52420,6 +52408,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
+"ifB" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Holodeck Control";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "iiu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57318,6 +57317,14 @@
 /obj/item/newspaper,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
+"wdq" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "wdA" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
@@ -88718,7 +88725,7 @@ agW
 ahE
 aii
 agn
-ajd
+ajc
 aja
 ahY
 vad
@@ -95668,7 +95675,7 @@ boP
 boP
 boP
 otN
-aro
+wdq
 aro
 aro
 aro
@@ -97728,7 +97735,7 @@ boP
 boP
 auB
 xII
-aua
+ifB
 aua
 xII
 arj
