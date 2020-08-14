@@ -55,7 +55,7 @@ export const settingsReducer = (state = initialState, action) => {
       view: {
         ...state.view,
         visible: true,
-        activeTab: 'chat',
+        activeTab: 'chatPage',
       },
     };
   }
