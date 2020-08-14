@@ -732,7 +732,7 @@
 
 		return
 
-	if(isobj(target))
+	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		if(actually_paints)
 			var/list/rgb = hex2rgb(paint_color)
 			var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
