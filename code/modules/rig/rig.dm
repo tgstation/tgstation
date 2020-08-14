@@ -308,6 +308,9 @@
 	flash_protect = FLASH_PROTECTION_NONE
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	resistance_flags = ACID_PROOF
+	flags_inv = HIDEFACIALHAIR
+	flags_cover = HEADCOVERSMOUTH
+	alternate_worn_layer = NECK_LAYER
 	permeability_coefficient = 0.01
 	var/obj/item/rig/control/rig
 
