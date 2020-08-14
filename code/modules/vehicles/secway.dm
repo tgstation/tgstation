@@ -64,7 +64,7 @@
 		return
 	return ..()
 
-/obj/vehicle/ridden/secway/driver_move(mob/user, direction)
+/obj/vehicle/ridden/secway/driver_move(mob/living/user, direction)
 	if(is_key(inserted_key) && eddie_murphy)
 		if(stall_cooldown + 10 < world.time)
 			visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")
