@@ -402,6 +402,7 @@ Class Procs:
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 			component_parts.Cut()
+			circuit = null
 	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
