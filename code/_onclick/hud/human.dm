@@ -29,7 +29,7 @@
 
 /obj/screen/human/equip/Click()
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 	var/mob/living/carbon/human/H = usr
 	H.quick_equip()
 

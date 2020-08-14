@@ -1,5 +1,6 @@
 //////////////////WELCOME TO MECHA.DM, ENJOY YOUR STAY\\\\\\\\\\\\\\\\\
-/** Mechs are now (finally) vehicles, this means you can make them multicrew
+/**
+  * Mechs are now (finally) vehicles, this means you can make them multicrew
   * They can also grant select ability buttons based on occupant bitflags
   *
   * Movement is handled through vehicle_move() which is called by relaymove
@@ -7,6 +8,9 @@
   * NOTE: MMIS are NOT mobs but instead contain a brain that is, so you need special checks
   * AI also has special checks becaus it gets in and out of the mech differently
   * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
+  *
+  * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+  * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
   *
   * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
   * Or are used to call action() on equipped gear
@@ -505,17 +509,12 @@
 				cookedalive.fire_stacks += 1
 				cookedalive.IgniteMob()
 
-/obj/vehicle/sealed/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())//todo make this a registersignal proc
-	. = ..()
-	if(locate(speaker) in occupants)
-		if(radio?.broadcasting)
-			radio.talk_into(speaker, text, , spans, message_language, message_mods)
-		//flick speech bubble
-		var/list/speech_bubble_recipients = list()
-		for(var/mob/M in get_hearers_in_view(7,src))
-			if(M.client)
-				speech_bubble_recipients.Add(M.client)
-		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+/obj/vehicle/sealed/mecha/proc/display_speech_bubble()
+	var/list/speech_bubble_recipients = get_hearers_in_view(7,src)
+	for(var/mob/M in speech_bubble_recipients)
+		if(M.client)
+			speech_bubble_recipients.Add(M.client)
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 ////////////////////////////
 ///// Action processing ////
@@ -833,14 +832,8 @@
 //Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/vehicle/sealed/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
 	AI.ai_restore_power()
-	AI.forceMove(src)
-	add_occupant(AI)
 	silicon_pilot = TRUE
-	icon_state = initial(icon_state)
-	update_icon()
-	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
-	if(!internal_damage)
-		SEND_SOUND(AI, sound('sound/mecha/nominal.ogg',volume=50))
+	moved_inside(AI)
 	AI.cancel_camera()
 	AI.controlled_mech = src
 	AI.remote_control = src
@@ -948,21 +941,23 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/strafe)
 
-/obj/vehicle/sealed/mecha/proc/moved_inside(mob/living/carbon/human/H)
+/obj/vehicle/sealed/mecha/proc/moved_inside(mob/living/H)
 	. = FALSE
-	if(H && H.client && (H in range(1)))
-		add_occupant(H)
-		H.forceMove(src)
-		H.update_mouse_pointer()
-		add_fingerprint(H)
-		forceMove(loc)
-		log_message("[H] moved in as pilot.", LOG_MECHA)
-		icon_state = initial(icon_state)
-		setDir(dir_in)
-		playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
-		if(!internal_damage)
-			SEND_SOUND(occupants, sound('sound/mecha/nominal.ogg',volume=50))
-		return TRUE
+	if(!(H?.client))
+		return
+	if(!(ishuman(H) && Adjacent(H)))
+		return
+	add_occupant(H)
+	H.forceMove(src)
+	H.update_mouse_pointer()
+	add_fingerprint(H)
+	log_message("[H] moved in as pilot.", LOG_MECHA)
+	updateicon()
+	setDir(dir_in)
+	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
+	if(!internal_damage)
+		SEND_SOUND(occupants, sound('sound/mecha/nominal.ogg',volume=50))
+	return TRUE
 
 /obj/vehicle/sealed/mecha/proc/mmi_move_inside(obj/item/mmi/M, mob/user)
 	if(!M.brain_check(user))
@@ -979,7 +974,7 @@
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
 
 	if(do_after(user, 40, target = src))
-		if(!(LAZYLEN(occupants) >= max_occupants))
+		if(LAZYLEN(occupants) < max_occupants)
 			return mmi_moved_inside(M, user)
 		else
 			to_chat(user, "<span class='warning'>Occupants detected!</span>")
@@ -1006,7 +1001,6 @@
 	B.remote_control = src
 	B.update_mobility()
 	B.update_mouse_pointer()
-	icon_state = initial(icon_state)
 	update_icon()
 	setDir(dir_in)
 	log_message("[M] moved in as pilot.", LOG_MECHA)
@@ -1084,12 +1078,14 @@
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
 	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/mob_exit)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
+	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
 	update_icon()
 	return ..()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
 	UnregisterSignal(M, COMSIG_MOB_DEATH)
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
+	UnregisterSignal(M, COMSIG_MOB_SAY)
 	update_icon()
 	M.clear_alert("charge")
 	M.clear_alert("mech damage")

@@ -1,4 +1,4 @@
-///Handle melee attack by a mech
+///Called when a mech melee attacks an atom
 /atom/proc/mech_melee_attack(obj/vehicle/sealed/mecha/M)
 	return
 
