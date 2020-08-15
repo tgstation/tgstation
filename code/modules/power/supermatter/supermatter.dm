@@ -422,10 +422,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.player_list)
-		if(M.z == z)
+		var/turf/mob_turf = get_turf(M)
+		if(T.z == mob_turf.z)
 			SEND_SOUND(M, 'sound/magic/charge.ogg')
-			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+
+			if (M.z == z)
+				to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+			else
+				to_chat(M, "<span class='boldannounce'>You hold onto \the [M.loc] as hard as you can, as reality distorts around you. You feel safe.</span>")
+
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
 		if(T) //If something fucks up we blow anyhow. This fix is 4 years old and none ever said why it's here. help.
@@ -434,10 +440,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			S.consume(src)
 			return //No boom for me sir
 	else if(power > POWER_PENALTY_THRESHOLD)
-		investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
+		investigate_log("has released tritium from an overcharge.", INVESTIGATE_SUPERMATTER)
 		if(T)
-			var/obj/singularity/energy_ball/E = new(T)
-			E.energy = power
+			atmos_spawn_air("tritium=2500;TEMP=500000") //extremely fucking hot and could do fusion if you tried hard enough //GEORGE SEARS DID 9/11
 	investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
@@ -1031,12 +1036,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(L)
 		switch(type)
 			if(FLUX_ANOMALY)
-				var/obj/effect/anomaly/flux/A = new(L, 300)
+				var/obj/effect/anomaly/flux/A = new(L, 300, FALSE)
 				A.explosive = FALSE
 			if(GRAVITATIONAL_ANOMALY)
-				new /obj/effect/anomaly/grav(L, 250)
+				new /obj/effect/anomaly/grav(L, 250, FALSE)
 			if(PYRO_ANOMALY)
-				new /obj/effect/anomaly/pyro(L, 200)
+				new /obj/effect/anomaly/pyro(L, 200, FALSE)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list())
 	if(QDELETED(zapstart))
@@ -1142,14 +1147,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					multi = 20
 				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
 					multi = 40
-			target.zap_act(zap_str * multi, zap_flags, list())
+			target.zap_act(zap_str * multi, zap_flags)
 			zap_str /= 3 //Coils should take a lot out of the power of the zap
-
-		else if(target_type == ROD)
-			//We can expect this to do very little, maybe shock the poor soul buckled to it, but that's all.
-			//This is one of our endpoints, if the bolt hits a grounding rod, it stops jumping
-			target.zap_act(zap_str, zap_flags, list())
-			return
 
 		else if(isliving(target))//If we got a fleshbag on our hands
 			var/mob/living/creature = target
@@ -1163,8 +1162,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			zap_str /= 1.5 //Meatsacks are conductive, makes working in pairs more destructive
 
 		else
-			target.zap_act(zap_str, zap_flags, list())
-			zap_str /= 2 // worse then living things, better then coils
+			zap_str = target.zap_act(zap_str, zap_flags)
 		//This gotdamn variable is a boomer and keeps giving me problems
 		var/turf/T = get_turf(target)
 		var/pressure = 1

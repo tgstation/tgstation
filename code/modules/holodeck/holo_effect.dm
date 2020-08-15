@@ -9,18 +9,18 @@
 	icon_state = "x2"
 	invisibility = INVISIBILITY_ABSTRACT
 
-/obj/effect/holodeck_effect/proc/activate(var/obj/machinery/computer/holodeck/HC)
+/obj/effect/holodeck_effect/proc/activate(obj/machinery/computer/holodeck/HC)
 	return
 
-/obj/effect/holodeck_effect/proc/deactivate(var/obj/machinery/computer/holodeck/HC)
+/obj/effect/holodeck_effect/proc/deactivate(obj/machinery/computer/holodeck/HC)
 	qdel(src)
 	return
 
 // Called by the holodeck computer as long as the program is running
-/obj/effect/holodeck_effect/proc/tick(var/obj/machinery/computer/holodeck/HC)
+/obj/effect/holodeck_effect/proc/tick(obj/machinery/computer/holodeck/HC)
 	return
 
-/obj/effect/holodeck_effect/proc/safety(var/active)
+/obj/effect/holodeck_effect/proc/safety(active)
 	return
 
 
@@ -30,7 +30,7 @@
 	icon_state = "deck_nanotrasen_full"
 	var/obj/item/toy/cards/deck/D
 
-/obj/effect/holodeck_effect/cards/activate(var/obj/machinery/computer/holodeck/HC)
+/obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/HC)
 	D = new(loc)
 	safety(!(HC.obj_flags & EMAGGED))
 	D.holo = HC
@@ -45,17 +45,17 @@
 		D.card_throwforce = 0
 		D.card_throw_speed = 3
 		D.card_throw_range = 7
-		D.card_attack_verb = list("attacked")
+		D.card_attack_verb_continuous = list("attacks")
 	else
 		D.card_hitsound = 'sound/weapons/bladeslice.ogg'
 		D.card_force = 5
 		D.card_throwforce = 10
 		D.card_throw_speed = 3
 		D.card_throw_range = 7
-		D.card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
+		D.card_attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
 
 
-/obj/effect/holodeck_effect/sparks/activate(var/obj/machinery/computer/holodeck/HC)
+/obj/effect/holodeck_effect/sparks/activate(obj/machinery/computer/holodeck/HC)
 	var/turf/T = get_turf(src)
 	if(T)
 		var/datum/effect_system/spark_spread/s = new
@@ -70,7 +70,7 @@
 	var/mobtype = /mob/living/simple_animal/hostile/carp/holocarp
 	var/mob/mob = null
 
-/obj/effect/holodeck_effect/mobspawner/activate(var/obj/machinery/computer/holodeck/HC)
+/obj/effect/holodeck_effect/mobspawner/activate(obj/machinery/computer/holodeck/HC)
 	if(islist(mobtype))
 		mobtype = pick(mobtype)
 	mob = new mobtype(loc)
@@ -81,7 +81,7 @@
 		mob.vars[v] = null
 	return mob
 
-/obj/effect/holodeck_effect/mobspawner/deactivate(var/obj/machinery/computer/holodeck/HC)
+/obj/effect/holodeck_effect/mobspawner/deactivate(obj/machinery/computer/holodeck/HC)
 	if(mob)
 		HC.derez(mob)
 	qdel(src)
@@ -101,7 +101,7 @@
 
 /obj/effect/holodeck_effect/mobspawner/penguin
 	mobtype = /mob/living/simple_animal/pet/penguin/emperor
-	
+
 /obj/effect/holodeck_effect/mobspawner/penguin/Initialize()
 	if(prob(1))
 		mobtype = /mob/living/simple_animal/pet/penguin/emperor/shamebrero

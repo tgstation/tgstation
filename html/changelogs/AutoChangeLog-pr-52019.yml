@@ -1,6 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - bugfix: "Syringe & dart projectiles now handle reagent transfer effects as intended."
-  - bugfix: "Also fixes reagent transfers from various other sources such as sleepy pens, cryo tubes and drink bottles."
-  - balance: "As a result of the fix; Standard sized syriniver filled syringe projectiles no longer overdose the victim in one hit, unless they already have poor liver health."

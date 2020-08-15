@@ -32,8 +32,9 @@
 	custom_materials = list(/datum/material/iron = 2000)
 	max_integrity = 100
 	integrity_failure = 0.33
-	smoothing_flags = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced, /obj/structure/table/greyscale)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_TABLES)
+	canSmoothWith = list(SMOOTH_GROUP_TABLES)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -239,6 +240,20 @@
 			new framestack(T, framestackamount)
 	qdel(src)
 
+/obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 24, "cost" = 16)
+	return FALSE
+
+/obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the table.</span>")
+			qdel(src)
+			return TRUE
+	return FALSE
+
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
@@ -252,7 +267,8 @@
 	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
 	smoothing_flags = NONE
-	canSmoothWith = list()
+	smoothing_groups = null
+	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
@@ -286,6 +302,7 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
+	smoothing_groups = null
 	canSmoothWith = null
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
@@ -368,9 +385,8 @@
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	canSmoothWith = list(/obj/structure/table/wood,
-		/obj/structure/table/wood/poker,
-		/obj/structure/table/wood/bar)
+	smoothing_groups = list(SMOOTH_GROUP_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
+	canSmoothWith = list(SMOOTH_GROUP_WOOD_TABLES)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
@@ -394,16 +410,8 @@
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/fancy,
-		/obj/structure/table/wood/fancy/black,
-		/obj/structure/table/wood/fancy/blue,
-		/obj/structure/table/wood/fancy/cyan,
-		/obj/structure/table/wood/fancy/green,
-		/obj/structure/table/wood/fancy/orange,
-		/obj/structure/table/wood/fancy/purple,
-		/obj/structure/table/wood/fancy/red,
-		/obj/structure/table/wood/fancy/royalblack,
-		/obj/structure/table/wood/fancy/royalblue)
+	smoothing_groups = list(SMOOTH_GROUP_FANCY_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
+	canSmoothWith = list(SMOOTH_GROUP_FANCY_WOOD_TABLES)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
 /obj/structure/table/wood/fancy/Initialize()
@@ -469,7 +477,6 @@
 	icon_state = "r_table"
 	deconstruction_ready = 0
 	buildstack = /obj/item/stack/sheet/plasteel
-	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table, /obj/structure/table/reinforced/ctf)
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list("melee" = 10, "bullet" = 30, "laser" = 30, "energy" = 100, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
@@ -505,7 +512,8 @@
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	buildstack = /obj/item/stack/tile/bronze
-	canSmoothWith = list(/obj/structure/table/bronze)
+	smoothing_groups = list(SMOOTH_GROUP_BRONZE_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
+	canSmoothWith = list(SMOOTH_GROUP_BRONZE_TABLES)
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
@@ -522,6 +530,8 @@
 	icon_state = "optable"
 	buildstack = /obj/item/stack/sheet/mineral/silver
 	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 	can_buckle = 1
 	buckle_lying = -1
 	buckle_requires_restraints = 1

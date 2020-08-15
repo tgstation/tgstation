@@ -3,10 +3,10 @@
 	desc = "Puts reagents into containers, like bottles and beakers."
 	icon_state = "bottler"
 	layer = ABOVE_ALL_MOB_LAYER
+
 	reagent_flags = TRANSPARENT | DRAINABLE
-	rcd_cost = 50
-	rcd_delay = 50
 	buffer = 100
+
 	///how much do we fill
 	var/wanted_amount = 10
 	///where things are sent

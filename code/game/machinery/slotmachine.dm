@@ -23,6 +23,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/computer/slot_machine
+	light_color = LIGHT_COLOR_BROWN
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = 0
@@ -34,7 +35,6 @@
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
-	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/slot_machine/Initialize()
 	. = ..()
@@ -160,7 +160,6 @@
 
 	var/datum/browser/popup = new(user, "slotmachine", "Slot Machine")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/slot_machine/Topic(href, href_list)

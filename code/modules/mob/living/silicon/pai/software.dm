@@ -84,7 +84,7 @@
 			<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style type=\"text/css\">
-					body { background-image:url('html/paigrid.png'); }
+					body { background-image:url('[SSassets.transport.get_asset_url("paigrid.png")]'); }
 
 					#header { text-align:center; color:white; font-size: 30px; height: 35px; width: 100%; letter-spacing: 2px; z-index: 5}
 					#content {position: relative; left: 10px; height: 400px; width: 100%; z-index: 0}
@@ -283,8 +283,6 @@
 			if("loudness")
 				if(subscreen == 1) // Open Instrument
 					internal_instrument.interact(src)
-				if(subscreen == 2) // Change Instrument type
-					internal_instrument.selectInstrument()
 
 		paiInterface()
 
@@ -559,7 +557,7 @@
 	dat += "Cable status : "
 	if(!hacking_cable)
 		dat += "<font color=#FF5555>Retracted</font> <br>"
-		dat += "<a href='byond://?src=[REF(src)];software=doorjack;hacking_cable=1;sub=0'>Extend Cable</a> <br>"
+		dat += "<a href='byond://?src=[REF(src)];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
 		return dat
 	if(!hacking_cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"

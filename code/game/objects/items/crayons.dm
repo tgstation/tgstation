@@ -28,7 +28,8 @@
 
 	var/crayon_color = "red"
 	w_class = WEIGHT_CLASS_TINY
-	attack_verb = list("attacked", "coloured")
+	attack_verb_continuous = list("attacks", "colours")
+	attack_verb_simple = list("attack", "colour")
 	grind_results = list()
 	var/paint_color = "#FF0000" //RGB
 
