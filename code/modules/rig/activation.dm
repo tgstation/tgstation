@@ -56,9 +56,9 @@
 		chestplate.icon_state = "[theme]-chestplate[active ? "" : "-sealed"]"
 		chestplate.worn_icon_state = "[theme]-chestplate[active ? "" : "-sealed"]"
 		if(active)
-			chestplate.clothing_flags &= ~STOPSPRESSUREDAMAGE
+			chestplate.clothing_flags &= ~chestplate.visor_flags
 		else
-			chestplate.clothing_flags |= STOPSPRESSUREDAMAGE
+			chestplate.clothing_flags |= chestplate.visor_flags
 		wearer.update_inv_wear_suit()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,20,target = wearer))
@@ -66,14 +66,14 @@
 		helmet.icon_state = "[theme]-helmet[active ? "" : "-sealed"]"
 		helmet.worn_icon_state = "[theme]-helmet[active ? "" : "-sealed"]"
 		if(active)
-			helmet.flags_cover = initial(helmet.flags_cover)
-			helmet.flags_inv = initial(helmet.flags_inv)
-			helmet.clothing_flags = initial(helmet.clothing_flags)
+			helmet.flags_cover &= ~helmet.visor_flags_cover
+			helmet.flags_inv &= ~helmet.visor_flags_inv
+			helmet.clothing_flags &= ~helmet.visor_flags
 			helmet.alternate_worn_layer = initial(helmet.alternate_worn_layer)
 		else
-			helmet.flags_cover |= (HEADCOVERSEYES|PEPPERPROOF)
-			helmet.flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR)
-			helmet.clothing_flags |= STOPSPRESSUREDAMAGE
+			helmet.flags_cover |= helmet.visor_flags_cover
+			helmet.flags_inv |= helmet.visor_flags_inv
+			helmet.clothing_flags |= helmet.visor_flags
 			helmet.alternate_worn_layer = null
 		wearer.update_inv_head()
 		wearer.update_hair()

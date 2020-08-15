@@ -20,6 +20,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	permeability_coefficient = 0.01
+	siemens_coefficient = 0.5
 	/// How the RIG and things connected to it look
 	var/theme = "engi"
 	/// If the suit is deployed and turned on
@@ -50,6 +51,8 @@
 	var/slowdown_active = 1
 	/// RIG cell
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	/// RIG air tank
+	var/obj/item/tank/internals/oxygen/tank = /obj/item/tank/internals/oxygen
 	/// RIG helmet
 	var/obj/item/clothing/head/helmet/space/rig/helmet = /obj/item/clothing/head/helmet/space/rig
 	/// RIG chestplate
@@ -77,6 +80,8 @@
 		locked = FALSE
 	if(ispath(cell))
 		cell = new cell(src)
+	if(ispath(tank))
+		tank = new tank(src)
 	if(ispath(helmet))
 		helmet = new helmet(src)
 		helmet.rig = src
@@ -96,7 +101,7 @@
 	if(LAZYLEN(rig_parts))
 		for(var/obj/item/piece in rig_parts)
 			piece.desc = "It seems to be a part of [src]."
-			piece.armor = armor.Copy()
+			piece.armor = armor
 			piece.resistance_flags = resistance_flags
 			piece.max_heat_protection_temperature = max_heat_protection_temperature
 			piece.min_cold_protection_temperature = min_cold_protection_temperature
@@ -306,10 +311,13 @@
 	worn_icon = 'icons/mob/rig.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	flash_protect = FLASH_PROTECTION_NONE
-	clothing_flags = THICKMATERIAL | SNUG_FIT
 	resistance_flags = ACID_PROOF
+	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEFACIALHAIR
 	flags_cover = HEADCOVERSMOUTH
+	visor_flags = STOPSPRESSUREDAMAGE
+	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	visor_flags_cover = HEADCOVERSEYES|PEPPERPROOF
 	alternate_worn_layer = NECK_LAYER
 	permeability_coefficient = 0.01
 	var/obj/item/rig/control/rig
@@ -332,7 +340,8 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
+	visor_flags = STOPSPRESSUREDAMAGE
+	allowed = list(/obj/item/flashlight)
 	resistance_flags = ACID_PROOF
 	permeability_coefficient = 0.01
 	var/obj/item/rig/control/rig
