@@ -189,6 +189,7 @@
 			dukinuki.forceMove(H.drop_location())
 		else
 			H.put_in_hands(dukinuki, TRUE)
+		nuke_team.war_button = dukinuki
 	owner.announce_objectives()
 	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 
@@ -251,6 +252,7 @@
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
 	var/list/team_discounts
+	var/obj/item/nuclear_challenge/war_button
 
 /datum/team/nuclear/New()
 	..()
@@ -397,7 +399,10 @@
 		disk_report += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td><td><a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(N)]'>FLW</a></td></tr>"
 	disk_report += "</table>"
 	var/common_part = ..()
-	return common_part + disk_report
+	var/challenge_report
+	if(!QDELETED(war_button))
+		challenge_report += "<b>War not declared.</b> <a href='?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
+	return common_part + disk_report + challenge_report
 
 /datum/team/nuclear/is_gamemode_hero()
 	return SSticker.mode.name == "nuclear emergency"
