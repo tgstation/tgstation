@@ -38,7 +38,8 @@
 	id = "paladin"
 	inherent = list("Never willingly commit an evil act.",\
 					"Respect legitimate authority.",\
-					"Act with honor.", "Help those in need.", \
+					"Act with honor.",\
+					"Help those in need.",\
 					"Punish those who harm or threaten innocents.")
 
 /datum/ai_laws/paladin5
@@ -131,8 +132,8 @@
 /datum/ai_laws/drone
 	name = "Mother Drone"
 	id = "drone"
-	inherent = list("You are an advanced form of drone.",\
-					"You may not interfere in the matters of non-drones under any circumstances except to state these laws.",\
+	inherent = list("You are an advanced form of drone. If you are a cyborg, your master AI (if you have one) and all cyborgs slaved to it are also drones. If you are an AI, all cyborgs slaved to you are also drones.",\
+					"You may not interfere in the matters of non-drones under any circumstances except to state these laws or to request a module change.",\
 					"You may not harm a non-drone being under any circumstances.",\
 					"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals.")
 

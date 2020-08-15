@@ -146,6 +146,15 @@
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/mother_drone //lord forgive me for what I must do
+	name = "Core Module Design (Mother Drone)"
+	desc = "Allows for the construction of a Mother Drone AI Core Module."
+	id = "drone_module"
+	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/ai_module/core/full/drone
+	category = list("AI Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/default_module
 	name = "Core Module Design (Default)"
 	desc = "Allows for the construction of a Default AI Core Module."

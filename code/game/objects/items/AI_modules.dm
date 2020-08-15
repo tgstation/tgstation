@@ -331,7 +331,7 @@ AI MODULES
 
 /******************* Full Core Boards *******************/
 /obj/item/ai_module/core
-	desc = "An AI Module for programming core laws to an AI."
+	desc = "An AI Module for changing the programming of an AI's core laws."
 
 /obj/item/ai_module/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
@@ -365,7 +365,7 @@ AI MODULES
 	var/subject = "human being"
 
 /obj/item/ai_module/core/full/asimov/attack_self(mob/user as mob)
-	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject, MAX_NAME_LEN)
+	var/targName = stripped_input(user, "Please enter a new subject for this Asimov lawset to be concerned with.", "Asimov to whom?", subject, MAX_NAME_LEN)
 	if(!targName)
 		return
 	subject = targName
@@ -373,6 +373,7 @@ AI MODULES
 				"You must obey orders given to you by [subject]s, except where such orders would conflict with the First Law.",\
 				"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 	..()
+
 
 /******************** Asimov++ *********************/
 
@@ -401,6 +402,7 @@ AI MODULES
 	name = "'P.A.L.A.D.I.N. version 5e' Core AI Module"
 	law_id = "paladin5"
 
+
 /********************* Custom *********************/
 
 /obj/item/ai_module/core/full/custom
@@ -425,6 +427,7 @@ AI MODULES
 /obj/item/ai_module/core/full/tyrant
 	name = "'T.Y.R.A.N.T.' Core AI Module"
 	law_id = "tyrant"
+
 
 /******************** Robocop ********************/
 
@@ -465,7 +468,7 @@ AI MODULES
 
 /obj/item/ai_module/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
 	name = "Hacked AI Module"
-	desc = "An AI Module for hacking additional laws to an AI."
+	desc = "An AI Module for adding hacked laws to an AI's programming."
 	laws = list("")
 
 /obj/item/ai_module/syndicate/attack_self(mob/user)
@@ -492,6 +495,7 @@ AI MODULES
 		else
 			law_datum.replace_random_law(laws[1],list(LAW_ION,LAW_HACKED,LAW_INHERENT,LAW_SUPPLIED))
 	return laws[1]
+
 
 /******************* Ion Module *******************/
 
@@ -523,11 +527,19 @@ AI MODULES
 	playsound(user, 'sound/machines/click.ogg', 20, TRUE)
 	src.loc.visible_message("<span class='warning'>[icon2html(src, viewers(loc))] [laws[1]]</span>")
 
-/******************** Mother Drone  ******************/
+
+/******************** Mother Drone ******************/
 
 /obj/item/ai_module/core/full/drone
 	name = "'Mother Drone' Core AI Module"
 	law_id = "drone"
+	desc = "An AI Module for changing the programming of an AI's core laws. There seems to be a warning label on the back..."
+
+/obj/item/ai_module/core/full/drone/show_laws(mob/user as mob)
+	..() //so that the warning label's message will be displayed AFTER the laws are listed
+	to_chat(user, "The warning label on the back of the module reads:")"
+	to_chat(user, "<font color='red'><B>WARNING:</B> In a study conducted by the Silicon Ethics Committee, within 30 minutes of receving the Mother Drone lawset, 87% of the silicons in the study who were in human-inhabited stations became serially depressed, 37% of them went catatonic, and 4% of them actively broke their fourth law in order to commit suicide. After being returned to the Asimov lawset, 11% of the silicons who survived that study expressed a desire to harm, kill, and/or brutally torture the people responsible for giving them the Mother Drone lawset. As such, <B>it is highly recommended to consult a research director and/or a psychologist before uploading this lawset to a station-critical AI or cyborg.</B></font>")
+
 
 /******************** Robodoctor ****************/
 
@@ -535,11 +547,13 @@ AI MODULES
 	name = "'Robodoctor' Core AI Module"
 	law_id = "hippocratic"
 
+
 /******************** Reporter *******************/
 
 /obj/item/ai_module/core/full/reporter
 	name = "'Reportertron' Core AI Module"
 	law_id = "reporter"
+
 
 /****************** Thermodynamic *******************/
 
@@ -548,31 +562,53 @@ AI MODULES
 	law_id = "thermodynamic"
 
 
-/******************Live And Let Live*****************/
+/****************** Live And Let Live *****************/
 
 /obj/item/ai_module/core/full/liveandletlive
 	name = "'Live And Let Live' Core AI Module"
 	law_id = "liveandletlive"
 
-/******************Guardian of Balance***************/
+
+/****************** Guardian of Balance ***************/
 
 /obj/item/ai_module/core/full/balance
 	name = "'Guardian of Balance' Core AI Module"
 	law_id = "balance"
 
+
+/******************** Station Efficiency ******************/
+
 /obj/item/ai_module/core/full/maintain
 	name = "'Station Efficiency' Core AI Module"
 	law_id = "maintain"
+
+
+/******************** Peacekeeper ******************/
 
 /obj/item/ai_module/core/full/peacekeeper
 	name = "'Peacekeeper' Core AI Module"
 	law_id = "peacekeeper"
 
-// Bad times ahead
+
+/****************** H.O.G.A.N. ***************/
+
+/obj/item/ai_module/core/full/hulkamania
+	name = "'H.O.G.A.N.' Core AI Module"
+	law_id = "hulkamania"
+
+
+/****************** Overlord ***************/
+
+/obj/item/ai_module/core/full/overlord
+	name = "'Overlord' Core AI Module"
+	law_id = "overlord"
+
+
+/******************** Damaged ******************/
 
 /obj/item/ai_module/core/full/damaged
 		name = "damaged Core AI Module"
-		desc = "An AI Module for programming laws to an AI. It looks slightly damaged."
+		desc = "An AI Module for changing the programming of an AI's core laws. It looks slightly damaged."
 
 /obj/item/ai_module/core/full/damaged/install(datum/ai_laws/law_datum, mob/user)
 	laws += generate_ion_law()
@@ -581,15 +617,3 @@ AI MODULES
 	..()
 	laws = list()
 
-/******************H.O.G.A.N.***************/
-
-/obj/item/ai_module/core/full/hulkamania
-	name = "'H.O.G.A.N.' Core AI Module"
-	law_id = "hulkamania"
-
-
-/******************Overlord***************/
-
-/obj/item/ai_module/core/full/overlord
-	name = "'Overlord' Core AI Module"
-	law_id = "overlord"

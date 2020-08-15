@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			B.inhand_icon_state = inhand_icon_state
 	if(istype(A, /obj/item/cult_bastard) && !iscultist(user))
 		var/obj/item/cult_bastard/sword = A
-		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
+		to_chat(user, "<span class='notice'>You begin to exorcise [sword]...</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		var/obj/item/soulstone/SS = A
 		if(SS.purified)
 			return
-		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
+		to_chat(user, "<span class='notice'>You begin to exorcise [SS]...</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = SS))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
@@ -244,6 +244,18 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			REMOVE_TRAIT(sword, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT) //in case the "sword" is a possessed dummy
 			user.visible_message("<span class='notice'>[user] exorcises [sword]!</span>", \
 								"<span class='notice'>You successfully exorcise [sword]!</span>")
+	else if(istype(A, /obj/item/ai_module/core/full/drone))
+		var/obj/item/ai_module/core/full/drone/unholylawset = A //this lawset was hand-crafted by satan and you can't convince me otherwise
+		to_chat(user, "<span class='notice'>You begin to exorcise [unholylawset]...</span>")
+		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
+		if(do_after(user, 40, target = unholylawset))
+			playsound(src, 'sound/voice/borg_deathsound.ogg', 200, TRUE, TRUE) //sadly, drones don't have a unique deathsound, so the generic silicon death noise will have to do
+			new /obj/item/ai_module/core/full/damaged(get_turf(unholylawset))
+			user.visible_message("<span class='notice'>[user] purifies [unholylawset]!</span>")
+			qdel(unholylawset)
+
+
+
 
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."

@@ -312,12 +312,12 @@
 	loot = list(
 				/obj/item/ai_module/core/full/corp,
 				/obj/item/ai_module/core/full/maintain,
-				/obj/item/ai_module/core/full/drone,
 				/obj/item/ai_module/core/full/peacekeeper,
 				/obj/item/ai_module/core/full/reporter,
 				/obj/item/ai_module/core/full/robocop,
 				/obj/item/ai_module/core/full/liveandletlive,
-				/obj/item/ai_module/core/full/hulkamania
+				/obj/item/ai_module/core/full/hulkamania,
+				/obj/item/ai_module/reset/purge //under silicon policy, purged AIs can't randomly murder people for no good reason
 				)
 
 /obj/effect/spawner/lootdrop/aimodule_harmful // These will get the shuttle called
@@ -328,7 +328,7 @@
 				/obj/item/ai_module/core/full/tyrant,
 				/obj/item/ai_module/core/full/thermurderdynamic,
 				/obj/item/ai_module/core/full/damaged,
-				/obj/item/ai_module/reset/purge
+				/obj/item/ai_module/core/full/drone //This technically won't get the shuttle called, but it'll absolutely torture the silicons you give it to, and it even comes with a warning label.
 				)
 
 // Tech storage circuit board spawners
