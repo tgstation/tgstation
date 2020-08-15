@@ -242,7 +242,7 @@
 		if(reagent == filtered_chem && parent_tray.waterlevel <= parent_tray.maxwater)
 			parent_tray.adjustWater(round(amount))
 			reagents.remove_reagent(reagent, amount)
-	. = ..()
+	return ..()
 
 
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
@@ -253,4 +253,3 @@
 /datum/component/plumbing/tank
 	demand_connects = WEST
 	supply_connects = EAST
-
