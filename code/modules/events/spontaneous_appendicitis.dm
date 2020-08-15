@@ -19,6 +19,7 @@
 			continue
 		if(!(H.mob_biotypes & MOB_ORGANIC)) //biotype sleeper bugs strike again, once again making appendicitis pick a target that can't take it
 			continue
+		if(C.z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))//not for admin/ooc stuff
 		var/foundAlready = FALSE	//don't infect someone that already has appendicitis
 		for(var/datum/disease/appendicitis/A in H.diseases)
 			foundAlready = TRUE

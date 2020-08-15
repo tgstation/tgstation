@@ -14,6 +14,7 @@
 			continue
 		if(!H.getorgan(/obj/item/organ/brain)) // If only I had a brain
 			continue
+		if(!SSjob.GetJob(H.mind.assigned_role) || (H.mind.assigned_role in GLOB.nonhuman_positions)) //please stop giving my centcom admin gimmicks full body paralysis
 
 		traumatize(H)
 		announce_to_ghosts(H)
