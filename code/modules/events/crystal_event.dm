@@ -228,7 +228,7 @@ This section is for the destabilized SM
 	qdel(src)
 
 /*
-This section is for the crystal stabilizer item
+This section is for the crystal stabilizer item and the crystal from the closed portals
 */
 /obj/item/crystal_stabilizer
 	name = "Supermatter Stabilizer"
@@ -251,12 +251,19 @@ This section is for the crystal stabilizer item
 	. = ..()
 	if((W.item_flags & ABSTRACT) || !istype(user))
 		return
-	if(istype(W, /obj/item/assembly/signaler/anomaly))
+	if(istype(W, /obj/item/stack/sheet/otherworld_crystal))
 		if(filled)
 			return
 		to_chat(user, "<span class='notice'>You refill the [src]</span>")
 		filled = TRUE
 		qdel(W)
+
+/obj/item/stack/sheet/otherworld_crystal
+	name = "Otherworld Crystals"
+	icon_state = "otherworld-crystal"
+	singular_name = "Otherworld Crystal"
+	icon = 'icons/obj/stack_objects.dmi'
+	material_type = /datum/material/otherworld_crystal
 
 /*
 This section is for the crystal portals variations
@@ -301,7 +308,7 @@ This section is for the crystal portals variations
 				explosion(loc, 1,3,5)
 			if("Huge Portal")
 				explosion(loc, 2,5,7)
-	new/obj/item/assembly/signaler/anomaly(loc)
+	new/obj/item/stack/sheet/otherworld_crystal(loc)
 	return ..()
 
 /obj/structure/crystal_portal/attack_animal(mob/living/simple_animal/M)
