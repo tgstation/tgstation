@@ -192,8 +192,6 @@
 
 //all air alarms in area are connected via magic
 /area
-	var/list/air_vent_names = list()
-	var/list/air_scrub_names = list()
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
@@ -296,8 +294,8 @@
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
-		for(var/id_tag in A.air_vent_names)
-			var/long_name = A.air_vent_names[id_tag]
+		for(var/id_tag in A.air_vent_info)
+			var/long_name = GLOB.air_vent_names[id_tag]
 			var/list/info = A.air_vent_info[id_tag]
 			if(!info || info["frequency"] != frequency)
 				continue
@@ -315,8 +313,8 @@
 					"intdefault"= (info["internal"] == 0)
 				))
 		data["scrubbers"] = list()
-		for(var/id_tag in A.air_scrub_names)
-			var/long_name = A.air_scrub_names[id_tag]
+		for(var/id_tag in A.air_scrub_info)
+			var/long_name = GLOB.air_scrub_names[id_tag]
 			var/list/info = A.air_scrub_info[id_tag]
 			if(!info || info["frequency"] != frequency)
 				continue
@@ -503,21 +501,21 @@
 	var/area/A = get_area(src)
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
 				), signal_source)
 		if(AALARM_MODE_CONTAMINATED)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(
@@ -538,34 +536,34 @@
 					"scrubbing" = 1,
 					"widenet" = 1
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
 				), signal_source)
 		if(AALARM_MODE_VENTING)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE*2
 				), signal_source)
 		if(AALARM_MODE_REFILL)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -573,43 +571,43 @@
 				), signal_source)
 		if(AALARM_MODE_PANIC,
 			AALARM_MODE_REPLACEMENT)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 1,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
 		if(AALARM_MODE_SIPHON)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
 
 		if(AALARM_MODE_OFF)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
 		if(AALARM_MODE_FLOOD)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 2,

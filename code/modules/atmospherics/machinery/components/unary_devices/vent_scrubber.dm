@@ -43,7 +43,7 @@
 	var/area/scrub_area = get_area(src)
 	if(scrub_area)
 		scrub_area.air_scrub_info -= id_tag
-		scrub_area.air_scrub_names -= id_tag
+		GLOB.air_scrub_names -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
@@ -115,10 +115,10 @@
 	))
 
 	var/area/scrub_area = get_area(src)
-	if(!scrub_area.air_scrub_names[id_tag])
+	if(!GLOB.air_scrub_names[id_tag])
 		// If we do not have a name, assign one
 		name = "[assign_random_name()] [scrub_area.name] Air Scrubber" // matching case
-		scrub_area.air_scrub_names[id_tag] = name
+		GLOB.air_scrub_names[id_tag] = name
 
 	scrub_area.air_scrub_info[id_tag] = signal.data
 
