@@ -14,7 +14,7 @@
 		handle_whitespace = TRUE,
 		trailing_newline = TRUE,
 		confidential = FALSE)
-	if(!target || !html || !text)
+	if(!target || (!html && !text))
 		return;
 	if(target == world)
 		target = GLOB.clients
@@ -43,6 +43,11 @@
 
 /**
  * Sends the message to the recipient (target).
+ *
+ * Recommended way to write to_chat calls:
+ * to_chat(client,
+ *     type = MESSAGE_TYPE_INFO,
+ *     html = "You have found <strong>[object]</strong>")
  */
 /proc/to_chat(target, html,
 		type = null,
@@ -54,7 +59,7 @@
 	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
 		to_chat_immediate(target, html, type, text)
 		return
-	if(!target || !html || !text)
+	if(!target || (!html && !text))
 		return;
 	if(target == world)
 		target = GLOB.clients
