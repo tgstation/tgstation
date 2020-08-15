@@ -58,19 +58,24 @@
 	var/obj/item/bodypart/affecting = C.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting) //Missing limb?
 		to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
-		return 0
+		return FALSE
 	if(affecting.status != BODYPART_ORGANIC) //Limb must be organic to be healed - RR
 		to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
-		return 0
+		return FALSE
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
 		user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
-		var/amount_healed = affecting.heal_damage(brute, burn)
-		if(amount_healed)
+		var/previous_damage = affecting.get_damage()
+		if(affecting.heal_damage(brute, burn))
 			C.update_damage_overlays()
-			return amount_healed
-		return 1
+		post_heal_effects(max(previous_damage - affecting.get_damage(), 0), C, user)
+		return TRUE
 	to_chat(user, "<span class='warning'>[C]'s [affecting.name] can not be healed with \the [src]!</span>")
-	return 0
+	return FALSE
+
+
+///Override this proc for special post heal effects.
+/obj/item/stack/medical/proc/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
+	return
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
@@ -449,18 +454,26 @@
 /obj/item/stack/medical/poultice
 	name = "mourning poultices"
 	singular_name = "mourning poultice"
-	desc = "A type of primitive herbal poultice. While traditionally used to prepare corpses for the mourning feast, it can also treat scrapes and burns on the living, however, it is liable to cause shortness of breath when employed in this manner.\nIt is imbued with ancient wisdom."
+	desc = "A type of primitive herbal poultice.\nWhile traditionally used to prepare corpses for the mourning feast, it can also treat scrapes and burns on the living, however, it is liable to cause shortness of breath when employed in this manner.\nIt is imbued with ancient wisdom."
 	icon_state = "poultice"
 	amount = 15
 	max_amount = 15
+	heal_brute = 10
+	heal_burn = 10
 	self_delay = 40
 	other_delay = 10
 	repeating = TRUE
+	drop_sound = 'sound/misc/moist_impact.ogg'
+	mob_throw_hit_sound = 'sound/misc/moist_impact.ogg'
+	hitsound = 'sound/misc/moist_impact.ogg'
 
 /obj/item/stack/medical/poultice/heal(mob/living/M, mob/user)
 	. = .. ()
 	if(iscarbon(M))
+		playsound(src, 'sound/misc/soggy.ogg', 30, TRUE)
 		return heal_carbon(M, user, heal_brute, heal_burn)
 
-/obj/item/stack/medical/poultice/heal_carbon(mob/living/carbon/C, mob/user, brute, burn)
-	C.adjustOxyLoss(..())
+/obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
+	. = ..()
+	to_chat(user, "AMOUNT HEALED = [amount_healed]") //debug
+	healed_mob.adjustOxyLoss(amount_healed)
