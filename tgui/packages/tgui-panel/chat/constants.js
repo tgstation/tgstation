@@ -41,12 +41,6 @@ export const MESSAGE_TYPE_DEBUG = 'debug';
 export const MESSAGE_TYPES = [
   // Always-on types
   {
-    type: MESSAGE_TYPE_UNKNOWN,
-    name: 'Unsorted',
-    description: 'Everything we could not sort, always enabled',
-    important: true,
-  },
-  {
     type: MESSAGE_TYPE_SYSTEM,
     name: 'System Messages',
     description: 'Messages from your client, always enabled',
@@ -101,6 +95,11 @@ export const MESSAGE_TYPES = [
     name: 'Combat Log',
     description: 'Urist McTraitor has stabbed you with a knife!',
     selector: '.danger',
+  },
+  {
+    type: MESSAGE_TYPE_UNKNOWN,
+    name: 'Unsorted',
+    description: 'Everything we could not sort, always enabled',
   },
   // Admin stuff
   {
