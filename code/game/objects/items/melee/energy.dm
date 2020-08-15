@@ -78,7 +78,7 @@
 	w_class_on = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 	armour_penetration = 100
-	attack_verb_off = list("attacked", "chopped", "cleaved", "tore", "lacerated", "cut")
+	attack_verb_off = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
 	attack_verb_on = list()
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 
@@ -95,7 +95,7 @@
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit" //it starts deactivated
-	attack_verb_off = list("tapped", "poked")
+	attack_verb_off = list("taps", "pokes")
 	throw_speed = 3
 	throw_range = 5
 	sharpness = SHARP_EDGED

@@ -4,9 +4,9 @@
 	var/heat_capacity = 1
 	var/temperature_archived
 
-	//list of open turfs adjacent to us
+	///list of open turfs adjacent to us
 	var/list/atmos_adjacent_turfs
-	//bitfield of dirs in which we are superconducitng
+	///bitfield of dirs in which we are superconducitng
 	var/atmos_supeconductivity = NONE
 
 	//used to determine whether we should archive

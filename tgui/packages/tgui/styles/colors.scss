@@ -31,7 +31,7 @@ $label: #7e90a7 !default;
 
 // Background and foreground color lightness ratios
 $bg-lightness: -15% !default;
-$fg-lightness: 5% !default;
+$fg-lightness: 10% !default;
 
 @function bg($color) {
   @return color.scale($color, $lightness: $bg-lightness);

@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "name": "tgui-polyfill",
+  "version": "4.2.0",
+  "type": "module"
+}

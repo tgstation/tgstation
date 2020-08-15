@@ -16,6 +16,7 @@
 		var/obj/item/cartridge/virus/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
+			playsound(src,'sound/machines/ping.ogg',30,TRUE)
 
 //Mime PDA sends "silent" messages.
 /obj/item/pda/mime

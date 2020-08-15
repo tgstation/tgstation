@@ -163,6 +163,8 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
+	pet_bonus = TRUE
+	pet_bonus_emote = "squeaks happily!"
 
 /obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
