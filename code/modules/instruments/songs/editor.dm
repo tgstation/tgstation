@@ -85,7 +85,6 @@
 
 	var/datum/browser/popup = new(user, "instrument", parent?.name || "instrument", 700, 500)
 	popup.set_content(dat.Join(""))
-	popup.set_title_image(user.browse_rsc_icon(parent.icon, parent.icon_state))
 	popup.open()
 
 /**
