@@ -75,7 +75,7 @@ interface ByondType {
 
   /**
    * Retrieves multiple properties of the BYOND skin element,
-   * as listen in the `propNames` array.
+   * as defined in the `propNames` array.
    *
    * Returns a promise with a key-value object containing listed properties.
    */
@@ -102,6 +102,6 @@ interface ByondType {
    * Uses a special encoding to preverse Infinity and NaN.
    */
   parseJson(text: string): any;
-};
+}
 
 declare const Byond: ByondType;
