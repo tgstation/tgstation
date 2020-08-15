@@ -103,7 +103,9 @@ a.popt {
   color: #333;
 }
 
-.popup input[type=text]:hover, .popup input[type=text]:active, .popup input[type=text]:focus {
+.popup input[type=text]:hover,
+.popup input[type=text]:active,
+.popup input[type=text]:focus {
   border-color: green;
 }
 
@@ -116,7 +118,9 @@ a.popt {
   font-weight: bold;
 }
 
-.popup input[type=submit]:hover, .popup input[type=submit]:focus, .popup input[type=submit]:active {
+.popup input[type=submit]:hover,
+.popup input[type=submit]:focus,
+.popup input[type=submit]:active {
   background: #aaa;
   cursor: pointer;
 }
@@ -225,14 +229,24 @@ a.popt {
 .motd {
   color: #638500;
   font-family: Verdana, sans-serif;
+  white-space: normal;
 }
 
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {
+.motd h1,
+.motd h2,
+.motd h3,
+.motd h4,
+.motd h5,
+.motd h6 {
   color: #638500;
   text-decoration: underline;
 }
 
-.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {
+.motd a,
+.motd a:link,
+.motd a:visited,
+.motd a:active,
+.motd a:hover {
   color: #638500;
 }
 
@@ -241,7 +255,15 @@ a.popt {
 /* ADD HERE FOR BOLD */
 
 
-.bold, .name, .prefix, .ooc, .looc, .adminooc, .admin, .medal, .yell {
+.bold,
+.name,
+.prefix,
+.ooc,
+.looc,
+.adminooc,
+.admin,
+.medal,
+.yell {
   font-weight: bold;
 }
 
@@ -250,7 +272,9 @@ a.popt {
 /* ADD HERE FOR ITALIC */
 
 
-.italic, .italics, .emote {
+.italic,
+.italics,
+.emote {
   font-style: italic;
 }
 
@@ -323,7 +347,8 @@ em {
   color: #00ff00;
 }
 
-.binarysay a:active, .binarysay a:visited {
+.binarysay a:active,
+.binarysay a:visited {
   color: #88ff88;
 }
 
@@ -830,7 +855,8 @@ h1.alert, h2.alert {
   font-size: 80%;
 }
 
-.connectionClosed, .fatalError {
+.connectionClosed,
+.fatalError {
   background: red;
   color: white;
   padding: 5px;

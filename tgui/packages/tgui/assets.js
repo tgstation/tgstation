@@ -51,7 +51,11 @@ const isStyleSheetReallyLoaded = url => {
   const len = styleSheets.length;
   for (let i = 0; i < len; i++) {
     const styleSheet = styleSheets[i];
-    if (styleSheet.href.includes(url)) {
+    if (!styleSheet.href) {
+      logger.warn('Missing href on stylesheet, UA:', navigator.userAgent);
+      return true;
+    }
+    if (styleSheet.href?.includes(url)) {
       return styleSheet.rules.length !== 0;
     }
   }
