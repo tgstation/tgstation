@@ -8,15 +8,20 @@
 
 /obj/machinery/shower
 	name = "shower"
-	desc = "The HS-452. Installed in the 2550s by the Nanotrasen Hygiene Division, now with 2560 lead compliance!"
+	desc = "The HS-452. Installed in the 2550s by the Nanotrasen Hygiene Division, now with 2560 lead compliance! Passively replenishes itself with water when not in use."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
 	use_power = NO_POWER_USE
+	///Is the shower on or off?
 	var/on = FALSE
+	///What temperature the shower reagents are set to.
 	var/current_temperature = SHOWER_NORMAL
+	///What sound will be played on loop when the shower is on and pouring water.
 	var/datum/looping_sound/showering/soundloop
+	///What reagent should the shower be filled with when initially built.
 	var/reagent_id = /datum/reagent/water
+	///How much reagent capacity should the shower begin with when built.
 	var/reaction_volume = 200
 
 /obj/machinery/shower/Initialize()
@@ -130,11 +135,12 @@
 			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
 				wash_atom(movable_content)
 	else
+		reagents.add_reagent(reagent_id, 5)
 		on = FALSE
 		soundloop.stop()
 		handle_mist()
 		update_icon()
-		return PROCESS_KILL
+		return
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal(drop_location(), 3)

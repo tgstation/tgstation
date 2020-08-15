@@ -245,7 +245,7 @@
 	name = "sink"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
-	desc = "A sink used for washing one's hands and face."
+	desc = "A sink used for washing one's hands and face. Passively reclaims water over time."
 	anchored = TRUE
 	///Something's being washed at the moment
 	var/busy = FALSE
@@ -257,13 +257,14 @@
 	var/buildstackamount = 1
 	///Does the sink have a water recycler to recollect it's water supply?
 	var/has_water_reclaimer = TRUE
+	///Has the water reclamation begun?
+	var/reclaiming = FALSE
 
 /obj/structure/sink/Initialize(mapload, bolt)
 	. = ..()
 	if(has_water_reclaimer)
 		create_reagents(100, NO_REACT)
 		reagents.add_reagent(dispensedreagent, 100)
-	START_PROCESSING(SSfluids, src)
 	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 
 /obj/structure/sink/examine(mob/user)
@@ -286,6 +287,7 @@
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return
+	process_check()
 	var/selected_area = parse_zone(user.zone_selected)
 	var/washing_face = 0
 	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
@@ -299,9 +301,8 @@
 		return
 
 	busy = FALSE
-	reagents.remove_any(4)
+	reagents.remove_any(5)
 	reagents.expose(user, TOUCH)
-	reagents.trans_to(user, 1)
 
 	if(washing_face)
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
@@ -324,6 +325,7 @@
 
 	if(istype(O, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RG = O
+		process_check()
 		if(reagents.total_volume <= 0)
 			to_chat(user, "<span class='notice'>\The [src] is dry.</span>")
 			return FALSE
@@ -400,6 +402,10 @@
 		drop_materials()
 	..()
 
+/obj/structure/sink/process()
+	if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
+		reagents.add_reagent(dispensedreagent, 5)
+
 /obj/structure/sink/proc/drop_materials()
 	if(buildstacktype)
 		new buildstacktype(loc,buildstackamount)
@@ -407,6 +413,12 @@
 		for(var/i in custom_materials)
 			var/datum/material/M = i
 			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+
+/obj/structure/sink/proc/process_check()
+	if(!reclaiming)
+		reclaiming = TRUE
+		START_PROCESSING(SSmachines, src)
+		process()
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
