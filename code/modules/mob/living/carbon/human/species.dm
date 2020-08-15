@@ -930,7 +930,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(replaced_item && ((replaced_item.item_flags & ABSTRACT) || (replaced_item.item_flags & DROPDEL) || HAS_TRAIT(I, TRAIT_NODROP)))
 		return FALSE
 
-	if((slot != ITEM_SLOT_BACKPACK) && !(I.slot_flags & slot) && !(I.w_class <= WEIGHT_CLASS_SMALL && (slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET))) // we can fit anything small or below in pockets
+	if(!(slot in list(ITEM_SLOT_SUITSTORE, ITEM_SLOT_BACKPACK)) && !(I.slot_flags & slot) && !(I.w_class <= WEIGHT_CLASS_SMALL && (slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET))) // we can fit anything small or below in pockets
 		return FALSE
 
 	switch(slot)
