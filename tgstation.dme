@@ -2650,7 +2650,7 @@
 #include "code\modules\power\singularity\singularity.dm"
 #include "code\modules\power\supermatter\supermatter.dm"
 #include "code\modules\power\tesla\coil.dm"
-#include "code\modules\power\tesla\tesla_zap.dm"
+#include "code\modules\power\tesla\tesla.dm"
 #include "code\modules\procedural_mapping\mapGenerator.dm"
 #include "code\modules\procedural_mapping\mapGeneratorModule.dm"
 #include "code\modules\procedural_mapping\mapGeneratorObj.dm"
