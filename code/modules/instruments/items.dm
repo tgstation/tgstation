@@ -174,7 +174,6 @@
 	icon_state = "spectral_trumpet"
 	inhand_icon_state = "spectral_trumpet"
 	force = 0
-	instrumentId = "trombone"
 	attack_verb_continuous = list("plays", "jazzes", "trumpets", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trumpet", "mourn", "doot", "spook")
 
