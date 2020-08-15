@@ -1,5 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - bugfix: "Swarmers are not able to teleport their subdued targets again"
-  - bugfix: "Removed references to Consturction in the Swarmer Beacon"
