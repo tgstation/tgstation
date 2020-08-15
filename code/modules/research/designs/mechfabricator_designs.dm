@@ -79,7 +79,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_torso
 	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
 	construction_time = 200
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_left_arm
 	name = "Exosuit Left Arm (APLU \"Ripley\")"
@@ -88,7 +88,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_left_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_right_arm
 	name = "Exosuit Right Arm (APLU \"Ripley\")"
@@ -97,7 +97,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_right_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_left_leg
 	name = "Exosuit Left Leg (APLU \"Ripley\")"
@@ -106,7 +106,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_left_leg
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_right_leg
 	name = "Exosuit Right Leg (APLU \"Ripley\")"
@@ -115,7 +115,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_right_leg
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 //Odysseus
 /datum/design/odysseus_chassis

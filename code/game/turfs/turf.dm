@@ -61,8 +61,18 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	assemble_baseturfs()
 
 	levelupdate()
-	if(smooth)
+
+	if (length(smoothing_groups))
+		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+		SET_BITFLAG_LIST(smoothing_groups)
+	if (length(canSmoothWith))
+		sortTim(canSmoothWith)
+		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
+			smoothing_flags |= SMOOTH_OBJ
+		SET_BITFLAG_LIST(canSmoothWith)
+	if (smoothing_flags)
 		QUEUE_SMOOTH(src)
+
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
@@ -135,6 +145,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/multiz_turf_del(turf/T, dir)
 
 /turf/proc/multiz_turf_new(turf/T, dir)
+
+///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi.
+/turf/proc/is_blocked_turf(exclude_mobs)
+	if(density)
+		return TRUE
+	for(var/i in contents)
+		var/atom/thing = i
+		if(thing.density && (!exclude_mobs || !ismob(thing)))
+			return TRUE
+	return FALSE
 
 //zPassIn doesn't necessarily pass an atom!
 //direction is direction of travel of air
@@ -375,7 +395,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 //////////////////////////////
 
 //Distance associates with all directions movement
-/turf/proc/Distance(var/turf/T)
+/turf/proc/Distance(turf/T)
 	return get_dist(src,T)
 
 //  This Distance proc assumes that only cardinal movement is
@@ -449,7 +469,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	underlay_appearance.dir = adjacency_dir
 	return TRUE
 
-/turf/proc/add_blueprints(var/atom/movable/AM)
+/turf/proc/add_blueprints(atom/movable/AM)
 	var/image/I = new
 	I.appearance = AM.appearance
 	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
@@ -559,3 +579,17 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_turf(src, reagents[R])
+
+/**
+  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
+  */
+/turf/wash(clean_types)
+	. = ..()
+
+	for(var/am in src)
+		if(am == src)
+			continue
+		var/atom/movable/movable_content = am
+		if(!ismopable(movable_content))
+			continue
+		movable_content.wash(clean_types)

@@ -206,7 +206,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
 	assets.send(user)
 
-	var/datum/asset/spritesheet/emoji_s = get_asset_datum(/datum/asset/spritesheet/goonchat)
+	var/datum/asset/spritesheet/emoji_s = get_asset_datum(/datum/asset/spritesheet/chat)
 	emoji_s.send(user) //Already sent by chat but no harm doing this
 
 	user.set_machine(src)
@@ -902,6 +902,30 @@ GLOBAL_LIST_EMPTY(PDAs)
 			user.put_in_hands(old_id)
 		else
 			old_id.forceMove(get_turf(src))
+
+
+/obj/item/pda/pre_attack(obj/target, mob/living/user, params)
+	if(!ismachinery(target))
+		return ..()
+	var/obj/machinery/target_machine = target
+	if(!target_machine.panel_open && !istype(target, /obj/machinery/computer))
+		return ..()
+	if(!istype(cartridge, /obj/item/cartridge/virus/clown))
+		return ..()
+	var/obj/item/cartridge/virus/installed_cartridge = cartridge
+
+	if(installed_cartridge.charges <=0)
+		to_chat(user, "<span class='notice'>Out of charges.</span>")
+		return ..()
+	to_chat(user, "<span class='notice'>You upload the virus to the airlock controller!</span>")
+	var/sig_list
+	if(istype(target,/obj/machinery/door/airlock))
+		sig_list += list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE)
+	else
+		sig_list += list(COMSIG_ATOM_ATTACK_HAND)
+	target.AddComponent(/datum/component/sound_player, amount = (rand(15,20)), signal_or_sig_list = sig_list)
+	installed_cartridge.charges --
+	return TRUE
 
 
 // access to status display signals

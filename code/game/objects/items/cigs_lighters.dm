@@ -48,7 +48,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		inhand_icon_state = "cigon"
 		name = "lit [initial(name)]"
 		desc = "A [initial(name)]. This one is lit."
-		attack_verb = list("burnt","singed")
+		attack_verb_continuous = list("burns", "sings")
+		attack_verb_simple = list("burn", "sing")
 		START_PROCESSING(SSobj, src)
 		update_icon()
 
@@ -62,7 +63,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		inhand_icon_state = "cigoff"
 		name = "burnt [initial(name)]"
 		desc = "A [initial(name)]. This one has seen better days."
-		attack_verb = list("flicked")
+		attack_verb_continuous = list("flicks")
+		attack_verb_simple = list("flick")
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/match/extinguish()
@@ -184,7 +186,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	lit = TRUE
 	name = "lit [name]"
-	attack_verb = list("burnt", "singed")
+	attack_verb_continuous = list("burns", "sings")
+	attack_verb_simple = list("burn", "sing")
 	hitsound = 'sound/items/welder.ogg'
 	damtype = "fire"
 	force = 4
@@ -220,7 +223,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!lit)
 		return
 	name = copytext_char(name, 5) //5 == length_char("lit ") + 1
-	attack_verb = null
+	attack_verb_continuous = null
+	attack_verb_simple = null
 	hitsound = null
 	damtype = BRUTE
 	force = 0
@@ -613,6 +617,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	heat = 1500
+	resistance_flags = FIRE_PROOF
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
+	custom_price = 55
+	light_color = LIGHT_COLOR_FIRE
 	var/lit = 0
 	var/fancy = TRUE
 	var/overlay_state
@@ -622,11 +631,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		"thirteen",
 		"snake"
 		)
-	heat = 1500
-	resistance_flags = FIRE_PROOF
-	light_color = LIGHT_COLOR_FIRE
-	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
-	custom_price = 55
 
 /obj/item/lighter/Initialize()
 	. = ..()
@@ -668,13 +672,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		force = 5
 		damtype = "fire"
 		hitsound = 'sound/items/welder.ogg'
-		attack_verb = list("burnt", "singed")
+		attack_verb_continuous = list("burns", "sings")
+		attack_verb_simple = list("burn", "sing")
 		set_light(1)
 		START_PROCESSING(SSobj, src)
 	else
 		hitsound = "swing_hit"
 		force = 0
-		attack_verb = null //human_defense.dm takes care of it
+		attack_verb_continuous = null //human_defense.dm takes care of it
+		attack_verb_simple = null
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 	update_icon()

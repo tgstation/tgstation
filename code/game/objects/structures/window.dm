@@ -304,7 +304,7 @@
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
-	if(smooth)
+	if(smoothing_flags)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 //merges adjacent full-tile windows into one
@@ -317,7 +317,7 @@
 		var/ratio = obj_integrity / max_integrity
 		ratio = CEILING(ratio*4, 1) * 25
 
-		if(smooth)
+		if(smoothing_flags)
 			QUEUE_SMOOTH(src)
 
 		cut_overlay(crack_overlay)
@@ -590,8 +590,9 @@
 	max_integrity = 50
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
+	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
 
 /obj/structure/window/fulltile/unanchored
@@ -604,8 +605,9 @@
 	max_integrity = 300
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
+	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
 
 /obj/structure/window/plasma/fulltile/unanchored
@@ -619,7 +621,9 @@
 	max_integrity = 1000
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
+	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
 
 /obj/structure/window/plasma/reinforced/fulltile/unanchored
@@ -633,9 +637,10 @@
 	max_integrity = 150
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
 	state = RWINDOW_SECURE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
+	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/unanchored
@@ -648,15 +653,15 @@
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
+	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
 	icon_state = "ice_window"
 	max_integrity = 150
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	glass_amount = 2
 
 /obj/structure/window/shuttle
@@ -672,7 +677,8 @@
 	reinf = TRUE
 	heat_resistance = 1600
 	armor = list("melee" = 90, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS)
 	canSmoothWith = null
 	explosion_block = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
@@ -700,7 +706,8 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	heat_resistance = 1600
 	armor = list("melee" = 95, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = null
 	explosion_block = 3
 	damage_deflection = 11 //The same as normal reinforced windows.3
@@ -722,8 +729,9 @@
 	max_integrity = 15
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_PAPERFRAME)
+	canSmoothWith = list(SMOOTH_GROUP_PAPERFRAME)
 	glass_amount = 2
 	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
@@ -808,7 +816,8 @@
 
 /obj/structure/window/bronze/fulltile
 	icon_state = "clockwork_window"
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = null
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1

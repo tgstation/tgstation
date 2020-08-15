@@ -388,7 +388,7 @@
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
-/proc/isAdminObserver(var/mob/user)
+/proc/isAdminObserver(mob/user)
 	if(!user)		//Are they a mob? Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
@@ -400,7 +400,7 @@
 	return TRUE
 
 ///Is the passed in mob an admin ghost WITH AI INTERACT enabled
-/proc/isAdminGhostAI(var/mob/user)
+/proc/isAdminGhostAI(mob/user)
 	if(!isAdminObserver(user))
 		return
 	if(!user.client.AI_Interact) // Do they have it enabled?

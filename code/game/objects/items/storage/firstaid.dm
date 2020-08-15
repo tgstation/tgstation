@@ -260,7 +260,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/instabitaluri = 3,
+		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
@@ -300,14 +300,16 @@
 		return
 
 	var/obj/item/bot_assembly/medbot/A = new
-	if(istype(src, /obj/item/storage/firstaid/fire))
+	if (istype(src, /obj/item/storage/firstaid/fire))
 		A.set_skin("ointment")
-	else if(istype(src, /obj/item/storage/firstaid/toxin))
+	else if (istype(src, /obj/item/storage/firstaid/toxin))
 		A.set_skin("tox")
-	else if(istype(src, /obj/item/storage/firstaid/o2))
+	else if (istype(src, /obj/item/storage/firstaid/o2))
 		A.set_skin("o2")
-	else if(istype(src, /obj/item/storage/firstaid/brute))
+	else if (istype(src, /obj/item/storage/firstaid/brute))
 		A.set_skin("brute")
+	else if (istype(src, /obj/item/storage/firstaid/advanced))
+		A.set_skin("advanced")
 	user.put_in_hands(A)
 	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
 	A.robot_arm = S.type

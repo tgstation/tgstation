@@ -191,6 +191,7 @@
 	desc = "A mysterious pendant. An inscription on it says: \"Certain death tomorrow means certain life today.\""
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "memento_mori"
+	worn_icon_state = "memento"
 	actions_types = list(/datum/action/item_action/hands_free/memento_mori)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/human/active_owner
@@ -323,7 +324,7 @@
 /obj/item/warp_cube/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = current_location.loc
-	if(!linked || current_area.noteleport)
+	if(!linked || (current_area.area_flags & NOTELEPORT))
 		to_chat(user, "<span class='warning'>[src] fizzles uselessly.</span>")
 		return
 	if(teleporting)
@@ -706,8 +707,8 @@
 	icon_state = "cleaving_saw"
 	icon_state_on = "cleaving_saw_open"
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb_off = list("attacked", "sawed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
-	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
+	attack_verb_off = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_on = list("cleaves", "swipes", "slashes", "chops")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
@@ -822,7 +823,8 @@
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "rended")
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
@@ -931,7 +933,7 @@
 				user.mind.AddSpell(D)
 		if(4)
 			to_chat(user, "<span class='danger'>You feel like you could walk straight through lava now.</span>")
-			H.weather_immunities |= "lava"
+			LAZYOR(H.weather_immunities, "lava")
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
@@ -1139,7 +1141,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15
-	attack_verb = list("clubbed", "beat", "pummeled")
+	attack_verb_continuous = list("clubs", "beats", "pummels")
+	attack_verb_simple = list("club", "beat", "pummel")
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
@@ -1179,6 +1182,9 @@
 	. = ..()
 	var/turf/T = get_turf(target)
 	if(!T || timer > world.time)
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>")
 		return
 	calculate_anger_mod(user)
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
@@ -1260,7 +1266,8 @@
 	if(get_dist(user, beacon) <= 2) //beacon too close abort
 		to_chat(user, "<span class='warning'>You are too close to the beacon to teleport to it!</span>")
 		return
-	if(is_blocked_turf(get_turf(beacon), TRUE))
+	var/turf/beacon_turf = get_turf(beacon)
+	if(beacon_turf?.is_blocked_turf(TRUE))
 		to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 		return
 	if(!isturf(user.loc))
@@ -1277,7 +1284,7 @@
 	if(do_after(user, 40, target = user) && user && beacon)
 		var/turf/T = get_turf(beacon)
 		var/turf/source = get_turf(user)
-		if(is_blocked_turf(T, TRUE))
+		if(T.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
@@ -1298,7 +1305,7 @@
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
-		if(is_blocked_turf(T, TRUE))
+		if(T.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>")
 			user.update_action_buttons_icon()
@@ -1333,7 +1340,7 @@
 
 /obj/item/hierophant_club/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
-	if(!turf_to_teleport_to || is_blocked_turf(turf_to_teleport_to, TRUE))
+	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE))
 		return
 	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)

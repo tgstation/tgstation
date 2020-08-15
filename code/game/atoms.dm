@@ -92,6 +92,19 @@
 	/// Last appearance of the atom for demo saving purposes
 	var/image/demo_last_appearance
 
+	///Range of the light in tiles. Zero means no light.
+	var/light_range = 0
+	///Intensity of the light. The stronger, the less shadows you will see on the lit area.
+	var/light_power = 1
+	///Hexadecimal RGB string representing the colour of the light. White by default.
+	var/light_color = COLOR_WHITE
+	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
+	var/light_on = TRUE
+	///Our light source. Don't fuck with this directly unless you have a good reason!
+	var/tmp/datum/light_source/light
+	///Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
+	var/tmp/list/light_sources
+
 	/// Last name used to calculate a color for the chatmessage overlays
 	var/chat_color_name
 	/// Last color calculated for the the chatmessage overlays
@@ -100,7 +113,7 @@
 	var/chat_color_darkened
 
 	///Icon-smoothing behavior.
-	var/smooth = SMOOTH_FALSE
+	var/smoothing_flags = NONE
 	///Smoothing variable
 	var/top_left_corner
 	///Smoothing variable
@@ -109,7 +122,9 @@
 	var/bottom_left_corner
 	///Smoothing variable
 	var/bottom_right_corner
-	///Type path list this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
+	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it.
+	var/list/smoothing_groups = null
+	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
 	var/list/canSmoothWith = null
 
 
@@ -193,8 +208,14 @@
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
-	if (canSmoothWith)
-		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
+	if (length(smoothing_groups))
+		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+		SET_BITFLAG_LIST(smoothing_groups)
+	if (length(canSmoothWith))
+		sortTim(canSmoothWith)
+		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
+			smoothing_flags |= SMOOTH_OBJ
+		SET_BITFLAG_LIST(canSmoothWith)
 
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
@@ -251,7 +272,7 @@
 	targeted_by = null
 	QDEL_NULL(light)
 
-	if(smooth & SMOOTH_QUEUED)
+	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
 
 	return ..()
@@ -805,7 +826,7 @@
   *
   * Default behaviour is to return, we define here to allow for cleaner code later on
   */
-/atom/proc/zap_act(power, zap_flags, shocked_targets)
+/atom/proc/zap_act(power, zap_flags)
 	return
 
 /**
@@ -933,8 +954,7 @@
 ///Removes an instance of colour_type from the atom's atom_colours list
 /atom/proc/remove_atom_colour(colour_priority, coloration)
 	if(!atom_colours)
-		atom_colours = list()
-		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
+		return
 	if(colour_priority > atom_colours.len)
 		return
 	if(coloration && atom_colours[colour_priority] != coloration)
@@ -945,10 +965,9 @@
 
 ///Resets the atom's color to null, and then sets it to the highest priority colour available
 /atom/proc/update_atom_colour()
-	if(!atom_colours)
-		atom_colours = list()
-		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
 	color = null
+	if(!atom_colours)
+		return
 	for(var/C in atom_colours)
 		if(islist(C))
 			var/list/L = C
@@ -960,20 +979,23 @@
 			return
 
 
-///Proc for being washed by a shower
-/atom/proc/washed(var/atom/washer, wash_strength = CLEAN_WEAK)
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, wash_strength)
-	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+/**
+  * Wash this atom
+  *
+  * This will clean it off any temporary stuff like blood. Override this in your item to add custom cleaning behavior.
+  * Returns true if any washing was necessary and thus performed
+  * Arguments:
+  * * clean_types: any of the CLEAN_ constants
+  */
+/atom/proc/wash(clean_types)
+	. = FALSE
+	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types))
+		. = TRUE
 
-	var/datum/component/radioactive/healthy_green_glow = GetComponent(/datum/component/radioactive)
-	if(!QDELETED(healthy_green_glow))
-		healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)))
-		if(healthy_green_glow.strength <= RAD_BACKGROUND_RADIATION)
-			qdel(healthy_green_glow)
-
-	/// we got to return true because of mob code
-	/// and not all code that uses COMSIG_COMPONENT_CLEAN_ACT returns true half the time
-	return TRUE
+	// Basically "if has washable coloration"
+	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
+		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		return TRUE
 
 /**
   * call back when a var is edited on this atom
@@ -1010,6 +1032,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
+	VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
@@ -1050,6 +1073,10 @@
 		usr.client.cmd_admin_explosion(src)
 	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
 		usr.client.cmd_admin_emp(src)
+	if(href_list[VV_HK_RADIATE] && check_rights(R_FUN))
+		var/strength = input(usr, "Choose the radiation strength.", "Choose the strength.") as num|null
+		if(!isnull(strength))
+			AddComponent(/datum/component/radioactive, strength, src)
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
 		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
 		var/matrix/M = transform
@@ -1454,5 +1481,5 @@
   *
   * Use this if an atom needs to attempt to charge another atom.
   */
-/atom/proc/attempt_charge(var/atom/sender, var/atom/target, var/extra_fees = 0)
+/atom/proc/attempt_charge(atom/sender, atom/target, extra_fees = 0)
 	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)

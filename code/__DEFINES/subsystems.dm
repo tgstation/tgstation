@@ -144,7 +144,6 @@
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
-#define FIRE_PRIORITY_PING			10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10
@@ -173,7 +172,9 @@
 #define FIRE_PRIORITY_RUNECHAT		410
 #define FIRE_PRIORITY_OVERLAYS		500
 #define FIRE_PRIORITY_EXPLOSIONS	666
+#define FIRE_PRIORITY_TIMER			700
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
+
 
 // SS runlevels
 
@@ -211,6 +212,15 @@
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}
+
+/**
+	Create a new timer and add it to the queue.
+	* Arguments:
+	* * callback the callback to call on timer finish
+	* * wait deciseconds to run the timer for
+	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+*/
+#define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
 
 // Air subsystem subtasks
 #define SSAIR_PIPENETS 1

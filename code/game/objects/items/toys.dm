@@ -168,8 +168,8 @@
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
-	
-	
+
+
 /obj/item/toy/balloon/arrest
 	name = "arreyst balloon"
 	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
@@ -247,7 +247,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
-	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
+	attack_verb_continuous = list("strikes", "pistol whips", "hits", "bashes")
+	attack_verb_simple = list("strike", "pistol whip", "hit", "bash")
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
@@ -323,7 +324,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/active = 0
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("attacked", "struck", "hit")
+	attack_verb_continuous = list("attacks", "strikes", "hits")
+	attack_verb_simple = list("attack", "strike", "hit")
 	var/hacked = FALSE
 	var/saber_color
 
@@ -386,7 +388,8 @@
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	attack_verb = list("pricked", "absorbed", "gored")
+	attack_verb_continuous = list("pricks", "absorbs", "gores")
+	attack_verb_simple = list("prick", "absorb", "gore")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 
@@ -401,7 +404,8 @@
 	var/active = FALSE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	hitsound = 'sound/weapons/smash.ogg'
-	attack_verb = list("robusted")
+	attack_verb_continuous = list("robusts")
+	attack_verb_simple = list("robust")
 
 /obj/item/toy/windup_toolbox/attack_self(mob/user)
 	if(!active)
@@ -447,7 +451,8 @@
 	throw_speed = 3
 	throw_range = 5
 	two_hand_force = 0
-	attack_verb = list("attacked", "struck", "hit")
+	attack_verb_continuous = list("attacks", "strikes", "hits")
+	attack_verb_simple = list("attack", "strike", "hit")
 
 /obj/item/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
@@ -469,7 +474,8 @@
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices")
+	attack_verb_simple = list("attack", "slash", "stab", "slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /*
@@ -646,7 +652,8 @@
 	var/card_throwforce = 0
 	var/card_throw_speed = 3
 	var/card_throw_range = 7
-	var/list/card_attack_verb = list("attacked")
+	var/list/card_attack_verb_continuous = list("attacks")
+	var/list/card_attack_verb_simple = list("attack")
 
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
@@ -846,7 +853,8 @@
 	newobj.card_throwforce = sourceobj.card_throwforce
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
-	newobj.card_attack_verb = sourceobj.card_attack_verb
+	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
+	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
@@ -965,8 +973,10 @@
 	newobj.throw_speed = newobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.throw_range = newobj.card_throw_range
-	newobj.card_attack_verb = sourceobj.card_attack_verb
-	newobj.attack_verb = newobj.card_attack_verb
+	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
+	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous
+	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
+	newobj.attack_verb_simple = newobj.card_attack_verb_simple
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
@@ -982,7 +992,8 @@
 	card_throwforce = 10
 	card_throw_speed = 3
 	card_throw_range = 7
-	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
+	card_attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
+	card_attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
 	resistance_flags = NONE
 
 /*
@@ -1091,7 +1102,8 @@
 	desc = "A compact ball of snow. Good for throwing at people."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snowball"
-	throwforce = 12 //pelt your enemies to death with lumps of snow
+	throwforce = 20 //the same damage as a disabler shot
+	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	. = ..()

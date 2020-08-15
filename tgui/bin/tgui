@@ -67,7 +67,7 @@ task-clean() {
 task-validate-build() {
   cd "${base_dir}"
   local diff
-  diff="$(git diff packages/tgui/public/tgui.bundle.*)"
+  diff="$(git diff packages/tgui/public/*)"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."

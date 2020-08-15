@@ -115,7 +115,7 @@
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
 ///from base of atom/set_light(): (l_range, l_power, l_color)
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"
-///from base of atom/setDir(): (old_dir, new_dir)
+///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
 ///from base of atom/handle_atom_del(): (atom/deleted)
 #define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"
@@ -166,12 +166,23 @@
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
 	#define COMPONENT_NO_ATTACK_HAND (1<<0)								//works on all 3.
 //This signal return value bitflags can be found in __DEFINES/misc.dm
+//from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
+#define COMISG_STORAGE_ENTERED "storage_entered"
+//from base of atom/movable/on_exit_storage(): (datum/component/storage/concrete/master_storage)
+#define CONSIG_STORAGE_EXITED "storage_exited"
 
 ///from base of atom/expose_reagents():
 #define COMSIG_ATOM_EXPOSE_REAGENTS "atom_expose_reagents"
 	/// Prevents the atom from being exposed to reagents if returned on [COMPONENT_ATOM_EXPOSE_REAGENTS]
 	#define COMPONENT_NO_EXPOSE_REAGENTS (1<<0)
-
+///Called right before the atom changes the value of light_range to a different one, from base atom/set_light_range(): (new_range)
+#define COMSIG_ATOM_SET_LIGHT_RANGE "atom_set_light_range"
+///Called right before the atom changes the value of light_power to a different one, from base atom/set_light_power(): (new_power)
+#define COMSIG_ATOM_SET_LIGHT_POWER "atom_set_light_power"
+///Called right before the atom changes the value of light_color to a different one, from base atom/set_light_color(): (new_color)
+#define COMSIG_ATOM_SET_LIGHT_COLOR "atom_set_light_color"
+///Called right before the atom changes the value of light_on to a different one, from base atom/set_light_on(): (new_value)
+#define COMSIG_ATOM_SET_LIGHT_ON "atom_set_light_on"
 ///called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"
 ///called on a movable (NOT living) when someone starts pulling it (atom/movable/puller, state, force)
@@ -271,6 +282,8 @@
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
 ///called when the movable sucessfully has it's anchored var changed, from base atom/movable/set_anchored(): (value)
 #define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"
+///from base of atom/movable/setGrabState(): (newstate)
+#define COMSIG_MOVABLE_SET_GRAB_STATE "living_set_grab_state"
 
 // /mob signals
 
@@ -357,6 +370,8 @@
 #define COMSIG_LIVING_REVIVE "living_revive"
 ///from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"
+///from base of mob/living/set_buckled(): (new_buckled)
+#define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
 
 ///sent from borg recharge stations: (amount, repairs)
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
@@ -428,6 +443,13 @@
 #define COMSIG_MACHINERY_POWER_LOST "machinery_power_lost"
 ///from base power_change() when power is restored
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"
+
+// /obj/machinery/door/airlock signals
+
+//from /obj/machinery/door/airlock/open(): (forced)
+#define COMSIG_AIRLOCK_OPEN "airlock_open"
+//from /obj/machinery/door/airlock/close(): (forced)
+#define COMSIG_AIRLOCK_CLOSE "airlock_close"
 
 // /obj/item signals
 
@@ -613,7 +635,8 @@
 #define COMSIG_TURF_IS_WET "check_turf_wet"
 ///(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"
-///called on an object to clean it of cleanables. Usualy with soap: (num/strength)
+
+///Called on an object to "clean it", such as removing blood decals/overlays, etc. The clean types bitfield is sent with it. Return TRUE if any cleaning was necessary and thus performed.
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"
 
 //Creamed
@@ -626,6 +649,12 @@
 ///from base of obj/item/reagent_containers/food/snacks/attack(): (mob/living/eater, mob/feeder)
 #define COMSIG_FOOD_EATEN "food_eaten"
 
+//Drink
+
+///from base of obj/item/reagent_containers/food/drinks/attack(): (mob/living/M, mob/user)
+#define COMSIG_DRINK_DRANK "drink_drank"
+///from base of obj/item/reagent_containers/glass/attack(): (mob/M, mob/user)
+#define COMSIG_GLASS_DRANK "glass_drank"
 //Gibs
 
 ///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)

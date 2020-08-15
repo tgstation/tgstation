@@ -228,9 +228,9 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	user.visible_message("<span class='danger'>[user] spits neurotoxin!</span>", "<span class='alertalien'>You spit neurotoxin.</span>")
-	var/obj/projectile/bullet/neurotoxin/A = new /obj/projectile/bullet/neurotoxin(user.loc)
-	A.preparePixelProjectile(target, user, params)
-	A.fire()
+	var/obj/projectile/neurotoxin/neurotoxin = new /obj/projectile/neurotoxin(user.loc)
+	neurotoxin.preparePixelProjectile(target, user, params)
+	neurotoxin.fire()
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost)
 

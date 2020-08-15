@@ -37,6 +37,7 @@ SUBSYSTEM_DEF(air)
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
+	var/display_all_groups = FALSE
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -65,6 +66,7 @@ SUBSYSTEM_DEF(air)
 	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
+	setup_turf_visuals()
 	return ..()
 
 
@@ -145,6 +147,7 @@ SUBSYSTEM_DEF(air)
 		resumed = 0
 	currentpart = SSAIR_REBUILD_PIPENETS
 
+	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
@@ -255,8 +258,8 @@ SUBSYSTEM_DEF(air)
 	active_turfs -= T
 	if(currentpart == SSAIR_ACTIVETURFS)
 		currentrun -= T
-	#ifdef VISUALIZE_ACTIVE_TURFS
-	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#00ff00")
+	#ifdef VISUALIZE_ACTIVE_TURFS //Use this when you want details about how the turfs are moving, display_all_groups should work for normal operation
+	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
 	#endif
 	if(istype(T))
 		T.excited = 0
@@ -266,7 +269,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
-		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
+		T.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
 		#endif
 		T.excited = 1
 		active_turfs |= T
@@ -301,6 +304,11 @@ SUBSYSTEM_DEF(air)
 
 	// Clear active turfs - faster than removing every single turf in the world
 	// one-by-one, and Initalize_Atmos only ever adds `src` back in.
+	#ifdef VISUALIZE_ACTIVE_TURFS
+	for(var/jumpy in active_turfs)
+		var/turf/active = jumpy
+		active.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
+	#endif
 	active_turfs.Cut()
 
 	for(var/thing in turfs_to_init)
@@ -380,6 +388,17 @@ SUBSYSTEM_DEF(air)
 		AM.build_network()
 		CHECK_TICK
 
+GLOBAL_LIST_EMPTY(colored_turfs)
+GLOBAL_LIST_EMPTY(colored_images)
+/datum/controller/subsystem/air/proc/setup_turf_visuals()
+	for(var/sharp_color in GLOB.contrast_colors)
+		var/obj/effect/overlay/atmos_excited/suger_high = new()
+		GLOB.colored_turfs += suger_high
+		var/image/shiny = new('icons/effects/effects.dmi', suger_high, "atmos_top", ATMOS_GROUP_LAYER)
+		shiny.plane = ATMOS_GROUP_PLANE
+		shiny.color = sharp_color
+		GLOB.colored_images += shiny
+
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
@@ -415,3 +434,97 @@ SUBSYSTEM_DEF(air)
 		return gas_string
 	var/datum/atmosphere/mix = atmos_gen[gas_string]
 	return mix.gas_string
+
+
+/datum/controller/subsystem/air/ui_state(mob/user)
+	return GLOB.debug_state
+
+/datum/controller/subsystem/air/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AtmosControlPanel")
+		ui.set_autoupdate(FALSE)
+		ui.open()
+
+/datum/controller/subsystem/air/ui_data(mob/user)
+	var/list/data = list()
+	data["excited_groups"] = list()
+	for(var/datum/excited_group/group in excited_groups)
+		var/turf/T = group.turf_list[1]
+		var/area/target = get_area(T)
+		var/max = 0
+		#ifdef TRACK_MAX_SHARE
+		for(var/who in group.turf_list)
+			var/turf/open/lad = who
+			max = max(lad.max_share, max)
+		#endif
+		data["excited_groups"] += list(list(
+			"jump_to" = REF(T), //Just go to the first turf
+			"group" = REF(group),
+			"area" = target.name,
+			"breakdown" = group.breakdown_cooldown,
+			"dismantle" = group.dismantle_cooldown,
+			"size" = group.turf_list.len,
+			"should_show" = group.should_display,
+			"max_share" = max
+		))
+	data["active_size"] = active_turfs.len
+	data["hotspots_size"] = hotspots.len
+	data["excited_size"] = excited_groups.len
+	data["conducting_size"] = active_super_conductivity.len
+	data["frozen"] = can_fire
+	data["show_all"] = display_all_groups
+	data["fire_count"] = times_fired
+	#ifdef TRACK_MAX_SHARE
+	data["display_max"] = TRUE
+	#else
+	data["display_max"] = FALSE
+	#endif
+	var/obj/screen/plane_master/plane = user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
+	data["showing_user"] = (plane.alpha == 255)
+	return data
+
+/datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(..() || !check_rights_for(usr.client, R_DEBUG))
+		return
+	switch(action)
+		if("move-to-target")
+			var/turf/target = locate(params["spot"])
+			if(!target)
+				return
+			usr.forceMove(target)
+			usr.update_parallax_contents()
+		if("toggle-freeze")
+			can_fire = !can_fire
+			return TRUE
+		if("toggle_show_group")
+			var/datum/excited_group/group = locate(params["group"])
+			if(!group)
+				return
+			group.should_display = !group.should_display
+			if(display_all_groups)
+				return TRUE
+			if(group.should_display)
+				group.display_turfs()
+			else
+				group.hide_turfs()
+			return TRUE
+		if("toggle_show_all")
+			display_all_groups = !display_all_groups
+			for(var/datum/excited_group/group in excited_groups)
+				if(display_all_groups)
+					group.display_turfs()
+				else if(!group.should_display) //Don't flicker yeah?
+					group.hide_turfs()
+			return TRUE
+		if("toggle_user_display")
+			var/obj/screen/plane_master/plane = ui.user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
+			if(!plane.alpha)
+				if(ui.user.client)
+					ui.user.client.images += GLOB.colored_images
+				plane.alpha = 255
+			else
+				if(ui.user.client)
+					ui.user.client.images -= GLOB.colored_images
+				plane.alpha = 0
+			return TRUE

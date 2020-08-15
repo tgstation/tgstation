@@ -10,7 +10,8 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
+	attack_verb_continuous = list("mops", "bashes", "bludgeons", "whacks")
+	attack_verb_simple = list("mop", "bash", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
 	var/mopping = 0
 	var/mopcount = 0
@@ -26,12 +27,10 @@
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
 	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
-		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
-		for(var/obj/effect/O in A)
-			if(is_cleanable(O))
-				var/obj/effect/decal/cleanable/C = O
-				cleaner?.mind.adjust_experience(/datum/skill/cleaning, max(round(C.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT,1),0)) //it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
-				qdel(O)
+		for(var/obj/effect/decal/cleanable/cleanable_decal in A)
+			cleaner?.mind.adjust_experience(/datum/skill/cleaning, max(round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1), 0)) //it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
+		A.wash(CLEAN_SCRUB)
+
 	reagents.expose(A, TOUCH, 10)	//Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)

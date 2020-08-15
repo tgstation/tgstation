@@ -97,8 +97,8 @@
 		mood += event.mood_change
 		if(!event.hidden)
 			shown_mood += event.mood_change
-		mood *= mood_modifier
-		shown_mood *= mood_modifier
+	mood *= mood_modifier
+	shown_mood *= mood_modifier
 
 	switch(mood)
 		if(-INFINITY to MOOD_LEVEL_SAD4)

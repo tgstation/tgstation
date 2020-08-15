@@ -60,6 +60,7 @@
 /mob/living/simple_animal/hostile/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
 	// Give spells
+	LAZYINITLIST(mob_spell_list)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
@@ -108,7 +109,7 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animals/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
+/mob/living/simple_animal/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
 	return FALSE
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)

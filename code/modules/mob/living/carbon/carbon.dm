@@ -497,7 +497,7 @@
 			if(T)
 				T.add_vomit_floor(src, VOMIT_TOXIC, purge)//toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
-		if (T != null && is_blocked_turf(T))
+		if (T?.is_blocked_turf())
 			break
 	return TRUE
 
@@ -554,9 +554,10 @@
 	var/stam = getStaminaLoss()
 	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold && !stat)
 		enter_stamcrit()
-	else if(stam_paralyzed)
-		stam_paralyzed = FALSE
-		REMOVE_TRAIT(src,TRAIT_INCAPACITATED, STAMINA)
+	else if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
+		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
+		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	else
 		return
 	update_health_hud()
@@ -921,7 +922,7 @@
 		I.extinguish() //extinguishes our clothes
 	..()
 
-/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
+/mob/living/carbon/fakefire(fire_icon = "Generic_mob_burning")
 	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 	new_fire_overlay.appearance_flags = RESET_COLOR
 	overlays_standing[FIRE_LAYER] = new_fire_overlay
@@ -1106,35 +1107,49 @@
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
 
-/mob/living/carbon/washed(var/atom/washer)
+/mob/living/carbon/wash(clean_types)
 	. = ..()
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 
-	for(var/obj/item/I in held_items)
-		I.washed(washer)
+	// Wash equipped stuff that cannot be covered
+	for(var/obj/item/held_thing in held_items)
+		if(held_thing.wash(clean_types))
+			. = TRUE
 
-	if(back && back.washed(washer))
+	if(back?.wash(clean_types))
 		update_inv_back(0)
+		. = TRUE
 
+	if(head?.wash(clean_types))
+		update_inv_head()
+		. = TRUE
+
+	// Check and wash stuff that can be covered
 	var/list/obscured = check_obscured_slots()
 
-	if(head && head.washed(washer))
-		update_inv_head()
-
-	if(glasses && !(ITEM_SLOT_EYES in obscured) && glasses.washed(washer))
+	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
+	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
 		update_inv_glasses()
+		. = TRUE
 
-	if(wear_mask && !(ITEM_SLOT_MASK in obscured && wear_mask.washed(washer)))
+	if(wear_mask && !(ITEM_SLOT_MASK in obscured) && wear_mask.wash(clean_types))
 		update_inv_wear_mask()
+		. = TRUE
 
-	if(ears && !(HIDEEARS in obscured) && ears.washed(washer))
+	if(ears && !(ITEM_SLOT_EARS in obscured) && ears.wash(clean_types))
 		update_inv_ears()
+		. = TRUE
 
-	if(wear_neck && !(ITEM_SLOT_NECK in obscured) && wear_neck.washed(washer))
+	if(wear_neck && !(ITEM_SLOT_NECK in obscured) && wear_neck.wash(clean_types))
 		update_inv_neck()
+		. = TRUE
 
-	if(shoes && !(HIDESHOES in obscured) && shoes.washed(washer))
+	if(shoes && !(ITEM_SLOT_FEET in obscured) && shoes.wash(clean_types))
 		update_inv_shoes()
+		. = TRUE
+
+	if(gloves && !(ITEM_SLOT_GLOVES in obscured) && gloves.wash(clean_types))
+		update_inv_gloves()
+		. = TRUE
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
@@ -1190,3 +1205,34 @@
   */
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
+
+/// Returns whether or not the carbon should be able to be shocked
+/mob/living/carbon/proc/should_electrocute(power_source)
+	if (ismecha(loc))
+		return FALSE
+
+	if (wearing_shock_proof_gloves())
+		return FALSE
+
+	if(!get_powernet_info_from_source(power_source))
+		return FALSE
+
+	if (HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+		return FALSE
+
+	return TRUE
+
+/// Returns if the carbon is wearing shock proof gloves
+/mob/living/carbon/proc/wearing_shock_proof_gloves()
+	return gloves?.siemens_coefficient == 0
+
+/// Modifies max_skillchip_count and updates active skillchips
+/mob/living/carbon/proc/adjust_skillchip_complexity_modifier(delta)
+	skillchip_complexity_modifier += delta
+
+	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
+
+	if(!brain)
+		return
+
+	brain.update_skillchips()

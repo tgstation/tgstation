@@ -5,18 +5,28 @@ GLOBAL_VAR(restart_counter)
 /**
   * World creation
   *
-  * Here is where a round itself is actually begun and setup, lots of important config changes happen here
+  * Here is where a round itself is actually begun and setup.
   * * db connection setup
   * * config loaded from files
   * * loads admins
   * * Sets up the dynamic menu system
   * * and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up
   *
-  * Note this happens after the Master subsystem is created (as that is a global datum), this means all the subsystems exist,
-  * but they have not been Initialized at this point, only their New proc has run
   *
   * Nothing happens until something moves. ~Albert Einstein
   *
+  * For clarity, this proc gets triggered later in the initialization pipeline, it is not the first thing to happen, as it might seem.
+  *
+  * Initialization Pipeline:
+  *		Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
+  *		Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
+  *		world/New() (You are here)
+  *		Once world/New() returns, client's can connect.
+  *		1 second sleep
+  *		Master Controller initialization.
+  *		Subsystem initialization.
+  *			Non-compiled-in maps are maploaded, all atoms are new()ed
+  *			All atoms in both compiled and uncompiled maps are initialized()
   */
 /world/New()
 	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
@@ -27,14 +37,7 @@ GLOBAL_VAR(restart_counter)
 	enable_reference_tracking()
 #endif
 
-	//Early profile for auto-profiler - will be stopped on profiler init if necessary.
-#if DM_BUILD >= 1506
-	world.Profile(PROFILE_START)
-#endif
-
 	log_world("World loaded at [time_stamp()]!")
-
-	SetupExternalRSC()
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -77,8 +80,9 @@ GLOBAL_VAR(restart_counter)
 
 	Master.Initialize(10, FALSE, TRUE)
 
-	if(TEST_RUN_PARAMETER in params)
-		HandleTestRun()
+	#ifdef UNIT_TESTS
+	HandleTestRun()
+	#endif
 
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
@@ -95,18 +99,8 @@ GLOBAL_VAR(restart_counter)
 #else
 	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
 #endif
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/addtimer, cb, 10 SECONDS))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/_addtimer, cb, 10 SECONDS))
 
-/world/proc/SetupExternalRSC()
-#if (PRELOAD_RSC == 0)
-	GLOB.external_rsc_urls = world.file2list("[global.config.directory]/external_rsc_urls.txt","\n")
-	var/i=1
-	while(i<=GLOB.external_rsc_urls.len)
-		if(GLOB.external_rsc_urls[i])
-			i++
-		else
-			GLOB.external_rsc_urls.Cut(i,i+1)
-#endif
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -253,9 +247,10 @@ GLOBAL_VAR(restart_counter)
 
 	TgsReboot()
 
-	if(TEST_RUN_PARAMETER in params)
-		FinishTestRun()
-		return
+	#ifdef UNIT_TESTS
+	FinishTestRun()
+	return
+	#endif
 
 	if(TgsAvailable())
 		var/do_hard_reboot

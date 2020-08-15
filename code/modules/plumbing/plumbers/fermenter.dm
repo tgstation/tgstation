@@ -3,10 +3,10 @@
 	desc = "Turns plants into various types of booze."
 	icon_state = "fermenter"
 	layer = ABOVE_ALL_MOB_LAYER
+
 	reagent_flags = TRANSPARENT | DRAINABLE
-	rcd_cost = 30
-	rcd_delay = 30
 	buffer = 400
+
 	///input dir
 	var/eat_dir = SOUTH
 

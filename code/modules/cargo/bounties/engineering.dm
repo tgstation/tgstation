@@ -34,18 +34,6 @@
 	description = "Our R&D department is working on the development of more efficient electrical batteries using hydrogen as a catalyst. Ship us a tank full of it. (20 Moles)"
 	gas_type = /datum/gas/hydrogen
 
-/datum/bounty/item/engineering/energy_ball
-	name = "Contained Tesla Ball"
-	description = "Station 24 is being overrun by hordes of angry Mothpeople. They are requesting the ultimate bug zapper."
-	reward = 75000 //requires 14k credits of purchases, not to mention cooperation with engineering/heads of staff to set up inside the cramped shuttle
-	wanted_types = list(/obj/singularity/energy_ball)
-
-/datum/bounty/item/engineering/energy_ball/applies_to(obj/O)
-	if(!..())
-		return FALSE
-	var/obj/singularity/energy_ball/T = O
-	return !T.miniball
-
 /datum/bounty/item/engineering/emitter
 	name = "Emitter"
 	description = "We think there may be a defect in your station's emitter designs, based on the sheer number of delaminations your sector seems to see. Ship us one of yours."

@@ -9,7 +9,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 
 	force = 10
-	attack_verb = list("beaten")
+	attack_verb_continuous = list("beats")
+	attack_verb_simple = list("beat")
 
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
@@ -224,7 +225,7 @@
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
 	L.Jitter(20)
-	L.confused = max(confusion_amt, L.confused)
+	L.set_confusion(max(confusion_amt, L.get_confusion()))
 	L.stuttering = max(8, L.stuttering)
 	L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
 

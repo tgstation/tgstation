@@ -4,7 +4,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_STOMACH
-	attack_verb = list("gored", "squished", "slapped", "digested")
+	attack_verb_continuous = list("gores", "squishes", "slaps", "digests")
+	attack_verb_simple = list("gore", "squish", "slap", "digest")
 	desc = "Onaka ga suite imasu."
 
 	healing_factor = STANDARD_ORGAN_HEALING
@@ -51,13 +52,13 @@
 		if(H.disgust >= DISGUST_LEVEL_GROSS)
 			if(prob(10))
 				H.stuttering += 1
-				H.confused += 2
+				H.add_confusion(2)
 			if(prob(10) && !H.stat)
 				to_chat(H, "<span class='warning'>You feel kind of iffy...</span>")
 			H.jitteriness = max(H.jitteriness - 3, 0)
 		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
-				H.confused += 2.5
+				H.add_confusion(2.5)
 				H.stuttering += 1
 				H.vomit(10, 0, 1, 0, 1, 0)
 			H.Dizzy(5)

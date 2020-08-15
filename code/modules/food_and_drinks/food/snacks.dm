@@ -250,17 +250,19 @@ All foods are distributed among various categories. Use common sense.
 		slice.foodtype = foodtype //if something happens that overrode our food type, make sure the slice carries that over
 
 /obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
-	if(trash)
-		if(ispath(trash, /obj/item))
-			. = new trash(location)
-			trash = null
-			return
-		else if(isitem(trash))
-			var/obj/item/trash_item = trash
-			trash_item.forceMove(location)
-			. = trash
-			trash = null
-			return
+	if(!trash)
+		return
+
+	if(ispath(trash, /obj/item))
+		. = new trash(location)
+		trash = null
+		return
+	else if(isitem(trash))
+		var/obj/item/trash_item = trash
+		trash_item.forceMove(location)
+		. = trash
+		trash = null
+		return
 
 /obj/item/reagent_containers/food/snacks/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
 	cut_overlays()
@@ -315,13 +317,13 @@ All foods are distributed among various categories. Use common sense.
 		if(isdog(M))
 			var/mob/living/L = M
 			if(bitecount == 0 || prob(50))
-				M.emote("me", 1, "nibbles away at \the [src]")
+				M.manual_emote("nibbles away at \the [src]")
 			bitecount++
 			L.taste(reagents) // why should carbons get all the fun?
 			if(bitecount >= 5)
 				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
 				if(sattisfaction_text)
-					M.emote("me", 1, "[sattisfaction_text]")
+					M.manual_emote(sattisfaction_text)
 				qdel(src)
 
 
