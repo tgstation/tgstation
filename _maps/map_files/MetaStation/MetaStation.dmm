@@ -65194,7 +65194,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "dhU" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/structure/window/reinforced{
 	dir = 8
 	},

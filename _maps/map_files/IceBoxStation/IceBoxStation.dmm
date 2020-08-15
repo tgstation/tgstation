@@ -5759,7 +5759,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "amO" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/wood,
@@ -16453,7 +16453,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aMq" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/wood,
