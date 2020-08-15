@@ -30,6 +30,11 @@ const loadChatFromStorage = async store => {
     storage.get('chat-state'),
     storage.get('chat-messages'),
   ]);
+  // Discard incompatible versions
+  if (state && state.version <= 4) {
+    store.dispatch(loadChat());
+    return;
+  }
   if (messages) {
     const batch = [
       ...messages,

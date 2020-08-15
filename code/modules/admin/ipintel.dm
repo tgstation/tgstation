@@ -134,8 +134,3 @@
 /proc/log_ipintel(text)
 	log_game("IPINTEL: [text]")
 	debug_admins("IPINTEL: [text]")
-
-
-
-
-
