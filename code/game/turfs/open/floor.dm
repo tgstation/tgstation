@@ -23,6 +23,7 @@
 	var/list/burnt_states
 
 	tiled_dirt = TRUE
+	smoothing_groups = list(SMOOTH_GROUP_OPEN_FLOOR)
 
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
