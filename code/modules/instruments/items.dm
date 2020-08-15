@@ -24,7 +24,7 @@
 	return ..()
 
 /obj/item/instrument/proc/should_stop_playing(mob/user)
-	return !user.canUseTopic(src, TRUE, FALSE, TRUE, TRUE)
+	return user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user)))		// sorry, no more TK playing.
 
 /obj/item/instrument/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
