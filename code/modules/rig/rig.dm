@@ -17,6 +17,8 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	actions_types = list(/datum/action/item_action/rig/deploy, /datum/action/item_action/rig/activate)
 	resistance_flags = ACID_PROOF
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	permeability_coefficient = 0.01
 	/// How the RIG and things connected to it look
 	var/theme = "engi"
@@ -78,42 +80,40 @@
 	if(ispath(helmet))
 		helmet = new helmet(src)
 		helmet.rig = src
-		helmet.armor = armor
-		helmet.resistance_flags = resistance_flags
-		helmet.icon_state = "[theme]-helmet"
-		helmet.worn_icon_state = "[theme]-helmet"
 		LAZYADD(rig_parts, helmet)
 	if(ispath(chestplate))
 		chestplate = new chestplate(src)
 		chestplate.rig = src
-		chestplate.armor = armor
-		chestplate.resistance_flags = resistance_flags
-		chestplate.icon_state = "[theme]-chestplate"
-		chestplate.worn_icon_state = "[theme]-chestplate"
 		LAZYADD(rig_parts, chestplate)
 	if(ispath(gauntlets))
 		gauntlets = new gauntlets(src)
 		gauntlets.rig = src
-		gauntlets.armor = armor
-		gauntlets.resistance_flags = resistance_flags
-		gauntlets.icon_state = "[theme]-gauntlets"
-		gauntlets.worn_icon_state = "[theme]-gauntlets"
 		LAZYADD(rig_parts, gauntlets)
 	if(ispath(boots))
 		boots = new boots(src)
 		boots.rig = src
-		boots.armor = armor
-		boots.resistance_flags = resistance_flags
-		boots.icon_state = "[theme]-boots"
-		boots.worn_icon_state = "[theme]-boots"
 		LAZYADD(rig_parts, boots)
-	if(initial_modules)
+	if(LAZYLEN(rig_parts))
+		for(var/obj/item/piece in rig_parts)
+			piece.desc = "It seems to be a part of [src]."
+			piece.armor = armor.Copy()
+			piece.resistance_flags = resistance_flags
+			piece.max_heat_protection_temperature = max_heat_protection_temperature
+			piece.min_cold_protection_temperature = min_cold_protection_temperature
+			piece.permeability_coefficient = permeability_coefficient
+			if(piece.siemens_coefficient > siemens_coefficient)
+				piece.siemens_coefficient = siemens_coefficient
+			piece.icon_state = "[theme]-[icon_state]"
+			piece.worn_icon_state = "[theme]-[icon_state]"
+	if(initial_modules.len)
 		for(var/obj/item/rig/module/module in initial_modules)
 			module = new module(src)
 			install(module, TRUE)
 
+
 /obj/item/rig/control/Destroy()
 	..()
+	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(wires)
 	if(cell)
 		QDEL_NULL(cell)
@@ -302,7 +302,7 @@
 /obj/item/clothing/head/helmet/space/rig
 	name = "RIG helmet"
 	icon = 'icons/obj/rig.dmi'
-	icon_state = "rig-helmet"
+	icon_state = "helmet"
 	worn_icon = 'icons/mob/rig.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	flash_protect = FLASH_PROTECTION_NONE
@@ -323,7 +323,7 @@
 /obj/item/clothing/suit/armor/rig
 	name = "RIG chestplate"
 	icon = 'icons/obj/rig.dmi'
-	icon_state = "rig-chestplate"
+	icon_state = "chestplate"
 	worn_icon = 'icons/mob/rig.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -346,7 +346,7 @@
 /obj/item/clothing/gloves/rig
 	name = "RIG gauntlets"
 	icon = 'icons/obj/rig.dmi'
-	icon_state = "rig-gauntlets"
+	icon_state = "gauntlets"
 	worn_icon = 'icons/mob/rig.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	resistance_flags = ACID_PROOF
@@ -362,7 +362,7 @@
 /obj/item/clothing/shoes/rig
 	name = "RIG boots"
 	icon = 'icons/obj/rig.dmi'
-	icon_state = "rig-boots"
+	icon_state = "boots"
 	worn_icon = 'icons/mob/rig.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	resistance_flags = ACID_PROOF
