@@ -35,7 +35,7 @@
 		metal_stack.use(1)
 		var/obj/structure/reagent_dispensers/plumbed/storage/new_tank = new /obj/structure/reagent_dispensers/plumbed/storage(drop_location())
 		new_tank.reagents.maximum_volume = reagents.maximum_volume
-		reagents.trans_to(new_tank, (reagents.total_volume))
+		reagents.trans_to(new_tank, reagents.total_volume)
 		new_tank.name = "stationary [name]"
 		new_tank.update_overlays()
 		new_tank.anchored = anchored
