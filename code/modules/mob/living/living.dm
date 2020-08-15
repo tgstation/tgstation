@@ -1628,7 +1628,7 @@
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 
-/mob/living/set_stat()
+/mob/living/set_stat(new_stat)
 	. = ..()
 	if(isnull(.))
 		return
