@@ -1,4 +1,5 @@
 //////////////////WELCOME TO MECHA.DM, ENJOY YOUR STAY\\\\\\\\\\\\\\\\\
+
 /**
   * Mechs are now (finally) vehicles, this means you can make them multicrew
   * They can also grant select ability buttons based on occupant bitflags
@@ -53,17 +54,13 @@
 	var/obj/item/stock_parts/capacitor/capacitor
 	///Whether the mechs maintenance protocols are on or off
 	var/construction_state = MECHA_LOCKED
-	///Whether we can use our ID to upload new access
-	var/add_req_access = TRUE
-	///Whether we can use out ID to alter the required maintenance mode access
-	var/maint_access = FALSE
+	///Contains flags for the mecha
+	var/mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
 	///Stores the DNA enzymes of a carbon so tht only they can access the mech
 	var/dna_lock
 	///Spark effects are handled by this datum
 	var/datum/effect_system/spark_spread/spark_system = new
-	///Whether the lights are on or off
-	var/lights = FALSE
-	///How powerfu our lights are
+	///How powerful our lights are
 	var/lights_power = 6
 	///Just stop the mech from doing anything
 	var/completely_disabled = FALSE
@@ -118,9 +115,6 @@
 	///Cooldown duration between melee punches
 	var/melee_cooldown = 10
 
-	///Bool for if in AI is driving
-	var/silicon_pilot = FALSE
-
 	///TIme taken to leave the mech
 	var/exit_delay = 2 SECONDS
 	///Time you get slept for if you get forcible ejected by the mech exploding
@@ -163,10 +157,6 @@
 
 	///Wether we are strafing
 	var/strafe = FALSE
-	//Can we turn on strafing?
-	var/canstrafe = TRUE
-	///Does this mech have lights we can enable?
-	var/haslights = TRUE
 
 	///Cooldown length between bumpsmashes
 	var/smashcooldown = 3
@@ -205,7 +195,7 @@
 	update_icon()
 
 /obj/vehicle/sealed/mecha/update_icon_state()
-	if(silicon_pilot && silicon_icon_state)
+	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
 		icon_state = silicon_icon_state
 	else if(LAZYLEN(occupants))
 		icon_state = initial(icon_state)
@@ -364,7 +354,7 @@
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
 			. += "[icon2html(ME, user)] \A [ME]."
 	if(!enclosed)
-		if(silicon_pilot)
+		if(mecha_flags & SILICON_PILOT)
 			. += "[src] appears to be piloting itself..."
 		else
 			for(var/occupante in occupants)
@@ -485,7 +475,7 @@
 					break  // all good
 				checking = checking.loc
 
-	if(lights)
+	if(mecha_flags & LIGHTS_ON)
 		var/lights_energy_drain = 2
 		use_power(lights_energy_drain)
 
@@ -502,19 +492,19 @@
 
 /obj/vehicle/sealed/mecha/fire_act() //Check if we should ignite the pilot of an open-canopy mech
 	. = ..()
-	if(LAZYLEN(occupants) && !enclosed && !silicon_pilot)
+	if(LAZYLEN(occupants) && !enclosed && !(mecha_flags & SILICON_PILOT))
 		for(var/M in occupants)
 			var/mob/living/cookedalive = M
 			if(cookedalive.fire_stacks < 5)
 				cookedalive.fire_stacks += 1
 				cookedalive.IgniteMob()
 
-/obj/vehicle/sealed/mecha/proc/display_speech_bubble()
+/obj/vehicle/sealed/mecha/proc/display_speech_bubble(datum/source, list/speech_args)
 	var/list/speech_bubble_recipients = get_hearers_in_view(7,src)
 	for(var/mob/M in speech_bubble_recipients)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(speech_args[SPEECH_MESSAGE])]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 ////////////////////////////
 ///// Action processing ////
@@ -557,7 +547,7 @@
 				return
 			selected.action(user, target, params)
 			return
-		if(selected.range & MECHA_MELEE) && Adjacent(target))
+		if((selected.range & MECHA_MELEE) && Adjacent(target))
 			if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
 				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
@@ -792,7 +782,7 @@
 			AI.radio_enabled = FALSE
 			AI.disconnect_shell()
 			remove_occupant(AI)
-			silicon_pilot = FALSE
+			mecha_flags  &= ~SILICON_PILOT
 			AI.forceMove(card)
 			card.AI = AI
 			AI.controlled_mech = null
@@ -832,7 +822,7 @@
 //Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/vehicle/sealed/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
 	AI.ai_restore_power()
-	silicon_pilot = TRUE
+	mecha_flags |= SILICON_PILOT
 	moved_inside(AI)
 	AI.cancel_camera()
 	AI.controlled_mech = src
@@ -952,7 +942,7 @@
 	H.update_mouse_pointer()
 	add_fingerprint(H)
 	log_message("[H] moved in as pilot.", LOG_MECHA)
-	updateicon()
+	update_icon()
 	setDir(dir_in)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(!internal_damage)
@@ -995,7 +985,7 @@
 
 	M.mecha = src
 	add_occupant(B)
-	silicon_pilot = TRUE
+	mecha_flags |= SILICON_PILOT
 	B.forceMove(src) //should allow relaymove
 	B.reset_perspective(src)
 	B.remote_control = src
@@ -1040,7 +1030,7 @@
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
-			silicon_pilot = FALSE
+			mecha_flags  &= ~SILICON_PILOT
 			return
 		else
 			if(!AI.linked_core)
@@ -1056,7 +1046,7 @@
 	else
 		return ..()
 	var/mob/living/L = M
-	silicon_pilot = FALSE
+	mecha_flags  &= ~SILICON_PILOT
 	if(mob_container.forceMove(newloc))//ejecting mob container
 		log_message("[mob_container] moved out.", LOG_MECHA)
 		L << browse(null, "window=exosuit")

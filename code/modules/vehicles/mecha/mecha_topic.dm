@@ -137,8 +137,8 @@
 	<div class='wr'>
 		<div class='header'>Permissions & Logging</div>
 		<div class='links'>
-			<a href='?src=[REF(src)];toggle_id_upload=1'><span id='t_id_upload'>[add_req_access?"L":"Unl"]ock ID upload panel</span></a><br>
-			<a href='?src=[REF(src)];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
+			<a href='?src=[REF(src)];toggle_id_upload=1'><span id='t_id_upload'>[(mecha_flags & ADDING_ACCESS_POSSIBLE)?"L":"Unl"]ock ID upload panel</span></a><br>
+			<a href='?src=[REF(src)];toggle_maint_access=1'><span id='t_maint_access'>[(mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)?"Forbid":"Permit"] maintenance protocols</span></a><br>
 			[internal_tank?"<a href='?src=[REF(src)];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>":""]
 			<a href='?src=[REF(src)];dna_lock=1'>DNA-lock</a><br>
 			<a href='?src=[REF(src)];change_name=1'>Change exosuit name</a>
@@ -202,8 +202,8 @@
 				</style>
 			</head>
 			<body>
-				[add_req_access?"<a href='?src=[REF(src)];req_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Edit operation keycodes</a>":null]
-				[maint_access?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>[(construction_state > MECHA_LOCKED) ? "Terminate" : "Initiate"] maintenance protocol</a>":null]
+				[(mecha_flags & ADDING_ACCESS_POSSIBLE)?"<a href='?src=[REF(src)];req_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Edit operation keycodes</a>":null]
+				[(mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>[(construction_state > MECHA_LOCKED) ? "Terminate" : "Initiate"] maintenance protocol</a>":null]
 				[(construction_state == MECHA_OPEN_HATCH) ?"--------------------</br>":null]
 				[(construction_state == MECHA_OPEN_HATCH) ?"[cell?"<a href='?src=[REF(src)];drop_cell=1;id_card=[REF(id_card)];user=[REF(user)]'>Drop power cell</a>":"No cell installed</br>"]":null]
 				[(construction_state == MECHA_OPEN_HATCH) ?"[scanmod?"<a href='?src=[REF(src)];drop_scanmod=1;id_card=[REF(id_card)];user=[REF(user)]'>Drop scanning module</a>":"No scanning module installed</br>"]":null]
@@ -243,13 +243,13 @@
 				return
 
 			if(href_list["req_access"])
-				if(!add_req_access)
+				if(!(mecha_flags & ADDING_ACCESS_POSSIBLE))
 					return
 				output_access_dialog(id_card,usr)
 				return
 
 			if(href_list["maint_access"])
-				if(!maint_access)
+				if(!(mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE))
 					return
 				if(construction_state == MECHA_LOCKED)
 					construction_state = MECHA_SECURE_BOLTS
@@ -279,14 +279,14 @@
 				return
 
 			if(href_list["add_req_access"])
-				if(!add_req_access)
+				if(!(mecha_flags & ADDING_ACCESS_POSSIBLE))
 					return
 				operation_req_access += text2num(href_list["add_req_access"])
 				output_access_dialog(id_card,usr)
 				return
 
 			if(href_list["del_req_access"])
-				if(!add_req_access)
+				if(!(mecha_flags & ADDING_ACCESS_POSSIBLE))
 					return
 				operation_req_access -= text2num(href_list["del_req_access"])
 				output_access_dialog(id_card, usr)
@@ -295,7 +295,7 @@
 
 		//Here ID access stuff goes to die.
 		if(href_list["finish_req_access"])
-			add_req_access = 0
+			(mecha_flags &= ~ADDING_ACCESS_POSSIBLE)
 			usr << browse(null,"window=exosuit_add_access")
 			return
 
@@ -356,8 +356,8 @@
 
 	//Toggles ID upload.
 	if (href_list["toggle_id_upload"])
-		add_req_access = !add_req_access
-		send_byjax(usr,"exosuit.browser","t_id_upload","[add_req_access?"L":"Unl"]ock ID upload panel")
+		(mecha_flags ^= ADDING_ACCESS_POSSIBLE)
+		send_byjax(usr,"exosuit.browser","t_id_upload","[(mecha_flags & ADDING_ACCESS_POSSIBLE)?"L":"Unl"]ock ID upload panel")
 		return
 
 	//Toggles main access.
@@ -365,8 +365,8 @@
 		if(construction_state)
 			to_chat(occupants, "[icon2html(src, occupants)]<span class='danger'>Maintenance protocols in effect</span>")
 			return
-		maint_access = !maint_access
-		send_byjax(usr,"exosuit.browser","t_maint_access","[maint_access?"Forbid":"Permit"] maintenance protocols")
+		(mecha_flags ^= ADDING_MAINT_ACCESS_POSSIBLE)
+		send_byjax(usr,"exosuit.browser","t_maint_access","[(mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)?"Forbid":"Permit"] maintenance protocols")
 		return
 
 	//Toggles connection port.

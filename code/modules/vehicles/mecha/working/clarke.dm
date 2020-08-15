@@ -14,7 +14,7 @@
 	max_equip = 7
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
-	canstrafe = FALSE
+	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED
 	/// Handles an internal ore box for Clarke
 	var/obj/structure/ore_box/box
 

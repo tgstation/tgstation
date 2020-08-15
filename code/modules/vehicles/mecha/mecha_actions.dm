@@ -91,15 +91,18 @@
 /datum/action/vehicle/sealed/mecha/mech_toggle_lights/Trigger()
 	if(!owner || !chassis || !locate(owner) in chassis.occupants)
 		return
-	chassis.lights = !chassis.lights
-	if(chassis.lights)
+	if(!(chassis.mecha_flags & HAS_LIGHTS))
+		to_chat(owner, "<span class='warning'>This mechs lights are destroyed!</span>")
+		return
+	chassis.mecha_flags ^= LIGHTS_ON
+	if(chassis.mecha_flags & LIGHTS_ON)
 		chassis.set_light(chassis.lights_power)
 		button_icon_state = "mech_lights_on"
 	else
 		chassis.set_light(-chassis.lights_power)
 		button_icon_state = "mech_lights_off"
-	to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Toggled lights [chassis.lights?"on":"off"].</span>")
-	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].", LOG_MECHA)
+	to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].</span>")
+	chassis.log_message("Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
 	UpdateButtonIcon()
 
 /datum/action/vehicle/sealed/mecha/mech_view_stats
@@ -185,7 +188,7 @@
 	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_SMOKE) && chassis.smoke_charges>0)
 		chassis.smoke_system.start()
 		chassis.smoke_charges--
-		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_SMOKE, smoke_cooldown)
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_SMOKE, chassis.smoke_cooldown)
 
 
 /datum/action/vehicle/sealed/mecha/mech_zoom

@@ -109,7 +109,7 @@
 	. = ..()
 
 /obj/vehicle/sealed/mecha/bullet_act(obj/projectile/Proj) //wrapper
-	if(!enclosed && LAZYLEN(occupants) && !silicon_pilot && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit the pilot of open-canopy mechs
+	if(!enclosed && LAZYLEN(occupants) && !(mecha_flags  & SILICON_PILOT) && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit the pilot of open-canopy mechs
 		for(var/m in occupants)
 			var/mob/living/hitmob = m
 			hitmob.bullet_act(Proj) //If the sides are open, the occupant can be hit
@@ -192,7 +192,7 @@
 		return
 
 	if(W.GetID())
-		if(add_req_access || maint_access)
+		if((mecha_flags & ADDING_ACCESS_POSSIBLE) || (mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE))
 			if(internals_access_allowed(user))
 				var/obj/item/card/id/id_card
 				if(istype(W, /obj/item/card/id))

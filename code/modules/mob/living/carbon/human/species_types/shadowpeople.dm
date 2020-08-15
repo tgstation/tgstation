@@ -217,9 +217,9 @@
 
 	else if(ismecha(AM))
 		var/obj/vehicle/sealed/mecha/M = AM
-		if(M.haslights)
+		if(M.mecha_flags & HAS_LIGHTS)
 			M.visible_message("<span class='danger'>[M]'s lights burn out!</span>")
-			M.haslights = FALSE
+			M.mecha_flags &= ~HAS_LIGHTS
 		M.set_light(-M.lights_power)
 		for(var/O in M.occupants)
 			var/mob/living/occupant = O

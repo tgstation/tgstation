@@ -361,7 +361,7 @@
 	if(M.cargo.len)
 		to_chat(loc, "<span class='warning'>[M]'s cargo hold must be empty before this conversion kit can be applied.</span>")
 		return FALSE
-	if(!M.maint_access) //non-removable upgrade, so lets make sure the pilot or owner has their say.
+	if(!(M.mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
 		to_chat(loc, "<span class='warning'>[M] must have maintenance protocols active in order to allow this conversion kit.</span>")
 		return FALSE
 	if(LAZYLEN(M.occupants)) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
@@ -399,7 +399,7 @@
 		E.detach(M)
 		E.attach(N)
 	N.dna_lock = M.dna_lock
-	N.maint_access = M.maint_access
+	N.mecha_flags = M.mecha_flags
 	N.strafe = M.strafe
 	N.obj_integrity = M.obj_integrity //This is not a repair tool
 	if (M.name != "\improper APLU MK-I \"Ripley\"")
