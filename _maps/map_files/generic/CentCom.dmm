@@ -161,9 +161,9 @@
 /area/holodeck/rec_center/bunker)
 "az" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/matches{
-	pixel_x = -4;
-	pixel_y = 8
+/obj/item/lighter{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/open/floor/holofloor{
 	dir = 9;
@@ -305,13 +305,11 @@
 /area/holodeck/rec_center/lounge)
 "aU" = (
 /turf/open/floor/holofloor{
-	dir = 9;
 	icon_state = "stairs-l"
 	},
 /area/holodeck/rec_center/lounge)
 "aV" = (
 /turf/open/floor/holofloor{
-	dir = 9;
 	icon_state = "stairs-r"
 	},
 /area/holodeck/rec_center/lounge)
