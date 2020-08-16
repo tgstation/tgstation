@@ -191,6 +191,7 @@
 	desc = "A mysterious pendant. An inscription on it says: \"Certain death tomorrow means certain life today.\""
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "memento_mori"
+	worn_icon_state = "memento"
 	actions_types = list(/datum/action/item_action/hands_free/memento_mori)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/human/active_owner
@@ -323,7 +324,7 @@
 /obj/item/warp_cube/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = current_location.loc
-	if(!linked || current_area.noteleport)
+	if(!linked || (current_area.area_flags & NOTELEPORT))
 		to_chat(user, "<span class='warning'>[src] fizzles uselessly.</span>")
 		return
 	if(teleporting)
@@ -706,8 +707,8 @@
 	icon_state = "cleaving_saw"
 	icon_state_on = "cleaving_saw_open"
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb_off = list("attacked", "sawed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
-	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
+	attack_verb_off = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_on = list("cleaves", "swipes", "slashes", "chops")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
@@ -822,7 +823,8 @@
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "rended")
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
@@ -931,7 +933,7 @@
 				user.mind.AddSpell(D)
 		if(4)
 			to_chat(user, "<span class='danger'>You feel like you could walk straight through lava now.</span>")
-			H.weather_immunities |= "lava"
+			LAZYOR(H.weather_immunities, "lava")
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
@@ -1139,7 +1141,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15
-	attack_verb = list("clubbed", "beat", "pummeled")
+	attack_verb_continuous = list("clubs", "beats", "pummels")
+	attack_verb_simple = list("club", "beat", "pummel")
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
@@ -1179,6 +1182,9 @@
 	. = ..()
 	var/turf/T = get_turf(target)
 	if(!T || timer > world.time)
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>")
 		return
 	calculate_anger_mod(user)
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown

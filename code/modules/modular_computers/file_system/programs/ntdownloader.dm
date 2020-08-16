@@ -1,14 +1,14 @@
 /datum/computer_file/program/ntnetdownload
-	filename = "ntndownloader"
-	filedesc = "Software Download Tool"
+	filename = "ntsoftwarehub"
+	filedesc = "NT Software Hub"
 	program_icon_state = "generic"
 	extended_desc = "This program allows downloads of software from official NT repositories"
-	unsendable = 1
-	undeletable = 1
+	unsendable = TRUE
+	undeletable = TRUE
 	size = 4
-	requires_ntnet = 1
+	requires_ntnet = TRUE
 	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
-	available_on_ntnet = 0
+	available_on_ntnet = FALSE
 	ui_header = "downloader_finished.gif"
 	tgui_id = "NtosNetDownloader"
 
@@ -125,6 +125,8 @@
 
 	if(!istype(my_computer))
 		return
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/list/access = card_slot?.GetAccess()
 
 	var/list/data = get_header_data()
 
@@ -146,7 +148,7 @@
 	for(var/A in main_repo)
 		var/datum/computer_file/program/P = A
 		// Only those programs our user can run will show in the list
-		if(!P.can_run(user,transfer = 1) || hard_drive.find_file_by_name(P.filename))
+		if(!P.can_run(user,transfer = 1, access = access) || hard_drive.find_file_by_name(P.filename))
 			continue
 		all_entries.Add(list(list(
 			"filename" = P.filename,

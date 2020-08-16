@@ -25,7 +25,7 @@
 	if(owner_overmind)
 		overmind = owner_overmind
 		var/area/Ablob = get_area(src)
-		if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+		if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
 			overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
@@ -50,7 +50,7 @@
 /obj/structure/blob/blob_act()
 	return
 
-/obj/structure/blob/Adjacent(var/atom/neighbour)
+/obj/structure/blob/Adjacent(atom/neighbour)
 	. = ..()
 	if(.)
 		var/result = 0
@@ -207,13 +207,14 @@
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
-/obj/structure/blob/zap_act(power)
-	. = ..()
+/obj/structure/blob/zap_act(power, zap_flags)
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
-			take_damage(power/400, BURN, "energy")
+			take_damage(power * 0.0025, BURN, "energy")
 	else
-		take_damage(power/400, BURN, "energy")
+		take_damage(power * 0.0025, BURN, "energy")
+	power -= power * 0.0025 //You don't get to do it for free
+	return ..() //You don't get to do it for free
 
 /obj/structure/blob/extinguish()
 	..()

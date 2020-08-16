@@ -2154,11 +2154,6 @@
 /obj/effect/decal/cleanable/oil,
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/ancientstation/deltaai)
-"fz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/field/generator,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fA" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/airless{
@@ -4378,11 +4373,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/proto)
-"kl" = (
-/obj/structure/table/reinforced,
-/obj/machinery/the_singularitygen,
-/turf/open/floor/plasteel/white,
-/area/ruin/space/has_grav/ancientstation/proto)
 "km" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -4498,14 +4488,6 @@
 /obj/machinery/door/poddoor{
 	id = "proto"
 	},
-/turf/open/floor/plasteel/white,
-/area/ruin/space/has_grav/ancientstation/proto)
-"kz" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/item/paper/fluff/ruins/oldstation/protosing,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "kA" = (
@@ -5168,6 +5150,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
+"mm" = (
+/obj/structure/table/reinforced,
+/obj/machinery/power/supermatter_crystal/shard,
+/obj/structure/closet/crate/engineering{
+	name = "supermatter shard crate"
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/ancientstation/proto)
 "mn" = (
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
@@ -5957,14 +5947,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
-"nU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 25
-	},
-/obj/structure/closet/crate,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "nV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/science{
@@ -6699,11 +6681,6 @@
 /obj/item/stack/rods,
 /turf/template_noop,
 /area/space/nearstation)
-"td" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/particle_accelerator/particle_emitter/center,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "tn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair,
@@ -6719,12 +6696,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
-"tT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/particle_accelerator/end_cap,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "up" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -6745,6 +6716,14 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/betacorridor)
+"uP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 25
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "uR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
@@ -6801,6 +6780,11 @@
 /obj/item/wallframe/camera,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
+"wj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "wz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
@@ -6808,11 +6792,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
-"wC" = (
-/obj/structure/particle_accelerator/power_box,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "wL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6931,11 +6910,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/ancientstation/atmo)
-"BH" = (
-/obj/structure/particle_accelerator/particle_emitter/left,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "BX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/glass,
@@ -7167,11 +7141,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
-"Ku" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/particle_accelerator/control_box,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "Ky" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/airless,
@@ -7186,6 +7155,16 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/ancientstation/atmo)
+"KG" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/paper/fluff/ruins/oldstation/protosing{
+	info = "<b>*Supermatter Crystal Shard*</b><br><br>Modern power generation typically comes in two forms, a Fusion Generator or a Fission Generator. Fusion provides the best space to power \ntratio, and is typically seen on military or high security ships and stations, however Fission reactors require the usage of expensive, and rare, materials in its construction. Fission generators are massive and bulky, and require a large reserve of uranium to power, however they are extremely cheap to operate and oft need little maintenance once \ntoperational.<br><br>The Supermatter aims to alter this, a functional Supermatter is essentially a gas producer that generates far more radiation than Fusion or Fission \ntgenerators can ever hope to produce. "
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/ancientstation/proto)
 "KO" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless{
@@ -7212,12 +7191,6 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/ancientstation/atmo)
-"Ll" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/particle_accelerator/particle_emitter/right,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "Ln" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
@@ -7470,12 +7443,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
-"Sf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/particle_accelerator/fuel_chamber,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "Sn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7491,6 +7458,22 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
+"SI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/engineering{
+	name = "radiation suit crate"
+	},
+/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/radiation,
+/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/radiation,
+/obj/item/geiger_counter,
+/obj/item/geiger_counter,
+/obj/item/geiger_counter,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "SP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror{
@@ -7733,6 +7716,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/atmo)
+"Zk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/pipe_dispenser,
+/obj/item/pipe_dispenser,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
 
 (1,1,1) = {"
 aa
@@ -11444,8 +11434,8 @@ dy
 Yr
 ca
 jA
-kl
-kz
+mm
+KG
 jA
 kU
 lc
@@ -11681,9 +11671,9 @@ eZ
 dh
 dh
 dh
-nU
-td
-tT
+dh
+dh
+wj
 bE
 Ve
 dh
@@ -11725,14 +11715,14 @@ AF
 fV
 bE
 eZ
-fz
-fz
+hK
+hK
 dk
-hK
-hK
-Ku
-Ll
-Sf
+SI
+dh
+dh
+wj
+wj
 bE
 jg
 jz
@@ -11774,14 +11764,14 @@ bE
 bY
 bE
 bE
-fz
-fz
-fz
 hK
 hK
-BH
-wC
-bE
+uP
+Zk
+dh
+dh
+dh
+wj
 bE
 bE
 bE
@@ -11831,7 +11821,7 @@ bE
 bE
 bE
 bE
-gK
+bE
 gK
 gK
 gK
@@ -11881,7 +11871,7 @@ gK
 gK
 gK
 gK
-aa
+gK
 aa
 aa
 aa

@@ -44,7 +44,7 @@
 /obj/machinery/vending/cola/blue
 	icon_state = "Cola_Machine"
 	light_mask = "cola-light-mask"
-	light_color = "#555cc2"
+	light_color = COLOR_MODERATE_BLUE
 
 /obj/machinery/vending/cola/black
 	icon_state = "cola_black"
@@ -56,7 +56,7 @@
 	desc = "It vends cola, in space."
 	product_slogans = "Cola in space!"
 	light_mask = "red_cola-light-mask"
-	light_color = "#a50824"
+	light_color = COLOR_DARK_RED
 
 /obj/machinery/vending/cola/space_up
 	icon_state = "space_up"
@@ -64,7 +64,7 @@
 	desc = "Indulge in an explosion of flavor."
 	product_slogans = "Space-up! Like a hull breach in your mouth."
 	light_mask = "space_up-light-mask"
-	light_color = "#44964a"
+	light_color = COLOR_DARK_MODERATE_LIME_GREEN
 
 /obj/machinery/vending/cola/starkist
 	icon_state = "starkist"
@@ -72,12 +72,12 @@
 	desc = "The taste of a star in liquid form."
 	product_slogans = "Drink the stars! Star-kist!"
 	light_mask = "starkist-light-mask"
-	light_color = "#ffc44d"
+	light_color = COLOR_LIGHT_ORANGE
 
 /obj/machinery/vending/cola/sodie
 	icon_state = "soda"
 	light_mask = "soda-light-mask"
-	light_color = ""
+	light_color = COLOR_WHITE
 
 /obj/machinery/vending/cola/pwr_game
 	icon_state = "pwr_game"
@@ -85,7 +85,7 @@
 	desc = "You want it, we got it. Brought to you in partnership with Vlad's Salads."
 	product_slogans = "The POWER that gamers crave! PWR GAME!"
 	light_mask = "pwr_game-light-mask"
-	light_color = "#6927c5"
+	light_color = COLOR_STRONG_VIOLET
 
 /obj/machinery/vending/cola/shamblers
 	name = "\improper Shambler's Vendor"
@@ -103,4 +103,4 @@
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
 	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
 	light_mask = "shamblers-light-mask"
-	light_color = "#e4005b"
+	light_color = COLOR_MOSTLY_PURE_PINK

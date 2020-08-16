@@ -97,16 +97,20 @@
 	var/healing_amount = -(maxHealth * healing_factor)
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
-	applyOrganDamage(healing_amount)
+	applyOrganDamage(healing_amount, damage) // pass curent damage incase we are over cap
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
+
+	. += "<span class='notice'>It should be inserted in the [parse_zone(zone)].</span>"
+
 	if(organ_flags & ORGAN_FAILING)
 		if(status == ORGAN_ROBOTIC)
 			. += "<span class='warning'>[src] seems to be broken.</span>"
 			return
 		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.</span>"
 		return
+
 	if(damage > high_threshold)
 		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 

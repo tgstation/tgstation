@@ -39239,7 +39239,7 @@
 /area/maintenance/department/engine)
 "bUb" = (
 /obj/structure/grille/broken,
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bUc" = (
@@ -44266,6 +44266,10 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
+"clK" = (
+/mob/living/simple_animal/mouse/brown/tom,
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "clL" = (
 /turf/closed/wall,
 /area/tcommsat/computer)
@@ -51688,6 +51692,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
+"kHO" = (
+/mob/living/simple_animal/pet/fox/renault,
+/obj/structure/bed/dogbed/renault,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/heads/captain)
 "kHP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -52181,11 +52190,6 @@
 	},
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
-"lMu" = (
-/mob/living/simple_animal/pet/fox/renault,
-/obj/structure/bed/dogbed/renault,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/heads/captain)
 "lMU" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
@@ -52489,11 +52493,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"mxk" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/lizard/wags_his_tail,
-/turf/open/floor/plasteel,
-/area/janitor)
 "mxy" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -53468,10 +53467,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"olf" = (
-/mob/living/simple_animal/mouse/brown/tom,
-/turf/open/floor/plasteel/dark,
-/area/security/prison)
 "olj" = (
 /obj/machinery/camera{
 	c_tag = "Xenobiology Slime Pen #3";
@@ -53672,6 +53667,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"oAk" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
+/turf/open/floor/plasteel,
+/area/janitor)
 "oAw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -54073,7 +54073,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "plA" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
 "pnU" = (
@@ -55420,6 +55420,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"sql" = (
+/mob/living/simple_animal/sloth/paperwork,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "sqQ" = (
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -56709,10 +56713,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"vdd" = (
-/mob/living/simple_animal/sloth/paperwork,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "vek" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -78929,7 +78929,7 @@ aeF
 aeV
 afq
 afF
-olf
+clK
 aeU
 agy
 agy
@@ -83353,7 +83353,7 @@ aXO
 aYM
 aZP
 baY
-mxk
+oAk
 bdh
 bed
 aVS
@@ -86928,7 +86928,7 @@ aAy
 aBp
 aCC
 aDG
-lMu
+kHO
 aFz
 aGm
 awR
@@ -98768,7 +98768,7 @@ aTn
 aUx
 aVA
 aTm
-vdd
+sql
 aTj
 aZr
 baD

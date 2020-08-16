@@ -63,7 +63,7 @@
 // Or autotator someone
 
 // IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
-// (see /datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = FALSE) for example)
+// (see /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE) for example)
 /datum/dynamic_ruleset/midround/ready(forced = FALSE)
 	if (!forced)
 		var/job_check = 0

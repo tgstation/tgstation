@@ -390,6 +390,17 @@
 /obj/item/seeds/onion,
 /turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
+"bn" = (
+/turf/closed/wall,
+/area/mine/mechbay)
+"bo" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/mine/mechbay)
+"bp" = (
+/obj/machinery/mech_bay_recharge_port,
+/turf/open/floor/plating,
+/area/mine/mechbay)
 "bq" = (
 /turf/closed/wall,
 /area/mine/production)
@@ -496,6 +507,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"bD" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mech_bay_recharge_floor,
+/area/mine/mechbay)
 "bE" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/tile/purple,
@@ -967,6 +984,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"db" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/mine/production)
 "dc" = (
 /obj/structure/closet/crate,
 /obj/machinery/airalarm{
@@ -1117,6 +1141,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/production)
+"du" = (
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/bot,
+/obj/item/coin/gold,
+/turf/open/floor/plasteel,
+/area/mine/production)
 "dv" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -1257,13 +1287,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"dL" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dM" = (
@@ -2444,23 +2467,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"in" = (
-/obj/structure/closet/secure_closet/engineering_welding{
-	req_access = list(54)
-	},
-/obj/structure/cable,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "ip" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -2569,6 +2575,9 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"jj" = (
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "jk" = (
 /obj/structure/stone_tile/center,
 /obj/structure/stone_tile/surrounding_tile,
@@ -3513,6 +3522,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"nA" = (
+/obj/machinery/computer/mech_bay_power_console,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Mining Station Mech Bay APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "nF" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
@@ -3619,6 +3638,29 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/laborcamp)
+"ps" = (
+/obj/structure/table,
+/obj/machinery/cell_charger{
+	pixel_y = 3
+	},
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high{
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/machinery/camera{
+	c_tag = "Mech Bay";
+	dir = 1;
+	network = list("mine")
+	},
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "pR" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
@@ -3632,14 +3674,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
-"qf" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "qk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
@@ -3691,10 +3725,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"qL" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/mechbay)
 "qP" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
@@ -3735,6 +3765,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"rR" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "sa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
@@ -3802,21 +3836,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
-"sT" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
-"sX" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/structure/closet/crate,
-/obj/item/dice/d4,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "tI" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -3848,15 +3867,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"uA" = (
-/obj/structure/table,
-/obj/item/mecha_parts/mecha_equipment/drill,
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp{
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "uB" = (
 /obj/structure/chair/stool,
 /obj/structure/sign/poster/official/report_crimes{
@@ -3917,6 +3927,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"vy" = (
+/obj/machinery/computer/mechpad{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "vH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -3944,6 +3963,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"wk" = (
+/obj/structure/closet/secure_closet/engineering_welding{
+	req_access = list(54)
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "wE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bucket,
@@ -3960,18 +3996,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/mine/living_quarters)
-"xC" = (
-/obj/machinery/computer/mechpad{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
-"xS" = (
-/turf/closed/wall,
-/area/mine/mechbay)
 "xW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
@@ -4072,6 +4096,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"zT" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "zX" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -4172,39 +4203,12 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"BM" = (
-/obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 3
-	},
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high{
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/machinery/camera{
-	c_tag = "Mech Bay";
-	dir = 1;
-	network = list("mine")
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "Co" = (
 /obj/machinery/computer/shuttle/mining/common{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"Da" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "Dh" = (
 /obj/machinery/light{
 	dir = 4
@@ -4238,14 +4242,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"DR" = (
-/obj/machinery/door/airlock/research/glass{
-	name = "Mining Station Mech Bay";
-	req_access_txt = "54"
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "Ef" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
@@ -4332,6 +4328,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Gh" = (
+/obj/structure/table,
+/obj/item/mecha_parts/mecha_equipment/drill,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "Gn" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
@@ -4372,10 +4377,6 @@
 /obj/item/tank/internals/emergency_oxygen,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"GZ" = (
-/obj/machinery/mechpad,
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "Hd" = (
 /turf/closed/wall/r_wall,
 /area/mine/laborcamp/security)
@@ -4551,6 +4552,10 @@
 "Na" = (
 /turf/closed/wall/r_wall,
 /area/lavaland/surface/outdoors/explored)
+"Nb" = (
+/obj/machinery/mechpad,
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "Nj" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -4580,6 +4585,14 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"NS" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/structure/closet/crate,
+/obj/item/dice/d4,
+/turf/open/floor/plasteel,
+/area/mine/production)
 "Om" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/mineral/labor_points_checker{
@@ -4714,12 +4727,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
 /turf/open/floor/plasteel,
 /area/mine/eva)
-"Qd" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/mech_bay_recharge_floor,
-/area/mine/mechbay)
 "Qg" = (
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
@@ -4936,6 +4943,14 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/living_quarters)
+"UC" = (
+/obj/machinery/door/airlock/research/glass{
+	name = "Mining Station Mech Bay";
+	req_access_txt = "54"
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "UH" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
@@ -5027,9 +5042,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
-"Vj" = (
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "VA" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/tile/green{
@@ -5066,12 +5078,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/living_quarters)
-"Wd" = (
-/obj/structure/closet/crate,
-/obj/effect/turf_decal/bot,
-/obj/item/coin/gold,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "We" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
@@ -5151,10 +5157,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"XB" = (
-/obj/machinery/mech_bay_recharge_port,
-/turf/open/floor/plating,
-/area/mine/mechbay)
 "Ym" = (
 /obj/structure/chair{
 	dir = 8
@@ -5219,6 +5221,14 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"Zh" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/mechbay)
 "Zk" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -5239,16 +5249,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp)
-"Zw" = (
-/obj/machinery/computer/mech_bay_power_console,
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station Mech Bay APC";
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel,
-/area/mine/mechbay)
 "ZD" = (
 /obj/machinery/light/small,
 /obj/machinery/camera{
@@ -19869,11 +19869,11 @@ am
 ai
 ab
 ab
-xS
-qL
-qL
-xS
-xS
+bn
+bo
+bo
+bn
+bn
 br
 br
 WE
@@ -20126,15 +20126,15 @@ am
 am
 ai
 ab
-xS
-XB
-Da
-BM
-xS
+bn
+bp
+rR
+ps
+bn
 br
 bO
 ck
-sX
+NS
 br
 bq
 bq
@@ -20383,11 +20383,11 @@ am
 am
 am
 ai
-xS
-Qd
-Vj
-uA
-xS
+bn
+bD
+jj
+Gh
+bn
 bC
 Lu
 bP
@@ -20640,11 +20640,11 @@ am
 am
 ai
 aj
-xS
-Zw
-sT
-qf
-DR
+bn
+nA
+zT
+Zh
+UC
 Rx
 bQ
 Uh
@@ -20897,11 +20897,11 @@ am
 ai
 aj
 aj
-xS
-in
-GZ
-xC
-qL
+bn
+wk
+Nb
+vy
+bo
 bE
 UQ
 cn
@@ -21154,9 +21154,9 @@ am
 ai
 aj
 ab
-xS
-qL
-xS
+bn
+bo
+bn
 bf
 bf
 bF
@@ -21679,7 +21679,7 @@ cp
 bf
 cL
 bq
-Wd
+du
 bP
 bP
 cH
@@ -21936,7 +21936,7 @@ cq
 bf
 bq
 bq
-dL
+db
 bP
 bP
 bP

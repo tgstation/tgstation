@@ -64,7 +64,7 @@
 				break
 			bitflag *= 2
 
-		M.actions += src
+		LAZYADD(M.actions, src)
 		if(M.client)
 			M.client.screen += button
 			button.locked = M.client.prefs.buttons_locked || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
@@ -77,7 +77,7 @@
 	if(M)
 		if(M.client)
 			M.client.screen -= button
-		M.actions -= src
+		LAZYREMOVE(M.actions, src)
 		M.update_action_buttons()
 	owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
@@ -317,16 +317,6 @@
 			name = "Toggle Friendly Fire \[ON\]"
 	..()
 
-/datum/action/item_action/synthswitch
-	name = "Change Synthesizer Instrument"
-	desc = "Change the type of instrument your synthesizer is playing as."
-
-/datum/action/item_action/synthswitch/Trigger()
-	if(istype(target, /obj/item/instrument/piano_synth))
-		var/obj/item/instrument/piano_synth/synth = target
-		return synth.selectInstrument()
-	return ..()
-
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"
 	desc = "Recall yourself, and anyone nearby, to an attuned hierophant beacon at any time.<br>If the beacon is still attached, will detach it."
@@ -336,7 +326,7 @@
 /datum/action/item_action/vortex_recall/IsAvailable()
 	var/turf/current_location = get_turf(target)
 	var/area/current_area = current_location.loc
-	if(current_area.noteleport)
+	if(current_area.area_flags & NOTELEPORT)
 		to_chat(target, "[src] fizzles uselessly.")
 		return
 	if(istype(target, /obj/item/hierophant_club))
