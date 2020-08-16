@@ -1,7 +1,7 @@
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/chemical_tanks.dmi'
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
@@ -260,3 +260,9 @@
 	if(anchored)
 		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
 	return !anchored
+
+/obj/structure/reagent_dispensers/plumbed/fuel
+	name = "stationairy fuel tank"
+	icon_state = "fuel_stationairy"
+	desc = "A stationairy, plumbed, fuel tank."
+	reagent_id = /datum/reagent/fuel
