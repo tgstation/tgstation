@@ -40,10 +40,6 @@
 	..()
 	to_chat(user, "<span class='notice'>Currently set to \"[dept_list[target_dept]]\".</span>")
 
-/obj/item/circuitboard/computer/accounting
-	name = "Cashflow Control Console (Computer Board)"
-	icon_state = "command"
-	build_path = /obj/machinery/computer/accounting
 
 //obj/item/circuitboard/computer/shield
 //	name = "Shield Control (Computer Board)"

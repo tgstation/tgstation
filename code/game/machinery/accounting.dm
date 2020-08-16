@@ -69,26 +69,3 @@
 	else
 		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", layer, plane, dir, alpha)
 		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
-
-/*
-/obj/machinery/computer/accounting
-	name = "cashflow control console"
-	desc = "Used to access the state of cashflow across the station, between crew and budgets. A bureaucrat's "
-	icon_screen = "cameras"
-	icon_keyboard = "security_key"
-	circuit = /obj/item/circuitboard/computer/accounting
-	light_color = COLOR_SOFT_BLUE
-
-/obj/machinery/computer/accounting/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "accounting", name)
-		ui.open()
-	RefreshParts()
-
-/obj/machinery/computer/accounting/ui_data(mob/user)
-	var/list/account_list = list("name" = Bot.name, "mode" = Bot.get_mode_ui(), "model" = Bot.model, "locat" = get_area(Bot), "bot_ref" = REF(Bot), "mule_check" = FALSE)
-	for(var/account in bank_accounts)
-		var/datum/bank_account/bank_account = account
-		mulelist += list(list("name" = MULE.name, "dest" = MULE.destination, "power" = MULE.cell ? MULE.cell.percent() : 0, "home" = MULE.home_destination, "autoReturn" = MULE.auto_return, "autoPickup" = MULE.auto_pickup, "reportDelivery" = MULE.report_delivery, "mule_ref" = REF(MULE)))
-			*/

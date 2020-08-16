@@ -33,9 +33,11 @@
 	market_dip = rand(1000,10000) * num_accounts
 	SSeconomy.station_target = max(SSeconomy.station_target - market_dip, 1)
 	SSeconomy.price_update()
+	SSeconomy.market_crashing = TRUE
 
 /datum/round_event/market_crash/end()
 	. = ..()
 	SSeconomy.station_target += market_dip
 	SSeconomy.price_update()
 	priority_announce("Prices for on-station vendors have now stabilized.", "Nanotrasen Accounting Division")
+	SSeconomy.market_crashing = FALSE

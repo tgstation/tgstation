@@ -51,12 +51,15 @@ SUBSYSTEM_DEF(economy)
 	var/station_total = 0
 	/// A var that tracks how much money is expected to be on station at a given time. If less than station_total prices go up in vendors.
 	var/station_target = 1
+	/// A passively increasing buffer to help alliviate inflation later into the shift, but to a lesser degree.
+	var/station_target_buffer = 0
 	/// A var that displays the result of inflation_value for easier debugging and tracking.
 	var/inflation_value = 1
 	/// How many civilain bounties have been completed so far this shift? Affects civilian budget payout values.
 	var/civ_bounty_tracker = 0
 	/// Contains the message to send to newscasters about price inflation and earnings, updated on price_update()
 	var/earning_report
+	var/market_crashing = FALSE
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
@@ -69,17 +72,19 @@ SUBSYSTEM_DEF(economy)
 	eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows.
 	sci_payout() // Payout based on slimes.
 	secmedsrv_payout() // Payout based on crew safety, health, and mood.
-	civ_payout() // Payout based on Effort and ???.
+	civ_payout() // Payout based on Effort and market ebb/flow.
 	car_payout() // Cargo's natural gain in the cash moneys.
 	station_total = 0
+	station_target_buffer += STATION_TARGET_BUFFER
 	for(var/account in bank_accounts)
 		var/datum/bank_account/bank_account = account
 		bank_account.payday(1)
 		temporary_total += (bank_account?.account_job.paycheck * STARTING_PAYCHECKS)
 		if(!istype(bank_account, /datum/bank_account/department))
 			station_total += bank_account.account_balance
-	station_target = max((temporary_total / (bank_accounts.len * 2)) + STATION_TARGET_BUFFER, 1)
-	price_update()
+	station_target = max(round(temporary_total / (bank_accounts.len * 2)) + station_target_buffer, 1)
+	if(!market_crashing)
+		price_update()
 
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)
@@ -180,5 +185,5 @@ SUBSYSTEM_DEF(economy)
 /datum/controller/subsystem/economy/proc/inflation_value()
 	if(!bank_accounts.len)
 		return 1
-	inflation_value = max(round((station_total / station_target), 0.1), 1.0)
+	inflation_value = max(round(((station_total / bank_accounts.len) / station_target), 0.1), 1.0)
 	return inflation_value
