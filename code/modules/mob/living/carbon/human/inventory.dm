@@ -113,7 +113,6 @@
 				update_tint()
 			if(G.vision_correction)
 				clear_fullscreen("nearsighted")
-				clear_fullscreen("eye_damage")
 			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 				update_sight()
 			update_inv_glasses()

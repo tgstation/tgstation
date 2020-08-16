@@ -58,6 +58,7 @@
 	M.cure_nearsighted(EYE_DAMAGE)
 	M.set_blindness(0)
 	M.set_blurriness(0)
+	M.clear_fullscreen("eye_damage", 0)
 	M.update_sight()
 
 
