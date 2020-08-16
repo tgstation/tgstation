@@ -1,7 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - tweak: "Small UI changes and cleanup of the Bank Machine and TTV UIs."
-  - tweak: "UI window resizes for the Point Claim Console, Bank Machine, Gravity Generator, Portable Turret, Turret Control Panel and TTV UIs."
-  - bugfix: "Fixed an issue where ignore heads of staff setting for the Portable Turret was actually inverted in functionality."
-  - spellcheck: "Fixed two typos in the Probing Console UI."
