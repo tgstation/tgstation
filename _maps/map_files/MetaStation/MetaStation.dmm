@@ -1480,8 +1480,8 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "adv" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "adw" = (
@@ -4176,10 +4176,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ajk" = (
-/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 1
 	},
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /turf/open/floor/plating,
 /area/janitor)
 "ajl" = (
@@ -28971,9 +28971,9 @@
 	uses = 10
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/bot/secbot/pingsky,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer1,
+/mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bpQ" = (
@@ -29655,7 +29655,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/rack,
 /obj/effect/turf_decal/bot,
 /obj/machinery/rnd/production/protolathe/department/engineering,
 /turf/open/floor/plasteel/dark/corner{
@@ -34895,10 +34894,10 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/mob/living/carbon/monkey/punpun,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/mob/living/carbon/monkey/punpun,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bFo" = (
@@ -63919,11 +63918,11 @@
 /obj/item/radio/intercom{
 	pixel_x = 27
 	},
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 1
+	},
+/mob/living/simple_animal/hostile/retaliate/goat{
+	name = "Pete"
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
@@ -71246,11 +71245,11 @@
 /area/maintenance/port/aft)
 "mDQ" = (
 /obj/structure/cable,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/structure/bed/dogbed/mcgriff,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 8
 	},
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "mEn" = (
