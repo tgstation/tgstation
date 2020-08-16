@@ -810,7 +810,11 @@
 		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
 		if (SSticker.round_start_time)
-			stat(null, "Round Time: [gameTimestamp("hh:mm:ss", (world.time - SSticker.round_start_time))]")
+			var/round_time = world.time - SSticker.round_start_time
+			if(round_time > MIDNIGHT_ROLLOVER)
+				stat(null, "Round Time: [round(round_time/MIDNIGHT_ROLLOVER)]:[gameTimestamp("hh:mm:ss", round_time)]")
+			else
+				stat(null, "Round Time: [gameTimestamp("hh:mm:ss", round_time)]")
 		else
 			stat(null, "Lobby Time: [gameTimestamp("hh:mm:ss", 0)]")
 		stat(null, "Station Time: [station_time_timestamp()]")
