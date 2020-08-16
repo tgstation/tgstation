@@ -15,11 +15,11 @@
 		trailing_newline = TRUE,
 		confidential = FALSE)
 	if(!target || (!html && !text))
-		return;
+		return
 	if(target == world)
 		target = GLOB.clients
 	// Build a message
-	var/message = list();
+	var/message = list()
 	if(type) message["type"] = type
 	if(text) message["text"] = text
 	if(html) message["html"] = html
@@ -60,11 +60,11 @@
 		to_chat_immediate(target, html, type, text)
 		return
 	if(!target || (!html && !text))
-		return;
+		return
 	if(target == world)
 		target = GLOB.clients
 	// Build a message
-	var/message = list();
+	var/message = list()
 	if(type) message["type"] = type
 	if(text) message["text"] = text
 	if(html) message["html"] = html
