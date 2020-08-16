@@ -475,5 +475,4 @@
 
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
 	. = ..()
-	to_chat(user, "AMOUNT HEALED = [amount_healed]") //debug
 	healed_mob.adjustOxyLoss(amount_healed)
