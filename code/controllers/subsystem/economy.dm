@@ -79,7 +79,8 @@ SUBSYSTEM_DEF(economy)
 	for(var/account in bank_accounts)
 		var/datum/bank_account/bank_account = account
 		bank_account.payday(1)
-		temporary_total += (bank_account?.account_job.paycheck * STARTING_PAYCHECKS)
+		if(bank_account && bank_account.account_job)
+			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		if(!istype(bank_account, /datum/bank_account/department))
 			station_total += bank_account.account_balance
 	station_target = max(round(temporary_total / (bank_accounts.len * 2)) + station_target_buffer, 1)
