@@ -26,12 +26,20 @@
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
+"ai" = (
+/obj/structure/lattice,
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "aj" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "ak" = (
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
+"al" = (
+/obj/machinery/ntnet_relay,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "am" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating,
@@ -46,24 +54,21 @@
 /turf/open/space,
 /area/space/nearstation)
 "ap" = (
-/obj/machinery/airalarm/unlocked{
-	pixel_y = 23
-	},
 /obj/structure/closet/secure_closet/engineering_electrical{
 	locked = 0
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aq" = (
-/obj/machinery/computer/monitor,
 /obj/machinery/camera/autoname,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/computer/monitor,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ar" = (
+/obj/machinery/airalarm/unlocked{
+	pixel_y = 23
+	},
 /obj/structure/closet/secure_closet/engineering_welding{
 	locked = 0
 	},
@@ -122,6 +127,13 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"aA" = (
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"aB" = (
+/obj/machinery/newscaster/security_unit,
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "aC" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -157,6 +169,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"aH" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "aI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -174,6 +192,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
+"aK" = (
+/obj/structure/table,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/construction/rcd/combat,
+/obj/item/construction/plumbing,
+/turf/open/floor/plasteel,
+/area/bridge)
 "aN" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -470,14 +497,6 @@
 "bK" = (
 /obj/structure/table,
 /obj/item/storage/backpack/holding,
-/turf/open/floor/plasteel,
-/area/bridge)
-"bL" = (
-/obj/structure/table,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/construction/rcd/combat,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bM" = (
@@ -7036,7 +7055,7 @@ aj
 ac
 ac
 bv
-bL
+aK
 cf
 RM
 bv
@@ -7119,9 +7138,9 @@ aa
 aa
 aa
 aa
-ae
-ac
-ac
+ai
+aj
+aj
 aj
 VA
 aj
@@ -7211,10 +7230,10 @@ aa
 aa
 aa
 aa
-ad
-bY
 aj
-aj
+al
+aA
+aB
 WT
 aj
 aj
@@ -7303,10 +7322,10 @@ aa
 aa
 aa
 aa
-ad
-af
 aj
 ap
+aA
+aA
 Vy
 aS
 bd
@@ -7395,10 +7414,10 @@ aa
 aa
 aa
 aa
-ad
-af
 aj
 aq
+Vy
+Vy
 aE
 aT
 be
@@ -7487,10 +7506,10 @@ aa
 aa
 aa
 aa
-ad
-af
 aj
 ar
+aA
+aH
 aF
 lg
 bf
@@ -7580,7 +7599,7 @@ aa
 aa
 aa
 ad
-af
+ad
 ak
 ak
 ak
@@ -7763,7 +7782,7 @@ aa
 aa
 aa
 aa
-ad
+bY
 af
 ak
 at
