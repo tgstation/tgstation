@@ -7,8 +7,8 @@
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
-import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES, PAGE_TEMPLATE } from './constants';
-import { canPageAcceptType, createMessage } from './model';
+import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES, MESSAGE_TYPE_INTERNAL, MESSAGE_TYPE_UNKNOWN } from './constants';
+import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 
 const logger = createLogger('chatRenderer');
@@ -237,9 +237,9 @@ class ChatRenderer {
       const message = this.visibleMessages[i];
       const matches = (
         // Is not an internal message
-        !message.type.startsWith('internal')
+        !message.type.startsWith(MESSAGE_TYPE_INTERNAL)
         // Text payload must fully match
-        && message.text === predicate.text
+        && isSameMessage(message, predicate)
         // Must land within the specified time window
         && now < message.createdAt + COMBINE_MAX_TIME_WINDOW
       );
@@ -290,7 +290,17 @@ class ChatRenderer {
       // Create message node
       else {
         node = createMessageNode();
-        node.innerHTML = message.text;
+        // Payload is plain text
+        if (message.text) {
+          node.textContent = message.text;
+        }
+        // Payload is HTML
+        else if (message.html) {
+          node.innerHTML = message.html;
+        }
+        else {
+          logger.error('Error: message is missing text payload', message);
+        }
         // Highlight text
         if (this.highlightRegex) {
           const highlighted = highlightNode(node,
@@ -323,7 +333,7 @@ class ChatRenderer {
           .find(typeDef => (
             typeDef.selector && node.querySelector(typeDef.selector)
           ));
-        message.type = typeDef?.type || 'unknown';
+        message.type = typeDef?.type || MESSAGE_TYPE_UNKNOWN;
       }
       updateMessageBadge(message);
       if (!countByType[message.type]) {
