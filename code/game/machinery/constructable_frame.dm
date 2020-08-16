@@ -195,9 +195,9 @@
 							qdel(O)
 						new_machine.component_parts = list()
 						for(var/obj/O in src)
-							O.moveToNullspace()
+							O.forceMove(new_machine)
 							new_machine.component_parts += O
-						circuit.moveToNullspace()
+						circuit.forceMove(new_machine)
 						new_machine.RefreshParts()
 					qdel(src)
 				return
@@ -238,6 +238,7 @@
 							S.merge(NS)
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
 						components += part
+						part.forceMove(src)
 					to_chat(user, "<span class='notice'>[part.name] applied.</span>")
 				if(added_components.len)
 					replacer.play_rped_sound()
