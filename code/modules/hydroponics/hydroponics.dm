@@ -132,7 +132,7 @@
 	else if(istype(Proj , /obj/projectile/energy/florayield))
 		return myseed.bullet_act(Proj)
 	else if(istype(Proj , /obj/projectile/energy/florarevolution))
-		if(myseed)
+		if(myseed && myseed.mutatelist)
 			if(myseed.mutatelist.len > 0)
 				myseed.instability = (myseed.instability/2)
 		mutatespecie()
@@ -450,7 +450,10 @@
 		return
 
 	var/oldPlantName = myseed.plantname
-	if(myseed.mutatelist.len > 0)
+	if(!myseed.mutatelist)
+		log_game("([myseed.type]:[myseed.name]) seed has a null mutatelist!")
+		return
+	else if(myseed.mutatelist.len > 0)
 		var/mutantseed = pick(myseed.mutatelist)
 		qdel(myseed)
 		myseed = null
