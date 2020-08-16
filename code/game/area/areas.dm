@@ -60,8 +60,8 @@
 	var/list/firealarms
 	var/firedoors_last_closed_on = 0
 
-	///Boolean to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
-	var/area_limited_icon_smoothing = FALSE
+	///Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
+	var/area/area_limited_icon_smoothing
 
 	var/list/power_usage
 

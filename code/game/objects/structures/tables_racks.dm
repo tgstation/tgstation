@@ -530,6 +530,8 @@
 	icon_state = "optable"
 	buildstack = /obj/item/stack/sheet/mineral/silver
 	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 	can_buckle = 1
 	buckle_lying = -1
 	buckle_requires_restraints = 1

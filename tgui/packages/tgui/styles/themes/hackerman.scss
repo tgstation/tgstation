@@ -36,7 +36,7 @@
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-background': #223d22,
+    'background-color': #223d22,
   ));
 
   .Layout__content {

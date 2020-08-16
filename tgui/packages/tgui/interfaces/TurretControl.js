@@ -14,7 +14,7 @@ export const TurretControl = (props, context) => {
   return (
     <Window
       width={305}
-      height={168}>
+      height={172}>
       <Window.Content>
         <InterfaceLockNoticeBox />
         <Section>
