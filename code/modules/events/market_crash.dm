@@ -38,6 +38,7 @@
 /datum/round_event/market_crash/end()
 	. = ..()
 	SSeconomy.station_target += market_dip
+	SSeconomy.market_crashing = FALSE
 	SSeconomy.price_update()
 	priority_announce("Prices for on-station vendors have now stabilized.", "Nanotrasen Accounting Division")
-	SSeconomy.market_crashing = FALSE
+
