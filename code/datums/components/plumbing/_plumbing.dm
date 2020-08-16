@@ -236,31 +236,6 @@
 /datum/component/plumbing/simple_demand
 	demand_connects = SOUTH
 
-/datum/component/plumbing/simple_demand/hydroponics
-	///Reagent to filter through for reaction purposes, for hydroponics we need water.
-	var/datum/reagent/filtered_chem = /datum/reagent/water
-	///typecast reference to our parent, which should always be a hydroponics tray.
-	var/obj/machinery/hydroponics/constructable/parent_tray
-
-/datum/component/plumbing/simple_demand/hydroponics/Initialize(start, _turn_connects)
-	if(istype(parent, /obj/machinery/hydroponics/constructable))
-		parent_tray = parent
-	. = ..()
-
-/datum/component/plumbing/simple_demand/hydroponics/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
-	if(!parent_tray)
-		CRASH("No parent tray assigned to hydroponics plumbing component!")
-	//Search through all reagents for water to process first.
-	for(var/pot_reagent in reagents.reagent_list)
-		var/datum/reagent/potential_reagent = pot_reagent
-		parent_tray.say("[potential_reagent.name] detected.")
-		if(istype(potential_reagent, filtered_chem))
-			parent_tray.say("Adjusting Water.")
-			parent_tray.adjustWater(potential_reagent.volume)
-			reagents.remove_reagent(filtered_chem, potential_reagent.volume)
-			break
-	return ..()
-
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
 	supply_connects = SOUTH
