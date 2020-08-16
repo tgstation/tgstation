@@ -18,7 +18,8 @@
 	throw_range = 5
 	force = 5
 	item_flags = NEEDS_PERMIT
-	attack_verb = list("struck", "hit", "bashed")
+	attack_verb_continuous = list("strikes", "hits", "bashes")
+	attack_verb_simple = list("strike", "hit", "bash")
 
 	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
@@ -93,6 +94,8 @@
 		QDEL_NULL(chambered)
 	if(azoom)
 		QDEL_NULL(azoom)
+	if(suppressed)
+		QDEL_NULL(suppressed)
 	return ..()
 
 /obj/item/gun/handle_atom_del(atom/A)
@@ -105,7 +108,16 @@
 		clear_bayonet()
 	if(A == gun_light)
 		clear_gunlight()
+	if(A == suppressed)
+		clear_suppressor()
 	return ..()
+
+///Clears var and updates icon. In the case of ballistic weapons, also updates the gun's weight.
+/obj/item/gun/proc/clear_suppressor()
+	if(!can_unsuppress)
+		return
+	suppressed = null
+	update_icon()
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
@@ -179,7 +191,7 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(!target)
+	if(QDELETED(target))
 		return
 	if(firing_burst)
 		return
@@ -198,7 +210,8 @@
 			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
-			for(var/datum/wound/W in C.all_wounds)
+			for(var/i in C.all_wounds)
+				var/datum/wound/W = i
 				if(W.try_treating(src, user))
 					return // another coward cured!
 

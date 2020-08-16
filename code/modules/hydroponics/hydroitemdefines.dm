@@ -6,7 +6,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	inhand_icon_state = "analyzer"
-	worn_icon_state = "analyzer"
+	worn_icon_state = "plantanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -42,6 +42,7 @@
 	name = "weed spray"
 	icon_state = "weedspray"
 	inhand_icon_state = "spraycan"
+	worn_icon_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
@@ -57,6 +58,7 @@
 	name = "pest spray"
 	icon_state = "pestspray"
 	inhand_icon_state = "plantbgone"
+	worn_icon_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
@@ -79,7 +81,8 @@
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50)
-	attack_verb = list("slashed", "sliced", "cut", "clawed")
+	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
+	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/cultivator/suicide_act(mob/user)
@@ -90,7 +93,8 @@
 	name = "rake"
 	icon_state = "rake"
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("slashed", "sliced", "bashed", "clawed")
+	attack_verb_continuous = list("slashes", "slices", "bashes", "claws")
+	attack_verb_simple = list("slash", "slice", "bash", "claw")
 	hitsound = null
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
 	flags_1 = NONE
@@ -102,7 +106,7 @@
 		return
 	var/mob/living/carbon/human/H = AM
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
-		H.confused = max(H.confused, 10)
+		H.set_confusion(max(H.get_confusion(), 10))
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message("<span class='warning'>[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!</span>", \
@@ -123,9 +127,10 @@
 	throw_speed = 3
 	throw_range = 4
 	custom_materials = list(/datum/material/iron = 15000)
-	attack_verb = list("chopped", "tore", "lacerated", "cut")
+	attack_verb_continuous = list("chops", "tears", "lacerates", "cuts")
+	attack_verb_simple = list("chop", "tear", "lacerate", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/hatchet/Initialize()
 	. = ..()
@@ -156,7 +161,8 @@
 	flags_1 = CONDUCT_1
 	armour_penetration = 20
 	slot_flags = ITEM_SLOT_BACK
-	attack_verb = list("chopped", "sliced", "cut", "reaped")
+	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
+	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE
 
@@ -203,7 +209,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=4000)
-	attack_verb = list("slashed", "sliced", "cut", "clawed")
+	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
+	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/geneshears
@@ -221,7 +228,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	material_flags = MATERIAL_NO_EFFECTS
 	custom_materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/gold=500)
-	attack_verb = list("slashed", "sliced", "cut")
+	attack_verb_continuous = list("slashes", "slices", "cuts")
+	attack_verb_simple = list("slash", "slice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 

@@ -260,7 +260,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/instabitaluri = 3,
+		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
@@ -300,14 +300,16 @@
 		return
 
 	var/obj/item/bot_assembly/medbot/A = new
-	if(istype(src, /obj/item/storage/firstaid/fire))
+	if (istype(src, /obj/item/storage/firstaid/fire))
 		A.set_skin("ointment")
-	else if(istype(src, /obj/item/storage/firstaid/toxin))
+	else if (istype(src, /obj/item/storage/firstaid/toxin))
 		A.set_skin("tox")
-	else if(istype(src, /obj/item/storage/firstaid/o2))
+	else if (istype(src, /obj/item/storage/firstaid/o2))
 		A.set_skin("o2")
-	else if(istype(src, /obj/item/storage/firstaid/brute))
+	else if (istype(src, /obj/item/storage/firstaid/brute))
 		A.set_skin("brute")
+	else if (istype(src, /obj/item/storage/firstaid/advanced))
+		A.set_skin("advanced")
 	user.put_in_hands(A)
 	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
 	A.robot_arm = S.type
@@ -401,6 +403,14 @@
 /obj/item/storage/pill_bottle/mannitol/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/mannitol(src)
+
+//Contains 4 pills instead of 7, and 5u pills instead of 50u (50u pills heal 250 brain damage, 5u pills heal 25)
+/obj/item/storage/pill_bottle/mannitol/braintumor
+	desc = "Contains diluted pills used to treat brain tumor symptoms. Take one when feeling lightheaded."
+
+/obj/item/storage/pill_bottle/mannitol/braintumor/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/pill/mannitol/braintumor(src)
 
 /obj/item/storage/pill_bottle/stimulant
 	name = "bottle of stimulant pills"

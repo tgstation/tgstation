@@ -10,7 +10,7 @@
 
 /obj/item/grown/Initialize(newloc, obj/item/seeds/new_seed)
 	. = ..()
-	create_reagents(50)
+	create_reagents(100)
 
 	if(new_seed)
 		seed = new_seed.Copy()

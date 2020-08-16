@@ -7,6 +7,7 @@
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/med_data
+	light_color = LIGHT_COLOR_BLUE
 	var/rank = null
 	var/screen = null
 	var/datum/data/record/active1
@@ -17,7 +18,6 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
@@ -172,7 +172,6 @@
 			dat += "<A href='?src=[REF(src)];login=1'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
@@ -184,7 +183,7 @@
 	if(!(active2 in GLOB.data_core.medical))
 		active2 = null
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			temp = null
@@ -216,7 +215,7 @@
 				authenticated = 1
 				rank = "AI"
 				screen = 1
-			else if(IsAdminGhost(M))
+			else if(isAdminGhostAI(M))
 				active1 = null
 				active2 = null
 				authenticated = 1

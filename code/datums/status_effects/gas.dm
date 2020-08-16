@@ -12,13 +12,16 @@
 	icon_state = "frozen"
 
 /datum/status_effect/freon/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist)
 	if(!owner.stat)
 		to_chat(owner, "<span class='userdanger'>You become frozen in a cube!</span>")
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	owner.add_overlay(cube)
 	owner.update_mobility()
-	return ..()
 
 /datum/status_effect/freon/tick()
 	owner.update_mobility()
@@ -40,6 +43,8 @@
 	owner.adjust_bodytemperature(100)
 	owner.update_mobility()
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	return ..()
 
 /datum/status_effect/freon/watcher
 	duration = 8

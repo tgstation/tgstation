@@ -11,11 +11,10 @@
 	stam_damage_coeff = 1
 	max_stamina_damage = 120
 	var/obj/item/cavity_item
-	specific_locations = list("upper chest", "lower abdomen", "midsection", "collarbone", "lower back")
 	wound_resistance = 10
 
 /obj/item/bodypart/chest/can_dismember(obj/item/I)
-	if(!((owner.stat == DEAD) || owner.InFullCritical()))
+	if(!((owner.stat == DEAD) || owner.InFullCritical()) || !get_organs())
 		return FALSE
 	return ..()
 
@@ -61,7 +60,8 @@
 		be possessed by the devil? This arm appears to be possessed by no \
 		one though."
 	icon_state = "default_human_l_arm"
-	attack_verb = list("slapped", "punched")
+	attack_verb_continuous = list("slaps", "punches")
+	attack_verb_simple = list("slap", "punch")
 	max_damage = 50
 	max_stamina_damage = 50
 	body_zone = BODY_ZONE_L_ARM
@@ -72,7 +72,6 @@
 	held_index = 1
 	px_x = -6
 	px_y = 0
-	specific_locations = list("outer left forearm", "inner left wrist", "left elbow", "left bicep", "left shoulder")
 
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
@@ -127,7 +126,8 @@
 	desc = "Over 87% of humans are right handed. That figure is much lower \
 		among humans missing their right arm."
 	icon_state = "default_human_r_arm"
-	attack_verb = list("slapped", "punched")
+	attack_verb_continuous = list("slaps", "punches")
+	attack_verb_simple = list("slap", "punch")
 	max_damage = 50
 	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
@@ -138,7 +138,6 @@
 	px_x = 6
 	px_y = 0
 	max_stamina_damage = 50
-	specific_locations = list("outer right forearm", "inner right wrist", "right elbow", "right bicep", "right shoulder")
 
 /obj/item/bodypart/r_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_ARM))
@@ -193,7 +192,8 @@
 	desc = "Some athletes prefer to tie their left shoelaces first for good \
 		luck. In this instance, it probably would not have helped."
 	icon_state = "default_human_l_leg"
-	attack_verb = list("kicked", "stomped")
+	attack_verb_continuous = list("kicks", "stomps")
+	attack_verb_simple = list("kick", "stomp")
 	max_damage = 50
 	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
@@ -201,7 +201,6 @@
 	px_x = -2
 	px_y = 12
 	max_stamina_damage = 50
-	specific_locations = list("inner left thigh", "outer left calf", "outer left hip", " left kneecap", "lower left shin")
 
 /obj/item/bodypart/l_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_LEG))
@@ -253,7 +252,8 @@
 		The hokey pokey has certainly changed a lot since space colonisation."
 	// alternative spellings of 'pokey' are availible
 	icon_state = "default_human_r_leg"
-	attack_verb = list("kicked", "stomped")
+	attack_verb_continuous = list("kicks", "stomps")
+	attack_verb_simple = list("kick", "stomp")
 	max_damage = 50
 	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
@@ -261,7 +261,6 @@
 	px_x = 2
 	px_y = 12
 	max_stamina_damage = 50
-	specific_locations = list("inner right thigh", "outer right calf", "outer right hip", "right kneecap", "lower right shin")
 
 /obj/item/bodypart/r_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_LEG))

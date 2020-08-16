@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/fakesyndiesuit = 2,
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/balloon/arrest = 2,
 		/obj/item/toy/prize/ripley = 1,
 		/obj/item/toy/prize/fireripley = 1,
 		/obj/item/toy/prize/deathripley = 1,
@@ -61,8 +62,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	icon_keyboard = "no_keyboard"
 	icon_screen = "invaders"
-	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
+	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()
 	return
@@ -276,7 +277,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(user.client) //mainly here to avoid a runtime when the player gets gibbed when losing the emag mode.
 		var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
 		popup.set_content(dat)
-		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 
@@ -596,6 +596,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	last_three_move = null
 	return ..() //well boys we did it, lists are no more
 
+/obj/machinery/computer/arcade/battle/examine_more(mob/user)
+	var/list/msg = list("<span class='notice'><i>You notice some writing scribbled on the side of [src]...</i></span>")
+	msg += "\t<span class='info'>smart -> defend, defend, light attack</span>"
+	msg += "\t<span class='info'>shotgun -> defend, defend, power attack</span>"
+	msg += "\t<span class='info'>short temper -> counter, counter, counter</span>"
+	msg += "\t<span class='info'>poisonous -> light attack, light attack, light attack</span>"
+	msg += "\t<span class='info'>chonker -> power attack, power attack, power attack</span>"
+	return msg
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -835,7 +843,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 	var/datum/browser/popup = new(user, "arcade", "The Orion Trail",400,700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -1415,7 +1422,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 
 //Add Random/Specific crewmember
-/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(var/specific = "")
+/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(specific = "")
 	var/newcrew = ""
 	if(specific)
 		newcrew = specific

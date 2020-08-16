@@ -190,12 +190,12 @@
 			if(!high_stress)
 				to_chat(owner, "<span class='warning'>You can't stop shaking...</span>")
 				owner.dizziness += 20
-				owner.confused += 20
+				owner.add_confusion(20)
 				owner.Jitter(20)
 			else
 				to_chat(owner, "<span class='warning'>You feel weak and scared! If only you weren't alone...</span>")
 				owner.dizziness += 20
-				owner.confused += 20
+				owner.add_confusion(20)
 				owner.Jitter(20)
 				owner.adjustStaminaLoss(50)
 

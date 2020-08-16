@@ -24,6 +24,7 @@
 		owner.update_stat()
 	return ..()
 
+
 //STUN
 /datum/status_effect/incapacitating/stun
 	id = "stun"
@@ -33,19 +34,45 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	return ..()
+
 
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
+/datum/status_effect/incapacitating/knockdown/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/knockdown/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
+
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
 	id = "immobilized"
 
+/datum/status_effect/incapacitating/immobilized/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/immobilized/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
+
+//PARALYZED
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
 
@@ -54,10 +81,15 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/paralyzed/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
 	return ..()
+
 
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
@@ -77,6 +109,7 @@
 /datum/status_effect/incapacitating/unconscious/tick()
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
+
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
@@ -163,12 +196,19 @@
 	if(.)
 		update_time_of_death()
 		owner.reagents?.end_metabolization(owner, FALSE)
-		owner.update_mobility()
+
+/datum/status_effect/grouped/stasis/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	owner.update_mobility()
 
 /datum/status_effect/grouped/stasis/tick()
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	owner.update_mobility()
 	update_time_of_death()
 	return ..()
@@ -350,7 +390,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		var/obj/item/bodypart/bodypart = pick(H.bodyparts)
-		var/datum/wound/brute/cut/severe/crit_wound = new
+		var/datum/wound/slash/severe/crit_wound = new
 		crit_wound.apply_wound(bodypart)
 	return ..()
 
@@ -389,6 +429,22 @@
 		if(!QDELETED(I) && prob(75)) //Just in case
 			I.take_damage(100)
 	return ..()
+
+/// A status effect used for specifying confusion on a living mob.
+/// Created automatically with /mob/living/set_confusion.
+/datum/status_effect/confusion
+	id = "confusion"
+	alert_type = null
+	var/strength
+
+/datum/status_effect/confusion/tick()
+	strength -= 1
+	if (strength <= 0)
+		owner.remove_status_effect(STATUS_EFFECT_CONFUSION)
+		return
+
+/datum/status_effect/confusion/proc/set_strength(new_strength)
+	strength = new_strength
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -434,7 +490,7 @@
 	var/still_bleeding = FALSE
 	for(var/thing in throat.wounds)
 		var/datum/wound/W = thing
-		if(W.wound_type == WOUND_LIST_CUT && W.severity > WOUND_SEVERITY_MODERATE)
+		if(W.wound_type == WOUND_SLASH && W.severity > WOUND_SEVERITY_MODERATE)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)
@@ -809,3 +865,62 @@
 			H.adjustOrganLoss(ORGAN_SLOT_TONGUE,10)
 		if(100)
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN,20)
+
+/datum/status_effect/amok
+	id = "amok"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 10 SECONDS
+	tick_interval = 1 SECONDS
+
+/datum/status_effect/amok/on_apply(mob/living/afflicted)
+	. = ..()
+	to_chat(owner, "<span class='boldwarning'>Your feel filled with a rage that is not your own!</span>")
+
+/datum/status_effect/amok/tick()
+	. = ..()
+	var/prev_intent = owner.a_intent
+	owner.a_intent = INTENT_HARM
+
+	var/list/mob/living/targets = list()
+	for(var/mob/living/potential_target in oview(owner, 1))
+		if(IS_HERETIC(potential_target) || potential_target.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+			continue
+		targets += potential_target
+	if(LAZYLEN(targets))
+		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
+		owner.ClickOn(pick(targets))
+	owner.a_intent = prev_intent
+
+/datum/status_effect/cloudstruck
+	id = "cloudstruck"
+	status_type = STATUS_EFFECT_REPLACE
+	duration = 3 SECONDS
+	on_remove_on_mob_delete = TRUE
+	///This overlay is applied to the owner for the duration of the effect.
+	var/mutable_appearance/mob_overlay
+
+/datum/status_effect/cloudstruck/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/cloudstruck/on_apply()
+	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
+	owner.overlays += mob_overlay
+	owner.update_icon()
+	ADD_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	return TRUE
+
+/datum/status_effect/cloudstruck/on_remove()
+	. = ..()
+	if(QDELETED(owner))
+		return
+	REMOVE_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	if(owner)
+		owner.overlays -= mob_overlay
+		owner.update_icon()
+
+/datum/status_effect/cloudstruck/Destroy()
+	. = ..()
+	QDEL_NULL(mob_overlay)

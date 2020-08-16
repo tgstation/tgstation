@@ -14,7 +14,8 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	force = 12
-	attack_verb = list("robusted")
+	attack_verb_continuous = list("robusts")
+	attack_verb_simple = list("robust")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/awakened = FALSE
 	var/bloodthirst = HIS_GRACE_SATIATED
@@ -252,3 +253,4 @@
 	if(istype(master))
 		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>")
 		name = "[master]'s mythical toolbox of three powers"
+		master.client?.give_award(/datum/award/achievement/misc/ascension, master)

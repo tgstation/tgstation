@@ -7,7 +7,6 @@
  *		Toy swords
  *		Crayons
  *		Snap pops
- *		Mech prizes
  *		AI core prizes
  *		Toy codex gigas
  * 		Skeleton toys
@@ -25,7 +24,6 @@
  *		Squeaky Brain
  *		Broken Radio
  */
-
 
 /obj/item/toy
 	throwforce = 0
@@ -171,6 +169,14 @@
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
 
+
+/obj/item/toy/balloon/arrest
+	name = "arreyst balloon"
+	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
+	icon_state = "arrestballoon"
+	inhand_icon_state = "arrestballoon"
+	random_color = FALSE
+
 /*
  * Fake singularity
  */
@@ -241,7 +247,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
-	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
+	attack_verb_continuous = list("strikes", "pistol whips", "hits", "bashes")
+	attack_verb_simple = list("strike", "pistol whip", "hit", "bash")
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
@@ -317,7 +324,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/active = 0
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("attacked", "struck", "hit")
+	attack_verb_continuous = list("attacks", "strikes", "hits")
+	attack_verb_simple = list("attack", "strike", "hit")
 	var/hacked = FALSE
 	var/saber_color
 
@@ -380,7 +388,8 @@
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	attack_verb = list("pricked", "absorbed", "gored")
+	attack_verb_continuous = list("pricks", "absorbs", "gores")
+	attack_verb_simple = list("prick", "absorb", "gore")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 
@@ -395,7 +404,8 @@
 	var/active = FALSE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	hitsound = 'sound/weapons/smash.ogg'
-	attack_verb = list("robusted")
+	attack_verb_continuous = list("robusts")
+	attack_verb_simple = list("robust")
 
 /obj/item/toy/windup_toolbox/attack_self(mob/user)
 	if(!active)
@@ -441,7 +451,8 @@
 	throw_speed = 3
 	throw_range = 5
 	two_hand_force = 0
-	attack_verb = list("attacked", "struck", "hit")
+	attack_verb_continuous = list("attacks", "strikes", "hits")
+	attack_verb_simple = list("attack", "strike", "hit")
 
 /obj/item/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
@@ -463,7 +474,8 @@
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices")
+	attack_verb_simple = list("attack", "slash", "stab", "slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /*
@@ -518,100 +530,6 @@
 /obj/effect/decal/cleanable/ash/snappop_phoenix/proc/respawn()
 	new /obj/item/toy/snappop/phoenix(get_turf(src))
 	qdel(src)
-
-
-/*
- * Mech prizes
- */
-/obj/item/toy/prize
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "ripleytoy"
-	var/timer = 0
-	var/cooldown = 30
-	var/quiet = 0
-	w_class = WEIGHT_CLASS_SMALL
-
-//all credit to skasi for toy mech fun ideas
-/obj/item/toy/prize/attack_self(mob/user)
-	if(timer < world.time)
-		to_chat(user, "<span class='notice'>You play with [src].</span>")
-		timer = world.time + cooldown
-		if(!quiet)
-			playsound(user, 'sound/mecha/mechstep.ogg', 20, TRUE)
-	else
-		. = ..()
-
-/obj/item/toy/prize/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(loc == user)
-		attack_self(user)
-
-/obj/item/toy/prize/ripley
-	name = "toy Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/13."
-
-/obj/item/toy/prize/fireripley
-	name = "toy firefighting Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/13."
-	icon_state = "fireripleytoy"
-
-/obj/item/toy/prize/deathripley
-	name = "toy deathsquad Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/13."
-	icon_state = "deathripleytoy"
-
-/obj/item/toy/prize/gygax
-	name = "toy Gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/13."
-	icon_state = "gygaxtoy"
-
-/obj/item/toy/prize/durand
-	name = "toy Durand"
-	desc = "Mini-Mecha action figure! Collect them all! 5/13."
-	icon_state = "durandtoy"
-
-/obj/item/toy/prize/honk
-	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/13."
-	icon_state = "honktoy"
-
-/obj/item/toy/prize/marauder
-	name = "toy Marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/13."
-	icon_state = "maraudertoy"
-
-/obj/item/toy/prize/seraph
-	name = "toy Seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/13."
-	icon_state = "seraphtoy"
-
-/obj/item/toy/prize/mauler
-	name = "toy Mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/13."
-	icon_state = "maulertoy"
-
-/obj/item/toy/prize/odysseus
-	name = "toy Odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/13."
-	icon_state = "odysseustoy"
-
-/obj/item/toy/prize/phazon
-	name = "toy Phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/13."
-	icon_state = "phazontoy"
-
-/obj/item/toy/prize/reticence
-	name = "toy Reticence"
-	desc = "Mini-Mecha action figure! Collect them all! 12/13."
-	icon_state = "reticencetoy"
-	quiet = 1
-
-/obj/item/toy/prize/clarke
-	name = "toy Clarke"
-	desc = "Mini-Mecha action figure! Collect them all! 13/13."
-	icon_state = "clarketoy"
 
 /obj/item/toy/talking
 	name = "talking action figure"
@@ -734,7 +652,8 @@
 	var/card_throwforce = 0
 	var/card_throw_speed = 3
 	var/card_throw_range = 7
-	var/list/card_attack_verb = list("attacked")
+	var/list/card_attack_verb_continuous = list("attacks")
+	var/list/card_attack_verb_simple = list("attack")
 
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
@@ -934,7 +853,8 @@
 	newobj.card_throwforce = sourceobj.card_throwforce
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
-	newobj.card_attack_verb = sourceobj.card_attack_verb
+	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
+	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
@@ -1053,8 +973,10 @@
 	newobj.throw_speed = newobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.throw_range = newobj.card_throw_range
-	newobj.card_attack_verb = sourceobj.card_attack_verb
-	newobj.attack_verb = newobj.card_attack_verb
+	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
+	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous
+	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
+	newobj.attack_verb_simple = newobj.card_attack_verb_simple
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
@@ -1070,7 +992,8 @@
 	card_throwforce = 10
 	card_throw_speed = 3
 	card_throw_range = 7
-	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
+	card_attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
+	card_attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
 	resistance_flags = NONE
 
 /*
@@ -1179,7 +1102,8 @@
 	desc = "A compact ball of snow. Good for throwing at people."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snowball"
-	throwforce = 12 //pelt your enemies to death with lumps of snow
+	throwforce = 20 //the same damage as a disabler shot
+	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	. = ..()
@@ -1514,7 +1438,7 @@
 	to_chat(user, "<span class='notice'>You name the dummy as \"[doll_name]\".</span>")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)
+/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language, list/message_mods)
 	var/mob/M = A
 	if (istype(M))
 		M.log_talk(message, LOG_SAY, tag="dummy toy")

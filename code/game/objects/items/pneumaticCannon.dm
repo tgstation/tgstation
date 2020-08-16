@@ -7,7 +7,8 @@
 	desc = "A gas-powered cannon that can fire any object loaded into it."
 	w_class = WEIGHT_CLASS_BULKY
 	force = 8 //Very heavy
-	attack_verb = list("bludgeoned", "smashed", "beaten")
+	attack_verb_continuous = list("bludgeons", "smashes", "beats")
+	attack_verb_simple = list("bludgeon", "smash", "beat")
 	icon = 'icons/obj/pneumaticCannon.dmi'
 	icon_state = "pneumaticCannon"
 	inhand_icon_state = "bulldog"
@@ -151,6 +152,9 @@
 		return
 	if(!tank && checktank)
 		to_chat(user, "<span class='warning'>\The [src] can't fire without a source of gas.</span>")
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>" )
 		return
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")

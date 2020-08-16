@@ -136,7 +136,7 @@
 	. = ..()
 	if(istype(hit_atom))
 		playsound(src, attack_sound, 100, TRUE)
-		hit_atom.apply_damage(22 * size / 2) //It gets pretty hard to dodge the skulls when there are a lot of them. Scales down with size
+		hit_atom.apply_damage(22 * size / 2, wound_bonus = CANT_WOUND) //It gets pretty hard to dodge the skulls when there are a lot of them. Scales down with size
 		hit_atom.safe_throw_at(get_step(src, get_dir(src, hit_atom)), 2) //Some knockback. Prevent the legion from melee directly after the throw.
 
 //TURRETS
@@ -146,7 +146,7 @@
 	playsound(src, 'sound/magic/RATTLEMEBONES.ogg', 100, TRUE)
 	var/list/possiblelocations = list()
 	for(var/turf/T in oview(src, 4)) //Only place the turrets on open turfs
-		if(is_blocked_turf(T))
+		if(T.is_blocked_turf())
 			continue
 		possiblelocations += T
 	for(var/i in 1 to min(rand(minimum, maximum), LAZYLEN(possiblelocations))) //Makes sure aren't spawning in nullspace.
@@ -234,7 +234,7 @@
 	return TRUE
 
 ///Sets the variables for new legion skulls. Usually called after splitting.
-/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(var/mob/living/simple_animal/hostile/megafauna/legion/L)
+/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(mob/living/simple_animal/hostile/megafauna/legion/L)
 	maxHealth = L.maxHealth
 	updatehealth()
 	size = L.size
@@ -376,7 +376,7 @@
 	damage = 19
 	range = 6
 	eyeblur = 0
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
 	tracer_type = /obj/effect/projectile/tracer/legion
 	muzzle_type = /obj/effect/projectile/tracer/legion
