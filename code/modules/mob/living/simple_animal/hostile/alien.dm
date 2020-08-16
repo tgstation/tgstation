@@ -177,7 +177,7 @@
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(ismovable(target))
-		target.wash(CLEAN_WASH)
+		target.wash(CLEAN_SCRUB)
 		if(istype(target, /obj/effect/decal/cleanable))
 			visible_message("<span class='notice'>[src] cleans up \the [target].</span>")
 		else
