@@ -348,7 +348,7 @@
 
 	// Shake animation
 	if (incapacitated())
-		var/direction = rand(50) ? -1 : 1
+		var/direction = prob(50) ? -1 : 1
 		animate(src, pixel_x = pixel_x + SHAKE_ANIMATION_OFFSET * direction, time = 1, easing = QUAD_EASING | EASE_OUT)
 		animate(pixel_x = pixel_x - (SHAKE_ANIMATION_OFFSET * 2 * direction), time = 1)
 		animate(pixel_x = pixel_x + SHAKE_ANIMATION_OFFSET * direction, time = 1, easing = QUAD_EASING | EASE_IN)
