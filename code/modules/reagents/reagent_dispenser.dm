@@ -223,10 +223,10 @@
 	reagent_id = /datum/reagent/consumable/nutraslop
 
 /obj/structure/reagent_dispensers/plumbed
-	name = "stationairy water tank"
+	name = "stationary water tank"
 	anchored = TRUE
-	icon_state = "water_stationairy"
-	desc = "A stationairy, plumbed, water tank."
+	icon_state = "water_stationary"
+	desc = "A stationary, plumbed, water tank."
 	can_be_tanked = FALSE
 
 /obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
@@ -238,8 +238,8 @@
 	AddComponent(/datum/component/plumbing/simple_supply)
 
 /obj/structure/reagent_dispensers/plumbed/storage
-	name = "stationairy storage tank"
-	icon_state = "tank_stationairy"
+	name = "stationary storage tank"
+	icon_state = "tank_stationary"
 	reagent_id = null //start empty
 
 /obj/structure/reagent_dispensers/plumbed/storage/ComponentInitialize()
@@ -262,7 +262,7 @@
 	return !anchored
 
 /obj/structure/reagent_dispensers/plumbed/fuel
-	name = "stationairy fuel tank"
-	icon_state = "fuel_stationairy"
-	desc = "A stationairy, plumbed, fuel tank."
+	name = "stationary fuel tank"
+	icon_state = "fuel_stationary"
+	desc = "A stationary, plumbed, fuel tank."
 	reagent_id = /datum/reagent/fuel
