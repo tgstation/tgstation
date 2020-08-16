@@ -16,6 +16,8 @@
 	var/max_fields = 3
 	var/list/current_fields
 	var/field_distance_limit = 7
+	var/forcefield_busy = FALSE //Prevents spamming forcefields
+	var/creation_time = 15 //Time needed to create, in deciseconds
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -42,8 +44,21 @@
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, "<span class='warning'>[src] cannot sustain any more forcefields!</span>")
 		return
+	if(forcefield_busy)
+		to_chat(user, "<span class='notice'>[src] is busy creating a forcefield!")
+		return
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
+	if(creation_time)
+		forcefield_busy = TRUE
+		if (!do_after(user, creation_time, target = target))
+			forcefield_busy = FALSE
+			return
+		forcefield_busy = FALSE
+		if(LAZYLEN(current_fields) >= max_fields)
+			return
+		if(T.is_blocked_turf(TRUE))
+			return
 	user.visible_message("<span class='warning'>[user] projects a forcefield!</span>","<span class='notice'>You project a forcefield.</span>")
 	var/obj/structure/projected_forcefield/F = new(T, src)
 	current_fields += F
@@ -101,6 +116,10 @@
 	generator.current_fields -= src
 	generator = null
 	return ..()
+
+/obj/structure/projected_forcefield/emp_act(severity)
+	. = ..()
+	generator.shield_integrity = 0 //Any EMP blast simply destoys the forcefield
 
 /obj/structure/projected_forcefield/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
