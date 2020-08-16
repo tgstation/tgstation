@@ -265,13 +265,11 @@
 /area/holodeck/rec_center/lounge)
 "aU" = (
 /turf/open/floor/holofloor{
-	dir = 9;
 	icon_state = "stairs-l"
 	},
 /area/holodeck/rec_center/lounge)
 "aV" = (
 /turf/open/floor/holofloor{
-	dir = 9;
 	icon_state = "stairs-r"
 	},
 /area/holodeck/rec_center/lounge)
