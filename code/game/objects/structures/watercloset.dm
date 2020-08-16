@@ -404,7 +404,7 @@
 
 /obj/structure/sink/process()
 	if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
-		reagents.add_reagent(dispensedreagent, 5)
+		reagents.add_reagent(dispensedreagent, 1)
 
 /obj/structure/sink/proc/drop_materials()
 	if(buildstacktype)
@@ -417,7 +417,7 @@
 /obj/structure/sink/proc/process_check()
 	if(!reclaiming)
 		reclaiming = TRUE
-		START_PROCESSING(SSmachines, src)
+		START_PROCESSING(SSfluids, src)
 		process()
 
 /obj/structure/sink/kitchen

@@ -135,7 +135,7 @@
 			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
 				wash_atom(movable_content)
 	else
-		reagents.add_reagent(reagent_id, 5)
+		reagents.add_reagent(reagent_id, 1)
 		on = FALSE
 		soundloop.stop()
 		handle_mist()
