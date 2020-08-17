@@ -172,7 +172,6 @@
 			dat += "<A href='?src=[REF(src)];login=1'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/med_data/Topic(href, href_list)

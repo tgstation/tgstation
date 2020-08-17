@@ -17,6 +17,8 @@
 	speak_chance = 1
 	turns_per_move = 10
 	can_be_held = TRUE
+	pet_bonus = TRUE
+	pet_bonus_emote = "woofs happily!"
 	var/turns_since_scan = 0
 	var/obj/movement_target
 
@@ -125,6 +127,10 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
 	held_state = "pug"
+
+/mob/living/simple_animal/pet/dog/pug/mcgriff
+	name = "McGriff"
+	desc = "This dog can tell someting smells around here, and that something is CRIME!"
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	name = "Exotic Corgi"
@@ -630,22 +636,3 @@
 	..()
 
 	make_babies()
-
-/mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/mob/living/simple_animal/pet/dog/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
-				new /obj/effect/temp_visual/heart(loc)
-				manual_emote("yaps happily!")
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-		else
-			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
-				manual_emote("growls!")

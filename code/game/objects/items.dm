@@ -128,7 +128,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/breakouttime = 0
 
 	///Used in [atom/proc/attackby] to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
-	var/list/attack_verb
+	var/list/attack_verb_continuous
+	var/list/attack_verb_simple
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 	var/list/species_exception = null
 
@@ -189,8 +190,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/Initialize()
 
-	if(attack_verb)
-		attack_verb = typelist("attack_verb", attack_verb)
+	if(attack_verb_continuous)
+		attack_verb_continuous = typelist("attack_verb_continuous", attack_verb_continuous)
+	if(attack_verb_simple)
+		attack_verb_simple = typelist("attack_verb_simple", attack_verb_simple)
 
 	. = ..()
 	for(var/path in actions_types)
@@ -549,7 +552,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	attack_self(user)
 
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-/obj/item/proc/IsReflect(var/def_zone)
+/obj/item/proc/IsReflect(def_zone)
 	return FALSE
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)

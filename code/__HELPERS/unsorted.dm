@@ -419,7 +419,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	Gets all contents of contents and returns them all in a list.
 */
 
-/atom/proc/GetAllContents(var/T, ignore_flag_1)
+/atom/proc/GetAllContents(T, ignore_flag_1)
 	var/list/processing_list = list(src)
 	if(T)
 		. = list()
@@ -821,7 +821,7 @@ B --><-- A
 // eg: center_image(I, 32,32)
 // eg2: center_image(I, 96,96)
 
-/proc/center_image(var/image/I, x_dimension = 0, y_dimension = 0)
+/proc/center_image(image/I, x_dimension = 0, y_dimension = 0)
 	if(!I)
 		return
 
@@ -978,7 +978,7 @@ B --><-- A
 
 	return L
 
-/atom/proc/contains(var/atom/A)
+/atom/proc/contains(atom/A)
 	if(!A)
 		return 0
 	for(var/atom/location = A.loc, location, location = location.loc)
@@ -1006,7 +1006,7 @@ B --><-- A
 			var/I = rand(1, L.len)
 			var/turf/T = L[I]
 			var/area/X = get_area(T)
-			if(!T.density && X.valid_territory)
+			if(!T.density && (X.area_flags & VALID_TERRITORY))
 				var/clear = TRUE
 				for(var/obj/O in T)
 					if(O.density)
@@ -1141,7 +1141,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
 
-/proc/weightclass2text(var/w_class)
+/proc/weightclass2text(w_class)
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
 			. = "tiny"
@@ -1464,7 +1464,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/i in L)
 		if(condition.Invoke(i))
 			. |= i
-/proc/generate_items_inside(list/items_list,var/where_to)
+/proc/generate_items_inside(list/items_list,where_to)
 	for(var/each_item in items_list)
 		for(var/i in 1 to items_list[each_item])
 			new each_item(where_to)
@@ -1483,47 +1483,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return call(source, proctype)(arglist(arguments))
 
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
-
-// Converts browser keycodes to BYOND keycodes.
-/proc/browser_keycode_to_byond(keycode)
-	keycode = text2num(keycode)
-	switch(keycode)
-		// letters and numbers
-		if(65 to 90, 48 to 57)
-			return ascii2text(keycode)
-		if(17)
-			return "Ctrl"
-		if(18)
-			return "Alt"
-		if(16)
-			return "Shift"
-		if(37)
-			return "West"
-		if(38)
-			return "North"
-		if(39)
-			return "East"
-		if(40)
-			return "South"
-		if(45)
-			return "Insert"
-		if(46)
-			return "Delete"
-		if(36)
-			return "Northwest"
-		if(35)
-			return "Southwest"
-		if(33)
-			return "Northeast"
-		if(34)
-			return "Southeast"
-		if(112 to 123)
-			return "F[keycode-111]"
-		if(96 to 105)
-			return "Numpad[keycode-96]"
-		if(188)
-			return ","
-		if(190)
-			return "."
-		if(189)
-			return "-"

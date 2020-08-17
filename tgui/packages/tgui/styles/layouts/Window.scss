@@ -42,6 +42,8 @@
 
 .Window__contentPadding {
   margin: 0.5rem;
+  // IE8: Calc not supported
+  height: 100%;
   // 0.01 is needed to make the scrollbar not appear
   // due to rem rendering inaccuracies in IE11.
   height: calc(100% - 1.01rem);

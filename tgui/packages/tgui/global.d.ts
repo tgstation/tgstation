@@ -75,11 +75,16 @@ interface ByondType {
 
   /**
    * Retrieves multiple properties of the BYOND skin element,
-   * as listen in the `propNames` array.
+   * as defined in the `propNames` array.
    *
    * Returns a promise with a key-value object containing listed properties.
    */
   winget(id: string, propNames: string[]): Promise<object>;
+
+  /**
+   * Assigns properties to BYOND skin elements.
+   */
+  winset(props: object): void;
 
   /**
    * Assigns properties to the BYOND skin element.
@@ -90,6 +95,13 @@ interface ByondType {
    * Sets a property on the BYOND skin element to a certain value.
    */
   winset(id: string, propName: string, propValue: any): void;
-};
+
+  /**
+   * Parses BYOND JSON
+   *
+   * Uses a special encoding to preverse Infinity and NaN.
+   */
+  parseJson(text: string): any;
+}
 
 declare const Byond: ByondType;

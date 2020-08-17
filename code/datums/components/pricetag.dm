@@ -15,7 +15,7 @@
 /datum/component/pricetag/proc/Unwrapped()
 	qdel(src) //Once it leaves it's wrapped container, the object in question should lose it's pricetag component.
 
-/datum/component/pricetag/proc/split_profit(var/item_value)
+/datum/component/pricetag/proc/split_profit(item_value)
 	var/price = item_value
 	if(price)
 		var/adjusted_value = price*(profit_ratio/100)
