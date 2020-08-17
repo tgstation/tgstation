@@ -160,8 +160,6 @@
 	puff.start()
 	owner.spin(8, 1) // Spin around like a loon.
 
-	..()
-
 /obj/effect/particle_effect/smoke/vampsmoke
 	opaque = FALSE
 	amount = 0

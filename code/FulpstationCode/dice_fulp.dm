@@ -17,10 +17,10 @@
 	var/owner = null
 	dice_spawn = /mob/living/simple_animal/hostile/carp
 
-obj/item/dice/encounter/attack_self(mob/user)
+/obj/item/dice/encounter/attack_self(mob/user)
 	diceroll(user)
 
-obj/item/dice/encounter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/dice/encounter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	diceroll(thrownby)
 
 

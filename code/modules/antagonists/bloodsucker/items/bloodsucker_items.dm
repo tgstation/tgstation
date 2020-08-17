@@ -44,7 +44,7 @@
 
 		// Taken from drinks.dm //
 		var/gulp_size = 5
-		var/fraction = min(gulp_size / reagents.total_volume, 1)
+		//var/fraction = min(gulp_size / reagents.total_volume, 1)
 		//checkLiked(fraction, M) // Blood isn't food, sorry.
 		//reagents.reaction(M, INGEST, fraction)	DEAD CODE MUST REWORK
 		reagents.trans_to(M, gulp_size)

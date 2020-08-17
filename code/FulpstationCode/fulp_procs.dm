@@ -32,7 +32,7 @@
 	var/deltaX = rand(minRange,checkRange)*pick(-1,1)
 	var/deltaY = rand(minRange,checkRange)*pick(-1,1)
 	var/turf/center = get_turf(A)
-	
+
 	var/target = locate((center.x + deltaX),(center.y + deltaY),center.z)
 
 	if (check_turf_is_valid(target, checkFloor))
@@ -56,7 +56,7 @@
 
 // Return a xeno_spawn location in an area - use for additional jobspawns
 //
-proc/get_fulp_spawn(area/dept)
+/proc/get_fulp_spawn(area/dept)
 	for(var/obj/effect/landmark/S in GLOB.xeno_spawn)
 		if(get_area(S) == dept)
 			return S

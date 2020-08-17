@@ -308,7 +308,7 @@
 	owner.current.hellbound = FALSE
 
 
-datum/antagonist/bloodsucker/proc/RankUp()
+/datum/antagonist/bloodsucker/proc/RankUp()
 	set waitfor = FALSE
 	if (!owner || !owner.current)
 		return
@@ -323,11 +323,11 @@ datum/antagonist/bloodsucker/proc/RankUp()
 			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, they can be built from wooden planks.</span><br>")
 
 
-datum/antagonist/bloodsucker/proc/LevelUpPowers()
+/datum/antagonist/bloodsucker/proc/LevelUpPowers()
 	for(var/datum/action/bloodsucker/power in powers)
 		power.level_current ++
 
-datum/antagonist/bloodsucker/proc/SpendRank()
+/datum/antagonist/bloodsucker/proc/SpendRank()
 	set waitfor = FALSE
 	if (vamplevel_unspent <= 0 || !owner || !owner.current || !owner.current.client)
 		return

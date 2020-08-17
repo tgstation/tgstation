@@ -174,7 +174,7 @@
 	owner.current.setToxLoss(0)
 
 	// No Bleeding
-	if (ishuman(owner.current))
+	//if (ishuman(owner.current))
 		//var/mob/living/carbon/human/H = owner.current		DEAD CODE MUST REWORK
 		//H.bleed_rate = 0		DEAD CODE MUST REWORK
 

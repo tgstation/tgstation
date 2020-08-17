@@ -90,7 +90,7 @@
 		var/mob/M = src.loc
 		to_chat(M, "<span class='danger'>[src]' hud abruptly flickers out as it overloads!</span>")
 		remove_sensors(M)
-	if(MODE_MESON) //disable mesons if active
+	if(mode == MODE_MESON) //disable mesons if active
 		vision_flags = NONE
 		darkness_view = 2
 		lighting_alpha = null

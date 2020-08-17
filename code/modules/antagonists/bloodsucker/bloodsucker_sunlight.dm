@@ -13,6 +13,7 @@
 	var/time_til_cycle = 0
 
 /obj/effect/sunlight/Initialize()
+	..()
 	countdown()
 	hud_tick()
 

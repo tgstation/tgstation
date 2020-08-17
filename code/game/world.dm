@@ -286,7 +286,7 @@ GLOBAL_VAR(restart_counter)
 /world/proc/update_status()
 
 	status = update_status_fulp()  // FULPSTATION Use our code and bail!
-	return
+	/*
 
 	var/list/features = list()
 
@@ -337,6 +337,7 @@ GLOBAL_VAR(restart_counter)
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+	*/
 
 /world/proc/update_hub_visibility(new_visibility)
 	if(new_visibility == GLOB.hub_visibility)

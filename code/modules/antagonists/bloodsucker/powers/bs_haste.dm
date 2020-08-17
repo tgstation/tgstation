@@ -63,7 +63,7 @@
 		safety --
 
 		// Did I get knocked down?
-		if (owner && owner.incapacitated(ignore_restraints=TRUE,ignore_grab=TRUE,check_immobilized=TRUE))// owner.incapacitated())
+		if (owner && owner.incapacitated(ignore_restraints=TRUE,ignore_grab=TRUE,ignore_stasis=TRUE))// owner.incapacitated())
 			// We're gonna cancel. But am I on the ground? Spin me!
 			if (!(user.mobility_flags & MOBILITY_STAND))
 				var/send_dir = get_dir(owner, T)

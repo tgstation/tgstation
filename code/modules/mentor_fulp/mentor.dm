@@ -64,12 +64,12 @@ GLOBAL_PROTECT(mentor_href_token)
 		C.mentor_datum = null
 	GLOB.mentors.Cut()
 	var/list/lines = world.file2list("[global.config.directory]/mentors.txt")
-		for(var/line in lines)
-			if(!length(line))
-				continue
-			if(findtextEx(line, "#", 1, 2))
-				continue
-			new /datum/mentors(line)
+	for(var/line in lines)
+		if(!length(line))
+			continue
+		if(findtextEx(line, "#", 1, 2))
+			continue
+		new /datum/mentors(line)
 	/*if(CONFIG_GET(flag/mentor_legacy_system))//legacy
 		var/list/lines = world.file2list("[global.config.directory]/mentors.txt")
 		for(var/line in lines)

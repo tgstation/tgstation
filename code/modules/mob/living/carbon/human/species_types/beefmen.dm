@@ -105,25 +105,37 @@
 
 
 
-/mob/living/carbon/proc/ReassignForeignBodyparts()
-	if (get_bodypart(BODY_ZONE_HEAD)?.type != part_default_head)  // <----- I think :? is used for procs instead of .? ...but apparently BYOND does that swap for you. //(!istype(get_bodypart(BODY_ZONE_HEAD), part_default_head))
-		qdel(get_bodypart(BODY_ZONE_HEAD))
-		new part_default_head().replace_limb(src,TRUE)
-	if (get_bodypart(BODY_ZONE_CHEST)?.type != part_default_chest)
-		qdel(get_bodypart(BODY_ZONE_CHEST))
-		new part_default_chest().replace_limb(src,TRUE)
-	if (get_bodypart(BODY_ZONE_L_ARM)?.type != part_default_l_arm)
-		qdel(get_bodypart(BODY_ZONE_L_ARM))
-		new part_default_l_arm().replace_limb(src,TRUE)
-	if (get_bodypart(BODY_ZONE_R_ARM)?.type != part_default_r_arm)
-		qdel(get_bodypart(BODY_ZONE_R_ARM))
-		new part_default_r_arm().replace_limb(src,TRUE)
-	if (get_bodypart(BODY_ZONE_L_LEG)?.type != part_default_l_leg)
-		qdel(get_bodypart(BODY_ZONE_L_LEG))
-		new part_default_l_leg().replace_limb(src,TRUE)
-	if (get_bodypart(BODY_ZONE_R_LEG)?.type != part_default_r_leg)
-		qdel(get_bodypart(BODY_ZONE_R_LEG))
-		new part_default_r_leg().replace_limb(src,TRUE)
+/mob/living/carbon/proc/ReassignForeignBodyparts() //This proc hurts me so much, it used to be worse, this really should be a list or something
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if (head?.type != part_default_head)  // <----- I think :? is used for procs instead of .? ...but apparently BYOND does that swap for you. //(!istype(get_bodypart(BODY_ZONE_HEAD), part_default_head))
+		qdel(head)
+		var/obj/item/bodypart/limb = new part_default_head
+		limb.replace_limb(src,TRUE)
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+	if (chest?.type != part_default_chest)
+		qdel(chest)
+		var/obj/item/bodypart/limb = new part_default_chest
+		limb.replace_limb(src,TRUE)
+	var/obj/item/bodypart/l_arm = get_bodypart(BODY_ZONE_L_ARM)
+	if (l_arm?.type != part_default_l_arm)
+		qdel(l_arm)
+		var/obj/item/bodypart/limb = new part_default_l_arm
+		limb.replace_limb(src,TRUE)
+	var/obj/item/bodypart/r_arm = get_bodypart(BODY_ZONE_R_ARM)
+	if (r_arm?.type != part_default_r_arm)
+		qdel(r_arm)
+		var/obj/item/bodypart/limb = new part_default_r_arm
+		limb.replace_limb(src,TRUE)
+	var/obj/item/bodypart/l_leg = get_bodypart(BODY_ZONE_L_LEG)
+	if (l_leg?.type != part_default_l_leg)
+		qdel(l_leg)
+		var/obj/item/bodypart/limb = new part_default_l_leg
+		limb.replace_limb(src,TRUE)
+	var/obj/item/bodypart/r_leg = get_bodypart(BODY_ZONE_R_LEG)
+	if (r_leg?.type != part_default_r_leg)
+		qdel(r_leg)
+		var/obj/item/bodypart/limb = new part_default_r_leg
+		limb.replace_limb(src,TRUE)
 
 /datum/species/beefman/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	..()
@@ -150,12 +162,12 @@
 	return capitalize(beefman_name(gender))
 
 
-/datum/species/beefman/spec_life(mob/living/carbon/human/H)	// This is your life ticker.
-	..()
+///datum/species/beefman/spec_life(mob/living/carbon/human/H)	// This is your life ticker.
+	//..()
 	// 		** BLEED YOUR JUICES **         // BODYTEMP_NORMAL = 310.15    // AC set to 293
 
 	// Step 1) Being burned keeps the juices in.
-	var/searJuices = H.getFireLoss_nonProsthetic() / 10
+	//var/searJuices = H.getFireLoss_nonProsthetic() / 10
 
 	// Step 2) Bleed out those juices by warmth, minus burn damage.
 	//--H.bleed_rate = clamp((H.bodytemperature - 285) / 20 - searJuices, 0, 5) // Every 20 points above 285 increases bleed rate. Don't worry, you're cold blooded.	DEAD CODE MUST REWORK
@@ -798,8 +810,9 @@
 		created_firsts += first
 
 	// Delete Next Portal if it's time (it will remove its partner)
-	if (created_firsts.len && world.time >= created_firsts[1].created_on + created_firsts[1].exist_length)
-		var/targetGate = created_firsts[1]
+	var/obj/effect/hallucination/simple/phobetor/first_on_the_stack = created_firsts[1]
+	if (created_firsts.len && world.time >= first_on_the_stack.created_on + first_on_the_stack.exist_length)
+		var/targetGate = first_on_the_stack
 		created_firsts -= targetGate
 		qdel(targetGate)
 
