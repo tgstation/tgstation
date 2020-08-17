@@ -11,11 +11,6 @@
 	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	var/obj/vehicle/sealed/mecha/chassis
 
-/datum/action/vehicle/sealed/mecha/Grant(mob/living/L, obj/vehicle/sealed/mecha/M)
-	if(M)
-		chassis = M
-	..()
-
 /datum/action/vehicle/sealed/mecha/Destroy()
 	chassis = null
 	return ..()

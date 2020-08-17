@@ -189,13 +189,11 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
 		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE	, l_power = 5, l_color = "#00FFFF")
-		sleep(3)
 		icon_state = "shield"
 		RegisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE, .proc/resetdir)
 	else
 		flick("shield_drop", src)
 		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
-		sleep(5)
 		set_light(0)
 		icon_state = "shield_null"
 		invisibility = INVISIBILITY_MAXIMUM //no showing on right-click

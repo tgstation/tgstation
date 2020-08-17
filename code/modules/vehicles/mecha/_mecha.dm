@@ -750,7 +750,7 @@
 		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>")
 	else
 		examine(user)
-		if(length(return_drivers()) >= 0)
+		if(length(return_drivers()) > 0)
 			to_chat(user, "<span class='warning'>This exosuit has a pilot and cannot be controlled.</span>")
 			return
 		var/can_control_mech = 0
@@ -789,7 +789,6 @@
 			AI.remote_control = null
 			to_chat(AI, "<span class='notice'>You have been downloaded to a mobile storage device. Wireless connection offline.</span>")
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
-			update_icon()
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
 			AI.linked_core = new /obj/structure/ai_core/deactivated(AI.loc)
@@ -828,13 +827,14 @@
 	AI.controlled_mech = src
 	AI.remote_control = src
 	AI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
-	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
+	if(interaction == AI_MECH_HACK)
+		AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
 	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
 		"<span class='notice'>You have been uploaded to a mech's onboard computer.</span>")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
 
 
-//An actual AI (simple_animal mecha pilot) entering the mech
+///Handles an actual AI (simple_animal mecha pilot) entering the mech
 /obj/vehicle/sealed/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
 	if(pilot_mob && pilot_mob.Adjacent(src))
 		if(occupants)
@@ -844,6 +844,7 @@
 		pilot_mob.forceMove(src)
 		update_icon()
 
+///Handles an actual AI (simple_animal mecha pilot) exiting the mech
 /obj/vehicle/sealed/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
 	LAZYREMOVE(occupants, pilot_mob)
 	if(pilot_mob.mecha == src)
@@ -935,8 +936,9 @@
 	. = FALSE
 	if(!(H?.client))
 		return
-	if(!(ishuman(H) && Adjacent(H)))
-		return
+	if(ishuman(H))
+		if(!Adjacent(H))
+			return
 	add_occupant(H)
 	H.forceMove(src)
 	H.update_mouse_pointer()
@@ -946,7 +948,7 @@
 	setDir(dir_in)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(!internal_damage)
-		SEND_SOUND(occupants, sound('sound/mecha/nominal.ogg',volume=50))
+		SEND_SOUND(H, sound('sound/mecha/nominal.ogg',volume=50))
 	return TRUE
 
 /obj/vehicle/sealed/mecha/proc/mmi_move_inside(obj/item/mmi/M, mob/user)
@@ -967,7 +969,7 @@
 		if(LAZYLEN(occupants) < max_occupants)
 			return mmi_moved_inside(M, user)
 		else
-			to_chat(user, "<span class='warning'>Occupants detected!</span>")
+			to_chat(user, "<span class='warning'>Maximum occupants detected!</span>")
 	else
 		to_chat(user, "<span class='notice'>You stop inserting the MMI.</span>")
 	return FALSE
@@ -984,9 +986,8 @@
 		return FALSE
 
 	M.mecha = src
-	add_occupant(B)
+	add_occupant(B)//Note this forcemoves the brain into the mech to allow relaymove
 	mecha_flags |= SILICON_PILOT
-	B.forceMove(src) //should allow relaymove
 	B.reset_perspective(src)
 	B.remote_control = src
 	B.update_mobility()
@@ -1000,12 +1001,13 @@
 	return TRUE
 
 /obj/vehicle/sealed/mecha/container_resist(mob/living/user)
-	is_currently_ejecting = TRUE
 	if(isAI(user))
 		var/mob/living/silicon/ai/AI = user
 		if(!AI.can_shunt)
 			to_chat(AI, "<span class='notice'>You can't leave a mech after dominating it!.</span>")
+			return FALSE
 	to_chat(user, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.</span>")
+	is_currently_ejecting = TRUE
 	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))
 		to_chat(user, "<span class='notice'>You exit the mech.</span>")
 		mob_exit(user, TRUE)

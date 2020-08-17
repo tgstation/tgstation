@@ -15,7 +15,7 @@
 	internal_damage_threshold = 25
 	force = 45
 	max_equip = 5
-	bumpsmash = 1
+	bumpsmash = TRUE
 
 /obj/vehicle/sealed/mecha/combat/marauder/generate_actions()
 	. = ..()
