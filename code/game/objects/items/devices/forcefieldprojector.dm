@@ -11,13 +11,13 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
-	var/max_shield_integrity = 250
-	var/shield_integrity = 250
+	var/max_charge = 100
+	var/current_charge = 100
 	var/max_fields = 3
 	var/list/current_fields
 	var/field_distance_limit = 7
-	var/forcefield_busy = FALSE //Prevents spamming forcefields
-	var/creation_time = 15 //Time needed to create, in deciseconds
+	var/forcefield_busy = FALSE ///Prevents spamming forcefields
+	var/creation_time = 1 SECONDS ///Time needed to create
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -47,6 +47,9 @@
 	if(forcefield_busy)
 		to_chat(user, "<span class='notice'>[src] is busy creating a forcefield!")
 		return
+	if(current_charge < 15)
+		to_chat(user, "<span class='warning'>[src] does not have enough charge to generate a forcefield!")
+		return
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
 	if(creation_time)
@@ -61,6 +64,7 @@
 			return
 	user.visible_message("<span class='warning'>[user] projects a forcefield!</span>","<span class='notice'>You project a forcefield.</span>")
 	var/obj/structure/projected_forcefield/F = new(T, src)
+	current_charge -= 10
 	current_fields += F
 	user.changeNext_move(CLICK_CD_MELEE)
 
@@ -72,7 +76,7 @@
 
 /obj/item/forcefield_projector/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [round((shield_integrity/max_shield_integrity)*100)]% charged.</span>"
+	. += "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [current_charge]% charged.</span>"
 
 /obj/item/forcefield_projector/Initialize(mapload)
 	. = ..()
@@ -85,11 +89,11 @@
 
 /obj/item/forcefield_projector/process()
 	if(!LAZYLEN(current_fields))
-		shield_integrity = min(shield_integrity + 4, max_shield_integrity)
+		current_charge = min(current_charge + 6, max_charge)
 	else
-		shield_integrity = max(shield_integrity - LAZYLEN(current_fields), 0) //fields degrade slowly over time
+		current_charge = max(current_charge - LAZYLEN(current_fields), 0) //having active fields slowly drains charge
 	for(var/obj/structure/projected_forcefield/F in current_fields)
-		if(shield_integrity <= 0 || get_dist(F,src) > field_distance_limit)
+		if(F.shield_integrity <= 0 || get_dist(F,src) > field_distance_limit || current_charge == 0)
 			qdel(F)
 
 /obj/structure/projected_forcefield
@@ -105,6 +109,7 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	armor = list("melee" = 0, "bullet" = 25, "laser" = 50, "energy" = 50, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	var/obj/item/forcefield_projector/generator
+	var/shield_integrity = 250
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)
 	. = ..()
@@ -119,7 +124,7 @@
 
 /obj/structure/projected_forcefield/emp_act(severity)
 	. = ..()
-	generator.shield_integrity = 0 //Any EMP blast simply destoys the forcefield
+	shield_integrity = 0 //Any EMP blast simply destoys the forcefield
 
 /obj/structure/projected_forcefield/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -132,4 +137,4 @@
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)
+	shield_integrity = max(shield_integrity - damage_amount, 0)
