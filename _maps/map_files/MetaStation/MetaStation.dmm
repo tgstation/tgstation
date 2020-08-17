@@ -66393,15 +66393,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"eVo" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "eWs" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /turf/open/floor/plasteel/white,
@@ -67376,12 +67367,6 @@
 /obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
-"gmg" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "gmp" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -68445,12 +68430,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/white,
 /area/medical/abandoned)
-"hZc" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "iaR" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -70456,13 +70435,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"lpp" = (
-/obj/item/cigbutt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "lqa" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/fork/plastic,
@@ -71121,13 +71093,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
-"mqt" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
 "mrv" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/cloth/five,
@@ -71273,6 +71238,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"mJJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 10
+	},
+/turf/closed/wall,
+/area/crew_quarters/fitness/recreation)
 "mKb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
@@ -72688,6 +72659,15 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
+"pnI" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck";
+	dir = 1
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "pod" = (
 /obj/effect/mapping_helpers/dead_body_placer,
 /obj/structure/cable,
@@ -76094,12 +76074,6 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/closed/wall,
 /area/medical/morgue)
-"uUV" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/starboard/fore)
 "uVk" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -76130,20 +76104,6 @@
 /obj/structure/flora/rock/jungle,
 /turf/open/floor/grass,
 /area/medical/virology)
-"uWX" = (
-/obj/machinery/camera{
-	c_tag = "Holodeck";
-	dir = 1
-	},
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "uYd" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue,
@@ -77890,6 +77850,20 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/primary)
+"xAc" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck Control";
+	dir = 1
+	},
+/obj/item/radio/intercom{
+	pixel_y = -28
+	},
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "xAp" = (
 /obj/structure/chair/comfy,
 /obj/machinery/power/apc/auto_name/north,
@@ -116280,7 +116254,7 @@ aaa
 aaa
 aaa
 aeB
-afC
+aho
 afC
 afC
 aib
@@ -117574,7 +117548,7 @@ afD
 afD
 afD
 afD
-afD
+pnI
 aqo
 arI
 atd
@@ -117821,22 +117795,22 @@ aaa
 aaa
 aai
 aaa
-mqt
-afC
-afC
-aho
-aic
-acQ
-acQ
-aln
-amE
-amE
-amE
-aqp
-dnh
-dnR
-aus
-dnS
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
+arI
+atd
+atd
+atd
 dnh
 aAm
 oeK
@@ -118078,22 +118052,22 @@ aaa
 aaa
 aaf
 aaa
-aaa
-aaf
-aaa
-acP
-aid
-aiZ
-ajX
-uWX
-acP
-dnz
-dnR
-lpp
-dnh
-dnh
-dnh
-dnh
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
+atd
+atd
+atd
+atd
 dnh
 axQ
 ayR
@@ -118335,21 +118309,21 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaf
-aaa
-acP
-aie
-aja
-gmg
-alp
-dtE
-hZc
-dnS
-doh
-dnS
-dnS
-uUV
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
+dnh
+dnR
+aus
 dnS
 dnS
 axO
@@ -118592,18 +118566,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaa
-acP
-acQ
-acQ
-acQ
-acP
-acP
-dnh
-dnh
-dnh
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
 dnh
 dnh
 dnh
@@ -118849,18 +118823,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaa
-aaa
-aaa
-aaa
-aaf
-dni
-eVo
-amH
-hZc
-dnS
+mJJ
+aho
+aho
+aho
+aic
+acQ
+acQ
+aln
+amE
+amE
+amE
+aqp
 arJ
 arI
 dnh
@@ -119109,15 +119083,15 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-dnh
-amH
+acP
+aid
+aiZ
+ajX
+xAc
+acP
 dnh
 apd
-dnS
+ape
 arK
 dnS
 dnh
@@ -119366,14 +119340,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaa
-aaf
-aaa
-ack
-dnh
-ape
+acP
+aie
+aja
+ahg
+alp
+dtE
+dnS
+dnS
 dnS
 arL
 ate
@@ -119623,14 +119597,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaf
-aaf
-aaf
-ack
-dni
+acP
+acP
+acP
+acP
+acP
+acP
 bcO
+dnS
 dnS
 dnS
 dnS
@@ -119881,12 +119855,12 @@ aaa
 aaa
 aaa
 aaa
-aaf
 aaa
-aaf
-aaa
-aaf
-dnh
+amH
+dnS
+amH
+dnS
+dnS
 apg
 aqs
 arM
