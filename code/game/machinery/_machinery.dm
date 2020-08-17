@@ -612,7 +612,7 @@ Class Procs:
  * Returns (string) The generated name
  */
 /obj/machinery/proc/assign_random_name(len=5)
-	var/new_name = ""
+	var/list/new_name = list()
 	// machine id's should be fun random chars hinting at a larger world
 	for(var/i = 1 to len)
 		switch(rand(1,3))
@@ -622,4 +622,4 @@ Class Procs:
 				new_name += ascii2text(rand(97,122)) // a - z
 			if(3)
 				new_name += ascii2text(rand(48, 57)) // 0 - 9
-	return new_name
+	return new_name.Join()
